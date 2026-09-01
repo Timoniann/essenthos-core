@@ -3,6 +3,7 @@ using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Links;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,7 @@ builder.Services.AddScoped<CorpusLoader>();
 builder.Services.AddScoped<CanonicalFrameLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.NewTestamentLinkLoader>();
+builder.Services.AddScoped<AlignmentPipeline>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
@@ -56,6 +58,25 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
         "The request could not be served. This is a fault in the API, not in the request; the cause is in " +
         "the API's own log.");
 }));
+
+// Alignment is computed once per pair of texts, not per request, so it is a batch run rather than
+// part of the startup pipeline: an API that trains a model before it answers is the shape PRB-0005
+// warned about.
+if (args is ["align", var alignFrom, var alignTo, ..])
+{
+    using var alignScope = app.Services.CreateScope();
+    var pipeline = alignScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
+    var confidence = Array.IndexOf(args, "--min");
+    app.Logger.LogInformation("{Outcome}", await pipeline.Run(
+        alignFrom,
+        alignTo,
+        Path.Combine(Path.GetTempPath(), "essenthos-align", $"{alignFrom}-{alignTo}"),
+        confidence >= 0 && confidence + 1 < args.Length
+            ? double.Parse(args[confidence + 1], System.Globalization.CultureInfo.InvariantCulture)
+            : AlignmentPipeline.DefaultMinimumConfidence,
+        args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4"));
+    return;
+}
 
 var v1 = app.MapGroup("/v1");
 v1.MapHealth();

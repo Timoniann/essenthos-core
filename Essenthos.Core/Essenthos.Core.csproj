@@ -19,11 +19,13 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+      <PackageReference Include="SIL.Machine" Version="3.9.3" />
+      <PackageReference Include="SIL.Machine.Translation.Thot" Version="3.9.3" />
     </ItemGroup>
 
     <ItemGroup>
         <!-- The Nestle tokeniser and the word separator are internal, and each one's off-by-one
              corrupted tens of thousands of words in the corpus, so both are worth a regression test. -->
-        <InternalsVisibleTo Include="Essenthos.Core.Tests"/>
+        <InternalsVisibleTo Include="Essenthos.Core.Tests" />
     </ItemGroup>
 </Project>
