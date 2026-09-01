@@ -43,6 +43,7 @@ internal sealed class DatasetLoader(
 
             await PlaceInTheFrame(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
+            await LinkTheNewTestament(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -108,6 +109,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OldTestamentLinkLoader>();
         status.Record(await loader.Load(records, cancellationToken));
+    }
+
+    /// <summary>
+    /// The New Testament correspondences, which no source states — this is Strong numbers matched
+    /// within a verse, and every link it writes says so.
+    /// </summary>
+    private async Task LinkTheNewTestament(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the New Testament links");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<NewTestamentLinkLoader>();
+        status.Record(await loader.Load(
+            ResourcePaths.File(resources, "Zefania", "SF_2009-01-20_ENG_KJV_(KJV+).xml"), cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)
