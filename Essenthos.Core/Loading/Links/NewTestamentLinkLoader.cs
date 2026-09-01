@@ -47,7 +47,8 @@ internal sealed record GreekLinkOutcome(
 /// </summary>
 internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestamentLinkLoader> logger)
 {
-    private const string Source = "Zefania KJV+ Strong numbers, matched within the verse";
+    private static string Source(string greekSlug) =>
+        $"Zefania KJV+ Strong numbers, matched within the verse against {greekSlug}";
 
     /// <summary>
     /// One English word and one Greek word in the verse carry the number. The correspondence is
@@ -82,15 +83,24 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     private const string LinkWordImport =
         "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
 
-    public async Task<GreekLinkOutcome> Load(string zefaniaPath, CancellationToken cancellationToken = default)
+    /// <param name="greekSlug">
+    /// Which Greek witness to match against. The King James renders the Textus Receptus and is
+    /// matched to Nestle 1904 as well, because the difference between what it reaches in each is
+    /// the evidence of which text it followed — and that evidence is ours, derived from our own
+    /// data, needing no licence and no outside claim.
+    /// </param>
+    public async Task<GreekLinkOutcome> Load(
+        string zefaniaPath,
+        string greekSlug,
+        CancellationToken cancellationToken = default)
     {
         var english = await db.Texts.SingleOrDefaultAsync(t => t.Slug == "kjv", cancellationToken);
-        var greek = await db.Texts.SingleOrDefaultAsync(t => t.Slug == NestleTextSource.Slug, cancellationToken);
+        var greek = await db.Texts.SingleOrDefaultAsync(t => t.Slug == greekSlug, cancellationToken);
         if (english is null || greek is null)
         {
             throw new InvalidOperationException(
-                "The King James and Nestle 1904 must both be loaded before the correspondences between them can " +
-                "be. Load the texts first; this reads them, it does not create them.");
+                $"The King James and \"{greekSlug}\" must both be loaded before the correspondences between them " +
+                "can be. Load the texts first; this reads them, it does not create them.");
         }
 
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == greek.Id, cancellationToken))
@@ -139,7 +149,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
             drafts.AddRange(Build(tags, kjv, nestle, ref unmatched));
         }
 
-        await Write(english.Id, greek.Id, drafts, cancellationToken);
+        await Write(english.Id, greek.Id, greekSlug, drafts, cancellationToken);
 
         var outcome = new GreekLinkOutcome(
             false,
@@ -276,6 +286,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     private async Task Write(
         int fromTextId,
         int toTextId,
+        string greekSlug,
         List<GreekLinkDraft> drafts,
         CancellationToken cancellationToken)
     {
@@ -304,7 +315,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
                 await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(drafts[i].Confidence, NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(Source(greekSlug), NpgsqlDbType.Text, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);

@@ -92,6 +92,16 @@ internal sealed class DatasetLoader(
     private static readonly Edition[] Editions = [Edition.Scrivener1894, Edition.Stephanus1550];
 
     /// <summary>
+    /// The Greek texts the King James is matched against, in the order they are worth reading: the
+    /// one it was translated from, then the one it was not.
+    /// </summary>
+    private static readonly string[] GreekWitnesses =
+    [
+        TextusReceptusTextSource.Slug(Edition.Scrivener1894),
+        NestleTextSource.Slug,
+    ];
+
+    /// <summary>
     /// Every text is placed in the shared frame after all of them are loaded, so that a text added
     /// later is placed on the next boot without the others being touched.
     /// </summary>
@@ -141,12 +151,20 @@ internal sealed class DatasetLoader(
     /// </summary>
     private async Task LinkTheNewTestament(string resources, CancellationToken cancellationToken)
     {
-        status.Starting("the New Testament links");
+        var zefania = ResourcePaths.File(resources, "Zefania", "SF_2009-01-20_ENG_KJV_(KJV+).xml");
 
-        using var scope = services.CreateScope();
-        var loader = scope.ServiceProvider.GetRequiredService<NewTestamentLinkLoader>();
-        status.Record(await loader.Load(
-            ResourcePaths.File(resources, "Zefania", "SF_2009-01-20_ENG_KJV_(KJV+).xml"), cancellationToken));
+        // Against both Greek witnesses. The King James renders the Textus Receptus, so Scrivener is
+        // the text it was translated from and Nestle is the one the corpus could offer it until
+        // now; the difference between what it reaches in each is evidence of which text it followed,
+        // derived from our own data.
+        foreach (var greek in GreekWitnesses)
+        {
+            status.Starting($"the New Testament links against {greek}");
+
+            using var scope = services.CreateScope();
+            var loader = scope.ServiceProvider.GetRequiredService<NewTestamentLinkLoader>();
+            status.Record(await loader.Load(zefania, greek, cancellationToken));
+        }
     }
 
     /// <summary>
