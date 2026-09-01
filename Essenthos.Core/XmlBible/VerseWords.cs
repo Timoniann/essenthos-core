@@ -41,10 +41,11 @@ public static partial class VerseWords
     }
 
     /// <summary>
-    /// A word is a run of letters and digits; everything up to the next one is its trailer. A
-    /// token with no word at all is folded into the word before it, because a verse cannot
-    /// contain a word that is not there — the one exception is punctuation that opens the verse,
-    /// which has no earlier word to belong to and is a real character of the text.
+    /// A word is a run of letters and digits, and an apostrophe or hyphen standing between two of
+    /// them belongs to the word rather than separating two. A token with no word at all is folded
+    /// into the word before it, because a verse cannot contain a word that is not there — the one
+    /// exception is punctuation that opens the verse, which has no earlier word to belong to and is
+    /// a real character of the text.
     /// </summary>
     private static List<(string Word, string Trailer)> Tokenize(string text)
     {
@@ -53,11 +54,9 @@ public static partial class VerseWords
         for (var i = 0; i < length; i++)
         {
             var start = i;
-            char c;
             for (; i < length; i++)
             {
-                c = text[i];
-                if (!(char.IsLetter(c) || char.IsDigit(c)))
+                if (!IsWordCharacter(text, i))
                 {
                     break;
                 }
@@ -73,8 +72,7 @@ public static partial class VerseWords
             var trailerStart = i++;
             for (; i < length; i++)
             {
-                c = text[i];
-                if (char.IsLetter(c) || char.IsDigit(c))
+                if (IsWordCharacter(text, i))
                 {
                     break;
                 }
@@ -85,6 +83,36 @@ public static partial class VerseWords
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// An apostrophe is a letter's business in some languages and punctuation in others, and the
+    /// difference is where it stands. Ukrainian writes it inside a word — сім'я is one word, and
+    /// splitting it gives сім and я, which mean other things — while Russian and English use the
+    /// same character to open and close a quotation. A hyphen divides the same way: из-за is one
+    /// word and a dash between two clauses is not. So the test is what surrounds it.
+    /// </summary>
+    private const char Apostrophe = '\u0027';
+    private const char TypographicApostrophe = '\u2019';
+    private const char Hyphen = '-';
+
+    private static bool IsWordCharacter(string text, int index)
+    {
+        var c = text[index];
+        if (char.IsLetter(c) || char.IsDigit(c))
+        {
+            return true;
+        }
+
+        if (c is not (Apostrophe or TypographicApostrophe or Hyphen))
+        {
+            return false;
+        }
+
+        return index > 0
+               && index + 1 < text.Length
+               && (char.IsLetter(text[index - 1]) || char.IsDigit(text[index - 1]))
+               && (char.IsLetter(text[index + 1]) || char.IsDigit(text[index + 1]));
     }
 
     private static void Append(List<(string Word, string Trailer)> result, string word, string trailer)

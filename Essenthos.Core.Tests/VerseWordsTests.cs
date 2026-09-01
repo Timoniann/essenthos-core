@@ -48,4 +48,38 @@ public class VerseWordsTests
     {
         VerseWords.StripMarkup("похули Бога и умри. (1)").Should().Be("похули Бога и умри.");
     }
+
+    /// <summary>
+    /// Ukrainian writes an apostrophe inside a word. Splitting сім'я gives сім and я, which mean
+    /// other things, and it did that 3,726 times in the loaded corpus.
+    /// </summary>
+    [Theory]
+    [InlineData("сім'я", "сім'я")]
+    [InlineData("wife's name", "wife's")]
+    [InlineData("из-за того", "из-за")]
+    public void AnApostropheOrHyphenInsideAWordBelongsToIt(string verse, string firstWord)
+    {
+        VerseWords.Parse(verse)[0].Word.Should().Be(firstWord);
+    }
+
+    /// <summary>
+    /// The same character opens and closes a quotation, and there it is punctuation. What decides
+    /// is whether a letter stands on both sides of it.
+    /// </summary>
+    [Theory]
+    [InlineData("'quoted' word", "quoted")]
+    [InlineData("said: 'yes'", "said")]
+    [InlineData("a — dash", "a")]
+    public void AnApostropheOrDashBetweenWordsIsPunctuation(string verse, string firstWord)
+    {
+        VerseWords.Parse(verse).First(w => w.Word.Length > 0).Word.Should().Be(firstWord);
+    }
+
+    [Fact]
+    public void TheVerseStillRebuildsFromItsWords()
+    {
+        const string verse = "And Adam called his wife's name Eve; сім'я, из-за.";
+
+        string.Concat(VerseWords.Parse(verse).Select(w => w.Word + w.Trailer)).Should().Be(verse);
+    }
 }
