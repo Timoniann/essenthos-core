@@ -15,11 +15,33 @@ internal static class ResourcePaths
     /// </summary>
     private const string DevelopmentDefault = "../../essenthos-api/Resources";
 
+    /// <summary>
+    /// The default is relative to the content root, which is the project folder under
+    /// <c>dotnet run</c> and the application folder anywhere else — so outside development it
+    /// resolves somewhere that does not exist, and this says so with the path it tried rather than
+    /// letting the load fail later against a directory nobody meant.
+    /// </summary>
     public static string Read(IConfiguration configuration, string contentRootPath)
     {
         var configured = configuration[ConfigurationKey];
         var path = string.IsNullOrWhiteSpace(configured) ? DevelopmentDefault : configured;
-        return Path.GetFullPath(Path.Combine(contentRootPath, path));
+        var resolved = Path.GetFullPath(Path.Combine(contentRootPath, path));
+
+        if (!Directory.Exists(resolved))
+        {
+            throw new DirectoryNotFoundException(
+                $"The corpus sources are not at {resolved}. " +
+                (string.IsNullOrWhiteSpace(configured)
+                    ? $"Nothing set \"{ConfigurationKey}\", so the development default " +
+                      $"\"{DevelopmentDefault}\" was resolved against the content root " +
+                      $"{contentRootPath} — which is the project folder under `dotnet run` and " +
+                      "the application folder anywhere else. "
+                    : $"\"{ConfigurationKey}\" is set to \"{configured}\". ") +
+                "Point it at the Resources directory of the essenthos-api checkout, as an absolute path if this is " +
+                "not a development run.");
+        }
+
+        return resolved;
     }
 
     /// <summary>

@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Essenthos.Core/Dockerfile
+    ports:
+      - "5279:8080"
+    environment:
+      # Set as "Urls" rather than ASPNETCORE_URLS: the slim builder reads ASPNETCORE_-prefixed
+      # variables *before* appsettings.json, so the port there would win and the container would
+      # listen on its own loopback where nothing outside can reach it.
+      Urls: http://+:8080
+
+      # The corpus sources are 373 MB and belong to essenthos-api, so they are mounted rather than
+      # copied into the image — which is why the old project's image could never load its dataset.
+      Dataset__ResourcesPath: /resources
+
+      # Postgres runs on the host, started by essenthos-api's compose. host.docker.internal is how a
+      # container reaches it without joining that stack's network.
+      Database__ConnectionString: Host=host.docker.internal;Port=5435;Database=essenthos_core;Username=essenthos
+      Database__Password: ${ESSENTHOS_DB_PASSWORD:?set ESSENTHOS_DB_PASSWORD, or put it in an .env file beside this one}
+
+      Cors__AllowedOrigins__0: http://localhost:5278
+    volumes:
+      - ../essenthos-api/Resources:/resources:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

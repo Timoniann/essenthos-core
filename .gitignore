@@ -137,3 +137,6 @@ Resources/
 
 # JetBrains IDE settings
 .idea/
+
+# The database password reaches compose through this file, and it is not this repository's to carry.
+.env
