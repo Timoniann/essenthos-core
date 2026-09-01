@@ -80,6 +80,12 @@ internal static partial class UtrReader
     /// </summary>
     private const int PipesPerGroup = 3;
 
+    /// <summary>
+    /// What Robinson writes where a word's Strong number is not simply its own: before the number
+    /// of a proper name the concordance lists elsewhere, and before both halves of a crasis.
+    /// </summary>
+    private const string Unnumbered = "0";
+
     public static IReadOnlyList<UtrVerse> Read(string content, Edition edition)
     {
         var verses = new List<UtrVerse>(1_200);
@@ -259,6 +265,7 @@ internal static partial class UtrReader
         string? inflection = null;
         string? morphology = null;
         var alternatives = new List<string>();
+        var compound = at < tokens.Length && tokens[at] == Unnumbered;
 
         // A surface is never all digits and never a brace, so everything up to the next word that
         // is neither belongs to this one. That is what keeps a repeated parse from being read as a
@@ -288,13 +295,30 @@ internal static partial class UtrReader
                 continue;
             }
 
+            // Zero is not a Strong number. Robinson writes it in front of a word whose numbering is
+            // not its own — simewn 0 4826, and eanper 0 1437 4007, which is a crasis of ean and per
+            // and carries the number of each. Taken as the number, it makes the word unresolvable
+            // and pushes the real one into the verb's inflection slot.
+            if (token == Unnumbered)
+            {
+                continue;
+            }
+
             if (strong is null)
             {
                 strong = token;
                 continue;
             }
 
-            inflection = token;
+            // A second number after the first is the verb's inflection code, unless the word was
+            // marked unnumbered — then it is the other half of a compound.
+            if (inflection is null && !compound)
+            {
+                inflection = token;
+                continue;
+            }
+
+            alternatives.Add(token);
         }
 
         return new UtrWord(surface, strong, inflection, morphology, alternatives);

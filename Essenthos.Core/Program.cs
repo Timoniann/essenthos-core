@@ -45,6 +45,7 @@ builder.Services.AddScoped<Essenthos.Core.Loading.Links.NewTestamentLinkLoader>(
 builder.Services.AddScoped<AlignmentPipeline>();
 builder.Services.AddScoped<CompositionPipeline>();
 builder.Services.AddScoped<CorpusCheck>();
+builder.Services.AddScoped<StrongLexiconLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
@@ -155,6 +156,7 @@ var v1 = app.MapGroup("/v1");
 v1.MapHealth();
 v1.MapRead();
 v1.MapParallel();
+v1.MapStrong();
 
 app.UseCors();
 

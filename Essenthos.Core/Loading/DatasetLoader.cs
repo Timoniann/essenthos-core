@@ -52,6 +52,7 @@ internal sealed class DatasetLoader(
                     ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation), stoppingToken);
             }
 
+            await LoadTheLexicon(resources, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
@@ -100,6 +101,22 @@ internal sealed class DatasetLoader(
         TextusReceptusTextSource.Slug(Edition.Scrivener1894),
         NestleTextSource.Slug,
     ];
+
+    /// <summary>
+    /// Strong's concordance, which belongs to no text and is loaded once. It is what turns the
+    /// numbers every text has been carrying into something that can be resolved and checked.
+    /// </summary>
+    private async Task LoadTheLexicon(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("Strong's concordance");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<StrongLexiconLoader>();
+        status.Record(await loader.Load(
+            ResourcePaths.File(resources, "Strong", "StrongHebrew.xml"),
+            ResourcePaths.File(resources, "Strong", "StrongGreek.xml"),
+            cancellationToken));
+    }
 
     /// <summary>
     /// Every text is placed in the shared frame after all of them are loaded, so that a text added

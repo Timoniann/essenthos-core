@@ -126,6 +126,17 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             """),
         ("Strong numbers that are not a letter and digits",
             "SELECT count(*) FROM word WHERE strong_number IS NOT NULL AND strong_number !~ '^[GH][0-9]+$'"),
+        // A number that resolves to nothing is a word the corpus cannot explain. The H9000 range is
+        // excluded because ETCBC numbers prefix morphemes there and Strong never catalogued them —
+        // 121,077 words carry one, and counting those as broken would misreport the corpus by 21%.
+        ("Strong numbers no dictionary entry answers",
+            """
+            SELECT count(*) FROM word w
+            WHERE w.strong_number IS NOT NULL
+              AND w.strong_number !~ '^H9[0-9]{3}$'
+              AND EXISTS (SELECT 1 FROM strong_entry)
+              AND NOT EXISTS (SELECT 1 FROM strong_entry e WHERE e.strong_number = w.strong_number)
+            """),
         ("link words whose text disagrees with the link's own",
             """
             SELECT count(*) FROM link_word lw

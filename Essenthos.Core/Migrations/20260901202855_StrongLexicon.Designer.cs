@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260901202855_StrongLexicon")]
+    partial class StrongLexicon
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,13 +259,13 @@ namespace Essenthos.Core.Migrations
                         .HasColumnName("twot_reference");
 
                     b.HasKey("Id")
-                        .HasName("pk_strong_entry");
+                        .HasName("pk_strong_entries");
 
                     b.HasIndex("StrongNumber")
                         .IsUnique()
-                        .HasDatabaseName("ix_strong_entry_strong_number");
+                        .HasDatabaseName("ix_strong_entries_strong_number");
 
-                    b.ToTable("strong_entry", (string)null);
+                    b.ToTable("strong_entries", (string)null);
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Text", b =>
@@ -423,9 +426,9 @@ namespace Essenthos.Core.Migrations
                         .HasColumnName("rendered");
 
                     b.HasKey("Id")
-                        .HasName("pk_verification_run");
+                        .HasName("pk_verification_runs");
 
-                    b.ToTable("verification_run", (string)null);
+                    b.ToTable("verification_runs", (string)null);
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Verse", b =>

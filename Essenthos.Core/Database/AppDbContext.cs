@@ -37,6 +37,9 @@ public class AppDbContext : DbContext
 
     public DbSet<VerseLinkVerse> VerseLinkVerses { get; set; } = null!;
 
+    /// <summary>Strong's concordance, which a word reaches by number rather than by key.</summary>
+    public DbSet<StrongEntry> StrongEntries { get; set; } = null!;
+
     /// <summary>What each load measured about the corpus it wrote, one row per load.</summary>
     public DbSet<VerificationRun> VerificationRuns { get; set; } = null!;
 
@@ -153,6 +156,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<VerseReference>().ToTable("verse_reference");
         modelBuilder.Entity<LinkWord>().ToTable("link_word");
         modelBuilder.Entity<VerseLinkVerse>().ToTable("verse_link_verse");
+        modelBuilder.Entity<StrongEntry>().ToTable("strong_entry");
+        modelBuilder.Entity<VerificationRun>().ToTable("verification_run");
     }
 
     private static void ConfigureLink(ModelBuilder modelBuilder)

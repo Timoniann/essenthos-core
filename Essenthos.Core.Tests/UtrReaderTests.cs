@@ -82,6 +82,34 @@ public class UtrReaderTests
         third.Should().Throw<InvalidOperationException>().WithMessage("*1:1*");
     }
 
+    /// <summary>
+    /// Zero is not a Strong number. Robinson writes it before the number of a proper name the
+    /// concordance lists elsewhere; taken literally it makes the word unresolvable and pushes the
+    /// real number into the slot a verb's inflection code uses.
+    /// </summary>
+    [Fact]
+    public void AWordMarkedUnnumberedTakesTheNumberThatFollows()
+    {
+        var verse = UtrReader.Read("2:25 simewn 0 4826 {N-PRI}", Edition.Scrivener1894)[0];
+
+        verse.Words.Single().Should().Be(new UtrWord("simewn", "4826", null, "N-PRI"));
+    }
+
+    /// <summary>
+    /// A crasis carries the number of each half — eanper is ean and per — and neither is an
+    /// inflection code.
+    /// </summary>
+    [Fact]
+    public void ACrasisKeepsBothOfItsNumbers()
+    {
+        var verse = UtrReader.Read("3:6 eanper 0 1437 4007 {COND}", Edition.Scrivener1894)[0];
+
+        var word = verse.Words.Single();
+        word.Strong.Should().Be("1437");
+        word.Inflection.Should().BeNull();
+        word.Alternatives.Should().Equal("4007");
+    }
+
     [Fact]
     public void AVerseWithNoVariantsReadsTheSameInBothEditions()
     {
