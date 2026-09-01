@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using NpgsqlTypes;
@@ -22,6 +23,7 @@ internal sealed record LinkOutcome(
     int HebrewWordsUnreached,
     int MultiWordLinks,
     int Omissions,
+    int StrongNumbers,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
@@ -30,7 +32,8 @@ internal sealed record LinkOutcome(
             : $"{Links} links over {Verses} verses in {Elapsed}: {EnglishWordsLinked} English and " +
               $"{HebrewWordsLinked} Hebrew words, {MultiWordLinks} naming more than one Hebrew word, " +
               $"{Omissions} naming a Hebrew word the English does not render, " +
-              $"{HebrewWordsUnreached} Hebrew words reached by nothing, {Refused} verses refused";
+              $"{HebrewWordsUnreached} Hebrew words reached by nothing, {StrongNumbers} Hebrew words given the " +
+              $"Strong number the file states, {Refused} verses refused";
 }
 
 /// <summary>
@@ -56,6 +59,16 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)
         """;
 
+    /// <summary>
+    /// The mapping file gives every Hebrew word a Strong number, which BHSA itself does not carry.
+    /// It is a claim the same source makes about the same words, so it arrives with the links and
+    /// not before them: it is only trustworthy for a verse whose join held.
+    /// </summary>
+    private const string StrongNumberUpdate =
+        """
+        CREATE TEMP TABLE stated_strong (word_id bigint PRIMARY KEY, strong_number text) ON COMMIT DROP;
+        """;
+
     public async Task<LinkOutcome> Load(
         IReadOnlyList<MappingRecord> records,
         CancellationToken cancellationToken = default)
@@ -72,7 +85,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == hebrew.Id, cancellationToken))
         {
             logger.LogInformation("The Old Testament links are already loaded; nothing to do");
-            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -80,6 +93,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var hebrewVerses = await VerseWords(hebrew.Id, cancellationToken);
 
         var pairs = new List<LinkDraft>(400_000);
+        var stated = new List<(long WordId, string Strong)>(430_000);
         var refused = 0;
         var unreached = 0;
 
@@ -102,9 +116,18 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
             pairs.AddRange(drafts);
             unreached += bhsaWords.Count - drafts.SelectMany(d => d.Hebrew).Distinct().Count();
+
+            for (var i = 0; i < record.Hebrew.Count; i++)
+            {
+                var strong = StrongNumbers.Normalize(record.Hebrew[i].Strong);
+                if (strong is not null)
+                {
+                    stated.Add((bhsaWords[i].Id, strong));
+                }
+            }
         }
 
-        await Write(english.Id, hebrew.Id, pairs, cancellationToken);
+        await Write(english.Id, hebrew.Id, pairs, stated, cancellationToken);
 
         var outcome = new LinkOutcome(
             false,
@@ -116,6 +139,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             unreached,
             pairs.Count(p => p.Hebrew.Count > 1),
             pairs.Count(p => p.Omitted),
+            stated.DistinctBy(pair => pair.WordId).Count(),
             started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
         return outcome;
@@ -225,6 +249,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         int fromTextId,
         int toTextId,
         List<LinkDraft> drafts,
+        List<(long WordId, string Strong)> stated,
         CancellationToken cancellationToken)
     {
         if (drafts.Count == 0)
@@ -276,7 +301,51 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             await writer.CompleteAsync(cancellationToken);
         }
 
+        await WriteStrongNumbers(connection, stated, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Writes the Strong numbers the file states for the Hebrew. Half a million single-row updates
+    /// would be minutes; a temporary table filled by COPY and one join is seconds.
+    ///
+    /// The codes above H9000 are the dataset's own for the prefixes Strong's concordance never
+    /// numbered — the conjunction, the article, the prefixed prepositions — so a reader looking one
+    /// up in a printed concordance will not find it. They are kept because they are what the source
+    /// says and because a prefix with no number is a prefix nothing can join on.
+    /// </summary>
+    private static async Task WriteStrongNumbers(
+        NpgsqlConnection connection,
+        List<(long WordId, string Strong)> stated,
+        CancellationToken cancellationToken)
+    {
+        if (stated.Count == 0)
+        {
+            return;
+        }
+
+        await using (var create = new NpgsqlCommand(StrongNumberUpdate, connection))
+        {
+            await create.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY stated_strong (word_id, strong_number) FROM STDIN (FORMAT BINARY)", cancellationToken))
+        {
+            foreach (var (wordId, strong) in stated.DistinctBy(pair => pair.WordId))
+            {
+                await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
+                await writer.WriteAsync(strong, NpgsqlDbType.Text, cancellationToken);
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await using var update = new NpgsqlCommand(
+            "UPDATE word SET strong_number = s.strong_number FROM stated_strong s WHERE word.id = s.word_id",
+            connection);
+        await update.ExecuteNonQueryAsync(cancellationToken);
     }
 
     private static async Task Row(
