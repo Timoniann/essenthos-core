@@ -1,4 +1,5 @@
 using Essenthos.Core.Configuration;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading.Frame;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ internal sealed class DatasetLoader(
     IHostEnvironment environment,
     IConfiguration configuration,
     DatasetStatus status,
+    ICanonIndex canon,
     ILogger<DatasetLoader> logger) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -40,6 +42,9 @@ internal sealed class DatasetLoader(
 
             await PlaceInTheFrame(resources, stoppingToken);
 
+            // The index answers from what it read the first time it was asked, and until now that
+            // was an empty database.
+            canon.Forget();
             status.Ready();
             logger.LogInformation("The dataset is loaded");
         }

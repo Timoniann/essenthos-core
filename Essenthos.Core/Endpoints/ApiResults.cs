@@ -11,4 +11,14 @@ internal static class ApiResults
     {
         return Results.Text(hint, "text/plain", statusCode: StatusCodes.Status400BadRequest);
     }
+
+    /// <summary>
+    /// Says what is absent and, where the two differ, which kind of absence it is: a text that does
+    /// not contain a book is a different fact from a book with no text in it, and a reader told the
+    /// first will stop looking for the second.
+    /// </summary>
+    public static IResult NotFound(string what)
+    {
+        return Results.Text(what, "text/plain", statusCode: StatusCodes.Status404NotFound);
+    }
 }

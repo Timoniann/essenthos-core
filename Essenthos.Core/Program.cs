@@ -39,6 +39,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 builder.Services.AddScoped<CorpusLoader>();
 builder.Services.AddScoped<CanonicalFrameLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
+builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
 
 var app = builder.Build();
@@ -56,6 +57,8 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
 
 var v1 = app.MapGroup("/v1");
 v1.MapHealth();
+v1.MapRead();
+v1.MapParallel();
 
 app.UseCors();
 
