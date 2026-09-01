@@ -38,6 +38,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 
 builder.Services.AddScoped<CorpusLoader>();
 builder.Services.AddScoped<CanonicalFrameLoader>();
+builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();

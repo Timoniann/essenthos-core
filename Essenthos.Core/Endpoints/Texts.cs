@@ -65,7 +65,31 @@ internal static class Texts
                 w.Verse!.Number, w.Id, w.Surface, w.Trailer, w.Gloss, w.Lemma, w.StrongNumber, w.Morphology))
             .ToListAsync(cancellationToken);
 
-        return Group(rows);
+        return Group(rows, await Counterparts(db, rows.Select(r => r.Id), cancellationToken));
+    }
+
+    /// <summary>
+    /// The links each of these words belongs to, in one query rather than one per word.
+    ///
+    /// The old contract calls this field <c>originalWordIds</c> and the client treats it as an
+    /// opaque set: two words correspond when their sets intersect. Link ids are what the sets hold
+    /// now, which makes the same intersection work between any two texts rather than only between a
+    /// translation and an original — there is no original for it to be about any more. A word that
+    /// belongs to no link is absent here and answers an empty set, which is not the same fact as a
+    /// text carrying no links at all.
+    /// </summary>
+    private static async Task<ILookup<long, long>> Counterparts(
+        AppDbContext db,
+        IEnumerable<long> wordIds,
+        CancellationToken cancellationToken)
+    {
+        var ids = wordIds.Distinct().ToList();
+        var rows = await db.LinkWords
+            .Where(side => ids.Contains(side.WordId))
+            .Select(side => new { side.WordId, side.LinkId })
+            .ToListAsync(cancellationToken);
+
+        return rows.ToLookup(row => row.WordId, row => row.LinkId);
     }
 
     /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>
@@ -86,21 +110,25 @@ internal static class Texts
                 w.StrongNumber, w.Morphology)))
             .ToListAsync(cancellationToken);
 
+        var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
+
         return rows
             .GroupBy(r => r.CanonicalVerse)
             .ToDictionary(
                 group => group.Key,
                 group => group
                     .OrderBy(r => r.VerseNumber).ThenBy(r => r.Position)
-                    .Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology))
+                    .Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
+                        counterparts))
                     .ToList());
     }
 
-    private static IList<TextVerseResponse> Group(List<WordRow> rows) =>
+    private static IList<TextVerseResponse> Group(List<WordRow> rows, ILookup<long, long> counterparts) =>
         rows.GroupBy(r => r.VerseNumber)
             .Select(group => new TextVerseResponse(
                 group.Key,
-                group.Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology))
+                group.Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
+                        counterparts))
                     .ToList()))
             .ToList();
 
@@ -111,7 +139,8 @@ internal static class Texts
         string? gloss,
         string? lemma,
         string? strongNumber,
-        JsonDocument? morphology)
+        JsonDocument? morphology,
+        ILookup<long, long> counterparts)
     {
         var features = Features(morphology);
         return new TextWordResponse(
@@ -121,7 +150,7 @@ internal static class Texts
             gloss,
             lemma,
             strongNumber,
-            [],
+            [.. counterparts[id].Distinct()],
             null,
             null,
             Morphology(features),

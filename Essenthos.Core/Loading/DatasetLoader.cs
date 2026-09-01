@@ -2,6 +2,7 @@ using Essenthos.Core.Configuration;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading.Frame;
+using Essenthos.Core.Loading.Links;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading;
@@ -41,6 +42,7 @@ internal sealed class DatasetLoader(
             }
 
             await PlaceInTheFrame(resources, stoppingToken);
+            await LinkTheOldTestament(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -90,6 +92,22 @@ internal sealed class DatasetLoader(
 
             status.Record(await loader.Place(text, frame, cancellationToken));
         }
+    }
+
+    /// <summary>
+    /// The Old Testament correspondences, which need both texts placed in the frame first: the file
+    /// addresses verses the way the King James numbers them, and BHSA numbers several of them
+    /// otherwise.
+    /// </summary>
+    private async Task LinkTheOldTestament(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Old Testament links");
+        var records = KjvBhsMapping.Read(
+            ResourcePaths.File(resources, "mapping", "KJV-OT-mapped-to-BHS-full-mapping.csv"));
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<OldTestamentLinkLoader>();
+        status.Record(await loader.Load(records, cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)
