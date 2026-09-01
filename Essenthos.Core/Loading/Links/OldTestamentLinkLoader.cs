@@ -50,7 +50,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
     private const string LinkImport =
         """
-        COPY link (id, from_text_id, to_text_id, relation, method, source)
+        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
         FROM STDIN (FORMAT BINARY)
         """;
 
@@ -179,21 +179,35 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             byPosition.TryAdd(record.Hebrew[i].Position, i);
         }
 
-        var drafts = new List<LinkDraft>(record.English.Count);
+        // The file marks content words only, so the function words in a phrase would otherwise be
+        // claimed by the one word it marks. What they actually render is recovered first, and they
+        // leave the phrase for links of their own.
+        var prefixes = HebrewPrefixes.Match(record.Hebrew, record.English)
+            .ToDictionary(match => match.EnglishWord, match => match);
+
+        var drafts = new List<LinkDraft>(record.English.Count + prefixes.Count);
+        foreach (var (english, match) in prefixes)
+        {
+            drafts.Add(new LinkDraft([kjv[english].Id], [bhsa[byPosition[match.HebrewPosition]].Id], match.Confidence));
+        }
+
         var read = 0;
 
         foreach (var segment in record.English)
         {
-            var words = kjv.GetRange(read, segment.Words.Count);
+            var at = read;
+            var words = kjv.GetRange(read, segment.Words.Count)
+                .Where((_, offset) => !prefixes.ContainsKey(at + offset))
+                .ToList();
             read += segment.Words.Count;
 
-            if (segment.RendersHebrew is null || !byPosition.TryGetValue(segment.RendersHebrew.Position, out var at))
+            if (segment.RendersHebrew is null || !byPosition.TryGetValue(segment.RendersHebrew.Position, out var index))
             {
                 continue;
             }
 
-            var hebrewWord = bhsa[at];
-            var position = record.Hebrew[at].Position;
+            var hebrewWord = bhsa[index];
+            var position = record.Hebrew[index].Position;
 
             if (words.Count == 0)
             {
@@ -263,7 +277,8 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
         var renders = EnumSpelling.Of(LinkRelation.Renders);
         var omits = EnumSpelling.Of(LinkRelation.Omits);
-        var method = EnumSpelling.Of(LinkMethod.StatedBySource);
+        var bySource = EnumSpelling.Of(LinkMethod.StatedBySource);
+        var lexical = EnumSpelling.Of(LinkMethod.Lexical);
         var fromSide = EnumSpelling.Of(LinkSide.From);
         var toSide = EnumSpelling.Of(LinkSide.To);
 
@@ -276,7 +291,18 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(drafts[i].Omitted ? omits : renders, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(
+                    drafts[i].Confidence is null ? bySource : lexical, NpgsqlDbType.Text, cancellationToken);
+
+                if (drafts[i].Confidence is { } confidence)
+                {
+                    await writer.WriteAsync(confidence, NpgsqlDbType.Double, cancellationToken);
+                }
+                else
+                {
+                    await writer.WriteNullAsync(cancellationToken);
+                }
+
                 await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
             }
 
@@ -383,7 +409,11 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// The King James renders nothing here, so the link says so with an empty side rather than
     /// attaching the Hebrew word to whatever phrase happened to precede it.
     /// </param>
-    private sealed record LinkDraft(List<long> English, List<long> Hebrew)
+    /// <param name="Confidence">
+    /// Null for everything the file states, and set for the function words matched to their
+    /// prefixes, so that the two can never be read as the same kind of claim.
+    /// </param>
+    private sealed record LinkDraft(List<long> English, List<long> Hebrew, double? Confidence = null)
     {
         public int LastHebrewPosition { get; set; }
 

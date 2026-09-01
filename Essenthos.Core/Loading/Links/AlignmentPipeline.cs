@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Globalization;
+using System.Text;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -37,18 +38,31 @@ internal sealed record AlignmentOutcome(
 internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeline> logger)
 {
     /// <summary>
-    /// Measured against the correspondences a source states for the King James and BHSA:
+    /// Measured with <c>score kjv bhsa</c> against the 625,826 correspondences the mapping file
+    /// states, so this number is a measurement anyone can repeat and not one somebody chose.
     ///
-    ///     threshold   precision   coverage
-    ///        0.3        80.4%      29.8%
-    ///        0.5        82.6%      19.9%
+    ///     min    kept   content precision   where the file answers
+    ///     0.20  379199        86.5 %              91.1 %
+    ///     0.25  347690        87.6 %              92.1 %
+    ///     0.30  319983        88.4 %              93.0 %
+    ///     0.50  228354        91.5 %              95.8 %
+    ///     0.60  198416        93.4 %              97.3 %
     ///
-    /// Half again as much coverage for two points of precision, so this is the trade taken. At 0.5
-    /// Genesis 1:1 lost "начале", "сотворил" and "бог" — all three correct, all three scored below
-    /// it — and a reader seeing four words linked where six were known is worse served than one
-    /// seeing six with the same confidence shown on each.
+    /// The two columns differ because the file is often silent rather than contradicting: at 0.3
+    /// half of what is scored wrong is the aligner reaching a Hebrew word the file links to nothing
+    /// at all, and a third of the rest is it choosing between two words the file itself renders the
+    /// same — "great" against גָּדֹל where the file states גְּדֹלִים. The second column drops the
+    /// silence and asks only the decidable question: where the file names a Hebrew word for this
+    /// English one, does the model name the same one.
+    ///
+    /// 0.25 is the trade taken. It keeps 347,690 pairs, agrees with the file 92.1% of the time where
+    /// the file answers, and is low enough to keep the correct-but-unremarkable words a reader
+    /// notices the absence of — Genesis 1:1 in Russian is seven words linked or it is wrong. Every
+    /// link carries its own confidence, so a reader is never told that a pair scoring 0.26 and one
+    /// scoring 0.99 are the same claim; raising this constant to 0.5 is available and costs a third
+    /// of the corpus.
     /// </summary>
-    public const double DefaultMinimumConfidence = 0.3;
+    public const double DefaultMinimumConfidence = 0.25;
 
     /// <summary>
     /// When this many source words all point at one target word and none of them confidently, the
@@ -98,10 +112,45 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 "loaded and placed before they can be aligned.");
         }
 
+        var alignmentFile = await Align(
+            fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
+
+        var (drafts, proposed, collapsed, below) =
+            Read(alignmentFile, addresses, source, target, minimumConfidence);
+
+        await Store(from.Id, to.Id, modelType, drafts, cancellationToken);
+
+        var outcome = new AlignmentOutcome(
+            fromSlug, toSlug, addresses.Count, proposed, collapsed, below, drafts.Count, started.Elapsed);
+        logger.LogInformation("Aligned {Outcome}", outcome);
+        return outcome;
+    }
+
+    /// <summary>
+    /// Trains the model and runs it, unless the workspace already holds the answer. Training the
+    /// twenty-three thousand verse pairs takes minutes, and the threshold is a question about how to
+    /// read the output rather than how to produce it, so a measurement sweep reuses one run.
+    /// </summary>
+    private async Task<string> Align(
+        string fromSlug,
+        string toSlug,
+        string workspace,
+        string modelType,
+        List<(int, int, int)> addresses,
+        Dictionary<(int, int, int), List<Word>> source,
+        Dictionary<(int, int, int), List<Word>> target,
+        CancellationToken cancellationToken)
+    {
         var sourceFile = Path.Combine(workspace, "source.txt");
         var targetFile = Path.Combine(workspace, "target.txt");
         var alignmentFile = Path.Combine(workspace, "alignment", "pharaoh.txt");
         var modelPrefix = Path.Combine(workspace, "model", $"{fromSlug}-{toSlug}");
+
+        if (File.Exists(alignmentFile))
+        {
+            logger.LogInformation("Reusing the alignment already in {Workspace}", workspace);
+            return alignmentFile;
+        }
 
         Write(sourceFile, addresses, source);
         Write(targetFile, addresses, target);
@@ -115,15 +164,107 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             ["align", "-mt", modelType, "-sh", "och", "-s", modelPrefix, sourceFile, targetFile, alignmentFile],
             cancellationToken);
 
-        var (drafts, proposed, collapsed, below) =
-            Read(alignmentFile, addresses, source, target, minimumConfidence);
+        return alignmentFile;
+    }
 
-        await Store(from.Id, to.Id, modelType, drafts, cancellationToken);
+    /// <summary>
+    /// Scores the model over a range of thresholds against the correspondences a source states for
+    /// the same two texts, so the threshold is a measurement anyone can repeat rather than a number
+    /// somebody once chose.
+    ///
+    /// It reports twice, because the two figures answer different questions. Every stated pair
+    /// includes the function words a phrase carries - "the beginning" states both of its words
+    /// against the one Hebrew word - and an aligner that declines to guess which of them is meant is
+    /// marked wrong for it. The second figure drops the pairs whose Hebrew word is a prefix or the
+    /// object marker, and is the closer answer to "when it says two words correspond, is it right".
+    /// </summary>
+    public async Task<string> Measure(
+        string fromSlug,
+        string toSlug,
+        string workspace,
+        IReadOnlyList<double> thresholds,
+        string modelType,
+        CancellationToken cancellationToken = default)
+    {
+        var from = await Text(fromSlug, cancellationToken);
+        var to = await Text(toSlug, cancellationToken);
+        var source = await Words(fromSlug, Surface, cancellationToken);
+        var target = await Words(toSlug, Comparable, cancellationToken);
+        var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
 
-        var outcome = new AlignmentOutcome(
-            fromSlug, toSlug, addresses.Count, proposed, collapsed, below, drafts.Count, started.Elapsed);
-        logger.LogInformation("Aligned {Outcome}", outcome);
-        return outcome;
+        Directory.CreateDirectory(workspace);
+        var alignmentFile = await Align(
+            fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
+
+        var (gold, structural) = await Stated(from.Id, to.Id, cancellationToken);
+        var content = gold.Where(pair => !structural.Contains(pair.To)).ToHashSet();
+
+        var report = new StringBuilder()
+            .AppendLine($"{fromSlug} against {toSlug}, scored on {gold.Count} stated pairs")
+            .AppendLine("  min     kept  precision  recall   content precision");
+
+        foreach (var threshold in thresholds)
+        {
+            var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, threshold);
+            var proposed = drafts.Select(d => (d.SourceWordId, d.TargetWordId)).ToHashSet();
+            var all = Alignment.Score(proposed, gold);
+            var narrow = Alignment.Score(proposed.Where(pair => !structural.Contains(pair.TargetWordId)), content);
+
+            report.AppendLine(
+                $"  {threshold:F2}  {drafts.Count,7}  {all.Precision,9:P1}  {all.Recall,6:P1}  " +
+                $"{narrow.Precision,9:P1} of {narrow.Proposed}");
+        }
+
+        return report.ToString();
+    }
+
+    /// <summary>
+    /// The pairs a source states for these two texts, and the Hebrew words that are prefixes or the
+    /// object marker rather than words a translation renders on their own.
+    /// </summary>
+    private async Task<(HashSet<(long From, long To)> Gold, HashSet<long> Structural)> Stated(
+        int fromTextId,
+        int toTextId,
+        CancellationToken cancellationToken)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        var gold = new HashSet<(long, long)>(400_000);
+        await using (var command = new NpgsqlCommand(
+            """
+            SELECT f.word_id, t.word_id
+            FROM link l
+            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
+            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
+            WHERE l.from_text_id = @from AND l.to_text_id = @to AND l.method <> 'aligner'
+            """, connection))
+        {
+            command.Parameters.AddWithValue("from", fromTextId);
+            command.Parameters.AddWithValue("to", toTextId);
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                gold.Add((reader.GetInt64(0), reader.GetInt64(1)));
+            }
+        }
+
+        var structural = new HashSet<long>(60_000);
+        await using (var command = new NpgsqlCommand(
+            """
+            SELECT id FROM word
+            WHERE text_id = @text AND (strong_number LIKE 'H9%' OR strong_number = 'H853')
+            """, connection))
+        {
+            command.Parameters.AddWithValue("text", toTextId);
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                structural.Add(reader.GetInt64(0));
+            }
+        }
+
+        return (gold, structural);
     }
 
     /// <summary>
@@ -314,11 +455,29 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         }
     }
 
+    /// <summary>
+    /// One verse per line, one token per word, and the tool splits the line on whitespace to get
+    /// them back. So a token that is empty or holds a space is not a token the tool will count, and
+    /// the indices it returns for that verse are then somebody else's words from that point on.
+    /// That is checked here rather than trusted: a shifted alignment is wrong in a way that looks
+    /// exactly like a right one.
+    /// </summary>
     private static void Write(
         string path,
         List<(int, int, int)> addresses,
-        Dictionary<(int, int, int), List<Word>> words) =>
-        File.WriteAllLines(path, addresses.Select(a => string.Join(' ', words[a].Select(w => w.Text))));
+        Dictionary<(int, int, int), List<Word>> words)
+    {
+        var lines = new List<string>(addresses.Count);
+
+        foreach (var address in addresses)
+        {
+            var verse = words[address];
+            var (book, chapter, number) = address;
+            lines.Add(AlignmentTokens.Line(verse.Select(w => w.Text), $"{book} {chapter}:{number}"));
+        }
+
+        File.WriteAllLines(path, lines);
+    }
 
     private async Task<Database.Entities.Text> Text(string slug, CancellationToken cancellationToken) =>
         await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken)
@@ -326,7 +485,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
     private async Task<Dictionary<(int, int, int), List<Word>>> Words(
         string slug,
-        Func<string, string?, string?, string> form,
+        Func<WordForms, string> form,
         CancellationToken cancellationToken)
     {
         var rows = await db.VerseReferences
@@ -340,6 +499,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 w.Id,
                 w.Surface,
                 w.Lemma,
+                w.StrongNumber,
                 Consonantal = w.Morphology == null ? null : w.Morphology.RootElement.GetProperty("consonantal")
                     .GetString(),
             }))
@@ -350,21 +510,28 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             .ToDictionary(
                 group => group.Key,
                 group => group.OrderBy(r => r.Position)
-                    .Select(r => new Word(r.Id, form(r.Surface, r.Lemma, r.Consonantal)))
+                    .Select(r => new Word(
+                        r.Id, AlignmentTokens.One(form(new WordForms(r.Surface, r.Lemma, r.Consonantal, r.StrongNumber)))))
                     .ToList());
     }
 
-    private static string Surface(string surface, string? lemma, string? consonantal) => surface.ToLowerInvariant();
+    private static string Surface(WordForms word) => word.Surface.ToLowerInvariant();
 
     /// <summary>
     /// The form a model can learn from. BHSA writes full vowel pointing, so the same word appears as
     /// many different strings and a lexicon built on twenty-three thousand verses never sees any of
     /// them often enough; using the consonants instead raised precision by a quarter.
     /// </summary>
-    private static string Comparable(string surface, string? lemma, string? consonantal) =>
-        !string.IsNullOrEmpty(consonantal) ? consonantal
-        : !string.IsNullOrEmpty(lemma) ? lemma
-        : surface.ToLowerInvariant();
+    private static string Comparable(WordForms word) =>
+        !string.IsNullOrWhiteSpace(word.Consonantal) ? word.Consonantal
+        : !string.IsNullOrWhiteSpace(word.Lemma) ? word.Lemma
+        : !string.IsNullOrWhiteSpace(word.Surface) ? word.Surface.ToLowerInvariant()
+        : word.Strong ?? string.Empty;
+
+    /// <param name="Strong">
+    /// The last resort, and the only form a zero morpheme has.
+    /// </param>
+    private sealed record WordForms(string Surface, string? Lemma, string? Consonantal, string? Strong);
 
     private sealed record Word(long Id, string Text);
 

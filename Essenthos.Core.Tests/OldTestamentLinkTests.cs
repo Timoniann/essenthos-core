@@ -166,7 +166,7 @@ public sealed class OldTestamentLinkTests : IDisposable
         new(1, 1, 1, [Hebrew(1), Hebrew(2), Hebrew(3), Hebrew(4)], segments);
 
     /// <summary>Positions are the file's running word index; within a verse they are consecutive.</summary>
-    private static HebrewEntry Hebrew(int position) => new($"H{position}", position, $"gloss{position}");
+    private static HebrewEntry Hebrew(int position) => new($"H{position}", "c1", position, $"gloss{position}");
 
     private static EnglishSegment Segment(string[] words, int rendersPosition) =>
         new(words, Hebrew(rendersPosition));

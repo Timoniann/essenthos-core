@@ -62,6 +62,21 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
 // Alignment is computed once per pair of texts, not per request, so it is a batch run rather than
 // part of the startup pipeline: an API that trains a model before it answers is the shape PRB-0005
 // warned about.
+// What a threshold costs, on the one pair where a source says what the right answer is. It reuses
+// the alignment in the workspace, so a sweep is seconds once the model has been run.
+if (args is ["score", var scoreFrom, var scoreTo, ..])
+{
+    using var scoreScope = app.Services.CreateScope();
+    var scorer = scoreScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
+    app.Logger.LogInformation("\n{Report}", await scorer.Measure(
+        scoreFrom,
+        scoreTo,
+        Path.Combine(Path.GetTempPath(), "essenthos-align", $"{scoreFrom}-{scoreTo}"),
+        [0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60],
+        args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4"));
+    return;
+}
+
 if (args is ["align", var alignFrom, var alignTo, ..])
 {
     using var alignScope = app.Services.CreateScope();

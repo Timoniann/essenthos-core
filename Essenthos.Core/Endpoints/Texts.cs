@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -83,7 +84,7 @@ internal static class Texts
     /// joins them by being linked to that same word rather than to any of them. A word of a witness
     /// carries its own id, so it meets the translations that reach it.
     /// </summary>
-    private static async Task<ILookup<long, long>> Counterparts(
+    private static async Task<Reached> Counterparts(
         AppDbContext db,
         IEnumerable<long> wordIds,
         CancellationToken cancellationToken)
@@ -104,8 +105,38 @@ internal static class Texts
                 .Select(other => new { side.WordId, Reached = other.WordId }))
             .ToListAsync(cancellationToken);
 
-        return own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached);
+        var evidence = await db.LinkWords
+            .Where(side => ids.Contains(side.WordId))
+            .Select(side => new { side.WordId, side.Link!.Method, side.Link!.Confidence })
+            .ToListAsync(cancellationToken);
+
+        var strongest = evidence
+            .GroupBy(row => row.WordId)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderByDescending(row => row.Confidence is null)
+                    .ThenByDescending(row => row.Confidence)
+                    .Select(row => Provenance(row.Method, row.Confidence))
+                    .First());
+
+        return new Reached(own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached), strongest);
     }
+
+    /// <summary>
+    /// What established this word's link, in one string the client can show without reading the
+    /// schema: the method, and the confidence where there is one. A link with no confidence is one
+    /// somebody asserted, and it is the only kind that carries no number — which is the point, and
+    /// why the number is not defaulted to 1.
+    /// </summary>
+    private static string Provenance(LinkMethod method, double? confidence) =>
+        confidence is { } value
+            ? $"{EnumSpelling.Of(method)}:{value.ToString("0.##", CultureInfo.InvariantCulture)}"
+            : EnumSpelling.Of(method);
+
+    /// <param name="Witnesses">The witness words each word reaches, which is what the client intersects.</param>
+    /// <param name="Provenance">What established the strongest link on each word, where it has one.</param>
+    private sealed record Reached(ILookup<long, long> Witnesses, Dictionary<long, string> Provenance);
 
     /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>
     public static async Task<Dictionary<int, List<TextWordResponse>>> ReadByCanonicalVerse(
@@ -138,7 +169,7 @@ internal static class Texts
                     .ToList());
     }
 
-    private static IList<TextVerseResponse> Group(List<WordRow> rows, ILookup<long, long> counterparts) =>
+    private static IList<TextVerseResponse> Group(List<WordRow> rows, Reached counterparts) =>
         rows.GroupBy(r => r.VerseNumber)
             .Select(group => new TextVerseResponse(
                 group.Key,
@@ -155,7 +186,7 @@ internal static class Texts
         string? lemma,
         string? strongNumber,
         JsonDocument? morphology,
-        ILookup<long, long> counterparts)
+        Reached counterparts)
     {
         var features = Features(morphology);
         return new TextWordResponse(
@@ -165,8 +196,8 @@ internal static class Texts
             gloss,
             lemma,
             strongNumber,
-            [.. counterparts[id].Distinct()],
-            null,
+            [.. counterparts.Witnesses[id].Distinct()],
+            counterparts.Provenance.GetValueOrDefault(id),
             null,
             Morphology(features),
             Feature(features, Phono),

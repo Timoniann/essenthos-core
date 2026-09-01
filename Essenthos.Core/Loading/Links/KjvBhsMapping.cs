@@ -2,12 +2,17 @@ using System.Text.RegularExpressions;
 
 namespace Essenthos.Core.Loading.Links;
 
+/// <param name="Clause">
+/// The clause the file puts this word in. It is what lets a conjunction be matched across the
+/// disagreement in word order: Hebrew hangs its <em>and</em> on the verb, English puts it first, and
+/// the clause is the span inside which they are the same <em>and</em>.
+/// </param>
 /// <param name="Gloss">
 /// The English gloss the file gives this Hebrew word. It is what makes the join checkable: BHSA
 /// carries the same glosses, so a verse whose gloss sequence agrees is a verse whose words are
 /// lined up, and one that disagrees is reported rather than guessed at.
 /// </param>
-internal sealed record HebrewEntry(string Strong, int Position, string Gloss);
+internal sealed record HebrewEntry(string Strong, string Clause, int Position, string Gloss);
 
 /// <param name="Words">
 /// The English words this segment carries, which may be none: where two Hebrew words are rendered
@@ -86,7 +91,7 @@ internal static partial class KjvBhsMapping
             var parts = match.Groups[1].Value.Split('｜');
             if (parts.Length >= 5 && int.TryParse(parts[2], out var position))
             {
-                entries.Add(new HebrewEntry(parts[0], position, parts[4]));
+                entries.Add(new HebrewEntry(parts[0], parts[1], position, parts[4]));
             }
         }
 
