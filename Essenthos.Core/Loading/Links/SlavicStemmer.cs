@@ -89,7 +89,16 @@ internal static class SlavicStemmer
     /// </summary>
     private const int LeaveAlone = 4;
 
-    public static string Stem(string word)
+    /// <param name="isName">
+    /// Whether the word is a proper name. A name inflects as a noun and never as a verb, and the
+    /// difference matters: the gerund ending is a bare -в after а or я, which is right for
+    /// <em>сказав</em> and takes the last letter off <em>Аминадав</em>, <em>Иоав</em>,
+    /// <em>Ахав</em> and <em>Моав</em>. The name then has two stems — <em>Аминадава</em> keeps its
+    /// в and <em>Аминадав</em> loses it — and in a genealogy where the same name stands twice in a
+    /// verse, one of them matches the Greek and the other matches nothing and is placed by
+    /// position alone.
+    /// </param>
+    public static string Stem(string word, bool isName = false)
     {
         var lower = word.ToLowerInvariant().Replace('ё', 'е');
         if (lower.Length < LeaveAlone)
@@ -101,7 +110,7 @@ internal static class SlavicStemmer
         var r2 = SecondRegion(lower);
         var stem = new StringBuilder(lower);
 
-        Step1(stem, rv);
+        Step1(stem, rv, isName);
         // "и" is the plural of everything and the conjunction of everything else; on a stem it says
         // nothing the singular does not.
         Trim(stem, rv, ["и"]);
@@ -135,16 +144,16 @@ internal static class SlavicStemmer
     /// first. The order is the published one and matters: an adjectival ending that is also a noun
     /// ending has to be read as the adjective it is.
     /// </summary>
-    private static void Step1(StringBuilder stem, int rv)
+    private static void Step1(StringBuilder stem, int rv, bool isName)
     {
-        if (TrimAfterVowel(stem, rv, GerundAfterVowel) || Trim(stem, rv, Gerund))
+        if (!isName && (TrimAfterVowel(stem, rv, GerundAfterVowel) || Trim(stem, rv, Gerund)))
         {
             return;
         }
 
         Trim(stem, rv, Reflexive);
 
-        if (Adjectival(stem, rv) || TrimAfterVowel(stem, rv, VerbAfterVowel) || Trim(stem, rv, Verb))
+        if (Adjectival(stem, rv) || (!isName && (TrimAfterVowel(stem, rv, VerbAfterVowel) || Trim(stem, rv, Verb))))
         {
             return;
         }

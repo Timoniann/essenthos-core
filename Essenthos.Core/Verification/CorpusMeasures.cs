@@ -35,6 +35,16 @@ internal sealed record Reach(string Witness, string From, int Lexical, int Reach
 /// <param name="Worst">The most links any single word of this text carries.</param>
 internal sealed record Contention(string Text, string Against, int Contended, int Worst);
 
+/// <param name="Crowded">
+/// Witness words claimed by more than two words of one text in the same verse. Some sharing is
+/// right — the Synodal writes <em>по роду</em> where Hebrew writes one word — but a witness word
+/// claimed by four or five is what a reader sees as half a verse lighting up when one word is
+/// touched, and it is the shape a repeated word makes when a model cannot tell its occurrences
+/// apart.
+/// </param>
+/// <param name="Worst">The most words of this text that claim one witness word.</param>
+internal sealed record Crowding(string Text, string Witness, int Crowded, int Worst);
+
 /// <param name="Found">
 /// How many rows break the check. Every one of these should be zero, so the name says what is
 /// wrong rather than what was counted.
@@ -49,6 +59,7 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<Coverage> Coverage,
     IReadOnlyList<Reach> Reach,
     IReadOnlyList<Contention> Contention,
+    IReadOnlyList<Crowding> Crowding,
     IReadOnlyList<IntegrityCheck> Integrity)
 {
     /// <summary>Integrity checks are the only measure with a right answer, and it is zero.</summary>
@@ -82,6 +93,12 @@ internal sealed record CorpusMeasures(
         foreach (var c in Contention)
         {
             report.AppendLine($"  {c.Text} to {c.Against,-12} {c.Contended,7} {c.Worst,10}");
+        }
+
+        report.AppendLine("crowding      witness words claimed by more than two, and the worst one");
+        foreach (var c in Crowding)
+        {
+            report.AppendLine($"  {c.Text} on {c.Witness,-12} {c.Crowded,7} {c.Worst,10}");
         }
 
         report.AppendLine("integrity     every one of these should be zero");

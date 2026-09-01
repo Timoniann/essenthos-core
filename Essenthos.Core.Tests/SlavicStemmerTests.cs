@@ -22,7 +22,7 @@ public class SlavicStemmerTests
     [InlineData("сказал", "сказала", "сказали", "сказать")]
     public void TheFormsOfOneWordLandTogether(params string[] forms)
     {
-        var stems = forms.Select(SlavicStemmer.Stem).Distinct();
+        var stems = forms.Select(form => SlavicStemmer.Stem(form)).Distinct();
 
         stems.Should().ContainSingle(because: string.Join(", ", forms.Select(f => $"{f} -> {SlavicStemmer.Stem(f)}")));
     }
@@ -33,7 +33,7 @@ public class SlavicStemmerTests
     [InlineData("небесний", "небесна", "небесні", "небесними")]
     [InlineData("сталося", "сталася", "сталися")]
     public void UkrainianFormsLandTogether(params string[] forms) =>
-        forms.Select(SlavicStemmer.Stem).Distinct().Should()
+        forms.Select(form => SlavicStemmer.Stem(form)).Distinct().Should()
             .ContainSingle(because: string.Join(", ", forms.Select(f => $"{f} -> {SlavicStemmer.Stem(f)}")));
 
     /// <summary>
@@ -61,10 +61,33 @@ public class SlavicStemmerTests
     [InlineData("над")]
     public void ShortWordsAreLeftAlone(string word) => SlavicStemmer.Stem(word).Should().Be(word);
 
+    /// <summary>
+    /// The case a reader found. The gerund ending is a bare -в after а or я, which is right for
+    /// сказав and wrong for a name: Аминадав lost its в and Аминадава kept it, so one name became
+    /// two stems. In a genealogy where the name stands twice in a verse, one stem matched the Greek
+    /// and the other matched nothing and was placed by position alone — onto δέ.
+    /// </summary>
+    [Theory]
+    [InlineData("Аминадав", "Аминадава")]
+    [InlineData("Иоав", "Иоава")]
+    [InlineData("Ахав", "Ахава")]
+    [InlineData("Моав", "Моава")]
+    [InlineData("Ісав", "Ісава")]
+    public void ANameAndItsInflectionsLandTogether(string bare, string inflected) =>
+        SlavicStemmer.Stem(bare, isName: true).Should().Be(SlavicStemmer.Stem(inflected, isName: true));
+
+    /// <summary>
+    /// And the rule the exemption is taken from still holds for the words it is for: сказав is a
+    /// gerund and must reach the same stem as сказал.
+    /// </summary>
+    [Fact]
+    public void AGerundStillLosesItsEnding() =>
+        SlavicStemmer.Stem("сказав").Should().Be(SlavicStemmer.Stem("сказал"));
+
     [Fact]
     public void TheStemIsNeverEmpty() =>
         new[] { "ая", "ими", "ость", "ться", "ы", "ю" }
-            .Select(SlavicStemmer.Stem).Should().OnlyContain(stem => stem.Length > 0);
+            .Select(form => SlavicStemmer.Stem(form)).Should().OnlyContain(stem => stem.Length > 0);
 
     /// <summary>Case and the ё/е spelling are not two different words.</summary>
     [Fact]

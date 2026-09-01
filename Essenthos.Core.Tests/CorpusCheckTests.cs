@@ -124,6 +124,24 @@ public sealed class CorpusCheckTests : IDisposable
         contention.Worst.Should().Be(2);
     }
 
+    /// <summary>
+    /// The measure a reader feels, and the one the forward count cannot see. Contention asks how
+    /// many words a word claims; this asks how many claim it, which is how many light together
+    /// when one is touched.
+    /// </summary>
+    [Fact]
+    public async Task AWitnessWordManyWordsClaimIsCrowded()
+    {
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+        Link(LinkRelation.Renders, english: 2, hebrew: 1);
+        Link(LinkRelation.Renders, english: 3, hebrew: 1);
+
+        var crowding = (await _check.Measure()).Crowding.Single();
+
+        crowding.Worst.Should().Be(3);
+        crowding.Crowded.Should().Be(1);
+    }
+
     [Fact]
     public async Task ASoundCorpusBreaksNothing()
     {

@@ -114,6 +114,28 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         """;
 
     /// <summary>
+    /// The same question as contention asked from the other end, and the one a reader actually
+    /// feels: not "how many words does this word claim" but "how many words claim this one". A
+    /// witness word claimed by five words of a translation is five words that light together, and
+    /// no forward count says so.
+    /// </summary>
+    private const string CrowdingSql =
+        """
+        SELECT t.slug, witness.slug, count(*) FILTER (WHERE claims.n > 2), coalesce(max(claims.n), 0)
+        FROM (
+            SELECT lw.word_id, l.from_text_id, l.to_text_id, count(*) AS n
+            FROM link_word lw
+            JOIN link l ON l.id = lw.link_id
+            WHERE lw.side = 'to'
+            GROUP BY lw.word_id, l.from_text_id, l.to_text_id
+        ) claims
+        JOIN text t ON t.id = claims.from_text_id
+        JOIN text witness ON witness.id = claims.to_text_id AND witness.kind <> 'translation'
+        GROUP BY t.slug, witness.slug
+        ORDER BY t.slug, witness.slug
+        """;
+
+    /// <summary>
     /// Each of these should return nothing. They are the shapes the schema cannot forbid but that
     /// no correct load produces, so a count above zero is a defect and not a measurement.
     /// </summary>
@@ -184,6 +206,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var contention = await Read(connection, ContentionSql, cancellationToken, reader => new Contention(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
 
+        var crowding = await Read(connection, CrowdingSql, cancellationToken, reader => new Crowding(
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
+
         var integrity = new List<IntegrityCheck>(Integrity.Length);
         foreach (var (breaks, sql) in Integrity)
         {
@@ -191,7 +216,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             integrity.Add(new IntegrityCheck(breaks, (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!));
         }
 
-        return new CorpusMeasures(coverage, reach, contention, integrity);
+        return new CorpusMeasures(coverage, reach, contention, crowding, integrity);
     }
 
     /// <summary>

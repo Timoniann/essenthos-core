@@ -99,19 +99,24 @@ internal sealed class CompositionPipeline(
 
         var composed = Compose(first, second);
 
-        // Each route already keeps only its own best answer per word; the merge can put two
-        // different best answers back on one word, and one of them is again a runner-up. Measured
-        // on the pair a source states, dropping those costs 0.3% of the coverage and returns half a
-        // point of precision — and it is what stops two words in a verse sharing a third and being
-        // highlighted as though they were one phrase.
+        // Each route already keeps its own best answer per word; the merge can put two different
+        // best answers back on one word, and one of them is again a runner-up.
+        //
+        // Which one survives is decided by how many readings found it before it is decided by
+        // confidence, and that order matters. Matthew 1:4 has the Synodal's second "Аминадав"
+        // scored 1.000 against δέ by the written reading alone, while the stems and the English
+        // both say Ἀμιναδάβ less loudly. Taking the loudest answer takes the wrong one — and
+        // agreement between readings that share no evidence is the whole reason there are three.
         var merged = Routes.Merge(
                 (Route.Written, written), (Route.Reduced, reduced), (Route.Composed, composed))
             .Where(link => link.Confidence >= minimumConfidence)
             .GroupBy(link => link.From)
             .SelectMany(group =>
             {
-                var best = group.Max(link => link.Confidence);
-                return group.Where(link => link.Confidence >= best);
+                var agreed = group.Max(link => Readings(link.Route));
+                var contenders = group.Where(link => Readings(link.Route) == agreed).ToList();
+                var best = contenders.Max(link => link.Confidence);
+                return contenders.Where(link => link.Confidence >= best);
             })
             .ToList();
 

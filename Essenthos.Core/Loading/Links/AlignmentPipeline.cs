@@ -377,7 +377,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 standing.Add((pair.Source, pair.Target, pair.Translation, pair.Alignment));
             }
 
-            foreach (var (from, to, confidence, position) in Selections.Apply(selection, standing))
+            foreach (var (from, to, confidence, position) in Selections.Apply(
+                         selection, standing, [.. targetWords.Select(word => word.Text)]))
             {
                 drafts.Add(new AlignedDraft(
                     sourceWords[from].Id, targetWords[to].Id, confidence, position));
@@ -562,7 +563,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     .Select(r => new Word(
                         r.Id,
                         AlignmentTokens.One(form(
-                            new WordForms(r.Surface, r.Lemma, r.Consonantal, r.StrongNumber, r.Language)))))
+                            new WordForms(
+                                r.Surface, r.Lemma, r.Consonantal, r.StrongNumber, r.Language, r.Position)))))
                     .ToList());
     }
 
@@ -580,10 +582,20 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// </summary>
     private static string Reduce(WordForms word) => word.Language switch
     {
-        "rus" or "ukr" => SlavicStemmer.Stem(word.Surface),
+        "rus" or "ukr" => SlavicStemmer.Stem(word.Surface, IsName(word)),
         "eng" => EnglishStemmer.Stem(word.Surface),
         _ => word.Surface.ToLowerInvariant(),
     };
+
+    /// <summary>
+    /// A capitalised word that does not open its verse. Every language here capitalises its proper
+    /// names and nothing else mid-sentence, so this is where the names are — and it is worth knowing
+    /// because a name inflects as a noun and never as a verb. The first word is excluded because a
+    /// verb opening a verse is capitalised too, and <em>Сказав</em> must stem where
+    /// <em>сказав</em> does.
+    /// </summary>
+    private static bool IsName(WordForms word) =>
+        word.Position > 1 && word.Surface.Length > 0 && char.IsUpper(word.Surface[0]);
 
     /// <summary>
     /// The form a model can learn from. BHSA writes full vowel pointing, so the same word appears as
@@ -604,12 +616,17 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// What the text is written in, which decides whether a form has to be reduced before a model
     /// can learn anything from it.
     /// </param>
+    /// <param name="Position">
+    /// Where it stands in its verse, which is how a proper name is told from a verb that happens to
+    /// open a sentence.
+    /// </param>
     private sealed record WordForms(
         string Surface,
         string? Lemma,
         string? Consonantal,
         string? Strong,
-        string? Language);
+        string? Language,
+        int Position);
 
     private sealed record Word(long Id, string Text);
 

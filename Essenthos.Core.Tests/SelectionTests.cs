@@ -59,6 +59,68 @@ public class SelectionTests
         Selections.Apply(Selection.BestPerSource, offered).Should().ContainSingle();
     }
 
+    /// <summary>
+    /// The case a reader found. Matthew 1:4 writes Ἀμιναδάβ twice and the model scores the Russian
+    /// name 1.000 against both — which says it cannot choose, not that the word renders both. Kept
+    /// as a tie, the reader lights every occurrence when one is touched.
+    /// </summary>
+    [Fact]
+    public void ATieBetweenTwoWritingsOfOneWordIsAmbiguityRatherThanOneToMany()
+    {
+        List<(int, int, double, double)> twice = [(2, 4, 1.0, 0.1), (2, 5, 1.0, 0.1)];
+
+        Selections.Apply(Selection.BestPerSource, twice, ["a", "b", "c", "d", "Ἀμιναδάβ", "Ἀμιναδάβ"])
+            .Should().ContainSingle();
+    }
+
+    /// <summary>And a tie between two different words is still the one-to-many it always was.</summary>
+    [Fact]
+    public void ATieBetweenTwoDifferentWordsIsStillKept()
+    {
+        List<(int, int, double, double)> divides = [(2, 4, 1.0, 0.1), (2, 5, 1.0, 0.1)];
+
+        Selections.Apply(Selection.BestPerSource, divides, ["a", "b", "c", "d", "מַבְדִּיל", "בֵּין"])
+            .Should().HaveCount(2);
+    }
+
+    /// <summary>
+    /// The case a reader found, in full. Ναασσών stands twice in Matthew 1:4 and twice in the
+    /// Synodal, and the model scores every combination 1.000 — correctly, because they are the same
+    /// word. Left alone both source words land on the first occurrence and light together.
+    /// </summary>
+    [Fact]
+    public void TwoWritingsOfOneWordTakeTheTwoOccurrencesInOrder()
+    {
+        List<(int, int, double, double)> both =
+            [(5, 9, 1.0, 0.1), (5, 10, 1.0, 0.1), (6, 9, 1.0, 0.1), (6, 10, 1.0, 0.1)];
+        var greek = new string[11];
+        Array.Fill(greek, "x");
+        greek[9] = greek[10] = "Ναασσών";
+
+        var kept = Selections.Apply(Selection.BestPerSource, both, greek);
+
+        kept.Should().BeEquivalentTo(new[] { (5, 9, 1.0, 0.1), (6, 10, 1.0, 0.1) });
+    }
+
+    /// <summary>
+    /// Where the counts do not match there is nothing to pair off, and the extra source word keeps
+    /// whatever it had rather than being given a target that is already spoken for.
+    /// </summary>
+    [Fact]
+    public void ThreeWordsOntoTwoOccurrencesLeavesTheThirdAsItWas()
+    {
+        List<(int, int, double, double)> three =
+            [(1, 9, 1.0, 0.1), (2, 9, 1.0, 0.1), (3, 9, 1.0, 0.1), (2, 10, 1.0, 0.1)];
+        var greek = new string[11];
+        Array.Fill(greek, "x");
+        greek[9] = greek[10] = "де";
+
+        var kept = Selections.Apply(Selection.BestPerSource, three, greek);
+
+        kept.Select(p => p.Source).Should().OnlyHaveUniqueItems();
+        kept.Should().HaveCount(3);
+    }
+
     [Fact]
     public void CompetitiveLinkingLeavesEveryWordInAtMostOnePair()
     {
