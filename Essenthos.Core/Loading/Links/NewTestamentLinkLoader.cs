@@ -63,6 +63,14 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     private const double BothSidesContended = 0.3;
 
     /// <summary>
+    /// The same number as many times on one side as the other, paired in the order both texts write
+    /// them. It is an assumption on top of an inference, so it sits below an unambiguous match —
+    /// but well above a set naming every candidate, because for a word repeated identically any
+    /// bijection reads the same to a reader and order is the one both texts agree on.
+    /// </summary>
+    private const double PairedInOrder = 0.7;
+
+    /// <summary>
     /// How much of a verse has to match word for word before the tagged text and the loaded King
     /// James are taken to be the same verse.
     ///
@@ -157,7 +165,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
             refused,
             drafts.Count,
             drafts.Count(d => d.Confidence == Unambiguous),
-            drafts.Count(d => d.Confidence < Unambiguous),
+            drafts.Count(d => d.Confidence < PairedInOrder),
             unmatched,
             spelled,
             started.Elapsed);
@@ -192,6 +200,23 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
             if (!greekByNumber.TryGetValue(group.Key, out var greekWords))
             {
                 unmatched += englishWords.Count;
+                continue;
+            }
+
+            // A set naming every candidate on both sides is a true claim and a useless one. Matthew
+            // 1:4 has three "and" against three δέ, and one link naming all six makes the reader
+            // light the whole verse when a single word is touched — which says the corpus cannot
+            // tell them apart, when in fact both texts write them in the same order.
+            //
+            // Where the counts agree the words are paired in that order, one link each. Where they
+            // do not, nothing here can choose, and the set stands.
+            if (englishWords.Count == greekWords.Count && englishWords.Count > 1)
+            {
+                for (var at = 0; at < englishWords.Count; at++)
+                {
+                    drafts.Add(new GreekLinkDraft([englishWords[at]], [greekWords[at]], PairedInOrder));
+                }
+
                 continue;
             }
 
