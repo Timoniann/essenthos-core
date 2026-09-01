@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
@@ -15,7 +16,7 @@ internal static class HealthEndpoints
             if (!reachable)
             {
                 return Results.Json(
-                    new HealthResponse("degraded", null, ["the database is not reachable"], false, []),
+                    new HealthResponse("degraded", null, ["the database is not reachable"], false, [], null),
                     statusCode: StatusCodes.Status503ServiceUnavailable);
             }
 
@@ -31,33 +32,60 @@ internal static class HealthEndpoints
                 0,
                 0);
 
+            var verified = await db.VerificationRuns
+                .OrderByDescending(v => v.RanAt)
+                .Select(v => new VerificationResponse(v.RanAt, v.Broken, v.Rendered))
+                .FirstOrDefaultAsync(cancellationToken);
+
             return Results.Ok(new HealthResponse(
-                Status(dataset),
+                Status(dataset, verified),
                 counts,
-                Missing(dataset, texts.Count),
+                Missing(dataset, texts.Count, verified),
                 dataset.State == DatasetState.Ready,
-                texts.Select(t => t.Slug).ToList()));
+                texts.Select(t => t.Slug).ToList(),
+                verified));
+        });
+
+        // The measures themselves, which are a report rather than a status: several hundred numbers
+        // that nothing polls and a person reads once.
+        routes.MapGet("/verification", async (AppDbContext db, CancellationToken cancellationToken) =>
+        {
+            var latest = await db.VerificationRuns
+                .OrderByDescending(v => v.RanAt)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return latest is null
+                ? Results.NotFound(new ProblemResponse("the corpus has not been measured yet"))
+                : Results.Ok(new VerificationReportResponse(
+                    latest.RanAt, latest.Broken, latest.Rendered, latest.Measures.RootElement));
         });
     }
 
     /// <summary>
     /// The contract's three words. A load that failed is <c>degraded</c> rather than
-    /// <c>loading</c>, because a client that polls a failed load waits forever.
+    /// <c>loading</c>, because a client that polls a failed load waits forever — and so is a load
+    /// that finished over a corpus breaking its own integrity checks, because those are not
+    /// measurements with a range but shapes no correct load produces.
     /// </summary>
-    private static string Status(DatasetStatus dataset) => dataset.State switch
+    private static string Status(DatasetStatus dataset, VerificationResponse? verified) => dataset.State switch
     {
+        DatasetState.Ready when verified is { Broken: > 0 } => "degraded",
         DatasetState.Ready => "ready",
         DatasetState.Failed => "degraded",
         _ => "loading",
     };
 
-    private static IList<string> Missing(DatasetStatus dataset, int texts) => dataset.State switch
-    {
-        DatasetState.Failed => [dataset.Detail ?? "the dataset load failed; the API's own log has the cause"],
-        DatasetState.Ready when texts == 0 => ["the load finished and wrote nothing"],
-        DatasetState.Ready => [],
-        _ => [dataset.Detail is null ? "the dataset is loading" : $"loading {dataset.Detail}"],
-    };
+    private static IList<string> Missing(DatasetStatus dataset, int texts, VerificationResponse? verified) =>
+        dataset.State switch
+        {
+            DatasetState.Failed => [dataset.Detail ?? "the dataset load failed; the API's own log has the cause"],
+            DatasetState.Ready when texts == 0 => ["the load finished and wrote nothing"],
+            DatasetState.Ready when verified is null => ["the corpus is loaded and has not been measured"],
+            DatasetState.Ready when verified.Broken > 0 =>
+                [$"the corpus breaks {verified.Broken} integrity checks; /v1/verification names them"],
+            DatasetState.Ready => [],
+            _ => [dataset.Detail is null ? "the dataset is loading" : $"loading {dataset.Detail}"],
+        };
 }
 
 /// <param name="Loaded">Whether the load has finished. <c>status</c> says the same thing in words.</param>
@@ -67,7 +95,27 @@ internal record HealthResponse(
     DatasetCountsResponse? Dataset,
     IList<string> Missing,
     bool Loaded,
-    IList<string> Texts);
+    IList<string> Texts,
+    VerificationResponse? Verified);
+
+/// <param name="Broken">Integrity checks the corpus fails. Anything but zero is a defect.</param>
+/// <param name="Rendered">
+/// The share of translated words that reach a witness. One number for whether the corpus is better
+/// or worse than the load before it; <c>/v1/verification</c> has the rest.
+/// </param>
+internal record VerificationResponse(DateTimeOffset RanAt, int Broken, double Rendered);
+
+/// <param name="Measures">
+/// Coverage, reach, contention and integrity, as the check computed them. Held as it was stored
+/// rather than retyped: it is a report, and a fifth measure should not be a schema change.
+/// </param>
+internal record VerificationReportResponse(
+    DateTimeOffset RanAt,
+    int Broken,
+    double Rendered,
+    JsonElement Measures);
+
+internal record ProblemResponse(string Message);
 
 internal record DatasetCountsResponse(
     int OriginalWords,

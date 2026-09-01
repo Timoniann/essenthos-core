@@ -37,6 +37,9 @@ public class AppDbContext : DbContext
 
     public DbSet<VerseLinkVerse> VerseLinkVerses { get; set; } = null!;
 
+    /// <summary>What each load measured about the corpus it wrote, one row per load.</summary>
+    public DbSet<VerificationRun> VerificationRuns { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         NameTablesInTheSingular(modelBuilder);

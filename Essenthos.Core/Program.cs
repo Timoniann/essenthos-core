@@ -4,6 +4,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Verification;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +44,7 @@ builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>(
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.NewTestamentLinkLoader>();
 builder.Services.AddScoped<AlignmentPipeline>();
 builder.Services.AddScoped<CompositionPipeline>();
+builder.Services.AddScoped<CorpusCheck>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
@@ -80,7 +82,42 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
         least >= 0 && least + 1 < args.Length
             ? double.Parse(args[least + 1], System.Globalization.CultureInfo.InvariantCulture)
             : AlignmentPipeline.DefaultMinimumConfidence));
-    return;
+    return 0;
+}
+
+// The measures as a command, so a build can fail on them. The floor is set below where the corpus
+// already stands: its job is to catch a load that lost something, not to be an aspiration.
+if (args is ["verify", ..])
+{
+    using var verifyScope = app.Services.CreateScope();
+    var check = verifyScope.ServiceProvider.GetRequiredService<CorpusCheck>();
+    var measures = await check.Measure();
+    var floor = Array.IndexOf(args, "--floor") is var at and >= 0 && at + 1 < args.Length
+        ? double.Parse(args[at + 1], System.Globalization.CultureInfo.InvariantCulture)
+        : CorpusCheck.RenderedFloor;
+
+    app.Logger.LogInformation("\n{Report}", measures.Describe());
+
+    var rendered = measures.Rendered;
+    if (measures.Broken > 0)
+    {
+        app.Logger.LogError(
+            "{Broken} integrity checks found something, and every one of them should find nothing",
+            measures.Broken);
+        return 1;
+    }
+
+    if (rendered < floor)
+    {
+        app.Logger.LogError(
+            "{Rendered:P1} of translated words reach a witness, below the floor of {Floor:P1}. Either the load " +
+            "lost something, or the floor is stale and should be raised deliberately",
+            rendered, floor);
+        return 1;
+    }
+
+    app.Logger.LogInformation("{Rendered:P1} of translated words reach a witness, floor {Floor:P1}", rendered, floor);
+    return 0;
 }
 
 if (args is ["score", var scoreFrom, var scoreTo, ..])
@@ -95,7 +132,7 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
         [0.25, 0.40],
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
         args.Contains("--surface")));
-    return;
+    return 0;
 }
 
 if (args is ["align", var alignFrom, var alignTo, ..])
@@ -111,7 +148,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
             ? double.Parse(args[confidence + 1], System.Globalization.CultureInfo.InvariantCulture)
             : AlignmentPipeline.DefaultMinimumConfidence,
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4"));
-    return;
+    return 0;
 }
 
 var v1 = app.MapGroup("/v1");
@@ -122,3 +159,4 @@ v1.MapParallel();
 app.UseCors();
 
 app.Run();
+return 0;

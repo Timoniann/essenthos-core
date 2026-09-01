@@ -3,6 +3,7 @@ using Essenthos.Core.Endpoints;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading;
@@ -48,6 +49,12 @@ internal sealed class DatasetLoader(
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
             canon.Forget();
+
+            // Measured after every load and not only after a change, because the corpus is written
+            // by several loaders and the question is what they produced together.
+            status.Starting("the verification pass");
+            await Verify(stoppingToken);
+
             status.Ready();
             logger.LogInformation("The dataset is loaded");
         }
@@ -123,6 +130,26 @@ internal sealed class DatasetLoader(
         var loader = scope.ServiceProvider.GetRequiredService<NewTestamentLinkLoader>();
         status.Record(await loader.Load(
             ResourcePaths.File(resources, "Zefania", "SF_2009-01-20_ENG_KJV_(KJV+).xml"), cancellationToken));
+    }
+
+    /// <summary>
+    /// Measures what the load produced and stores it beside what the last one produced. A failure
+    /// here does not fail the load: a corpus that cannot be measured is still a corpus that can be
+    /// read, and the health endpoint will say the measurement is missing.
+    /// </summary>
+    private async Task Verify(CancellationToken cancellationToken)
+    {
+        using var scope = services.CreateScope();
+        var check = scope.ServiceProvider.GetRequiredService<CorpusCheck>();
+
+        try
+        {
+            status.Record((await check.Record(cancellationToken)).ToString());
+        }
+        catch (Exception exception) when (exception is not OperationCanceledException)
+        {
+            logger.LogError(exception, "The verification pass failed; the corpus is loaded and unmeasured");
+        }
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

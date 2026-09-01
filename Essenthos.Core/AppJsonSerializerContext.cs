@@ -9,6 +9,9 @@ namespace Essenthos.Core;
 /// </summary>
 [JsonSerializable(typeof(HealthResponse))]
 [JsonSerializable(typeof(DatasetCountsResponse))]
+[JsonSerializable(typeof(VerificationResponse))]
+[JsonSerializable(typeof(VerificationReportResponse))]
+[JsonSerializable(typeof(ProblemResponse))]
 [JsonSerializable(typeof(IList<string>))]
 [JsonSerializable(typeof(IReadOnlyList<string>))]
 [JsonSerializable(typeof(CorpusListResponse))]
