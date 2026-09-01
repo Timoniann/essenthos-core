@@ -1,0 +1,41 @@
+﻿using Essenthos.Core.Bhsa.Attributes;
+
+namespace Essenthos.Core.Bhsa.Core;
+
+public record Word(
+    int SlotId,
+    string TextUtf8,
+    string ConsonantalUtf8,
+    string LexemeUtf8,
+    string Trailer,
+    string? Qere,
+    string? QereTrailer,
+    string? Gloss,
+    string VocalizedLexemeUtf8,
+    string PhonologicalTranscription,
+    string PhonologicalTrailer,
+    LanguageIso Language,
+    Verse Verse,
+    Lexeme Lexeme,
+    HalfVerse HalfVerse,
+    PartOfSpeech PartOfSpeech,
+    Nametype[] Nametypes,
+    PhraseDependentPartOfSpeech PhraseDependentPartOfSpeech,
+    LexicalSet LexicalSet,
+    Clause Clause,
+    ClauseAtom ClauseAtom,
+    Phrase Phrase,
+    PhraseAtom PhraseAtom,
+    Sentence Sentence,
+    SentenceAtom SentenceAtom,
+    Subphrase? Subphrase,
+    Gender Gender,
+    Gender PronominalSuffixGender,
+    WordNumberClass WordNumberClass,
+    WordNumberClass PronominalWordNumberClass,
+    WordPersonClass WordPersonClass,
+    WordPersonClass PronominalWordPersonClass,
+    NounState NounState,
+    VerbalStem VerbalStem,
+    VerbalTense VerbalTense
+);
