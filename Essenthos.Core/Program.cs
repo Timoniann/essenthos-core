@@ -42,6 +42,7 @@ builder.Services.AddScoped<CanonicalFrameLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.NewTestamentLinkLoader>();
 builder.Services.AddScoped<AlignmentPipeline>();
+builder.Services.AddScoped<CompositionPipeline>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
@@ -64,6 +65,24 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
 // warned about.
 // What a threshold costs, on the one pair where a source says what the right answer is. It reuses
 // the alignment in the workspace, so a sweep is seconds once the model has been run.
+// The second route to the same word, through a text whose own links to the target are stated.
+// Russian against Hebrew is one hard hop; Russian against the King James is an easy one, and the
+// King James against BHSA is not a hop at all.
+if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
+{
+    using var composeScope = app.Services.CreateScope();
+    var composer = composeScope.ServiceProvider.GetRequiredService<CompositionPipeline>();
+    var least = Array.IndexOf(args, "--min");
+    app.Logger.LogInformation("{Outcome}", await composer.Run(
+        composeFrom,
+        composeVia,
+        composeTo,
+        least >= 0 && least + 1 < args.Length
+            ? double.Parse(args[least + 1], System.Globalization.CultureInfo.InvariantCulture)
+            : AlignmentPipeline.DefaultMinimumConfidence));
+    return;
+}
+
 if (args is ["score", var scoreFrom, var scoreTo, ..])
 {
     using var scoreScope = app.Services.CreateScope();

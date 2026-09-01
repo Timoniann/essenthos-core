@@ -105,8 +105,15 @@ internal static class Texts
                 .Select(other => new { side.WordId, Reached = other.WordId }))
             .ToListAsync(cancellationToken);
 
+        // Only the links that reach a witness, because those are the ones the highlighting is built
+        // from. A translation is now linked to other translations too — the Synodal to the King
+        // James, which is how it reaches the Hebrew at all — and letting one of those describe the
+        // word would report the confidence of a step the reader never sees.
         var evidence = await db.LinkWords
-            .Where(side => ids.Contains(side.WordId))
+            .Where(side => ids.Contains(side.WordId)
+                           && db.LinkWords.Any(other => other.LinkId == side.LinkId
+                                                        && other.Side != side.Side
+                                                        && other.Word!.Text!.Kind != TextKind.Translation))
             .Select(side => new { side.WordId, side.Link!.Method, side.Link!.Confidence })
             .ToListAsync(cancellationToken);
 

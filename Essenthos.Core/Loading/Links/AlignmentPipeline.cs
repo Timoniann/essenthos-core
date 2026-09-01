@@ -168,6 +168,36 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     }
 
     /// <summary>
+    /// What the model proposes, without storing anything.
+    ///
+    /// Composition needs this rather than the links already stored, and the difference matters: a
+    /// pair is written only if it clears the threshold on its own, but a pair that two routes both
+    /// propose faintly is not faint evidence. Genesis 1:3 has "стал" against יְהִי at 0.16 by one
+    /// route and 0.22 by the other — neither is worth writing alone, and the two together are worth
+    /// a third of a reader's trust, which is more than the threshold asks. Reading only what was
+    /// stored would have thrown both away before they could meet.
+    /// </summary>
+    public async Task<IReadOnlyList<(long From, long To, double Confidence)>> Proposals(
+        string fromSlug,
+        string toSlug,
+        string workspace,
+        double floor,
+        string modelType = "ibm4",
+        CancellationToken cancellationToken = default)
+    {
+        var source = await Words(fromSlug, Surface, cancellationToken);
+        var target = await Words(toSlug, Comparable, cancellationToken);
+        var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
+
+        Directory.CreateDirectory(workspace);
+        var alignmentFile = await Align(
+            fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
+
+        var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, floor);
+        return [.. drafts.Select(d => (d.SourceWordId, d.TargetWordId, d.Translation))];
+    }
+
+    /// <summary>
     /// Scores the model over a range of thresholds against the correspondences a source states for
     /// the same two texts, so the threshold is a measurement anyone can repeat rather than a number
     /// somebody once chose.
