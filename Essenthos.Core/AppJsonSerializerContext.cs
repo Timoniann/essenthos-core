@@ -8,6 +8,8 @@ namespace Essenthos.Core;
 /// record that is missing fails at runtime on first request rather than at compile time.
 /// </summary>
 [JsonSerializable(typeof(HealthResponse))]
+[JsonSerializable(typeof(DatasetCountsResponse))]
+[JsonSerializable(typeof(IList<string>))]
 [JsonSerializable(typeof(IReadOnlyList<string>))]
 [JsonSerializable(typeof(CorpusListResponse))]
 [JsonSerializable(typeof(CorpusResponse))]
