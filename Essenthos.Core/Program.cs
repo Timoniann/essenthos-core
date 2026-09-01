@@ -91,7 +91,7 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
         scoreFrom,
         scoreTo,
         Path.Combine(Path.GetTempPath(), "essenthos-align", $"{scoreFrom}-{scoreTo}"),
-        [0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60],
+        [0.25, 0.40],
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4"));
     return;
 }

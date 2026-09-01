@@ -116,7 +116,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
 
         var (drafts, proposed, collapsed, below) =
-            Read(alignmentFile, addresses, source, target, minimumConfidence);
+            Read(alignmentFile, addresses, source, target, minimumConfidence, Selection.BestPerSource);
 
         await Store(from.Id, to.Id, modelType, drafts, cancellationToken);
 
@@ -182,6 +182,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         string toSlug,
         string workspace,
         double floor,
+        Selection selection = Selection.BestPerSource,
         string modelType = "ibm4",
         CancellationToken cancellationToken = default)
     {
@@ -193,7 +194,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var alignmentFile = await Align(
             fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
 
-        var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, floor);
+        var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, floor, selection);
         return [.. drafts.Select(d => (d.SourceWordId, d.TargetWordId, d.Translation))];
     }
 
@@ -231,18 +232,22 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
         var report = new StringBuilder()
             .AppendLine($"{fromSlug} against {toSlug}, scored on {gold.Count} stated pairs")
-            .AppendLine("  min     kept  precision  recall   content precision");
+            .AppendLine("  rule            min     kept  precision  recall   content precision");
 
-        foreach (var threshold in thresholds)
+        foreach (var selection in Enum.GetValues<Selection>())
         {
-            var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, threshold);
-            var proposed = drafts.Select(d => (d.SourceWordId, d.TargetWordId)).ToHashSet();
-            var all = Alignment.Score(proposed, gold);
-            var narrow = Alignment.Score(proposed.Where(pair => !structural.Contains(pair.TargetWordId)), content);
+            foreach (var threshold in thresholds)
+            {
+                var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, threshold, selection);
+                var proposed = drafts.Select(d => (d.SourceWordId, d.TargetWordId)).ToHashSet();
+                var all = Alignment.Score(proposed, gold);
+                var narrow = Alignment.Score(
+                    proposed.Where(pair => !structural.Contains(pair.TargetWordId)), content);
 
-            report.AppendLine(
-                $"  {threshold:F2}  {drafts.Count,7}  {all.Precision,9:P1}  {all.Recall,6:P1}  " +
-                $"{narrow.Precision,9:P1} of {narrow.Proposed}");
+                report.AppendLine(
+                    $"  {selection,-14}  {threshold:F2}  {drafts.Count,7}  {all.Precision,9:P1}  " +
+                    $"{all.Recall,6:P1}  {narrow.Precision,9:P1} of {narrow.Proposed}");
+            }
         }
 
         return report.ToString();
@@ -306,7 +311,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         List<(int, int, int)> addresses,
         Dictionary<(int, int, int), List<Word>> source,
         Dictionary<(int, int, int), List<Word>> target,
-        double minimumConfidence)
+        double minimumConfidence,
+        Selection selection = Selection.All)
     {
         var drafts = new List<AlignedDraft>(300_000);
         var proposed = 0;
@@ -347,6 +353,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 .Select(group => group.Key)
                 .ToHashSet();
 
+            var standing = new List<(int Source, int Target, double Confidence, double Position)>(verse.Count);
             foreach (var pair in verse)
             {
                 if (crowded.Contains(pair.Target))
@@ -361,8 +368,13 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     continue;
                 }
 
+                standing.Add((pair.Source, pair.Target, pair.Translation, pair.Alignment));
+            }
+
+            foreach (var (from, to, confidence, position) in Selections.Apply(selection, standing))
+            {
                 drafts.Add(new AlignedDraft(
-                    sourceWords[pair.Source].Id, targetWords[pair.Target].Id, pair.Translation, pair.Alignment));
+                    sourceWords[from].Id, targetWords[to].Id, confidence, position));
             }
         }
 
