@@ -32,6 +32,12 @@ internal sealed class DatasetLoader(
                 ResourcePaths.File(resources, "Nestle1904", "Nestle1904.xml"),
                 ResourcePaths.File(resources, "Nestle1904", "berean-interlinear-glosses.xml")), stoppingToken);
 
+            foreach (var translation in Bible4uTranslations)
+            {
+                await Load(translation, () => Bible4uTextSource.Read(
+                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation), stoppingToken);
+            }
+
             await PlaceInTheFrame(resources, stoppingToken);
 
             status.Ready();
@@ -47,6 +53,11 @@ internal sealed class DatasetLoader(
             logger.LogError(exception, "The dataset load failed; the API will answer 404 until it is fixed");
         }
     }
+
+    /// <summary>
+    /// The three bible4u translations, in the order a reader is most likely to want them.
+    /// </summary>
+    private static readonly string[] Bible4uTranslations = ["KJV", "RUSV", "UKR"];
 
     /// <summary>
     /// Every text is placed in the shared frame after all of them are loaded, so that a text added
