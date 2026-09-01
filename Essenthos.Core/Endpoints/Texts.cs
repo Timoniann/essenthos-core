@@ -69,14 +69,19 @@ internal static class Texts
     }
 
     /// <summary>
-    /// The links each of these words belongs to, in one query rather than one per word.
+    /// The words of the ancient witnesses each of these words reaches, in one query rather than one
+    /// per word.
     ///
-    /// The old contract calls this field <c>originalWordIds</c> and the client treats it as an
-    /// opaque set: two words correspond when their sets intersect. Link ids are what the sets hold
-    /// now, which makes the same intersection work between any two texts rather than only between a
-    /// translation and an original — there is no original for it to be about any more. A word that
-    /// belongs to no link is absent here and answers an empty set, which is not the same fact as a
-    /// text carrying no links at all.
+    /// The client treats this set as opaque and highlights where two words' sets intersect, so what
+    /// the set holds decides what can light up together. Holding link ids would only ever join two
+    /// texts that are **directly** linked — the Ukrainian and the Synodal each link to BHSA and
+    /// never to each other, so hovering one would leave the other dark although both name the same
+    /// Hebrew word.
+    ///
+    /// Holding the witness's word ids instead makes the join happen through the witness, which is
+    /// what the whole model is shaped for: five texts meet at the word they all render, and a sixth
+    /// joins them by being linked to that same word rather than to any of them. A word of a witness
+    /// carries its own id, so it meets the translations that reach it.
     /// </summary>
     private static async Task<ILookup<long, long>> Counterparts(
         AppDbContext db,
@@ -84,12 +89,22 @@ internal static class Texts
         CancellationToken cancellationToken)
     {
         var ids = wordIds.Distinct().ToList();
-        var rows = await db.LinkWords
-            .Where(side => ids.Contains(side.WordId))
-            .Select(side => new { side.WordId, side.LinkId })
+
+        var own = await db.Words
+            .Where(w => ids.Contains(w.Id) && w.Text!.Kind != TextKind.Translation)
+            .Select(w => new { WordId = w.Id, Reached = w.Id })
             .ToListAsync(cancellationToken);
 
-        return rows.ToLookup(row => row.WordId, row => row.LinkId);
+        var reached = await db.LinkWords
+            .Where(side => ids.Contains(side.WordId))
+            .SelectMany(side => db.LinkWords
+                .Where(other => other.LinkId == side.LinkId
+                                && other.Side != side.Side
+                                && other.Word!.Text!.Kind != TextKind.Translation)
+                .Select(other => new { side.WordId, Reached = other.WordId }))
+            .ToListAsync(cancellationToken);
+
+        return own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached);
     }
 
     /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>

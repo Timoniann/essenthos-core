@@ -37,12 +37,18 @@ internal sealed record AlignmentOutcome(
 internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeline> logger)
 {
     /// <summary>
-    /// Measured against the correspondences a source states for the King James and BHSA: at this
-    /// threshold roughly four in five links on content words are ones the source agrees with, and
-    /// about half of what the model proposes survives. Below it precision falls away without
-    /// buying much coverage.
+    /// Measured against the correspondences a source states for the King James and BHSA:
+    ///
+    ///     threshold   precision   coverage
+    ///        0.3        80.4%      29.8%
+    ///        0.5        82.6%      19.9%
+    ///
+    /// Half again as much coverage for two points of precision, so this is the trade taken. At 0.5
+    /// Genesis 1:1 lost "начале", "сотворил" and "бог" — all three correct, all three scored below
+    /// it — and a reader seeing four words linked where six were known is worse served than one
+    /// seeing six with the same confidence shown on each.
     /// </summary>
-    public const double DefaultMinimumConfidence = 0.5;
+    public const double DefaultMinimumConfidence = 0.3;
 
     /// <summary>
     /// When this many source words all point at one target word and none of them confidently, the
