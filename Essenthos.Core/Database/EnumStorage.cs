@@ -27,6 +27,32 @@ internal static class EnumSpelling
         _ => throw Unreadable<TextKind>(stored),
     };
 
+    public static string Of(WordGroupKind value) => value switch
+    {
+        WordGroupKind.Sentence => "sentence",
+        WordGroupKind.SentenceAtom => "sentence-atom",
+        WordGroupKind.Clause => "clause",
+        WordGroupKind.ClauseAtom => "clause-atom",
+        WordGroupKind.Phrase => "phrase",
+        WordGroupKind.PhraseAtom => "phrase-atom",
+        WordGroupKind.Subphrase => "subphrase",
+        WordGroupKind.HalfVerse => "half-verse",
+        _ => throw Unmapped(value),
+    };
+
+    public static WordGroupKind ToWordGroupKind(string stored) => stored switch
+    {
+        "sentence" => WordGroupKind.Sentence,
+        "sentence-atom" => WordGroupKind.SentenceAtom,
+        "clause" => WordGroupKind.Clause,
+        "clause-atom" => WordGroupKind.ClauseAtom,
+        "phrase" => WordGroupKind.Phrase,
+        "phrase-atom" => WordGroupKind.PhraseAtom,
+        "subphrase" => WordGroupKind.Subphrase,
+        "half-verse" => WordGroupKind.HalfVerse,
+        _ => throw Unreadable<WordGroupKind>(stored),
+    };
+
     public static string Of(TextDirection value) => value switch
     {
         TextDirection.LeftToRight => "ltr",
@@ -188,6 +214,9 @@ internal static class EnumStorage
 
     public static readonly ValueConverter<Redistribution, string> Redistribution =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToRedistribution(stored));
+
+    public static readonly ValueConverter<WordGroupKind, string> WordGroupKind =
+        new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToWordGroupKind(stored));
 
     public static readonly ValueConverter<TextRelationKind, string> TextRelationKind =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToTextRelationKind(stored));

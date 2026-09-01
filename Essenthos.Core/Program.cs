@@ -46,6 +46,7 @@ builder.Services.AddScoped<AlignmentPipeline>();
 builder.Services.AddScoped<CompositionPipeline>();
 builder.Services.AddScoped<CorpusCheck>();
 builder.Services.AddScoped<StrongLexiconLoader>();
+builder.Services.AddScoped<SyntaxLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
@@ -157,6 +158,7 @@ v1.MapHealth();
 v1.MapRead();
 v1.MapParallel();
 v1.MapStrong();
+v1.MapSyntax();
 
 app.UseCors();
 

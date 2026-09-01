@@ -1,3 +1,4 @@
+using Essenthos.Core.Bhsa;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Database;
@@ -32,7 +33,8 @@ internal sealed class DatasetLoader(
             var resources = ResourcePaths.Read(configuration, environment.ContentRootPath);
             logger.LogInformation("Loading the dataset from {ResourcesPath}", resources);
 
-            await Load("BHSA", () => BhsaTextSource.Read(Path.Combine(resources, "etcbc")), stoppingToken);
+            var bhsa = BhsaProject.Load(Path.Combine(resources, "etcbc"));
+            await Load("BHSA", () => BhsaTextSource.Build(bhsa), stoppingToken);
             await Load("Nestle 1904", () => NestleTextSource.Read(
                 ResourcePaths.File(resources, "Nestle1904", "Nestle1904.xml"),
                 ResourcePaths.File(resources, "Nestle1904", "berean-interlinear-glosses.xml")), stoppingToken);
@@ -53,6 +55,7 @@ internal sealed class DatasetLoader(
             }
 
             await LoadTheLexicon(resources, stoppingToken);
+            await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
@@ -101,6 +104,20 @@ internal sealed class DatasetLoader(
         TextusReceptusTextSource.Slug(Edition.Scrivener1894),
         NestleTextSource.Slug,
     ];
+
+    /// <summary>
+    /// BHSA's clauses, phrases and sentences. It reads the same parse the text was loaded from
+    /// rather than parsing the files twice — a million groups over three hundred megabytes of
+    /// Text-Fabric is not work to repeat for want of passing a reference along.
+    /// </summary>
+    private async Task LoadTheSyntax(BhsaProject project, CancellationToken cancellationToken)
+    {
+        status.Starting("BHSA's syntax");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SyntaxLoader>();
+        status.Record(await loader.Load(project, BhsaTextSource.Slug, cancellationToken));
+    }
 
     /// <summary>
     /// Strong's concordance, which belongs to no text and is loaded once. It is what turns the

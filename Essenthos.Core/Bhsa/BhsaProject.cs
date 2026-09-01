@@ -356,7 +356,11 @@ public class BhsaProject
                         var slot = wordSlotRanges[index];
                         for (int j = slot.Start, end = slot.End; j <= end; j++)
                         {
-                            wordData[j].Subphrase = subphrase;
+                            // Subphrases nest — a construct chain inside an apposition — so a word
+                            // belongs to several at once. Keeping one per word left 29,192 of the
+                            // 113,850 with no words at all, because every word they covered was
+                            // also in a deeper one.
+                            (wordData[j].Subphrases ??= []).Add(subphrase);
                         }
                     }
                 }
@@ -397,7 +401,7 @@ public class BhsaProject
             var phraseAtom = wordData[i].PhraseAtom!;
             var sentence = wordData[i].Sentence!;
             var sentenceAtom = wordData[i].SentenceAtom!;
-            var subphrase = wordData[i].Subphrase;
+            var subphrases = wordData[i].Subphrases;
             var lexeme = wordData[i].Lexeme!;
             var word = new Word(i,
                 TextUtf8: wordUtf8[i],
@@ -424,7 +428,7 @@ public class BhsaProject
                 PhraseAtom: phraseAtom,
                 Sentence: sentence,
                 SentenceAtom: sentenceAtom,
-                Subphrase: subphrase,
+                Subphrase: subphrases?.MinBy(candidate => candidate.Words.Count),
                 Gender: gn[i],
                 PronominalSuffixGender: prsGn[i],
                 WordNumberClass: nu[i],
@@ -450,7 +454,10 @@ public class BhsaProject
             data.PhraseAtom!.Words.Add(word);
             data.Sentence!.Words.Add(word);
             data.SentenceAtom!.Words.Add(word);
-            data.Subphrase?.Words.Add(word);
+            foreach (var subphrase in data.Subphrases ?? [])
+            {
+                subphrase.Words.Add(word);
+            }
             data.Lexeme!.Words.Add(word);
             words.Add(word);
         }
@@ -603,7 +610,7 @@ public class BhsaProject
 
         public SentenceAtom? SentenceAtom { get; set; }
 
-        public Subphrase? Subphrase { get; set; }
+        public List<Subphrase>? Subphrases { get; set; }
 
         public Lexeme? Lexeme { get; set; }
 

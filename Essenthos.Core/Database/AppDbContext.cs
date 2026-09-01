@@ -37,6 +37,11 @@ public class AppDbContext : DbContext
 
     public DbSet<VerseLinkVerse> VerseLinkVerses { get; set; } = null!;
 
+    /// <summary>The spans a text's own analysis names — clauses, phrases, sentences.</summary>
+    public DbSet<WordGroup> WordGroups { get; set; } = null!;
+
+    public DbSet<WordGroupWord> WordGroupWords { get; set; } = null!;
+
     /// <summary>Strong's concordance, which a word reaches by number rather than by key.</summary>
     public DbSet<StrongEntry> StrongEntries { get; set; } = null!;
 
@@ -137,6 +142,19 @@ public class AppDbContext : DbContext
                 .HasDatabaseName("ix_verse_reference_one_primary_per_verse");
         });
 
+        modelBuilder.Entity<WordGroup>(entity =>
+        {
+            entity.Property(g => g.Kind).HasConversion(EnumStorage.WordGroupKind);
+
+            entity.HasOne(g => g.Text).WithMany().HasForeignKey(g => g.TextId).OnDelete(DeleteBehavior.Cascade);
+
+            // A group whose parent goes takes its children with it, which is what nesting means.
+            entity.HasOne(g => g.Parent)
+                .WithMany()
+                .HasForeignKey(g => g.ParentId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
         ConfigureLink(modelBuilder);
         ConfigureVerseLink(modelBuilder);
     }
@@ -158,6 +176,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<VerseLinkVerse>().ToTable("verse_link_verse");
         modelBuilder.Entity<StrongEntry>().ToTable("strong_entry");
         modelBuilder.Entity<VerificationRun>().ToTable("verification_run");
+        modelBuilder.Entity<WordGroup>().ToTable("word_group");
+        modelBuilder.Entity<WordGroupWord>().ToTable("word_group_word");
     }
 
     private static void ConfigureLink(ModelBuilder modelBuilder)
