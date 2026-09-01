@@ -32,6 +32,14 @@ internal static class TestResources
 
     public static string Tvtms => Path("Versification", "TVTMS.txt");
 
+    /// <summary>Robinson's composite, one file per book.</summary>
+    public static string TextusReceptus(string book) => Path("TextusReceptus", "parsed", $"{book}.UTR");
+
+    /// <summary>The plain Scrivener text the extraction is checked against.</summary>
+    public static string Scrivener(string book) => Path("TextusReceptus", "scrivener", $"{book}.SCV");
+
+    public static string TextusReceptusFolder => System.IO.Path.Combine(ResolvedPath.Value, "TextusReceptus");
+
     public static string Etcbc => System.IO.Path.Combine(ResolvedPath.Value, "etcbc");
 
     /// <summary>

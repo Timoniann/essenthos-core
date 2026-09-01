@@ -9,5 +9,12 @@ public enum TextKind
 {
     ManuscriptTradition,
     CriticalEdition,
+
+    /// <summary>
+    /// A Renaissance printed edition — Stephanus 1550, Scrivener 1894. Not a critical edition: it
+    /// was set by a printer from the manuscripts to hand, and Scrivener's was reconstructed
+    /// backwards from what the King James translators must have read.
+    /// </summary>
+    PrintedEdition,
     Translation,
 }

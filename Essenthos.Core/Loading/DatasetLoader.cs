@@ -2,6 +2,7 @@ using Essenthos.Core.Configuration;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading.Frame;
+using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,15 @@ internal sealed class DatasetLoader(
             await Load("Nestle 1904", () => NestleTextSource.Read(
                 ResourcePaths.File(resources, "Nestle1904", "Nestle1904.xml"),
                 ResourcePaths.File(resources, "Nestle1904", "berean-interlinear-glosses.xml")), stoppingToken);
+
+            // Both printed editions come out of one file, so they are one parse and two texts. The
+            // extraction is checked against byztxt/greektext-scrivener in the tests rather than here:
+            // it is a property of the reader, not of a particular load.
+            foreach (var edition in Editions)
+            {
+                await Load($"the {edition} Textus Receptus", () => TextusReceptusTextSource.Read(
+                    Path.Combine(resources, "TextusReceptus"), edition), stoppingToken);
+            }
 
             foreach (var translation in Bible4uTranslations)
             {
@@ -73,6 +83,13 @@ internal sealed class DatasetLoader(
     /// The three bible4u translations, in the order a reader is most likely to want them.
     /// </summary>
     private static readonly string[] Bible4uTranslations = ["KJV", "RUSV", "UKR"];
+
+    /// <summary>
+    /// The two editions Robinson's composite holds. Scrivener is the text the King James was
+    /// translated from and the reason its unreached words are unreached; Stephanus is the first
+    /// alternative of the same groups and costs nothing more to read.
+    /// </summary>
+    private static readonly Edition[] Editions = [Edition.Scrivener1894, Edition.Stephanus1550];
 
     /// <summary>
     /// Every text is placed in the shared frame after all of them are loaded, so that a text added

@@ -13,6 +13,7 @@ internal static class EnumSpelling
     {
         TextKind.ManuscriptTradition => "manuscript-tradition",
         TextKind.CriticalEdition => "critical-edition",
+        TextKind.PrintedEdition => "printed-edition",
         TextKind.Translation => "translation",
         _ => throw Unmapped(value),
     };
@@ -21,6 +22,7 @@ internal static class EnumSpelling
     {
         "manuscript-tradition" => TextKind.ManuscriptTradition,
         "critical-edition" => TextKind.CriticalEdition,
+        "printed-edition" => TextKind.PrintedEdition,
         "translation" => TextKind.Translation,
         _ => throw Unreadable<TextKind>(stored),
     };
