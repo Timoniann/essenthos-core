@@ -90,9 +90,11 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
     app.Logger.LogInformation("\n{Report}", await scorer.Measure(
         scoreFrom,
         scoreTo,
-        Path.Combine(Path.GetTempPath(), "essenthos-align", $"{scoreFrom}-{scoreTo}"),
+        Path.Combine(Path.GetTempPath(), "essenthos-align",
+            $"{scoreFrom}-{scoreTo}{(args.Contains("--surface") ? "-surface" : string.Empty)}"),
         [0.25, 0.40],
-        args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4"));
+        args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
+        args.Contains("--surface")));
     return;
 }
 

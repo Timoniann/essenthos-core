@@ -102,7 +102,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var started = Stopwatch.StartNew();
         Directory.CreateDirectory(workspace);
 
-        var source = await Words(fromSlug, Surface, cancellationToken);
+        var source = await Words(fromSlug, Reduce, cancellationToken);
         var target = await Words(toSlug, Comparable, cancellationToken);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
         if (addresses.Count == 0)
@@ -182,11 +182,15 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         string toSlug,
         string workspace,
         double floor,
+        bool asWritten = false,
         Selection selection = Selection.BestPerSource,
         string modelType = "ibm4",
         CancellationToken cancellationToken = default)
     {
-        var source = await Words(fromSlug, Surface, cancellationToken);
+        // Only the source is read as written. The target's own reduction is not a hedge — BHSA's
+        // consonantal text and Nestle's lemmas are the forms those texts themselves carry, and both
+        // were measured as plainly better than the pointing and the inflection they replace.
+        var source = await Words(fromSlug, asWritten ? Written : Reduce, cancellationToken);
         var target = await Words(toSlug, Comparable, cancellationToken);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
 
@@ -215,12 +219,13 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         string workspace,
         IReadOnlyList<double> thresholds,
         string modelType,
+        bool targetSurface = false,
         CancellationToken cancellationToken = default)
     {
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
-        var source = await Words(fromSlug, Surface, cancellationToken);
-        var target = await Words(toSlug, Comparable, cancellationToken);
+        var source = await Words(fromSlug, targetSurface ? Written : Reduce, cancellationToken);
+        var target = await Words(toSlug, targetSurface ? Written : Comparable, cancellationToken);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
 
         Directory.CreateDirectory(workspace);
@@ -231,7 +236,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var content = gold.Where(pair => !structural.Contains(pair.To)).ToHashSet();
 
         var report = new StringBuilder()
-            .AppendLine($"{fromSlug} against {toSlug}, scored on {gold.Count} stated pairs")
+            .AppendLine($"{fromSlug} against {toSlug} as " + (targetSurface ? "written" : "reduced") +
+                        $", scored on {gold.Count} stated pairs")
             .AppendLine("  rule            min     kept  precision  recall   content precision");
 
         foreach (var selection in Enum.GetValues<Selection>())
@@ -542,6 +548,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 w.Surface,
                 w.Lemma,
                 w.StrongNumber,
+                Language = w.Text!.Language,
                 Consonantal = w.Morphology == null ? null : w.Morphology.RootElement.GetProperty("consonantal")
                     .GetString(),
             }))
@@ -553,11 +560,30 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 group => group.Key,
                 group => group.OrderBy(r => r.Position)
                     .Select(r => new Word(
-                        r.Id, AlignmentTokens.One(form(new WordForms(r.Surface, r.Lemma, r.Consonantal, r.StrongNumber)))))
+                        r.Id,
+                        AlignmentTokens.One(form(
+                            new WordForms(r.Surface, r.Lemma, r.Consonantal, r.StrongNumber, r.Language)))))
                     .ToList());
     }
 
-    private static string Surface(WordForms word) => word.Surface.ToLowerInvariant();
+    /// <summary>
+    /// The word as the text writes it, except where the language inflects so heavily that writing
+    /// it that way tells the model nothing. Greek and Hebrew carry a lemma of their own; Russian and
+    /// Ukrainian carry none, so one is computed.
+    /// </summary>
+    private static string Written(WordForms word) => word.Surface.ToLowerInvariant();
+
+    /// <summary>
+    /// Whatever form of this word pools the most evidence. Both sides have to be reduced together
+    /// or neither: reducing one alone leaves its word facing several forms of the other and splits
+    /// the evidence it was meant to gather.
+    /// </summary>
+    private static string Reduce(WordForms word) => word.Language switch
+    {
+        "rus" or "ukr" => SlavicStemmer.Stem(word.Surface),
+        "eng" => EnglishStemmer.Stem(word.Surface),
+        _ => word.Surface.ToLowerInvariant(),
+    };
 
     /// <summary>
     /// The form a model can learn from. BHSA writes full vowel pointing, so the same word appears as
@@ -565,7 +591,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// them often enough; using the consonants instead raised precision by a quarter.
     /// </summary>
     private static string Comparable(WordForms word) =>
-        !string.IsNullOrWhiteSpace(word.Consonantal) ? word.Consonantal
+        word.Language is "rus" or "ukr" or "eng" ? Reduce(word)
+        : !string.IsNullOrWhiteSpace(word.Consonantal) ? word.Consonantal
         : !string.IsNullOrWhiteSpace(word.Lemma) ? word.Lemma
         : !string.IsNullOrWhiteSpace(word.Surface) ? word.Surface.ToLowerInvariant()
         : word.Strong ?? string.Empty;
@@ -573,7 +600,16 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// <param name="Strong">
     /// The last resort, and the only form a zero morpheme has.
     /// </param>
-    private sealed record WordForms(string Surface, string? Lemma, string? Consonantal, string? Strong);
+    /// <param name="Language">
+    /// What the text is written in, which decides whether a form has to be reduced before a model
+    /// can learn anything from it.
+    /// </param>
+    private sealed record WordForms(
+        string Surface,
+        string? Lemma,
+        string? Consonantal,
+        string? Strong,
+        string? Language);
 
     private sealed record Word(long Id, string Text);
 

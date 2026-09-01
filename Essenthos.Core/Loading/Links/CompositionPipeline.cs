@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Globalization;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -25,10 +24,9 @@ internal sealed record CompositionOutcome(
 {
     public override string ToString() =>
         $"{From} to {To} through {Via}: {Written} links from {Direct} direct and {Reached} composed — " +
-        $"{Agreed} reached by both ({Share(Agreed, Direct)} of the direct route), {Added} only through {Via}";
+            $"{Agreed} reached by more than one reading, {Added} only through {Via}";
 
-    private static string Share(int part, int whole) =>
-        whole == 0 ? "none" : (part / (double)whole).ToString("P1", CultureInfo.InvariantCulture);}
+}
 
 /// <summary>
 /// The second route to the same Hebrew word, through the English.
@@ -88,10 +86,15 @@ internal sealed class CompositionPipeline(
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var direct = await aligner.Proposals(
-            fromSlug, toSlug, Workspace(fromSlug, toSlug), AgreementFloor, cancellationToken: cancellationToken);
+        var reduced = await aligner.Proposals(
+            fromSlug, toSlug, Workspace(fromSlug, toSlug), AgreementFloor,
+            cancellationToken: cancellationToken);
+        var written = await aligner.Proposals(
+            fromSlug, toSlug, Workspace(fromSlug, toSlug) + "-written", AgreementFloor, asWritten: true,
+            cancellationToken: cancellationToken);
         var first = await aligner.Proposals(
-            fromSlug, viaSlug, Workspace(fromSlug, viaSlug), AgreementFloor, cancellationToken: cancellationToken);
+            fromSlug, viaSlug, Workspace(fromSlug, viaSlug), AgreementFloor,
+            cancellationToken: cancellationToken);
         var second = await Carried(connection, via.Id, to.Id, cancellationToken);
 
         var composed = Compose(first, second);
@@ -101,7 +104,8 @@ internal sealed class CompositionPipeline(
         // on the pair a source states, dropping those costs 0.3% of the coverage and returns half a
         // point of precision — and it is what stops two words in a verse sharing a third and being
         // highlighted as though they were one phrase.
-        var merged = Routes.Merge(direct, composed)
+        var merged = Routes.Merge(
+                (Route.Written, written), (Route.Reduced, reduced), (Route.Composed, composed))
             .Where(link => link.Confidence >= minimumConfidence)
             .GroupBy(link => link.From)
             .SelectMany(group =>
@@ -113,9 +117,9 @@ internal sealed class CompositionPipeline(
 
         var outcome = new CompositionOutcome(
             fromSlug, viaSlug, toSlug,
-            direct.Count,
+            written.Count + reduced.Count,
             composed.Count,
-            merged.Count(link => link.Route == Route.Both),
+            merged.Count(link => Readings(link.Route) > 1),
             merged.Count(link => link.Route == Route.Composed),
             merged.Count,
             started.Elapsed);
@@ -254,7 +258,8 @@ internal sealed class CompositionPipeline(
                 await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(merged[i].Confidence, NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(Source(merged[i].Route, viaSlug), NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(
+                    Routes.Describe(merged[i].Route, viaSlug), NpgsqlDbType.Text, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
@@ -274,12 +279,10 @@ internal sealed class CompositionPipeline(
         await transaction.CommitAsync(cancellationToken);
     }
 
-    private static string Source(Route route, string viaSlug) => route switch
-    {
-        Route.Direct => "SIL.Machine, aligned directly",
-        Route.Composed => $"SIL.Machine, composed through {viaSlug}",
-        _ => $"SIL.Machine, aligned directly and composed through {viaSlug}",
-    };
+    private static int Readings(Route route) =>
+        (route.HasFlag(Route.Written) ? 1 : 0)
+        + (route.HasFlag(Route.Reduced) ? 1 : 0)
+        + (route.HasFlag(Route.Composed) ? 1 : 0);
 
     private static async Task Row(
         NpgsqlBinaryImporter writer,
