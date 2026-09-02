@@ -21,12 +21,18 @@ namespace Essenthos.Core.Loading.Links;
 /// Hebrew words where the file and BHSA both state a gloss, which is how far the check reached. A
 /// zero here says the check ran over nothing, and a check that passes over nothing is not a check.
 /// </param>
+/// <param name="GlossesDrifted">
+/// Verses that pass the check and are still not a perfect match — the two sides gloss the same
+/// words from two revisions of one dictionary. Kept and counted rather than refused: they are
+/// correct verses, and the number is the early warning that a revision has begun to matter.
+/// </param>
 internal sealed record LinkOutcome(
     bool AlreadyLoaded,
     int Verses,
     int Refused,
     int GlossRefused,
     int GlossesCompared,
+    int GlossesDrifted,
     int Links,
     int EnglishWordsLinked,
     int HebrewWordsLinked,
@@ -46,7 +52,8 @@ internal sealed record LinkOutcome(
               $"{Supplied} naming an English word the King James supplies and the Hebrew does not have, " +
               $"{HebrewWordsUnreached} Hebrew words reached by nothing, {StrongNumbers} Hebrew words given the " +
               $"Strong number the file states, {Refused} verses refused of which {GlossRefused} for glosses that " +
-              $"disagree, over {GlossesCompared} words the file and BHSA both gloss";
+              $"disagree, over {GlossesCompared} words the file and BHSA both gloss, {GlossesDrifted} verses " +
+              $"passing with a gloss the dictionary has since revised";
 }
 
 /// <summary>
@@ -67,12 +74,35 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     ///
     /// The file's glosses come from an older revision of the same ETCBC vocabulary, so a correct
     /// verse is not always a perfect match: <em>Kittim</em> became <em>Cypriot</em>, <em>cloth</em>
-    /// became <em>clothe</em>, <em>lefthand side</em> gained a hyphen. Over the 23,021 verses whose
-    /// counts agree, 22,678 gloss identically, 334 differ in one or two words that way, and nine
-    /// fall below this line — four of them because the two divide the verse differently and the
-    /// counts happen to match anyway, which is the case no count can catch.
+    /// became <em>clothe</em>, <em>lefthand side</em> gained a hyphen.
+    ///
+    /// <para>
+    /// The line is where it is because the data puts a gap there. Measured over all 23,021 verses
+    /// whose counts agree:
+    /// </para>
+    /// <code>
+    ///   0.077  1 Samuel 20:42     3/39   different division
+    ///   0.097  1 Kings 22:43      3/31   different division
+    ///   0.227  1 Chronicles 12:4  5/22   different division
+    ///   0.579  Numbers 26:1      11/19   different division
+    ///   ————————————————————————————————— the gap
+    ///   0.667  Genesis 10:4       6/9    revision drift
+    ///   0.667  1 Chronicles 1:7   6/9    revision drift
+    ///   0.750  …and 605 more, none of them wrong
+    /// </code>
+    /// <para>
+    /// So it separates cleanly, and only here: at 0.8 it also refuses five correct verses, at 0.9
+    /// eighty, at 1.0 six hundred and eleven. Raising it does not buy strictness, it buys the loss
+    /// of verses whose only fault is that a dictionary was revised — and the four it must catch are
+    /// already three times below the nearest of them.
+    /// </para>
+    /// <para>
+    /// The verses between this line and a perfect match are not discarded and not ignored either:
+    /// <see cref="LinkOutcome.GlossesDrifted"/> counts them, so a revision that starts to matter
+    /// shows up as a number going the wrong way rather than as silence.
+    /// </para>
     /// </summary>
-    private const double SameVerse = 0.8;
+    private const double SameVerse = 0.6;
 
     private const string LinkImport =
         """
@@ -111,7 +141,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == hebrew.Id, cancellationToken))
         {
             logger.LogInformation("The Old Testament links are already loaded; nothing to do");
-            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -123,6 +153,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var refused = 0;
         var glossRefused = 0;
         var glossesCompared = 0;
+        var glossesDrifted = 0;
         var unreached = 0;
 
         foreach (var record in records)
@@ -148,6 +179,11 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 continue;
             }
 
+            if (glosses.Compared > 0 && glosses.Same < glosses.Compared)
+            {
+                glossesDrifted++;
+            }
+
             pairs.AddRange(drafts);
             unreached += bhsaWords.Count - drafts.SelectMany(d => d.Hebrew).Distinct().Count();
 
@@ -169,6 +205,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             refused,
             glossRefused,
             glossesCompared,
+            glossesDrifted,
             pairs.Count,
             pairs.Sum(p => p.English.Count),
             pairs.SelectMany(p => p.Hebrew).Distinct().Count(),
