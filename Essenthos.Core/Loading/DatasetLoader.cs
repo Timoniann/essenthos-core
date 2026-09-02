@@ -300,6 +300,13 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<BibleDataLoader>();
         status.Record(await loader.Load(Path.Combine(resources, "BibleData2026"), cancellationToken));
+
+        // The New Testament, which that dataset does not date. Second, and in its own scope,
+        // because it reads back the entities and chronologies the first one wrote.
+        using var second = services.CreateScope();
+        var newTestament = second.ServiceProvider.GetRequiredService<TheographicEventLoader>();
+        status.Record(await newTestament.Load(
+            Path.Combine(resources, "TheographicBibleData"), cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

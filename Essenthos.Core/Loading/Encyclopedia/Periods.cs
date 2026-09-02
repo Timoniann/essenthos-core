@@ -49,6 +49,25 @@ internal static partial class Periods
     ];
 
     /// <summary>
+    /// The eras the New Testament needs, which no dataset here draws.
+    ///
+    /// BibleData stops at Artaxerxes and Theographic names no eras at all, so the four centuries of
+    /// silence and the two ages after them would otherwise be an unlabelled gap on the axis — which
+    /// is where a reader most needs to be told what they are looking at. Each is anchored to two
+    /// events, one of which is the last thing the Old Testament dataset narrates.
+    /// </summary>
+    private static readonly (string Slug, string Name, string From, string To, string? Notes)[] NewTestamentEras =
+    [
+        ("era-between-the-testaments", "Between the testaments", "endartaxerxes1reign", "birthofjesus",
+            "Four centuries neither dataset narrates. BibleData's method is arithmetic over the " +
+            "genealogies and reign lengths, and those stop; Theographic begins again with Luke's " +
+            "synchronisms. The gap is real, not a loading failure."),
+        ("era-life-of-christ", "The life of Christ", "birthofjesus", "resurrectionandascension", null),
+        ("era-apostolic", "The apostolic age", "theholyspiritcomes", "paulsfirstromanimprisonment",
+            "Ends where the account in Acts ends, not where the age does."),
+    ];
+
+    /// <summary>
     /// Which level a kind is drawn on. An era is the ground, the spans of rule and captivity that
     /// order the narrative sit above it, and the lives and ministries — of which there are many
     /// more, overlapping constantly — sit above those.
@@ -105,6 +124,82 @@ internal static partial class Periods
         }
 
         return (periods, unpaired);
+    }
+
+    /// <summary>
+    /// The New Testament's bands: the three eras, and the missionary journeys the source groups
+    /// its events into.
+    /// </summary>
+    /// <param name="bySlug">
+    /// Every event that can anchor one of these, which is the New Testament's own plus the last
+    /// event the Old Testament dataset narrates.
+    /// </param>
+    /// <param name="journeys">
+    /// The groups the source marks with <c>partOf</c>, each as the first and last event in it.
+    /// </param>
+    public static List<Period> ForTheNewTestament(
+        IReadOnlyDictionary<string, Event> bySlug,
+        IEnumerable<(string Name, string From, string To)> journeys,
+        string source)
+    {
+        var made = new List<Period>();
+        var eras = new List<Period>();
+
+        foreach (var era in NewTestamentEras)
+        {
+            if (Between(bySlug, era.Slug, era.Name, "era", 0, era.From, era.To, era.Notes, source) is { } band)
+            {
+                eras.Add(band);
+                made.Add(band);
+            }
+        }
+
+        foreach (var (name, from, to) in journeys)
+        {
+            if (Between(bySlug, $"period-{Slugs.Of(name)}", name, "travel", 1, from, to, null, source) is { } band)
+            {
+                made.Add(band);
+            }
+        }
+
+        foreach (var period in made.Where(p => p.Level > 0))
+        {
+            period.Parent = eras.FirstOrDefault(
+                era => era.StartYear <= period.StartYear && period.StartYear <= era.EndYear);
+        }
+
+        return made;
+    }
+
+    private static Period? Between(
+        IReadOnlyDictionary<string, Event> bySlug,
+        string slug,
+        string name,
+        string kind,
+        int level,
+        string from,
+        string to,
+        string? notes,
+        string source)
+    {
+        if (!bySlug.TryGetValue(from, out var opens) || !bySlug.TryGetValue(to, out var closes))
+        {
+            return null;
+        }
+
+        return new Period
+        {
+            Slug = slug,
+            Name = name,
+            Kind = kind,
+            Level = level,
+            StartEventId = opens.Id,
+            EndEventId = closes.Id,
+            StartYear = opens.YearFromCreation,
+            EndYear = closes.YearFromCreation,
+            Notes = notes,
+            Source = source,
+        };
     }
 
     /// <summary>Every opening that finds its close.</summary>
