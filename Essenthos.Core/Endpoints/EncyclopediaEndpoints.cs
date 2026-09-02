@@ -526,6 +526,7 @@ internal static class EncyclopediaEndpoints
         e.Region,
         e.Uri,
         e.Notes,
+        e.Source,
         dates)
     {
         Era = e.YearFromCreation is { } year && year > LastYearBeforeChrist ? "AD" : "BCE",
@@ -609,6 +610,11 @@ internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResp
 /// Every reckoning's answer, beside each other rather than one instead of the rest. A reader is
 /// owed the disagreement, not a winner — and they disagree in 413 of the 419 events they share.
 /// </param>
+/// <param name="Source">
+/// Who compiled this row and under what licence. Per row rather than per corpus, because they
+/// differ: the Old Testament chronology is CC BY 4.0, the New Testament CC BY-SA 4.0, and the
+/// world layer CC0. A page showing one licence for all three would assert what none of them says.
+/// </param>
 internal record EventResponse(
     string Slug,
     string Name,
@@ -626,6 +632,7 @@ internal record EventResponse(
     string? Region,
     string? Uri,
     string? Notes,
+    string Source,
     IList<EventDateResponse> Dates)
 {
     /// <summary>
