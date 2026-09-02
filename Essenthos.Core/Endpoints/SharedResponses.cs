@@ -96,6 +96,10 @@ internal record TextWordResponse(
     string? PhonoTrailer,
     string? Language);
 
-internal record TextVerseResponse(int Number, IList<TextWordResponse> Words);
+/// <param name="Label">
+/// The letter this edition prints after the number, where it prints one — the Septuagint's Genesis
+/// 31:50a. Empty for every other text, which number their verses and nothing else.
+/// </param>
+internal record TextVerseResponse(int Number, IList<TextWordResponse> Words, string Label = "");
 
 internal record VerseRefResponse(int BookOrdinal, string Book, string Slug, int Chapter, int Verse);

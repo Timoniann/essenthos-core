@@ -9,7 +9,7 @@ namespace Essenthos.Core.Database.Entities;
 /// <see cref="VerseReference"/>, and the two are not the same thing: pairing verses by number
 /// across texts is what made the split view show different passages in its two panes.
 /// </summary>
-[Index(nameof(TextId), nameof(BookId), nameof(ChapterNumber), nameof(Number), IsUnique = true)]
+[Index(nameof(TextId), nameof(BookId), nameof(ChapterNumber), nameof(Number), nameof(Label), IsUnique = true)]
 public class Verse
 {
     [Key]
@@ -29,6 +29,17 @@ public class Verse
     public int ChapterNumber { get; set; }
 
     public int Number { get; set; }
+
+    /// <summary>
+    /// The letter this edition prints after the number, where it prints one — <c>a</c> in the
+    /// Septuagint's Genesis 31:50a, which is material the Hebrew does not have and which the Greek
+    /// numbers by extending 50 rather than by inventing a 51.
+    ///
+    /// Empty for an ordinary verse, and empty rather than null so that the uniqueness of a verse
+    /// within its chapter is actually enforced: Postgres treats nulls in a unique index as all
+    /// different from one another.
+    /// </summary>
+    public string Label { get; set; } = string.Empty;
 
     public ICollection<Word> Words { get; set; } = [];
 

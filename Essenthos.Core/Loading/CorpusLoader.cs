@@ -147,10 +147,11 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
                         Chapter = chapter,
                         ChapterNumber = chapterDraft.Number,
                         Number = verseDraft.Number,
+                        Label = verseDraft.Label,
                     };
                     db.Verses.Add(verse);
                     verses.Add(new LoadedVerse(verse, verseDraft,
-                        $"{source.Definition.Slug} {bookDraft.Name} {chapterDraft.Number}:{verseDraft.Number}"));
+                        $"{source.Definition.Slug} {bookDraft.Name} {chapterDraft.Number}:{verseDraft.Number}{verseDraft.Label}"));
                 }
             }
         }

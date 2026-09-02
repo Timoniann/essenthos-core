@@ -48,6 +48,9 @@ internal sealed class DatasetLoader(
                     Path.Combine(resources, "TextusReceptus"), edition), stoppingToken);
             }
 
+            await Load("Brenton's Septuagint", () => SeptuagintTextSource.Read(
+                Path.Combine(resources, "Septuagint")), stoppingToken);
+
             foreach (var translation in Bible4uTranslations)
             {
                 await Load(translation, () => Bible4uTextSource.Read(

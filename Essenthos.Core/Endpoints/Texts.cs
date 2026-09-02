@@ -67,9 +67,10 @@ internal static class Texts
             .Where(w => w.TextId == textId
                         && w.Verse!.Book!.CanonicalOrdinal == bookOrdinal
                         && w.Verse.ChapterNumber == chapter)
-            .OrderBy(w => w.Verse!.Number).ThenBy(w => w.Position)
+            .OrderBy(w => w.Verse!.Number).ThenBy(w => w.Verse!.Label).ThenBy(w => w.Position)
             .Select(w => new WordRow(
-                w.Verse!.Number, w.Id, w.Surface, w.Trailer, w.Gloss, w.Lemma, w.StrongNumber, w.Morphology))
+                w.Verse!.Number, w.Verse!.Label, w.Id, w.Surface, w.Trailer, w.Gloss, w.Lemma, w.StrongNumber,
+                w.Morphology))
             .ToListAsync(cancellationToken);
 
         return Group(rows, await Counterparts(db, rows.Select(r => r.Id), cancellationToken));
@@ -182,8 +183,8 @@ internal static class Texts
                         && r.CanonicalBook == canonicalBook
                         && r.CanonicalChapter == canonicalChapter)
             .SelectMany(r => r.Verse!.Words.Select(w => new CanonicalWordRow(
-                r.CanonicalVerse, r.Verse.Number, w.Position, w.Id, w.Surface, w.Trailer, w.Gloss, w.Lemma,
-                w.StrongNumber, w.Morphology)))
+                r.CanonicalVerse, r.Verse.Number, r.Verse.Label, w.Position, w.Id, w.Surface, w.Trailer, w.Gloss,
+                w.Lemma, w.StrongNumber, w.Morphology)))
             .ToListAsync(cancellationToken);
 
         var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
@@ -192,20 +193,30 @@ internal static class Texts
             .GroupBy(r => r.CanonicalVerse)
             .ToDictionary(
                 group => group.Key,
+                // The letter orders too. Two verses of this text can sit at one canonical address
+                // — the Septuagint's 50 and 50a both answer to Genesis 31:50 — and ordering by
+                // position alone shuffles their words together.
                 group => group
-                    .OrderBy(r => r.VerseNumber).ThenBy(r => r.Position)
+                    .OrderBy(r => r.VerseNumber).ThenBy(r => r.Label).ThenBy(r => r.Position)
                     .Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
                         counterparts))
                     .ToList());
     }
 
+    /// <summary>
+    /// Grouped by the number **and** the letter, because the Septuagint prints Genesis 31 as 49,
+    /// 50, 50a, 52 and two verses numbered 50 are two verses. Grouping by the number alone put
+    /// both their words in one list ordered by position, which interleaved them word by word.
+    /// </summary>
     private static IList<TextVerseResponse> Group(List<WordRow> rows, Reached counterparts) =>
-        rows.GroupBy(r => r.VerseNumber)
+        rows.GroupBy(r => (r.VerseNumber, r.Label))
+            .OrderBy(group => group.Key.VerseNumber).ThenBy(group => group.Key.Label)
             .Select(group => new TextVerseResponse(
-                group.Key,
+                group.Key.VerseNumber,
                 group.Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
                         counterparts))
-                    .ToList()))
+                    .ToList(),
+                group.Key.Label))
             .ToList();
 
     private static TextWordResponse Word(
@@ -269,10 +280,10 @@ internal static class Texts
     }
 
     private sealed record WordRow(
-        int VerseNumber, long Id, string Text, string Trailer, string? Gloss, string? Lemma, string? StrongNumber,
-        JsonDocument? Morphology);
+        int VerseNumber, string Label, long Id, string Text, string Trailer, string? Gloss, string? Lemma,
+        string? StrongNumber, JsonDocument? Morphology);
 
     private sealed record CanonicalWordRow(
-        int CanonicalVerse, int VerseNumber, int Position, long Id, string Text, string Trailer, string? Gloss,
-        string? Lemma, string? StrongNumber, JsonDocument? Morphology);
+        int CanonicalVerse, int VerseNumber, string Label, int Position, long Id, string Text, string Trailer,
+        string? Gloss, string? Lemma, string? StrongNumber, JsonDocument? Morphology);
 }

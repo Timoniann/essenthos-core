@@ -67,7 +67,11 @@ internal sealed record WordDraft(
     string? Gloss = null,
     string? Morphology = null);
 
-internal sealed record VerseDraft(int Number, IReadOnlyList<WordDraft> Words);
+/// <param name="Label">
+/// The letter the edition prints after the number, where it prints one. Empty for the other
+/// texts, which number their verses and nothing else.
+/// </param>
+internal sealed record VerseDraft(int Number, IReadOnlyList<WordDraft> Words, string Label = "");
 
 internal sealed record ChapterDraft(int Number, IReadOnlyList<VerseDraft> Verses);
 
