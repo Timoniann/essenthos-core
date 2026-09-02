@@ -143,6 +143,7 @@ internal static class EncyclopediaEndpoints
                 entity.Notes,
                 entity.OpenBibleId,
                 entity.Source,
+                Datasets.Of(entity.Source),
                 entity.References,
                 entity.Disputed,
                 names,
@@ -304,6 +305,7 @@ internal static class EncyclopediaEndpoints
                 period.Uri,
                 period.Notes,
                 period.Source,
+                Datasets.Of(period.Source),
                 period.Parent is null ? null : new PeriodRefResponse(
                     period.Parent.Slug, period.Parent.Name, null, null, null),
                 period.Entity is null ? null : new NamedEntityResponse(
@@ -527,6 +529,7 @@ internal static class EncyclopediaEndpoints
         e.Uri,
         e.Notes,
         e.Source,
+        Datasets.Of(e.Source),
         dates)
     {
         Era = e.YearFromCreation is { } year && year > LastYearBeforeChrist ? "AD" : "BCE",
@@ -559,6 +562,7 @@ internal record EntityResponse(
     string? Notes,
     string? OpenBibleId,
     string Source,
+    string? SourceId,
     int References,
     int Disputed,
     IList<EntityNameResponse> Names,
@@ -633,6 +637,7 @@ internal record EventResponse(
     string? Uri,
     string? Notes,
     string Source,
+    string? SourceId,
     IList<EventDateResponse> Dates)
 {
     /// <summary>
@@ -680,6 +685,7 @@ internal record PeriodResponse(
     string? Uri,
     string? Notes,
     string Source,
+    string? SourceId,
     PeriodRefResponse? Parent,
     NamedEntityResponse? Entity,
     EventRefResponse? Opens,

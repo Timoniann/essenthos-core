@@ -20,50 +20,6 @@ namespace Essenthos.Core.Endpoints;
 /// </summary>
 public static class DatasetEndpoints
 {
-    /// <summary>
-    /// The datasets, declared rather than parsed.
-    ///
-    /// The rows carry their source as one prose string — *"BibleData by Brady Stephenson,
-    /// github.com/BradyStephenson/bible-data, CC BY 4.0"* — which is right for a row and wrong for
-    /// a page: pulling a licence back out of prose with a regex is how a page ends up quietly
-    /// asserting the wrong one. So the fields are written here and matched to rows by prefix, and
-    /// anything whose source matches nothing is reported rather than hidden.
-    /// </summary>
-    private static readonly Dataset[] Datasets =
-    [
-        new("bibledata", "BibleData", "Brady Stephenson", "CC BY 4.0",
-            "https://creativecommons.org/licenses/by/4.0/",
-            "https://github.com/BradyStephenson/bible-data",
-            "The people and places the text names, how they stand to one another, and a chronology "
-            + "of the Old Testament in which every year is computed from a verse and shows its "
-            + "arithmetic.",
-            "BibleData by"),
-
-        new("theographic", "Theographic Bible Data", "Robert Rouse", "CC BY-SA 4.0",
-            "https://creativecommons.org/licenses/by-sa/4.0/",
-            "https://github.com/robertrouse/theographic-bible-metadata",
-            "The New Testament chronology, which the other dataset does not have: its method stops "
-            + "where the genealogies stop. Share-alike, unlike everything around it.",
-            "Theographic"),
-
-        new("wikidata", "Wikidata", "the Wikidata contributors", "CC0",
-            "https://creativecommons.org/publicdomain/zero/1.0/",
-            "https://query.wikidata.org",
-            "World history on the same axis: battles, cities founded, dynasties, writing systems "
-            + "and archaeological ages, so the text can be read against what else was happening.",
-            "Wikidata"),
-
-        // What this project asserts itself. One row today — the entity BibleData folds into the
-        // divine name and this corpus does not — and it belongs in the list precisely because it
-        // is ours: a claim of our own, printed beside the ones we merely carry.
-        new("essenthos", "Essenthos", "this project", "CC BY 4.0",
-            "https://creativecommons.org/licenses/by/4.0/",
-            "https://github.com/",
-            "Corrections and separations this project makes to the datasets it carries, each "
-            + "recorded on the row it changed.",
-            "Essenthos"),
-    ];
-
     public static void MapDatasets(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/datasets", async (AppDbContext db, CancellationToken cancellationToken) =>
@@ -73,7 +29,7 @@ public static class DatasetEndpoints
             var periods = await Counted(db.Periods.Select(p => p.Source), cancellationToken);
 
             var answers = new List<DatasetResponse>();
-            foreach (var dataset in Datasets)
+            foreach (var dataset in Datasets.All)
             {
                 var counts = new DatasetCounts(
                     Of(entities, dataset.Prefix),
@@ -126,17 +82,8 @@ public static class DatasetEndpoints
 
     private static IEnumerable<(string Source, int Rows)> Undeclared(
         IEnumerable<(string Source, int Rows)> counted) =>
-        counted.Where(row => !Datasets.Any(d => row.Source.StartsWith(d.Prefix, StringComparison.Ordinal)));
+        counted.Where(row => Datasets.Match(row.Source) is null);
 
-    private sealed record Dataset(
-        string Id,
-        string Name,
-        string Author,
-        string Licence,
-        string LicenceUrl,
-        string Url,
-        string Covers,
-        string Prefix);
 }
 
 /// <param name="Counts">
