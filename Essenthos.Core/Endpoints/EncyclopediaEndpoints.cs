@@ -242,6 +242,77 @@ internal static class EncyclopediaEndpoints
         //
         // When world history arrives and this becomes megabytes, a windowed request earns its
         // complexity. Not before.
+        // One event, with everything the trimmed timeline payload leaves out.
+        //
+        // The timeline sends 1,508 events and cannot afford a description apiece; a reader who has
+        // picked one wants exactly that, plus the arithmetic and every reckoning's answer. So it is
+        // fetched when asked for rather than carried for everything on the chance it is.
+        routes.MapGet("/events/{slug}", async (
+            string slug,
+            AppDbContext db,
+            CancellationToken cancellationToken) =>
+        {
+            var row = await db.Events.Where(e => e.Slug == slug).Select(Rows).FirstOrDefaultAsync(cancellationToken);
+            return row is null ? Results.NotFound() : Results.Ok(Event(row));
+        });
+
+        // One period: what it is, what opens and closes it, and what each reckoning makes of those.
+        routes.MapGet("/periods/{slug}", async (
+            string slug,
+            AppDbContext db,
+            CancellationToken cancellationToken) =>
+        {
+            var period = await db.Periods
+                .Where(p => p.Slug == slug)
+                .Select(p => new
+                {
+                    p.Slug,
+                    p.Name,
+                    p.Kind,
+                    p.Level,
+                    p.Realm,
+                    p.Region,
+                    p.Uri,
+                    p.Notes,
+                    p.Source,
+                    Parent = p.Parent == null ? null : new { p.Parent.Slug, p.Parent.Name },
+                    Entity = p.Entity == null ? null : new { p.Entity.Slug, p.Entity.Name, p.Entity.Distinguisher },
+                    Opens = p.StartEvent == null ? null : new { p.StartEvent.Slug, p.StartEvent.Name },
+                    Closes = p.EndEvent == null ? null : new { p.EndEvent.Slug, p.EndEvent.Name },
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (period is null)
+            {
+                return Results.NotFound();
+            }
+
+            var children = await db.Periods
+                .Where(p => p.Parent!.Slug == slug)
+                .OrderBy(p => p.StartYear)
+                .Select(p => new PeriodRefResponse(p.Slug, p.Name, p.Kind, p.StartYear, p.EndYear))
+                .Take(60)
+                .ToListAsync(cancellationToken);
+
+            return Results.Ok(new PeriodResponse(
+                period.Slug,
+                period.Name,
+                period.Kind,
+                period.Level,
+                period.Realm,
+                period.Region,
+                period.Uri,
+                period.Notes,
+                period.Source,
+                period.Parent is null ? null : new PeriodRefResponse(
+                    period.Parent.Slug, period.Parent.Name, null, null, null),
+                period.Entity is null ? null : new NamedEntityResponse(
+                    period.Entity.Slug, period.Entity.Name, period.Entity.Distinguisher),
+                period.Opens is null ? null : new EventRefResponse(period.Opens.Slug, period.Opens.Name),
+                period.Closes is null ? null : new EventRefResponse(period.Closes.Slug, period.Closes.Name),
+                children));
+        });
+
         routes.MapGet("/timeline", async (AppDbContext db, CancellationToken cancellationToken) =>
         {
             var chronologies = await db.Chronologies
@@ -580,6 +651,33 @@ internal record EventDateResponse(
     string? Notes);
 
 internal record EventListResponse(int Total, IList<EventResponse> Items);
+
+internal record EventRefResponse(string Slug, string Name);
+
+/// <summary>A person or a place, named just enough to link to.</summary>
+internal record NamedEntityResponse(string Slug, string Name, string? Distinguisher);
+
+internal record PeriodRefResponse(string Slug, string Name, string? Kind, int? StartYear, int? EndYear);
+
+/// <param name="Opens">
+/// The two events that bound it. A period is anchored to them rather than to years, which is why
+/// switching reckoning moves the band as well as the marks inside it.
+/// </param>
+internal record PeriodResponse(
+    string Slug,
+    string Name,
+    string? Kind,
+    int Level,
+    string Realm,
+    string? Region,
+    string? Uri,
+    string? Notes,
+    string Source,
+    PeriodRefResponse? Parent,
+    NamedEntityResponse? Entity,
+    EventRefResponse? Opens,
+    EventRefResponse? Closes,
+    IList<PeriodRefResponse> Inside);
 
 /// <param name="LastAnnoMundiBeforeTheCommonEra">
 /// The year from creation that is 1 BCE, so a client can turn every year on this axis into an
