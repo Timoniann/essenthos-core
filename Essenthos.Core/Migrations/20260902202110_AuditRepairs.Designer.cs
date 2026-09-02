@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260902195901_EntityNameStrongNumbersByLanguage")]
-    partial class EntityNameStrongNumbersByLanguage
+    [Migration("20260902202110_AuditRepairs")]
+    partial class AuditRepairs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1173,6 +1173,10 @@ namespace Essenthos.Core.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<bool>("Elided")
+                        .HasColumnType("boolean")
+                        .HasColumnName("elided");
+
                     b.Property<string>("Gloss")
                         .HasColumnType("text")
                         .HasColumnName("gloss");
@@ -1252,6 +1256,14 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("kind");
 
+                    b.Property<long?>("MotherGroupId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("mother_group_id");
+
+                    b.Property<long?>("MotherWordId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("mother_word_id");
+
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint")
                         .HasColumnName("parent_id");
@@ -1266,6 +1278,12 @@ namespace Essenthos.Core.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_word_group");
+
+                    b.HasIndex("MotherGroupId")
+                        .HasDatabaseName("ix_word_group_mother_group_id");
+
+                    b.HasIndex("MotherWordId")
+                        .HasDatabaseName("ix_word_group_mother_word_id");
 
                     b.HasIndex("ParentId")
                         .HasDatabaseName("ix_word_group_parent_id");
@@ -1605,6 +1623,18 @@ namespace Essenthos.Core.Migrations
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordGroup", b =>
                 {
+                    b.HasOne("Essenthos.Core.Database.Entities.WordGroup", "MotherGroup")
+                        .WithMany()
+                        .HasForeignKey("MotherGroupId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_word_group_word_group_mother_group_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Word", "MotherWord")
+                        .WithMany()
+                        .HasForeignKey("MotherWordId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_word_group_word_mother_word_id");
+
                     b.HasOne("Essenthos.Core.Database.Entities.WordGroup", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId")
@@ -1617,6 +1647,10 @@ namespace Essenthos.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_word_group_text_text_id");
+
+                    b.Navigation("MotherGroup");
+
+                    b.Navigation("MotherWord");
 
                     b.Navigation("Parent");
 
