@@ -128,7 +128,7 @@ internal static class EncyclopediaEndpoints
             var events = await db.Events
                 .Where(e => e.EntityId == entity.Id)
                 .OrderBy(e => e.YearFromCreation)
-                .Select(e => Event(e))
+                .Select(e => new EventRow(e, e.Entity!.Slug, e.Entity.Name))
                 .ToListAsync(cancellationToken);
 
             return Results.Ok(new EntityResponse(
@@ -147,7 +147,7 @@ internal static class EncyclopediaEndpoints
                 entity.Disputed,
                 names,
                 [.. outward, .. inward],
-                events));
+                [.. events.Select(Event)]));
         });
 
         routes.MapGet("/entities/{slug}/references", async (
@@ -221,10 +221,11 @@ internal static class EncyclopediaEndpoints
                 .OrderBy(e => e.YearFromCreation).ThenBy(e => e.Slug)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
-                .Select(e => Event(e))
+                .Select(e => new EventRow(e, e.Entity == null ? null : e.Entity.Slug,
+                    e.Entity == null ? null : e.Entity.Name))
                 .ToListAsync(cancellationToken);
 
-            return Results.Ok(new EventListResponse(total, page));
+            return Results.Ok(new EventListResponse(total, [.. page.Select(Event)]));
         });
     }
 
@@ -234,13 +235,34 @@ internal static class EncyclopediaEndpoints
                 ordinal, BookReferences.Name(ordinal), BookReferences.Slug(ordinal), inChapter, atVerse)
             : null;
 
-    private static EventResponse Event(Database.Entities.Event e) => new(
+    /// <summary>
+    /// The event with the two fields that need a join, read in the query rather than off a
+    /// navigation property. Projecting <c>e.Entity.Slug</c> through a method EF cannot translate
+    /// left every one of the 572 events without a person on it, while the filter that uses the
+    /// same navigation worked — so the timeline could select by a person and never name one.
+    /// </summary>
+    private sealed record EventRow(Database.Entities.Event Event, string? EntitySlug, string? EntityName);
+
+    /// <summary>
+    /// Which side of the era a year falls. The source counts forward from the creation without a
+    /// sign, so its year 3,969 answers <c>8</c> meaning AD 8, and nothing in the number says so.
+    /// The turn is at 3,961, and it is arithmetic rather than a guess: below it the BCE year is
+    /// 3,962 less the count, above it the AD year is the count less 3,961.
+    /// </summary>
+    private const int LastYearBeforeChrist = 3961;
+
+    private static EventResponse Event(EventRow row) => Event(row.Event, row.EntitySlug, row.EntityName);
+
+    private static EventResponse Event(
+        Database.Entities.Event e,
+        string? entitySlug,
+        string? entityName) => new(
         e.Slug,
         e.Name,
         e.Description,
         e.Kind,
-        e.Entity == null ? null : e.Entity.Slug,
-        e.Entity == null ? null : e.Entity.Name,
+        entitySlug,
+        entityName,
         e.YearFromCreation,
         e.BceYear,
         e.AgeAtEvent,
@@ -251,7 +273,10 @@ internal static class EncyclopediaEndpoints
         e.UssherBceYear,
         e.UssherParagraph,
         e.ShulmanAnnoMundi,
-        e.Notes);
+        e.Notes)
+    {
+        Era = e.YearFromCreation is { } year && year > LastYearBeforeChrist ? "AD" : "BCE",
+    };
 }
 
 internal record EntitySummaryResponse(
@@ -348,6 +373,13 @@ internal record EventResponse(
     int? UssherBceYear,
     string? UssherParagraph,
     int? ShulmanAnnoMundi,
-    string? Notes);
+    string? Notes)
+{
+    /// <summary>
+    /// <c>BCE</c> or <c>AD</c>. The source writes its year without a sign and keeps counting past
+    /// the turn, so its <c>8</c> may mean 8 BCE or AD 8 and the number alone cannot say which.
+    /// </summary>
+    public string Era { get; init; } = "BCE";
+}
 
 internal record EventListResponse(int Total, IList<EventResponse> Items);
