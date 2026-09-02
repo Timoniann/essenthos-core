@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -41,7 +42,7 @@ internal sealed record EncyclopediaOutcome(
 /// LICENSE file governs". The copy loaded here is from `main`, and the folder it lives in is not
 /// the older one this workspace already held.
 /// </summary>
-internal sealed class BibleDataLoader(AppDbContext db, ILogger<BibleDataLoader> logger)
+internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleDataLoader> logger)
 {
     private const string Source = "BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0";
 
@@ -113,6 +114,8 @@ internal sealed class BibleDataLoader(AppDbContext db, ILogger<BibleDataLoader> 
         var relationships = Relationships(folder, entities, books);
         var (references, disputed) = References(folder, entities, books, jesus);
         var events = Events(folder, entities, books);
+
+        Name(entities, events);
 
         db.EntityNames.AddRange(names);
         db.EntityRelationships.AddRange(relationships);
@@ -368,6 +371,66 @@ internal sealed class BibleDataLoader(AppDbContext db, ILogger<BibleDataLoader> 
 
         return events;
     }
+
+    /// <summary>
+    /// Puts names where the source wrote its own identifiers.
+    ///
+    /// The sentences that show an event's arithmetic are generated from a template, and the
+    /// template interpolates the row id: <em>"The year of Moses_1's birth is the year of the
+    /// Exodus (2515) minus his age…"</em>. A reader has no idea there is a Moses_1, and the
+    /// underscore and the number are an artefact of a spreadsheet rather than anything about
+    /// Moses.
+    ///
+    /// This is not editing a quotation. The sentence is machine-written and the identifier stands
+    /// for exactly one entity or event; putting the name back is rendering it, not rewriting it.
+    /// Anything the corpus cannot resolve is left exactly as it was, because a stray identifier
+    /// visible on the page is a better outcome than a wrong name.
+    /// </summary>
+    private static void Name(Dictionary<string, Entity> entities, List<Event> events)
+    {
+        var names = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var (key, entity) in entities)
+        {
+            var at = key.IndexOf(':');
+            names[at < 0 ? key : key[(at + 1)..]] = entity.Name;
+        }
+
+        foreach (var one in events)
+        {
+            names.TryAdd(one.Slug, one.Name);
+        }
+
+        foreach (var one in events)
+        {
+            one.Calculation = Named(one.Calculation, names);
+            one.Notes = Named(one.Notes, names);
+            one.Description = Named(one.Description, names);
+        }
+    }
+
+    /// <summary>
+    /// An identifier in this dataset is a name, an underscore and a number — <c>Moses_1</c>,
+    /// <c>The_Exodus</c>. Underscores inside ordinary prose are rare enough that requiring one
+    /// costs nothing and catches nothing it should not.
+    /// </summary>
+    private static string? Named(string? sentence, Dictionary<string, string> names)
+    {
+        if (sentence is not { Length: > 0 } || !sentence.Contains('_'))
+        {
+            return sentence;
+        }
+
+        return Identifier().Replace(sentence, match =>
+        {
+            var id = match.Value;
+            return names.TryGetValue(id, out var name) ? name
+                : names.TryGetValue(Slugs.Of(id), out var bySlug) ? bySlug
+                : id;
+        });
+    }
+
+    [GeneratedRegex(@"\b[A-Za-z][A-Za-z0-9-]*(?:_[A-Za-z0-9-]+)+")]
+    private static partial Regex Identifier();
 
     /// <summary>
     /// <c>GEN 1:1</c> in the shared frame. Answers null for the 113 references the dataset makes
