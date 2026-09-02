@@ -65,6 +65,7 @@ internal sealed class DatasetLoader(
             await LinkThePrintedEditions(resources, stoppingToken);
             await LinkTheGreekWitnesses(stoppingToken);
             await GiveEveryWordASearchableForm(stoppingToken);
+            await LinkFromTheInterlinear(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -267,6 +268,23 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<WordFoldingLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The one stated word-level correspondence a Slavic text has. Everything else the Ukrainian
+    /// reaches, it reaches through a model; this is people saying which word renders which.
+    /// </summary>
+    private async Task LinkFromTheInterlinear(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Ukrainian interlinear");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<InterlinearLinkLoader>();
+        status.Record(await loader.Load(
+            Path.Combine(resources, "Door43", "uk_ubio"),
+            "ukr",
+            "unfoldingWord's Ukrainian Bible Interlinear Ogienko, git.door43.org/uk_ts/uk_ubio, CC BY-SA 4.0",
+            cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

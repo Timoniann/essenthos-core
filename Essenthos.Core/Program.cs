@@ -50,6 +50,7 @@ builder.Services.AddScoped<SyntaxLoader>();
 builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddScoped<GreekWitnessLinkLoader>();
 builder.Services.AddScoped<WordFoldingLoader>();
+builder.Services.AddScoped<InterlinearLinkLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
