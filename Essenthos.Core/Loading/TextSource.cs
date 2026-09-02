@@ -23,6 +23,13 @@ internal sealed record TextDefinition(
     Redistribution Redistribution,
     string? TextualFamily)
 {
+    /// <summary>
+    /// What the licence requires be cited, where a name and a URL cannot carry it. Optional, and
+    /// null means the licence asks for nothing beyond attribution — not that nobody checked.
+    /// </summary>
+    public string? Citation { get; init; }
+
+
     public void Validate()
     {
         Require(Slug, nameof(Slug));

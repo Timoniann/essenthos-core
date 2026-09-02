@@ -35,7 +35,14 @@ internal static class BhsaTextSource
         Licence: "CC-BY-NC-4.0",
         LicenceUrl: "https://creativecommons.org/licenses/by-nc/4.0/",
         Redistribution: Redistribution.NonCommercialOnly,
-        TextualFamily: "Masoretic");
+        TextualFamily: "Masoretic")
+    {
+        // Not a courtesy. The ETCBC asks that anything published from BHSA cite the dataset by
+        // its DOI, and a licence name and a URL cannot carry that — PRB-0067 is the field that
+        // was missing.
+        Citation = "Eep Talstra Centre for Bible and Computer, Biblia Hebraica Stuttgartensia " +
+                   "Amstelodamensis (BHSA), DANS, https://doi.org/10.17026/dans-z6y-skyh",
+    };
 
     public static TextSource Read(string etcbcPath) => Build(BhsaProject.Load(etcbcPath));
 

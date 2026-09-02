@@ -47,6 +47,7 @@ internal static class Texts
     {
         RightsHolder = text.RightsHolder,
         LicenseUrl = text.LicenceUrl,
+        Citation = text.Citation,
         SourceUrl = text.SourceUrl,
         Redistribution = EnumSpelling.Of(text.Redistribution),
     };

@@ -106,12 +106,45 @@ internal static class SyntaxEndpoints
             [FromQuery] string? kind,
             [FromQuery] string? feature,
             [FromQuery] string? corpus,
+            [FromQuery] string? book,
+            [FromQuery] int? chapter,
+            [FromQuery] int? verse,
+            [FromQuery] string? word,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
             var groups = db.WordGroups.AsQueryable();
+
+            // Where to look, and what to look for in it. A search over 986,830 groups that can
+            // only say "every phrase whose function is Predicate" is a search of the whole Bible
+            // at once; the questions worth asking are about a passage, or about a word.
+            if (book is { Length: > 0 })
+            {
+                if (BookReferences.ResolveOrdinal(book) is not { } ordinal)
+                {
+                    return ApiResults.NotFound(BookReferences.FormatHint(book));
+                }
+
+                groups = groups.Where(g => g.Words.Any(m =>
+                    m.Word!.Verse!.Book!.CanonicalOrdinal == ordinal
+                    && (chapter == null || m.Word.Verse.ChapterNumber == chapter)
+                    && (verse == null || m.Word.Verse.Number == verse)));
+            }
+            else if (chapter != null || verse != null)
+            {
+                return Results.BadRequest(new ProblemResponse(
+                    "A chapter or a verse needs a book to be in. Pass ?book= as well."));
+            }
+
+            // The word is matched on the same folded form the text search uses, so an unpointed
+            // query finds a pointed word here exactly as it does there.
+            if (word is { Length: > 0 })
+            {
+                var folded = WordFolding.Fold(word, "hbo");
+                groups = groups.Where(g => g.Words.Any(m => m.Word!.NormalisedText == folded));
+            }
 
             if (kind is { Length: > 0 })
             {

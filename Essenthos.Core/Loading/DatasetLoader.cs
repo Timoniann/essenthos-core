@@ -64,6 +64,7 @@ internal sealed class DatasetLoader(
             await LinkTheNewTestament(resources, stoppingToken);
             await LinkThePrintedEditions(resources, stoppingToken);
             await LinkTheGreekWitnesses(stoppingToken);
+            await GiveEveryWordASearchableForm(stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -253,6 +254,19 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<GreekWitnessLinkLoader>();
         status.Record(await loader.Load("nestle1904", "scrivener1894", cancellationToken));
+    }
+
+    /// <summary>
+    /// The form a word is searched by. Idempotent by the column itself, so a loaded corpus pays
+    /// one indexed count and a newly loaded text is folded the once.
+    /// </summary>
+    private async Task GiveEveryWordASearchableForm(CancellationToken cancellationToken)
+    {
+        status.Starting("the searchable form of every word");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<WordFoldingLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

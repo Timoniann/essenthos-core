@@ -36,6 +36,13 @@ internal record CorpusResponse(
 
     public string? LicenseUrl { get; init; }
 
+    /// <summary>
+    /// How the licence requires this text to be cited, where a name and a URL cannot carry it.
+    /// BHSA asks for its DOI in anything published from it, and that is an obligation rather than
+    /// a courtesy.
+    /// </summary>
+    public string? Citation { get; init; }
+
     /// <summary>Where the text was obtained, so a reader can check what was loaded.</summary>
     public string? SourceUrl { get; init; }
 

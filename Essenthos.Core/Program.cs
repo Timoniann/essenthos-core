@@ -49,6 +49,7 @@ builder.Services.AddScoped<StrongLexiconLoader>();
 builder.Services.AddScoped<SyntaxLoader>();
 builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddScoped<GreekWitnessLinkLoader>();
+builder.Services.AddScoped<WordFoldingLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
@@ -162,6 +163,7 @@ v1.MapParallel();
 v1.MapStrong();
 v1.MapSyntax();
 v1.MapWords();
+v1.MapSearch();
 
 app.UseCors();
 

@@ -55,6 +55,14 @@ internal static class SearchTerms
     public const string SubstringMatching = "substring";
 
     /// <summary>
+    /// Every term matched a whole word of the folded text. This is what a search of this corpus
+    /// normally does — the words are stored one to a row, so matching one is matching a word and
+    /// not a run of letters inside one, and calling that "substring" told the caller the opposite
+    /// of what happened.
+    /// </summary>
+    public const string WholeWordMatching = "whole-word";
+
+    /// <summary>
     /// More than one strategy answered the query — a stop word matched literally beside a stemmed
     /// term, say. The per-term list says which was which.
     /// </summary>
@@ -117,7 +125,12 @@ internal static class SearchTerms
             return FullTextMatching;
         }
 
-        if (terms.All(t => t.Matching is TermMatching.Substring or TermMatching.Folded))
+        if (terms.All(t => t.Matching == TermMatching.Folded))
+        {
+            return WholeWordMatching;
+        }
+
+        if (terms.All(t => t.Matching == TermMatching.Substring))
         {
             return SubstringMatching;
         }

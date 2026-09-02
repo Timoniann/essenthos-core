@@ -103,6 +103,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         SourceUrl = definition.SourceUrl,
         RightsHolder = definition.RightsHolder,
         Licence = definition.Licence,
+        Citation = definition.Citation,
         LicenceUrl = definition.LicenceUrl,
         Redistribution = definition.Redistribution,
         TextualFamily = definition.TextualFamily,

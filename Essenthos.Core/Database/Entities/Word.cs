@@ -13,6 +13,7 @@ namespace Essenthos.Core.Database.Entities;
 /// </summary>
 [Index(nameof(VerseId), nameof(Position), IsUnique = true)]
 [Index(nameof(TextId), nameof(StrongNumber))]
+[Index(nameof(TextId), nameof(NormalisedText))]
 
 // The concordance asks for a number across every text at once, and the composite index cannot
 // answer that without its leading column. A million-row scan per lookup is the alternative.

@@ -54,6 +54,13 @@ public class Text
 
     public string? LicenceUrl { get; set; }
 
+    /// <summary>
+    /// How this text must be cited, where its licence asks for something a name and a URL cannot
+    /// carry. BHSA requires the DOI 10.17026/dans-z6y-skyh in anything published from it; that is
+    /// an obligation, and there was nowhere to put it (PRB-0067).
+    /// </summary>
+    public string? Citation { get; set; }
+
     public Redistribution Redistribution { get; set; } = Redistribution.Unknown;
 
     /// <summary>Masoretic, Alexandrian, Byzantine, Samaritan — free text, because the list is open.</summary>

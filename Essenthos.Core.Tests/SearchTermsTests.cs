@@ -60,8 +60,19 @@ public class SearchTermsTests
     {
         SearchTerms.Matching([Term("god", TermMatching.Stemmed), Term("loved", TermMatching.Stemmed)])
             .Should().Be(SearchTerms.FullTextMatching);
-        SearchTerms.Matching([Term("logos", TermMatching.Folded), Term("theos", TermMatching.Substring)])
+        SearchTerms.Matching([Term("logos", TermMatching.Folded), Term("theos", TermMatching.Folded)])
+            .Should().Be(SearchTerms.WholeWordMatching);
+        SearchTerms.Matching([Term("logo", TermMatching.Substring), Term("theo", TermMatching.Substring)])
             .Should().Be(SearchTerms.SubstringMatching);
+    }
+
+    [Fact]
+    public void MatchingAWholeWordIsNotMatchingPartOfOne()
+    {
+        // The words are stored one to a row, so matching one is matching a word. Reporting that
+        // as "substring" told the caller the opposite of what happened.
+        SearchTerms.Matching([Term("logos", TermMatching.Folded), Term("theos", TermMatching.Substring)])
+            .Should().Be(SearchTerms.MixedMatching);
     }
 
     /// <summary>
