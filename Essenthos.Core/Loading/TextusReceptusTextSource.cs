@@ -116,7 +116,7 @@ internal static class TextusReceptusTextSource
 
     private static VerseDraft Verse(UtrVerse verse) =>
         new(verse.Number, [.. verse.Words.Select((word, at) => new WordDraft(
-            Surface: word.Surface,
+            Surface: BetaCode.ToGreek(word.Surface),
             Trailer: at == verse.Words.Count - 1 ? string.Empty : " ",
             StrongNumber: word.Strong is null ? null : $"G{word.Strong}",
             Morphology: Morphology(word)))]);

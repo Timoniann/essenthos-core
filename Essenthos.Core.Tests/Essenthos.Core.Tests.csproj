@@ -7,7 +7,14 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>essenthos-core</UserSecretsId>
-  </PropertyGroup>
+  
+        <!--
+            The application sets this, so the tests must. Without it the test project has ICU and
+            the application does not, string.Normalize silently does nothing in one and works in
+            the other, and a test can pass over code that cannot work. PRB-0093 is what that cost.
+        -->
+        <InvariantGlobalization>true</InvariantGlobalization>
+    </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />

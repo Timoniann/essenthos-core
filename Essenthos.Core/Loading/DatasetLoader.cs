@@ -60,6 +60,7 @@ internal sealed class DatasetLoader(
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
             await LinkThePrintedEditions(resources, stoppingToken);
+            await LinkTheGreekWitnesses(stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -233,6 +234,22 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<PrintedEditionLinkLoader>();
         status.Record(await loader.Load(Path.Combine(resources, "TextusReceptus"), cancellationToken));
+    }
+
+    /// <summary>
+    /// Nestle against the Textus Receptus, by the Strong numbers both editions state.
+    ///
+    /// Scrivener alone, because Stephanus already meets it word for word: a word carries the
+    /// witness ids it reaches, so linking Nestle to Scrivener puts Scrivener's ids on both sides
+    /// and joins all four Greek panes at once.
+    /// </summary>
+    private async Task LinkTheGreekWitnesses(CancellationToken cancellationToken)
+    {
+        status.Starting("the Greek witnesses to each other");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<GreekWitnessLinkLoader>();
+        status.Record(await loader.Load("nestle1904", "scrivener1894", cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)
