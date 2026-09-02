@@ -13,10 +13,20 @@ namespace Essenthos.Core.Loading.Links;
 /// point: a link written from a verse whose words do not correspond is a claim about the wrong
 /// words, and it would look exactly like the 402,232 correct ones.
 /// </param>
+/// <param name="GlossRefused">
+/// Of those, the ones the counts accepted and the glosses caught. They are the misalignments
+/// nothing else can see, so they are counted apart from the rest.
+/// </param>
+/// <param name="GlossesCompared">
+/// Hebrew words where the file and BHSA both state a gloss, which is how far the check reached. A
+/// zero here says the check ran over nothing, and a check that passes over nothing is not a check.
+/// </param>
 internal sealed record LinkOutcome(
     bool AlreadyLoaded,
     int Verses,
     int Refused,
+    int GlossRefused,
+    int GlossesCompared,
     int Links,
     int EnglishWordsLinked,
     int HebrewWordsLinked,
@@ -35,7 +45,8 @@ internal sealed record LinkOutcome(
               $"{Omissions} naming a Hebrew word the English does not render, " +
               $"{Supplied} naming an English word the King James supplies and the Hebrew does not have, " +
               $"{HebrewWordsUnreached} Hebrew words reached by nothing, {StrongNumbers} Hebrew words given the " +
-              $"Strong number the file states, {Refused} verses refused";
+              $"Strong number the file states, {Refused} verses refused of which {GlossRefused} for glosses that " +
+              $"disagree, over {GlossesCompared} words the file and BHSA both gloss";
 }
 
 /// <summary>
@@ -49,6 +60,19 @@ internal sealed record LinkOutcome(
 internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestamentLinkLoader> logger)
 {
     private const string Source = "mapping/KJV-OT-mapped-to-BHS-full-mapping.csv";
+
+    /// <summary>
+    /// How much of a verse's Hebrew the file and BHSA have to gloss the same way before the two are
+    /// taken to be the same words in the same order.
+    ///
+    /// The file's glosses come from an older revision of the same ETCBC vocabulary, so a correct
+    /// verse is not always a perfect match: <em>Kittim</em> became <em>Cypriot</em>, <em>cloth</em>
+    /// became <em>clothe</em>, <em>lefthand side</em> gained a hyphen. Over the 23,021 verses whose
+    /// counts agree, 22,678 gloss identically, 334 differ in one or two words that way, and nine
+    /// fall below this line — four of them because the two divide the verse differently and the
+    /// counts happen to match anyway, which is the case no count can catch.
+    /// </summary>
+    private const double SameVerse = 0.8;
 
     private const string LinkImport =
         """
@@ -87,7 +111,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == hebrew.Id, cancellationToken))
         {
             logger.LogInformation("The Old Testament links are already loaded; nothing to do");
-            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -97,6 +121,8 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var pairs = new List<LinkDraft>(400_000);
         var stated = new List<(long WordId, string Strong)>(430_000);
         var refused = 0;
+        var glossRefused = 0;
+        var glossesCompared = 0;
         var unreached = 0;
 
         foreach (var record in records)
@@ -109,10 +135,16 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 continue;
             }
 
-            var drafts = Build(record, kjvWords, bhsaWords);
+            var drafts = Build(record, kjvWords, bhsaWords, out var glosses);
+            glossesCompared += glosses.Compared;
             if (drafts is null)
             {
                 refused++;
+                if (glosses.Share < SameVerse)
+                {
+                    glossRefused++;
+                }
+
                 continue;
             }
 
@@ -135,6 +167,8 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             false,
             records.Count - refused,
             refused,
+            glossRefused,
+            glossesCompared,
             pairs.Count,
             pairs.Sum(p => p.English.Count),
             pairs.SelectMany(p => p.Hebrew).Distinct().Count(),
@@ -154,10 +188,26 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// The Hebrew join is positional within the verse and checked against the glosses BHSA carries;
     /// the English join is positional and checked against the words themselves, folded for case
     /// because the file writes the divine name in capitals and bible4u does not.
+    ///
+    /// The gloss check runs before the English one so that a verse the two sides divide differently
+    /// is always refused here, and the count of refusals for that reason means what it says.
     /// </summary>
-    private static List<LinkDraft>? Build(MappingRecord record, List<Word> kjv, List<Word> bhsa)
+    private static List<LinkDraft>? Build(
+        MappingRecord record,
+        List<Word> kjv,
+        List<Word> bhsa,
+        out GlossAgreement glosses)
     {
+        glosses = default;
         if (record.Hebrew.Count != bhsa.Count)
+        {
+            return null;
+        }
+
+        glosses = Glosses.Agreement(
+            [.. record.Hebrew.Select(entry => (string?)entry.Gloss)],
+            [.. bhsa.Select(word => word.Gloss)]);
+        if (glosses.Share < SameVerse)
         {
             return null;
         }
@@ -269,6 +319,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 w.Position,
                 w.Id,
                 w.Surface,
+                w.Gloss,
             }))
             .ToListAsync(cancellationToken);
 
@@ -276,7 +327,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             .GroupBy(r => (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse))
             .ToDictionary(
                 group => group.Key,
-                group => group.OrderBy(r => r.Position).Select(r => new Word(r.Id, r.Surface)).ToList());
+                group => group.OrderBy(r => r.Position).Select(r => new Word(r.Id, r.Surface, r.Gloss)).ToList());
     }
 
     private async Task Write(
@@ -424,7 +475,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
-    private sealed record Word(long Id, string Text);
+    private sealed record Word(long Id, string Text, string? Gloss);
 
     /// <param name="Omitted">
     /// The King James renders nothing here, so the link says so with an empty side rather than

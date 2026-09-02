@@ -18,9 +18,10 @@ namespace Essenthos.Core.Loading;
 /// annotated Septuagint in existence descends from CATSS and is NonCommercial or worse, and this
 /// one is public domain outright. What alignment there is to be had will be built here.
 ///
-/// Sixteen of its fifty-two books had no ordinal until FTR-0091, which is why this could not be
+/// Sixteen of its fifty-two files had no ordinal until FTR-0091, which is why this could not be
 /// loaded before. Two of them are not extra books at all: Greek Esther and Greek Daniel are Esther
 /// and Daniel, longer, so they take those books' canonical ordinals and their own versification.
+/// One file is two books: Esdras B is Ezra and Nehemiah together, and is split on load.
 /// </summary>
 internal static class SeptuagintTextSource
 {
@@ -40,9 +41,9 @@ internal static class SeptuagintTextSource
     /// canonical ordinal is exactly what the model is for. Giving them ordinals of their own would
     /// put one book in the canon twice under two names.
     ///
-    /// There is no Nehemiah. The Greek tradition prints Ezra and Nehemiah together as Esdras B,
-    /// so what is here as <c>EZR</c> covers both, and the second half of it has no address in the
-    /// frame yet. That is a versification question (TSK-0011), not a missing file.
+    /// There is no <c>NEH</c> file. The Greek tradition prints Ezra and Nehemiah together as
+    /// Esdras B, twenty-three chapters under one heading, so <c>EZR</c> carries both and is split
+    /// on load — see <see cref="SecondEsdras"/>.
     /// </summary>
     private static readonly (string Code, int Canonical)[] Canon =
     [
@@ -78,12 +79,34 @@ internal static class SeptuagintTextSource
         Redistribution: Redistribution.PublicDomain,
         TextualFamily: "Septuagint");
 
+    /// <summary>
+    /// Esdras B, which is Ezra and Nehemiah under one heading: chapters 1 to 10 are Ezra and 11 to
+    /// 23 are Nehemiah 1 to 13.
+    ///
+    /// The split is made here rather than left to the frame because the versification data itself
+    /// numbers Greek Nehemiah from one — it says Greek Nehemiah 3:33 is the standard 4:1, and that
+    /// rule cannot be found by a verse that calls itself Ezra 13:33. Kept as one book, thirteen
+    /// chapters would have no address in the shared frame at all and Nehemiah would be missing from
+    /// this witness while its Greek sat in the database.
+    /// </summary>
+    private static class SecondEsdras
+    {
+        public const string Code = "EZR";
+
+        public const int Ezra = 15;
+
+        public const int Nehemiah = 16;
+
+        /// <summary>The last chapter of Esdras B that belongs to Ezra.</summary>
+        public const int LastEzraChapter = 10;
+    }
+
     public static TextSource Read(string folder)
     {
         var files = Directory.GetFiles(folder, "*.usfm")
             .ToDictionary(path => Code(Path.GetFileName(path)), path => path);
 
-        var books = new List<BookDraft>(Canon.Length);
+        var books = new List<BookDraft>(Canon.Length + 1);
         var position = 0;
 
         foreach (var (code, canonical) in Canon)
@@ -101,26 +124,47 @@ internal static class SeptuagintTextSource
                     "under either name would put a book of the Septuagint where it does not belong.");
             }
 
-            position++;
+            var chapters = read.Chapters.Select(Chapter).ToList();
 
-            books.Add(new BookDraft(
-                CanonicalOrdinal: canonical,
-                Position: position,
-                Name: BookReferences.Name(canonical),
-                Slug: BookReferences.Slug(canonical),
-                Abbreviation: BookReferences.Abbreviation(canonical),
-                Chapters: [.. read.Chapters.Select(chapter => new ChapterDraft(
-                    chapter.Number,
-                    [.. chapter.Verses.Select(verse => new VerseDraft(
-                        verse.Number,
-                        [.. verse.Words.Select(word => new WordDraft(word.Surface, word.Trailer))],
-                        verse.Label))]))]));
+            if (code == SecondEsdras.Code)
+            {
+                books.Add(Book(SecondEsdras.Ezra, ++position,
+                    [.. chapters.Where(chapter => chapter.Number <= SecondEsdras.LastEzraChapter)]));
+                books.Add(Book(SecondEsdras.Nehemiah, ++position,
+                    [.. chapters
+                        .Where(chapter => chapter.Number > SecondEsdras.LastEzraChapter)
+                        .Select(chapter => chapter with
+                        {
+                            Number = chapter.Number - SecondEsdras.LastEzraChapter,
+                        })]));
+                continue;
+            }
+
+            books.Add(Book(canonical, ++position, chapters));
         }
 
         return new TextSource(Definition(), books);
     }
 
-    /// <summary>Where a book of this edition stands in the shared canon.</summary>
+    private static BookDraft Book(int canonical, int position, IReadOnlyList<ChapterDraft> chapters) => new(
+        CanonicalOrdinal: canonical,
+        Position: position,
+        Name: BookReferences.Name(canonical),
+        Slug: BookReferences.Slug(canonical),
+        Abbreviation: BookReferences.Abbreviation(canonical),
+        Chapters: chapters);
+
+    private static ChapterDraft Chapter(UsfmChapter chapter) => new(
+        chapter.Number,
+        [.. chapter.Verses.Select(verse => new VerseDraft(
+            verse.Number,
+            [.. verse.Words.Select(word => new WordDraft(word.Surface, word.Trailer))],
+            verse.Label))]);
+
+    /// <summary>
+    /// Where a file of this edition starts in the shared canon. <c>EZR</c> is Esdras B and covers
+    /// two books, so this answers with the first of them; <see cref="SecondEsdras"/> has the rest.
+    /// </summary>
     public static int Canonical(string code) =>
         Canon.FirstOrDefault(entry => entry.Code == code) is { Canonical: > 0 } found
             ? found.Canonical

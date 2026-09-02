@@ -55,8 +55,14 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         var started = Stopwatch.StartNew();
         var verses = await db.Verses
             .Where(v => v.TextId == text.Id)
-            .Select(v => new { v.Id, Book = v.Book!.CanonicalOrdinal, v.ChapterNumber, v.Number })
+            .Select(v => new { v.Id, Book = v.Book!.CanonicalOrdinal, v.ChapterNumber, v.Number, v.Label })
             .ToListAsync(cancellationToken);
+
+        // The addresses this text prints as lettered verses, which the frame resolves differently.
+        var lettered = verses
+            .Where(v => v.Label.Length > 0)
+            .Select(v => new CanonicalReference(v.Book, v.ChapterNumber, v.Number))
+            .ToHashSet();
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -67,7 +73,12 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         {
             foreach (var verse in verses)
             {
-                var placements = frame.Resolve(verse.Book, verse.ChapterNumber, verse.Number);
+                var placements = frame.Resolve(
+                    verse.Book,
+                    verse.ChapterNumber,
+                    verse.Number,
+                    lettered.Contains(new CanonicalReference(verse.Book, verse.ChapterNumber, verse.Number)));
+
                 if (placements[0].Chapter != verse.ChapterNumber || placements[0].Verse != verse.Number)
                 {
                     moved++;

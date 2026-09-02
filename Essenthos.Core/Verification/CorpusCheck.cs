@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -14,12 +15,19 @@ namespace Essenthos.Core.Verification;
 /// one of those numbers takes seconds — so the work was not the measuring, it was remembering to
 /// measure, which is what this removes.
 ///
-/// The four measures answer different questions and none of them substitutes for another. Coverage
-/// is the forward view: of the words in a translation, how many say anything. Reach is the same
-/// question from the other side, and it is the one nobody asks — a corpus can link 90% of a
-/// translation's words to 40% of the witness's, and the forward number hides that entirely.
-/// Contention counts words claimed more than once, which is how a heuristic mapping announces
-/// itself. Integrity is the only measure with a right answer, and it is zero.
+/// The measures answer different questions and none of them substitutes for another. Coverage is
+/// the forward view: of the words in a text, how many say anything. Reach is the same question from
+/// the other side, and it is the one nobody asks — a corpus can link 90% of a translation's words
+/// to 40% of the witness's, and the forward number hides that entirely. Contention counts words
+/// claimed more than once, which is how a heuristic mapping announces itself. Pairing asks whether
+/// the two texts were laid against each other correctly at all, which every other measure assumes.
+/// Integrity is the only measure with a right answer, and it is zero.
+///
+/// Coverage is reported per section rather than per text, because a text is not one thing: the King
+/// James renders 97% of the Hebrew and 58% of the Greek, and one number for it describes neither
+/// half. And it covers every text with links rather than the translations alone, because the
+/// worst-covered text in this corpus is a printed edition and a headline share computed without it
+/// is a headline about a subset.
 /// </summary>
 internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
 {
@@ -37,13 +45,45 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// </summary>
     private const string StructuralMorphemes = "(strong_number LIKE 'H9%' OR strong_number = 'H853')";
 
+    /// <summary>The last book of each half of the canon, which is where a section ends.</summary>
+    private const int LastOldTestamentBook = 39;
+
+    private const int LastNewTestamentBook = 66;
+
     /// <summary>
     /// Walks the links rather than the words: a lateral lookup per word would be two million of
     /// them, and the answer is the same.
+    ///
+    /// Whether a word was ever promised anything is asked of its verse and not of its text. The
+    /// Septuagint's deuterocanon has no Hebrew counterpart at all and its Daniel 3 has sixty-five
+    /// verses BHSA does not hold, and counting those as words the corpus failed to reach would
+    /// report the shape of the canon as a defect in the alignment.
+    ///
+    /// Every text linked to a witness is counted, and every translation whether or not it is —
+    /// unfinished alignment work is a fact worth reporting, and it is the <c>unpaired</c> column
+    /// that reports it.
     /// </summary>
-    private const string CoverageSql =
-        """
-        WITH claimed AS (
+    private static readonly string CoverageSql =
+        $"""
+        WITH witness AS (
+            SELECT DISTINCT l.from_text_id, l.to_text_id
+            FROM link l
+            JOIN text other ON other.id = l.to_text_id AND other.kind <> 'translation'
+        ),
+        placed AS (
+            SELECT v.id AS verse_id, v.text_id, r.canonical_book AS book,
+                   r.canonical_chapter AS chapter, r.canonical_verse AS verse
+            FROM verse v
+            JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+        ),
+        paired AS (
+            SELECT DISTINCT here.verse_id
+            FROM placed here
+            JOIN witness w ON w.from_text_id = here.text_id
+            JOIN placed there ON there.text_id = w.to_text_id
+                AND (there.book, there.chapter, there.verse) = (here.book, here.chapter, here.verse)
+        ),
+        claimed AS (
             SELECT lw.word_id,
                    bool_or(l.relation IN ('renders', 'equals')) AS rendered,
                    bool_or(l.relation IN ('omits', 'expands', 'transposes')) AS absent
@@ -52,24 +92,105 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             JOIN text other ON other.id = l.to_text_id AND other.kind <> 'translation'
             WHERE lw.side = 'from'
             GROUP BY lw.word_id
-        ),
-        paired AS (
-            SELECT DISTINCT l.from_text_id
-            FROM link l
-            JOIN text other ON other.id = l.to_text_id AND other.kind <> 'translation'
         )
         SELECT t.slug,
+               CASE
+                   WHEN p.book <= {LastOldTestamentBook} THEN 'old testament'
+                   WHEN p.book <= {LastNewTestamentBook} THEN 'new testament'
+                   ELSE 'deuterocanon'
+               END,
                count(*),
                count(*) FILTER (WHERE c.rendered),
                count(*) FILTER (WHERE c.rendered IS NOT TRUE AND c.absent),
-               count(*) FILTER (WHERE c.word_id IS NULL AND p.from_text_id IS NOT NULL),
-               count(*) FILTER (WHERE c.word_id IS NULL AND p.from_text_id IS NULL)
+               count(*) FILTER (WHERE c.word_id IS NULL AND pv.verse_id IS NOT NULL),
+               count(*) FILTER (WHERE c.word_id IS NULL AND pv.verse_id IS NULL)
         FROM word w
-        JOIN text t ON t.id = w.text_id AND t.kind = 'translation'
+        JOIN text t ON t.id = w.text_id
+        JOIN placed p ON p.verse_id = w.verse_id
         LEFT JOIN claimed c ON c.word_id = w.id
-        LEFT JOIN paired p ON p.from_text_id = w.text_id
-        GROUP BY t.slug
-        ORDER BY t.slug
+        LEFT JOIN paired pv ON pv.verse_id = w.verse_id
+        WHERE t.kind = 'translation'
+           OR EXISTS (SELECT 1 FROM witness x WHERE x.from_text_id = w.text_id)
+        GROUP BY t.slug, 2
+        ORDER BY t.slug, 2
+        """;
+
+    /// <summary>
+    /// A verse pair whose links are all faint, which is what a wrong pairing looks like from
+    /// underneath. The links themselves are individually unremarkable and the verse as a whole is
+    /// not: Leviticus 11:15 in Brenton is Masoretic 11:16, so every link in it names the wrong
+    /// Hebrew word, and its mean confidence is the only thing in the corpus that says so.
+    /// </summary>
+    private const double WeakVerse = 0.5;
+
+    /// <summary>
+    /// How many links a verse pair needs before its mean is worth reading. One faint link is a
+    /// faint link; six of them and nothing else is a verse laid against the wrong verse.
+    /// </summary>
+    private const int EnoughLinks = 3;
+
+    /// <summary>How many of the weakest are named. A reader checks a few and infers the rest.</summary>
+    private const int WorstNamed = 12;
+
+    /// <summary>The threshold as SQL reads it, which is not as a Ukrainian locale writes it.</summary>
+    private static readonly string Weak = WeakVerse.ToString(CultureInfo.InvariantCulture);
+
+    /// <summary>
+    /// Whether the two texts were laid against each other correctly, which every other measure
+    /// takes for granted. Verses are paired by canonical address alone, so a chapter the two divide
+    /// differently produces links that are wrong in a way no word-level check can see.
+    ///
+    /// Two signals, and they catch different failures. A chapter where the two hold a different
+    /// number of verses is visible without looking at a single link. Where the counts agree and the
+    /// division does not, nothing is visibly wrong and the alignment quietly collapses, which the
+    /// mean confidence of the verse reports.
+    /// </summary>
+    private static readonly string PairingSql =
+        $"""
+        WITH placed AS (
+            SELECT v.id AS verse_id, v.text_id, r.canonical_book AS book,
+                   r.canonical_chapter AS chapter, r.canonical_verse AS verse
+            FROM verse v
+            JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+        ),
+        size AS (
+            SELECT text_id, book, chapter, count(*) AS verses FROM placed GROUP BY 1, 2, 3
+        ),
+        pairs AS (SELECT DISTINCT from_text_id, to_text_id FROM link),
+        strength AS (
+            SELECT l.from_text_id, l.to_text_id, w.verse_id, avg(l.confidence) AS mean, count(*) AS links
+            FROM link l
+            JOIN link_word lw ON lw.link_id = l.id AND lw.side = 'from'
+            JOIN word w ON w.id = lw.word_id
+            WHERE l.confidence IS NOT NULL
+            GROUP BY 1, 2, 3
+        )
+        SELECT f.slug,
+               t.slug,
+               count(DISTINCT (here.book, here.chapter)) FILTER (WHERE there.text_id IS NOT NULL),
+               count(DISTINCT (here.book, here.chapter)) FILTER (WHERE here.verses <> there.verses),
+               (SELECT count(*) FROM strength s
+                 WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id),
+               (SELECT count(*) FROM strength s
+                 WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id
+                   AND s.links >= {EnoughLinks} AND s.mean < {Weak}),
+               (SELECT coalesce(array_agg(name ORDER BY mean), ARRAY[]::text[]) FROM (
+                    SELECT b.name || ' ' || v.chapter_number || ':' || v.number AS name, s.mean
+                    FROM strength s
+                    JOIN verse v ON v.id = s.verse_id
+                    JOIN book b ON b.id = v.book_id
+                    WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id
+                      AND s.links >= {EnoughLinks} AND s.mean < {Weak}
+                    ORDER BY s.mean
+                    LIMIT {WorstNamed}) worst)
+        FROM pairs p
+        JOIN text f ON f.id = p.from_text_id
+        JOIN text t ON t.id = p.to_text_id
+        LEFT JOIN size here ON here.text_id = p.from_text_id
+        LEFT JOIN size there ON there.text_id = p.to_text_id
+            AND (there.book, there.chapter) = (here.book, here.chapter)
+        GROUP BY f.slug, t.slug, p.from_text_id, p.to_text_id
+        ORDER BY f.slug, t.slug
         """;
 
     /// <summary>
@@ -168,6 +289,19 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             """),
         ("links naming no word on either side",
             "SELECT count(*) FROM link l WHERE NOT EXISTS (SELECT 1 FROM link_word lw WHERE lw.link_id = l.id)"),
+        // An absence is one claim read from either end, and the relation is the only thing that
+        // says which end. An `omits` link names words on the `to` side alone and an `expands` link
+        // on the `from` side alone; a row with words on the side the relation says is empty has
+        // thrown the direction away, and no query can recover it.
+        ("absences whose relation contradicts the side the words are on",
+            """
+            SELECT count(*) FROM link l
+            WHERE l.relation IN ('omits', 'expands')
+              AND EXISTS (
+                  SELECT 1 FROM link_word lw
+                  WHERE lw.link_id = l.id
+                    AND lw.side = CASE l.relation WHEN 'omits' THEN 'from' ELSE 'to' END)
+            """),
         // A link may name words in two verses on purpose — that is how "the word ended up
         // elsewhere" is said. It is only wrong when no verse link joins the two verses, because
         // then the corpus is claiming a correspondence across a boundary it does not believe in.
@@ -197,8 +331,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         var coverage = await Read(connection, CoverageSql, cancellationToken, reader => new Coverage(
-            reader.GetString(0), (int)reader.GetInt64(1), (int)reader.GetInt64(2),
-            (int)reader.GetInt64(3), (int)reader.GetInt64(4), (int)reader.GetInt64(5)));
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
+            (int)reader.GetInt64(4), (int)reader.GetInt64(5), (int)reader.GetInt64(6)));
 
         var reach = await Read(connection, ReachSql, cancellationToken, reader => new Reach(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
@@ -209,6 +343,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var crowding = await Read(connection, CrowdingSql, cancellationToken, reader => new Crowding(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
 
+        var pairing = await Read(connection, PairingSql, cancellationToken, reader => new Pairing(
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
+            (int)reader.GetInt64(4), (int)reader.GetInt64(5), reader.GetFieldValue<string[]>(6)));
+
         var integrity = new List<IntegrityCheck>(Integrity.Length);
         foreach (var (breaks, sql) in Integrity)
         {
@@ -216,7 +354,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             integrity.Add(new IntegrityCheck(breaks, (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!));
         }
 
-        return new CorpusMeasures(coverage, reach, contention, crowding, integrity);
+        return new CorpusMeasures(coverage, reach, contention, crowding, pairing, integrity);
     }
 
     /// <summary>
@@ -256,7 +394,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
 
         if (previous is null)
         {
-            logger.LogInformation("Verified: {Rendered:P1} of translated words reach a witness", current.Rendered);
+            logger.LogInformation(
+                "Verified: {Rendered:P1} of the words in a linked text reach a witness", current.Rendered);
             return;
         }
 
@@ -264,14 +403,14 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         if (moved < -Tolerance)
         {
             logger.LogWarning(
-                "Verified: {Rendered:P1} of translated words reach a witness, down from {Before:P1}. " +
+                "Verified: {Rendered:P1} of the words in a linked text reach a witness, down from {Before:P1}. " +
                 "A load that reaches fewer words than the one before it has lost something",
                 current.Rendered, previous.Rendered);
             return;
         }
 
         logger.LogInformation(
-            "Verified: {Rendered:P1} of translated words reach a witness, {Before:P1} last time",
+            "Verified: {Rendered:P1} of the words in a linked text reach a witness, {Before:P1} last time",
             current.Rendered, previous.Rendered);
     }
 

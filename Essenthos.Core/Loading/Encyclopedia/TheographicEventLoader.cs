@@ -97,14 +97,14 @@ internal sealed class TheographicEventLoader(AppDbContext db, ILogger<Theographi
         var taken = await db.Events.Select(e => e.Slug).ToHashSetAsync(cancellationToken);
 
         var events = new List<Event>();
-        var years = new Dictionary<Event, int>();
+        var years = new Dictionary<Event, (int Astronomical, string Citation)>();
         var resolved = 0;
         var linked = 0;
 
         foreach (var row in rows)
         {
-            var stated = Astronomical(row["startDate"]);
-            var year = stated ?? Follow(row, byTitle, []);
+            var stated = Stated(row["startDate"]);
+            var year = YearOf(row, byTitle);
             if (year is not { } astronomical || astronomical <= WhereTheOtherDatasetStops)
             {
                 continue;
@@ -137,24 +137,22 @@ internal sealed class TheographicEventLoader(AppDbContext db, ILogger<Theographi
                 CanonicalBook = reference?.Book,
                 CanonicalChapter = reference?.Chapter,
                 CanonicalVerse = reference?.Verse,
-                Notes = stated is null
-                    ? "Theographic leaves this event undated. The year here is its own: followed up " +
-                      "the predecessor chain it records until a dated event, adding each step's " +
-                      "duration. That chain is how the rest of its dates are computed; these are the " +
-                      "ones where it never ran."
-                    : null,
+                Notes = stated is { } date ? BeyondTheAxis(date) : Chained,
                 Source = Source,
             };
 
             events.Add(made);
-            years[made] = astronomical;
+            years[made] = (astronomical, stated is { } given
+                ? $"Theographic dates this {Written(given)}"
+                : $"Theographic states no date for this event; {Written((astronomical, 0, 0))} follows " +
+                  "from the predecessor chain it records.");
         }
 
         db.Events.AddRange(events);
         await db.SaveChangesAsync(cancellationToken);
 
         var dates = new List<EventDate>(events.Count * chronologies.Count);
-        foreach (var (made, astronomical) in years)
+        foreach (var (made, dated) in years)
         {
             foreach (var chronology in chronologies)
             {
@@ -162,10 +160,8 @@ internal sealed class TheographicEventLoader(AppDbContext db, ILogger<Theographi
                 {
                     EventId = made.Id,
                     ChronologyId = chronology.Id,
-                    Year = AnnoMundi(chronology.LastYearBeforeTheCommonEra, astronomical),
-                    Citation = astronomical <= 0
-                        ? $"Theographic dates this {1 - astronomical} BCE"
-                        : $"Theographic dates this AD {astronomical}",
+                    Year = AnnoMundi(chronology.LastYearBeforeTheCommonEra, dated.Astronomical),
+                    Citation = dated.Citation,
                     Notes = "Anchored to the common era rather than to the creation, so every " +
                             "reckoning places it in the same historical year and they differ only " +
                             "in what they call that year counting from the creation.",
@@ -192,14 +188,13 @@ internal sealed class TheographicEventLoader(AppDbContext db, ILogger<Theographi
     }
 
     /// <summary>
-    /// The one join the source is missing.
+    /// The one join the source's own graph is missing.
     ///
-    /// Its fifty undated events form chains, and every chain but one reaches a dated ancestor. The
-    /// exception is where Acts begins: <em>The Holy Spirit is promised</em> (Acts 1:4) names no
-    /// predecessor, so it and the four events after it — the ascension, Matthias, Pentecost, and
-    /// Peter's sermon — have nothing to be dated from. The gospel chain ends at the resurrection
-    /// and the Acts chain starts the next verse after it; joining them is what the source's own
-    /// model says, and it is the only edge added here.
+    /// Where Acts begins, <em>The Holy Spirit is promised</em> (Acts 1:4) names no predecessor, so
+    /// a chain reaching it stops there and the four events after it — the ascension, Matthias,
+    /// Pentecost and Peter's sermon — would have nothing to be dated from. The gospel chain ends
+    /// at the resurrection and the Acts chain starts the next verse after it; joining them is what
+    /// the source's own model says, and it is the only edge added here.
     /// </summary>
     private static readonly Dictionary<string, string> Bridges = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -243,20 +238,25 @@ internal sealed class TheographicEventLoader(AppDbContext db, ILogger<Theographi
     }
 
     /// <summary>
-    /// A date for an event the source leaves undated, from the chain it already records.
+    /// The year the corpus gives a row: what the source states, and only where it states nothing,
+    /// what its predecessor chain works out to.
+    /// </summary>
+    internal static int? YearOf(
+        Dictionary<string, string> row,
+        Dictionary<string, Dictionary<string, string>> byTitle) =>
+        Stated(row["startDate"])?.Year ?? Follow(row, byTitle, []);
+
+    /// <summary>
+    /// A date for an event the source leaves undated, from the chain it already records: walk to
+    /// the nearest dated ancestor and add each step's duration.
     ///
-    /// Fifty events have no <c>startDate</c> and every one of them names a predecessor — including
-    /// the crucifixion, the resurrection, Pentecost and the whole of the first missionary journey.
-    /// They are not undatable; the source's own dependency solver simply never ran on them. So it
-    /// is run here: walk to the nearest dated ancestor and add each step's duration.
+    /// The fallback, not the rule. Every row in the file as it stands states a date, so this runs
+    /// on nothing — but the source is a live repository, its events name predecessors, and a row
+    /// that arrives with a predecessor and no date is datable rather than undatable.
     ///
     /// Worked in days and floored to a year at the end, because the steps are mostly a day or a
     /// month and summing them as whole years would drift by one per step.
     /// </summary>
-    internal static int? YearOf(
-        Dictionary<string, string> row,
-        Dictionary<string, Dictionary<string, string>> byTitle) => Follow(row, byTitle, []);
-
     private static int? Follow(
         Dictionary<string, string> row,
         Dictionary<string, Dictionary<string, string>> byTitle,
@@ -271,9 +271,9 @@ internal sealed class TheographicEventLoader(AppDbContext db, ILogger<Theographi
         Dictionary<string, Dictionary<string, string>> byTitle,
         HashSet<string> visiting)
     {
-        if (Astronomical(row["startDate"]) is { } stated)
+        if (Stated(row["startDate"]) is { } stated)
         {
-            return stated * 365.0;
+            return stated.Year * 365.0 + Into(stated);
         }
 
         var title = row["title"].Trim();
@@ -325,10 +325,85 @@ internal sealed class TheographicEventLoader(AppDbContext db, ILogger<Theographi
         };
     }
 
-    private static int? Astronomical(string? value) =>
-        int.TryParse((value ?? string.Empty).Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out var year)
-            ? year
-            : null;
+    /// <summary>
+    /// The date the source states, in the two shapes it writes.
+    ///
+    /// Most rows are a bare astronomical year — <c>-4003</c> for 4004 BCE, <c>30</c> for AD 30 —
+    /// and fifty are a full ISO date, <c>0030-04-04</c>, with one of them writing a single-digit
+    /// day. Same reckoning either way; only the second carries a month, and <c>Month</c> is zero
+    /// where the source gives none.
+    /// </summary>
+    internal static (int Year, int Month, int Day)? Stated(string? value)
+    {
+        var text = (value ?? string.Empty).Trim();
+        if (text.Length == 0)
+        {
+            return null;
+        }
+
+        var negative = text[0] == '-';
+        var parts = (negative ? text[1..] : text).Split('-');
+        if (!int.TryParse(parts[0], NumberStyles.None, CultureInfo.InvariantCulture, out var year))
+        {
+            return null;
+        }
+
+        if (negative)
+        {
+            year = -year;
+        }
+
+        if (parts.Length == 1)
+        {
+            return (year, 0, 0);
+        }
+
+        if (parts.Length != 3
+            || !int.TryParse(parts[1], NumberStyles.None, CultureInfo.InvariantCulture, out var month)
+            || !int.TryParse(parts[2], NumberStyles.None, CultureInfo.InvariantCulture, out var day)
+            || month is < 1 or > 12
+            || day is < 1 or > 31)
+        {
+            return null;
+        }
+
+        return (year, month, day);
+    }
+
+    private static readonly int[] DaysBeforeMonth = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+
+    /// <summary>
+    /// Days from the start of the stated year, so a chain hung off a day-precise date does not
+    /// gain or lose a year at its first step.
+    /// </summary>
+    private static int Into((int Year, int Month, int Day) date) =>
+        date.Month == 0 ? 0 : DaysBeforeMonth[date.Month - 1] + date.Day - 1;
+
+    private const string Chained =
+        "Theographic leaves this event undated. The year here is its own: followed up the " +
+        "predecessor chain it records until a dated event, adding each step's duration.";
+
+    /// <summary>
+    /// What the source states and the axis cannot hold.
+    ///
+    /// Twenty-six events of Holy Week and the opening of Acts share one year, and the day is the
+    /// only thing that orders them — so where the source gives one it is written down, even though
+    /// nothing draws it yet.
+    /// </summary>
+    private static string? BeyondTheAxis((int Year, int Month, int Day) date) =>
+        date.Month == 0
+            ? null
+            : $"Theographic dates this {Written(date)}. The axis is a year, so the day is recorded " +
+              "here rather than drawn.";
+
+    /// <summary>The date as a reader says it — <c>4 April AD 30</c>, <c>4004 BCE</c>.</summary>
+    private static string Written((int Year, int Month, int Day) date)
+    {
+        var era = date.Year <= 0 ? $"{1 - date.Year} BCE" : $"AD {date.Year}";
+        return date.Month == 0
+            ? era
+            : $"{date.Day} {CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(date.Month)} {era}";
+    }
 
     /// <summary>
     /// What sort of event it is, inferred from the title.

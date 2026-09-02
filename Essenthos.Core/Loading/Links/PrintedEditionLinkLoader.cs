@@ -40,9 +40,10 @@ internal sealed record PrintedEditionOutcome(
 /// says which word corresponds to which, and where it offers a choice it says that too. Every link
 /// carries <c>stated-by-source</c> and no confidence.
 ///
-/// The 52 groups where one side is empty are the interesting ones. They are written as
-/// <c>omits</c>, with words on one side and nothing on the other, which is what DOC-0007 built the
-/// link table to be able to say: an absence recorded rather than a hole left.
+/// The 52 groups where one side is empty are the interesting ones. They are written with words on
+/// one side and nothing on the other, which is what DOC-0007 built the link table to be able to
+/// say: an absence recorded rather than a hole left. Which edition lacks the word is the relation's
+/// to carry — <c>omits</c> where Stephanus does, <c>expands</c> where Scrivener does.
 /// </summary>
 internal sealed class PrintedEditionLinkLoader(AppDbContext db, ILogger<PrintedEditionLinkLoader> logger)
 {
@@ -111,7 +112,7 @@ internal sealed class PrintedEditionLinkLoader(AppDbContext db, ILogger<PrintedE
             drafts.Count,
             drafts.Count(d => d.Relation == LinkRelation.Equals),
             drafts.Count(d => d.Relation == LinkRelation.Renders),
-            drafts.Count(d => d.Relation == LinkRelation.Omits),
+            drafts.Count(d => d.Relation is LinkRelation.Omits or LinkRelation.Expands),
             started.Elapsed);
 
         logger.LogInformation("Linked the printed editions: {Outcome}", outcome);
@@ -147,10 +148,13 @@ internal sealed class PrintedEditionLinkLoader(AppDbContext db, ILogger<PrintedE
 
             // A segment present on one side only is a word one edition prints and the other does
             // not. Stored positively, which is what turns a difference between editions from a gap
-            // into something a reader can be shown.
-            var relation = here.Count == 0 || there.Count == 0
+            // into something a reader can be shown — and which way round it stands is the relation's
+            // to say, since a row with one empty side cannot say it on its own.
+            var relation = here.Count == 0
                 ? LinkRelation.Omits
-                : Same(here, there) ? LinkRelation.Equals : LinkRelation.Renders;
+                : there.Count == 0
+                    ? LinkRelation.Expands
+                    : Same(here, there) ? LinkRelation.Equals : LinkRelation.Renders;
 
             drafts.Add(new EditionDraft(
                 relation,

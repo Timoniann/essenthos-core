@@ -10,24 +10,28 @@ namespace Essenthos.Core.Loading.Links;
 
 /// <param name="Same">Words the two editions write identically once accents are set aside.</param>
 /// <param name="Differing">Words at the same place in the verse that are not the same word.</param>
-/// <param name="Omitted">
-/// A word one edition has and the other does not. This is the interesting number and the reason to
-/// hold two Greek witnesses at all: it is the textual variants, stated.
+/// <param name="Missing">
+/// A word the second edition has and the first does not. This and <paramref name="Added"/> are the
+/// interesting numbers and the reason to hold two Greek witnesses at all: they are the textual
+/// variants, stated, and each says which edition lacks the word.
 /// </param>
+/// <param name="Added">A word the first edition has and the second does not.</param>
 internal sealed record GreekWitnessOutcome(
     bool AlreadyLoaded,
     int Verses,
     int Links,
     int Same,
     int Differing,
-    int Omitted,
+    int Missing,
+    int Added,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "the Greek witnesses are already linked"
             : $"{Links} links over {Verses} verses in {Elapsed}: {Same} the same word, {Differing} a " +
-              $"different word in the same place, {Omitted} present in one edition and not the other";
+              $"different word in the same place, {Added} the first edition has and the second does not, " +
+              $"{Missing} the second has and the first does not";
 }
 
 /// <summary>
@@ -47,16 +51,34 @@ internal sealed record GreekWitnessOutcome(
 /// aligner, no statistics. Where a number stands once on each side the pairing is certain enough
 /// to say so; where it repeats, the repeats are handed out in order, which is right far more often
 /// than not and is recorded at a lower confidence because "far more often than not" is what it is.
+/// The words no number answers are then read as variants where they stand at the same place, and
+/// that one step is positional rather than stated, so it says <c>lexical</c> and says it cheaply.
 /// </summary>
 internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitnessLinkLoader> logger)
 {
     private const string Source = "the Strong numbers both editions carry, paired within each verse";
+
+    private const string SubstitutionSource =
+        "the words left over once the Strong numbers were paired, matched by their place in the verse";
 
     /// <summary>A number standing once on each side of the verse. There is nothing to choose between.</summary>
     private const double Unique = 0.95;
 
     /// <summary>A number standing more than once, handed out in the order it occurs.</summary>
     private const double Repeated = 0.85;
+
+    /// <summary>
+    /// Two words the editions do not share, standing at the same place in the verse. Position is
+    /// the whole evidence, so this sits below every number match and well above nothing.
+    /// </summary>
+    private const double Substituted = 0.6;
+
+    /// <summary>
+    /// How far apart two leftovers may stand and still be one reading. The editions run word for
+    /// word between variants, so a substitution moves a word by one at most; anything further is
+    /// two unrelated absences that happened to fall in the same verse.
+    /// </summary>
+    private const int SamePlace = 1;
 
     private const string LinkImport =
         """
@@ -78,7 +100,7 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
         if (await db.Links.AnyAsync(l => l.FromTextId == from && l.ToTextId == to, cancellationToken))
         {
             logger.LogInformation("{From} and {To} are already linked; nothing to do", fromSlug, toSlug);
-            return new GreekWitnessOutcome(true, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new GreekWitnessOutcome(true, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -108,6 +130,7 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
             drafts.Count(d => d.Relation == LinkRelation.Equals),
             drafts.Count(d => d.Relation == LinkRelation.Renders),
             drafts.Count(d => d.Relation == LinkRelation.Omits),
+            drafts.Count(d => d.Relation == LinkRelation.Expands),
             started.Elapsed);
 
         logger.LogInformation("Linked {From} to {To}: {Outcome}", fromSlug, toSlug, outcome);
@@ -116,7 +139,7 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
 
     /// <summary>
     /// One verse of each edition, paired by the Strong numbers they both state. A number on one
-    /// side only is written positively as an omission rather than left as a hole — that is the
+    /// side only is written positively as an absence rather than left as a hole — that is the
     /// variant, and recording it is the whole point.
     /// </summary>
     private static void Pair(List<GreekWord> left, List<GreekWord> right, List<GreekDraft> drafts)
@@ -125,6 +148,9 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
             .ToDictionary(g => g.Key, g => g.OrderBy(w => w.Position).ToList());
         var yours = right.Where(w => w.Strong is not null).GroupBy(w => w.Strong!)
             .ToDictionary(g => g.Key, g => g.OrderBy(w => w.Position).ToList());
+
+        var hereOnly = new List<Leftover>();
+        var thereOnly = new List<Leftover>();
 
         foreach (var strong in mine.Keys.Union(yours.Keys))
         {
@@ -141,19 +167,62 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
                         : LinkRelation.Renders,
                     [ours[i].Id],
                     [theirs[i].Id],
-                    certainty));
+                    certainty,
+                    LinkMethod.StrongNumber));
             }
 
-            // Whatever is left over stands in one edition and not the other.
-            foreach (var word in ours.Skip(shared))
+            hereOnly.AddRange(ours.Skip(shared).Select(word => new Leftover(word, certainty)));
+            thereOnly.AddRange(theirs.Skip(shared).Select(word => new Leftover(word, certainty)));
+        }
+
+        Unpaired(hereOnly, thereOnly, drafts);
+    }
+
+    /// <summary>
+    /// What is left once the numbers have been paired, which is where the variants are.
+    ///
+    /// Two leftovers standing at the same place in their verses are one reading written two ways —
+    /// Matthew 1:10 has Ἀμώς where Scrivener has αμων, twice — and four independent absences say
+    /// that far worse than two substitutions do. The place is the only evidence for it, so the link
+    /// says <c>lexical</c> and carries a confidence well below a matched number.
+    ///
+    /// Everything else stands in one edition and not the other, and the side it is missing from is
+    /// what the relation has to name: <c>omits</c> where the first edition lacks the word,
+    /// <c>expands</c> where it has one the second does not.
+    /// </summary>
+    private static void Unpaired(List<Leftover> here, List<Leftover> there, List<GreekDraft> drafts)
+    {
+        here.Sort((a, b) => a.Word.Position.CompareTo(b.Word.Position));
+        there.Sort((a, b) => a.Word.Position.CompareTo(b.Word.Position));
+
+        var substituted = new HashSet<long>();
+        for (var i = 0; i < here.Count && i < there.Count; i++)
+        {
+            if (Math.Abs(here[i].Word.Position - there[i].Word.Position) > SamePlace)
             {
-                drafts.Add(new GreekDraft(LinkRelation.Omits, [word.Id], [], certainty));
+                continue;
             }
 
-            foreach (var word in theirs.Skip(shared))
-            {
-                drafts.Add(new GreekDraft(LinkRelation.Omits, [], [word.Id], certainty));
-            }
+            substituted.Add(here[i].Word.Id);
+            substituted.Add(there[i].Word.Id);
+            drafts.Add(new GreekDraft(
+                LinkRelation.Renders,
+                [here[i].Word.Id],
+                [there[i].Word.Id],
+                Substituted,
+                LinkMethod.Lexical));
+        }
+
+        foreach (var leftover in here.Where(l => !substituted.Contains(l.Word.Id)))
+        {
+            drafts.Add(new GreekDraft(
+                LinkRelation.Expands, [leftover.Word.Id], [], leftover.Certainty, LinkMethod.StrongNumber));
+        }
+
+        foreach (var leftover in there.Where(l => !substituted.Contains(l.Word.Id)))
+        {
+            drafts.Add(new GreekDraft(
+                LinkRelation.Omits, [], [leftover.Word.Id], leftover.Certainty, LinkMethod.StrongNumber));
         }
     }
 
@@ -199,7 +268,6 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
-        var method = EnumSpelling.Of(LinkMethod.StrongNumber);
         var fromSide = EnumSpelling.Of(LinkSide.From);
         var toSide = EnumSpelling.Of(LinkSide.To);
 
@@ -213,9 +281,13 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
                 await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(
                     EnumSpelling.Of(drafts[i].Relation), NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(
+                    EnumSpelling.Of(drafts[i].Method), NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(drafts[i].Confidence, NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(
+                    drafts[i].Method == LinkMethod.Lexical ? SubstitutionSource : Source,
+                    NpgsqlDbType.Text,
+                    cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
@@ -276,9 +348,13 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
 
     private sealed record GreekWord(long Id, int Position, string Surface, string? Strong);
 
+    /// <summary>A word whose number the other edition did not answer, and how sure that is.</summary>
+    private sealed record Leftover(GreekWord Word, double Certainty);
+
     private sealed record GreekDraft(
         LinkRelation Relation,
         List<long> From,
         List<long> To,
-        double Confidence);
+        double Confidence,
+        LinkMethod Method);
 }

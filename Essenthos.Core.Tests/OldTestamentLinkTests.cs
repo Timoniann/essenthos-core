@@ -138,6 +138,65 @@ public sealed class OldTestamentLinkTests : IDisposable
         (await _db.Links.CountAsync()).Should().Be(0);
     }
 
+    /// <summary>
+    /// The check the file's own comments promised and nothing ran. The counts agree, so the load
+    /// before this one wrote four links naming the wrong Hebrew word each, and it would have gone
+    /// on doing that for as long as the file and BHSA divided a verse differently.
+    /// </summary>
+    [Fact]
+    public async Task AVerseTheTwoDivideDifferentlyIsCaughtByItsGlossesEvenThoughTheCountsAgree()
+    {
+        Gloss("gloss2", "gloss3", "gloss4", "gloss5");
+
+        var outcome = await Load(Record(
+            Segment(["In", "the"], 1),
+            Segment(["beginning"], 2),
+            Segment(["created"], 3)));
+
+        outcome.Refused.Should().Be(1);
+        outcome.GlossRefused.Should().Be(1);
+        outcome.Links.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task AVerseWhoseGlossesAgreeIsLoadedAndSaysHowFarTheCheckReached()
+    {
+        Gloss("gloss1", "gloss2", "gloss3", "gloss4");
+
+        var outcome = await Load(Record(
+            Segment(["In", "the", "beginning"], 2),
+            Segment(["created"], 3)));
+
+        outcome.GlossRefused.Should().Be(0);
+        outcome.GlossesCompared.Should().Be(4);
+        outcome.Links.Should().Be(2);
+    }
+
+    /// <summary>
+    /// A witness with no glosses cannot answer, and the outcome says the check reached nothing
+    /// rather than reporting a pass it never earned.
+    /// </summary>
+    [Fact]
+    public async Task AWitnessWithNoGlossesLeavesTheCheckWithNothingToCompare()
+    {
+        var outcome = await Load(Record(
+            Segment(["In", "the", "beginning"], 2),
+            Segment(["created"], 3)));
+
+        outcome.GlossesCompared.Should().Be(0);
+        outcome.Links.Should().Be(2);
+    }
+
+    private void Gloss(params string[] glosses)
+    {
+        for (var position = 0; position < glosses.Length; position++)
+        {
+            _db.WordAt(_bhsa, 1, 1, position + 1).Gloss = glosses[position];
+        }
+
+        _db.SaveChanges();
+    }
+
     private async Task<LinkOutcome> Load(params MappingRecord[] records)
     {
         Place(_kjv);

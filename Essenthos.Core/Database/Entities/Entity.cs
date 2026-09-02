@@ -73,11 +73,12 @@ public class Entity
 /// One name or title an entity is called by, in the languages the source carries it in.
 ///
 /// This is where the encyclopedia meets the rest of the corpus: a label carries a Strong number,
-/// and a Strong number reaches words. Nothing uses that yet, and the column is why it will be
+/// and a Strong number reaches words. Nothing uses that yet, and the columns are why it will be
 /// possible without another load.
 /// </summary>
 [Index(nameof(EntityId))]
-[Index(nameof(StrongNumber))]
+[Index(nameof(HebrewStrongNumber))]
+[Index(nameof(GreekStrongNumber))]
 public class EntityName
 {
     [Key]
@@ -100,7 +101,18 @@ public class EntityName
     /// <summary>What the name means, where the source says. "Drawn out", "House of Bread".</summary>
     public string? Meaning { get; set; }
 
-    public string? StrongNumber { get; set; }
+    /// <summary>
+    /// The Hebrew lexeme this name is, as a Strong number — and for a title, the Strong number of
+    /// each word of it, comma-joined the way <see cref="StrongEntry.SeeAlso"/> joins its
+    /// cross-references. <em>King of Judah</em> is two words and two numbers, and squeezing them
+    /// into one value is what made a sixth of this column unresolvable.
+    ///
+    /// The two languages are separate columns because a name has both: Elijah is H452 in Kings and
+    /// G2243 in Luke, and one column can only keep whichever is read first.
+    /// </summary>
+    public string? HebrewStrongNumber { get; set; }
+
+    public string? GreekStrongNumber { get; set; }
 
     /// <summary>Name, title, epithet — what kind of label this is.</summary>
     public string? Kind { get; set; }
@@ -152,9 +164,10 @@ public class EntityRelationship
 /// </summary>
 /// <remarks>
 /// <see cref="Disputed"/> marks a reference the source itself cannot resolve. BibleData holds the
-/// God of the Old Testament and Jesus as one entity, and 1,397 New Testament references say only
-/// "G-d" or "Lord", which in the Gospels may be either. Those are kept and flagged rather than
-/// assigned, because assigning them would be this corpus asserting a reading of the text.
+/// God of the Old Testament and Jesus as one entity, and 1,417 New Testament references are
+/// labelled with a word the New Testament uses of both — "G-d", "Lord", "Savior", "Judge". Those
+/// are kept and flagged rather than assigned, because assigning them would be this corpus
+/// asserting a reading of the text.
 /// </remarks>
 [Index(nameof(EntityId))]
 [Index(nameof(CanonicalBook), nameof(CanonicalChapter), nameof(CanonicalVerse))]

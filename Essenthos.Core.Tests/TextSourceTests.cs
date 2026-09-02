@@ -213,3 +213,67 @@ public class TextSourceTests(ParsedWitnesses witnesses) : IClassFixture<ParsedWi
         words.Should().OnlyContain(w => w.StrongNumber != null && w.StrongNumber.StartsWith('G'));
     }
 }
+
+/// <summary>
+/// BHSA's elided morphemes: 6,488 words the annotation records and the text prints nothing for,
+/// almost all of them the definite article that has assimilated into the preposition before it.
+/// They are kept, because dropping one loses the word a translation's "the" corresponds to. What
+/// was missing is any way for a consumer to tell them from ordinary words.
+/// </summary>
+public class ElidedMorphemeTests(ParsedWitnesses witnesses) : IClassFixture<ParsedWitnesses>
+{
+    private const int ElidedMorphemes = 6_488;
+
+    [Fact]
+    public void EveryWordWithNoSurfaceIsMarkedAndNoOtherIs()
+    {
+        var words = Words(BhsaTextSource.Build(witnesses.Bhsa)).ToList();
+
+        words.Count(word => word.Elided).Should().Be(ElidedMorphemes);
+        words.Should().NotContain(word => word.Elided != (word.Surface.Length == 0));
+    }
+
+    /// <summary>
+    /// The annotation is the whole reason to keep them: an elided article carries its Strong number
+    /// and its morphology, and is the far end of thousands of alignments.
+    /// </summary>
+    [Fact]
+    public void AnElidedMorphemeStillCarriesItsAnnotation()
+    {
+        Words(BhsaTextSource.Build(witnesses.Bhsa))
+            .Where(word => word.Elided)
+            .Should().OnlyContain(word => word.Morphology != null);
+    }
+
+    /// <summary>
+    /// Ten of them carry a trailer, and seven repeat a space the word before them has already
+    /// supplied — the corpus's only doubled spaces. The other three are the whole of what separates
+    /// two words: they follow a maqqef, and one of them carries the verse's sof pasuq.
+    /// </summary>
+    [Fact]
+    public void NoVerseRebuildsWithADoubledSpace()
+    {
+        var doubled = BhsaTextSource.Build(witnesses.Bhsa).Books
+            .SelectMany(book => book.Chapters)
+            .SelectMany(chapter => chapter.Verses)
+            .Count(verse => string.Concat(verse.Words.Select(word => word.Surface + word.Trailer)).Contains("  "));
+
+        doubled.Should().Be(0);
+    }
+
+    [Fact]
+    public void TheTrailerThatIsTheOnlySeparatorIsKept()
+    {
+        // 2 Samuel 8:3, where the elided morpheme follows a maqqef and carries the sof pasuq.
+        var verse = BhsaTextSource.Build(witnesses.Bhsa).Books
+            .Single(book => book.CanonicalOrdinal == 10).Chapters
+            .Single(chapter => chapter.Number == 8).Verses
+            .Single(verse => verse.Number == 3);
+
+        verse.Words.Should().Contain(word => word.Elided && word.Trailer.Length > 0);
+    }
+
+    private static IEnumerable<WordDraft> Words(TextSource source) =>
+        source.Books.SelectMany(book => book.Chapters).SelectMany(chapter => chapter.Verses)
+            .SelectMany(verse => verse.Words);
+}

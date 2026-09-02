@@ -104,6 +104,12 @@ internal static class TextusReceptusTextSource
                 Name: name,
                 Slug: Slugs.Of(name),
                 Chapters: [.. verses
+                    // Robinson's file lists every verse either edition has and leaves the other's
+                    // empty: Stephanus omits Luke 17:36, so the file carries the number with no
+                    // words under it. A verse row means the text has that verse, so this edition
+                    // gets none — which is what the Nestle loader does with the sixteen verses the
+                    // critical text omits.
+                    .Where(v => v.Words.Count > 0)
                     .GroupBy(v => v.Chapter)
                     .OrderBy(chapter => chapter.Key)
                     .Select(chapter => new ChapterDraft(

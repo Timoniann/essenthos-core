@@ -181,6 +181,24 @@ public sealed class CorpusCheckTests : IDisposable
         integrity.Should().Be(1);
     }
 
+    /// <summary>
+    /// An absence is one claim read from either end, and only the relation says which end. A link
+    /// that says <c>omits</c> and names a word on the side that is supposed to be empty has thrown
+    /// the direction away, and nothing downstream can recover it: 8,451 links between the two Greek
+    /// witnesses said <c>omits</c> in both directions, so the relation named the fact of a variant
+    /// and never which edition lacked the word.
+    /// </summary>
+    [Fact]
+    public async Task AnAbsenceNamingAWordOnTheSideItSaysIsEmptyIsFound()
+    {
+        Link(LinkRelation.Omits, english: 1, hebrew: 1);
+        Link(LinkRelation.Expands, english: 2, hebrew: null);
+
+        var integrity = await Integrity("absences whose relation contradicts the side the words are on");
+
+        integrity.Should().Be(1);
+    }
+
     [Fact]
     public async Task ALinkNamingNoWordAtAllIsFound()
     {

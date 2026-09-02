@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +65,9 @@ internal static class SyntaxEndpoints
                     g.Features,
                     g.ParentId,
                     ParentKind = g.Parent == null ? (WordGroupKind?)null : g.Parent.Kind,
+                    g.MotherGroupId,
+                    MotherKind = g.MotherGroup == null ? (WordGroupKind?)null : g.MotherGroup.Kind,
+                    g.MotherWordId,
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -96,6 +99,9 @@ internal static class SyntaxEndpoints
             {
                 ParentId = group.ParentId,
                 ParentKind = group.ParentKind is { } kind ? EnumSpelling.Of(kind) : null,
+                MotherId = group.MotherGroupId,
+                MotherKind = group.MotherKind is { } mother ? EnumSpelling.Of(mother) : null,
+                MotherWordId = group.MotherWordId,
             });
         });
 
@@ -255,6 +261,17 @@ internal record SyntaxGroupResponse(
 
     /// <summary>What the containing group is, so a link to it is a fact rather than a number.</summary>
     public string? ParentKind { get; init; }
+
+    /// <summary>
+    /// What this group stands in its <c>relation</c> feature to: the regens a rectum belongs to,
+    /// the clause an adjunctive clause modifies. Without it the relation names nothing.
+    /// </summary>
+    public long? MotherId { get; init; }
+
+    public string? MotherKind { get; init; }
+
+    /// <summary>The mother where the analysis names a single word rather than a group.</summary>
+    public long? MotherWordId { get; init; }
 
     /// <summary>The group's own words, run together, so a search result can be read as text.</summary>
     public string? Preview { get; init; }

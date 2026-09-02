@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 using Essenthos.Core.Database.Entities.Enums;
@@ -21,6 +21,8 @@ namespace Essenthos.Core.Database.Entities;
 /// </summary>
 [Index(nameof(TextId), nameof(Kind))]
 [Index(nameof(ParentId))]
+[Index(nameof(MotherGroupId))]
+[Index(nameof(MotherWordId))]
 public class WordGroup
 {
     [Key]
@@ -42,7 +44,31 @@ public class WordGroup
 
     public WordGroup? Parent { get; set; }
 
-    /// <summary>Its order among the groups of its kind, by where its first word stands.</summary>
+    /// <summary>
+    /// What this group stands in its <c>relation</c> to, where its analysis names one: a rectum's
+    /// regens, an adjunctive clause's main clause. It is the other half of the relation, and
+    /// without it <c>{"relation": "rec"}</c> says a group is the genitive of nothing.
+    ///
+    /// Not <see cref="ParentId"/>: that is containment and points at what this group is inside of,
+    /// while a mother points sideways at something this group need not be anywhere near.
+    /// </summary>
+    public long? MotherGroupId { get; set; }
+
+    public WordGroup? MotherGroup { get; set; }
+
+    /// <summary>
+    /// The mother where it is a single word rather than a group, which BHSA states for 38,397 of
+    /// its edges. Exactly one of this and <see cref="MotherGroupId"/> is set, or neither.
+    /// </summary>
+    public long? MotherWordId { get; set; }
+
+    public Word? MotherWord { get; set; }
+
+    /// <summary>
+    /// Its place in text order among the groups of its kind in this text, counting from one. A
+    /// group's children ordered by it are therefore in text order too, which is what makes
+    /// <em>the second clause of this sentence</em> answerable without reading any words.
+    /// </summary>
     public int Position { get; set; }
 
     /// <summary>

@@ -79,6 +79,26 @@ internal static class Corpus
         return text;
     }
 
+    /// <summary>
+    /// Moves a text into another part of the canonical frame. <see cref="Add"/> puts everything in
+    /// Genesis, which is right until the test is about the two halves of the canon disagreeing.
+    /// </summary>
+    public static Text In(this AppDbContext db, Text text, int canonicalBook)
+    {
+        foreach (var book in db.Books.Where(b => b.TextId == text.Id))
+        {
+            book.CanonicalOrdinal = canonicalBook;
+        }
+
+        foreach (var reference in db.VerseReferences.Where(r => r.Verse!.TextId == text.Id))
+        {
+            reference.CanonicalBook = canonicalBook;
+        }
+
+        db.SaveChanges();
+        return text;
+    }
+
     /// <summary>One word by its address, which is how a link's ends are named in a test.</summary>
     public static Word WordAt(this AppDbContext db, Text text, int chapter, int verse, int position) =>
         db.Words.Single(w =>

@@ -15,6 +15,11 @@ namespace Essenthos.Core.Loading.Links;
 /// corpus holds, or the match may simply have failed, and nothing here can tell those apart. Saying
 /// <c>expands</c> would assert the first. Loading the Textus Receptus is what settles it.
 /// </param>
+/// <param name="StrongNumbers">
+/// English words given the Strong number the tagged edition puts on them. It is the evidence these
+/// links were built from, and a corpus that keeps the conclusion and throws the evidence away
+/// cannot afterwards be asked whether the conclusion follows.
+/// </param>
 internal sealed record GreekLinkOutcome(
     bool AlreadyLoaded,
     int Verses,
@@ -24,6 +29,7 @@ internal sealed record GreekLinkOutcome(
     int Contended,
     int Unmatched,
     int SpellingDiffers,
+    int StrongNumbers,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
@@ -32,7 +38,8 @@ internal sealed record GreekLinkOutcome(
             : $"{Links} links over {Verses} verses in {Elapsed}: {Unambiguous} where one English word and one " +
               $"Greek word carried the number alone, {Contended} where more than one did, {Unmatched} English " +
               $"words whose number no Greek word in the verse carries, {SpellingDiffers} verses where the two " +
-              $"editions spell a word differently, {Refused} verses refused";
+              $"editions spell a word differently, {StrongNumbers} English words given the number the tagged " +
+              $"edition states, {Refused} verses refused";
 }
 
 /// <summary>
@@ -91,6 +98,11 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     private const string LinkWordImport =
         "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
 
+    private const string StrongNumberTable =
+        """
+        CREATE TEMP TABLE tagged_strong (word_id bigint PRIMARY KEY, strong_number text) ON COMMIT DROP;
+        """;
+
     /// <param name="greekSlug">
     /// Which Greek witness to match against. The King James renders the Textus Receptus and is
     /// matched to Nestle 1904 as well, because the difference between what it reaches in each is
@@ -114,7 +126,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == greek.Id, cancellationToken))
         {
             logger.LogInformation("The New Testament links are already loaded; nothing to do");
-            return new GreekLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new GreekLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -123,6 +135,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         var greekVerses = await VerseWords(greek.Id, cancellationToken);
 
         var drafts = new List<GreekLinkDraft>(200_000);
+        var stated = new List<(long WordId, string Strong)>(120_000);
         var refused = 0;
         var unmatched = 0;
         var verses = 0;
@@ -155,9 +168,17 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
                 spelled++;
             }
             drafts.AddRange(Build(tags, kjv, nestle, ref unmatched));
+
+            for (var i = 0; i < tags.Count; i++)
+            {
+                if (tags[i].Strong is { } strong)
+                {
+                    stated.Add((kjv[i].Id, strong));
+                }
+            }
         }
 
-        await Write(english.Id, greek.Id, greekSlug, drafts, cancellationToken);
+        await Write(english.Id, greek.Id, greekSlug, drafts, stated, cancellationToken);
 
         var outcome = new GreekLinkOutcome(
             false,
@@ -168,6 +189,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
             drafts.Count(d => d.Confidence < PairedInOrder),
             unmatched,
             spelled,
+            stated.DistinctBy(pair => pair.WordId).Count(),
             started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
         return outcome;
@@ -313,6 +335,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         int toTextId,
         string greekSlug,
         List<GreekLinkDraft> drafts,
+        List<(long WordId, string Strong)> stated,
         CancellationToken cancellationToken)
     {
         if (drafts.Count == 0)
@@ -364,7 +387,48 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
             await writer.CompleteAsync(cancellationToken);
         }
 
+        await WriteStrongNumbers(connection, stated, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Puts the tagged edition's Strong numbers on the English words themselves, so that the links
+    /// built from them can afterwards be checked against something. It runs once per Greek witness
+    /// over the same tags, which is why it writes only where the number is not already there.
+    /// </summary>
+    private static async Task WriteStrongNumbers(
+        NpgsqlConnection connection,
+        List<(long WordId, string Strong)> stated,
+        CancellationToken cancellationToken)
+    {
+        if (stated.Count == 0)
+        {
+            return;
+        }
+
+        await using (var create = new NpgsqlCommand(StrongNumberTable, connection))
+        {
+            await create.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY tagged_strong (word_id, strong_number) FROM STDIN (FORMAT BINARY)", cancellationToken))
+        {
+            foreach (var (wordId, strong) in stated.DistinctBy(pair => pair.WordId))
+            {
+                await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
+                await writer.WriteAsync(strong, NpgsqlDbType.Text, cancellationToken);
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await using var update = new NpgsqlCommand(
+            "UPDATE word SET strong_number = s.strong_number FROM tagged_strong s " +
+            "WHERE word.id = s.word_id AND word.strong_number IS DISTINCT FROM s.strong_number",
+            connection);
+        await update.ExecuteNonQueryAsync(cancellationToken);
     }
 
     private static async Task Row(

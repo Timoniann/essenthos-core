@@ -68,9 +68,13 @@ internal static partial class Periods
     ];
 
     /// <summary>
-    /// Which level a kind is drawn on. An era is the ground, the spans of rule and captivity that
+    /// Which row a kind is drawn on. An era is the ground, the spans of rule and captivity that
     /// order the narrative sit above it, and the lives and ministries — of which there are many
     /// more, overlapping constantly — sit above those.
+    ///
+    /// A band, not a depth. Every period here hangs off an era whatever its level, so a level-2
+    /// life is a child of a level-0 era and not of anything at level 1; the number says which row
+    /// to draw on, and <see cref="Period.Parent"/> says what it belongs to.
     /// </summary>
     private static int LevelOf(string kind) => kind switch
     {
@@ -114,14 +118,7 @@ internal static partial class Periods
         periods.AddRange(spans);
         periods.AddRange(Lives(events, source));
 
-        // Everything below an era belongs to the era its opening falls in. Nesting by containment
-        // rather than by the whole span on purpose: a reign that outlasts its era still starts in
-        // one, and a band that jumped parents halfway through would draw as two.
-        foreach (var period in periods.Where(p => p.Level > 0))
-        {
-            period.Parent = eras.FirstOrDefault(
-                era => era.StartYear <= period.StartYear && period.StartYear <= era.EndYear);
-        }
+        Nest(periods, eras);
 
         return (periods, unpaired);
     }
@@ -162,14 +159,40 @@ internal static partial class Periods
             }
         }
 
-        foreach (var period in made.Where(p => p.Level > 0))
-        {
-            period.Parent = eras.FirstOrDefault(
-                era => era.StartYear <= period.StartYear && period.StartYear <= era.EndYear);
-        }
+        Nest(made, eras);
 
         return made;
     }
+
+    /// <summary>
+    /// The era each band belongs to, which is the era it opens in.
+    ///
+    /// Not the era that contains it. The eras are contiguous and 42 of these bands run past the
+    /// close of the one they start in — Noah outlives the Flood, and the 430 years from the promise
+    /// to the covenant end two eras after they begin — so for those there is no containing era to
+    /// point at, and a band that changed parent halfway through would draw as two. Where a band does
+    /// leave its era the row says so, because a client that reads the parent as nesting would
+    /// otherwise draw a child outside its parent with nothing to say that this is expected.
+    /// </summary>
+    private static void Nest(IEnumerable<Period> periods, IReadOnlyList<Period> eras)
+    {
+        foreach (var period in periods.Where(p => p.Level > 0))
+        {
+            period.Parent = eras.FirstOrDefault(
+                era => era.StartYear <= period.StartYear && period.StartYear <= era.EndYear);
+
+            if (period.Parent is { EndYear: { } closes } era && period.EndYear > closes)
+            {
+                period.Notes = Appended(
+                    period.Notes,
+                    $"Runs {period.EndYear - closes} years past the close of \"{era.Name}\", the era " +
+                    "it opens in. The parent of a band is where it begins, not what contains it.");
+            }
+        }
+    }
+
+    private static string Appended(string? notes, string sentence) =>
+        string.IsNullOrWhiteSpace(notes) ? sentence : $"{notes} {sentence}";
 
     private static Period? Between(
         IReadOnlyDictionary<string, Event> bySlug,

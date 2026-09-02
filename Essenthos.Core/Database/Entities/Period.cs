@@ -38,12 +38,27 @@ public class Period
     public string? Kind { get; set; }
 
     /// <summary>
-    /// How deep it nests: 0 is an era spanning the whole history, 1 a period inside one, 2 the
-    /// subperiods — a reign inside the divided kingdom, a life inside the patriarchs. The drawing
-    /// gives each level its own band, which is what makes the nesting readable rather than a pile.
+    /// Which row it draws on: 0 the eras, 1 the spans of rule and captivity that order the
+    /// narrative, 2 the lives and ministries, of which there are many more and which overlap
+    /// constantly. Each level gets its own band, which is what makes them readable rather than a
+    /// pile.
+    ///
+    /// <b>A band, not a depth.</b> Every period hangs off an era whatever its level, so a level-2
+    /// life is the child of a level-0 era and nothing sits under level 1. The number chooses a row;
+    /// <see cref="Parent"/> says what the period belongs to.
     /// </summary>
     public int Level { get; set; }
 
+    /// <summary>
+    /// The era it opens in — which is not always the era that contains it.
+    ///
+    /// The eras are contiguous and a band may run past the close of the one it starts in: a
+    /// lifespan crosses the Flood because the man outlived it, and the 430 years from the promise
+    /// to the covenant end two eras after they begin. For those there is no containing era to point
+    /// at, so the parent records where the band opens and <see cref="Notes"/> says how far past its
+    /// era it runs. Nesting a child bar inside its parent's bar without reading the years will draw
+    /// it outside.
+    /// </summary>
     public int? ParentId { get; set; }
     public Period? Parent { get; set; }
 

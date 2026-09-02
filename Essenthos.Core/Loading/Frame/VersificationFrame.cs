@@ -22,9 +22,18 @@ internal sealed class VersificationFrame(
     /// Where a verse of this tradition sits. The first reference is its primary placement; further
     /// ones are the rest of what it spans. A verse nobody wrote a rule about is where it says it is.
     /// </summary>
-    public IReadOnlyList<CanonicalReference> Resolve(int book, int chapter, int verse)
+    /// <param name="lettered">
+    /// Whether the edition prints lettered verses at this address — <c>2:35</c> alongside
+    /// <c>2:35a</c> to <c>2:35o</c>. A rule for such an address describes the undivided complex:
+    /// the Greek rule for 3 Kingdoms 12:24 names everything from 11:1 to 14:43, because in a Bible
+    /// that runs the additions into one verse that is what the verse holds. An edition that prints
+    /// them apart has already divided it, and giving each of the twenty-five pieces all thirty-six
+    /// addresses is a cross product rather than a mapping. So each piece stands where the edition
+    /// prints it, and the letter says which piece it is.
+    /// </param>
+    public IReadOnlyList<CanonicalReference> Resolve(int book, int chapter, int verse, bool lettered = false)
     {
         var own = new CanonicalReference(book, chapter, verse);
-        return rules.TryGetValue(own, out var mapped) ? mapped : [own];
+        return !lettered && rules.TryGetValue(own, out var mapped) ? mapped : [own];
     }
 }

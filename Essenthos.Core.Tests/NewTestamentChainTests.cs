@@ -7,10 +7,9 @@ namespace Essenthos.Core.Tests;
 /// <summary>
 /// Dating what Theographic leaves undated.
 ///
-/// Fifty of its events have no year and every one of them names a predecessor — the crucifixion,
-/// the resurrection, Pentecost and the whole first missionary journey among them. They are not
-/// undatable; the source's own dependency solver simply never ran on them. These are the rules for
-/// running it, and the reason it is arithmetic rather than a guess.
+/// The fallback, for a row that arrives with a predecessor and no date of its own. Nothing in the
+/// file as it stands needs it — every row states a date — so these are the rules stated on rows
+/// built for the purpose, and the reason the answer is arithmetic rather than a guess.
 /// </summary>
 public class NewTestamentChainTests
 {

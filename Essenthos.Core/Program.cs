@@ -120,13 +120,16 @@ if (args is ["verify", ..])
     if (rendered < floor)
     {
         app.Logger.LogError(
-            "{Rendered:P1} of translated words reach a witness, below the floor of {Floor:P1}. Either the load " +
-            "lost something, or the floor is stale and should be raised deliberately",
+            "{Rendered:P1} of the words in a linked text reach a witness, below the floor of {Floor:P1}. Either " +
+            "the load lost something, or the floor is stale and should be raised deliberately",
             rendered, floor);
         return 1;
     }
 
-    app.Logger.LogInformation("{Rendered:P1} of translated words reach a witness, floor {Floor:P1}", rendered, floor);
+    app.Logger.LogInformation(
+        "{Rendered:P1} of the words in a linked text reach a witness, floor {Floor:P1}; the weakest section of " +
+        "any one text reaches {Weakest:P1}",
+        rendered, floor, measures.Weakest);
     return 0;
 }
 

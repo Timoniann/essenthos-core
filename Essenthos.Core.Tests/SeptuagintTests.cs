@@ -137,3 +137,101 @@ public class SeptuagintCanonTests
         act.Should().Throw<InvalidOperationException>().WithMessage("*ODA2*");
     }
 }
+
+/// <summary>Read once; fifty-two USFM files is about a second.</summary>
+public sealed class Brenton
+{
+    internal TextSource Source { get; } = SeptuagintTextSource.Read(TestResources.SeptuagintFolder);
+
+    internal BookDraft Book(int canonical) => Source.Books.Single(book => book.CanonicalOrdinal == canonical);
+}
+
+/// <summary>
+/// Esdras B, which Brenton prints as one book of twenty-three chapters and the canon knows as two.
+/// The second half is Nehemiah, and until it was split it had no canonical address at all: its
+/// verses sat at Ezra 11:1 to 23:47, chapters no versification has, and a request for Nehemiah in
+/// this text was a 404 over Greek that was loaded and complete.
+/// </summary>
+public class SeptuagintSecondEsdrasTests(Brenton brenton) : IClassFixture<Brenton>
+{
+    private const int Ezra = 15;
+
+    private const int Nehemiah = 16;
+
+    [Fact]
+    public void EsdrasBIsReadAsTwoBooks()
+    {
+        brenton.Book(Ezra).Chapters.Should().HaveCount(10);
+        brenton.Book(Nehemiah).Chapters.Should().HaveCount(13);
+    }
+
+    /// <summary>
+    /// The versification data numbers Greek Nehemiah from one — it says Greek Nehemiah 3:33 is the
+    /// standard 4:1 — so a verse that called itself Ezra 13:33 could match no rule in it.
+    /// </summary>
+    [Fact]
+    public void NehemiahIsNumberedFromOne()
+    {
+        var nehemiah = brenton.Book(Nehemiah);
+
+        nehemiah.Chapters.Select(chapter => chapter.Number).Should().Equal(Enumerable.Range(1, 13));
+        nehemiah.Chapters[0]!.Verses.Should().HaveCount(11);
+        nehemiah.Chapters[2]!.Verses.Should().HaveCount(37);
+    }
+
+    [Fact]
+    public void TheTwoStandWhereBrentonPrintsThem()
+    {
+        var ezra = brenton.Book(Ezra);
+        var nehemiah = brenton.Book(Nehemiah);
+
+        nehemiah.Position.Should().Be(ezra.Position + 1);
+        brenton.Source.Books.Select(book => book.CanonicalOrdinal).Should().OnlyHaveUniqueItems();
+        brenton.Source.Books.Select(book => book.Position).Should().OnlyHaveUniqueItems();
+    }
+
+    /// <summary>Nothing is lost in the split: the twenty-three chapters are all still there.</summary>
+    [Fact]
+    public void EveryVerseOfEsdrasBSurvives()
+    {
+        var verses = brenton.Book(Ezra).Chapters.Sum(chapter => chapter.Verses.Count)
+                     + brenton.Book(Nehemiah).Chapters.Sum(chapter => chapter.Verses.Count);
+
+        verses.Should().Be(669);
+    }
+}
+
+/// <summary>
+/// The lettered verses, which are how the Greek numbers material the Hebrew does not have. The
+/// reader keeps them apart; what follows is that the frame has to as well.
+/// </summary>
+public class SeptuagintLetteredVerseTests(Brenton brenton) : IClassFixture<Brenton>
+{
+    [Fact]
+    public void TheEditionsLetteredVersesAreRead()
+    {
+        var lettered = brenton.Source.Books
+            .SelectMany(book => book.Chapters)
+            .SelectMany(chapter => chapter.Verses)
+            .Count(verse => verse.Label.Length > 0);
+
+        lettered.Should().Be(317);
+    }
+
+    /// <summary>
+    /// Twenty-four verses at one address: 12:24 and the additions a to z, which Brenton letters in
+    /// the classical Latin alphabet — no j, no v, no w.
+    /// </summary>
+    [Fact]
+    public void ThirdKingdomsTwelveTwentyFourIsTwentyFourVerses()
+    {
+        var at = brenton.Book(11).Chapters
+            .Single(chapter => chapter.Number == 12).Verses
+            .Where(verse => verse.Number == 24)
+            .ToList();
+
+        at.Should().HaveCount(24);
+        at.Select(verse => verse.Label).Should().OnlyHaveUniqueItems();
+        at.Count(verse => verse.Label.Length == 0).Should().Be(1);
+    }
+}

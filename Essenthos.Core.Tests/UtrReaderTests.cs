@@ -1,3 +1,4 @@
+using Essenthos.Core.Loading;
 using Essenthos.Core.TextusReceptus;
 using FluentAssertions;
 using Xunit;
@@ -118,4 +119,46 @@ public class UtrReaderTests
         UtrReader.Read(plain, Edition.Stephanus1550).Should()
             .BeEquivalentTo(UtrReader.Read(plain, Edition.Scrivener1894));
     }
+}
+
+/// <summary>
+/// A verse row means the text has that verse. Stephanus 1550 omits Luke 17:36 and the composite
+/// still carries the number, with the words on Scrivener's side of the group and nothing on
+/// Stephanus's — so the edition that does not print the verse must not get a verse.
+/// </summary>
+public class TextusReceptusOmissionTests
+{
+    private const int Luke = 42;
+
+    [Theory]
+    [InlineData(Edition.Stephanus1550, false)]
+    [InlineData(Edition.Scrivener1894, true)]
+    public void OnlyTheEditionThatPrintsLukeSeventeenThirtySixHasIt(Edition edition, bool present)
+    {
+        var chapter = SeventeenthOfLuke(edition);
+
+        chapter.Verses.Any(verse => verse.Number == 36).Should().Be(present);
+        chapter.Verses.Should().HaveCount(present ? 37 : 36);
+    }
+
+    /// <summary>
+    /// The one wordless verse in the corpus was here, and it made the database and the API
+    /// disagree about how many verses Stephanus has: the reader filtered it out and the row stayed.
+    /// </summary>
+    [Fact]
+    public void NoEditionCarriesAVerseWithNoWords()
+    {
+        foreach (var edition in new[] { Edition.Stephanus1550, Edition.Scrivener1894 })
+        {
+            TextusReceptusTextSource.Read(TestResources.TextusReceptusFolder, edition).Books
+                .SelectMany(book => book.Chapters)
+                .SelectMany(chapter => chapter.Verses)
+                .Should().NotContain(verse => verse.Words.Count == 0);
+        }
+    }
+
+    private static ChapterDraft SeventeenthOfLuke(Edition edition) =>
+        TextusReceptusTextSource.Read(TestResources.TextusReceptusFolder, edition).Books
+            .Single(book => book.CanonicalOrdinal == Luke).Chapters
+            .Single(chapter => chapter.Number == 17);
 }

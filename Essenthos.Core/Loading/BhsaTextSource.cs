@@ -77,13 +77,39 @@ internal static class BhsaTextSource
         return new TextSource(Definition, books);
     }
 
-    private static VerseDraft Draft(Bhsa.Core.Verse verse) =>
-        new(verse.Number, verse.Words.Select(Draft).ToList());
+    private static VerseDraft Draft(Bhsa.Core.Verse verse)
+    {
+        var words = new List<WordDraft>(verse.Words.Count);
+        foreach (var word in verse.Words)
+        {
+            var draft = Draft(word);
+            words.Add(draft.Elided && RepeatsTheSeparator(words, draft.Trailer)
+                ? draft with { Trailer = string.Empty }
+                : draft);
+        }
+
+        return new VerseDraft(verse.Number, words);
+    }
+
+    /// <summary>
+    /// A morpheme with no letters still carries whatever BHSA writes after its slot, and ten of
+    /// them are followed by a space the word before them has already supplied. Concatenating the
+    /// verse then yields two — the corpus's only doubled spaces. Where the separator is not already
+    /// there the trailer is the whole of what stands between two words and is kept: three of the
+    /// ten follow a maqqef, and one of those carries the verse's sof pasuq.
+    /// </summary>
+    private static bool RepeatsTheSeparator(List<WordDraft> words, string trailer) =>
+        trailer.Length > 0
+        && string.IsNullOrWhiteSpace(trailer)
+        && words.Count > 0
+        && words[^1].Trailer.Length > 0
+        && char.IsWhiteSpace(words[^1].Trailer[^1]);
 
     /// <summary>
     /// Thousands of these words have no surface text: Hebrew elides the definite article into the
     /// preposition before it and BHSA still records the article as its own slot, so dropping an
-    /// empty word would lose exactly the word a translation's "the" corresponds to.
+    /// empty word would lose exactly the word a translation's "the" corresponds to. They are
+    /// flagged instead, so that a reader can tell a word nobody printed from one that is missing.
     /// </summary>
     private static WordDraft Draft(Bhsa.Core.Word word) => new(
         Surface: word.TextUtf8,
@@ -91,7 +117,8 @@ internal static class BhsaTextSource
         Lemma: Empty(word.LexemeUtf8),
         StrongNumber: null,
         Gloss: Empty(word.Gloss),
-        Morphology: Morphology(word));
+        Morphology: Morphology(word),
+        Elided: word.TextUtf8.Length == 0);
 
     /// <summary>
     /// BHSA carries features Nestle does not and the Peshitta will carry others again, so the

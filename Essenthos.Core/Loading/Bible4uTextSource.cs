@@ -85,7 +85,11 @@ internal static class Bible4uTextSource
     /// </summary>
     private static VerseDraft Draft(XmlBibleVerse verse) =>
         new(verse.VNumber, VerseWords.Parse(verse.Text)
-            .Select(word => new WordDraft(word.Word, word.Trailer))
+            // A verse that opens with a bracket has nothing before it to hang the bracket on, so
+            // the first token is the bracket and no word. It is a real character of the printed
+            // text and it stays; it is marked because a consumer rendering word by word must not
+            // paint an empty span for it.
+            .Select(word => new WordDraft(word.Word, word.Trailer, Elided: word.Word.Length == 0))
             .ToList());
 
     private static TextDefinition Definition(

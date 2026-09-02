@@ -1,4 +1,4 @@
-using Essenthos.Core.Database.Entities;
+﻿using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -181,6 +181,18 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(g => g.ParentId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // A mother is a reference and not a container, so losing it loses the edge and not the
+            // group that pointed along it.
+            entity.HasOne(g => g.MotherGroup)
+                .WithMany()
+                .HasForeignKey(g => g.MotherGroupId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(g => g.MotherWord)
+                .WithMany()
+                .HasForeignKey(g => g.MotherWordId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         ConfigureLink(modelBuilder);

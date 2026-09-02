@@ -39,6 +39,19 @@ public class Word
     /// <summary>Whatever separates this word from the next, punctuation and space included.</summary>
     public required string Trailer { get; set; }
 
+    /// <summary>
+    /// The source records this word and prints no letters for it, so <see cref="Surface"/> is empty
+    /// by design. BHSA does this 6,488 times: Hebrew elides the definite article into the
+    /// preposition before it and the annotation still records the article, which is the word a
+    /// translation's "the" corresponds to.
+    ///
+    /// Kept, because dropping it would lose the article. Flagged, because everything downstream
+    /// otherwise treats it as an ordinary word — a client paints an empty span for it, the split
+    /// view highlights something invisible, and counting words to reach a position counts a word
+    /// nobody printed.
+    /// </summary>
+    public bool Elided { get; set; }
+
     public string? Lemma { get; set; }
 
     /// <summary><c>H####</c> or <c>G####</c>.</summary>

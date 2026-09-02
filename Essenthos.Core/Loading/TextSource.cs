@@ -66,13 +66,20 @@ internal sealed record TextDefinition(
 /// The annotation this text happens to carry, already serialised as JSON, because a word carries no
 /// fixed set of features and half a million <c>JsonDocument</c>s is a cost with no reader.
 /// </param>
+/// <param name="Elided">
+/// The source records this word and prints no letters for it. Set by the reader that knows why —
+/// a Hebrew article that has assimilated into the preposition before it, a bracket that opens a
+/// verse — so that an empty surface is a claim somebody made rather than a string that happens to
+/// be empty, which is also what a broken tokeniser produces.
+/// </param>
 internal sealed record WordDraft(
     string Surface,
     string Trailer,
     string? Lemma = null,
     string? StrongNumber = null,
     string? Gloss = null,
-    string? Morphology = null);
+    string? Morphology = null,
+    bool Elided = false);
 
 /// <param name="Label">
 /// The letter the edition prints after the number, where it prints one. Empty for the other

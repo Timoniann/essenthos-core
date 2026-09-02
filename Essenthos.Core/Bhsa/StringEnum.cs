@@ -149,11 +149,18 @@ public class StringEnums<
     // ReSharper disable once ConvertToAutoPropertyWhenPossible
     public string[] Values => _values;
 
+    /// <summary>
+    /// The spelling the source writes today, which is the first one given. The rest are earlier
+    /// releases' spellings of the same value, kept so an older export still parses — a tolerance
+    /// that belongs to reading and must never reach anything that is written or compared.
+    /// </summary>
+    public string Value => _values[0];
+
     public bool External { get; }
 
     public override string ToString()
     {
-        return string.Join(", ", _values);
+        return Value;
     }
 
     // ReSharper disable once StaticMemberInGenericType

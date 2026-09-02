@@ -101,7 +101,17 @@ internal record TextWordResponse(
     MorphologyResponse? Morphology,
     string? Phono,
     string? PhonoTrailer,
-    string? Language);
+    string? Language)
+{
+    /// <summary>
+    /// The source records this word and prints no letters for it: a Hebrew article that has
+    /// assimilated into its preposition, a bracket that opens a verse. It carries annotation and it
+    /// can be the far end of an alignment, so it is sent rather than dropped — but a renderer
+    /// should not give it a span of its own, and counting words to reach a position should not
+    /// count it.
+    /// </summary>
+    public bool Elided { get; init; }
+}
 
 /// <param name="Label">
 /// The letter this edition prints after the number, where it prints one — the Septuagint's Genesis

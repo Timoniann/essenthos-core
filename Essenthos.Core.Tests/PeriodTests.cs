@@ -112,4 +112,40 @@ public class PeriodTests
         periods.Should().Contain(p => p.Slug == "life-adam1")
             .Which.Parent.Should().Be(era, "a life that opens inside an era belongs to it");
     }
+
+    [Fact]
+    public void SaysSoWhenABandRunsPastTheEraItOpensIn()
+    {
+        var (periods, _) = Periods.From(
+            [
+                An(1, "creation", "The Creation", "Unique", 1),
+                An(2, "beginflood", "The Flood began", "Begin", 1657),
+                An(3, "endflood", "The Flood ended", "End", 1658),
+                An(4, "birthnoah1", "Birth of Noah", "Birth", 1057),
+                An(5, "deathnoah1", "Death of Noah", "Death", 2008),
+            ],
+            "test");
+
+        // Noah outlives the Flood, as the text says, so no era contains his life and the parent is
+        // only where it opens.
+        var life = periods.Should().Contain(p => p.Slug == "life-noah1").Which;
+        life.Parent!.Slug.Should().Be("era-antediluvian");
+        life.Notes.Should().Contain("351 years past");
+    }
+
+    [Fact]
+    public void SaysNothingAboutABandThatStaysInsideItsEra()
+    {
+        var (periods, _) = Periods.From(
+            [
+                An(1, "creation", "The Creation", "Unique", 1),
+                An(2, "beginflood", "The Flood began", "Begin", 1657),
+                An(3, "endflood", "The Flood ended", "End", 1658),
+                An(4, "birthadam1", "Birth of Adam", "Birth", 1),
+                An(5, "deathadam1", "Death of Adam", "Death", 931),
+            ],
+            "test");
+
+        periods.Should().Contain(p => p.Slug == "life-adam1").Which.Notes.Should().BeNull();
+    }
 }

@@ -6,12 +6,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
-internal sealed record WorldOutcome(bool AlreadyLoaded, int Events, int Periods, int Dates, TimeSpan Elapsed)
+internal sealed record WorldOutcome(
+    bool AlreadyLoaded,
+    int Events,
+    int Beginnings,
+    int Periods,
+    int Dates,
+    int AlreadyInScripture,
+    TimeSpan Elapsed)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "world history is already loaded"
-            : $"{Events} events and {Periods} spans of world history, with {Dates} dates, in {Elapsed}";
+            : $"{Events} events and {Periods} spans of world history, {Beginnings} of the events " +
+              $"dated by an inception rather than by something happening, with {Dates} dates and " +
+              $"{AlreadyInScripture} rows left to the scripture layer, in {Elapsed}";
 }
 
 /// <summary>
@@ -22,7 +31,9 @@ internal sealed record WorldOutcome(bool AlreadyLoaded, int Events, int Periods,
 /// the point rather than an embarrassment: the Great Pyramid is finished around 2560 BCE and the
 /// Masoretic reckoning puts the Flood at 2304 BCE, so on that reckoning a surviving building
 /// predates the Flood, and on the Septuagint's longer genealogies it does not. Both are drawn.
-/// Nothing here is reconciled, hidden, or nudged to fit.
+/// Nothing here is reconciled, hidden, or nudged to fit. The two exceptions are named in code and
+/// neither is about a disagreement: an event the scripture layer already carries is not drawn a
+/// second time, and a date the source itself has mistyped is not drawn at all.
 ///
 /// **Wikidata, CC0.** Chosen over the encyclopedias with better prose because they are share-alike
 /// or non-commercial, and a condition on the world layer would reach the corpus beside it. Every
@@ -36,6 +47,12 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
     private const string Source = "Wikidata, query.wikidata.org, CC0";
 
     /// <summary>
+    /// The year the default reckoning calls 1 BCE. Every reckoning gets its own answer in
+    /// <see cref="EventDate"/>; the event row itself still has to carry one, and this is whose.
+    /// </summary>
+    private const int DefaultReckoningZero = 3961;
+
+    /// <summary>
     /// Wikidata has an item for the year 500 BC, and that item has a point in time. Two thirds of
     /// the first query's rows are these. They are not events.
     /// </summary>
@@ -46,20 +63,90 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
     };
 
     /// <summary>
-    /// What each sort of thing is called on this timeline, so that a hundred Wikidata types become
-    /// a handful a reader can hold in their head. Anything unmatched keeps Wikidata's own word,
-    /// which is honest and colours as the fallback.
+    /// What each sort of thing is called on this timeline, so that a hundred Wikidata classes
+    /// become a handful a reader can hold in their head.
+    ///
+    /// Two families, and which one a row falls into is a difference the reader should never have to
+    /// guess at. <b>Something happened</b> — a battle, a treaty, an eruption — is a moment.
+    /// <b>Something began to exist</b> — a city, a dynasty, a stele, a play — is dated by its
+    /// inception, and the Merneptah Stele did not happen in 1200 BCE, it was cut then. Two thirds
+    /// of this layer is the second kind, so one colour over both would say that a battle and a
+    /// death mask are the same sort of fact.
+    ///
+    /// Matched on Wikidata class in order, first match winning, which is why <c>death mask</c> has
+    /// to sit above <c>death</c>.
     /// </summary>
     private static readonly (string[] Contains, string Kind)[] Kinds =
     [
-        (["naval battle", "battle", "siege", "last stand", "ambush", "military campaign", "war", "rebellion", "revolt"], "Battle"),
-        (["treaty", "peace", "synod", "council", "census", "law", "legal", "trial", "edict"], "Message"),
+        // Something happened.
+        (["naval battle", "battle", "siege", "last stand", "ambush", "military campaign", "war",
+            "rebellion", "revolt", "coup", "conspiracy", "shipwreck"], "Battle"),
+        (["treaty", "peace"], "Treaty"),
+        (["synod", "council", "census", "law", "legal", "trial", "edict", "decree", "oration",
+            "statute", "reform", "court"], "Message"),
         (["eruption", "earthquake", "flood", "famine", "plague", "epidemic", "eclipse", "impact"], "Destruction"),
-        (["dynasty", "empire", "kingdom", "historical country", "state", "province", "caliphate"], "Reign"),
-        (["city", "polis", "settlement", "site", "temple", "pyramid", "wall", "tomb", "monument", "building"], "Construction"),
-        (["work", "text", "poem", "epic", "treatise", "writing system", "alphabet", "script", "manuscript", "tablet"], "Message"),
+        (["wedding", "marriage"], "Marriage"),
+        (["festival", "games"], "Meeting"),
+
+        // Something began to exist. Objects before events: a death mask is not a death.
+        (["mask", "statue", "sculpture", "stele", "mosaic", "artefact", "artifact", "jewel"], "Artefact"),
+        (["work", "text", "poem", "epic", "treatise", "writing system", "alphabet", "script",
+            "syllabary", "abjad", "manuscript", "tablet"], "Work"),
+        (["temple", "pyramid", "wall", "tomb", "monument", "building", "ruins", "tell", "site",
+            "cave", "aqueduct", "theatre", "palace", "fortress", "church"], "Construction"),
+        (["city", "polis", "settlement", "town", "village", "municipality", "comune", "commune",
+            "colony", "country", "state", "kingdom", "empire", "dynasty", "province", "realm",
+            "caliphate", "koinon", "legion", "school", "museum", "religion", "office",
+            "organization", "position", "title"], "Founding"),
+
+        // Neither: a stretch of time named as though it were a thing.
         (["culture", "period", "age", "periodization", "style", "horizon"], "Unique"),
     ];
+
+    /// <summary>
+    /// The classes whose span is a stretch of rule. Only <see cref="Spans"/> asks: a dynasty with a
+    /// start and an end is a reign, and the same word on a row with one date is the day it began.
+    /// </summary>
+    private static readonly string[] Reigns =
+        ["dynasty", "empire", "kingdom", "historical country", "state", "province", "caliphate"];
+
+    /// <summary>
+    /// Where the two layers are about the same event.
+    ///
+    /// Wikidata and Theographic both carry the passion, the circumcision, the return from Egypt and
+    /// the council at Jerusalem, and they date them three to five years apart. As two rows that is
+    /// the crucifixion drawn twice with nothing saying it is one event; as one row with a year
+    /// picked it is a reading the corpus has quietly made on the reader's behalf. So the scripture
+    /// row stands — that layer is where these belong — and Wikidata's year is written onto it as
+    /// the disagreement it is.
+    ///
+    /// Keyed on the item identifier, never on the name: a name join between two datasets is the
+    /// mistake this corpus has already made once. Each pair below was read on both sides.
+    /// </summary>
+    internal static readonly Dictionary<string, string> AlreadyInScripture = new(StringComparer.Ordinal)
+    {
+        ["http://www.wikidata.org/entity/Q51636"] = "crucifixionandburial",
+        ["http://www.wikidata.org/entity/Q51624"] = "resurrectionandascension",
+        ["http://www.wikidata.org/entity/Q13510036"] = "jesuscircumsized",
+        ["http://www.wikidata.org/entity/Q619950"] = "jerusalemcouncil",
+        ["http://www.wikidata.org/entity/Q7317265"] = "josephandmaryreturnfromegypt",
+    };
+
+    /// <summary>
+    /// Dates the source has mistyped, dropped by item with the reason beside them.
+    ///
+    /// Not a plausibility rule. Anything that dropped what looks too old or too round would drop the
+    /// founding of Rome and the Great Pyramid, which are what this layer is for. These are single
+    /// rows read at Wikidata and found to disagree with the item's own article by an order of
+    /// magnitude — a century typed into a year field.
+    /// </summary>
+    internal static readonly Dictionary<string, string> Miskeyed = new(StringComparer.Ordinal)
+    {
+        ["http://www.wikidata.org/entity/Q503387"] =
+            "Rock-hewn Churches of Ivanovo, inception 0013-01-01, which is the 13th century written " +
+            "as a year: the churches are 12th to 14th century, and the reign of Augustus is not a " +
+            "plausible date for a Bulgarian rock church.",
+    };
 
     public async Task<WorldOutcome> Load(string folder, CancellationToken cancellationToken = default)
     {
@@ -67,24 +154,27 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
         if (!Directory.Exists(folder))
         {
             logger.LogWarning("No world history: {Folder} is not there.", folder);
-            return new WorldOutcome(true, 0, 0, 0, TimeSpan.Zero);
+            return new WorldOutcome(true, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         if (await db.Events.AnyAsync(e => e.Realm == Realms.World, cancellationToken))
         {
-            return new WorldOutcome(true, 0, 0, 0, started.Elapsed);
+            return new WorldOutcome(true, 0, 0, 0, 0, 0, started.Elapsed);
         }
 
         var chronologies = await db.Chronologies.ToListAsync(cancellationToken);
         if (chronologies.Count == 0)
         {
             logger.LogWarning("No world history: the chronologies are not loaded yet.");
-            return new WorldOutcome(true, 0, 0, 0, started.Elapsed);
+            return new WorldOutcome(true, 0, 0, 0, 0, 0, started.Elapsed);
         }
 
+        var counterparts = await Counterparts(cancellationToken);
         var taken = await db.Events.Select(e => e.Slug).ToHashSetAsync(cancellationToken);
         var events = new List<Event>();
         var years = new Dictionary<Event, int>();
+        var beginnings = 0;
+        var deferred = 0;
 
         foreach (var file in new[] { "wikidata-events.csv", "wikidata-inception.csv" })
         {
@@ -94,6 +184,8 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                 continue;
             }
 
+            var inception = file.Contains("inception", StringComparison.Ordinal);
+
             foreach (var item in Items(path, "time"))
             {
                 if (Year(item.Time) is not { } year)
@@ -101,22 +193,37 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                     continue;
                 }
 
+                if (AlreadyInScripture.TryGetValue(item.Uri, out var slug))
+                {
+                    if (counterparts.TryGetValue(slug, out var scripture))
+                    {
+                        scripture.Notes = Disagreeing(scripture, item, year);
+                        deferred++;
+                    }
+
+                    continue;
+                }
+
                 var made = new Event
                 {
                     Slug = Unique(Slugs.Of(item.Label), taken),
                     Name = item.Label,
-                    Kind = Kind(item.Type),
-                    Description = Described(item.Type, item.Where, file),
+                    Kind = Kind(item.Type, inception),
+                    Description = Described(item.Type, item.Where, inception),
                     Realm = Realms.World,
                     Region = item.Where,
                     Uri = item.Uri,
-                    YearFromCreation = 3961 + year,
+                    YearFromCreation = DefaultReckoningZero + year,
                     BceYear = year <= 0 ? 1 - year : null,
                     Source = Source,
                 };
 
                 events.Add(made);
                 years[made] = year;
+                if (inception)
+                {
+                    beginnings++;
+                }
             }
         }
 
@@ -136,7 +243,7 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                     // and disagrees only on how far it is from the creation. That difference is
                     // exactly what moves a pyramid to one side of the Flood or the other.
                     Year = chronology.LastYearBeforeTheCommonEra + year,
-                    Citation = year <= 0 ? $"{1 - year} BCE" : $"AD {year}",
+                    Citation = Era(year),
                 });
             }
         }
@@ -147,7 +254,8 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
         db.Periods.AddRange(periods);
         await db.SaveChangesAsync(cancellationToken);
 
-        var outcome = new WorldOutcome(false, events.Count, periods.Count, dates.Count, started.Elapsed);
+        var outcome = new WorldOutcome(
+            false, events.Count, beginnings, periods.Count, dates.Count, deferred, started.Elapsed);
         logger.LogInformation("Loaded world history: {Outcome}", outcome);
         return outcome;
     }
@@ -181,11 +289,13 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
             {
                 Slug = Unique($"world-{Slugs.Of(item.Label)}", slugs),
                 Name = item.Label,
-                Kind = Kind(item.Type).ToLowerInvariant() == "reign" ? "reign" : "span",
+                Kind = Reigns.Any(word => item.Type.Contains(word, StringComparison.OrdinalIgnoreCase))
+                    ? "reign"
+                    : "span",
                 // The second band. Level 0 is this corpus's own eras and stays that way.
                 Level = 1,
-                StartYear = 3961 + from,
-                EndYear = 3961 + to,
+                StartYear = DefaultReckoningZero + from,
+                EndYear = DefaultReckoningZero + to,
                 Realm = Realms.World,
                 Region = item.Where,
                 Uri = item.Uri,
@@ -224,7 +334,8 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                 continue;
             }
 
-            if (NotEvents.Contains(type) || invented.Contains(uri) || !seen.Add(uri))
+            if (NotEvents.Contains(type) || invented.Contains(uri) || Miskeyed.ContainsKey(uri)
+                || !seen.Add(uri))
             {
                 continue;
             }
@@ -291,7 +402,11 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
         return negative ? -year : year;
     }
 
-    private static string Kind(string type)
+    /// <summary>
+    /// The kind, and where the class is one nobody has mapped, the family it came from — so an
+    /// inception nobody has classified still reads as a thing that began rather than as a moment.
+    /// </summary>
+    internal static string Kind(string type, bool inception)
     {
         var text = type.ToLowerInvariant();
         foreach (var (contains, kind) in Kinds)
@@ -302,16 +417,45 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
             }
         }
 
-        return "Unique";
+        return inception ? "Inception" : "Unique";
     }
+
+    /// <summary>
+    /// The scripture rows this loader has something to say about, read back by slug. Five of them,
+    /// so the whole set is fetched rather than queried one at a time.
+    /// </summary>
+    private async Task<Dictionary<string, Event>> Counterparts(CancellationToken cancellationToken)
+    {
+        var slugs = AlreadyInScripture.Values.ToList();
+        return await db.Events
+            .Where(e => slugs.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug, cancellationToken);
+    }
+
+    /// <summary>
+    /// Two datasets on one event, on the row that stays. Written out rather than resolved: the
+    /// reader is told both years and which dataset holds each, and is left to weigh them.
+    /// </summary>
+    private static string Disagreeing(Event scripture, Item item, int year)
+    {
+        var held = (scripture.YearFromCreation ?? DefaultReckoningZero) - DefaultReckoningZero;
+        var said =
+            $"Wikidata has this event as \"{item.Label}\" at {Era(year)} ({item.Uri}), where this " +
+            $"row holds {Era(held)}. One event under two datasets, {Math.Abs(year - held)} years " +
+            "apart — so world history draws no second mark for it and the disagreement is here.";
+
+        return string.IsNullOrWhiteSpace(scripture.Notes) ? said : $"{scripture.Notes} {said}";
+    }
+
+    private static string Era(int year) => year <= 0 ? $"{1 - year} BCE" : $"AD {year}";
 
     /// <summary>
     /// What the row says about itself, in a sentence, because the source sends no prose at all.
     /// Better an honest label than an empty description that reads as missing data.
     /// </summary>
-    private static string Described(string type, string? where, string file)
+    private static string Described(string type, string? where, bool inception)
     {
-        var what = file.Contains("inception", StringComparison.Ordinal)
+        var what = inception
             ? $"{Capitalised(type)}, dated by its inception"
             : Capitalised(type);
 

@@ -14,6 +14,8 @@ public sealed class VersificationFrames
     internal VersificationFrame Hebrew => All[Versification.Original];
 
     internal VersificationFrame English => All[Versification.English];
+
+    internal VersificationFrame Greek => All[Versification.Septuagint];
 }
 
 public class CanonicalReferenceTests
@@ -164,4 +166,74 @@ public class CanonicalFrameTests(VersificationFrames frames) : IClassFixture<Ver
 
     internal static CanonicalReference Primary(VersificationFrame frame, int book, int chapter, int verse) =>
         frame.Resolve(book, chapter, verse)[0];
+}
+
+/// <summary>
+/// The lettered verses, which are the Septuagint's way of numbering material the Hebrew does not
+/// have. A rule written for the address they share describes the undivided complex, and an edition
+/// that prints them apart must not have it applied to each piece.
+/// </summary>
+public class LetteredVerseFrameTests(VersificationFrames frames) : IClassFixture<VersificationFrames>
+{
+    private const int FirstKings = 11;
+
+    private const int Esther = 17;
+
+    /// <summary>
+    /// The worst case in the corpus. Brenton prints twenty-four verses at 3 Kingdoms 12:24, and the
+    /// undivided rule names thirty-six addresses spread over three chapters — which, given to each
+    /// of them, is 864 references saying every piece is every place.
+    /// </summary>
+    [Fact]
+    public void TheUndividedRuleForThirdKingdomsTwelveTwentyFourNamesTheWholeComplex()
+    {
+        var whole = frames.Greek.Resolve(FirstKings, 12, 24);
+
+        whole.Should().HaveCount(36);
+        whole.Should().Contain(new CanonicalReference(FirstKings, 11, 19));
+        whole.Should().Contain(new CanonicalReference(FirstKings, 14, 18));
+    }
+
+    [Fact]
+    public void AnEditionThatPrintsThemApartPlacesEachWhereItPrintsIt()
+    {
+        frames.Greek.Resolve(FirstKings, 12, 24, lettered: true)
+            .Should().Equal(new CanonicalReference(FirstKings, 12, 24));
+    }
+
+    /// <summary>
+    /// The same for Esther, where the undivided rule reaches into the addition chapters the Greek
+    /// carries as 1:1b to 1:1s.
+    /// </summary>
+    [Fact]
+    public void TheSameHoldsForGreekEsther()
+    {
+        frames.Greek.Resolve(Esther, 1, 1).Should().HaveCountGreaterThan(1);
+        frames.Greek.Resolve(Esther, 1, 1, lettered: true)
+            .Should().Equal(new CanonicalReference(Esther, 1, 1));
+    }
+
+    /// <summary>
+    /// Nothing else changes. A verse at an address the edition does not letter resolves exactly as
+    /// it did, which is what keeps this from being a change to the whole frame.
+    /// </summary>
+    [Fact]
+    public void AnAddressWithNoLettersIsUnaffected()
+    {
+        CanonicalFrameTests.Primary(frames.Hebrew, 29, 4, 1).Should().Be(new CanonicalReference(29, 3, 1));
+        frames.Hebrew.Resolve(19, 51, 1).Should().HaveCount(1);
+    }
+
+    /// <summary>
+    /// Greek Nehemiah is numbered from one in the versification data, so a text that keeps Esdras B
+    /// whole and asks about its chapter 13 asks about Ezra 13, which does not exist.
+    /// </summary>
+    [Fact]
+    public void GreekNehemiahIsAddressedAsNehemiah()
+    {
+        const int Nehemiah = 16;
+
+        CanonicalFrameTests.Primary(frames.Greek, Nehemiah, 3, 33)
+            .Should().Be(new CanonicalReference(Nehemiah, 4, 1));
+    }
 }

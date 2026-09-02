@@ -39,7 +39,8 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     /// </summary>
     private const string WordImport =
         """
-        COPY word (text_id, verse_id, "position", "text", trailer, lemma, strong_number, gloss, morphology)
+        COPY word (text_id, verse_id, "position", "text", trailer, lemma, strong_number, gloss, morphology,
+                   elided)
         FROM STDIN (FORMAT BINARY)
         """;
 
@@ -175,6 +176,15 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
             for (var i = 0; i < loaded.Draft.Words.Count; i++)
             {
                 var word = loaded.Draft.Words[i];
+                if (word.Elided != (word.Surface.Length == 0))
+                {
+                    throw new InvalidOperationException(
+                        $"{loaded.Reference} word {i + 1} is marked " +
+                        $"{(word.Elided ? "elided and has letters" : "written and has none")}. A word with no " +
+                        "surface is a claim the reader makes about the source, not a string that came out " +
+                        "empty; set Elided where the source prints nothing and nowhere else.");
+                }
+
                 await writer.StartRowAsync(cancellationToken);
                 await writer.WriteAsync(text.Id, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(loaded.Verse.Id, NpgsqlDbType.Integer, cancellationToken);
@@ -185,6 +195,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
                 await WriteNullable(writer, word.StrongNumber, NpgsqlDbType.Text, cancellationToken);
                 await WriteNullable(writer, word.Gloss, NpgsqlDbType.Text, cancellationToken);
                 await WriteNullable(writer, word.Morphology, NpgsqlDbType.Jsonb, cancellationToken);
+                await writer.WriteAsync(word.Elided, NpgsqlDbType.Boolean, cancellationToken);
                 written++;
             }
         }

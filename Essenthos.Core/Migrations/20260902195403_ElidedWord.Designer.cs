@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260902195403_ElidedWord")]
+    partial class ElidedWord
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,10 +264,6 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("greek");
 
-                    b.Property<string>("GreekStrongNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("greek_strong_number");
-
                     b.Property<string>("GreekTransliterated")
                         .HasColumnType("text")
                         .HasColumnName("greek_transliterated");
@@ -272,10 +271,6 @@ namespace Essenthos.Core.Migrations
                     b.Property<string>("Hebrew")
                         .HasColumnType("text")
                         .HasColumnName("hebrew");
-
-                    b.Property<string>("HebrewStrongNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("hebrew_strong_number");
 
                     b.Property<string>("HebrewTransliterated")
                         .HasColumnType("text")
@@ -294,17 +289,18 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("meaning");
 
+                    b.Property<string>("StrongNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("strong_number");
+
                     b.HasKey("Id")
                         .HasName("pk_entity_name");
 
                     b.HasIndex("EntityId")
                         .HasDatabaseName("ix_entity_name_entity_id");
 
-                    b.HasIndex("GreekStrongNumber")
-                        .HasDatabaseName("ix_entity_name_greek_strong_number");
-
-                    b.HasIndex("HebrewStrongNumber")
-                        .HasDatabaseName("ix_entity_name_hebrew_strong_number");
+                    b.HasIndex("StrongNumber")
+                        .HasDatabaseName("ix_entity_name_strong_number");
 
                     b.ToTable("entity_name", (string)null);
                 });
@@ -1169,6 +1165,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Elided")
+                        .HasColumnType("boolean")
+                        .HasColumnName("elided");
 
                     b.Property<string>("Gloss")
                         .HasColumnType("text")

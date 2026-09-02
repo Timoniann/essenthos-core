@@ -1,5 +1,10 @@
 namespace Essenthos.Core.Verification;
 
+/// <param name="Section">
+/// Which half of the canon these words are in, or the deuterocanon. A text is not one thing — the
+/// King James renders 97% of the Hebrew and 58% of the Greek — and a single share for it is an
+/// average that describes neither part.
+/// </param>
 /// <param name="Rendered">Words a link names as corresponding to something.</param>
 /// <param name="StatedAbsent">
 /// Words named by a link that records an absence — <c>omits</c> where the other text has nothing
@@ -12,10 +17,18 @@ namespace Essenthos.Core.Verification;
 /// two kinds of absence above.
 /// </param>
 /// <param name="Unpaired">
-/// Words no link names, in a text that has no links to any witness. Nothing is missing here that
-/// was ever promised — the pair has not been aligned.
+/// Words no link names, in a verse no witness this text is linked to has at all. Nothing is missing
+/// here that was ever promised — the Septuagint's deuterocanon has no Hebrew counterpart, and the
+/// sixty-five verses its Daniel 3 holds beyond the Masoretic text have none either.
 /// </param>
-internal sealed record Coverage(string Text, int Words, int Rendered, int StatedAbsent, int Silent, int Unpaired)
+internal sealed record Coverage(
+    string Text,
+    string Section,
+    int Words,
+    int Rendered,
+    int StatedAbsent,
+    int Silent,
+    int Unpaired)
 {
     public double Share => Words == 0 ? 0 : (double)Rendered / Words;
 }
@@ -45,6 +58,28 @@ internal sealed record Contention(string Text, string Against, int Contended, in
 /// <param name="Worst">The most words of this text that claim one witness word.</param>
 internal sealed record Crowding(string Text, string Witness, int Crowded, int Worst);
 
+/// <param name="Chapters">Chapters both texts place in the canonical frame.</param>
+/// <param name="Divided">
+/// Of those, the ones the two divide into a different number of verses. Nothing can be aligned
+/// verse by verse across such a chapter without something being laid against the wrong thing, and
+/// this is the half of the problem that is visible without reading a single link.
+/// </param>
+/// <param name="Verses">Verse pairs the links cross, and whose strength can therefore be read.</param>
+/// <param name="Suspect">
+/// Verse pairs whose links are uniformly faint. This is the other half, and the dangerous one: the
+/// counts agree, the division does not, and every link in the verse is a claim about the word next
+/// to the right one. Nothing else in the corpus reports it.
+/// </param>
+/// <param name="Worst">The weakest of those, named, because a count nobody can check is a rumour.</param>
+internal sealed record Pairing(
+    string Text,
+    string Against,
+    int Chapters,
+    int Divided,
+    int Verses,
+    int Suspect,
+    IReadOnlyList<string> Worst);
+
 /// <param name="Found">
 /// How many rows break the check. Every one of these should be zero, so the name says what is
 /// wrong rather than what was counted.
@@ -52,14 +87,15 @@ internal sealed record Crowding(string Text, string Witness, int Crowded, int Wo
 internal sealed record IntegrityCheck(string Breaks, int Found);
 
 /// <summary>
-/// What one load produced, in the four measures TSK-0014 asks for. Every field is a query, and the
-/// point of storing it is that the next load can be compared with it.
+/// What one load produced. Every field is a query, and the point of storing it is that the next
+/// load can be compared with it.
 /// </summary>
 internal sealed record CorpusMeasures(
     IReadOnlyList<Coverage> Coverage,
     IReadOnlyList<Reach> Reach,
     IReadOnlyList<Contention> Contention,
     IReadOnlyList<Crowding> Crowding,
+    IReadOnlyList<Pairing> Pairing,
     IReadOnlyList<IntegrityCheck> Integrity)
 {
     /// <summary>Integrity checks are the only measure with a right answer, and it is zero.</summary>
@@ -67,20 +103,34 @@ internal sealed record CorpusMeasures(
 
     public int Broken => Integrity.Sum(check => check.Found);
 
-    /// <summary>The share of translated words that reach a witness, over the whole corpus.</summary>
+    /// <summary>
+    /// The share of words that reach a witness, over every text the corpus has linked to one. It is
+    /// a trend line and nothing more — no text has this share, and the per-section rows are where a
+    /// reader looks for a number that describes something.
+    /// </summary>
     public double Rendered => Coverage.Sum(c => c.Words) is var words and > 0
         ? (double)Coverage.Sum(c => c.Rendered) / words
         : 0;
 
-    /// <summary>The four measures as a person reads them, for a build log and a terminal.</summary>
+    /// <summary>
+    /// The lowest share any one section of any one text reaches, over the sections where something
+    /// was promised. A section whose every word is unpaired has no coverage to be worst at — the
+    /// Septuagint's deuterocanon has no Hebrew counterpart, and reporting it as 0% would put a fact
+    /// about the canon at the bottom of a list about the alignment.
+    /// </summary>
+    public double Weakest => Coverage.Where(c => c.Words > c.Unpaired).ToList() is { Count: > 0 } promised
+        ? promised.Min(c => c.Share)
+        : 0;
+
+    /// <summary>The measures as a person reads them, for a build log and a terminal.</summary>
     public string Describe()
     {
         var report = new System.Text.StringBuilder();
-        report.AppendLine("coverage      words   rendered   stated absent     silent   unpaired");
+        report.AppendLine("coverage                          words   rendered   stated absent     silent   unpaired");
         foreach (var c in Coverage)
         {
-            report.AppendLine($"  {c.Text,-10} {c.Words,7} {c.Rendered,10} {c.StatedAbsent,15} {c.Silent,10} " +
-                              $"{c.Unpaired,10}   {c.Share,7:P1}");
+            report.AppendLine($"  {c.Text,-13} {c.Section,-15} {c.Words,7} {c.Rendered,10} {c.StatedAbsent,15} " +
+                              $"{c.Silent,10} {c.Unpaired,10}   {c.Share,7:P1}");
         }
 
         report.AppendLine("reach         lexical    reached");
@@ -99,6 +149,13 @@ internal sealed record CorpusMeasures(
         foreach (var c in Crowding)
         {
             report.AppendLine($"  {c.Text} on {c.Witness,-12} {c.Crowded,7} {c.Worst,10}");
+        }
+
+        report.AppendLine("pairing       chapters shared, chapters divided differently, verses, verses too weak to trust");
+        foreach (var p in Pairing)
+        {
+            report.AppendLine($"  {p.Text} to {p.Against,-14} {p.Chapters,6} {p.Divided,7} {p.Verses,8} {p.Suspect,7}" +
+                              (p.Worst.Count == 0 ? string.Empty : $"   {string.Join(", ", p.Worst)}"));
         }
 
         report.AppendLine("integrity     every one of these should be zero");

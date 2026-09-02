@@ -30,9 +30,10 @@ public static class Datasets
         new("bibledata", "BibleData", "Brady Stephenson", "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://github.com/BradyStephenson/bible-data",
-            "The people and places the text names, how they stand to one another, and a chronology "
-            + "of the Old Testament in which every year is computed from a verse and shows its "
-            + "arithmetic.",
+            "The people the text names, how they stand to one another, and a chronology of the Old "
+            + "Testament in which every year is computed from a verse and shows its arithmetic. Its "
+            + "places are marked in progress by its author and read that way here: 118 of them, "
+            + "named but not placed, and referenced only through Genesis and Exodus.",
             "BibleData by"),
 
         new("theographic", "Theographic Bible Data", "Robert Rouse", "CC BY-SA 4.0",

@@ -71,7 +71,7 @@ internal static class Texts
             .OrderBy(w => w.Verse!.Number).ThenBy(w => w.Verse!.Label).ThenBy(w => w.Position)
             .Select(w => new WordRow(
                 w.Verse!.Number, w.Verse!.Label, w.Id, w.Surface, w.Trailer, w.Gloss, w.Lemma, w.StrongNumber,
-                w.Morphology))
+                w.Morphology, w.Elided))
             .ToListAsync(cancellationToken);
 
         return Group(rows, await Counterparts(db, rows.Select(r => r.Id), cancellationToken));
@@ -185,7 +185,7 @@ internal static class Texts
                         && r.CanonicalChapter == canonicalChapter)
             .SelectMany(r => r.Verse!.Words.Select(w => new CanonicalWordRow(
                 r.CanonicalVerse, r.Verse.Number, r.Verse.Label, w.Position, w.Id, w.Surface, w.Trailer, w.Gloss,
-                w.Lemma, w.StrongNumber, w.Morphology)))
+                w.Lemma, w.StrongNumber, w.Morphology, w.Elided)))
             .ToListAsync(cancellationToken);
 
         var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
@@ -200,7 +200,7 @@ internal static class Texts
                 group => group
                     .OrderBy(r => r.VerseNumber).ThenBy(r => r.Label).ThenBy(r => r.Position)
                     .Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
-                        counterparts))
+                        r.Elided, counterparts))
                     .ToList());
     }
 
@@ -215,7 +215,7 @@ internal static class Texts
             .Select(group => new TextVerseResponse(
                 group.Key.VerseNumber,
                 group.Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
-                        counterparts))
+                        r.Elided, counterparts))
                     .ToList(),
                 group.Key.Label))
             .ToList();
@@ -228,6 +228,7 @@ internal static class Texts
         string? lemma,
         string? strongNumber,
         JsonDocument? morphology,
+        bool elided,
         Reached counterparts)
     {
         var features = Features(morphology);
@@ -245,7 +246,10 @@ internal static class Texts
             Morphology(features),
             Feature(features, Phono),
             Feature(features, PhonoTrailer),
-            Feature(features, Language));
+            Feature(features, Language))
+        {
+            Elided = elided,
+        };
     }
 
     private static JsonElement? Features(JsonDocument? morphology) => morphology?.RootElement;
@@ -282,9 +286,9 @@ internal static class Texts
 
     private sealed record WordRow(
         int VerseNumber, string Label, long Id, string Text, string Trailer, string? Gloss, string? Lemma,
-        string? StrongNumber, JsonDocument? Morphology);
+        string? StrongNumber, JsonDocument? Morphology, bool Elided);
 
     private sealed record CanonicalWordRow(
         int CanonicalVerse, int VerseNumber, string Label, int Position, long Id, string Text, string Trailer,
-        string? Gloss, string? Lemma, string? StrongNumber, JsonDocument? Morphology);
+        string? Gloss, string? Lemma, string? StrongNumber, JsonDocument? Morphology, bool Elided);
 }

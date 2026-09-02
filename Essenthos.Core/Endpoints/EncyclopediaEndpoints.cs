@@ -1,4 +1,6 @@
+using System.Linq.Expressions;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +20,57 @@ namespace Essenthos.Core.Endpoints;
 internal static class EncyclopediaEndpoints
 {
     private const int MostPerPage = 100;
+
+    /// <summary>
+    /// A verse address as one number, so that <em>how many verses</em> is a <c>DISTINCT</c> the
+    /// database can do rather than a group the API has to assemble.
+    ///
+    /// It orders exactly as the three columns order, because no chapter reaches a thousand verses
+    /// and no book a thousand chapters — Psalm 119 is 176 verses and Psalms is 150 chapters, and
+    /// both stay that way.
+    /// </summary>
+    private const int ChapterStride = 1_000;
+
+    private const int BookStride = 1_000_000;
+
+    /// <summary>
+    /// How many verses name an entity, how many namings they hold, and how many of those verses
+    /// carry a naming the source cannot resolve.
+    ///
+    /// One expression, read by the entity page and by the test that measures it, because the three
+    /// numbers differ — 28,226 verses under 30,105 namings — and reporting one of them under
+    /// another's name is the whole defect.
+    /// </summary>
+    internal static readonly Expression<Func<Entity, EntityTally>> Tally =
+        e => new EntityTally(
+            e.Verses
+                .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                             + v.CanonicalVerse)
+                .Distinct().Count(),
+            e.Verses.Count,
+            e.Verses
+                .Where(v => v.Disputed)
+                .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                             + v.CanonicalVerse)
+                .Distinct().Count());
+
+    internal static readonly Expression<Func<Entity, EntitySummaryResponse>> Summary =
+        e => new EntitySummaryResponse(
+            e.Slug,
+            EnumSpelling.Of(e.Kind),
+            e.Name,
+            e.Distinguisher,
+            e.Verses
+                .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                             + v.CanonicalVerse)
+                .Distinct().Count(),
+            e.Verses.Count);
+
+    /// <summary>The addresses of a set of namings, each address once.</summary>
+    internal static IQueryable<int> Addresses(IQueryable<EntityVerse> namings) =>
+        namings
+            .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride) + v.CanonicalVerse)
+            .Distinct();
 
     public static void MapEncyclopedia(this IEndpointRouteBuilder routes)
     {
@@ -60,12 +113,7 @@ internal static class EncyclopediaEndpoints
                 .OrderBy(e => e.Name).ThenBy(e => e.Slug)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 40, 1, MostPerPage))
-                .Select(e => new EntitySummaryResponse(
-                    e.Slug,
-                    EnumSpelling.Of(e.Kind),
-                    e.Name,
-                    e.Distinguisher,
-                    e.Verses.Count))
+                .Select(Summary)
                 .ToListAsync(cancellationToken);
 
             return Results.Ok(new EntityListResponse(total, page));
@@ -92,8 +140,6 @@ internal static class EncyclopediaEndpoints
                     e.Notes,
                     e.OpenBibleId,
                     e.Source,
-                    References = e.Verses.Count,
-                    Disputed = e.Verses.Count(v => v.Disputed),
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -102,11 +148,18 @@ internal static class EncyclopediaEndpoints
                 return ApiResults.NotFound($"There is no person or place \"{slug}\".");
             }
 
+            var tally = await db.Entities
+                .Where(e => e.Id == entity.Id)
+                .Select(Tally)
+                .SingleAsync(cancellationToken);
+
             var names = await db.EntityNames
                 .Where(n => n.EntityId == entity.Id)
-                .Select(n => new EntityNameResponse(
+                .Select(n => new
+                {
                     n.Label, n.Hebrew, n.HebrewTransliterated, n.Greek, n.GreekTransliterated,
-                    n.Meaning, n.StrongNumber, n.Kind))
+                    n.Meaning, n.HebrewStrongNumber, n.GreekStrongNumber, n.Kind,
+                })
                 .ToListAsync(cancellationToken);
 
             // Both directions at once: a father is not recorded twice, so reading only one side
@@ -144,9 +197,14 @@ internal static class EncyclopediaEndpoints
                 entity.OpenBibleId,
                 entity.Source,
                 Datasets.Of(entity.Source),
-                entity.References,
-                entity.Disputed,
-                names,
+                tally.References,
+                tally.Mentions,
+                tally.Disputed,
+                [
+                    .. names.Select(n => new EntityNameResponse(
+                        n.Label, n.Hebrew, n.HebrewTransliterated, n.Greek, n.GreekTransliterated,
+                        n.Meaning, Numbers(n.HebrewStrongNumber), Numbers(n.GreekStrongNumber), n.Kind)),
+                ],
                 [.. outward, .. inward],
                 [.. events.Select(Event)]));
         });
@@ -165,27 +223,46 @@ internal static class EncyclopediaEndpoints
                 return ApiResults.NotFound($"There is no person or place \"{slug}\".");
             }
 
+            // Paged by verse, not by naming. The source writes one row per naming, so Manasseh's
+            // list showed the same address twice wherever the text names him twice in it — a verse
+            // repeated in a list of verses, with nothing on the page saying why.
             var references = db.EntityVerses.Where(v => v.EntityId == entity);
-            var total = await references.CountAsync(cancellationToken);
-            var page = await references
-                .OrderBy(v => v.CanonicalBook).ThenBy(v => v.CanonicalChapter).ThenBy(v => v.CanonicalVerse)
+            var addresses = Addresses(references);
+
+            var total = await addresses.CountAsync(cancellationToken);
+            var wanted = await addresses
+                .OrderBy(address => address)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
+                .ToListAsync(cancellationToken);
+
+            var namings = await references
+                .Where(v => wanted.Contains((v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                                            + v.CanonicalVerse))
                 .Select(v => new { v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse, v.Label, v.Disputed })
                 .ToListAsync(cancellationToken);
+
+            var byAddress = namings
+                .GroupBy(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                              + v.CanonicalVerse)
+                .ToDictionary(group => group.Key, group => group.ToList());
 
             return Results.Ok(new EntityReferenceListResponse(
                 total,
                 [
-                    .. page.Select(v => new EntityReferenceResponse(
-                        new BookRefResponse(
-                            v.CanonicalBook,
-                            BookReferences.Name(v.CanonicalBook),
-                            BookReferences.Slug(v.CanonicalBook)),
-                        v.CanonicalChapter,
-                        v.CanonicalVerse,
-                        v.Label,
-                        v.Disputed)),
+                    .. wanted.Where(byAddress.ContainsKey).Select(address =>
+                    {
+                        var at = byAddress[address];
+                        return new EntityReferenceResponse(
+                            new BookRefResponse(
+                                at[0].CanonicalBook,
+                                BookReferences.Name(at[0].CanonicalBook),
+                                BookReferences.Slug(at[0].CanonicalBook)),
+                            at[0].CanonicalChapter,
+                            at[0].CanonicalVerse,
+                            [.. at.Select(v => new EntityNamingResponse(v.Label, v.Disputed))],
+                            at.Any(v => v.Disputed));
+                    }),
                 ]));
         });
 
@@ -447,6 +524,13 @@ internal static class EncyclopediaEndpoints
         return span;
     }
 
+    /// <summary>
+    /// The Strong numbers of one name, which the column keeps comma-joined the way the lexicon's
+    /// own cross-references are kept.
+    /// </summary>
+    private static IList<string> Numbers(string? stored) =>
+        stored is { Length: > 0 } ? stored.Split(',') : [];
+
     private static VerseRefResponse? Reference(int? book, int? chapter, int? verse) =>
         book is { } ordinal && chapter is { } inChapter && verse is { } atVerse
             ? new VerseRefResponse(
@@ -536,19 +620,37 @@ internal static class EncyclopediaEndpoints
     };
 }
 
+/// <summary>The three counts of an entity's references, which are three different questions.</summary>
+internal sealed record EntityTally(int References, int Mentions, int Disputed);
+
+/// <param name="References">How many verses name this entity.</param>
+/// <param name="Mentions">
+/// How many times they name it, which is the larger number: the source records one row per
+/// naming, and Matthew 20:30 names Jesus three times over.
+/// </param>
 internal record EntitySummaryResponse(
     string Slug,
     string Kind,
     string Name,
     string? Distinguisher,
-    int References);
+    int References,
+    int Mentions);
 
 internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items);
 
+/// <param name="References">
+/// How many verses name this entity — the number a reader asking "how often is Nebuchadnezzar in
+/// the text" is asking for.
+/// </param>
+/// <param name="Mentions">
+/// How many namings those verses hold. The two differ by six per cent across the corpus and by a
+/// third on Nebuchadnezzar, so they are both here and both labelled rather than one of them
+/// standing in for the other.
+/// </param>
 /// <param name="Disputed">
-/// References the source itself cannot resolve. BibleData holds the God of Israel and Jesus as one
-/// entity; 1,416 New Testament references say only "God" or "Lord", and which of the two is meant
-/// is a reading of the text rather than a fact about the dataset.
+/// Verses the source itself cannot resolve. BibleData holds the God of Israel and Jesus as one
+/// entity; 1,417 New Testament namings use a word the New Testament gives both, and which of the
+/// two is meant is a reading of the text rather than a fact about the dataset.
 /// </param>
 internal record EntityResponse(
     string Slug,
@@ -564,11 +666,17 @@ internal record EntityResponse(
     string Source,
     string? SourceId,
     int References,
+    int Mentions,
     int Disputed,
     IList<EntityNameResponse> Names,
     IList<EntityRelationshipResponse> Relationships,
     IList<EventResponse> Events);
 
+/// <param name="HebrewStrongNumbers">
+/// The lexicon entries this name is, one per word of it. A proper name has one; a title has as
+/// many as it has words — <em>King of Judah</em> is H4428 and H3063 — which is why it is a list
+/// and not a number.
+/// </param>
 internal record EntityNameResponse(
     string Label,
     string? Hebrew,
@@ -576,7 +684,8 @@ internal record EntityNameResponse(
     string? Greek,
     string? GreekTransliterated,
     string? Meaning,
-    string? StrongNumber,
+    IList<string> HebrewStrongNumbers,
+    IList<string> GreekStrongNumbers,
     string? Kind);
 
 /// <param name="Category">
@@ -597,11 +706,18 @@ internal record EntityRelationshipResponse(
     VerseRefResponse? Reference,
     string? Notes);
 
+/// <summary>What the text calls the entity at one verse, and whether that word settles who it is.</summary>
+internal record EntityNamingResponse(string? Label, bool Disputed);
+
+/// <param name="Namings">
+/// Every name the entity is given in this verse. Matthew 20:30 calls Jesus by name and by *Son of
+/// David*, and both are here rather than the verse appearing twice.
+/// </param>
 internal record EntityReferenceResponse(
     BookRefResponse Book,
     int Chapter,
     int Verse,
-    string? Label,
+    IList<EntityNamingResponse> Namings,
     bool Disputed);
 
 internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResponse> Items);

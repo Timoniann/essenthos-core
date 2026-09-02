@@ -100,8 +100,9 @@ internal record HealthResponse(
 
 /// <param name="Broken">Integrity checks the corpus fails. Anything but zero is a defect.</param>
 /// <param name="Rendered">
-/// The share of translated words that reach a witness. One number for whether the corpus is better
-/// or worse than the load before it; <c>/v1/verification</c> has the rest.
+/// The share of words that reach a witness, over every text the corpus has linked to one. It is a
+/// trend line and describes no text: <c>/v1/verification</c> reports coverage per section, which is
+/// where a number that describes something is.
 /// </param>
 internal record VerificationResponse(DateTimeOffset RanAt, int Broken, double Rendered);
 

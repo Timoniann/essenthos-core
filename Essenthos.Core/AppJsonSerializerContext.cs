@@ -37,6 +37,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(EntityRelationshipResponse))]
 [JsonSerializable(typeof(EntityReferenceResponse))]
 [JsonSerializable(typeof(EntityReferenceListResponse))]
+[JsonSerializable(typeof(EntityNamingResponse))]
+[JsonSerializable(typeof(IList<EntityNamingResponse>))]
 [JsonSerializable(typeof(EventResponse))]
 [JsonSerializable(typeof(EventListResponse))]
 [JsonSerializable(typeof(TimelineResponse))]

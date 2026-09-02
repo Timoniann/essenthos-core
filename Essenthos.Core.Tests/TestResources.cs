@@ -32,6 +32,9 @@ internal static class TestResources
 
     public static string Tvtms => Path("Versification", "TVTMS.txt");
 
+    /// <summary>Brenton's Septuagint, one USFM file per book.</summary>
+    public static string SeptuagintFolder => System.IO.Path.Combine(ResolvedPath.Value, "Septuagint");
+
     /// <summary>Robinson's composite, one file per book.</summary>
     public static string TextusReceptus(string book) => Path("TextusReceptus", "parsed", $"{book}.UTR");
 

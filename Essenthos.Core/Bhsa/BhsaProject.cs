@@ -32,6 +32,16 @@ public class BhsaProject
 
     public IReadOnlyList<Lexeme> Lexemes { get; init; }
 
+    /// <summary>
+    /// BHSA's mother edge, from a node to the node it stands in its <c>rela</c> to: a rectum to its
+    /// regens, an adjunctive clause to the clause it modifies. Keyed and valued by BHSA node id,
+    /// and the target is as often a word as it is a group, so it is left as the source states it
+    /// rather than resolved onto one of the parsed lists.
+    ///
+    /// It is the other half of <c>rela</c>. Without it a relation names nothing.
+    /// </summary>
+    public IReadOnlyDictionary<int, int> Mothers { get; init; }
+
     public static BhsaProject Load(string path)
     {
         var tfProject = Project.Load(path);
@@ -109,6 +119,7 @@ public class BhsaProject
         var phono = GetDocument<string>("phono");
         var phonoTrailer = GetDocument<string>("phono_trailer");
         var label = GetDocument<string>("label");
+        var mother = GetDocument<string>("mother");
 
         var wordCount = wordRange.End - wordRange.Start + 1;
         var books = new List<Book>(bookRange.End - bookRange.Start + 1);
@@ -291,8 +302,8 @@ public class BhsaProject
                 for (var i = phraseAtomRange.Start; i <= phraseAtomRange.End; i++)
                 {
                     var wordSlotRanges = tfProject.ObjectSlotsMap[i];
-                    var phraseAtom = new PhraseAtom(SlotId: i, Ordinal: phraseAtomIndex++, LinguisticRelation: rela[i],
-                        Determination: det[i], Words: []);
+                    var phraseAtom = new PhraseAtom(SlotId: i, Ordinal: phraseAtomIndex++, Type: type[i],
+                        LinguisticRelation: rela[i], Determination: det[i], Words: []);
                     phraseAtoms.Add(phraseAtom);
                     for (int index = 0, count = wordSlotRanges.Count; index < count; index++)
                     {
@@ -570,8 +581,15 @@ public class BhsaProject
         var unusedKeys = tfProject.Documents.Keys.Except(accessedKeys);
         Console.WriteLine($"Unused documents in the project: {string.Join(", ", unusedKeys)}");
 
+        var mothers = new Dictionary<int, int>(mother.Count);
+        foreach (var (node, target) in mother)
+        {
+            mothers[node] = int.Parse(target);
+        }
+
         return new BhsaProject
         {
+            Mothers = mothers,
             Words = words,
             Books = books,
             Lexemes = lexemes,
