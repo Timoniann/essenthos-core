@@ -182,6 +182,13 @@ public class EntityVerse
         $"EntityVerse({EntityId} at {CanonicalBook} {CanonicalChapter}:{CanonicalVerse})";
 }
 
+/// <summary>The two histories drawn on the one axis.</summary>
+public static class Realms
+{
+    public const string Scripture = "scripture";
+    public const string World = "world";
+}
+
 /// <summary>
 /// Something that happened, and when the source thinks it happened.
 ///
@@ -194,6 +201,7 @@ public class EntityVerse
 [Index(nameof(Slug), IsUnique = true)]
 [Index(nameof(EntityId))]
 [Index(nameof(YearFromCreation))]
+[Index(nameof(Realm))]
 public class Event
 {
     [Key]
@@ -230,19 +238,28 @@ public class Event
 
     public string? Location { get; set; }
 
-    /// <summary>Ussher's year from creation, and his paragraph, where he treats it.</summary>
-    public int? UssherAnnoMundi { get; set; }
+    /// <summary>
+    /// Which history this belongs to — <c>scripture</c> or <c>world</c>.
+    ///
+    /// The whole point of putting them on one axis is that they disagree: the Great Pyramid is
+    /// finished in 2560 BCE and the Masoretic reckoning has the Flood in 2304 BCE, so on that
+    /// reckoning the pyramid is antediluvian and on the Septuagint's it is not. A reader has to be
+    /// able to see which claim comes from which history before they can weigh that.
+    /// </summary>
+    public string Realm { get; set; } = Realms.Scripture;
 
-    public int? UssherBceYear { get; set; }
+    /// <summary>Where in the world, where the source says. The world layer is filtered by it.</summary>
+    public string? Region { get; set; }
 
-    public string? UssherParagraph { get; set; }
-
-    /// <summary>Shulman's year from creation, following Seder Olam.</summary>
-    public int? ShulmanAnnoMundi { get; set; }
+    /// <summary>Where to go and check this one row — a Wikidata item, usually.</summary>
+    public string? Uri { get; set; }
 
     public string? Notes { get; set; }
 
     public required string Source { get; set; }
+
+    /// <summary>What each reckoning makes of it. Never one number — see <see cref="EventDate"/>.</summary>
+    public ICollection<EventDate> Dates { get; set; } = [];
 
     public override string ToString() => $"Event({Slug}, {BceYear} BCE)";
 }

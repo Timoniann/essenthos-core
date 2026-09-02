@@ -65,6 +65,15 @@ public class Period
 
     public int? EndYear { get; set; }
 
+    /// <summary>Which history this belongs to — <c>scripture</c> or <c>world</c>.</summary>
+    public string Realm { get; set; } = Realms.Scripture;
+
+    /// <summary>Where in the world, where the source says.</summary>
+    public string? Region { get; set; }
+
+    /// <summary>Where to go and check it.</summary>
+    public string? Uri { get; set; }
+
     public string? Notes { get; set; }
 
     public required string Source { get; set; }

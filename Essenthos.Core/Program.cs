@@ -54,6 +54,7 @@ builder.Services.AddScoped<WordFoldingLoader>();
 builder.Services.AddScoped<InterlinearLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<TheographicEventLoader>();
+builder.Services.AddScoped<WorldHistoryLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();

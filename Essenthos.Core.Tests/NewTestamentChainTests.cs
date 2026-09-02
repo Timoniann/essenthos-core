@@ -120,3 +120,40 @@ public class NewTestamentChainTests
         return titled;
     }
 }
+
+/// <summary>
+/// Reading Wikidata's timestamps, which are not written the way its own documentation describes.
+///
+/// The RDF these queries return is XSD <c>dateTime</c>, and XSD has a year zero — so <c>-0489</c>
+/// is 490 BCE. Wikidata's internal model has no year zero and writes the same battle
+/// <c>-0490</c>. Believing the documentation over the file put every world event a year late,
+/// which is invisible on a six-thousand-year axis and wrong in every citation.
+/// </summary>
+public class WorldYearTests
+{
+    [Theory]
+    [InlineData("-0489-08-07T00:00:00Z", -489)]   // Marathon, 490 BCE
+    [InlineData("-2559-01-01T00:00:00Z", -2559)]  // The Great Pyramid, 2560 BCE
+    [InlineData("-0030-09-02T00:00:00Z", -30)]    // Actium, 31 BCE
+    [InlineData("0079-08-24T00:00:00Z", 79)]      // Vesuvius, AD 79
+    [InlineData("0000-01-01T00:00:00Z", 0)]       // The year the axis calls 1 BCE
+    public void ReadsTheYearOutOfATimestamp(string timestamp, int expected) =>
+        WorldHistoryLoader.Year(timestamp).Should().Be(expected);
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("not a date")]
+    [InlineData("-04")]
+    public void AnswersNothingForWhatIsNotADate(string timestamp) =>
+        WorldHistoryLoader.Year(timestamp).Should().BeNull();
+
+    [Fact]
+    public void PutsAYearOnTheAxisWhereEveryReckoningCanFindIt()
+    {
+        // 490 BCE is the axis year `zero + -489` on any reckoning: 3472 on this corpus's own,
+        // 3514 on Ussher's. The historical year is the same; only the count from creation moves.
+        var marathon = WorldHistoryLoader.Year("-0489-01-01T00:00:00Z")!.Value;
+        (3961 + marathon).Should().Be(3472);
+        (4003 + marathon).Should().Be(3514);
+    }
+}

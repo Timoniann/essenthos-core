@@ -307,6 +307,14 @@ internal sealed class DatasetLoader(
         var newTestament = second.ServiceProvider.GetRequiredService<TheographicEventLoader>();
         status.Record(await newTestament.Load(
             Path.Combine(resources, "TheographicBibleData"), cancellationToken));
+
+        // What else was happening. Its own folder in this project rather than the frozen API's,
+        // because it was fetched for the rebuild and nothing over there reads it.
+        using var third = services.CreateScope();
+        var world = third.ServiceProvider.GetRequiredService<WorldHistoryLoader>();
+        status.Record(await world.Load(
+            Path.Combine(AppContext.BaseDirectory, "Resources", "WorldHistory"),
+            cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

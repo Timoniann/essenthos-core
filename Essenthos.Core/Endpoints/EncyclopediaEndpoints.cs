@@ -128,7 +128,7 @@ internal static class EncyclopediaEndpoints
             var events = await db.Events
                 .Where(e => e.EntityId == entity.Id)
                 .OrderBy(e => e.YearFromCreation)
-                .Select(e => new EventRow(e, e.Entity!.Slug, e.Entity.Name))
+                .Select(Rows)
                 .ToListAsync(cancellationToken);
 
             return Results.Ok(new EntityResponse(
@@ -194,12 +194,18 @@ internal static class EncyclopediaEndpoints
             [FromQuery] string? entity,
             [FromQuery] int? fromYear,
             [FromQuery] int? toYear,
+            [FromQuery] string? realm,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
             var events = db.Events.AsQueryable();
+
+            if (realm is { Length: > 0 })
+            {
+                events = events.Where(e => e.Realm == realm);
+            }
 
             if (entity is { Length: > 0 })
             {
@@ -221,8 +227,7 @@ internal static class EncyclopediaEndpoints
                 .OrderBy(e => e.YearFromCreation).ThenBy(e => e.Slug)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
-                .Select(e => new EventRow(e, e.Entity == null ? null : e.Entity.Slug,
-                    e.Entity == null ? null : e.Entity.Name))
+                .Select(Rows)
                 .ToListAsync(cancellationToken);
 
             return Results.Ok(new EventListResponse(total, [.. page.Select(Event)]));
@@ -251,6 +256,9 @@ internal static class EncyclopediaEndpoints
                     e.Slug,
                     e.Name,
                     e.Kind,
+                    e.Realm,
+                    e.Region,
+                    e.Uri,
                     EntitySlug = e.Entity == null ? null : e.Entity.Slug,
                 })
                 .ToListAsync(cancellationToken);
@@ -280,6 +288,9 @@ internal static class EncyclopediaEndpoints
                     p.Name,
                     p.Kind,
                     p.Level,
+                    p.Realm,
+                    p.Region,
+                    p.Uri,
                     ParentSlug = p.Parent == null ? null : p.Parent.Slug,
                     EntitySlug = p.Entity == null ? null : p.Entity.Slug,
                     p.Notes,
@@ -302,6 +313,9 @@ internal static class EncyclopediaEndpoints
                         e.Slug,
                         e.Name,
                         e.Kind,
+                        e.Realm,
+                        e.Region,
+                        e.Uri,
                         e.EntitySlug,
                         years.GetValueOrDefault(e.Id) ?? [])),
                 ],
@@ -311,6 +325,9 @@ internal static class EncyclopediaEndpoints
                         p.Name,
                         p.Kind,
                         p.Level,
+                        p.Realm,
+                        p.Region,
+                        p.Uri,
                         p.ParentSlug,
                         p.EntitySlug,
                         p.Notes,
@@ -369,7 +386,11 @@ internal static class EncyclopediaEndpoints
     /// left every one of the 572 events without a person on it, while the filter that uses the
     /// same navigation worked — so the timeline could select by a person and never name one.
     /// </summary>
-    private sealed record EventRow(Database.Entities.Event Event, string? EntitySlug, string? EntityName);
+    private sealed record EventRow(
+        Database.Entities.Event Event,
+        string? EntitySlug,
+        string? EntityName,
+        IList<EventDateResponse> Dates);
 
     /// <summary>
     /// Which side of the era a year falls. The source counts forward from the creation without a
@@ -379,12 +400,45 @@ internal static class EncyclopediaEndpoints
     /// </summary>
     private const int LastYearBeforeChrist = 3961;
 
-    private static EventResponse Event(EventRow row) => Event(row.Event, row.EntitySlug, row.EntityName);
+    /// <summary>
+    /// An event with the people and the dates it needs, projected in the query.
+    ///
+    /// One expression, used by both places that return events, because reading a navigation
+    /// property outside the projection is what left all 572 events without a person once already
+    /// while the filter over the same navigation went on working.
+    /// </summary>
+    private static readonly System.Linq.Expressions.Expression<Func<Database.Entities.Event, EventRow>> Rows =
+        e => new EventRow(
+            e,
+            e.Entity == null ? null : e.Entity.Slug,
+            e.Entity == null ? null : e.Entity.Name,
+            e.Dates
+                .OrderBy(d => d.Chronology!.Position)
+                .Select(d => new EventDateResponse(
+                    d.Chronology!.Slug,
+                    d.Chronology.Name,
+                    d.Year,
+                    d.Year == null
+                        ? null
+                        : d.Year <= d.Chronology.LastYearBeforeTheCommonEra
+                            ? d.Chronology.LastYearBeforeTheCommonEra - d.Year.Value + 1
+                            : d.Year.Value - d.Chronology.LastYearBeforeTheCommonEra,
+                    d.Year != null && d.Year > d.Chronology.LastYearBeforeTheCommonEra ? "CE" : "BCE",
+                    d.EarliestYear,
+                    d.LatestYear,
+                    d.Calculation,
+                    d.Citation,
+                    d.Notes))
+                .ToList());
+
+    private static EventResponse Event(EventRow row) =>
+        Event(row.Event, row.EntitySlug, row.EntityName, row.Dates);
 
     private static EventResponse Event(
         Database.Entities.Event e,
         string? entitySlug,
-        string? entityName) => new(
+        string? entityName,
+        IList<EventDateResponse> dates) => new(
         e.Slug,
         e.Name,
         e.Description,
@@ -397,11 +451,11 @@ internal static class EncyclopediaEndpoints
         e.Calculation,
         Reference(e.CanonicalBook, e.CanonicalChapter, e.CanonicalVerse),
         e.Location,
-        e.UssherAnnoMundi,
-        e.UssherBceYear,
-        e.UssherParagraph,
-        e.ShulmanAnnoMundi,
-        e.Notes)
+        e.Realm,
+        e.Region,
+        e.Uri,
+        e.Notes,
+        dates)
     {
         Era = e.YearFromCreation is { } year && year > LastYearBeforeChrist ? "AD" : "BCE",
     };
@@ -480,9 +534,9 @@ internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResp
 /// The arithmetic that produced the year, in a sentence, so it can be checked rather than
 /// believed. This is why this dataset was chosen over the others.
 /// </param>
-/// <param name="UssherAnnoMundi">
-/// What Ussher makes it, and what Shulman makes it after Seder Olam. Beside the figure rather than
-/// instead of it: a reader is owed the disagreement, not a winner.
+/// <param name="Dates">
+/// Every reckoning's answer, beside each other rather than one instead of the rest. A reader is
+/// owed the disagreement, not a winner — and they disagree in 413 of the 419 events they share.
 /// </param>
 internal record EventResponse(
     string Slug,
@@ -497,11 +551,11 @@ internal record EventResponse(
     string? Calculation,
     VerseRefResponse? Reference,
     string? Location,
-    int? UssherAnnoMundi,
-    int? UssherBceYear,
-    string? UssherParagraph,
-    int? ShulmanAnnoMundi,
-    string? Notes)
+    string Realm,
+    string? Region,
+    string? Uri,
+    string? Notes,
+    IList<EventDateResponse> Dates)
 {
     /// <summary>
     /// <c>BCE</c> or <c>AD</c>. The source writes its year without a sign and keeps counting past
@@ -509,6 +563,21 @@ internal record EventResponse(
     /// </summary>
     public string Era { get; init; } = "BCE";
 }
+
+/// <param name="Calculation">
+/// The arithmetic that produced this reckoning's year, where the reckoning shows its working.
+/// </param>
+internal record EventDateResponse(
+    string Chronology,
+    string Name,
+    int? Year,
+    int? BceYear,
+    string Era,
+    int? EarliestYear,
+    int? LatestYear,
+    string? Calculation,
+    string? Citation,
+    string? Notes);
 
 internal record EventListResponse(int Total, IList<EventResponse> Items);
 
@@ -553,6 +622,9 @@ internal record TimelineEventResponse(
     string Slug,
     string Name,
     string? Kind,
+    string Realm,
+    string? Region,
+    string? Uri,
     string? EntitySlug,
     IDictionary<string, int> Years);
 
@@ -565,6 +637,9 @@ internal record TimelinePeriodResponse(
     string Name,
     string? Kind,
     int Level,
+    string Realm,
+    string? Region,
+    string? Uri,
     string? ParentSlug,
     string? EntitySlug,
     string? Notes,

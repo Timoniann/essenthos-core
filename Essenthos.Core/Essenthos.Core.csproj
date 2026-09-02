@@ -28,4 +28,10 @@
              corrupted tens of thousands of words in the corpus, so both are worth a regression test. -->
         <InternalsVisibleTo Include="Essenthos.Core.Tests" />
     </ItemGroup>
+    <ItemGroup>
+        <!-- Fetched for the rebuild and read by it, so it travels with the assembly rather than
+             living in the frozen project's Resources folder beside data nothing here fetched. -->
+        <Content Include="..\Resources\WorldHistory\**" LinkBase="Resources\WorldHistory" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
 </Project>

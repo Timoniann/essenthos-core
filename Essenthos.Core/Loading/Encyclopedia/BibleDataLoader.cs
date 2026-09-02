@@ -480,10 +480,6 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 CanonicalChapter = reference?.Chapter,
                 CanonicalVerse = reference?.Verse,
                 Location = Blank(row["event_location"]),
-                UssherAnnoMundi = Number(row["ussher_am_year"]),
-                UssherBceYear = Number(row["ussher_bce_year"]),
-                UssherParagraph = Blank(row["ussher_paragraph_number"]),
-                ShulmanAnnoMundi = Number(row["shulman_am_year"]),
                 Notes = Blank(row["event_notes"]),
                 Source = Source,
             });
