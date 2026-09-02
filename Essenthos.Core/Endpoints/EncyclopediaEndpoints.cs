@@ -227,6 +227,48 @@ internal static class EncyclopediaEndpoints
 
             return Results.Ok(new EventListResponse(total, [.. page.Select(Event)]));
         });
+
+        // Every event at once, trimmed to what a timeline draws with.
+        //
+        // The paged endpoint caps at a hundred, so a timeline would make six round trips for the
+        // 572 events and more as the corpus grows — and it would make them again on every zoom.
+        // That is the shape that stalls. Trimmed, the whole set is 58 KB, which is fetched once
+        // and never fetched again, so panning and zooming touch no network at all.
+        //
+        // When world history arrives and this becomes megabytes, a windowed request earns its
+        // complexity. Not before.
+        routes.MapGet("/timeline", async (AppDbContext db, CancellationToken cancellationToken) =>
+        {
+            var events = await db.Events
+                .OrderBy(e => e.YearFromCreation).ThenBy(e => e.Slug)
+                .Select(e => new
+                {
+                    e.Slug,
+                    e.Name,
+                    e.Kind,
+                    e.YearFromCreation,
+                    e.BceYear,
+                    e.UssherAnnoMundi,
+                    e.ShulmanAnnoMundi,
+                    EntitySlug = e.Entity == null ? null : e.Entity.Slug,
+                })
+                .ToListAsync(cancellationToken);
+
+            return Results.Ok(new TimelineResponse(
+                LastYearBeforeChrist,
+                [
+                    .. events.Select(e => new TimelineEventResponse(
+                        e.Slug,
+                        e.Name,
+                        e.Kind,
+                        e.YearFromCreation,
+                        e.BceYear,
+                        e.YearFromCreation is { } year && year > LastYearBeforeChrist ? "AD" : "BCE",
+                        e.UssherAnnoMundi,
+                        e.ShulmanAnnoMundi,
+                        e.EntitySlug)),
+                ]));
+        });
     }
 
     private static VerseRefResponse? Reference(int? book, int? chapter, int? verse) =>
@@ -383,3 +425,29 @@ internal record EventResponse(
 }
 
 internal record EventListResponse(int Total, IList<EventResponse> Items);
+
+/// <param name="LastAnnoMundiBeforeTheCommonEra">
+/// The year from creation that is 1 BCE, so a client can turn every year on this axis into an
+/// astronomical one by subtracting it — and can do so without a <c>Date</c>, which is the point.
+/// The dataset counts forward from the creation without a sign, and 3,961 is where its era turns.
+/// </param>
+internal record TimelineResponse(
+    int LastAnnoMundiBeforeTheCommonEra,
+    IList<TimelineEventResponse> Items);
+
+/// <param name="UssherAnnoMundi">
+/// What Ussher and Shulman make of the same event, carried here rather than resolved. They differ
+/// from the source in 413 of 419 and 303 of 303 shared events respectively, by as much as 236
+/// years — so the disagreement is the normal case, and a timeline that averaged or hid it would be
+/// asserting a chronology no chronologer holds.
+/// </param>
+internal record TimelineEventResponse(
+    string Slug,
+    string Name,
+    string? Kind,
+    int? Year,
+    int? BceYear,
+    string Era,
+    int? UssherAnnoMundi,
+    int? ShulmanAnnoMundi,
+    string? EntitySlug);
