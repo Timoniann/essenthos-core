@@ -169,7 +169,7 @@ public sealed class OldTestamentLinkTests : IDisposable
     private static HebrewEntry Hebrew(int position) => new($"H{position}", "c1", position, $"gloss{position}");
 
     private static EnglishSegment Segment(string[] words, int rendersPosition) =>
-        new(words, Hebrew(rendersPosition));
+        new([.. words.Select(word => new EnglishWord(word, false))], Hebrew(rendersPosition));
 
     private async Task<List<(List<string> English, List<string> Hebrew, LinkRelation Relation)>> Links()
     {

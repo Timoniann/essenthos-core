@@ -37,8 +37,8 @@ public class UtrReaderTests
     {
         var verse = UtrReader.Read(Genealogy, Edition.Scrivener1894)[1];
 
-        verse.Words[1].Should().Be(new UtrWord("egennhsen", "1080", "5656", "V-AAI-3S"));
-        verse.Words[2].Should().Be(new UtrWord("ton", "3588", null, "T-ASM"));
+        (verse.Words[1] with { Segment = 0 }).Should().Be(new UtrWord("egennhsen", "1080", "5656", "V-AAI-3S"));
+        (verse.Words[2] with { Segment = 0 }).Should().Be(new UtrWord("ton", "3588", null, "T-ASM"));
     }
 
     /// <summary>The first alternative is Stephanus and the second is Scrivener, in every group.</summary>
@@ -70,7 +70,7 @@ public class UtrReaderTests
         var verse = UtrReader.Read("2:9 kai 2532 {CONJ} | ouqen | ouden | 3762 {A-NSN-N} eti 2089 {ADV}", edition)[0];
 
         verse.Words.Should().HaveCount(3);
-        verse.Words[1].Should().Be(new UtrWord(surface, "3762", null, "A-NSN-N"));
+        (verse.Words[1] with { Segment = 0 }).Should().Be(new UtrWord(surface, "3762", null, "A-NSN-N"));
         verse.Words[2].Surface.Should().Be("eti");
     }
 
@@ -92,7 +92,7 @@ public class UtrReaderTests
     {
         var verse = UtrReader.Read("2:25 simewn 0 4826 {N-PRI}", Edition.Scrivener1894)[0];
 
-        verse.Words.Single().Should().Be(new UtrWord("simewn", "4826", null, "N-PRI"));
+        (verse.Words.Single() with { Segment = 0 }).Should().Be(new UtrWord("simewn", "4826", null, "N-PRI"));
     }
 
     /// <summary>

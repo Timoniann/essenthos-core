@@ -111,10 +111,11 @@ internal static class Texts
         // word would report the confidence of a step the reader never sees.
         var evidence = await db.LinkWords
             .Where(side => ids.Contains(side.WordId)
-                           && db.LinkWords.Any(other => other.LinkId == side.LinkId
-                                                        && other.Side != side.Side
-                                                        && other.Word!.Text!.Kind != TextKind.Translation))
-            .Select(side => new { side.WordId, side.Link!.Method, side.Link!.Confidence })
+                           && (side.Link!.Relation == LinkRelation.Expands
+                               || db.LinkWords.Any(other => other.LinkId == side.LinkId
+                                                            && other.Side != side.Side
+                                                            && other.Word!.Text!.Kind != TextKind.Translation)))
+            .Select(side => new { side.WordId, side.Link!.Method, side.Link!.Confidence, side.Link.Relation })
             .ToListAsync(cancellationToken);
 
         var strongest = evidence
@@ -127,7 +128,16 @@ internal static class Texts
                     .Select(row => Provenance(row.Method, row.Confidence))
                     .First());
 
-        return new Reached(own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached), strongest);
+        // A word whose absence is stated is not a word nothing was found for, and a reader has to
+        // be able to tell them apart — that difference is what the schema was built to hold and
+        // what 22,155 King James italics say outright.
+        var absent = evidence
+            .Where(row => row.Relation is LinkRelation.Expands or LinkRelation.Omits)
+            .GroupBy(row => row.WordId)
+            .ToDictionary(group => group.Key, group => EnumSpelling.Of(group.First().Relation));
+
+        return new Reached(
+            own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached), strongest, absent);
     }
 
     /// <summary>
@@ -143,7 +153,14 @@ internal static class Texts
 
     /// <param name="Witnesses">The witness words each word reaches, which is what the client intersects.</param>
     /// <param name="Provenance">What established the strongest link on each word, where it has one.</param>
-    private sealed record Reached(ILookup<long, long> Witnesses, Dictionary<long, string> Provenance);
+    /// <param name="Absent">
+    /// Where a link records an absence rather than a correspondence: <c>expands</c> for a word this
+    /// text supplies and the other does not have, <c>omits</c> for the reverse.
+    /// </param>
+    private sealed record Reached(
+        ILookup<long, long> Witnesses,
+        Dictionary<long, string> Provenance,
+        Dictionary<long, string> Absent);
 
     /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>
     public static async Task<Dictionary<int, List<TextWordResponse>>> ReadByCanonicalVerse(
@@ -205,6 +222,7 @@ internal static class Texts
             strongNumber,
             [.. counterparts.Witnesses[id].Distinct()],
             counterparts.Provenance.GetValueOrDefault(id),
+            counterparts.Absent.GetValueOrDefault(id),
             null,
             Morphology(features),
             Feature(features, Phono),

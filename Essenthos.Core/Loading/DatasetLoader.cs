@@ -59,6 +59,7 @@ internal sealed class DatasetLoader(
             await PlaceInTheFrame(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
+            await LinkThePrintedEditions(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -219,6 +220,19 @@ internal sealed class DatasetLoader(
         {
             logger.LogError(exception, "The verification pass failed; the corpus is loaded and unmeasured");
         }
+    }
+
+    /// <summary>
+    /// The two printed editions against each other. Nothing is aligned: they come out of one token
+    /// stream with a choice at 261 places, so the file itself says which word corresponds to which.
+    /// </summary>
+    private async Task LinkThePrintedEditions(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the printed editions");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<PrintedEditionLinkLoader>();
+        status.Record(await loader.Load(Path.Combine(resources, "TextusReceptus"), cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

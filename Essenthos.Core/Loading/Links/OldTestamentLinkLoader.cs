@@ -23,6 +23,7 @@ internal sealed record LinkOutcome(
     int HebrewWordsUnreached,
     int MultiWordLinks,
     int Omissions,
+    int Supplied,
     int StrongNumbers,
     TimeSpan Elapsed)
 {
@@ -32,6 +33,7 @@ internal sealed record LinkOutcome(
             : $"{Links} links over {Verses} verses in {Elapsed}: {EnglishWordsLinked} English and " +
               $"{HebrewWordsLinked} Hebrew words, {MultiWordLinks} naming more than one Hebrew word, " +
               $"{Omissions} naming a Hebrew word the English does not render, " +
+              $"{Supplied} naming an English word the King James supplies and the Hebrew does not have, " +
               $"{HebrewWordsUnreached} Hebrew words reached by nothing, {StrongNumbers} Hebrew words given the " +
               $"Strong number the file states, {Refused} verses refused";
 }
@@ -85,7 +87,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == hebrew.Id, cancellationToken))
         {
             logger.LogInformation("The Old Testament links are already loaded; nothing to do");
-            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -139,6 +141,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             unreached,
             pairs.Count(p => p.Hebrew.Count > 1),
             pairs.Count(p => p.Omitted),
+            pairs.Count(p => p.Relation == LinkRelation.Expands),
             stated.DistinctBy(pair => pair.WordId).Count(),
             started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
@@ -167,7 +170,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
         for (var i = 0; i < fileWords.Count; i++)
         {
-            if (!string.Equals(fileWords[i], kjv[i].Text, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(fileWords[i].Text, kjv[i].Text, StringComparison.OrdinalIgnoreCase))
             {
                 return null;
             }
@@ -185,10 +188,27 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var prefixes = HebrewPrefixes.Match(record.Hebrew, record.English)
             .ToDictionary(match => match.EnglishWord, match => match);
 
-        var drafts = new List<LinkDraft>(record.English.Count + prefixes.Count);
+        // And a word the King James prints in italics renders nothing at all: the translators are
+        // saying they supplied it. It leaves its phrase too, for a link with an empty Hebrew side —
+        // which is what `expands` is for, and is a statement rather than a gap.
+        var supplied = new HashSet<int>();
+        for (var i = 0; i < fileWords.Count; i++)
+        {
+            if (fileWords[i].Supplied && !prefixes.ContainsKey(i))
+            {
+                supplied.Add(i);
+            }
+        }
+
+        var drafts = new List<LinkDraft>(record.English.Count + prefixes.Count + supplied.Count);
         foreach (var (english, match) in prefixes)
         {
             drafts.Add(new LinkDraft([kjv[english].Id], [bhsa[byPosition[match.HebrewPosition]].Id], match.Confidence));
+        }
+
+        foreach (var english in supplied)
+        {
+            drafts.Add(new LinkDraft([kjv[english].Id], []) { Relation = LinkRelation.Expands });
         }
 
         var read = 0;
@@ -197,7 +217,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         {
             var at = read;
             var words = kjv.GetRange(read, segment.Words.Count)
-                .Where((_, offset) => !prefixes.ContainsKey(at + offset))
+                .Where((_, offset) => !prefixes.ContainsKey(at + offset) && !supplied.Contains(at + offset))
                 .ToList();
             read += segment.Words.Count;
 
@@ -275,8 +295,6 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
-        var renders = EnumSpelling.Of(LinkRelation.Renders);
-        var omits = EnumSpelling.Of(LinkRelation.Omits);
         var bySource = EnumSpelling.Of(LinkMethod.StatedBySource);
         var lexical = EnumSpelling.Of(LinkMethod.Lexical);
         var fromSide = EnumSpelling.Of(LinkSide.From);
@@ -290,7 +308,10 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
                 await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(drafts[i].Omitted ? omits : renders, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(
+                    EnumSpelling.Of(drafts[i].Omitted ? LinkRelation.Omits : drafts[i].Relation),
+                    NpgsqlDbType.Text,
+                    cancellationToken);
                 await writer.WriteAsync(
                     drafts[i].Confidence is null ? bySource : lexical, NpgsqlDbType.Text, cancellationToken);
 
@@ -418,5 +439,11 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         public int LastHebrewPosition { get; set; }
 
         public bool Omitted { get; init; }
+
+        /// <summary>
+        /// What the link says. Most say the English renders the Hebrew; a marker with no English
+        /// says the Hebrew is unrendered, and an italic word says the English was supplied.
+        /// </summary>
+        public LinkRelation Relation { get; init; } = LinkRelation.Renders;
     }
 }

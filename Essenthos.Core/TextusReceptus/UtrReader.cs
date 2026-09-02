@@ -22,6 +22,13 @@ public enum Edition
 /// expects one number per word takes this for the next word's number and misreads every verb in
 /// the New Testament.
 /// </param>
+/// <param name="Segment">
+/// Which piece of the verse this word came out of, counted the same way in both editions. A word
+/// outside a variant group is its own segment and is the same word in both; a group is one segment
+/// whichever side is taken. So two readings of one verse can be laid against each other without
+/// aligning anything — the file already says which words correspond, and where it offers a choice
+/// it says that too.
+/// </param>
 /// <param name="Alternatives">
 /// The other parses the file offers for the same word. Matthew 4:15 gives γῆ as both nominative and
 /// vocative — <c>gh 1093 {N-NSF} 1093 {N-VSF}</c> — and a reader that takes the repeated number for
@@ -32,7 +39,8 @@ internal sealed record UtrWord(
     string? Strong,
     string? Inflection,
     string? Morphology,
-    IReadOnlyList<string> Alternatives)
+    IReadOnlyList<string> Alternatives,
+    int Segment = 0)
 {
     public UtrWord(string surface, string? strong, string? inflection, string? morphology)
         : this(surface, strong, inflection, morphology, [])
@@ -49,6 +57,7 @@ internal sealed record UtrWord(
         && Strong == other.Strong
         && Inflection == other.Inflection
         && Morphology == other.Morphology
+        && Segment == other.Segment
         && Alternatives.SequenceEqual(other.Alternatives);
 
     public override int GetHashCode() => HashCode.Combine(Surface, Strong, Inflection, Morphology);
@@ -138,6 +147,7 @@ internal static partial class UtrReader
         var tokens = body.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
         var words = new List<UtrWord>(32);
         var at = 0;
+        var segment = 0;
 
         while (at < tokens.Length)
         {
@@ -150,13 +160,16 @@ internal static partial class UtrReader
                 continue;
             }
 
+            segment++;
+
             if (tokens[at] != "|")
             {
-                words.Add(Word(tokens, ref at));
+                words.Add(Word(tokens, ref at) with { Segment = segment });
                 continue;
             }
 
-            words.AddRange(Variant(tokens, ref at, edition, chapter, verse));
+            words.AddRange(Variant(tokens, ref at, edition, chapter, verse)
+                .Select(word => word with { Segment = segment }));
         }
 
         return words;

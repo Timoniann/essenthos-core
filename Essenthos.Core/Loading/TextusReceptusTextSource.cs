@@ -30,6 +30,12 @@ internal static class TextusReceptusTextSource
 
     public static IReadOnlyList<string> Books => [.. Canon.Select(book => book.File)];
 
+    /// <summary>Where a book of this edition stands in the shared canon.</summary>
+    public static int Canonical(string book) =>
+        Canon.FirstOrDefault(entry => entry.File == book) is { Canonical: > 0 } found
+            ? found.Canonical
+            : throw new InvalidOperationException($"The Textus Receptus has no book \"{book}\".");
+
     public static string Slug(Edition edition) =>
         edition == Edition.Scrivener1894 ? "scrivener1894" : "stephanus1550";
 

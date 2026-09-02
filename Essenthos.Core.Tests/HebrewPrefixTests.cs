@@ -182,7 +182,31 @@ public class HebrewPrefixTests
     }
 
     private static EnglishSegment Segment(IReadOnlyList<HebrewEntry> hebrew, int position, params string[] words) =>
-        new(words, hebrew.Single(entry => entry.Position == position));
+        new([.. words.Select(word => new EnglishWord(word, false))],
+            hebrew.Single(entry => entry.Position == position));
+
+    /// <summary>
+    /// The King James prints in italics what its translators supplied, and the file carries those
+    /// marks. Stripping them and keeping the word loses the one thing they say — that the Hebrew
+    /// does not have it — and leaves the word attached to whatever the phrase happened to name.
+    /// </summary>
+    [Fact]
+    public void AnItalicWordIsReadAsSuppliedAndTheOthersAreNot()
+    {
+        var words = KjvBhsMapping.Words("and darkness <i>was</i> upon");
+
+        words.Select(word => word.Text).Should().Equal("and", "darkness", "was", "upon");
+        words.Select(word => word.Supplied).Should().Equal(false, false, true, false);
+    }
+
+    /// <summary>Several words inside one pair of tags are all supplied.</summary>
+    [Fact]
+    public void EveryWordOfAnItalicRunIsSupplied()
+    {
+        var words = KjvBhsMapping.Words("there <i>is</i> <i>no</i> man");
+
+        words.Where(word => word.Supplied).Select(word => word.Text).Should().Equal("is", "no");
+    }
 
     private static Dictionary<int, int> Matched(
         IReadOnlyList<HebrewEntry> hebrew,

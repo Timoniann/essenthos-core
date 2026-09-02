@@ -64,6 +64,12 @@ internal record TextWordResponse(
     string? StrongNo,
     long[] OriginalWordIds,
     string? MappingProvenance,
+    /// <summary>
+    /// Set where a source states that this word has no counterpart: <c>expands</c> where the
+    /// translation supplies it and the original does not have it, <c>omits</c> for the reverse.
+    /// Null is not the same fact — it means nothing was found, which is silence rather than a claim.
+    /// </summary>
+    string? Absence,
     EntityRefResponse? Entity,
     MorphologyResponse? Morphology,
     string? Phono,

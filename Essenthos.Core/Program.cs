@@ -47,6 +47,7 @@ builder.Services.AddScoped<CompositionPipeline>();
 builder.Services.AddScoped<CorpusCheck>();
 builder.Services.AddScoped<StrongLexiconLoader>();
 builder.Services.AddScoped<SyntaxLoader>();
+builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();

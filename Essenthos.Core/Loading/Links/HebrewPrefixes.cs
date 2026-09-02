@@ -114,7 +114,7 @@ internal static class HebrewPrefixes
             var at = 0;
             for (var i = 0; i < segment.Words.Count - 1 && at < prefixes.Count; i++)
             {
-                var word = segment.Words[i];
+                var word = segment.Words[i].Text;
                 if (!Renders.Values.Any(words => words.Contains(word, StringComparer.OrdinalIgnoreCase)))
                 {
                     // The run of function words the phrase opens with has ended. Anything further in
@@ -212,7 +212,7 @@ internal static class HebrewPrefixes
                 || !seen.Add(segment.RendersHebrew.Clause)
                 || !opening.TryGetValue(segment.RendersHebrew.Clause, out var conjunction)
                 || assigned.Contains(start)
-                || !Conjunctions.Contains(segment.Words[0]))
+                || !Conjunctions.Contains(segment.Words[0].Text))
             {
                 continue;
             }
