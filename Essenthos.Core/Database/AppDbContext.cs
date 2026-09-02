@@ -59,6 +59,13 @@ public class AppDbContext : DbContext
 
     public DbSet<Event> Events { get; set; } = null!;
 
+    /// <summary>Whose reckoning a date belongs to, and the dates themselves.</summary>
+    public DbSet<Chronology> Chronologies { get; set; } = null!;
+
+    public DbSet<Period> Periods => Set<Period>();
+
+    public DbSet<EventDate> EventDates { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         NameTablesInTheSingular(modelBuilder);

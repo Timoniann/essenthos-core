@@ -239,36 +239,122 @@ internal static class EncyclopediaEndpoints
         // complexity. Not before.
         routes.MapGet("/timeline", async (AppDbContext db, CancellationToken cancellationToken) =>
         {
+            var chronologies = await db.Chronologies
+                .OrderBy(c => c.Position)
+                .ToListAsync(cancellationToken);
+
             var events = await db.Events
                 .OrderBy(e => e.YearFromCreation).ThenBy(e => e.Slug)
                 .Select(e => new
                 {
+                    e.Id,
                     e.Slug,
                     e.Name,
                     e.Kind,
-                    e.YearFromCreation,
-                    e.BceYear,
-                    e.UssherAnnoMundi,
-                    e.ShulmanAnnoMundi,
                     EntitySlug = e.Entity == null ? null : e.Entity.Slug,
+                })
+                .ToListAsync(cancellationToken);
+
+            var dates = await db.EventDates
+                .Select(d => new { d.EventId, d.ChronologyId, d.Year })
+                .ToListAsync(cancellationToken);
+
+            var reckoning = chronologies.ToDictionary(c => c.Id, c => c.Slug);
+            var years = new Dictionary<int, Dictionary<string, int>>(events.Count);
+            foreach (var date in dates.Where(d => d.Year is not null))
+            {
+                if (!years.TryGetValue(date.EventId, out var byChronology))
+                {
+                    byChronology = [];
+                    years[date.EventId] = byChronology;
+                }
+
+                byChronology[reckoning[date.ChronologyId]] = date.Year!.Value;
+            }
+
+            var periods = await db.Periods
+                .OrderBy(p => p.Level).ThenBy(p => p.StartYear)
+                .Select(p => new
+                {
+                    p.Slug,
+                    p.Name,
+                    p.Kind,
+                    p.Level,
+                    ParentSlug = p.Parent == null ? null : p.Parent.Slug,
+                    EntitySlug = p.Entity == null ? null : p.Entity.Slug,
+                    p.Notes,
+                    p.StartEventId,
+                    p.EndEventId,
+                    p.StartYear,
+                    p.EndYear,
                 })
                 .ToListAsync(cancellationToken);
 
             return Results.Ok(new TimelineResponse(
                 LastYearBeforeChrist,
                 [
+                    .. chronologies.Select(c => new ChronologyResponse(
+                        c.Slug, c.Name, c.Authority, c.Basis, c.Source,
+                        c.LastYearBeforeTheCommonEra, c.IsDefault)),
+                ],
+                [
                     .. events.Select(e => new TimelineEventResponse(
                         e.Slug,
                         e.Name,
                         e.Kind,
-                        e.YearFromCreation,
-                        e.BceYear,
-                        e.YearFromCreation is { } year && year > LastYearBeforeChrist ? "AD" : "BCE",
-                        e.UssherAnnoMundi,
-                        e.ShulmanAnnoMundi,
-                        e.EntitySlug)),
+                        e.EntitySlug,
+                        years.GetValueOrDefault(e.Id) ?? [])),
+                ],
+                [
+                    .. periods.Select(p => new TimelinePeriodResponse(
+                        p.Slug,
+                        p.Name,
+                        p.Kind,
+                        p.Level,
+                        p.ParentSlug,
+                        p.EntitySlug,
+                        p.Notes,
+                        Span(years, p.StartEventId, p.EndEventId, p.StartYear, p.EndYear))),
                 ]));
         });
+    }
+
+    /// <summary>
+    /// A period's years, in every chronology that can state both of them.
+    ///
+    /// Both ends or neither. A band whose start came from Ussher and whose end came from the base
+    /// reckoning is a duration nobody computed, and drawing one would be the exact failure this
+    /// whole model exists to avoid — Ussher is up to 236 years from the base, so such a band could
+    /// be wrong by two centuries while looking authoritative.
+    /// </summary>
+    private static Dictionary<string, int[]> Span(
+        Dictionary<int, Dictionary<string, int>> years,
+        int? startEventId,
+        int? endEventId,
+        int? startYear,
+        int? endYear)
+    {
+        var span = new Dictionary<string, int[]>();
+
+        if (startEventId is { } opens && endEventId is { } closes
+            && years.TryGetValue(opens, out var from) && years.TryGetValue(closes, out var to))
+        {
+            foreach (var (chronology, year) in from)
+            {
+                if (to.TryGetValue(chronology, out var ends))
+                {
+                    span[chronology] = [year, ends];
+                }
+            }
+        }
+
+        // A period with no anchors carries its own years, and they belong to no chronology.
+        if (span.Count == 0 && startYear is { } first && endYear is { } last)
+        {
+            span[""] = [first, last];
+        }
+
+        return span;
     }
 
     private static VerseRefResponse? Reference(int? book, int? chapter, int? verse) =>
@@ -431,23 +517,55 @@ internal record EventListResponse(int Total, IList<EventResponse> Items);
 /// astronomical one by subtracting it — and can do so without a <c>Date</c>, which is the point.
 /// The dataset counts forward from the creation without a sign, and 3,961 is where its era turns.
 /// </param>
+/// <param name="LastAnnoMundiBeforeTheCommonEra">
+/// The year from creation that is 1 BCE in the default reckoning, so a client can turn a year on
+/// this axis into an astronomical one by subtracting it — and can do so without a <c>Date</c>,
+/// which is the point. Each chronology carries its own; this is the default's.
+/// </param>
 internal record TimelineResponse(
     int LastAnnoMundiBeforeTheCommonEra,
-    IList<TimelineEventResponse> Items);
+    IList<ChronologyResponse> Chronologies,
+    IList<TimelineEventResponse> Items,
+    IList<TimelinePeriodResponse> Periods);
 
-/// <param name="UssherAnnoMundi">
-/// What Ussher and Shulman make of the same event, carried here rather than resolved. They differ
-/// from the source in 413 of 419 and 303 of 303 shared events respectively, by as much as 236
-/// years — so the disagreement is the normal case, and a timeline that averaged or hid it would be
-/// asserting a chronology no chronologer holds.
+/// <summary>
+/// One reckoning of when things happened, and what it rests on.
+///
+/// Sent alongside the dates rather than resolved into them. They disagree in 413 of 419 shared
+/// events and by as much as 236 years, and that disagreement is a finding rather than a defect —
+/// a corpus that picked one and hid the others would be asserting a chronology no chronologer
+/// holds.
+/// </summary>
+internal record ChronologyResponse(
+    string Slug,
+    string Name,
+    string? Authority,
+    string? Basis,
+    string? Source,
+    int LastAnnoMundiBeforeTheCommonEra,
+    bool IsDefault);
+
+/// <param name="Years">
+/// The year each chronology gives this event, keyed by chronology slug. A chronology that says
+/// nothing about it is absent rather than null — silence and zero are different facts.
 /// </param>
 internal record TimelineEventResponse(
     string Slug,
     string Name,
     string? Kind,
-    int? Year,
-    int? BceYear,
-    string Era,
-    int? UssherAnnoMundi,
-    int? ShulmanAnnoMundi,
-    string? EntitySlug);
+    string? EntitySlug,
+    IDictionary<string, int> Years);
+
+/// <param name="Years">
+/// Start and end, per chronology, as a two-element array. Only a chronology that can state both
+/// ends appears. The empty key is a period that carries its own years and belongs to no reckoning.
+/// </param>
+internal record TimelinePeriodResponse(
+    string Slug,
+    string Name,
+    string? Kind,
+    int Level,
+    string? ParentSlug,
+    string? EntitySlug,
+    string? Notes,
+    IDictionary<string, int[]> Years);

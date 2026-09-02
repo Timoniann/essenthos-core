@@ -19,13 +19,15 @@ internal sealed record EncyclopediaOutcome(
     int References,
     int Disputed,
     int Events,
+    int Periods,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "the encyclopedia is already loaded"
             : $"{People} people and {Places} places with {Names} names, {Relationships} relationships, " +
-              $"{References} references ({Disputed} of them disputed) and {Events} dated events in {Elapsed}";
+              $"{References} references ({Disputed} of them disputed), {Events} dated events and " +
+              $"{Periods} periods in {Elapsed}";
 }
 
 /// <summary>
@@ -65,6 +67,32 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     private const string JesusSlug = "jesus";
 
     /// <summary>
+    /// The reckonings this dataset carries, each as its own authority rather than as a column.
+    ///
+    /// They disagree constantly — Ussher differs from the base in 413 of 419 shared events, by up
+    /// to 236 years — and that disagreement is the thing worth showing. A reader wants to see that
+    /// the Exodus is 1447 on one reckoning and 1491 on another, and which text each rests on.
+    /// </summary>
+    private static readonly (string Slug, string Name, string? Authority, string Basis, string? Source,
+        int Zero, bool Default, int Position)[] Reckonings =
+    [
+        ("bibledata", "BibleData", "Brady Stephenson",
+            "Computed from the genealogies and reign lengths of the Masoretic text, with each year " +
+            "derived from a verse and the arithmetic recorded. Anchored on a 1447 BCE Exodus and a " +
+            "931 BCE division of the kingdom.",
+            "github.com/BradyStephenson/bible-data", 3961, true, 1),
+        ("ussher", "Ussher", "James Ussher, 1650",
+            "The Annals of the World. Creation at 4004 BCE, the Exodus at 1491 BCE. Still the " +
+            "reckoning printed in the margins of many English Bibles.",
+            "Annales Veteris Testamenti, 1650", 4003, false, 2),
+        ("shulman", "Seder Olam", "Eliezer Shulman",
+            "The Sequence of Events in the Old Testament, following Seder Olam Rabbah — the " +
+            "rabbinic reckoning, which compresses the Persian period and so runs several " +
+            "centuries short of the others after the exile.",
+            "Eliezer Shulman, The Sequence of Events in the Old Testament", 3760, false, 3),
+    ];
+
+    /// <summary>
     /// New Testament labels on <see cref="DivineName"/> that name God rather than Jesus, or that
     /// could name either. Everything else on that entity in the New Testament — Christ, Son of
     /// Man, Lamb, Rabbi, King of the Jews, and a hundred more — names Jesus and nothing else.
@@ -84,13 +112,13 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         if (await db.Entities.AnyAsync(cancellationToken))
         {
             logger.LogInformation("The encyclopedia is already loaded; nothing to do");
-            return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         if (!Directory.Exists(folder))
         {
             logger.LogWarning("No encyclopedia data at {Folder}; the corpus keeps its texts only", folder);
-            return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -114,14 +142,29 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         var relationships = Relationships(folder, entities, books);
         var (references, disputed) = References(folder, entities, books, jesus);
         var events = Events(folder, entities, books);
+        var chronologies = Reckon();
 
         Name(entities, events);
 
         db.EntityNames.AddRange(names);
         db.EntityRelationships.AddRange(relationships);
         db.EntityVerses.AddRange(references);
+        db.Chronologies.AddRange(chronologies);
         db.Events.AddRange(events);
         await db.SaveChangesAsync(cancellationToken);
+
+        db.EventDates.AddRange(Dates(folder, events, chronologies, books));
+
+        var (periods, unpaired) = Periods.From(events, Source);
+        db.Periods.AddRange(periods);
+        await db.SaveChangesAsync(cancellationToken);
+
+        if (unpaired > 0)
+        {
+            logger.LogInformation(
+                "{Unpaired} of the dataset's openings have no matching close and became no period.",
+                unpaired);
+        }
 
         var outcome = new EncyclopediaOutcome(
             false,
@@ -132,6 +175,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             references.Count,
             disputed,
             events.Count,
+            periods.Count,
             started.Elapsed);
 
         logger.LogInformation("Loaded the encyclopedia: {Outcome}", outcome);
@@ -213,6 +257,82 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 Source = Source,
             };
         }
+    }
+
+    private static List<Chronology> Reckon() =>
+    [
+        .. Reckonings.Select(r => new Chronology
+        {
+            Slug = r.Slug,
+            Name = r.Name,
+            Authority = r.Authority,
+            Basis = r.Basis,
+            Source = r.Source,
+            LastYearBeforeTheCommonEra = r.Zero,
+            IsDefault = r.Default,
+            Position = r.Position,
+        }),
+    ];
+
+    /// <summary>
+    /// Every reckoning's answer for every event, as rows rather than columns.
+    ///
+    /// A reckoning that says nothing about an event writes no row — which is a different fact from
+    /// saying nothing is known, and the reason this is not a table of nulls. Ussher treats 419 of
+    /// the 572 and is silent on the rest.
+    /// </summary>
+    private static List<EventDate> Dates(
+        string folder,
+        List<Event> events,
+        List<Chronology> chronologies,
+        Dictionary<string, int> books)
+    {
+        var bySlug = events.ToDictionary(e => e.Slug, e => e.Id);
+        var reckoning = chronologies.ToDictionary(c => c.Slug, c => c.Id);
+        var dates = new List<EventDate>(1_500);
+        var slugs = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (var row in Csv.Read(Path.Combine(folder, "BibleData-Event.csv")))
+        {
+            var slug = Unique(Slugs.Of(row["event_id"]), slugs);
+            if (!bySlug.TryGetValue(slug, out var eventId))
+            {
+                continue;
+            }
+
+            Add(dates, eventId, reckoning["bibledata"], Number(row["event_year_ah"]),
+                Blank(row["event_year_calculation"]), null, Blank(row["event_notes"]));
+            Add(dates, eventId, reckoning["ussher"], Number(row["ussher_am_year"]),
+                null, Blank(row["ussher_paragraph_number"]) is { } paragraph ? $"¶{paragraph}" : null, null);
+            Add(dates, eventId, reckoning["shulman"], Number(row["shulman_am_year"]), null, null, null);
+        }
+
+        return dates;
+    }
+
+    private static void Add(
+        List<EventDate> dates,
+        int eventId,
+        int chronologyId,
+        int? year,
+        string? calculation,
+        string? citation,
+        string? notes)
+    {
+        if (year is null)
+        {
+            return;
+        }
+
+        dates.Add(new EventDate
+        {
+            EventId = eventId,
+            ChronologyId = chronologyId,
+            Year = year,
+            Calculation = calculation,
+            Citation = citation,
+            Notes = notes,
+        });
     }
 
     private static List<EntityName> Names(string folder, Dictionary<string, Entity> entities)

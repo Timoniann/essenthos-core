@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260902144615_Chronologies")]
+    partial class Chronologies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -642,91 +645,6 @@ namespace Essenthos.Core.Migrations
                         .HasDatabaseName("ix_link_word_word_id");
 
                     b.ToTable("link_word", (string)null);
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.Period", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("EndEventId")
-                        .HasColumnType("integer")
-                        .HasColumnName("end_event_id");
-
-                    b.Property<int?>("EndYear")
-                        .HasColumnType("integer")
-                        .HasColumnName("end_year");
-
-                    b.Property<int?>("EntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("entity_id");
-
-                    b.Property<string>("Kind")
-                        .HasColumnType("text")
-                        .HasColumnName("kind");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("integer")
-                        .HasColumnName("level");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("text")
-                        .HasColumnName("notes");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("integer")
-                        .HasColumnName("parent_id");
-
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("slug");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.Property<int?>("StartEventId")
-                        .HasColumnType("integer")
-                        .HasColumnName("start_event_id");
-
-                    b.Property<int?>("StartYear")
-                        .HasColumnType("integer")
-                        .HasColumnName("start_year");
-
-                    b.HasKey("Id")
-                        .HasName("pk_period");
-
-                    b.HasIndex("EndEventId")
-                        .HasDatabaseName("ix_period_end_event_id");
-
-                    b.HasIndex("EntityId")
-                        .HasDatabaseName("ix_period_entity_id");
-
-                    b.HasIndex("Level")
-                        .HasDatabaseName("ix_period_level");
-
-                    b.HasIndex("ParentId")
-                        .HasDatabaseName("ix_period_parent_id");
-
-                    b.HasIndex("Slug")
-                        .IsUnique()
-                        .HasDatabaseName("ix_period_slug");
-
-                    b.HasIndex("StartEventId")
-                        .HasDatabaseName("ix_period_start_event_id");
-
-                    b.ToTable("period", (string)null);
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongEntry", b =>
@@ -1421,37 +1339,6 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Link");
 
                     b.Navigation("Word");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.Period", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.Event", "EndEvent")
-                        .WithMany()
-                        .HasForeignKey("EndEventId")
-                        .HasConstraintName("fk_period_event_end_event_id");
-
-                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
-                        .WithMany()
-                        .HasForeignKey("EntityId")
-                        .HasConstraintName("fk_period_entity_entity_id");
-
-                    b.HasOne("Essenthos.Core.Database.Entities.Period", "Parent")
-                        .WithMany()
-                        .HasForeignKey("ParentId")
-                        .HasConstraintName("fk_period_period_parent_id");
-
-                    b.HasOne("Essenthos.Core.Database.Entities.Event", "StartEvent")
-                        .WithMany()
-                        .HasForeignKey("StartEventId")
-                        .HasConstraintName("fk_period_event_start_event_id");
-
-                    b.Navigation("EndEvent");
-
-                    b.Navigation("Entity");
-
-                    b.Navigation("Parent");
-
-                    b.Navigation("StartEvent");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.TextRelation", b =>
