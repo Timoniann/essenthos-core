@@ -584,6 +584,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     {
         "rus" or "ukr" => SlavicStemmer.Stem(word.Surface, IsName(word)),
         "eng" => EnglishStemmer.Stem(word.Surface),
+        "grc" => GreekStemmer.Stem(word.Surface),
         _ => word.Surface.ToLowerInvariant(),
     };
 
@@ -604,6 +605,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// </summary>
     private static string Comparable(WordForms word) =>
         word.Language is "rus" or "ukr" or "eng" ? Reduce(word)
+        // A Greek witness with a lemma keeps it; Brenton has none, so it is reduced like any other
+        // heavily inflected language rather than counted as eight words for one.
+        : word.Language is "grc" && string.IsNullOrWhiteSpace(word.Lemma) ? Reduce(word)
         : !string.IsNullOrWhiteSpace(word.Consonantal) ? word.Consonantal
         : !string.IsNullOrWhiteSpace(word.Lemma) ? word.Lemma
         : !string.IsNullOrWhiteSpace(word.Surface) ? word.Surface.ToLowerInvariant()
