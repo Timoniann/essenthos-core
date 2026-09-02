@@ -160,6 +160,7 @@ v1.MapRead();
 v1.MapParallel();
 v1.MapStrong();
 v1.MapSyntax();
+v1.MapWords();
 
 app.UseCors();
 

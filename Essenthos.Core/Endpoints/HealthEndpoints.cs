@@ -25,10 +25,12 @@ internal static class HealthEndpoints
                 .Select(t => new { t.Slug, t.Kind })
                 .ToListAsync(cancellationToken);
 
+            // People and places stay zero: the old contract has a field for each and this corpus
+            // holds neither, and reporting a count it does not have would be worse than a zero.
             var counts = new DatasetCountsResponse(
                 await db.Words.CountAsync(w => w.Text!.Kind != TextKind.Translation, cancellationToken),
                 texts.Count(t => t.Kind == TextKind.Translation),
-                0,
+                await db.StrongEntries.CountAsync(cancellationToken),
                 0,
                 0);
 

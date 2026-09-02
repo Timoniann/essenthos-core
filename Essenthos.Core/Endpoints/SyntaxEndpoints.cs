@@ -58,7 +58,14 @@ internal static class SyntaxEndpoints
         {
             var group = await db.WordGroups
                 .Where(g => g.Id == id)
-                .Select(g => new { g.Id, g.Kind, g.Features, g.ParentId })
+                .Select(g => new
+                {
+                    g.Id,
+                    g.Kind,
+                    g.Features,
+                    g.ParentId,
+                    ParentKind = g.Parent == null ? (WordGroupKind?)null : g.Parent.Kind,
+                })
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (group is null)
@@ -80,6 +87,7 @@ internal static class SyntaxEndpoints
                     m.Word.Verse!.Number,
                     m.Word.Position,
                     m.Word.Surface,
+                    m.Word.Trailer,
                     m.Word.Gloss))
                 .ToListAsync(cancellationToken);
 
@@ -87,6 +95,7 @@ internal static class SyntaxEndpoints
                 group.Id, EnumSpelling.Of(group.Kind), words.Count, Features(group.Features), words)
             {
                 ParentId = group.ParentId,
+                ParentKind = group.ParentKind is { } kind ? EnumSpelling.Of(kind) : null,
             });
         });
 
@@ -145,9 +154,50 @@ internal static class SyntaxEndpoints
                 .Select(g => new { g.Id, g.Kind, g.Features, Words = g.Words.Count })
                 .ToListAsync(cancellationToken);
 
+            // A result that says only "phrase, 3 words, predicate" is not a result anybody can
+            // read. The words themselves are what a search of a text is for, so the page's groups —
+            // never more than a hundred — carry their own text and their own address.
+            var ids = page.Select(g => g.Id).ToList();
+            var previews = await db.WordGroupWords
+                .Where(m => ids.Contains(m.WordGroupId))
+                .OrderBy(m => m.Word!.Verse!.Book!.Position)
+                .ThenBy(m => m.Word!.Verse!.ChapterNumber)
+                .ThenBy(m => m.Word!.Verse!.Number)
+                .ThenBy(m => m.Word!.Position)
+                .Select(m => new
+                {
+                    m.WordGroupId,
+                    Ordinal = m.Word!.Verse!.Book!.CanonicalOrdinal,
+                    Chapter = m.Word.Verse!.ChapterNumber,
+                    Verse = m.Word.Verse!.Number,
+                    m.Word.Surface,
+                    m.Word.Trailer,
+                })
+                .ToListAsync(cancellationToken);
+
+            var byGroup = previews.GroupBy(row => row.WordGroupId).ToDictionary(g => g.Key, g => g.ToList());
+
             return Results.Ok(new SyntaxListResponse(total, page
-                .Select(g => new SyntaxGroupResponse(
-                    g.Id, EnumSpelling.Of(g.Kind), g.Words, Features(g.Features), null))
+                .Select(g =>
+                {
+                    var words = byGroup.GetValueOrDefault(g.Id, []);
+                    var first = words.FirstOrDefault();
+                    return new SyntaxGroupResponse(
+                        g.Id, EnumSpelling.Of(g.Kind), g.Words, Features(g.Features), null)
+                    {
+                        Preview = words.Count == 0
+                            ? null
+                            : string.Concat(words.Select(w => w.Surface + w.Trailer)).Trim(),
+                        Reference = first is null
+                            ? null
+                            : new VerseRefResponse(
+                                first.Ordinal,
+                                BookReferences.Name(first.Ordinal),
+                                BookReferences.Slug(first.Ordinal),
+                                first.Chapter,
+                                first.Verse),
+                    };
+                })
                 .ToList()));
         });
     }
@@ -169,6 +219,15 @@ internal record SyntaxGroupResponse(
     IList<SyntaxWordResponse>? Words)
 {
     public long? ParentId { get; init; }
+
+    /// <summary>What the containing group is, so a link to it is a fact rather than a number.</summary>
+    public string? ParentKind { get; init; }
+
+    /// <summary>The group's own words, run together, so a search result can be read as text.</summary>
+    public string? Preview { get; init; }
+
+    /// <summary>Where the group starts, so a search result can be opened in the reader.</summary>
+    public VerseRefResponse? Reference { get; init; }
 }
 
 internal record SyntaxWordResponse(
@@ -179,6 +238,11 @@ internal record SyntaxWordResponse(
     int Verse,
     int Position,
     string Text,
+    /// <summary>
+    /// What follows the word in the text — a space, a maqqef, a verse mark. BHSA's words are
+    /// morphemes, so joining them with a space writes בְּ רֵאשִׁית where the text has בְּרֵאשִׁית.
+    /// </summary>
+    string Trailer,
     string? Gloss);
 
 internal record SyntaxListResponse(int Total, IList<SyntaxGroupResponse> Items);

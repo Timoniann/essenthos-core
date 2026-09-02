@@ -1,7 +1,10 @@
+using System.Data;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Strong;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Essenthos.Core.Endpoints;
 
@@ -123,19 +126,175 @@ internal static class StrongEndpoints
                 .ThenBy(w => w.Position)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
-                .Select(w => new StrongOccurrenceResponse(
-                    w.Text!.Slug,
-                    w.Verse!.Book!.CanonicalOrdinal,
-                    w.Verse!.Book!.Name,
+                .Select(w => new
+                {
+                    Corpus = w.Text!.Slug,
+                    Ordinal = w.Verse!.Book!.CanonicalOrdinal,
                     w.Verse!.ChapterNumber,
-                    w.Verse!.Number,
+                    Verse = w.Verse!.Number,
+                    w.Id,
                     w.Position,
                     w.Surface,
-                    w.Gloss))
+                    w.Gloss,
+                })
                 .ToListAsync(cancellationToken);
 
-            return Results.Ok(new StrongOccurrenceListResponse(canonical, total, page));
+            return Results.Ok(new StrongOccurrenceListResponse(
+                canonical,
+                total,
+                [
+                    .. page.Select(w => new StrongOccurrenceResponse(
+                        w.Corpus,
+                        w.Ordinal,
+                        BookReferences.Name(w.Ordinal),
+                        BookReferences.Slug(w.Ordinal),
+                        w.ChapterNumber,
+                        w.Verse,
+                        w.Id,
+                        w.Position,
+                        w.Surface,
+                        w.Gloss)),
+                ]));
         });
+
+        MapRenderings(routes);
+    }
+
+    /// <summary>
+    /// How a translation actually renders this lexeme, counted over every place it stands.
+    ///
+    /// This is the question the corpus is shaped for and the reason the link table exists. A
+    /// dictionary says H430 means "God"; this says the King James writes it <em>god</em> 2,284
+    /// times, <em>gods</em> 210, and — because a Hebrew word carries its pronoun with it and the
+    /// English has to spend a separate word on it — <em>thy</em> 342 times and <em>our</em> 184.
+    /// Nothing about that is in a lexicon, and no free site answers it.
+    ///
+    /// It is counted from links, so it inherits their honesty and their limits both: a rendering
+    /// listed here is one some link asserts, and a word this text reaches by no link is counted
+    /// separately as unrendered rather than quietly dropped.
+    /// </summary>
+    private static void MapRenderings(IEndpointRouteBuilder routes) =>
+        routes.MapGet("/strong/{number}/renderings", async (
+            string number,
+            [FromQuery] string? corpus,
+            [FromQuery] int? take,
+            AppDbContext db,
+            ICanonIndex canon,
+            CancellationToken cancellationToken) =>
+        {
+            if (StrongNumbers.Normalize(number) is not { } canonical)
+            {
+                return Results.BadRequest(new ProblemResponse(
+                    $"\"{number}\" is not a Strong number. Write a language letter and digits, as H430 or G26."));
+            }
+
+            if (corpus is not { Length: > 0 })
+            {
+                return Results.BadRequest(new ProblemResponse(
+                    "Name the text whose renderings you want, as ?corpus=kjv. GET /v1/corpora lists them."));
+            }
+
+            if (await canon.Text(corpus, cancellationToken) is not { } text)
+            {
+                return Results.NotFound(new ProblemResponse($"There is no text \"{corpus}\"."));
+            }
+
+            // Counted only over the witnesses this text is linked to at all. G26 stands 348 times
+            // across the three Greek witnesses, but the King James is linked to two of them, so
+            // counting all three would report a third of the lexeme as unrendered when the truth is
+            // that those words belong to an edition this pair does not join.
+            var neighbours = await db.Links
+                .Where(l => l.FromTextId == text.Id || l.ToTextId == text.Id)
+                .Select(l => l.FromTextId == text.Id ? l.ToTextId : l.FromTextId)
+                .Distinct()
+                .ToListAsync(cancellationToken);
+
+            var occurrences = await db.Words.CountAsync(
+                w => w.StrongNumber == canonical && neighbours.Contains(w.TextId), cancellationToken);
+
+            var reached = await db.LinkWords
+                .Where(side => side.Word!.StrongNumber == canonical
+                               && (side.Link!.FromTextId == text.Id || side.Link.ToTextId == text.Id)
+                               && (side.Link!.Relation == LinkRelation.Renders
+                                   || side.Link.Relation == LinkRelation.Equals))
+                .Select(side => side.WordId)
+                .Distinct()
+                .CountAsync(cancellationToken);
+
+            var counted = await Phrases(db, canonical, text.Id, Math.Clamp(take ?? 40, 1, MostPerPage),
+                cancellationToken);
+
+            return Results.Ok(new StrongRenderingsResponse(
+                canonical,
+                corpus,
+                occurrences,
+                reached,
+                occurrences - reached,
+                [.. counted.Select(row => new StrongRenderingResponse(row.Text, row.Count))]));
+        });
+
+    /// <summary>
+    /// The whole phrase each link renders, not each word of it separately.
+    ///
+    /// Counting words alone reports אֱלֹהֶיךָ as <em>god</em> 2,284 times and <em>thy</em> 342, which
+    /// reads as noise and is not: a Hebrew word carries its pronoun and its construct relation
+    /// inside itself, so <em>thy God</em> is one rendering of one word and splitting it in two
+    /// destroys the very thing the link recorded. Grouped by link it reads as what it is —
+    /// <em>god</em> 684, <em>thy god</em> 319, <em>of god</em> 317.
+    ///
+    /// Written as SQL because the aggregation is one <c>string_agg</c> over an ordered group inside
+    /// a grouped outer query, which EF will not translate; doing it in memory would pull every word
+    /// of every link for a number like the conjunction.
+    /// </summary>
+    private static async Task<List<StrongRenderingResponse>> Phrases(
+        AppDbContext db,
+        string canonical,
+        int textId,
+        int take,
+        CancellationToken cancellationToken)
+    {
+        const string sql =
+            """
+            SELECT phrase, count(*) AS uses
+            FROM (
+                SELECT string_agg(lower(w.text), ' ' ORDER BY v.number, w.position) AS phrase
+                FROM link l
+                JOIN link_word o ON o.link_id = l.id
+                JOIN word w ON w.id = o.word_id AND w.text_id = @text
+                JOIN verse v ON v.id = w.verse_id
+                WHERE (l.from_text_id = @text OR l.to_text_id = @text)
+                  AND l.relation IN ('renders', 'equals')
+                  AND EXISTS (
+                      SELECT 1 FROM link_word s
+                      JOIN word sw ON sw.id = s.word_id
+                      WHERE s.link_id = l.id AND s.side <> o.side AND sw.strong_number = @number)
+                GROUP BY l.id
+            ) rendered
+            WHERE phrase IS NOT NULL
+            GROUP BY phrase
+            ORDER BY count(*) DESC, phrase
+            LIMIT @take
+            """;
+
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        if (connection.State != ConnectionState.Open)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        await using var command = new NpgsqlCommand(sql, connection);
+        command.Parameters.AddWithValue("text", textId);
+        command.Parameters.AddWithValue("number", canonical);
+        command.Parameters.AddWithValue("take", take);
+
+        var rows = new List<StrongRenderingResponse>(take);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            rows.Add(new StrongRenderingResponse(reader.GetString(0), (int)reader.GetInt64(1)));
+        }
+
+        return rows;
     }
 
     private static StrongEntryResponse Response(Database.Entities.StrongEntry entry) => new(
@@ -180,8 +339,10 @@ internal record StrongOccurrenceResponse(
     string Corpus,
     int BookOrdinal,
     string Book,
+    string BookSlug,
     int Chapter,
     int Verse,
+    long WordId,
     int Position,
     string Text,
     string? Gloss);
@@ -190,3 +351,23 @@ internal record StrongOccurrenceListResponse(
     string StrongNumber,
     int Total,
     IList<StrongOccurrenceResponse> Items);
+
+/// <param name="Occurrences">Every word of the corpus carrying this number, in any witness.</param>
+/// <param name="Reached">
+/// How many of those the named text renders by some link. The gap between this and
+/// <paramref name="Occurrences"/> is the honest one: places the lexeme stands and nothing in this
+/// text has been linked to it.
+/// </param>
+/// <param name="Renderings">
+/// Each distinct phrase this text puts where the lexeme stands, and how often. A phrase, not a
+/// word: one Hebrew word is often two or three English ones and the link says which.
+/// </param>
+internal record StrongRenderingsResponse(
+    string StrongNumber,
+    string Corpus,
+    int Occurrences,
+    int Reached,
+    int Unrendered,
+    IList<StrongRenderingResponse> Renderings);
+
+internal record StrongRenderingResponse(string Text, int Count);
