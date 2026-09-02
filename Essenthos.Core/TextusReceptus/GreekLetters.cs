@@ -2,51 +2,119 @@ namespace Essenthos.Core.TextusReceptus;
 
 /// <summary>
 /// A Greek word with its accents and its case set aside, so that two witnesses of the same word
-/// can be recognised as the same word.
+/// can be recognised as the same word, and so that a reader who types unaccented Greek finds it.
 ///
-/// Nestle is accented polytonic Greek and the printed Textus Receptus editions carry no accents at
-/// all, so comparing them as written reports every word in the New Testament as a different word.
+/// Nestle is accented polytonic Greek, the printed Textus Receptus editions carry no accents at
+/// all, and a reader's keyboard has none either — so comparing them as written reports every word
+/// in the New Testament as a different word, and every search for one as a miss.
 ///
 /// **This does not use <c>string.Normalize</c>, and that is the whole point of the file.** This
 /// project sets <c>InvariantGlobalization</c>, which leaves the runtime without ICU, and under it
 /// <c>Normalize(FormD)</c> does not throw — it silently returns the string unchanged. A test of
 /// the normalising version passed, because the test project does not set the flag, while the
 /// running loader compared accented Greek against unaccented Greek and found 2,964 matches in
-/// 134,863 pairs. A table cannot fail that way: it either has a letter or it does not.
+/// 134,863 pairs.
 ///
-/// The table is exactly the letters the loaded Greek texts contain — 151 of them, taken from the
-/// database rather than from the Unicode charts, so it covers what is here and claims nothing
-/// about what is not.
+/// <para>
+/// It also does not use a table of the letters that happen to be loaded, which is what it did
+/// until the Septuagint arrived. That table was taken from the database, honestly, and covered
+/// every letter the two Greek New Testaments contained — and then Brenton brought fourteen more.
+/// 1,462 Septuagint words kept their accents, so <c>αδου</c> found three verses where <c>ᾅδου</c>
+/// found fifty-nine, and <c>ωσηε</c> found none at all where Hosea is named eleven times. A table
+/// of what is here claims nothing about what is not, and what is not turned up.
+/// </para>
+///
+/// So this folds by the **structure of the Unicode block** instead. Greek Extended is laid out
+/// sixteen cells to a vowel: every character from U+1F00 to U+1F0F is an alpha with some
+/// combination of breathing, accent and length, and the same holds for each row after it. That is
+/// a property of the encoding rather than of this corpus, so a Greek text nobody has loaded yet
+/// folds correctly the day it arrives.
 /// </summary>
 internal static class GreekLetters
 {
-    private const string Written =
-        "ΑἀἈἄἌᾄἂἆἎἁἉἅἍἃἋάᾴὰᾶᾷᾳΒΓΔΕἐἘἔἜἑἙἕἝἓἛέὲΖΗἠ" +
-        "ἨἤἬᾔἢἪἦἮᾖᾐἡἩἥἭἣἧᾗᾑήῄὴῆῇῃΘΙἰἸἴἼἶἱἹἵἽἳἷίὶῖ" +
-        "ϊΐῒΚΛΜΝΞΟὀὈὄὌὂὁὉὅὍὃὋόὸΠΡῥῬΣςΤΥὐὔὒὖὑὙὕὝὓὗ" +
-        "ὟύὺῦϋΰῢΦΧΨΩὠὤὬὢὦὮᾠὡὩὥὭὧὯᾧώῴὼῶῷῳ";
-
-    private const string Plain =
-        "αααααααααααααααααααααβγδεεεεεεεεεεεεεζηη" +
-        "ηηηηηηηηηηηηηηηηηηηηηηηηθιιιιιιιιιιιιιιι" +
-        "ιιικλμνξοοοοοοοοοοοοοοπρρρσστυυυυυυυυυυυ" +
-        "υυυυυυυφχψωωωωωωωωωωωωωωωωωωωωω";
+    /// <summary>
+    /// The base letter each sixteen-cell row of Greek Extended belongs to, indexed by the row.
+    /// U+1F00 is row 0. A row with no vowel of its own — the rows of marks — is a space, and its
+    /// exceptions are handled below.
+    /// </summary>
+    private const string Rows =
+        // 1F0x 1F1x 1F2x 1F3x 1F4x 1F5x 1F6x 1F7x
+        "αεηιουω " +
+        // 1F8x 1F9x 1FAx 1FBx 1FCx 1FDx 1FEx 1FFx
+        "αηωαηιυω";
 
     /// <summary>
-    /// The word as the two editions would both have written it. A letter the table does not know
-    /// is passed through: a Greek letter this corpus does not contain, or something that is not
-    /// Greek at all, and neither is improved by being guessed at.
+    /// The cells that do not follow their row.
+    ///
+    /// U+1F70 to U+1F7D is the row of bare grave and acute accents, two cells per vowel in
+    /// alphabetical order rather than one row per vowel. Rho takes a breathing and lives in the
+    /// upsilon row. Iota subscript adscript is a letter in the alpha row. And the free-standing
+    /// diacritics — the ones that are marks rather than letters — belong nowhere and are dropped.
+    /// </summary>
+    private static char? Exception(char c) => c switch
+    {
+        >= 'ὰ' and <= 'ώ' => "αεηιουω"[(c - 'ὰ') / 2],
+        'ῤ' or 'ῥ' => 'ρ',        // ῤ ῥ
+        'ι' => 'ι',                    // ι adscript
+        '᾽' or '᾿' or '῀' or '῁' or '῍' or '῎' or '῏'
+            or '῝' or '῞' or '῟' or '῭' or '΅' or '`'
+            or '´' or '῾' => ' ',  // marks, not letters
+        _ => null,
+    };
+
+    /// <summary>
+    /// The accented letters of the monotonic block, which is not laid out in rows and so is
+    /// written out. Uppercase and final sigma are handled by the ordinary case fold below.
+    /// </summary>
+    private const string Monotonic = "ΆΈΉΊΌΎΏΐ"
+        + "ΪΫάέήίΰϊϋόύώ";
+
+    private const string MonotonicPlain = "αεηιουωι" + "ιυαεηιυιυουω";
+
+    /// <summary>
+    /// The word as every witness would have written it bare: lower case, no breathings, no
+    /// accents, no iota subscript, final sigma folded to medial. A character that is not Greek at
+    /// all is passed through — punctuation, a digit, a Latin letter in a manuscript note — because
+    /// none of those is improved by being guessed at.
     /// </summary>
     public static string Bare(string word)
     {
         Span<char> bare = stackalloc char[word.Length];
-        for (var i = 0; i < word.Length; i++)
+        var length = 0;
+
+        foreach (var c in word)
         {
-            var at = Written.IndexOf(word[i], StringComparison.Ordinal);
-            bare[i] = at < 0 ? word[i] : Plain[at];
+            var folded = Fold(c);
+            if (folded != ' ')
+            {
+                bare[length++] = folded;
+            }
         }
 
-        return new string(bare);
+        return new string(bare[..length]);
+    }
+
+    /// <summary>One character, bare. A space means it was a mark and belongs in no word.</summary>
+    public static char Fold(char c)
+    {
+        if (c is >= 'ἀ' and <= '῿')
+        {
+            return Exception(c) ?? Rows[(c - 'ἀ') / 16];
+        }
+
+        var at = Monotonic.IndexOf(c, StringComparison.Ordinal);
+        if (at >= 0)
+        {
+            return MonotonicPlain[at];
+        }
+
+        return c switch
+        {
+            'ς' => 'σ',                                  // final sigma
+            >= 'Α' and <= 'Ω' => (char)(c + 32),          // capitals
+            'ͅ' or (>= '̀' and <= 'ͯ') => ' ',       // combining marks
+            _ => c,
+        };
     }
 
     /// <summary>Whether the two witnesses write the same word, accents aside.</summary>
