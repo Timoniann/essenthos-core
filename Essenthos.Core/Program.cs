@@ -170,6 +170,7 @@ v1.MapSyntax();
 v1.MapWords();
 v1.MapSearch();
 v1.MapEncyclopedia();
+v1.MapDatasets();
 
 app.UseCors();
 
