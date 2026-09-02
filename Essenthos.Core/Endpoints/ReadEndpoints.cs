@@ -1,19 +1,50 @@
 using Essenthos.Core.Database;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Endpoints;
 
 internal record CorpusListResponse(IList<CorpusResponse> Items);
 
+/// <param name="Testament">
+/// <c>old</c> or <c>new</c>, kept because the contract has it. It is the Protestant canon's answer
+/// and only ever that: <c>Section</c> is the one that changes with the canon asked for.
+/// </param>
+/// <param name="Section">
+/// The heading this book sits under in the canon that was asked for — <c>ketuvim</c> in the
+/// Tanakh, <c>old-testament</c> in the Protestant canon, both for Ruth.
+/// </param>
 internal record BookResponse(
     int Ordinal,
     string Name,
     string Abbreviation,
     string Slug,
     string Testament,
-    int ChapterCount);
+    int ChapterCount)
+{
+    public string? Section { get; init; }
+}
 
-internal record BookListResponse(IList<BookResponse> Items);
+/// <param name="Canon">Which canon these books are, in which order.</param>
+internal record BookListResponse(IList<BookResponse> Items)
+{
+    public CanonResponse? Canon { get; init; }
+}
+
+/// <param name="Collection">
+/// What to call the whole thing in this canon: "Bible", or "Scripture" for the Tanakh.
+/// </param>
+internal record CanonResponse(
+    string Slug,
+    string Name,
+    string Collection,
+    string Description,
+    int BookCount,
+    IList<CanonSectionResponse> Sections);
+
+internal record CanonSectionResponse(string Slug, string Name, int BookCount);
+
+internal record CanonListResponse(IList<CanonResponse> Items);
 
 internal record ChapterTextResponse(
     string Corpus,
@@ -42,15 +73,32 @@ internal static class ReadEndpoints
             return Results.Ok(new CorpusListResponse(items));
         });
 
-        routes.MapGet("/books", async (ICanonIndex canon, CancellationToken cancellationToken) =>
+        // Which canon, in which order, under what headings — and what the collection is called.
+        // Answered without touching the database, because it is a statement about traditions and
+        // not about what happens to be loaded.
+        routes.MapGet("/canons", () => Results.Ok(new CanonListResponse(
+            [.. Canons.List.Select(Canon)])));
+
+        routes.MapGet("/books", async (
+            [FromQuery] string? canon,
+            ICanonIndex index,
+            CancellationToken cancellationToken) =>
         {
-            var items = new List<BookResponse>(BookReferences.CanonBookCount);
-            foreach (var ordinal in BookReferences.Ordinals)
+            if (Canons.Find(canon) is not { } wanted)
             {
-                items.Add(await Book(canon, ordinal, cancellationToken));
+                return ApiResults.NotFound($"There is no canon \"{canon}\". Try one of: {Canons.Names}.");
             }
 
-            return Results.Ok(new BookListResponse(items));
+            var items = new List<BookResponse>(wanted.BookCount);
+            foreach (var ordinal in wanted.Ordinals)
+            {
+                items.Add(await Book(index, ordinal, cancellationToken) with
+                {
+                    Section = Canons.SectionOf(wanted, ordinal),
+                });
+            }
+
+            return Results.Ok(new BookListResponse(items) { Canon = Canon(wanted) });
         });
 
         routes.MapGet("/books/{book}", async (string book, ICanonIndex canon, CancellationToken cancellationToken) =>
@@ -120,6 +168,15 @@ internal static class ReadEndpoints
             BookReferences.Testament(ordinal),
             await canon.ChapterCount(ordinal, cancellationToken));
     }
+
+    private static CanonResponse Canon(CanonDefinition canon) => new(
+        canon.Slug,
+        canon.Name,
+        canon.Collection,
+        canon.Description,
+        canon.BookCount,
+        [.. canon.Sections.Select(section =>
+            new CanonSectionResponse(section.Slug, section.Name, section.Ordinals.Count))]);
 
     private static BookRefResponse BookReference(int ordinal) =>
         new(ordinal, BookReferences.Name(ordinal), BookReferences.Slug(ordinal));

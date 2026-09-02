@@ -12,7 +12,19 @@ internal static class BookReferences
 {
     public const int OldTestamentBookCount = 39;
 
+    /// <summary>
+    /// The books the default canon holds. Not the number of books that exist: the table runs past
+    /// this, and which of them a reader sees is a canon's question rather than a constant's
+    /// (DOC-0090).
+    /// </summary>
     public const int CanonBookCount = 66;
+
+    /// <summary>
+    /// Every ordinal the book table names, deuterocanon and all. `IsInCanon` accepts these so a
+    /// reference to Tobit resolves; whether any text has Tobit is a separate question, answered
+    /// by the data rather than by the frame.
+    /// </summary>
+    public const int LastOrdinal = 84;
 
     public const string OldTestament = "old";
 
@@ -50,7 +62,7 @@ internal static class BookReferences
 
     public static bool IsInCanon(int ordinal)
     {
-        return ordinal >= 1 && ordinal <= CanonBookCount;
+        return ordinal >= 1 && ordinal <= LastOrdinal;
     }
 
     public static string Name(int ordinal)
@@ -75,8 +87,9 @@ internal static class BookReferences
 
     public static string FormatHint(string? book)
     {
-        return $"'{book}' is not a book of the canon. Expected an ordinal from 1 to {CanonBookCount} " +
-               "or a slug such as 'genesis' or '1-samuel'. GET /v1/books lists every accepted slug.";
+        return $"'{book}' is not a book this corpus knows. Expected an ordinal from 1 to {LastOrdinal} " +
+               "or a slug such as 'genesis' or '1-samuel'. GET /v1/books lists every accepted slug, " +
+               "and GET /v1/books?canon=septuagint the ones only a wider canon holds.";
     }
 
     private static string Slugify(string name)
@@ -99,8 +112,8 @@ internal static class BookReferences
 
     private static Dictionary<string, int> BuildSlugIndex()
     {
-        var index = new Dictionary<string, int>(CanonBookCount, StringComparer.Ordinal);
-        for (var ordinal = 1; ordinal <= CanonBookCount; ordinal++)
+        var index = new Dictionary<string, int>(LastOrdinal, StringComparer.Ordinal);
+        for (var ordinal = 1; ordinal <= LastOrdinal; ordinal++)
         {
             index[Slugify(Name(ordinal))] = ordinal;
         }

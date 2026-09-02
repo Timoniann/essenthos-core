@@ -37,13 +37,25 @@ public class BookReferencesTests
     [InlineData("   ")]
     [InlineData(null)]
     [InlineData("0")]
-    [InlineData("67")]
+    [InlineData("85")]
     [InlineData("-1")]
     [InlineData("nope")]
-    [InlineData("1 Maccabees")]
-    public void RejectsAnythingOutsideTheCanon(string? book)
+    [InlineData("The Shepherd of Hermas")]
+    public void RejectsAnythingThatIsNotABookItKnows(string? book)
     {
         BookReferences.ResolveOrdinal(book).Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData("67", 67)]
+    [InlineData("1 Maccabees", 73)]
+    [InlineData("Tobit", 70)]
+    public void ResolvesTheDeuterocanonToo(string book, int ordinal)
+    {
+        // This used to be the rejection list. The frame stopped at 66 and the deuterocanon was
+        // "outside the canon" — but whose canon was never asked, and the answer differs by reader
+        // (DOC-0090). A reference resolving is not a claim that any loaded text has the book.
+        BookReferences.ResolveOrdinal(book).Should().Be(ordinal);
     }
 
     [Theory]

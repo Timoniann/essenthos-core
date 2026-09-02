@@ -13,6 +13,12 @@ internal record BookRefResponse(int Ordinal, string Name, string Slug);
 
 internal record CoverageResponse(int FirstBook, int LastBook);
 
+/// <param name="License">The licence's name, an SPDX identifier where one applies.</param>
+/// <param name="RightsHolder">
+/// Who to credit. CC BY and CC BY-NC both require the creator to be named and the licence to be
+/// linked, so a page that prints only <c>CC-BY-NC-4.0</c> is not attribution — it is the name of
+/// the obligation with the obligation unmet. The columns held all of this and nothing sent it.
+/// </param>
 internal record CorpusResponse(
     string Id,
     string Name,
@@ -24,7 +30,21 @@ internal record CorpusResponse(
     string? TextualBasis,
     string? Versification,
     int? PublicationYear,
-    CoverageResponse Coverage);
+    CoverageResponse Coverage)
+{
+    public string? RightsHolder { get; init; }
+
+    public string? LicenseUrl { get; init; }
+
+    /// <summary>Where the text was obtained, so a reader can check what was loaded.</summary>
+    public string? SourceUrl { get; init; }
+
+    /// <summary>
+    /// What the licence permits, in one word: <c>public-domain</c>, <c>attribution</c>,
+    /// <c>non-commercial-only</c>, <c>share-alike</c>, <c>unknown</c>. Unknown is not permission.
+    /// </summary>
+    public string? Redistribution { get; init; }
+}
 
 /// <summary>
 /// One nested object rather than twenty flat fields. Null means this text does not carry that

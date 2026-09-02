@@ -43,7 +43,13 @@ internal static class Texts
         text.TextualFamily,
         text.Versification.ToString(),
         text.PublishedYear,
-        coverage);
+        coverage)
+    {
+        RightsHolder = text.RightsHolder,
+        LicenseUrl = text.LicenceUrl,
+        SourceUrl = text.SourceUrl,
+        Redistribution = EnumSpelling.Of(text.Redistribution),
+    };
 
     /// <summary>
     /// Reads one chapter as this text numbers it. The words come back in one query projected into

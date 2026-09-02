@@ -78,7 +78,27 @@ public class BibleBookAbbreviation
         new(72, "Sirach (Ecclesiasticus)", "Sir", "Si", ["Ecclesiasticus", "Eccl", "Ecclus"]),
         new(73, "1 Maccabees", "1 Macc", "1Mc", ["I Mac", "1 Ma"]),
         new(74, "2 Maccabees", "2 Macc", "2Mc", ["II Mac", "2 Ma"]),
-        new(75, "Wisdom of Solomon", "Ws", "Ws", ["Wisdom"]),
+        new(75, "Wisdom of Solomon", "Ws", "Ws", ["Wisdom", "WIS"]),
+
+        // The rest of what the Greek canons carry, and what Brenton prints. Numbered past the
+        // Western deuterocanon rather than interleaved with it, because an ordinal here is an
+        // identity — it is in every saved URL and on every book row in the database — and a canon
+        // decides order separately (DOC-0090).
+        //
+        // Greek Esther and Greek Daniel get no ordinal of their own: they are Esther and Daniel,
+        // longer. A witness holds its own book at the same canonical ordinal and its own
+        // versification, which is the whole point of the model. The pieces printed apart in
+        // Brenton — Susanna, Bel, the Letter of Jeremiah — do get one, because a canon that prints
+        // them as books has to be able to name them.
+        new(76, "Letter of Jeremiah", "Ep Jer", "LJe", ["LJE", "Epistle of Jeremiah", "EpJer"]),
+        new(77, "Susanna", "Sus", "Sus", ["SUS"]),
+        new(78, "Bel and the Dragon", "Bel", "Bel", ["BEL", "Bel and Dragon"]),
+        new(79, "Prayer of Manasseh", "Pr Man", "PrM", ["MAN", "Manasseh", "PrMan"]),
+        new(80, "3 Maccabees", "3 Macc", "3Mc", ["3MA", "III Mac", "3 Ma"]),
+        new(81, "4 Maccabees", "4 Macc", "4Mc", ["4MA", "IV Mac", "4 Ma"]),
+        new(82, "Psalm 151", "Ps 151", "Ps151", ["PS2", "Psalm151"]),
+        new(83, "Odes", "Ode", "Ode", ["ODA", "ODES"]),
+        new(84, "Psalms of Solomon", "Ps Sol", "PsS", ["PSS", "PssSol"]),
     ];
 
     private static readonly Dictionary<string, BookAbbreviation> AbbreviationMap;
