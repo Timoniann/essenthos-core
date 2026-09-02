@@ -27,6 +27,18 @@ internal static class EnumSpelling
         _ => throw Unreadable<TextKind>(stored),
     };
 
+    public static string Of(EntityKind value) => value switch
+    {
+        EntityKind.Place => "place",
+        _ => "person",
+    };
+
+    public static EntityKind ToEntityKind(string stored) => stored switch
+    {
+        "place" => EntityKind.Place,
+        _ => EntityKind.Person,
+    };
+
     public static string Of(WordGroupKind value) => value switch
     {
         WordGroupKind.Sentence => "sentence",
@@ -214,6 +226,9 @@ internal static class EnumStorage
 
     public static readonly ValueConverter<Redistribution, string> Redistribution =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToRedistribution(stored));
+
+    public static readonly ValueConverter<Entities.Enums.EntityKind, string> EntityKind =
+        new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToEntityKind(stored));
 
     public static readonly ValueConverter<WordGroupKind, string> WordGroupKind =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToWordGroupKind(stored));

@@ -7,6 +7,7 @@ using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
+using Essenthos.Core.Loading.Encyclopedia;
 
 namespace Essenthos.Core.Loading;
 
@@ -66,6 +67,7 @@ internal sealed class DatasetLoader(
             await LinkTheGreekWitnesses(stoppingToken);
             await GiveEveryWordASearchableForm(stoppingToken);
             await LinkFromTheInterlinear(resources, stoppingToken);
+            await LoadTheEncyclopedia(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -285,6 +287,19 @@ internal sealed class DatasetLoader(
             "ukr",
             "unfoldingWord's Ukrainian Bible Interlinear Ogienko, git.door43.org/uk_ts/uk_ubio, CC BY-SA 4.0",
             cancellationToken));
+    }
+
+    /// <summary>
+    /// The people, places and dated events the text names. DOC-0099 records why this dataset and
+    /// not the others, and BibleDataLoader records what had to be corrected in it.
+    /// </summary>
+    private async Task LoadTheEncyclopedia(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the encyclopedia");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<BibleDataLoader>();
+        status.Record(await loader.Load(Path.Combine(resources, "BibleData2026"), cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

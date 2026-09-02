@@ -7,6 +7,7 @@ using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Verification;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Essenthos.Core.Loading.Encyclopedia;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
@@ -51,6 +52,7 @@ builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddScoped<GreekWitnessLinkLoader>();
 builder.Services.AddScoped<WordFoldingLoader>();
 builder.Services.AddScoped<InterlinearLinkLoader>();
+builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
@@ -165,6 +167,7 @@ v1.MapStrong();
 v1.MapSyntax();
 v1.MapWords();
 v1.MapSearch();
+v1.MapEncyclopedia();
 
 app.UseCors();
 

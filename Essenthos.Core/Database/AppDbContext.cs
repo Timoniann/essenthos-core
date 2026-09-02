@@ -48,9 +48,30 @@ public class AppDbContext : DbContext
     /// <summary>What each load measured about the corpus it wrote, one row per load.</summary>
     public DbSet<VerificationRun> VerificationRuns { get; set; } = null!;
 
+    /// <summary>The people and places the text names, and where it names them.</summary>
+    public DbSet<Entity> Entities { get; set; } = null!;
+
+    public DbSet<EntityName> EntityNames { get; set; } = null!;
+
+    public DbSet<EntityRelationship> EntityRelationships { get; set; } = null!;
+
+    public DbSet<EntityVerse> EntityVerses { get; set; } = null!;
+
+    public DbSet<Event> Events { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         NameTablesInTheSingular(modelBuilder);
+
+        modelBuilder.Entity<Entity>().Property(e => e.Kind).HasConversion(EnumStorage.EntityKind);
+
+        modelBuilder.Entity<EntityRelationship>(entity =>
+        {
+            entity.HasOne(r => r.From).WithMany().HasForeignKey(r => r.FromEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(r => r.To).WithMany().HasForeignKey(r => r.ToEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
 
         modelBuilder.Entity<Text>(entity =>
         {
@@ -163,21 +184,41 @@ public class AppDbContext : DbContext
     /// A table is named for what one of its rows is, and the design document, every measurement
     /// taken against this corpus and every query in it are written that way: <c>from link</c>,
     /// <c>from verse_reference</c>. Left to the DbSet names, EF would pluralise them all.
+    ///
+    /// Derived from the entity type rather than listed. The list was written by hand, so a new
+    /// entity opted out of the convention by nobody remembering it — two tables were created
+    /// plural before anyone noticed (PRB-0083). A convention cannot be forgotten.
     /// </summary>
     private static void NameTablesInTheSingular(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Text>().ToTable("text");
-        modelBuilder.Entity<Book>().ToTable("book");
-        modelBuilder.Entity<Chapter>().ToTable("chapter");
-        modelBuilder.Entity<Verse>().ToTable("verse");
-        modelBuilder.Entity<Word>().ToTable("word");
-        modelBuilder.Entity<VerseReference>().ToTable("verse_reference");
-        modelBuilder.Entity<LinkWord>().ToTable("link_word");
-        modelBuilder.Entity<VerseLinkVerse>().ToTable("verse_link_verse");
-        modelBuilder.Entity<StrongEntry>().ToTable("strong_entry");
-        modelBuilder.Entity<VerificationRun>().ToTable("verification_run");
-        modelBuilder.Entity<WordGroup>().ToTable("word_group");
-        modelBuilder.Entity<WordGroupWord>().ToTable("word_group_word");
+        foreach (var entity in modelBuilder.Model.GetEntityTypes())
+        {
+            if (entity.ClrType is { } type && !entity.IsOwned())
+            {
+                entity.SetTableName(SnakeCase(type.Name));
+            }
+        }
+    }
+
+    /// <summary>
+    /// <c>VerseReference</c> becomes <c>verse_reference</c>, which is what
+    /// <c>EFCore.NamingConventions</c> does to every column already; this applies the same rule to
+    /// the table, singular because the type is singular.
+    /// </summary>
+    private static string SnakeCase(string name)
+    {
+        var snake = new System.Text.StringBuilder(name.Length + 4);
+        for (var i = 0; i < name.Length; i++)
+        {
+            if (i > 0 && char.IsUpper(name[i]))
+            {
+                snake.Append('_');
+            }
+
+            snake.Append(char.ToLowerInvariant(name[i]));
+        }
+
+        return snake.ToString();
     }
 
     private static void ConfigureLink(ModelBuilder modelBuilder)
