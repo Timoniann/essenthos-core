@@ -1,0 +1,120 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_NOLOGO: "true"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "true"
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      - run: dotnet restore
+
+      - run: dotnet build --no-restore -c Release
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+
+    # The suite is not database-free. 74 of its tests build their own fixtures in Postgres and
+    # assert what Postgres accepts, which no in-memory provider would answer honestly. A service
+    # container is per-run, so it also settles PRB-0154: nothing else is dropping this database
+    # mid-fixture, which is what happens when two runs share the one on the developer's machine.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: essenthos
+          # Not a credential. This Postgres is created for the job and destroyed with it, is
+          # reachable only from inside the run, and holds nothing but a scratch schema.
+          POSTGRES_PASSWORD: essenthos
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U essenthos"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    env:
+      Database__ConnectionString: Host=localhost;Port=5432;Database=essenthos_core_test;Username=essenthos
+      Database__Password: essenthos
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      - run: dotnet restore
+
+      - name: Test, less the classes that read the corpus
+        # The corpus sources are 500+ MB fetched from third parties and are not in any repository,
+        # so a runner has none of them. These classes read them and fail outright without them —
+        # they do not skip, which is why the count below is a real number rather than a hope.
+        # Excluding them here is deliberate: a new class that reads the corpus is not in this list
+        # and so goes red on the first run, which is the failure everyone would want to see.
+        run: |
+          set -euo pipefail
+          needs_corpus=(
+            BibleDataLoadTests
+            CanonicalFrameTests
+            CorpusRoundTripTests
+            EditionFrameTests
+            ElidedMorphemeTests
+            EncyclopediaTests
+            LetteredVerseFrameTests
+            ScrivenerExtractionTests
+            SeptuagintLetteredVerseTests
+            SeptuagintSecondEsdrasTests
+            SyntaxTests
+            TextSourceTests
+            TextusReceptusOmissionTests
+            TheographicDateTests
+            # Reads Resources/WorldHistory, which the fetch scripts generate and .gitignore keeps
+            # out of the repository. PRB-0163.
+            WorldLayerTests
+          )
+          filter=$(printf 'FullyQualifiedName!~%s&' "${needs_corpus[@]}")
+          dotnet test --no-restore --filter "${filter%&}"
+
+  image:
+    name: image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # `docker build`, not `docker compose build`: compose.yaml interpolates
+      # ESSENTHOS_DB_PASSWORD on every command, so compose cannot even parse the file on a runner.
+      # Nothing runs this image here — it is only a check that it still assembles.
+      - run: docker build -f Essenthos.Core/Dockerfile -t essenthos-core:${{ github.sha }} .
