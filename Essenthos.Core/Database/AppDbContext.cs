@@ -45,6 +45,12 @@ public class AppDbContext : DbContext
     /// <summary>Strong's concordance, which a word reaches by number rather than by key.</summary>
     public DbSet<StrongEntry> StrongEntries { get; set; } = null!;
 
+    /// <summary>
+    /// Strong numbers proposed for a word, with what proposed them. Separate from
+    /// <c>word.strong_number</c>, which means a source stated it.
+    /// </summary>
+    public DbSet<WordStrong> WordStrongs { get; set; } = null!;
+
     /// <summary>What each load measured about the corpus it wrote, one row per load.</summary>
     public DbSet<VerificationRun> VerificationRuns { get; set; } = null!;
 
@@ -197,6 +203,7 @@ public class AppDbContext : DbContext
 
         ConfigureLink(modelBuilder);
         ConfigureVerseLink(modelBuilder);
+        ConfigureWordStrong(modelBuilder);
     }
 
     /// <summary>
@@ -273,6 +280,23 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(w => w.WordId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+    }
+
+    private static void ConfigureWordStrong(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<WordStrong>(entity =>
+        {
+            entity.Property(w => w.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(w => w.Word)
+                .WithMany()
+                .HasForeignKey(w => w.WordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // The same rules the links live under, and for the same reason: a proposal that carried
+            // no confidence while claiming to be inferred would read as testimony.
+            entity.ToTable("word_strong", t => AddProvenanceConstraints(t, "word_strong"));
         });
     }
 

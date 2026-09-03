@@ -302,6 +302,12 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Glaux.GlauxLemmaLoader>();
         status.Record(await loader.Load(Path.Combine(resources, "Glaux", "xml"), cancellationToken));
+
+        // The number follows from the lemma, so it is proposed in the same breath -- but into
+        // word_strong, because Strong never numbered the Greek Old Testament and a number here is
+        // our reasoning rather than anybody's testimony.
+        var numbers = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Glaux.SeptuagintStrongLoader>();
+        status.Record(await numbers.Load(cancellationToken));
     }
 
     /// <summary>
