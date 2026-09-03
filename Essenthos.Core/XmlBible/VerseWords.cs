@@ -250,9 +250,10 @@ public static partial class VerseWords
     /// </para>
     ///
     /// <para>
-    /// This is a normalisation and not a repair of the source. <c>essenthos-api</c> owns
-    /// <c>Resources/</c>, which is frozen, so editing the file there would be a change to a
-    /// repository this project only reads. Instead the correction is named, applied in
+    /// This is a normalisation and not a repair of the source. The file under <c>Resources/</c> is
+    /// the publisher's bytes, fetched and not committed, so a correction written into it would be
+    /// indistinguishable from the edition's own text and would vanish on the next fetch. Instead
+    /// the correction is named, applied in
     /// <see cref="Separate"/> before anything measures offsets, and included in
     /// <see cref="StripMarkup"/> — which is what <c>EveryBible4uVerseRebuildsItsStrippedSource</c>
     /// compares the rebuilt verse against, so the round trip the corpus requires of every reader

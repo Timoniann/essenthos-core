@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Fetches the 57 Septuagint books of the GLAUx treebank, which give Brenton its lemmas.
 
@@ -24,8 +24,8 @@
 
 [CmdletBinding()]
 param(
-    # Where essenthos-api keeps its resources; the default matches Dataset:ResourcesPath.
-    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' '..' 'essenthos-api' 'Resources')
+    # The default matches Dataset:ResourcesPath: this project's own Resources folder.
+    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources')
 )
 
 $ErrorActionPreference = 'Stop'

@@ -131,18 +131,27 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
-# The corpus sources are large and are not this repository's to carry.
-# Set Dataset:ResourcesPath to wherever they live; see README.
-Resources/
+# Resources/ is where the corpus lives: about a gigabyte of third-party Bibles, lexicons and
+# alignments. It is not this repository's to carry -- the fetch scripts under scripts/ and the
+# sources they name put it there, and Dataset:ResourcesPath can point somewhere else entirely.
+#
+# The three rules below re-admit, in order: every folder, so git looks inside; nothing that is in
+# one; and then the two kinds of file a fresh clone is useless without. Do not simplify the middle
+# rule away -- without it the negations above match everything and a stray `git add` commits a
+# gigabyte.
+Resources/*
+!Resources/*/
+Resources/*/*
 
-# -- except this repository's own. The rule above was written for essenthos-api's 373 MB of
-# Bibles and it swallowed the 319 KB of world history this project fetched itself: three CC0
-# Wikidata exports, the SPARQL queries that produced them, and a README recording the date they
-# were fetched. Never committed, so a fresh clone could not load the world layer and could not
-# pass its own suite -- WorldLayerTests fails on a clean checkout and passes on this machine,
-# which is why it read as an environment problem for a week (PRB-0163).
-!Resources/
-!Resources/WorldHistory/
+# The licence beside each corpus folder. A licence statement that survives only on the machine
+# that fetched the data is not a record anybody can check, which is the entire reason for keeping
+# a copy next to the bytes. Kilobytes; the data they describe stays out.
+!Resources/*/LICENCE.md
+
+# The world history this project fetched itself: three CC0 Wikidata exports, the SPARQL queries
+# that produced them, and a README recording when they were run. 319 KB, and without them the
+# world layer loads nothing and its test fails on every clean checkout while passing on the
+# machine that did the fetching.
 !Resources/WorldHistory/**
 
 # JetBrains IDE settings

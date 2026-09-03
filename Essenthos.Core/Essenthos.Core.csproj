@@ -29,8 +29,9 @@
         <InternalsVisibleTo Include="Essenthos.Core.Tests" />
     </ItemGroup>
     <ItemGroup>
-        <!-- Fetched for the rebuild and read by it, so it travels with the assembly rather than
-             living in the frozen project's Resources folder beside data nothing here fetched. -->
+        <!-- The one part of Resources/ small enough to be committed, so it travels with the
+             assembly and is read from the output folder rather than through Dataset:ResourcesPath.
+             That is why a clean checkout can load the world layer with no fetch step at all. -->
         <Content Include="..\Resources\WorldHistory\**" LinkBase="Resources\WorldHistory" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
