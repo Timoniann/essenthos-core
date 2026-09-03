@@ -1,0 +1,4 @@
+# The data is fetched, not committed — 44 MB of it, placed by scripts/fetch-bibledata.ps1.
+# The licence statements stay tracked: what this was taken under has to survive a checkout
+# where nothing has been fetched yet.
+*.csv
