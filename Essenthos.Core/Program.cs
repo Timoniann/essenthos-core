@@ -51,6 +51,7 @@ builder.Services.AddScoped<SyntaxLoader>();
 builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddScoped<GreekWitnessLinkLoader>();
 builder.Services.AddScoped<WordFoldingLoader>();
+builder.Services.AddScoped<Essenthos.Core.Glaux.GlauxLemmaLoader>();
 builder.Services.AddScoped<InterlinearLinkLoader>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();

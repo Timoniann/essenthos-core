@@ -31,12 +31,23 @@ public static class DatasetEndpoints
             var answers = new List<DatasetResponse>();
             foreach (var dataset in Datasets.All)
             {
+                // A dataset that annotates a text rather than contributing rows is counted by the
+                // words it annotates. Only GLAUx does this today, and its licence is share-alike,
+                // so a dataset that fell out of this list for having no rows would be the one whose
+                // attribution matters most.
+                var lemmas = dataset.Lemmas is null
+                    ? 0
+                    : await db.Words.CountAsync(
+                        word => word.Text!.Slug == dataset.Lemmas && word.Lemma != null,
+                        cancellationToken);
+
                 var counts = new DatasetCounts(
                     Of(entities, dataset.Prefix),
                     Of(events, dataset.Prefix),
-                    Of(periods, dataset.Prefix));
+                    Of(periods, dataset.Prefix),
+                    lemmas);
 
-                if (counts is { Entities: 0, Events: 0, Periods: 0 })
+                if (counts is { Entities: 0, Events: 0, Periods: 0, Lemmas: 0 })
                 {
                     continue;
                 }
@@ -100,7 +111,7 @@ public record DatasetResponse(
     string Covers,
     DatasetCounts Counts);
 
-public record DatasetCounts(int Entities, int Events, int Periods);
+public record DatasetCounts(int Entities, int Events, int Periods, int Lemmas);
 
 /// <param name="Source">
 /// The source string as the rows carry it. A dataset that reaches the database without being

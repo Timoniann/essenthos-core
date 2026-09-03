@@ -61,6 +61,7 @@ internal sealed class DatasetLoader(
             await LoadTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
+            await LemmatiseTheSeptuagint(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
             await LinkThePrintedEditions(resources, stoppingToken);
@@ -288,6 +289,19 @@ internal sealed class DatasetLoader(
             "ukr",
             "unfoldingWord's Ukrainian Bible Interlinear Ogienko, git.door43.org/uk_ts/uk_ubio, CC BY-SA 4.0",
             cancellationToken));
+    }
+
+    /// <summary>
+    /// The one text that arrived without lemmas. GLAUx is used as a dictionary and its own Greek is
+    /// never loaded; DOC-0161 is the licence reading and the reason that distinction matters.
+    /// </summary>
+    private async Task LemmatiseTheSeptuagint(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Septuagint lemmas");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Glaux.GlauxLemmaLoader>();
+        status.Record(await loader.Load(Path.Combine(resources, "Glaux", "xml"), cancellationToken));
     }
 
     /// <summary>
