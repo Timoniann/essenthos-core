@@ -528,8 +528,19 @@ internal static class EncyclopediaEndpoints
     /// The Strong numbers of one name, which the column keeps comma-joined the way the lexicon's
     /// own cross-references are kept.
     /// </summary>
+    /// <summary>
+    /// The lexicon entries stored against a name, one per word of it.
+    ///
+    /// Trimmed and emptied out, because the column holds them as one comma-separated string written
+    /// with spaces — <c>"H1, NONE"</c> — and splitting it without trimming sends <c>" NONE"</c> to
+    /// every client, each of which then has to know that. A word the source has no entry for stays
+    /// in the list as the source wrote it: the position matters, and a name is easier to read with
+    /// a gap named than with a gap.
+    /// </summary>
     private static IList<string> Numbers(string? stored) =>
-        stored is { Length: > 0 } ? stored.Split(',') : [];
+        stored is { Length: > 0 }
+            ? [.. stored.Split(',').Select(entry => entry.Trim()).Where(entry => entry.Length > 0)]
+            : [];
 
     private static VerseRefResponse? Reference(int? book, int? chapter, int? verse) =>
         book is { } ordinal && chapter is { } inChapter && verse is { } atVerse
