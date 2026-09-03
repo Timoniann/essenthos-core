@@ -22,7 +22,7 @@ public class BibleBookAbbreviation
         new(16, "Nehemiah", "Neh", "Ne", ["Nehemia"]),
         new(17, "Esther", "Esth", "Es", ["Est"]),
         new(18, "Job", "Job", "Jb", ["Iob"]),
-        new(19, "Psalms", "Pss", "Ps", ["Psalmi"]),
+        new(19, "Psalms", "Pss", "Ps", ["Psalmi", "Psalm"]),   // "Psalm" is how the Berean edition names it, and the whole book went missing without it
         new(20, "Proverbs", "Prov", "Prv", ["Proverbia"]),
         new(21, "Ecclesiastes", "Eccles", "Eccl", ["Ec"]),
         new(22, "Song of Solomon", "Song", "Sg", ["Sg", "Songs of Solomon", "Songs", "Canticum"]),

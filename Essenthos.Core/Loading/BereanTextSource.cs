@@ -56,10 +56,13 @@ internal static class BereanTextSource
         var books = new Dictionary<int, Dictionary<int, List<VerseDraft>>>();
         var names = new Dictionary<int, string>();
 
+        var unresolved = new List<string>();
+
         foreach (var (reference, text) in BereanWords.Verses(path))
         {
             if (!Address(reference, out var book, out var chapter, out var verse))
             {
+                unresolved.Add(reference);
                 continue;
             }
 
@@ -97,6 +100,19 @@ internal static class BereanTextSource
                         [.. chapter.Value.OrderBy(v => v.Number)]))],
                 Abbreviation: BibleBookAbbreviation.GetByOrdinal(book.Key)?.StandardAbbreviation.Full))
             .ToList();
+
+        // Refused rather than dropped. This skipped every reference it could not resolve and said
+        // nothing, and the Berean names its nineteenth book "Psalm" where the table knew only
+        // "Psalms" — so 2,461 verses, a whole book, were quietly absent from a text that reported
+        // itself as covering 1 to 66. A span hid it (PRB-0188); silence made it.
+        if (unresolved.Count > 0)
+        {
+            throw new InvalidOperationException(
+                $"{unresolved.Count} of the Berean's verse references name a book this corpus does not " +
+                $"know — the first is \"{unresolved[0]}\". Loading the rest would publish a text with a " +
+                "hole in it that nothing reports. Add the name the edition uses, or say why it is not " +
+                "a book.");
+        }
 
         return new TextSource(Definition, drafts);
     }
