@@ -58,14 +58,13 @@ Also worth reading before you touch a loader: **DOC-0004** (what LLM alignment c
 
 `essenthos-api/Resources` still holds its own copy and the frozen API still runs on it. The two are now separate trees: a correction or a licence note made here does not reach it, which is the point.
 
-**In a git worktree** the corpus is not there — it is ignored, so a worktree starts with only `Resources/WorldHistory`. Junction the rest to the main checkout rather than copying a gigabyte per worktree:
+**In a git worktree** the corpus is not there — it is ignored, so a worktree starts with `Resources/WorldHistory`, the licence beside each source, and no data. Copy it in from the main checkout, from the worktree root:
 
 ```powershell
-$src = "..\..\essenthos-core\Resources"
-Get-ChildItem -Directory $src | Where-Object Name -ne 'WorldHistory' | ForEach-Object {
-    New-Item -ItemType Junction -Path (Join-Path 'Resources' $_.Name) -Value $_.FullName
-}
+robocopy ..\..\essenthos-core\Resources Resources /E /MT:16
 ```
+
+A gigabyte, four seconds, and it merges rather than mirrors, so the committed files already there are left alone. Junctioning the folders instead does not work: git tracks a `LICENCE.md` inside most of them, so a checkout has already created the directory and `New-Item -ItemType Junction` refuses a path that exists.
 
 ## What carries over, and what does not
 
