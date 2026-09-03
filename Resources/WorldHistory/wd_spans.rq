@@ -1,0 +1,11 @@
+SELECT ?e ?eLabel ?start ?end ?sprec ?kindLabel ?sitelinks ?whereLabel WHERE {
+  ?e wikibase:sitelinks ?sitelinks .
+  FILTER(?sitelinks >= 18)
+  ?e p:P580/psv:P580 [ wikibase:timeValue ?start ; wikibase:timePrecision ?sprec ] .
+  ?e p:P582/psv:P582 [ wikibase:timeValue ?end ] .
+  FILTER(?sprec >= 9)
+  FILTER(?start >= "-3500-01-01T00:00:00Z"^^xsd:dateTime && ?start <= "0110-01-01T00:00:00Z"^^xsd:dateTime)
+  ?e wdt:P31 ?kind .
+  OPTIONAL { ?e wdt:P17 ?where . }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}

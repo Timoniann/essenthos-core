@@ -135,6 +135,16 @@ _NCrunch*
 # Set Dataset:ResourcesPath to wherever they live; see README.
 Resources/
 
+# -- except this repository's own. The rule above was written for essenthos-api's 373 MB of
+# Bibles and it swallowed the 319 KB of world history this project fetched itself: three CC0
+# Wikidata exports, the SPARQL queries that produced them, and a README recording the date they
+# were fetched. Never committed, so a fresh clone could not load the world layer and could not
+# pass its own suite -- WorldLayerTests fails on a clean checkout and passes on this machine,
+# which is why it read as an environment problem for a week (PRB-0163).
+!Resources/
+!Resources/WorldHistory/
+!Resources/WorldHistory/**
+
 # JetBrains IDE settings
 .idea/
 
