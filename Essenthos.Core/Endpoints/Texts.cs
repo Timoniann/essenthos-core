@@ -56,6 +56,7 @@ internal static class Texts
         EditionYear = text.EditionYear,
         About = text.About,
         RightsNote = text.RightsNote,
+        Aliases = TextAliases.Of(text.Slug) is { Count: > 0 } aliases ? aliases : null,
     };
 
     /// <summary>

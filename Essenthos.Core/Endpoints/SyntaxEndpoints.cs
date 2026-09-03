@@ -119,6 +119,7 @@ internal static class SyntaxEndpoints
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
+            ICanonIndex canon,
             CancellationToken cancellationToken) =>
         {
             var groups = db.WordGroups.AsQueryable();
@@ -167,7 +168,15 @@ internal static class SyntaxEndpoints
 
             if (corpus is { Length: > 0 })
             {
-                groups = groups.Where(g => g.Text!.Slug == corpus);
+                // Resolved rather than compared to the column, so that a spelling the corpus does
+                // not know is a 404 and not an empty page.
+                if (await canon.Text(corpus, cancellationToken) is not { } named)
+                {
+                    return ApiResults.NotFound(
+                        $"There is no text \"{corpus}\". Ask /v1/corpora for the ones this corpus holds.");
+                }
+
+                groups = groups.Where(g => g.TextId == named.Id);
             }
 
             if (feature is { Length: > 0 })

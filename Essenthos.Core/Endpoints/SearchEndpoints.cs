@@ -46,10 +46,9 @@ internal static class SearchEndpoints
                 return Results.BadRequest(new ProblemResponse(SearchTerms.FormatHint()));
             }
 
-            var texts = await index.Texts(cancellationToken);
             var text = corpus is { Length: > 0 }
-                ? texts.FirstOrDefault(t => string.Equals(t.Slug, corpus, StringComparison.OrdinalIgnoreCase))
-                : texts.FirstOrDefault();
+                ? await index.Text(corpus, cancellationToken)
+                : (await index.Texts(cancellationToken)).FirstOrDefault();
 
             if (text is null)
             {
