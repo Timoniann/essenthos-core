@@ -52,6 +52,7 @@ builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddScoped<GreekWitnessLinkLoader>();
 builder.Services.AddScoped<WordFoldingLoader>();
 builder.Services.AddScoped<InterlinearLinkLoader>();
+builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<TheographicEventLoader>();
 builder.Services.AddScoped<WorldHistoryLoader>();

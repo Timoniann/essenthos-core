@@ -67,6 +67,7 @@ internal sealed class DatasetLoader(
             await LinkTheGreekWitnesses(stoppingToken);
             await GiveEveryWordASearchableForm(stoppingToken);
             await LinkFromTheInterlinear(resources, stoppingToken);
+            await JoinTheVerses(stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
@@ -287,6 +288,21 @@ internal sealed class DatasetLoader(
             "ukr",
             "unfoldingWord's Ukrainian Bible Interlinear Ogienko, git.door43.org/uk_ts/uk_ubio, CC BY-SA 4.0",
             cancellationToken));
+    }
+
+    /// <summary>
+    /// Which verse of one text is which verse of another, for every pair the word links already
+    /// cover. It runs last of the linking steps on purpose: the pairs come from the links, and the
+    /// alignment commands that create most of them are run outside this pipeline, so a pair aligned
+    /// today gets its verse links on the next start.
+    /// </summary>
+    private async Task JoinTheVerses(CancellationToken cancellationToken)
+    {
+        status.Starting("the verse links");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<VerseLinkLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>
