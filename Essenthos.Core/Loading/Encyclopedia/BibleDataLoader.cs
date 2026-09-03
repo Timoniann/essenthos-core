@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Essenthos.Core.Database;
@@ -286,7 +286,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         await db.SaveChangesAsync(cancellationToken);
 
         var names = Names(folder, entities);
-        var (relationships, duplicates, unpaired) = Relationships(folder, entities, frame);
+        var (relationships, duplicates, unpaired) = Relationships(folder, entities, frame, jesus);
         var (references, disputed) = References(folder, entities, frame, jesus);
         var events = Events(folder, entities, frame);
         var chronologies = Reckon();
@@ -621,10 +621,50 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// gives Aaron as Jozadak's ancestor twice, once said to be explicit and once inferred, and an
     /// entity page that listed it twice would be reporting a spreadsheet rather than a genealogy.
     /// </summary>
+    /// <summary>
+    /// The relations to the divine name that are relations to Jesus of Nazareth.
+    ///
+    /// The separation was applied to the references and not to these, so every one of them stayed
+    /// on the divine name: the twelve apostles were apostles of the God of Israel, Mary was his
+    /// bearer, and the encyclopedia said <em>YHVH brother of James</em> at Matthew 13:55.
+    ///
+    /// Listed rather than derived, and the list is the whole population — nine types across
+    /// sixty-four rows, which is a paragraph of reading rather than an algorithm. A rule saying
+    /// "in the New Testament it means Jesus" would be wrong the first time the dataset records
+    /// <em>servant</em> of God in a letter, and wrong silently.
+    ///
+    /// <para>
+    /// **Both directions of a tie are separate rows with different words**, and both have to be
+    /// here or the tie comes apart: <em>apostle</em> against <em>master</em>, <em>disciple</em>
+    /// against <em>rabbi</em>, <em>bearer</em> against <em>born by</em>, <em>patron</em> against
+    /// <em>client</em>. Listing only the first of each pair moved half of every tie and left 56
+    /// relationships pointing at an entity that no longer pointed back.
+    /// </para>
+    ///
+    /// <para>
+    /// <em>master</em> is why the New Testament test is not redundant: it is the reverse of
+    /// <em>apostle</em> twelve times in Matthew and the reverse of <em>servant</em> nine times from
+    /// Genesis to Jeremiah, and Moses is not a servant of Jesus of Nazareth.
+    /// </para>
+    /// </summary>
+    private static readonly HashSet<string> RelationsToJesus = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "apostle", "master", "disciple", "rabbi", "brother", "bearer", "born by", "patron", "client",
+    };
+
+    /// <summary>The first book of the New Testament in the shared order.</summary>
+    private const int FirstApostolicBook = 40;
+
+    /// <param name="jesus">
+    /// Where a relation to the divine name is a relation to Jesus of Nazareth. Both directions are
+    /// separate rows in this dataset and both are moved, or the encyclopedia would say one thing
+    /// on his page and the other on hers.
+    /// </param>
     internal static (List<EntityRelationship> Relationships, int Duplicates, int Unpaired) Relationships(
         string folder,
         Dictionary<string, Entity> entities,
-        ReferenceTable frame)
+        ReferenceTable frame,
+        Entity jesus)
     {
         var relationships = new List<EntityRelationship>(6_000);
         var seen = new Dictionary<(int From, string Type, int To, int? Book, int? Chapter, int? Verse, string? Notes),
@@ -640,10 +680,11 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             }
 
             var reference = frame.Resolve(row["reference_id"]);
+            var type = row["relationship_type"];
             var relationship = new EntityRelationship
             {
-                FromEntityId = from.Id,
-                ToEntityId = to.Id,
+                FromEntityId = Read(from, type, reference, jesus).Id,
+                ToEntityId = Read(to, type, reference, jesus).Id,
                 Type = row["relationship_type"],
                 Category = row["relationship_category"],
                 CanonicalBook = reference?.Book,
@@ -679,6 +720,20 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
 
         return (relationships, duplicates, unpaired);
     }
+
+    /// <summary>
+    /// Which of the two the divine name is standing for in one relationship. Anything that is not
+    /// the divine name is itself; anything outside the New Testament is the God of Israel; and a
+    /// New Testament relation is his unless its type is one of the handful that can only be a
+    /// relation to a man.
+    /// </summary>
+    private static Entity Read(
+        Entity entity, string type, (int Book, int Chapter, int Verse)? reference, Entity jesus) =>
+        entity.SourceId == DivineName
+        && reference is { Book: >= FirstApostolicBook }
+        && RelationsToJesus.Contains(type)
+            ? jesus
+            : entity;
 
     internal static (List<EntityVerse> References, int Disputed) References(
         string folder,

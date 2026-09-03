@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
@@ -307,6 +307,61 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
 
     [GeneratedRegex(@"\b[A-Za-z][A-Za-z0-9-]*(?:_[A-Za-z0-9-]+)+")]
     private static partial Regex Identifier();
+
+    /// <summary>
+    /// The dataset holds the God of Israel and Jesus as one entity, and the separation was applied
+    /// to the references and not to these — so the twelve apostles were apostles of the God of
+    /// Israel, Mary was his bearer, and the encyclopedia said "YHVH brother of James".
+    /// </summary>
+    [Fact]
+    public void TheApostlesAreApostlesOfJesus()
+    {
+        var apostles = _corpus.Relationships
+            .Where(r => r.ToEntityId == _corpus.Jesus.Id && r.Type == "apostle")
+            .ToList();
+
+        apostles.Should().HaveCount(12);
+        apostles.Should().OnlyContain(r => r.CanonicalBook >= 40);
+    }
+
+    [Fact]
+    public void MaryBearsJesusRatherThanTheGodOfIsrael()
+    {
+        var divine = _corpus.Entities.Values.Single(e => e.SourceId == "person:YHVH_1");
+
+        _corpus.Relationships.Where(r => r.Type == "bearer")
+            .Should().OnlyContain(r => r.FromEntityId != divine.Id && r.ToEntityId != divine.Id);
+    }
+
+    /// <summary>
+    /// Both directions of one tie are separate rows in this dataset, so both have to move or the
+    /// encyclopedia says one thing on his page and the other on hers.
+    /// </summary>
+    [Fact]
+    public void BothDirectionsOfATieMoveTogether()
+    {
+        var jesus = _corpus.Jesus.Id;
+        var brothers = _corpus.Relationships.Where(r => r.Type == "brother"
+            && (r.FromEntityId == jesus || r.ToEntityId == jesus)).ToList();
+
+        brothers.Where(r => r.FromEntityId == jesus).Should().HaveCount(4);
+        brothers.Where(r => r.ToEntityId == jesus).Should().HaveCount(4);
+    }
+
+    /// <summary>
+    /// A relation to the divine name outside the New Testament is a relation to the God of Israel,
+    /// and stays. Abraham is not a servant of Jesus of Nazareth.
+    /// </summary>
+    [Fact]
+    public void TheOldTestamentRelationsStayWithTheGodOfIsrael()
+    {
+        var divine = _corpus.Entities.Values.Single(e => e.SourceId == "person:YHVH_1");
+        var servants = _corpus.Relationships
+            .Where(r => r.ToEntityId == divine.Id && r.Type == "servant").ToList();
+
+        servants.Should().NotBeEmpty();
+        servants.Should().OnlyContain(r => r.CanonicalBook < 40);
+    }
 }
 
 /// <summary>
@@ -334,7 +389,7 @@ public sealed class BibleDataCorpus
 
         var frame = BibleDataLoader.ReferenceTable.Read(Folder);
         Names = BibleDataLoader.Names(Folder, Entities);
-        (Relationships, Duplicates, Unpaired) = BibleDataLoader.Relationships(Folder, Entities, frame);
+        (Relationships, Duplicates, Unpaired) = BibleDataLoader.Relationships(Folder, Entities, frame, Jesus);
         (References, Disputed) = BibleDataLoader.References(Folder, Entities, frame, Jesus);
         var events = BibleDataLoader.Events(Folder, Entities, frame);
         BibleDataLoader.Name(Entities, events, Relationships);
