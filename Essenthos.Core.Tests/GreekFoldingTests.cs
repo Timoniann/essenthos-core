@@ -68,4 +68,30 @@ public class GreekFoldingTests
     [Fact]
     public void LeavesAloneWhatIsNotGreek() =>
         GreekLetters.Bare("{N-GSM}").Should().Be("{N-GSM}");
+
+    /// <summary>
+    /// The elision mark is a letter that is not there, not punctuation.
+    ///
+    /// Brenton writes it as U+02BC MODIFIER LETTER APOSTROPHE, which is outside every Greek block,
+    /// so a fold that works by block structure passed it through and 4,832 Septuagint words folded
+    /// to a form no other witness contains and no reader types. The bug got in because the test
+    /// that proved the fold walked the Greek letters; the character that broke it is not a Greek
+    /// letter. PRB-0158.
+    /// </summary>
+    [Theory]
+    [InlineData("ἐπʼ", "επ")]           // U+02BC, as the Septuagint writes it
+    [InlineData("μετʼ", "μετ")]
+    [InlineData("ἀλλʼ", "αλλ")]
+    [InlineData("ἐπ’", "επ")]           // U+2019, as a typographic edition would
+    [InlineData("ἐπ'", "επ")]           // U+0027, as a plain-text one would
+    [InlineData("ʼΑαρών", "ααρων")]     // word-initial, standing in for the breathing
+    public void DropsTheElisionMarkHoweverItIsWritten(string written, string bare) =>
+        GreekLetters.Bare(written).Should().Be(bare);
+
+    /// <summary>
+    /// The three witnesses spell the elided preposition three ways and mean one word.
+    /// </summary>
+    [Fact]
+    public void CountsAnElidedWordAsTheSameWordAsItsPlainSpelling() =>
+        GreekLetters.Same("ἐπʼ", "επ'").Should().BeTrue();
 }

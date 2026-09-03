@@ -63,6 +63,17 @@ internal static class GreekLetters
     };
 
     /// <summary>
+    /// The elision mark, however an edition writes it: a letter that is not there rather than
+    /// punctuation, so it belongs in no folded form.
+    ///
+    /// Brenton writes it as U+02BC MODIFIER LETTER APOSTROPHE and uses the same character for a
+    /// word-initial breathing. It sits outside every Greek block, so a fold that works by block
+    /// structure passed it straight through and 4,832 Septuagint words came out as forms no other
+    /// witness contains and no reader types. PRB-0158.
+    /// </summary>
+    private const string Elision = "ʼʻ’‘'";
+
+    /// <summary>
     /// The accented letters of the monotonic block, which is not laid out in rows and so is
     /// written out. Uppercase and final sigma are handled by the ordinary case fold below.
     /// </summary>
@@ -113,6 +124,13 @@ internal static class GreekLetters
             'ς' => 'σ',                                  // final sigma
             >= 'Α' and <= 'Ω' => (char)(c + 32),          // capitals
             'ͅ' or (>= '̀' and <= 'ͯ') => ' ',       // combining marks
+            // The elision mark, which is a letter that is not there rather than punctuation.
+            // Brenton writes it as U+02BC and uses the same character for an initial breathing, so
+            // it stands between a word and every other witness of it: ἐπʼ folded to επʼ, which no reader
+            // types and no other Greek text contains. Dropping it is what the Greek blocks' own
+            // free-standing diacritics already do a few lines above; this one only lives outside
+            // them. PRB-0158.
+            _ when Elision.Contains(c) => ' ',
             _ => c,
         };
     }
