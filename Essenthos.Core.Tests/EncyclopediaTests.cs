@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Strong;
 using FluentAssertions;
@@ -256,6 +257,38 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
     public void ADistinguisherReadsAsAName() =>
         _corpus.Entities["person:Abdeel_1"].Distinguisher.Should().Be("father of Shelemiah (JER 36:26)");
 
+    /// <summary>
+    /// Two entities are named YHVH and a search for the name returns both. The dataset's own
+    /// attribute for the first is a sample of its titles — "Holy, Holy, Holy (ISA 6:3) and too many
+    /// others to fit here" — which is true of it and says nothing about which of the two it is.
+    /// </summary>
+    [Fact]
+    public void TheTwoEntitiesNamedYhvhAreToldApart()
+    {
+        var god = _corpus.Entities["person:YHVH_1"];
+        var father = _corpus.Entities["person:YHVH_2"];
+
+        god.Name.Should().Be(father.Name);
+        god.Distinguisher.Should().NotBeNullOrWhiteSpace().And.NotBe(father.Distinguisher);
+        father.Distinguisher.Should().NotBeNullOrWhiteSpace();
+        god.Distinguisher.Should().NotContain("too many others");
+        god.Notes.Should().NotBeNull().And.Contain("too many others");
+    }
+
+    /// <summary>
+    /// What the distinguisher on the second one rests on: the dataset cites it in the New Testament
+    /// and nowhere else, so "whom the New Testament names" is a measure rather than a reading.
+    /// </summary>
+    [Fact]
+    public void TheFatherIsNamedOnlyInTheNewTestament()
+    {
+        var father = _corpus.Entities["person:YHVH_2"];
+        var references = _corpus.References.Where(r => r.EntityId == father.Id).ToList();
+
+        references.Should().HaveCount(352);
+        references.Should().OnlyContain(r => r.CanonicalBook > BookReferences.OldTestamentBookCount);
+    }
+
     private IList<string> Leaked()
     {
         var prose = _corpus.Entities.Values.Select(e => e.Distinguisher)
@@ -290,6 +323,7 @@ public sealed class BibleDataCorpus
         Jesus = BibleDataLoader.Divide(Entities, slugs);
         BibleDataLoader.People(Folder, Entities, slugs);
         BibleDataLoader.Places(Folder, Entities, slugs);
+        BibleDataLoader.Distinguish(Entities);
 
         // The database hands these out; here they are only needed to tell one entity from another.
         var id = 1;

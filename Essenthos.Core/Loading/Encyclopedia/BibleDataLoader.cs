@@ -55,6 +55,12 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     private const string DivineName = "person:YHVH_1";
 
     /// <summary>
+    /// The dataset's second entity of the same name: the Father, as the New Testament names him.
+    /// Every one of its 352 namings is in a New Testament book.
+    /// </summary>
+    private const string TheFather = "person:YHVH_2";
+
+    /// <summary>
     /// The two id spaces are separate in the source and must be separate here. Twenty ids name
     /// both a person and a place — Canaan, Cush, Eden, Midian, Moab, Shechem — because a nation is
     /// called after its ancestor, and keying them together let the place quietly overwrite the
@@ -274,6 +280,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         var jesus = Divide(entities, slugs);
         People(folder, entities, slugs);
         Places(folder, entities, slugs);
+        Distinguish(entities);
 
         db.Entities.AddRange(entities.Values);
         await db.SaveChangesAsync(cancellationToken);
@@ -396,6 +403,44 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         entities[jesus.SourceId] = jesus;
         return jesus;
     }
+
+    /// <summary>
+    /// Tells the dataset's two entities named YHVH apart, which its own attributes do not.
+    ///
+    /// Both are called YHVH, so the attribute is the only thing a list, a search result or a
+    /// relationship row can offer to choose between them — and the first one's is a sample of its
+    /// own titles, <em>"Holy, Holy, Holy (ISA 6:3) and too many others to fit here"</em>, which
+    /// says nothing about which of the two it is. A reader searching the name gets two rows and no
+    /// way to pick one.
+    ///
+    /// What separates them is what each is, and both halves are facts about the dataset rather
+    /// than readings of the text: the first carries the divine name through the whole canon and is
+    /// the entity Jesus was taken out of; the second is the Father, and all 352 of its namings are
+    /// in New Testament books. The source's own attribute is kept in the notes, because it is a
+    /// true thing it said even though it is not a distinguisher.
+    /// </summary>
+    internal static void Distinguish(Dictionary<string, Entity> entities)
+    {
+        if (entities.TryGetValue(DivineName, out var god))
+        {
+            god.Distinguisher = "the God of Israel";
+            god.Notes = Sentences(
+                "The dataset gives this entity and the Father the same name and tells them apart by a " +
+                "sample of their titles — for this one, \"Holy, Holy, Holy (ISA 6:3) and too many others " +
+                "to fit here\" — which does not say which of the two it is. This is the one the divine " +
+                "name belongs to, named through the whole canon. It is also the entity Jesus is folded " +
+                "into, and the New Testament namings that plainly mean him were moved to his own entry.",
+                god.Notes);
+        }
+
+        if (entities.TryGetValue(TheFather, out var father))
+        {
+            father.Distinguisher = "the Father, whom the New Testament names (MAT 5:16)";
+        }
+    }
+
+    private static string? Sentences(params string?[] parts) =>
+        Blank(string.Join(" ", parts.Where(part => !string.IsNullOrWhiteSpace(part))));
 
     internal static void People(string folder, Dictionary<string, Entity> entities, HashSet<string> slugs)
     {

@@ -72,6 +72,75 @@ internal static class EncyclopediaEndpoints
             .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride) + v.CanonicalVerse)
             .Distinct();
 
+    /// <summary>
+    /// How far each layer of the encyclopedia actually reaches, asked of the database rather than
+    /// declared anywhere.
+    ///
+    /// A layer whose books stop short of the canon makes every count on every page of it a
+    /// statement about the source and not about the text: the place layer states references for
+    /// Genesis and Exodus and nothing after them, so Jerusalem reports one verse for a city the
+    /// text names hundreds of times. The books are what turns that number from a wrong answer into
+    /// a partial one.
+    ///
+    /// Four aggregates over the whole table rather than one, because the four questions are
+    /// different — how many entities exist, how many are cited at all, how many verses cite them,
+    /// and how many citations those verses hold — and a single query answering them together
+    /// double-counts every entity named twice in a verse.
+    /// </summary>
+    internal static async Task<EntityCoverageResponse> Coverage(
+        AppDbContext db,
+        CancellationToken cancellationToken = default)
+    {
+        var tallies = await db.Entities
+            .GroupBy(e => e.Kind)
+            .Select(g => new { Kind = g.Key, Entities = g.Count(), Named = g.Count(e => e.Verses.Any()) })
+            .ToListAsync(cancellationToken);
+
+        var mentions = await db.EntityVerses
+            .GroupBy(v => v.Entity!.Kind)
+            .Select(g => new { Kind = g.Key, Count = g.Count() })
+            .ToDictionaryAsync(row => row.Kind, row => row.Count, cancellationToken);
+
+        var verses = await db.EntityVerses
+            .Select(v => new
+            {
+                v.Entity!.Kind,
+                Address = (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride) + v.CanonicalVerse,
+            })
+            .Distinct()
+            .GroupBy(v => v.Kind)
+            .Select(g => new { Kind = g.Key, Count = g.Count() })
+            .ToDictionaryAsync(row => row.Kind, row => row.Count, cancellationToken);
+
+        var reached = (await db.EntityVerses
+                .Select(v => new { v.Entity!.Kind, v.CanonicalBook })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .GroupBy(b => b.Kind)
+            .ToDictionary(g => g.Key, g => g.Select(b => b.CanonicalBook).Order().ToList());
+
+        return new EntityCoverageResponse(
+            BookReferences.CanonBookCount,
+            [
+                .. tallies
+                    .Select(t =>
+                    {
+                        var ordinals = reached.GetValueOrDefault(t.Kind, []);
+                        return new EntityLayerCoverageResponse(
+                            EnumSpelling.Of(t.Kind),
+                            t.Entities,
+                            t.Named,
+                            verses.GetValueOrDefault(t.Kind),
+                            mentions.GetValueOrDefault(t.Kind),
+                            new CoverageResponse(
+                                ordinals.Count > 0 ? ordinals[0] : 0,
+                                ordinals.Count > 0 ? ordinals[^1] : 0,
+                                ordinals));
+                    })
+                    .OrderBy(layer => layer.Kind, StringComparer.Ordinal),
+            ]);
+    }
+
     public static void MapEncyclopedia(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/entities", async (
@@ -118,6 +187,19 @@ internal static class EncyclopediaEndpoints
 
             return Results.Ok(new EntityListResponse(total, page));
         });
+
+        // How far each layer of the encyclopedia actually reaches, measured rather than declared.
+        //
+        // The place layer states references for Genesis and Exodus and for nothing after them, so
+        // Jerusalem's page reports one verse for a city the text names hundreds of times. A page
+        // that shows the number alone reads as a claim about the text; a page that can also say
+        // which books the layer covers reads as what it is, which is a claim about the dataset.
+        //
+        // Its own endpoint rather than a field on every entity: it is one aggregate over the whole
+        // table, it is the same answer for every entity of a kind, and it costs about 20ms — which
+        // is nothing once a session and a great deal on each of a hundred pages.
+        routes.MapGet("/entities/coverage", async (AppDbContext db, CancellationToken cancellationToken) =>
+            Results.Ok(await Coverage(db, cancellationToken)));
 
         routes.MapGet("/entities/{slug}", async (
             string slug,
@@ -689,6 +771,32 @@ internal record EntitySummaryResponse(
     int Mentions);
 
 internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items);
+
+/// <summary>
+/// How far one kind of entity's references actually reach, so that a count on a page can be read
+/// as a fact about the dataset rather than as a fact about the text.
+/// </summary>
+/// <param name="Named">
+/// How many of them any verse names. An entity the source lists and never cites is a row with no
+/// references, which is a different fact from an entity the text never mentions.
+/// </param>
+/// <param name="Books">
+/// The canonical books in which any reference of this kind falls, and nothing beyond them. Where
+/// this is short of the canon, a page that says "1 verse" is reporting where the source stopped.
+/// </param>
+internal record EntityLayerCoverageResponse(
+    string Kind,
+    int Entities,
+    int Named,
+    int References,
+    int Mentions,
+    CoverageResponse Books);
+
+/// <param name="Canon">
+/// How many books a complete layer would reach, so a client can say "2 of 66" without holding a
+/// number of its own.
+/// </param>
+internal record EntityCoverageResponse(int Canon, IList<EntityLayerCoverageResponse> Layers);
 
 /// <param name="References">
 /// How many verses name this entity — the number a reader asking "how often is Nebuchadnezzar in
