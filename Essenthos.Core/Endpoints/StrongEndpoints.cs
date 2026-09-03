@@ -103,6 +103,7 @@ internal static class StrongEndpoints
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
+            ICanonIndex canon,
             CancellationToken cancellationToken) =>
         {
             if (StrongNumbers.Normalize(number) is not { } canonical)
@@ -114,7 +115,16 @@ internal static class StrongEndpoints
             var words = db.Words.Where(w => w.StrongNumber == canonical);
             if (corpus is { Length: > 0 })
             {
-                words = words.Where(w => w.Text!.Slug == corpus);
+                // Resolved rather than compared to the column, so that a spelling the corpus does
+                // not know is a 404 and not an empty page: matching the slug directly answered
+                // "this number stands nowhere" to a question that was never asked of a real text.
+                if (await canon.Text(corpus, cancellationToken) is not { } named)
+                {
+                    return Results.NotFound(new ProblemResponse(
+                        $"There is no text \"{corpus}\". Ask /v1/corpora for the ones this corpus holds."));
+                }
+
+                words = words.Where(w => w.TextId == named.Id);
             }
 
             var total = await words.CountAsync(cancellationToken);
@@ -226,7 +236,7 @@ internal static class StrongEndpoints
 
             return Results.Ok(new StrongRenderingsResponse(
                 canonical,
-                corpus,
+                text.Slug,
                 occurrences,
                 reached,
                 occurrences - reached,

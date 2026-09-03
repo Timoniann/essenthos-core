@@ -64,7 +64,7 @@ internal static class WordEndpoints
 
             if (word is null)
             {
-                return Results.NotFound(new ProblemResponse($"{corpus} has no word {id}."));
+                return Results.NotFound(new ProblemResponse($"{text.Slug} has no word {id}."));
             }
 
             // Every word this one is linked to, in both directions at once. The reader wants the
@@ -125,7 +125,7 @@ internal static class WordEndpoints
 
             return Results.Ok(new WordDetailResponse(
                 word.Id,
-                corpus,
+                text.Slug,
                 word.Surface,
                 word.Gloss,
                 word.Lemma,

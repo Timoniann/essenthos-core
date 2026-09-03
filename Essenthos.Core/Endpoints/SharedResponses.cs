@@ -88,6 +88,16 @@ internal record CorpusResponse(
     /// <c>non-commercial-only</c>, <c>share-alike</c>, <c>unknown</c>. Unknown is not permission.
     /// </summary>
     public string? Redistribution { get; init; }
+
+    /// <summary>
+    /// The other identifiers this text answers to, where other Bible software spells it
+    /// differently: the Synodal is <c>syno</c> at YouVersion and <c>synod</c> at bolls.life as well
+    /// as <c>rusv</c> here. Any of them may be sent in a path or in <c>?corpora=</c>, and
+    /// <see cref="Id"/> is what comes back — a client that stores what it received keeps the
+    /// canonical spelling. Null where a text has no other name, so a client can offer them without
+    /// knowing which texts have any.
+    /// </summary>
+    public IReadOnlyList<string>? Aliases { get; init; }
 }
 
 /// <summary>

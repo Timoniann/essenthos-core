@@ -29,6 +29,11 @@ internal sealed record TextEntry(int Id, string Slug, IReadOnlyList<int> Books, 
 /// </summary>
 internal interface ICanonIndex
 {
+    /// <summary>
+    /// The text this identifier names, whether it is the text's own slug or one of the other
+    /// spellings <see cref="TextAliases"/> declares. The entry answers with the canonical slug
+    /// either way, which is what every response is built from.
+    /// </summary>
     Task<TextEntry?> Text(string slug, CancellationToken cancellationToken);
 
     Task<IReadOnlyList<TextEntry>> Texts(CancellationToken cancellationToken);
@@ -52,11 +57,23 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
     private IReadOnlyDictionary<int, int>? _chapterCounts;
     private IReadOnlyDictionary<(int Text, int Book), int>? _chapterCountsByText;
 
-    public async Task<TextEntry?> Text(string slug, CancellationToken cancellationToken)
-    {
-        var texts = await Texts(cancellationToken);
-        return texts.FirstOrDefault(t => string.Equals(t.Slug, slug, StringComparison.OrdinalIgnoreCase));
-    }
+    public async Task<TextEntry?> Text(string slug, CancellationToken cancellationToken) =>
+        Resolve(await Texts(cancellationToken), slug);
+
+    /// <summary>
+    /// The text an identifier names, its own slug or an alias of it.
+    ///
+    /// A loaded text's own slug is tried first, so an alias can never shadow one: were some later
+    /// text to take an identifier already declared as another's alias, the request would still
+    /// reach the text that owns it. Serving the wrong text is the one failure this mechanism must
+    /// not have, and ordering the two lookups is what rules it out rather than checking for it.
+    /// </summary>
+    public static TextEntry? Resolve(IReadOnlyList<TextEntry> texts, string identifier) =>
+        Named(texts, identifier)
+        ?? (TextAliases.Canonical(identifier) is { } canonical ? Named(texts, canonical) : null);
+
+    private static TextEntry? Named(IReadOnlyList<TextEntry> texts, string slug) =>
+        texts.FirstOrDefault(t => string.Equals(t.Slug, slug, StringComparison.OrdinalIgnoreCase));
 
     public async Task<IReadOnlyList<TextEntry>> Texts(CancellationToken cancellationToken)
     {
