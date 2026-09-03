@@ -52,6 +52,8 @@ Also worth reading before you touch a loader: **DOC-0004** (what LLM alignment c
 
 **Ports:** the old API holds 5277 and the web client 5278. Take **5279**.
 
+**One resource is fetched, not present.** GLAUx gives the Septuagint its lemmas and is 111 MB, so it is downloaded rather than committed like `etcbc` and the Septuagint text beside it: `./scripts/fetch-glaux.ps1`. Without it the corpus loads and Brenton simply keeps no lemmas, which the log says.
+
 **Resources** stay in `essenthos-api/Resources` and are read through configuration — `Dataset:ResourcesPath`, defaulting to `../../essenthos-api/Resources`, resolved from the content root. Two levels, not one: the content root is the project folder `essenthos-core/Essenthos.Core`. Do not copy them and do not use `../Resources`.
 
 ## What carries over, and what does not
