@@ -35,6 +35,19 @@ public static class Datasets
     /// from anywhere but itself, and a share-alike licence that reached the reader through nothing
     /// at all would be worse than the counting being approximate.
     /// </param>
+    /// <param name="Methods">
+    /// Further prefixes this dataset claims, for rows whose source names a method rather than a
+    /// speaker — <c>"the Strong numbers both editions carry, paired within each verse"</c>.
+    ///
+    /// Only this project's own reasoning is written that way, and on purpose: what a reader needs
+    /// from an inferred link is how it was reached, and only then that it was reached here. So the
+    /// strings stay as the rows already carry them and the declaration reaches for them, rather
+    /// than the rows being rewritten to start with a name — rewriting one changes nothing already
+    /// loaded, and a loaded corpus is the only place the undeclared report is read.
+    ///
+    /// Listed one by one rather than swept up by a catch-all, so a method nobody declared still
+    /// shows as undeclared.
+    /// </param>
     public sealed record Dataset(
         string Id,
         string Name,
@@ -45,7 +58,12 @@ public static class Datasets
         string Covers,
         string Prefix,
         string? Lemmas = null,
-        bool Links = false);
+        bool Links = false,
+        string[]? Methods = null)
+    {
+        /// <summary>Every source-string prefix this dataset claims, its own name first.</summary>
+        public IEnumerable<string> Prefixes => Methods is null ? [Prefix] : [Prefix, .. Methods];
+    }
 
     public static readonly Dataset[] All =
     [
@@ -90,6 +108,50 @@ public static class Datasets
             + "Slavic text in the corpus has — so it is what every model here is calibrated on.",
             "unfoldingWord", Links: true),
 
+        // The site says two things about itself. Its licensing page places the text in the public
+        // domain and adds "Licensing is not required for any use"; the footer of every page on the
+        // same site still reads "Copyright © 2021 Berean Standard Bible. All rights reserved." The
+        // licensing page is the specific and deliberate statement and the footer is template
+        // chrome, so the licensing page is believed — and both are recorded, beside the data.
+        new("berean", "Berean Standard Bible", "Bible Hub / Berean Bible", "Public Domain",
+            "https://berean.bible/licensing.htm",
+            "https://berean.bible",
+            "Which Berean word renders which Hebrew, Aramaic or Greek word, stated by the "
+            + "translators themselves in the tables they publish beside the text. It is the second "
+            + "stated English anchor the corpus has and the first that covers both testaments, so "
+            + "for the New Testament it is the only word-level testimony there is.",
+            "Berean Standard Bible translation tables", Links: true),
+
+        // Public domain by the only statement attached to the bytes — the repository's README says
+        // "License? Public Domain. Copy freely." and there is no LICENSE file and no licence on the
+        // GitHub repository record. Robinson asks, without requiring it, that his name and the
+        // title stay with the text; both are here. The re-wrappings disagree with the original and
+        // are more restrictive, so they are not the ones believed. RUL-0105.
+        new("byztxt", "Robinson's Textus Receptus", "Maurice A. Robinson", "Public Domain",
+            "https://github.com/byztxt/greektext-textus-receptus#license",
+            "https://github.com/byztxt/greektext-textus-receptus",
+            "Which word of Stephanus 1550 is which word of Scrivener 1894, stated rather than "
+            + "aligned. The composite is one token stream that offers a choice at the places the "
+            + "two editions differ, so the file itself says which reading is whose — including the "
+            + "places where one edition has a word and the other has none, which are the only "
+            + "absences this corpus records rather than merely fails to fill.",
+            "byztxt/greektext-textus-receptus", Links: true),
+
+        // The one source in this list that states no licence at all: the module's own <rights>
+        // element is present and empty, and the SourceForge project declares none either. What it
+        // carries is old enough to be out of copyright on its own — see the LICENCE.md kept beside
+        // the file — but that is our reading of the contents, not a grant by the packager, and the
+        // difference is exactly what this field must not blur.
+        new("zefaniakjv", "Zefania KJV+", "Theologische Initative Freiburg", "No licence stated",
+            "https://sourceforge.net/projects/zefania-sharp/files/Bibles/ENG/King%20James/KJV%2B/",
+            "https://sourceforge.net/projects/zefania-sharp/files/Bibles/ENG/King%20James/KJV%2B/",
+            "The Strong number on each King James word, which is what every New Testament link "
+            + "between the English and the Greek is matched on. The King James text itself is read "
+            + "from elsewhere and only the tagging is taken from here — and the tagging is all this "
+            + "supplies: which tagged word pairs with which Greek word is matched within the verse "
+            + "by this project, at a confidence, and no part of that pairing is stated by anyone.",
+            "Zefania KJV+", Links: true),
+
         new("glaux", "GLAUx", "Alek Keersmaekers and the GLAUx contributors", "CC BY-SA 3.0",
             "https://creativecommons.org/licenses/by-sa/3.0/",
             "https://github.com/alekkeersmaekers/glaux",
@@ -100,15 +162,25 @@ public static class Datasets
             + "applied to the Brenton text already served.",
             "GLAUx", Lemmas: "lxx-brenton"),
 
-        // What this project asserts itself. One row today — the entity BibleData folds into the
-        // divine name and this corpus does not — and it belongs in the list precisely because it
-        // is ours: a claim of our own, printed beside the ones we merely carry.
+        // What this project asserts itself, and it belongs in the list precisely because it is
+        // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly
+        // all of it — correspondences nobody states, which read exactly like an undeclared third
+        // party until they were claimed here. PRB-0180.
         new("essenthos", "Essenthos", "this project", "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://github.com/",
-            "Corrections and separations this project makes to the datasets it carries, each "
-            + "recorded on the row it changed.",
-            "Essenthos"),
+            "What this project works out for itself. Corrections and separations it makes to the "
+            + "datasets it carries, each recorded on the row it changed; and the word "
+            + "correspondences no source states — the two Greek editions joined on the Strong "
+            + "numbers both of them tag, and the English function words the tagging skips, "
+            + "recovered from the morphology the Greek states. Every one of them carries a "
+            + "confidence, which is how it is told apart from testimony.",
+            "Essenthos", Links: true, Methods:
+            [
+                "the Strong numbers both editions carry",
+                "the words left over once the Strong numbers were paired",
+                "the untagged English function words",
+            ]),
     ];
 
     /// <summary>Which dataset a row's source string belongs to, or null if none claims it.</summary>
@@ -117,6 +189,10 @@ public static class Datasets
     public static Dataset? Match(string? source) =>
         source is null
             ? null
-            : Array.Find(All, d => source.StartsWith(d.Prefix, StringComparison.Ordinal));
+            : Array.Find(All, d => Claims(d, source));
+
+    /// <summary>Whether a dataset's declaration reaches a row carrying this source string.</summary>
+    public static bool Claims(Dataset dataset, string source) =>
+        dataset.Prefixes.Any(prefix => source.StartsWith(prefix, StringComparison.Ordinal));
 
 }

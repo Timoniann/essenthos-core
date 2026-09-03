@@ -50,11 +50,11 @@ public static class DatasetEndpoints
                         cancellationToken);
 
                 var counts = new DatasetCounts(
-                    Of(entities, dataset.Prefix),
-                    Of(events, dataset.Prefix),
-                    Of(periods, dataset.Prefix),
+                    Of(entities, dataset),
+                    Of(events, dataset),
+                    Of(periods, dataset),
                     lemmas,
-                    dataset.Links ? Of(links, dataset.Prefix) : 0);
+                    dataset.Links ? Of(links, dataset) : 0);
 
                 if (counts is { Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Links: 0 })
                 {
@@ -98,8 +98,8 @@ public static class DatasetEndpoints
         return [.. rows.Select(row => (row.Source, row.Rows))];
     }
 
-    private static int Of(IEnumerable<(string Source, int Rows)> counted, string prefix) =>
-        counted.Where(row => row.Source.StartsWith(prefix, StringComparison.Ordinal)).Sum(row => row.Rows);
+    private static int Of(IEnumerable<(string Source, int Rows)> counted, Datasets.Dataset dataset) =>
+        counted.Where(row => Datasets.Claims(dataset, row.Source)).Sum(row => row.Rows);
 
     private static IEnumerable<(string Source, int Rows)> Undeclared(
         IEnumerable<(string Source, int Rows)> counted) =>
