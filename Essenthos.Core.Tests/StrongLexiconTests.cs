@@ -3,6 +3,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
@@ -88,6 +89,35 @@ public sealed class StrongLexiconTests : IDisposable
 
         unresolved.Should().Be(0);
         unused.Should().Be(1);
+    }
+
+    /// <summary>
+    /// The two files as they stand, loaded, and then asked what a reader's page turns on: is there
+    /// a row here with nothing in it, and does anything still carry the mark the printed
+    /// concordance put between a definition and the renderings.
+    ///
+    /// 8,674 Hebrew entries and 5,523 Greek — the Greek file holds 5,624 and 101 of them are the
+    /// numbers Strong never assigned, which have no lemma, no definition and nothing to say.
+    /// </summary>
+    [Fact]
+    public async Task TheLoadedLexiconHasNoEmptyEntriesAndNoPrintedSeparators()
+    {
+        var outcome = await _loader.Load(
+            TestResources.Path("Strong", "StrongHebrew.xml"),
+            TestResources.Path("Strong", "StrongGreek.xml"));
+
+        outcome.Entries.Should().Be(14_197);
+
+        var blank = await _db.StrongEntries.CountAsync(e =>
+            e.Lemma == null && e.Definition == null && e.Derivation == null && e.KjvDefinition == null);
+        blank.Should().Be(0, "an entry with nothing in it answers a reader 200 with an empty page");
+
+        var separated = await _db.StrongEntries.CountAsync(e =>
+            e.KjvDefinition != null && e.KjvDefinition.Contains(":--"));
+        separated.Should().Be(0, "the separator belongs to neither the definition nor the renderings");
+
+        var undefined = await _db.StrongEntries.CountAsync(e => e.Definition == null);
+        undefined.Should().Be(0, "every entry says what the word means, wherever the file keeps it");
     }
 
     private void Number(int position, string strong)
