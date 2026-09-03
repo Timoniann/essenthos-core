@@ -108,6 +108,19 @@ public static class Datasets
             + "Slavic text in the corpus has — so it is what every model here is calibrated on.",
             "unfoldingWord", Links: true),
 
+        // The second answer to a question the corpus already had an answer to, which is why it is
+        // here at all: 98,989 of its records corroborate a link the Berean's own tables state, and
+        // 8,345 disagree with one. Its repository carries no licence file — every statement of terms
+        // is in the per-set TOML, which is the one closest to the bytes (RUL-0105).
+        new("clearbible", "Clear Bible Alignments", "BiblioNexus", "CC BY 4.0",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://github.com/Clear-Bible/Alignments",
+            "Which English word of the Berean renders which Greek word, aligned by hand by a team "
+            + "that did not consult the Berean's own translators. Where the two agree, a link carries "
+            + "both their names; where they differ, the corpus holds both answers rather than "
+            + "choosing. Their Russian set is in the same download and is deliberately not loaded.",
+            "Clear Bible Alignments", Links: true),
+
         // The site says two things about itself. Its licensing page places the text in the public
         // domain and adds "Licensing is not required for any use"; the footer of every page on the
         // same site still reads "Copyright © 2021 Berean Standard Bible. All rights reserved." The
