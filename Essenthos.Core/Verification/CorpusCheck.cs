@@ -317,10 +317,15 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             JOIN verse_reference tr ON tr.verse_id = tw.verse_id AND tr.is_primary
             WHERE (fr.canonical_book, fr.canonical_chapter, fr.canonical_verse)
                <> (tr.canonical_book, tr.canonical_chapter, tr.canonical_verse)
+              -- Joined through verse_link_verse alone rather than through verse_link as well:
+              -- the link row adds nothing the two membership rows do not already say, and with a
+              -- quarter of a million verse links in the table the extra join was enough to time
+              -- the whole verification out.
               AND NOT EXISTS (
-                  SELECT 1 FROM verse_link vl
-                  JOIN verse_link_verse a ON a.verse_link_id = vl.id AND a.verse_id = fw.verse_id
-                  JOIN verse_link_verse b ON b.verse_link_id = vl.id AND b.verse_id = tw.verse_id
+                  SELECT 1 FROM verse_link_verse a
+                  JOIN verse_link_verse b
+                    ON b.verse_link_id = a.verse_link_id AND b.verse_id = tw.verse_id
+                  WHERE a.verse_id = fw.verse_id
               )
             """),
     ];
@@ -350,7 +355,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var integrity = new List<IntegrityCheck>(Integrity.Length);
         foreach (var (breaks, sql) in Integrity)
         {
-            await using var command = new NpgsqlCommand(sql, connection);
+            // These sweep the whole link table -- three and a half million rows joined to their
+            // words and addresses -- so they are minutes, not seconds, and the default thirty
+            // seconds silently turned a correct corpus into a failed verification.
+            await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = 900 };
             integrity.Add(new IntegrityCheck(breaks, (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!));
         }
 

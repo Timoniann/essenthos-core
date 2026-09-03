@@ -194,30 +194,50 @@ internal sealed class CompositionPipeline(
         while (await reader.ReadAsync(cancellationToken))
         {
             rows.Add((reader.GetInt64(0), reader.GetInt64(1),
-                Confidence(reader, 2) * Specificity(reader.GetInt64(3))));
+                Confidence(reader, 2) * SpecificityOf(reader.GetInt64(3))));
         }
 
         return rows.ToLookup(row => row.Bridge, row => (row.To, row.Confidence));
     }
 
     /// <summary>
-    /// How much a middle link says about any one of its own words.
+    /// How often a composed link running through a middle link of this size turns out to be right,
+    /// as a share of how often one running through a stated one-to-one pair does.
     ///
     /// A link naming one English word and one Hebrew word states that pair, and carrying a
-    /// correspondence through it adds no doubt at all. A link naming a phrase states that the
+    /// correspondence through it adds almost no doubt. A link naming a phrase states that the
     /// phrase renders the word, and which of its words a foreign one arrives at is a question the
-    /// file does not answer — so composing through it is an n-way choice made without evidence, and
-    /// is worth a fraction of the claim rather than the whole of it.
+    /// file does not answer -- so composing through it is worth less than the whole of the claim.
     ///
-    /// This is not a tuned number. It is the difference the sampling showed: composed links running
-    /// through a stated pair are mostly right, and those running through a phrase are mostly not —
-    /// "путь" against דֶּרֶךְ and "котел" against קַלַּחַת on the one hand, "сынов" against נֹחַ and
-    /// "твои" against שְׁנֵי on the other, where the file had lumped a whole span onto the head of it.
-    /// Four in five composed links run through a phrase, so leaving this out meant writing tens of
-    /// thousands of wrong pairs at the confidence of the right ones, which is the failure this
-    /// project minds most.
+    /// **How much less is measured, not assumed.** This was 1/n, which is what a pure n-way choice
+    /// would cost, and it was between two and three times too harsh. Against the 2,647 links the
+    /// Ukrainian interlinear states, the path ukr -&gt; kjv -&gt; original agrees with the interlinear:
+    ///
+    /// <code>
+    /// English words on the middle link   proposals   agrees
+    ///                                1        1364    89.1 %
+    ///                                2         622    80.4 %
+    ///                                3         455    71.0 %
+    ///                                4         126    69.8 %
+    ///                           5 or more       80    56.3 %
+    /// </code>
+    ///
+    /// So a three-word phrase is worth 0.80 of a stated pair and not 0.33, and the comment that
+    /// stood here -- *those running through a phrase are mostly not right* -- was wrong: at every
+    /// size measured they are mostly right. What 1/n cost was Genesis 1:3, where the King James
+    /// states that *Let there be* renders יְהִי and the Russian **будет** aligns to *be* at 0.55.
+    /// A third of that is 0.18, under the floor, so the word reached nothing at all while **да**
+    /// beside it reached the Hebrew by the direct route. PRB-0076.
+    ///
+    /// The sample is the only stated word-level correspondence a Slavic text has, so it is small
+    /// and it leans towards the words an interlinear chooses to annotate, which are content words.
+    /// Beyond five the counts are in the tens and the buckets are pooled rather than believed
+    /// separately. Re-measure it when another stated mapping arrives; the query is on PRB-0076.
     /// </summary>
-    private static double Specificity(long englishWords) => englishWords <= 1 ? 1 : 1.0 / englishWords;
+    private static readonly double[] Confirmed = [0.891, 0.804, 0.710, 0.698, 0.563];
+
+    internal static double SpecificityOf(long englishWords) =>
+        Confirmed[(int)Math.Clamp(englishWords, 1, Confirmed.Length) - 1] / Confirmed[0];
 
     private static double Confidence(NpgsqlDataReader reader, int column) =>
         reader.IsDBNull(column) ? 1 : reader.GetDouble(column);
