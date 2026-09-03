@@ -1,8 +1,8 @@
 {
   "Berean": {
-    "bytes": 95436759,
-    "files": 4,
-    "sha256": "dc970bfc8df22b0aaa839c28c65f6c26a204d28b599e953b0574e78271f3dd44"
+    "bytes": 95435158,
+    "files": 3,
+    "sha256": "17855b13b48a2a3a4b9bf238d29d14b6fe3bce227b94a95a60818e81475f3287"
   },
   "BibleData": {
     "bytes": 13188940,
@@ -10,14 +10,14 @@
     "sha256": "b5f77c60fcc1dd8460ee734bf3173ab60a9964c7cebbf9097d8b446160aa752a"
   },
   "BibleData2026": {
-    "bytes": 8550843,
-    "files": 19,
-    "sha256": "c4998cbdf9496ef71fc5844dcdb4f7a969976f82db572e7e584248f02d4e8ab8"
+    "bytes": 8526076,
+    "files": 14,
+    "sha256": "51043a76c98d3a7c476931a4ea3ea82f47537e98a571dfe361c757950b19abce"
   },
   "ClearBible": {
-    "bytes": 467285100,
-    "files": 29,
-    "sha256": "79b25747f87cc64c97d5b39259cca44cf0fd2cb797ea4173f15f1b70bb9ecaea"
+    "bytes": 467283150,
+    "files": 28,
+    "sha256": "1b4c41644c0f0180441aa6b4f29d0853286a7d80634f9725d97ce376d0e68aac"
   },
   "Door43": {
     "bytes": 3465729,
@@ -25,24 +25,24 @@
     "sha256": "ceadf1e57c5df764e6c2ffc5e58e3cdaff5007080a92feea0dc54ce567f80613"
   },
   "Glaux": {
-    "bytes": 116098330,
-    "files": 61,
-    "sha256": "7915a0cd2b5e4ae2a7913be978095391c8132f4adcb0b78694113a706df2d980"
+    "bytes": 116096549,
+    "files": 60,
+    "sha256": "67308d9dcae41b4589ae4997a401396de5659f6d21050e9b5c4e1246267c32e5"
   },
   "Nestle1904": {
-    "bytes": 43633404,
-    "files": 3,
-    "sha256": "c142bf9b3da492058a7b42d51dcbfd8a2c5cd8961bee57ea51448fa5932f27b5"
+    "bytes": 43631728,
+    "files": 2,
+    "sha256": "02dd96165e56ce5d77cc3cea1a469aa6b88f5b865442034269dba901a9dc1343"
   },
   "OpenBible": {
-    "bytes": 11625925,
-    "files": 4,
-    "sha256": "18ac158ff2fe5640f4867c5d1d3d5eb33f4f5d90de09e41489adf4cc87bea3f1"
+    "bytes": 11622625,
+    "files": 3,
+    "sha256": "3812bea6b4d41e3bc56959d4623be35ce3a38579c3af15b030994a157a24ae04"
   },
   "STEPBible": {
-    "bytes": 70214613,
-    "files": 5,
-    "sha256": "d2c454b23895c74d15c628f3edd293b3cbce3d8c559460749882152b3c46ea3d"
+    "bytes": 70208423,
+    "files": 4,
+    "sha256": "178f51e2ea43373a2ed68401557bbad08154e3f74d6c99d81d6e4546f3c32b06"
   },
   "Septuagint": {
     "bytes": 7207010,
@@ -50,14 +50,14 @@
     "sha256": "4e797384dcc7916fdd54d58dcb730853af3994d9d62a238d7fb6d4558fed83c8"
   },
   "Strong": {
-    "bytes": 9074469,
-    "files": 3,
-    "sha256": "15191d5c6606c28adb9d1ad300943029fd00bce90b394507c357b92c3b027f1f"
+    "bytes": 9072609,
+    "files": 2,
+    "sha256": "ab3f349ae0a0e3b585d17425749803f3c61699ba4bcc5d72f36ae411de121d3c"
   },
   "TextusReceptus": {
-    "bytes": 4015058,
-    "files": 56,
-    "sha256": "bce392d81e13db5cb3844ef1fb44c7fb6b2886e4bc4394de6f86ebc89a784bac"
+    "bytes": 4011481,
+    "files": 55,
+    "sha256": "cad426763e69353724537d1f6a8029927b1c244b2cdd4a84238e921fe88d0669"
   },
   "TheographicBibleData": {
     "bytes": 35548558,
@@ -65,33 +65,33 @@
     "sha256": "9f85cf44eac3240ab4546adc3d579f3056a44bafe7a2dd27e48aff9f495b8071"
   },
   "Versification": {
-    "bytes": 5793058,
-    "files": 2,
-    "sha256": "1d7d975693b22d35e0727bc02f6e2d65a91fa51ab2db271ff186063ea1fa2fb4"
+    "bytes": 5790928,
+    "files": 1,
+    "sha256": "24704247b91c44728f58c4fdeba9072308ee5b714b4bbfea568ce8bb7fe55ca9"
   },
   "WorldHistory": {
-    "bytes": 313246,
-    "files": 7,
-    "sha256": "bc58ead87d0db2bb0454395b6f84a1333eb531fd677314500a65c42a444e79c8"
+    "bytes": 0,
+    "files": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "Zefania": {
-    "bytes": 17296188,
-    "files": 2,
-    "sha256": "5a91bb3484b379a640f2803905bd36c0b048ac8059f350bb11a84754bc0d1999"
+    "bytes": 17291524,
+    "files": 1,
+    "sha256": "26bdc54962a2243e6c71e60704c91c6cd5b334af4517ef80cc555c7aa7968cee"
   },
   "bible4u": {
-    "bytes": 19529551,
-    "files": 4,
-    "sha256": "a1de6be36990a9c693fa4ce6fd238e953baae0e92c5972a8c10a7bb5714e0648"
+    "bytes": 19526992,
+    "files": 3,
+    "sha256": "2658947206013a844670aa0b13cd5cb2bcd96988d2ea6b228dc94611140fe57c"
   },
   "etcbc": {
-    "bytes": 214606946,
-    "files": 119,
-    "sha256": "e8cb04daada6485c9844bb0dedecb0185a2a21c923e44259bd4929caf1fe5fb6"
+    "bytes": 214604687,
+    "files": 118,
+    "sha256": "ed3ed24503c5dbea5cb79603fd60820613e73a60135ec1bc9f2b5db707b95a3b"
   },
   "mapping": {
-    "bytes": 56271957,
-    "files": 3,
-    "sha256": "83a8519ef0b62477054fb2e5872e8c47c695bab8f75aef22650a99f15429c33e"
+    "bytes": 56270209,
+    "files": 2,
+    "sha256": "1f2a0423f8fcacd75a4f846edd461c866c4815d875065a791d4d4a0659ac18fa"
   }
 }

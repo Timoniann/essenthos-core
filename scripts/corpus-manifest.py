@@ -17,10 +17,22 @@ missing.
   python scripts/corpus-manifest.py --check    compare the corpus against it, exit 1 on a difference
 """
 
-import hashlib, os, json, sys, time
+import hashlib, os, json, subprocess, sys, time
 sys.stdout.reconfigure(encoding='utf-8')
 root = 'Resources'
 started = time.time()
+
+# Files git already carries are excluded. They are versioned, so the manifest adds nothing about
+# them -- and they are text, so git rewrites their line endings on checkout: a LICENCE.md alone made
+# a folder's fingerprint differ between two worktrees of the same commit by 799 bytes. The manifest
+# is for the data git does not carry, which is all of it that matters.
+tracked = set()
+try:
+    listed = subprocess.run(['git', 'ls-files', root], capture_output=True, text=True, check=True)
+    tracked = {os.path.normpath(line) for line in listed.stdout.splitlines() if line}
+except Exception:
+    pass
+
 folders = {}
 for name in sorted(os.listdir(root)):
     d = os.path.join(root, name)
@@ -30,6 +42,8 @@ for name in sorted(os.listdir(root)):
     for dirpath, _, filenames in os.walk(d):
         for f in sorted(filenames):
             p = os.path.join(dirpath, f)
+            if os.path.normpath(p) in tracked:
+                continue
             rel = os.path.relpath(p, d).replace(os.sep, '/')
             h = hashlib.sha256()
             with open(p, 'rb') as fh:
