@@ -54,6 +54,7 @@ builder.Services.AddScoped<WordFoldingLoader>();
 builder.Services.AddScoped<Essenthos.Core.Glaux.GlauxLemmaLoader>();
 builder.Services.AddScoped<Essenthos.Core.Glaux.SeptuagintStrongLoader>();
 builder.Services.AddScoped<InterlinearLinkLoader>();
+builder.Services.AddScoped<BereanLinkLoader>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<TheographicEventLoader>();

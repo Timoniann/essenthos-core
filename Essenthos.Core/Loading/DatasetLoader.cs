@@ -52,6 +52,12 @@ internal sealed class DatasetLoader(
             await Load("Brenton's Septuagint", () => SeptuagintTextSource.Read(
                 Path.Combine(resources, "Septuagint")), stoppingToken);
 
+            // The Berean's own edition, because rebuilding it from the tables is right nine verses
+            // in ten and a text that is right nine times in ten is not a text. The tables then say
+            // which of its words renders which Greek word. FTR-0182.
+            await Load("the Berean Standard Bible", () => BereanTextSource.Read(
+                ResourcePaths.File(resources, "Berean", "bsb.txt")), stoppingToken);
+
             foreach (var translation in Bible4uTranslations)
             {
                 await Load(translation, () => Bible4uTextSource.Read(
@@ -64,6 +70,7 @@ internal sealed class DatasetLoader(
             await LemmatiseTheSeptuagint(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
+            await LinkTheBerean(resources, stoppingToken);
             await LinkThePrintedEditions(resources, stoppingToken);
             await LinkTheGreekWitnesses(stoppingToken);
             await GiveEveryWordASearchableForm(stoppingToken);
@@ -308,6 +315,23 @@ internal sealed class DatasetLoader(
         // our reasoning rather than anybody's testimony.
         var numbers = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Glaux.SeptuagintStrongLoader>();
         status.Record(await numbers.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The second stated word mapping the corpus has, and the first that reaches the New Testament.
+    /// It is joined by word order and checked by the Strong number both sides state; a verse the two
+    /// divide differently is refused whole rather than aligned partly.
+    /// </summary>
+    private async Task LinkTheBerean(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Berean tables");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<Links.BereanLinkLoader>();
+        status.Record(await loader.Load(
+            Path.Combine(resources, "Berean", "bsb_tables.tsv"),
+            NestleTextSource.Slug,
+            cancellationToken));
     }
 
     /// <summary>
