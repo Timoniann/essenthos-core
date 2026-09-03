@@ -807,8 +807,10 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// </summary>
     private static string Comparable(WordForms word) =>
         word.Language is "rus" or "ukr" or "eng" ? Reduce(word)
-        // A Greek witness with a lemma keeps it; Brenton has none, so it is reduced like any other
-        // heavily inflected language rather than counted as eight words for one.
+        // A Greek witness with a lemma keeps it, and a word without one is reduced like any other
+        // heavily inflected language rather than counted as eight words for one. Brenton had none
+        // at all until GLAUx; it now has one on 97.1% of its words, so this is per word rather than
+        // per text and the remaining 3% still fall to the stemmer.
         : word.Language is "grc" && string.IsNullOrWhiteSpace(word.Lemma) ? Reduce(word)
         : !string.IsNullOrWhiteSpace(word.Consonantal) ? word.Consonantal
         : !string.IsNullOrWhiteSpace(word.Lemma) ? word.Lemma
