@@ -1,4 +1,4 @@
-using Essenthos.Core.Loading;
+﻿using Essenthos.Core.Loading;
 using Essenthos.Core.TextusReceptus;
 using FluentAssertions;
 using Xunit;
@@ -26,15 +26,18 @@ public class ScrivenerExtractionTests
     /// <c>dusi</c> at Matthew 6:24 and Luke 16:13, and six that differ in length.
     ///
     /// None can be fixed by any rule over the pipes, because the composite does not record them.
-    /// DOC-0009 counted 36 rather than these 37; its analysis predates the omission variants and
-    /// the double parses, so this list is the one measured against the reader that handles them.
+    /// DOC-0009 counted 36 rather than these 37, and 36 is what it is again: COL 4:10 left the list
+    /// when the reader learnt that a variant group of two parses belongs to the word before it
+    /// rather than being a word (PRB-0094). Its disagreement was a phantom "{N-DSM}" in the middle
+    /// of the verse, and it is the only entry here that was ever this reader's fault — the
+    /// remaining 36 the composite genuinely does not record.
     /// </summary>
     private static readonly string[] KnownDifferences =
     [
         "MT 4:16", "MT 6:24", "MT 15:5", "MT 15:6", "MT 17:14", "MT 17:15", "MT 20:4", "MT 20:5",
         "MT 26:60", "MT 26:61", "MR 6:27", "MR 6:28", "LU 1:73", "LU 1:74", "LU 16:13", "AC 4:5",
         "AC 4:6", "AC 9:28", "AC 9:29", "AC 13:32", "AC 13:33", "AC 17:27", "EPH 3:17", "EPH 3:18",
-        "EPH 3:20", "COL 4:10", "1TH 2:11", "1TH 2:12", "1TH 3:10", "1TH 5:13", "PHM 1:11",
+        "EPH 3:20", "1TH 2:11", "1TH 2:12", "1TH 3:10", "1TH 5:13", "PHM 1:11",
         "PHM 1:12", "HEB 1:1", "HEB 1:2", "HEB 7:20", "HEB 7:21", "RE 14:13",
     ];
 
