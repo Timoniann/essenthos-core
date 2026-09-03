@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Essenthos.Core.Berean;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
@@ -45,7 +46,7 @@ internal sealed record BereanLinkOutcome(
     public override string ToString() =>
         AlreadyLoaded
             ? "the Berean is already linked to the Greek"
-            : $"{Links} links over {Verses} verses in {Elapsed}: {Absent} Greek words the English does " +
+            : $"{Links} links over {Verses} verses in {Elapsed}: {Absent} original words the English does " +
               $"not render, {Moved} whose rendering the file places elsewhere, {Divided} verses the two " +
               $"divide differently, {Drifted} whose English did not line up, {Disputed} refused on their " +
               $"numbers; {NumbersAgreeing} of {NumbersCompared} Strong numbers agree " +
@@ -113,7 +114,10 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
-        if (await db.Links.AnyAsync(l => l.FromTextId == from && l.ToTextId == to, cancellationToken))
+        // Guarded on this source rather than on the pair: the aligner may already have spoken about
+        // these two texts, and what it said is not what this file says.
+        if (await db.Links.AnyAsync(
+                l => l.FromTextId == from && l.ToTextId == to && l.Source == Source, cancellationToken))
         {
             logger.LogInformation("The Berean is already linked to {Witness}; nothing to do", witnessSlug);
             return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
@@ -128,10 +132,13 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         }
 
         var started = Stopwatch.StartNew();
+        var greekWitness = await db.Texts
+            .Where(t => t.Id == to).Select(t => t.Language).FirstAsync(cancellationToken) == "grc";
         var english = await Words(from, cancellationToken);
         var greek = await Words(to, cancellationToken);
 
         var drafts = new List<Draft>(150_000);
+        var covered = new List<int>(30_000);
         int verses = 0, absent = 0, moved = 0, divided = 0, drifted = 0, disputed = 0;
         int compared = 0, agreeing = 0;
 
@@ -142,45 +149,104 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
                 continue;
             }
 
+            // The file holds both testaments; a load is about one witness, so the rows that speak
+            // about the other language are not this run's business.
             var address = (book, chapter, number);
-            if (!rows[0].IsGreek
+            if (rows[0].IsGreek != greekWitness
                 || !english.TryGetValue(address, out var ours)
                 || !greek.TryGetValue(address, out var witness))
             {
                 continue;
             }
 
-            if (rows.Count != witness.Count)
+            List<List<long>> run;
+            var agreed = 0;
+            var of = 0;
+
+            if (rows[0].IsGreek)
+            {
+                // The Berean's Greek is Nestle respelled, so it joins by order and is checked by the
+                // Strong number both sides state independently of the spelling.
+                if (rows.Count != witness.Count)
+                {
+                    divided++;
+                    continue;
+                }
+
+                (agreed, of) = Agreement(rows, witness);
+                if (of > 0 && (double)agreed / of < Agreeing)
+                {
+                    disputed++;
+                    continue;
+                }
+
+                run = [.. witness.Select(word => new List<long> { word.Id })];
+            }
+            else if (Consonants(rows, witness) is { } matched)
+            {
+                run = matched;
+            }
+            else
             {
                 divided++;
                 continue;
             }
 
-            var (agreed, of) = Agreement(rows, witness);
-            if (of > 0 && (double)agreed / of < Agreeing)
-            {
-                disputed++;
-                continue;
-            }
-
-            if (Pair(rows, ours, witness, drafts, ref absent, ref moved) is false)
+            if (Pair(rows, ours, run, drafts, ref absent, ref moved) is false)
             {
                 drifted++;
                 continue;
             }
 
             verses++;
+            covered.Add(ours[0].VerseId);
             compared += of;
             agreeing += agreed;
         }
 
         await Write(from, to, drafts, cancellationToken);
+        var replaced = await Supersede(from, to, covered, cancellationToken);
 
         var outcome = new BereanLinkOutcome(
             false, verses, drafts.Count, absent, moved, divided, drifted, disputed, compared, agreeing,
             started.Elapsed);
-        logger.LogInformation("Linked the Berean to {Witness}: {Outcome}", witnessSlug, outcome);
+        logger.LogInformation(
+            "Linked the Berean to {Witness}: {Outcome}; {Replaced} aligner links superseded",
+            witnessSlug, outcome, replaced);
         return outcome;
+    }
+
+    /// <summary>
+    /// Drops the aligner's answer for the verses a source has now spoken about.
+    ///
+    /// A model's guess and a person's statement about the same two words are not two facts, and
+    /// keeping both would make every one of these words look contended when nothing is in doubt.
+    /// The guess is also much the cheaper of the two to get back: <c>align</c> and <c>compose</c>
+    /// rebuild it in minutes, and a stated mapping cannot be rebuilt at all.
+    ///
+    /// Only the verses this load covered. Where it refused one -- the two editions genuinely
+    /// differing -- the aligner is all there is, and it stays.
+    /// </summary>
+    private async Task<int> Supersede(
+        int fromTextId,
+        int toTextId,
+        List<int> verses,
+        CancellationToken cancellationToken)
+    {
+        if (verses.Count == 0)
+        {
+            return 0;
+        }
+
+        return await db.Database.ExecuteSqlRawAsync(
+            """
+            DELETE FROM link l
+            USING link_word lw, word w
+            WHERE lw.link_id = l.id AND lw.side = 'from' AND w.id = lw.word_id
+              AND l.from_text_id = {0} AND l.to_text_id = {1} AND l.method = 'aligner'
+              AND w.verse_id = ANY({2})
+            """,
+            [fromTextId, toTextId, verses.ToArray()], cancellationToken);
     }
 
     /// <summary>
@@ -215,10 +281,62 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     /// part. Returning false rather than writing what it has is the point: a partial alignment
     /// produces links about the wrong words for the rest of the verse and looks exactly right.
     /// </summary>
+    /// <summary>
+    /// The Hebrew, which does not join by order and cannot join by number.
+    ///
+    /// BHSA writes the preposition, the article and the noun of לָאוֹר as three words and the
+    /// Westminster edition the Berean follows writes one, so the counts never agree — 21.4% of
+    /// verses, measured. Their Strong numbers do not agree either, because the numbering is
+    /// OpenScriptures' against ETCBC's: 43.8%. What both editions preserve exactly is the letters.
+    ///
+    /// So each Berean word takes BHSA words until their consonants concatenate to its own, and the
+    /// run it took is what it renders. 92.6% of Old Testament verses come out whole; the rest are
+    /// refused, which is where the two editions genuinely differ — a qere against a ketiv, a word
+    /// one prints and the other does not.
+    ///
+    /// Returns null the moment a word cannot be accounted for. A partial run would pair every
+    /// remaining word of the verse with the wrong Hebrew and look exactly like a correct verse.
+    /// </summary>
+    private static List<List<long>>? Consonants(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness)
+    {
+        var runs = new List<List<long>>(rows.Count);
+        var at = 0;
+
+        foreach (var row in rows)
+        {
+            var wanted = HebrewLetters.Of(row.Original);
+            var taken = new List<long>();
+            var got = string.Empty;
+
+            while (at < witness.Count && !string.Equals(got, wanted, StringComparison.Ordinal))
+            {
+                got += HebrewLetters.Of(witness[at].Surface);
+                taken.Add(witness[at].Id);
+                at++;
+            }
+
+            if (!string.Equals(got, wanted, StringComparison.Ordinal))
+            {
+                return null;
+            }
+
+            runs.Add(taken);
+        }
+
+        // BHSA's wordless morphemes may trail the last word the Berean accounted for; they write no
+        // letters, so nothing claimed them, and leaving them unclaimed is right.
+        while (at < witness.Count && HebrewLetters.Of(witness[at].Surface).Length == 0)
+        {
+            at++;
+        }
+
+        return at == witness.Count ? runs : null;
+    }
+
     private static bool Pair(
         IReadOnlyList<BereanRow> rows,
         IReadOnlyList<Word> ours,
-        IReadOnlyList<Word> witness,
+        IReadOnlyList<List<long>> witness,
         List<Draft> drafts,
         ref int absent,
         ref int moved)
@@ -261,7 +379,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             var mine = claimed[i] ?? [];
             if (mine.Count > 0)
             {
-                drafts.Add(new Draft(LinkRelation.Renders, mine, witness[i].Id));
+                drafts.Add(new Draft(LinkRelation.Renders, mine, witness[i]));
                 continue;
             }
 
@@ -275,7 +393,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             else
             {
                 absent++;
-                drafts.Add(new Draft(LinkRelation.Omits, [], witness[i].Id));
+                drafts.Add(new Draft(LinkRelation.Omits, [], witness[i]));
             }
         }
 
@@ -286,18 +404,23 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         int textId,
         CancellationToken cancellationToken)
     {
-        var rows = await db.Words
-            .Where(word => word.TextId == textId)
-            .Select(word => new
+        // By the canonical address and not by each text's own numbering. BHSA numbers 2,036 of its
+        // verses differently from the English scheme the Berean follows, and pairing by the printed
+        // number puts those links on the wrong verse -- which the verification caught as twelve word
+        // links crossing a verse pair nothing joins.
+        var rows = await db.VerseReferences
+            .Where(reference => reference.IsPrimary && reference.Verse!.TextId == textId)
+            .SelectMany(reference => reference.Verse!.Words.Select(word => new
             {
-                Book = word.Verse!.Book!.CanonicalOrdinal,
-                word.Verse!.ChapterNumber,
-                Verse = word.Verse!.Number,
+                Book = reference.CanonicalBook,
+                ChapterNumber = reference.CanonicalChapter,
+                Verse = reference.CanonicalVerse,
                 word.Id,
+                word.VerseId,
                 word.Position,
                 word.Surface,
                 word.StrongNumber,
-            })
+            }))
             .ToListAsync(cancellationToken);
 
         return rows
@@ -305,7 +428,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             .ToDictionary(
                 group => group.Key,
                 group => group.OrderBy(row => row.Position)
-                    .Select(row => new Word(row.Id, row.Surface, row.StrongNumber))
+                    .Select(row => new Word(row.Id, row.VerseId, row.Surface, row.StrongNumber))
                     .ToList());
     }
 
@@ -355,7 +478,10 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
                     await Row(writer, firstId + i, word, fromSide, cancellationToken);
                 }
 
-                await Row(writer, firstId + i, drafts[i].To, toSide, cancellationToken);
+                foreach (var word in drafts[i].To)
+                {
+                    await Row(writer, firstId + i, word, toSide, cancellationToken);
+                }
             }
 
             await writer.CompleteAsync(cancellationToken);
@@ -392,7 +518,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     private async Task<int> Text(string slug, CancellationToken cancellationToken) =>
         await db.Texts.Where(t => t.Slug == slug).Select(t => t.Id).FirstOrDefaultAsync(cancellationToken);
 
-    private sealed record Word(long Id, string Surface, string? Strong);
+    private sealed record Word(long Id, int VerseId, string Surface, string? Strong);
 
-    private sealed record Draft(LinkRelation Relation, List<long> From, long To);
+    private sealed record Draft(LinkRelation Relation, List<long> From, List<long> To);
 }

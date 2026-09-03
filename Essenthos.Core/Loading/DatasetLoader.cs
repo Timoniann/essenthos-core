@@ -328,10 +328,12 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<Links.BereanLinkLoader>();
-        status.Record(await loader.Load(
-            Path.Combine(resources, "Berean", "bsb_tables.tsv"),
-            NestleTextSource.Slug,
-            cancellationToken));
+        var tables = Path.Combine(resources, "Berean", "bsb_tables.tsv");
+        status.Record(await loader.Load(tables, NestleTextSource.Slug, cancellationToken));
+
+        // The same file's Hebrew half, which joins on the letters rather than on the order or the
+        // number, because BHSA and the Westminster edition tokenise the same text differently.
+        status.Record(await loader.Load(tables, BhsaTextSource.Slug, cancellationToken));
     }
 
     /// <summary>
