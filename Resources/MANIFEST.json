@@ -34,6 +34,11 @@
     "files": 3,
     "sha256": "c142bf9b3da492058a7b42d51dcbfd8a2c5cd8961bee57ea51448fa5932f27b5"
   },
+  "OpenBible": {
+    "bytes": 11625925,
+    "files": 4,
+    "sha256": "18ac158ff2fe5640f4867c5d1d3d5eb33f4f5d90de09e41489adf4cc87bea3f1"
+  },
   "Septuagint": {
     "bytes": 7207010,
     "files": 53,
