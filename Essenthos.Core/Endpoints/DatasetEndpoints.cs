@@ -49,14 +49,19 @@ public static class DatasetEndpoints
                         word => word.Text!.Slug == dataset.Lemmas && word.Lemma != null,
                         cancellationToken);
 
+                var lexicon = dataset.Lexicon
+                    ? await db.StrongEntries.CountAsync(cancellationToken)
+                    : 0;
+
                 var counts = new DatasetCounts(
                     Of(entities, dataset),
                     Of(events, dataset),
                     Of(periods, dataset),
                     lemmas,
+                    lexicon,
                     dataset.Links ? Of(links, dataset) : 0);
 
-                if (counts is { Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Links: 0 })
+                if (counts is { Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Lexicon: 0, Links: 0 })
                 {
                     continue;
                 }
@@ -121,7 +126,7 @@ public record DatasetResponse(
     string Covers,
     DatasetCounts Counts);
 
-public record DatasetCounts(int Entities, int Events, int Periods, int Lemmas, int Links);
+public record DatasetCounts(int Entities, int Events, int Periods, int Lemmas, int Lexicon, int Links);
 
 /// <param name="Source">
 /// The source string as the rows carry it. A dataset that reaches the database without being

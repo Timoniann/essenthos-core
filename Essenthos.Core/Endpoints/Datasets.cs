@@ -19,6 +19,13 @@ public static class Datasets
     /// What a row's source string starts with, where the dataset supplies rows. A dataset that
     /// supplies annotation rather than rows carries no prefix and is found by <paramref name="Lemmas"/>.
     /// </param>
+    /// <param name="Lexicon">
+    /// Whether this dataset is the Strong lexicon, counted by its entries.
+    ///
+    /// A third shape, because the lexicon belongs to no text and contributes neither rows carrying a
+    /// source string nor links — 14,298 entries the whole corpus resolves its numbers through, and
+    /// the one dataset the undeclared report could not see. PRB-0059.
+    /// </param>
     /// <param name="Links">
     /// Whether this dataset supplies word links, whose source strings carry <c>Prefix</c> too.
     ///
@@ -59,6 +66,7 @@ public static class Datasets
         string Prefix,
         string? Lemmas = null,
         bool Links = false,
+        bool Lexicon = false,
         string[]? Methods = null)
     {
         /// <summary>Every source-string prefix this dataset claims, its own name first.</summary>
@@ -174,6 +182,24 @@ public static class Datasets
             + "the lexical table is taken: GLAUx's own Greek text is not loaded, and its lemmas are "
             + "applied to the Brenton text already served.",
             "GLAUx", Lemmas: "lxx-brenton"),
+
+        // The lexicon every Strong number in the corpus resolves through, and the one dataset with
+        // no declaration at all — it contributes neither rows carrying a source nor links, so the
+        // undeclared report was blind to it. PRB-0059.
+        //
+        // The licence recorded is the Greek file's, which is Strong's own and long out of copyright.
+        // The Hebrew file embeds a second work with its own notice — "Copyright © 1980 by the Moody
+        // Bible Institute" against the TWOT references — and what becomes of that field is asked on
+        // PRB-0199 rather than settled here.
+        new("strong", "Strong's Exhaustive Concordance", "James Strong", "Public Domain",
+            "https://en.wikipedia.org/wiki/Public_domain",
+            "https://openscriptures.org",
+            "The dictionary every Strong number in the corpus resolves to: the lemma, the "
+            + "transliteration, the definition, and how the King James renders it. Strong published "
+            + "it in 1890 and it is long out of copyright; the machine-readable Greek was prepared by "
+            + "Ulrik Petersen in 2006 from the ASCII e-text, whose own prologue reads \"Public "
+            + "Domain -- Copy Freely\".",
+            "Strong", Lexicon: true),
 
         // What this project asserts itself, and it belongs in the list precisely because it is
         // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly
