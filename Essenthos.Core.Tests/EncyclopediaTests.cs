@@ -258,9 +258,11 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _corpus.Entities["person:Abdeel_1"].Distinguisher.Should().Be("father of Shelemiah (JER 36:26)");
 
     /// <summary>
-    /// Two entities are named YHVH and a search for the name returns both. The dataset's own
-    /// attribute for the first is a sample of its titles — "Holy, Holy, Holy (ISA 6:3) and too many
-    /// others to fit here" — which is true of it and says nothing about which of the two it is.
+    /// The dataset names both of these YHVH and tells them apart by a sample of their titles —
+    /// "Holy, Holy, Holy (ISA 6:3) and too many others to fit here" — which is true of the first and
+    /// says nothing about which of the two it is. A search for the name returned two rows a reader
+    /// had nothing to choose between, so the second is named rather than distinguished. Both keep
+    /// the dataset's own words in their notes: a name it chose is a thing it said.
     /// </summary>
     [Fact]
     public void TheTwoEntitiesNamedYhvhAreToldApart()
@@ -268,11 +270,13 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         var god = _corpus.Entities["person:YHVH_1"];
         var father = _corpus.Entities["person:YHVH_2"];
 
-        god.Name.Should().Be(father.Name);
+        god.Name.Should().Be("YHVH");
+        father.Name.Should().Be("God the Father");
         god.Distinguisher.Should().NotBeNullOrWhiteSpace().And.NotBe(father.Distinguisher);
         father.Distinguisher.Should().NotBeNullOrWhiteSpace();
         god.Distinguisher.Should().NotContain("too many others");
         god.Notes.Should().NotBeNull().And.Contain("too many others");
+        father.Notes.Should().NotBeNull().And.Contain("YHVH");
     }
 
     /// <summary>

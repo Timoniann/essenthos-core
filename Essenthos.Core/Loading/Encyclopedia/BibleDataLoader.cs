@@ -435,7 +435,20 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
 
         if (entities.TryGetValue(TheFather, out var father))
         {
-            father.Distinguisher = "the Father, whom the New Testament names (MAT 5:16)";
+            // Renamed rather than distinguished. The dataset calls both of them YHVH and tells them
+            // apart by a sample of their titles, so a search for the name returned two rows and a
+            // reader had nothing to choose between them; a distinguisher under a repeated name is a
+            // weaker instrument than a name. What the dataset says this one is, it says in its own
+            // labels — Father in heaven, Father, Abba Father, Holy Father, Righteous Father — and
+            // all 352 of its namings are in New Testament books.
+            father.Name = "God the Father";
+            father.Distinguisher = "as the New Testament names him (MAT 5:16)";
+            father.Notes = Sentences(
+                "The dataset names this entity YHVH, the same as the God of Israel, and tells the " +
+                "two apart by a sample of their titles. The name here is the one its own labels " +
+                "give it; the dataset's is kept in this note, because a name it chose is a thing " +
+                "it said.",
+                father.Notes);
         }
     }
 
