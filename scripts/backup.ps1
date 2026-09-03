@@ -70,7 +70,8 @@ function Save-Bundle([string]$repo, [string]$name) {
     if ($LASTEXITCODE -ne 0) { throw "The bundle for $repo did not verify. Nothing was replaced." }
 
     $size = (Get-Item $file).Length
-    Write-Host ("  {0,-16} {1,8:N1} MB  {2}  {3} uncommitted" -f $name, ($size / 1MB), $head.Substring(0, 8), $dirty.Lines)
+    $note = if ($dirty.Lines -gt 0) { "$($dirty.Lines) uncommitted, NOT in this bundle" } else { 'clean' }
+    Write-Host ("  {0,-16} {1,8:N1} MB  {2}  {3}" -f $name, ($size / 1MB), $head.Substring(0, 8), $note)
     $script:receipt.parts += [ordered]@{
         kind = 'bundle'; name = $name; head = $head; uncommitted = $dirty.Lines; bytes = $size
     }
@@ -82,17 +83,23 @@ Save-Bundle 'essenthos-core' 'essenthos-core'
 Save-Bundle 'essenthos-web' 'essenthos-web'
 Save-Bundle 'essenthos-api' 'essenthos-api'
 
-# The attachments and the run state are deliberately outside the store's git repository -- a
-# screenshot in a history is a history every clone pays for forever -- so a bundle does not carry
-# them and they are copied as files.
-$state = Join-Path $workspace '.avioniq\state'
-if (Test-Path $state) {
-    $to = Join-Path $Destination 'avioniq-state'
-    robocopy $state $to /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
-    if ($LASTEXITCODE -ge 8) { throw "Copying the avioniq state failed with robocopy code $LASTEXITCODE." }
-    Write-Host ("  {0,-16} mirrored" -f 'avioniq state')
-    $receipt.parts += [ordered]@{ kind = 'mirror'; name = 'avioniq-state' }
-}
+# The store is mirrored whole as well as bundled, and that is not belt and braces.
+#
+# A bundle carries committed history and nothing else, and this store does not commit on every
+# write: its last commit when this script was written was three days old, with 331 changed files
+# sitting in the working tree. Every finding, decision and measurement of those three days would
+# have been missed by a backup that reported success. The attachments and the run state are outside
+# its git repository on purpose -- a screenshot in a history is a history every clone pays for
+# forever -- so those were never in the bundle either.
+#
+# Five megabytes. There is no version of this worth being clever about.
+$store = Join-Path $workspace '.avioniq'
+$to = Join-Path $Destination 'avioniq'
+robocopy $store $to /MIR /XD .git /NFL /NDL /NJH /NJS /NP | Out-Null
+if ($LASTEXITCODE -ge 8) { throw "Mirroring the avioniq store failed with robocopy code $LASTEXITCODE." }
+$stored = (Get-ChildItem $to -Recurse -File | Measure-Object -Property Length -Sum)
+Write-Host ("  {0,-16} {1,8:N1} MB  {2} files, working tree and all" -f 'avioniq store', ($stored.Sum / 1MB), $stored.Count)
+$receipt.parts += [ordered]@{ kind = 'mirror'; name = 'avioniq'; files = $stored.Count; bytes = $stored.Sum }
 
 # Mirrored, not archived: a second run copies what changed. /MIR deletes what is no longer here,
 # which is what makes it a copy of the corpus rather than an attic of every file that ever was.
