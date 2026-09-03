@@ -351,9 +351,14 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
             }
         }
 
+        // The links this loader wrote of its own get their claim the way every other loader's do,
+        // copied from the link itself. Only the corroborations are written by hand here, because
+        // those are claims on somebody else's link and there is nothing to copy them from.
+        await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
+
         await using (var writer = await connection.BeginBinaryImportAsync(ClaimImport, cancellationToken))
         {
-            foreach (var link in corroborated.Concat(Enumerable.Range(0, drafts.Count).Select(i => firstId + i)))
+            foreach (var link in corroborated)
             {
                 await writer.StartRowAsync(cancellationToken);
                 await writer.WriteAsync(link, NpgsqlDbType.Bigint, cancellationToken);

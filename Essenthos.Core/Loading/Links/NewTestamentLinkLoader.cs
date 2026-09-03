@@ -616,6 +616,11 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         }
 
         await WriteStrongNumbers(connection, stated, cancellationToken);
+        // The claim that says this loader is the one asserting these links. Written here rather
+        // than left to a backfill: a link with no claim is invisible to the agreement measure, and
+        // the measure spent a day reporting the migration instead of the corpus. PRB-0198.
+        await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
+
         await transaction.CommitAsync(cancellationToken);
     }
 

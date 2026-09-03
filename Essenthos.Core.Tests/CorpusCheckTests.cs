@@ -231,6 +231,17 @@ public sealed class CorpusCheckTests : IDisposable
         _db.Links.Add(link);
         _db.SaveChanges();
 
+        // Every link carries the claim of whatever asserted it. A link with none is invisible to
+        // the measures that read `link_claim`, and a fixture without one would test a shape no
+        // loader produces — which is exactly how PRB-0198 stayed hidden for a day.
+        _db.LinkClaims.Add(new LinkClaim
+        {
+            LinkId = link.Id,
+            Method = link.Method,
+            Confidence = link.Confidence,
+            Source = link.Source,
+        });
+
         _db.LinkWords.Add(new LinkWord
         {
             LinkId = link.Id,

@@ -46,7 +46,16 @@ internal sealed record Reach(string Witness, string From, int Lexical, int Reach
 
 /// <param name="Contended">Words named by more than one link between the same pair of texts.</param>
 /// <param name="Worst">The most links any single word of this text carries.</param>
-internal sealed record Contention(string Text, string Against, int Contended, int Worst);
+/// <param name="Contended">
+/// Words one source gives more than one counterpart. A defect in that source's load, and the number
+/// this measure was built for; it should be zero.
+/// </param>
+/// <param name="Disputed">
+/// Words two sources answer differently, each with one counterpart. Not a defect — two people who
+/// both looked, differing about which word renders which, which is a fact about translation. Kept
+/// apart from <paramref name="Contended"/> because counted together the second hides the first.
+/// </param>
+internal sealed record Contention(string Text, string Against, int Contended, int Worst, int Disputed);
 
 /// <param name="Crowded">
 /// Witness words claimed by more than two words of one text in the same verse. Some sharing is
@@ -168,10 +177,10 @@ internal sealed record CorpusMeasures(
             report.AppendLine($"  {r.Witness} from {r.From,-6} {r.Lexical,7} {r.Reached,10}   {r.Share,7:P1}");
         }
 
-        report.AppendLine("contention    words claimed more than once, and the worst one");
+        report.AppendLine("contention    words one source claims twice, the worst one, and words two sources dispute");
         foreach (var c in Contention)
         {
-            report.AppendLine($"  {c.Text} to {c.Against,-12} {c.Contended,7} {c.Worst,10}");
+            report.AppendLine($"  {c.Text} to {c.Against,-12} {c.Contended,7} {c.Worst,10} {c.Disputed,10}");
         }
 
         report.AppendLine("crowding      witness words claimed by more than two, and the worst one");

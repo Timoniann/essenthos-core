@@ -218,18 +218,43 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// Hebrew writes one word — so this is not an error count. It is a number that moves sharply
     /// when a mapping starts guessing, which is how the heuristic New Testament mapping was found.
     /// </summary>
+    /// <summary>
+    /// A word given more than one counterpart **by one source**, and a word two sources answer
+    /// differently. They were one number until a second source could disagree, and then it read
+    /// 18,086 for a pair that had read 0 the morning before — not because anything broke, but
+    /// because Clear Bible differs from the Berean's own tables about 8,310 Greek words and the
+    /// corpus deliberately keeps both answers (FTR-0186).
+    ///
+    /// The two are not the same fact. One source claiming a word twice is a defect in that source's
+    /// load and should be zero. Two sources claiming it differently is a disagreement between people
+    /// who both looked, and is the most interesting row in the corpus. Counted together, the second
+    /// hides the first: a pair with real duplication and a pair with rich disagreement report the
+    /// same number. PRB-0198.
+    /// </summary>
     private const string ContentionSql =
         """
-        SELECT t.slug, against.slug, count(*) FILTER (WHERE claims.n > 1), coalesce(max(claims.n), 0)
-        FROM (
-            SELECT lw.word_id, l.from_text_id, l.to_text_id, count(*) AS n
+        WITH claimed AS (
+            SELECT lw.word_id, l.from_text_id, l.to_text_id, c.source, count(DISTINCT lw.link_id) AS links
             FROM link_word lw
             JOIN link l ON l.id = lw.link_id
+            JOIN link_claim c ON c.link_id = l.id
             WHERE lw.side = 'from'
-            GROUP BY lw.word_id, l.from_text_id, l.to_text_id
-        ) claims
-        JOIN text t ON t.id = claims.from_text_id
-        JOIN text against ON against.id = claims.to_text_id
+            GROUP BY lw.word_id, l.from_text_id, l.to_text_id, c.source
+        ),
+        perWord AS (
+            SELECT word_id, from_text_id, to_text_id,
+                   max(links) AS most_by_one_source,
+                   count(*) AS sources
+            FROM claimed
+            GROUP BY word_id, from_text_id, to_text_id
+        )
+        SELECT t.slug, against.slug,
+               count(*) FILTER (WHERE most_by_one_source > 1),
+               coalesce(max(most_by_one_source), 0),
+               count(*) FILTER (WHERE sources > 1 AND most_by_one_source = 1)
+        FROM perWord
+        JOIN text t ON t.id = perWord.from_text_id
+        JOIN text against ON against.id = perWord.to_text_id
         GROUP BY t.slug, against.slug
         ORDER BY t.slug, against.slug
         """;
@@ -302,6 +327,17 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                   WHERE lw.link_id = l.id
                     AND lw.side = CASE l.relation WHEN 'omits' THEN 'from' ELSE 'to' END)
             """),
+        // A link nothing claims. Every loader writes its claim in the same transaction as the link
+        // (PRB-0198), so this is zero — and it is here because for one day it was not: the migration
+        // backfilled the links that existed and nothing kept it up, so 403,343 links written
+        // afterwards had none and the agreement measure reported the migration instead of the
+        // corpus. A number that looks like an answer is worse than a missing one.
+        ("links no claim stands on, so nothing says what asserted them",
+            """
+            SELECT count(*) FROM link l
+            WHERE NOT EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = l.id)
+            """),
+
         // Two links naming exactly the same words in the same pair of texts are not two facts.
         // They are two methods agreeing, and agreeing is what link_claim is for -- one link with
         // two claims. Before that table existed there were 4,664 of these, every one of them the
@@ -405,7 +441,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
 
         var contention = await Read(connection, ContentionSql, cancellationToken, reader => new Contention(
-            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
+            (int)reader.GetInt64(4)));
 
         var crowding = await Read(connection, CrowdingSql, cancellationToken, reader => new Crowding(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
