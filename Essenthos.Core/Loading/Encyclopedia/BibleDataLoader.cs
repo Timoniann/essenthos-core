@@ -790,6 +790,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                     CanonicalVerse = reference.Verse,
                     Label = Blank(label),
                     Disputed = contested,
+                    Source = Source,
                 });
             }
         }

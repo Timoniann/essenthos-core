@@ -400,6 +400,13 @@ internal sealed class DatasetLoader(
         status.Record(await newTestament.Load(
             Path.Combine(resources, "TheographicBibleData"), cancellationToken));
 
+        // The places, which the first dataset marks in progress and stops after Exodus. Third,
+        // because it joins onto the place entities that dataset already created wherever the two
+        // name the same place, and creates one only where it does not.
+        using var geography = services.CreateScope();
+        var places = geography.ServiceProvider.GetRequiredService<OpenBiblePlaceLoader>();
+        status.Record(await places.Load(Path.Combine(resources, "OpenBible"), cancellationToken));
+
         // What else was happening. Read from the output folder rather than through the configured
         // resources path: it is the one dataset small enough to be committed, so it is always
         // there and never waits on a fetch.

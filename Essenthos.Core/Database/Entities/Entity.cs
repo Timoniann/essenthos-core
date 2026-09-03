@@ -191,6 +191,18 @@ public class EntityVerse
 
     public bool Disputed { get; set; }
 
+    /// <summary>
+    /// Which dataset says the entity is named here, which is not always the dataset the entity
+    /// came from.
+    ///
+    /// The place layer is two sources over one set of places: BibleData names 118 of them and
+    /// stops after Exodus, and OpenBible names 1,342 across 61 books, 110 of which are the same
+    /// places under the identifier BibleData already carries. Joining them onto one entity is
+    /// right — a reader wants one Jerusalem — but a count that silently mixes the two would be a
+    /// claim neither source makes. So the provenance is per row, at the grain the claim is made.
+    /// </summary>
+    public required string Source { get; set; }
+
     public override string ToString() =>
         $"EntityVerse({EntityId} at {CanonicalBook} {CanonicalChapter}:{CanonicalVerse})";
 }

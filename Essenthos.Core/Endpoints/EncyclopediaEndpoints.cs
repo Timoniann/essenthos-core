@@ -119,6 +119,8 @@ internal static class EncyclopediaEndpoints
             .GroupBy(b => b.Kind)
             .ToDictionary(g => g.Key, g => g.Select(b => b.CanonicalBook).Order().ToList());
 
+        var stated = await Stated(db, cancellationToken);
+
         return new EntityCoverageResponse(
             BookReferences.CanonBookCount,
             [
@@ -135,10 +137,71 @@ internal static class EncyclopediaEndpoints
                             new CoverageResponse(
                                 ordinals.Count > 0 ? ordinals[0] : 0,
                                 ordinals.Count > 0 ? ordinals[^1] : 0,
-                                ordinals));
+                                ordinals),
+                            stated.GetValueOrDefault(t.Kind, []));
                     })
                     .OrderBy(layer => layer.Kind, StringComparer.Ordinal),
             ]);
+    }
+
+    /// <summary>
+    /// Which dataset states each layer's references, and how far each one of them reaches.
+    ///
+    /// The place layer is two sources over one set of places, and they are not alike: one names
+    /// 118 places and stops after Exodus, the other names 1,342 across the canon and joins onto
+    /// the same entries wherever the two mean the same place. A layer total that adds them
+    /// together is true and says nothing — this is what turns it back into two statements, each
+    /// attributable to whoever made it.
+    /// </summary>
+    private static async Task<Dictionary<EntityKind, List<EntitySourceCoverageResponse>>> Stated(
+        AppDbContext db,
+        CancellationToken cancellationToken)
+    {
+        var mentions = await db.EntityVerses
+            .GroupBy(v => new { v.Entity!.Kind, v.Source })
+            .Select(g => new { g.Key.Kind, g.Key.Source, Mentions = g.Count() })
+            .ToListAsync(cancellationToken);
+
+        var verses = (await db.EntityVerses
+                .Select(v => new
+                {
+                    v.Entity!.Kind,
+                    v.Source,
+                    Address = (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                              + v.CanonicalVerse,
+                })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .GroupBy(v => (v.Kind, v.Source))
+            .ToDictionary(g => g.Key, g => g.Count());
+
+        var books = (await db.EntityVerses
+                .Select(v => new { v.Entity!.Kind, v.Source, v.CanonicalBook })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .GroupBy(b => (b.Kind, b.Source))
+            .ToDictionary(g => g.Key, g => g.Select(b => b.CanonicalBook).Order().ToList());
+
+        return mentions
+            .GroupBy(m => m.Kind)
+            .ToDictionary(
+                g => g.Key,
+                g => g
+                    .OrderByDescending(m => m.Mentions)
+                    .Select(m =>
+                    {
+                        var ordinals = books.GetValueOrDefault((m.Kind, m.Source), []);
+                        return new EntitySourceCoverageResponse(
+                            Datasets.Of(m.Source),
+                            m.Source,
+                            verses.GetValueOrDefault((m.Kind, m.Source)),
+                            m.Mentions,
+                            new CoverageResponse(
+                                ordinals.Count > 0 ? ordinals[0] : 0,
+                                ordinals.Count > 0 ? ordinals[^1] : 0,
+                                ordinals));
+                    })
+                    .ToList());
     }
 
     public static void MapEncyclopedia(this IEndpointRouteBuilder routes)
@@ -266,6 +329,26 @@ internal static class EncyclopediaEndpoints
                 .Select(Rows)
                 .ToListAsync(cancellationToken);
 
+            // Who says the text names this entity where it does — which is not always whoever
+            // supplied the entity. A place can come from one dataset and be referenced by another,
+            // and a page reporting 955 verses under the first one's credit would attribute the
+            // second one's work to it.
+            var stated = await db.EntityVerses
+                .Where(v => v.EntityId == entity.Id)
+                .GroupBy(v => v.Source)
+                .Select(g => new
+                {
+                    Source = g.Key,
+                    Mentions = g.Count(),
+                    References = g
+                        .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                                     + v.CanonicalVerse)
+                        .Distinct()
+                        .Count(),
+                })
+                .OrderByDescending(row => row.Mentions)
+                .ToListAsync(cancellationToken);
+
             return Results.Ok(new EntityResponse(
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
@@ -288,7 +371,11 @@ internal static class EncyclopediaEndpoints
                         n.Meaning, Numbers(n.HebrewStrongNumber), Numbers(n.GreekStrongNumber), n.Kind)),
                 ],
                 [.. outward, .. inward],
-                [.. events.Select(Event)]));
+                [.. events.Select(Event)],
+                [
+                    .. stated.Select(row => new EntityReferenceSourceResponse(
+                        Datasets.Of(row.Source), row.Source, row.References, row.Mentions)),
+                ]));
         });
 
         routes.MapGet("/entities/{slug}/references", async (
@@ -321,7 +408,10 @@ internal static class EncyclopediaEndpoints
             var namings = await references
                 .Where(v => wanted.Contains((v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                                             + v.CanonicalVerse))
-                .Select(v => new { v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse, v.Label, v.Disputed })
+                .Select(v => new
+                {
+                    v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse, v.Label, v.Disputed, v.Source,
+                })
                 .ToListAsync(cancellationToken);
 
             var byAddress = namings
@@ -342,7 +432,7 @@ internal static class EncyclopediaEndpoints
                                 BookReferences.Slug(at[0].CanonicalBook)),
                             at[0].CanonicalChapter,
                             at[0].CanonicalVerse,
-                            [.. at.Select(v => new EntityNamingResponse(v.Label, v.Disputed))],
+                            [.. at.Select(v => new EntityNamingResponse(v.Label, v.Disputed, Datasets.Of(v.Source)))],
                             at.Any(v => v.Disputed));
                     }),
                 ]));
@@ -784,10 +874,27 @@ internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items
 /// The canonical books in which any reference of this kind falls, and nothing beyond them. Where
 /// this is short of the canon, a page that says "1 verse" is reporting where the source stopped.
 /// </param>
+/// <param name="Sources">
+/// Which datasets state this layer's references, and what each one alone reaches. The layer's own
+/// totals are the union; these are the statements the union is made of.
+/// </param>
 internal record EntityLayerCoverageResponse(
     string Kind,
     int Entities,
     int Named,
+    int References,
+    int Mentions,
+    CoverageResponse Books,
+    IList<EntitySourceCoverageResponse> Sources);
+
+/// <param name="Dataset">
+/// Which of the declared datasets this is, where one claims the source string — the id a client
+/// uses to reach its name, its licence and its credit. Null where nothing declares it, which is
+/// how an undeclared source is noticed instead of being silently credited to nobody.
+/// </param>
+internal record EntitySourceCoverageResponse(
+    string? Dataset,
+    string Source,
     int References,
     int Mentions,
     CoverageResponse Books);
@@ -830,7 +937,23 @@ internal record EntityResponse(
     int Disputed,
     IList<EntityNameResponse> Names,
     IList<EntityRelationshipResponse> Relationships,
-    IList<EventResponse> Events);
+    IList<EventResponse> Events,
+    IList<EntityReferenceSourceResponse> ReferenceSources);
+
+/// <summary>
+/// Who states that the text names this entity, and how much of the count is theirs.
+/// </summary>
+/// <remarks>
+/// <see cref="EntityResponse.Source"/> is who supplied the entity, which is a different question:
+/// 110 of the places came from one dataset and are referenced almost entirely by another, so a
+/// page crediting the reference list to the entity's source would name the wrong party on nearly
+/// every place in the corpus.
+/// </remarks>
+internal record EntityReferenceSourceResponse(
+    string? Dataset,
+    string Source,
+    int References,
+    int Mentions);
 
 /// <param name="HebrewStrongNumbers">
 /// The lexicon entries this name is, one per word of it. A proper name has one; a title has as
@@ -867,7 +990,11 @@ internal record EntityRelationshipResponse(
     string? Notes);
 
 /// <summary>What the text calls the entity at one verse, and whether that word settles who it is.</summary>
-internal record EntityNamingResponse(string? Label, bool Disputed);
+/// <param name="Dataset">
+/// Which declared dataset states this naming. A place's references can come from two sources at
+/// once, and the reader is owed which of them said the text names it here.
+/// </param>
+internal record EntityNamingResponse(string? Label, bool Disputed, string? Dataset);
 
 /// <param name="Namings">
 /// Every name the entity is given in this verse. Matthew 20:30 calls Jesus by name and by *Son of

@@ -126,6 +126,21 @@ public static class Datasets
             Citation: "Stephenson, B. (2026). BibleData: Structured Datasets from the Holy Bible "
                 + "(1.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.19539956"),
 
+        // The place layer, which the dataset above marks in progress: 118 places referenced only
+        // through Genesis and Exodus against 1,342 across 61 books. Attribution 4.0 is why this and
+        // not Theographic, whose 7,310 place references are share-alike. Only the ancient places
+        // are taken — the coordinates and geometry beside them are partly OpenStreetMap's, under
+        // ODbL, and none of it is fetched.
+        new("openbible", "OpenBible.info Bible Geocoding", "Stephen Smith", "CC BY 4.0",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://github.com/openbibleinfo/Bible-Geocoding-Data",
+            "Every identifiable place the Bible names and the verses that name it, drawn from over "
+            + "seventy modern commentaries, dictionaries and atlases with the confidence of each "
+            + "identification recorded. It is what the place layer reaches past Exodus on, and where "
+            + "it names a place the other dataset already had, the reference joins that same entry "
+            + "rather than making a second one.",
+            "OpenBible.info"),
+
         new("theographic", "Theographic Bible Data", "Robert Rouse", "CC BY-SA 4.0",
             "https://creativecommons.org/licenses/by-sa/4.0/",
             "https://github.com/robertrouse/theographic-bible-metadata",

@@ -45,6 +45,9 @@ internal static class TestResources
 
     public static string Etcbc => System.IO.Path.Combine(ResolvedPath.Value, "etcbc");
 
+    /// <summary>The place layer's second source, one JSON object per line.</summary>
+    public static string OpenBibleFolder => System.IO.Path.GetDirectoryName(Path("OpenBible", "ancient.jsonl"))!;
+
     /// <summary>
     /// The project folder, which is what the host uses as its content root. Walking up from the
     /// test assembly rather than counting <c>..</c> segments, because the depth of the output
