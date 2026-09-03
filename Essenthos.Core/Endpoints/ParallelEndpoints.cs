@@ -13,10 +13,20 @@ namespace Essenthos.Core.Endpoints;
 /// What this text itself calls the verse, which can differ from the row: canonical Joel 3:1 is
 /// Joel 4:1 in BHSA, and a reader comparing them should see both numbers.
 /// </param>
+/// <param name="Verses">
+/// Which of this text's own verses the row holds, as the text numbers them — <c>50</c>, <c>50a</c>.
+///
+/// Usually one, and then it says nothing new. Where a text divides a passage more finely than the
+/// shared frame does it is more than one, and saying so is the difference between a row a reader can
+/// trust and a silent merge: Brenton's Genesis 31:50 and 31:50a both belong at canonical 31:50, so
+/// the row carried 39 Greek words against 19 Hebrew with nothing to say why. 91 addresses across the
+/// Septuagint are like that. PRB-0118.
+/// </param>
 internal record ParallelCellResponse(
     IList<TextWordResponse> Words,
     string Alignment,
-    VerseRefResponse? Reference);
+    VerseRefResponse? Reference,
+    IList<string> Verses);
 
 internal record ParallelVerseResponse(int Number, Dictionary<string, ParallelCellResponse?> Texts);
 
@@ -77,11 +87,13 @@ internal static class ParallelEndpoints
 
             var byText = new Dictionary<string, Dictionary<int, List<TextWordResponse>>>();
             var references = new Dictionary<string, Dictionary<int, VerseRefResponse>>();
+            var own = new Dictionary<string, Dictionary<int, List<string>>>();
             foreach (var entry in requested)
             {
                 byText[entry.Slug] = await Texts.ReadByCanonicalVerse(
                     db, entry.Id, ordinal.Value, chapter, cancellationToken);
                 references[entry.Slug] = await OwnReferences(db, entry.Id, ordinal.Value, chapter, cancellationToken);
+                own[entry.Slug] = await OwnVerses(db, entry.Id, ordinal.Value, chapter, cancellationToken);
             }
 
             var numbers = byText.Values
@@ -95,7 +107,8 @@ internal static class ParallelEndpoints
                     number,
                     requested.ToDictionary(
                         entry => entry.Slug,
-                        entry => Cell(byText[entry.Slug], references[entry.Slug], number))))
+                        entry => Cell(
+                            byText[entry.Slug], references[entry.Slug], own[entry.Slug], number))))
                 .ToList();
 
             var corpusRows = await CorpusRows(db, canon, requested, cancellationToken);
@@ -118,10 +131,49 @@ internal static class ParallelEndpoints
     private static ParallelCellResponse? Cell(
         Dictionary<int, List<TextWordResponse>> verses,
         Dictionary<int, VerseRefResponse> references,
+        Dictionary<int, List<string>> own,
         int number) =>
         verses.TryGetValue(number, out var words)
-            ? new ParallelCellResponse(words, PairedThroughTheFrame, references.GetValueOrDefault(number))
+            ? new ParallelCellResponse(
+                words,
+                PairedThroughTheFrame,
+                references.GetValueOrDefault(number),
+                own.GetValueOrDefault(number) ?? [])
             : null;
+
+    /// <summary>
+    /// Which of a text's own verses sit at each canonical address in this chapter, as the text
+    /// numbers them.
+    ///
+    /// <see cref="OwnReferences"/> answers the same question and keeps only one per address, because
+    /// a reference is a single address and cannot be two. That is right for what it is for and it is
+    /// why the label went missing: Brenton's <c>31:50a</c> and <c>31:50</c> both belong at canonical
+    /// 31:50, so one of the two was reported and the row silently held both.
+    /// </summary>
+    private static async Task<Dictionary<int, List<string>>> OwnVerses(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.VerseReferences
+            .Where(r => r.IsPrimary
+                        && r.Verse!.TextId == textId
+                        && r.CanonicalBook == canonicalBook
+                        && r.CanonicalChapter == canonicalChapter)
+            .Select(r => new { r.CanonicalVerse, r.Verse!.ChapterNumber, r.Verse.Number, r.Verse.Label })
+            .ToListAsync(cancellationToken);
+
+        return rows
+            .GroupBy(r => r.CanonicalVerse)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderBy(r => r.Number).ThenBy(r => r.Label, StringComparer.Ordinal)
+                    .Select(r => $"{r.ChapterNumber}:{r.Number}{r.Label}")
+                    .ToList());
+    }
 
     private static async Task<List<TextEntry>> Requested(
         ICanonIndex canon,
