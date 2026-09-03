@@ -28,6 +28,7 @@ public sealed class TextAliasTests
         SeptuagintTextSource.Definition(),
         TextusReceptusTextSource.Definition(Edition.Scrivener1894),
         TextusReceptusTextSource.Definition(Edition.Stephanus1550),
+        ByzantineTextSource.Definition,
         BereanTextSource.Definition,
         .. Bible4uTextSource.Definitions.Values,
     ];

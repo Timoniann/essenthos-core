@@ -49,6 +49,12 @@ internal sealed class DatasetLoader(
                     Path.Combine(resources, "TextusReceptus"), edition), stoppingToken);
             }
 
+            // The one Greek witness that is neither critical nor Erasmian. It is loaded from the
+            // same shape of file as the two above and carries a Strong number on every word, so it
+            // needs no reader of its own beyond an alphabet and no aligner at all.
+            await Load("the Byzantine Textform", () => ByzantineTextSource.Read(
+                Path.Combine(resources, "Byzantine")), stoppingToken);
+
             await Load("Brenton's Septuagint", () => SeptuagintTextSource.Read(
                 Path.Combine(resources, "Septuagint")), stoppingToken);
 
@@ -126,11 +132,16 @@ internal sealed class DatasetLoader(
 
     /// <summary>
     /// The Greek texts the King James is matched against, in the order they are worth reading: the
-    /// one it was translated from, then the one it was not.
+    /// one it was translated from, then the tradition that text belongs to, then the one it was not.
+    ///
+    /// Matching it against all three is how the corpus answers from its own data which text the
+    /// translators followed, rather than repeating what everyone says about it. The difference in
+    /// what the English reaches in each is the evidence.
     /// </summary>
     private static readonly string[] GreekWitnesses =
     [
         TextusReceptusTextSource.Slug(Edition.Scrivener1894),
+        ByzantineTextSource.Slug,
         NestleTextSource.Slug,
     ];
 
@@ -294,19 +305,26 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// Nestle against the Textus Receptus, by the Strong numbers both editions state.
+    /// Nestle and the Byzantine Textform against the Textus Receptus, by the Strong numbers all
+    /// three state.
     ///
-    /// Scrivener alone, because Stephanus already meets it word for word: a word carries the
-    /// witness ids it reaches, so linking Nestle to Scrivener puts Scrivener's ids on both sides
-    /// and joins all four Greek panes at once.
+    /// Scrivener is the hub, because Stephanus already meets it word for word: a word carries the
+    /// witness ids it reaches, so linking to Scrivener puts Scrivener's ids on both sides and joins
+    /// every Greek pane at once. It also makes each pairing a measurement — how far the Received
+    /// Text stands from the critical text, and how far it stands from the tradition it is usually
+    /// said to represent, in words rather than in reputation.
     /// </summary>
     private async Task LinkTheGreekWitnesses(CancellationToken cancellationToken)
     {
         status.Starting("the Greek witnesses to each other");
 
-        using var scope = services.CreateScope();
-        var loader = scope.ServiceProvider.GetRequiredService<GreekWitnessLinkLoader>();
-        status.Record(await loader.Load("nestle1904", "scrivener1894", cancellationToken));
+        foreach (var witness in new[] { NestleTextSource.Slug, ByzantineTextSource.Slug })
+        {
+            using var scope = services.CreateScope();
+            var loader = scope.ServiceProvider.GetRequiredService<GreekWitnessLinkLoader>();
+            status.Record(await loader.Load(
+                witness, TextusReceptusTextSource.Slug(Edition.Scrivener1894), cancellationToken));
+        }
     }
 
     /// <summary>

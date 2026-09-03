@@ -43,6 +43,18 @@ internal static class TestResources
 
     public static string TextusReceptusFolder => System.IO.Path.Combine(ResolvedPath.Value, "TextusReceptus");
 
+    /// <summary>Robinson and Pierpont's parsed beta code, one file per book.</summary>
+    public static string Byzantine(string book) => Path("Byzantine", "strongs", $"{book}.BP5");
+
+    /// <summary>
+    /// The repository's own Unicode conversion of the file above, which is the answer key the
+    /// beta-code table is checked against and is never loaded. The book stem drops its number here.
+    /// </summary>
+    public static string ByzantineUnicode(string book) =>
+        Path("Byzantine", "unicode", $"{book[3..]}.csv");
+
+    public static string ByzantineFolder => System.IO.Path.Combine(ResolvedPath.Value, "Byzantine");
+
     public static string Etcbc => System.IO.Path.Combine(ResolvedPath.Value, "etcbc");
 
     public static string KjvBhsMapping => Path("mapping", "KJV-OT-mapped-to-BHS-full-mapping.csv");
