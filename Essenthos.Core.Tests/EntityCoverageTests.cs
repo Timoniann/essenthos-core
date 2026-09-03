@@ -124,5 +124,6 @@ public sealed class EntityCoverageTests : IDisposable
             CanonicalVerse = verse,
             Label = entity.Name,
             Disputed = false,
+            Source = "test",
         });
 }

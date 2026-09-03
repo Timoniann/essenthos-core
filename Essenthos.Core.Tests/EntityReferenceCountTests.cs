@@ -107,5 +107,6 @@ public sealed class EntityReferenceCountTests : IDisposable
             CanonicalVerse = verse,
             Label = label,
             Disputed = disputed,
+            Source = "test",
         });
 }
