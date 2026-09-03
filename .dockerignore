@@ -3,3 +3,9 @@
 .git
 .idea
 .env
+
+# The corpus is about a gigabyte and is mounted at runtime, never built into the image. Without
+# this every `docker build` would ship it through the daemon and into a layer. WorldHistory is the
+# exception the csproj copies to the output folder, so it has to survive into the context.
+Resources
+!Resources/WorldHistory

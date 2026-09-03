@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Fetches the Berean Standard Bible: the published text, and the translation tables that say
     which of its words renders which original word.
@@ -20,7 +20,7 @@
 
 [CmdletBinding()]
 param(
-    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' '..' 'essenthos-api' 'Resources')
+    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources')
 )
 
 $ErrorActionPreference = 'Stop'

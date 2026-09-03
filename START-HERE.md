@@ -1,4 +1,4 @@
-# essenthos-core — start here
+﻿# essenthos-core — start here
 
 This project exists because the old schema says every translated word points at *the* original word, and there is no such thing.
 
@@ -44,7 +44,7 @@ Also worth reading before you touch a loader: **DOC-0004** (what LLM alignment c
 
 ## The state you are starting from
 
-**The folder** is a copy of essenthos-api with build output, git history and `Resources/` stripped, its own git repository initialised, and `Resources/` in `.gitignore` so the 373 MB is never committed again.
+**The folder** is a copy of essenthos-api with build output and git history stripped and its own git repository initialised. `Resources/` is its own again — see below — and `.gitignore` keeps the gigabyte of corpus out of every commit while admitting the licence beside each folder and `Resources/WorldHistory`.
 
 **The database** `essenthos_core` exists on the same Postgres container as the old one, owned by `essenthos`, with `pg_trgm` enabled. It is empty. The old database is untouched and still serving the old API.
 
@@ -52,9 +52,19 @@ Also worth reading before you touch a loader: **DOC-0004** (what LLM alignment c
 
 **Ports:** the old API holds 5277 and the web client 5278. Take **5279**.
 
-**One resource is fetched, not present.** GLAUx gives the Septuagint its lemmas and is 111 MB, so it is downloaded rather than committed like `etcbc` and the Septuagint text beside it: `./scripts/fetch-glaux.ps1`. Without it the corpus loads and Brenton simply keeps no lemmas, which the log says.
+**Nothing in `Resources/` is committed except the licences and `WorldHistory`,** so a fresh clone has the folder and not the corpus. GLAUx, the Berean and ClearBible have fetch scripts under `scripts/`; the rest were fetched by hand years ago and live only on this machine and in `essenthos-api/Resources`, which is where a new checkout should copy them from until each one has a script of its own.
 
-**Resources** stay in `essenthos-api/Resources` and are read through configuration — `Dataset:ResourcesPath`, defaulting to `../../essenthos-api/Resources`, resolved from the content root. Two levels, not one: the content root is the project folder `essenthos-core/Essenthos.Core`. Do not copy them and do not use `../Resources`.
+**Resources are this project's own.** They live in `essenthos-core/Resources` and are read through configuration — `Dataset:ResourcesPath`, defaulting to `../Resources`, resolved from the content root, which is the project folder `essenthos-core/Essenthos.Core`. Nothing here reads `essenthos-api` any more; a bare `dotnet test` needs no environment variable.
+
+`essenthos-api/Resources` still holds its own copy and the frozen API still runs on it. The two are now separate trees: a correction or a licence note made here does not reach it, which is the point.
+
+**In a git worktree** the corpus is not there — it is ignored, so a worktree starts with `Resources/WorldHistory`, the licence beside each source, and no data. Copy it in from the main checkout, from the worktree root:
+
+```powershell
+robocopy ..\..\essenthos-core\Resources Resources /E /MT:16
+```
+
+A gigabyte, four seconds, and it merges rather than mirrors, so the committed files already there are left alone. Junctioning the folders instead does not work: git tracks a `LICENCE.md` inside most of them, so a checkout has already created the directory and `New-Item -ItemType Junction` refuses a path that exists.
 
 ## What carries over, and what does not
 

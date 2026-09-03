@@ -400,8 +400,9 @@ internal sealed class DatasetLoader(
         status.Record(await newTestament.Load(
             Path.Combine(resources, "TheographicBibleData"), cancellationToken));
 
-        // What else was happening. Its own folder in this project rather than the frozen API's,
-        // because it was fetched for the rebuild and nothing over there reads it.
+        // What else was happening. Read from the output folder rather than through the configured
+        // resources path: it is the one dataset small enough to be committed, so it is always
+        // there and never waits on a fetch.
         using var third = services.CreateScope();
         var world = third.ServiceProvider.GetRequiredService<WorldHistoryLoader>();
         status.Record(await world.Load(

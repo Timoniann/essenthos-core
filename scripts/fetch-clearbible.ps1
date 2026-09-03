@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Fetches Clear Bible's hand-made word alignments.
 
@@ -20,7 +20,7 @@
 
 [CmdletBinding()]
 param(
-    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' '..' 'essenthos-api' 'Resources'),
+    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources'),
     # eng holds the Berean and Young's Literal; rus is kept for the day PRB-0185 is fixed upstream.
     [string[]] $Languages = @('eng', 'rus')
 )
