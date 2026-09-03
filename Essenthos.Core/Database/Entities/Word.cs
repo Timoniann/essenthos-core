@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +14,7 @@ namespace Essenthos.Core.Database.Entities;
 [Index(nameof(VerseId), nameof(Position), IsUnique = true)]
 [Index(nameof(TextId), nameof(StrongNumber))]
 [Index(nameof(TextId), nameof(NormalisedText))]
+[Index(nameof(TextId), nameof(GraphicalText))]
 
 // The concordance asks for a number across every text at once, and the composite index cannot
 // answer that without its leading column. A million-row scan per lookup is the alternative.
@@ -69,6 +70,22 @@ public class Word
 
     /// <summary>Diacritics folded and case lowered, for search. Folding happens in Postgres.</summary>
     public string? NormalisedText { get; set; }
+
+    /// <summary>
+    /// The folded form of the whole printed word this one is part of, where it is part of a longer
+    /// one — and null where the word is printed on its own, which is most of the corpus.
+    ///
+    /// A word here is a morpheme, and Hebrew prints several of them as one word: BHSA stores
+    /// בְּרֵאשִׁית as בְּ and רֵאשִׁית, joined by an empty trailer because nothing stands between
+    /// them on the page. 121,808 of BHSA's 426,590 rows are joined to the next that way, so up to
+    /// 40% of what a reader sees printed is not in any single row — and a reader who copies a word
+    /// out of a search result and searches for it gets nothing back.
+    ///
+    /// Every member of a run carries the same value, so a term matching it selects the whole
+    /// printed word and the snippet can mark all of it. The trailer is what says a run continues;
+    /// no morphology is consulted and none is guessed at.
+    /// </summary>
+    public string? GraphicalText { get; set; }
 
     public override string ToString() => $"Word({Surface}, verse {VerseId}, position {Position})";
 }

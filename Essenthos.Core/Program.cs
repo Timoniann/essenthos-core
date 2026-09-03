@@ -1,4 +1,4 @@
-using Essenthos.Core;
+﻿using Essenthos.Core;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
 using Essenthos.Core.Endpoints;
@@ -51,6 +51,7 @@ builder.Services.AddScoped<SyntaxLoader>();
 builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddScoped<GreekWitnessLinkLoader>();
 builder.Services.AddScoped<WordFoldingLoader>();
+builder.Services.AddScoped<GraphicalWordLoader>();
 builder.Services.AddScoped<Essenthos.Core.Glaux.GlauxLemmaLoader>();
 builder.Services.AddScoped<Essenthos.Core.Glaux.SeptuagintStrongLoader>();
 builder.Services.AddScoped<InterlinearLinkLoader>();

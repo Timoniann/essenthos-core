@@ -1,4 +1,4 @@
-using Essenthos.Core.Bhsa;
+﻿using Essenthos.Core.Bhsa;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Database;
@@ -75,6 +75,7 @@ internal sealed class DatasetLoader(
             await LinkThePrintedEditions(resources, stoppingToken);
             await LinkTheGreekWitnesses(stoppingToken);
             await GiveEveryWordASearchableForm(stoppingToken);
+            await JoinTheWordsThatArePrintedTogether(stoppingToken);
             await LinkFromTheInterlinear(resources, stoppingToken);
             await JoinTheVerses(stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
@@ -279,6 +280,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<WordFoldingLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The printed word, where several rows make one. A row is a morpheme and Hebrew prints
+    /// several of them together, so without this a reader who types what the page shows is told
+    /// the corpus does not have it. Runs after the folding it concatenates.
+    /// </summary>
+    private async Task JoinTheWordsThatArePrintedTogether(CancellationToken cancellationToken)
+    {
+        status.Starting("the printed form of every word");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<GraphicalWordLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

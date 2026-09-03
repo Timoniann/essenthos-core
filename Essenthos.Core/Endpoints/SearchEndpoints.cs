@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,9 +17,11 @@ namespace Essenthos.Core.Endpoints;
 /// folding for both the stored word and the typed term, which is the only way the two can be
 /// guaranteed to agree.
 ///
-/// A term matches a whole word first. If nothing in the corpus has that word, it falls back to
-/// matching part of one, and the response says per term which happened — because a search that
-/// silently changes what it did is a search whose results cannot be read.
+/// A term matches a stored word first, then the word as it is printed, then part of one. The
+/// middle step is there because a row is a morpheme: Hebrew writes the preposition and the article
+/// onto the noun, so בְּרֵאשִׁית is two rows and one printed word, and a reader typing what the page
+/// shows is typing something no single row contains. The response says per term which of the three
+/// happened — a search that silently changes what it did is a search whose results cannot be read.
 /// </summary>
 internal static class SearchEndpoints
 {
@@ -88,9 +90,20 @@ internal static class SearchEndpoints
 
                 if (!await whole.AnyAsync(cancellationToken))
                 {
-                    // Nothing in the corpus is that word. Try it as part of one before giving up:
-                    // a reader typing "beginn" means "beginning", and answering nothing is worse
-                    // than answering something and saying what was done.
+                    // No row is that word. It may still be a word of the text: a row is a morpheme,
+                    // and Hebrew prints several of them together, so בראשית is two rows and one
+                    // printed word. Ask that before falling back to a substring, or the commonest
+                    // noun phrase in the Hebrew Bible is findable only as a fragment of a longer
+                    // word somewhere else.
+                    whole = words.Where(w => w.GraphicalText == folded);
+                    matching = TermMatching.Printed;
+                }
+
+                if (!await whole.AnyAsync(cancellationToken))
+                {
+                    // Nothing in the corpus is that word, printed or stored. Try it as part of one
+                    // before giving up: a reader typing "beginn" means "beginning", and answering
+                    // nothing is worse than answering something and saying what was done.
                     var pattern = LikePatterns.Containing(folded);
                     whole = words.Where(w => EF.Functions.Like(w.NormalisedText!, pattern));
                     matching = TermMatching.Substring;
@@ -116,7 +129,7 @@ internal static class SearchEndpoints
                     v.Number,
                     v.Label,
                     Words = v.Words.OrderBy(w => w.Position)
-                        .Select(w => new { w.Surface, w.Trailer, w.NormalisedText })
+                        .Select(w => new { w.Surface, w.Trailer, w.NormalisedText, w.GraphicalText })
                         .ToList(),
                 })
                 .ToListAsync(cancellationToken);
@@ -138,9 +151,15 @@ internal static class SearchEndpoints
                             word.Surface,
                             word.Trailer,
                             Matched: word.NormalisedText is { } folded && wanted.Any(term =>
-                                term.Matching == TermMatching.Folded
-                                    ? folded == term.Match
-                                    : folded.Contains(term.Match, StringComparison.Ordinal))))),
+                                term.Matching switch
+                                {
+                                    // Every row of the run carries the run's form, so marking on it
+                                    // marks the whole printed word rather than the morpheme that
+                                    // happens to spell the term.
+                                    TermMatching.Printed => word.GraphicalText == term.Match,
+                                    TermMatching.Folded => folded == term.Match,
+                                    _ => folded.Contains(term.Match, StringComparison.Ordinal),
+                                })))),
                         verse.Label)),
                 ],
                 SearchTerms.Matching(matched),

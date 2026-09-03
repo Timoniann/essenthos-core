@@ -24,6 +24,15 @@ internal enum TermMatching
     /// unvocalised Hebrew or unaccented Greek query finds the vocalised word.
     /// </summary>
     Folded,
+
+    /// <summary>
+    /// Matched a whole word as it is printed, where the corpus stores it as more than one row.
+    /// Hebrew writes the preposition and the article onto the noun — בְּרֵאשִׁית is two rows and
+    /// one printed word — so a reader typing what the page shows is not typing anything a single
+    /// row contains. Reported separately from <see cref="Folded"/> because the reader asked for a
+    /// word and the corpus answered with a run of morphemes, and that is worth saying.
+    /// </summary>
+    Printed,
 }
 
 /// <summary>
@@ -61,6 +70,12 @@ internal static class SearchTerms
     /// of what happened.
     /// </summary>
     public const string WholeWordMatching = "whole-word";
+
+    /// <summary>
+    /// Every term matched a printed word that the corpus stores as several. Named apart from
+    /// <see cref="WholeWordMatching"/> so a caller can tell that the match crossed a row boundary.
+    /// </summary>
+    public const string PrintedWordMatching = "printed-word";
 
     /// <summary>
     /// More than one strategy answered the query — a stop word matched literally beside a stemmed
@@ -130,6 +145,11 @@ internal static class SearchTerms
             return WholeWordMatching;
         }
 
+        if (terms.All(t => t.Matching == TermMatching.Printed))
+        {
+            return PrintedWordMatching;
+        }
+
         if (terms.All(t => t.Matching == TermMatching.Substring))
         {
             return SubstringMatching;
@@ -145,6 +165,7 @@ internal static class SearchTerms
             TermMatching.Stemmed => "stemmed",
             TermMatching.Literal => "literal",
             TermMatching.Folded => "folded",
+            TermMatching.Printed => "printed-word",
             _ => "substring",
         };
     }
