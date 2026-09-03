@@ -28,6 +28,7 @@ public sealed class TextProvenanceTests
         SeptuagintTextSource.Definition(),
         TextusReceptusTextSource.Definition(Edition.Scrivener1894),
         TextusReceptusTextSource.Definition(Edition.Stephanus1550),
+        ByzantineTextSource.Definition,
         BereanTextSource.Definition,
         .. Bible4uTextSource.Definitions.Values,
     ];
@@ -35,7 +36,7 @@ public sealed class TextProvenanceTests
     private static TextDefinition Of(string slug) => All.Single(definition => definition.Slug == slug);
 
     [Fact]
-    public void TheCorpusHoldsNineTexts() => All.Should().HaveCount(9);
+    public void TheCorpusHoldsTenTexts() => All.Should().HaveCount(10);
 
     /// <summary>
     /// Every text says what it is. A licence and a year identify a file, not an edition, and the
@@ -47,6 +48,7 @@ public sealed class TextProvenanceTests
     [InlineData("lxx-brenton")]
     [InlineData("scrivener1894")]
     [InlineData("stephanus1550")]
+    [InlineData("robinsonpierpont2018")]
     [InlineData("bsb")]
     [InlineData("kjv")]
     [InlineData("rusv")]
@@ -65,6 +67,7 @@ public sealed class TextProvenanceTests
     [InlineData("lxx-brenton")]
     [InlineData("scrivener1894")]
     [InlineData("stephanus1550")]
+    [InlineData("robinsonpierpont2018")]
     [InlineData("bsb")]
     [InlineData("kjv")]
     [InlineData("rusv")]

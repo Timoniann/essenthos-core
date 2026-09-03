@@ -14,6 +14,11 @@
     "files": 19,
     "sha256": "c4998cbdf9496ef71fc5844dcdb4f7a969976f82db572e7e584248f02d4e8ab8"
   },
+  "Byzantine": {
+    "bytes": 6177551,
+    "files": 57,
+    "sha256": "13c733c4e3011a5bc9a74b810588e23aba6b86be48d68aed3a8b272a64e6fdab"
+  },
   "ClearBible": {
     "bytes": 467285100,
     "files": 29,
