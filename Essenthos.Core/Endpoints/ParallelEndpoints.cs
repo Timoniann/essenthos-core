@@ -186,7 +186,7 @@ internal static class ParallelEndpoints
         return requested
             .Select(entry => Texts.Corpus(
                 texts.Single(t => t.Id == entry.Id),
-                new CoverageResponse(entry.FirstBook, entry.LastBook),
+                new CoverageResponse(entry.FirstBook, entry.LastBook, entry.Books),
                 entry.HasWordMapping))
             .ToList();
     }

@@ -66,7 +66,7 @@ internal static class ReadEndpoints
             var items = texts
                 .Join(entries, t => t.Id, e => e.Id, (text, entry) => Texts.Corpus(
                     text,
-                    new CoverageResponse(entry.FirstBook, entry.LastBook),
+                    new CoverageResponse(entry.FirstBook, entry.LastBook, entry.Books),
                     entry.HasWordMapping))
                 .ToList();
 

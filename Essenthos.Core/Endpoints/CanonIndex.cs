@@ -3,7 +3,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Endpoints;
 
-internal sealed record TextEntry(int Id, string Slug, int FirstBook, int LastBook, bool HasWordMapping);
+/// <param name="Books">
+/// The canonical books this text actually holds, in order.
+///
+/// Not a range, because a range cannot describe a set with a hole in it and one of these texts has
+/// one: Brenton's Septuagint holds books 1-39 and 67-81 and nothing between, so *first 1, last 81*
+/// reads as covering the whole New Testament. The reader believed it, opened John against the
+/// Septuagint, and printed "not present in lxx-brenton" against every verse of the chapter.
+/// </param>
+internal sealed record TextEntry(int Id, string Slug, IReadOnlyList<int> Books, bool HasWordMapping)
+{
+    public int FirstBook => Books.Count > 0 ? Books[0] : 0;
+
+    public int LastBook => Books.Count > 0 ? Books[^1] : 0;
+
+    public bool Covers(int canonicalBook) => Books.Contains(canonicalBook);
+}
 
 /// <summary>
 /// The canon and the texts, read once and kept.
@@ -93,8 +108,7 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
                 {
                     t.Id,
                     t.Slug,
-                    First = t.Books.Min(b => (int?)b.CanonicalOrdinal) ?? 0,
-                    Last = t.Books.Max(b => (int?)b.CanonicalOrdinal) ?? 0,
+                    Books = t.Books.Select(b => b.CanonicalOrdinal).OrderBy(ordinal => ordinal).ToList(),
                     Linked = db.Links.Any(l => l.FromTextId == t.Id || l.ToTextId == t.Id),
                 })
                 .ToListAsync(cancellationToken);
@@ -112,7 +126,7 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
                 .ToDictionary(row => (row.TextId, row.CanonicalOrdinal), row => row.Chapters);
 
             _texts = texts
-                .Select(t => new TextEntry(t.Id, t.Slug, t.First, t.Last, t.Linked))
+                .Select(t => new TextEntry(t.Id, t.Slug, t.Books, t.Linked))
                 .ToList();
         }
         finally

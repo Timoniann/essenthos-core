@@ -11,7 +11,12 @@ namespace Essenthos.Core.Endpoints;
 /// </summary>
 internal record BookRefResponse(int Ordinal, string Name, string Slug);
 
-internal record CoverageResponse(int FirstBook, int LastBook);
+/// <param name="Books">
+/// Every canonical book the text holds. <paramref name="FirstBook"/> and <paramref name="LastBook"/>
+/// are kept because DOC-0002 defined them and clients read them, but they cannot be believed on
+/// their own: the Septuagint's books are 1-39 and 67-81, so its span says it covers John.
+/// </param>
+internal record CoverageResponse(int FirstBook, int LastBook, IReadOnlyList<int> Books);
 
 /// <param name="License">The licence's name, an SPDX identifier where one applies.</param>
 /// <param name="RightsHolder">
