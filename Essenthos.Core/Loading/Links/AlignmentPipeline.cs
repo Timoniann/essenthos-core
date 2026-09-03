@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using Essenthos.Core.Database;
@@ -544,6 +544,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var proposed = 0;
         var collapsed = 0;
         var below = 0;
+        var unwritten = 0;
 
         foreach (var (sourceWords, targetWords, raw) in Parse(path, addresses, source, target))
         {
@@ -561,6 +562,20 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             var standing = new List<(int Source, int Target, double Confidence, double Position)>(verse.Count);
             foreach (var pair in verse)
             {
+                // A word that writes no token has nothing for a model to learn from, and every such
+                // word in a text is the same string to it — so they pool into one lexical item that
+                // pairs with whatever happens to stand near it. In a translation these are the
+                // quotation mark and the parenthesis that open a verse, and the alignment said a
+                // Hebrew word was rendered by an opening bracket. A Hebrew word that has assimilated
+                // into the letter before it is a real word and keeps its links; it writes its Strong
+                // number rather than nothing, so it is not one of these.
+                if (sourceWords[pair.Source].Text == AlignmentTokens.Nothing
+                    || targetWords[pair.Target].Text == AlignmentTokens.Nothing)
+                {
+                    unwritten++;
+                    continue;
+                }
+
                 if (crowded.Contains(pair.Target))
                 {
                     collapsed++;
@@ -584,7 +599,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             }
         }
 
-        return (drafts, proposed, collapsed, below);
+        return (drafts, proposed, collapsed + unwritten, below);
     }
 
     private static double Score(string[] parts, int index) =>
