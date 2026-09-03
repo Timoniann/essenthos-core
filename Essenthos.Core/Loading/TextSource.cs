@@ -29,6 +29,27 @@ internal sealed record TextDefinition(
     /// </summary>
     public string? Citation { get; init; }
 
+    /// <summary>
+    /// Who put the text into the language it is in — a person, or the body where there is no single
+    /// person. Null is silence: nobody known, or not a translation.
+    /// </summary>
+    public string? Translators { get; init; }
+
+    /// <summary>Who established this edition, which is rarely whoever translated it.</summary>
+    public string? Editors { get; init; }
+
+    /// <summary>Which edition or revision this is, where the year alone does not identify it.</summary>
+    public string? Edition { get; init; }
+
+    /// <summary>The year of the edition loaded, where it is not <see cref="PublishedYear"/>.</summary>
+    public int? EditionYear { get; init; }
+
+    /// <summary>What this text is and how it came to be, in a paragraph.</summary>
+    public string? About { get; init; }
+
+    /// <summary>What is unsettled or additional about the rights, beside the licence stated.</summary>
+    public string? RightsNote { get; init; }
+
 
     public void Validate()
     {

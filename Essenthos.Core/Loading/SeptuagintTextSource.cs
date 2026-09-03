@@ -63,7 +63,7 @@ internal static class SeptuagintTextSource
     /// <c>Redistributable = "True"</c>. Brenton died in 1862. Kept beside the data as
     /// <c>copr.htm</c>, because a licence that lives only at a URL is one nobody can check offline.
     /// </summary>
-    private static TextDefinition Definition() => new(
+    public static TextDefinition Definition() => new(
         Slug: Slug,
         Name: "Brenton's Septuagint",
         NameNative: "Η ΠΑΛΑΙΑ ΔΙΑΘΗΚΗ ΚΑΤΑ ΤΟΥΣ ΕΒΔΟΜΗΚΟΝΤΑ",
@@ -77,7 +77,19 @@ internal static class SeptuagintTextSource
         Licence: "Public Domain",
         LicenceUrl: "https://ebible.org/find/details.php?id=grcbrent",
         Redistribution: Redistribution.PublicDomain,
-        TextualFamily: "Septuagint");
+        TextualFamily: "Septuagint")
+    {
+        Editors = "Sir Lancelot Charles Lee Brenton",
+        Edition = "The Greek Brenton printed facing his English translation, following Codex Vaticanus",
+        About = "The Greek here is not Brenton's work in the way the English beside it is: he printed "
+                + "a text following Codex Vaticanus, and what he translated was that. Who first put "
+                + "these books into Greek is not known — the translation was made in Alexandria "
+                + "between roughly the third and the first century BC, by different hands book by "
+                + "book, which is why its books differ so much from one another in manner. Samuel "
+                + "Bagster and Sons published Brenton's edition in London in 1844 and added the "
+                + "Apocrypha in 1851. It arrived here with no annotation at all; its lemmas come from "
+                + "GLAUx.",
+    };
 
     /// <summary>
     /// Esdras B, which is Ezra and Nehemiah under one heading: chapters 1 to 10 are Ezra and 11 to

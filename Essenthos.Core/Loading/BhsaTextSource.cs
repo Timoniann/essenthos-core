@@ -21,7 +21,7 @@ internal static class BhsaTextSource
     /// is what the licence grants, and anything else needs their consent. Recorded on the text so
     /// that "may we serve this?" is a query rather than a memory.
     /// </summary>
-    private static readonly TextDefinition Definition = new(
+    public static readonly TextDefinition Definition = new(
         Slug: Slug,
         Name: "Biblia Hebraica Stuttgartensia Amstelodamensis",
         NameNative: "תורה נביאים וכתובים",
@@ -37,6 +37,16 @@ internal static class BhsaTextSource
         Redistribution: Redistribution.NonCommercialOnly,
         TextualFamily: "Masoretic")
     {
+        Editors = "The Eep Talstra Centre for Bible and Computer, VU Amsterdam; encoded for "
+                  + "Text-Fabric by Dirk Roorda",
+        Edition = "ETCBC version 2021",
+        About = "The consonantal and vocalised text of the Biblia Hebraica Stuttgartensia, which is "
+                + "the Masoretic Text as the Leningrad Codex preserves it, carrying the linguistic "
+                + "annotation the ETCBC and its predecessor the Werkgroep Informatica have been "
+                + "building since the 1970s: part of speech, stem, state, and the clause and phrase "
+                + "structure every syntactic query in this corpus is asked of. Nobody translated it; "
+                + "what is edited here is the encoding and the annotation, not the words.",
+
         // Not a courtesy. The ETCBC asks that anything published from BHSA cite the dataset by
         // its DOI, and a licence name and a URL cannot carry that — PRB-0067 is the field that
         // was missing.

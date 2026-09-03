@@ -39,7 +39,53 @@ public class Text
     /// <summary>Which frame this text's own chapter and verse numbers follow.</summary>
     public Versification Versification { get; set; } = Versification.Unknown;
 
+    /// <summary>
+    /// Who put the text into the language it is in. A body where there is no single person — the
+    /// King James has forty-seven translators in six companies and naming none of them would be as
+    /// false as naming one. Null where nobody is known, which is the Septuagint's translators, and
+    /// where the text is not a translation at all.
+    /// </summary>
+    public string? Translators { get; set; }
+
+    /// <summary>
+    /// Who established this edition of it, which is a different person from the translator and
+    /// often the only one there is: Nestle edited a Greek text he did not write, Scrivener
+    /// reconstructed one, the ETCBC annotated a printed edition.
+    /// </summary>
+    public string? Editors { get; set; }
+
+    /// <summary>
+    /// Which edition or revision this is, where that is what identifies it and the year does not.
+    /// Every digital "King James" is the modern standard text rather than the 1611 printing, and
+    /// nothing in a row that says 1611 tells a reader so.
+    /// </summary>
+    public string? Edition { get; set; }
+
+    /// <summary>
+    /// When the work was first published, which for a revised text is not when the edition served
+    /// here was printed — see <see cref="EditionYear"/>.
+    /// </summary>
     public int? PublishedYear { get; set; }
+
+    /// <summary>
+    /// The year of the edition actually loaded, where it is not <see cref="PublishedYear"/>. Null
+    /// means the two are the same, not that nobody looked.
+    /// </summary>
+    public int? EditionYear { get; set; }
+
+    /// <summary>
+    /// What this text is and how it came to be, in a paragraph, because the columns beside it
+    /// cannot say that a translation begun in 1917 and finished in 1940 was first printed in 1962.
+    /// </summary>
+    public string? About { get; set; }
+
+    /// <summary>
+    /// What is unsettled or additional about the rights, beside the licence the source states.
+    /// It sits next to <see cref="Licence"/> rather than inside <see cref="About"/> because a
+    /// reader deciding whether they may republish needs it where they are already looking, and a
+    /// contested public-domain claim is worse than an unchecked one when it is not shown.
+    /// </summary>
+    public string? RightsNote { get; set; }
 
     /// <summary>Where this text was obtained, so a reader can go back to what we loaded.</summary>
     public string? SourceUrl { get; set; }

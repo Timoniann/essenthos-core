@@ -52,6 +52,38 @@ internal record CorpusResponse(
     public string? SourceUrl { get; init; }
 
     /// <summary>
+    /// Who put the text into the language it is in — a person where there is one, the body that
+    /// made it where there is not. Null is silence: nobody known, or not a translation at all.
+    /// </summary>
+    public string? Translators { get; init; }
+
+    /// <summary>Who established this edition, which is rarely whoever translated it.</summary>
+    public string? Editors { get; init; }
+
+    /// <summary>
+    /// Which edition or revision this is, where the year alone does not identify it. Every digital
+    /// King James is the modern standard text and not the 1611 printing, and a reader cannot tell
+    /// from a publication year that says 1611.
+    /// </summary>
+    public string? Edition { get; init; }
+
+    /// <summary>
+    /// The year of the edition served, where that is not <paramref name="PublicationYear"/>. Null
+    /// means they are the same year, not that nobody looked.
+    /// </summary>
+    public int? EditionYear { get; init; }
+
+    /// <summary>What this text is and how it came to be, in a paragraph the columns cannot hold.</summary>
+    public string? About { get; init; }
+
+    /// <summary>
+    /// What is unsettled or additional about the rights, beside the licence the source states. It
+    /// belongs next to the licence rather than inside <see cref="About"/>: a contested claim of
+    /// public domain is exactly what a reader deciding whether to republish must not miss.
+    /// </summary>
+    public string? RightsNote { get; init; }
+
+    /// <summary>
     /// What the licence permits, in one word: <c>public-domain</c>, <c>attribution</c>,
     /// <c>non-commercial-only</c>, <c>share-alike</c>, <c>unknown</c>. Unknown is not permission.
     /// </summary>
