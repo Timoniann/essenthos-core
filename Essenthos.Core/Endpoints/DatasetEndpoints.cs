@@ -74,7 +74,11 @@ public static class DatasetEndpoints
                     dataset.LicenceUrl,
                     dataset.Url,
                     dataset.Covers,
-                    counts));
+                    counts,
+                    dataset.Contains is null
+                        ? []
+                        : [.. dataset.Contains.Select(work => new WorkResponse(
+                            work.Name, work.Author, work.Licence, work.LicenceUrl, work.Covers))]));
             }
 
             // Rows whose source no declaration claims. Reported rather than dropped: a dataset
@@ -116,6 +120,11 @@ public static class DatasetEndpoints
 /// How many rows of each kind it accounts for, so a reader can see how much of what they are
 /// looking at rests on which licence.
 /// </param>
+/// <param name="Contains">
+/// Further works bound into the same source under their own terms, empty for almost every dataset.
+/// A reader who is told only that the lexicon is public domain has been told something false about
+/// 6,070 of its entries.
+/// </param>
 public record DatasetResponse(
     string Id,
     string Name,
@@ -124,7 +133,16 @@ public record DatasetResponse(
     string LicenceUrl,
     string Url,
     string Covers,
-    DatasetCounts Counts);
+    DatasetCounts Counts,
+    IList<WorkResponse> Contains);
+
+/// <param name="Covers">Which part of the dataset is this work's, so the credit lands on the right rows.</param>
+public record WorkResponse(
+    string Name,
+    string Author,
+    string Licence,
+    string LicenceUrl,
+    string Covers);
 
 public record DatasetCounts(int Entities, int Events, int Periods, int Lemmas, int Lexicon, int Links);
 

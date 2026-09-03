@@ -58,6 +58,24 @@ public sealed class CorpusLoaderTests : IDisposable
     }
 
     /// <summary>
+    /// Who made the text and which edition it is reach the row. A field the definition holds and
+    /// the loader drops is worse than one nobody filled in: it reads as established and absent.
+    /// </summary>
+    [Fact]
+    public async Task WhoMadeTheTextAndWhichEditionItIsAreWrittenWithIt()
+    {
+        await Loader().Load(Sample());
+
+        var text = await _db.Texts.SingleAsync(t => t.Slug == "sample");
+        text.Translators.Should().Be("Somebody");
+        text.Editors.Should().Be("Somebody else");
+        text.Edition.Should().Be("The second, revised");
+        text.EditionYear.Should().Be(1769);
+        text.About.Should().Be("What this text is.");
+        text.RightsNote.Should().Be("What is unsettled about the rights.");
+    }
+
+    /// <summary>
     /// The whole reason there are two numbers. The loader must store the book's place in this text
     /// and its place in the shared order without conflating them.
     /// </summary>
@@ -136,7 +154,15 @@ public sealed class CorpusLoaderTests : IDisposable
         Licence: "CC0-1.0",
         LicenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
         Redistribution: Redistribution.PublicDomain,
-        TextualFamily: null);
+        TextualFamily: null)
+    {
+        Translators = "Somebody",
+        Editors = "Somebody else",
+        Edition = "The second, revised",
+        EditionYear = 1769,
+        About = "What this text is.",
+        RightsNote = "What is unsettled about the rights.",
+    };
 
     /// <summary>
     /// One book at canonical ordinal 8 but first in this text, so the two numbers cannot be

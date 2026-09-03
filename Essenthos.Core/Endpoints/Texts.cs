@@ -50,6 +50,12 @@ internal static class Texts
         Citation = text.Citation,
         SourceUrl = text.SourceUrl,
         Redistribution = EnumSpelling.Of(text.Redistribution),
+        Translators = text.Translators,
+        Editors = text.Editors,
+        Edition = text.Edition,
+        EditionYear = text.EditionYear,
+        About = text.About,
+        RightsNote = text.RightsNote,
     };
 
     /// <summary>

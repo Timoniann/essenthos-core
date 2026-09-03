@@ -49,7 +49,7 @@ internal static class TextusReceptusTextSource
     /// Zefania build both carry CC BY-NC-SA over data that is public domain at source. Take the
     /// original.
     /// </summary>
-    private static TextDefinition Definition(Edition edition) => edition == Edition.Scrivener1894
+    public static TextDefinition Definition(Edition edition) => edition == Edition.Scrivener1894
         ? new TextDefinition(
             Slug: Slug(edition),
             Name: "Scrivener 1894 Textus Receptus",
@@ -65,6 +65,18 @@ internal static class TextusReceptusTextSource
             LicenceUrl: "https://github.com/byztxt/greektext-textus-receptus",
             Redistribution: Redistribution.PublicDomain,
             TextualFamily: "Byzantine")
+        {
+            Editors = "Frederick Henry Ambrose Scrivener (1813-1891)",
+            Edition = "The 1894 Cambridge printing, published after his death",
+            About = "Not an edition of the Greek in the ordinary sense but a reconstruction of one. "
+                    + "The King James translators never published the Greek they worked from, and they "
+                    + "did not follow a single edition: they took readings from Erasmus, Stephanus and "
+                    + "Beza as they went. Scrivener worked backwards from the English, choosing at each "
+                    + "point the reading those editions offered that the Authorised Version had "
+                    + "followed. He first published it in 1881 as The New Testament in the Original "
+                    + "Greek according to the Text followed in the Authorised Version; the 1894 "
+                    + "printing read here appeared three years after his death.",
+        }
         : new TextDefinition(
             Slug: Slug(edition),
             Name: "Stephanus 1550 Textus Receptus",
@@ -79,7 +91,18 @@ internal static class TextusReceptusTextSource
             Licence: "Public Domain",
             LicenceUrl: "https://github.com/byztxt/greektext-textus-receptus",
             Redistribution: Redistribution.PublicDomain,
-            TextualFamily: "Byzantine");
+            TextualFamily: "Byzantine")
+        {
+            Editors = "Robert Estienne, who printed as Stephanus (1503-1559)",
+            Edition = "The 1550 editio regia, printed in Paris",
+            About = "The third of the four Greek New Testaments Estienne edited, in 1546, 1549, 1550 "
+                    + "and 1551, and the one that carried. It rests on Erasmus and on the Complutensian "
+                    + "Polyglot, and prints variant readings in the margin from the dozen and more "
+                    + "manuscripts he had reached, among them Codex Bezae. In England this is the "
+                    + "edition that became the Received Text, which is why it and the Scrivener stand "
+                    + "beside each other here: they are two states of one tradition, and the places "
+                    + "where they differ are the places where the King James followed somebody else.",
+        };
 
     public static TextSource Read(string folder, Edition edition)
     {

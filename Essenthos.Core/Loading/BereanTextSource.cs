@@ -40,6 +40,24 @@ internal static class BereanTextSource
         Redistribution: Redistribution.PublicDomain,
         TextualFamily: null)
     {
+        Translators = "The Bible Hub and Discovery Bible teams",
+        Editors = "An advisory committee of Gary Hill (original languages), Grant Osborne (New "
+                  + "Testament lead), Eugene H. Merrill (Old Testament lead), Maury Robertson, Ulrik "
+                  + "Sandborg-Petersen and Baruch Korman",
+        About = "A new translation rather than a revision of an existing one, made so that every "
+                + "English word could be traced back to the Greek or Hebrew behind it — which is why "
+                + "the translators publish their own word-level tables, and why those tables are the "
+                + "only stated English mapping this corpus has for the New Testament. The advisory "
+                + "committee directed the use of the sources and settled the translation decisions; "
+                + "the Bible Hub and Discovery Bible teams did the translating, styling and proofing "
+                + "under them. It was funded from Bible Hub's advertising revenue, with no donors or "
+                + "publisher, and placed in the public domain on 30 April 2023.",
+        RightsNote = "The licensing page places the text in the public domain and adds that licensing "
+                     + "is not required for any use. The footer of every page on the same site still "
+                     + "reads \"Copyright © 2021 Berean Standard Bible. All rights reserved.\" The "
+                     + "licensing page is the specific and deliberate statement and the footer is "
+                     + "template chrome, so the licensing page is the one believed — and both are "
+                     + "recorded rather than one of them chosen quietly.",
         Citation = "The Holy Bible, Berean Standard Bible, BSB. Produced in cooperation with Bible Hub, " +
                    "Discovery Bible, unfoldingWord, Bible Aquifer and OpenBible.com. Public domain.",
     };

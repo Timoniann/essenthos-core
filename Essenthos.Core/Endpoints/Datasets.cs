@@ -55,6 +55,16 @@ public static class Datasets
     /// Listed one by one rather than swept up by a catch-all, so a method nobody declared still
     /// shows as undeclared.
     /// </param>
+    /// <param name="Contains">
+    /// Further works bound into the same file, each with its own author and its own terms.
+    ///
+    /// One field is not enough for a source that is two works. <c>StrongHebrew.xml</c> declares
+    /// three in its own header — Strong's Hebrew and Greek dictionaries, both public domain, and
+    /// the Theological Wordbook of the Old Testament, under a 1980 Moody copyright — and the file
+    /// says which is which: <c>workPrefix</c> assigns the entry to Strong and the gloss to TWOT.
+    /// Flattening that to one author and one licence would put the wrong name on 6,070 rows and
+    /// the wrong terms on all of them.
+    /// </param>
     public sealed record Dataset(
         string Id,
         string Name,
@@ -67,11 +77,20 @@ public static class Datasets
         string? Lemmas = null,
         bool Links = false,
         bool Lexicon = false,
-        string[]? Methods = null)
+        string[]? Methods = null,
+        Work[]? Contains = null)
     {
         /// <summary>Every source-string prefix this dataset claims, its own name first.</summary>
         public IEnumerable<string> Prefixes => Methods is null ? [Prefix] : [Prefix, .. Methods];
     }
+
+    /// <param name="Covers">Which part of the dataset is this work's, so the credit lands on the right rows.</param>
+    public sealed record Work(
+        string Name,
+        string Author,
+        string Licence,
+        string LicenceUrl,
+        string Covers);
 
     public static readonly Dataset[] All =
     [
@@ -187,10 +206,10 @@ public static class Datasets
         // no declaration at all — it contributes neither rows carrying a source nor links, so the
         // undeclared report was blind to it. PRB-0059.
         //
-        // The licence recorded is the Greek file's, which is Strong's own and long out of copyright.
-        // The Hebrew file embeds a second work with its own notice — "Copyright © 1980 by the Moody
-        // Bible Institute" against the TWOT references — and what becomes of that field is asked on
-        // PRB-0199 rather than settled here.
+        // The licence recorded is Strong's own, long out of copyright. The Hebrew file embeds a
+        // second work under its own terms, and it is declared in Contains rather than folded in
+        // here: the TWOT reference on 6,070 entries is Archer and Harris's and is under a 1980
+        // Moody copyright, and nothing else in the lexicon is.
         new("strong", "Strong's Exhaustive Concordance", "James Strong", "Public Domain",
             "https://en.wikipedia.org/wiki/Public_domain",
             "https://openscriptures.org",
@@ -199,7 +218,17 @@ public static class Datasets
             + "it in 1890 and it is long out of copyright; the machine-readable Greek was prepared by "
             + "Ulrik Petersen in 2006 from the ASCII e-text, whose own prologue reads \"Public "
             + "Domain -- Copy Freely\".",
-            "Strong", Lexicon: true),
+            "Strong", Lexicon: true, Contains:
+            [
+                new Work(
+                    "Theological Wordbook of the Old Testament",
+                    "Gleason L. Archer and R. Laird Harris, published by Moody Publishers",
+                    "Copyright © 1980 by the Moody Bible Institute",
+                    "https://www.moodypublishers.com",
+                    "The TWOT reference carried by 6,070 Hebrew entries, and only that: the file's own "
+                    + "header assigns the entry to Strong and the gloss to TWOT, so nothing else in the "
+                    + "lexicon is theirs."),
+            ]),
 
         // What this project asserts itself, and it belongs in the list precisely because it is
         // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly

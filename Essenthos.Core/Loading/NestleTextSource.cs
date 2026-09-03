@@ -20,7 +20,7 @@ internal static class NestleTextSource
     /// readme states — read on 2026-08-31. So there is no rights holder to name, and serving it is
     /// unconditioned.
     /// </summary>
-    private static readonly TextDefinition Definition = new(
+    public static readonly TextDefinition Definition = new(
         Slug: Slug,
         Name: "Nestle 1904 Greek New Testament",
         NameNative: "Η ΚΑΙΝΗ ΔΙΑΘΗΚΗ",
@@ -34,7 +34,18 @@ internal static class NestleTextSource
         Licence: "CC0-1.0",
         LicenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
         Redistribution: Redistribution.PublicDomain,
-        TextualFamily: "Alexandrian");
+        TextualFamily: "Alexandrian")
+    {
+        Editors = "Eberhard Nestle",
+        Edition = "The 1904 British and Foreign Bible Society printing",
+        About = "Nestle collated no manuscripts for this text: he built it by combining the printed "
+                + "editions of Tischendorf, Westcott and Hort, and Weymouth, which is why it stands "
+                + "close to the modern critical text without being one. He published the first "
+                + "edition in 1898; the British and Foreign Bible Society printed the 1904 edition "
+                + "read here, and the Nestle name has been on their Greek New Testament ever since. "
+                + "The digital edition was transcribed by Diego Renato dos Santos, given its "
+                + "morphology by Ulrik Sandborg-Petersen and marked up by Jonathan Robie.",
+    };
 
     public static TextSource Read(string nestlePath, string? glossPath = null)
     {
