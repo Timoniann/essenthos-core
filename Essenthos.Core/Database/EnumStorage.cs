@@ -49,6 +49,7 @@ internal static class EnumSpelling
         WordGroupKind.PhraseAtom => "phrase-atom",
         WordGroupKind.Subphrase => "subphrase",
         WordGroupKind.HalfVerse => "half-verse",
+        WordGroupKind.Supplied => "supplied",
         _ => throw Unmapped(value),
     };
 
@@ -62,6 +63,7 @@ internal static class EnumSpelling
         "phrase-atom" => WordGroupKind.PhraseAtom,
         "subphrase" => WordGroupKind.Subphrase,
         "half-verse" => WordGroupKind.HalfVerse,
+        "supplied" => WordGroupKind.Supplied,
         _ => throw Unreadable<WordGroupKind>(stored),
     };
 

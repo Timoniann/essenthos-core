@@ -1,6 +1,7 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
@@ -55,6 +56,26 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         FROM word WHERE text_id = @textId GROUP BY verse_id
         """;
 
+    /// <summary>
+    /// The ids of the words a supplied span covers. Words are written with COPY, which returns no
+    /// keys, so the spans are joined back on the address the draft knows: the verse and the
+    /// position within it. Only the words in a span are asked for — 5,054 of the Synodal's 565,384.
+    /// </summary>
+    private const string SuppliedWordIds =
+        """
+        SELECT w.id FROM unnest(@verseIds, @positions) WITH ORDINALITY AS wanted(verse_id, "position", at)
+        JOIN word w ON w.verse_id = wanted.verse_id AND w."position" = wanted."position"
+        ORDER BY wanted.at
+        """;
+
+    private const string SuppliedGroupImport =
+        """
+        COPY word_group (id, text_id, kind, "position") FROM STDIN (FORMAT BINARY)
+        """;
+
+    private const string SuppliedMembershipImport =
+        "COPY word_group_word (word_group_id, word_id) FROM STDIN (FORMAT BINARY)";
+
     public async Task<LoadOutcome> Load(TextSource source, CancellationToken cancellationToken = default)
     {
         source.Definition.Validate();
@@ -76,6 +97,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         var verses = await WriteStructure(text, source, cancellationToken);
         var words = await WriteWords(text, verses, cancellationToken);
         await VerifyRoundTrip(text, verses, cancellationToken);
+        await WriteSupplied(text, verses, cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);
 
@@ -202,6 +224,158 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
 
         await writer.CompleteAsync(cancellationToken);
         return written;
+    }
+
+    /// <summary>
+    /// The spans the edition marks as words it supplies, as word groups of their own.
+    ///
+    /// They are groups rather than a flag on the word because the mark is over a span and the
+    /// spans abut: the Synodal writes "[для] [управления]" 79 times, two brackets and two claims,
+    /// which a per-word flag reports as one. And they are not links, although the schema can say
+    /// <c>expands</c> with an empty side — a link is a claim about a pair of texts, and it would
+    /// make this edition's mark on its own page into an assertion about a counterpart the edition
+    /// never named, for 884 New Testament spans among others.
+    /// </summary>
+    private async Task WriteSupplied(
+        Text text,
+        List<LoadedVerse> verses,
+        CancellationToken cancellationToken)
+    {
+        var verseIds = new List<int>();
+        var positions = new List<int>();
+        var sizes = new List<int>();
+
+        foreach (var loaded in verses)
+        {
+            var span = 0;
+            var size = 0;
+            for (var i = 0; i < loaded.Draft.Words.Count; i++)
+            {
+                if (loaded.Draft.Words[i].SuppliedSpan is not { } number)
+                {
+                    continue;
+                }
+
+                if (number != span)
+                {
+                    if (size > 0)
+                    {
+                        sizes.Add(size);
+                    }
+
+                    span = number;
+                    size = 0;
+                }
+
+                verseIds.Add(loaded.Verse.Id);
+                positions.Add(i + 1);
+                size++;
+            }
+
+            if (size > 0)
+            {
+                sizes.Add(size);
+            }
+        }
+
+        if (sizes.Count == 0)
+        {
+            return;
+        }
+
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        var words = await SuppliedWords(connection, verseIds, positions, cancellationToken);
+        if (words.Count != positions.Count)
+        {
+            throw new InvalidOperationException(
+                $"The load of {text.Slug} marked {positions.Count} supplied words but only {words.Count} of " +
+                "them came back from the word table. The spans are addressed by verse and position, so a " +
+                "position that does not exist means the words were written from a different draft than the " +
+                "one the spans were read from.");
+        }
+
+        var firstGroup = await ReserveGroupIds(connection, sizes.Count, cancellationToken);
+
+        await using (var writer = await connection.BeginBinaryImportAsync(SuppliedGroupImport, cancellationToken))
+        {
+            for (var i = 0; i < sizes.Count; i++)
+            {
+                await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(firstGroup + i, NpgsqlDbType.Bigint, cancellationToken);
+                await writer.WriteAsync(text.Id, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(
+                    EnumSpelling.Of(WordGroupKind.Supplied), NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(i + 1, NpgsqlDbType.Integer, cancellationToken);
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await using (var writer =
+                     await connection.BeginBinaryImportAsync(SuppliedMembershipImport, cancellationToken))
+        {
+            var at = 0;
+            for (var i = 0; i < sizes.Count; i++)
+            {
+                for (var j = 0; j < sizes[i]; j++, at++)
+                {
+                    await writer.StartRowAsync(cancellationToken);
+                    await writer.WriteAsync(firstGroup + i, NpgsqlDbType.Bigint, cancellationToken);
+                    await writer.WriteAsync(words[at], NpgsqlDbType.Bigint, cancellationToken);
+                }
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        logger.LogInformation(
+            "{Slug}: {Spans} spans the edition marks as supplied, over {Words} words",
+            text.Slug, sizes.Count, words.Count);
+    }
+
+    private async Task<List<long>> SuppliedWords(
+        NpgsqlConnection connection,
+        List<int> verseIds,
+        List<int> positions,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(SuppliedWordIds, connection,
+            (NpgsqlTransaction?)db.Database.CurrentTransaction?.GetDbTransaction());
+        command.Parameters.Add(new NpgsqlParameter("verseIds", NpgsqlDbType.Array | NpgsqlDbType.Integer)
+        {
+            Value = verseIds.ToArray(),
+        });
+        command.Parameters.Add(new NpgsqlParameter("positions", NpgsqlDbType.Array | NpgsqlDbType.Integer)
+        {
+            Value = positions.ToArray(),
+        });
+
+        var ids = new List<long>(positions.Count);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            ids.Add(reader.GetInt64(0));
+        }
+
+        return ids;
+    }
+
+    /// <summary>
+    /// Groups are written with COPY, which does not fill a generated key, so the sequence is moved
+    /// on by as many as are about to be written and the block it skipped is theirs. The same thing
+    /// <see cref="SyntaxLoader"/> does, for the same reason.
+    /// </summary>
+    private async Task<long> ReserveGroupIds(
+        NpgsqlConnection connection,
+        int count,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(
+            "SELECT setval(pg_get_serial_sequence('word_group', 'id'), " +
+            "coalesce((SELECT max(id) FROM word_group), 0) + @count) - @count + 1", connection,
+            (NpgsqlTransaction?)db.Database.CurrentTransaction?.GetDbTransaction());
+        command.Parameters.AddWithValue("count", count);
+        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     private static async Task WriteNullable(

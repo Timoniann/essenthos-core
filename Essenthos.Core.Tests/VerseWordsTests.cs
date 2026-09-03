@@ -27,14 +27,61 @@ public class VerseWordsTests
     [Fact]
     public void NoWordIsEmptyExceptPunctuationThatOpensTheVerse()
     {
-        VerseWords.Parse("[Авраам] сказал: вот.").Select(w => w.Word).Should().Equal("", "Авраам", "сказал", "вот");
+        VerseWords.Parse("«Авраам» сказал: вот.").Select(w => w.Word).Should().Equal("", "Авраам", "сказал", "вот");
         VerseWords.Parse("Он сказал [это] нам.").Select(w => w.Word).Should().Equal("Он", "сказал", "это", "нам");
     }
 
     [Fact]
     public void TheSourcesOwnSpacingIsKept()
     {
-        VerseWords.Parse("Он сказал [это] нам.").Select(w => w.Trailer).Should().Equal(" ", " [", "] ", ".");
+        VerseWords.Parse("Он сказал «это» нам.").Select(w => w.Trailer).Should().Equal(" ", " «", "» ", ".");
+    }
+
+    /// <summary>
+    /// The brackets the Synodal marks its supplied words with are markup, not text: they leave the
+    /// surface and the words they covered say which span they were in.
+    /// </summary>
+    [Fact]
+    public void ABracketIsNotACharacterOfTheVerse()
+    {
+        var words = VerseWords.Parse("Он сказал [это] нам.");
+
+        string.Concat(words.Select(w => w.Word + w.Trailer)).Should().Be("Он сказал это нам.");
+        words.Select(w => w.SuppliedSpan).Should().Equal(null, null, 1, null);
+    }
+
+    /// <summary>
+    /// A verse that opens with a bracket used to begin with a word that was only the bracket. With
+    /// the bracket gone there is nothing left of it, and the verse starts with its first word.
+    /// </summary>
+    [Fact]
+    public void ABracketOpeningAVerseLeavesNoWordBehind()
+    {
+        var words = VerseWords.Parse("[Победители] взяли все.");
+
+        words.Select(w => w.Word).Should().Equal("Победители", "взяли", "все");
+        words[0].SuppliedSpan.Should().Be(1);
+    }
+
+    /// <summary>
+    /// 1 Kings 5:7 and 78 other verses write two brackets side by side. They are two statements by
+    /// the edition, and a span number keeps them apart where a flag would not.
+    /// </summary>
+    [Fact]
+    public void TwoBracketsSideBySideAreTwoSpans()
+    {
+        var words = VerseWords.Parse("мудрого [для] [управления] этим");
+
+        words.Select(w => w.Word).Should().Equal("мудрого", "для", "управления", "этим");
+        words.Select(w => w.SuppliedSpan).Should().Equal(null, 1, 2, null);
+    }
+
+    [Fact]
+    public void ABracketOverSeveralWordsIsOneSpan()
+    {
+        VerseWords.Parse("и [прибьешь ее гвоздем] к колоде")
+            .Select(w => w.SuppliedSpan)
+            .Should().Equal(null, 1, 1, 1, null, null);
     }
 
     [Fact]

@@ -82,14 +82,19 @@ internal static class Bible4uTextSource
     /// Hebrew numbering of a differently numbered psalm as "(22-1)" and mark a superscription with
     /// "^^", and tokenising that as it stands put "(", "22", "1" and ")" into the corpus as
     /// scripture.
+    ///
+    /// The Synodal's square brackets are markup too, and the largest of it: 4,247 spans over 3,708
+    /// verses, which tokenised as text put a stray bracket on 8,413 words and made a bare "[" a
+    /// word of its own 145 times. They are the edition saying which words are its own and not its
+    /// base text's, so they leave the surface and become the spans the loader records.
     /// </summary>
     private static VerseDraft Draft(XmlBibleVerse verse) =>
         new(verse.VNumber, VerseWords.Parse(verse.Text)
-            // A verse that opens with a bracket has nothing before it to hang the bracket on, so
-            // the first token is the bracket and no word. It is a real character of the printed
-            // text and it stays; it is marked because a consumer rendering word by word must not
-            // paint an empty span for it.
-            .Select(word => new WordDraft(word.Word, word.Trailer, Elided: word.Word.Length == 0))
+            .Select(word => new WordDraft(
+                word.Word,
+                word.Trailer,
+                Elided: word.Word.Length == 0,
+                SuppliedSpan: word.SuppliedSpan))
             .ToList());
 
     private static TextDefinition Definition(

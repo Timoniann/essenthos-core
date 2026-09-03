@@ -110,12 +110,24 @@ internal record TextWordResponse(
 {
     /// <summary>
     /// The source records this word and prints no letters for it: a Hebrew article that has
-    /// assimilated into its preposition, a bracket that opens a verse. It carries annotation and it
-    /// can be the far end of an alignment, so it is sent rather than dropped — but a renderer
-    /// should not give it a span of its own, and counting words to reach a position should not
-    /// count it.
+    /// assimilated into its preposition, a quotation mark that opens a verse. It carries annotation
+    /// and it can be the far end of an alignment, so it is sent rather than dropped — but a
+    /// renderer should not give it a span of its own, and counting words to reach a position should
+    /// not count it.
     /// </summary>
     public bool Elided { get; init; }
+
+    /// <summary>
+    /// The edition prints this word as one it supplies: the translators put it there and the text
+    /// they were translating has no counterpart for it. The Synodal says so with square brackets,
+    /// 4,247 spans of them, and a renderer should show that — in brackets, in italics, however it
+    /// shows an editorial hand — rather than as ordinary text.
+    ///
+    /// It is the edition's own statement about its own page, so it is not <see cref="Absence"/>,
+    /// which is what an alignment against some other text concluded. A word can carry both, one,
+    /// or neither.
+    /// </summary>
+    public bool Supplied { get; init; }
 }
 
 /// <param name="Label">

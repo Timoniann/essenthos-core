@@ -68,9 +68,14 @@ internal sealed record TextDefinition(
 /// </param>
 /// <param name="Elided">
 /// The source records this word and prints no letters for it. Set by the reader that knows why —
-/// a Hebrew article that has assimilated into the preposition before it, a bracket that opens a
-/// verse — so that an empty surface is a claim somebody made rather than a string that happens to
-/// be empty, which is also what a broken tokeniser produces.
+/// a Hebrew article that has assimilated into the preposition before it, a quotation mark that
+/// opens a verse — so that an empty surface is a claim somebody made rather than a string that
+/// happens to be empty, which is also what a broken tokeniser produces.
+/// </param>
+/// <param name="SuppliedSpan">
+/// Which of its verse's supplied spans this word stands in, counting from one, where the edition
+/// marks the words it supplies and its base text does not have. Null everywhere else, which is
+/// silence rather than a claim: a text that marks nothing says nothing about any of its words.
 /// </param>
 internal sealed record WordDraft(
     string Surface,
@@ -79,7 +84,8 @@ internal sealed record WordDraft(
     string? StrongNumber = null,
     string? Gloss = null,
     string? Morphology = null,
-    bool Elided = false);
+    bool Elided = false,
+    int? SuppliedSpan = null);
 
 /// <param name="Label">
 /// The letter the edition prints after the number, where it prints one. Empty for the other

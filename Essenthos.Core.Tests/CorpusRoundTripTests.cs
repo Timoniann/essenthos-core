@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Xml.Linq;
 using Essenthos.Core.Bhsa;
 using Essenthos.Core.Bhsa.Attributes;
@@ -35,6 +35,17 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
     private const int BhsaWordsWithoutSurfaceText = 6_488;
 
     private const int BhsaElidedArticles = 6_464;
+
+    /// <summary>
+    /// The Synodal's bracketed spans, measured over its file: 3,363 in the Old Testament and 884
+    /// in the New, none nested and none unbalanced.
+    /// </summary>
+    private const int SynodalSuppliedSpans = 4_247;
+
+    /// <summary>The words those spans cover — 3,577 of the spans are a single word.</summary>
+    private const int SynodalSuppliedWords = 5_054;
+
+    private const int SynodalVersesWithSupplied = 3_708;
 
     /// <summary>Measured over all 31,102 verses: 925 commas, 401 stops, 243 colons, and the rest.</summary>
     private const int ZefaniaVersesLosingPunctuation = 1_755;
@@ -107,6 +118,56 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
         verses.Should().BeGreaterThan(30_000);
         failures.Should().BeEmpty(string.Join(Environment.NewLine, failures));
     }
+
+    /// <summary>
+    /// The Synodal's square brackets, counted over the file rather than assumed from the
+    /// convention. They are not the Septuagint readings they are usually said to be: 3,577 of the
+    /// 4,247 spans are one word, the longest is seven, and 884 stand in the New Testament, where
+    /// nothing is being compared with the Masoretic. They are the words the edition supplies.
+    ///
+    /// Pinned here because the parser now decides where a span starts, and two brackets side by
+    /// side are two spans — 79 places where a per-word flag would count one.
+    /// </summary>
+    [Theory]
+    [InlineData("RUSV", SynodalSuppliedSpans, SynodalSuppliedWords, SynodalVersesWithSupplied)]
+    [InlineData("KJV", 0, 0, 0)]
+    [InlineData("UKR", 0, 0, 0)]
+    public void TheEditionsOwnMarkupIsSpansAndNotCharacters(
+        string translation,
+        int expectedSpans,
+        int expectedWords,
+        int expectedVerses)
+    {
+        var bible = new XmlBibleParser().Parse(File.ReadAllText(TestResources.Bible4u(translation)));
+
+        var spans = 0;
+        var supplied = 0;
+        var verses = 0;
+        var brackets = 0;
+        foreach (var book in bible.Books)
+        foreach (var chapter in book.Chapters)
+        foreach (var verse in chapter.Verses)
+        {
+            var words = VerseWords.Parse(verse.Text);
+            var inVerse = words.Where(w => w.SuppliedSpan is not null).ToList();
+            if (inVerse.Count > 0)
+            {
+                verses++;
+                spans += inVerse.Select(w => w.SuppliedSpan).Distinct().Count();
+                supplied += inVerse.Count;
+            }
+
+            brackets += words.Sum(w => w.Word.Count(IsBracket) + w.Trailer.Count(IsBracket));
+        }
+
+        output.WriteLine($"{translation}: {spans} spans over {supplied} words in {verses} verses");
+        spans.Should().Be(expectedSpans);
+        supplied.Should().Be(expectedWords);
+        verses.Should().Be(expectedVerses);
+        brackets.Should().Be(0);
+    }
+
+    private static bool IsBracket(char c) => c is '[' or ']';
 
     /// <summary>
     /// The Zefania King James interleaves Strong-tagged elements and styled spans with plain text.

@@ -1,15 +1,25 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 using Essenthos.Core.Utils;
 
 namespace Essenthos.Core.XmlBible;
 
+/// <param name="SuppliedSpan">
+/// Which of the verse's bracketed spans this word stands in, counting from one, and null where the
+/// edition prints it plainly. It is a span number rather than a flag because two brackets stand
+/// side by side 79 times in the Synodal — "[для] [управления]" — and a flag would report one
+/// editorial mark where the edition made two.
+/// </param>
+public readonly record struct VerseToken(string Word, string Trailer, int? SuppliedSpan);
+
 /// <summary>
 /// Splits a bible4u verse into the words a corpus is stored as. The source carries editorial
 /// markup inside the verse text — the Synodal and Ukrainian files write the Hebrew verse number a
-/// psalm is numbered differently under as "(22-1)", and mark a superscription with "^^" — and
-/// tokenising that text as it stands put "(", "22", "1" and ")" into the corpus as scripture
-/// words. The markup is removed here, once, so the loader and the repair that fixes
-/// already-loaded rows cannot disagree about what a verse's words are.
+/// psalm is numbered differently under as "(22-1)", mark a superscription with "^^", and the
+/// Synodal brackets the words it supplies — and tokenising that text as it stands put "(", "22",
+/// "1" and ")" into the corpus as scripture words and a bare "[" as a word of its own. The markup
+/// is removed here, once, so the loader and the repair that fixes already-loaded rows cannot
+/// disagree about what a verse's words are.
 /// </summary>
 public static partial class VerseWords
 {
@@ -19,13 +29,21 @@ public static partial class VerseWords
     /// </summary>
     private const string SuperscriptionMarker = "^^";
 
+    private const char SuppliedOpen = '[';
+
+    private const char SuppliedClose = ']';
+
+    /// <summary>Where a bracketed span stands in the verse once the brackets are gone.</summary>
+    private readonly record struct SuppliedRange(int Start, int End);
+
     /// <summary>
     /// A trailer is whatever the source wrote between one word and the next, so the separation is
     /// the source's and not this tokeniser's — nothing is added and nothing is dropped (/// is a defect of the Zefania parser, which is a different reader).
     /// </summary>
-    public static List<(string Word, string Trailer)> Parse(string verseText)
+    public static List<VerseToken> Parse(string verseText)
     {
-        return Tokenize(StripMarkup(verseText));
+        var (text, supplied) = Separate(verseText);
+        return Tokenize(text, supplied);
     }
 
     /// <summary>
@@ -33,11 +51,60 @@ public static partial class VerseWords
     /// parenthesised bare number is always a cross-reference to the other versification or a
     /// footnote marker — no verse of either translation reads a number in brackets as text.
     /// </summary>
-    public static string StripMarkup(string verseText)
+    public static string StripMarkup(string verseText) => Separate(verseText).Text;
+
+    /// <summary>
+    /// The verse without its markup, and where the square brackets stood in what is left. The
+    /// Synodal prints a word it supplies in brackets; that is a statement the edition makes about
+    /// its own text and it belongs in structure, so the characters go and the spans are handed to
+    /// the caller.
+    ///
+    /// Measured over the three files: all 4,247 of the Synodal's brackets are balanced and none
+    /// nests, none stands inside a word, and removing them leaves no verse with doubled or
+    /// stray whitespace. The King James and the Ukrainian carry none at all. A bracket left open
+    /// at the end of a verse is closed there rather than dropped, so an edition less tidy than
+    /// this one loses the extent of the mark and not the mark.
+    /// </summary>
+    private static (string Text, List<SuppliedRange> Supplied) Separate(string verseText)
     {
         var stripped = verseText.Replace(SuperscriptionMarker, string.Empty);
         stripped = CrossNumbering().Replace(stripped, string.Empty);
-        return WordSeparation.NormalizeWhitespace(stripped).Trim();
+        stripped = WordSeparation.NormalizeWhitespace(stripped).Trim();
+
+        if (!stripped.Contains(SuppliedOpen) && !stripped.Contains(SuppliedClose))
+        {
+            return (stripped, []);
+        }
+
+        var builder = new StringBuilder(stripped.Length);
+        var supplied = new List<SuppliedRange>();
+        var openedAt = -1;
+
+        foreach (var character in stripped)
+        {
+            switch (character)
+            {
+                case SuppliedOpen:
+                    openedAt = builder.Length;
+                    continue;
+                case SuppliedClose when openedAt >= 0:
+                    supplied.Add(new SuppliedRange(openedAt, builder.Length));
+                    openedAt = -1;
+                    continue;
+                case SuppliedClose:
+                    continue;
+                default:
+                    builder.Append(character);
+                    continue;
+            }
+        }
+
+        if (openedAt >= 0)
+        {
+            supplied.Add(new SuppliedRange(openedAt, builder.Length));
+        }
+
+        return (builder.ToString(), supplied);
     }
 
     /// <summary>
@@ -47,10 +114,12 @@ public static partial class VerseWords
     /// exception is punctuation that opens the verse, which has no earlier word to belong to and is
     /// a real character of the text.
     /// </summary>
-    private static List<(string Word, string Trailer)> Tokenize(string text)
+    private static List<VerseToken> Tokenize(string text, List<SuppliedRange> supplied)
     {
-        var result = new List<(string Word, string Trailer)>(20);
+        var result = new List<VerseToken>(20);
         var length = text.Length;
+        var span = 0;
+
         for (var i = 0; i < length; i++)
         {
             var start = i;
@@ -64,7 +133,7 @@ public static partial class VerseWords
 
             if (i >= length)
             {
-                Append(result, text[start..], string.Empty);
+                Append(result, text[start..], string.Empty, SpanAt(supplied, ref span, start, i));
                 break;
             }
 
@@ -78,11 +147,32 @@ public static partial class VerseWords
                 }
             }
 
-            Append(result, wordText, text[trailerStart..i]);
+            Append(result, wordText, text[trailerStart..i], SpanAt(supplied, ref span, start, trailerStart));
             --i;
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// Which bracketed span the word at these offsets stands in. The spans are in text order and
+    /// do not overlap, so the search walks forward with the tokeniser rather than starting again
+    /// per word. A word with no letters is punctuation and belongs to no span, whatever it sits
+    /// between.
+    /// </summary>
+    private static int? SpanAt(List<SuppliedRange> supplied, ref int from, int start, int end)
+    {
+        if (start == end)
+        {
+            return null;
+        }
+
+        while (from < supplied.Count && supplied[from].End <= start)
+        {
+            from++;
+        }
+
+        return from < supplied.Count && supplied[from].Start <= start ? from + 1 : null;
     }
 
     /// <summary>
@@ -115,16 +205,16 @@ public static partial class VerseWords
                && (char.IsLetter(text[index + 1]) || char.IsDigit(text[index + 1]));
     }
 
-    private static void Append(List<(string Word, string Trailer)> result, string word, string trailer)
+    private static void Append(List<VerseToken> result, string word, string trailer, int? suppliedSpan)
     {
         if (word.Length == 0 && result.Count > 0)
         {
             var previous = result[^1];
-            result[^1] = (previous.Word, previous.Trailer + trailer);
+            result[^1] = previous with { Trailer = previous.Trailer + trailer };
             return;
         }
 
-        result.Add((word, trailer));
+        result.Add(new VerseToken(word, trailer, suppliedSpan));
     }
 
     [GeneratedRegex(@"\(\d+(?:[-:]\d+)?\)")]
