@@ -520,6 +520,138 @@ public class StrongXmlParserTests
         entries[0].SeeAlso.Should().BeNull();
     }
 
+    // ────────────────────────────────────────────────────────────────
+    //  The Greek file's own artefacts
+    // ────────────────────────────────────────────────────────────────
+
+    [Fact]
+    public void ParseGreek_NotUsedEntry_IsNotAnEntry()
+    {
+        var xml = Greek(
+            """
+            <entry strongs="03204">
+             <strongs>3204</strongs>  Not Used
+            </entry>
+            <entry strongs="03303">
+             <strongs>3303</strongs>   <greek BETA="ME/N" unicode="μέν" translit="mén"/>
+             <strongs_def> a primary particle</strongs_def>
+             <kjv_def>:--even, indeed.</kjv_def>
+            </entry>
+            """);
+
+        var entries = _parser.ParseGreek(xml);
+
+        entries.Should().ContainSingle().Which.StrongNumber.Should().Be("G3303");
+    }
+
+    [Fact]
+    public void ParseGreek_RenderingSeparator_IsNotPartOfTheRenderings()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02570">
+             <strongs>2570</strongs>   <greek BETA="KALO/S" unicode="καλός" translit="kalós"/>
+             <strongs_def> beautiful</strongs_def>
+             <kjv_def>:--X better, fair, good(-ly).</kjv_def>
+            </entry>
+            """));
+
+        entries[0].KjvDefinition.Should().Be("X better, fair, good(-ly).");
+    }
+
+    /// <summary>
+    /// Ten entries put the colon on the definition and the two dashes on the renderings. Both
+    /// halves of the separator go.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_SeparatorSplitBetweenTheElements_GoesFromBoth()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="00001">
+             <strongs>1</strongs>   <greek BETA="*A" unicode="Α" translit="A"/>
+             <strongs_def> the first letter of the alphabet:</strongs_def>
+             <kjv_def>--Alpha.</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Definition.Should().Be("the first letter of the alphabet");
+        entries[0].KjvDefinition.Should().Be("Alpha.");
+    }
+
+    /// <summary>
+    /// G2384 Ἰακώβ. <em>Also an Israelite</em> is the rest of the definition, and no translation of
+    /// Ἰακώβ.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_DefinitionRunningPastTheSeparator_GoesBackToTheDefinition()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02384">
+             <strongs>2384</strongs>   <greek BETA="*)IAKW/B" unicode="Ἰακώβ" translit="Iakṓb"/>
+             <strongs_def> Jacob, the progenitor of the Israelites</strongs_def>
+             <kjv_def>:--also an Israelite:--Jacob.</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Definition.Should().Be("Jacob, the progenitor of the Israelites; also an Israelite");
+        entries[0].KjvDefinition.Should().Be("Jacob.");
+    }
+
+    /// <summary>
+    /// G2022 ἐπιχέω, whose definition element holds one space and whose sense sits in front of a
+    /// second separator.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_EmptyDefinitionElement_TakesTheSenseFromTheRenderings()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02022">
+             <strongs>2022</strongs>   <greek BETA="E)PIXE/W" unicode="ἐπιχέω" translit="epichéō"/>
+             <strongs_derivation>from <strongsref language="GREEK" strongs="1909"/>;</strongs_derivation>
+             <strongs_def> </strongs_def>
+             <kjv_def>--to pour upon:--pour in.</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Definition.Should().Be("to pour upon");
+        entries[0].Derivation.Should().Be("from G1909;");
+        entries[0].KjvDefinition.Should().Be("pour in.");
+    }
+
+    /// <summary>
+    /// G1473 ἐγώ has no definition element at all, and the derivation is the whole of what Strong
+    /// says about the word.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_NoDefinitionElement_TheDerivationIsTheDefinition()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="01473">
+             <strongs>1473</strongs>   <greek BETA="E)GW/" unicode="ἐγώ" translit="egṓ"/>
+             <strongs_derivation>a primary pronoun of the first person I</strongs_derivation>
+             <kjv_def>:--I, me.</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Definition.Should().Be("a primary pronoun of the first person I");
+        entries[0].Derivation.Should().BeNull();
+    }
+
+    private static string Greek(string body) =>
+        $"""
+         <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+         <strongsdictionary>
+         <prologue>test</prologue>
+         <entries>
+         {body}
+         </entries>
+         </strongsdictionary>
+         """;
+
     [Fact]
     public void ParseGreek_CleanTextCollapsesWhitespace()
     {
@@ -543,6 +675,60 @@ public class StrongXmlParserTests
         // Multiline and extra whitespace should be collapsed
         entries[0].Definition.Should().NotContain("\n");
         entries[0].Definition.Should().NotContain("  ");
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  The census, over the files themselves
+    // ────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// The whole Greek file, which is the only place the counts can be checked: a hand-written
+    /// fixture proves the rule and says nothing about how much of the dictionary it touches.
+    /// 5,624 entries stand in the file and 101 of them are the unassigned numbers — 2717 and the
+    /// block 3203-3302 — so 5,523 words come out, every one of them with a lemma and a definition.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_TheFile_HasNoBlankEntriesAndNoSeparators()
+    {
+        var entries = _parser.ParseGreek(File.ReadAllText(TestResources.Path("Strong", "StrongGreek.xml")));
+
+        entries.Should().HaveCount(5_523);
+        entries.Should().OnlyContain(e => e.Lemma != null, "an entry with no lemma is one of the unassigned numbers");
+        entries.Should().OnlyContain(e => e.Definition != null, "every assigned number says what the word means");
+        entries.Where(e => e.KjvDefinition != null).Should().OnlyContain(
+            e => !e.KjvDefinition!.StartsWith('-') && !e.KjvDefinition.StartsWith(':'),
+            "the separator between the definition and the renderings belongs to neither");
+        entries.Where(e => e.KjvDefinition != null).Should().OnlyContain(
+            e => !e.KjvDefinition!.Contains(":--"),
+            "a second separator means the definition ran on into the renderings");
+        entries.Should().Contain(e => e.StrongNumber == "G3303", "3303 is the first number after the block");
+        entries.Should().NotContain(e => e.StrongNumber == "G3204");
+        entries.Should().NotContain(e => e.StrongNumber == "G2717");
+
+        // ἐγώ and καλός are two of the commonest words in the New Testament, and the file keeps what
+        // it has to say about both of them outside the definition element.
+        Entry(entries, "G1473").Definition.Should().StartWith("a primary pronoun of the first person");
+        Entry(entries, "G1473").KjvDefinition.Should().Be("I, me.");
+        Entry(entries, "G2570").Definition.Should().StartWith("of uncertain affinity; properly, beautiful");
+        Entry(entries, "G2570").KjvDefinition.Should().StartWith("X better, fair, good(-ly)");
+    }
+
+    private static StrongParsedEntry Entry(IEnumerable<StrongParsedEntry> entries, string number) =>
+        entries.Single(e => e.StrongNumber == number);
+
+    /// <summary>
+    /// The Hebrew file has none of this: the separator was taken out where it was prepared, and
+    /// every one of its 8,674 entries carries a lemma. It is read here so that a change made for
+    /// the Greek side cannot quietly reach it.
+    /// </summary>
+    [Fact]
+    public void ParseHebrew_TheFile_IsUntouchedByTheGreekRepairs()
+    {
+        var entries = _parser.ParseHebrew(File.ReadAllText(TestResources.Path("Strong", "StrongHebrew.xml")));
+
+        entries.Should().HaveCount(8_674);
+        entries.Should().OnlyContain(e => e.Lemma != null);
+        entries.Where(e => e.KjvDefinition != null).Should().OnlyContain(e => !e.KjvDefinition!.Contains(":--"));
     }
 }
 
