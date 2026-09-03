@@ -142,9 +142,29 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
         scoreTo,
         Path.Combine(Path.GetTempPath(), "essenthos-align",
             $"{scoreFrom}-{scoreTo}{(args.Contains("--surface") ? "-surface" : string.Empty)}"),
-        [0.25, 0.40],
+        args.Contains("--min")
+            ? [.. args[Array.IndexOf(args, "--min") + 1].Split(',')
+                .Select(t => double.Parse(t, System.Globalization.CultureInfo.InvariantCulture))]
+            : [0.25, 0.40],
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
-        args.Contains("--surface")));
+        args.Contains("--surface"),
+        args.Contains("--stated")));
+    return 0;
+}
+
+// What the target text's own syntax is worth as a check on the model, before it is believed: every
+// proposal the model made, bucketed by how it sits among its neighbours' answers, against what a
+// source states. The last column is the weight the rescorer uses, so revising it is a reading.
+if (args is ["syntax", var syntaxFrom, var syntaxTo, ..])
+{
+    using var syntaxScope = app.Services.CreateScope();
+    var prior = syntaxScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
+    app.Logger.LogInformation("\n{Report}", await prior.Diagnose(
+        syntaxFrom,
+        syntaxTo,
+        Path.Combine(Path.GetTempPath(), "essenthos-align", $"{syntaxFrom}-{syntaxTo}"),
+        args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
+        args.Contains("--stated")));
     return 0;
 }
 

@@ -8,14 +8,13 @@ namespace Essenthos.Core.Tests;
 /// <summary>Read once; the file is 5.8 MB and 22,875 rules.</summary>
 public sealed class VersificationFrames
 {
-    internal IReadOnlyDictionary<Versification, VersificationFrame> All { get; } =
-        TvtmsReader.Read(TestResources.Tvtms);
+    internal VersificationRules Rules { get; } = TvtmsReader.Read(TestResources.Tvtms);
 
-    internal VersificationFrame Hebrew => All[Versification.Original];
+    internal VersificationFrame Hebrew => Rules.Frame(Versification.Original);
 
-    internal VersificationFrame English => All[Versification.English];
+    internal VersificationFrame English => Rules.Frame(Versification.English);
 
-    internal VersificationFrame Greek => All[Versification.Septuagint];
+    internal VersificationFrame Greek => Rules.Frame(Versification.Septuagint);
 }
 
 public class CanonicalReferenceTests
@@ -159,9 +158,13 @@ public class CanonicalFrameTests(VersificationFrames frames) : IClassFixture<Ver
     [Fact]
     public void EveryTraditionTheCorpusUsesIsCovered()
     {
-        frames.All.Keys.Should().Contain([
-            Versification.Original, Versification.English, Versification.Septuagint, Versification.Vulgate,
-        ]);
+        foreach (var tradition in new[]
+                 {
+                     Versification.Original, Versification.English, Versification.Septuagint, Versification.Vulgate,
+                 })
+        {
+            frames.Rules.Covers(tradition).Should().BeTrue();
+        }
     }
 
     internal static CanonicalReference Primary(VersificationFrame frame, int book, int chapter, int verse) =>

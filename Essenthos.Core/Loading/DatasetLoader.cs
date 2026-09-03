@@ -151,7 +151,7 @@ internal sealed class DatasetLoader(
     private async Task PlaceInTheFrame(string resources, CancellationToken cancellationToken)
     {
         status.Starting("the canonical frame");
-        var frames = TvtmsReader.Read(ResourcePaths.File(resources, "Versification", "TVTMS.txt"));
+        var rules = TvtmsReader.Read(ResourcePaths.File(resources, "Versification", "TVTMS.txt"));
 
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -159,7 +159,7 @@ internal sealed class DatasetLoader(
 
         foreach (var text in await db.Texts.OrderBy(t => t.Slug).ToListAsync(cancellationToken))
         {
-            if (!frames.TryGetValue(text.Versification, out var frame))
+            if (!rules.Covers(text.Versification))
             {
                 logger.LogWarning(
                     "The text {Slug} follows {Versification} numbering, which the versification data does not " +
@@ -168,7 +168,7 @@ internal sealed class DatasetLoader(
                 continue;
             }
 
-            status.Record(await loader.Place(text, frame, cancellationToken));
+            status.Record(await loader.Place(text, rules, cancellationToken));
         }
     }
 

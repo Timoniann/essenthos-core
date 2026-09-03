@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using NpgsqlTypes;
 
+using Candidate = (int Source, int Target, double Translation, double Alignment);
+
 namespace Essenthos.Core.Loading.Links;
 
 internal sealed record AlignmentOutcome(
@@ -61,6 +63,12 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// link carries its own confidence, so a reader is never told that a pair scoring 0.26 and one
     /// scoring 0.99 are the same claim; raising this constant to 0.5 is available and costs a third
     /// of the corpus.
+    ///
+    /// The table above is what the model scores on its own. <see cref="SyntaxPrior"/> reads the
+    /// target's own phrase and clause structure over the same proposals before this threshold sees
+    /// them, and moves the numbers a little: 84.1% against 83.9% here, and 88.0% content precision
+    /// against 87.7%, for 342,038 pairs instead of 346,263. It sharpens the order the proposals
+    /// stand in rather than changing where the line should be drawn, so the threshold is unaffected.
     /// </summary>
     public const double DefaultMinimumConfidence = 0.25;
 
@@ -115,10 +123,14 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var alignmentFile = await Align(
             fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
 
-        var (drafts, proposed, collapsed, below) =
-            Read(alignmentFile, addresses, source, target, minimumConfidence, Selection.BestPerSource);
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var prior = await SyntaxPrior.Read(
+            (NpgsqlConnection)db.Database.GetDbConnection(), to.Id, cancellationToken);
 
-        await Store(from.Id, to.Id, modelType, drafts, cancellationToken);
+        var (drafts, proposed, collapsed, below) = Read(
+            alignmentFile, addresses, source, target, minimumConfidence, Selection.BestPerSource, prior);
+
+        await Store(from.Id, to.Id, modelType, prior.Known, drafts, cancellationToken);
 
         var outcome = new AlignmentOutcome(
             fromSlug, toSlug, addresses.Count, proposed, collapsed, below, drafts.Count, started.Elapsed);
@@ -198,7 +210,13 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var alignmentFile = await Align(
             fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
 
-        var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, floor, selection);
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var prior = await SyntaxPrior.Read(
+            (NpgsqlConnection)db.Database.GetDbConnection(),
+            (await Text(toSlug, cancellationToken)).Id,
+            cancellationToken);
+
+        var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, floor, selection, prior);
         return [.. drafts.Select(d => (d.SourceWordId, d.TargetWordId, d.Translation))];
     }
 
@@ -220,6 +238,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         IReadOnlyList<double> thresholds,
         string modelType,
         bool targetSurface = false,
+        bool statedOnly = false,
         CancellationToken cancellationToken = default)
     {
         var from = await Text(fromSlug, cancellationToken);
@@ -232,27 +251,34 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var alignmentFile = await Align(
             fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
 
-        var (gold, structural) = await Stated(from.Id, to.Id, cancellationToken);
+        var (gold, structural) = await Stated(from.Id, to.Id, statedOnly, cancellationToken);
         var content = gold.Where(pair => !structural.Contains(pair.To)).ToHashSet();
+        var prior = await SyntaxPrior.Read(
+            (NpgsqlConnection)db.Database.GetDbConnection(), to.Id, cancellationToken);
 
         var report = new StringBuilder()
             .AppendLine($"{fromSlug} against {toSlug} as " + (targetSurface ? "written" : "reduced") +
-                        $", scored on {gold.Count} stated pairs")
-            .AppendLine("  rule            min     kept  precision  recall   content precision");
+                        $", scored on {gold.Count} " + (statedOnly ? "stated" : "stated and lexical") + " pairs")
+            .AppendLine("  rule            min  syntax     kept  precision  recall   content precision");
 
         foreach (var selection in Enum.GetValues<Selection>())
         {
             foreach (var threshold in thresholds)
             {
-                var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, threshold, selection);
-                var proposed = drafts.Select(d => (d.SourceWordId, d.TargetWordId)).ToHashSet();
-                var all = Alignment.Score(proposed, gold);
-                var narrow = Alignment.Score(
-                    proposed.Where(pair => !structural.Contains(pair.TargetWordId)), content);
+                foreach (var read in prior.Known ? new SyntaxPrior?[] { null, prior } : [null])
+                {
+                    var (drafts, _, _, _) =
+                        Read(alignmentFile, addresses, source, target, threshold, selection, read);
+                    var proposed = drafts.Select(d => (d.SourceWordId, d.TargetWordId)).ToHashSet();
+                    var all = Alignment.Score(proposed, gold);
+                    var narrow = Alignment.Score(
+                        proposed.Where(pair => !structural.Contains(pair.TargetWordId)), content);
 
-                report.AppendLine(
-                    $"  {selection,-14}  {threshold:F2}  {drafts.Count,7}  {all.Precision,9:P1}  " +
-                    $"{all.Recall,6:P1}  {narrow.Precision,9:P1} of {narrow.Proposed}");
+                    report.AppendLine(
+                        $"  {selection,-14}  {threshold:F2}  {(read is null ? "off" : "on"),-6}  " +
+                        $"{drafts.Count,7}  {all.Precision,9:P1}  " +
+                        $"{all.Recall,6:P1}  {narrow.Precision,9:P1} of {narrow.Proposed}");
+                }
             }
         }
 
@@ -263,9 +289,16 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// The pairs a source states for these two texts, and the Hebrew words that are prefixes or the
     /// object marker rather than words a translation renders on their own.
     /// </summary>
+    /// <param name="statedOnly">
+    /// Whether to score against the correspondences a file states and nothing else. The wider set
+    /// also holds the lexical matches, which are themselves inferred, so scoring against them is
+    /// partly a measure of agreement with another guess. Both are worth having: the wider one is
+    /// what every earlier measurement of this aligner used, and the narrower one is the claim.
+    /// </param>
     private async Task<(HashSet<(long From, long To)> Gold, HashSet<long> Structural)> Stated(
         int fromTextId,
         int toTextId,
+        bool statedOnly,
         CancellationToken cancellationToken)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
@@ -278,9 +311,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             FROM link l
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
             JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
-            WHERE l.from_text_id = @from AND l.to_text_id = @to AND l.method <> 'aligner'
+            WHERE l.from_text_id = @from AND l.to_text_id = @to
+              AND (l.method = 'stated-by-source' OR (l.method <> 'aligner' AND NOT @stated))
             """, connection))
         {
+            command.Parameters.AddWithValue("stated", statedOnly);
             command.Parameters.AddWithValue("from", fromTextId);
             command.Parameters.AddWithValue("to", toTextId);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -309,34 +344,32 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     }
 
     /// <summary>
-    /// Reads the tool's Pharaoh output — <c>source-target:translation:alignment</c> per pair — and
-    /// keeps what is worth keeping.
+    /// Reads the tool's Pharaoh output — <c>source-target:translation:alignment</c> per pair — one
+    /// verse at a time, with the indices resolved to the words they stand for.
+    ///
+    /// A pair naming a word the verse does not have is dropped rather than trusted. The tool counts
+    /// tokens and this counts words, and where the two disagree the rest of that line is about
+    /// somebody else's words.
     /// </summary>
-    private static (List<AlignedDraft> Drafts, int Proposed, int Collapsed, int Below) Read(
+    private static IEnumerable<(List<Word> Source, List<Word> Target, List<Candidate> Pairs)> Parse(
         string path,
         List<(int, int, int)> addresses,
         Dictionary<(int, int, int), List<Word>> source,
-        Dictionary<(int, int, int), List<Word>> target,
-        double minimumConfidence,
-        Selection selection = Selection.All)
+        Dictionary<(int, int, int), List<Word>> target)
     {
-        var drafts = new List<AlignedDraft>(300_000);
-        var proposed = 0;
-        var collapsed = 0;
-        var below = 0;
         var line = 0;
 
         foreach (var text in File.ReadLines(path))
         {
             if (line >= addresses.Count)
             {
-                break;
+                yield break;
             }
 
             var address = addresses[line++];
             var sourceWords = source[address];
             var targetWords = target[address];
-            var verse = new List<(int Source, int Target, double Translation, double Alignment)>(24);
+            var pairs = new List<Candidate>(24);
 
             foreach (var token in text.Split(' ', StringSplitOptions.RemoveEmptyEntries))
             {
@@ -349,9 +382,175 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     continue;
                 }
 
-                proposed++;
-                verse.Add((s, t, Score(parts, 1), Score(parts, 2)));
+                pairs.Add((s, t, Score(parts, 1), Score(parts, 2)));
             }
+
+            yield return (sourceWords, targetWords, pairs);
+        }
+    }
+
+    /// <summary>
+    /// What the model proposed for one pair of texts, with the syntax of the target read over it,
+    /// against what a source states. It answers the only question worth asking of a new signal
+    /// before it is wired into anything: does knowing this separate the model's right answers from
+    /// its wrong ones, and by how much.
+    /// </summary>
+    public async Task<string> Diagnose(
+        string fromSlug,
+        string toSlug,
+        string workspace,
+        string modelType,
+        bool statedOnly = false,
+        CancellationToken cancellationToken = default)
+    {
+        var from = await Text(fromSlug, cancellationToken);
+        var to = await Text(toSlug, cancellationToken);
+        var source = await Words(fromSlug, Reduce, cancellationToken);
+        var target = await Words(toSlug, Comparable, cancellationToken);
+        var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
+
+        Directory.CreateDirectory(workspace);
+        var alignmentFile = await Align(
+            fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
+
+        var (gold, _) = await Stated(from.Id, to.Id, statedOnly, cancellationToken);
+        var prior = await SyntaxPrior.Read(
+            (NpgsqlConnection)db.Database.GetDbConnection(), to.Id, cancellationToken);
+
+        var cohesions = Enum.GetValues<Cohesion>();
+        var seen = new int[Bands.Length + 1, cohesions.Length];
+        var right = new int[Bands.Length + 1, cohesions.Length];
+
+        foreach (var (sourceWords, targetWords, raw) in Parse(alignmentFile, addresses, source, target))
+        {
+            var ids = targetWords.Select(word => word.Id).ToList();
+            var judged = prior.Judge(raw, ids);
+
+            for (var at = 0; at < raw.Count; at++)
+            {
+                var band = Band(raw[at].Translation);
+                var bucket = (int)judged[at];
+                seen[band, bucket]++;
+                if (gold.Contains((sourceWords[raw[at].Source].Id, ids[raw[at].Target])))
+                {
+                    right[band, bucket]++;
+                }
+            }
+        }
+
+        var report = new StringBuilder()
+            .AppendLine($"{fromSlug} into {toSlug}, every proposal the model made, against {gold.Count} " +
+                        (statedOnly ? "stated" : "stated and lexical") + " pairs")
+            .AppendLine("  How often a source agrees, by what the model scored the pair and how the pair sits")
+            .AppendLine("  among its neighbours' answers. The last row is the log ratio the rescorer adds to")
+            .AppendLine("  the log odds — how much likelier that reading is among the agreed than the rest.")
+            .AppendLine()
+            .Append($"  {"confidence",-12}");
+
+        foreach (var cohesion in cohesions)
+        {
+            report.Append($"{cohesion,20}");
+        }
+
+        report.AppendLine();
+
+        for (var band = 0; band <= Bands.Length; band++)
+        {
+            report.Append($"  {Describe(band),-12}");
+            foreach (var cohesion in cohesions)
+            {
+                var at = (int)cohesion;
+                var agrees = seen[band, at] == 0 ? 0 : (double)right[band, at] / seen[band, at];
+                report.Append($"{agrees,9:P1} of {seen[band, at],-7}");
+            }
+
+            report.AppendLine();
+        }
+
+        var agreed = Total(right);
+        var disagreed = Total(seen) - agreed;
+        report.Append($"  {"log ratio",-12}");
+
+        foreach (var cohesion in cohesions)
+        {
+            var at = (int)cohesion;
+            var hit = Column(right, at);
+            var wrong = Column(seen, at) - hit;
+            report.Append(
+                $"{(hit == 0 || wrong == 0 ? 0 : Math.Log((double)hit / agreed / ((double)wrong / disagreed))),20:F3}");
+        }
+
+        return report.AppendLine().ToString();
+    }
+
+    /// <summary>
+    /// Where the model's own confidence sits, so the syntax can be asked whether it says anything
+    /// the confidence did not. A signal that only separates the sure pairs from the doubtful ones is
+    /// the confidence over again under another name.
+    /// </summary>
+    private static readonly double[] Bands = [0.25, 0.50, 0.80];
+
+    private static int Band(double confidence)
+    {
+        var band = 0;
+        while (band < Bands.Length && confidence >= Bands[band])
+        {
+            band++;
+        }
+
+        return band;
+    }
+
+    private static string Describe(int band) =>
+        band == 0 ? $"below {Bands[0]:F2}"
+        : band == Bands.Length ? $"{Bands[^1]:F2} and up"
+        : $"{Bands[band - 1]:F2} to {Bands[band]:F2}";
+
+    private static int Total(int[,] counts)
+    {
+        var total = 0;
+        foreach (var count in counts)
+        {
+            total += count;
+        }
+
+        return total;
+    }
+
+    private static int Column(int[,] counts, int column)
+    {
+        var total = 0;
+        for (var row = 0; row < counts.GetLength(0); row++)
+        {
+            total += counts[row, column];
+        }
+
+        return total;
+    }
+
+    /// <summary>
+    /// Reads the tool's Pharaoh output and keeps what is worth keeping.
+    /// </summary>
+    private static (List<AlignedDraft> Drafts, int Proposed, int Collapsed, int Below) Read(
+        string path,
+        List<(int, int, int)> addresses,
+        Dictionary<(int, int, int), List<Word>> source,
+        Dictionary<(int, int, int), List<Word>> target,
+        double minimumConfidence,
+        Selection selection = Selection.All,
+        SyntaxPrior? prior = null)
+    {
+        var drafts = new List<AlignedDraft>(300_000);
+        var proposed = 0;
+        var collapsed = 0;
+        var below = 0;
+
+        foreach (var (sourceWords, targetWords, raw) in Parse(path, addresses, source, target))
+        {
+            proposed += raw.Count;
+            List<Candidate> verse = prior is null
+                ? raw
+                : prior.Rescore(raw, [.. targetWords.Select(word => word.Id)]);
 
             var crowded = verse
                 .GroupBy(pair => pair.Target)
@@ -398,6 +597,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         int fromTextId,
         int toTextId,
         string modelType,
+        bool syntax,
         List<AlignedDraft> drafts,
         CancellationToken cancellationToken)
     {
@@ -430,7 +630,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(drafts[i].Translation, NpgsqlDbType.Double, cancellationToken);
                 await writer.WriteAsync(
-                    $"SIL.Machine {modelType}, symmetrised och, position {drafts[i].Position:F4}",
+                    $"SIL.Machine {modelType}, symmetrised och" +
+                    (syntax ? ", rescored on ETCBC phrase and clause structure" : string.Empty) +
+                    $", position {drafts[i].Position:F4}",
                     NpgsqlDbType.Text, cancellationToken);
             }
 

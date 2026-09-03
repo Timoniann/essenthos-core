@@ -35,7 +35,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
 
     public async Task<FrameOutcome> Place(
         Text text,
-        VersificationFrame frame,
+        VersificationRules rules,
         CancellationToken cancellationToken = default)
     {
         if (await db.VerseReferences.AnyAsync(r => r.Verse!.TextId == text.Id, cancellationToken))
@@ -44,19 +44,32 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             return new FrameOutcome(text.Slug, AlreadyPlaced: true, 0, 0, 0);
         }
 
-        if (frame.Tradition != text.Versification)
+        if (!rules.Covers(text.Versification))
         {
             throw new InvalidOperationException(
-                $"The text \"{text.Slug}\" follows {text.Versification} numbering and the frame offered is " +
-                $"{frame.Tradition}. Placing a text with the wrong tradition puts every verse of it at a " +
-                "plausible and wrong address; load the frame for its own tradition instead.");
+                $"The text \"{text.Slug}\" follows {text.Versification} numbering, which the versification " +
+                "data does not describe. Placing it by another tradition's rules would put every verse of it " +
+                "at a plausible and wrong address; leave it out of the frame instead.");
         }
 
         var started = Stopwatch.StartNew();
         var verses = await db.Verses
             .Where(v => v.TextId == text.Id)
-            .Select(v => new { v.Id, Book = v.Book!.CanonicalOrdinal, v.ChapterNumber, v.Number, v.Label })
+            .Select(v => new
+            {
+                v.Id,
+                Book = v.Book!.CanonicalOrdinal,
+                v.ChapterNumber,
+                v.Number,
+                v.Label,
+                Length = v.Words.Sum(w => w.Surface.Length),
+            })
             .ToListAsync(cancellationToken);
+
+        // Which scheme of its tradition this edition follows is a question only the edition can
+        // answer, and the versification data states the tests that ask it.
+        var frame = rules.Frame(text.Versification, EditionShape.Of(verses.Select(v =>
+            (v.Book, v.ChapterNumber, v.Number, v.Label, v.Length))));
 
         // The addresses this text prints as lettered verses, which the frame resolves differently.
         var lettered = verses
