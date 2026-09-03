@@ -38,7 +38,9 @@ public static partial class VerseWords
 
     /// <summary>
     /// A trailer is whatever the source wrote between one word and the next, so the separation is
-    /// the source's and not this tokeniser's — nothing is added and nothing is dropped (/// is a defect of the Zefania parser, which is a different reader).
+    /// the source's and not this tokeniser's: nothing is added and nothing is dropped. Dropping the
+    /// punctuation that follows a styled span is a defect of the Zefania parser, which is a
+    /// different reader over a different file (PRB-0065), and does not happen here.
     /// </summary>
     public static List<VerseToken> Parse(string verseText)
     {
@@ -70,6 +72,7 @@ public static partial class VerseWords
         var stripped = verseText.Replace(SuperscriptionMarker, string.Empty);
         stripped = CrossNumbering().Replace(stripped, string.Empty);
         stripped = WordSeparation.NormalizeWhitespace(stripped).Trim();
+        stripped = CloseUpPunctuation(stripped);
 
         if (!stripped.Contains(SuppliedOpen) && !stripped.Contains(SuppliedClose))
         {
@@ -216,6 +219,57 @@ public static partial class VerseWords
 
         result.Add(new VerseToken(word, trailer, suppliedSpan));
     }
+
+    /// <summary>
+    /// Closes up the space the source leaves between a word and the punctuation after it.
+    ///
+    /// The King James file writes <c>Thus saith the Lord , Behold</c> — 2,879 times, in 2,632
+    /// verses — because whoever flattened the small-caps LORD markup left the space that had
+    /// separated the styled name from what followed. It shows on every page where God speaks,
+    /// which in the prophets is most of them, and the King James is the text every other text is
+    /// compared against in the split view. PRB-0151.
+    ///
+    /// <para>
+    /// **Only closing punctuation, and that is the whole of the care needed here.** Measured over
+    /// the three files, every character that stands after a space is one of these:
+    /// </para>
+    ///
+    /// <code>
+    /// KJV    ,1446  .692  ;390  :292  (151  '108  ?47  !11  )1
+    /// RUSV   [4089  -979  '875  (131  ^112  |1
+    /// UKR    (75  „15  |1  .1
+    /// </code>
+    ///
+    /// <para>
+    /// A space before <c>(</c> or <c>„</c> is how a parenthesis and a quotation open, a space
+    /// before <c>-</c> is a dash, and <c>'</c> is an apostrophe; all of those are the edition
+    /// writing what it meant. So the rule is the closing marks only, and the corpus loses one
+    /// stray Ukrainian full stop along with the King James's. The single <c>)</c> is the same
+    /// fault as the commas — <em>(I am the Lord ) instead of</em> — and is included for that
+    /// reason rather than by symmetry with <c>(</c>.
+    /// </para>
+    ///
+    /// <para>
+    /// This is a normalisation and not a repair of the source. <c>essenthos-api</c> owns
+    /// <c>Resources/</c> and is frozen (NOT-0013), so editing the file there would be a change to
+    /// a frozen repository that this project reads. Instead the correction is named, applied in
+    /// <see cref="Separate"/> before anything measures offsets, and included in
+    /// <see cref="StripMarkup"/> — which is what <c>EveryBible4uVerseRebuildsItsStrippedSource</c>
+    /// compares the rebuilt verse against, so the round trip DOC-0007 asks for still holds
+    /// exactly, against the normalised form this reader declares rather than against the bytes.
+    /// </para>
+    /// </summary>
+    private static string CloseUpPunctuation(string text) =>
+        SpaceBeforePunctuation().Replace(text, "$1");
+
+    /// <summary>
+    /// A run of spaces between a word character and a closing mark. Anchoring on the word
+    /// character keeps it away from punctuation that legitimately follows other punctuation, and
+    /// the marks are listed rather than taken from a Unicode category because the category holds
+    /// the opening brackets and quotation marks too.
+    /// </summary>
+    [GeneratedRegex(@"(?<=[\p{L}\p{N}]) +([,.;:?!)])")]
+    private static partial Regex SpaceBeforePunctuation();
 
     [GeneratedRegex(@"\(\d+(?:[-:]\d+)?\)")]
     private static partial Regex CrossNumbering();

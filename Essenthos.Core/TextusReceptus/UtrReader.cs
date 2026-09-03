@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Essenthos.Core.TextusReceptus;
 
@@ -168,7 +168,7 @@ internal static partial class UtrReader
                 continue;
             }
 
-            words.AddRange(Variant(tokens, ref at, edition, chapter, verse)
+            words.AddRange(Variant(tokens, ref at, edition, chapter, verse, words)
                 .Select(word => word with { Segment = segment }));
         }
 
@@ -180,7 +180,12 @@ internal static partial class UtrReader
     /// group in one shape and after it in the other. Both alternatives of the second shape share
     /// the tags, because they are the same word spelt two ways.
     /// </summary>
-    private static List<UtrWord> Variant(string[] tokens, ref int at, Edition edition, int chapter, int verse)
+    /// <param name="words">
+    /// The words of the verse so far, because one shape of group is a parse of the word before it
+    /// rather than a word of its own and has to reach back — see the tags-only branch below.
+    /// </param>
+    private static List<UtrWord> Variant(
+        string[] tokens, ref int at, Edition edition, int chapter, int verse, List<UtrWord> words)
     {
         // The opening pipe starts the first alternative, so the list begins empty rather than with
         // one already in it — otherwise the tokens before the group, of which there are none, are
@@ -198,8 +203,12 @@ internal static partial class UtrReader
                     alternatives.Add([]);
                 }
             }
-            else
+            else if (!Division().IsMatch(tokens[at]))
             {
+                // The same note about versification the outer loop already skips, which also stands
+                // at the head of an alternative: Matthew writes "| (23:14) ouai {INJ} | ouai de |"
+                // because the two editions swap 23:13 and 23:14. Skipped only there, so it was read
+                // as a word, and Stephanus's Matthew 23:13 opened with "(23:14)". PRB-0094.
                 alternatives[^1].Add(tokens[at]);
             }
 
@@ -230,17 +239,37 @@ internal static partial class UtrReader
             return [];
         }
 
+        // The third shape: both alternatives are a parse and nothing else, because the editions read
+        // the same letters as different cases. Colossians 4:10 writes
+        // "barnaba 921 | {N-GSM} | {N-DSM} |" — Stephanus takes Βαρναβᾶ as a genitive and Scrivener
+        // as a dative, one word either way. Read as a word this put "{N-GSM}" into the text as a
+        // word of Colossians and left Βαρναβᾶ with no parse at all. PRB-0094.
+        if (chosen.All(token => token.StartsWith('{')))
+        {
+            if (words.Count == 0)
+            {
+                throw new InvalidOperationException(
+                    $"{chapter}:{verse} opens with a variant group that is a parse and nothing else, " +
+                    "so there is no word for it to be the parse of. Every group of this shape in the " +
+                    "27 books follows the word it describes; a file where one does not is one this " +
+                    "reader has not seen.");
+            }
+
+            words[^1] = words[^1] with { Morphology = chosen[0].Trim('{', '}') };
+            return [];
+        }
+
         if (chosen.Any(token => token.StartsWith('{')))
         {
             var inner = 0;
-            var words = new List<UtrWord>(2);
+            var tagged = new List<UtrWord>(2);
             var array = chosen.ToArray();
             while (inner < array.Length)
             {
-                words.Add(Word(array, ref inner));
+                tagged.Add(Word(array, ref inner));
             }
 
-            return words;
+            return tagged;
         }
 
         // The spellings-only shape: the tags stand after the closing pipe and belong to whichever

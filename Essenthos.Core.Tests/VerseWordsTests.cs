@@ -1,4 +1,4 @@
-using Essenthos.Core.XmlBible;
+﻿using Essenthos.Core.XmlBible;
 using FluentAssertions;
 using Xunit;
 
@@ -128,5 +128,57 @@ public class VerseWordsTests
         const string verse = "And Adam called his wife's name Eve; сім'я, из-за.";
 
         string.Concat(VerseWords.Parse(verse).Select(w => w.Word + w.Trailer)).Should().Be(verse);
+    }
+
+    /// <summary>
+    /// The King James file writes "Thus saith the Lord , Behold" wherever the small-caps divine
+    /// name meets punctuation, and the reader used to store that space as part of the trailer.
+    /// PRB-0151.
+    /// </summary>
+    [Theory]
+    [InlineData("Thus saith the Lord , Behold", "Lord, ")]
+    [InlineData("I am the Lord .", "Lord.")]
+    [InlineData("the Lord ; and", "Lord; ")]
+    [InlineData("the Lord : behold", "Lord: ")]
+    [InlineData("the Lord ? Nay", "Lord? ")]
+    [InlineData("the Lord ! Nay", "Lord! ")]
+    [InlineData("(I am the Lord ) instead", "Lord) ")]
+    public void TheSpaceBeforeClosingPunctuationIsClosedUp(string verse, string expected)
+    {
+        var rebuilt = string.Concat(VerseWords.Parse(verse).Select(w => w.Word + w.Trailer));
+
+        rebuilt.Should().Contain(expected);
+        rebuilt.Should().NotContain(" ,").And.NotContain(" .").And.NotContain(" )");
+    }
+
+    /// <summary>
+    /// The marks that legitimately follow a space are left alone: a parenthesis and a low
+    /// quotation mark open that way, a dash stands between clauses, and an apostrophe is a
+    /// character of the word beside it. Listing the closing marks rather than taking a Unicode
+    /// category is what keeps these out.
+    /// </summary>
+    [Theory]
+    [InlineData("the Levites (I am he) instead")]
+    [InlineData("сказав „так“ йому")]
+    [InlineData("a - dash between")]
+    public void PunctuationThatOpensSomethingKeepsItsSpace(string verse)
+    {
+        string.Concat(VerseWords.Parse(verse).Select(w => w.Word + w.Trailer)).Should().Be(verse);
+    }
+
+    /// <summary>
+    /// The normalisation is part of the stripped form, which is what the corpus round trip compares
+    /// against. If it were applied only in <c>Parse</c>, the round trip would fail on every one of
+    /// the 2,632 verses; if it were applied only in <c>StripMarkup</c>, the corpus would keep the
+    /// space and the test would still pass. Both come from one call for that reason.
+    /// </summary>
+    [Fact]
+    public void TheStrippedFormCarriesTheSameNormalisation()
+    {
+        const string verse = "Thus saith the Lord , Behold";
+
+        VerseWords.StripMarkup(verse).Should().Be("Thus saith the Lord, Behold");
+        string.Concat(VerseWords.Parse(verse).Select(w => w.Word + w.Trailer))
+            .Should().Be(VerseWords.StripMarkup(verse));
     }
 }

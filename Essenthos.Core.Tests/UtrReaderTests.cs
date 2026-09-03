@@ -1,4 +1,4 @@
-using Essenthos.Core.Loading;
+﻿using Essenthos.Core.Loading;
 using Essenthos.Core.TextusReceptus;
 using FluentAssertions;
 using Xunit;
@@ -155,6 +155,59 @@ public class TextusReceptusOmissionTests
                 .SelectMany(chapter => chapter.Verses)
                 .Should().NotContain(verse => verse.Words.Count == 0);
         }
+    }
+
+    /// <summary>
+    /// The composite writes the other edition's verse number inline where the two divide a verse
+    /// differently. The outer loop already skipped it; inside a variant group it was read as a
+    /// word, so Stephanus's Matthew 23:13 opened with "(23:14)". PRB-0094.
+    /// </summary>
+    [Theory]
+    [InlineData(Edition.Stephanus1550)]
+    [InlineData(Edition.Scrivener1894)]
+    public void NoWordIsAVerseNumberInBrackets(Edition edition)
+    {
+        var words = TextusReceptusTextSource.Read(TestResources.TextusReceptusFolder, edition).Books
+            .SelectMany(book => book.Chapters)
+            .SelectMany(chapter => chapter.Verses)
+            .SelectMany(verse => verse.Words);
+
+        words.Should().NotContain(word => word.Surface.StartsWith('(') && word.Surface.EndsWith(')'));
+    }
+
+    /// <summary>
+    /// A variant group whose two alternatives are a parse and nothing else is the parse of the word
+    /// before it, not a word. Colossians 4:10 writes "barnaba 921 | {N-GSM} | {N-DSM} |" because
+    /// Stephanus reads Βαρναβᾶ as a genitive and Scrivener as a dative. Read as a word it put
+    /// "{N-GSM}" into the text and left Βαρναβᾶ with no parse. PRB-0094.
+    /// </summary>
+    [Theory]
+    [InlineData(Edition.Stephanus1550, "N-GSM")]
+    [InlineData(Edition.Scrivener1894, "N-DSM")]
+    public void AGroupOfParsesBelongsToTheWordBeforeIt(Edition edition, string expected)
+    {
+        var words = UtrReader.Read(File.ReadAllText(TestResources.TextusReceptus("COL")), edition)
+            .Single(verse => verse is { Chapter: 4, Number: 10 })
+            .Words;
+
+        words.Should().NotContain(word => word.Surface.StartsWith('{'));
+        words.Single(word => word.Surface == "barnaba").Morphology.Should().Be(expected);
+    }
+
+    /// <summary>
+    /// No word of either edition is a brace: a parse is a word's attribute and never a word. This
+    /// is the assertion the two above are instances of, over the whole corpus.
+    /// </summary>
+    [Theory]
+    [InlineData(Edition.Stephanus1550)]
+    [InlineData(Edition.Scrivener1894)]
+    public void NoWordIsAParse(Edition edition)
+    {
+        TextusReceptusTextSource.Read(TestResources.TextusReceptusFolder, edition).Books
+            .SelectMany(book => book.Chapters)
+            .SelectMany(chapter => chapter.Verses)
+            .SelectMany(verse => verse.Words)
+            .Should().NotContain(word => word.Surface.StartsWith('{'));
     }
 
     private static ChapterDraft SeventeenthOfLuke(Edition edition) =>
