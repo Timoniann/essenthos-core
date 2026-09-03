@@ -19,6 +19,13 @@ public static class Datasets
     /// What a row's source string starts with, where the dataset supplies rows. A dataset that
     /// supplies annotation rather than rows carries no prefix and is found by <paramref name="Lemmas"/>.
     /// </param>
+    /// <param name="Links">
+    /// Whether this dataset supplies word links, whose source strings carry <c>Prefix</c> too.
+    ///
+    /// Set where a dataset states word-to-word correspondences rather than contributing rows of its
+    /// own. It is a separate flag rather than another prefix because the link table is millions of
+    /// rows and only worth sweeping for the two or three datasets that speak there.
+    /// </param>
     /// <param name="Lemmas">
     /// The text whose lemmas this dataset supplies, where it supplies lemmas rather than rows.
     ///
@@ -37,7 +44,8 @@ public static class Datasets
         string Url,
         string Covers,
         string Prefix,
-        string? Lemmas = null);
+        string? Lemmas = null,
+        bool Links = false);
 
     public static readonly Dataset[] All =
     [
@@ -63,6 +71,24 @@ public static class Datasets
             "World history on the same axis: battles, cities founded, dynasties, writing systems "
             + "and archaeological ages, so the text can be read against what else was happening.",
             "Wikidata"),
+
+        // The corpus's single most load-bearing source, and the one that went longest unnamed: every
+        // stated word-level correspondence the Old Testament has comes from it. PRB-0179.
+        new("openhebrewbible", "Open Hebrew Bible Project", "Eliran Wong", "CC BY-NC 4.0",
+            "https://creativecommons.org/licenses/by-nc/4.0/",
+            "https://github.com/eliranwong/OpenHebrewBible",
+            "Which King James word renders which Hebrew word, stated rather than computed, for the "
+            + "whole Old Testament. It is the only word-level testimony this corpus holds for the "
+            + "Hebrew, and therefore also the standard every inferred method is measured against.",
+            "Open Hebrew Bible Project", Links: true),
+
+        new("unfoldingword", "Ukrainian Bible Interlinear Ogienko", "unfoldingWord", "CC BY-SA 4.0",
+            "https://creativecommons.org/licenses/by-sa/4.0/",
+            "https://git.door43.org/uk_ts/uk_ubio",
+            "Which Ukrainian word renders which Greek or Hebrew word, stated by people. Small "
+            + "beside the Old Testament mapping, and the only stated word-level correspondence any "
+            + "Slavic text in the corpus has — so it is what every model here is calibrated on.",
+            "unfoldingWord", Links: true),
 
         new("glaux", "GLAUx", "Alek Keersmaekers and the GLAUx contributors", "CC BY-SA 3.0",
             "https://creativecommons.org/licenses/by-sa/3.0/",

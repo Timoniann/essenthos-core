@@ -1,5 +1,6 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Endpoints;
@@ -28,6 +29,13 @@ public static class DatasetEndpoints
             var events = await Counted(db.Events.Select(e => e.Source), cancellationToken);
             var periods = await Counted(db.Periods.Select(p => p.Source), cancellationToken);
 
+            // Only the links somebody stated. The aligner's millions are this project's own
+            // inference and belong to no third party, and sweeping them would cost a second a call
+            // to count nothing.
+            var links = await Counted(
+                db.Links.Where(link => link.Method != LinkMethod.Aligner).Select(link => link.Source),
+                cancellationToken);
+
             var answers = new List<DatasetResponse>();
             foreach (var dataset in Datasets.All)
             {
@@ -45,9 +53,10 @@ public static class DatasetEndpoints
                     Of(entities, dataset.Prefix),
                     Of(events, dataset.Prefix),
                     Of(periods, dataset.Prefix),
-                    lemmas);
+                    lemmas,
+                    dataset.Links ? Of(links, dataset.Prefix) : 0);
 
-                if (counts is { Entities: 0, Events: 0, Periods: 0, Lemmas: 0 })
+                if (counts is { Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Links: 0 })
                 {
                     continue;
                 }
@@ -67,6 +76,7 @@ public static class DatasetEndpoints
             // loaded without being declared here is exactly the thing this endpoint exists to
             // catch, and a silent zero would let it be published unattributed.
             var undeclared = Undeclared(entities).Concat(Undeclared(events)).Concat(Undeclared(periods))
+                .Concat(Undeclared(links))
                 .GroupBy(row => row.Source, StringComparer.Ordinal)
                 .Select(group => new UndeclaredResponse(group.Key, group.Sum(row => row.Rows)))
                 .OrderByDescending(row => row.Rows)
@@ -111,7 +121,7 @@ public record DatasetResponse(
     string Covers,
     DatasetCounts Counts);
 
-public record DatasetCounts(int Entities, int Events, int Periods, int Lemmas);
+public record DatasetCounts(int Entities, int Events, int Periods, int Lemmas, int Links);
 
 /// <param name="Source">
 /// The source string as the rows carry it. A dataset that reaches the database without being

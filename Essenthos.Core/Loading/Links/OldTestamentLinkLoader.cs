@@ -66,7 +66,20 @@ internal sealed record LinkOutcome(
 /// </summary>
 internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestamentLinkLoader> logger)
 {
-    private const string Source = "mapping/KJV-OT-mapped-to-BHS-full-mapping.csv";
+    /// <summary>
+    /// Who says so, not where the bytes are.
+    ///
+    /// This was the filename. `link.source` is the column a reader is answered with when they ask
+    /// where a claim came from, and answering with a path names nobody — while the Ukrainian
+    /// interlinear beside it in the same column has always named its project and its licence. The
+    /// file is CC BY-NC 4.0 and requires attribution, and for the corpus's most cited source there
+    /// was none anywhere: not here, not in the resource folder, not in the store. PRB-0179.
+    ///
+    /// NonCommercial is not a new constraint — BHSA, which this maps onto, is non-commercial itself
+    /// (NOT-0014). Attribution was the term being broken.
+    /// </summary>
+    private const string Source =
+        "Open Hebrew Bible Project by Eliran Wong, github.com/eliranwong/OpenHebrewBible, CC BY-NC 4.0";
 
     /// <summary>
     /// How much of a verse's Hebrew the file and BHSA have to gloss the same way before the two are
