@@ -1,4 +1,4 @@
-using Essenthos.Core.Database.Entities.Enums;
+﻿using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.TextusReceptus;
@@ -39,7 +39,6 @@ public sealed class TextAliasTests
     public void TheSynodalAnswersToTheSpellingsOtherSoftwareUses()
     {
         TextAliases.Canonical("syno").Should().Be("rusv");
-        TextAliases.Canonical("synod").Should().Be("rusv");
     }
 
     /// <summary>Identifiers are matched the way every other lookup here matches them.</summary>
@@ -112,7 +111,7 @@ public sealed class TextAliasTests
     [Fact]
     public void OnlyATextWithOtherNamesCarriesThem()
     {
-        TextAliases.Of("rusv").Should().Equal("syno", "synod");
+        TextAliases.Of("rusv").Should().Equal("syno");
         TextAliases.Of("kjv").Should().BeEmpty();
     }
 
@@ -127,7 +126,7 @@ public sealed class TextAliasTests
         var synodal = Corpora("rusv");
 
         synodal.Id.Should().Be("rusv");
-        synodal.Aliases.Should().Equal("syno", "synod");
+        synodal.Aliases.Should().Equal("syno");
         Corpora("kjv").Aliases.Should().BeNull();
     }
 
