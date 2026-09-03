@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Nestle;
+﻿namespace Essenthos.Core.Nestle;
 
 /// <summary>
 /// A Greek word's case, read from the form code rather than from the attribute that claims to hold
@@ -8,7 +8,7 @@ namespace Essenthos.Core.Nestle;
 /// where the word is nominative, and the value `nominative` never appears in the file at all. It is
 /// not a rename either: measured over every word of the file, `case="neuter"` stands against a
 /// nominative form code 20,629 times and against an accusative one 5. The attribute is unreliable
-/// and the form code is not. PRB-0066.
+/// and the form code is not.
 ///
 /// <para>
 /// The form code is the standard morphology string — <c>N-NSF</c>, <c>V-PAP-NSM</c>, <c>P-1AS</c> —
@@ -32,8 +32,8 @@ namespace Essenthos.Core.Nestle;
 /// So the code wins where it speaks, and the attribute is read only where the code is silent — and
 /// then only if it names a real case, because <c>neuter</c> is not one and the gender attribute
 /// already carries the gender correctly. Gender was never wrong: masculine, feminine and neuter
-/// agree with the code everywhere, which is why PRB-0162's reading of this as *gender stored under
-/// case* is a misdiagnosis of the same fault.
+/// agree with the code everywhere, so reading this as *gender stored under case* is a
+/// misdiagnosis: the gender is right and the case simply holds a value from the wrong vocabulary.
 /// </para>
 /// </summary>
 internal static class NestleCase

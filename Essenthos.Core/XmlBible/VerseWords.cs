@@ -40,7 +40,7 @@ public static partial class VerseWords
     /// A trailer is whatever the source wrote between one word and the next, so the separation is
     /// the source's and not this tokeniser's: nothing is added and nothing is dropped. Dropping the
     /// punctuation that follows a styled span is a defect of the Zefania parser, which is a
-    /// different reader over a different file (PRB-0065), and does not happen here.
+    /// different reader over a different file, and does not happen here.
     /// </summary>
     public static List<VerseToken> Parse(string verseText)
     {
@@ -227,7 +227,7 @@ public static partial class VerseWords
     /// verses — because whoever flattened the small-caps LORD markup left the space that had
     /// separated the styled name from what followed. It shows on every page where God speaks,
     /// which in the prophets is most of them, and the King James is the text every other text is
-    /// compared against in the split view. PRB-0151.
+    /// compared against in the split view.
     ///
     /// <para>
     /// **Only closing punctuation, and that is the whole of the care needed here.** Measured over
@@ -251,12 +251,12 @@ public static partial class VerseWords
     ///
     /// <para>
     /// This is a normalisation and not a repair of the source. <c>essenthos-api</c> owns
-    /// <c>Resources/</c> and is frozen (NOT-0013), so editing the file there would be a change to
-    /// a frozen repository that this project reads. Instead the correction is named, applied in
+    /// <c>Resources/</c>, which is frozen, so editing the file there would be a change to a
+    /// repository this project only reads. Instead the correction is named, applied in
     /// <see cref="Separate"/> before anything measures offsets, and included in
     /// <see cref="StripMarkup"/> — which is what <c>EveryBible4uVerseRebuildsItsStrippedSource</c>
-    /// compares the rebuilt verse against, so the round trip DOC-0007 asks for still holds
-    /// exactly, against the normalised form this reader declares rather than against the bytes.
+    /// compares the rebuilt verse against, so the round trip the corpus requires of every reader
+    /// still holds exactly — against the normalised form this one declares, rather than the bytes.
     /// </para>
     /// </summary>
     private static string CloseUpPunctuation(string text) =>

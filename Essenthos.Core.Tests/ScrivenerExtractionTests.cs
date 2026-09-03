@@ -26,11 +26,10 @@ public class ScrivenerExtractionTests
     /// <c>dusi</c> at Matthew 6:24 and Luke 16:13, and six that differ in length.
     ///
     /// None can be fixed by any rule over the pipes, because the composite does not record them.
-    /// DOC-0009 counted 36 rather than these 37, and 36 is what it is again: COL 4:10 left the list
-    /// when the reader learnt that a variant group of two parses belongs to the word before it
-    /// rather than being a word (PRB-0094). Its disagreement was a phantom "{N-DSM}" in the middle
-    /// of the verse, and it is the only entry here that was ever this reader's fault — the
-    /// remaining 36 the composite genuinely does not record.
+    /// Colossians 4:10 was a thirty-seventh until the reader learnt that a variant group of two
+    /// parses belongs to the word before it rather than being a word of its own; its disagreement
+    /// was a phantom "{N-DSM}" in the middle of the verse, and it was the only entry here that was
+    /// ever this reader's fault.
     /// </summary>
     private static readonly string[] KnownDifferences =
     [
@@ -70,8 +69,8 @@ public class ScrivenerExtractionTests
     }
 
     /// <summary>
-    /// The rule is right in all but the verses DOC-0009 enumerated. A number above that is a defect
-    /// in the extraction; a number below it means the answer key changed and the count is stale.
+    /// The rule is right in all but the verses listed above. A number above that is a defect in the
+    /// extraction; a number below it means the answer key changed and the list is stale.
     /// </summary>
     [Fact]
     public void TheSecondAlternativeIsScrivenerExceptWhereTheTranscriptionsThemselvesDisagree()

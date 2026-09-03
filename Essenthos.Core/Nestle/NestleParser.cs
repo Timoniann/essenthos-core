@@ -105,7 +105,7 @@ public class NestleParser
                     TenseVoiceMoodNumber = tenseVoiceMoodNumber,
                     // From the form code, not from the attribute that claims to hold it: the file
                     // writes case="neuter" where the word is nominative, 20,629 times, and never
-                    // writes "nominative" at all. NestleCase has the measurement. PRB-0066.
+                    // writes "nominative" at all. NestleCase has the measurement.
                     Case = NestleCase.Of(form, caseStr),
                     Number = number,
                     Gender = gender,

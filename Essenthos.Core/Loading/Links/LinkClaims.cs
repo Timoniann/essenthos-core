@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 
 namespace Essenthos.Core.Loading.Links;
@@ -11,7 +11,6 @@ namespace Essenthos.Core.Loading.Links;
 /// afterwards, so every link written since — the Berean's 403,343, every aligner run, everything
 /// reloaded — carried none, and a link two independent sources had both arrived at read as a link
 /// one source stated. The agreement measure sat at 4,664 and was measuring the migration.
-/// PRB-0198.
 ///
 /// <para>
 /// **The claim is taken from the link rather than passed in.** At the moment a batch is written the

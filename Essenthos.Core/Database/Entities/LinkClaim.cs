@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +12,8 @@ namespace Essenthos.Core.Database.Entities;
 /// only answer to *who says so*, one method and one source, and the first method to speak won. So a
 /// word pair the Ukrainian interlinear states and the aligner independently arrived at was stored
 /// as **two links**, competing, each looking like the other's rival; and a word pair only the
-/// aligner ever guessed at was stored identically to one four methods agree on. AUD-0111 could
-/// measure the corpus at 92.1% correct and could not say which 8% was wrong, and this is why.
+/// aligner ever guessed at was stored identically to one four methods agree on. So the corpus could
+/// be measured at 92.1% correct and could not say which 8% was wrong, and this is why.
 ///
 /// <para>
 /// **Agreement is the cheapest evidence there is and it was being thrown away.** Two methods that

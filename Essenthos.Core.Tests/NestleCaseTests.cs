@@ -1,4 +1,4 @@
-using Essenthos.Core.Nestle;
+﻿using Essenthos.Core.Nestle;
 using FluentAssertions;
 using Xunit;
 
@@ -7,7 +7,7 @@ namespace Essenthos.Core.Tests;
 /// <summary>
 /// A Greek word's case, read from the form code because the attribute that claims to hold it does
 /// not. The file writes `case="neuter"` — a gender — where the word is nominative, 20,629 times,
-/// and never writes `nominative` at all. PRB-0066.
+/// and never writes `nominative` at all.
 /// </summary>
 public class NestleCaseTests
 {

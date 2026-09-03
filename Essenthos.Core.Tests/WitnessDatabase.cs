@@ -1,4 +1,4 @@
-using Essenthos.Core.Configuration;
+﻿using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +20,6 @@ namespace Essenthos.Core.Tests;
 /// mid-test. Five identical runs of an unchanged tree gave 601, 579, 601, 543, 601 passes, every
 /// failure a database-backed class and every one of them 3D000 <em>database does not exist</em>.
 /// Three agents hit it the same afternoon in three worktrees without knowing about each other.
-/// PRB-0154.
 /// </para>
 ///
 /// <para>

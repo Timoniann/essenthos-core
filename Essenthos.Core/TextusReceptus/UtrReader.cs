@@ -208,7 +208,7 @@ internal static partial class UtrReader
                 // The same note about versification the outer loop already skips, which also stands
                 // at the head of an alternative: Matthew writes "| (23:14) ouai {INJ} | ouai de |"
                 // because the two editions swap 23:13 and 23:14. Skipped only there, so it was read
-                // as a word, and Stephanus's Matthew 23:13 opened with "(23:14)". PRB-0094.
+                // as a word, and Stephanus's Matthew 23:13 opened with "(23:14)".
                 alternatives[^1].Add(tokens[at]);
             }
 
@@ -243,7 +243,7 @@ internal static partial class UtrReader
         // the same letters as different cases. Colossians 4:10 writes
         // "barnaba 921 | {N-GSM} | {N-DSM} |" — Stephanus takes Βαρναβᾶ as a genitive and Scrivener
         // as a dative, one word either way. Read as a word this put "{N-GSM}" into the text as a
-        // word of Colossians and left Βαρναβᾶ with no parse at all. PRB-0094.
+        // word of Colossians and left Βαρναβᾶ with no parse at all.
         if (chosen.All(token => token.StartsWith('{')))
         {
             if (words.Count == 0)

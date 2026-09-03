@@ -160,7 +160,7 @@ public class TextusReceptusOmissionTests
     /// <summary>
     /// The composite writes the other edition's verse number inline where the two divide a verse
     /// differently. The outer loop already skipped it; inside a variant group it was read as a
-    /// word, so Stephanus's Matthew 23:13 opened with "(23:14)". PRB-0094.
+    /// word, so Stephanus's Matthew 23:13 opened with "(23:14)".
     /// </summary>
     [Theory]
     [InlineData(Edition.Stephanus1550)]
@@ -179,7 +179,7 @@ public class TextusReceptusOmissionTests
     /// A variant group whose two alternatives are a parse and nothing else is the parse of the word
     /// before it, not a word. Colossians 4:10 writes "barnaba 921 | {N-GSM} | {N-DSM} |" because
     /// Stephanus reads Βαρναβᾶ as a genitive and Scrivener as a dative. Read as a word it put
-    /// "{N-GSM}" into the text and left Βαρναβᾶ with no parse. PRB-0094.
+    /// "{N-GSM}" into the text and left Βαρναβᾶ with no parse.
     /// </summary>
     [Theory]
     [InlineData(Edition.Stephanus1550, "N-GSM")]
