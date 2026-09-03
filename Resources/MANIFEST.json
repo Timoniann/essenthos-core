@@ -39,6 +39,11 @@
     "files": 4,
     "sha256": "18ac158ff2fe5640f4867c5d1d3d5eb33f4f5d90de09e41489adf4cc87bea3f1"
   },
+  "STEPBible": {
+    "bytes": 70214613,
+    "files": 5,
+    "sha256": "d2c454b23895c74d15c628f3edd293b3cbce3d8c559460749882152b3c46ea3d"
+  },
   "Septuagint": {
     "bytes": 7207010,
     "files": 53,

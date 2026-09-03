@@ -115,6 +115,15 @@ internal sealed class DatasetLoader(
     /// </summary>
     private static readonly Edition[] Editions = [Edition.Scrivener1894, Edition.Stephanus1550];
 
+    private const string StepBibleFolder = "STEPBible";
+
+    /// <summary>
+    /// STEPBible splits the Old Testament across four files because one would be too large for
+    /// GitHub. They are one dataset and each row addresses its own verse, so they are read together
+    /// and the order does not matter.
+    /// </summary>
+    private const string TahotVolumes = "TAHOT *.txt";
+
     /// <summary>
     /// The Greek texts the King James is matched against, in the order they are worth reading: the
     /// one it was translated from, then the one it was not.
@@ -196,7 +205,37 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OldTestamentLinkLoader>();
-        status.Record(await loader.Load(records, cancellationToken));
+        status.Record(await loader.Load(records, Tahot(resources), cancellationToken));
+    }
+
+    /// <summary>
+    /// STEPBible's morpheme segmentation, which says which of the mapping file's morphemes are
+    /// prefixes and what each means where it stands. It is fetched rather than committed, so a
+    /// checkout without it still loads: the prefixes then fall back to this project's own list of
+    /// what each one can render, which is weaker, and the load says so rather than being silently
+    /// worse.
+    /// </summary>
+    private TahotSegmentation? Tahot(string resources)
+    {
+        var folder = Path.Combine(resources, StepBibleFolder);
+        var volumes = Directory.Exists(folder)
+            ? Directory.GetFiles(folder, TahotVolumes).Order(StringComparer.Ordinal).ToArray()
+            : [];
+
+        if (volumes.Length == 0)
+        {
+            logger.LogWarning(
+                "TAHOT is not in {Folder}, so the Hebrew prefixes are matched from this project's own list of " +
+                "what each one can render rather than from what STEPBible states. Run scripts/fetch-stepbible.ps1",
+                folder);
+            return null;
+        }
+
+        var segmentation = TahotSegmentation.Read(volumes);
+        logger.LogInformation(
+            "Read {Morphemes} morphemes over {Verses} verses from {Volumes} TAHOT volumes",
+            segmentation.Morphemes, segmentation.Verses, volumes.Length);
+        return segmentation;
     }
 
     /// <summary>

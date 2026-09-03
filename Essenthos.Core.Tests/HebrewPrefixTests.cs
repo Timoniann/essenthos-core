@@ -120,7 +120,7 @@ public class HebrewPrefixTests
         var matches = HebrewPrefixes.Match(AndGodSaid, LetThereBeLight);
 
         matches.Single(m => m.EnglishWord == 7).Should()
-            .BeEquivalentTo(new PrefixMatch(7, 37, HebrewPrefixes.Adjacent));
+            .BeEquivalentTo(new PrefixMatch(7, 37, HebrewPrefixes.Adjacent, false));
         matches.Single(m => m.EnglishWord == 0).Confidence.Should().Be(HebrewPrefixes.ClauseInitial);
     }
 

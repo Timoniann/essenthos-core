@@ -45,6 +45,21 @@ internal static class TestResources
 
     public static string Etcbc => System.IO.Path.Combine(ResolvedPath.Value, "etcbc");
 
+    public static string KjvBhsMapping => Path("mapping", "KJV-OT-mapped-to-BHS-full-mapping.csv");
+
+    /// <summary>
+    /// TAHOT's four volumes, which STEPBible splits only because one file would be too large for
+    /// GitHub. Empty where the fetch script has not been run, which the tests over it check for
+    /// rather than failing on a missing folder.
+    /// </summary>
+    public static IReadOnlyList<string> Tahot()
+    {
+        var folder = System.IO.Path.Combine(ResolvedPath.Value, "STEPBible");
+        return Directory.Exists(folder)
+            ? [.. Directory.GetFiles(folder, "TAHOT *.txt").Order(StringComparer.Ordinal)]
+            : [];
+    }
+
     /// <summary>The place layer's second source, one JSON object per line.</summary>
     public static string OpenBibleFolder => System.IO.Path.GetDirectoryName(Path("OpenBible", "ancient.jsonl"))!;
 

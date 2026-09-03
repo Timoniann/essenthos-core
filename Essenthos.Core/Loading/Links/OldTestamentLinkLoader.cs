@@ -21,6 +21,16 @@ namespace Essenthos.Core.Loading.Links;
 /// Hebrew words where the file and BHSA both state a gloss, which is how far the check reached. A
 /// zero here says the check ran over nothing, and a check that passes over nothing is not a check.
 /// </param>
+/// <param name="StatedPrefixes">
+/// Prefix links whose English word is the one STEPBible prints for that morpheme where it stands,
+/// rather than one of the senses this project listed for its Strong number. They are still
+/// inferences — the pairing is ours — but they rest on a source saying what the morpheme means, and
+/// each carries a second claim naming it.
+/// </param>
+/// <param name="StatedVerses">
+/// Verses whose morphemes TAHOT and the mapping file could be lined up in. Zero means the
+/// segmentation was absent or reached nothing, and the prefixes fell back to the project's list.
+/// </param>
 /// <param name="GlossesDrifted">
 /// Verses that pass the check and are still not a perfect match — the two sides gloss the same
 /// words from two revisions of one dictionary. Kept and counted rather than refused: they are
@@ -33,6 +43,8 @@ internal sealed record LinkOutcome(
     int GlossRefused,
     int GlossesCompared,
     int GlossesDrifted,
+    int StatedPrefixes,
+    int StatedVerses,
     int Links,
     int EnglishWordsLinked,
     int HebrewWordsLinked,
@@ -50,7 +62,9 @@ internal sealed record LinkOutcome(
               $"{HebrewWordsLinked} Hebrew words, {MultiWordLinks} naming more than one Hebrew word, " +
               $"{Omissions} naming a Hebrew word the English does not render, " +
               $"{Supplied} naming an English word the King James supplies and the Hebrew does not have, " +
-              $"{HebrewWordsUnreached} Hebrew words reached by nothing, {StrongNumbers} Hebrew words given the " +
+              $"{HebrewWordsUnreached} Hebrew words reached by nothing, {StatedPrefixes} function words matched to " +
+              $"the morpheme STEPBible glosses for them over {StatedVerses} verses it segments, " +
+              $"{StrongNumbers} Hebrew words given the " +
               $"Strong number the file states, {Refused} verses refused of which {GlossRefused} for glosses that " +
               $"disagree, over {GlossesCompared} words the file and BHSA both gloss, {GlossesDrifted} verses " +
               $"passing with a gloss the dictionary has since revised";
@@ -80,6 +94,19 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// </summary>
     private const string Source =
         "Open Hebrew Bible Project by Eliran Wong, github.com/eliranwong/OpenHebrewBible, CC BY-NC 4.0";
+
+    /// <summary>
+    /// The second source, where it reaches: STEPBible's TAHOT, which says which morphemes are
+    /// prefixes and what each one means where it stands. It states nothing about the King James, so
+    /// it never makes a link <c>stated-by-source</c> — it is a second, independent answer to what
+    /// the Hebrew says, and the claim it writes records that rather than upgrading the link.
+    /// </summary>
+    private const string StatedSource =
+        "TAHOT by STEP Bible, www.STEPBible.org, based on work at Tyndale House Cambridge, CC BY-NC 3.0";
+
+    /// <summary>What the second claim asserts, as against what the link's own claim asserts.</summary>
+    private const string StatedNote =
+        "the gloss TAHOT prints for this morpheme where it stands";
 
     /// <summary>
     /// How much of a verse's Hebrew the file and BHSA have to gloss the same way before the two are
@@ -138,8 +165,13 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         CREATE TEMP TABLE stated_strong (word_id bigint PRIMARY KEY, strong_number text) ON COMMIT DROP;
         """;
 
+    /// <param name="segmentation">
+    /// TAHOT, or null where it is not on disk. Without it the prefixes fall back to the project's
+    /// own list of what each one can render, which is what the corpus had before and is weaker.
+    /// </param>
     public async Task<LinkOutcome> Load(
         IReadOnlyList<MappingRecord> records,
+        TahotSegmentation? segmentation = null,
         CancellationToken cancellationToken = default)
     {
         var english = await db.Texts.SingleOrDefaultAsync(t => t.Slug == "kjv", cancellationToken);
@@ -154,7 +186,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == hebrew.Id, cancellationToken))
         {
             logger.LogInformation("The Old Testament links are already loaded; nothing to do");
-            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -162,12 +194,13 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var hebrewVerses = await VerseWords(hebrew.Id, cancellationToken);
 
         var pairs = new List<LinkDraft>(400_000);
-        var stated = new List<(long WordId, string Strong)>(430_000);
+        var statedStrong = new List<(long WordId, string Strong)>(430_000);
         var refused = 0;
         var glossRefused = 0;
         var glossesCompared = 0;
         var glossesDrifted = 0;
         var unreached = 0;
+        var statedVerses = 0;
 
         foreach (var record in records)
         {
@@ -179,7 +212,13 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 continue;
             }
 
-            var drafts = Build(record, kjvWords, bhsaWords, out var glosses);
+            var stated = segmentation?.Align(record.Book, record.Chapter, record.Verse, record.Hebrew);
+            if (stated is { Count: > 0 })
+            {
+                statedVerses++;
+            }
+
+            var drafts = Build(record, kjvWords, bhsaWords, stated, out var glosses);
             glossesCompared += glosses.Compared;
             if (drafts is null)
             {
@@ -205,12 +244,12 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 var strong = StrongNumbers.Normalize(record.Hebrew[i].Strong);
                 if (strong is not null)
                 {
-                    stated.Add((bhsaWords[i].Id, strong));
+                    statedStrong.Add((bhsaWords[i].Id, strong));
                 }
             }
         }
 
-        await Write(english.Id, hebrew.Id, pairs, stated, cancellationToken);
+        await Write(english.Id, hebrew.Id, pairs, statedStrong, cancellationToken);
 
         var outcome = new LinkOutcome(
             false,
@@ -219,6 +258,8 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             glossRefused,
             glossesCompared,
             glossesDrifted,
+            pairs.Count(p => p.Stated),
+            statedVerses,
             pairs.Count,
             pairs.Sum(p => p.English.Count),
             pairs.SelectMany(p => p.Hebrew).Distinct().Count(),
@@ -226,7 +267,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             pairs.Count(p => p.Hebrew.Count > 1),
             pairs.Count(p => p.Omitted),
             pairs.Count(p => p.Relation == LinkRelation.Expands),
-            stated.DistinctBy(pair => pair.WordId).Count(),
+            statedStrong.DistinctBy(pair => pair.WordId).Count(),
             started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
         return outcome;
@@ -246,6 +287,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         MappingRecord record,
         List<Word> kjv,
         List<Word> bhsa,
+        IReadOnlyDictionary<int, TahotMorpheme>? stated,
         out GlossAgreement glosses)
     {
         glosses = default;
@@ -285,7 +327,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         // The file marks content words only, so the function words in a phrase would otherwise be
         // claimed by the one word it marks. What they actually render is recovered first, and they
         // leave the phrase for links of their own.
-        var prefixes = HebrewPrefixes.Match(record.Hebrew, record.English)
+        var prefixes = HebrewPrefixes.Match(record.Hebrew, record.English, stated)
             .ToDictionary(match => match.EnglishWord, match => match);
 
         // And a word the King James prints in italics renders nothing at all: the translators are
@@ -303,7 +345,11 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var drafts = new List<LinkDraft>(record.English.Count + prefixes.Count + supplied.Count);
         foreach (var (english, match) in prefixes)
         {
-            drafts.Add(new LinkDraft([kjv[english].Id], [bhsa[byPosition[match.HebrewPosition]].Id], match.Confidence));
+            drafts.Add(new LinkDraft(
+                [kjv[english].Id], [bhsa[byPosition[match.HebrewPosition]].Id], match.Confidence)
+            {
+                Stated = match.Stated,
+            });
         }
 
         foreach (var english in supplied)
@@ -455,6 +501,29 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         // the measure spent a day reporting the migration instead of the corpus. PRB-0198.
         await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
 
+        // And the second claim, where a second source reached the same place. TAHOT says nothing
+        // about the King James, so it cannot make one of these links stated -- what it says is what
+        // the Hebrew morpheme means, and a function word matched to the morpheme whose printed gloss
+        // is that very word has two sources behind it rather than one.
+        var corroborated = new List<long>();
+        for (var i = 0; i < drafts.Count; i++)
+        {
+            if (drafts[i].Stated)
+            {
+                corroborated.Add(firstId + i);
+            }
+        }
+
+        await LinkClaims.Corroborate(
+            connection,
+            transaction,
+            corroborated,
+            LinkMethod.Lexical,
+            HebrewPrefixes.Stated,
+            StatedSource,
+            StatedNote,
+            cancellationToken);
+
         await transaction.CommitAsync(cancellationToken);
     }
 
@@ -543,6 +612,13 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     private sealed record LinkDraft(List<long> English, List<long> Hebrew, double? Confidence = null)
     {
         public int LastHebrewPosition { get; set; }
+
+        /// <summary>
+        /// Whether a second source states what this morpheme means where it stands. It does not
+        /// change what the link is — the pairing is still inferred — it earns the link a second
+        /// claim, so that the agreement measure can see two sources standing behind it.
+        /// </summary>
+        public bool Stated { get; init; }
 
         public bool Omitted { get; init; }
 
