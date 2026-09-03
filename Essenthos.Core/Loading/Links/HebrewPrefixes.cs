@@ -2,7 +2,12 @@ namespace Essenthos.Core.Loading.Links;
 
 /// <param name="EnglishWord">Index of the English word within its verse, counting from zero.</param>
 /// <param name="HebrewPosition">The file's position for the Hebrew morpheme it renders.</param>
-internal sealed record PrefixMatch(int EnglishWord, int HebrewPosition, double Confidence);
+/// <param name="Stated">
+/// Whether a source says this morpheme means this English word where it stands, as against the
+/// project's own list of what each prefix can render. The pairing is an inference either way — the
+/// two differ in what the inference rests on, and a reader is owed that difference.
+/// </param>
+internal sealed record PrefixMatch(int EnglishWord, int HebrewPosition, double Confidence, bool Stated);
 
 /// <summary>
 /// Gives the English function words their own Hebrew morphemes.
@@ -14,7 +19,7 @@ internal sealed record PrefixMatch(int EnglishWord, int HebrewPosition, double C
 /// וַ it does render is reached by nothing at all. Across the Old Testament that is 144,963 English
 /// function words attached to a word they do not translate, and 34,910 Hebrew morphemes left dark.
 ///
-/// So the correspondence is recovered rather than asserted, from what the file itself says: every
+/// So the correspondence is recovered rather than asserted, from what the sources say: every
 /// morpheme carries its Strong number, its position, and the clause it belongs to. Two rules, both
 /// conservative — where there is no positive evidence the word stays where it was:
 ///
@@ -34,12 +39,26 @@ internal sealed record PrefixMatch(int EnglishWord, int HebrewPosition, double C
 /// </item>
 /// </list>
 ///
-/// These are inferences, so they are written <c>lexical</c> with a confidence and never as anything
-/// the file stated. Adjacency has two independent signals agreeing, position and gloss, and is
-/// scored above the clause rule, which has only the one.
+/// Which morphemes are prefixes, and what each one means where it stands, comes from TAHOT where
+/// TAHOT reaches the verse — see <see cref="TahotSegmentation"/>. That matters most where the
+/// mapping file cannot distinguish a prefix from a word at all: it numbers the prefixed מ H4480,
+/// which is also the free-standing preposition מִן, so before TAHOT no English "from" could reach
+/// the morpheme it renders. Where TAHOT does not reach, <see cref="Renders"/> is the project's own
+/// reading of what each prefix can stand for, and it is the weaker of the two.
+///
+/// These are inferences either way, so they are written <c>lexical</c> with a confidence and never
+/// as anything a source stated. Adjacency has two independent signals agreeing, position and gloss,
+/// and is scored above the clause rule, which has only the one.
 /// </summary>
 internal static class HebrewPrefixes
 {
+    /// <summary>
+    /// Position and gloss both agree, no other morpheme could be meant, and the gloss is the one the
+    /// source prints for this morpheme in this verse rather than one of the senses the project
+    /// listed for its Strong number.
+    /// </summary>
+    public const double Stated = 0.98;
+
     /// <summary>Position and gloss both agree, and no other morpheme could be meant.</summary>
     public const double Adjacent = 0.95;
 
@@ -47,10 +66,12 @@ internal static class HebrewPrefixes
     public const double ClauseInitial = 0.9;
 
     /// <summary>
-    /// The prefix morphemes, by the Strong number the file gives them, and the English words each
-    /// may render. Keyed on the number rather than the gloss because a handful of rows carry the
-    /// gloss of the word the prefix is attached to — <c>H9003｜walk</c> — and a number does not
-    /// drift.
+    /// The prefix morphemes, by the Strong number the mapping file gives them, and the English words
+    /// each may render. This is the project's own reading and it is used only where TAHOT does not
+    /// reach the verse.
+    ///
+    /// Keyed on the number rather than the gloss because a handful of rows carry the gloss of the
+    /// word the prefix is attached to — <c>H9003｜walk</c> — and a number does not drift.
     /// </summary>
     private static readonly Dictionary<string, string[]> Renders = new(StringComparer.Ordinal)
     {
@@ -72,9 +93,16 @@ internal static class HebrewPrefixes
     /// <summary>The object marker אֵת is never rendered, so a prefix search reads straight past it.</summary>
     private const string ObjectMarker = "H853";
 
+    /// <param name="stated">
+    /// What TAHOT says about this verse's morphemes, keyed by the mapping file's position, or null
+    /// where it says nothing — a verse it does not carry, or one the two divide differently. Absent
+    /// is not "no prefix": the project's own list answers for every morpheme the segmentation does
+    /// not reach.
+    /// </param>
     public static IReadOnlyList<PrefixMatch> Match(
         IReadOnlyList<HebrewEntry> hebrew,
-        IReadOnlyList<EnglishSegment> segments)
+        IReadOnlyList<EnglishSegment> segments,
+        IReadOnlyDictionary<int, TahotMorpheme>? stated = null)
     {
         var byPosition = new Dictionary<int, HebrewEntry>(hebrew.Count);
         foreach (var entry in hebrew)
@@ -105,7 +133,7 @@ internal static class HebrewPrefixes
                 continue;
             }
 
-            var prefixes = Preceding(byPosition, claimed, taken, segment.RendersHebrew.Position);
+            var prefixes = Preceding(byPosition, stated, claimed, taken, segment.RendersHebrew.Position);
             if (prefixes.Count == 0)
             {
                 continue;
@@ -115,28 +143,31 @@ internal static class HebrewPrefixes
             for (var i = 0; i < segment.Words.Count - 1 && at < prefixes.Count; i++)
             {
                 var word = segment.Words[i].Text;
-                if (!Renders.Values.Any(words => words.Contains(word, StringComparer.OrdinalIgnoreCase)))
+                if (!IsFunctionWord(word) && !prefixes.Exists(position => Says(stated, position, word)))
                 {
                     // The run of function words the phrase opens with has ended. Anything further in
                     // is the phrase's own content, and past it the order stops being parallel.
                     break;
                 }
 
-                var found = prefixes.FindIndex(at, position => Accepts(byPosition[position], word));
+                var found = prefixes.FindIndex(at, position => Accepts(byPosition[position], stated, word));
                 if (found < 0)
                 {
-                    // English supplies an article the Hebrew does not have. It renders nothing, and
+                    // The English supplies a word the Hebrew does not have. It renders nothing, and
                     // stays with the phrase rather than being given the next prefix along.
                     continue;
                 }
 
-                matches.Add(new PrefixMatch(start + i, prefixes[found], Adjacent));
-                taken.Add(prefixes[found]);
+                var position = prefixes[found];
+                var source = Says(stated, position, word);
+                matches.Add(new PrefixMatch(
+                    start + i, position, source ? Stated : Adjacent, source));
+                taken.Add(position);
                 at = found + 1;
             }
         }
 
-        matches.AddRange(ClauseOpenings(hebrew, segments, claimed, taken, matches));
+        matches.AddRange(ClauseOpenings(hebrew, segments, stated, claimed, taken, matches));
         return matches;
     }
 
@@ -147,6 +178,7 @@ internal static class HebrewPrefixes
     /// </summary>
     private static List<int> Preceding(
         Dictionary<int, HebrewEntry> byPosition,
+        IReadOnlyDictionary<int, TahotMorpheme>? stated,
         HashSet<int> claimed,
         HashSet<int> taken,
         int position)
@@ -165,7 +197,7 @@ internal static class HebrewPrefixes
                 continue;
             }
 
-            if (!Renders.ContainsKey(entry.Strong))
+            if (!IsPrefix(entry, stated, at))
             {
                 break;
             }
@@ -184,6 +216,7 @@ internal static class HebrewPrefixes
     private static List<PrefixMatch> ClauseOpenings(
         IReadOnlyList<HebrewEntry> hebrew,
         IReadOnlyList<EnglishSegment> segments,
+        IReadOnlyDictionary<int, TahotMorpheme>? stated,
         HashSet<int> claimed,
         HashSet<int> taken,
         List<PrefixMatch> already)
@@ -191,7 +224,7 @@ internal static class HebrewPrefixes
         var opening = new Dictionary<string, int>(8);
         foreach (var entry in hebrew)
         {
-            if (entry.Strong == "H9000" && !claimed.Contains(entry.Position) && !taken.Contains(entry.Position)
+            if (IsConjunction(entry, stated) && !claimed.Contains(entry.Position) && !taken.Contains(entry.Position)
                 && (!opening.TryGetValue(entry.Clause, out var standing) || entry.Position < standing))
             {
                 opening[entry.Clause] = entry.Position;
@@ -217,14 +250,46 @@ internal static class HebrewPrefixes
                 continue;
             }
 
-            matched.Add(new PrefixMatch(start, conjunction, ClauseInitial));
+            matched.Add(new PrefixMatch(start, conjunction, ClauseInitial, false));
             taken.Add(conjunction);
         }
 
         return matched;
     }
 
-    private static bool Accepts(HebrewEntry entry, string word) =>
-        Renders.TryGetValue(entry.Strong, out var words)
-        && words.Contains(word, StringComparer.OrdinalIgnoreCase);
+    private static bool IsPrefix(HebrewEntry entry, IReadOnlyDictionary<int, TahotMorpheme>? stated, int position) =>
+        stated is not null && stated.TryGetValue(position, out var morpheme)
+            ? morpheme.IsPrefix
+            : Renders.ContainsKey(entry.Strong);
+
+    private static bool IsConjunction(HebrewEntry entry, IReadOnlyDictionary<int, TahotMorpheme>? stated) =>
+        stated is not null && stated.TryGetValue(entry.Position, out var morpheme)
+            ? morpheme.IsConjunction
+            : entry.Strong == "H9000";
+
+    /// <summary>
+    /// Whether this morpheme can render this English word. Both readings are allowed where both
+    /// exist: TAHOT prints one sense per occurrence and the King James often picks another word for
+    /// it — <em>and</em> where TAHOT says <em>and</em> but <em>but</em>, <em>now</em> and
+    /// <em>then</em> where it still says <em>and</em>.
+    /// </summary>
+    private static bool Accepts(HebrewEntry entry, IReadOnlyDictionary<int, TahotMorpheme>? stated, string word) =>
+        (Renders.TryGetValue(entry.Strong, out var words)
+         && words.Contains(word, StringComparer.OrdinalIgnoreCase))
+        || Says(stated, entry.Position, word);
+
+    /// <summary>
+    /// Whether any prefix at all can render this word, which is how the run of function words a
+    /// phrase opens with is told from the phrase's own content. It asks the project's list rather
+    /// than the morphemes in reach, so that a word no prefix here renders but another might is not
+    /// mistaken for the start of the content.
+    /// </summary>
+    private static bool IsFunctionWord(string word) =>
+        Renders.Values.Any(words => words.Contains(word, StringComparer.OrdinalIgnoreCase));
+
+    private static bool Says(IReadOnlyDictionary<int, TahotMorpheme>? stated, int position, string word) =>
+        stated is not null
+        && stated.TryGetValue(position, out var morpheme)
+        && morpheme.IsPrefix
+        && morpheme.Renders(word);
 }

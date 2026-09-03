@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
+﻿using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities.Enums;
+using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 
 namespace Essenthos.Core.Loading.Links;
@@ -13,11 +15,12 @@ namespace Essenthos.Core.Loading.Links;
 /// one source stated. The agreement measure sat at 4,664 and was measuring the migration.
 ///
 /// <para>
-/// **The claim is taken from the link rather than passed in.** At the moment a batch is written the
+/// **A loader's own claim is taken from the link rather than passed in.** At the moment a batch is written the
 /// link's own <c>method</c>, <c>confidence</c> and <c>source</c> *are* its single claim, so copying
 /// them cannot disagree with them — and a helper that took them as arguments could be called with
 /// the wrong ones. The columns on <c>link</c> become a cached view of the strongest claim; this is
-/// where the reasoning is kept.
+/// where the reasoning is kept. <see cref="Corroborate"/> is the exception and has to be: a second
+/// source agreeing is by definition not what the link's own columns say.
 /// </para>
 /// </summary>
 internal static class LinkClaims
@@ -56,4 +59,50 @@ internal static class LinkClaims
         command.CommandTimeout = 600;
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
+
+    /// <summary>
+    /// A second answer on links that already have one: another source, asked independently, that
+    /// agrees. Two sources agreeing is the whole point of the table — a link with two claims is one
+    /// the corroboration measure can see — and it is thrown away by writing a second <em>link</em>
+    /// instead, which reads as two facts about the same words.
+    ///
+    /// <para>
+    /// The claim is passed in here rather than copied from the link, because it is by definition not
+    /// what the link says: the link records the method and source that established it, and this
+    /// records a different one that reached the same place. A claim is unique on
+    /// (link, method, source), so calling this twice with the same source adds nothing.
+    /// </para>
+    /// </summary>
+    public static async Task Corroborate(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        IReadOnlyCollection<long> linkIds,
+        LinkMethod method,
+        double? confidence,
+        string source,
+        string note,
+        CancellationToken cancellationToken)
+    {
+        if (linkIds.Count == 0)
+        {
+            return;
+        }
+
+        await using var command = new NpgsqlCommand(Corroboration, connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction());
+        command.Parameters.AddWithValue("ids", linkIds as long[] ?? [.. linkIds]);
+        command.Parameters.AddWithValue("method", EnumSpelling.Of(method));
+        command.Parameters.AddWithValue("confidence", (object?)confidence ?? DBNull.Value);
+        command.Parameters.AddWithValue("source", source);
+        command.Parameters.AddWithValue("note", note);
+        command.CommandTimeout = 600;
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    private const string Corroboration =
+        """
+        INSERT INTO link_claim (link_id, method, confidence, source, note)
+        SELECT id, @method, @confidence, @source, @note FROM unnest(@ids) AS id
+        ON CONFLICT DO NOTHING
+        """;
 }
