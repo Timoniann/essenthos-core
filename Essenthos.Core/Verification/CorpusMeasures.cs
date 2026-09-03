@@ -84,6 +84,22 @@ internal sealed record Pairing(
 /// How many rows break the check. Every one of these should be zero, so the name says what is
 /// wrong rather than what was counted.
 /// </param>
+/// <summary>
+/// How many links carry how many independent methods saying they are true.
+/// </summary>
+/// <param name="Claims">
+/// How many independent answers stand on these links. One is the ordinary case and says nothing
+/// about whether the link is right; two or more is the corpus's cheapest evidence, because two
+/// sources that did not consult each other landing on the same pair of words is worth more than
+/// either alone.
+///
+/// It counts claims and not methods. The Berean's publisher and Clear Bible's team are both
+/// <c>stated-by-source</c> and neither knew what the other wrote, so counting methods reported
+/// 98,989 corroborated links as none at all.
+/// </param>
+/// <param name="Links">How many links have exactly that many.</param>
+internal sealed record Agreement(int Claims, int Links);
+
 internal sealed record IntegrityCheck(string Breaks, int Found);
 
 /// <summary>
@@ -96,8 +112,21 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<Contention> Contention,
     IReadOnlyList<Crowding> Crowding,
     IReadOnlyList<Pairing> Pairing,
+    IReadOnlyList<Agreement> Agreement,
     IReadOnlyList<IntegrityCheck> Integrity)
 {
+    /// <summary>
+    /// The share of links more than one method claims. It is the number DOC-0170 says the corpus
+    /// could not compute: a link four methods agree on and a link one model guessed at were stored
+    /// identically, so *92.1% correct* could be measured and *which 8%* could not.
+    ///
+    /// It should rise, and it will stay small for a long time, because most pairs of texts have
+    /// only one method that can speak about them at all.
+    /// </summary>
+    public double Corroborated => Agreement.Sum(a => a.Links) is var links and > 0
+        ? (double)Agreement.Where(a => a.Claims > 1).Sum(a => a.Links) / links
+        : 0;
+
     /// <summary>Integrity checks are the only measure with a right answer, and it is zero.</summary>
     public bool Sound => Integrity.All(check => check.Found == 0);
 
@@ -149,6 +178,13 @@ internal sealed record CorpusMeasures(
         foreach (var c in Crowding)
         {
             report.AppendLine($"  {c.Text} on {c.Witness,-12} {c.Crowded,7} {c.Worst,10}");
+        }
+
+        report.AppendLine("agreement     links, by how many independent answers stand on them");
+        foreach (var a in Agreement.OrderBy(a => a.Claims))
+        {
+            report.AppendLine($"  {a.Claims} claim{(a.Claims == 1 ? " " : "s")}     {a.Links,10}" +
+                              (a.Claims > 1 ? "   corroborated" : string.Empty));
         }
 
         report.AppendLine("pairing       chapters shared, chapters divided differently, verses, verses too weak to trust");

@@ -33,6 +33,12 @@ public class AppDbContext : DbContext
 
     public DbSet<LinkWord> LinkWords { get; set; } = null!;
 
+    /// <summary>
+    /// Every method that says a link is true. The link keeps the strongest as its own answer; this
+    /// is where the others live, and where agreement between them becomes countable.
+    /// </summary>
+    public DbSet<LinkClaim> LinkClaims { get; set; } = null!;
+
     public DbSet<VerseLink> VerseLinks { get; set; } = null!;
 
     public DbSet<VerseLinkVerse> VerseLinkVerses { get; set; } = null!;
@@ -280,6 +286,18 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(w => w.WordId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<LinkClaim>(entity =>
+        {
+            entity.Property(c => c.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(c => c.Link)
+                .WithMany(l => l.Claims)
+                .HasForeignKey(c => c.LinkId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("link_claim", t => AddProvenanceConstraints(t, "link_claim"));
         });
     }
 

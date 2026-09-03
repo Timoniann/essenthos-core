@@ -71,6 +71,7 @@ internal sealed class DatasetLoader(
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
             await LinkTheBerean(resources, stoppingToken);
+            await CorroborateTheBerean(resources, stoppingToken);
             await LinkThePrintedEditions(resources, stoppingToken);
             await LinkTheGreekWitnesses(stoppingToken);
             await GiveEveryWordASearchableForm(stoppingToken);
@@ -334,6 +335,20 @@ internal sealed class DatasetLoader(
         // The same file's Hebrew half, which joins on the letters rather than on the order or the
         // number, because BHSA and the Westminster edition tokenise the same text differently.
         status.Record(await loader.Load(tables, BhsaTextSource.Slug, cancellationToken));
+    }
+
+    /// <summary>
+    /// A second person's answer to the question the Berean's own tables answer. Mostly it agrees,
+    /// and where it agrees it adds a claim rather than a link — which is the first time this corpus
+    /// has been able to record that two independent methods reached the same word pair.
+    /// </summary>
+    private async Task CorroborateTheBerean(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("Clear Bible on the Berean");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<Links.ClearBibleLinkLoader>();
+        status.Record(await loader.Load(Path.Combine(resources, "ClearBible"), cancellationToken));
     }
 
     /// <summary>

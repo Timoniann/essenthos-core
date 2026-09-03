@@ -302,6 +302,51 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                   WHERE lw.link_id = l.id
                     AND lw.side = CASE l.relation WHEN 'omits' THEN 'from' ELSE 'to' END)
             """),
+        // Two links naming exactly the same words in the same pair of texts are not two facts.
+        // They are two methods agreeing, and agreeing is what link_claim is for -- one link with
+        // two claims. Before that table existed there were 4,664 of these, every one of them the
+        // Ukrainian interlinear and the aligner independently reaching the same word pair, stored
+        // as rivals. A loader that writes one again has silently gone back to throwing the
+        // agreement away.
+        // Two links naming exactly the same words in the same pair of texts are not two facts.
+        // They are two methods agreeing, and agreeing is what link_claim is for -- one link with two
+        // claims. Before that table existed there were 4,664 of these, every one the Ukrainian
+        // interlinear and the aligner independently reaching the same word pair, stored as rivals.
+        // A loader that writes one again has quietly gone back to throwing the agreement away.
+        //
+        // Fingerprinted before it is compared. The obvious form of this -- string_agg over every
+        // link -- asks Postgres to sort 4.6 million assembled strings across parallel workers, and
+        // it died on the shared memory segment rather than returning a wrong answer. Counting the
+        // words and summing their ids is cheap and integer-only, and the exact comparison then runs
+        // on the handful that collide.
+        ("links naming the same words as another link, instead of one link with two claims",
+            """
+            WITH fingerprint AS (
+                SELECT l.id, l.from_text_id, l.to_text_id, count(*) AS words,
+                       min(lw.word_id) AS lowest, max(lw.word_id) AS highest, sum(lw.word_id) AS total
+                FROM link l JOIN link_word lw ON lw.link_id = l.id
+                GROUP BY l.id, l.from_text_id, l.to_text_id),
+            colliding AS (
+                SELECT f.id, f.from_text_id, f.to_text_id
+                FROM fingerprint f
+                JOIN (SELECT from_text_id, to_text_id, words, lowest, highest, total
+                      FROM fingerprint
+                      GROUP BY 1, 2, 3, 4, 5, 6
+                      HAVING count(*) > 1) c
+                  ON c.from_text_id = f.from_text_id AND c.to_text_id = f.to_text_id
+                 AND c.words = f.words AND c.lowest = f.lowest
+                 AND c.highest = f.highest AND c.total = f.total),
+            shaped AS (
+                SELECT co.id, co.from_text_id, co.to_text_id,
+                       string_agg(lw.word_id::text, ',' ORDER BY lw.side, lw.word_id) AS words
+                FROM colliding co JOIN link_word lw ON lw.link_id = co.id
+                GROUP BY co.id, co.from_text_id, co.to_text_id)
+            SELECT count(*) FROM (
+                SELECT 1 FROM shaped
+                GROUP BY from_text_id, to_text_id, words
+                HAVING count(*) > 1) duplicated
+            """),
+
         // A link may name words in two verses on purpose — that is how "the word ended up
         // elsewhere" is said. It is only wrong when no verse link joins the two verses, because
         // then the corpus is claiming a correspondence across a boundary it does not believe in.
@@ -330,6 +375,23 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             """),
     ];
 
+    /// <summary>
+    /// Links by how many claims stand on them.
+    ///
+    /// Counting distinct *methods* was wrong and read as a flat zero for the case it was built for:
+    /// the Berean's own tables and Clear Bible's team are both <c>stated-by-source</c>, so 98,989
+    /// links with two independent human witnesses counted as one. Two sources agreeing is the
+    /// corroboration; which method each used is a separate question. A claim is unique on
+    /// (link, method, source), so counting rows counts distinct answers.
+    /// </summary>
+    private const string AgreementSql =
+        """
+        SELECT claims, count(*)
+        FROM (SELECT link_id, count(*) AS claims FROM link_claim GROUP BY link_id) c
+        GROUP BY claims
+        ORDER BY claims
+        """;
+
     public async Task<CorpusMeasures> Measure(CancellationToken cancellationToken = default)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
@@ -352,6 +414,20 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), reader.GetFieldValue<string[]>(6)));
 
+        var agreement = await Read(connection, AgreementSql, cancellationToken, reader =>
+            new Agreement((int)reader.GetInt64(0), (int)reader.GetInt64(1)));
+
+        // Single-threaded, deliberately. These sweep every link in the corpus, and Postgres
+        // parallelises them across workers that share their sort state through /dev/shm — which a
+        // container gives 64 MB of by default. The duplicate-link check exhausted it and the whole
+        // verification died with "No space left on device", which is a true sentence about a
+        // segment nobody sized and a false one about the disk. Raising it belongs in the frozen
+        // repository's compose file (PRB-0187); not needing it belongs here.
+        await using (var single = new NpgsqlCommand("SET max_parallel_workers_per_gather = 0", connection))
+        {
+            await single.ExecuteNonQueryAsync(cancellationToken);
+        }
+
         var integrity = new List<IntegrityCheck>(Integrity.Length);
         foreach (var (breaks, sql) in Integrity)
         {
@@ -362,7 +438,12 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             integrity.Add(new IntegrityCheck(breaks, (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!));
         }
 
-        return new CorpusMeasures(coverage, reach, contention, crowding, pairing, integrity);
+        await using (var restore = new NpgsqlCommand("RESET max_parallel_workers_per_gather", connection))
+        {
+            await restore.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        return new CorpusMeasures(coverage, reach, contention, crowding, pairing, agreement, integrity);
     }
 
     /// <summary>

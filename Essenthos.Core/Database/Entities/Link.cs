@@ -50,6 +50,13 @@ public class Link
     /// <summary>For a manual link, why.</summary>
     public string? Note { get; set; }
 
+    /// <summary>
+    /// Every method that says this link is true, including the one the link shows as its own. A
+    /// link two methods that share no reasoning both arrived at is worth more than one only a model
+    /// proposed, and this is where that difference is recorded.
+    /// </summary>
+    public ICollection<LinkClaim> Claims { get; set; } = [];
+
     public ICollection<LinkWord> Words { get; set; } = [];
 
     public override string ToString() => $"Link({FromTextId} to {ToTextId}, {Relation}, {Method})";
