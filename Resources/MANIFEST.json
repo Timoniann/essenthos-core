@@ -1,0 +1,87 @@
+{
+  "Berean": {
+    "bytes": 95436759,
+    "files": 4,
+    "sha256": "dc970bfc8df22b0aaa839c28c65f6c26a204d28b599e953b0574e78271f3dd44"
+  },
+  "BibleData": {
+    "bytes": 13188940,
+    "files": 6,
+    "sha256": "b5f77c60fcc1dd8460ee734bf3173ab60a9964c7cebbf9097d8b446160aa752a"
+  },
+  "BibleData2026": {
+    "bytes": 8550843,
+    "files": 19,
+    "sha256": "c4998cbdf9496ef71fc5844dcdb4f7a969976f82db572e7e584248f02d4e8ab8"
+  },
+  "ClearBible": {
+    "bytes": 467285100,
+    "files": 29,
+    "sha256": "79b25747f87cc64c97d5b39259cca44cf0fd2cb797ea4173f15f1b70bb9ecaea"
+  },
+  "Door43": {
+    "bytes": 3465729,
+    "files": 15,
+    "sha256": "ceadf1e57c5df764e6c2ffc5e58e3cdaff5007080a92feea0dc54ce567f80613"
+  },
+  "Glaux": {
+    "bytes": 116098330,
+    "files": 61,
+    "sha256": "7915a0cd2b5e4ae2a7913be978095391c8132f4adcb0b78694113a706df2d980"
+  },
+  "Nestle1904": {
+    "bytes": 43633404,
+    "files": 3,
+    "sha256": "c142bf9b3da492058a7b42d51dcbfd8a2c5cd8961bee57ea51448fa5932f27b5"
+  },
+  "Septuagint": {
+    "bytes": 7207010,
+    "files": 53,
+    "sha256": "4e797384dcc7916fdd54d58dcb730853af3994d9d62a238d7fb6d4558fed83c8"
+  },
+  "Strong": {
+    "bytes": 9074469,
+    "files": 3,
+    "sha256": "15191d5c6606c28adb9d1ad300943029fd00bce90b394507c357b92c3b027f1f"
+  },
+  "TextusReceptus": {
+    "bytes": 4015058,
+    "files": 56,
+    "sha256": "bce392d81e13db5cb3844ef1fb44c7fb6b2886e4bc4394de6f86ebc89a784bac"
+  },
+  "TheographicBibleData": {
+    "bytes": 35548558,
+    "files": 12,
+    "sha256": "9f85cf44eac3240ab4546adc3d579f3056a44bafe7a2dd27e48aff9f495b8071"
+  },
+  "Versification": {
+    "bytes": 5793058,
+    "files": 2,
+    "sha256": "1d7d975693b22d35e0727bc02f6e2d65a91fa51ab2db271ff186063ea1fa2fb4"
+  },
+  "WorldHistory": {
+    "bytes": 313246,
+    "files": 7,
+    "sha256": "bc58ead87d0db2bb0454395b6f84a1333eb531fd677314500a65c42a444e79c8"
+  },
+  "Zefania": {
+    "bytes": 17296188,
+    "files": 2,
+    "sha256": "5a91bb3484b379a640f2803905bd36c0b048ac8059f350bb11a84754bc0d1999"
+  },
+  "bible4u": {
+    "bytes": 19529551,
+    "files": 4,
+    "sha256": "a1de6be36990a9c693fa4ce6fd238e953baae0e92c5972a8c10a7bb5714e0648"
+  },
+  "etcbc": {
+    "bytes": 214606946,
+    "files": 119,
+    "sha256": "e8cb04daada6485c9844bb0dedecb0185a2a21c923e44259bd4929caf1fe5fb6"
+  },
+  "mapping": {
+    "bytes": 56271957,
+    "files": 3,
+    "sha256": "83a8519ef0b62477054fb2e5872e8c47c695bab8f75aef22650a99f15429c33e"
+  }
+}

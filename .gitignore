@@ -143,6 +143,12 @@ Resources/*
 !Resources/*/
 Resources/*/*
 
+# What each corpus folder is, so a copy of the data can be checked against the one this
+# repository's measurements were taken from. Thirteen of the seventeen folders have no fetch script
+# and exist because somebody downloaded them once; without this, two machines can disagree about the
+# bytes under one folder name and every number either measured is unfalsifiable. 4 KB.
+!Resources/MANIFEST.json
+
 # The licence beside each corpus folder. A licence statement that survives only on the machine
 # that fetched the data is not a record anybody can check, which is the entire reason for keeping
 # a copy next to the bytes. Kilobytes; the data they describe stays out.
