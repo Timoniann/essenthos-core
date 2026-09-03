@@ -554,17 +554,35 @@ internal static class EncyclopediaEndpoints
     /// left every one of the 572 events without a person on it, while the filter that uses the
     /// same navigation worked — so the timeline could select by a person and never name one.
     /// </summary>
-    private sealed record EventRow(
+    internal sealed record EventRow(
         Database.Entities.Event Event,
         string? EntitySlug,
         string? EntityName,
+        string? DefaultChronology,
         IList<EventDateResponse> Dates);
 
     /// <summary>
-    /// Which side of the era a year falls. The source counts forward from the creation without a
-    /// sign, so its year 3,969 answers <c>8</c> meaning AD 8, and nothing in the number says so.
+    /// One vocabulary for the two sides of the turn, in the response and in the dates alike. Named
+    /// rather than written twice, because they were written twice and disagreed: an event past the
+    /// turn said <c>AD</c> at the top and <c>CE</c> in its dates, so a client switching on the
+    /// field had three values to handle for two eras.
+    /// </summary>
+    private const string CommonEra = "CE";
+
+    private const string BeforeTheCommonEra = "BCE";
+
+    /// <summary>
+    /// Which side of the turn a year from creation falls. The source counts forward without a
+    /// sign, so its year 3,969 answers <c>8</c> meaning 8 CE, and nothing in the number says so.
     /// The turn is at 3,961, and it is arithmetic rather than a guess: below it the BCE year is
-    /// 3,962 less the count, above it the AD year is the count less 3,961.
+    /// 3,962 less the count, above it the CE year is the count less 3,961.
+    ///
+    /// <para>
+    /// This is the default chronology's <c>last_year_before_the_common_era</c>, and every event
+    /// with a date row reads it from there instead. It stands alone in two places only: the
+    /// timeline payload, which states it once for a client that has to place a bare year, and an
+    /// event no reckoning dates at all.
+    /// </para>
     /// </summary>
     private const int LastYearBeforeChrist = 3961;
 
@@ -575,11 +593,12 @@ internal static class EncyclopediaEndpoints
     /// property outside the projection is what left all 572 events without a person once already
     /// while the filter over the same navigation went on working.
     /// </summary>
-    private static readonly System.Linq.Expressions.Expression<Func<Database.Entities.Event, EventRow>> Rows =
+    internal static readonly System.Linq.Expressions.Expression<Func<Database.Entities.Event, EventRow>> Rows =
         e => new EventRow(
             e,
             e.Entity == null ? null : e.Entity.Slug,
             e.Entity == null ? null : e.Entity.Name,
+            e.Dates.Where(d => d.Chronology!.IsDefault).Select(d => d.Chronology!.Slug).FirstOrDefault(),
             e.Dates
                 .OrderBy(d => d.Chronology!.Position)
                 .Select(d => new EventDateResponse(
@@ -591,7 +610,9 @@ internal static class EncyclopediaEndpoints
                         : d.Year <= d.Chronology.LastYearBeforeTheCommonEra
                             ? d.Chronology.LastYearBeforeTheCommonEra - d.Year.Value + 1
                             : d.Year.Value - d.Chronology.LastYearBeforeTheCommonEra,
-                    d.Year != null && d.Year > d.Chronology.LastYearBeforeTheCommonEra ? "CE" : "BCE",
+                    d.Year != null && d.Year > d.Chronology.LastYearBeforeTheCommonEra
+                        ? CommonEra
+                        : BeforeTheCommonEra,
                     d.EarliestYear,
                     d.LatestYear,
                     d.Calculation,
@@ -599,36 +620,56 @@ internal static class EncyclopediaEndpoints
                     d.Notes))
                 .ToList());
 
-    private static EventResponse Event(EventRow row) =>
-        Event(row.Event, row.EntitySlug, row.EntityName, row.Dates);
+    internal static EventResponse Event(EventRow row) =>
+        Event(row.Event, row.EntitySlug, row.EntityName, row.DefaultChronology, row.Dates);
 
+    /// <summary>
+    /// One event, with the top-level year read off the default reckoning's own row rather than
+    /// computed a second time.
+    ///
+    /// BibleData ships a <c>bce_year</c> column beside the year from creation, and the two do not
+    /// always agree: David's return to Jerusalem is year 2,978, which the base reckoning turns
+    /// into 984 BCE, while the column says 980. Serving both put two answers to one question in
+    /// one payload, and left two events dated <c>null</c> at the top that every reckoning below
+    /// them could date. Taking the number from the row that already derived it means the two can
+    /// no longer drift apart, because there is only one of them.
+    /// </summary>
     private static EventResponse Event(
         Database.Entities.Event e,
         string? entitySlug,
         string? entityName,
-        IList<EventDateResponse> dates) => new(
-        e.Slug,
-        e.Name,
-        e.Description,
-        e.Kind,
-        entitySlug,
-        entityName,
-        e.YearFromCreation,
-        e.BceYear,
-        e.AgeAtEvent,
-        e.Calculation,
-        Reference(e.CanonicalBook, e.CanonicalChapter, e.CanonicalVerse),
-        e.Location,
-        e.Realm,
-        e.Region,
-        e.Uri,
-        e.Notes,
-        e.Source,
-        Datasets.Of(e.Source),
-        dates)
+        string? defaultChronology,
+        IList<EventDateResponse> dates)
     {
-        Era = e.YearFromCreation is { } year && year > LastYearBeforeChrist ? "AD" : "BCE",
-    };
+        var reckoning = dates.FirstOrDefault(d => d.Chronology == defaultChronology);
+
+        return new EventResponse(
+            e.Slug,
+            e.Name,
+            e.Description,
+            e.Kind,
+            entitySlug,
+            entityName,
+            e.YearFromCreation,
+            reckoning?.BceYear,
+            e.AgeAtEvent,
+            e.Calculation,
+            Reference(e.CanonicalBook, e.CanonicalChapter, e.CanonicalVerse),
+            e.Location,
+            e.Realm,
+            e.Region,
+            e.Uri,
+            e.Notes,
+            e.Source,
+            Datasets.Of(e.Source),
+            dates)
+        {
+            // Only where no reckoning states this event at all does the base zero point stand in;
+            // it is the same number the default chronology holds.
+            Era = reckoning?.Era
+                  ?? (e.YearFromCreation > LastYearBeforeChrist ? CommonEra : BeforeTheCommonEra),
+        };
+    }
 }
 
 /// <summary>The three counts of an entity's references, which are three different questions.</summary>
@@ -746,6 +787,13 @@ internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResp
 /// differ: the Old Testament chronology is CC BY 4.0, the New Testament CC BY-SA 4.0, and the
 /// world layer CC0. A page showing one licence for all three would assert what none of them says.
 /// </param>
+/// <param name="BceYear">
+/// <see cref="YearFromCreation"/> as a reader writes it, in the default reckoning, with
+/// <see cref="EventResponse.Era"/> saying on which side of the turn — so past it this is a common
+/// era year, exactly as it is in <c>Dates</c>. It is that reckoning's own entry in <c>Dates</c>
+/// and not BibleData's <c>bce_year</c> column, which disagrees with the arithmetic on one event
+/// and is empty on 266 the arithmetic dates without trouble.
+/// </param>
 internal record EventResponse(
     string Slug,
     string Name,
@@ -768,8 +816,10 @@ internal record EventResponse(
     IList<EventDateResponse> Dates)
 {
     /// <summary>
-    /// <c>BCE</c> or <c>AD</c>. The source writes its year without a sign and keeps counting past
-    /// the turn, so its <c>8</c> may mean 8 BCE or AD 8 and the number alone cannot say which.
+    /// <c>BCE</c> or <c>CE</c>, saying which side of the turn <see cref="BceYear"/> falls on: the
+    /// year from creation carries no sign and keeps counting past the turn, so a bare <c>8</c>
+    /// could mean either side of it. The same two words as <see cref="EventDateResponse.Era"/>,
+    /// and the same answer, because both are the default reckoning's.
     /// </summary>
     public string Era { get; init; } = "BCE";
 }
