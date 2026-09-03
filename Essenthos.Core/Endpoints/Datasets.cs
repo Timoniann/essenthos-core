@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Endpoints;
+﻿namespace Essenthos.Core.Endpoints;
 
 /// <summary>
 /// The datasets that are not texts, and which row came from which.
@@ -55,6 +55,26 @@ public static class Datasets
     /// Listed one by one rather than swept up by a catch-all, so a method nobody declared still
     /// shows as undeclared.
     /// </param>
+    /// <param name="Citation">
+    /// The form the author asks to be cited in, verbatim, where the source publishes one.
+    ///
+    /// **It is what a contested licence leaves standing.** BibleData ships four licence statements
+    /// and three different answers — its LICENSE file and README say Attribution 4.0, its citation
+    /// file said NonCommercial-ShareAlike until the author corrected it, and the copy on Kaggle
+    /// still says NonCommercial-ShareAlike 3.0 IGO beside byte-identical data. Whichever governs,
+    /// every one of them requires attribution, and every one of them is satisfied by citing the
+    /// work as its author asked. So where the terms are argued the citation is the part that is
+    /// not.
+    ///
+    /// It also pins a version, which a licence never does. A DOI resolves to one deposit; a
+    /// repository URL resolves to whatever is on the branch this week, and this dataset's terms
+    /// changed on that branch between two of our own loads. Naming the deposit says which bytes
+    /// were used, which is the question a reader who disagrees with a row actually has.
+    ///
+    /// Null where the source publishes no citation form. That is silence, not an assertion that
+    /// none is owed — the author, the licence and the URL are recorded either way (RUL-0181), and
+    /// this is the extra thing an author asked for on top of them.
+    /// </param>
     /// <param name="Contains">
     /// Further works bound into the same file, each with its own author and its own terms.
     ///
@@ -78,7 +98,8 @@ public static class Datasets
         bool Links = false,
         bool Lexicon = false,
         string[]? Methods = null,
-        Work[]? Contains = null)
+        Work[]? Contains = null,
+        string? Citation = null)
     {
         /// <summary>Every source-string prefix this dataset claims, its own name first.</summary>
         public IEnumerable<string> Prefixes => Methods is null ? [Prefix] : [Prefix, .. Methods];
@@ -101,7 +122,9 @@ public static class Datasets
             + "Testament in which every year is computed from a verse and shows its arithmetic. Its "
             + "places are marked in progress by its author and read that way here: 118 of them, "
             + "named but not placed, and referenced only through Genesis and Exodus.",
-            "BibleData by"),
+            "BibleData by",
+            Citation: "Stephenson, B. (2026). BibleData: Structured Datasets from the Holy Bible "
+                + "(1.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.19539956"),
 
         new("theographic", "Theographic Bible Data", "Robert Rouse", "CC BY-SA 4.0",
             "https://creativecommons.org/licenses/by-sa/4.0/",

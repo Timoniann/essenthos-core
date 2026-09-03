@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -74,6 +74,7 @@ public static class DatasetEndpoints
                     dataset.LicenceUrl,
                     dataset.Url,
                     dataset.Covers,
+                    dataset.Citation,
                     counts,
                     dataset.Contains is null
                         ? []
@@ -125,6 +126,10 @@ public static class DatasetEndpoints
 /// A reader who is told only that the lexicon is public domain has been told something false about
 /// 6,070 of its entries.
 /// </param>
+/// <param name="Citation">
+/// How the author asked to be cited, where the source publishes a form. Null where none is
+/// published — silence, not an assertion that none is owed.
+/// </param>
 public record DatasetResponse(
     string Id,
     string Name,
@@ -133,6 +138,7 @@ public record DatasetResponse(
     string LicenceUrl,
     string Url,
     string Covers,
+    string? Citation,
     DatasetCounts Counts,
     IList<WorkResponse> Contains);
 
