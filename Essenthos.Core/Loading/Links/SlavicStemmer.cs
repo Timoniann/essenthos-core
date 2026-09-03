@@ -101,6 +101,16 @@ internal static class SlavicStemmer
     public static string Stem(string word, bool isName = false)
     {
         var lower = word.ToLowerInvariant().Replace('ё', 'е');
+
+        // The closed classes first, because stripping endings cannot help a word whose forms share
+        // no stem: "я" and "меня" are one word and two strings, and no rule turns one into the
+        // other. Thirty lexemes, a quarter of everything the Ukrainian alignment fails to link.
+        // SlavicSuppletion says why these thirty and not others.
+        if (SlavicSuppletion.Of(lower) is { } closed)
+        {
+            return closed;
+        }
+
         if (lower.Length < LeaveAlone)
         {
             return lower;
