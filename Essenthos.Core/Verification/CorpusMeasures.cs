@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Verification;
+﻿namespace Essenthos.Core.Verification;
 
 /// <param name="Section">
 /// Which half of the canon these words are in, or the deuterocanon. A text is not one thing — the
@@ -146,9 +146,24 @@ internal sealed record CorpusMeasures(
     /// a trend line and nothing more — no text has this share, and the per-section rows are where a
     /// reader looks for a number that describes something.
     /// </summary>
-    public double Rendered => Coverage.Sum(c => c.Words) is var words and > 0
-        ? (double)Coverage.Sum(c => c.Rendered) / words
+    public double Rendered => Words is > 0
+        ? (double)RenderedWords / Words
         : 0;
+
+    /// <summary>
+    /// The two numbers <see cref="Rendered"/> is the ratio of, published beside it.
+    ///
+    /// A share on its own cannot be checked or compared. Two measurements of this corpus a day apart
+    /// differed by four points and neither could be reproduced from the other, because each was a
+    /// ratio with no numerator and no denominator recorded — and the question "which words did you
+    /// count" has three defensible answers here: words reaching any link at all, words reaching a
+    /// non-translation witness, and words reaching an original-language text. These are the counts
+    /// behind the second, which is the one this measure means.
+    /// </summary>
+    public int Words => Coverage.Sum(c => c.Words);
+
+    /// <inheritdoc cref="Words"/>
+    public int RenderedWords => Coverage.Sum(c => c.Rendered);
 
     /// <summary>
     /// The lowest share any one section of any one text reaches, over the sections where something

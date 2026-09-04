@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -498,6 +498,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             RanAt = DateTimeOffset.UtcNow,
             Broken = measures.Broken,
             Rendered = measures.Rendered,
+            RenderedWords = measures.RenderedWords,
+            Words = measures.Words,
             Measures = JsonSerializer.SerializeToDocument(measures, MeasureJson),
         };
 

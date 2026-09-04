@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
@@ -34,7 +34,8 @@ internal static class HealthEndpoints
 
             var verified = await db.VerificationRuns
                 .OrderByDescending(v => v.RanAt)
-                .Select(v => new VerificationResponse(v.RanAt, v.Broken, v.Rendered))
+                .Select(v => new VerificationResponse(
+                    v.RanAt, v.Broken, v.Rendered, v.RenderedWords, v.Words))
                 .FirstOrDefaultAsync(cancellationToken);
 
             return Results.Ok(new HealthResponse(
@@ -104,7 +105,19 @@ internal record HealthResponse(
 /// trend line and describes no text: <c>/v1/verification</c> reports coverage per section, which is
 /// where a number that describes something is.
 /// </param>
-internal record VerificationResponse(DateTimeOffset RanAt, int Broken, double Rendered);
+/// <param name="RenderedWords">
+/// The numerator, and <paramref name="Words"/> the denominator, so the share can be checked rather
+/// than believed.
+///
+/// A ratio alone cannot be reproduced or compared, and "which words did you count" has three
+/// defensible answers in this corpus: words reaching any link at all, words reaching a
+/// non-translation witness, and words reaching an original-language text. Two measurements a day
+/// apart once differed by four points with no way to tell which question either had asked. A word
+/// counts here when a link names it as rendering or equalling a word of a text that is not a
+/// translation.
+/// </param>
+internal record VerificationResponse(
+    DateTimeOffset RanAt, int Broken, double Rendered, int RenderedWords, int Words);
 
 /// <param name="Measures">
 /// Coverage, reach, contention and integrity, as the check computed them. Held as it was stored

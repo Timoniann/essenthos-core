@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 
@@ -35,7 +35,21 @@ public class VerificationRun
     /// </summary>
     public double Rendered { get; set; }
 
+    /// <summary>
+    /// The numerator and the denominator <see cref="Rendered"/> is the ratio of.
+    ///
+    /// Columns for the same reason <see cref="Broken"/> is one: a health endpoint asks for them
+    /// without reading the report. And they are here at all because a share on its own cannot be
+    /// checked. Two measurements of this corpus a day apart differed by four points and neither
+    /// could be reproduced from the other — "which words did you count" has three defensible
+    /// answers here, and a ratio does not say which was asked.
+    /// </summary>
+    public int RenderedWords { get; set; }
+
+    /// <inheritdoc cref="RenderedWords"/>
+    public int Words { get; set; }
+
     public required JsonDocument Measures { get; set; }
 
-    public override string ToString() => $"VerificationRun({RanAt:u}, {Broken} broken, {Rendered:P1} rendered)";
+    public override string ToString() => $"VerificationRun({RanAt:u}, {Broken} broken, {RenderedWords}/{Words} rendered)";
 }
