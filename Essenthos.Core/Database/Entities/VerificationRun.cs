@@ -41,8 +41,12 @@ public class VerificationRun
     /// Columns for the same reason <see cref="Broken"/> is one: a health endpoint asks for them
     /// without reading the report. And they are here at all because a share on its own cannot be
     /// checked. Two measurements of this corpus a day apart differed by four points and neither
-    /// could be reproduced from the other — "which words did you count" has three defensible
+    /// could be reproduced from the other — "which words did you count" has several defensible
     /// answers here, and a ratio does not say which was asked.
+    ///
+    /// The denominator counts the words that had a counterpart to reach, not every word in the
+    /// text. Words in a verse no witness holds are outside it; the report's coverage rows carry
+    /// them in their own column.
     /// </summary>
     public int RenderedWords { get; set; }
 

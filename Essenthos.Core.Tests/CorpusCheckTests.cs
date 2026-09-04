@@ -265,18 +265,21 @@ public sealed class CorpusCheckTests : IDisposable
     /// <summary>
     /// The share is published with the two numbers it is the ratio of, because a ratio alone cannot
     /// be checked. Two measurements of this corpus a day apart differed by four points and neither
-    /// could be reproduced from the other — "which words did you count" has three defensible answers
-    /// here, and a share does not say which was asked.
+    /// could be reproduced from the other — "which words did you count" has several defensible
+    /// answers here, and a share does not say which was asked.
     /// </summary>
     [Fact]
     public async Task TheCoverageShareIsPublishedWithItsCounts()
     {
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+
         var measures = await _check.Measure();
 
-        measures.Words.Should().Be(measures.Coverage.Sum(c => c.Words));
+        measures.Words.Should().Be(measures.Coverage.Sum(c => c.Promised));
+        measures.UnpairedWords.Should().Be(measures.Coverage.Sum(c => c.Unpaired));
         measures.RenderedWords.Should().Be(measures.Coverage.Sum(c => c.Rendered));
         measures.RenderedWords.Should().BeLessThanOrEqualTo(measures.Words);
+        (measures.Words + measures.UnpairedWords).Should().Be(measures.Coverage.Sum(c => c.Words));
         measures.Rendered.Should().BeApproximately((double)measures.RenderedWords / measures.Words, 1e-12);
     }
-
 }

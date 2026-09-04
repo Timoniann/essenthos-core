@@ -109,12 +109,17 @@ internal record HealthResponse(
 /// The numerator, and <paramref name="Words"/> the denominator, so the share can be checked rather
 /// than believed.
 ///
-/// A ratio alone cannot be reproduced or compared, and "which words did you count" has three
+/// A ratio alone cannot be reproduced or compared, and "which words did you count" has several
 /// defensible answers in this corpus: words reaching any link at all, words reaching a
 /// non-translation witness, and words reaching an original-language text. Two measurements a day
 /// apart once differed by four points with no way to tell which question either had asked. A word
 /// counts here when a link names it as rendering or equalling a word of a text that is not a
 /// translation.
+///
+/// The denominator is the words with a counterpart to reach. A word in a verse no witness of this
+/// text holds is outside it — Brenton's deuterocanon has no Hebrew anywhere in this corpus, and
+/// counting its 98,670 words as unreached would report the canon as an alignment failure.
+/// <c>/v1/verification</c> carries the excluded count and the per-section rows behind it.
 /// </param>
 internal record VerificationResponse(
     DateTimeOffset RanAt, int Broken, double Rendered, int RenderedWords, int Words);

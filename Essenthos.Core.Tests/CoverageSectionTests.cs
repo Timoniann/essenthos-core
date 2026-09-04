@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Verification;
@@ -99,6 +99,26 @@ public sealed class CoverageSectionTests : IDisposable
         coverage.Rendered.Should().Be(1);
         coverage.Silent.Should().Be(1);
         coverage.Unpaired.Should().Be(3);
+    }
+
+    /// <summary>
+    /// A word with nothing to reach is outside the share, not a failure inside it. Genesis 1:2 of
+    /// the Greek has no Hebrew verse, so the Septuagint here reaches one of the two words that had
+    /// a counterpart rather than one of its five — and in the corpus itself this is 98,670 words of
+    /// deuterocanon that no loaded text holds a single book of.
+    /// </summary>
+    [Fact]
+    public async Task AWordWithNothingToReachIsOutsideTheShareRatherThanBelowIt()
+    {
+        var measures = await _check.Measure();
+        var coverage = measures.Coverage.Single(c => c.Text == "lxx-brenton");
+
+        coverage.Words.Should().Be(5);
+        coverage.Promised.Should().Be(2);
+        coverage.Share.Should().Be(0.5);
+
+        measures.UnpairedWords.Should().Be(3);
+        measures.Words.Should().Be(measures.Coverage.Sum(c => c.Words) - 3);
     }
 
     private async Task<IReadOnlyList<Coverage>> Coverage() => (await _check.Measure()).Coverage;

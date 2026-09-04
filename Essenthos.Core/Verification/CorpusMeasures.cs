@@ -30,7 +30,17 @@ internal sealed record Coverage(
     int Silent,
     int Unpaired)
 {
-    public double Share => Words == 0 ? 0 : (double)Rendered / Words;
+    /// <summary>
+    /// The words this section had something to reach: every word but the unpaired ones.
+    ///
+    /// It is the denominator of <see cref="Share"/> because a share taken over words with no
+    /// counterpart in the corpus measures the shape of the canon and not the alignment. Brenton's
+    /// deuterocanon is 98,670 words of it — no Hebrew of Tobit, Judith, Wisdom, Sirach, Baruch or
+    /// the Maccabees exists here to be reached, and for most of them none exists anywhere.
+    /// </summary>
+    public int Promised => Words - Unpaired;
+
+    public double Share => Promised <= 0 ? 0 : (double)Rendered / Promised;
 }
 
 /// <param name="Lexical">
@@ -145,6 +155,10 @@ internal sealed record CorpusMeasures(
     /// The share of words that reach a witness, over every text the corpus has linked to one. It is
     /// a trend line and nothing more — no text has this share, and the per-section rows are where a
     /// reader looks for a number that describes something.
+    ///
+    /// Taken over the words that had a counterpart to reach, which is the same line
+    /// <see cref="Weakest"/> draws. A word in a verse no witness holds cannot reach one, and
+    /// counting it as a failure publishes the shape of the canon as a defect in the alignment.
     /// </summary>
     public double Rendered => Words is > 0
         ? (double)RenderedWords / Words
@@ -156,14 +170,26 @@ internal sealed record CorpusMeasures(
     /// A share on its own cannot be checked or compared. Two measurements of this corpus a day apart
     /// differed by four points and neither could be reproduced from the other, because each was a
     /// ratio with no numerator and no denominator recorded — and the question "which words did you
-    /// count" has three defensible answers here: words reaching any link at all, words reaching a
-    /// non-translation witness, and words reaching an original-language text. These are the counts
-    /// behind the second, which is the one this measure means.
+    /// count" has four defensible answers here: words reaching any link at all, words reaching a
+    /// non-translation witness, words reaching an original-language text, and any of those taken
+    /// over the words that had one to reach. These are the counts behind the last, which is the one
+    /// this measure means. <see cref="UnpairedWords"/> is what it leaves out, published so that the
+    /// exclusion is visible and every word in a linked text is still accounted for.
     /// </summary>
-    public int Words => Coverage.Sum(c => c.Words);
+    public int Words => Coverage.Sum(c => c.Promised);
 
     /// <inheritdoc cref="Words"/>
     public int RenderedWords => Coverage.Sum(c => c.Rendered);
+
+    /// <summary>
+    /// Words in a verse no witness the text is linked to holds at all, and therefore outside
+    /// <see cref="Words"/>. Nothing is missing here that was ever promised, and a corpus that
+    /// reported it as unreached would be reporting which books the canon contains.
+    ///
+    /// It is not small: Brenton's deuterocanon alone is 98,670 words, and no text in this corpus
+    /// holds a single book beyond the sixty-six for any of it to correspond to.
+    /// </summary>
+    public int UnpairedWords => Coverage.Sum(c => c.Unpaired);
 
     /// <summary>
     /// The lowest share any one section of any one text reaches, over the sections where something
@@ -171,7 +197,7 @@ internal sealed record CorpusMeasures(
     /// Septuagint's deuterocanon has no Hebrew counterpart, and reporting it as 0% would put a fact
     /// about the canon at the bottom of a list about the alignment.
     /// </summary>
-    public double Weakest => Coverage.Where(c => c.Words > c.Unpaired).ToList() is { Count: > 0 } promised
+    public double Weakest => Coverage.Where(c => c.Promised > 0).ToList() is { Count: > 0 } promised
         ? promised.Min(c => c.Share)
         : 0;
 
@@ -185,6 +211,9 @@ internal sealed record CorpusMeasures(
             report.AppendLine($"  {c.Text,-13} {c.Section,-15} {c.Words,7} {c.Rendered,10} {c.StatedAbsent,15} " +
                               $"{c.Silent,10} {c.Unpaired,10}   {c.Share,7:P1}");
         }
+
+        report.AppendLine($"  {RenderedWords} of {Words} words had a counterpart to reach and reached it; " +
+                          $"{UnpairedWords} more have none in this corpus and are outside the share");
 
         report.AppendLine("reach         lexical    reached");
         foreach (var r in Reach)
