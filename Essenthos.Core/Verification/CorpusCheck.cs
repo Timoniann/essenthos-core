@@ -213,14 +213,14 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                (SELECT count(*) FROM word lex
                 WHERE lex.text_id = witness.id AND NOT {StructuralMorphemes}),
                count(DISTINCT lw.word_id),
-               count(DISTINCT lw.word_id) FILTER (WHERE l.method = 'stated-by-source')
+               l.method
         FROM link l
         JOIN text source ON source.id = l.from_text_id AND source.kind = 'translation'
         JOIN text witness ON witness.id = l.to_text_id AND witness.kind <> 'translation'
         JOIN link_word lw ON lw.link_id = l.id AND lw.side = 'to'
         JOIN word w ON w.id = lw.word_id AND NOT {StructuralMorphemes}
-        GROUP BY witness.slug, witness.id, source.slug
-        ORDER BY witness.slug, source.slug
+        GROUP BY witness.slug, witness.id, source.slug, l.method
+        ORDER BY witness.slug, source.slug, l.method
         """;
 
     /// <summary>
@@ -447,9 +447,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), (int)reader.GetInt64(6)));
 
-        var reach = await Read(connection, ReachSql, cancellationToken, reader => new Reach(
-            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
-            (int)reader.GetInt64(4)));
+        var reach = Reach.Gather(await Read(connection, ReachSql, cancellationToken,
+            reader => (Witness: reader.GetString(0), From: reader.GetString(1),
+                       Lexical: (int)reader.GetInt64(2), Reached: (int)reader.GetInt64(3),
+                       Method: reader.GetString(4))));
 
         var contention = await Read(connection, ContentionSql, cancellationToken, reader => new Contention(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),

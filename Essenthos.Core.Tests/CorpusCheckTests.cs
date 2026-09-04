@@ -307,7 +307,11 @@ public sealed class CorpusCheckTests : IDisposable
 
         reach.Reached.Should().Be(2);
         reach.Stated.Should().Be(1);
-        reach.Inferred.Should().Be(1);
+        reach.ByMethod.Should().BeEquivalentTo(new Dictionary<string, int>
+        {
+            ["stated-by-source"] = 1,
+            ["aligner"] = 1,
+        });
         reach.Testimony.Should().BeApproximately(0.5, 1e-12);
     }
 
