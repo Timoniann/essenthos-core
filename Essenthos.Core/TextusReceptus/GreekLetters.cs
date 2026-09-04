@@ -50,11 +50,21 @@ internal static class GreekLetters
     /// alphabetical order rather than one row per vowel. Rho takes a breathing and lives in the
     /// upsilon row. Iota subscript adscript is a letter in the alpha row. And the free-standing
     /// diacritics — the ones that are marks rather than letters — belong nowhere and are dropped.
+    ///
+    /// <para>
+    /// Five cells hold a letter of a vowel their row does not belong to, and every one of them
+    /// is a capital: the block gave each vowel a row of its own forms and then put the capitals
+    /// carrying a bare accent wherever there was space. Getting one wrong is silent, because the
+    /// fold is still a Greek letter and the folded word is still a word — Ῥώμη came out as υωμη, so
+    /// Rome could be found only by a reader who typed it that way.
+    /// </para>
     /// </summary>
     private static char? Exception(char c) => c switch
     {
         >= 'ὰ' and <= 'ώ' => "αεηιουω"[(c - 'ὰ') / 2],
-        'ῤ' or 'ῥ' => 'ρ',        // ῤ ῥ
+        'ῤ' or 'ῥ' or 'Ῥ' => 'ρ',   // ῤ ῥ Ῥ, in the upsilon row
+        'Ὲ' or 'Έ' => 'ε',          // Ὲ Έ, in the eta row
+        'Ὸ' or 'Ό' => 'ο',          // Ὸ Ό, in the omega row
         'ι' => 'ι',                    // ι adscript
         '᾽' or '᾿' or '῀' or '῁' or '῍' or '῎' or '῏'
             or '῝' or '῞' or '῟' or '῭' or '΅' or '`'

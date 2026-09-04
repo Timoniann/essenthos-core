@@ -61,6 +61,38 @@ public class GreekFoldingTests
     public void FoldsAWordToWhatAReaderWouldType(string written, string bare) =>
         GreekLetters.Bare(written).Should().Be(bare);
 
+    /// <summary>
+    /// An accented capital folds to its own vowel, whichever block it is written in.
+    ///
+    /// Greek Extended gives each vowel a row of sixteen cells and then puts the capitals carrying
+    /// a bare accent wherever there was space, so five of them sit in another vowel's row: Ὲ and Έ
+    /// in the eta row, Ὸ and Ό in the omega row, and Ῥ — a consonant — in the upsilon row. A fold
+    /// that reads the row alone answers with a letter that is still Greek, so the word is still a
+    /// word and only the reader searching for it notices. The first column here is Greek Extended
+    /// with varia, the second the same letter with oxia, the third the monotonic block's capital.
+    /// </summary>
+    [Theory]
+    [InlineData("ᾺΆΆ", "ααα")]
+    [InlineData("ῈΈΈ", "εεε")]
+    [InlineData("ῊΉΉ", "ηηη")]
+    [InlineData("ῚΊΊ", "ιιι")]
+    [InlineData("ῸΌΌ", "οοο")]
+    [InlineData("ῪΎΎ", "υυυ")]
+    [InlineData("ῺΏΏ", "ωωω")]
+    public void FoldsAnAccentedCapitalToItsOwnVowel(string capitals, string vowels) =>
+        GreekLetters.Bare(capitals).Should().Be(vowels);
+
+    /// <summary>
+    /// Capital rho with rough breathing, which lives in the upsilon row and folded to upsilon:
+    /// 671 Septuagint words and 59 of Nestle 1904, every one of them a name.
+    /// </summary>
+    [Theory]
+    [InlineData("Ῥώμη", "ρωμη")]
+    [InlineData("Ῥαὰβ", "ρααβ")]
+    [InlineData("Ῥεβέκκα", "ρεβεκκα")]
+    public void FoldsCapitalRhoWithBreathingToRho(string written, string bare) =>
+        GreekLetters.Bare(written).Should().Be(bare);
+
     [Fact]
     public void CountsTwoWitnessesOfOneWordAsOne() =>
         GreekLetters.Same("Ἰησοῦς", "ΙΗΣΟΥΣ").Should().BeTrue();

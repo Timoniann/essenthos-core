@@ -641,6 +641,71 @@ public class StrongXmlParserTests
         entries[0].Derivation.Should().BeNull();
     }
 
+    /// <summary>
+    /// "of uncertain affinity" is a whole etymology, so the clause after it is the sense the XML
+    /// left on the wrong side of the cut. G2316 θεός is the case that matters: its definition
+    /// element holds only the figurative extension, so the entry answered that the word means a
+    /// magistrate.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_SenseLeftInTheDerivation_GoesBackToTheDefinition()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02316">
+             <strongs>2316</strongs>   <greek BETA="QEO/S" unicode="θεός" translit="theós"/>
+             <strongs_derivation>of uncertain affinity; a deity, especially (with <strongsref language="GREEK" strongs="3588"/>) the supreme
+             Divinity;</strongs_derivation><strongs_def> figuratively, a magistrate; by Hebraism, very</strongs_def><kjv_def>:--X exceeding,
+             God, god(-ly, -ward).</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be("of uncertain affinity;");
+        entries[0].Definition.Should().Be(
+            "a deity, especially (with G3588) the supreme Divinity; "
+            + "figuratively, a magistrate; by Hebraism, very");
+        entries[0].KjvDefinition.Should().Be("X exceeding, God, god(-ly, -ward).");
+    }
+
+    /// <summary>
+    /// The same phrase continued inside a parenthesis is still naming an origin, not a sense.
+    /// G1088 γέρων is the only entry in the file that does this, and the semicolon is what tells
+    /// it apart from the six that do not.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_UncertainAffinityWithACrossReference_StaysADerivation()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="01088">
+             <strongs>1088</strongs>   <greek BETA="GE/RWN" unicode="γέρων" translit="gérōn"/>
+             <strongs_derivation>of uncertain affinity (compare <strongsref language="GREEK" strongs="1094"/>);</strongs_derivation><strongs_def> aged</strongs_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be("of uncertain affinity (compare G1094);");
+        entries[0].Definition.Should().Be("aged");
+    }
+
+    /// <summary>
+    /// Where the entry has no definition element the sense still comes out of the derivation on its
+    /// own, rather than the whole block moving across with the etymology attached to the front.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_SenseLeftInTheDerivationWithNoDefinition_LeavesTheEtymologyBehind()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02063">
+             <strongs>2063</strongs>   <greek BETA="E)RUQRO/S" unicode="ἐρυθρός" translit="erythrós"/>
+             <strongs_derivation>of uncertain affinity; red, i.e. (with <strongsref language="GREEK" strongs="2281"/>) the Red Sea</strongs_derivation>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be("of uncertain affinity;");
+        entries[0].Definition.Should().Be("red, i.e. (with G2281) the Red Sea");
+    }
+
     private static string Greek(string body) =>
         $"""
          <?xml version='1.0' encoding='utf-8' standalone='yes'?>
@@ -709,8 +774,22 @@ public class StrongXmlParserTests
         // it has to say about both of them outside the definition element.
         Entry(entries, "G1473").Definition.Should().StartWith("a primary pronoun of the first person");
         Entry(entries, "G1473").KjvDefinition.Should().Be("I, me.");
-        Entry(entries, "G2570").Definition.Should().StartWith("of uncertain affinity; properly, beautiful");
+        Entry(entries, "G2570").Definition.Should().StartWith("properly, beautiful");
+        Entry(entries, "G2570").Derivation.Should().Be("of uncertain affinity;");
         Entry(entries, "G2570").KjvDefinition.Should().StartWith("X better, fair, good(-ly)");
+
+        // An unknown origin is not a meaning, and it is never what a definition opens with. θεός is
+        // the entry a reader is likeliest to open, and the one the misplaced cut cost the most.
+        // G2442 is excluded because a different fault reaches it: its etymology was cut in the
+        // middle of a parenthesis, so its definition opens with the rest of the derivation and the
+        // bracket that closes it — "of uncertain affinity); to long for".
+        entries.Where(e => e.StrongNumber != "G2442").Should().OnlyContain(
+            e => !e.Definition!.StartsWith("of uncertain affinity"),
+            "an etymology at the head of a definition is the cut landing in the wrong place");
+        Entry(entries, "G2316").Derivation.Should().Be("of uncertain affinity;");
+        Entry(entries, "G2316").Definition.Should().Be(
+            "a deity, especially (with G3588) the supreme Divinity; "
+            + "figuratively, a magistrate; by Hebraism, very");
     }
 
     private static StrongParsedEntry Entry(IEnumerable<StrongParsedEntry> entries, string number) =>
