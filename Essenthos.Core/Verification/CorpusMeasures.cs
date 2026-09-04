@@ -127,6 +127,70 @@ internal sealed record Contention(string Text, string Against, int Contended, in
 /// <param name="Worst">The most words of this text that claim one witness word.</param>
 internal sealed record Crowding(string Text, string Witness, int Crowded, int Worst);
 
+/// <param name="Omits">
+/// Words of <paramref name="Against"/> that <paramref name="Text"/> does not have, where a link
+/// says so. It is the one thing this corpus can state and a bare text cannot: silence about a word
+/// and a recorded claim that the word is not there are different facts, and every other measure
+/// here counts correspondences rather than their absence.
+/// </param>
+/// <param name="Expands">
+/// The reverse — words <paramref name="Text"/> has that <paramref name="Against"/> does not. The
+/// King James italics are 21,393 of these against BHSA, the words the translators added to make
+/// English of the Hebrew and printed in a different face to say so.
+/// </param>
+/// <param name="Books">
+/// The same two counts per book, which is where a variant tradition becomes readable. A number for
+/// the whole Pentateuch says the Samaritan differs; the per-book rows say it differs most in Exodus
+/// and Numbers and least in Leviticus, which is a claim a scholar can go and check.
+/// </param>
+/// <summary>
+/// Absence, recorded rather than inferred, for one ordered pair of texts.
+///
+/// The pair is ordered as the link stores it and is never folded with its reverse. The relation
+/// alone does not say which of the two lacks the word — the same variant has been written as
+/// <c>omits</c> from both ends — so a fold would turn one disagreement into two, and the direction
+/// it was written in is the only thing that says which text the words belong to.
+/// </summary>
+internal sealed record Absence(
+    string Text, string Against, int Omits, int Expands, IReadOnlyList<BookAbsence> Books)
+{
+    /// <summary>Words this pair records as missing on one side or the other.</summary>
+    public int Words => Omits + Expands;
+
+    /// <summary>
+    /// The per-book rows folded into one row per pair, whose totals are their sum.
+    ///
+    /// Summed, and not read off a total the query computed separately, because a word is in exactly
+    /// one book and the books therefore partition it. Reach cannot do this — a word two methods
+    /// both reach belongs to both — and the difference is worth stating, because copying its
+    /// grouping sets here would be machinery guarding against something that cannot happen.
+    /// </summary>
+    public static IReadOnlyList<Absence> Gather(
+        IEnumerable<(string Text, string Against, int Ordinal, string Book, int Omits, int Expands)> rows) =>
+    [
+        .. rows
+            .GroupBy(r => (r.Text, r.Against))
+            .Select(pair => new Absence(
+                pair.Key.Text,
+                pair.Key.Against,
+                pair.Sum(r => r.Omits),
+                pair.Sum(r => r.Expands),
+                [
+                    .. pair
+                        .OrderBy(r => r.Ordinal)
+                        .Select(r => new BookAbsence(r.Ordinal, r.Book, r.Omits, r.Expands)),
+                ]))
+            .OrderBy(a => a.Text, StringComparer.Ordinal)
+            .ThenBy(a => a.Against, StringComparer.Ordinal),
+    ];
+}
+
+/// <param name="Book">
+/// The book as the text holding the words names it. Every text in this corpus names them in
+/// English, and the ordinal beside it is what a reader should sort and join on.
+/// </param>
+internal sealed record BookAbsence(int Ordinal, string Book, int Omits, int Expands);
+
 /// <param name="Chapters">Chapters both texts place in the canonical frame.</param>
 /// <param name="Divided">
 /// Of those, the ones the two divide into a different number of verses. Nothing can be aligned
@@ -180,6 +244,7 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<Reach> Reach,
     IReadOnlyList<Contention> Contention,
     IReadOnlyList<Crowding> Crowding,
+    IReadOnlyList<Absence> Absence,
     IReadOnlyList<Pairing> Pairing,
     IReadOnlyList<Agreement> Agreement,
     IReadOnlyList<IntegrityCheck> Integrity)
@@ -251,6 +316,13 @@ internal sealed record CorpusMeasures(
         ? promised.Min(c => c.Share)
         : 0;
 
+    /// <summary>
+    /// How many books each absence row names in the written report. All of them are in the stored
+    /// measures and on the endpoint; a terminal wants the shape of the disagreement, which the
+    /// heaviest few give.
+    /// </summary>
+    private const int BooksNamed = 3;
+
     /// <summary>The measures as a person reads them, for a build log and a terminal.</summary>
     public string Describe()
     {
@@ -283,6 +355,16 @@ internal sealed record CorpusMeasures(
         foreach (var c in Crowding)
         {
             report.AppendLine($"  {c.Text} on {c.Witness,-12} {c.Crowded,7} {c.Worst,10}");
+        }
+
+        report.AppendLine("absence       words the pair records as missing, and the books holding most of them");
+        foreach (var a in Absence)
+        {
+            var books = string.Join(" ", a.Books
+                .OrderByDescending(b => b.Omits + b.Expands)
+                .Take(BooksNamed)
+                .Select(b => $"{b.Book} {b.Omits}/{b.Expands}"));
+            report.AppendLine($"  {a.Text} to {a.Against,-22} {a.Omits,7} {a.Expands,10}   {books}");
         }
 
         report.AppendLine("agreement     links, by how many independent answers stand on them");
