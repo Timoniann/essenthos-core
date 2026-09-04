@@ -143,6 +143,10 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
             // the translators saying they supplied the word. Four thousand of them, and a load
             // that reports none has stopped reading them.
             load.Supplied.Should().BeGreaterThan(4_000);
+
+            // A tag naming several numbers is one English word over a Greek phrase, and reading
+            // only its first number left about 2,500 Greek words in each edition named by nobody.
+            load.Phrases.Should().BeGreaterThan(2_000);
         }
     }
 
