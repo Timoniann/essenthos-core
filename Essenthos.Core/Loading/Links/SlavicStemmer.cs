@@ -98,15 +98,20 @@ internal static class SlavicStemmer
     /// verse, one of them matches the Greek and the other matches nothing and is placed by
     /// position alone.
     /// </param>
-    public static string Stem(string word, bool isName = false)
+    /// <param name="suppletion">
+    /// Whether the closed-class table is consulted. It is not, by default, because it was measured
+    /// and did not earn its place — <see cref="SlavicSuppletion"/> carries the numbers. The switch
+    /// stays so the measurement can be repeated rather than believed.
+    /// </param>
+    public static string Stem(string word, bool isName = false, bool suppletion = false)
     {
         var lower = word.ToLowerInvariant().Replace('ё', 'е');
 
-        // The closed classes first, because stripping endings cannot help a word whose forms share
-        // no stem: "я" and "меня" are one word and two strings, and no rule turns one into the
-        // other. Thirty lexemes, a quarter of everything the Ukrainian alignment fails to link.
-        // SlavicSuppletion says why these thirty and not others.
-        if (SlavicSuppletion.Of(lower) is { } closed)
+        // The closed classes first, where they are consulted at all: stripping endings cannot help a
+        // word whose forms share no stem, and "я" and "меня" are one word and two strings that no
+        // rule turns into each other. SlavicSuppletion says what unifying them was measured to be
+        // worth, and why it is off.
+        if (suppletion && SlavicSuppletion.Of(lower) is { } closed)
         {
             return closed;
         }
