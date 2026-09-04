@@ -21,18 +21,22 @@ namespace Essenthos.Core.Tests;
 /// </summary>
 public sealed class TextProvenanceTests
 {
-    private static TextDefinition[] All =>
-    [
-        BhsaTextSource.Definition,
-        NestleTextSource.Definition,
-        SeptuagintTextSource.Definition(),
-        TextusReceptusTextSource.Definition(Edition.Scrivener1894),
-        TextusReceptusTextSource.Definition(Edition.Stephanus1550),
-        ByzantineTextSource.Definition,
-        SamaritanTextSource.Definition,
-        BereanTextSource.Definition,
-        .. Bible4uTextSource.Definitions.Values,
-    ];
+    private static IReadOnlyList<TextDefinition> All => TextCorpus.Definitions;
+
+    /// <summary>Every text, so a text added to the corpus is checked without anyone remembering.</summary>
+    public static TheoryData<string> EverySlug
+    {
+        get
+        {
+            var data = new TheoryData<string>();
+            foreach (var slug in TextCorpus.Slugs)
+            {
+                data.Add(slug);
+            }
+
+            return data;
+        }
+    }
 
     private static TextDefinition Of(string slug) => All.Single(definition => definition.Slug == slug);
 
@@ -44,17 +48,7 @@ public sealed class TextProvenanceTests
     /// columns beside them cannot hold the sentence that actually answers the reader's question.
     /// </summary>
     [Theory]
-    [InlineData("bhsa")]
-    [InlineData("nestle1904")]
-    [InlineData("lxx-brenton")]
-    [InlineData("scrivener1894")]
-    [InlineData("stephanus1550")]
-    [InlineData("robinsonpierpont2018")]
-    [InlineData("sp")]
-    [InlineData("bsb")]
-    [InlineData("kjv")]
-    [InlineData("rusv")]
-    [InlineData("ukr")]
+    [MemberData(nameof(EverySlug))]
     public void EveryTextSaysWhatItIs(string slug) =>
         Of(slug).About.Should().NotBeNullOrWhiteSpace();
 
@@ -64,17 +58,7 @@ public sealed class TextProvenanceTests
     /// looked into, which is the state the whole corpus was in.
     /// </summary>
     [Theory]
-    [InlineData("bhsa")]
-    [InlineData("nestle1904")]
-    [InlineData("lxx-brenton")]
-    [InlineData("scrivener1894")]
-    [InlineData("stephanus1550")]
-    [InlineData("robinsonpierpont2018")]
-    [InlineData("sp")]
-    [InlineData("bsb")]
-    [InlineData("kjv")]
-    [InlineData("rusv")]
-    [InlineData("ukr")]
+    [MemberData(nameof(EverySlug))]
     public void EveryTextNamesWhoMadeIt(string slug)
     {
         var definition = Of(slug);

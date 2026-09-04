@@ -1,4 +1,4 @@
-﻿using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.TextusReceptus;
@@ -19,19 +19,11 @@ public sealed class TextAliasTests
 {
     /// <summary>
     /// Every text the corpus loads, so the alias declarations are checked against the real slugs
-    /// rather than against a list written beside them.
+    /// rather than against a list written beside them. This one had fallen a text behind — the
+    /// Samaritan Pentateuch was loading and nothing here covered it — which is why the list is no
+    /// longer written twice.
     /// </summary>
-    private static TextDefinition[] Corpus =>
-    [
-        BhsaTextSource.Definition,
-        NestleTextSource.Definition,
-        SeptuagintTextSource.Definition(),
-        TextusReceptusTextSource.Definition(Edition.Scrivener1894),
-        TextusReceptusTextSource.Definition(Edition.Stephanus1550),
-        ByzantineTextSource.Definition,
-        BereanTextSource.Definition,
-        .. Bible4uTextSource.Definitions.Values,
-    ];
+    private static IReadOnlyList<TextDefinition> Corpus => TextCorpus.Definitions;
 
     private static IReadOnlyList<TextEntry> Loaded =>
         [.. Corpus.Select((definition, at) => new TextEntry(at + 1, definition.Slug, [1], false))];
