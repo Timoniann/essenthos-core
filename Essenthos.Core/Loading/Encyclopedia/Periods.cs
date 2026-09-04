@@ -43,11 +43,12 @@ internal static partial class Periods
             "Israel falls to Assyria within this era, 137 years before Judah falls to Babylon."),
         ("era-exile", "The exile in Babylon", "beginseventyyearexileinbabylon", "endseventyyearexileinbabylon", null),
         ("era-return", "The return and the Persian period", "endseventyyearexileinbabylon", "endartaxerxes1reign",
-            "Where the scripture layer stops. Its chronology is arithmetic over the genealogies and "
-            + "the reign lengths, and those stop here, so nothing after this point is narrated on "
-            + "this axis: not the four centuries between the testaments, and not the New Testament "
-            + "itself. The jubilees are counted forward rather than narrated, and the only marks "
-            + "past this era are world history's. The gap is stated, not a loading failure."),
+            "Where the computed chronology stops. It is arithmetic over the genealogies and the "
+            + "reign lengths, and those stop here, so the four centuries between the testaments are "
+            + "still unnarrated on this axis and the jubilees past this point are counted forward "
+            + "rather than narrated. The New Testament is narrated, by a different hand: Ussher "
+            + "dates 354 of its paragraphs, AD 7 to AD 73, and they say so on every row. The gap "
+            + "that remains is stated, not a loading failure."),
     ];
 
     /// <summary>

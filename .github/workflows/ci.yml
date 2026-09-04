@@ -100,10 +100,25 @@ jobs:
             SyntaxTests
             TextSourceTests
             TextusReceptusOmissionTests
-            TheographicDateTests
             # Reads Resources/WorldHistory, which the fetch scripts generate and .gitignore keeps
-            # out of the repository. PRB-0163.
+            # out of the repository.
             WorldLayerTests
+            # Added 2026-09-04, after the list had gone stale twice. Kept alphabetical; a trait on
+            # the class would put the declaration where whoever adds the dependency is typing.
+            ByzantineTextformTests
+            GreekWitnessReachTests
+            OpenBiblePlaceLoadTests
+            SamaritanCorpusTests
+            SamaritanLinkTests
+            SamaritanTests
+            SeptuagintTests
+            StrongLexiconTests
+            StrongTagTests
+            StrongXmlParserTests
+            TahotSegmentationTests
+            UssherAnnalsLoadTests
+            UssherAnnalsTests
+            UtrReaderTests
           )
           filter=$(printf 'FullyQualifiedName!~%s&' "${needs_corpus[@]}")
           dotnet test --no-restore --filter "${filter%&}"
