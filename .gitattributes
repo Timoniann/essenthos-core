@@ -1,0 +1,21 @@
+# The corpus fingerprint hashes bytes on disk, and git rewrites line endings on checkout.
+#
+# Resources/MANIFEST.json records a SHA-256 per folder so a copy of the data can be checked against
+# the one this repository's measurements were taken from. Almost none of that data is in git — it is
+# a gigabyte of third-party sources that stay out — but WorldHistory is: 319 KB of CC0 Wikidata
+# exports and the SPARQL queries that produced them, committed because without them the world layer
+# loads nothing.
+#
+# Committed and text, those files are stored with LF and checked out with CRLF on Windows, so the
+# hash recorded on one machine can never match the bytes on another. The check would report a
+# difference on a checkout where nothing is wrong — which is worse than not checking, because a
+# reader told once that a folder always differs is the reader who will not look the next time it
+# really does.
+#
+# So the bytes are pinned. This is the fix that keeps the check meaningful; excluding the folder from
+# the manifest would have silenced it and given up on the one folder a clone actually carries.
+Resources/** -text
+
+# Everything else keeps git's normal handling. The corpus manifest already skips files git tracks,
+# for the same reason in the other direction: a licence file beside the data is versioned, and git
+# is entitled to change its bytes.
