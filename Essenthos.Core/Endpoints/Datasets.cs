@@ -75,6 +75,19 @@ public static class Datasets
     /// none is owed — the author, the licence and the URL are recorded either way (RUL-0181), and
     /// this is the extra thing an author asked for on top of them.
     /// </param>
+    /// <param name="Obliges">
+    /// What this source's terms require of anything the corpus publishes from it, in a sentence.
+    ///
+    /// A licence name says what may be taken; it does not say what is owed back, and the two are
+    /// not the same reading. **CC BY-SA 4.0** on an alignment means the corpus's own form of those
+    /// links has to be offered under CC BY-SA 4.0 in turn, and unfoldingWord adds that a derivative
+    /// work must not carry their trademark. **CC BY-NC 4.0** means the rows it stands behind cannot
+    /// be published commercially. None of that is inferable from four letters and a URL, and an
+    /// obligation nobody wrote down is one nobody meets.
+    ///
+    /// Null where the terms ask for nothing beyond the attribution every source here gets anyway
+    /// (RUL-0181) — which is most of them, and is why this being set is worth noticing.
+    /// </param>
     /// <param name="Contains">
     /// Further works bound into the same file, each with its own author and its own terms.
     ///
@@ -99,7 +112,8 @@ public static class Datasets
         bool Lexicon = false,
         string[]? Methods = null,
         Work[]? Contains = null,
-        string? Citation = null)
+        string? Citation = null,
+        string? Obliges = null)
     {
         /// <summary>Every source-string prefix this dataset claims, its own name first.</summary>
         public IEnumerable<string> Prefixes => Methods is null ? [Prefix] : [Prefix, .. Methods];
@@ -141,13 +155,6 @@ public static class Datasets
             + "rather than making a second one.",
             "OpenBible.info"),
 
-        new("theographic", "Theographic Bible Data", "Robert Rouse", "CC BY-SA 4.0",
-            "https://creativecommons.org/licenses/by-sa/4.0/",
-            "https://github.com/robertrouse/theographic-bible-metadata",
-            "The New Testament chronology, which the other dataset does not have: its method stops "
-            + "where the genealogies stop. Share-alike, unlike everything around it.",
-            "Theographic"),
-
         new("wikidata", "Wikidata", "the Wikidata contributors", "CC0",
             "https://creativecommons.org/publicdomain/zero/1.0/",
             "https://query.wikidata.org",
@@ -163,15 +170,25 @@ public static class Datasets
             "Which King James word renders which Hebrew word, stated rather than computed, for the "
             + "whole Old Testament. It is the only word-level testimony this corpus holds for the "
             + "Hebrew, and therefore also the standard every inferred method is measured against.",
-            "Open Hebrew Bible Project", Links: true),
+            "Open Hebrew Bible Project", Links: true,
+            Obliges: "NonCommercial: the links this source states, and anything published from "
+                + "them, may not be used commercially."),
 
+        // The heaviest condition on anything in the corpus, and the reason it is written out rather
+        // than left to be read off the licence name: share-alike reaches back out of the database
+        // onto whatever the corpus publishes from these links, and the trademark clause is
+        // unfoldingWord's own and appears in no licence at all.
         new("unfoldingword", "Ukrainian Bible Interlinear Ogienko", "unfoldingWord", "CC BY-SA 4.0",
             "https://creativecommons.org/licenses/by-sa/4.0/",
             "https://git.door43.org/uk_ts/uk_ubio",
             "Which Ukrainian word renders which Greek or Hebrew word, stated by people. Small "
             + "beside the Old Testament mapping, and for a long time the only stated word-level "
             + "correspondence any Slavic text had — so it is what every model here is calibrated on.",
-            "unfoldingWord", Links: true),
+            "unfoldingWord", Links: true,
+            Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the "
+                + "corpus's own form of these links is offered under CC BY-SA 4.0 in turn. "
+                + "unfoldingWord's terms add that a derivative work must remove the unfoldingWord® "
+                + "trademark, so the mark is not carried on them."),
 
         // The same format and the same ecosystem as the entry above, and deliberately not folded
         // into it: the three Synodal books are dedicated to the public domain by whoever aligned
@@ -254,7 +271,11 @@ public static class Datasets
             + "that makes the Greek Old Testament searchable by word rather than by spelling. Only "
             + "the lexical table is taken: GLAUx's own Greek text is not loaded, and its lemmas are "
             + "applied to the Brenton text already served.",
-            "GLAUx", Lemmas: "lxx-brenton"),
+            "GLAUx", Lemmas: "lxx-brenton",
+            Obliges: "ShareAlike: the lemmas taken from here, and anything published from them, are "
+                + "offered under CC BY-SA 3.0 in turn. Only the lexical table is taken and the "
+                + "Brenton text it annotates is public domain, which is what keeps the clause on "
+                + "the lemmas rather than on the Septuagint."),
 
         // The lexicon every Strong number in the corpus resolves through, and the one dataset with
         // no declaration at all — it contributes neither rows carrying a source nor links, so the

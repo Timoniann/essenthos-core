@@ -14,10 +14,14 @@ namespace Essenthos.Core.Endpoints;
 /// carries the string of its source, and three datasets now sit side by side under three different
 /// licences.
 ///
-/// **The licences differ, and that is the whole reason this exists.** CC BY 4.0 for the Old
-/// Testament chronology, CC BY-SA 4.0 for the New, CC0 for the world layer. A page that printed one
-/// licence over all three would be asserting what none of them says, and share-alike is not a
-/// condition anybody should discover after the fact. PRB-0109.
+/// **The licences differ, and that is the whole reason this exists.** CC BY 4.0 for the chronology,
+/// CC0 for the world layer, CC BY-NC 4.0 and CC BY-SA 4.0 for the two sources that say which word
+/// renders which. A page that printed one licence over all of them would be asserting what none of
+/// them says. PRB-0109.
+///
+/// And a licence name is only half of it: what a reader needs before they publish anything is what
+/// each source asks of them in return, which <c>Obliges</c> carries in words. Share-alike is not a
+/// condition anybody should discover after the fact.
 /// </summary>
 public static class DatasetEndpoints
 {
@@ -75,6 +79,7 @@ public static class DatasetEndpoints
                     dataset.Url,
                     dataset.Covers,
                     dataset.Citation,
+                    dataset.Obliges,
                     counts,
                     dataset.Contains is null
                         ? []
@@ -130,6 +135,11 @@ public static class DatasetEndpoints
 /// How the author asked to be cited, where the source publishes a form. Null where none is
 /// published — silence, not an assertion that none is owed.
 /// </param>
+/// <param name="Obliges">
+/// What this source requires of anything published from it — share-alike, NonCommercial, a
+/// trademark that must not be carried. Null where the terms ask for nothing beyond attribution,
+/// which is the common case and is why the ones that are set matter.
+/// </param>
 public record DatasetResponse(
     string Id,
     string Name,
@@ -139,6 +149,7 @@ public record DatasetResponse(
     string Url,
     string Covers,
     string? Citation,
+    string? Obliges,
     DatasetCounts Counts,
     IList<WorkResponse> Contains);
 

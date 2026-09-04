@@ -111,14 +111,18 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
         ["dynasty", "empire", "kingdom", "historical country", "state", "province", "caliphate"];
 
     /// <summary>
-    /// Where the two layers are about the same event.
+    /// Where the two layers would be about the same event.
     ///
-    /// Wikidata and Theographic both carry the passion, the circumcision, the return from Egypt and
-    /// the council at Jerusalem, and they date them three to five years apart. As two rows that is
-    /// the crucifixion drawn twice with nothing saying it is one event; as one row with a year
-    /// picked it is a reading the corpus has quietly made on the reader's behalf. So the scripture
-    /// row stands — that layer is where these belong — and Wikidata's year is written onto it as
-    /// the disagreement it is.
+    /// These five items are the passion, the circumcision, the return from Egypt and the council at
+    /// Jerusalem — narrative, not world history. Where the scripture layer holds the same event, two
+    /// rows would draw the crucifixion twice with nothing saying it is one event, and one row with a
+    /// year picked would be a reading the corpus had quietly made on the reader's behalf. So the
+    /// scripture row stands, that layer being where these belong, and Wikidata's year is written
+    /// onto it as the disagreement it is.
+    ///
+    /// **The scripture layer holds none of them today**, because no chronology loaded here dates a
+    /// New Testament event. So each of these loads as a world row, which is what keeps the passion
+    /// on the axis at all, and the handoff waits for a scripture layer that reaches this far.
     ///
     /// Keyed on the item identifier, never on the name: a name join between two datasets is the
     /// mistake this corpus has already made once. Each pair below was read on both sides.
@@ -193,14 +197,11 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                     continue;
                 }
 
-                if (AlreadyInScripture.TryGetValue(item.Uri, out var slug))
+                if (AlreadyInScripture.TryGetValue(item.Uri, out var slug)
+                    && counterparts.TryGetValue(slug, out var scripture))
                 {
-                    if (counterparts.TryGetValue(slug, out var scripture))
-                    {
-                        scripture.Notes = Disagreeing(scripture, item, year);
-                        deferred++;
-                    }
-
+                    scripture.Notes = Disagreeing(scripture, item, year);
+                    deferred++;
                     continue;
                 }
 

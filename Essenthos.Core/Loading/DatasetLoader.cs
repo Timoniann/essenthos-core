@@ -475,6 +475,11 @@ internal sealed class DatasetLoader(
     /// <summary>
     /// The people, places and dated events the text names. DOC-0099 records why this dataset and
     /// not the others, and BibleDataLoader records what had to be corrected in it.
+    ///
+    /// **The chronology stops at Artaxerxes.** Its method is arithmetic over the genealogies and
+    /// the reign lengths, and those stop where the Old Testament stops, so nothing loaded here
+    /// dates a New Testament event. The world layer reaches past it and dates none of the
+    /// narrative; the gap is real and is said so on the era that closes against it.
     /// </summary>
     private async Task LoadTheEncyclopedia(string resources, CancellationToken cancellationToken)
     {
@@ -484,23 +489,16 @@ internal sealed class DatasetLoader(
         var loader = scope.ServiceProvider.GetRequiredService<BibleDataLoader>();
         status.Record(await loader.Load(Path.Combine(resources, "BibleData2026"), cancellationToken));
 
-        // The New Testament, which that dataset does not date. Second, and in its own scope,
-        // because it reads back the entities and chronologies the first one wrote.
-        using var second = services.CreateScope();
-        var newTestament = second.ServiceProvider.GetRequiredService<TheographicEventLoader>();
-        status.Record(await newTestament.Load(
-            Path.Combine(resources, "TheographicBibleData"), cancellationToken));
-
-        // The places, which the first dataset marks in progress and stops after Exodus. Third,
+        // The places, which the first dataset marks in progress and stops after Exodus. Second,
         // because it joins onto the place entities that dataset already created wherever the two
         // name the same place, and creates one only where it does not.
         using var geography = services.CreateScope();
         var places = geography.ServiceProvider.GetRequiredService<OpenBiblePlaceLoader>();
         status.Record(await places.Load(Path.Combine(resources, "OpenBible"), cancellationToken));
 
-        // What else was happening. Read from the output folder rather than through the configured
-        // resources path: it is the one dataset small enough to be committed, so it is always
-        // there and never waits on a fetch.
+        // What else was happening, and the only layer that reaches the New Testament at all. Read
+        // from the output folder rather than through the configured resources path: it is the one
+        // dataset small enough to be committed, so it is always there and never waits on a fetch.
         using var third = services.CreateScope();
         var world = third.ServiceProvider.GetRequiredService<WorldHistoryLoader>();
         status.Record(await world.Load(
