@@ -25,13 +25,25 @@ namespace Essenthos.Core.Loading.Links;
 /// </param>
 /// <param name="Recovered">
 /// Untagged English words given a Greek word from the morphology — the article, a case ending, a
-/// verb's person. These are the 35.6% of the New Testament that carries no Strong number at all,
+/// verb's person. These are the 31.5% of the New Testament that carries no Strong number at all,
 /// and they are <c>lexical</c>, never <c>strong-number</c>.
 /// </param>
 /// <param name="StrongNumbers">
 /// English words given the Strong number the tagged edition puts on them. It is the evidence these
 /// links were built from, and a corpus that keeps the conclusion and throws the evidence away
 /// cannot afterwards be asked whether the conclusion follows.
+/// </param>
+/// <param name="Supplied">
+/// English words the King James prints in italics, which is the translators saying they put the
+/// word there and the Greek does not have it. They are written as <c>expands</c> with no Greek
+/// word at all — an absence the source states, which is a different fact from a word the matcher
+/// failed on, and the only kind of claim about the New Testament here that rests on a source
+/// rather than on an inference.
+/// </param>
+/// <param name="Redivided">
+/// Verses the two editions do not write word for word — a different spelling, or the same letters
+/// divided differently. They are aligned rather than refused, and this counts how often that was
+/// needed.
 /// </param>
 internal sealed record GreekLinkOutcome(
     bool AlreadyLoaded,
@@ -44,8 +56,9 @@ internal sealed record GreekLinkOutcome(
     int Resolved,
     int Redirects,
     int Recovered,
-    int SpellingDiffers,
+    int Redivided,
     int StrongNumbers,
+    int Supplied,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
@@ -54,9 +67,10 @@ internal sealed record GreekLinkOutcome(
             : $"{Links} links over {Verses} verses in {Elapsed}: {Unambiguous} where one English word and one " +
               $"Greek word carried the number alone, {Contended} where more than one did, {Resolved} English " +
               $"words matched through the lemma the dictionary names for their form over {Redirects} numbers it " +
-              $"resolved, {Recovered} untagged English words given a Greek word by its morphology, {Unmatched} " +
-              $"English words whose number no Greek word in the verse carries, {SpellingDiffers} verses where " +
-              $"the two editions spell a word differently, {StrongNumbers} English words given the number the " +
+              $"resolved, {Recovered} untagged English words given a Greek word by its morphology, {Supplied} " +
+              $"English words the translators printed in italics and no Greek word stands behind, {Unmatched} " +
+              $"English words whose number no Greek word in the verse carries, {Redivided} verses the two " +
+              $"editions do not write word for word, {StrongNumbers} English words given the number the " +
               $"tagged edition states, {Refused} verses refused";
 }
 
@@ -71,6 +85,11 @@ internal sealed record GreekLinkOutcome(
 /// it is used. And the tagged edition numbers content words only, so the article, the case endings
 /// and the verb's person are recovered from the morphology both editions state, as <c>lexical</c>.
 ///
+/// The tagged edition and the loaded one are two printings of the King James and divide the same
+/// letters differently, so they are aligned rather than required to agree word for word. And where
+/// the King James prints a word in italics the translators are saying they supplied it, which is
+/// written as an absence rather than left as a gap.
+///
 /// The old loader silenced fifty-five English words and four passages of Matthew to make its
 /// coverage look better. That list is deliberately not carried: its passage checks named no book,
 /// so they silenced fifteen unintended verses in fourteen other books, and the word list hid 1,144
@@ -83,6 +102,9 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
     private static string RecoveredSource(string greekSlug) =>
         $"the untagged English function words, matched to the morphology {greekSlug} states";
+
+    private const string SuppliedSource =
+        "Zefania KJV+ italics, the King James translators' own mark that they supplied the word";
 
     /// <summary>
     /// One English word and one Greek word in the verse carry the number. The correspondence is
@@ -112,14 +134,15 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     private const double ResolvedNumber = 0.1;
 
     /// <summary>
-    /// How much of a verse has to match word for word before the tagged text and the loaded King
-    /// James are taken to be the same verse.
+    /// How much of a verse the two editions have to write the same way before they are taken to be
+    /// the same verse.
     ///
-    /// They are two editions of one translation and they spell names differently — Boaz against
+    /// They are two printings of one translation and they spell names differently — Boaz against
     /// Booz, Judea against Judaea, worshiped against worshipped — so demanding every word match
     /// refused 883 verses that are plainly the same verse. Demanding none would accept a verse whose
-    /// words merely happen to number the same. Where the counts agree and most of the words do, the
-    /// nth word of one is the nth word of the other whatever it is spelled like.
+    /// words merely happen to look alike here and there. Four fifths written identically is the
+    /// same verse; the rest of it is aligned on the letters, and what will not align is left
+    /// untagged rather than guessed at.
     /// </summary>
     private const double SameVerse = 0.8;
 
@@ -160,7 +183,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == greek.Id, cancellationToken))
         {
             logger.LogInformation("The New Testament links are already loaded; nothing to do");
-            return new GreekLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new GreekLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -169,7 +192,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         var greekVerses = await VerseWords(greek.Id, cancellationToken);
 
         var refused = 0;
-        var spelled = 0;
+        var redivided = 0;
         var pairs = new List<VersePair>(8_000);
 
         foreach (var (address, tags) in tagged)
@@ -180,25 +203,21 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
                 continue;
             }
 
-            if (tags.Count != kjv.Count)
+            var spans = TaggedEdition.Align(
+                [.. tags.Select(tag => tag.Text)],
+                [.. kjv.Select(word => word.Text)]);
+            if (TaggedEdition.Agreement(spans, kjv.Count) < SameVerse)
             {
                 refused++;
                 continue;
             }
 
-            var agreement = Agreement(tags, kjv);
-            if (agreement < SameVerse)
+            if (spans.Count != kjv.Count || spans.Any(span => span.Match != EditionMatch.Identical))
             {
-                refused++;
-                continue;
+                redivided++;
             }
 
-            if (agreement < 1)
-            {
-                spelled++;
-            }
-
-            pairs.Add(new VersePair(tags, kjv, witness));
+            pairs.Add(new VersePair(Project(tags, kjv.Count, spans), kjv, witness));
         }
 
         var resolution = await Resolution(pairs, cancellationToken);
@@ -234,8 +253,9 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
             resolved,
             resolution.Count,
             drafts.Count(d => d.Kind == GreekMatch.FunctionWord),
-            spelled,
+            redivided,
             stated.DistinctBy(pair => pair.WordId).Count(),
+            drafts.Count(d => d.Kind == GreekMatch.Supplied),
             started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
         return outcome;
@@ -362,8 +382,34 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
                 group.English.Count == 1 && group.Greek.Count == 1 ? GreekMatch.Unambiguous : GreekMatch.Contended));
         }
 
-        drafts.AddRange(Recover(pair, drafts));
+        var supplied = Supplied(pair);
+        foreach (var english in supplied)
+        {
+            drafts.Add(new GreekLinkDraft([pair.English[english].Id], [], null, GreekMatch.Supplied));
+        }
+
+        drafts.AddRange(Recover(pair, drafts, supplied));
         return drafts;
+    }
+
+    /// <summary>
+    /// The words the translators printed in italics and no number reaches, each as a link with an
+    /// English word and no Greek one. It is the source stating an absence, so it carries no
+    /// confidence, and it is written before the function-word pass so that pass cannot hand a Greek
+    /// word to something the King James says renders nothing.
+    /// </summary>
+    private static HashSet<int> Supplied(VersePair pair)
+    {
+        var supplied = new HashSet<int>();
+        for (var i = 0; i < pair.Tags.Count; i++)
+        {
+            if (pair.Tags[i] is { Supplied: true, Strong: null })
+            {
+                supplied.Add(i);
+            }
+        }
+
+        return supplied;
     }
 
     /// <summary>
@@ -371,7 +417,10 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// links already built: a function word is only attached through a content word whose Greek is
     /// a single settled word, so nothing here can widen a set that was already a guess.
     /// </summary>
-    private static List<GreekLinkDraft> Recover(VersePair pair, List<GreekLinkDraft> drafts)
+    private static List<GreekLinkDraft> Recover(
+        VersePair pair,
+        List<GreekLinkDraft> drafts,
+        IReadOnlySet<int> supplied)
     {
         var greekAt = new Dictionary<long, int>(pair.Greek.Count);
         for (var i = 0; i < pair.Greek.Count; i++)
@@ -412,7 +461,8 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
             [.. pair.Tags.Select(tag => tag.Strong)],
             anchors,
             [.. pair.Greek.Select(word => word.Morphology)],
-            claimed);
+            claimed,
+            supplied);
 
         return
         [
@@ -478,24 +528,42 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     private static double Lower(double confidence, bool resolved) =>
         resolved ? Math.Round(confidence - ResolvedNumber, 2) : confidence;
 
-    /// <summary>How much of the verse the two editions write the same way.</summary>
-    private static double Agreement(List<TaggedWord> tags, List<Word> kjv)
+    /// <summary>
+    /// The tagged edition's words re-divided onto the loaded one's, so that everything downstream
+    /// can go on reading the nth tag as belonging to the nth word.
+    ///
+    /// A span may be several words on either side. Where the tagged edition writes two words for
+    /// one — <em>child</em> and <em>'s</em> — the number is the one the pair states, and only one
+    /// of them ever carries it. Where it writes one for two — <em>forever</em> against <em>for
+    /// ever</em> — both loaded words take that number, which is the truth: they render the one
+    /// Greek word between them, and the grouping below turns that into a single link naming both.
+    /// A word in no span is untagged, and the function-word pass may still reach it.
+    /// </summary>
+    private static List<TaggedWord> Project(List<TaggedWord> tags, int words, List<EditionSpan> spans)
     {
-        if (tags.Count == 0)
+        var projected = new List<TaggedWord>(words);
+        for (var i = 0; i < words; i++)
         {
-            return 1;
+            projected.Add(new TaggedWord(string.Empty, null, false));
         }
 
-        var same = 0;
-        for (var i = 0; i < tags.Count; i++)
+        foreach (var span in spans)
         {
-            if (string.Equals(tags[i].Text, kjv[i].Text, StringComparison.OrdinalIgnoreCase))
+            string? strong = null;
+            var supplied = true;
+            for (var i = span.TaggedFrom; i < span.TaggedTo; i++)
             {
-                same++;
+                strong ??= tags[i].Strong;
+                supplied &= tags[i].Supplied;
+            }
+
+            for (var i = span.CorpusFrom; i < span.CorpusTo; i++)
+            {
+                projected[i] = new TaggedWord(tags[span.TaggedFrom].Text, strong, supplied);
             }
         }
 
-        return (double)same / tags.Count;
+        return projected;
     }
 
     private static Dictionary<(int, int, int), List<TaggedWord>> Tagged(string path)
@@ -517,7 +585,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
                 foreach (var verse in chapter.Verses)
                 {
                     verses[(canonical.Ordinal, chapter.Number, verse.Number)] = verse.Words
-                        .Select(word => new TaggedWord(word.Text, StrongTags.Read(word.StrongNo)))
+                        .Select(word => new TaggedWord(word.Text, StrongTags.Read(word.StrongNo), word.Italic))
                         .ToList();
                 }
             }
@@ -572,8 +640,10 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
         var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
         var renders = EnumSpelling.Of(LinkRelation.Renders);
+        var expands = EnumSpelling.Of(LinkRelation.Expands);
         var byNumber = EnumSpelling.Of(LinkMethod.StrongNumber);
         var lexical = EnumSpelling.Of(LinkMethod.Lexical);
+        var bySource = EnumSpelling.Of(LinkMethod.StatedBySource);
         var fromSide = EnumSpelling.Of(LinkSide.From);
         var toSide = EnumSpelling.Of(LinkSide.To);
         var source = Source(greekSlug);
@@ -583,15 +653,41 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         {
             for (var i = 0; i < drafts.Count; i++)
             {
-                var fromMorphology = drafts[i].Kind == GreekMatch.FunctionWord;
+                var kind = drafts[i].Kind;
                 await writer.StartRowAsync(cancellationToken);
                 await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
                 await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(fromMorphology ? lexical : byNumber, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(drafts[i].Confidence, NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(fromMorphology ? recovered : source, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(
+                    kind == GreekMatch.Supplied ? expands : renders, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(
+                    kind switch
+                    {
+                        GreekMatch.Supplied => bySource,
+                        GreekMatch.FunctionWord => lexical,
+                        _ => byNumber,
+                    },
+                    NpgsqlDbType.Text,
+                    cancellationToken);
+
+                if (drafts[i].Confidence is { } confidence)
+                {
+                    await writer.WriteAsync(confidence, NpgsqlDbType.Double, cancellationToken);
+                }
+                else
+                {
+                    await writer.WriteNullAsync(cancellationToken);
+                }
+
+                await writer.WriteAsync(
+                    kind switch
+                    {
+                        GreekMatch.Supplied => SuppliedSource,
+                        GreekMatch.FunctionWord => recovered,
+                        _ => source,
+                    },
+                    NpgsqlDbType.Text,
+                    cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
@@ -689,7 +785,13 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
-    private sealed record TaggedWord(string Text, string? Strong);
+    /// <param name="Supplied">
+    /// Whether the King James prints this word in italics. The translators mark that way what they
+    /// added to make English of the Greek, so it is the source saying no Greek word stands behind
+    /// it — 4,175 words of the New Testament, 71 of which the same file also numbers, and where the
+    /// two disagree the number is the more specific claim and wins.
+    /// </param>
+    private sealed record TaggedWord(string Text, string? Strong, bool Supplied);
 
     private sealed record Word(long Id, string Text, string? Strong, GreekMorphology Morphology);
 
@@ -703,6 +805,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         Paired,
         Contended,
         FunctionWord,
+        Supplied,
     }
 
     private sealed record Group(List<long> Greek)
@@ -712,5 +815,10 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         public bool Resolved { get; set; }
     }
 
-    private sealed record GreekLinkDraft(List<long> English, List<long> Greek, double Confidence, GreekMatch Kind);
+    /// <param name="Confidence">
+    /// How sure the pairing is, or null where nothing was inferred — a supplied word's absence is
+    /// stated by the source, and a number on it would invite the reader to weigh a claim that was
+    /// never a guess.
+    /// </param>
+    private sealed record GreekLinkDraft(List<long> English, List<long> Greek, double? Confidence, GreekMatch Kind);
 }

@@ -15,7 +15,7 @@ namespace Essenthos.Core.Loading;
 /// <para>
 /// **It is here for its tables, not for itself.** Every stated word-level correspondence this corpus
 /// holds comes from one file and one small interlinear, and the King James New Testament reaches only
-/// 72.7% of the Greek. The Berean publishes a row per original word with the English that renders it,
+/// 77.2% of the Greek. The Berean publishes a row per original word with the English that renders it,
 /// for the whole Bible, which makes it a second independent English anchor and the only calibration
 /// set the New Testament has. That the translation is also good and readable is a bonus.
 /// </para>

@@ -7,7 +7,7 @@ internal readonly record struct FunctionWordMatch(int EnglishWord, int GreekWord
 /// <summary>
 /// Gives the English function words their Greek.
 ///
-/// The tagged King James numbers its content words and leaves 64,165 New Testament words — 35.6% of
+/// The tagged King James numbers its content words and leaves 56,878 New Testament words — 31.5% of
 /// it — with no tag at all: <em>the</em>, <em>of</em>, <em>unto</em>, <em>he</em>, <em>shall</em>.
 /// Matching Strong numbers can never reach them, so without this they are linked to nothing and a
 /// reader hovering a Greek word sees half an English clause light up.
@@ -18,7 +18,10 @@ internal readonly record struct FunctionWordMatch(int EnglishWord, int GreekWord
 /// as a separate word are stated rather than inferred. Each rule below has the tag as its evidence
 /// and adjacency only to say which word is meant. Where the tag does not say it, nothing is
 /// written — <em>a</em> and <em>an</em> render the absence of the Greek article and appear nowhere
-/// here, and <em>is</em> is left alone because a supplied copula and an untagged one look the same.
+/// here, and <em>is</em> is left alone because Greek states a copula it does not write only by
+/// writing nothing, which no tag on any other word can be read as. The King James italics settle
+/// the supplied ones, and they are settled before this runs; what is left is the copula the
+/// tagged edition simply did not number, and nothing here can tell that from a supplied one.
 /// </summary>
 internal static class GreekFunctionWords
 {
@@ -113,19 +116,26 @@ internal static class GreekFunctionWords
     /// content word whose own Greek is settled — an anchor naming a set would spread the guess.
     /// </param>
     /// <param name="claimed">Greek words some link already names, so an article is not taken twice.</param>
+    /// <param name="supplied">
+    /// English words the King James prints in italics. The translators are saying no Greek word
+    /// stands behind them, which settles the question this class exists to guess at — so they are
+    /// passed over here rather than filtered out afterwards, and the article one of them would have
+    /// taken stays free for the word that does render it.
+    /// </param>
     public static IReadOnlyList<FunctionWordMatch> Match(
         IReadOnlyList<string> english,
         IReadOnlyList<string?> tags,
         IReadOnlyList<int> anchors,
         IReadOnlyList<GreekMorphology> greek,
-        IReadOnlySet<int> claimed)
+        IReadOnlySet<int> claimed,
+        IReadOnlySet<int> supplied)
     {
         var matches = new List<FunctionWordMatch>();
         var taken = new HashSet<int>();
 
         for (var i = 0; i < english.Count; i++)
         {
-            if (tags[i] is not null)
+            if (tags[i] is not null || supplied.Contains(i))
             {
                 continue;
             }

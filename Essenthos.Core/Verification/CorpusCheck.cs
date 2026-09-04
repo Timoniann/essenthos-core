@@ -24,7 +24,7 @@ namespace Essenthos.Core.Verification;
 /// Integrity is the only measure with a right answer, and it is zero.
 ///
 /// Coverage is reported per section rather than per text, because a text is not one thing: the King
-/// James renders 97% of the Hebrew and 58% of the Greek, and one number for it describes neither
+/// James renders 94% of the Hebrew and 77% of the Greek, and one number for it describes neither
 /// half. And it covers every text with links rather than the translations alone, because the
 /// worst-covered text in this corpus is a printed edition and a headline share computed without it
 /// is a headline about a subset.
