@@ -1152,6 +1152,19 @@ internal record TimelineEventResponse(
     string? EntitySlug,
     IDictionary<string, int> Years);
 
+/// <param name="Level">
+/// Which row to draw it on — 0 the eras, 1 the spans of rule and captivity, 2 the lives and
+/// ministries — and not its depth in the tree. Every period hangs off an era whatever its level,
+/// so nothing sits under a level-1 period: of the 178 that have a parent, 87 are level 1 and 91
+/// level 2, and all 178 point at a level-0 era.
+/// </param>
+/// <param name="ParentSlug">
+/// The era this period <em>opens in</em>, which is not always an era that contains it. Drawing a
+/// child bar inside its parent's bar without reading <see cref="Years"/> puts it outside in 42 of
+/// the 178: a lifespan crosses the Flood because the man outlived it, and the 430 years from the
+/// promise to the covenant end two eras after they begin. Those 42 say how far they overrun in
+/// <see cref="Notes"/>. The years are the containment; this is only where the band starts.
+/// </param>
 /// <param name="Years">
 /// Start and end, per chronology, as a two-element array. Only a chronology that can state both
 /// ends appears. The empty key is a period that carries its own years and belongs to no reckoning.
