@@ -295,6 +295,7 @@ internal static class Texts
 
         return new MorphologyResponse(
             Feature(features, PartOfSpeech),
+            Feature(features, "case"),
             Feature(features, "gender"),
             Feature(features, "number"),
             Feature(features, "person"),

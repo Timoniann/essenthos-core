@@ -1,4 +1,4 @@
-﻿namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Endpoints;
 
 /// <summary>
 /// The records more than one endpoint group answers with. Everything else lives beside the
@@ -103,9 +103,16 @@ internal record CorpusResponse(
 /// <summary>
 /// One nested object rather than twenty flat fields. Null means this text does not carry that
 /// annotation, which is most of them for Greek and all of them for a translation.
+///
+/// <para>
+/// The field set came from a Hebrew text and shows it: state and stem are BHSA's, and until now
+/// there was nowhere at all to put a Greek word's case, which for a reader of the Greek is the one
+/// thing they most want the word to say. It is stored, and was simply never read out.
+/// </para>
 /// </summary>
 internal record MorphologyResponse(
     string? PartOfSpeech,
+    string? Case,
     string? Gender,
     string? Number,
     string? Person,
