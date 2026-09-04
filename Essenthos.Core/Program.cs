@@ -140,6 +140,10 @@ if (args is ["verify", ..])
     return 0;
 }
 
+// `--suppletion` scores the Slavic texts with the closed-class table switched on, which is how
+// what that table is worth stays a measurement rather than an opinion. It gets its own workspace
+// because the reduction changes the tokens the model trains on, and reusing the other one would
+// score the wrong run.
 if (args is ["score", var scoreFrom, var scoreTo, ..])
 {
     using var scoreScope = app.Services.CreateScope();
@@ -148,14 +152,16 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
         scoreFrom,
         scoreTo,
         Path.Combine(Path.GetTempPath(), "essenthos-align",
-            $"{scoreFrom}-{scoreTo}{(args.Contains("--surface") ? "-surface" : string.Empty)}"),
+            $"{scoreFrom}-{scoreTo}{(args.Contains("--surface") ? "-surface" : string.Empty)}" +
+            $"{(args.Contains("--suppletion") ? "-suppletion" : string.Empty)}"),
         args.Contains("--min")
             ? [.. args[Array.IndexOf(args, "--min") + 1].Split(',')
                 .Select(t => double.Parse(t, System.Globalization.CultureInfo.InvariantCulture))]
             : [0.25, 0.40],
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
         args.Contains("--surface"),
-        args.Contains("--stated")));
+        args.Contains("--stated"),
+        args.Contains("--suppletion")));
     return 0;
 }
 

@@ -110,8 +110,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var started = Stopwatch.StartNew();
         Directory.CreateDirectory(workspace);
 
-        var source = await Words(fromSlug, Reduce, cancellationToken);
-        var target = await Words(toSlug, Comparable, cancellationToken);
+        var source = await Words(fromSlug, word => Reduce(word), cancellationToken);
+        var target = await Words(toSlug, word => Comparable(word), cancellationToken);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
         if (addresses.Count == 0)
         {
@@ -202,8 +202,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         // Only the source is read as written. The target's own reduction is not a hedge — BHSA's
         // consonantal text and Nestle's lemmas are the forms those texts themselves carry, and both
         // were measured as plainly better than the pointing and the inflection they replace.
-        var source = await Words(fromSlug, asWritten ? Written : Reduce, cancellationToken);
-        var target = await Words(toSlug, Comparable, cancellationToken);
+        var source = await Words(
+            fromSlug, asWritten ? Written : word => Reduce(word), cancellationToken);
+        var target = await Words(toSlug, word => Comparable(word), cancellationToken);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
 
         Directory.CreateDirectory(workspace);
@@ -239,12 +240,15 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         string modelType,
         bool targetSurface = false,
         bool statedOnly = false,
+        bool suppletion = false,
         CancellationToken cancellationToken = default)
     {
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
-        var source = await Words(fromSlug, targetSurface ? Written : Reduce, cancellationToken);
-        var target = await Words(toSlug, targetSurface ? Written : Comparable, cancellationToken);
+        var source = await Words(
+            fromSlug, targetSurface ? Written : word => Reduce(word, suppletion), cancellationToken);
+        var target = await Words(
+            toSlug, targetSurface ? Written : word => Comparable(word, suppletion), cancellationToken);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
 
         Directory.CreateDirectory(workspace);
@@ -256,10 +260,21 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var prior = await SyntaxPrior.Read(
             (NpgsqlConnection)db.Database.GetDbConnection(), to.Id, cancellationToken);
 
+        // A file that states correspondences for nine books of sixty-six marks every proposal made
+        // in the other fifty-seven wrong, and the precision column then reports the file's coverage
+        // rather than the model's accuracy — 4% where the model is not 4% wrong. Restricting it to
+        // the source words the file actually speaks about is the only question a partial gold can
+        // answer, and where the file covers everything the two columns are the same number.
+        var answered = gold.Select(pair => pair.From).ToHashSet();
+
         var report = new StringBuilder()
-            .AppendLine($"{fromSlug} against {toSlug} as " + (targetSurface ? "written" : "reduced") +
-                        $", scored on {gold.Count} " + (statedOnly ? "stated" : "stated and lexical") + " pairs")
-            .AppendLine("  rule            min  syntax     kept  precision  recall   content precision");
+            .AppendLine($"{fromSlug} against {toSlug} as " +
+                        (targetSurface ? "written" : suppletion ? "reduced, suppletion on" : "reduced") +
+                        $", scored on {gold.Count} " + (statedOnly ? "stated" : "stated and lexical") +
+                        $" pairs over {answered.Count} source words")
+            .AppendLine(
+                "  rule            min  syntax     kept  precision  recall   content precision" +
+                "   where the source answers");
 
         foreach (var selection in Enum.GetValues<Selection>())
         {
@@ -273,11 +288,14 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     var all = Alignment.Score(proposed, gold);
                     var narrow = Alignment.Score(
                         proposed.Where(pair => !structural.Contains(pair.TargetWordId)), content);
+                    var decided = Alignment.Score(
+                        proposed.Where(pair => answered.Contains(pair.SourceWordId)), gold);
 
                     report.AppendLine(
                         $"  {selection,-14}  {threshold:F2}  {(read is null ? "off" : "on"),-6}  " +
                         $"{drafts.Count,7}  {all.Precision,9:P1}  " +
-                        $"{all.Recall,6:P1}  {narrow.Precision,9:P1} of {narrow.Proposed}");
+                        $"{all.Recall,6:P1}  {narrow.Precision,9:P1} of {narrow.Proposed}" +
+                        $"  {decided.Precision,9:P1}, {decided.Hit} of {decided.Proposed}");
                 }
             }
         }
@@ -405,8 +423,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     {
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
-        var source = await Words(fromSlug, Reduce, cancellationToken);
-        var target = await Words(toSlug, Comparable, cancellationToken);
+        var source = await Words(fromSlug, word => Reduce(word), cancellationToken);
+        var target = await Words(toSlug, word => Comparable(word), cancellationToken);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
 
         Directory.CreateDirectory(workspace);
@@ -802,9 +820,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// or neither: reducing one alone leaves its word facing several forms of the other and splits
     /// the evidence it was meant to gather.
     /// </summary>
-    private static string Reduce(WordForms word) => word.Language switch
+    private static string Reduce(WordForms word, bool suppletion = false) => word.Language switch
     {
-        "rus" or "ukr" => SlavicStemmer.Stem(word.Surface, IsName(word)),
+        "rus" or "ukr" => SlavicStemmer.Stem(word.Surface, IsName(word), suppletion),
         "eng" => EnglishStemmer.Stem(word.Surface),
         "grc" => GreekStemmer.Stem(word.Surface),
         _ => word.Surface.ToLowerInvariant(),
@@ -825,8 +843,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// many different strings and a lexicon built on twenty-three thousand verses never sees any of
     /// them often enough; using the consonants instead raised precision by a quarter.
     /// </summary>
-    private static string Comparable(WordForms word) =>
-        word.Language is "rus" or "ukr" or "eng" ? Reduce(word)
+    private static string Comparable(WordForms word, bool suppletion = false) =>
+        word.Language is "rus" or "ukr" or "eng" ? Reduce(word, suppletion)
         // A Greek witness with a lemma keeps it, and a word without one is reduced like any other
         // heavily inflected language rather than counted as eight words for one. Brenton had none
         // at all until GLAUx; it now has one on 97.1% of its words, so this is per word rather than

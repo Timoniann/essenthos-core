@@ -7,17 +7,24 @@ namespace Essenthos.Core.Tests;
 /// <summary>
 /// The thirty closed-class words a stemmer cannot hold together.
 ///
-/// Everything here is one claim: these forms are one word, and the aligner should count them as
-/// one. A test that only checked the table returns *something* would pass on a table that merged
-/// every pronoun into one lexeme, which is the failure worth guarding — so each case names both
-/// what must land together and what must not.
+/// Everything here is one claim: these forms are one word, and a caller that asks for the table
+/// should be told so. A test that only checked the table returns *something* would pass on a table
+/// that merged every pronoun into one lexeme, which is the failure worth guarding — so each case
+/// names both what must land together and what must not.
+///
+/// The table is not on by default: scored against the correspondences the Ukrainian interlinear
+/// states it added twelve right links and seventy-one wrong ones, and
+/// <see cref="SlavicSuppletion"/> carries the numbers. So every case here asks for it explicitly,
+/// which is also what the pipeline does when it is measured.
 /// </summary>
 public class SlavicSuppletionTests
 {
+    private static string Joined(string word) => SlavicStemmer.Stem(word, suppletion: true);
+
     /// <summary>
-    /// The case PRB-0076 is about. Ukrainian writes the copula as `є`, `буде` and `був`, which
-    /// share no stem, so the aligner saw three rare words instead of one common one — and
-    /// "станеться" linked to nothing while "сталося" two words later linked at 0.98.
+    /// Ukrainian writes the copula as `є`, `буде` and `був`, which share no stem, so the stemmer
+    /// alone leaves the aligner three rare words where the language has one common one. Whether
+    /// joining them helps the alignment is a separate question, and a measured one.
     /// </summary>
     [Theory]
     [InlineData("є")]
@@ -26,7 +33,7 @@ public class SlavicSuppletionTests
     [InlineData("будуть")]
     [InlineData("бути")]
     public void CountsEveryFormOfTheUkrainianCopulaAsOneWord(string form) =>
-        SlavicStemmer.Stem(form).Should().Be(SlavicStemmer.Stem("бути"));
+        Joined(form).Should().Be(Joined("бути"));
 
     [Theory]
     [InlineData("был")]
@@ -34,7 +41,7 @@ public class SlavicSuppletionTests
     [InlineData("будут")]
     [InlineData("есть")]
     public void CountsEveryFormOfTheRussianCopulaAsOneWord(string form) =>
-        SlavicStemmer.Stem(form).Should().Be(SlavicStemmer.Stem("быть"));
+        Joined(form).Should().Be(Joined("быть"));
 
     /// <summary>A pronoun's forms share no letters at all, which is why no rule can join them.</summary>
     [Theory]
@@ -46,7 +53,7 @@ public class SlavicSuppletionTests
     [InlineData("вони", "їх")]
     [InlineData("мы", "нас")]
     public void JoinsThePersonalPronounsToTheirOwnObliqueForms(string nominative, string oblique) =>
-        SlavicStemmer.Stem(oblique).Should().Be(SlavicStemmer.Stem(nominative));
+        Joined(oblique).Should().Be(Joined(nominative));
 
     /// <summary>
     /// The guard that matters. A table that merged the pronouns into one another would make the
@@ -61,7 +68,7 @@ public class SlavicSuppletionTests
     [InlineData("быть", "бог")]
     [InlineData("кто", "что")]
     public void KeepsTwoDifferentWordsApart(string one, string other) =>
-        SlavicStemmer.Stem(one).Should().NotBe(SlavicStemmer.Stem(other));
+        Joined(one).Should().NotBe(Joined(other));
 
     [Theory]
     [InlineData("сказал", "сказать")]
@@ -69,14 +76,14 @@ public class SlavicSuppletionTests
     [InlineData("сказав", "сказати")]
     [InlineData("скажуть", "сказати")]
     public void JoinsTheFormsOfToSay(string form, string word) =>
-        SlavicStemmer.Stem(form).Should().Be(SlavicStemmer.Stem(word));
+        Joined(form).Should().Be(Joined(word));
 
     [Theory]
     [InlineData("бога", "бог")]
     [InlineData("боже", "бог")]
     [InlineData("богові", "бог")]
     public void JoinsTheFormsOfGod(string form, string word) =>
-        SlavicStemmer.Stem(form).Should().Be(SlavicStemmer.Stem(word));
+        Joined(form).Should().Be(Joined(word));
 
     /// <summary>
     /// Closed classes only. A content word must reach the stemmer, because the table is written by
@@ -90,7 +97,7 @@ public class SlavicSuppletionTests
     public void LeavesTheOpenClassesToTheStemmer(string form)
     {
         SlavicSuppletion.Of(form).Should().BeNull();
-        SlavicStemmer.Stem(form).Should().Be(SlavicStemmer.Stem("отделил"));
+        Joined(form).Should().Be(Joined("отделил"));
     }
 
     [Fact]
@@ -102,5 +109,5 @@ public class SlavicSuppletionTests
     [InlineData("Бог", "бог")]
     [InlineData("Её", "ее")]
     public void ReadsAFormHoweverItIsWritten(string written, string plain) =>
-        SlavicStemmer.Stem(written).Should().Be(SlavicStemmer.Stem(plain));
+        Joined(written).Should().Be(Joined(plain));
 }

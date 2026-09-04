@@ -1,7 +1,8 @@
 namespace Essenthos.Core.Loading.Links;
 
 /// <summary>
-/// The thirty words a stemmer cannot hold together, held together by hand.
+/// The thirty words a stemmer cannot hold together, held together by hand — and measured, and
+/// found not to be worth it.
 ///
 /// <see cref="SlavicStemmer"/> strips endings, and that is the right instrument for the open
 /// classes — <em>отделил</em>, <em>отделяет</em> and <em>отделить</em> land on one stem because
@@ -11,35 +12,54 @@ namespace Essenthos.Core.Loading.Links;
 /// pieces each, and no amount of ending-stripping puts them back.
 ///
 /// <para>
-/// **It is thirty words and a quarter of the problem.** Measured over the corpus (DOC-0179 §3.4):
-/// the thirty most-fragmented lexemes are 18.0% of the Ukrainian text and 18.7% of the Russian, and
-/// they hold **25.4%** of everything the Ukrainian alignment fails to link and 19.0% of the
-/// Russian. They are the copula, the personal and possessive pronouns, the demonstratives,
-/// <em>сказати</em>, <em>бог</em> and <em>хто</em> — which is to say they are the words
-/// <em>да будет</em> and <em>станеться</em> are made of, and PRB-0076 is one instance of exactly
-/// this.
+/// **The population is a quarter of the problem.** Measured over the corpus, the thirty
+/// most-fragmented lexemes are 18.0% of the Ukrainian text and 18.7% of the Russian, and
+/// they hold 25.4% of everything the Ukrainian alignment fails to link and 19.0% of the Russian.
+/// That is why the table was written. It is also, on its own, an argument about a population and
+/// not about an outcome, and the two turned out to differ.
 /// </para>
 ///
 /// <para>
-/// **This is what a lemmatiser would have been for, without the lemmatiser.** DOC-0179 measured
-/// three of them on this text and found the population they would rescue over the stemmer to be 355
-/// tokens in 1,161,026 — 0.03% — while every option good enough to consider carries a
-/// non-commercial licence at the model layer. Fifty lines of table, no dependency, no licence, no
-/// model, and it is testable.
+/// **What it is worth, scored.** The aligner was run twice over the same texts — once with this
+/// table and once without, nothing else changed — and both runs scored against the only word-level
+/// correspondences a Slavic text in this corpus has: 7,109 links stated by unfoldingWord's
+/// Ukrainian Bible Interlinear Ogienko, 10,403 word pairs over Esther and eight epistles. At the
+/// pipeline's own operating point, one target per source word at 0.25, counting only the source
+/// words the interlinear actually speaks about:
+///
+///     ukr -> nestle1904   off   4,083 right of 4,401 proposed   92.8 %
+///     ukr -> nestle1904   on    4,100 right of 4,479 proposed   91.5 %
+///     ukr -> bhsa         off   1,880 right of 2,113 proposed   89.0 %
+///     ukr -> bhsa         on    1,875 right of 2,118 proposed   88.5 %
+///
+/// Twelve more correct pairs in 10,403, and seventy-one more wrong ones. The table buys about four
+/// wrong links for every right one it adds, and the direction is the same in all twelve
+/// configurations measured — three selection rules, two thresholds, both testaments.
+/// </para>
+///
+/// <para>
+/// **So it is off**, and the switch stays rather than the code being deleted, because the
+/// measurement is the valuable part and it has to remain repeatable: <c>score ukr nestle1904
+/// --stated</c> against <c>score ukr nestle1904 --stated --suppletion</c>. A pooling that does not
+/// pay today may pay against a different scorer — a bilingual lexical prior would ask which
+/// <em>word</em> this form belongs to, which is the question this table answers and the stemmer
+/// does not.
+/// </para>
+///
+/// <para>
+/// Why it fails is worth saying, because it is not that the table is wrong. These are the words
+/// that occur everywhere, so unifying their forms makes one very frequent lexical item out of
+/// several frequent ones, and a very frequent item co-occurs with everything: the model gains
+/// evidence and loses discrimination in the same step. The pronoun that was three stems competing
+/// weakly becomes one stem competing strongly for whatever stands near it.
 /// </para>
 ///
 /// <para>
 /// **Closed classes only, and that is the safety.** These are function words whose forms have not
 /// changed since Ogienko and Синодальный, so the table can be written out and checked rather than
 /// learned. Nothing here touches a content word: a wrong entry would merge two lexemes into one and
-/// make the model confidently wrong, which is the failure RUL-0024 is about, so the list is short
-/// on purpose and every entry is a form somebody can look up.
-/// </para>
-///
-/// <para>
-/// What this does not claim: that the 24,711 tokens will now link. Unifying a class is not the same
-/// as aligning it — *fragmented* is a population, not a promise. The experiment that settles it is
-/// to re-run the aligner and score against the 7,109 stated Ukrainian links, and it has not been run.
+/// make the model confidently wrong — a guess that reads like a sourced claim, which is worse than
+/// no answer — so the list is short on purpose and every entry is a form somebody can look up.
 /// </para>
 /// </summary>
 internal static class SlavicSuppletion
