@@ -57,6 +57,9 @@ internal static class TestResources
 
     public static string Etcbc => System.IO.Path.Combine(ResolvedPath.Value, "etcbc");
 
+    /// <summary>The Text-Fabric dataset of the Samaritan Pentateuch, one file per feature.</summary>
+    public static string Samaritan => System.IO.Path.Combine(ResolvedPath.Value, "SamaritanPentateuch");
+
     public static string KjvBhsMapping => Path("mapping", "KJV-OT-mapped-to-BHS-full-mapping.csv");
 
     /// <summary>

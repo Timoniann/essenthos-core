@@ -58,6 +58,11 @@ internal sealed class DatasetLoader(
             await Load("Brenton's Septuagint", () => SeptuagintTextSource.Read(
                 Path.Combine(resources, "Septuagint")), stoppingToken);
 
+            // The Torah as the Samaritan community transmitted it, which is the first text here
+            // that disagrees with BHSA about the Hebrew rather than about a translation of it.
+            await Load("the Samaritan Pentateuch", () => SamaritanTextSource.Read(
+                Path.Combine(resources, "SamaritanPentateuch")), stoppingToken);
+
             // The Berean's own edition, because rebuilding it from the tables is right nine verses
             // in ten and a text that is right nine times in ten is not a text. The tables then say
             // which of its words renders which Greek word. FTR-0182.
@@ -80,6 +85,7 @@ internal sealed class DatasetLoader(
             await CorroborateTheBerean(resources, stoppingToken);
             await LinkThePrintedEditions(resources, stoppingToken);
             await LinkTheGreekWitnesses(stoppingToken);
+            await LinkTheHebrewWitnesses(stoppingToken);
             await GiveEveryWordASearchableForm(stoppingToken);
             await JoinTheWordsThatArePrintedTogether(stoppingToken);
             await LinkFromTheInterlinear(resources, stoppingToken);
@@ -325,6 +331,21 @@ internal sealed class DatasetLoader(
             status.Record(await loader.Load(
                 witness, TextusReceptusTextSource.Slug(Edition.Scrivener1894), cancellationToken));
         }
+    }
+
+    /// <summary>
+    /// The Samaritan Pentateuch against BHSA. Nobody states this correspondence, so every link it
+    /// writes is an inference over the consonants both witnesses print, carries a confidence, and
+    /// says which of the two lacks the word wherever one of them does.
+    /// </summary>
+    private async Task LinkTheHebrewWitnesses(CancellationToken cancellationToken)
+    {
+        status.Starting("the Hebrew witnesses to each other");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SamaritanLinkLoader>();
+        status.Record(await loader.Load(
+            SamaritanTextSource.Slug, BhsaTextSource.Slug, cancellationToken));
     }
 
     /// <summary>
