@@ -92,6 +92,31 @@ public class BookReferencesTests
         BookReferences.Testament(ordinal).Should().Be(testament);
     }
 
+    /// <summary>
+    /// The book codes of USFM 3.0, in canonical order. Every USFM file the corpus reads names its
+    /// book with one of these, and a file whose book does not resolve is skipped without being
+    /// read — so a gap here is data that silently never loads rather than an error anyone sees.
+    /// </summary>
+    private static readonly string[] UsfmBookCodes =
+    [
+        "GEN", "EXO", "LEV", "NUM", "DEU", "JOS", "JDG", "RUT", "1SA", "2SA", "1KI", "2KI", "1CH",
+        "2CH", "EZR", "NEH", "EST", "JOB", "PSA", "PRO", "ECC", "SNG", "ISA", "JER", "LAM", "EZK",
+        "DAN", "HOS", "JOL", "AMO", "OBA", "JON", "MIC", "NAM", "HAB", "ZEP", "HAG", "ZEC", "MAL",
+        "MAT", "MRK", "LUK", "JHN", "ACT", "ROM", "1CO", "2CO", "GAL", "EPH", "PHP", "COL", "1TH",
+        "2TH", "1TI", "2TI", "TIT", "PHM", "HEB", "JAS", "1PE", "2PE", "1JN", "2JN", "3JN", "JUD",
+        "REV",
+    ];
+
+    [Fact]
+    public void EveryUsfmBookCodeResolvesToItsOwnBook()
+    {
+        for (var at = 0; at < UsfmBookCodes.Length; at++)
+        {
+            BookReferences.ResolveOrdinal(UsfmBookCodes[at]).Should().Be(at + 1,
+                $"USFM names that book {UsfmBookCodes[at]}");
+        }
+    }
+
     [Fact]
     public void FormatHintNamesTheAcceptedForms()
     {

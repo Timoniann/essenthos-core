@@ -5,9 +5,10 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// The first verse of Esther as unfoldingWord aligns it. This is the only stated word-level
-/// correspondence anyone publishes for a Slavic text, so reading it wrong would turn the one
-/// asserted link the Ukrainian could ever have into another guess.
+/// The first verse of Esther as unfoldingWord aligns it, and the first of Titus as the Door43
+/// community aligned the Synodal. This ecosystem is the only place a stated word-level
+/// correspondence for a Slavic text is published, so reading it wrong would turn the only asserted
+/// links either text could ever have into more guesses.
 /// </summary>
 public class Usfm3AlignmentTests
 {
@@ -53,6 +54,43 @@ public class Usfm3AlignmentTests
         spans[0]!.Morphemes.Should().HaveCount(2);
         spans[1]!.Morphemes.Should().HaveCount(2);
         spans[2]!.Morphemes.Should().ContainSingle();
+    }
+
+    /// <summary>
+    /// Titus 1:1 as the Synodal alignment writes it. Two things differ from the Ukrainian above and
+    /// both would break a reader that only ever saw one file: the milestone puts a space after its
+    /// pipe, and the last span here is a nest — two Greek words over one Russian word, where only
+    /// the inner one names it.
+    /// </summary>
+    private const string Titus =
+        """
+        \c 1
+        \v 1 \zaln-s | x-strong="G39720" x-lemma="Παῦλος" x-occurrence="1" x-content="Παῦλος"\*\w Павел|x-occurrence="1"\w*\zaln-e\*,
+        \zaln-s | x-strong="G14010" x-lemma="δοῦλος" x-occurrence="1" x-content="δοῦλος"\*\w раб|x-occurrence="1"\w*\zaln-e\*
+        \zaln-s | x-strong="G35880" x-lemma="ὁ" x-occurrence="1" x-content="τῆς"\*\zaln-s | x-strong="G25960" x-lemma="κατά" x-occurrence="1" x-content="κατ’"\*\w относящейся|x-occurrence="1"\w*\zaln-e\*\zaln-e\*
+        """;
+
+    [Fact]
+    public void ReadsTheSynodalAlignmentDespiteTheSpaceAfterItsPipe()
+    {
+        var spans = Usfm3AlignmentReader.Read(Titus)[0]!.Spans;
+
+        spans.Should().HaveCount(3);
+        spans[0]!.Strong.Should().Be("G39720");
+        spans[0]!.Words.Should().Equal(["Павел"]);
+        spans[1]!.Words.Should().Equal(["раб"]);
+    }
+
+    [Fact]
+    public void OnlyTheInnermostSpanOfANestClaimsTheWord()
+    {
+        // τῆς and κατ' both stand over относящейся, and only κατ' is the word it renders. An outer
+        // milestone covers several original words at once and says nothing about which is which.
+        var spans = Usfm3AlignmentReader.Read(Titus)[0]!.Spans;
+
+        spans[2]!.Strong.Should().Be("G25960");
+        spans[2]!.Words.Should().Equal(["относящейся"]);
+        spans.Should().NotContain(span => span.Strong == "G35880");
     }
 
     [Fact]

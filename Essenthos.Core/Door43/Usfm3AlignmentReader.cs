@@ -26,8 +26,9 @@ internal sealed record AlignedVerse(int Chapter, int Number, IReadOnlyList<Align
 /// unfoldingWord's USFM 3 word alignment, which is a translation with each of its words tied to
 /// the original word it renders — stated by the people who did the tying, not inferred by us.
 ///
-/// This is the only source of word-level correspondence for a Slavic text that anyone publishes.
-/// Everything else the Synodal and the Ukrainian reach, they reach through a model.
+/// This ecosystem is the only place a word-level correspondence for a Slavic text is published at
+/// all: twelve books of the Ukrainian and three of the Synodal. Everything else the two of them
+/// reach, they reach through a model.
 ///
 /// The format nests: a <c>\zaln-s</c> milestone opens a span over one original word, the
 /// <c>\w</c> words inside it are the translation of that word, and <c>\zaln-e\*</c> closes it.

@@ -376,8 +376,12 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The one stated word-level correspondence a Slavic text has. Everything else the Ukrainian
-    /// reaches, it reaches through a model; this is people saying which word renders which.
+    /// The stated word-level correspondence the Slavic texts have. Everything else they reach, they
+    /// reach through a model; this is people saying which word renders which.
+    ///
+    /// The Ukrainian covers twelve books and the Russian three, and the Russian three are the whole
+    /// of what anyone has aligned of the Synodal. Their worth is not coverage — it is that a model's
+    /// answer on a Slavic text can be checked against a person's at all.
     /// </summary>
     private async Task LinkFromTheInterlinear(string resources, CancellationToken cancellationToken)
     {
@@ -389,6 +393,15 @@ internal sealed class DatasetLoader(
             Path.Combine(resources, "Door43", "uk_ubio"),
             "ukr",
             "unfoldingWord's Ukrainian Bible Interlinear Ogienko, git.door43.org/uk_ts/uk_ubio, CC BY-SA 4.0",
+            cancellationToken));
+
+        status.Starting("the Russian Synodal alignment");
+
+        status.Record(await loader.Load(
+            Path.Combine(resources, "Door43", "ru_rsb"),
+            "rusv",
+            "Door43 Russian Synodal alignment of Titus, Philemon and 2 John, made in "
+            + "translationCore and published at git.door43.org under CC0 1.0",
             cancellationToken));
     }
 

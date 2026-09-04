@@ -30,12 +30,19 @@ internal sealed record InterlinearOutcome(
 }
 
 /// <summary>
-/// The one stated word-level correspondence a Slavic text has.
+/// The stated word-level correspondence the Slavic texts have, which is the whole of what anyone
+/// publishes for either of them.
 ///
-/// Everything else the Ukrainian reaches, it reaches through a model: 396,093 links to BHSA, every
-/// one of them inferred, none of them asserted by anybody. unfoldingWord's interlinear is people
-/// saying *this Ukrainian word renders that Hebrew word*, and that is a different kind of claim —
-/// <c>stated-by-source</c>, no confidence, the same standing as the King James mapping file.
+/// Everything else the Ukrainian and the Synodal reach, they reach through a model: hundreds of
+/// thousands of links to BHSA and to the Greek, every one of them inferred, none of them asserted
+/// by anybody. unfoldingWord's alignment is people saying *this Ukrainian word renders that Hebrew
+/// word*, and that is a different kind of claim — <c>stated-by-source</c>, no confidence, the same
+/// standing as the King James mapping file.
+///
+/// The Russian half of it is three books, Titus, Philemon and 2 John, against 66. That is small
+/// enough to be worth saying why it is here at all: it is not coverage, it is a standard. Until it
+/// was loaded, every Russian link in the corpus came out of a model and nothing could say whether
+/// any of them was right.
 ///
 /// It joins without alignment because the source marks its own morpheme boundaries. BHSA holds
 /// <c>וַ⁠יְהִי</c> as two words, the conjunction and the verb, and the interlinear writes it with
@@ -95,6 +102,12 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             var ordinal = Ordinal(Path.GetFileName(file));
             if (ordinal is null)
             {
+                // Said out loud, because it used to be said to nobody. A file named for a book the
+                // abbreviation table does not answer to is skipped whole, and skipping a book of a
+                // stated source in silence is indistinguishable from the source not covering it.
+                logger.LogWarning(
+                    "{File} names no book this corpus knows, so nothing in it was read. Add the " +
+                    "name it uses to BibleBookAbbreviation", file);
                 continue;
             }
 
@@ -156,13 +169,18 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         int toTextId,
         List<InterlinearDraft> drafts)
     {
+        if (translated.Count == 0 || original.Count == 0)
+        {
+            return 0;
+        }
+
         var made = 0;
         var here = 0;
         var there = 0;
 
         foreach (var span in verse.Spans)
         {
-            var (ours, afterOurs) = Find(translated, span.Words, "ukr", here);
+            var (ours, afterOurs) = Find(translated, span.Words, translated[0].Language, here);
             var (theirs, afterTheirs) = Find(original, span.Morphemes, original[0].Language, there);
             if (ours.Count == 0 || theirs.Count == 0)
             {

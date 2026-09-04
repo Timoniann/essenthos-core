@@ -169,9 +169,25 @@ public static class Datasets
             "https://creativecommons.org/licenses/by-sa/4.0/",
             "https://git.door43.org/uk_ts/uk_ubio",
             "Which Ukrainian word renders which Greek or Hebrew word, stated by people. Small "
-            + "beside the Old Testament mapping, and the only stated word-level correspondence any "
-            + "Slavic text in the corpus has — so it is what every model here is calibrated on.",
+            + "beside the Old Testament mapping, and for a long time the only stated word-level "
+            + "correspondence any Slavic text had — so it is what every model here is calibrated on.",
             "unfoldingWord", Links: true),
+
+        // The same format and the same ecosystem as the entry above, and deliberately not folded
+        // into it: the three Synodal books are dedicated to the public domain by whoever aligned
+        // them, while the Ukrainian is share-alike and carries a trademark condition. One entry
+        // would put the wrong terms on one of them. The identical alignment is also published in
+        // the ru_rsb aggregate under CC BY-SA 4.0; the per-book repositories are what is taken and
+        // what is quoted in Resources/Door43/LICENCE.md.
+        new("door43-rsb", "Russian Synodal word alignment", "the Door43 World Missions Community",
+            "CC0 1.0",
+            "https://creativecommons.org/publicdomain/zero/1.0/",
+            "https://git.door43.org/Anna/ru_rsb_tit_book",
+            "Which Russian word renders which Greek word, stated by people, for Titus, Philemon and "
+            + "2 John — which is the whole of what anyone has aligned of the Synodal. Three books of "
+            + "sixty-six is not coverage; it is the only thing in the corpus that can say whether a "
+            + "Russian link a model proposed is right.",
+            "Door43 Russian Synodal alignment", Links: true),
 
         // The second answer to a question the corpus already had an answer to, which is why it is
         // here at all: 98,989 of its records corroborate a link the Berean's own tables state, and

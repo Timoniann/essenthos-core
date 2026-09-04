@@ -2,6 +2,11 @@
 
 public class BibleBookAbbreviation
 {
+    // The three-letter capitals among the alternatives are the USFM 3.0 book codes, which is how
+    // every USFM file in the corpus names its book. Sixteen of them differ from every spelling
+    // this table already held, and a file whose book does not resolve is skipped rather than read:
+    // the Ukrainian interlinear's LUK went in as 43-LUK.usfm and 505 links it states were never
+    // loaded, silently, because nothing here answered to "LUK".
     private static readonly BookAbbreviation[] BookAbbreviations =
     [
         new(1, "Genesis", "Gen", "Gn", ["1M", "1Mose"]),
@@ -11,7 +16,7 @@ public class BibleBookAbbreviation
         new(5, "Deuteronomy", "Deut", "Dt", ["5M", "5Mose", "Deuteronomium", "Deu"]),
         new(6, "Joshua", "Josh", "Jo", ["Jos", "Josua"]),
         new(7, "Judges", "Judg", "Jdg", ["Judices"]),
-        new(8, "Ruth", "Ruth", "Ru"),
+        new(8, "Ruth", "Ruth", "Ru", ["RUT"]),
         new(9, "1 Samuel", "1 Sam", "1Sm", ["I Sam", "1 Sa", "Samuel_I"]),
         new(10, "2 Samuel", "2 Sam", "2Sm", ["II Sam", "2 Sa", "Samuel_II"]),
         new(11, "1 Kings", "1 Kgs", "1Ki", ["I Kgs", "1 Ki", "Reges_I"]),
@@ -22,32 +27,32 @@ public class BibleBookAbbreviation
         new(16, "Nehemiah", "Neh", "Ne", ["Nehemia"]),
         new(17, "Esther", "Esth", "Es", ["Est"]),
         new(18, "Job", "Job", "Jb", ["Iob"]),
-        new(19, "Psalms", "Pss", "Ps", ["Psalmi", "Psalm"]),   // "Psalm" is how the Berean edition names it, and the whole book went missing without it
-        new(20, "Proverbs", "Prov", "Prv", ["Proverbia"]),
-        new(21, "Ecclesiastes", "Eccles", "Eccl", ["Ec"]),
-        new(22, "Song of Solomon", "Song", "Sg", ["Sg", "Songs of Solomon", "Songs", "Canticum"]),
+        new(19, "Psalms", "Pss", "Ps", ["Psalmi", "Psalm", "PSA"]),   // "Psalm" is how the Berean edition names it, and the whole book went missing without it
+        new(20, "Proverbs", "Prov", "Prv", ["Proverbia", "PRO"]),
+        new(21, "Ecclesiastes", "Eccles", "Eccl", ["Ec", "ECC"]),
+        new(22, "Song of Solomon", "Song", "Sg", ["Sg", "Songs of Solomon", "Songs", "Canticum", "SNG"]),
         new(23, "Isaiah", "Isa", "Is", ["Jesaia"]),
         new(24, "Jeremiah", "Jer", "Je", ["Jeremia"]),
         new(25, "Lamentations", "Lam", "La", ["Threni"]),
-        new(26, "Ezekiel", "Ezek", "Eze", ["Ezechiel"]),
+        new(26, "Ezekiel", "Ezek", "Eze", ["Ezechiel", "EZK"]),
         new(27, "Daniel", "Dan", "Dn", ["Da"]),
         new(28, "Hosea", "Hos", "Ho"),
-        new(29, "Joel", "Joel", "Jl"),
-        new(30, "Amos", "Amos", "Am"),
-        new(31, "Obadiah", "Obad", "Ob", ["Obadia"]),
+        new(29, "Joel", "Joel", "Jl", ["JOL"]),
+        new(30, "Amos", "Amos", "Am", ["AMO"]),
+        new(31, "Obadiah", "Obad", "Ob", ["Obadia", "OBA"]),
         new(32, "Jonah", "Jonah", "Jon", ["Jnh", "Jona"]),
         new(33, "Micah", "Mic", "Mi", ["Micha"]),
-        new(34, "Nahum", "Nah", "Na"),
+        new(34, "Nahum", "Nah", "Na", ["NAM"]),
         new(35, "Habakkuk", "Hab", "Ha", ["Habakuk"]),
         new(36, "Zephaniah", "Zeph", "Zep", ["Zephania"]),
         new(37, "Haggai", "Hag", "Hg"),
         new(38, "Zechariah", "Zech", "Zec", ["Sacharia"]),
         new(39, "Malachi", "Mal", "Ml", ["Maleachi"]),
-        new(40, "Matthew", "Matt", "Mt"),
-        new(41, "Mark", "Mark", "Mk"),
-        new(42, "Luke", "Luke", "Lk"),
-        new(43, "John", "John", "Jn", ["Johaness", "Joh"]),
-        new(44, "Acts", "Acts", "Ac", ["Apg", "Acts of the Apostles"]),
+        new(40, "Matthew", "Matt", "Mt", ["MAT"]),
+        new(41, "Mark", "Mark", "Mk", ["MRK"]),
+        new(42, "Luke", "Luke", "Lk", ["LUK"]),
+        new(43, "John", "John", "Jn", ["Johaness", "Joh", "JHN"]),
+        new(44, "Acts", "Acts", "Ac", ["Apg", "Acts of the Apostles", "ACT"]),
         new(45, "Romans", "Rom", "Ro", ["Röm"]),
         new(46, "1 Corinthians", "1 Cor", "1Co", ["I Cor", "1 Co", "1Kor"]),
         new(47, "2 Corinthians", "2 Cor", "2Co", ["II Cor", "2 Co", "2Kor"]),
@@ -60,7 +65,7 @@ public class BibleBookAbbreviation
         new(54, "1 Timothy", "1 Tim", "1Tm", ["I Tim", "1 Ti"]),
         new(55, "2 Timothy", "2 Tim", "2Tm", ["II Tim", "2 Ti"]),
         new(56, "Titus", "Titus", "Tit"),
-        new(57, "Philemon", "Philem", "Phlm", ["Phlm", "Phim"]),
+        new(57, "Philemon", "Philem", "Phlm", ["Phlm", "Phim", "PHM"]),
         new(58, "Hebrews", "Heb", "He"),
         new(59, "James", "Jas", "Ja", ["Jak"]),
         new(60, "1 Peter", "1 Pet", "1Pt", ["I Pet", "1 Pe", "1Petr"]),
