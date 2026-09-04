@@ -6,8 +6,8 @@
 /// </summary>
 public static class StrongNumbers
 {
-    private const char Hebrew = 'H';
-    private const char Greek = 'G';
+    public const char Hebrew = 'H';
+    public const char Greek = 'G';
 
     /// <summary>
     /// Returns the canonical form of a Strong's number, or null when the input is not one.

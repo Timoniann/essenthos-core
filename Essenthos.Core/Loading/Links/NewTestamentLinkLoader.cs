@@ -33,6 +33,10 @@ namespace Essenthos.Core.Loading.Links;
 /// links were built from, and a corpus that keeps the conclusion and throws the evidence away
 /// cannot afterwards be asked whether the conclusion follows.
 /// </param>
+/// <param name="Phrases">
+/// English words whose tag names more than one Greek word — <c>1223 5124</c> for διὰ τοῦτο,
+/// written <em>therefore</em>. The tag states the whole list, so the link names every one of them.
+/// </param>
 /// <param name="Supplied">
 /// English words the King James prints in italics, which is the translators saying they put the
 /// word there and the Greek does not have it. They are written as <c>expands</c> with no Greek
@@ -58,26 +62,31 @@ internal sealed record GreekLinkOutcome(
     int Recovered,
     int Redivided,
     int StrongNumbers,
+    int Phrases,
     int Supplied,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "the New Testament links are already loaded"
-            : $"{Links} links over {Verses} verses in {Elapsed}: {Unambiguous} where one English word and one " +
-              $"Greek word carried the number alone, {Contended} where more than one did, {Resolved} English " +
+            : $"{Links} links over {Verses} verses in {Elapsed}: {Unambiguous} where each number the tag names " +
+              $"was written once on each side, {Contended} where more than one word carried it, {Resolved} English " +
               $"words matched through the lemma the dictionary names for their form over {Redirects} numbers it " +
               $"resolved, {Recovered} untagged English words given a Greek word by its morphology, {Supplied} " +
               $"English words the translators printed in italics and no Greek word stands behind, {Unmatched} " +
               $"English words whose number no Greek word in the verse carries, {Redivided} verses the two " +
               $"editions do not write word for word, {StrongNumbers} English words given the number the " +
-              $"tagged edition states, {Refused} verses refused";
+              $"tagged edition states, {Phrases} of them a phrase of several Greek words, {Refused} verses refused";
 }
 
 /// <summary>
 /// The New Testament correspondences, which **no source states**. They are this loader matching
 /// Strong numbers within a verse, so every one carries <c>strong-number</c> and a confidence, and
 /// none of them may be mistaken for the Old Testament's, which a file states.
+///
+/// A tag naming several numbers is one English word standing over a Greek phrase, and the link
+/// names every Greek word the tag does. That much the source states; which of them answers which
+/// English syllable it does not, and neither does the link.
 ///
 /// Two things reach past a bare number match, and both are labelled apart from it. The concordance
 /// numbers Greek by the form and the editions tag it by the lemma, so the dictionary's own
@@ -105,6 +114,12 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
     private const string SuppliedSource =
         "Zefania KJV+ italics, the King James translators' own mark that they supplied the word";
+
+    private const string PhraseSource =
+        "Zefania KJV+ Strong numbers, the whole list a tag naming a Greek phrase states";
+
+    /// <summary>The last book of the Old Testament, after which this file numbers in Greek.</summary>
+    private const int LastOldTestamentBook = 39;
 
     /// <summary>
     /// One English word and one Greek word in the verse carry the number. The correspondence is
@@ -157,7 +172,30 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
     private const string StrongNumberTable =
         """
-        CREATE TEMP TABLE tagged_strong (word_id bigint PRIMARY KEY, strong_number text) ON COMMIT DROP;
+        CREATE TEMP TABLE tagged_strong (word_id bigint, strong_number text, position int) ON COMMIT DROP;
+        """;
+
+    private const string StrongNumberUpdate =
+        """
+        UPDATE word SET strong_number = s.strong_number
+        FROM tagged_strong s
+        WHERE word.id = s.word_id AND s.position = 0
+          AND word.strong_number IS DISTINCT FROM s.strong_number
+        """;
+
+    /// <summary>
+    /// Every number of a word whose tag names more than one. <c>word.strong_number</c> holds the
+    /// first because a column holds one, and the rest would otherwise be the half of the source's
+    /// statement the corpus threw away. They are <c>stated-by-source</c> and carry no confidence:
+    /// nothing was inferred, the file writes the list.
+    /// </summary>
+    private const string PhraseNumbers =
+        """
+        INSERT INTO word_strong (word_id, number, method, confidence, source)
+        SELECT DISTINCT s.word_id, s.strong_number, @method, NULL::double precision, @source
+        FROM tagged_strong s
+        WHERE s.word_id IN (SELECT word_id FROM tagged_strong GROUP BY word_id HAVING count(*) > 1)
+        ON CONFLICT DO NOTHING
         """;
 
     /// <param name="greekSlug">
@@ -183,7 +221,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == greek.Id, cancellationToken))
         {
             logger.LogInformation("The New Testament links are already loaded; nothing to do");
-            return new GreekLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new GreekLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -223,19 +261,20 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         var resolution = await Resolution(pairs, cancellationToken);
 
         var drafts = new List<GreekLinkDraft>(300_000);
-        var stated = new List<(long WordId, string Strong)>(120_000);
+        var stated = new List<(long WordId, string Strong)>(140_000);
         var unmatched = 0;
         var resolved = 0;
+        var phrases = 0;
 
         foreach (var pair in pairs)
         {
-            drafts.AddRange(Build(pair, resolution, ref unmatched, ref resolved));
+            drafts.AddRange(Build(pair, resolution, ref unmatched, ref resolved, ref phrases));
 
             for (var i = 0; i < pair.Tags.Count; i++)
             {
-                if (pair.Tags[i].Strong is { } strong)
+                foreach (var number in pair.Tags[i].Numbers)
                 {
-                    stated.Add((pair.English[i].Id, strong));
+                    stated.Add((pair.English[i].Id, number));
                 }
             }
         }
@@ -255,6 +294,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
             drafts.Count(d => d.Kind == GreekMatch.FunctionWord),
             redivided,
             stated.DistinctBy(pair => pair.WordId).Count(),
+            phrases,
             drafts.Count(d => d.Kind == GreekMatch.Supplied),
             started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
@@ -294,28 +334,31 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
                 .Select(word => word.Strong!)
                 .ToHashSet(StringComparer.Ordinal);
 
-            foreach (var tag in pair.Tags.Where(tag => tag.Strong is not null))
+            foreach (var number in pair.Tags.SelectMany(tag => tag.Numbers))
             {
-                yield return new NumberOccurrence(tag.Strong!, numbers);
+                yield return new NumberOccurrence(number, numbers);
             }
         }
     }
 
     /// <summary>
-    /// One link per effective Strong number per verse, naming every English word that carries it
-    /// and every Greek word that does. Where several English words render one Greek word — 995
-    /// times in the New Testament against 30 in the whole Old — that is one claim about a set, not
-    /// several claims each pretending to be about a pair.
+    /// One link per effective set of Strong numbers per verse, naming every English word that
+    /// carries it and every Greek word that does. Where several English words render one Greek word
+    /// — 995 times in the New Testament against 30 in the whole Old — that is one claim about a set,
+    /// not several claims each pretending to be about a pair.
     ///
     /// The effective number is the tagged edition's own where the Greek writes it, and the one the
     /// dictionary resolves it to otherwise. Grouping on it rather than on the tag is what lets a
     /// verse's ἐστί and its εἰμί arrive at the same link instead of at two claiming the same word.
+    /// A tag naming several numbers is grouped under all of them together, which keeps a phrase
+    /// apart from the words that carry one of its numbers alone.
     /// </summary>
     private static List<GreekLinkDraft> Build(
         VersePair pair,
         IReadOnlyDictionary<string, NumberRedirect> resolution,
         ref int unmatched,
-        ref int resolved)
+        ref int resolved,
+        ref int phrases)
     {
         var byNumber = pair.Greek
             .Where(word => word.Strong is not null)
@@ -327,26 +370,28 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
         for (var i = 0; i < pair.Tags.Count; i++)
         {
-            if (pair.Tags[i].Strong is not { } strong)
+            var numbers = pair.Tags[i].Numbers;
+            if (numbers.Count == 0)
             {
                 continue;
             }
 
-            if (byNumber.TryGetValue(strong, out var direct))
+            if (Reach(byNumber, resolution, numbers) is not { } reached)
             {
-                Collect(order, groups, strong, pair.English[i].Id, direct, false);
+                unmatched++;
                 continue;
             }
 
-            if (resolution.TryGetValue(strong, out var redirect)
-                && Together(byNumber, redirect.Numbers) is { } words)
+            Collect(order, groups, reached, pair.English[i].Id);
+            if (reached.Resolved)
             {
-                Collect(order, groups, string.Join('+', redirect.Numbers), pair.English[i].Id, words, true);
                 resolved++;
-                continue;
             }
 
-            unmatched++;
+            if (reached.Numbers > 1)
+            {
+                phrases++;
+            }
         }
 
         var drafts = new List<GreekLinkDraft>(order.Count + 8);
@@ -360,8 +405,10 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
             // tell them apart, when in fact both texts write them in the same order.
             //
             // Where the counts agree the words are paired in that order, one link each. Where they
-            // do not, nothing here can choose, and the set stands.
-            if (group.English.Count == group.Greek.Count && group.English.Count > 1)
+            // do not, nothing here can choose, and the set stands. A phrase is never paired this
+            // way: two English words tagged with the same two Greek words each render both of them,
+            // and pairing them off would split one stated claim into two invented ones.
+            if (group.Numbers == 1 && group.English.Count == group.Greek.Count && group.English.Count > 1)
             {
                 for (var at = 0; at < group.English.Count; at++)
                 {
@@ -375,11 +422,12 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
                 continue;
             }
 
+            var settled = group.English.Count == 1 && group.Greek.Count == group.Numbers;
             drafts.Add(new GreekLinkDraft(
                 group.English,
                 group.Greek,
-                Confidence(group.English.Count, group.Greek.Count, group.Resolved),
-                group.English.Count == 1 && group.Greek.Count == 1 ? GreekMatch.Unambiguous : GreekMatch.Contended));
+                Confidence(settled, group.English.Count, group.Greek.Count, group.Resolved),
+                settled ? GreekMatch.Unambiguous : GreekMatch.Contended));
         }
 
         var supplied = Supplied(pair);
@@ -403,7 +451,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         var supplied = new HashSet<int>();
         for (var i = 0; i < pair.Tags.Count; i++)
         {
-            if (pair.Tags[i] is { Supplied: true, Strong: null })
+            if (pair.Tags[i] is { Supplied: true, Numbers.Count: 0 })
             {
                 supplied.Add(i);
             }
@@ -445,7 +493,10 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
                 claimed.Add(greekAt[word]);
             }
 
-            if (draft.Greek.Count != 1)
+            // A phrase link names more than one Greek word and is still settled, because the tag
+            // states the whole list rather than leaving a choice — so it anchors on the first of
+            // them, as a single settled word does.
+            if (draft.Greek.Count != 1 && draft.Kind != GreekMatch.Unambiguous)
             {
                 continue;
             }
@@ -458,7 +509,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
         var matches = GreekFunctionWords.Match(
             [.. pair.English.Select(word => word.Text)],
-            [.. pair.Tags.Select(tag => tag.Strong)],
+            [.. pair.Tags.Select(tag => tag.Numbers.Count == 0 ? null : tag.Numbers[0])],
             anchors,
             [.. pair.Greek.Select(word => word.Morphology)],
             claimed,
@@ -496,30 +547,86 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         return words;
     }
 
+    /// <summary>
+    /// The Greek words one tag's numbers reach, and the key they group under.
+    ///
+    /// A tag naming several numbers is the source stating a phrase — <c>1223 5124</c> for διὰ
+    /// τοῦτο, written <em>therefore</em> — so the words of all of them together are one claim, the
+    /// shape <see cref="Together"/> already builds for a redirect. A number this witness does not
+    /// write is left out rather than sinking the rest: the editions differ, and what the English
+    /// still reaches is what the link should say.
+    /// </summary>
+    private static Reached? Reach(
+        Dictionary<string, List<long>> byNumber,
+        IReadOnlyDictionary<string, NumberRedirect> resolution,
+        IReadOnlyList<string> numbers)
+    {
+        var keys = new List<string>(numbers.Count);
+        var greek = new List<long>(numbers.Count);
+        var taken = new HashSet<long>(numbers.Count);
+        var resolved = false;
+
+        foreach (var number in numbers)
+        {
+            string key;
+            List<long> carrying;
+            if (byNumber.TryGetValue(number, out var direct))
+            {
+                key = number;
+                carrying = direct;
+            }
+            else if (resolution.TryGetValue(number, out var redirect)
+                     && Together(byNumber, redirect.Numbers) is { } through)
+            {
+                key = string.Join('+', redirect.Numbers);
+                carrying = through;
+                resolved = true;
+            }
+            else
+            {
+                continue;
+            }
+
+            if (keys.Contains(key))
+            {
+                continue;
+            }
+
+            keys.Add(key);
+            greek.AddRange(carrying.Where(taken.Add));
+        }
+
+        return keys.Count == 0 ? null : new Reached(string.Join('+', keys), greek, keys.Count, resolved);
+    }
+
     private static void Collect(
         List<string> order,
         Dictionary<string, Group> groups,
-        string key,
-        long english,
-        List<long> greek,
-        bool resolved)
+        Reached reached,
+        long english)
     {
-        if (!groups.TryGetValue(key, out var group))
+        if (!groups.TryGetValue(reached.Key, out var group))
         {
-            group = new Group(greek);
-            groups[key] = group;
-            order.Add(key);
+            group = new Group(reached.Greek, reached.Numbers);
+            groups[reached.Key] = group;
+            order.Add(reached.Key);
         }
 
         group.English.Add(english);
-        group.Resolved |= resolved;
+        group.Resolved |= reached.Resolved;
     }
 
-    private static double Confidence(int englishWords, int greekWords, bool resolved) => Lower(
-        (englishWords, greekWords) switch
+    /// <param name="settled">
+    /// One English word, and the verse writes each number its tag names exactly once. Which Greek
+    /// word answers which is then not a choice — the ordinary single number matched alone is the
+    /// commonest case of it, and a two-number phrase whose words the verse writes once each is as
+    /// settled as that.
+    /// </param>
+    private static double Confidence(bool settled, int englishWords, int greekWords, bool resolved) => Lower(
+        (settled, englishWords, greekWords) switch
         {
-            (1, 1) => Unambiguous,
-            (1, _) or (_, 1) => OneSideContended,
+            (true, _, _) => Unambiguous,
+            (_, 1, _) or (_, _, 1) => OneSideContended,
             _ => BothSidesContended,
         },
         resolved);
@@ -544,22 +651,26 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         var projected = new List<TaggedWord>(words);
         for (var i = 0; i < words; i++)
         {
-            projected.Add(new TaggedWord(string.Empty, null, false));
+            projected.Add(new TaggedWord(string.Empty, [], false));
         }
 
         foreach (var span in spans)
         {
-            string? strong = null;
+            IReadOnlyList<string> numbers = [];
             var supplied = true;
             for (var i = span.TaggedFrom; i < span.TaggedTo; i++)
             {
-                strong ??= tags[i].Strong;
+                if (numbers.Count == 0)
+                {
+                    numbers = tags[i].Numbers;
+                }
+
                 supplied &= tags[i].Supplied;
             }
 
             for (var i = span.CorpusFrom; i < span.CorpusTo; i++)
             {
-                projected[i] = new TaggedWord(tags[span.TaggedFrom].Text, strong, supplied);
+                projected[i] = new TaggedWord(tags[span.TaggedFrom].Text, numbers, supplied);
             }
         }
 
@@ -575,7 +686,10 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         {
             var canonical = BibleBookAbbreviation.GetAbbreviation(book.ShortName)
                             ?? BibleBookAbbreviation.GetByOrdinal(book.Number);
-            if (canonical is null)
+
+            // The file numbers its Old Testament in Hebrew and its New Testament in Greek, and the
+            // tag itself says which of the two only by where it stands.
+            if (canonical is null || canonical.Ordinal <= LastOldTestamentBook)
             {
                 continue;
             }
@@ -585,7 +699,8 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
                 foreach (var verse in chapter.Verses)
                 {
                     verses[(canonical.Ordinal, chapter.Number, verse.Number)] = verse.Words
-                        .Select(word => new TaggedWord(word.Text, StrongTags.Read(word.StrongNo), word.Italic))
+                        .Select(word => new TaggedWord(
+                            word.Text, StrongTags.Read(word.StrongNo, StrongNumbers.Greek), word.Italic))
                         .ToList();
                 }
             }
@@ -724,6 +839,9 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// Puts the tagged edition's Strong numbers on the English words themselves, so that the links
     /// built from them can afterwards be checked against something. It runs once per Greek witness
     /// over the same tags, which is why it writes only where the number is not already there.
+    ///
+    /// A word whose tag names several numbers keeps the first in the column and all of them in
+    /// <c>word_strong</c>, which is where a number the column cannot hold belongs.
     /// </summary>
     private static async Task WriteStrongNumbers(
         NpgsqlConnection connection,
@@ -741,23 +859,40 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         }
 
         await using (var writer = await connection.BeginBinaryImportAsync(
-                         "COPY tagged_strong (word_id, strong_number) FROM STDIN (FORMAT BINARY)", cancellationToken))
+                         "COPY tagged_strong (word_id, strong_number, position) FROM STDIN (FORMAT BINARY)",
+                         cancellationToken))
         {
-            foreach (var (wordId, strong) in stated.DistinctBy(pair => pair.WordId))
+            var written = new HashSet<(long, string)>(stated.Count);
+            var positions = new Dictionary<long, int>(stated.Count);
+
+            foreach (var (wordId, strong) in stated)
             {
+                if (!written.Add((wordId, strong)))
+                {
+                    continue;
+                }
+
+                var position = positions.GetValueOrDefault(wordId);
+                positions[wordId] = position + 1;
+
                 await writer.StartRowAsync(cancellationToken);
                 await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
                 await writer.WriteAsync(strong, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(position, NpgsqlDbType.Integer, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
         }
 
-        await using var update = new NpgsqlCommand(
-            "UPDATE word SET strong_number = s.strong_number FROM tagged_strong s " +
-            "WHERE word.id = s.word_id AND word.strong_number IS DISTINCT FROM s.strong_number",
-            connection);
-        await update.ExecuteNonQueryAsync(cancellationToken);
+        await using (var update = new NpgsqlCommand(StrongNumberUpdate, connection))
+        {
+            await update.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        await using var phrases = new NpgsqlCommand(PhraseNumbers, connection);
+        phrases.Parameters.AddWithValue("method", EnumSpelling.Of(LinkMethod.StatedBySource));
+        phrases.Parameters.AddWithValue("source", PhraseSource);
+        await phrases.ExecuteNonQueryAsync(cancellationToken);
     }
 
     private static async Task Row(
@@ -791,7 +926,11 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// it — 4,175 words of the New Testament, 71 of which the same file also numbers, and where the
     /// two disagree the number is the more specific claim and wins.
     /// </param>
-    private sealed record TaggedWord(string Text, string? Strong, bool Supplied);
+    /// <param name="Numbers">
+    /// The Strong numbers the tag names, which is usually one, sometimes none, and 2,725 times in
+    /// the New Testament several — one English word standing over a Greek phrase.
+    /// </param>
+    private sealed record TaggedWord(string Text, IReadOnlyList<string> Numbers, bool Supplied);
 
     private sealed record Word(long Id, string Text, string? Strong, GreekMorphology Morphology);
 
@@ -808,12 +947,24 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         Supplied,
     }
 
-    private sealed record Group(List<long> Greek)
+    /// <param name="Numbers">
+    /// How many distinct Strong numbers this group stands on. One is the ordinary case; more is a
+    /// phrase tag, and it is what says whether the Greek words are occurrences of one number to
+    /// choose between or the several words the source names together.
+    /// </param>
+    private sealed record Group(List<long> Greek, int Numbers)
     {
         public List<long> English { get; } = [];
 
         public bool Resolved { get; set; }
     }
+
+    /// <param name="Greek">Every Greek word the tag's numbers name, in the order the numbers stand.</param>
+    /// <param name="Numbers">
+    /// How many of the tag's numbers this witness writes at all. Compared against the Greek words
+    /// found, it is what says whether each of them was written once or some of them several times.
+    /// </param>
+    private sealed record Reached(string Key, List<long> Greek, int Numbers, bool Resolved);
 
     /// <param name="Confidence">
     /// How sure the pairing is, or null where nothing was inferred — a supplied word's absence is
