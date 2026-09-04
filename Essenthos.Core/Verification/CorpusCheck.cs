@@ -19,9 +19,11 @@ namespace Essenthos.Core.Verification;
 /// the forward view: of the words in a text, how many say anything. Reach is the same question from
 /// the other side, and it is the one nobody asks — a corpus can link 90% of a translation's words
 /// to 40% of the witness's, and the forward number hides that entirely. Contention counts words
-/// claimed more than once, which is how a heuristic mapping announces itself. Pairing asks whether
-/// the two texts were laid against each other correctly at all, which every other measure assumes.
-/// Integrity is the only measure with a right answer, and it is zero.
+/// claimed more than once, which is how a heuristic mapping announces itself. Absence is the only
+/// one that counts what the corpus says is *not* there, and it is the reason a variant witness is
+/// loaded at all. Pairing asks whether the two texts were laid against each other correctly at all,
+/// which every other measure assumes. Integrity is the only measure with a right answer, and it is
+/// zero.
 ///
 /// Coverage is reported per section rather than per text, because a text is not one thing: the King
 /// James renders 94% of the Hebrew and 77% of the Greek, and one number for it describes neither
@@ -298,6 +300,55 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         """;
 
     /// <summary>
+    /// What the corpus says is not there, which nothing else here counts. Every other measure asks
+    /// how much of a text corresponds to something; a corpus that had silently stopped recording
+    /// absences would still score perfectly on all of them, and the Samaritan Pentateuch is loaded
+    /// almost entirely for the 6,445 words it and the Masoretic text do not share.
+    ///
+    /// <para>
+    /// The words are taken from the side the relation names, and only that side: <c>omits</c> names
+    /// the words the other text has and this one lacks, so they are on <c>to</c>, and <c>expands</c>
+    /// names this text's own, on <c>from</c>. A link that names words on the side its relation says
+    /// is empty has thrown its direction away, and reading both sides would fold those in as though
+    /// the direction were still known. The integrity checks count them instead, which is where a
+    /// defect belongs.
+    /// </para>
+    ///
+    /// <para>
+    /// Words rather than links, because a link is a statement and the number a reader wants is how
+    /// many words are missing: 5,146 <c>expands</c> links between the Samaritan and BHSA name 5,146
+    /// words, but 1,291 <c>omits</c> links name 1,299, and the eight are a real difference rather
+    /// than a rounding.
+    /// </para>
+    /// </summary>
+    private const string AbsenceSql =
+        """
+        WITH stated AS (
+            SELECT l.from_text_id, l.to_text_id, l.relation, lw.word_id
+            FROM link l
+            JOIN link_word lw ON lw.link_id = l.id
+                AND lw.side = CASE l.relation WHEN 'omits' THEN 'to' ELSE 'from' END
+            WHERE l.relation IN ('omits', 'expands')
+        ),
+        placed AS (
+            SELECT s.from_text_id, s.to_text_id, s.relation, s.word_id,
+                   b.canonical_ordinal AS ordinal, b.name AS book
+            FROM stated s
+            JOIN word w ON w.id = s.word_id
+            JOIN verse v ON v.id = w.verse_id
+            JOIN book b ON b.id = v.book_id
+        )
+        SELECT f.slug, t.slug, ordinal, book,
+               count(DISTINCT word_id) FILTER (WHERE relation = 'omits'),
+               count(DISTINCT word_id) FILTER (WHERE relation = 'expands')
+        FROM placed
+        JOIN text f ON f.id = from_text_id
+        JOIN text t ON t.id = to_text_id
+        GROUP BY f.slug, t.slug, ordinal, book
+        ORDER BY f.slug, t.slug, ordinal
+        """;
+
+    /// <summary>
     /// Each of these should return nothing. They are the shapes the schema cannot forbid but that
     /// no correct load produces, so a count above zero is a defect and not a measurement.
     /// </summary>
@@ -465,6 +516,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var crowding = await Read(connection, CrowdingSql, cancellationToken, reader => new Crowding(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
 
+        var absence = Absence.Gather(await Read(connection, AbsenceSql, cancellationToken,
+            reader => (Text: reader.GetString(0), Against: reader.GetString(1),
+                       Ordinal: reader.GetInt32(2), Book: reader.GetString(3),
+                       Omits: (int)reader.GetInt64(4), Expands: (int)reader.GetInt64(5))));
+
         var pairing = await Read(connection, PairingSql, cancellationToken, reader => new Pairing(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), reader.GetFieldValue<string[]>(6)));
@@ -498,7 +554,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             await restore.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        return new CorpusMeasures(coverage, reach, contention, crowding, pairing, agreement, integrity);
+        return new CorpusMeasures(
+            coverage, reach, contention, crowding, absence, pairing, agreement, integrity);
     }
 
     /// <summary>

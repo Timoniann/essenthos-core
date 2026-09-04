@@ -142,6 +142,44 @@ public sealed class CorpusCheckTests : IDisposable
         crowding.Crowded.Should().Be(1);
     }
 
+    /// <summary>
+    /// The measure a variant witness is loaded for. Every other measure counts correspondence, so a
+    /// corpus that had silently stopped recording absences would score perfectly on all of them and
+    /// nothing published would say the disagreements had gone.
+    /// </summary>
+    [Fact]
+    public async Task AnAbsenceIsCountedPerBookOnTheSideItsRelationNames()
+    {
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+        Link(LinkRelation.Expands, english: 3, hebrew: null);
+        Link(LinkRelation.Omits, english: null, hebrew: 3);
+
+        var absence = (await _check.Measure()).Absence.Single();
+
+        absence.Text.Should().Be("kjv");
+        absence.Against.Should().Be("bhsa");
+        absence.Expands.Should().Be(1);
+        absence.Omits.Should().Be(1);
+        absence.Books.Should().BeEquivalentTo([new BookAbsence(1, "Genesis", 1, 1)]);
+    }
+
+    /// <summary>
+    /// Only the side the relation names is read, so a link that names both is counted once. The
+    /// same variant between two Greek editions has been written as <c>omits</c> from both ends, and
+    /// a measure that counted whichever side held words would report one disagreement as two.
+    /// </summary>
+    [Fact]
+    public async Task AnAbsenceNamingBothSidesIsStillOneAbsence()
+    {
+        Link(LinkRelation.Omits, english: 1, hebrew: 2);
+
+        var absence = (await _check.Measure()).Absence.Single();
+
+        absence.Omits.Should().Be(1);
+        absence.Expands.Should().Be(0);
+        absence.Words.Should().Be(1);
+    }
+
     [Fact]
     public async Task ASoundCorpusBreaksNothing()
     {
@@ -219,7 +257,7 @@ public sealed class CorpusCheckTests : IDisposable
         (await _check.Measure()).Integrity.Single(check => check.Breaks == breaks).Found;
 
     private Link Link(
-        LinkRelation relation, int english, int? hebrew, LinkMethod method = LinkMethod.Manual)
+        LinkRelation relation, int? english, int? hebrew, LinkMethod method = LinkMethod.Manual)
     {
         var link = new Link
         {
@@ -248,12 +286,17 @@ public sealed class CorpusCheckTests : IDisposable
             Source = link.Source,
         });
 
-        _db.LinkWords.Add(new LinkWord
+        // An `omits` link names no word of the text it is written from — that is the whole claim —
+        // so the from side has to be omissible here as well.
+        if (english is { } englishPosition)
         {
-            LinkId = link.Id,
-            WordId = _db.WordAt(_english, 1, 1, english).Id,
-            Side = LinkSide.From,
-        });
+            _db.LinkWords.Add(new LinkWord
+            {
+                LinkId = link.Id,
+                WordId = _db.WordAt(_english, 1, 1, englishPosition).Id,
+                Side = LinkSide.From,
+            });
+        }
 
         if (hebrew is { } position)
         {
