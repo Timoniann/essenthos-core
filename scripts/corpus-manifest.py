@@ -53,6 +53,13 @@ for name in sorted(os.listdir(root)):
     digest = hashlib.sha256()
     for rel, size, h in sorted(files):
         digest.update((rel + ' ' + str(size) + ' ' + h + '\n').encode())
+    if not files:
+        # A folder git carries entirely -- WorldHistory is 319 KB of committed CC0 exports -- has
+        # nothing here to fingerprint, and listing it as zero files reads like the data is missing.
+        # It is versioned instead, which is the stronger guarantee.
+        print(f"{name:22} {'':>5} tracked in full, nothing to fingerprint")
+        continue
+
     total = sum(s for _, s, _ in files)
     folders[name] = {"files": len(files), "bytes": total, "sha256": digest.hexdigest()}
     print(f"{name:22} {len(files):>5} files {total/1e6:>9.1f} MB  {digest.hexdigest()[:16]}")
