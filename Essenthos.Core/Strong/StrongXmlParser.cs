@@ -35,6 +35,14 @@ public partial class StrongXmlParser
     private const string SplitSeparator = "--";
 
     /// <summary>
+    /// A whole etymology, and the only one Strong writes that cannot be continued: it says the
+    /// origin is not known, so nothing after it is more origin. 88 Greek entries carry it as their
+    /// entire derivation, and it is what makes the seven that carry more readable — six of those
+    /// seven continue with the sense.
+    /// </summary>
+    private const string UnknownOrigin = "of uncertain affinity;";
+
+    /// <summary>
     /// Parses the Greek Strong's XML file (format from openscriptures/strongs).
     /// </summary>
     public List<StrongParsedEntry> ParseGreek(string xmlContent)
@@ -131,6 +139,19 @@ public partial class StrongXmlParser
     /// </para>
     ///
     /// <para>
+    /// <b>The derivation runs on into the sense.</b> The cut between the two elements is not always
+    /// at the end of the etymology, and where it is late the definition loses its opening. G2316
+    /// θεός keeps <em>a deity, especially (with G3588) the supreme Divinity;</em> in the derivation
+    /// and answers with <em>figuratively, a magistrate; by Hebraism, very</em> as its whole
+    /// definition — the commonest theological word in the New Testament, saying it means a
+    /// magistrate. Only one form of this is safe to read: <c>of uncertain affinity</c> is a
+    /// complete etymology, so text after it is sense. 88 entries carry the phrase alone and 7
+    /// carry more; of those 7 the six that continue after a semicolon continue with the sense, and
+    /// the one that continues inside a parenthesis — G1088, <c>(compare G1094)</c> — is still
+    /// naming an origin. Requiring the semicolon is what tells them apart.
+    /// </para>
+    ///
+    /// <para>
     /// <b>There is no definition element at all.</b> 19 entries have only a derivation, and it
     /// carries the sense: G1473 ἐγώ reads <em>a primary pronoun of the first person I</em> and
     /// G2570 καλός <em>of uncertain affinity; properly, beautiful, but chiefly (figuratively)
@@ -171,6 +192,16 @@ public partial class StrongXmlParser
             definition = definition is null || strayed is null
                 ? definition ?? strayed
                 : $"{definition}; {strayed}";
+        }
+
+        if (derivation is not null && derivation.StartsWith(UnknownOrigin, StringComparison.Ordinal))
+        {
+            var sense = CleanText(derivation[UnknownOrigin.Length..]);
+            if (sense is not null)
+            {
+                derivation = UnknownOrigin;
+                definition = definition is null ? sense : $"{sense} {definition}";
+            }
         }
 
         if (definition is null && derivation is not null)
