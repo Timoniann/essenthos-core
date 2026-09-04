@@ -663,7 +663,7 @@ internal static class EncyclopediaEndpoints
     ///
     /// Both ends or neither. A band whose start came from Ussher and whose end came from the base
     /// reckoning is a duration nobody computed, and drawing one would be the exact failure this
-    /// whole model exists to avoid — Ussher is up to 236 years from the base, so such a band could
+    /// whole model exists to avoid — Ussher is up to 278 years from the base, so such a band could
     /// be wrong by two centuries while looking authoritative.
     /// </summary>
     private static Dictionary<string, int[]> Span(
@@ -1016,12 +1016,12 @@ internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResp
 /// </param>
 /// <param name="Dates">
 /// Every reckoning's answer, beside each other rather than one instead of the rest. A reader is
-/// owed the disagreement, not a winner — and they disagree in 413 of the 419 events they share.
+/// owed the disagreement, not a winner — and they disagree in 406 of the 419 events they share.
 /// </param>
 /// <param name="Source">
 /// Who compiled this row and under what licence. Per row rather than per corpus, because they
-/// differ: the Old Testament chronology is CC BY 4.0, the New Testament CC BY-SA 4.0, and the
-/// world layer CC0. A page showing one licence for all three would assert what none of them says.
+/// differ: the scripture chronology is CC BY 4.0 and the world layer CC0. A page showing one
+/// licence for both would assert what neither of them says.
 /// </param>
 /// <param name="BceYear">
 /// <see cref="YearFromCreation"/> as a reader writes it, in the default reckoning, with
@@ -1133,10 +1133,11 @@ internal record TimelineResponse(
 /// <summary>
 /// One reckoning of when things happened, and what it rests on.
 ///
-/// Sent alongside the dates rather than resolved into them. They disagree in 413 of 419 shared
-/// events and by as much as 236 years, and that disagreement is a finding rather than a defect —
-/// a corpus that picked one and hid the others would be asserting a chronology no chronologer
-/// holds.
+/// Sent alongside the dates rather than resolved into them. The base reckoning and Ussher disagree
+/// in 406 of the 419 events they share and by as much as 278 years; Ussher and Shulman agree on
+/// none of their 267 and stand 477 years apart at the Tower of Babel. That disagreement is a
+/// finding rather than a defect — a corpus that picked one and hid the others would be asserting a
+/// chronology no chronologer holds.
 /// </summary>
 internal record ChronologyResponse(
     string Slug,
@@ -1161,6 +1162,19 @@ internal record TimelineEventResponse(
     string? EntitySlug,
     IDictionary<string, int> Years);
 
+/// <param name="Level">
+/// Which row to draw it on — 0 the eras, 1 the spans of rule and captivity, 2 the lives and
+/// ministries — and not its depth in the tree. Every period hangs off an era whatever its level,
+/// so nothing sits under a level-1 period: of the 178 that have a parent, 87 are level 1 and 91
+/// level 2, and all 178 point at a level-0 era.
+/// </param>
+/// <param name="ParentSlug">
+/// The era this period <em>opens in</em>, which is not always an era that contains it. Drawing a
+/// child bar inside its parent's bar without reading <see cref="Years"/> puts it outside in 42 of
+/// the 178: a lifespan crosses the Flood because the man outlived it, and the 430 years from the
+/// promise to the covenant end two eras after they begin. Those 42 say how far they overrun in
+/// <see cref="Notes"/>. The years are the containment; this is only where the band starts.
+/// </param>
 /// <param name="Years">
 /// Start and end, per chronology, as a two-element array. Only a chronology that can state both
 /// ends appears. The empty key is a period that carries its own years and belongs to no reckoning.

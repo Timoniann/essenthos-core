@@ -9,8 +9,9 @@ namespace Essenthos.Core.Database.Entities;
 ///
 /// Not a column on an event. Two columns can hold two opinions, cannot say whose they are, cannot
 /// cite either, and cannot hold a third — and disagreement here is the normal case rather than the
-/// exception: Ussher differs from the base reckoning in 413 of the 419 events they share, by as
-/// much as 236 years, and Shulman in all 303 of his.
+/// exception: Ussher differs from the base reckoning in 406 of the 419 events they share, by as
+/// much as 278 years, Shulman in all 303 of his, and Ussher and Shulman in all 267 of theirs, by
+/// as much as 477.
 ///
 /// So a date belongs to a chronology, and a chronology belongs to whoever computed it. This is the
 /// model PeriodO uses for period definitions and CIDOC-CRM for time spans, and both arrived at it
