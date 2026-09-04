@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -43,6 +43,18 @@ internal sealed record GraphicalOutcome(int Words, int Runs, TimeSpan Elapsed)
 /// </summary>
 internal sealed class GraphicalWordLoader(AppDbContext db, ILogger<GraphicalWordLoader> logger)
 {
+    /// <summary>
+    /// Long enough for a window function over the largest text, on every command here and not only
+    /// the obvious one.
+    ///
+    /// The window that finds the runs had this and the two queries around it did not, so they kept
+    /// the 30-second default — and the default is what a start-up pass gets on the day a text is
+    /// added and the counts are suddenly cold. Loading the Samaritan Pentateuch timed one of them
+    /// out mid-pipeline, which aborts the whole load and leaves the API answering 404: a start-up
+    /// pass that throws does not fail its own step, it fails every step after it.
+    /// </summary>
+    private const int Patient = 1800;
+
     /// <summary>
     /// A run is the words from one whose predecessor ended the previous run, up to and including
     /// the first with a non-empty trailer. The last word of a verse ends its run whatever its
@@ -107,6 +119,7 @@ internal sealed class GraphicalWordLoader(AppDbContext db, ILogger<GraphicalWord
             await using (var ask = new NpgsqlCommand(Pending, connection))
             {
                 ask.Parameters.AddWithValue("text", text.Id);
+                ask.CommandTimeout = Patient;
                 if (await ask.ExecuteScalarAsync(cancellationToken) is not true)
                 {
                     continue;
@@ -115,7 +128,7 @@ internal sealed class GraphicalWordLoader(AppDbContext db, ILogger<GraphicalWord
 
             await using var command = new NpgsqlCommand(Fill, connection);
             command.Parameters.AddWithValue("text", text.Id);
-            command.CommandTimeout = 1800;
+            command.CommandTimeout = Patient;
             var written = await command.ExecuteNonQueryAsync(cancellationToken);
             if (written == 0)
             {
@@ -140,6 +153,7 @@ internal sealed class GraphicalWordLoader(AppDbContext db, ILogger<GraphicalWord
             "SELECT count(DISTINCT (verse_id, graphical_text)) FROM word " +
             "WHERE text_id = @text AND graphical_text IS NOT NULL", connection);
         command.Parameters.AddWithValue("text", textId);
+        command.CommandTimeout = Patient;
         return Convert.ToInt32(await command.ExecuteScalarAsync(cancellationToken));
     }
 }
