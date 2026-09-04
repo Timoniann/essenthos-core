@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Loading.Frame;
+﻿namespace Essenthos.Core.Loading.Frame;
 
 /// <summary>
 /// The three-letter book codes the versification data is written in, mapped to canonical ordinals.
@@ -7,6 +7,10 @@ namespace Essenthos.Core.Loading.Frame;
 /// way BHSA's Latin book names belong to BHSA's reader. The books beyond the sixty-six are listed
 /// and deliberately unmapped: the frame has no place for them yet, and a rule about Tobit should be
 /// skipped knowingly rather than fail as an unrecognised code.
+///
+/// Unmapped is not the same as absent. Brenton holds fourteen of these as books of its own, at
+/// canonical ordinals 67 to 81; what they lack is a place in the frame, so nothing reversifies them
+/// and nothing can be laid against them.
 /// </summary>
 internal static class BookCodes
 {
@@ -29,8 +33,8 @@ internal static class BookCodes
     };
 
     /// <summary>
-    /// Books the data carries rules for and this corpus does not hold. Named so that a rule about
-    /// one is skipped on purpose, and an unknown code is still an error worth reporting.
+    /// Books the data carries rules for and the frame has no ordinal for. Named so that a rule
+    /// about one is skipped on purpose, and an unknown code is still an error worth reporting.
     /// </summary>
     private static readonly HashSet<string> BeyondTheCanon = new(StringComparer.OrdinalIgnoreCase)
     {
