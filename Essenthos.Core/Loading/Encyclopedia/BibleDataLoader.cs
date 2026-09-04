@@ -285,9 +285,12 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         db.Entities.AddRange(entities.Values);
         await db.SaveChangesAsync(cancellationToken);
 
-        var names = Names(folder, entities);
         var (relationships, duplicates, unpaired) = Relationships(folder, entities, frame, jesus);
-        var (references, disputed) = References(folder, entities, frame, jesus);
+        var (references, disputed, divided) = References(folder, entities, frame, jesus);
+
+        // After the references, because a label of the divine name is a name of whichever entity
+        // its namings turned out to be about.
+        var names = Names(folder, entities, divided);
         var events = Events(folder, entities, frame);
         var chronologies = Reckon();
 
@@ -397,7 +400,8 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 "BibleData holds the God of Israel and Jesus as one entity and the Father as another. This " +
                 "corpus separates them. New Testament references that name Jesus plainly were moved here; " +
                 "those that say only God or Lord stayed on the divine name and are marked disputed, because " +
-                "which of the two they mean is a reading of the text and not a fact about the dataset.",
+                "which of the two they mean is a reading of the text and not a fact about the dataset. The " +
+                "titles came with the references that carry them, so a name is here where the namings are.",
         };
 
         entities[jesus.SourceId] = jesus;
@@ -577,11 +581,28 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// no Greek and no meaning while every person page offered all three. It carries the same
     /// columns bar the Greek meaning, so it reads through the same code.
     /// </summary>
-    internal static List<EntityName> Names(string folder, Dictionary<string, Entity> entities)
+    /// <param name="divided">
+    /// Which entities each label of the divine name turned out to name, from
+    /// <see cref="References"/>. Without it every one of its 217 titles lands on the divine name,
+    /// which puts <em>Jesus</em>, <em>Christ</em>, <em>Son of Man</em> and <em>King of the Jews</em>
+    /// among the names of the God of Israel and leaves Jesus of Nazareth with none — the division
+    /// is decided per naming, and a label row has no verse of its own to decide by.
+    ///
+    /// <para>
+    /// So a name follows its namings rather than a second list, and there is nothing here to keep
+    /// in step with <see cref="Readings"/>: 67 titles are used only of the Son and are written on
+    /// him, and the six the dataset uses in both testaments — <em>Shepherd</em>, <em>I AM</em>,
+    /// <em>My Servant</em>, <em>King of Israel</em>, <em>Righteous One</em>, <em>The First and the
+    /// Last</em> — are written on both, because its own verse rows call both of them that. A title
+    /// whose namings are contested stays where they stay.
+    /// </para>
+    /// </param>
+    internal static List<EntityName> Names(
+        string folder, Dictionary<string, Entity> entities, Dictionary<string, HashSet<int>> divided)
     {
         var names = new List<EntityName>(4_000);
 
-        foreach (var (file, key, kind) in LabelFiles)
+        foreach (var (file, key, label, kind) in LabelFiles)
         {
             var path = Path.Combine(folder, file);
             if (!File.Exists(path))
@@ -596,9 +617,11 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                     continue;
                 }
 
-                names.Add(new EntityName
+                IReadOnlyCollection<int> bearers = divided.GetValueOrDefault(row[label]) ?? [entity.Id];
+
+                names.AddRange(bearers.Select(bearer => new EntityName
                 {
-                    EntityId = entity.Id,
+                    EntityId = bearer,
                     Label = row["english_label"],
                     Hebrew = Blank(row["hebrew_label"]),
                     HebrewTransliterated = Blank(row["hebrew_label_transliterated"]),
@@ -609,17 +632,17 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                     HebrewStrongNumber = Strong(row["hebrew_strongs_number"], 'H'),
                     GreekStrongNumber = Strong(row["greek_strongs_number"], 'G'),
                     Kind = Blank(row["label_type"]),
-                });
+                }));
             }
         }
 
         return names;
     }
 
-    private static readonly (string File, string Key, EntityKind Kind)[] LabelFiles =
+    private static readonly (string File, string Key, string Label, EntityKind Kind)[] LabelFiles =
     [
-        ("BibleData-PersonLabel.csv", "person_id", EntityKind.Person),
-        ("BibleData-PlaceLabel.csv", "place_id", EntityKind.Place),
+        ("BibleData-PersonLabel.csv", "person_id", "person_label_id", EntityKind.Person),
+        ("BibleData-PlaceLabel.csv", "place_id", "place_label_id", EntityKind.Place),
     ];
 
     /// <summary>Where the source says a verse states the relation, rather than having deduced it.</summary>
@@ -748,19 +771,25 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             ? jesus
             : entity;
 
-    internal static (List<EntityVerse> References, int Disputed) References(
+    /// <returns>
+    /// The references, how many of them are contested, and which entities each label of the
+    /// divine name turned out to name — <see cref="Names"/> writes the labels where the namings
+    /// went.
+    /// </returns>
+    internal static (List<EntityVerse> References, int Disputed, Dictionary<string, HashSet<int>> Divided) References(
         string folder,
         Dictionary<string, Entity> entities,
         ReferenceTable frame,
         Entity jesus)
     {
         var references = new List<EntityVerse>(50_000);
+        var divided = new Dictionary<string, HashSet<int>>(StringComparer.Ordinal);
         var disputed = 0;
 
-        foreach (var (file, key, kind) in ((string, string, EntityKind)[])
+        foreach (var (file, key, labelKey, kind) in ((string, string, string, EntityKind)[])
                  [
-                     ("BibleData-PersonVerse.csv", "person_id", EntityKind.Person),
-                     ("BibleData-PlaceVerse.csv", "place_id", EntityKind.Place),
+                     ("BibleData-PersonVerse.csv", "person_id", "person_label_id", EntityKind.Person),
+                     ("BibleData-PlaceVerse.csv", "place_id", "place_label_id", EntityKind.Place),
                  ])
         {
             var path = Path.Combine(folder, file);
@@ -779,9 +808,10 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
 
                 var label = row.GetValueOrDefault(kind == EntityKind.Place ? "place_label" : "person_label");
                 var newTestament = reference.Book > BookReferences.OldTestamentBookCount;
+                var divine = entity.SourceId == DivineName;
                 var contested = false;
 
-                if (entity.SourceId == DivineName && newTestament)
+                if (divine && newTestament)
                 {
                     switch (Reading(label))
                     {
@@ -793,6 +823,16 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                             disputed++;
                             break;
                     }
+                }
+
+                if (divine && row.GetValueOrDefault(labelKey) is { Length: > 0 } divineLabel)
+                {
+                    if (!divided.TryGetValue(divineLabel, out var bearers))
+                    {
+                        divided[divineLabel] = bearers = [];
+                    }
+
+                    bearers.Add(entity.Id);
                 }
 
                 references.Add(new EntityVerse
@@ -808,7 +848,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             }
         }
 
-        return (references, disputed);
+        return (references, disputed, divided);
     }
 
     internal static List<Event> Events(

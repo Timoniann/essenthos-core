@@ -67,6 +67,22 @@ public sealed class BibleDataLoadTests : IDisposable
         var greek = await _db.EntityNames.CountAsync(n => n.GreekStrongNumber != null);
 
         both.Should().BeGreaterThan(800);
-        greek.Should().Be(1_157);
+        greek.Should().Be(1_161);
+    }
+
+    /// <summary>
+    /// The names are searched as well as the headword, so a title on the wrong entity is a search
+    /// that answers with the wrong person: Christ returned the Antichrist, two prophets and the
+    /// God of Israel, and not Jesus.
+    /// </summary>
+    [Fact]
+    public async Task SearchingForATitleOfTheSonFindsJesus()
+    {
+        var found = await _db.Entities
+            .Where(e => e.Names.Any(n => n.Label == "Christ" || n.Label == "Son of Man"))
+            .Select(e => e.SourceId)
+            .ToListAsync();
+
+        found.Should().Equal("essenthos:jesus");
     }
 }

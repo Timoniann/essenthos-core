@@ -47,6 +47,7 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _output.WriteLine($"  with a Greek number    {_corpus.Names.Count(n => n.GreekStrongNumber is not null)}");
         _output.WriteLine($"  Strong numbers in all  {strongNumbers}");
         _output.WriteLine($"  on places              {_corpus.PlaceNames.Count}");
+        _output.WriteLine($"  on Jesus               {_corpus.NamesOf("jesus").Count}");
         _output.WriteLine($"relationships            {_corpus.Relationships.Count}");
         _output.WriteLine($"  duplicates dropped     {_corpus.Duplicates}");
         _output.WriteLine($"  without a reciprocal   {_corpus.Unpaired}");
@@ -55,11 +56,12 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _output.WriteLine($"  on Jesus               {_corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id)}");
         _output.WriteLine($"prose still holding a row identifier {Leaked().Count}");
 
-        _corpus.Names.Should().HaveCount(3_888);
-        _corpus.Names.Count(n => n.HebrewStrongNumber is not null).Should().Be(3_674);
-        _corpus.Names.Count(n => n.GreekStrongNumber is not null).Should().Be(1_157);
-        strongNumbers.Should().Be(5_835);
+        _corpus.Names.Should().HaveCount(3_894);
+        _corpus.Names.Count(n => n.HebrewStrongNumber is not null).Should().Be(3_680);
+        _corpus.Names.Count(n => n.GreekStrongNumber is not null).Should().Be(1_161);
+        strongNumbers.Should().Be(5_852);
         _corpus.PlaceNames.Should().HaveCount(141);
+        _corpus.NamesOf("jesus").Should().HaveCount(73);
         _corpus.Relationships.Should().HaveCount(5_448);
         _corpus.Duplicates.Should().Be(2);
         _corpus.Unpaired.Should().Be(7);
@@ -160,10 +162,10 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
     }
 
     /// <summary>
-    /// The verses PRB-0129 measured, each of which the fourteen-word list got wrong. The first
-    /// three are the God of Israel, named by an Old Testament title in a New Testament verse; the
-    /// next two were flagged as doubtful where nothing is in doubt; the last is doubtful and was
-    /// not flagged.
+    /// One verse for each way a list of the fourteen ambiguous words got it wrong. The first three
+    /// are the God of Israel, named by an Old Testament title in a New Testament verse; the next
+    /// three are unambiguous and must not be flagged as doubtful; the last two are doubtful and
+    /// must be.
     /// </summary>
     [Theory]
     [InlineData("the G-d of Abraham, the G-d of Isaac, and the G-d of Jacob", false, false)]
@@ -293,6 +295,68 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         references.Should().OnlyContain(r => r.CanonicalBook > BookReferences.OldTestamentBookCount);
     }
 
+    /// <summary>
+    /// The dataset gives the Father his own label rows, anchored where the New Testament first
+    /// says each — <em>Father</em> at Matthew 6:4. The divine name's own <em>Father</em> is a
+    /// second row anchored at Deuteronomy 32:6, and the five New Testament verses that use it use
+    /// that one. Moving them would overrule a distinction the source draws itself.
+    /// </summary>
+    [Fact]
+    public void TheFatherKeepsHisOwnLabelsAndTakesNoneFromTheDivineName()
+    {
+        var father = _corpus.Entities["person:YHVH_2"];
+
+        _corpus.NamesOf("YHVH_2").Select(n => n.Label)
+            .Should().HaveCount(10).And.Contain(["Father", "Abba Father", "Righteous Father"]);
+
+        _corpus.References
+            .Where(r => r.EntityId == father.Id && r.Label == "Father")
+            .Should().HaveCount(175);
+    }
+
+    /// <summary>
+    /// The names are the third place the one entity had to come apart, and the last to be done:
+    /// every title of the divine name stayed on it, so the encyclopedia listed Jesus, Christ and
+    /// King of the Jews among the names of the God of Israel and gave Jesus of Nazareth none.
+    /// </summary>
+    [Fact]
+    public void TheTitlesOfTheSonAreNamesOfJesus()
+    {
+        var his = _corpus.NamesOf("jesus").Select(n => n.Label).ToList();
+
+        his.Should().Contain(["Jesus", "Christ", "Son of Man", "King of the Jews", "Rabboni", "Lamb"]);
+        _corpus.NamesOf("YHVH_1").Select(n => n.Label)
+            .Should().NotContain(["Jesus", "Christ", "Son of Man", "King of the Jews"]);
+    }
+
+    /// <summary>
+    /// A title the dataset uses in both testaments is written on both entities, because its own
+    /// verse rows call both of them that: Genesis 49:24 and Hebrews 13:20 are both "Shepherd".
+    /// </summary>
+    [Fact]
+    public void ATitleUsedInBothTestamentsIsANameOfBoth()
+    {
+        foreach (var shared in new[] { "I AM", "King of Israel", "My Servant" })
+        {
+            _corpus.NamesOf("jesus").Select(n => n.Label).Should().Contain(shared);
+            _corpus.NamesOf("YHVH_1").Select(n => n.Label).Should().Contain(shared);
+        }
+    }
+
+    /// <summary>
+    /// A name follows its namings, so a title whose New Testament uses are contested stays with
+    /// the divine name exactly as those uses do. Nothing new is decided here.
+    /// </summary>
+    [Fact]
+    public void AContestedTitleIsNotGivenToJesus() =>
+        _corpus.NamesOf("jesus").Select(n => n.Label)
+            .Should().NotContain(["Lord", "G-d", "Savior", "King of kings", "The Alpha and the Omega"]);
+
+    [Fact]
+    public void TheOldTestamentTitlesStayWithTheGodOfIsrael() =>
+        _corpus.NamesOf("YHVH_1").Select(n => n.Label)
+            .Should().Contain(["Father", "the Most High", "Almighty", "Lord of Sabaoth", "Creator"]);
+
     private IList<string> Leaked()
     {
         var prose = _corpus.Entities.Values.Select(e => e.Distinguisher)
@@ -392,9 +456,9 @@ public sealed class BibleDataCorpus
         }
 
         var frame = BibleDataLoader.ReferenceTable.Read(Folder);
-        Names = BibleDataLoader.Names(Folder, Entities);
         (Relationships, Duplicates, Unpaired) = BibleDataLoader.Relationships(Folder, Entities, frame, Jesus);
-        (References, Disputed) = BibleDataLoader.References(Folder, Entities, frame, Jesus);
+        (References, Disputed, var divided) = BibleDataLoader.References(Folder, Entities, frame, Jesus);
+        Names = BibleDataLoader.Names(Folder, Entities, divided);
         var events = BibleDataLoader.Events(Folder, Entities, frame);
         BibleDataLoader.Name(Entities, events, Relationships);
 
