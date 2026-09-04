@@ -58,7 +58,7 @@ internal sealed record BereanLinkOutcome(
 ///
 /// The corpus has had exactly one whole-Bible stated word mapping — the King James against the
 /// Hebrew — and nothing at all of the kind for the New Testament, where the King James reaches
-/// 72.7% of the Greek by inference from Strong numbers. This is a second, independent, human-made
+/// 77.2% of the Greek by inference from Strong numbers. This is a second, independent, human-made
 /// answer, and it is the only thing the New Testament's methods can be calibrated against.
 ///
 /// <para>

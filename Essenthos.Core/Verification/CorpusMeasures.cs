@@ -2,7 +2,7 @@
 
 /// <param name="Section">
 /// Which half of the canon these words are in, or the deuterocanon. A text is not one thing — the
-/// King James renders 97% of the Hebrew and 58% of the Greek — and a single share for it is an
+/// King James renders 94% of the Hebrew and 77% of the Greek — and a single share for it is an
 /// average that describes neither part.
 /// </param>
 /// <param name="Rendered">Words a link names as corresponding to something.</param>

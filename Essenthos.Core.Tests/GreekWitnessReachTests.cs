@@ -92,7 +92,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
         db.Database.SetCommandTimeout(LongEnoughForAWholeCorpus);
 
         await LoadTheTexts(db);
-        await LinkTheEnglishToEachGreek(db);
+        var loads = await LinkTheEnglishToEachGreek(db);
         var apart = await MeasureHowFarTheEditionsStandApart(db);
 
         var scrivener = await Reached(Scrivener);
@@ -130,6 +130,20 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
         // is still a different text.
         apart[ByzantineTextSource.Slug].Should().BeGreaterThan(0);
         apart[ByzantineTextSource.Slug].Should().BeLessThan(apart[NestleTextSource.Slug] / 2);
+
+        // A verse the two printings divide differently is still the same verse. Refusing on the
+        // word count alone threw away 436 of the 7,957 and 10,605 English words with them, and
+        // nothing in the suite noticed, because every measure here counts what was linked.
+        foreach (var load in loads)
+        {
+            load.Refused.Should().BeLessThan(20);
+            load.Verses.Should().BeGreaterThan(7_900);
+
+            // And the italics are the one thing in the New Testament that no inference produced:
+            // the translators saying they supplied the word. Four thousand of them, and a load
+            // that reports none has stopped reading them.
+            load.Supplied.Should().BeGreaterThan(4_000);
+        }
     }
 
     private static async Task LoadTheTexts(AppDbContext db)
@@ -155,13 +169,19 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
         }
     }
 
-    private async Task LinkTheEnglishToEachGreek(AppDbContext db)
+    private async Task<List<GreekLinkOutcome>> LinkTheEnglishToEachGreek(AppDbContext db)
     {
+        var loads = new List<GreekLinkOutcome>(3);
+
         foreach (var greek in new[] { Scrivener, ByzantineTextSource.Slug, NestleTextSource.Slug })
         {
             var loader = new NewTestamentLinkLoader(db, NullLogger<NewTestamentLinkLoader>.Instance);
-            output.WriteLine($"{greek}: {await loader.Load(TestResources.ZefaniaKingJames, greek)}");
+            var outcome = await loader.Load(TestResources.ZefaniaKingJames, greek);
+            output.WriteLine($"{greek}: {outcome}");
+            loads.Add(outcome);
         }
+
+        return loads;
     }
 
     /// <summary>
