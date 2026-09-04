@@ -35,8 +35,9 @@ internal sealed record PlacesOutcome(
 /// it once. This states 1,342 places and 8,742 place-verse references across 61 books, with
 /// Jerusalem at 955.
 ///
-/// **It is not a replacement.** 110 of BibleData's places already carry OpenBible's identifier, and
-/// those join onto the entity that exists rather than standing beside it as a second Jerusalem —
+/// **It is not a replacement.** 111 of BibleData's 118 places already carry OpenBible's identifier,
+/// 109 of which OpenBible still has, and those join onto the entity that exists rather than
+/// standing beside it as a second Jerusalem —
 /// but the references themselves each carry the name of the dataset that stated them, so a count
 /// is never a blend of two sources presented as one claim.
 ///

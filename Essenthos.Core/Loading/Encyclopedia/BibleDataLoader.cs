@@ -75,8 +75,8 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// <summary>
     /// The reckonings this dataset carries, each as its own authority rather than as a column.
     ///
-    /// They disagree constantly — Ussher differs from the base in 413 of 419 shared events, by up
-    /// to 236 years — and that disagreement is the thing worth showing. A reader wants to see that
+    /// They disagree constantly — Ussher differs from the base in 406 of 419 shared events, by up
+    /// to 278 years — and that disagreement is the thing worth showing. A reader wants to see that
     /// the Exodus is 1447 on one reckoning and 1491 on another, and which text each rests on.
     /// </summary>
     private static readonly (string Slug, string Name, string? Authority, string Basis, string? Source,

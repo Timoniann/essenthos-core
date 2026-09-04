@@ -272,6 +272,16 @@ public class Event
     /// <summary>Years from the creation as this dataset counts them, Adam being year 1.</summary>
     public int? YearFromCreation { get; set; }
 
+    /// <summary>
+    /// The BCE year as the source printed it, where it printed one — not a derivation. Everything
+    /// here can be computed from <see cref="YearFromCreation"/> and the reckoning's zero, so a row
+    /// that merely restates the arithmetic says nothing and is not written; what is worth keeping
+    /// is a figure a source stated and the arithmetic does not reproduce.
+    ///
+    /// It is unsigned, because the one source that states it prints it unsigned: a jubilee whose
+    /// derivation lands after the turn has <c>BceYear = 8</c> for the year 7 CE. Read it with
+    /// <see cref="YearFromCreation"/> beside it, which does carry the sign.
+    /// </summary>
     public int? BceYear { get; set; }
 
     public int? AgeAtEvent { get; set; }

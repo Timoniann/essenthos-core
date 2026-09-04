@@ -215,7 +215,6 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                     Region = item.Where,
                     Uri = item.Uri,
                     YearFromCreation = DefaultReckoningZero + year,
-                    BceYear = year <= 0 ? 1 - year : null,
                     Source = Source,
                 };
 
