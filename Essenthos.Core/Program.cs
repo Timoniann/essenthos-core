@@ -60,6 +60,7 @@ builder.Services.AddScoped<BereanLinkLoader>();
 builder.Services.AddScoped<ClearBibleLinkLoader>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
+builder.Services.AddScoped<UssherAnnalsLoader>();
 builder.Services.AddScoped<OpenBiblePlaceLoader>();
 builder.Services.AddScoped<WorldHistoryLoader>();
 builder.Services.AddSingleton<DatasetStatus>();

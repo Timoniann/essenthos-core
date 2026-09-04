@@ -818,6 +818,7 @@ internal static class EncyclopediaEndpoints
         return new EventResponse(
             e.Slug,
             e.Name,
+            e.NameSource,
             e.Description,
             e.Kind,
             entitySlug,
@@ -1029,9 +1030,18 @@ internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResp
 /// and not BibleData's <c>bce_year</c> column, which disagrees with the arithmetic on one event
 /// and is empty on 266 the arithmetic dates without trouble.
 /// </param>
+/// <param name="NameSource">
+/// Whose words <paramref name="Name"/> is — <c>source</c> where the dataset titled its own row,
+/// <c>quoted</c> where it wrote no title and the opening of what it did write stands in, and
+/// <c>generated</c> where the title was written for this corpus, in which case
+/// <paramref name="Notes"/> says by what and when. Ussher's Annals are 7,000 untitled paragraphs,
+/// so the distinction is the difference between quoting a chronologer and putting words in his
+/// mouth.
+/// </param>
 internal record EventResponse(
     string Slug,
     string Name,
+    string NameSource,
     string? Description,
     string? Kind,
     string? EntitySlug,

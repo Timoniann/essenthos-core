@@ -476,18 +476,26 @@ internal sealed class DatasetLoader(
     /// The people, places and dated events the text names. DOC-0099 records why this dataset and
     /// not the others, and BibleDataLoader records what had to be corrected in it.
     ///
-    /// **The chronology stops at Artaxerxes.** Its method is arithmetic over the genealogies and
-    /// the reign lengths, and those stop where the Old Testament stops, so nothing loaded here
-    /// dates a New Testament event. The world layer reaches past it and dates none of the
-    /// narrative; the gap is real and is said so on the era that closes against it.
+    /// **The computed chronology stops at Artaxerxes.** Its method is arithmetic over the
+    /// genealogies and the reign lengths, and those stop where the Old Testament stops. Ussher
+    /// reaches past it, by reading the consular lists and Josephus as well as Scripture, and is
+    /// loaded second and marked as his — a second witness, not the axis.
     /// </summary>
     private async Task LoadTheEncyclopedia(string resources, CancellationToken cancellationToken)
     {
         status.Starting("the encyclopedia");
 
+        var bibleData = Path.Combine(resources, "BibleData2026");
+
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<BibleDataLoader>();
-        status.Record(await loader.Load(Path.Combine(resources, "BibleData2026"), cancellationToken));
+        status.Record(await loader.Load(bibleData, cancellationToken));
+
+        // The New Testament narrative, which nothing else here dates. Guarded on its own rows
+        // rather than on the encyclopedia's, so it reaches a database that already holds one.
+        using var annals = services.CreateScope();
+        var ussher = annals.ServiceProvider.GetRequiredService<UssherAnnalsLoader>();
+        status.Record(await ussher.Load(bibleData, cancellationToken));
 
         // The places, which the first dataset marks in progress and stops after Exodus. Second,
         // because it joins onto the place entities that dataset already created wherever the two

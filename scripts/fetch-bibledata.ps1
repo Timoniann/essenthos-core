@@ -19,7 +19,7 @@
     and its dataset page still says NonCommercial-ShareAlike, which is the second reason GitHub is
     the default.
 
-    Fifteen of the files are loaded into the corpus and seven are not. Where a loaded file changes,
+    Sixteen of the files are loaded into the corpus and six are not. Where a loaded file changes,
     this says which, because the encyclopedia loader does nothing when the tables already hold rows
     — a new release is not picked up by restarting.
 
@@ -32,8 +32,8 @@
 
 [CmdletBinding()]
 param(
-    # Where essenthos-api keeps its resources; the default matches Dataset:ResourcesPath.
-    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' '..' 'essenthos-api' 'Resources'),
+    # Where this project keeps its resources; the default matches Dataset:ResourcesPath.
+    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources'),
 
     [ValidateSet('GitHub', 'Kaggle')]
     [string] $From = 'GitHub',
@@ -57,13 +57,12 @@ $Loaded = @(
     'BibleData-PersonRelationship.csv', 'BibleData-PersonVerse.csv',
     'BibleData-PersonVerseApostolic.csv', 'BibleData-PersonVerseTanakh.csv',
     'BibleData-Place.csv', 'BibleData-PlaceLabel.csv', 'BibleData-PlaceVerse.csv',
-    'BibleData-Reference.csv', 'LICENSE'
+    'BibleData-Reference.csv', 'Ussher-AnnalsOfTheWorld.csv', 'LICENSE'
 )
 
 $Carried = @(
     'README.md', 'CITATION.cff', 'AlamoPolyglot.csv', 'HebrewStrongs.csv',
-    'HitchcocksBibleNamesDictionary.csv', 'NavesTopicalDictionary.csv',
-    'Ussher-AnnalsOfTheWorld.csv'
+    'HitchcocksBibleNamesDictionary.csv', 'NavesTopicalDictionary.csv'
 )
 
 function Get-KaggleCredential {
@@ -216,18 +215,43 @@ for the person labels, Fernando Falci for the person relationships.
 
 ## What is loaded and what is not
 
-Fifteen files are read by the encyclopedia loader. Seven are carried and never loaded: the
-release's own ``README.md`` and ``CITATION.cff``, and five datasets that are separate works —
-the Alamo Polyglot, Strong's Hebrew concordance, Naves Topical Dictionary, Hitchcock's Bible
-Names Dictionary, and Ussher's *Annals of the World*. Loading any of those is a corpus decision
-and not a consequence of downloading them.
+Sixteen files are read by the encyclopedia loader. Six are carried and never loaded: the
+release's own ``README.md`` and ``CITATION.cff``, and four datasets that are separate works —
+the Alamo Polyglot, Strong's Hebrew concordance, Naves Topical Dictionary and Hitchcock's Bible
+Names Dictionary. Loading any of those is a corpus decision and not a consequence of downloading
+them.
 
-None of the five is Stephenson's own composition, and their underlying works are out of copyright
-rather than licensed by him: Hitchcock (1869), Naves (1897), Ussher (1658) and Strong (1890) are
-public domain, and the Polyglot's ten component texts each carry their own terms — the World
-English Bible and the King James are free, but Brenton, the Leningrad Codex and the JPS 1917 have
-to be read one by one before any of them is served. What CC BY 4.0 covers is his transcription
-and structuring of them, which is a real contribution and is what the credit above is for.
+None of the four is Stephenson's own composition, and their underlying works are out of copyright
+rather than licensed by him: Hitchcock (1869), Naves (1897) and Strong (1890) are public domain,
+and the Polyglot's ten component texts each carry their own terms — the World English Bible and
+the King James are free, but Brenton, the Leningrad Codex and the JPS 1917 have to be read one by
+one before any of them is served. What CC BY 4.0 covers is his transcription and structuring of
+them, which is a real contribution and is what the credit above is for.
+
+## Ussher's *Annals of the World*, which is loaded and is not Stephenson's work
+
+``Ussher-AnnalsOfTheWorld.csv`` is the sixteenth loaded file and the only one of the separate
+works the corpus reads, so its terms are worth stating on their own rather than inside the
+paragraph above.
+
+**Two layers, and both are clear.** James Ussher's *Annales Veteris Testamenti* is 1650 and its
+English translation by Edmund Pierce is 1658; both are out of copyright by age everywhere, and no
+licence of Stephenson's could take that away or add to it. What he contributes is the
+transcription into 7,000 numbered paragraphs with a year in four reckonings against each, and
+that structuring is his — covered by the CC BY 4.0 above, with no ShareAlike obligation to carry.
+He names himself for this file in the release's own contributor list.
+
+Nothing in the release says anything narrower about it. The ``LICENSE`` file, the ``README``
+badge and licence section, the corrected ``CITATION.cff`` and the repository record are the four
+statements read above; none of them carves any file out, and there is no per-file notice beside
+this one. So the most restrictive statement actually attached to these bytes is Attribution 4.0,
+over a public-domain work.
+
+**Credited as Ussher's, not as ours.** Every row the corpus writes from it carries him as the
+author, the paragraph number it came from, and Stephenson's transcription as the route — and
+where an event's title had to be made rather than quoted, the row says which and by what. That
+last part is not a licence obligation. It is the same rule the rest of the corpus keeps: a reader
+has to be able to tell what a source said from what this project did with it.
 "@
 
     Set-Content -Path (Join-Path $root 'LICENCE.md') -Value $licenceNote -Encoding UTF8

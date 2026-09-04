@@ -215,6 +215,27 @@ public static class Realms
 }
 
 /// <summary>
+/// Where an event's title came from, which is not always where its facts came from.
+///
+/// Most sources title their own rows and this says so. Some do not: Ussher wrote 7,000 numbered
+/// paragraphs and no headings, and a table whose name column cannot be null has to put something
+/// there. Quoting the author's opening sentence and writing a summary are both defensible answers
+/// and they are not the same answer, so a row says which it took — a made title that reads as the
+/// author's is a claim about a dead man's words, and the corpus refuses those everywhere else.
+/// </summary>
+public static class EventNames
+{
+    /// <summary>The source named it, and the name is the source's.</summary>
+    public const string FromTheSource = "source";
+
+    /// <summary>The source's own words, taken from the start of what it wrote and not rephrased.</summary>
+    public const string Quoted = "quoted";
+
+    /// <summary>Written for the corpus. Never the source's words, and the row says what wrote it.</summary>
+    public const string Generated = "generated";
+}
+
+/// <summary>
 /// Something that happened, and when the source thinks it happened.
 ///
 /// The dates are the reason this dataset was chosen over the others: every one is computed from a
@@ -236,6 +257,9 @@ public class Event
     public required string Slug { get; set; }
 
     public required string Name { get; set; }
+
+    /// <summary>Whose words <see cref="Name"/> is. One of <see cref="EventNames"/>.</summary>
+    public string NameSource { get; set; } = EventNames.FromTheSource;
 
     public string? Description { get; set; }
 

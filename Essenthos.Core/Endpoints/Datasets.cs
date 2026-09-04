@@ -155,6 +155,22 @@ public static class Datasets
             + "rather than making a second one.",
             "OpenBible.info"),
 
+        // Its own entry rather than a line under BibleData, because the words are Ussher's and the
+        // dataset above only carries them. The rows it supplies are the only ones in the corpus
+        // that date anything the gospels narrate.
+        new("ussher", "Ussher's Annals of the World",
+            "James Ussher, 1650, in Edmund Pierce's English of 1658, transcribed by Brady Stephenson",
+            "CC BY 4.0",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://github.com/BradyStephenson/bible-data",
+            "The New Testament chronology, and the only one here: the computed reckoning is "
+            + "arithmetic over the genealogies and stops at Artaxerxes, where Ussher goes on by "
+            + "reading the consular lists and Josephus beside Scripture. One seventeenth-century "
+            + "reckoning, drawn as his and never as the axis. Ussher's own text is out of copyright "
+            + "by age; the Attribution licence covers the transcription into numbered paragraphs, "
+            + "which is Stephenson's work.",
+            "Ussher's Annals of the World"),
+
         new("wikidata", "Wikidata", "the Wikidata contributors", "CC0",
             "https://creativecommons.org/publicdomain/zero/1.0/",
             "https://query.wikidata.org",
