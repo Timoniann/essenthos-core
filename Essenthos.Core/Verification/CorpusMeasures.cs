@@ -49,9 +49,28 @@ internal sealed record Coverage(
 /// report a failure that is really a fact about Hebrew.
 /// </param>
 /// <param name="Reached">Lexical words at least one word of the other text points at.</param>
-internal sealed record Reach(string Witness, string From, int Lexical, int Reached)
+/// <param name="Stated">
+/// Of those, how many a source states rather than a model proposes.
+///
+/// **Without this the table is a quality ranking of something else.** It puts the Berean at 88.9%
+/// into the Greek and the Ukrainian at 77.3%, and the difference is mostly that the Berean's
+/// publisher ships word tables and the Ukrainian has IBM-4. Scored against their own stated pairs
+/// the same aligner is 91.4% on the Berean and 92.8% on the Ukrainian — better on the text the
+/// single column ranks eleven points lower. The number was read as a ranking of alignment quality,
+/// which is the one thing it cannot be.
+/// </param>
+internal sealed record Reach(string Witness, string From, int Lexical, int Reached, int Stated)
 {
     public double Share => Lexical == 0 ? 0 : (double)Reached / Lexical;
+
+    /// <summary>Reached only because a model proposed it — no source names these.</summary>
+    public int Inferred => Reached - Stated;
+
+    /// <summary>
+    /// What share of this pair rests on testimony. Two pairs with the same <see cref="Share"/> and
+    /// different values here are not comparable, and this is the field that says so.
+    /// </summary>
+    public double Testimony => Reached == 0 ? 0 : (double)Stated / Reached;
 }
 
 /// <param name="Contended">Words named by more than one link between the same pair of texts.</param>
@@ -215,10 +234,12 @@ internal sealed record CorpusMeasures(
         report.AppendLine($"  {RenderedWords} of {Words} words had a counterpart to reach and reached it; " +
                           $"{UnpairedWords} more have none in this corpus and are outside the share");
 
-        report.AppendLine("reach         lexical    reached");
+        report.AppendLine("reach         lexical    reached           stated   inferred");
         foreach (var r in Reach)
         {
-            report.AppendLine($"  {r.Witness} from {r.From,-6} {r.Lexical,7} {r.Reached,10}   {r.Share,7:P1}");
+            report.AppendLine(
+                $"  {r.Witness} from {r.From,-6} {r.Lexical,7} {r.Reached,10}   {r.Share,7:P1} " +
+                $"{r.Stated,8} {r.Inferred,10}   {r.Testimony,7:P1} stated");
         }
 
         report.AppendLine("contention    words one source claims twice, the worst one, and words two sources dispute");

@@ -218,15 +218,21 @@ public sealed class CorpusCheckTests : IDisposable
     private async Task<int> Integrity(string breaks) =>
         (await _check.Measure()).Integrity.Single(check => check.Breaks == breaks).Found;
 
-    private Link Link(LinkRelation relation, int english, int? hebrew)
+    private Link Link(
+        LinkRelation relation, int english, int? hebrew, LinkMethod method = LinkMethod.Manual)
     {
         var link = new Link
         {
             FromTextId = _english.Id,
             ToTextId = _hebrew.Id,
             Relation = relation,
-            Method = LinkMethod.Manual,
+            Method = method,
             Source = "a test",
+
+            // Confidence is null exactly when a source stated it, and set exactly when something
+            // inferred it. The schema holds that as a check constraint, so a fixture that ignores
+            // it is refused rather than quietly testing a shape no loader can produce.
+            Confidence = method is LinkMethod.StatedBySource or LinkMethod.Manual ? null : 0.9,
         };
         _db.Links.Add(link);
         _db.SaveChanges();
@@ -282,4 +288,27 @@ public sealed class CorpusCheckTests : IDisposable
         (measures.Words + measures.UnpairedWords).Should().Be(measures.Coverage.Sum(c => c.Words));
         measures.Rendered.Should().BeApproximately((double)measures.RenderedWords / measures.Words, 1e-12);
     }
+    /// <summary>
+    /// Reach says how much of what it counted rests on testimony, because without that the table
+    /// ranks translations by quality and what it ranks them by is how much testimony each has. The
+    /// Berean's 88.9% into the Greek is its publisher's word tables; the Ukrainian's 77.3% is a
+    /// model; the same aligner scored against each text's own stated pairs is better on the
+    /// Ukrainian. One column invited that reading and it was taken.
+    /// </summary>
+    [Fact]
+    public async Task ReachSaysHowMuchOfItselfASourceStated()
+    {
+        // The second and third Hebrew words, because the first is a prefix and reach counts only
+        // lexical content — linking it would test nothing.
+        Link(LinkRelation.Renders, english: 1, hebrew: 2, LinkMethod.StatedBySource);
+        Link(LinkRelation.Renders, english: 2, hebrew: 3, LinkMethod.Aligner);
+
+        var reach = (await _check.Measure()).Reach.Single();
+
+        reach.Reached.Should().Be(2);
+        reach.Stated.Should().Be(1);
+        reach.Inferred.Should().Be(1);
+        reach.Testimony.Should().BeApproximately(0.5, 1e-12);
+    }
+
 }

@@ -196,6 +196,15 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// <summary>
     /// The direction nobody measures. A corpus can name 90% of a translation's words and still
     /// leave more than half the witness untouched, and the forward count hides that completely.
+    ///
+    /// <para>
+    /// **Split by whether a source said it.** Read as one column this table ranks translations by
+    /// quality, and what it actually ranks them by is how much testimony each has: the Berean's
+    /// 88.9% into the Greek is its publisher's own word tables and the Ukrainian's 77.3% is a
+    /// model. Scored against their own stated pairs, the same aligner is 91.4% on the Berean and
+    /// 92.8% on the Ukrainian — a point better on the text the single column puts eleven points
+    /// lower. One number invited that reading and it was taken.
+    /// </para>
     /// </summary>
     private const string ReachSql =
         $"""
@@ -203,7 +212,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                source.slug,
                (SELECT count(*) FROM word lex
                 WHERE lex.text_id = witness.id AND NOT {StructuralMorphemes}),
-               count(DISTINCT lw.word_id)
+               count(DISTINCT lw.word_id),
+               count(DISTINCT lw.word_id) FILTER (WHERE l.method = 'stated-by-source')
         FROM link l
         JOIN text source ON source.id = l.from_text_id AND source.kind = 'translation'
         JOIN text witness ON witness.id = l.to_text_id AND witness.kind <> 'translation'
@@ -438,7 +448,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), (int)reader.GetInt64(6)));
 
         var reach = await Read(connection, ReachSql, cancellationToken, reader => new Reach(
-            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
+            (int)reader.GetInt64(4)));
 
         var contention = await Read(connection, ContentionSql, cancellationToken, reader => new Contention(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
