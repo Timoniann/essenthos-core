@@ -98,6 +98,133 @@ public sealed class ParallelPairingTests : IDisposable
         elsewhere.Should().BeEmpty();
     }
 
+    /// <summary>
+    /// The number the verification pass reads to decide a verse pair is too faint to trust, said to
+    /// the reader instead of to a log. A faint pair means one of two things — the verses were laid
+    /// against each other wrongly, or the two traditions genuinely differ here — and only somebody
+    /// looking at both panes can tell which.
+    /// </summary>
+    [Fact]
+    public async Task AVersePairCarriesHowStronglyItsTwoSidesAnswerEachOther()
+    {
+        var (greek, hebrew) = Pair();
+
+        Link(greek, 1, hebrew, 1, confidence: 0.2);
+        Link(greek, 2, hebrew, 2, confidence: 0.4);
+
+        var strength = await ParallelEndpoints.Strengths(_db, greek.Id, hebrew.Id, 1, 1, default);
+
+        strength[1].Links.Should().Be(2);
+        strength[1].Stated.Should().Be(0);
+        strength[1].Confidence.Should().BeApproximately(0.3, 1e-12);
+    }
+
+    /// <summary>
+    /// A stated link carries no confidence, and averaging it in as though it were certainty would
+    /// make testimony and a confident guess report the same number. It is counted and named apart.
+    /// </summary>
+    [Fact]
+    public async Task AStatedLinkIsCountedAndNotAveraged()
+    {
+        var (greek, hebrew) = Pair();
+
+        Link(greek, 1, hebrew, 1, confidence: null);
+        Link(greek, 2, hebrew, 2, confidence: 0.4);
+
+        var strength = await ParallelEndpoints.Strengths(_db, greek.Id, hebrew.Id, 1, 1, default);
+
+        strength[1].Links.Should().Be(2);
+        strength[1].Stated.Should().Be(1);
+        strength[1].Confidence.Should().BeApproximately(0.4, 1e-12);
+    }
+
+    /// <summary>
+    /// Read from whichever end the loader wrote it. Which text a link is stored as being from is a
+    /// fact about the loader, and the strength of a verse pair is not.
+    /// </summary>
+    [Fact]
+    public async Task ThePairIsReadInEitherDirection()
+    {
+        var (greek, hebrew) = Pair();
+
+        Link(hebrew, 1, greek, 1, confidence: 0.6);
+
+        var strength = await ParallelEndpoints.Strengths(_db, greek.Id, hebrew.Id, 1, 1, default);
+
+        strength[1].Links.Should().Be(1);
+        strength[1].Confidence.Should().BeApproximately(0.6, 1e-12);
+    }
+
+    /// <summary>
+    /// A link naming two words of one verse is one link. Counting its ends would report a verse
+    /// answered by a single generous link as more strongly paired than one answered by two.
+    /// </summary>
+    [Fact]
+    public async Task ALinkNamingTwoWordsOfAVerseIsCountedOnce()
+    {
+        var (greek, hebrew) = Pair();
+
+        var link = Link(greek, 1, hebrew, 1, confidence: 0.5);
+        _db.LinkWords.Add(new LinkWord
+        {
+            LinkId = link.Id,
+            WordId = _db.WordAt(greek, 1, 1, 2).Id,
+            Side = LinkSide.From,
+        });
+        _db.SaveChanges();
+
+        var strength = await ParallelEndpoints.Strengths(_db, greek.Id, hebrew.Id, 1, 1, default);
+
+        strength[1].Links.Should().Be(1);
+    }
+
+    /// <summary>Two texts of one verse each, already sitting at the same canonical address.</summary>
+    private (Text Greek, Text Hebrew) Pair()
+    {
+        var greek = Corpus.Add(_db, "lxx-brenton", TextKind.Translation, "eng", (1, 1, ["a", "spreading", "trunk"]));
+        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["a", "doe", "loosed"]));
+        _db.SaveChanges();
+        return (greek, hebrew);
+    }
+
+    private Link Link(Text from, int fromPosition, Text to, int toPosition, double? confidence)
+    {
+        var link = new Link
+        {
+            FromTextId = from.Id,
+            ToTextId = to.Id,
+            Relation = LinkRelation.Renders,
+            Method = confidence is null ? LinkMethod.StatedBySource : LinkMethod.Aligner,
+            Source = "a test",
+            Confidence = confidence,
+        };
+        _db.Links.Add(link);
+        _db.SaveChanges();
+
+        _db.LinkClaims.Add(new LinkClaim
+        {
+            LinkId = link.Id,
+            Method = link.Method,
+            Confidence = link.Confidence,
+            Source = link.Source,
+        });
+        _db.LinkWords.Add(new LinkWord
+        {
+            LinkId = link.Id,
+            WordId = _db.WordAt(from, 1, 1, fromPosition).Id,
+            Side = LinkSide.From,
+        });
+        _db.LinkWords.Add(new LinkWord
+        {
+            LinkId = link.Id,
+            WordId = _db.WordAt(to, 1, 1, toPosition).Id,
+            Side = LinkSide.To,
+        });
+        _db.SaveChanges();
+
+        return link;
+    }
+
     private void Place(Text text, int chapter, int verse, int canonicalChapter, int canonicalVerse)
     {
         var own = _db.VerseAt(text, chapter, verse);

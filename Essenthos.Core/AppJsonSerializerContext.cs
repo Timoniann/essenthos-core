@@ -90,6 +90,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(List<TextVerseResponse>))]
 [JsonSerializable(typeof(ChapterTextResponse))]
 [JsonSerializable(typeof(ParallelCellResponse))]
+[JsonSerializable(typeof(LinkStrengthResponse))]
 [JsonSerializable(typeof(ParallelVerseResponse))]
 [JsonSerializable(typeof(IList<ParallelVerseResponse>))]
 [JsonSerializable(typeof(List<ParallelVerseResponse>))]
