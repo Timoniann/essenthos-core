@@ -45,5 +45,12 @@ public class Verse
 
     public ICollection<VerseReference> References { get; set; } = [];
 
+    /// <summary>
+    /// The addresses the edition prints for this verse in its own numbering, where it prints any.
+    /// Empty for almost every verse of the corpus and for every text but the two whose publisher
+    /// renumbered them.
+    /// </summary>
+    public ICollection<StatedVerseNumber> StatedNumbers { get; set; } = [];
+
     public override string ToString() => $"Verse(text {TextId}, book {BookId}, {ChapterNumber}:{Number})";
 }

@@ -143,6 +143,11 @@ internal static class Bible4uTextSource
     /// verses, which tokenised as text put a stray bracket on 8,413 words and made a bare "[" a
     /// word of its own 145 times. They are the edition saying which words are its own and not its
     /// base text's, so they leave the surface and become the spans the loader records.
+    ///
+    /// The "(22-1)" leaves the surface too, and is now kept rather than only removed. It is the one
+    /// place either Slavic file records the numbering its own readers hold — bible4u renumbered
+    /// both of them to the King James — so it becomes the verse's stated address, and a pane of the
+    /// Synodal can then say its Psalm 119 is printed as 118 the way Brenton's pane already does.
     /// </summary>
     private static VerseDraft Draft(XmlBibleVerse verse) =>
         new(verse.VNumber, VerseWords.Parse(verse.Text)
@@ -151,7 +156,14 @@ internal static class Bible4uTextSource
                 word.Trailer,
                 Elided: word.Word.Length == 0,
                 SuppliedSpan: word.SuppliedSpan))
-            .ToList());
+            .ToList())
+        {
+            Stated =
+            [
+                .. VerseWords.StatedAddresses(verse.Text)
+                    .Select(address => new StatedNumberDraft(address.Chapter, address.Number)),
+            ],
+        };
 
     private static TextDefinition Definition(
         string slug,

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 using Essenthos.Core.Utils;
 
@@ -11,6 +12,13 @@ namespace Essenthos.Core.XmlBible;
 /// editorial mark where the edition made two.
 /// </param>
 public readonly record struct VerseToken(string Word, string Trailer, int? SuppliedSpan);
+
+/// <summary>
+/// An address the edition prints inside the verse, in the numbering the edition itself follows —
+/// the "(118-1)" that stands at the head of the Synodal's Psalm 119:1, which is the Synodal saying
+/// that in its own pages this verse is 118:1.
+/// </summary>
+public readonly record struct VerseAddress(int Chapter, int Number);
 
 /// <summary>
 /// Splits a bible4u verse into the words a corpus is stored as. The source carries editorial
@@ -33,6 +41,13 @@ public static partial class VerseWords
 
     private const char SuppliedClose = ']';
 
+    /// <summary>
+    /// What stands between the chapter and the verse of a printed address. The Synodal and the
+    /// Ukrainian both write the hyphen and nothing else, and the colon is accepted because the
+    /// pattern that finds these markers has always accepted it.
+    /// </summary>
+    private static readonly char[] AddressSeparators = ['-', ':'];
+
     /// <summary>Where a bracketed span stands in the verse once the brackets are gone.</summary>
     private readonly record struct SuppliedRange(int Start, int End);
 
@@ -54,6 +69,63 @@ public static partial class VerseWords
     /// footnote marker — no verse of either translation reads a number in brackets as text.
     /// </summary>
     public static string StripMarkup(string verseText) => Separate(verseText).Text;
+
+    /// <summary>
+    /// The addresses the edition prints for this verse in its own numbering, in the order it prints
+    /// them, and empty for a verse where it prints none.
+    ///
+    /// <para>
+    /// bible4u renumbers both Slavic files to the numbering the King James follows, and then says
+    /// so in the text: where its number and the edition's disagree it opens the verse with the
+    /// edition's own — "(118-1)" at Psalm 119:1 of the Synodal, which prints that psalm as 118. So
+    /// a marker is not decoration, it is the one place either file records the numbering its
+    /// readers actually hold in their hands, and taking it out of the words without keeping it left
+    /// the Synodal unable to say a chapter is numbered differently while Brenton, whose own rows
+    /// carry his own numbers, could.
+    /// </para>
+    ///
+    /// <para>
+    /// **Only the two-part form is an address, and that distinction is measured rather than
+    /// assumed.** Over the three files there are 2,678 marked verses in the Synodal and 1,928 in
+    /// Ohienko's Ukrainian, none at all in the King James, and every marker writes a chapter and a
+    /// verse — except two, Job 2:9 and Job 9:9 in the Synodal, which write a bare "(1)" standing at
+    /// the end of a clause where the edition footnotes a variant reading. A bare number names no
+    /// chapter and no verse and is not stored as one; it still leaves the words, because it is no
+    /// more scripture than the address is. What is left is 2,676 addressed verses in the Synodal
+    /// and 1,928 in the Ukrainian, 2,735 and 1,931 addresses between them.
+    /// </para>
+    ///
+    /// <para>
+    /// A verse may print more than one, and 58 of them do: bible4u merges what the edition divides,
+    /// so Psalm 12:1 of the Synodal carries "(11-1)" over the superscription and "(11-2)" over the
+    /// body, and Revelation 13:1 of the Ukrainian carries "(12-18)" and "(13-1)" across a chapter
+    /// boundary. All of them are kept, in order, because one verse of ours genuinely is two of
+    /// theirs and reporting the first alone would say the second is not there. Nor is the position
+    /// in the verse a condition: 73 verses print their first address after a superscription or in
+    /// the middle of the line, addressing the part that follows it, and requiring the head would
+    /// drop exactly those.
+    /// </para>
+    /// </summary>
+    public static IReadOnlyList<VerseAddress> StatedAddresses(string verseText)
+    {
+        var found = new List<VerseAddress>(1);
+
+        foreach (var match in CrossNumbering().EnumerateMatches(verseText))
+        {
+            var marker = verseText.AsSpan(match.Index, match.Length);
+            var separator = marker.IndexOfAny(AddressSeparators);
+            if (separator < 0)
+            {
+                continue;
+            }
+
+            found.Add(new VerseAddress(
+                int.Parse(marker[1..separator], CultureInfo.InvariantCulture),
+                int.Parse(marker[(separator + 1)..^1], CultureInfo.InvariantCulture)));
+        }
+
+        return found;
+    }
 
     /// <summary>
     /// The verse without its markup, and where the square brackets stood in what is left. The

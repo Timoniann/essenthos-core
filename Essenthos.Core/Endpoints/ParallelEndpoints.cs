@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +23,25 @@ namespace Essenthos.Core.Endpoints;
 /// the row carried 39 Greek words against 19 Hebrew with nothing to say why. 91 addresses across the
 /// Septuagint are like that. PRB-0118.
 /// </param>
+/// <param name="StatedVerses">
+/// What the edition itself prints as this verse's address, where its own file says so and that is
+/// not the address it is stored under — the Synodal's <c>118:1</c> at Psalm 119:1.
+///
+/// Usually empty, and empty is silence rather than agreement. bible4u renumbered the Synodal and
+/// Ohienko's Ukrainian to the numbering the King James follows, which is what lets either of them
+/// be laid beside anything, and then printed the edition's own address in the verse wherever the
+/// two disagree: 2,676 verses of the Synodal and 1,928 of the Ukrainian, 2,414 and 1,013 of them in
+/// the Psalms. Everywhere else the file states nothing, because there the two numberings are the
+/// same — but that inference belongs to whoever wants to draw it, so nothing is written here for a
+/// verse the edition said nothing about.
+///
+/// More than one where the edition divides what this corpus holds as one verse: the Synodal counts
+/// Psalm 12's superscription as its own verse, so our 12:1 is its 11:1 and 11:2 both.
+///
+/// It is not <see cref="Verses"/>, and the difference matters: those are verses this text actually
+/// holds, and can be asked for. An address here is a statement about a printed page, and no verse
+/// of this corpus answers to it.
+/// </param>
 /// <param name="Strength">
 /// How strongly this verse is linked to the same row of the reference pane, or null on the
 /// reference pane itself and on a text nothing links to it.
@@ -32,6 +51,7 @@ internal record ParallelCellResponse(
     string Alignment,
     VerseRefResponse? Reference,
     IList<string> Verses,
+    IList<string> StatedVerses,
     LinkStrengthResponse? Strength);
 
 /// <param name="Links">
@@ -114,6 +134,7 @@ internal static class ParallelEndpoints
             var byText = new Dictionary<string, Dictionary<int, List<TextWordResponse>>>();
             var references = new Dictionary<string, Dictionary<int, VerseRefResponse>>();
             var own = new Dictionary<string, Dictionary<int, List<string>>>();
+            var stated = new Dictionary<string, Dictionary<int, List<string>>>();
             var strength = new Dictionary<string, Dictionary<int, LinkStrengthResponse>>();
             var reference = requested[0];
             foreach (var entry in requested)
@@ -122,6 +143,7 @@ internal static class ParallelEndpoints
                     db, entry.Id, ordinal.Value, chapter, cancellationToken);
                 references[entry.Slug] = await OwnReferences(db, entry.Id, ordinal.Value, chapter, cancellationToken);
                 own[entry.Slug] = await OwnVerses(db, entry.Id, ordinal.Value, chapter, cancellationToken);
+                stated[entry.Slug] = await StatedVerses(db, entry.Id, ordinal.Value, chapter, cancellationToken);
                 strength[entry.Slug] = entry.Id == reference.Id
                     ? []
                     : await Strengths(db, entry.Id, reference.Id, ordinal.Value, chapter, cancellationToken);
@@ -140,7 +162,7 @@ internal static class ParallelEndpoints
                         entry => entry.Slug,
                         entry => Cell(
                             byText[entry.Slug], references[entry.Slug], own[entry.Slug],
-                            strength[entry.Slug], number))))
+                            stated[entry.Slug], strength[entry.Slug], number))))
                 .ToList();
 
             var corpusRows = await CorpusRows(db, canon, requested, cancellationToken);
@@ -164,6 +186,7 @@ internal static class ParallelEndpoints
         Dictionary<int, List<TextWordResponse>> verses,
         Dictionary<int, VerseRefResponse> references,
         Dictionary<int, List<string>> own,
+        Dictionary<int, List<string>> stated,
         Dictionary<int, LinkStrengthResponse> strength,
         int number) =>
         verses.TryGetValue(number, out var words)
@@ -172,6 +195,7 @@ internal static class ParallelEndpoints
                 PairedThroughTheFrame,
                 references.GetValueOrDefault(number),
                 own.GetValueOrDefault(number) ?? [],
+                stated.GetValueOrDefault(number) ?? [],
                 strength.GetValueOrDefault(number))
             : null;
 
@@ -272,6 +296,55 @@ internal static class ParallelEndpoints
                 group => group
                     .OrderBy(r => r.Number).ThenBy(r => r.Label, StringComparer.Ordinal)
                     .Select(r => $"{r.ChapterNumber}:{r.Number}{r.Label}")
+                    .ToList());
+    }
+
+    /// <summary>
+    /// What the edition prints as its own address for each canonical address in this chapter.
+    ///
+    /// <para>
+    /// It sits beside <see cref="OwnVerses"/> and answers a different question. That one asks which
+    /// verses this text holds here, and every answer is a row that can be fetched; this one asks
+    /// what the edition's own pages call them, and the answer is a claim about a printed book that
+    /// no row of this corpus answers to. Reading them as one field is how the Synodal would come to
+    /// offer 118:1 as a verse it has.
+    /// </para>
+    ///
+    /// <para>
+    /// The addresses of a verse are ordered as the edition printed them, and where two of its
+    /// verses became one of ours both are here — the second is not a duplicate of the first and
+    /// dropping it would say the edition divides the passage as we do.
+    /// </para>
+    /// </summary>
+    public static async Task<Dictionary<int, List<string>>> StatedVerses(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.StatedVerseNumbers
+            .Where(n => n.Verse!.TextId == textId
+                        && n.Verse.References.Any(r => r.IsPrimary
+                                                       && r.CanonicalBook == canonicalBook
+                                                       && r.CanonicalChapter == canonicalChapter))
+            .Select(n => new
+            {
+                Canonical = n.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
+                Holder = n.Verse.Number,
+                n.Position,
+                Chapter = n.ChapterNumber,
+                Verse = n.Number,
+            })
+            .ToListAsync(cancellationToken);
+
+        return rows
+            .GroupBy(row => row.Canonical)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderBy(row => row.Holder).ThenBy(row => row.Position)
+                    .Select(row => $"{row.Chapter}:{row.Verse}")
                     .ToList());
     }
 
