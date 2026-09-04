@@ -198,9 +198,9 @@ internal static class WordEndpoints
         return Of("pos") is null
             ? null
             : new MorphologyResponse(
-                Of("pos"), Of("gender"), Of("number"), Of("person"), Of("state"), Of("stem"),
-                Of("tense"), Of("lexicalSet"), Of("phrasePos"), Of("suffixGender"), Of("suffixNumber"),
-                Of("suffixPerson"), Of("nameType")?.Split(','));
+                Of("pos"), Of("case"), Of("gender"), Of("number"), Of("person"), Of("state"),
+                Of("stem"), Of("tense"), Of("lexicalSet"), Of("phrasePos"), Of("suffixGender"),
+                Of("suffixNumber"), Of("suffixPerson"), Of("nameType")?.Split(','));
     }
 }
 
