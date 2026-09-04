@@ -29,6 +29,8 @@ public class AppDbContext : DbContext
 
     public DbSet<VerseReference> VerseReferences { get; set; } = null!;
 
+    public DbSet<StatedVerseNumber> StatedVerseNumbers { get; set; } = null!;
+
     public DbSet<Link> Links { get; set; } = null!;
 
     public DbSet<LinkWord> LinkWords { get; set; } = null!;
@@ -180,6 +182,14 @@ public class AppDbContext : DbContext
                 .IsUnique()
                 .HasFilter("\"is_primary\"")
                 .HasDatabaseName("ix_verse_reference_one_primary_per_verse");
+        });
+
+        modelBuilder.Entity<StatedVerseNumber>(entity =>
+        {
+            entity.HasOne(n => n.Verse)
+                .WithMany(v => v.StatedNumbers)
+                .HasForeignKey(n => n.VerseId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<WordGroup>(entity =>

@@ -178,6 +178,45 @@ public sealed class ParallelPairingTests : IDisposable
         strength[1].Links.Should().Be(1);
     }
 
+    /// <summary>
+    /// The other half of the same question the frame answers. A pane knows where its verse sits and
+    /// what this corpus calls it; what it could not say until now is what the edition's own pages
+    /// call it, which for the Synodal's Psalm 119 is 118 and is the number its readers know.
+    ///
+    /// Both addresses of a verse holding two of the edition's are reported, in the order printed.
+    /// </summary>
+    [Fact]
+    public async Task ACellSaysWhatTheEditionItselfCallsTheVerse()
+    {
+        var synodal = Corpus.Add(_db, "rusv", TextKind.Translation, "rus",
+            (1, 1, ["Блаженны", "непорочные"]),
+            (1, 2, ["Спаси", "Господи"]),
+            (1, 3, ["Хвалите", "Господа"]));
+        _db.SaveChanges();
+
+        State(synodal, 1, 1, position: 1, 118, 1);
+        State(synodal, 1, 2, position: 1, 117, 1);
+        State(synodal, 1, 2, position: 2, 117, 2);
+        _db.SaveChanges();
+
+        var stated = await ParallelEndpoints.StatedVerses(_db, synodal.Id, 1, 1, default);
+
+        stated[1].Should().Equal("118:1");
+        stated[2].Should().Equal("117:1", "117:2");
+        stated.Should().NotContainKey(3);
+    }
+
+    private void State(Text text, int chapter, int verse, int position, int statedChapter, int statedVerse)
+    {
+        _db.StatedVerseNumbers.Add(new StatedVerseNumber
+        {
+            VerseId = _db.VerseAt(text, chapter, verse).Id,
+            Position = position,
+            ChapterNumber = statedChapter,
+            Number = statedVerse,
+        });
+    }
+
     /// <summary>Two texts of one verse each, already sitting at the same canonical address.</summary>
     private (Text Greek, Text Hebrew) Pair()
     {

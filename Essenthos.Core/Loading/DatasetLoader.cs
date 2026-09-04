@@ -522,5 +522,17 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<CorpusLoader>();
         status.Record(await loader.Load(source, cancellationToken));
+
+        // What the edition calls its own verses, where its publisher renumbered it and it says so
+        // in the text. Guarded on its own rows rather than on the text's, so it reaches a database
+        // that already holds the text — which is every database the corpus has been loaded into.
+        // Silent for a text that states nothing, which is most of them.
+        using var numbering = services.CreateScope();
+        var stated = numbering.ServiceProvider.GetRequiredService<StatedNumberLoader>();
+        var outcome = await stated.Load(source, cancellationToken);
+        if (outcome.Verses > 0 || outcome.AlreadyLoaded)
+        {
+            status.Record(outcome.ToString());
+        }
     }
 }

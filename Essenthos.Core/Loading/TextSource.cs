@@ -108,11 +108,24 @@ internal sealed record WordDraft(
     bool Elided = false,
     int? SuppliedSpan = null);
 
+/// <param name="Chapter">The chapter of the edition's own numbering, which need not be the row's.</param>
+/// <param name="Number">The verse of it.</param>
+internal readonly record struct StatedNumberDraft(int Chapter, int Number);
+
 /// <param name="Label">
 /// The letter the edition prints after the number, where it prints one. Empty for the other
 /// texts, which number their verses and nothing else.
 /// </param>
-internal sealed record VerseDraft(int Number, IReadOnlyList<WordDraft> Words, string Label = "");
+internal sealed record VerseDraft(int Number, IReadOnlyList<WordDraft> Words, string Label = "")
+{
+    /// <summary>
+    /// The addresses the edition prints for this verse in its own numbering, in the order it prints
+    /// them. Empty for a text that numbers its verses the way it is stored and says nothing further
+    /// — which is every text loaded here except the Synodal and Ohienko's Ukrainian, whose files
+    /// were renumbered by their publisher and which say so verse by verse where it matters.
+    /// </summary>
+    public IReadOnlyList<StatedNumberDraft> Stated { get; init; } = [];
+}
 
 internal sealed record ChapterDraft(int Number, IReadOnlyList<VerseDraft> Verses);
 
