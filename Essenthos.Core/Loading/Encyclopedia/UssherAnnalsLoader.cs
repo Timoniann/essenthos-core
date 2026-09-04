@@ -42,6 +42,30 @@ internal sealed record AnnalsOutcome(
 /// **Public domain, transcribed under CC BY 4.0.** Ussher died in 1656 and Pierce's English is
 /// 1658. What Brady Stephenson contributes is the transcription into 7,000 numbered paragraphs,
 /// and that is what the attribution is for. See <c>Resources/BibleData2026/LICENCE.md</c>.
+///
+/// <para>
+/// <b>What is taken, and what is left.</b> Of the 7,000 paragraphs, 859 are dated AD. 354 of those
+/// cite a verse of the New Testament and are loaded; the 505 that cite none are not. Those 505 are
+/// Ussher's other half — Tiberius' senate, the Parthian succession, Josephus on Cumanus and the
+/// Samaritans — and they are world history rather than narrative. The world layer already holds
+/// modern, checkable, identifier-bearing events for the same century, so putting a seventeenth-
+/// century reading of Roman history beside them would be adding a worse answer to a question that
+/// already has one.
+/// </para>
+/// <para>
+/// The rule is the paragraph's first New Testament citation, and it is right most of the time
+/// because Ussher writes the citation after the sentence it belongs to. It is not always: one
+/// paragraph narrates Valerius Gratus appointing a high priest and cites John 18:13, because that
+/// verse names Caiaphas' father-in-law. The row is true, dated and correctly cited — it is simply
+/// filed under John rather than being gospel narrative, and nothing separates that case
+/// mechanically.
+/// </para>
+/// <para>
+/// The date column is what bounds this, not the citation, and it has to be: forty paragraphs cite a
+/// New Testament verse and are dated BC, because Ussher proves the creation, the flood and Abraham
+/// offering Isaac from Hebrews and Colossians. Anchoring on the citation alone would file the sixth
+/// day of creation under Colossians 3.
+/// </para>
 /// </summary>
 internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<UssherAnnalsLoader> logger)
 {
