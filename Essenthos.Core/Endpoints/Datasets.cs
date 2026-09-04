@@ -286,6 +286,7 @@ public static class Datasets
                 "the Strong numbers both editions carry",
                 "the words left over once the Strong numbers were paired",
                 "the untagged English function words",
+                "the consonants both Hebrew witnesses write",
             ]),
     ];
 

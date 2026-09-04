@@ -49,6 +49,11 @@
     "files": 4,
     "sha256": "178f51e2ea43373a2ed68401557bbad08154e3f74d6c99d81d6e4546f3c32b06"
   },
+  "SamaritanPentateuch": {
+    "bytes": 17127528,
+    "files": 41,
+    "sha256": "b1dbf43a2217910bf8eb582baabafd542b812f5cf4effb77dc3e3fe80695c223"
+  },
   "Septuagint": {
     "bytes": 7207010,
     "files": 53,
