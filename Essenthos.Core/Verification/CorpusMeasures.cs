@@ -83,19 +83,22 @@ internal sealed record Reach(
     public double Testimony => Reached == 0 ? 0 : (double)Stated / Reached;
 
     /// <summary>
-    /// One row per method for one pair, folded into one. The query groups by method so that a word
-    /// reached by two of them is counted once in each, and the totals are read off the row that
-    /// counts every link of the pair together.
+    /// One row per method for one pair, plus the pair's own row, folded into one.
+    ///
+    /// The total is read off the row whose method is null and never summed from the others. A word
+    /// two methods both reach belongs to both, so adding the per-method counts gives more words
+    /// than the text has — which is how the share first came out above 100%.
     /// </summary>
     public static IReadOnlyList<Reach> Gather(
-        IEnumerable<(string Witness, string From, int Lexical, int Reached, string Method)> rows) =>
+        IEnumerable<(string Witness, string From, int Lexical, int Reached, string? Method)> rows) =>
     [
         .. rows
             .GroupBy(r => (r.Witness, r.From, r.Lexical))
             .Select(pair => new Reach(
                 pair.Key.Witness, pair.Key.From, pair.Key.Lexical,
-                pair.Sum(r => r.Reached),
-                pair.ToDictionary(r => r.Method, r => r.Reached, StringComparer.Ordinal)))
+                pair.Single(r => r.Method is null).Reached,
+                pair.Where(r => r.Method is not null)
+                    .ToDictionary(r => r.Method!, r => r.Reached, StringComparer.Ordinal)))
             .OrderBy(r => r.Witness, StringComparer.Ordinal)
             .ThenBy(r => r.From, StringComparer.Ordinal),
     ];

@@ -315,4 +315,22 @@ public sealed class CorpusCheckTests : IDisposable
         reach.Testimony.Should().BeApproximately(0.5, 1e-12);
     }
 
+    /// <summary>
+    /// The total counts the pair's own words, it does not add the methods up. A word two methods
+    /// both reach belongs to both, so summing them counts it twice — which put the reported reach
+    /// above 100% the first time this was written.
+    /// </summary>
+    [Fact]
+    public async Task AWordTwoMethodsReachIsOneWord()
+    {
+        Link(LinkRelation.Renders, english: 1, hebrew: 2, LinkMethod.StatedBySource);
+        Link(LinkRelation.Renders, english: 2, hebrew: 2, LinkMethod.Aligner);
+
+        var reach = (await _check.Measure()).Reach.Single();
+
+        reach.Reached.Should().Be(1);
+        reach.ByMethod.Values.Sum().Should().Be(2);
+        reach.Share.Should().BeLessThanOrEqualTo(1);
+    }
+
 }

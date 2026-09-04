@@ -219,7 +219,13 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         JOIN text witness ON witness.id = l.to_text_id AND witness.kind <> 'translation'
         JOIN link_word lw ON lw.link_id = l.id AND lw.side = 'to'
         JOIN word w ON w.id = lw.word_id AND NOT {StructuralMorphemes}
-        GROUP BY witness.slug, witness.id, source.slug, l.method
+        -- Grouping sets, so the pair's own row is counted rather than summed. A word two methods
+        -- both reach belongs to both of them, so the per-method counts overlap and adding them up
+        -- gives a total larger than the number of words -- which showed as a reach above 100%.
+        -- The row where the method is null is the distinct count over every link of the pair.
+        GROUP BY GROUPING SETS (
+            (witness.slug, witness.id, source.slug, l.method),
+            (witness.slug, witness.id, source.slug))
         ORDER BY witness.slug, source.slug, l.method
         """;
 
@@ -450,7 +456,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var reach = Reach.Gather(await Read(connection, ReachSql, cancellationToken,
             reader => (Witness: reader.GetString(0), From: reader.GetString(1),
                        Lexical: (int)reader.GetInt64(2), Reached: (int)reader.GetInt64(3),
-                       Method: reader.GetString(4))));
+                       Method: reader.IsDBNull(4) ? null : reader.GetString(4))));
 
         var contention = await Read(connection, ContentionSql, cancellationToken, reader => new Contention(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
