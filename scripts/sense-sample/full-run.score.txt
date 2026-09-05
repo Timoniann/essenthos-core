@@ -1,0 +1,15 @@
+decided by the witness: 8281   agree 8198   disagree 83   -> 99.00%
+unclear 15   unlisted 249
+  high     8027/ 8094 = 99.17%   unlisted 178  unclear 0
+  medium    170/  186 = 91.40%   unlisted 69  unclear 3
+  low         1/    1 = 100.00%   unlisted 2  unclear 12
+  2 candidates     99.05%  (2935)
+  3-4 candidates   98.81%  (2009)
+  5-9 candidates   99.41%  (2550)
+  10+ candidates   97.97%  (787)
+witness silent: {'also unlisted': 1171, 'named a candidate': 321}
+disagreements written: 77
+
+Runs aggregated: full-0..5 (the whole contested population, six shards balanced by occurrence
+count), rest-0..5 (what the first pass left after two harness faults), and run-29, an independent
+sample drawn with a different seed. 9,996 contested Hebrew occurrences over 515 Strong numbers.

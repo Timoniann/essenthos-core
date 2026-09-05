@@ -1,0 +1,77 @@
+H6659 word 6862917: model **zadok-6** (high), witness **zadok-3** -- Zadok son of Meraioth, father's line to Meshullam, matches Neh 11:11 genealogy exactly.
+H6659 word 6865955: model **zadok** (high), witness **zadok-3** -- David calls for Zadok and Abiathar the priests.
+H6659 word 6866885: model **zadok** (high), witness **zadok-3** -- Zadok the priest ministering at Gibeon under David.
+H6659 word 6752759: model **zadok** (high), witness **zadok-3** -- Sons of Zadok denotes the priestly line descended from David's high priest Zadok.
+H6659 word 6754325: model **zadok** (high), witness **zadok-3** -- Seed of Zadok, same priestly lineage as Ezekiel's other references.
+H6659 word 6754843: model **zadok** (high), witness **zadok-3** -- Sons of Zadok, priestly line, consistent with Ezekiel's usage elsewhere.
+H6659 word 6757161: model **zadok** (high), witness **zadok-3** -- Sons of Zadok, priestly line, consistent with Ezekiel's usage elsewhere.
+H5838 word 6889628: model **azariah-15** (high), witness **azariah-7** -- Same Hezekiah temple-reform narrative, ruler of house of God, same chief priest.
+H5838 word 6854130: model **azariah-7** (high), witness **azariah-16** -- Distinguisher explicitly cites Nehemiah 8:7, explained the law to the people.
+H5838 word 6855504: model **azariah-7** (medium), witness **azariah-15** -- Post-exilic priest sealing the covenant, fitting azariah-7's Ezra-Nehemiah era role.
+H5838 word 6856923: model **azariah-7** (medium), witness **seraiah-6** -- Priest in wall-dedication procession, likely the same restoration-era Azariah.
+H3442 word 6848942: model **jeshua-5** (medium), witness **jeshua-3** -- Jozabad's father Jeshua best fits the returned Levitical family head of Ezra 2:40.
+H3442 word 6856585: model **jeshua-7** (medium), witness **jeshua-5** -- Leading Levite grouped with Kadmiel and Sherebiah, as in Neh 8:7/9:4-5.
+H3442 word 6856606: model **jeshua-3** (high), witness **jeshua-7** -- Genealogy: Jeshua begat Joiakim begat Eliashib, the high-priestly line.
+H281 word 6655793: model **ahijah-3** (high), witness **ahijah** -- 'Baasha the son of Ahijah' - father of Baasha again.
+H5662 word 6881451: model **obadiah** (high), witness **obadiah-5** -- Sent by Jehoshaphat to teach, matching this candidate's own distinguisher verse.
+H4983 word 6856590: model **mattaniah-2** (high), witness **mattaniah-9** -- Candidate's distinguisher explicitly cites this verse: over the thanksgiving.
+H2766 word 6850099: model **harim-2** (high), witness **harim-3** -- Listed among lay 'Israel' families (Ezra 10:25ff), the lay Harim family.
+H672 word 6859629: model **ephrath** (medium), witness **bethlehem** -- Again Hur is 'firstborn of Ephratah,' echoing 1 Chr 2:19/2:50 genealogical link to his mother.
+H5711 word 6486326: model **basemath** (high), witness **adah** -- Adah, daughter of Elon the Hittite, is Gen 26:34's Bashemath under a variant name.
+H2174 word 6667754: model **zimri-2** (high), witness **jehu-2** -- Jezebel alludes to Zimri who slew his master, the earlier usurper king.
+H3406 word 6870953: model **jerimoth-3** (high), witness **jeremoth-3** -- The fifteenth lot, matching candidate's exact distinguisher (chosen fifteenth by lot).
+H6934 word 6856587: model **kadmiel** (medium), witness **kadmiel-2** -- Listed 'in the days of Jeshua,' marking this as the earlier returnee-era Kadmiel.
+H7895 word 6652648: model **shishak** (high), witness **pharaoh-5** -- Jeroboam fled to Shishak king of Egypt, same figure as in 1Ki 14:25.
+H7895 word 6655000: model **shishak** (high), witness **pharaoh-5** -- Shishak king of Egypt attacked Jerusalem under Rehoboam; the Shishak candidate.
+H7895 word 6879410: model **shishak** (high), witness **pharaoh-5** -- Same event, Shishak king of Egypt attacking Jerusalem in Rehoboam's 5th year.
+H7895 word 6879473: model **shishak** (high), witness **pharaoh-5** -- Same Shishak narrative in 2 Chronicles 12.
+H7895 word 6879490: model **shishak** (high), witness **pharaoh-5** -- Same Shishak narrative in 2 Chronicles 12.
+H7895 word 6879533: model **shishak** (high), witness **pharaoh-5** -- Same Shishak narrative in 2 Chronicles 12.
+H7895 word 6879549: model **shishak** (high), witness **pharaoh-5** -- Same Shishak narrative in 2 Chronicles 12.
+H469 word 6865923: model **elzaphan** (medium), witness **elizaphan** -- Levitical family group distinct from Uzziel's line listed separately; likely Kohathite Elzaphan's descendants.
+H2828 word 6855573: model **hashum** (high), witness **hashum-2** -- Covenant-sealer list order matches the Ezra2/Neh7 family sequence, identifying this as the family head.
+H43 word 6861066: model **abiasaph** (high), witness **ebiasaph** -- Genealogy makes him son of Korah directly (Assir son of Ebiasaph son of Korah).
+H1835 word 6605787: model **dan** (high), witness **dan-2** -- 'After the name of Dan their father' â€” the ancestor.
+H8304 word 6860842: model **seraiah-2** (high), witness **seraiah-5** -- Azariah begat Seraiah, Seraiah begat Jehozadak â€” matches high-priest genealogy.
+H8304 word 6860844: model **seraiah-2** (high), witness **seraiah-5** -- Same clause, same Seraiah who begat Jehozadak, the chief priest.
+H8304 word 6856639: model **seraiah-6** (medium), witness **seraiah-8** -- Priestly course named for Seraiah of Neh 12:1, same returnee family head.
+H5152 word 6481805: model **nahor-2** (high), witness **nahor** -- Laban descends from Bethuel son of Nahor, Abraham's brother.
+H5152 word 6484158: model **nahor-2** (high), witness **nahor** -- God of Abraham and God of Nahor his brother, sons of Terah.
+H568 word 6847735: model **amariah-2** (high), witness **amariah** -- Ezra's ancestor: son of Azariah, father-line to Ahitub, as in 1Chr6:11.
+H1271 word 6845696: model **barzillai** (high), witness **barzillai-3** -- Explicitly 'Barzillai the Gileadite', the father-in-law.
+H1271 word 6853729: model **barzillai** (high), witness **barzillai-3** -- Explicitly 'Barzillai the Gileadite', matching Ezra parallel.
+H3048 word 6856568: model **jedaiah-2** (high), witness **jedaiah-5** -- Priest who returned with Zerubbabel, matches distinguisher exactly.
+H3048 word 6856572: model **jedaiah-5** (high), witness **jedaiah-2** -- Second Jedaiah of the same returnee list, matches son-of-Joiarib distinguisher (NEH 12:7).
+H7619 word 6870934: model **shebuel-2** (high), witness **shebuel** -- 'The thirteenth to Shubael' matches candidate's 'chosen thirteenth by lot.'
+H8050 word 6863113: model **samuel-2** (high), witness **samuel** -- David and Samuel the seer ordained the porters.
+H8050 word 6863840: model **samuel-2** (high), witness **samuel** -- David anointed king according to word of the Lord by Samuel.
+H3379 word 6860483: model **jeroboam-2** (medium), witness **jeroboam** -- Paired with Jotham king of Judah, chronologically fits Jeroboam II's era.
+H2811 word 6855548: model **hashabiah** (high), witness **hashabiah-4** -- Candidate's own citation names this verse among Levites sealing the covenant.
+H2811 word 6856743: model **hashabiah-4** (medium), witness **hashabiah-7** -- Paired with Sherebiah as chief of Levites, matching the Ezra 8:24 duo reappearing.
+H6034 word 6858439: model **beeri** (high), witness **anah** -- Sons of Anah: Dishon, parallel to Genesis 36:25's same Anah.
+H1867 word 6843688: model **darius-2** (medium), witness **darius** -- Same 'first year of Darius the Mede' framing as Dan 9:1's genealogical identification.
+H564 word 6845479: model **immer** (high), witness **immer-2** -- Distinguisher explicitly cites this verse for the priestly clan count.
+H564 word 6849958: model **immer** (medium), witness **immer-2** -- Sons of Immer clan, same priestly lineage counted in Ezra 2:37.
+H564 word 6853521: model **immer** (high), witness **immer-2** -- Distinguisher explicitly cites this verse, duplicate of Ezra 2:37's list.
+H6126 word 6854125: model **akkub-3** (high), witness **akkub-2** -- Listed among Levites who helped expound the law, matching Nehemiah 8:7 distinguisher.
+H1787 word 6858440: model **dishon-2** (high), witness **dishon** -- "Sons of Anah: Dishon" parallels Genesis 36:25, son of Anah.
+H1787 word 6858443: model **dishon-2** (high), witness **dishon** -- Sons Hemdan(Amram)/Eshban/Ithran/Cheran match Gen 36:26, same Dishon son of Anah.
+H1587 word 6721263: model **gemariah-2** (high), witness **gemariah** -- Explicitly son of Shaphan the scribe, matching that candidate.
+H1587 word 6721302: model **gemariah-2** (high), witness **gemariah** -- Same list, explicitly Gemariah son of Shaphan.
+H1587 word 6721621: model **gemariah-2** (high), witness **gemariah** -- Same episode as 36:11-12, same Gemariah son of Shaphan.
+H2148 word 6871069: model **zechariah-4** (high), witness **zechariah-5** -- Firstborn son of Meshelemiah, same family as 1Ch9:21 gatekeeper.
+H2148 word 6871262: model **zechariah-4** (high), witness **zechariah-5** -- Son of Shelemiah (=Meshelemiah), same gatekeeper family as 26:2.
+H623 word 6892506: model **asaph-2** (high), witness **asaph-3** -- Sons of Asaph in their place per commandment of David and Asaph, the musician's guild.
+H623 word 6892513: model **asaph-2** (high), witness **asaph-3** -- Same verse, 'commandment of David and Asaph' the original chief musician.
+H623 word 6846158: model **asaph-2** (medium), witness **asaph-3** -- Cymbals 'after the ordinance of David' point to the original Davidic musician's guild.
+H511 word 6860944: model **elkanah-4** (high), witness **elkanah-5** -- 'As for Elkanah' resumes the Elkanah just named as father of Amasai/Ahimoth in v.25.
+H1137 word 6855562: model **bani-3** (high), witness **bani-6** -- Candidate distinguisher explicitly cites this verse as lay leader Bani.
+H8018 word 6721910: model **shelemiah-8** (high), witness **shelemiah-6** -- Father of Jehucal/Jucal, same person named again in Jer 38:1.
+H2246 word 6596381: model **hobab** (high), witness **reuel-2** -- Explicitly called father-in-law of Moses, same figure as in Numbers 10:29.
+H3059 word 6886221: model **jehoahaz** (high), witness **ahaziah-2** -- Joash king of Israel, son of Jehoahaz, in same account.
+H285 word 6847733: model **ahitub-3** (medium), witness **ahitub-2** -- Ezra's genealogy chain (Ahitub-Zadok-Shallum-Hilkiah-Azariah-Seraiah) matches the later Ahitub of 1CH6:11-12.
+H285 word 6856184: model **ahitub-3** (high), witness **ahitub-4** -- Parallel list to 1CH9:11 with identical Zadok-Meraioth-Ahitub chain.
+H7645 word 6855551: model **shebaniah-4** (high), witness **shebaniah-2** -- Candidate explicitly cited as appearing at both v10 and v12 of the Levite sealers list.
+H4441 word 6711709: model **malchijah-10** (medium), witness **malchijah-2** -- Pashur son of Malchiah, same father-son pair identified with this candidate at Jer 38:1.
+H2766 word 6850099: model **harim-2** (medium), witness **harim-3** -- Listed among lay 'of Israel' families with foreign wives, same clan as EZR 2:32.
+H3088 word 6666988: model **jehoram** (high), witness **jehoram-2** -- "Ahaziah son of Jehoram king of Judah" contrasted with Joram son of Ahab in same verse.
