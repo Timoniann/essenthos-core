@@ -405,6 +405,30 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             WHERE NOT EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = l.id)
             """),
 
+        // The same question asked of the annotations, and here for the same reason: an annotation
+        // with nothing claiming it is one nobody can weigh, and a card that names a person with no
+        // account of how it knows is exactly what this schema was built to make impossible.
+        ("word annotations no claim stands on, so nothing says what asserted them",
+            """
+            SELECT count(*) FROM word_entity a
+            WHERE NOT EXISTS (SELECT 1 FROM word_entity_claim c WHERE c.word_entity_id = a.id)
+            """),
+
+        // Twenty-three men are called Zechariah, and no method that works from the name alone can
+        // say which of them a verse means. Leaving such a word unannotated is the right answer, so
+        // an annotation resolved through a number several people or places share is not an
+        // incomplete answer -- it is a confident wrong one, and a reader cannot tell it from
+        // scholarship.
+        ("words a name-resolution annotated although the name is several people's",
+            """
+            SELECT count(*) FROM word_entity a
+            JOIN word w ON w.id = a.word_id
+            WHERE a.method = 'strong-number'
+              AND w.strong_number IS NOT NULL
+              AND (SELECT count(DISTINCT n.entity_id) FROM entity_name n
+                   WHERE n.hebrew_strong_number = w.strong_number) > 1
+            """),
+
         // Two links naming exactly the same words in the same pair of texts are not two facts.
         // They are two methods agreeing, and agreeing is what link_claim is for -- one link with
         // two claims. Before that table existed there were 4,664 of these, every one of them the

@@ -71,6 +71,15 @@ public class AppDbContext : DbContext
 
     public DbSet<EntityVerse> EntityVerses { get; set; } = null!;
 
+    /// <summary>
+    /// Which word names which person or place. The encyclopedia says a verse names somebody; this
+    /// says which word of it does, which is what a reader hovering a word is asking.
+    /// </summary>
+    public DbSet<WordEntity> WordEntities { get; set; } = null!;
+
+    /// <summary>Every method that says a word names an entity, the way link claims do for links.</summary>
+    public DbSet<WordEntityClaim> WordEntityClaims { get; set; } = null!;
+
     public DbSet<Event> Events { get; set; } = null!;
 
     /// <summary>Whose reckoning a date belongs to, and the dates themselves.</summary>
@@ -220,6 +229,7 @@ public class AppDbContext : DbContext
         ConfigureLink(modelBuilder);
         ConfigureVerseLink(modelBuilder);
         ConfigureWordStrong(modelBuilder);
+        ConfigureWordEntity(modelBuilder);
     }
 
     /// <summary>
@@ -325,6 +335,44 @@ public class AppDbContext : DbContext
             // The same rules the links live under, and for the same reason: a proposal that carried
             // no confidence while claiming to be inferred would read as testimony.
             entity.ToTable("word_strong", t => AddProvenanceConstraints(t, "word_strong"));
+        });
+    }
+
+    /// <summary>
+    /// The annotation and its claims live under the same rules the links do, and for the same
+    /// reason: an annotation that came from resolving a lexicon entry and carried no confidence
+    /// would be stored looking exactly like one a source stated about the word, and no reader could
+    /// tell them apart afterwards.
+    /// </summary>
+    private static void ConfigureWordEntity(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<WordEntity>(entity =>
+        {
+            entity.Property(a => a.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(a => a.Word)
+                .WithMany()
+                .HasForeignKey(a => a.WordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(a => a.Entity)
+                .WithMany()
+                .HasForeignKey(a => a.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("word_entity", t => AddProvenanceConstraints(t, "word_entity"));
+        });
+
+        modelBuilder.Entity<WordEntityClaim>(entity =>
+        {
+            entity.Property(c => c.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(c => c.WordEntity)
+                .WithMany(a => a.Claims)
+                .HasForeignKey(c => c.WordEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("word_entity_claim", t => AddProvenanceConstraints(t, "word_entity_claim"));
         });
     }
 

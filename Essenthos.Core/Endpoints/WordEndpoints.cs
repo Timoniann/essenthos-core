@@ -158,7 +158,7 @@ internal static class WordEndpoints
                     word.CanonicalChapter,
                     word.CanonicalVerse),
                 Morphology(word.Morphology),
-                null,
+                await Annotations.Of(db, id, cancellationToken),
                 strong,
                 renderings,
                 syntax));

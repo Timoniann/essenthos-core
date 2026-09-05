@@ -126,7 +126,28 @@ internal record MorphologyResponse(
     string? PronominalPerson,
     string[]? Nametypes);
 
-internal record EntityRefResponse(string Type, string Slug, string Name);
+/// <summary>
+/// Who a word names — <c>person</c> or <c>place</c>, and which one — for the card a reader gets by
+/// hovering it.
+/// </summary>
+internal record EntityRefResponse(string Type, string Slug, string Name)
+{
+    /// <summary>
+    /// What established this, as the link provenance spells it: <c>strong-number</c> where the name
+    /// resolved through the lexicon, <c>manual</c> where a person said so. Null only for an older
+    /// annotation that predates the field.
+    ///
+    /// It is here because the alternative was a card that says <em>Moses</em> in the same voice
+    /// whether a source stated it or something guessed, and a reader cannot ask afterwards.
+    /// </summary>
+    public string? Method { get; init; }
+
+    /// <summary>
+    /// How sure, between 0 and 1, and null exactly where a source or a person stated it rather than
+    /// a process concluding it. Null is therefore the strongest value and not the weakest.
+    /// </summary>
+    public double? Confidence { get; init; }
+}
 
 /// <param name="OriginalWordIds">
 /// The words of other texts this word is linked to. Empty until the links are loaded, which is not
