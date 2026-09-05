@@ -1,0 +1,181 @@
+{
+ "prompt_version": "sense-1",
+ "database": "essenthos_core",
+ "extracted": "2026-09-05T20:47:50+00:00",
+ "selection": {
+  "kind": "sample",
+  "seed": 11,
+  "target": 400,
+  "drawn": 503
+ },
+ "numbers": [
+  "H7073",
+  "H4812",
+  "H7645",
+  "H3460",
+  "H4435",
+  "H6312",
+  "H304",
+  "H5837",
+  "H7727",
+  "H5989",
+  "H5827",
+  "H3094",
+  "H295",
+  "H8037",
+  "H7509",
+  "H2216",
+  "H4332",
+  "H2970",
+  "H3312",
+  "H3059",
+  "H2365",
+  "H3035",
+  "H463",
+  "H5812",
+  "H573",
+  "H7394",
+  "H3058",
+  "H4977",
+  "H2366",
+  "H1867",
+  "H2387",
+  "H2128",
+  "H5658",
+  "H7927",
+  "H4918",
+  "H1177",
+  "H3434",
+  "H8050"
+ ],
+ "batches": [
+  {
+   "batch": "batch-0000",
+   "numbers": [
+    "H7073",
+    "H4812",
+    "H7645"
+   ],
+   "occurrences": 25
+  },
+  {
+   "batch": "batch-0001",
+   "numbers": [
+    "H3460",
+    "H4435",
+    "H6312"
+   ],
+   "occurrences": 14
+  },
+  {
+   "batch": "batch-0002",
+   "numbers": [
+    "H304",
+    "H5837",
+    "H7727"
+   ],
+   "occurrences": 8
+  },
+  {
+   "batch": "batch-0003",
+   "numbers": [
+    "H5989",
+    "H5827",
+    "H3094"
+   ],
+   "occurrences": 12
+  },
+  {
+   "batch": "batch-0004",
+   "numbers": [
+    "H295",
+    "H8037",
+    "H7509"
+   ],
+   "occurrences": 13
+  },
+  {
+   "batch": "batch-0005",
+   "numbers": [
+    "H2216",
+    "H4332",
+    "H2970"
+   ],
+   "occurrences": 30
+  },
+  {
+   "batch": "batch-0006",
+   "numbers": [
+    "H3312",
+    "H3059"
+   ],
+   "occurrences": 36
+  },
+  {
+   "batch": "batch-0007",
+   "numbers": [
+    "H2365",
+    "H3035",
+    "H463"
+   ],
+   "occurrences": 18
+  },
+  {
+   "batch": "batch-0008",
+   "numbers": [
+    "H5812",
+    "H573",
+    "H7394"
+   ],
+   "occurrences": 18
+  },
+  {
+   "batch": "batch-0009",
+   "numbers": [
+    "H3058"
+   ],
+   "occurrences": 57
+  },
+  {
+   "batch": "batch-0010",
+   "numbers": [
+    "H4977",
+    "H2366",
+    "H1867"
+   ],
+   "occurrences": 17
+  },
+  {
+   "batch": "batch-0011",
+   "numbers": [
+    "H2387",
+    "H2128",
+    "H5658"
+   ],
+   "occurrences": 20
+  },
+  {
+   "batch": "batch-0012",
+   "numbers": [
+    "H7927"
+   ],
+   "occurrences": 62
+  },
+  {
+   "batch": "batch-0013",
+   "numbers": [
+    "H4918",
+    "H1177",
+    "H3434"
+   ],
+   "occurrences": 33
+  },
+  {
+   "batch": "batch-0014",
+   "numbers": [
+    "H8050"
+   ],
+   "occurrences": 140
+  }
+ ]
+}

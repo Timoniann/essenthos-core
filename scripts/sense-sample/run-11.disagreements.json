@@ -1,0 +1,58 @@
+[
+ {
+  "word_id": 6855541,
+  "strong_number": "H7645",
+  "model": "shebaniah-2",
+  "witness": "shebaniah-4",
+  "confidence": "medium",
+  "reason": "First-listed Levite signer, likely same leading Levite as Nehemiah 9:4-5."
+ },
+ {
+  "word_id": 6855551,
+  "strong_number": "H7645",
+  "model": "shebaniah-4",
+  "witness": "shebaniah-2",
+  "confidence": "medium",
+  "reason": "A second, distinct Levite named Shebaniah later in the same sealing list."
+ },
+ {
+  "word_id": 6886221,
+  "strong_number": "H3059",
+  "model": "jehoahaz",
+  "witness": "ahaziah-2",
+  "confidence": "high",
+  "reason": "Joash son of Jehoahaz, king of Israel."
+ },
+ {
+  "word_id": 6843688,
+  "strong_number": "H1867",
+  "model": "darius-2",
+  "witness": "darius",
+  "confidence": "high",
+  "reason": "'Darius the Mede', same figure and reign-year formula as Daniel 9:1."
+ },
+ {
+  "word_id": 6485198,
+  "strong_number": "H7927",
+  "model": "shechem-4",
+  "witness": "shechem",
+  "confidence": "high",
+  "reason": "\"Father of Shechem\" idiom marks Hamor founder of the city (BHSA topo)."
+ },
+ {
+  "word_id": 6863113,
+  "strong_number": "H8050",
+  "model": "samuel-2",
+  "witness": "samuel",
+  "confidence": "high",
+  "reason": "David and Samuel the seer ordaining porters."
+ },
+ {
+  "word_id": 6863840,
+  "strong_number": "H8050",
+  "model": "samuel-2",
+  "witness": "samuel",
+  "confidence": "high",
+  "reason": "David anointed king by word of the Lord through Samuel."
+ }
+]

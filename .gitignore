@@ -165,3 +165,7 @@ Resources/*/*
 
 # The database password reaches compose through this file, and it is not this repository's to carry.
 .env
+
+# A run of the sense harness: prompts, raw answers and the score report. Cheap to reproduce from
+# scripts/sense.py against the database, and not this repository's to carry.
+.sense/
