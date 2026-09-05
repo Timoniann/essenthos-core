@@ -11,6 +11,11 @@ namespace Essenthos.Core.Loading.Links;
 /// <param name="Reached">Pairs the composed route proposes, before merging.</param>
 /// <param name="Agreed">Pairs both routes reached, which is the measure of whether either works.</param>
 /// <param name="Added">Pairs only the composed route reached — the coverage this buys.</param>
+/// <param name="Written">Pairs written as links of their own, because nothing else names those words.</param>
+/// <param name="Corroborated">
+/// Pairs a source has already stated, which become a second claim on the link that states them
+/// rather than a second link beside it.
+/// </param>
 internal sealed record CompositionOutcome(
     string From,
     string Via,
@@ -20,11 +25,13 @@ internal sealed record CompositionOutcome(
     int Agreed,
     int Added,
     int Written,
+    int Corroborated,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
         $"{From} to {To} through {Via}: {Written} links from {Direct} direct and {Reached} composed — " +
-            $"{Agreed} reached by more than one reading, {Added} only through {Via}";
+            $"{Agreed} reached by more than one reading, {Added} only through {Via}, " +
+            $"{Corroborated} agreeing with a link a source already states";
 
 }
 
@@ -120,16 +127,18 @@ internal sealed class CompositionPipeline(
             })
             .ToList();
 
+        var (fresh, corroborated) = await Write(connection, from, to, viaSlug, merged, cancellationToken);
+
         var outcome = new CompositionOutcome(
             fromSlug, viaSlug, toSlug,
             written.Count + reduced.Count,
             composed.Count,
             merged.Count(link => Readings(link.Route) > 1),
             merged.Count(link => link.Route == Route.Composed),
-            merged.Count,
+            fresh,
+            corroborated,
             started.Elapsed);
 
-        await Write(connection, from, to, viaSlug, merged, cancellationToken);
         logger.LogInformation("Composed {Outcome}", outcome);
         return outcome;
     }
@@ -246,8 +255,18 @@ internal sealed class CompositionPipeline(
     /// Replaces the aligner links between the two texts with the merged set, in one transaction, so
     /// there is never a moment where a pair is claimed twice by two routes that have not been
     /// reconciled.
+    ///
+    /// <para>
+    /// A pair a source has already stated is not written again. The routes reach words the
+    /// interlinear also annotates — the same word of the Ukrainian against the same word of the
+    /// Hebrew — and a second row saying that is not a second fact: it makes a word pair nobody
+    /// doubts read as contended, and it double-counts it in every measure. So the guess becomes a
+    /// claim on the link that states the pair, which is what <c>link_claim</c> is for, and the
+    /// stated row keeps the source's identity because a guess can be rebuilt by running the aligner
+    /// again and a statement cannot be rebuilt at all.
+    /// </para>
     /// </summary>
-    private async Task Write(
+    private async Task<(int Fresh, int Corroborated)> Write(
         NpgsqlConnection connection,
         Database.Entities.Text from,
         Database.Entities.Text to,
@@ -255,6 +274,10 @@ internal sealed class CompositionPipeline(
         IReadOnlyList<RoutedLink> merged,
         CancellationToken cancellationToken)
     {
+        var renders = EnumSpelling.Of(LinkRelation.Renders);
+        var stated = await Stated(connection, from.Id, to.Id, renders, cancellationToken);
+        var (fresh, agreeing) = Split(merged, stated, viaSlug);
+
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
 
         await using (var delete = new NpgsqlCommand(
@@ -266,15 +289,14 @@ internal sealed class CompositionPipeline(
             await delete.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        var firstId = await ReserveLinkIds(connection, merged.Count, cancellationToken);
-        var renders = EnumSpelling.Of(LinkRelation.Renders);
+        var firstId = await ReserveLinkIds(connection, fresh.Count, cancellationToken);
         var method = EnumSpelling.Of(LinkMethod.Aligner);
         var fromSide = EnumSpelling.Of(LinkSide.From);
         var toSide = EnumSpelling.Of(LinkSide.To);
 
         await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
         {
-            for (var i = 0; i < merged.Count; i++)
+            for (var i = 0; i < fresh.Count; i++)
             {
                 await writer.StartRowAsync(cancellationToken);
                 await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
@@ -282,9 +304,9 @@ internal sealed class CompositionPipeline(
                 await writer.WriteAsync(to.Id, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(merged[i].Confidence, NpgsqlDbType.Double, cancellationToken);
+                await writer.WriteAsync(fresh[i].Confidence, NpgsqlDbType.Double, cancellationToken);
                 await writer.WriteAsync(
-                    Routes.Describe(merged[i].Route, viaSlug), NpgsqlDbType.Text, cancellationToken);
+                    Routes.Describe(fresh[i].Route, viaSlug), NpgsqlDbType.Text, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
@@ -292,10 +314,10 @@ internal sealed class CompositionPipeline(
 
         await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
         {
-            for (var i = 0; i < merged.Count; i++)
+            for (var i = 0; i < fresh.Count; i++)
             {
-                await Row(writer, firstId + i, merged[i].From, fromSide, cancellationToken);
-                await Row(writer, firstId + i, merged[i].To, toSide, cancellationToken);
+                await Row(writer, firstId + i, fresh[i].From, fromSide, cancellationToken);
+                await Row(writer, firstId + i, fresh[i].To, toSide, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
@@ -304,9 +326,94 @@ internal sealed class CompositionPipeline(
         // The claim that says this loader is the one asserting these links. Written here rather
         // than left to a backfill: a link with no claim is invisible to the agreement measure, and
         // the measure spent a day reporting the migration instead of the corpus. PRB-0198.
-        await LinkClaims.Record(connection, transaction, firstId, merged.Count, cancellationToken);
+        await LinkClaims.Record(connection, transaction, firstId, fresh.Count, cancellationToken);
+
+        await LinkClaims.Corroborate(
+            connection, transaction, agreeing, LinkMethod.Aligner, Agreement, cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);
+        return (fresh.Count, agreeing.Count);
+    }
+
+    /// <summary>
+    /// The merged pairs divided into the ones that become links of their own and the ones that
+    /// become a second claim on a link a source already wrote.
+    ///
+    /// Each corroboration keeps the confidence and the source of the pair that produced it: the
+    /// source names which readings found it, and that is the only thing a claim from this run says
+    /// which the stated link does not say for itself.
+    /// </summary>
+    internal static (
+        List<RoutedLink> Fresh,
+        List<(long Link, double Confidence, string Source)> Agreeing) Split(
+        IReadOnlyList<RoutedLink> merged,
+        IReadOnlyDictionary<(long From, long To), long> stated,
+        string viaSlug)
+    {
+        var fresh = new List<RoutedLink>(merged.Count);
+        var agreeing = new List<(long Link, double Confidence, string Source)>();
+
+        foreach (var link in merged)
+        {
+            if (stated.TryGetValue((link.From, link.To), out var already))
+            {
+                agreeing.Add((already, link.Confidence, Routes.Describe(link.Route, viaSlug)));
+            }
+            else
+            {
+                fresh.Add(link);
+            }
+        }
+
+        return (fresh, agreeing);
+    }
+
+    /// <summary>
+    /// What the aligner writes when it arrives at a pair somebody has already stated.
+    /// </summary>
+    private const string Agreement =
+        "The aligner reached a pair this source states, so it stands as a second voice for that " +
+        "link rather than as a rival link naming the same two words.";
+
+    /// <summary>
+    /// The word pairs a source has already stated for these two texts, by the two words they name.
+    ///
+    /// Only the links naming one word on each side, because that is the only shape a composed link
+    /// has and therefore the only one it can duplicate: a stated link naming a phrase says
+    /// something no single pair says, and a link with no word on one side is an absence rather than
+    /// a correspondence. The aligner's own rows are left out because they are about to be deleted
+    /// and rewritten.
+    /// </summary>
+    private static async Task<Dictionary<(long From, long To), long>> Stated(
+        NpgsqlConnection connection,
+        int fromTextId,
+        int toTextId,
+        string relation,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(
+            """
+            SELECT min(f.word_id), min(t.word_id), l.id
+            FROM link l
+            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
+            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
+            WHERE l.from_text_id = @from AND l.to_text_id = @to
+              AND l.relation = @relation AND l.method <> 'aligner'
+            GROUP BY l.id
+            HAVING count(*) = 1
+            """, connection);
+        command.Parameters.AddWithValue("from", fromTextId);
+        command.Parameters.AddWithValue("to", toTextId);
+        command.Parameters.AddWithValue("relation", relation);
+
+        var stated = new Dictionary<(long, long), long>(20_000);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            stated[(reader.GetInt64(0), reader.GetInt64(1))] = reader.GetInt64(2);
+        }
+
+        return stated;
     }
 
     private static int Readings(Route route) =>

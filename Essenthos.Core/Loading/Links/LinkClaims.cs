@@ -99,10 +99,54 @@ internal static class LinkClaims
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// The same second answer, where each link's claim carries a confidence and a source of its
+    /// own rather than one shared by the batch.
+    ///
+    /// <para>
+    /// The alignment routes need it. A pair is reached as written, as stems, through a third text
+    /// or by several of those at once, and which of them found it is written into the source, so a
+    /// run's corroborations are not one claim repeated — they are one claim per link, and giving
+    /// them a single source would throw away the one thing the source is there to say. The
+    /// confidence differs for the same reason: it is what that pair scored, not what the run did.
+    /// </para>
+    /// </summary>
+    public static async Task Corroborate(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        IReadOnlyList<(long Link, double Confidence, string Source)> claims,
+        LinkMethod method,
+        string note,
+        CancellationToken cancellationToken)
+    {
+        if (claims.Count == 0)
+        {
+            return;
+        }
+
+        await using var command = new NpgsqlCommand(
+            EachCorroboration, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+        command.Parameters.AddWithValue("ids", claims.Select(claim => claim.Link).ToArray());
+        command.Parameters.AddWithValue("confidences", claims.Select(claim => claim.Confidence).ToArray());
+        command.Parameters.AddWithValue("sources", claims.Select(claim => claim.Source).ToArray());
+        command.Parameters.AddWithValue("method", EnumSpelling.Of(method));
+        command.Parameters.AddWithValue("note", note);
+        command.CommandTimeout = 600;
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
     private const string Corroboration =
         """
         INSERT INTO link_claim (link_id, method, confidence, source, note)
         SELECT id, @method, @confidence, @source, @note FROM unnest(@ids) AS id
+        ON CONFLICT DO NOTHING
+        """;
+
+    private const string EachCorroboration =
+        """
+        INSERT INTO link_claim (link_id, method, confidence, source, note)
+        SELECT claim.link_id, @method, claim.confidence, claim.source, @note
+        FROM unnest(@ids, @confidences, @sources) AS claim(link_id, confidence, source)
         ON CONFLICT DO NOTHING
         """;
 }

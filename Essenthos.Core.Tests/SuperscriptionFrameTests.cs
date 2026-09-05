@@ -2,6 +2,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Verification;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ public sealed class SuperscriptionFrameTests : IDisposable
     private readonly AppDbContext _db;
     private readonly IDbContextTransaction _transaction;
     private readonly SuperscriptionFrameLoader _loader;
+    private readonly VerseLinkLoader _verseLinks;
     private readonly Text _hebrew;
     private readonly Text _slavic;
     private readonly VerseLink _verseLink;
@@ -36,6 +38,7 @@ public sealed class SuperscriptionFrameTests : IDisposable
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
         _loader = new SuperscriptionFrameLoader(_db, NullLogger<SuperscriptionFrameLoader>.Instance);
+        _verseLinks = new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance);
 
         _hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
             (3, 1, ["מִזְמֹור", "לְדָוִד"]),
@@ -74,16 +77,18 @@ public sealed class SuperscriptionFrameTests : IDisposable
     /// <summary>
     /// The Hebrew's title verse belonged to no verse link at all: nothing of the translation stood
     /// at its address, so the loader that derives verse links from the frame counted it as a verse
-    /// with no counterpart. Saying the translation's verse covers that address is what gives it one.
+    /// with no counterpart. Saying the translation's verse covers that address is what gives it one,
+    /// and joining the two is the verse-link loader's, which does it for every address a verse
+    /// covers rather than for the title alone.
     /// </summary>
     [Fact]
     public async Task TheTitleVerseJoinsTheVerseLinkTheTranslationIsAlreadyIn()
     {
         _db.VerseLinkVerses.Count(v => v.VerseId == _db.VerseAt(_hebrew, 3, 1).Id).Should().Be(0);
 
-        var outcome = await _loader.Load(Marked());
+        await _loader.Load(Marked());
 
-        outcome.Joined.Should().Be(1);
+        (await _verseLinks.Cover()).Should().Be(1);
         Members(_verseLink.Id, LinkSide.To).Should().BeEquivalentTo(
             [_db.VerseAt(_hebrew, 3, 1).Id, _db.VerseAt(_hebrew, 3, 2).Id]);
     }
@@ -99,6 +104,7 @@ public sealed class SuperscriptionFrameTests : IDisposable
     public async Task ALinkCrossingAJoinedBoundaryIsNotAFaultAndOneCrossingAnUnjoinedBoundaryIs()
     {
         await _loader.Load(Marked());
+        await _verseLinks.Cover();
         Link(_db.WordAt(_slavic, 3, 1, 1), _db.WordAt(_hebrew, 3, 1, 1));
 
         (await Crossings()).Should().Be(0);
@@ -123,11 +129,13 @@ public sealed class SuperscriptionFrameTests : IDisposable
     public async Task ASecondRunWritesNothing()
     {
         await _loader.Load(Marked());
+        await _verseLinks.Cover();
+
         var again = await _loader.Load(Marked());
 
         again.Verses.Should().Be(1);
         again.Placed.Should().Be(0);
-        again.Joined.Should().Be(0);
+        (await _verseLinks.Cover()).Should().Be(0);
     }
 
     /// <summary>

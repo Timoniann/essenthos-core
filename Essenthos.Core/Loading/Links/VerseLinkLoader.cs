@@ -18,6 +18,11 @@ namespace Essenthos.Core.Loading.Links;
 /// from the other text is not a correspondence, and writing it as one would assert an absence the
 /// frame does not state.
 /// </param>
+/// <param name="Covered">
+/// Memberships added because a verse covers a second canonical address and something stands at that
+/// address in the other text. Non-zero on a start after the frame has learned to say that a verse
+/// spans two rows, and zero on every start after it.
+/// </param>
 internal sealed record VerseLinkOutcome(
     bool AlreadyLoaded,
     int Pairs,
@@ -25,14 +30,18 @@ internal sealed record VerseLinkOutcome(
     int Straight,
     int Divided,
     int Alone,
+    int Covered,
     TimeSpan Elapsed)
 {
-    public override string ToString() =>
-        AlreadyLoaded
-            ? "the verse links are already loaded"
-            : $"{Links} verse links over {Pairs} text pairs in {Elapsed}: {Straight} one verse against " +
-              $"one, {Divided} where the two divide the passage differently, {Alone} verses with no " +
-              "counterpart at all";
+    public override string ToString() => (AlreadyLoaded, Covered) switch
+    {
+        (true, 0) => "the verse links are already loaded",
+        (true, _) => $"the verse links are already loaded; {Covered} verses joined at an address " +
+                     "another verse covers",
+        _ => $"{Links} verse links over {Pairs} text pairs in {Elapsed}: {Straight} one verse against " +
+             $"one, {Divided} where the two divide the passage differently, {Alone} verses with no " +
+             $"counterpart at all, {Covered} joined at an address another verse covers",
+    };
 }
 
 /// <summary>
@@ -78,6 +87,14 @@ internal sealed record VerseLinkOutcome(
 /// alignment commands rather than before, which it does: it is idempotent per pair, so the next
 /// start picks up whatever a `compose` or an `align` added.
 /// </para>
+///
+/// <para>
+/// It is two steps, and <see cref="Cover"/> is the second. The components are built from the
+/// address each verse primarily stands at; a verse that covers a further address is then joined to
+/// what stands there in the other text. That second step runs on every start whether or not any
+/// pair was built, because the frame can learn to say that a verse spans two rows long after the
+/// verse links for its pair were written.
+/// </para>
 /// </summary>
 internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> logger)
 {
@@ -91,6 +108,34 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
     private const string VerseImport =
         "COPY verse_link_verse (verse_link_id, verse_id, side) FROM STDIN (FORMAT BINARY)";
+
+    /// <summary>
+    /// For every verse standing at an address that is not its own, the verse at that address in the
+    /// other text of each link the first one already belongs to, on the opposite side of it.
+    ///
+    /// Inserted on conflict rather than checked first, so a start that has nothing to add costs one
+    /// statement and writes nothing.
+    /// </summary>
+    private const string CoveredVerseImport =
+        """
+        INSERT INTO verse_link_verse (verse_link_id, verse_id, side)
+        SELECT DISTINCT member.verse_link_id,
+               counterpart.id,
+               CASE WHEN member.side = 'from' THEN 'to' ELSE 'from' END
+        FROM verse_reference cover
+        JOIN verse_link_verse member ON member.verse_id = cover.verse_id
+        JOIN verse_link link ON link.id = member.verse_link_id
+        JOIN verse_reference stands
+          ON stands.is_primary
+         AND stands.canonical_book = cover.canonical_book
+         AND stands.canonical_chapter = cover.canonical_chapter
+         AND stands.canonical_verse = cover.canonical_verse
+        JOIN verse counterpart
+          ON counterpart.id = stands.verse_id
+         AND counterpart.text_id = CASE WHEN member.side = 'from' THEN link.to_text_id ELSE link.from_text_id END
+        WHERE NOT cover.is_primary
+        ON CONFLICT DO NOTHING
+        """;
 
     public async Task<VerseLinkOutcome> Load(CancellationToken cancellationToken = default)
     {
@@ -113,8 +158,11 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
         if (todo.Count == 0)
         {
-            logger.LogInformation("Every linked pair already has its verse links; nothing to do");
-            return new VerseLinkOutcome(true, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            var only = await Cover(cancellationToken);
+            logger.LogInformation(
+                "Every linked pair already has its verse links; {Covered} memberships added for the " +
+                "addresses a verse covers", only);
+            return new VerseLinkOutcome(true, 0, 0, 0, 0, 0, only, started.Elapsed);
         }
 
         var addresses = new Dictionary<int, Dictionary<(int, int, int), List<int>>>();
@@ -134,9 +182,54 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         }
 
         var outcome = new VerseLinkOutcome(
-            false, todo.Count, written, straight, divided, alone, started.Elapsed);
+            false, todo.Count, written, straight, divided, alone, await Cover(cancellationToken),
+            started.Elapsed);
         logger.LogInformation("Verse links: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// Joins a verse that covers a second canonical address to whatever stands at that address in
+    /// the other text.
+    ///
+    /// <para>
+    /// The components above are built from the address each verse primarily stands at, which is
+    /// what makes them a partition: every verse belongs to one of them, and a verse that covers a
+    /// second address would otherwise pull two passages into one statement wherever the frame parks
+    /// an address on a verse rather than placing it. So the skeleton is the primary addresses and
+    /// this adds the coverage on top of it, which is also what lets it repair a corpus whose verse
+    /// links were written before the frame learned to say that a verse spans two rows.
+    /// </para>
+    ///
+    /// <para>
+    /// **This is what makes a word link crossing a verse boundary legitimate.** BHSA writes Isaiah
+    /// 63:19 as one verse where the English begins chapter 64 inside it, Nehemiah 7:68 where the
+    /// English has 7:68 and 7:69, and Psalm 13:6 where the English has 13:5 and 13:6 — and the
+    /// aligner, which buckets a verse by every address it stands at, proposes links across those
+    /// boundaries because the frame says the verse is there. Without this the frame states the
+    /// address and refuses to join it, and the verification reads the aligner's true answer as a
+    /// fault. The psalm superscriptions are the same statement read the other way: a Slavic verse
+    /// covers the title address, and the Hebrew's title verse is what stands there.
+    /// </para>
+    ///
+    /// <para>
+    /// The counterpart has to stand at the address <em>primarily</em>, which is the difference
+    /// between a verse the other text really holds there and an address the versification data has
+    /// parked absent material on. The King James' Esther 1:1 carries eighteen of the second kind,
+    /// standing for the Greek additions it does not contain; joining one covering to another
+    /// covering of the same empty address would state a correspondence between two absences.
+    /// </para>
+    /// </summary>
+    public async Task<int> Cover(CancellationToken cancellationToken = default)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        await using var command = new NpgsqlCommand(CoveredVerseImport, connection)
+        {
+            CommandTimeout = 600,
+        };
+        return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
     /// <summary>
@@ -267,6 +360,12 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// <summary>
     /// Every verse of a text by the canonical address it primarily stands at, cached because a text
     /// takes part in several pairs and the query is the expensive half of this.
+    ///
+    /// The primary address alone, deliberately: it is the one address every verse has exactly one
+    /// of, so the components come out as a partition of the two texts' verses. The further
+    /// addresses a verse covers are joined afterwards by <see cref="Cover"/>, which adds a
+    /// membership to the statement the covering verse is already part of instead of merging two
+    /// passages into one.
     /// </summary>
     private async Task<Dictionary<(int, int, int), List<int>>> Addressed(
         Dictionary<int, Dictionary<(int, int, int), List<int>>> cache,
