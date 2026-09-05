@@ -92,6 +92,7 @@ internal sealed class DatasetLoader(
             await CoverThePsalmTitles(resources, stoppingToken);
             await JoinTheVerses(stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
+            await SayWhichWordNamesWhom(stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -546,6 +547,20 @@ internal sealed class DatasetLoader(
         status.Record(await world.Load(
             Path.Combine(AppContext.BaseDirectory, "Resources", "WorldHistory"),
             cancellationToken));
+    }
+
+    /// <summary>
+    /// Which word names which person or place. Last of everything, because it needs three earlier
+    /// steps to have finished: BHSA's annotation, the links that carry the answer into every other
+    /// text, and the encyclopedia the answer is about.
+    /// </summary>
+    private async Task SayWhichWordNamesWhom(CancellationToken cancellationToken)
+    {
+        status.Starting("the entity annotations");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<EntityAnnotationLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

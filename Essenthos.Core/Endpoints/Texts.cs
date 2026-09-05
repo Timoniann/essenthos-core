@@ -163,7 +163,8 @@ internal static class Texts
             own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached),
             strongest,
             absent,
-            supplied.ToHashSet());
+            supplied.ToHashSet(),
+            await Annotations.Of(db, ids, cancellationToken));
     }
 
     /// <summary>
@@ -188,11 +189,16 @@ internal static class Texts
     /// twice: that is what an alignment found, and this is what the edition printed, which is a
     /// first-hand claim about one text and names no counterpart for it.
     /// </param>
+    /// <param name="Named">
+    /// The person or place each word names, where the corpus can say and can say it without
+    /// choosing. Empty for most words, because most words are not names.
+    /// </param>
     private sealed record Reached(
         ILookup<long, long> Witnesses,
         Dictionary<long, string> Provenance,
         Dictionary<long, string> Absent,
-        HashSet<long> Supplied);
+        HashSet<long> Supplied,
+        Dictionary<long, EntityRefResponse> Named);
 
     /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>
     public static async Task<Dictionary<int, List<TextWordResponse>>> ReadByCanonicalVerse(
@@ -266,7 +272,7 @@ internal static class Texts
             [.. counterparts.Witnesses[id].Distinct()],
             counterparts.Provenance.GetValueOrDefault(id),
             counterparts.Absent.GetValueOrDefault(id),
-            null,
+            counterparts.Named.GetValueOrDefault(id),
             Morphology(features),
             Feature(features, Phono),
             Feature(features, PhonoTrailer),
