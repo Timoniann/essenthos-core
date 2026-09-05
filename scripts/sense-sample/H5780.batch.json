@@ -1,0 +1,132 @@
+{
+ "batch": "batch-0000",
+ "prompt_version": "sense-1",
+ "names": [
+  {
+   "strong_number": "H5780",
+   "lexicon": {
+    "number": "H5780",
+    "lemma": "עוּץ",
+    "transliteration": "ʻÛwts",
+    "definition": "Uts, a son of Aram, also a Seirite, and the regions settled by them.",
+    "derivation": "apparently from עוּץ (H5779); consultation;",
+    "kjv_definition": "Uz.",
+    "detailed_definition": "Uz = \"wooded\"\nn pr m\n1) son of Aram and grandson of Seth\n2) son of Nahor by Milcah\n3) an Edomite,  son of Dishan and grandson of Seir\nn pr loc\n4) the country of Job; probably east and southeast of Palestine somewhere in the Arabian desert"
+   },
+   "candidates": [
+    {
+     "key": "uz",
+     "kind": "person",
+     "name": "Uz",
+     "distinguisher": "son of Aram (GEN 10:23)",
+     "meaning": null,
+     "attested_in": [],
+     "attested_in_total": 0,
+     "withheld_for_this_batch": 2
+    },
+    {
+     "key": "uz-2",
+     "kind": "person",
+     "name": "Uz",
+     "distinguisher": "son of Nahor (GEN 22:20-21)",
+     "meaning": null,
+     "attested_in": [],
+     "attested_in_total": 0,
+     "withheld_for_this_batch": 1
+    },
+    {
+     "key": "uz-3",
+     "kind": "person",
+     "name": "Uz",
+     "distinguisher": "son of Dishan (GEN 36:28)",
+     "meaning": null,
+     "attested_in": [],
+     "attested_in_total": 0,
+     "withheld_for_this_batch": 2
+    }
+   ],
+   "occurrences": [
+    {
+     "word_id": 6471603,
+     "reference": "Genesis 10:23",
+     "bhsa_name_type": "pers",
+     "hebrew_verse": "וּ בְנֵ֖י אֲרָ֑ם <<ע֥וּץ>> וְ ח֖וּל וְ גֶ֥תֶר וָ מַֽשׁ",
+     "king_james_before": "The children of Shem; Elam, and Asshur, and Arphaxad, and Lud, and Aram.",
+     "king_james": "And the children of Aram; Uz, and Hul, and Gether, and Mash.",
+     "king_james_after": "And Arphaxad begat Salah; and Salah begat Eber.",
+     "king_james_words_for_this_word": "Uz"
+    },
+    {
+     "word_id": 6477436,
+     "reference": "Genesis 22:21",
+     "bhsa_name_type": "pers",
+     "hebrew_verse": "אֶת <<ע֥וּץ>> בְּכֹרֹ֖ו וְ אֶת בּ֣וּז אָחִ֑יו וְ אֶת קְמוּאֵ֖ל אֲבִ֥י אֲרָֽם",
+     "king_james_before": "And it came to pass after these things, that it was told Abraham, saying, Behold, Milcah, she hath also born children unto thy brother Nahor;",
+     "king_james": "Huz his firstborn, and Buz his brother, and Kemuel the father of Aram,",
+     "king_james_after": "And Chesed, and Hazo, and Pildash, and Jidlaph, and Bethuel.",
+     "king_james_words_for_this_word": "Huz"
+    },
+    {
+     "word_id": 6486731,
+     "reference": "Genesis 36:28",
+     "bhsa_name_type": "pers",
+     "hebrew_verse": "אֵ֥לֶּה בְנֵֽי דִישָׁ֖ן <<ע֥וּץ>> וַ אֲרָֽן",
+     "king_james_before": "The children of Ezer are these; Bilhan, and Zaavan, and Akan.",
+     "king_james": "The children of Dishan are these; Uz, and Aran.",
+     "king_james_after": "These are the dukes that came of the Horites; duke Lotan, duke Shobal, duke Zibeon, duke Anah,",
+     "king_james_words_for_this_word": "Uz"
+    },
+    {
+     "word_id": 6858191,
+     "reference": "1 Chronicles 1:17",
+     "bhsa_name_type": "pers",
+     "hebrew_verse": "בְּנֵ֣י שֵׁ֔ם עֵילָ֣ם וְ אַשּׁ֔וּר וְ אַרְפַּכְשַׁ֖ד וְ ל֣וּד וַ אֲרָ֑ם וְ <<ע֥וּץ>> וְ ח֖וּל וְ גֶ֥תֶר וָ מֶֽשֶׁךְ",
+     "king_james_before": "And the Arvadite, and the Zemarite, and the Hamathite.",
+     "king_james": "The sons of Shem; Elam, and Asshur, and Arphaxad, and Lud, and Aram, and Uz, and Hul, and Gether, and Meshech.",
+     "king_james_after": "And Arphaxad begat Shelah, and Shelah begat Eber.",
+     "king_james_words_for_this_word": "Uz"
+    },
+    {
+     "word_id": 6858459,
+     "reference": "1 Chronicles 1:42",
+     "bhsa_name_type": "pers",
+     "hebrew_verse": "בְּֽנֵי אֵ֔צֶר בִּלְהָ֥ן וְ זַעֲוָ֖ן יַעֲקָ֑ן בְּנֵ֥י דִישֹׁ֖ון <<ע֥וּץ>> וַ אֲרָֽן",
+     "king_james_before": "The sons of Anah; Dishon. And the sons of Dishon; Amram, and Eshban, and Ithran, and Cheran.",
+     "king_james": "The sons of Ezer; Bilhan, and Zavan, and Jakan. The sons of Dishan; Uz, and Aran.",
+     "king_james_after": "Now these are the kings that reigned in the land of Edom before any king reigned over the children of Israel; Bela the son of Beor: and the name of his city was Dinhabah.",
+     "king_james_words_for_this_word": "Uz"
+    },
+    {
+     "word_id": 6802789,
+     "reference": "Job 1:1",
+     "bhsa_name_type": "topo",
+     "hebrew_verse": "אִ֛ישׁ הָיָ֥ה בְ אֶֽרֶץ <<ע֖וּץ>> אִיֹּ֣וב שְׁמֹ֑ו וְ הָיָ֣ה הָ אִ֣ישׁ הַ ה֗וּא תָּ֧ם וְ יָשָׁ֛ר וִ ירֵ֥א אֱלֹהִ֖ים וְ סָ֥ר מֵ רָֽע",
+     "king_james_before": null,
+     "king_james": "There was a man in the land of Uz, whose name was Job; and that man was perfect and upright, and one that feared God, and eschewed evil.",
+     "king_james_after": "And there were born unto him seven sons and three daughters.",
+     "king_james_words_for_this_word": "of Uz"
+    },
+    {
+     "word_id": 6714217,
+     "reference": "Jeremiah 25:20",
+     "bhsa_name_type": "topo",
+     "hebrew_verse": "וְ אֵת֙ כָּל הָ עֶ֔רֶב וְ אֵ֕ת כָּל מַלְכֵ֖י אֶ֣רֶץ הָ <<ע֑וּץ>> וְ אֵ֗ת כָּל מַלְכֵי֙ אֶ֣רֶץ פְּלִשְׁתִּ֔ים וְ אֶת אַשְׁקְלֹ֤ון וְ אֶת עַזָּה֙ וְ אֶת עֶקְרֹ֔ון וְ אֵ֖ת שְׁאֵרִ֥ית אַשְׁדֹּֽוד",
+     "king_james_before": "Pharaoh king of Egypt, and his servants, and his princes, and all his people;",
+     "king_james": "And all the mingled people, and all the kings of the land of Uz, and all the kings of the land of the Philistines, and Ashkelon, and Azzah, and Ekron, and the remnant of Ashdod,",
+     "king_james_after": "Edom, and Moab, and the children of Ammon,",
+     "king_james_words_for_this_word": "of Uz"
+    },
+    {
+     "word_id": 6832016,
+     "reference": "Lamentations 4:21",
+     "bhsa_name_type": "topo",
+     "hebrew_verse": "שִׂ֤ישִׂי וְ שִׂמְחִי֙ בַּת אֱדֹ֔ום יושׁבתי בְּ אֶ֣רֶץ <<ע֑וּץ>> גַּם עָלַ֨יִךְ֙ תַּעֲבָר כֹּ֔וס תִּשְׁכְּרִ֖י וְ תִתְעָרִֽי",
+     "king_james_before": "The breath of our nostrils, the anointed of the Lord, was taken in their pits, of whom we said, Under his shadow we shall live among the heathen.",
+     "king_james": "Rejoice and be glad, O daughter of Edom, that dwellest in the land of Uz; the cup also shall pass through unto thee: thou shalt be drunken, and shalt make thyself naked.",
+     "king_james_after": "The punishment of thine iniquity is accomplished, O daughter of Zion; he will no more carry thee away into captivity: he will visit thine iniquity, O daughter of Edom; he will discover thy sins.",
+     "king_james_words_for_this_word": "of Uz"
+    }
+   ]
+  }
+ ]
+}
