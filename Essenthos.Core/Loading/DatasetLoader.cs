@@ -89,8 +89,8 @@ internal sealed class DatasetLoader(
             await GiveEveryWordASearchableForm(stoppingToken);
             await JoinTheWordsThatArePrintedTogether(stoppingToken);
             await LinkFromTheInterlinear(resources, stoppingToken);
-            await JoinTheVerses(stoppingToken);
             await CoverThePsalmTitles(resources, stoppingToken);
+            await JoinTheVerses(stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
@@ -459,21 +459,15 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// Which verse of one text is which verse of another, for every pair the word links already
-    /// cover. It runs last of the linking steps on purpose: the pairs come from the links, and the
-    /// alignment commands that create most of them are run outside this pipeline, so a pair aligned
-    /// today gets its verse links on the next start.
-    /// </summary>
-    /// <summary>
     /// Where a translation prints a psalm's superscription inside its first verse, the second
-    /// address that verse stands at and the verse link that joins it to the title verse of the
-    /// Hebrew and the Greek.
+    /// canonical address that verse stands at.
     ///
-    /// After the verses are joined rather than with the frame, because it adds to the links that
-    /// pass writes and cannot add to links that are not there yet. The two Slavic files are re-read
-    /// for it: what decides which verse holds a title is markup the corpus loader strips before a
-    /// word is stored, so the answer is in the file and nowhere else, and two XML parses is a
-    /// second and a half against a gigabyte of corpus.
+    /// Before the verses are joined rather than after, because the address is what the verse links
+    /// are derived from: a verse recorded as covering the title row is joined to the Hebrew's title
+    /// verse by the next step, and only if that step runs afterwards. The two Slavic files are
+    /// re-read for it: what decides which verse holds a title is markup the corpus loader strips
+    /// before a word is stored, so the answer is in the file and nowhere else, and two XML parses is
+    /// a second and a half against a gigabyte of corpus.
     /// </summary>
     private async Task CoverThePsalmTitles(string resources, CancellationToken cancellationToken)
     {
@@ -495,6 +489,14 @@ internal sealed class DatasetLoader(
         }
     }
 
+    /// <summary>
+    /// Which verse of one text is which verse of another, for every pair the word links already
+    /// cover. It runs last of the linking steps on purpose: the pairs come from the links, and the
+    /// alignment commands that create most of them are run outside this pipeline, so a pair aligned
+    /// today gets its verse links on the next start. The same run also joins every verse that
+    /// covers a second address to what stands there, which is what makes a word link crossing a
+    /// verse boundary a correspondence the frame backs rather than a fault.
+    /// </summary>
     private async Task JoinTheVerses(CancellationToken cancellationToken)
     {
         status.Starting("the verse links");

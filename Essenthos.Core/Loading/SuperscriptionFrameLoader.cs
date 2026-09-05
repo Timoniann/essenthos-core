@@ -3,18 +3,17 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Loading.Frame;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace Essenthos.Core.Loading;
 
-internal sealed record SuperscriptionOutcome(string Slug, int Verses, int Placed, int Joined, TimeSpan Elapsed)
+internal sealed record SuperscriptionOutcome(string Slug, int Verses, int Placed, TimeSpan Elapsed)
 {
-    public override string ToString() => (Verses, Placed, Joined) switch
+    public override string ToString() => (Verses, Placed) switch
     {
-        (0, _, _) => $"{Slug} marks no superscription inside a verse of its own",
-        (_, 0, 0) => $"{Slug} already covers the title verse of {Verses} psalms",
+        (0, _) => $"{Slug} marks no superscription inside a verse of its own",
+        (_, 0) => $"{Slug} already covers the title verse of {Verses} psalms",
         _ => $"{Slug}: {Verses} verses cover a title verse as well as their own, {Placed} of them newly " +
-             $"placed and {Joined} memberships added, in {Elapsed}",
+             $"placed, in {Elapsed}",
     };
 }
 
@@ -51,12 +50,12 @@ internal sealed record SuperscriptionOutcome(string Slug, int Verses, int Placed
 /// </para>
 ///
 /// <para>
-/// A pass of its own, after the verses have been joined, because both texts are already loaded and
-/// already placed everywhere this corpus exists: the frame loader returns early for a text that has
-/// references and the verse-link loader for a pair that has links, so a filler guarded on its own
-/// rows is the only thing that reaches those databases. It is idempotent twice over — a verse that
-/// already carries the address is skipped, and the memberships are inserted on conflict — so it
-/// also repairs itself after the verse links are rebuilt from the primary addresses alone.
+/// A pass of its own, because both texts are already loaded and already placed everywhere this
+/// corpus exists: the frame loader returns early for a text that has references, so a filler
+/// guarded on its own rows is the only thing that reaches those databases. It is idempotent — a
+/// verse that already carries the address is skipped — and it writes the address and nothing else.
+/// Joining the verses at it belongs to the verse-link loader, which does that for every address a
+/// verse covers rather than for the one this pass happens to write.
 /// </para>
 /// </summary>
 internal sealed class SuperscriptionFrameLoader(AppDbContext db, ILogger<SuperscriptionFrameLoader> logger)
@@ -66,40 +65,6 @@ internal sealed class SuperscriptionFrameLoader(AppDbContext db, ILogger<Supersc
     /// chapter has one, so the verse that covers it is the chapter's first.
     /// </summary>
     private const int FirstVerse = 1;
-
-    /// <summary>
-    /// Adds the title verses of the other text to the verse link the two texts already share for a
-    /// covering verse, so that the boundary a word link now crosses is one the frame joins.
-    ///
-    /// <para>
-    /// Written here rather than derived by the verse-link loader from every address a verse carries,
-    /// because that loader reads the primary address on purpose and the other addresses in this
-    /// corpus are not all of this kind: the King James' Esther 1:1 carries twenty of them, standing
-    /// for the Greek additions it does not contain, and joining it to twenty verses of anything
-    /// would be a correspondence nobody stated.
-    /// </para>
-    /// </summary>
-    private const string JoinTitleVerses =
-        """
-        INSERT INTO verse_link_verse (verse_link_id, verse_id, side)
-        SELECT DISTINCT member.verse_link_id,
-               title.id,
-               CASE WHEN member.side = 'from' THEN 'to' ELSE 'from' END
-        FROM verse_reference cover
-        JOIN verse covering ON covering.id = cover.verse_id AND covering.text_id = @text
-        JOIN verse_link_verse member ON member.verse_id = cover.verse_id
-        JOIN verse_link link ON link.id = member.verse_link_id
-        JOIN verse_reference stands
-          ON stands.is_primary
-         AND stands.canonical_book = cover.canonical_book
-         AND stands.canonical_chapter = cover.canonical_chapter
-         AND stands.canonical_verse = @title
-        JOIN verse title
-          ON title.id = stands.verse_id
-         AND title.text_id = CASE WHEN member.side = 'from' THEN link.to_text_id ELSE link.from_text_id END
-        WHERE NOT cover.is_primary AND cover.canonical_verse = @title
-        ON CONFLICT DO NOTHING
-        """;
 
     public async Task<SuperscriptionOutcome> Load(TextSource source, CancellationToken cancellationToken = default)
     {
@@ -113,7 +78,7 @@ internal sealed class SuperscriptionFrameLoader(AppDbContext db, ILogger<Supersc
 
         if (marked.Count == 0)
         {
-            return new SuperscriptionOutcome(slug, 0, 0, 0, TimeSpan.Zero);
+            return new SuperscriptionOutcome(slug, 0, 0, TimeSpan.Zero);
         }
 
         var text = await db.Texts.FirstOrDefaultAsync(t => t.Slug == slug, cancellationToken);
@@ -128,9 +93,8 @@ internal sealed class SuperscriptionFrameLoader(AppDbContext db, ILogger<Supersc
         var started = Stopwatch.StartNew();
         var covering = await Covering(text.Id, marked, cancellationToken);
         var placed = await Place(covering, cancellationToken);
-        var joined = await Join(text.Id, cancellationToken);
 
-        var outcome = new SuperscriptionOutcome(slug, covering.Count, placed, joined, started.Elapsed);
+        var outcome = new SuperscriptionOutcome(slug, covering.Count, placed, started.Elapsed);
         logger.LogInformation("Superscriptions: {Outcome}", outcome);
         return outcome;
     }
@@ -214,16 +178,5 @@ internal sealed class SuperscriptionFrameLoader(AppDbContext db, ILogger<Supersc
         }
 
         return placed;
-    }
-
-    private async Task<int> Join(int textId, CancellationToken cancellationToken)
-    {
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-
-        await using var command = new NpgsqlCommand(JoinTitleVerses, connection);
-        command.Parameters.AddWithValue("text", textId);
-        command.Parameters.AddWithValue("title", CanonicalReference.TitleVerse);
-        return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 }
