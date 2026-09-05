@@ -20,6 +20,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(List<SyntaxGroupResponse>))]
 [JsonSerializable(typeof(Dictionary<string, string>))]
 [JsonSerializable(typeof(StrongEntryResponse))]
+[JsonSerializable(typeof(StrongGentilicResponse))]
 [JsonSerializable(typeof(StrongListResponse))]
 [JsonSerializable(typeof(StrongOccurrenceResponse))]
 [JsonSerializable(typeof(StrongOccurrenceListResponse))]

@@ -49,6 +49,7 @@ builder.Services.AddScoped<AlignmentPipeline>();
 builder.Services.AddScoped<CompositionPipeline>();
 builder.Services.AddScoped<CorpusCheck>();
 builder.Services.AddScoped<StrongLexiconLoader>();
+builder.Services.AddScoped<StrongGentilicLoader>();
 builder.Services.AddScoped<SyntaxLoader>();
 builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddScoped<GreekWitnessLinkLoader>();

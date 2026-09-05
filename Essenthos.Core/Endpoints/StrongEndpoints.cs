@@ -39,12 +39,11 @@ internal static class StrongEndpoints
 
             var entry = await db.StrongEntries
                 .Where(e => e.StrongNumber == canonical)
-                .Select(e => Response(e))
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (entry is not null)
             {
-                return Results.Ok(entry);
+                return Results.Ok(Response(entry, await Gentilic(db, canonical, cancellationToken)));
             }
 
             // A prefix morpheme is not a missing entry. ETCBC numbers the conjunction, the article
@@ -53,7 +52,7 @@ internal static class StrongEndpoints
             // 121,077 words of this corpus as broken.
             return StrongMorphemeCodes.GetDescription(canonical) is { } morpheme
                 ? Results.Ok(new StrongEntryResponse(canonical, null, null, null, morpheme, null, null,
-                    null, null, null, null, null, true))
+                    null, null, null, null, null, true, null))
                 : Results.NotFound(new ProblemResponse(
                     $"Strong's concordance has no entry {canonical}."));
         });
@@ -91,7 +90,7 @@ internal static class StrongEndpoints
                 .ThenBy(e => e.StrongNumber)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
-                .Select(e => Response(e))
+                .Select(e => Response(e, null))
                 .ToListAsync(cancellationToken);
 
             return Results.Ok(new StrongListResponse(total, page));
@@ -307,7 +306,52 @@ internal static class StrongEndpoints
         return rows;
     }
 
-    private static StrongEntryResponse Response(Database.Entities.StrongEntry entry) => new(
+    /// <summary>
+    /// Whom this people is named after, where the dictionary says so.
+    ///
+    /// It hangs on the entry rather than on a route of its own because it is a property of the
+    /// lexeme and because this is the request a reader hovering a word already makes: the word
+    /// carries H4125, this answers that a Moabite descends from Moab, and where the origin is one
+    /// person or one place it hands over the page as well.
+    ///
+    /// The origin's own gloss is carried too, so the claim reads as a sentence for the 109 origins
+    /// that reach no page — <em>patronymic from H2246, Chobab</em> is worth more to a reader than a
+    /// number on its own.
+    /// </summary>
+    internal static async Task<StrongGentilicResponse?> Gentilic(
+        AppDbContext db,
+        string canonical,
+        CancellationToken cancellationToken)
+    {
+        var stated = await db.StrongGentilics
+            .Include(g => g.Origin)
+            .FirstOrDefaultAsync(g => g.StrongNumber == canonical, cancellationToken);
+
+        if (stated is null)
+        {
+            return null;
+        }
+
+        var origin = await db.StrongEntries
+            .Where(e => e.StrongNumber == stated.OriginNumber)
+            .Select(e => new { e.Lemma, e.Definition })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return new StrongGentilicResponse(
+            stated.OriginNumber,
+            stated.Kind,
+            origin?.Lemma,
+            origin?.Definition,
+            stated.Statement,
+            stated.Source,
+            stated.Origin is null ? null : EnumSpelling.Of(stated.Origin.Kind),
+            stated.Origin?.Slug,
+            stated.Origin?.Name);
+    }
+
+    private static StrongEntryResponse Response(
+        Database.Entities.StrongEntry entry,
+        StrongGentilicResponse? gentilic) => new(
         entry.StrongNumber,
         entry.Lemma,
         entry.Transliteration,
@@ -320,13 +364,44 @@ internal static class StrongEndpoints
         entry.SeeAlso,
         entry.SourceLanguage,
         entry.TwotReference,
-        false);
+        false,
+        gentilic);
 }
+
+/// <param name="Kind">
+/// <c>patronymic</c> where the people is named after a man, <c>patrial</c> where it is named after
+/// a place, and <c>patronymic or patrial</c> where the dictionary writes both and settles neither.
+/// </param>
+/// <param name="Statement">
+/// The dictionary's own clause. Shown rather than paraphrased: this is a nineteenth-century
+/// lexicographer's claim about a people's ancestry, and a reader is entitled to weigh it in his
+/// words.
+/// </param>
+/// <param name="EntityKind">
+/// The page the origin reaches, where it reaches exactly one. Null is the common answer — 23 men
+/// are called Zechariah and the derivation does not say which — and it means the claim stands
+/// without a page behind it, never that the claim is weaker.
+/// </param>
+internal record StrongGentilicResponse(
+    string Origin,
+    string Kind,
+    string? OriginLemma,
+    string? OriginDefinition,
+    string Statement,
+    string Source,
+    string? EntityKind,
+    string? EntitySlug,
+    string? EntityName);
 
 /// <param name="Morpheme">
 /// True where the number is not a concordance entry at all but a prefix morpheme ETCBC numbers in
 /// the H9000 range. The definition then says which morpheme, and everything else is null — because
 /// there is no entry, not because one is missing.
+/// </param>
+/// <param name="Gentilic">
+/// Whom this people is named after, where the entry is a gentilic and the dictionary states an
+/// origin plainly enough to be read. Null for everything else, which is 14,005 of the 14,197
+/// entries.
 /// </param>
 internal record StrongEntryResponse(
     string StrongNumber,
@@ -341,7 +416,8 @@ internal record StrongEntryResponse(
     string? SeeAlso,
     string? SourceLanguage,
     string? TwotReference,
-    bool Morpheme);
+    bool Morpheme,
+    StrongGentilicResponse? Gentilic);
 
 internal record StrongListResponse(int Total, IList<StrongEntryResponse> Items);
 
