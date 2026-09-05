@@ -331,15 +331,34 @@ def witness_answers(word_ids):
 
 
 def batched(numbers, counts, per_call, budget):
+    """
+    Names grouped into calls, and a name that is bigger than a whole call split across several.
+
+    Without the split, Judah's eight hundred occurrences formed one batch on their own, and the
+    model cannot emit eight hundred rows in a single reply: the call came back with no JSON array
+    and the largest name in the corpus was the one name that got no answer at all. Each part
+    carries the whole candidate list, because the question about the four hundredth occurrence is
+    the same question as about the first.
+
+    Yields (numbers, part, parts) so the extractor can slice, and `part` is 0 for a name that fits.
+    """
     batch, occurrences_in_batch = [], 0
     for number in numbers:
+        if counts[number] > budget:
+            if batch:
+                yield batch, 0, 1
+                batch, occurrences_in_batch = [], 0
+            parts = -(-counts[number] // budget)
+            for part in range(parts):
+                yield [number], part, parts
+            continue
         if batch and (len(batch) >= per_call or occurrences_in_batch + counts[number] > budget):
-            yield batch
+            yield batch, 0, 1
             batch, occurrences_in_batch = [], 0
         batch.append(number)
         occurrences_in_batch += counts[number]
     if batch:
-        yield batch
+        yield batch, 0, 1
 
 
 def extract(args):
@@ -385,17 +404,30 @@ def extract(args):
         'batches': [],
     }
 
-    for index, numbers in enumerate(batched(chosen, counts, args.batch_numbers, args.batch_occurrences)):
+    plan = list(batched(chosen, counts, args.batch_numbers, args.batch_occurrences))
+    for index, (numbers, part, parts) in enumerate(plan):
         name = f'batch-{index:04d}'
+
+        def slice_of(number):
+            all_of_them = by_number_occurrences.get(number, [])
+            if parts == 1:
+                return all_of_them
+            size = -(-len(all_of_them) // parts)
+            return all_of_them[part * size:(part + 1) * size]
+
+        # Every verse the batch asks about is hidden from the candidates' attestation lists, so the
+        # figure measures reading rather than copying. A split name hides only its own part's
+        # verses: the other parts are a different call and cannot see this one's answers.
         asked = {(o['book'], o['chapter'], o['verse'])
-                 for n in numbers for o in by_number_occurrences.get(n, [])}
+                 for n in numbers for o in slice_of(n)}
         payload = {'batch': name, 'prompt_version': PROMPT_VERSION, 'names': []}
         for number in numbers:
             payload['names'].append({
                 'strong_number': number,
+                'part': None if parts == 1 else f'{part + 1} of {parts}',
                 'lexicon': entries.get(number),
                 'candidates': [shown(c, asked) for c in by_number_candidates.get(number, [])],
-                'occurrences': [asking(o) for o in by_number_occurrences.get(number, [])],
+                'occurrences': [asking(o) for o in slice_of(number)],
             })
         path = os.path.join(args.dir, 'batches', name + '.json')
         with open(path, 'w', encoding='utf-8') as handle:
@@ -403,7 +435,7 @@ def extract(args):
         manifest['batches'].append({
             'batch': name,
             'numbers': numbers,
-            'occurrences': sum(len(by_number_occurrences.get(n, [])) for n in numbers),
+            'occurrences': sum(len(slice_of(n)) for n in numbers),
         })
 
     with open(os.path.join(args.dir, 'manifest.json'), 'w', encoding='utf-8') as handle:
@@ -479,7 +511,11 @@ def call(prompt, model):
         command, input=prompt.encode('utf-8'),
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if process.returncode != 0:
-        return None, process.stderr.decode('utf-8', 'replace')
+        # An empty stderr here is not "no error": it read as a falsy failure, the caller went on to
+        # ask a None outcome for its cost, and the run died forty batches in with the answers it
+        # already had still on disk. Say something whatever the process said.
+        said = process.stderr.decode('utf-8', 'replace').strip()
+        return None, said or f'the harness exited {process.returncode} and said nothing'
     try:
         return json.loads(process.stdout.decode('utf-8', 'replace')), None
     except json.JSONDecodeError as broken:
