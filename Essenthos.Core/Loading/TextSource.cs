@@ -125,6 +125,19 @@ internal sealed record VerseDraft(int Number, IReadOnlyList<WordDraft> Words, st
     /// were renumbered by their publisher and which say so verse by verse where it matters.
     /// </summary>
     public IReadOnlyList<StatedNumberDraft> Stated { get; init; } = [];
+
+    /// <summary>
+    /// The edition marks a superscription inside this verse. False for a text that marks none,
+    /// which is silence and not a claim that the verse holds no title.
+    /// </summary>
+    public bool MarksASuperscription { get; init; }
+
+    /// <summary>
+    /// The verse holds words standing before the address it states for what follows them, so by the
+    /// edition's own numbering it opens in an earlier verse than the one it states. False where the
+    /// edition states nothing, which is again silence.
+    /// </summary>
+    public bool OpensBeforeItsStatedAddress { get; init; }
 }
 
 internal sealed record ChapterDraft(int Number, IReadOnlyList<VerseDraft> Verses);

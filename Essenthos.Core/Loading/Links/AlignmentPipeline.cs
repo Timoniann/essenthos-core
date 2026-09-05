@@ -559,6 +559,13 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         SyntaxPrior? prior = null)
     {
         var drafts = new List<AlignedDraft>(300_000);
+
+        // Where a verse covers two canonical addresses on both sides at once, the same two words
+        // are offered to the model twice and it answers twice. That is one claim about one pair of
+        // words, and writing it as two links is the shape the corpus check calls two facts about
+        // the same words — so the louder answer stands and the other is dropped here rather than
+        // reaching the database.
+        var at = new Dictionary<(long From, long To), int>(300_000);
         var proposed = 0;
         var collapsed = 0;
         var below = 0;
@@ -612,8 +619,19 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             foreach (var (from, to, confidence, position) in Selections.Apply(
                          selection, standing, [.. targetWords.Select(word => word.Text)]))
             {
-                drafts.Add(new AlignedDraft(
-                    sourceWords[from].Id, targetWords[to].Id, confidence, position));
+                var draft = new AlignedDraft(
+                    sourceWords[from].Id, targetWords[to].Id, confidence, position);
+                var pair = (draft.SourceWordId, draft.TargetWordId);
+
+                if (!at.TryGetValue(pair, out var already))
+                {
+                    at[pair] = drafts.Count;
+                    drafts.Add(draft);
+                }
+                else if (drafts[already].Translation < confidence)
+                {
+                    drafts[already] = draft;
+                }
             }
         }
 
@@ -772,13 +790,35 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken)
         ?? throw new InvalidOperationException($"There is no text \"{slug}\".");
 
+    /// <summary>
+    /// Every word of a text by the canonical address it stands at — by every address it stands at,
+    /// not by its primary one alone.
+    ///
+    /// <para>
+    /// A verse covering two addresses contributes its words to each, because a model bucketing by
+    /// the primary address alone cannot see half of what such a verse holds. The Synodal's Psalm 3:1
+    /// prints the superscription and the body together where the Hebrew numbers them 3:1 and 3:2;
+    /// bucketed at 3:1 it is offered the body of the Hebrew psalm and nothing else, and its nine
+    /// title words have nothing in front of them to match. The title formulae repeat across sixty
+    /// psalms, so the evidence is there as soon as the words are put where they belong.
+    /// </para>
+    ///
+    /// <para>
+    /// It costs the same verse being read twice on both sides of a pair where it genuinely spans
+    /// two addresses, and that is few: Brenton carries 129 such addresses another text also
+    /// occupies, BHSA three and Nestle two, against Brenton's 22,775 verses. The King James, the
+    /// Berean and the two Slavic texts carry a hundred each for the Greek additions to Esther, and
+    /// no text here holds a verse at any of those addresses, so none of them is ever bucketed
+    /// twice.
+    /// </para>
+    /// </summary>
     private async Task<Dictionary<(int, int, int), List<Word>>> Words(
         string slug,
         Func<WordForms, string> form,
         CancellationToken cancellationToken)
     {
         var rows = await db.VerseReferences
-            .Where(r => r.IsPrimary && r.Verse!.Text!.Slug == slug)
+            .Where(r => r.Verse!.Text!.Slug == slug)
             .SelectMany(r => r.Verse!.Words.Select(w => new
             {
                 r.CanonicalBook,

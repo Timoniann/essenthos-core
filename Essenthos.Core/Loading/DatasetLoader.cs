@@ -90,6 +90,7 @@ internal sealed class DatasetLoader(
             await JoinTheWordsThatArePrintedTogether(stoppingToken);
             await LinkFromTheInterlinear(resources, stoppingToken);
             await JoinTheVerses(stoppingToken);
+            await CoverThePsalmTitles(resources, stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
@@ -463,6 +464,37 @@ internal sealed class DatasetLoader(
     /// alignment commands that create most of them are run outside this pipeline, so a pair aligned
     /// today gets its verse links on the next start.
     /// </summary>
+    /// <summary>
+    /// Where a translation prints a psalm's superscription inside its first verse, the second
+    /// address that verse stands at and the verse link that joins it to the title verse of the
+    /// Hebrew and the Greek.
+    ///
+    /// After the verses are joined rather than with the frame, because it adds to the links that
+    /// pass writes and cannot add to links that are not there yet. The two Slavic files are re-read
+    /// for it: what decides which verse holds a title is markup the corpus loader strips before a
+    /// word is stored, so the answer is in the file and nowhere else, and two XML parses is a
+    /// second and a half against a gigabyte of corpus.
+    /// </summary>
+    private async Task CoverThePsalmTitles(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the psalm titles");
+
+        foreach (var translation in Bible4uTranslations)
+        {
+            using var scope = services.CreateScope();
+            var loader = scope.ServiceProvider.GetRequiredService<SuperscriptionFrameLoader>();
+            var outcome = await loader.Load(
+                Bible4uTextSource.Read(
+                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation),
+                cancellationToken);
+
+            if (outcome.Verses > 0)
+            {
+                status.Record(outcome.ToString());
+            }
+        }
+    }
+
     private async Task JoinTheVerses(CancellationToken cancellationToken)
     {
         status.Starting("the verse links");

@@ -128,6 +128,64 @@ public static partial class VerseWords
     }
 
     /// <summary>
+    /// Whether the edition wraps a superscription in this verse.
+    ///
+    /// <para>
+    /// The Synodal file marks one with <c>^^</c>, and it does so in exactly 120 places, every one of
+    /// them the first verse of a psalm and every one of them a balanced pair. Sixty-three of those
+    /// psalms are ones the Hebrew numbers the title as a verse of its own; the other fifty-seven
+    /// keep it inside verse one, as the Hebrew does, so there is nothing for them to be placed
+    /// against. Ohienko's Ukrainian carries the marker nowhere and is silent here.
+    /// </para>
+    ///
+    /// <para>
+    /// This says the verse holds a superscription, not where it begins and ends. The marker is not
+    /// reliable as a span — the Synodal's Psalm 51:1 wraps the whole verse, body and all — and a
+    /// division the edition did not print is not one to record.
+    /// </para>
+    /// </summary>
+    public static bool MarksASuperscription(string verseText) => verseText.Contains(SuperscriptionMarker);
+
+    /// <summary>
+    /// Whether the verse holds words standing before the address it states for what follows them.
+    ///
+    /// <para>
+    /// A marker inside a verse is the edition saying that everything after it is its own verse
+    /// <c>k</c>, so text standing before that marker is its verse <c>k - 1</c> or earlier, printed
+    /// here because the publisher merged what the edition divides. The Synodal's Psalm 3:1 opens
+    /// with the superscription and only then writes "(3-2)": by its own numbering those first words
+    /// are its verse 3:1, and it is the Hebrew's title verse that stands there.
+    /// </para>
+    ///
+    /// <para>
+    /// The number has to be greater than one for the same reason. A verse whose only marker names
+    /// verse one states that it begins where the edition's verse begins, and a verse opening
+    /// "(113-9)" — the Synodal's Psalm 115:1, which continues the psalm it numbers 113 — carries
+    /// nothing before its marker at all.
+    /// </para>
+    /// </summary>
+    public static bool OpensBeforeItsStatedAddress(string verseText)
+    {
+        var last = -1;
+        var number = 0;
+
+        foreach (var match in CrossNumbering().EnumerateMatches(verseText))
+        {
+            var marker = verseText.AsSpan(match.Index, match.Length);
+            var separator = marker.IndexOfAny(AddressSeparators);
+            if (separator < 0)
+            {
+                continue;
+            }
+
+            last = match.Index;
+            number = int.Parse(marker[(separator + 1)..^1], CultureInfo.InvariantCulture);
+        }
+
+        return last > 0 && number > 1 && StripMarkup(verseText[..last]).Length > 0;
+    }
+
+    /// <summary>
     /// The verse without its markup, and where the square brackets stood in what is left. The
     /// Synodal prints a word it supplies in brackets; that is a statement the edition makes about
     /// its own text and it belongs in structure, so the characters go and the spans are handed to

@@ -163,6 +163,8 @@ internal static class Bible4uTextSource
                 .. VerseWords.StatedAddresses(verse.Text)
                     .Select(address => new StatedNumberDraft(address.Chapter, address.Number)),
             ],
+            MarksASuperscription = VerseWords.MarksASuperscription(verse.Text),
+            OpensBeforeItsStatedAddress = VerseWords.OpensBeforeItsStatedAddress(verse.Text),
         };
 
     private static TextDefinition Definition(
