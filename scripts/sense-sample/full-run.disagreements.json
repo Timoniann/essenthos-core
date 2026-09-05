@@ -1,0 +1,666 @@
+[
+ {
+  "word_id": 6862917,
+  "strong_number": "H6659",
+  "model": "zadok-6",
+  "witness": "zadok-3",
+  "confidence": "high",
+  "reason": "Zadok son of Meraioth, father's line to Meshullam, matches Neh 11:11 genealogy exactly."
+ },
+ {
+  "word_id": 6865955,
+  "strong_number": "H6659",
+  "model": "zadok",
+  "witness": "zadok-3",
+  "confidence": "high",
+  "reason": "David calls for Zadok and Abiathar the priests."
+ },
+ {
+  "word_id": 6866885,
+  "strong_number": "H6659",
+  "model": "zadok",
+  "witness": "zadok-3",
+  "confidence": "high",
+  "reason": "Zadok the priest ministering at Gibeon under David."
+ },
+ {
+  "word_id": 6752759,
+  "strong_number": "H6659",
+  "model": "zadok",
+  "witness": "zadok-3",
+  "confidence": "high",
+  "reason": "Sons of Zadok denotes the priestly line descended from David's high priest Zadok."
+ },
+ {
+  "word_id": 6754325,
+  "strong_number": "H6659",
+  "model": "zadok",
+  "witness": "zadok-3",
+  "confidence": "high",
+  "reason": "Seed of Zadok, same priestly lineage as Ezekiel's other references."
+ },
+ {
+  "word_id": 6754843,
+  "strong_number": "H6659",
+  "model": "zadok",
+  "witness": "zadok-3",
+  "confidence": "high",
+  "reason": "Sons of Zadok, priestly line, consistent with Ezekiel's usage elsewhere."
+ },
+ {
+  "word_id": 6757161,
+  "strong_number": "H6659",
+  "model": "zadok",
+  "witness": "zadok-3",
+  "confidence": "high",
+  "reason": "Sons of Zadok, priestly line, consistent with Ezekiel's usage elsewhere."
+ },
+ {
+  "word_id": 6889628,
+  "strong_number": "H5838",
+  "model": "azariah-15",
+  "witness": "azariah-7",
+  "confidence": "high",
+  "reason": "Same Hezekiah temple-reform narrative, ruler of house of God, same chief priest."
+ },
+ {
+  "word_id": 6854130,
+  "strong_number": "H5838",
+  "model": "azariah-7",
+  "witness": "azariah-16",
+  "confidence": "high",
+  "reason": "Distinguisher explicitly cites Nehemiah 8:7, explained the law to the people."
+ },
+ {
+  "word_id": 6855504,
+  "strong_number": "H5838",
+  "model": "azariah-7",
+  "witness": "azariah-15",
+  "confidence": "medium",
+  "reason": "Post-exilic priest sealing the covenant, fitting azariah-7's Ezra-Nehemiah era role."
+ },
+ {
+  "word_id": 6856923,
+  "strong_number": "H5838",
+  "model": "azariah-7",
+  "witness": "seraiah-6",
+  "confidence": "medium",
+  "reason": "Priest in wall-dedication procession, likely the same restoration-era Azariah."
+ },
+ {
+  "word_id": 6848942,
+  "strong_number": "H3442",
+  "model": "jeshua-5",
+  "witness": "jeshua-3",
+  "confidence": "medium",
+  "reason": "Jozabad's father Jeshua best fits the returned Levitical family head of Ezra 2:40."
+ },
+ {
+  "word_id": 6856585,
+  "strong_number": "H3442",
+  "model": "jeshua-7",
+  "witness": "jeshua-5",
+  "confidence": "medium",
+  "reason": "Leading Levite grouped with Kadmiel and Sherebiah, as in Neh 8:7/9:4-5."
+ },
+ {
+  "word_id": 6856606,
+  "strong_number": "H3442",
+  "model": "jeshua-3",
+  "witness": "jeshua-7",
+  "confidence": "high",
+  "reason": "Genealogy: Jeshua begat Joiakim begat Eliashib, the high-priestly line."
+ },
+ {
+  "word_id": 6655793,
+  "strong_number": "H281",
+  "model": "ahijah-3",
+  "witness": "ahijah",
+  "confidence": "high",
+  "reason": "'Baasha the son of Ahijah' - father of Baasha again."
+ },
+ {
+  "word_id": 6881451,
+  "strong_number": "H5662",
+  "model": "obadiah",
+  "witness": "obadiah-5",
+  "confidence": "high",
+  "reason": "Sent by Jehoshaphat to teach, matching this candidate's own distinguisher verse."
+ },
+ {
+  "word_id": 6856590,
+  "strong_number": "H4983",
+  "model": "mattaniah-2",
+  "witness": "mattaniah-9",
+  "confidence": "high",
+  "reason": "Candidate's distinguisher explicitly cites this verse: over the thanksgiving."
+ },
+ {
+  "word_id": 6850099,
+  "strong_number": "H2766",
+  "model": "harim-2",
+  "witness": "harim-3",
+  "confidence": "high",
+  "reason": "Listed among lay 'Israel' families (Ezra 10:25ff), the lay Harim family."
+ },
+ {
+  "word_id": 6859629,
+  "strong_number": "H672",
+  "model": "ephrath",
+  "witness": "bethlehem",
+  "confidence": "medium",
+  "reason": "Again Hur is 'firstborn of Ephratah,' echoing 1 Chr 2:19/2:50 genealogical link to his mother."
+ },
+ {
+  "word_id": 6486326,
+  "strong_number": "H5711",
+  "model": "basemath",
+  "witness": "adah",
+  "confidence": "high",
+  "reason": "Adah, daughter of Elon the Hittite, is Gen 26:34's Bashemath under a variant name."
+ },
+ {
+  "word_id": 6486349,
+  "strong_number": "H5711",
+  "model": "basemath",
+  "witness": "adah",
+  "confidence": "high",
+  "reason": "Same Adah of 36:2, Elon's daughter, mother of Eliphaz."
+ },
+ {
+  "word_id": 6486461,
+  "strong_number": "H5711",
+  "model": "basemath",
+  "witness": "adah",
+  "confidence": "high",
+  "reason": "Eliphaz's mother, same Elon's-daughter wife as 36:2/4."
+ },
+ {
+  "word_id": 6486496,
+  "strong_number": "H5711",
+  "model": "basemath",
+  "witness": "adah",
+  "confidence": "high",
+  "reason": "Continues genealogy of Eliphaz's mother, Elon's daughter."
+ },
+ {
+  "word_id": 6486568,
+  "strong_number": "H5711",
+  "model": "basemath",
+  "witness": "adah",
+  "confidence": "high",
+  "reason": "Dukes descending from Eliphaz son of this same Adah."
+ },
+ {
+  "word_id": 6589163,
+  "strong_number": "H44",
+  "model": "abiezer-2",
+  "witness": "iezer",
+  "confidence": "high",
+  "reason": "Manassite clan, son of Gilead's sister Hammolecheth per 1 Chr 7:18."
+ },
+ {
+  "word_id": 6598942,
+  "strong_number": "H44",
+  "model": "abiezer-2",
+  "witness": "iezer",
+  "confidence": "high",
+  "reason": "Same Manassite clan tied to Gideon's vintage/harvest imagery."
+ },
+ {
+  "word_id": 6667754,
+  "strong_number": "H2174",
+  "model": "zimri-2",
+  "witness": "jehu-2",
+  "confidence": "high",
+  "reason": "Jezebel alludes to Zimri who slew his master, the earlier usurper king."
+ },
+ {
+  "word_id": 6870953,
+  "strong_number": "H3406",
+  "model": "jerimoth-3",
+  "witness": "jeremoth-3",
+  "confidence": "high",
+  "reason": "The fifteenth lot, matching candidate's exact distinguisher (chosen fifteenth by lot)."
+ },
+ {
+  "word_id": 6856587,
+  "strong_number": "H6934",
+  "model": "kadmiel",
+  "witness": "kadmiel-2",
+  "confidence": "medium",
+  "reason": "Listed 'in the days of Jeshua,' marking this as the earlier returnee-era Kadmiel."
+ },
+ {
+  "word_id": 6652648,
+  "strong_number": "H7895",
+  "model": "shishak",
+  "witness": "pharaoh-5",
+  "confidence": "high",
+  "reason": "Jeroboam fled to Shishak king of Egypt, same figure as in 1Ki 14:25."
+ },
+ {
+  "word_id": 6655000,
+  "strong_number": "H7895",
+  "model": "shishak",
+  "witness": "pharaoh-5",
+  "confidence": "high",
+  "reason": "Shishak king of Egypt attacked Jerusalem under Rehoboam; the Shishak candidate."
+ },
+ {
+  "word_id": 6879410,
+  "strong_number": "H7895",
+  "model": "shishak",
+  "witness": "pharaoh-5",
+  "confidence": "high",
+  "reason": "Same event, Shishak king of Egypt attacking Jerusalem in Rehoboam's 5th year."
+ },
+ {
+  "word_id": 6879473,
+  "strong_number": "H7895",
+  "model": "shishak",
+  "witness": "pharaoh-5",
+  "confidence": "high",
+  "reason": "Same Shishak narrative in 2 Chronicles 12."
+ },
+ {
+  "word_id": 6879490,
+  "strong_number": "H7895",
+  "model": "shishak",
+  "witness": "pharaoh-5",
+  "confidence": "high",
+  "reason": "Same Shishak narrative in 2 Chronicles 12."
+ },
+ {
+  "word_id": 6879533,
+  "strong_number": "H7895",
+  "model": "shishak",
+  "witness": "pharaoh-5",
+  "confidence": "high",
+  "reason": "Same Shishak narrative in 2 Chronicles 12."
+ },
+ {
+  "word_id": 6879549,
+  "strong_number": "H7895",
+  "model": "shishak",
+  "witness": "pharaoh-5",
+  "confidence": "high",
+  "reason": "Same Shishak narrative in 2 Chronicles 12."
+ },
+ {
+  "word_id": 6865923,
+  "strong_number": "H469",
+  "model": "elzaphan",
+  "witness": "elizaphan",
+  "confidence": "medium",
+  "reason": "Levitical family group distinct from Uzziel's line listed separately; likely Kohathite Elzaphan's descendants."
+ },
+ {
+  "word_id": 6855573,
+  "strong_number": "H2828",
+  "model": "hashum",
+  "witness": "hashum-2",
+  "confidence": "high",
+  "reason": "Covenant-sealer list order matches the Ezra2/Neh7 family sequence, identifying this as the family head."
+ },
+ {
+  "word_id": 6861066,
+  "strong_number": "H43",
+  "model": "abiasaph",
+  "witness": "ebiasaph",
+  "confidence": "high",
+  "reason": "Genealogy makes him son of Korah directly (Assir son of Ebiasaph son of Korah)."
+ },
+ {
+  "word_id": 6605787,
+  "strong_number": "H1835",
+  "model": "dan",
+  "witness": "dan-2",
+  "confidence": "high",
+  "reason": "'After the name of Dan their father' — the ancestor."
+ },
+ {
+  "word_id": 6860842,
+  "strong_number": "H8304",
+  "model": "seraiah-2",
+  "witness": "seraiah-5",
+  "confidence": "high",
+  "reason": "Azariah begat Seraiah, Seraiah begat Jehozadak — matches high-priest genealogy."
+ },
+ {
+  "word_id": 6860844,
+  "strong_number": "H8304",
+  "model": "seraiah-2",
+  "witness": "seraiah-5",
+  "confidence": "high",
+  "reason": "Same clause, same Seraiah who begat Jehozadak, the chief priest."
+ },
+ {
+  "word_id": 6856639,
+  "strong_number": "H8304",
+  "model": "seraiah-6",
+  "witness": "seraiah-8",
+  "confidence": "medium",
+  "reason": "Priestly course named for Seraiah of Neh 12:1, same returnee family head."
+ },
+ {
+  "word_id": 6481805,
+  "strong_number": "H5152",
+  "model": "nahor-2",
+  "witness": "nahor",
+  "confidence": "high",
+  "reason": "Laban descends from Bethuel son of Nahor, Abraham's brother."
+ },
+ {
+  "word_id": 6484158,
+  "strong_number": "H5152",
+  "model": "nahor-2",
+  "witness": "nahor",
+  "confidence": "high",
+  "reason": "God of Abraham and God of Nahor his brother, sons of Terah."
+ },
+ {
+  "word_id": 6847735,
+  "strong_number": "H568",
+  "model": "amariah-2",
+  "witness": "amariah",
+  "confidence": "high",
+  "reason": "Ezra's ancestor: son of Azariah, father-line to Ahitub, as in 1Chr6:11."
+ },
+ {
+  "word_id": 6845696,
+  "strong_number": "H1271",
+  "model": "barzillai",
+  "witness": "barzillai-3",
+  "confidence": "high",
+  "reason": "Explicitly 'Barzillai the Gileadite', the father-in-law."
+ },
+ {
+  "word_id": 6853729,
+  "strong_number": "H1271",
+  "model": "barzillai",
+  "witness": "barzillai-3",
+  "confidence": "high",
+  "reason": "Explicitly 'Barzillai the Gileadite', matching Ezra parallel."
+ },
+ {
+  "word_id": 6856568,
+  "strong_number": "H3048",
+  "model": "jedaiah-2",
+  "witness": "jedaiah-5",
+  "confidence": "high",
+  "reason": "Priest who returned with Zerubbabel, matches distinguisher exactly."
+ },
+ {
+  "word_id": 6856572,
+  "strong_number": "H3048",
+  "model": "jedaiah-5",
+  "witness": "jedaiah-2",
+  "confidence": "high",
+  "reason": "Second Jedaiah of the same returnee list, matches son-of-Joiarib distinguisher (NEH 12:7)."
+ },
+ {
+  "word_id": 6870934,
+  "strong_number": "H7619",
+  "model": "shebuel-2",
+  "witness": "shebuel",
+  "confidence": "high",
+  "reason": "'The thirteenth to Shubael' matches candidate's 'chosen thirteenth by lot.'"
+ },
+ {
+  "word_id": 6863113,
+  "strong_number": "H8050",
+  "model": "samuel-2",
+  "witness": "samuel",
+  "confidence": "high",
+  "reason": "David and Samuel the seer ordained the porters."
+ },
+ {
+  "word_id": 6863840,
+  "strong_number": "H8050",
+  "model": "samuel-2",
+  "witness": "samuel",
+  "confidence": "high",
+  "reason": "David anointed king according to word of the Lord by Samuel."
+ },
+ {
+  "word_id": 6860483,
+  "strong_number": "H3379",
+  "model": "jeroboam-2",
+  "witness": "jeroboam",
+  "confidence": "medium",
+  "reason": "Paired with Jotham king of Judah, chronologically fits Jeroboam II's era."
+ },
+ {
+  "word_id": 6855548,
+  "strong_number": "H2811",
+  "model": "hashabiah",
+  "witness": "hashabiah-4",
+  "confidence": "high",
+  "reason": "Candidate's own citation names this verse among Levites sealing the covenant."
+ },
+ {
+  "word_id": 6856743,
+  "strong_number": "H2811",
+  "model": "hashabiah-4",
+  "witness": "hashabiah-7",
+  "confidence": "medium",
+  "reason": "Paired with Sherebiah as chief of Levites, matching the Ezra 8:24 duo reappearing."
+ },
+ {
+  "word_id": 6858439,
+  "strong_number": "H6034",
+  "model": "beeri",
+  "witness": "anah",
+  "confidence": "high",
+  "reason": "Sons of Anah: Dishon, parallel to Genesis 36:25's same Anah."
+ },
+ {
+  "word_id": 6843688,
+  "strong_number": "H1867",
+  "model": "darius-2",
+  "witness": "darius",
+  "confidence": "medium",
+  "reason": "Same 'first year of Darius the Mede' framing as Dan 9:1's genealogical identification."
+ },
+ {
+  "word_id": 6845479,
+  "strong_number": "H564",
+  "model": "immer",
+  "witness": "immer-2",
+  "confidence": "high",
+  "reason": "Distinguisher explicitly cites this verse for the priestly clan count."
+ },
+ {
+  "word_id": 6849958,
+  "strong_number": "H564",
+  "model": "immer",
+  "witness": "immer-2",
+  "confidence": "medium",
+  "reason": "Sons of Immer clan, same priestly lineage counted in Ezra 2:37."
+ },
+ {
+  "word_id": 6853521,
+  "strong_number": "H564",
+  "model": "immer",
+  "witness": "immer-2",
+  "confidence": "high",
+  "reason": "Distinguisher explicitly cites this verse, duplicate of Ezra 2:37's list."
+ },
+ {
+  "word_id": 6854125,
+  "strong_number": "H6126",
+  "model": "akkub-3",
+  "witness": "akkub-2",
+  "confidence": "high",
+  "reason": "Listed among Levites who helped expound the law, matching Nehemiah 8:7 distinguisher."
+ },
+ {
+  "word_id": 6858440,
+  "strong_number": "H1787",
+  "model": "dishon-2",
+  "witness": "dishon",
+  "confidence": "high",
+  "reason": "\"Sons of Anah: Dishon\" parallels Genesis 36:25, son of Anah."
+ },
+ {
+  "word_id": 6858443,
+  "strong_number": "H1787",
+  "model": "dishon-2",
+  "witness": "dishon",
+  "confidence": "high",
+  "reason": "Sons Hemdan(Amram)/Eshban/Ithran/Cheran match Gen 36:26, same Dishon son of Anah."
+ },
+ {
+  "word_id": 6721263,
+  "strong_number": "H1587",
+  "model": "gemariah-2",
+  "witness": "gemariah",
+  "confidence": "high",
+  "reason": "Explicitly son of Shaphan the scribe, matching that candidate."
+ },
+ {
+  "word_id": 6721302,
+  "strong_number": "H1587",
+  "model": "gemariah-2",
+  "witness": "gemariah",
+  "confidence": "high",
+  "reason": "Same list, explicitly Gemariah son of Shaphan."
+ },
+ {
+  "word_id": 6721621,
+  "strong_number": "H1587",
+  "model": "gemariah-2",
+  "witness": "gemariah",
+  "confidence": "high",
+  "reason": "Same episode as 36:11-12, same Gemariah son of Shaphan."
+ },
+ {
+  "word_id": 6871069,
+  "strong_number": "H2148",
+  "model": "zechariah-4",
+  "witness": "zechariah-5",
+  "confidence": "high",
+  "reason": "Firstborn son of Meshelemiah, same family as 1Ch9:21 gatekeeper."
+ },
+ {
+  "word_id": 6871262,
+  "strong_number": "H2148",
+  "model": "zechariah-4",
+  "witness": "zechariah-5",
+  "confidence": "high",
+  "reason": "Son of Shelemiah (=Meshelemiah), same gatekeeper family as 26:2."
+ },
+ {
+  "word_id": 6892506,
+  "strong_number": "H623",
+  "model": "asaph-2",
+  "witness": "asaph-3",
+  "confidence": "high",
+  "reason": "Sons of Asaph in their place per commandment of David and Asaph, the musician's guild."
+ },
+ {
+  "word_id": 6892513,
+  "strong_number": "H623",
+  "model": "asaph-2",
+  "witness": "asaph-3",
+  "confidence": "high",
+  "reason": "Same verse, 'commandment of David and Asaph' the original chief musician."
+ },
+ {
+  "word_id": 6846158,
+  "strong_number": "H623",
+  "model": "asaph-2",
+  "witness": "asaph-3",
+  "confidence": "medium",
+  "reason": "Cymbals 'after the ordinance of David' point to the original Davidic musician's guild."
+ },
+ {
+  "word_id": 6860944,
+  "strong_number": "H511",
+  "model": "elkanah-4",
+  "witness": "elkanah-5",
+  "confidence": "high",
+  "reason": "'As for Elkanah' resumes the Elkanah just named as father of Amasai/Ahimoth in v.25."
+ },
+ {
+  "word_id": 6855562,
+  "strong_number": "H1137",
+  "model": "bani-3",
+  "witness": "bani-6",
+  "confidence": "high",
+  "reason": "Candidate distinguisher explicitly cites this verse as lay leader Bani."
+ },
+ {
+  "word_id": 6721910,
+  "strong_number": "H8018",
+  "model": "shelemiah-8",
+  "witness": "shelemiah-6",
+  "confidence": "high",
+  "reason": "Father of Jehucal/Jucal, same person named again in Jer 38:1."
+ },
+ {
+  "word_id": 6596381,
+  "strong_number": "H2246",
+  "model": "hobab",
+  "witness": "reuel-2",
+  "confidence": "high",
+  "reason": "Explicitly called father-in-law of Moses, same figure as in Numbers 10:29."
+ },
+ {
+  "word_id": 6886221,
+  "strong_number": "H3059",
+  "model": "jehoahaz",
+  "witness": "ahaziah-2",
+  "confidence": "high",
+  "reason": "Joash king of Israel, son of Jehoahaz, in same account."
+ },
+ {
+  "word_id": 6847733,
+  "strong_number": "H285",
+  "model": "ahitub-3",
+  "witness": "ahitub-2",
+  "confidence": "medium",
+  "reason": "Ezra's genealogy chain (Ahitub-Zadok-Shallum-Hilkiah-Azariah-Seraiah) matches the later Ahitub of 1CH6:11-12."
+ },
+ {
+  "word_id": 6856184,
+  "strong_number": "H285",
+  "model": "ahitub-3",
+  "witness": "ahitub-4",
+  "confidence": "high",
+  "reason": "Parallel list to 1CH9:11 with identical Zadok-Meraioth-Ahitub chain."
+ },
+ {
+  "word_id": 6855551,
+  "strong_number": "H7645",
+  "model": "shebaniah-4",
+  "witness": "shebaniah-2",
+  "confidence": "high",
+  "reason": "Candidate explicitly cited as appearing at both v10 and v12 of the Levite sealers list."
+ },
+ {
+  "word_id": 6711709,
+  "strong_number": "H4441",
+  "model": "malchijah-10",
+  "witness": "malchijah-2",
+  "confidence": "medium",
+  "reason": "Pashur son of Malchiah, same father-son pair identified with this candidate at Jer 38:1."
+ },
+ {
+  "word_id": 6850099,
+  "strong_number": "H2766",
+  "model": "harim-2",
+  "witness": "harim-3",
+  "confidence": "medium",
+  "reason": "Listed among lay 'of Israel' families with foreign wives, same clan as EZR 2:32."
+ },
+ {
+  "word_id": 6666988,
+  "strong_number": "H3088",
+  "model": "jehoram",
+  "witness": "jehoram-2",
+  "confidence": "high",
+  "reason": "\"Ahaziah son of Jehoram king of Judah\" contrasted with Joram son of Ahab in same verse."
+ }
+]
