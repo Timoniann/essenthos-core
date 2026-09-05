@@ -92,6 +92,7 @@ internal sealed class DatasetLoader(
             await CoverThePsalmTitles(resources, stoppingToken);
             await JoinTheVerses(stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
+            await ReadTheStatedKinship(stoppingToken);
             await SayWhichWordNamesWhom(stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
@@ -547,6 +548,20 @@ internal sealed class DatasetLoader(
         status.Record(await world.Load(
             Path.Combine(AppContext.BaseDirectory, "Resources", "WorldHistory"),
             cancellationToken));
+    }
+
+    /// <summary>
+    /// Which peoples the dictionary already says descend from whom. Last of the encyclopedia's
+    /// loads because it reads both halves: the lexicon for the claim and the entities for the page
+    /// each claim points at.
+    /// </summary>
+    private async Task ReadTheStatedKinship(CancellationToken cancellationToken)
+    {
+        status.Starting("the gentilics Strong states");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<StrongGentilicLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>

@@ -127,15 +127,26 @@ internal static class WordEndpoints
                 witnesses.Insert(0, id);
             }
 
-            var strong = word.StrongNumber is null
+            // The gentilic travels with the entry rather than being fetched separately, because
+            // this response is what a reader hovering a word gets: the Ukrainian моавітяни reaches
+            // the Hebrew word behind it, the word carries H4125, and the answer worth showing is
+            // that the people are named after Moab.
+            var stated = word.StrongNumber is null
+                ? null
+                : await StrongEndpoints.Gentilic(db, word.StrongNumber, cancellationToken);
+
+            var entry = word.StrongNumber is null
                 ? null
                 : await db.StrongEntries
-                    .Where(e => e.StrongNumber == word.StrongNumber)
-                    .Select(e => new StrongEntryResponse(
-                        e.StrongNumber, e.Lemma, e.Transliteration, e.Pronunciation, e.Definition,
-                        e.Derivation, e.KjvDefinition, e.Morphology, e.DetailedDefinition, e.SeeAlso,
-                        e.SourceLanguage, e.TwotReference, false))
-                    .FirstOrDefaultAsync(cancellationToken);
+                    .FirstOrDefaultAsync(e => e.StrongNumber == word.StrongNumber, cancellationToken);
+
+            var strong = entry is null
+                ? null
+                : new StrongEntryResponse(
+                    entry.StrongNumber, entry.Lemma, entry.Transliteration, entry.Pronunciation,
+                    entry.Definition, entry.Derivation, entry.KjvDefinition, entry.Morphology,
+                    entry.DetailedDefinition, entry.SeeAlso, entry.SourceLanguage,
+                    entry.TwotReference, false, stated);
 
             var syntax = await Syntax(db, id, cancellationToken);
 

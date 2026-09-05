@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260905200150_TheGentilicsStrongStates")]
+    partial class TheGentilicsStrongStates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1426,119 +1429,6 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("word", (string)null);
                 });
 
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<double?>("Confidence")
-                        .HasColumnType("double precision")
-                        .HasColumnName("confidence");
-
-                    b.Property<int>("EntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("entity_id");
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("method");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text")
-                        .HasColumnName("note");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.Property<long>("WordId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("word_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_word_entity");
-
-                    b.HasIndex("EntityId")
-                        .HasDatabaseName("ix_word_entity_entity_id");
-
-                    b.HasIndex("WordId")
-                        .HasDatabaseName("ix_word_entity_word_id");
-
-                    b.HasIndex("WordId", "EntityId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_word_entity_word_id_entity_id");
-
-                    b.ToTable("word_entity", null, t =>
-                        {
-                            t.HasCheckConstraint("ck_word_entity_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
-
-                            t.HasCheckConstraint("ck_word_entity_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
-
-                            t.HasCheckConstraint("ck_word_entity_source_not_empty", "length(btrim(\"source\")) > 0");
-
-                            t.HasCheckConstraint("ck_word_entity_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
-                        });
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordEntityClaim", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<double?>("Confidence")
-                        .HasColumnType("double precision")
-                        .HasColumnName("confidence");
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("method");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text")
-                        .HasColumnName("note");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.Property<long>("WordEntityId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("word_entity_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_word_entity_claim");
-
-                    b.HasIndex("WordEntityId")
-                        .HasDatabaseName("ix_word_entity_claim_word_entity_id");
-
-                    b.HasIndex("WordEntityId", "Method", "Source")
-                        .IsUnique()
-                        .HasDatabaseName("ix_word_entity_claim_word_entity_id_method_source");
-
-                    b.ToTable("word_entity_claim", null, t =>
-                        {
-                            t.HasCheckConstraint("ck_word_entity_claim_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
-
-                            t.HasCheckConstraint("ck_word_entity_claim_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
-
-                            t.HasCheckConstraint("ck_word_entity_claim_source_not_empty", "length(btrim(\"source\")) > 0");
-
-                            t.HasCheckConstraint("ck_word_entity_claim_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
-                        });
-                });
-
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordGroup", b =>
                 {
                     b.Property<long>("Id")
@@ -2018,39 +1908,6 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Verse");
                 });
 
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordEntity", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
-                        .WithMany()
-                        .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_word_entity_entity_entity_id");
-
-                    b.HasOne("Essenthos.Core.Database.Entities.Word", "Word")
-                        .WithMany()
-                        .HasForeignKey("WordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_word_entity_word_word_id");
-
-                    b.Navigation("Entity");
-
-                    b.Navigation("Word");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordEntityClaim", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.WordEntity", "WordEntity")
-                        .WithMany("Claims")
-                        .HasForeignKey("WordEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_word_entity_claim_word_entity_word_entity_id");
-
-                    b.Navigation("WordEntity");
-                });
-
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordGroup", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.WordGroup", "MotherGroup")
@@ -2171,11 +2028,6 @@ namespace Essenthos.Core.Migrations
             modelBuilder.Entity("Essenthos.Core.Database.Entities.VerseLink", b =>
                 {
                     b.Navigation("Verses");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordEntity", b =>
-                {
-                    b.Navigation("Claims");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordGroup", b =>

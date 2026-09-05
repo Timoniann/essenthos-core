@@ -59,6 +59,12 @@ public class AppDbContext : DbContext
     /// </summary>
     public DbSet<WordStrong> WordStrongs { get; set; } = null!;
 
+    /// <summary>
+    /// Which peoples the dictionary says are named after whom, read out of its own prose. Keyed on
+    /// the lexeme rather than on two entities, because a people is not an entity here.
+    /// </summary>
+    public DbSet<StrongGentilic> StrongGentilics { get; set; } = null!;
+
     /// <summary>What each load measured about the corpus it wrote, one row per load.</summary>
     public DbSet<VerificationRun> VerificationRuns { get; set; } = null!;
 
@@ -102,6 +108,14 @@ public class AppDbContext : DbContext
             entity.HasOne(r => r.To).WithMany().HasForeignKey(r => r.ToEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+
+        // The claim is the dictionary's and the entity is only where it lands, so an entity going
+        // away takes the link with it and leaves the sentence standing.
+        modelBuilder.Entity<StrongGentilic>(entity => entity
+            .HasOne(g => g.Origin)
+            .WithMany()
+            .HasForeignKey(g => g.OriginEntityId)
+            .OnDelete(DeleteBehavior.SetNull));
 
         modelBuilder.Entity<Text>(entity =>
         {
