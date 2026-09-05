@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -59,6 +59,9 @@ internal static class WordEndpoints
                     BookName = w.Verse!.Book!.Name,
                     Chapter = w.Verse!.ChapterNumber,
                     Verse = w.Verse!.Number,
+                    CanonicalBook = w.Verse!.References.First(r => r.IsPrimary).CanonicalBook,
+                    CanonicalChapter = w.Verse!.References.First(r => r.IsPrimary).CanonicalChapter,
+                    CanonicalVerse = w.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -84,6 +87,9 @@ internal static class WordEndpoints
                         other.Word.Gloss,
                         Kind = other.Word.Text!.Kind,
                         Position = other.Word.Verse!.Number * 1000 + other.Word.Position,
+                        CanonicalBook = other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalBook,
+                        CanonicalChapter = other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalChapter,
+                        CanonicalVerse = other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
                     }))
                 .ToListAsync(cancellationToken);
 
@@ -91,7 +97,17 @@ internal static class WordEndpoints
                 .DistinctBy(row => row.WordId)
                 .OrderBy(row => row.Corpus)
                 .ThenBy(row => row.Position)
-                .Select(row => new WordRenderingResponse(row.Corpus, row.Surface, row.Gloss, row.WordId))
+                .Select(row => new WordRenderingResponse(
+                    row.Corpus,
+                    row.Surface,
+                    row.Gloss,
+                    row.WordId,
+                    new VerseRefResponse(
+                        row.CanonicalBook,
+                        BookReferences.Name(row.CanonicalBook),
+                        BookReferences.Slug(row.CanonicalBook),
+                        row.CanonicalChapter,
+                        row.CanonicalVerse)))
                 .ToList();
 
             // The same set the reader highlights on: the witness words this one reaches, plus its
@@ -135,6 +151,12 @@ internal static class WordEndpoints
                     BookReferences.Slug(word.Ordinal)),
                 word.Chapter,
                 word.Verse,
+                new VerseRefResponse(
+                    word.CanonicalBook,
+                    BookReferences.Name(word.CanonicalBook),
+                    BookReferences.Slug(word.CanonicalBook),
+                    word.CanonicalChapter,
+                    word.CanonicalVerse),
                 Morphology(word.Morphology),
                 null,
                 strong,
@@ -212,6 +234,11 @@ internal static class WordEndpoints
 /// The groups this word's own text places it in, innermost first. Empty for every text but BHSA,
 /// which is the only one that carries an analysis.
 /// </param>
+/// <param name="Reference">
+/// Where this word stands in the shared frame. <c>Chapter</c> and <c>Verse</c> are its own text's
+/// numbering and stay that way, because a reader asking about a Hebrew word wants the number the
+/// Hebrew prints. This is the coordinate that can be compared with another text's.
+/// </param>
 internal record WordDetailResponse(
     long Id,
     string Corpus,
@@ -223,10 +250,22 @@ internal record WordDetailResponse(
     BookRefResponse Book,
     int Chapter,
     int Verse,
+    VerseRefResponse Reference,
     MorphologyResponse? Morphology,
     EntityRefResponse? Entity,
     StrongEntryResponse? Strong,
     IList<WordRenderingResponse> Renderings,
     IList<SyntaxGroupResponse> Syntax);
 
-internal record WordRenderingResponse(string Corpus, string Text, string? Gloss, long WordId);
+/// <param name="Reference">
+/// Where this rendering stands in the shared frame, not in its own text's numbering.
+///
+/// It has to be the frame, because the two texts number differently and that is the whole reason
+/// the field exists: the Hebrew calls a psalm's superscription 3:1 and the Synodal calls the verse
+/// holding both the superscription and the psalm's first line 3:1 too, so their own numbers agree
+/// while the words sit a row apart. Compared against <see cref="WordDetailResponse.Reference"/>,
+/// which is the same coordinate, the difference is visible; compared against either text's own
+/// numbering it is not.
+/// </param>
+internal record WordRenderingResponse(
+    string Corpus, string Text, string? Gloss, long WordId, VerseRefResponse Reference);
