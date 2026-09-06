@@ -1,4 +1,4 @@
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Endpoints;
 
 /// <summary>
-/// The people and places the text names, what it calls them, how they stand to one another, and
-/// when the source thinks things happened to them.
+/// The people, places and peoples the text names, what it calls them, how they stand to one
+/// another, and when the source thinks things happened to them.
 ///
 /// A reference here is a canonical verse, not a word. That is what the data states — BibleData
 /// tags verses — and stating it at the verse is honest where claiming a word would not be. The
@@ -218,13 +218,13 @@ internal static class EncyclopediaEndpoints
 
             if (kind is { Length: > 0 })
             {
-                if (kind is not ("person" or "place"))
+                if (kind is not ("person" or "place" or "people"))
                 {
                     return Results.BadRequest(new ProblemResponse(
-                        $"\"{kind}\" is not a kind of entity. Try person or place."));
+                        $"\"{kind}\" is not a kind of entity. Try person, place or people."));
                 }
 
-                var wanted = kind == "place" ? EntityKind.Place : EntityKind.Person;
+                var wanted = EnumSpelling.ToEntityKind(kind);
                 entities = entities.Where(e => e.Kind == wanted);
             }
 
@@ -284,13 +284,20 @@ internal static class EncyclopediaEndpoints
                     e.ModernEquivalent,
                     e.Notes,
                     e.OpenBibleId,
+                    Origin = e.Origin == null
+                        ? null
+                        : new EntityOriginResponse(
+                            e.Origin.Slug,
+                            EnumSpelling.Of(e.Origin.Kind),
+                            e.Origin.Name,
+                            e.Origin.Distinguisher),
                     e.Source,
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (entity is null)
             {
-                return ApiResults.NotFound($"There is no person or place \"{slug}\".");
+                return ApiResults.NotFound($"There is no person, place or people \"{slug}\".");
             }
 
             var tally = await db.Entities
@@ -380,6 +387,7 @@ internal static class EncyclopediaEndpoints
                 entity.ModernEquivalent,
                 entity.Notes,
                 entity.OpenBibleId,
+                entity.Origin,
                 entity.Source,
                 Datasets.Of(entity.Source),
                 tally.References,
@@ -415,7 +423,7 @@ internal static class EncyclopediaEndpoints
                 .FirstOrDefaultAsync(cancellationToken);
             if (entity == 0)
             {
-                return ApiResults.NotFound($"There is no person or place \"{slug}\".");
+                return ApiResults.NotFound($"There is no person, place or people \"{slug}\".");
             }
 
             // Paged by verse, not by naming. The source writes one row per naming, so Manasseh's
@@ -972,6 +980,7 @@ internal record EntityResponse(
     string? ModernEquivalent,
     string? Notes,
     string? OpenBibleId,
+    EntityOriginResponse? Origin,
     string Source,
     string? SourceId,
     int References,
@@ -995,6 +1004,15 @@ internal record EntityClaimResponse(
     string Source,
     string? Dataset,
     string? Note);
+
+/// <summary>
+/// Whom or where a people is named after, as a page a reader can open.
+///
+/// Null on every person and every place, and on the two thirds of peoples whose ancestor the
+/// encyclopedia does not hold — where it is null the record's claim still says whom, in the words
+/// of whoever said it, and only the link is missing.
+/// </summary>
+internal record EntityOriginResponse(string Slug, string Kind, string Name, string? Distinguisher);
 
 /// <param name="Slug">
 /// The alternative's own page, where the encyclopedia holds one. Null where it does not, in which

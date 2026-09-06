@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Database.Entities;
 
 /// <summary>
-/// A person or a place the text names.
+/// A person, a place or a people the text names.
 ///
 /// Deliberately not a word and not a verse: an entity is a thing the world contains, and where it
 /// is named is a separate fact recorded in <see cref="EntityVerse"/>. The old schema hung person
@@ -61,6 +61,26 @@ public class Entity
     /// second gazetteer.
     /// </summary>
     public string? OpenBibleId { get; set; }
+
+    /// <summary>
+    /// Whom or where a people is named after — Moab for the Moabites, Judah for the Judahites.
+    ///
+    /// A column on the record rather than a row in <see cref="EntityRelationship"/>, and the reason
+    /// is provenance rather than convenience. That table has no per-row source, so every edge in it
+    /// is BibleData's and reads as BibleData's; the claim here is Strong's, or ours, and putting it
+    /// there would make one witness's statement wear another's name. What established it is the
+    /// record's own <see cref="Claims"/>, which is where a reader can already see who said so.
+    ///
+    /// <para>
+    /// Null far more often than not, and that is not a defect: Strong states an origin for every
+    /// gentilic he derives and the encyclopedia holds a page for a third of them, so most peoples
+    /// name an ancestor the corpus cannot open. The claim on the record still says whom, in his
+    /// words; only the link is withheld.
+    /// </para>
+    /// </summary>
+    public int? OriginEntityId { get; set; }
+
+    public Entity? Origin { get; set; }
 
     public ICollection<EntityName> Names { get; set; } = [];
 

@@ -93,6 +93,7 @@ internal sealed class DatasetLoader(
             await JoinTheVerses(stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
             await ReadTheStatedKinship(stoppingToken);
+            await NameThePeoples(resources, stoppingToken);
             await SayWhichWordNamesWhom(stoppingToken);
             await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
             await ReadTheNamesNothingSettles(resources, stoppingToken);
@@ -564,6 +565,21 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<StrongGentilicLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The nations, the tribes and the clans, which the encyclopedia had no kind for. After the
+    /// gentilics because it is made out of them — a record per lexeme Strong derives, with the near
+    /// end that table was written without — and before the annotations, because a word carrying a
+    /// gentilic names the people and until now named nobody.
+    /// </summary>
+    private async Task NameThePeoples(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the peoples");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<PeopleLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     /// <summary>

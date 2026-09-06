@@ -61,14 +61,15 @@ public class AppDbContext : DbContext
 
     /// <summary>
     /// Which peoples the dictionary says are named after whom, read out of its own prose. Keyed on
-    /// the lexeme rather than on two entities, because a people is not an entity here.
+    /// the lexeme rather than on two entities, because the claim is about two words; both ends
+    /// reach a page where the encyclopedia holds one.
     /// </summary>
     public DbSet<StrongGentilic> StrongGentilics { get; set; } = null!;
 
     /// <summary>What each load measured about the corpus it wrote, one row per load.</summary>
     public DbSet<VerificationRun> VerificationRuns { get; set; } = null!;
 
-    /// <summary>The people and places the text names, and where it names them.</summary>
+    /// <summary>The people, places and peoples the text names, and where it names them.</summary>
     public DbSet<Entity> Entities { get; set; } = null!;
 
     public DbSet<EntityName> EntityNames { get; set; } = null!;
@@ -87,8 +88,8 @@ public class AppDbContext : DbContext
     public DbSet<EntityAlternative> EntityAlternatives { get; set; } = null!;
 
     /// <summary>
-    /// Which word names which person or place. The encyclopedia says a verse names somebody; this
-    /// says which word of it does, which is what a reader hovering a word is asking.
+    /// Which word names which person, place or people. The encyclopedia says a verse names
+    /// somebody; this says which word of it does, which is what a reader hovering a word is asking.
     /// </summary>
     public DbSet<WordEntity> WordEntities { get; set; } = null!;
 
@@ -108,7 +109,18 @@ public class AppDbContext : DbContext
     {
         NameTablesInTheSingular(modelBuilder);
 
-        modelBuilder.Entity<Entity>().Property(e => e.Kind).HasConversion(EnumStorage.EntityKind);
+        // A people's origin going away must not take the people with it: the Moabites do not stop
+        // existing because the record for the man Moab was merged into another, and the claim on
+        // the record still says in Strong's words whom they are named after.
+        modelBuilder.Entity<Entity>(entity =>
+        {
+            entity.Property(e => e.Kind).HasConversion(EnumStorage.EntityKind);
+
+            entity.HasOne(e => e.Origin)
+                .WithMany()
+                .HasForeignKey(e => e.OriginEntityId)
+                .OnDelete(DeleteBehavior.SetNull);
+        });
 
         modelBuilder.Entity<EntityRelationship>(entity =>
         {
@@ -148,11 +160,18 @@ public class AppDbContext : DbContext
 
         // The claim is the dictionary's and the entity is only where it lands, so an entity going
         // away takes the link with it and leaves the sentence standing.
-        modelBuilder.Entity<StrongGentilic>(entity => entity
-            .HasOne(g => g.Origin)
-            .WithMany()
-            .HasForeignKey(g => g.OriginEntityId)
-            .OnDelete(DeleteBehavior.SetNull));
+        modelBuilder.Entity<StrongGentilic>(entity =>
+        {
+            entity.HasOne(g => g.Origin)
+                .WithMany()
+                .HasForeignKey(g => g.OriginEntityId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(g => g.People)
+                .WithMany()
+                .HasForeignKey(g => g.PeopleEntityId)
+                .OnDelete(DeleteBehavior.SetNull);
+        });
 
         modelBuilder.Entity<Text>(entity =>
         {

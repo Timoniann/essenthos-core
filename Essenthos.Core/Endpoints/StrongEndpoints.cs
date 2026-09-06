@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Strong;
@@ -325,6 +325,7 @@ internal static class StrongEndpoints
     {
         var stated = await db.StrongGentilics
             .Include(g => g.Origin)
+            .Include(g => g.People)
             .FirstOrDefaultAsync(g => g.StrongNumber == canonical, cancellationToken);
 
         if (stated is null)
@@ -346,7 +347,9 @@ internal static class StrongEndpoints
             stated.Source,
             stated.Origin is null ? null : EnumSpelling.Of(stated.Origin.Kind),
             stated.Origin?.Slug,
-            stated.Origin?.Name);
+            stated.Origin?.Name,
+            stated.People?.Slug,
+            stated.People?.Name);
     }
 
     private static StrongEntryResponse Response(
@@ -382,6 +385,11 @@ internal static class StrongEndpoints
 /// are called Zechariah and the derivation does not say which — and it means the claim stands
 /// without a page behind it, never that the claim is weaker.
 /// </param>
+/// <param name="PeopleSlug">
+/// The people this lexeme names, as a page. This is the near end the table was written without,
+/// because until a people was a kind there was nothing for <em>the Moabites</em> to be — and it is
+/// the end a reader hovering <em>моавітяни</em> actually wants.
+/// </param>
 internal record StrongGentilicResponse(
     string Origin,
     string Kind,
@@ -391,7 +399,9 @@ internal record StrongGentilicResponse(
     string Source,
     string? EntityKind,
     string? EntitySlug,
-    string? EntityName);
+    string? EntityName,
+    string? PeopleSlug,
+    string? PeopleName);
 
 /// <param name="Morpheme">
 /// True where the number is not a concordance entry at all but a prefix morpheme ETCBC numbers in

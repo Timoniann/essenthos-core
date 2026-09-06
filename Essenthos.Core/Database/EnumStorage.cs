@@ -29,14 +29,18 @@ internal static class EnumSpelling
 
     public static string Of(EntityKind value) => value switch
     {
+        EntityKind.Person => "person",
         EntityKind.Place => "place",
-        _ => "person",
+        EntityKind.People => "people",
+        _ => throw Unmapped(value),
     };
 
     public static EntityKind ToEntityKind(string stored) => stored switch
     {
+        "person" => EntityKind.Person,
         "place" => EntityKind.Place,
-        _ => EntityKind.Person,
+        "people" => EntityKind.People,
+        _ => throw Unreadable<EntityKind>(stored),
     };
 
     public static string Of(WordGroupKind value) => value switch

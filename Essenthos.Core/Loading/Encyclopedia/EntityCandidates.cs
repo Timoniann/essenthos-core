@@ -105,11 +105,24 @@ internal static class EntityCandidates
     /// Only a label that is a single number is read. A comma-joined value is the numbers of the
     /// words of a title, and the words of a title are not the entity's name: taken as one, H3389
     /// stops being Jerusalem and becomes Adonizedek, who is called king of it.
+    ///
+    /// <para>
+    /// A people is never a candidate here, and leaving it out is what keeps this list from getting
+    /// worse as the encyclopedia grows. Everything downstream asks whether a number names exactly
+    /// one thing, and a word BHSA marks <c>pers</c> or <c>topo</c> can only ever be answered by a
+    /// person or a place — so a people sharing the number could never be the answer and could only
+    /// take the count from one to two. Judah's tribe carries H3063 and the Chaldeans carry H3778,
+    /// and without this the first would make nothing resolvable and the second would quietly drop
+    /// fifteen annotations that are right. Whether a reading pass should be <em>offered</em> a
+    /// people as a candidate is a different question, and one that would need the names asking
+    /// again.
+    /// </para>
     /// </summary>
     private const string Stated =
         """
         SELECT DISTINCT n.hebrew_strong_number AS number, n.entity_id
         FROM entity_name n
+        JOIN entity e ON e.id = n.entity_id AND e.kind <> 'people'
         WHERE n.hebrew_strong_number IS NOT NULL AND position(',' IN n.hebrew_strong_number) = 0
         """;
 

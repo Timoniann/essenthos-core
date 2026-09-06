@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Essenthos.Core.Endpoints;
 
 namespace Essenthos.Core;
@@ -50,6 +50,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(EntityClaimResponse))]
 [JsonSerializable(typeof(IList<EntityClaimResponse>))]
 [JsonSerializable(typeof(List<EntityClaimResponse>))]
+[JsonSerializable(typeof(EntityOriginResponse))]
 [JsonSerializable(typeof(EntityAlternativeResponse))]
 [JsonSerializable(typeof(IList<EntityAlternativeResponse>))]
 [JsonSerializable(typeof(List<EntityAlternativeResponse>))]
