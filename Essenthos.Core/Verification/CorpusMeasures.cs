@@ -76,11 +76,39 @@ internal sealed record Reach(
     /// <summary>What a source claims, which is the strongest thing this corpus can say.</summary>
     public int Stated => ByMethod.GetValueOrDefault("stated-by-source");
 
+    /// <summary>What a publisher printed on the words themselves, which we then matched.</summary>
+    public int Tagged => ByMethod.GetValueOrDefault("strong-number");
+
     /// <summary>
-    /// The share of this pair that rests on testimony. Two pairs with the same
+    /// The share of this pair where a source says these words correspond. Two pairs with the same
     /// <see cref="Share"/> and different values here are not comparable, and this says so.
+    ///
+    /// It is the narrow reading on purpose and it must be read beside <see cref="Attested"/>, never
+    /// alone: everything that is not this word is not therefore a guess. That is what PRB-0399 was
+    /// about — the King James against Nestle scored 0.0000 here on 129,626 links made from Strong
+    /// numbers two publishers printed, which put the corpus's own headline claim in the same column
+    /// as a model that has never seen a Strong number.
     /// </summary>
     public double Testimony => Reached == 0 ? 0 : (double)Stated / Reached;
+
+    /// <summary>
+    /// The share resting on a publisher's own annotation of each side, joined by us.
+    ///
+    /// Between the other two and belonging to neither. A Strong number is a fact somebody printed,
+    /// so this is not inference; but the correspondence is ours — two words carrying H430 in one
+    /// verse are matched by a rule, and where a verse holds the same number twice the rule chooses.
+    /// Folding it into <see cref="Testimony"/> would claim a source said something it never said;
+    /// leaving it with the aligner calls a printed number a guess. Three grades, because there are
+    /// three things.
+    /// </summary>
+    public double Attested => Reached == 0 ? 0 : (double)Tagged / Reached;
+
+    /// <summary>
+    /// What neither a source nor a publisher's annotation supports: our own model, our own lexical
+    /// rules, our own composition. One minus the other two, floored at zero because the per-method
+    /// counts overlap and a word two methods reach is counted by both.
+    /// </summary>
+    public double Inferred => Math.Max(0, 1 - Testimony - Attested);
 
     /// <summary>
     /// One row per method for one pair, plus the pair's own row, folded into one.
