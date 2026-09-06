@@ -170,3 +170,7 @@ Resources/*/*
 # scripts/sense.py against the database, and not this repository's to carry.
 .sense/
 scripts/__pycache__/
+
+# A run of the lexicon harness: prompts, translations, judgements and the score report. Cheap to
+# reproduce from scripts/lexicon.py, and not this repository's to carry.
+.lexicon/
