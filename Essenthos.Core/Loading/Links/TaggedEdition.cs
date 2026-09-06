@@ -28,16 +28,23 @@ internal enum EditionMatch
 }
 
 /// <summary>
-/// Lays the Strong-tagged King James against the loaded one, which are two printings of one
-/// translation and divide the same letters differently.
+/// Lays one digitisation of a text against another, where the two divide the same letters
+/// differently and neither is a different text.
 ///
-/// The tagged edition writes the possessive as a word of its own — <em>child</em> then <em>'s</em>
-/// — where the loaded one writes <em>child's</em>; it writes <em>forever</em>, <em>today</em> and
-/// <em>tomorrow</em> where the loaded one writes <em>for ever</em>, <em>to day</em> and <em>to
-/// morrow</em>. Neither is a different text. Measured over the New Testament, 436 verses differ in
-/// word count for reasons of this kind and no other, and demanding the counts agree threw all 436
-/// away whole — 10,605 English words, a fifth of everything the King James New Testament failed to
-/// reach, including the doxology of the Lord's Prayer.
+/// The Strong-tagged King James is the case it was written for. That edition writes the possessive
+/// as a word of its own — <em>child</em> then <em>'s</em> — where the loaded one writes
+/// <em>child's</em>; it writes <em>forever</em>, <em>today</em> and <em>tomorrow</em> where the
+/// loaded one writes <em>for ever</em>, <em>to day</em> and <em>to morrow</em>. Measured over the
+/// New Testament, 436 verses differ in word count for reasons of this kind and no other, and
+/// demanding the counts agree threw all 436 away whole — 10,605 English words, a fifth of everything
+/// the King James New Testament failed to reach, including the doxology of the Lord's Prayer.
+///
+/// The second case is a third party's tokenisation of a text this corpus holds:
+/// <see cref="ClearBibleLinkLoader"/> places their word ids by what each token is written with
+/// rather than by where it stands, because their tokeniser makes a word of punctuation and the
+/// Westminster morphology divides the Hebrew into 469,476 morphemes where BHSA divides it into
+/// 426,590 words. The question is the same one — <em>which of our words is this word of theirs</em>
+/// — so it is the same answer.
 ///
 /// A span is admitted on evidence, in one of three shapes. Two words spelled the same are one span
 /// and the strongest kind. A run where the two sides write the same letters and divide them

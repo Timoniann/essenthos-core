@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -23,6 +24,10 @@ namespace Essenthos.Core.Loading.Links;
 /// address in the other text. Non-zero on a start after the frame has learned to say that a verse
 /// spans two rows, and zero on every start after it.
 /// </param>
+/// <param name="Stated">
+/// Verse pairs a source states through its own word links, where the frame joins nothing. Zero
+/// wherever the two agree, which is almost everywhere.
+/// </param>
 internal sealed record VerseLinkOutcome(
     bool AlreadyLoaded,
     int Pairs,
@@ -31,16 +36,18 @@ internal sealed record VerseLinkOutcome(
     int Divided,
     int Alone,
     int Covered,
+    int Stated,
     TimeSpan Elapsed)
 {
     public override string ToString() => (AlreadyLoaded, Covered) switch
     {
-        (true, 0) => "the verse links are already loaded",
+        (true, 0) when Stated == 0 => "the verse links are already loaded",
         (true, _) => $"the verse links are already loaded; {Covered} verses joined at an address " +
-                     "another verse covers",
+                     $"another verse covers, {Stated} pairs a source states",
         _ => $"{Links} verse links over {Pairs} text pairs in {Elapsed}: {Straight} one verse against " +
              $"one, {Divided} where the two divide the passage differently, {Alone} verses with no " +
-             $"counterpart at all, {Covered} joined at an address another verse covers",
+             $"counterpart at all, {Covered} joined at an address another verse covers, {Stated} " +
+             "stated by a source through its own word links",
     };
 }
 
@@ -137,6 +144,58 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         ON CONFLICT DO NOTHING
         """;
 
+    /// <summary>
+    /// The verse correspondences a source states through its word links, wherever the frame joins
+    /// nothing.
+    ///
+    /// A person who says <em>this Spanish word renders that Hebrew word</em> has said, in the same
+    /// breath, that the verse holding the one answers the verse holding the other. Usually the frame
+    /// says it too and there is nothing to add. Where it does not, the source is the better witness:
+    /// Clear Bible's Reina-Valera alignment crosses verse boundaries the frame refuses in the ten
+    /// chapters PRB-0376 names, where eBible left the Spanish at its own numbering and mapped the
+    /// German. Without this the corpus holds a hand-made claim and reports it as a fault.
+    ///
+    /// <para>
+    /// **Only <c>stated-by-source</c> links.** A model proposing a link across a verse boundary is
+    /// not testifying to anything, and taking its word here would turn every stray alignment into a
+    /// statement about versification. The source recorded is the one the word links carry, so a
+    /// reader is answered with who said it rather than with the fact that it was derived.
+    /// </para>
+    /// </summary>
+    private const string StatedVerseImport =
+        """
+        CREATE TEMP TABLE stated_verse_pair ON COMMIT DROP AS
+        WITH crossing AS (
+            SELECT l.from_text_id, l.to_text_id, fw.verse_id AS from_verse, tw.verse_id AS to_verse,
+                   min(l.source) AS source
+            FROM link l
+            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
+            JOIN word fw ON fw.id = f.word_id
+            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
+            JOIN word tw ON tw.id = t.word_id
+            WHERE l.method = 'stated-by-source'
+            GROUP BY l.from_text_id, l.to_text_id, fw.verse_id, tw.verse_id
+        )
+        SELECT nextval(pg_get_serial_sequence('verse_link', 'id'))::int AS id, c.*
+        FROM crossing c
+        WHERE NOT EXISTS (
+            SELECT 1 FROM verse_link_verse a
+            JOIN verse_link_verse b ON b.verse_link_id = a.verse_link_id AND b.verse_id = c.to_verse
+            WHERE a.verse_id = c.from_verse);
+
+        INSERT INTO verse_link (id, from_text_id, to_text_id, relation, method, confidence, source, note)
+        SELECT id, from_text_id, to_text_id, 'renders', 'stated-by-source', NULL, source,
+               'the verse this source''s own word links put against that one'
+        FROM stated_verse_pair;
+
+        INSERT INTO verse_link_verse (verse_link_id, verse_id, side)
+        SELECT id, from_verse, 'from' FROM stated_verse_pair
+        UNION ALL
+        SELECT id, to_verse, 'to' FROM stated_verse_pair;
+
+        SELECT count(*) FROM stated_verse_pair;
+        """;
+
     public async Task<VerseLinkOutcome> Load(CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -159,10 +218,12 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         if (todo.Count == 0)
         {
             var only = await Cover(cancellationToken);
+            var alreadyStated = await Stated(cancellationToken);
             logger.LogInformation(
                 "Every linked pair already has its verse links; {Covered} memberships added for the " +
-                "addresses a verse covers", only);
-            return new VerseLinkOutcome(true, 0, 0, 0, 0, 0, only, started.Elapsed);
+                "addresses a verse covers, {Stated} verse pairs a source states through its word links",
+                only, alreadyStated);
+            return new VerseLinkOutcome(true, 0, 0, 0, 0, 0, only, alreadyStated, started.Elapsed);
         }
 
         var addresses = new Dictionary<int, Dictionary<(int, int, int), List<int>>>();
@@ -183,7 +244,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
         var outcome = new VerseLinkOutcome(
             false, todo.Count, written, straight, divided, alone, await Cover(cancellationToken),
-            started.Elapsed);
+            await Stated(cancellationToken), started.Elapsed);
         logger.LogInformation("Verse links: {Outcome}", outcome);
         return outcome;
     }
@@ -220,6 +281,24 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// covering of the same empty address would state a correspondence between two absences.
     /// </para>
     /// </summary>
+    /// <inheritdoc cref="StatedVerseImport"/>
+    public async Task<int> Stated(CancellationToken cancellationToken = default)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        await using var command = new NpgsqlCommand(StatedVerseImport, connection)
+        {
+            CommandTimeout = 600,
+            Transaction = (NpgsqlTransaction)transaction.GetDbTransaction(),
+        };
+
+        var written = (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
+        await transaction.CommitAsync(cancellationToken);
+        return written;
+    }
+
     public async Task<int> Cover(CancellationToken cancellationToken = default)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);

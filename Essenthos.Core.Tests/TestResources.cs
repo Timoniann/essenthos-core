@@ -49,6 +49,9 @@ internal static class TestResources
     public static string EbibleFolder(string folder) =>
         System.IO.Path.Combine(ResolvedPath.Value, folder);
 
+    /// <summary>Clear Bible's alignments, as the fetch script leaves them.</summary>
+    public static string ClearBibleFolder => System.IO.Path.Combine(ResolvedPath.Value, "ClearBible");
+
     /// <summary>Robinson's composite, one file per book.</summary>
     public static string TextusReceptus(string book) => Path("TextusReceptus", "parsed", $"{book}.UTR");
 
