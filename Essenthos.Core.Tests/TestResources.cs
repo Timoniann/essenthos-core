@@ -49,6 +49,9 @@ internal static class TestResources
     public static string EbibleFolder(string folder) =>
         System.IO.Path.Combine(ResolvedPath.Value, folder);
 
+    /// <summary>Clear Bible's alignments, as the fetch script leaves them.</summary>
+    public static string ClearBibleFolder => System.IO.Path.Combine(ResolvedPath.Value, "ClearBible");
+
     /// <summary>Robinson's composite, one file per book.</summary>
     public static string TextusReceptus(string book) => Path("TextusReceptus", "parsed", $"{book}.UTR");
 
@@ -68,6 +71,23 @@ internal static class TestResources
         Path("Byzantine", "unicode", $"{book[3..]}.csv");
 
     public static string ByzantineFolder => System.IO.Path.Combine(ResolvedPath.Value, "Byzantine");
+
+    /// <summary>Tischendorf's eighth edition, one word per line, one file per book.</summary>
+    public static string Tischendorf(string book) =>
+        Path("Tischendorf", "word-per-line", "2.8", "Unicode", $"{book}.txt");
+
+    public static string TischendorfFolder => System.IO.Path.Combine(ResolvedPath.Value, "Tischendorf");
+
+    /// <summary>Robinson's parsed Westcott-Hort, one file per book.</summary>
+    public static string WestcottHort(string book) => Path("WestcottHort", "parsed", $"{book}.UWH");
+
+    /// <summary>
+    /// The repository's own plain transcription of the same text, which is never loaded and is the
+    /// answer key the choice between the text and its margin is checked against.
+    /// </summary>
+    public static string WestcottHortPlain(string book) => Path("WestcottHort", "textonly", $"{book}.WH");
+
+    public static string WestcottHortFolder => System.IO.Path.Combine(ResolvedPath.Value, "WestcottHort");
 
     public static string Etcbc => System.IO.Path.Combine(ResolvedPath.Value, "etcbc");
 

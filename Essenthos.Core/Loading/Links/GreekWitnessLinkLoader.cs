@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Strong;
 using Essenthos.Core.TextusReceptus;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -16,6 +17,12 @@ namespace Essenthos.Core.Loading.Links;
 /// variants, stated, and each says which edition lacks the word.
 /// </param>
 /// <param name="Added">A word the first edition has and the second does not.</param>
+/// <param name="Lemmatised">
+/// Pairings the two editions would have missed because they number the same word differently —
+/// ὑμῶν is G5210 in Tischendorf and G4771 everywhere else. Reported rather than absorbed, because
+/// the number is what the pairing rests on and a reader is entitled to know how often it was not
+/// literally the same number.
+/// </param>
 internal sealed record GreekWitnessOutcome(
     bool AlreadyLoaded,
     int Verses,
@@ -24,6 +31,7 @@ internal sealed record GreekWitnessOutcome(
     int Differing,
     int Missing,
     int Added,
+    int Lemmatised,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
@@ -31,7 +39,8 @@ internal sealed record GreekWitnessOutcome(
             ? "the Greek witnesses are already linked"
             : $"{Links} links over {Verses} verses in {Elapsed}: {Same} the same word, {Differing} a " +
               $"different word in the same place, {Added} the first edition has and the second does not, " +
-              $"{Missing} the second has and the first does not";
+              $"{Missing} the second has and the first does not" +
+              (Lemmatised > 0 ? $", {Lemmatised} paired through the number the lemma carries" : string.Empty);
 }
 
 /// <summary>
@@ -51,6 +60,12 @@ internal sealed record GreekWitnessOutcome(
 /// aligner, no statistics. Where a number stands once on each side the pairing is certain enough
 /// to say so; where it repeats, the repeats are handed out in order, which is right far more often
 /// than not and is recorded at a lower confidence because "far more often than not" is what it is.
+///
+/// The one thing done to a number before it is compared is <see cref="GreekLemmaNumbers"/>, which
+/// is not a heuristic: Strong gave ὑμεῖς an entry beside σύ and most digital editions tag the lemma
+/// where Tischendorf's tags the form. Without it 2,729 words of that edition pair with nothing and
+/// are then written out as textual variants, which is a stated difference between two editions that
+/// do not differ.
 /// The words no number answers are then read as variants where they stand at the same place, and
 /// that one step is positional rather than stated, so it says <c>lexical</c> and says it cheaply.
 /// </summary>
@@ -60,6 +75,16 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
 
     private const string SubstitutionSource =
         "the words left over once the Strong numbers were paired, matched by their place in the verse";
+
+    /// <summary>
+    /// What the pairing rested on where the two editions do not write the same number for the same
+    /// word. Said on the link rather than folded into the ordinary source string, because a reader
+    /// checking a pairing against the two numbers printed would otherwise find them different and
+    /// have nothing to tell them why.
+    /// </summary>
+    private const string LemmatisedSource =
+        "the Strong numbers both editions carry, paired within each verse under the number each " +
+        "concordance gives the lemma";
 
     /// <summary>A number standing once on each side of the verse. There is nothing to choose between.</summary>
     private const double Unique = 0.95;
@@ -100,7 +125,7 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
         if (await db.Links.AnyAsync(l => l.FromTextId == from && l.ToTextId == to, cancellationToken))
         {
             logger.LogInformation("{From} and {To} are already linked; nothing to do", fromSlug, toSlug);
-            return new GreekWitnessOutcome(true, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new GreekWitnessOutcome(true, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -131,6 +156,7 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
             drafts.Count(d => d.Relation == LinkRelation.Renders),
             drafts.Count(d => d.Relation == LinkRelation.Omits),
             drafts.Count(d => d.Relation == LinkRelation.Expands),
+            drafts.Count(d => d.Source == LemmatisedSource),
             started.Elapsed);
 
         logger.LogInformation("Linked {From} to {To}: {Outcome}", fromSlug, toSlug, outcome);
@@ -144,9 +170,9 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
     /// </summary>
     private static void Pair(List<GreekWord> left, List<GreekWord> right, List<GreekDraft> drafts)
     {
-        var mine = left.Where(w => w.Strong is not null).GroupBy(w => w.Strong!)
+        var mine = left.Where(w => w.Strong is not null).GroupBy(w => GreekLemmaNumbers.Of(w.Strong)!)
             .ToDictionary(g => g.Key, g => g.OrderBy(w => w.Position).ToList());
-        var yours = right.Where(w => w.Strong is not null).GroupBy(w => w.Strong!)
+        var yours = right.Where(w => w.Strong is not null).GroupBy(w => GreekLemmaNumbers.Of(w.Strong)!)
             .ToDictionary(g => g.Key, g => g.OrderBy(w => w.Position).ToList());
 
         var hereOnly = new List<Leftover>();
@@ -168,7 +194,8 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
                     [ours[i].Id],
                     [theirs[i].Id],
                     certainty,
-                    LinkMethod.StrongNumber));
+                    LinkMethod.StrongNumber,
+                    ours[i].Strong == theirs[i].Strong ? Source : LemmatisedSource));
             }
 
             hereOnly.AddRange(ours.Skip(shared).Select(word => new Leftover(word, certainty)));
@@ -210,19 +237,22 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
                 [here[i].Word.Id],
                 [there[i].Word.Id],
                 Substituted,
-                LinkMethod.Lexical));
+                LinkMethod.Lexical,
+                SubstitutionSource));
         }
 
         foreach (var leftover in here.Where(l => !substituted.Contains(l.Word.Id)))
         {
             drafts.Add(new GreekDraft(
-                LinkRelation.Expands, [leftover.Word.Id], [], leftover.Certainty, LinkMethod.StrongNumber));
+                LinkRelation.Expands, [leftover.Word.Id], [], leftover.Certainty, LinkMethod.StrongNumber,
+                Source));
         }
 
         foreach (var leftover in there.Where(l => !substituted.Contains(l.Word.Id)))
         {
             drafts.Add(new GreekDraft(
-                LinkRelation.Omits, [], [leftover.Word.Id], leftover.Certainty, LinkMethod.StrongNumber));
+                LinkRelation.Omits, [], [leftover.Word.Id], leftover.Certainty, LinkMethod.StrongNumber,
+                Source));
         }
     }
 
@@ -284,10 +314,7 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
                 await writer.WriteAsync(
                     EnumSpelling.Of(drafts[i].Method), NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(drafts[i].Confidence, NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(
-                    drafts[i].Method == LinkMethod.Lexical ? SubstitutionSource : Source,
-                    NpgsqlDbType.Text,
-                    cancellationToken);
+                await writer.WriteAsync(drafts[i].Source, NpgsqlDbType.Text, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
@@ -361,5 +388,6 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
         List<long> From,
         List<long> To,
         double Confidence,
-        LinkMethod Method);
+        LinkMethod Method,
+        string Source);
 }

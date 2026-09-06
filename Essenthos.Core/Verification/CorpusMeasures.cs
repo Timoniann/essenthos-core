@@ -76,11 +76,39 @@ internal sealed record Reach(
     /// <summary>What a source claims, which is the strongest thing this corpus can say.</summary>
     public int Stated => ByMethod.GetValueOrDefault("stated-by-source");
 
+    /// <summary>What a publisher printed on the words themselves, which we then matched.</summary>
+    public int Tagged => ByMethod.GetValueOrDefault("strong-number");
+
     /// <summary>
-    /// The share of this pair that rests on testimony. Two pairs with the same
+    /// The share of this pair where a source says these words correspond. Two pairs with the same
     /// <see cref="Share"/> and different values here are not comparable, and this says so.
+    ///
+    /// It is the narrow reading on purpose and it must be read beside <see cref="Attested"/>, never
+    /// alone: everything that is not this word is not therefore a guess. That is what PRB-0399 was
+    /// about — the King James against Nestle scored 0.0000 here on 129,626 links made from Strong
+    /// numbers two publishers printed, which put the corpus's own headline claim in the same column
+    /// as a model that has never seen a Strong number.
     /// </summary>
     public double Testimony => Reached == 0 ? 0 : (double)Stated / Reached;
+
+    /// <summary>
+    /// The share resting on a publisher's own annotation of each side, joined by us.
+    ///
+    /// Between the other two and belonging to neither. A Strong number is a fact somebody printed,
+    /// so this is not inference; but the correspondence is ours — two words carrying H430 in one
+    /// verse are matched by a rule, and where a verse holds the same number twice the rule chooses.
+    /// Folding it into <see cref="Testimony"/> would claim a source said something it never said;
+    /// leaving it with the aligner calls a printed number a guess. Three grades, because there are
+    /// three things.
+    /// </summary>
+    public double Attested => Reached == 0 ? 0 : (double)Tagged / Reached;
+
+    /// <summary>
+    /// What neither a source nor a publisher's annotation supports: our own model, our own lexical
+    /// rules, our own composition. One minus the other two, floored at zero because the per-method
+    /// counts overlap and a word two methods reach is counted by both.
+    /// </summary>
+    public double Inferred => Math.Max(0, 1 - Testimony - Attested);
 
     /// <summary>
     /// One row per method for one pair, plus the pair's own row, folded into one.
@@ -233,6 +261,35 @@ internal sealed record Pairing(
 /// <param name="Links">How many links have exactly that many.</param>
 internal sealed record Agreement(int Claims, int Links);
 
+/// <param name="Text">The edition that was voted, which is Nestle 1904.</param>
+/// <param name="First">One of the editions it was voted from.</param>
+/// <param name="Second">The other.</param>
+/// <param name="Words">Words of <paramref name="Text"/> in the New Testament.</param>
+/// <param name="Both">Words both voters write the same way, which is most of them.</param>
+/// <param name="FirstOnly">
+/// Words <paramref name="First"/> writes as Nestle does and <paramref name="Second"/> does not, so
+/// Nestle followed the first against the second. Reading them beside <paramref name="SecondOnly"/>
+/// is the decomposition: it says which two editions outvoted which one.
+/// </param>
+/// <param name="SecondOnly">The same the other way round.</param>
+/// <param name="Neither">
+/// Words neither voter writes as Nestle does — which is where the third voter decided.
+///
+/// This is the interesting number and the one the corpus cannot explain. Nestle's rule was a
+/// majority of Tischendorf's eighth edition, Westcott and Hort, and Weiss; where the first two
+/// both disagree with what he printed, Weiss is why, and no free machine-readable Weiss was found.
+/// A reader shown a complete apparatus here would be shown one that is two thirds of a vote.
+/// </param>
+internal sealed record Vote(
+    string Text,
+    string First,
+    string Second,
+    int Words,
+    int Both,
+    int FirstOnly,
+    int SecondOnly,
+    int Neither);
+
 internal sealed record IntegrityCheck(string Breaks, int Found);
 
 /// <summary>
@@ -247,6 +304,7 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<Absence> Absence,
     IReadOnlyList<Pairing> Pairing,
     IReadOnlyList<Agreement> Agreement,
+    IReadOnlyList<Vote> Vote,
     IReadOnlyList<IntegrityCheck> Integrity)
 {
     /// <summary>
