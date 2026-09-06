@@ -99,10 +99,20 @@
     "files": 12,
     "sha256": "9f85cf44eac3240ab4546adc3d579f3056a44bafe7a2dd27e48aff9f495b8071"
   },
+  "Tischendorf": {
+    "bytes": 9935139,
+    "files": 31,
+    "sha256": "5399d995478f1d3c6d1a599cda2a5ba7fcf09a2c668470b31777dd965cfdefc6"
+  },
   "Versification": {
     "bytes": 5790928,
     "files": 1,
     "sha256": "24704247b91c44728f58c4fdeba9072308ee5b714b4bbfea568ce8bb7fe55ca9"
+  },
+  "WestcottHort": {
+    "bytes": 3883476,
+    "files": 56,
+    "sha256": "ae94531aee7e51caf29f18da6b0cd4b0b33238a654bda142c24af0c3a79b82aa"
   },
   "Zefania": {
     "bytes": 17291524,

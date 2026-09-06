@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Loading;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -349,6 +350,59 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         """;
 
     /// <summary>
+    /// How Nestle 1904 was voted, which is the one thing this corpus can say that no apparatus in
+    /// it can.
+    ///
+    /// Nestle collated nothing. He took Tischendorf's eighth edition, Westcott and Hort, and Weiss,
+    /// and printed whichever reading two of the three agreed on — so his text is a function of its
+    /// ingredients, and the corpus now holds two of the three. For every word of Nestle this asks
+    /// which of the two voters writes the same word there, and the four answers decompose his text:
+    /// both, Tischendorf alone, Westcott and Hort alone, and neither.
+    ///
+    /// The fourth is the interesting one. Neither voter agreeing means Weiss cast the deciding vote,
+    /// and no free machine-readable Weiss was found — so the corpus can show two thirds of the vote
+    /// and should say so rather than presenting a complete apparatus that is not one.
+    ///
+    /// <c>equals</c> and not <c>renders</c>. The link loader writes <c>equals</c> where the two
+    /// editions print the same word once accents are set aside and <c>renders</c> where a Strong
+    /// number paired two different words, and only the first is agreement. That distinction is what
+    /// makes this a measurement of the text rather than of the tagging.
+    /// </summary>
+    private static readonly string VoteSql =
+        $"""
+        WITH voted AS (
+            SELECT w.id
+            FROM word w
+            JOIN text t ON t.id = w.text_id AND t.slug = @text
+            JOIN verse v ON v.id = w.verse_id
+            JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+            WHERE r.canonical_book BETWEEN {LastOldTestamentBook + 1} AND {LastNewTestamentBook}
+        ),
+        agreed AS (
+            SELECT DISTINCT lw.word_id, f.slug AS voter
+            FROM link_word lw
+            JOIN link l ON l.id = lw.link_id AND l.relation = 'equals'
+            JOIN text f ON f.id = l.from_text_id AND f.slug = ANY(@voters)
+            JOIN text n ON n.id = l.to_text_id AND n.slug = @text
+            WHERE lw.side = 'to'
+        ),
+        counted AS (
+            SELECT voted.id,
+                   bool_or(a.voter = @first) AS by_first,
+                   bool_or(a.voter = @second) AS by_second
+            FROM voted
+            LEFT JOIN agreed a ON a.word_id = voted.id
+            GROUP BY voted.id
+        )
+        SELECT count(*),
+               count(*) FILTER (WHERE by_first AND by_second),
+               count(*) FILTER (WHERE by_first AND by_second IS NOT TRUE),
+               count(*) FILTER (WHERE by_second AND by_first IS NOT TRUE),
+               count(*) FILTER (WHERE by_first IS NOT TRUE AND by_second IS NOT TRUE)
+        FROM counted
+        """;
+
+    /// <summary>
     /// Each of these should return nothing. They are the shapes the schema cannot forbid but that
     /// no correct load produces, so a count above zero is a defect and not a measurement.
     /// </summary>
@@ -578,6 +632,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var agreement = await Read(connection, AgreementSql, cancellationToken, reader =>
             new Agreement((int)reader.GetInt64(0), (int)reader.GetInt64(1)));
 
+        var vote = await TheVote(connection, cancellationToken);
+
         // Single-threaded, deliberately. These sweep every link in the corpus, and Postgres
         // parallelises them across workers that share their sort state through /dev/shm — which a
         // container gives 64 MB of by default. The duplicate-link check exhausted it and the whole
@@ -605,7 +661,53 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         }
 
         return new CorpusMeasures(
-            coverage, reach, contention, crowding, absence, pairing, agreement, integrity);
+            coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity);
+    }
+
+    /// <summary>The edition Nestle voted, and the two of his three voters the corpus holds.</summary>
+    private const string Voted = NestleTextSource.Slug;
+
+    private const string FirstVoter = TischendorfTextSource.Slug;
+
+    private const string SecondVoter = WestcottHortTextSource.Slug;
+
+    /// <summary>
+    /// Empty until both voters are loaded, which is silence rather than a claim that Nestle agrees
+    /// with nobody. A corpus without them would otherwise report every word of his as decided by an
+    /// edition it does not hold.
+    /// </summary>
+    private async Task<IReadOnlyList<Vote>> TheVote(
+        NpgsqlConnection connection,
+        CancellationToken cancellationToken)
+    {
+        var loaded = await db.Texts
+            .Where(t => t.Slug == Voted || t.Slug == FirstVoter || t.Slug == SecondVoter)
+            .CountAsync(cancellationToken);
+
+        if (loaded < 3)
+        {
+            return [];
+        }
+
+        await using var command = new NpgsqlCommand(VoteSql, connection) { CommandTimeout = 900 };
+        command.Parameters.AddWithValue("text", Voted);
+        command.Parameters.AddWithValue("first", FirstVoter);
+        command.Parameters.AddWithValue("second", SecondVoter);
+        command.Parameters.AddWithValue("voters", new[] { FirstVoter, SecondVoter });
+
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        if (!await reader.ReadAsync(cancellationToken))
+        {
+            return [];
+        }
+
+        return
+        [
+            new Vote(
+                Voted, FirstVoter, SecondVoter,
+                (int)reader.GetInt64(0), (int)reader.GetInt64(1), (int)reader.GetInt64(2),
+                (int)reader.GetInt64(3), (int)reader.GetInt64(4)),
+        ];
     }
 
     /// <summary>

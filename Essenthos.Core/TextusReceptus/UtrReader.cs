@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace Essenthos.Core.TextusReceptus;
 
@@ -10,6 +10,20 @@ public enum Edition
 
     /// <summary>The second alternative of every variant group.</summary>
     Scrivener1894,
+}
+
+/// <summary>
+/// Which side of every variant group to take, where a Robinson parse offers two.
+///
+/// The Textus Receptus files answer this with <see cref="Edition"/> because the two sides there are
+/// two printed editions. Robinson's Westcott-Hort file uses the same three-pipe notation for
+/// something else — the text against the reading Westcott and Hort put in their margin — so the
+/// side has to be sayable without naming an edition that does not exist.
+/// </summary>
+internal enum Reading
+{
+    First,
+    Second,
 }
 
 /// <param name="Strong">
@@ -79,13 +93,20 @@ internal sealed record UtrVerse(int Chapter, int Number, IReadOnlyList<UtrWord> 
 ///
 /// Expecting tags inside every alternative drops both spellings of all 181, which is how Nazareth
 /// disappears from Matthew 2:23.
+///
+/// Robinson writes his Westcott-Hort in the same notation, and it is read here rather than by a
+/// second parser: the shapes are the same and only what the two sides mean has changed, from two
+/// printed editions to a text and its margin. That file exercises the notation far harder — 1,653
+/// groups against 261 — which is why <see cref="Reading"/> exists rather than a third
+/// <see cref="Edition"/> value.
 /// </summary>
 internal static partial class UtrReader
 {
     /// <summary>
     /// A group is three pipes: the one that opens it, the one between its two alternatives, and the
-    /// one that closes it. Every group in all 27 books has exactly two alternatives — 783 pipes
-    /// over 261 groups — so a group with any other count is a file this reader has not seen.
+    /// one that closes it. Every group in every file read here has exactly two alternatives — 783
+    /// pipes over 261 groups in the Textus Receptus, 4,959 over 1,653 in the Westcott-Hort — so a
+    /// group with any other count is a file this reader has not seen.
     /// </summary>
     private const int PipesPerGroup = 3;
 
@@ -95,13 +116,16 @@ internal static partial class UtrReader
     /// </summary>
     private const string Unnumbered = "0";
 
-    public static IReadOnlyList<UtrVerse> Read(string content, Edition edition)
+    public static IReadOnlyList<UtrVerse> Read(string content, Edition edition) =>
+        Read(content, edition == Edition.Stephanus1550 ? Reading.First : Reading.Second);
+
+    public static IReadOnlyList<UtrVerse> Read(string content, Reading reading)
     {
         var verses = new List<UtrVerse>(1_200);
 
         foreach (var (chapter, number, body) in Verses(content))
         {
-            verses.Add(new UtrVerse(chapter, number, Words(body, edition, chapter, number)));
+            verses.Add(new UtrVerse(chapter, number, Words(body, reading, chapter, number)));
         }
 
         return verses;
@@ -142,7 +166,7 @@ internal static partial class UtrReader
         }
     }
 
-    private static List<UtrWord> Words(string body, Edition edition, int chapter, int verse)
+    private static List<UtrWord> Words(string body, Reading reading, int chapter, int verse)
     {
         var tokens = body.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
         var words = new List<UtrWord>(32);
@@ -168,7 +192,7 @@ internal static partial class UtrReader
                 continue;
             }
 
-            words.AddRange(Variant(tokens, ref at, edition, chapter, verse, words)
+            words.AddRange(Variant(tokens, ref at, reading, chapter, verse, words)
                 .Select(word => word with { Segment = segment }));
         }
 
@@ -185,7 +209,7 @@ internal static partial class UtrReader
     /// rather than a word of its own and has to reach back — see the tags-only branch below.
     /// </param>
     private static List<UtrWord> Variant(
-        string[] tokens, ref int at, Edition edition, int chapter, int verse, List<UtrWord> words)
+        string[] tokens, ref int at, Reading reading, int chapter, int verse, List<UtrWord> words)
     {
         // The opening pipe starts the first alternative, so the list begins empty rather than with
         // one already in it — otherwise the tokens before the group, of which there are none, are
@@ -224,7 +248,7 @@ internal static partial class UtrReader
                 "that nobody printed.");
         }
 
-        var chosen = alternatives[edition == Edition.Stephanus1550 ? 0 : 1];
+        var chosen = alternatives[reading == Reading.First ? 0 : 1];
 
         // 52 groups offer a word against nothing — this is where the two editions genuinely differ
         // rather than spelling one word two ways, and it is the whole reason a second Greek witness

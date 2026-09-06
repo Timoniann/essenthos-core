@@ -49,6 +49,14 @@ internal sealed class DatasetLoader(
                     Path.Combine(resources, "TextusReceptus"), edition), stoppingToken);
             }
 
+            // The two editions Nestle 1904 was voted out of. They add almost no reading the corpus
+            // could not already see; what they add is the reason Nestle reads as it does, because
+            // at every place the three differ his text is whichever two of them agreed.
+            await Load("Tischendorf's eighth edition", () => TischendorfTextSource.Read(
+                Path.Combine(resources, TischendorfFolder)), stoppingToken);
+            await Load("Westcott and Hort", () => WestcottHortTextSource.Read(
+                Path.Combine(resources, WestcottHortFolder)), stoppingToken);
+
             // The one Greek witness that is neither critical nor Erasmian. It is loaded from the
             // same shape of file as the two above and carries a Strong number on every word, so it
             // needs no reader of its own beyond an alphabet and no aligner at all.
@@ -158,6 +166,10 @@ internal sealed class DatasetLoader(
     private static readonly Edition[] Editions = [Edition.Scrivener1894, Edition.Stephanus1550];
 
     private const string StepBibleFolder = "STEPBible";
+
+    private const string TischendorfFolder = "Tischendorf";
+
+    private const string WestcottHortFolder = "WestcottHort";
 
     /// <summary>
     /// STEPBible splits the Old Testament across four files because one would be too large for
@@ -341,8 +353,8 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// Nestle and the Byzantine Textform against the Textus Receptus, by the Strong numbers all
-    /// three state.
+    /// Every other Greek edition against the Textus Receptus, by the Strong numbers all of them
+    /// state, and then Nestle's own two ingredients against Nestle.
     ///
     /// Scrivener is the hub, because Stephanus already meets it word for word: a word carries the
     /// witness ids it reaches, so linking to Scrivener puts Scrivener's ids on both sides and joins
@@ -354,12 +366,30 @@ internal sealed class DatasetLoader(
     {
         status.Starting("the Greek witnesses to each other");
 
-        foreach (var witness in new[] { NestleTextSource.Slug, ByzantineTextSource.Slug })
+        var witnesses = new[]
+        {
+            NestleTextSource.Slug,
+            ByzantineTextSource.Slug,
+            TischendorfTextSource.Slug,
+            WestcottHortTextSource.Slug,
+        };
+
+        foreach (var witness in witnesses)
         {
             using var scope = services.CreateScope();
             var loader = scope.ServiceProvider.GetRequiredService<GreekWitnessLinkLoader>();
             status.Record(await loader.Load(
                 witness, TextusReceptusTextSource.Slug(Edition.Scrivener1894), cancellationToken));
+        }
+
+        // And each of Nestle's two ingredients directly against Nestle, which is the pair the
+        // decomposition is read off. Through Scrivener it could only be read as two hops with the
+        // Received Text in the middle, and the Received Text disagrees with all three of them.
+        foreach (var ingredient in new[] { TischendorfTextSource.Slug, WestcottHortTextSource.Slug })
+        {
+            using var scope = services.CreateScope();
+            var loader = scope.ServiceProvider.GetRequiredService<GreekWitnessLinkLoader>();
+            status.Record(await loader.Load(ingredient, NestleTextSource.Slug, cancellationToken));
         }
     }
 
