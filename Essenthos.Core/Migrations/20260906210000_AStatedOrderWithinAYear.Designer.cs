@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260906210000_AStatedOrderWithinAYear")]
+    partial class AStatedOrderWithinAYear
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1223,84 +1226,6 @@ namespace Essenthos.Core.Migrations
                         .HasDatabaseName("ix_strong_entry_strong_number");
 
                     b.ToTable("strong_entry", (string)null);
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongEntryTranslation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<double?>("Confidence")
-                        .HasColumnType("double precision")
-                        .HasColumnName("confidence");
-
-                    b.Property<string>("Definition")
-                        .HasColumnType("text")
-                        .HasColumnName("definition");
-
-                    b.Property<string>("Derivation")
-                        .HasColumnType("text")
-                        .HasColumnName("derivation");
-
-                    b.Property<string>("DetailedDefinition")
-                        .HasColumnType("text")
-                        .HasColumnName("detailed_definition");
-
-                    b.Property<string>("KjvDefinition")
-                        .HasColumnType("text")
-                        .HasColumnName("kjv_definition");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("language");
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("method");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text")
-                        .HasColumnName("note");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.Property<string>("StrongNumber")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("strong_number");
-
-                    b.HasKey("Id")
-                        .HasName("pk_strong_entry_translation");
-
-                    b.HasIndex("Language")
-                        .HasDatabaseName("ix_strong_entry_translation_language");
-
-                    b.HasIndex("StrongNumber")
-                        .HasDatabaseName("ix_strong_entry_translation_strong_number");
-
-                    b.HasIndex("StrongNumber", "Language")
-                        .IsUnique()
-                        .HasDatabaseName("ix_strong_entry_translation_strong_number_language");
-
-                    b.ToTable("strong_entry_translation", null, t =>
-                        {
-                            t.HasComment("Strong's four prose fields in one other language, next to the English and never over it. Only these four are language; the lemma, the transliteration, the morphology code and the see-also numbers are identifiers and are not here, because a translated identifier breaks a lookup silently. A row is a machine's reading of Strong rather than Strong in another language, and source says which machine, under which prompt, on which day. It carries no confidence where every other inference in this corpus must: there is no candidate set to be sure between, and what a reader checks it against is the English on strong_entry, not a number nobody measured.");
-
-                            t.HasCheckConstraint("ck_strong_entry_translation_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
-
-                            t.HasCheckConstraint("ck_strong_entry_translation_says_something", "\"definition\" IS NOT NULL OR \"derivation\" IS NOT NULL OR \"kjv_definition\" IS NOT NULL OR \"detailed_definition\" IS NOT NULL");
-
-                            t.HasCheckConstraint("ck_strong_entry_translation_source_not_empty", "length(btrim(\"source\")) > 0");
-                        });
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongGentilic", b =>

@@ -204,14 +204,36 @@ internal static class EncyclopediaEndpoints
                     .ToList());
     }
 
+
     /// <summary>
-    /// Which language a description was asked for in. <c>language</c> is the spelling this API
-    /// already uses, on <c>/v1/strong</c>; <c>lang</c> is accepted beside it because the client
-    /// shipped that one, and a query parameter nobody reads fails by rendering the wrong language
-    /// rather than by saying anything.
+    /// How the index is ordered. Alphabetical is the default and the only order that answers
+    /// <em>where is the name I am looking for</em>; the two counts answer <em>who does this corpus
+    /// have most to say about</em>, and they are different numbers — 28,226 verses under 30,105
+    /// namings — so a client that offers a sort has to name which of them it used.
+    ///
+    /// It is a query parameter rather than something the client does to a page because the page is
+    /// a hundred of four and a half thousand rows: sorting what arrived would order the first
+    /// hundred alphabetical names by verse count and present that as the corpus's own ranking.
+    ///
+    /// Both counts descend, because the question they answer only has a useful end at the top, and
+    /// both break ties on the name so that a page boundary falls in the same place twice.
     /// </summary>
-    internal static string? Language(string? language, string? lang) =>
-        string.IsNullOrWhiteSpace(language) ? lang : language;
+    private static IQueryable<Entity> Ordered(IQueryable<Entity> entities, string? sort) => sort switch
+    {
+        "verses" => entities
+            .OrderByDescending(e => e.Verses
+                .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                             + v.CanonicalVerse)
+                .Distinct().Count())
+            .ThenBy(e => e.Name).ThenBy(e => e.Slug),
+        "mentions" => entities
+            .OrderByDescending(e => e.Verses.Count)
+            .ThenBy(e => e.Name).ThenBy(e => e.Slug),
+        _ => entities.OrderBy(e => e.Name).ThenBy(e => e.Slug),
+    };
+
+    /// <summary>The orders <c>sort</c> accepts. Anything else is refused rather than ignored.</summary>
+    private static readonly string[] Sorts = ["name", "verses", "mentions"];
 
     public static void MapEncyclopedia(this IEndpointRouteBuilder routes)
     {
@@ -219,12 +241,18 @@ internal static class EncyclopediaEndpoints
             [FromQuery] string? q,
             [FromQuery] string? kind,
             [FromQuery] string? language,
-            [FromQuery] string? lang,
+            [FromQuery] string? sort,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
+            if (sort is { Length: > 0 } && !Sorts.Contains(sort))
+            {
+                return Results.BadRequest(new ProblemResponse(
+                    $"\"{sort}\" is not an order for this index. Try {string.Join(", ", Sorts)}."));
+            }
+
             var entities = db.Entities.AsQueryable();
 
             if (kind is { Length: > 0 })
@@ -252,15 +280,14 @@ internal static class EncyclopediaEndpoints
             }
 
             var total = await entities.CountAsync(cancellationToken);
-            var page = await entities
-                .OrderBy(e => e.Name).ThenBy(e => e.Slug)
+            var page = await Ordered(entities, sort)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 40, 1, MostPerPage))
                 .Select(Summary)
                 .ToListAsync(cancellationToken);
 
             var described = await Descriptors.Of(
-                db, page.Select(e => e.Slug), Language(language, lang), cancellationToken);
+                db, page.Select(e => e.Slug), language, cancellationToken);
 
             return Results.Ok(new EntityListResponse(
                 total,
@@ -288,7 +315,6 @@ internal static class EncyclopediaEndpoints
         routes.MapGet("/entities/{slug}", async (
             string slug,
             [FromQuery] string? language,
-            [FromQuery] string? lang,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
@@ -353,9 +379,7 @@ internal static class EncyclopediaEndpoints
                     Reference(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), r.Notes))
                 .ToListAsync(cancellationToken);
 
-            var events = await db.Events
-                .Where(e => e.EntityId == entity.Id)
-                .OrderBy(e => e.YearFromCreation)
+            var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
                 .ToListAsync(cancellationToken);
 
@@ -435,7 +459,7 @@ internal static class EncyclopediaEndpoints
                 alternatives.Count > 0)
             {
                 Descriptor = await Descriptors.Of(
-                    db, entity.Slug, Language(language, lang), cancellationToken),
+                    db, entity.Slug, language, cancellationToken),
             });
         });
 
@@ -534,8 +558,7 @@ internal static class EncyclopediaEndpoints
             }
 
             var total = await events.CountAsync(cancellationToken);
-            var page = await events
-                .OrderBy(e => e.YearFromCreation).ThenBy(e => e.Slug)
+            var page = await InOrder(events)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
                 .Select(Rows)
@@ -631,8 +654,7 @@ internal static class EncyclopediaEndpoints
                 .OrderBy(c => c.Position)
                 .ToListAsync(cancellationToken);
 
-            var events = await db.Events
-                .OrderBy(e => e.YearFromCreation).ThenBy(e => e.Slug)
+            var events = await InOrder(db.Events)
                 .Select(e => new
                 {
                     e.Id,
@@ -642,6 +664,7 @@ internal static class EncyclopediaEndpoints
                     e.Realm,
                     e.Region,
                     e.Uri,
+                    e.SequenceInYear,
                     EntitySlug = e.Entity == null ? null : e.Entity.Slug,
                 })
                 .ToListAsync(cancellationToken);
@@ -700,6 +723,7 @@ internal static class EncyclopediaEndpoints
                         e.Region,
                         e.Uri,
                         e.EntitySlug,
+                        e.SequenceInYear != null,
                         years.GetValueOrDefault(e.Id) ?? [])),
                 ],
                 [
@@ -820,6 +844,35 @@ internal static class EncyclopediaEndpoints
     private const int LastYearBeforeChrist = 3961;
 
     /// <summary>
+    /// Events in the order a timeline draws them: by the year, then by whatever order a source
+    /// stated inside that year, then by the slug so that what nobody ordered is at least stable.
+    ///
+    /// <para>
+    /// The year alone does not order them. Ussher dates dozens of paragraphs to AD 33, and writes
+    /// <em>the next day</em> and <em>on the third day</em> across them, so the year is a tie and his
+    /// paragraphs are the tiebreak he himself stated. The tiebreak before this was the slug, which
+    /// is a name and not a position: it sorts <c>ussher-{paragraph}</c> as text, so it agrees with
+    /// him only while every loaded paragraph number has the same number of digits, and it says
+    /// nothing at all about the order of two rows from different sources in one year.
+    /// </para>
+    ///
+    /// <para>
+    /// **Nothing invents a position for a row that has none.** The null check is written out rather
+    /// than left to the database's own idea of where nulls sort, because it is the whole claim this
+    /// ordering makes: what a source ordered comes in that order, and what nobody ordered follows
+    /// it. <see cref="EventResponse.Sequenced"/> says which of the two a row is, so a client is
+    /// never left reading an arbitrary order as a chronology.
+    /// </para>
+    /// </summary>
+    internal static IOrderedQueryable<Database.Entities.Event> InOrder(
+        IQueryable<Database.Entities.Event> events) =>
+        events
+            .OrderBy(e => e.YearFromCreation)
+            .ThenBy(e => e.SequenceInYear == null)
+            .ThenBy(e => e.SequenceInYear)
+            .ThenBy(e => e.Slug);
+
+    /// <summary>
     /// An event with the people and the dates it needs, projected in the query.
     ///
     /// One expression, used by both places that return events, because reading a navigation
@@ -898,6 +951,7 @@ internal static class EncyclopediaEndpoints
             Datasets.Of(e.Source),
             dates)
         {
+            Sequenced = e.SequenceInYear is not null,
             // Only where no reckoning states this event at all does the base zero point stand in;
             // it is the same number the default chronology holds.
             Era = reckoning?.Era
@@ -1196,6 +1250,18 @@ internal record EventResponse(
     IList<EventDateResponse> Dates)
 {
     /// <summary>
+    /// Whether a source states where this falls inside its year, or whether the year is the whole
+    /// of what anybody said.
+    ///
+    /// False for most of the corpus, and that is the honest answer rather than a missing one: a
+    /// year holds ninety-five events and only some of them were ever put in an order.
+    /// Where this is true the position in a list of events is a claim; where it is false the
+    /// position is only stable, and a reader should be told so rather than left to infer a
+    /// chronology from it.
+    /// </summary>
+    public bool Sequenced { get; init; }
+
+    /// <summary>
     /// <c>BCE</c> or <c>CE</c>, saying which side of the turn <see cref="BceYear"/> falls on: the
     /// year from creation carries no sign and keeps counting past the turn, so a bare <c>8</c>
     /// could mean either side of it. The same two words as <see cref="EventDateResponse.Era"/>,
@@ -1283,6 +1349,16 @@ internal record ChronologyResponse(
     int LastAnnoMundiBeforeTheCommonEra,
     bool IsDefault);
 
+/// <param name="Sequenced">
+/// Whether this event's place among the others of its year is something a source stated, or only
+/// where the list happened to put it.
+///
+/// The items arrive in the order they are to be drawn, and for most of them that order inside a
+/// year is arbitrary — the year is all anybody said. Ussher dates ninety-five paragraphs to AD 33
+/// and narrates them in order, so those are a sequence and the crucifixion precedes the
+/// resurrection because he says so. Without this a client cannot tell one from the other, and would
+/// have to read an arbitrary order as a chronology.
+/// </param>
 /// <param name="Years">
 /// The year each chronology gives this event, keyed by chronology slug. A chronology that says
 /// nothing about it is absent rather than null — silence and zero are different facts.
@@ -1295,6 +1371,7 @@ internal record TimelineEventResponse(
     string? Region,
     string? Uri,
     string? EntitySlug,
+    bool Sequenced,
     IDictionary<string, int> Years);
 
 /// <param name="Level">

@@ -54,6 +54,15 @@ public sealed class DescriptorTests : IDisposable
         Add("bethlehem-1", EntityKind.Place, "Bethlehem", null, (1, 35, 19));
         Add("judah-1", EntityKind.Place, "Judah", null, (1, 35, 19));
 
+        // The place clauses, which are the ones the locative is needed for. Nod is the one no pass
+        // produced a locative for, so it is what the fallback is proved on.
+        Add("abraham-1", EntityKind.Person, "Abraham", null, (1, 13, 18), (1, 25, 9));
+        Add("hebron-1", EntityKind.Place, "Hebron", null, (1, 13, 18), (1, 25, 9));
+        Add("nebo-1", EntityKind.Place, "Nebo", null, (5, 34, 1));
+        Add("moab-region-1", EntityKind.Place, "Moab", null, (5, 34, 1));
+        Add("cain-1", EntityKind.Person, "Cain", null, (1, 4, 16));
+        Add("nod-1", EntityKind.Place, "Nod", null, (1, 4, 16));
+
         _db.SaveChanges();
     }
 
@@ -263,6 +272,48 @@ public sealed class DescriptorTests : IDisposable
         Line(description).Should().Be("місто в Юдеї");
         description!.Claims.Should().ContainSingle().Which.Target.Forms!.Keys
             .Should().BeEquivalentTo(GrammaticalCases.All);
+    }
+
+    /// <summary>
+    /// PRB-0361's four clauses, which are what a place page is made of: each puts its target in the
+    /// locative and none of them can be said with the genitive. <em>жив у Хевроні</em>, not
+    /// <em>жив у Хеврона</em>, and not the <em>мешканець Хеврона</em> the phrasing said while
+    /// nothing produced a locative — that is an inhabitant rather than someone who lived there.
+    /// </summary>
+    [Fact]
+    public async Task EveryPlaceClauseIsPutInTheLocativeInUkrainian()
+    {
+        await Load("located");
+
+        Line(await Read("abraham-1", DescriptorPhrasings.Ukrainian))
+            .Should().Be("жив у Хевроні, похований у Хевроні");
+        Line(await Read("nebo-1", DescriptorPhrasings.Ukrainian)).Should().Be("гора в Моаві");
+    }
+
+    /// <summary>
+    /// The other path, and the one that matters today: 727 entities' worth of claims have been
+    /// generated and none of them carries a locative yet, so this is what almost every place clause
+    /// renders as until TSK-0364's pass lands.
+    ///
+    /// The assertion that makes it worth writing is the second one. Nod has a genitive, and the
+    /// clause does not reach for it — <em>жив у Нода</em> reads as Ukrainian and is not Ukrainian,
+    /// while <em>жив у Nod</em> is visibly a gap.
+    /// </summary>
+    [Fact]
+    public async Task APlaceWithNoLocativeFallsBackToTheEnglishNameAndNeverToTheGenitive()
+    {
+        await Load("located");
+
+        var description = await Read("cain-1", DescriptorPhrasings.Ukrainian);
+
+        Line(description).Should().Be("жив у Nod");
+        description!.Claims.Should().ContainSingle().Which.Target.Forms.Should().Equal(
+            new Dictionary<string, string>
+            {
+                [GrammaticalCases.Nominative] = "Нод",
+                [GrammaticalCases.Genitive] = "Нода",
+            },
+            "the genitive is there and is deliberately not what the locative falls back to");
     }
 
     /// <summary>

@@ -35,10 +35,17 @@ internal sealed record Phrasing(string Before, string Case, string After = "");
 /// </para>
 ///
 /// <para>
-/// The Slavic phrasings avoid the locative wherever a genitive construction says the same thing —
-/// <em>мешканець Вифлеєма</em> for <em>lived in Bethlehem</em> — because the genitive is the form
-/// DOC-0191 asks a pass to produce. Where only a locative will do, the phrasing asks for one and
-/// the name falls back to English until a pass carries it.
+/// **The four clauses a place page is made of ask for the locative, and no genitive stands in.**
+/// <c>lived-in</c>, <c>buried-in</c>, <c>city-in</c> and <c>mountain-in</c> put their target in it
+/// in both Slavic languages — <em>жив у Вифлеємі</em>, not <em>жив у Вифлеєма</em> — so each
+/// phrasing asks for the case its own phrase puts the name in rather than for the genitive the
+/// other thirty-four take. <c>lived-in</c> was phrased around the gap once, as
+/// <em>мешканець Вифлеєма</em>, while nothing produced a locative; that says something else — an
+/// inhabitant rather than someone who lived there — and it is no longer needed.
+///
+/// A form the generation pass has not produced falls back to the English name and never to another
+/// case: <em>жив у Hebron</em> is visibly a gap, and <em>жив у Хеврона</em> would read as Ukrainian
+/// and be wrong.
 /// </para>
 /// </summary>
 internal static class DescriptorPhrasings
@@ -170,7 +177,7 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.OfTribe] = new("з племені ", Genitive),
             [DescriptorRelations.OfPeople] = new("з народу ", Genitive),
             [DescriptorRelations.FromPlace] = new("з ", Genitive),
-            [DescriptorRelations.LivedIn] = new("мешканець ", Genitive),
+            [DescriptorRelations.LivedIn] = new("жив у ", Locative),
             [DescriptorRelations.BuriedIn] = new("похований у ", Locative),
             [DescriptorRelations.DescendantsOf] = new("нащадки ", Genitive),
             [DescriptorRelations.CityIn] = new("місто в ", Locative),
@@ -213,7 +220,7 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.OfTribe] = new("из колена ", Genitive),
             [DescriptorRelations.OfPeople] = new("из народа ", Genitive),
             [DescriptorRelations.FromPlace] = new("из ", Genitive),
-            [DescriptorRelations.LivedIn] = new("житель ", Genitive),
+            [DescriptorRelations.LivedIn] = new("жил в ", Locative),
             [DescriptorRelations.BuriedIn] = new("похоронен в ", Locative),
             [DescriptorRelations.DescendantsOf] = new("потомки ", Genitive),
             [DescriptorRelations.CityIn] = new("город в ", Locative),

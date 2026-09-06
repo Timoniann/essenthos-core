@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -214,6 +214,7 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
                 Description = paragraph,
                 Kind = Kind,
                 YearFromCreation = DefaultReckoningZero + year,
+                SequenceInYear = Sequence(number),
                 CanonicalBook = book,
                 CanonicalChapter = chapter,
                 CanonicalVerse = verse,
@@ -244,6 +245,26 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
         logger.LogInformation("Loaded the Annals: {Outcome}", outcome);
         return outcome;
     }
+
+    /// <summary>
+    /// The paragraph number as a number, which is the one thing in the Annals that states an order.
+    ///
+    /// Ussher dates dozens of paragraphs to a single year and writes <em>the next day</em> and
+    /// <em>on the third day</em> between them, so his sequence is a claim and his year is the only
+    /// date. The slug carries the same number and still cannot stand in for it: it is text and the
+    /// numbers are not zero-padded, so it sorts by width first. Nothing loaded today shows that —
+    /// only the AD paragraphs are taken and they are all four digits — which is an accident of the
+    /// filter above rather than a property of the source, and it ends at the first paragraph below
+    /// a thousand.
+    ///
+    /// A paragraph number that is not a number leaves the row unsequenced, which is the same answer
+    /// as a source that states no order — and the right one, because the alternative is a position
+    /// this made up.
+    /// </summary>
+    private static int? Sequence(string paragraph) =>
+        int.TryParse(paragraph, NumberStyles.Integer, CultureInfo.InvariantCulture, out var number)
+            ? number
+            : null;
 
     private static readonly char[] RangeMarks = ['-', ','];
 
