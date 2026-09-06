@@ -204,14 +204,6 @@ internal static class EncyclopediaEndpoints
                     .ToList());
     }
 
-    /// <summary>
-    /// Which language a description was asked for in. <c>language</c> is the spelling this API
-    /// already uses, on <c>/v1/strong</c>; <c>lang</c> is accepted beside it because the client
-    /// shipped that one, and a query parameter nobody reads fails by rendering the wrong language
-    /// rather than by saying anything.
-    /// </summary>
-    internal static string? Language(string? language, string? lang) =>
-        string.IsNullOrWhiteSpace(language) ? lang : language;
 
     /// <summary>
     /// How the index is ordered. Alphabetical is the default and the only order that answers
@@ -249,7 +241,6 @@ internal static class EncyclopediaEndpoints
             [FromQuery] string? q,
             [FromQuery] string? kind,
             [FromQuery] string? language,
-            [FromQuery] string? lang,
             [FromQuery] string? sort,
             [FromQuery] int? skip,
             [FromQuery] int? take,
@@ -296,7 +287,7 @@ internal static class EncyclopediaEndpoints
                 .ToListAsync(cancellationToken);
 
             var described = await Descriptors.Of(
-                db, page.Select(e => e.Slug), Language(language, lang), cancellationToken);
+                db, page.Select(e => e.Slug), language, cancellationToken);
 
             return Results.Ok(new EntityListResponse(
                 total,
@@ -324,7 +315,6 @@ internal static class EncyclopediaEndpoints
         routes.MapGet("/entities/{slug}", async (
             string slug,
             [FromQuery] string? language,
-            [FromQuery] string? lang,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
@@ -471,7 +461,7 @@ internal static class EncyclopediaEndpoints
                 alternatives.Count > 0)
             {
                 Descriptor = await Descriptors.Of(
-                    db, entity.Slug, Language(language, lang), cancellationToken),
+                    db, entity.Slug, language, cancellationToken),
             });
         });
 
