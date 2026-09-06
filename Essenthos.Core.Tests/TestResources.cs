@@ -35,6 +35,9 @@ internal static class TestResources
     /// <summary>Brenton's Septuagint, one USFM file per book.</summary>
     public static string SeptuagintFolder => System.IO.Path.Combine(ResolvedPath.Value, "Septuagint");
 
+    /// <summary>Swete's Septuagint, one file of one token per line per book.</summary>
+    public static string SweteFolder => System.IO.Path.Combine(ResolvedPath.Value, "Swete");
+
     /// <summary>The Kulish Bible, one USFM file per book, as eBible publishes it.</summary>
     public static string KulishFolder => System.IO.Path.Combine(ResolvedPath.Value, "Kulish");
 

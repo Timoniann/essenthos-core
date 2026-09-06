@@ -25,6 +25,7 @@ internal static class TextCorpus
         BhsaTextSource.Definition,
         NestleTextSource.Definition,
         SeptuagintTextSource.Definition(),
+        SweteTextSource.Definition,
         TextusReceptusTextSource.Definition(Edition.Scrivener1894),
         TextusReceptusTextSource.Definition(Edition.Stephanus1550),
         ByzantineTextSource.Definition,
