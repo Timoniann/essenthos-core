@@ -204,12 +204,22 @@ internal static class EncyclopediaEndpoints
                     .ToList());
     }
 
+    /// <summary>
+    /// Which language a description was asked for in. <c>language</c> is the spelling this API
+    /// already uses, on <c>/v1/strong</c>; <c>lang</c> is accepted beside it because the client
+    /// shipped that one, and a query parameter nobody reads fails by rendering the wrong language
+    /// rather than by saying anything.
+    /// </summary>
+    internal static string? Language(string? language, string? lang) =>
+        string.IsNullOrWhiteSpace(language) ? lang : language;
+
     public static void MapEncyclopedia(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/entities", async (
             [FromQuery] string? q,
             [FromQuery] string? kind,
             [FromQuery] string? language,
+            [FromQuery] string? lang,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
@@ -250,7 +260,7 @@ internal static class EncyclopediaEndpoints
                 .ToListAsync(cancellationToken);
 
             var described = await Descriptors.Of(
-                db, page.Select(e => e.Slug), language, cancellationToken);
+                db, page.Select(e => e.Slug), Language(language, lang), cancellationToken);
 
             return Results.Ok(new EntityListResponse(
                 total,
@@ -278,6 +288,7 @@ internal static class EncyclopediaEndpoints
         routes.MapGet("/entities/{slug}", async (
             string slug,
             [FromQuery] string? language,
+            [FromQuery] string? lang,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
@@ -423,7 +434,8 @@ internal static class EncyclopediaEndpoints
                 alternatives,
                 alternatives.Count > 0)
             {
-                Descriptor = await Descriptors.Of(db, entity.Slug, language, cancellationToken),
+                Descriptor = await Descriptors.Of(
+                    db, entity.Slug, Language(language, lang), cancellationToken),
             });
         });
 
@@ -911,9 +923,8 @@ internal record EntitySummaryResponse(
     int Mentions)
 {
     /// <summary>
-    /// What this corpus says the entity is, in the language asked for, as the pieces of a line
-    /// whose every name is a link. Null where nothing has been generated for this entity yet, or
-    /// where the encyclopedia does not speak the language asked for.
+    /// What this corpus says the entity is, as the pieces of a line whose every name is a link, in
+    /// the language it says it is in. Null where nothing has been generated for this entity yet.
     /// </summary>
     public EntityDescriptorResponse? Descriptor { get; init; }
 }
@@ -1018,16 +1029,16 @@ internal record EntityResponse(
     bool Unsettled)
 {
     /// <summary>
-    /// What this corpus says the entity is, in the language asked for: the pieces of a line, each
-    /// name among them carrying the entity it names, and the claims the line was made of with the
-    /// verse each was read from.
+    /// What this corpus says the entity is: the pieces of a line, each name among them carrying the
+    /// entity it names complete enough to be linked, and the claims the line was made of with the
+    /// verse each was read from. <see cref="EntityDescriptorResponse.Language"/> says which language
+    /// it came out in, which is not always the one asked for.
     ///
     /// <para>
     /// It is what <paramref name="Distinguisher"/> was being shown for, and it replaces it — but
     /// that field stays on the wire while the client is changed, because a field that vanishes
     /// mid-flight breaks whoever is reading it. Null where nothing has been generated for this
-    /// entity, or where the encyclopedia has no phrasings for the language asked for; in the second
-    /// case showing the English would be the failure this replaces, one language further on.
+    /// entity.
     /// </para>
     /// </summary>
     public EntityDescriptorResponse? Descriptor { get; init; }

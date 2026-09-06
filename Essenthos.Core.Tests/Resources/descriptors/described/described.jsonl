@@ -3,3 +3,5 @@
 {"entity":"moses-1","kind":"person","claims":[],"names":{"eng":{"nominative":"Moses"},"ukr":{"nominative":"Мойсей","genitive":"Мойсея"}},"model":"claude-sonnet-5","askedAt":"2026-09-06"}
 {"entity":"reuel-1","kind":"person","claims":[],"names":{"eng":{"nominative":"Reuel"},"ukr":{"nominative":"Регуїл","genitive":"Регуїла"}},"model":"claude-sonnet-5","askedAt":"2026-09-06"}
 {"entity":"moab-1","kind":"person","claims":[],"names":{"eng":{"nominative":"Moab"},"ukr":{"nominative":"Моав","genitive":"Моава"}},"model":"claude-sonnet-5","askedAt":"2026-09-06"}
+{"entity":"bethlehem-1","kind":"place","claims":[{"relation":"city-in","target":"judah-1","reference":"GEN 35:19","confidence":0.96}],"names":{"eng":{"nominative":"Bethlehem"},"ukr":{"nominative":"Вифлеєм","genitive":"Вифлеєма","locative":"Вифлеємі"}},"model":"claude-sonnet-5","askedAt":"2026-09-06"}
+{"entity":"judah-1","kind":"place","claims":[],"names":{"eng":{"nominative":"Judah"},"ukr":{"nominative":"Юдея","genitive":"Юдеї","locative":"Юдеї"}},"model":"claude-sonnet-5","askedAt":"2026-09-06"}

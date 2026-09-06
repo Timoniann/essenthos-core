@@ -1,4 +1,5 @@
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,10 +18,18 @@ namespace Essenthos.Core.Endpoints;
 /// </para>
 ///
 /// <para>
-/// A language the encyclopedia has no phrasings for renders nothing at all. That is deliberate and
-/// it is the same judgement <see cref="Annotations"/> makes about a disputed word: showing an
-/// English sentence to a Ukrainian reader is exactly the failure this layer replaces, and doing it
-/// one language further out is not an improvement.
+/// **Every name the line needs arrives with it.** A clause names a target, and rendering that
+/// target means knowing what kind of thing it is, what it is called in the language being rendered,
+/// and what it is called in the cases that language's phrases put it in — none of which is on the
+/// subject's own record. A card that had to fetch each target's record to say <em>тесть Мойсея</em>
+/// would make one request per name in a line, so the target is complete when it arrives.
+/// </para>
+///
+/// <para>
+/// A language the encyclopedia has no phrasings for is answered in English and told so:
+/// <see cref="EntityDescriptorResponse.Language"/> is the language rendered and never the one asked
+/// for. The alternative for such a reader is <see cref="Database.Entities.Entity.Distinguisher"/>,
+/// which is English too and is somebody else's prose with no link in it.
 /// </para>
 /// </summary>
 internal static class Descriptors
@@ -43,13 +52,17 @@ internal static class Descriptors
         CancellationToken cancellationToken)
     {
         var wanted = slugs.Distinct(StringComparer.Ordinal).ToList();
-        var spoken = DescriptorPhrasings.Spoken(language);
-        var phrasings = DescriptorPhrasings.For(spoken);
-        if (wanted.Count == 0 || phrasings is null)
+        if (wanted.Count == 0)
         {
             return [];
         }
 
+        var spoken = DescriptorPhrasings.Spoken(language);
+        var phrasings = DescriptorPhrasings.For(spoken)!;
+
+        // Everything the target contributes is taken along this join rather than looked up per
+        // clause: a subquery in a projection is evaluated once per joined row, which is what took
+        // /v1/corpora from a millisecond to 46 seconds (PRB-0357).
         var clauses = await db.EntityDescriptors
             .Where(d => wanted.Contains(d.Entity!.Slug))
             .OrderBy(d => d.EntityId).ThenBy(d => d.Ordinal)
@@ -61,6 +74,7 @@ internal static class Descriptors
                 d.Target!.Kind,
                 d.Target.Slug,
                 d.Target.Name,
+                d.Target.Distinguisher,
                 d.CanonicalBook,
                 d.CanonicalChapter,
                 d.CanonicalVerse,
@@ -76,18 +90,23 @@ internal static class Descriptors
         }
 
         var targets = clauses.Select(c => c.TargetEntityId).Distinct().ToList();
-        var forms = await db.EntityNameForms
+        var rows = await db.EntityNameForms
             .Where(f => targets.Contains(f.EntityId) && f.Language == spoken)
             .Select(f => new { f.EntityId, f.GrammaticalCase, f.Form })
             .ToListAsync(cancellationToken);
 
-        var byCase = forms.ToDictionary(f => (f.EntityId, f.GrammaticalCase), f => f.Form);
+        var forms = rows
+            .GroupBy(f => f.EntityId)
+            .ToDictionary(
+                target => target.Key,
+                target => (IReadOnlyDictionary<string, string>)target.ToDictionary(
+                    f => f.GrammaticalCase, f => f.Form, StringComparer.Ordinal));
 
         return clauses
             .GroupBy(c => c.Slug, StringComparer.Ordinal)
             .ToDictionary(
                 group => group.Key,
-                group => Render(spoken!, [.. group], phrasings, byCase),
+                group => Render(spoken, [.. group], phrasings, forms),
                 StringComparer.Ordinal);
     }
 
@@ -111,7 +130,7 @@ internal static class Descriptors
         string language,
         IReadOnlyList<Clause> clauses,
         IReadOnlyDictionary<string, Phrasing> phrasings,
-        IReadOnlyDictionary<(int, string), string> forms)
+        IReadOnlyDictionary<int, IReadOnlyDictionary<string, string>> forms)
     {
         var parts = new List<DescriptorPartResponse>();
         var claims = new List<DescriptorClaimResponse>();
@@ -127,8 +146,8 @@ internal static class Descriptors
             }
 
             var doubtful = clause.Confidence is { } confidence && confidence < Plain;
-            var target = new EntityRefResponse(
-                EnumSpelling.Of(clause.TargetKind), clause.TargetSlug, clause.TargetName);
+            var cases = forms.GetValueOrDefault(clause.TargetEntityId);
+            var target = Target(clause, cases);
 
             if (parts.Count > 0)
             {
@@ -136,7 +155,7 @@ internal static class Descriptors
             }
 
             parts.Add(new DescriptorPartResponse(phrasing.Before) { Doubtful = doubtful });
-            parts.Add(new DescriptorPartResponse(Name(clause, phrasing.Case, forms))
+            parts.Add(new DescriptorPartResponse(Name(clause, phrasing.Case, cases))
             {
                 Entity = target,
                 Doubtful = doubtful,
@@ -170,6 +189,33 @@ internal static class Descriptors
     }
 
     /// <summary>
+    /// The target as a client needs it to draw a link: what kind of page it is, what it is called
+    /// in this language, every case of that name the pass produced, and the English name that
+    /// stands in for a case it did not.
+    ///
+    /// <para>
+    /// <see cref="DescriptorTargetResponse.Forms"/> is keyed by case rather than being a fixed pair
+    /// of fields, which is what makes the locative Ukrainian needs for <em>місто в Юдеї</em>
+    /// additive: a language turning out to need a fourth case is a phrasing and a generation pass,
+    /// not a change to the wire.
+    /// </para>
+    /// </summary>
+    private static DescriptorTargetResponse Target(
+        Clause clause,
+        IReadOnlyDictionary<string, string>? cases) =>
+        new(
+            EnumSpelling.Of(clause.TargetKind),
+            clause.TargetSlug,
+            cases?.GetValueOrDefault(GrammaticalCases.Nominative) ?? clause.TargetEnglishName,
+            clause.TargetEnglishName)
+        {
+            Forms = cases is { Count: > 0 }
+                ? new Dictionary<string, string>(cases, StringComparer.Ordinal)
+                : null,
+            Distinguisher = clause.TargetDistinguisher,
+        };
+
+    /// <summary>
     /// The target's name in the form the phrase puts it in, and the English name where the pass
     /// produced no such form.
     ///
@@ -180,10 +226,8 @@ internal static class Descriptors
     private static string Name(
         Clause clause,
         string grammaticalCase,
-        IReadOnlyDictionary<(int, string), string> forms) =>
-        forms.TryGetValue((clause.TargetEntityId, grammaticalCase), out var form)
-            ? form
-            : clause.TargetName;
+        IReadOnlyDictionary<string, string>? cases) =>
+        cases?.GetValueOrDefault(grammaticalCase) ?? clause.TargetEnglishName;
 
     /// <summary>One clause with its target flattened, so the render is a loop and not a join.</summary>
     private sealed record Clause(
@@ -193,7 +237,8 @@ internal static class Descriptors
         int TargetEntityId,
         EntityKind TargetKind,
         string TargetSlug,
-        string TargetName,
+        string TargetEnglishName,
+        string? TargetDistinguisher,
         int Book,
         int Chapter,
         int Verse,
@@ -204,8 +249,9 @@ internal static class Descriptors
 }
 
 /// <param name="Language">
-/// The language actually rendered, which is the one asked for — a language with no phrasings
-/// produces no descriptor at all rather than one in some other tongue.
+/// The language actually rendered, never the one asked for. A language the encyclopedia has no
+/// phrasings for is answered in English and says <c>eng</c> here, because a client told otherwise
+/// puts Ukrainian grammar around an English name and prints <em>син Reuel</em>.
 /// </param>
 /// <param name="Parts">
 /// The line, in order. Concatenating <c>text</c> gives the sentence; a part carrying
@@ -229,9 +275,48 @@ internal record EntityDescriptorResponse(
 /// </param>
 internal record DescriptorPartResponse(string Text)
 {
-    public EntityRefResponse? Entity { get; init; }
+    public DescriptorTargetResponse? Entity { get; init; }
 
     public bool Doubtful { get; init; }
+}
+
+/// <summary>
+/// Whom or what a clause names, complete enough to be drawn as a link without asking again.
+/// </summary>
+/// <param name="Kind">
+/// <c>person</c>, <c>place</c> or <c>people</c>. A slug does not say which, and the client routes
+/// each to a different page, so without this a link cannot be built at all.
+/// </param>
+/// <param name="Name">
+/// The nominative in the language being rendered, or the English name where the pass produced no
+/// form for it. This is the name to print where the phrase does not inflect.
+/// </param>
+/// <param name="EnglishName">
+/// The name the corpus holds, which every entity has. It is what a case the pass did not produce
+/// falls back to, and the client needs it because the fallback happens where the phrase is built.
+/// </param>
+internal record DescriptorTargetResponse(
+    string Kind,
+    string Slug,
+    string Name,
+    string EnglishName)
+{
+    /// <summary>
+    /// The name in every case a pass produced for this language, keyed by case — <c>nominative</c>,
+    /// <c>genitive</c>, <c>locative</c>. Null where no pass has produced any form for this entity in
+    /// this language, which is where <see cref="EnglishName"/> is the whole of what can be said.
+    ///
+    /// A map and not a pair of fields: <em>місто в Юдеї</em> needs a locative that the genitive
+    /// cannot stand in for, and the next language to need a case should cost a phrasing rather than
+    /// a change to the wire.
+    /// </summary>
+    public Dictionary<string, string>? Forms { get; init; }
+
+    /// <summary>
+    /// The imported sentence, where the target still has one. It is what a link's own hover shows
+    /// until a description has been generated for the entity on the other end.
+    /// </summary>
+    public string? Distinguisher { get; init; }
 }
 
 /// <param name="Confidence">
@@ -241,7 +326,7 @@ internal record DescriptorPartResponse(string Text)
 internal record DescriptorClaimResponse(
     int Ordinal,
     string Relation,
-    EntityRefResponse Target,
+    DescriptorTargetResponse Target,
     VerseRefResponse Reference,
     string Method,
     double? Confidence,

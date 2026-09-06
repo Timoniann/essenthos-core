@@ -22,12 +22,16 @@ internal sealed record Phrasing(string Before, string Case, string After = "");
 /// say. The alternative is a reader meeting <c>father-in-law-of</c> on a page.
 ///
 /// <para>
-/// **A language with no table here renders nothing, and that is the correct answer for it.** The
-/// tables are English, Ukrainian and Russian. German is not here on purpose: <em>vom Volk der
-/// Moabiter</em> and <em>Prophet für Israel</em> are choices somebody who reads German has to make,
-/// and thirty-eight phrasings guessed by somebody who does not would reach a German reader looking
-/// exactly as authoritative as the three that were checked. Showing them the English is worse
-/// still — it is the failure this replaces, one language further on.
+/// **A language with no table here is answered in English, and the answer says so.** The tables are
+/// English, Ukrainian and Russian. German is not here on purpose: <em>vom Volk der Moabiter</em> and
+/// <em>Prophet für Israel</em> are choices somebody who reads German has to make, and thirty-eight
+/// phrasings guessed by somebody who does not would reach a German reader looking exactly as
+/// authoritative as the three that were checked. So a German reader gets the English line, named as
+/// English — which is what the alternative already was, since the only other thing to show is
+/// <see cref="Database.Entities.Entity.Distinguisher"/>, an English sentence somebody else wrote
+/// with no link in it. <see cref="Spoken"/> is where that is decided, and it is what
+/// <c>descriptor.language</c> carries, so a client never puts one language's grammar around another
+/// language's name.
 /// </para>
 ///
 /// <para>
@@ -55,12 +59,22 @@ internal static class DescriptorPhrasings
     private const string Locative = GrammaticalCases.Locative;
 
     /// <summary>
-    /// Which language to render in. Asking for nothing is not asking for a language, so it gets
-    /// English; asking for one the encyclopedia does not speak gets that language and no
-    /// description, which is what <see cref="For"/> then says.
+    /// Which language a description is actually rendered in, given the one asked for. Asking for
+    /// nothing is not asking for a language, and asking for one the encyclopedia does not speak is
+    /// answered in English rather than refused.
+    ///
+    /// <para>
+    /// **This, and not the parameter, is what the answer reports.** A client that is told the
+    /// language it asked for and handed the language it got puts Ukrainian grammar around an English
+    /// name and prints <em>син Reuel</em> — the sentence the fallback exists to prevent. So the
+    /// fallback is decided in one place and travels on the wire.
+    /// </para>
     /// </summary>
-    public static string Spoken(string? asked) =>
-        string.IsNullOrWhiteSpace(asked) ? English : asked.Trim();
+    public static string Spoken(string? asked)
+    {
+        var wanted = string.IsNullOrWhiteSpace(asked) ? English : asked.Trim();
+        return ByLanguage.ContainsKey(wanted) ? wanted : English;
+    }
 
     public static IReadOnlyDictionary<string, Phrasing>? For(string? language) =>
         language is { Length: > 0 } && ByLanguage.TryGetValue(language, out var phrasings)

@@ -54,20 +54,47 @@ public sealed class DescriptorVocabularyTests
             .Should().OnlyContain(c => GrammaticalCases.All.Contains(c));
 
     /// <summary>
-    /// A language nothing has phrasings for renders nothing rather than falling back to English.
-    /// Showing a German reader an English sentence is the failure this whole layer replaces.
+    /// A language nothing has phrasings for has none, and is answered in English instead of being
+    /// refused. The alternative on the page is the imported sentence, which is English too and is
+    /// somebody else's prose with no link in it.
     /// </summary>
     [Fact]
-    public void ALanguageWithNoPhrasingsRendersNothing() =>
+    public void ALanguageWithNoPhrasingsHasNoneAndIsSpokenAsEnglish()
+    {
         DescriptorPhrasings.For("deu").Should().BeNull();
+        DescriptorPhrasings.Spoken("deu").Should().Be(DescriptorPhrasings.English);
+    }
 
     /// <summary>Asking for no language is not asking for one, so it is answered in English.</summary>
     [Theory]
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public void NoLanguageAskedForIsEnglish(string? asked) =>
+    [InlineData("deu")]
+    [InlineData("not-a-language")]
+    public void WhatIsNotSpokenIsAnsweredInEnglish(string? asked) =>
         DescriptorPhrasings.Spoken(asked).Should().Be(DescriptorPhrasings.English);
+
+    [Theory]
+    [InlineData("ukr")]
+    [InlineData("  ukr  ")]
+    public void ALanguageTheEncyclopediaSpeaksIsTheOneRendered(string asked) =>
+        DescriptorPhrasings.Spoken(asked).Should().Be(DescriptorPhrasings.Ukrainian);
+
+    /// <summary>
+    /// The client shipped <c>lang</c> and this API already spelled it <c>language</c> on
+    /// <c>/v1/strong</c>. Both are read, because the failure of reading only one is a page rendered
+    /// in the wrong language with nothing anywhere saying so.
+    /// </summary>
+    [Theory]
+    [InlineData("ukr", null, "ukr")]
+    [InlineData(null, "ukr", "ukr")]
+    [InlineData("", "ukr", "ukr")]
+    [InlineData("ukr", "rus", "ukr")]
+    [InlineData(null, null, null)]
+    public void EitherSpellingOfTheLanguageParameterIsRead(
+        string? language, string? lang, string? expected) =>
+        EncyclopediaEndpoints.Language(language, lang).Should().Be(expected);
 
     [Theory]
     [InlineData("NUM 10:29", 4, 10, 29)]
@@ -94,6 +121,8 @@ public sealed class DescriptorVocabularyTests
     /// </summary>
     [Theory]
     [InlineData(typeof(EntityDescriptorResponse))]
+    [InlineData(typeof(DescriptorTargetResponse))]
+    [InlineData(typeof(Dictionary<string, string>))]
     [InlineData(typeof(DescriptorPartResponse))]
     [InlineData(typeof(IList<DescriptorPartResponse>))]
     [InlineData(typeof(DescriptorClaimResponse))]
@@ -118,16 +147,13 @@ public sealed class DescriptorVocabularyTests
                 DescriptorPhrasings.Ukrainian,
                 [
                     new DescriptorPartResponse("тесть "),
-                    new DescriptorPartResponse("Мойсея")
-                    {
-                        Entity = new EntityRefResponse("person", "moses-1", "Moses"),
-                    },
+                    new DescriptorPartResponse("Мойсея") { Entity = Moses },
                 ],
                 [
                     new DescriptorClaimResponse(
                         1,
                         DescriptorRelations.FatherInLawOf,
-                        new EntityRefResponse("person", "moses-1", "Moses"),
+                        Moses,
                         new VerseRefResponse(7, "Judges", "judges", 4, 11),
                         "model-reading",
                         0.93,
@@ -146,5 +172,25 @@ public sealed class DescriptorVocabularyTests
             .And.Contain("moses-1")
             .And.Contain("father-in-law-of")
             .And.Contain("father-in-law (NUM 10:29)", "the imported sentence stays on the wire for now");
+
+        wire.Should().Contain("\"Kind\":\"person\"", "a slug alone cannot be routed to a page")
+            .And.Contain("\"EnglishName\":\"Moses\"")
+            .And.Contain("\"genitive\":\"\\u041C\\u043E\\u0439\\u0441\\u0435\\u044F\"")
+            .And.Contain("\"Slug\":\"judges\"", "a client links a verse by book slug, not by JDG");
     }
+
+    /// <summary>
+    /// Moses as a client receives him: the kind that says which page to open, the name in the
+    /// language being rendered, the cases that language's phrases put it in, and the English name a
+    /// case nobody produced falls back to.
+    /// </summary>
+    private static DescriptorTargetResponse Moses { get; } =
+        new("person", "moses-1", "Мойсей", "Moses")
+        {
+            Forms = new Dictionary<string, string>
+            {
+                [GrammaticalCases.Nominative] = "Мойсей",
+                [GrammaticalCases.Genitive] = "Мойсея",
+            },
+        };
 }

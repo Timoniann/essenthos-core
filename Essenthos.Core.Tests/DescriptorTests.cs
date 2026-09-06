@@ -1,3 +1,5 @@
+using System.Data.Common;
+using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -5,9 +7,11 @@ using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Essenthos.Core.Tests;
 
@@ -32,8 +36,11 @@ public sealed class DescriptorTests : IDisposable
 
     private readonly AppDbContext _db;
 
-    public DescriptorTests(WitnessDatabase database)
+    private readonly ITestOutputHelper _output;
+
+    public DescriptorTests(WitnessDatabase database, ITestOutputHelper output)
     {
+        _output = output;
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
 
@@ -44,6 +51,8 @@ public sealed class DescriptorTests : IDisposable
         Add("moabites", EntityKind.People, "Moabites", null, (1, 19, 37));
         Add("jethro-1", EntityKind.Person, "Jethro", null, (2, 3, 1));
         Add("midianites", EntityKind.People, "Midianites", null, (2, 3, 1));
+        Add("bethlehem-1", EntityKind.Place, "Bethlehem", null, (1, 35, 19));
+        Add("judah-1", EntityKind.Place, "Judah", null, (1, 35, 19));
 
         _db.SaveChanges();
     }
@@ -114,8 +123,8 @@ public sealed class DescriptorTests : IDisposable
     {
         var outcome = await Load("described");
 
-        outcome.Described.Should().Be(2);
-        outcome.Clauses.Should().Be(3);
+        outcome.Described.Should().Be(3);
+        outcome.Clauses.Should().Be(4);
         outcome.Unresolved.Should().Be(1, "Hobab's pass could not place the Kenites");
 
         var clauses = await _db.EntityDescriptors
@@ -194,12 +203,81 @@ public sealed class DescriptorTests : IDisposable
             .Which.Entity!.Slug.Should().Be("moab-1");
     }
 
+    /// <summary>
+    /// The one that produces a visibly wrong sentence if it is got wrong. A client that asked for
+    /// German, was handed English and was told <em>deu</em> would put another language's grammar
+    /// around these names, which is what the fallback exists to prevent.
+    /// </summary>
     [Fact]
-    public async Task ALanguageTheEncyclopediaDoesNotSpeakGetsNoDescriptionRatherThanAnEnglishOne()
+    public async Task ALanguageTheEncyclopediaDoesNotSpeakIsAnsweredInEnglishAndSaysSo()
     {
         await Load("described");
 
-        (await Read("hobab-1", "deu")).Should().BeNull();
+        var description = await Read("hobab-1", "deu");
+
+        description!.Language.Should().Be(DescriptorPhrasings.English);
+        Line(description).Should().Be("son of Reuel, father-in-law of Moses");
+        description.Claims.Should().OnlyContain(c => c.Target.Name == c.Target.EnglishName);
+    }
+
+    /// <summary>
+    /// A target arrives complete: what kind of page it is, what it is called here, and the cases
+    /// this language puts it in. A hover card cannot fetch the record of every name in its own line,
+    /// so anything the client needs to draw the link has to be in the answer already.
+    /// </summary>
+    [Fact]
+    public async Task EveryTargetCarriesItsKindItsOwnNameAndTheCasesThePassProduced()
+    {
+        await Load("described");
+
+        var description = await Read("hobab-1", DescriptorPhrasings.Ukrainian);
+
+        var moses = description!.Claims
+            .Should().ContainSingle(c => c.Relation == DescriptorRelations.FatherInLawOf)
+            .Which.Target;
+
+        moses.Kind.Should().Be("person", "a slug does not say which page to route to");
+        moses.Slug.Should().Be("moses-1");
+        moses.Name.Should().Be("Мойсей", "the nominative in the language being rendered");
+        moses.EnglishName.Should().Be("Moses", "what a case the pass did not produce falls back to");
+        moses.Forms.Should().Equal(new Dictionary<string, string>
+        {
+            [GrammaticalCases.Nominative] = "Мойсей",
+            [GrammaticalCases.Genitive] = "Мойсея",
+        });
+    }
+
+    /// <summary>
+    /// PRB-0361's case, end to end: <em>місто в Юдеї</em> and not <em>місто в Юдея</em>. It is here
+    /// because the locative is what proves the forms are keyed by case rather than a nominative and
+    /// a genitive under other names — a third case cost a phrasing and a generation pass, and
+    /// nothing on the wire.
+    /// </summary>
+    [Fact]
+    public async Task APlaceIsPutInTheLocativeAndTheFormsArriveKeyedByCase()
+    {
+        await Load("described");
+
+        var description = await Read("bethlehem-1", DescriptorPhrasings.Ukrainian);
+
+        Line(description).Should().Be("місто в Юдеї");
+        description!.Claims.Should().ContainSingle().Which.Target.Forms!.Keys
+            .Should().BeEquivalentTo(GrammaticalCases.All);
+    }
+
+    /// <summary>
+    /// A verse reference the client can link. <c>GEN 35:19</c> is a corpus code and no client holds
+    /// a map from it, so the address arrives resolved the way every other reference in v1 is.
+    /// </summary>
+    [Fact]
+    public async Task AReferenceArrivesAsABookASlugAnOrdinalAChapterAndAVerse()
+    {
+        await Load("described");
+
+        var description = await Read("bethlehem-1", DescriptorPhrasings.English);
+
+        description!.Claims.Should().ContainSingle().Which.Reference
+            .Should().Be(new VerseRefResponse(1, "Genesis", "genesis", 35, 19));
     }
 
     /// <summary>
@@ -264,7 +342,7 @@ public sealed class DescriptorTests : IDisposable
 
         again.Clauses.Should().Be(0);
         again.Forms.Should().Be(0);
-        again.Skipped.Should().Be(5, "every record in the file names an entity already described");
+        again.Skipped.Should().Be(7, "every record in the file names an entity already described");
         (await _db.EntityDescriptors.CountAsync()).Should().Be(before);
         (await _db.EntityNameForms.CountAsync()).Should().Be(forms);
     }
@@ -308,5 +386,180 @@ public sealed class DescriptorTests : IDisposable
 
         outcome.NoDescriptors.Should().BeTrue();
         outcome.Clauses.Should().Be(0);
+    }
+
+    /// <summary>
+    /// Sending each target complete costs two queries for a whole page, not one per name.
+    ///
+    /// <para>
+    /// It is asserted rather than assumed because the shape that reads a target's own forms inside
+    /// the clause projection is exactly the shape of PRB-0357, where a subquery in a projection was
+    /// evaluated once per joined row and took <c>/v1/corpora</c> from a millisecond to 46 seconds.
+    /// A count of commands is what tells the two apart, and it is invisible in an assertion about
+    /// the answer.
+    /// </para>
+    /// </summary>
+    [Fact]
+    public async Task AWholePageOfDescriptionsCostsTwoQueriesAndNotOnePerName()
+    {
+        const int Described = 400;
+        const int Page = 40;
+
+        Seed(Described);
+        var slugs = Enumerable.Range(0, Page).Select(i => $"cost-{i}").ToList();
+
+        var counted = new CountingCommands();
+        await using var db = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
+            .UseNpgsql(_db.Database.GetConnectionString())
+            .AddInterceptors(counted)
+            .Options);
+
+        // The first read of a context builds EF's model, which is tens of milliseconds and is not
+        // what is being measured. The second is what a request pays.
+        await Descriptors.Of(db, slugs, DescriptorPhrasings.Ukrainian, default);
+        counted.Reset();
+
+        var started = Stopwatch.GetTimestamp();
+        var descriptions = await Descriptors.Of(
+            db, slugs, DescriptorPhrasings.Ukrainian, default);
+        var elapsed = Stopwatch.GetElapsedTime(started);
+
+        foreach (var sql in counted.Sql)
+        {
+            _output.WriteLine(sql);
+        }
+
+        _output.WriteLine(await Plan(db, counted.Sql[0], slugs));
+        _output.WriteLine(
+            $"{Page} descriptions of {Described} entities in {elapsed.TotalMilliseconds:F1} ms, "
+            + $"{counted.Commands} commands");
+
+        descriptions.Should().HaveCount(Page);
+        descriptions[slugs[0]].Claims.Should()
+            .OnlyContain(c => c.Target.Forms!.Count == GrammaticalCases.All.Count);
+        counted.Commands.Should().Be(2, "one read for the clauses and one for the name forms");
+        elapsed.Should().BeLessThan(TimeSpan.FromSeconds(1));
+    }
+
+    /// <summary>
+    /// What Postgres does with the query EF actually sent, rather than with one written out again
+    /// here — the second would go stale the first time the projection changed, which is the change
+    /// this is watching for.
+    /// </summary>
+    private static async Task<string> Plan(AppDbContext db, string sql, IReadOnlyList<string> slugs)
+    {
+        var connection = db.Database.GetDbConnection();
+        await connection.OpenAsync();
+
+        await using var command = connection.CreateCommand();
+        command.CommandText = $"EXPLAIN (ANALYZE, BUFFERS) {sql}";
+
+        var wanted = command.CreateParameter();
+        wanted.ParameterName = "__wanted_0";
+        wanted.Value = slugs.ToArray();
+        command.Parameters.Add(wanted);
+
+        await using var reader = await command.ExecuteReaderAsync();
+        var plan = new List<string>();
+        while (await reader.ReadAsync())
+        {
+            plan.Add(reader.GetString(0));
+        }
+
+        return string.Join(Environment.NewLine, plan);
+    }
+
+    /// <summary>
+    /// A corpus-sized set of entities, each describing itself in three clauses and carrying its
+    /// name in every case. The targets are spread across the whole set so the forms query cannot
+    /// accidentally be answered from a handful of rows.
+    /// </summary>
+    private void Seed(int entities)
+    {
+        for (var i = 0; i < entities; i++)
+        {
+            Add($"cost-{i}", EntityKind.Person, $"Name {i}", null, (1, 1, 1));
+        }
+
+        _db.SaveChanges();
+
+        var ids = _db.Entities
+            .Where(e => e.Slug.StartsWith("cost-"))
+            .ToDictionary(e => e.Slug, e => e.Id);
+
+        for (var i = 0; i < entities; i++)
+        {
+            var id = ids[$"cost-{i}"];
+
+            foreach (var (grammaticalCase, index) in GrammaticalCases.All.Select((c, n) => (c, n)))
+            {
+                _db.EntityNameForms.Add(new EntityNameForm
+                {
+                    EntityId = id,
+                    Language = DescriptorPhrasings.Ukrainian,
+                    GrammaticalCase = grammaticalCase,
+                    Form = $"Ім'я {i}-{index}",
+                    Method = LinkMethod.ModelReading,
+                    Confidence = 0.9,
+                    Source = "a test",
+                });
+            }
+
+            for (var ordinal = 1; ordinal <= 3; ordinal++)
+            {
+                _db.EntityDescriptors.Add(new EntityDescriptor
+                {
+                    EntityId = id,
+                    Ordinal = ordinal,
+                    Relation = DescriptorRelations.SonOf,
+                    TargetEntityId = ids[$"cost-{(i + ordinal * 97) % entities}"],
+                    CanonicalBook = 1,
+                    CanonicalChapter = 1,
+                    CanonicalVerse = 1,
+                    Method = LinkMethod.ModelReading,
+                    Confidence = 0.9,
+                    Source = "a test",
+                });
+            }
+        }
+
+        _db.SaveChanges();
+    }
+
+    /// <summary>How many round trips a read actually made, which no assertion about its answer says.</summary>
+    private sealed class CountingCommands : DbCommandInterceptor
+    {
+        private int _commands;
+
+        public int Commands => _commands;
+
+        public List<string> Sql { get; } = [];
+
+        public void Reset()
+        {
+            Interlocked.Exchange(ref _commands, 0);
+            Sql.Clear();
+        }
+
+        public override InterceptionResult<DbDataReader> ReaderExecuting(
+            DbCommand command,
+            CommandEventData eventData,
+            InterceptionResult<DbDataReader> result)
+        {
+            Interlocked.Increment(ref _commands);
+            Sql.Add(command.CommandText);
+            return result;
+        }
+
+        public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync(
+            DbCommand command,
+            CommandEventData eventData,
+            InterceptionResult<DbDataReader> result,
+            CancellationToken cancellationToken = default)
+        {
+            Interlocked.Increment(ref _commands);
+            Sql.Add(command.CommandText);
+            return ValueTask.FromResult(result);
+        }
     }
 }

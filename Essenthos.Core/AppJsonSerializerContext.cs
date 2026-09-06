@@ -51,6 +51,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(IList<EntityClaimResponse>))]
 [JsonSerializable(typeof(List<EntityClaimResponse>))]
 [JsonSerializable(typeof(EntityDescriptorResponse))]
+[JsonSerializable(typeof(DescriptorTargetResponse))]
 [JsonSerializable(typeof(DescriptorPartResponse))]
 [JsonSerializable(typeof(IList<DescriptorPartResponse>))]
 [JsonSerializable(typeof(List<DescriptorPartResponse>))]
