@@ -45,7 +45,7 @@ public sealed class EntityAnnotationTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
         _loader = new EntityAnnotationLoader(_db, NullLogger<EntityAnnotationLoader>.Instance);
 
-        _hebrew = Corpus.Add(_db, EntityAnnotationLoader.Witness, TextKind.CriticalEdition, "hbo",
+        _hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
             (1, 1, ["משה"]),
             (1, 2, ["זכריה"]),
             (1, 3, ["ירושלם"]),
@@ -371,6 +371,6 @@ public sealed class EntityAnnotationTests : IDisposable
 
         outcome.Contested.Should().Be(1);
         outcome.Unanswered.Should().Be(2);
-        outcome.ByText.Should().ContainSingle().Which.Text.Should().Be(EntityAnnotationLoader.Witness);
+        outcome.ByText.Should().ContainSingle().Which.Text.Should().Be(EntityCandidates.Witness);
     }
 }
