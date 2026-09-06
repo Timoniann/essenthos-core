@@ -253,6 +253,53 @@ public sealed class CorpusCheckTests : IDisposable
         (await Integrity("links naming no word on either side")).Should().Be(1);
     }
 
+    /// <summary>
+    /// A lemma written with its accent as a separate combining mark is a different string from the
+    /// same lemma written composed, and Postgres compares them byte for byte — so one Greek text
+    /// lemmatised the decomposed way agrees with every other Greek text on nothing at all, and the
+    /// empty result looks exactly like having no lemmas. Both spellings of καί are written here
+    /// deliberately: the assertion is worthless if the two literals are the same bytes.
+    /// </summary>
+    [Fact]
+    public async Task AGreekLemmaWrittenDecomposedIsFound()
+    {
+        var greek = Corpus.Add(
+            _db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 1, ["καί", "λόγος"]));
+        _db.SaveChanges();
+
+        // Composed, which is what every other Greek text in the corpus carries.
+        _db.WordAt(greek, 1, 1, 1).Lemma = "καί";
+        // Decomposed: kappa, alpha, iota, then the acute as its own character. Same three letters
+        // on the screen, four characters in the column.
+        _db.WordAt(greek, 1, 1, 2).Lemma = "καί";
+        _db.SaveChanges();
+
+        // The guard on the guard. An editor, a formatter or a git filter that normalises this file
+        // would make the two literals identical, and the test would then pass while checking
+        // nothing at all — the same silent-success failure the check itself is about.
+        _db.WordAt(greek, 1, 1, 1).Lemma.Should().NotBe(_db.WordAt(greek, 1, 1, 2).Lemma,
+            "the two spellings of this lemma must differ in bytes or this test proves nothing");
+
+        (await Integrity("Greek lemmas not in canonical form, which nothing can join"))
+            .Should().Be(1);
+    }
+
+    /// <summary>
+    /// The Hebrew texts are deliberately not counted. They order their points and accents
+    /// differently from canonical order as well, but there the column holds the witness's own text
+    /// and whether it may be rewritten is a decision nobody has taken — PRB-0386. A check that
+    /// reported an open question as a broken corpus would be worse than no check.
+    /// </summary>
+    [Fact]
+    public async Task AHebrewLemmaWrittenDecomposedIsNotCounted()
+    {
+        _db.WordAt(_hebrew, 1, 1, 1).Lemma = "שָׁלוֹם";
+        _db.SaveChanges();
+
+        (await Integrity("Greek lemmas not in canonical form, which nothing can join"))
+            .Should().Be(0);
+    }
+
     private async Task<int> Integrity(string breaks) =>
         (await _check.Measure()).Integrity.Single(check => check.Breaks == breaks).Found;
 

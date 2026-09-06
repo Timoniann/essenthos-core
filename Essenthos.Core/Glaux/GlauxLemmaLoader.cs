@@ -1,4 +1,5 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Text;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
 using Essenthos.Core.TextusReceptus;
@@ -227,6 +228,18 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
         {
             return;
         }
+
+        // GLAUx writes its accents as separate combining marks and every other text in the corpus
+        // carries them composed. The three visible letters of καί are four characters here and
+        // three in Nestle, so `=` between them is false for every lemma GLAUx supplies — measured
+        // at 0 matches out of 95,861 before this line existed, which is not a plausible answer for
+        // two Greek texts and is what exposed it (PRB-0384). A lemma is an identifier, and two
+        // spellings of one identifier is the fault the corpus already refuses for a text's slug.
+        //
+        // Normalised here, at the one point every lemma passes through, rather than at each of the
+        // places that will one day compare them: a comparison that forgets is one that silently
+        // finds nothing, and finding nothing looks exactly like having no data.
+        written = [.. written.Select(row => (row.Id, Lemma: row.Lemma.Normalize(NormalizationForm.FormC)))];
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);

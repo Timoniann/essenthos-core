@@ -361,6 +361,23 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             """),
         ("Strong numbers that are not a letter and digits",
             "SELECT count(*) FROM word WHERE strong_number IS NOT NULL AND strong_number !~ '^[GH][0-9]+$'"),
+        // A lemma is an identifier, so two spellings of one lemma is the same defect as a text
+        // answering to two slugs. GLAUx supplied the Septuagint's lemmas with their accents as
+        // separate combining marks while every other Greek text carries them composed, and the
+        // result was that `=` between a Brenton lemma and a Nestle lemma was false 100% of the
+        // time — 0 matches out of 95,861, which nothing reported because finding nothing is what
+        // having no data also looks like (PRB-0384).
+        //
+        // Greek only. The Hebrew texts order their points and accents differently from canonical
+        // order too, and that is not the same question: `word.text` there is the witness's own
+        // text and rewriting it is a decision the owner has not made (PRB-0386). Counting it here
+        // would report an open question as a broken corpus.
+        ("Greek lemmas not in canonical form, which nothing can join",
+            """
+            SELECT count(*) FROM word w
+            JOIN text t ON t.id = w.text_id
+            WHERE t.language = 'grc' AND w.lemma IS NOT NULL AND w.lemma <> normalize(w.lemma, NFC)
+            """),
         // A number that resolves to nothing is a word the corpus cannot explain. The H9000 range is
         // excluded because ETCBC numbers prefix morphemes there and Strong never catalogued them —
         // 121,077 words carry one, and counting those as broken would misreport the corpus by 21%.
