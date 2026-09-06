@@ -275,8 +275,14 @@ internal sealed class PeopleLoader(
                 continue;
             }
 
+            // Against every slug already in the encyclopedia and not only against this run's, since
+            // the address has to be unique across the table and a clash there is a failed save at
+            // the end of a long load rather than a warning where it happened.
             var entity = Record(
-                PeopleFiles.Slug(name, gentilic.StrongNumber, peoples.ContainsKey),
+                PeopleFiles.Slug(
+                    name,
+                    gentilic.StrongNumber,
+                    slug => peoples.ContainsKey(slug) || origins.ContainsKey(slug)),
                 name,
                 Distinguisher(gentilic),
                 correction is null ? null : $"Named here as {name}. {correction.Why}",
