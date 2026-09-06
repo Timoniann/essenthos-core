@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Essenthos.Core.ClearBible;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
@@ -16,9 +17,21 @@ namespace Essenthos.Core.Loading.Links;
 /// </param>
 /// <param name="Added">Records naming words no link joined, which become links of their own.</param>
 /// <param name="Contradicted">
-/// Records whose Greek word the corpus already links to *different* English words. Written, because
-/// a disagreement between two people who both looked is a fact about the translation and the most
-/// interesting row in the corpus — not an error to be resolved by whoever loaded second.
+/// Records whose witness word the corpus already links to *different* words of the translation.
+/// Written, because a disagreement between two people who both looked is a fact about the
+/// translation and the most interesting row in the corpus — not an error to be resolved by whoever
+/// loaded second.
+/// </param>
+/// <param name="Unresolved">
+/// Records naming a word this corpus could not place — a verse neither text has, or a word inside a
+/// verse the two editions write too differently to line up. A record is resolved whole or not at
+/// all: half of it would be a claim about fewer words than the person made, which is a different
+/// claim.
+/// </param>
+/// <param name="Placed">
+/// Their words that became ours, on each side. It is the measure of the join itself rather than of
+/// the alignment, and it is what says whether an empty result means the two disagree or means
+/// nothing was ever compared.
 /// </param>
 internal sealed record ClearBibleOutcome(
     bool AlreadyLoaded,
@@ -27,6 +40,7 @@ internal sealed record ClearBibleOutcome(
     int Added,
     int Contradicted,
     int Unresolved,
+    ClearBiblePlacement Placed,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
@@ -35,32 +49,56 @@ internal sealed record ClearBibleOutcome(
             : $"{Records} records in {Elapsed}: {Corroborated} corroborate a link the corpus already " +
               $"holds ({(Records == 0 ? 0 : (double)Corroborated / Records):P1}), {Added} name words " +
               $"nothing joined, {Contradicted} disagree with a link already here, {Unresolved} could " +
-              "not be resolved to words on both sides";
+              $"not be resolved to words on both sides; {Placed}";
+}
+
+/// <param name="SourceWords">Their source words this corpus could name a word of its own for.</param>
+/// <param name="SourceTotal">Their source words altogether.</param>
+/// <param name="Verses">Verses the two sides could be lined up in at all.</param>
+/// <param name="Refused">Verses where they could not, so every record in them is unresolved.</param>
+internal readonly record struct ClearBiblePlacement(
+    int SourceWords,
+    int SourceTotal,
+    int TargetWords,
+    int TargetTotal,
+    int Verses,
+    int Refused)
+{
+    public override string ToString() =>
+        $"{SourceWords} of {SourceTotal} source words and {TargetWords} of {TargetTotal} target words " +
+        $"were placed, over {Verses} verses, {Refused} of which would not line up";
 }
 
 /// <summary>
-/// Clear Bible's hand-made alignment of the Berean Standard Bible, as a second opinion on links the
-/// corpus already has.
-///
-/// The Berean's own publisher states which English word renders which Greek word, and that is loaded
-/// (FTR-0182). Clear Bible's team answered the same question about the same translation, without
-/// consulting them. Measured before this was written, over the 7,925 verses where the two tokenise
-/// the text identically: of 115,016 Greek words both name, **96.6% get exactly the same English
-/// words**, 1.1% overlap, 2.3% share none.
+/// Clear Bible's hand-made alignments: a second opinion on the Berean, and the only opinion anybody
+/// has published on the Reina-Valera.
 ///
 /// <para>
-/// **So this loader mostly writes nothing.** Where the two agree it adds a claim to the link that is
-/// already there, and the link's own method and source do not change — the Berean stated it first
-/// and still states it. What changes is that the link can now say two people arrived at it, which is
-/// the cheapest evidence this corpus has and the thing DOC-0170 says it was throwing away.
+/// **The Berean.** Its own publisher states which English word renders which Greek word, and that is
+/// loaded (FTR-0182). Clear Bible's team answered the same question about the same translation,
+/// without consulting them. Measured before this was written, over the 7,925 verses where the two
+/// tokenise the text identically: of 115,016 Greek words both name, **96.6% get exactly the same
+/// English words**, 1.1% overlap, 2.3% share none. So this mostly writes nothing: where the two
+/// agree it adds a claim to the link that is already there, and the link's own method and source do
+/// not change — the Berean stated it first and still states it. What changes is that the link can
+/// now say two people arrived at it, which is the cheapest evidence this corpus has and the thing
+/// DOC-0170 says it was throwing away.
 /// </para>
 ///
 /// <para>
-/// Where they disagree, both answers are kept. A second link naming different words is not a
+/// **The Reina-Valera.** Nothing else states a single Spanish correspondence. `process = "manual"`,
+/// CC BY 4.0, whole Bible, and keyed by eBible identifier to the exact file this corpus loads. It
+/// is <c>stated-by-source</c> and carries no confidence, which is the strongest thing this corpus
+/// can say about a pair of words and is said here because a person made the claim, not because the
+/// claim is beyond question — <see cref="ClearBibleSet"/> records how the identity was checked, and
+/// PRB-0185 records what happened when the same repository's Russian set was believed on its label.
+/// </para>
+///
+/// <para>
+/// Where two sources disagree, both answers are kept. A second link naming different words is not a
 /// duplicate and does not trip the check that catches those — that check is about two links naming
-/// *the same* words, which is agreement stored as rivalry. Two people disagreeing about which
-/// English word renders a Greek one is a fact about translation, and the corpus should hold it
-/// rather than pick.
+/// *the same* words, which is agreement stored as rivalry. Two people disagreeing about which word
+/// renders which is a fact about translation, and the corpus should hold it rather than pick.
 /// </para>
 ///
 /// <para>
@@ -70,9 +108,6 @@ internal sealed record ClearBibleOutcome(
 /// </summary>
 internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLinkLoader> logger)
 {
-    private const string Source =
-        "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0";
-
     private const string LinkImport =
         """
         COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
@@ -88,41 +123,55 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
         FROM STDIN (FORMAT BINARY)
         """;
 
+    /// <summary>
+    /// How much of a verse the two editions have to write the same way before their words are put in
+    /// step at all. Below it the verse is refused whole and every record in it is unresolved: an
+    /// alignment laid on a verse the two sides do not share is a claim about the wrong words, and it
+    /// would look exactly like the correct ones.
+    /// </summary>
+    private const double SameVerse = 0.5;
+
     public async Task<ClearBibleOutcome> Load(
         string directory,
+        ClearBibleSet set,
         CancellationToken cancellationToken = default)
     {
-        var from = await Text(BereanTextSource.Slug, cancellationToken);
-        var to = await Text(NestleTextSource.Slug, cancellationToken);
+        var from = await db.Texts.SingleOrDefaultAsync(t => t.Slug == set.From, cancellationToken);
+        var to = await db.Texts.SingleOrDefaultAsync(t => t.Slug == set.To, cancellationToken);
 
-        if (from == 0 || to == 0)
+        if (from is null || to is null)
         {
-            return new ClearBibleOutcome(true, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return Nothing();
         }
 
-        var alignment = Path.Combine(directory, "data", "eng", "alignments", "BSB", "BGNT-BSB-manual.json");
-        var tokens = Path.Combine(directory, "data", "eng", "targets", "BSB", "nt_BSB.tsv");
+        var alignment = Path.Combine(directory, set.Alignment);
+        var target = Path.Combine(directory, set.Target);
+        var source = set.Source is null ? null : Path.Combine(directory, set.Source);
 
-        if (!File.Exists(alignment) || !File.Exists(tokens))
+        if (!File.Exists(alignment) || !File.Exists(target) || (source is not null && !File.Exists(source)))
         {
             logger.LogWarning(
-                "Clear Bible is not at {Directory}, so nothing corroborates the Berean tables. It is "
-                + "fetched rather than committed; scripts/fetch-clearbible.ps1 says from where", directory);
-            return new ClearBibleOutcome(true, 0, 0, 0, 0, 0, TimeSpan.Zero);
+                "Clear Bible's {Alignment} is not under {Directory}, so nothing is loaded from it. It is "
+                + "fetched rather than committed; scripts/fetch-clearbible.ps1 says from where",
+                set.Alignment, directory);
+            return Nothing();
         }
 
         if (await db.LinkClaims.AnyAsync(
-                c => c.Source == Source && c.Link!.FromTextId == from, cancellationToken))
+                c => c.Source == set.Statement && c.Link!.FromTextId == from.Id, cancellationToken))
         {
-            logger.LogInformation("Clear Bible has already spoken about the Berean; nothing to do");
-            return new ClearBibleOutcome(true, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            logger.LogInformation("Clear Bible has already spoken about {From} and {To}", set.From, set.To);
+            return Nothing();
         }
 
         var started = Stopwatch.StartNew();
-        var english = await Words(from, cancellationToken);
-        var greek = await Words(to, cancellationToken);
-        var theirs = TheirWords(tokens);
-        var existing = await Shapes(from, to, cancellationToken);
+        var placement = new Placement();
+        var theirTarget = await Placed(from, set.Join, target, placement.Target, cancellationToken);
+        var theirSource = source is null
+            ? await ByPosition(to, placement.Source, cancellationToken)
+            : await Placed(to, set.Join, source, placement.Source, cancellationToken);
+
+        var existing = await Shapes(from.Id, to.Id, cancellationToken);
 
         var claims = new List<long>();
         var drafts = new List<Draft>();
@@ -131,26 +180,26 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
         foreach (var record in ClearBibleAlignment.Records(alignment))
         {
             records++;
-            var source = Ours(record.Source, greek, id => ClearBibleAlignment.Position(id));
-            var target = Ours(record.Target, english, id => theirs.GetValueOrDefault(ClearBibleAlignment.Word(id)));
+            var witness = Ours(record.Source, theirSource);
+            var translation = Ours(record.Target, theirTarget);
 
-            if (source.Count == 0 || target.Count == 0)
+            if (witness.Count == 0 || translation.Count == 0)
             {
                 unresolved++;
                 continue;
             }
 
-            if (existing.Shapes.TryGetValue(Shape(target, source), out var link))
+            if (existing.Shapes.TryGetValue(Shape(translation, witness), out var link))
             {
                 corroborated++;
                 claims.Add(link);
                 continue;
             }
 
-            // A Greek word the corpus already joins to different English words: two people who both
-            // looked, disagreeing. Counted apart from a plain addition because the two mean
-            // different things about the corpus and a single total would hide it.
-            if (source.Any(existing.SpokenFor.Contains))
+            // A witness word the corpus already joins to different words of the translation: two
+            // people who both looked, disagreeing. Counted apart from a plain addition because the
+            // two mean different things about the corpus and a single total would hide it.
+            if (witness.Any(existing.SpokenFor.Contains))
             {
                 contradicted++;
             }
@@ -159,16 +208,19 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
                 added++;
             }
 
-            drafts.Add(new Draft(target, source));
+            drafts.Add(new Draft(translation, witness));
         }
 
-        await Write(from, to, drafts, [.. claims.Distinct()], cancellationToken);
+        await Write(from.Id, to.Id, set.Statement, drafts, [.. claims.Distinct()], cancellationToken);
 
         var outcome = new ClearBibleOutcome(
-            false, records, corroborated, added, contradicted, unresolved, started.Elapsed);
-        logger.LogInformation("Clear Bible on the Berean: {Outcome}", outcome);
+            false, records, corroborated, added, contradicted, unresolved, placement.Read(), started.Elapsed);
+        logger.LogInformation("Clear Bible on {From} against {To}: {Outcome}", set.From, set.To, outcome);
         return outcome;
     }
+
+    private static ClearBibleOutcome Nothing() =>
+        new(true, 0, 0, 0, 0, 0, default, TimeSpan.Zero);
 
     /// <summary>
     /// Their word ids as ours, dropping a record whose words this corpus does not hold. A record
@@ -177,48 +229,145 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
     /// </summary>
     private static List<long> Ours(
         IReadOnlyList<string> ids,
-        IReadOnlyDictionary<(int, int, int), List<long>> words,
-        Func<string, int> position)
+        IReadOnlyDictionary<string, List<long>> placed)
     {
         var resolved = new List<long>(ids.Count);
         foreach (var id in ids)
         {
-            if (!ClearBibleAlignment.Address(id, out var book, out var chapter, out var verse)
-                || !words.TryGetValue((book, chapter, verse), out var verseWords))
+            if (!placed.TryGetValue(ClearBibleAlignment.Word(id), out var words))
             {
                 return [];
             }
 
-            var at = position(id);
-            if (at < 1 || at > verseWords.Count)
+            foreach (var word in words)
             {
-                return [];
+                if (!resolved.Contains(word))
+                {
+                    resolved.Add(word);
+                }
             }
-
-            resolved.Add(verseWords[at - 1]);
         }
 
         return resolved;
     }
 
     /// <summary>
-    /// Their token ids against the position each holds among the words of its verse, counting only
-    /// the tokens the file does not exclude. Their punctuation is numbered like a word and marked
-    /// out of the alignment; ours is not a word at all.
+    /// Every word of a text against the position it holds among the words of its canonical verse,
+    /// keyed the way an identifier that carries its own address is read. It needs no file of theirs
+    /// because it assumes their nth word is our nth word, which holds only where the two are the
+    /// same edition tokenised the same way.
     /// </summary>
-    private static Dictionary<string, int> TheirWords(string path)
+    private async Task<Dictionary<string, List<long>>> ByPosition(
+        Database.Entities.Text text,
+        Counter counter,
+        CancellationToken cancellationToken)
     {
-        var positions = new Dictionary<string, int>(220_000, StringComparer.Ordinal);
-        var verse = string.Empty;
-        var at = 0;
+        var verses = await Words(text.Id, text.Language, canonical: true, cancellationToken);
+        var placed = new Dictionary<string, List<long>>(verses.Count * 20, StringComparer.Ordinal);
+
+        foreach (var ((book, chapter, verse), words) in verses)
+        {
+            counter.Verses++;
+            for (var at = 0; at < words.Count; at++)
+            {
+                placed[$"{book:D2}{chapter:D3}{verse:D3}{at + 1:D3}"] = [words[at].Id];
+                counter.Total++;
+                counter.Placed++;
+            }
+        }
+
+        return placed;
+    }
+
+    /// <summary>
+    /// Their tokens as our word ids, joined on the letters inside each verse.
+    ///
+    /// The two sides are numbered by different tokenisers, so a token is placed by what it is
+    /// written with and not by where it stands. A run the two divide differently is one span naming
+    /// every word on both sides of it — their <em>bə</em> and <em>rēʾšîṯ</em> against our two words,
+    /// or their two tokens against our one — which is the truth about a division and the only thing
+    /// that can be said without inventing a split.
+    /// </summary>
+    private async Task<Dictionary<string, List<long>>> Placed(
+        Database.Entities.Text text,
+        ClearBibleJoin join,
+        string tokens,
+        Counter counter,
+        CancellationToken cancellationToken)
+    {
+        if (join == ClearBibleJoin.Position)
+        {
+            return await ByPosition(text, counter, cancellationToken);
+        }
+
+        var ours = await Words(text.Id, text.Language, canonical: false, cancellationToken);
+        var placed = new Dictionary<string, List<long>>(ours.Count * 20, StringComparer.Ordinal);
+
+        foreach (var (address, theirs) in Verses(tokens, text.Language))
+        {
+            counter.Total += theirs.Count;
+            if (!ours.TryGetValue(address, out var mine))
+            {
+                continue;
+            }
+
+            counter.Verses++;
+            var spans = TaggedEdition.Align(
+                [.. theirs.Select(token => token.Folded)],
+                [.. mine.Select(word => word.Folded)]);
+
+            if (TaggedEdition.Agreement(spans, mine.Count) < SameVerse)
+            {
+                counter.Refused++;
+                continue;
+            }
+
+            foreach (var span in spans)
+            {
+                var words = new List<long>(span.CorpusTo - span.CorpusFrom);
+                for (var at = span.CorpusFrom; at < span.CorpusTo; at++)
+                {
+                    words.Add(mine[at].Id);
+                }
+
+                for (var at = span.TaggedFrom; at < span.TaggedTo; at++)
+                {
+                    placed[theirs[at].Id] = words;
+                    counter.Placed++;
+                }
+            }
+        }
+
+        return placed;
+    }
+
+    /// <summary>
+    /// Their token file as verses, in file order, with the punctuation the file marks out of the
+    /// alignment left out and everything folded to the letters it is compared by.
+    /// </summary>
+    private static IEnumerable<((int, int, int) Address, List<Token> Tokens)> Verses(
+        string path,
+        string language)
+    {
+        var address = (0, 0, 0);
+        var tokens = new List<Token>(64);
 
         foreach (var token in ClearBibleAlignment.Tokens(path))
         {
-            var address = token.Id[..8];
-            if (!string.Equals(address, verse, StringComparison.Ordinal))
+            if (!ClearBibleAlignment.Address(token.Id, out var book, out var chapter, out var verse))
             {
-                verse = address;
-                at = 0;
+                continue;
+            }
+
+            if ((book, chapter, verse) != address)
+            {
+                if (tokens.Count > 0)
+                {
+                    yield return (address, tokens);
+                }
+
+                address = (book, chapter, verse);
+                tokens = [];
             }
 
             if (token.Excluded)
@@ -226,10 +375,38 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
                 continue;
             }
 
-            positions[token.Id] = ++at;
+            tokens.Add(new Token(ClearBibleAlignment.Word(token.Id), Comparable(token.Text, language)));
         }
 
-        return positions;
+        if (tokens.Count > 0)
+        {
+            yield return (address, tokens);
+        }
+    }
+
+    /// <summary>
+    /// The form two editions are compared by: the word's own letters, folded the way the corpus
+    /// folds them for search, with the punctuation each edition attaches differently removed.
+    ///
+    /// It is <see cref="WordFolding"/> and not a second fold written here, so that a Hebrew word
+    /// loses its points and a Greek word its accents by the same rule the reader searches by. What
+    /// is added is dropping everything that is not a letter or a digit, because the two sides of
+    /// this join disagree about punctuation by construction: their tokeniser makes a token of it and
+    /// this reader hangs it on the word before.
+    /// </summary>
+    private static string Comparable(string text, string? language)
+    {
+        var folded = WordFolding.Fold(text, language);
+        var letters = new System.Text.StringBuilder(folded.Length);
+        foreach (var character in folded)
+        {
+            if (char.IsLetterOrDigit(character))
+            {
+                letters.Append(char.ToLowerInvariant(character));
+            }
+        }
+
+        return letters.ToString();
     }
 
     /// <summary>Every link of a pair by the words it names, so a second opinion can find it.</summary>
@@ -268,32 +445,52 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
     private static string Shape(IEnumerable<long> from, IEnumerable<long> to) =>
         string.Join(',', from.Order()) + '|' + string.Join(',', to.Order());
 
-    private async Task<Dictionary<(int, int, int), List<long>>> Words(
+    /// <param name="canonical">
+    /// Whether to key by where the canonical frame places a verse or by the number the text prints
+    /// for it. They differ wherever a Hebrew book is numbered the Hebrew way, and a file keyed to
+    /// one and read by the other lands a whole chapter one verse out.
+    /// </param>
+    private async Task<Dictionary<(int, int, int), List<Word>>> Words(
         int textId,
+        string language,
+        bool canonical,
         CancellationToken cancellationToken)
     {
-        var rows = await db.VerseReferences
-            .Where(reference => reference.IsPrimary && reference.Verse!.TextId == textId)
-            .SelectMany(reference => reference.Verse!.Words.Select(word => new
-            {
-                reference.CanonicalBook,
-                reference.CanonicalChapter,
-                reference.CanonicalVerse,
-                word.Id,
-                word.Position,
-            }))
-            .ToListAsync(cancellationToken);
+        var rows = canonical
+            ? await db.VerseReferences
+                .Where(reference => reference.IsPrimary && reference.Verse!.TextId == textId)
+                .SelectMany(reference => reference.Verse!.Words.Select(word => new WordRow(
+                    reference.CanonicalBook,
+                    reference.CanonicalChapter,
+                    reference.CanonicalVerse,
+                    word.Position,
+                    word.Id,
+                    word.Surface)))
+                .ToListAsync(cancellationToken)
+            : await db.Words
+                .Where(word => word.TextId == textId)
+                .Select(word => new WordRow(
+                    word.Verse!.Book!.CanonicalOrdinal,
+                    word.Verse!.ChapterNumber,
+                    word.Verse!.Number,
+                    word.Position,
+                    word.Id,
+                    word.Surface))
+                .ToListAsync(cancellationToken);
 
         return rows
-            .GroupBy(row => (row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse))
+            .GroupBy(row => (row.Book, row.Chapter, row.Verse))
             .ToDictionary(
                 group => group.Key,
-                group => group.OrderBy(row => row.Position).Select(row => row.Id).ToList());
+                group => group.OrderBy(row => row.Position)
+                    .Select(row => new Word(row.Id, Comparable(row.Surface, language)))
+                    .ToList());
     }
 
     private async Task Write(
         int fromTextId,
         int toTextId,
+        string statement,
         List<Draft> drafts,
         IReadOnlyList<long> corroborated,
         CancellationToken cancellationToken)
@@ -326,7 +523,7 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
                     await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
                     await writer.WriteAsync(stated, NpgsqlDbType.Text, cancellationToken);
                     await writer.WriteNullAsync(cancellationToken);
-                    await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
+                    await writer.WriteAsync(statement, NpgsqlDbType.Text, cancellationToken);
                 }
 
                 await writer.CompleteAsync(cancellationToken);
@@ -364,7 +561,7 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
                 await writer.WriteAsync(link, NpgsqlDbType.Bigint, cancellationToken);
                 await writer.WriteAsync(stated, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteNullAsync(cancellationToken);
-                await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(statement, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteNullAsync(cancellationToken);
             }
 
@@ -399,8 +596,37 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
         return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
-    private async Task<int> Text(string slug, CancellationToken cancellationToken) =>
-        await db.Texts.Where(t => t.Slug == slug).Select(t => t.Id).FirstOrDefaultAsync(cancellationToken);
+    private sealed record WordRow(int Book, int Chapter, int Verse, int Position, long Id, string Surface);
+
+    private sealed record Word(long Id, string Folded);
+
+    private sealed record Token(string Id, string Folded);
 
     private sealed record Draft(List<long> From, List<long> To);
+
+    private sealed class Counter
+    {
+        public int Total { get; set; }
+
+        public int Placed { get; set; }
+
+        public int Verses { get; set; }
+
+        public int Refused { get; set; }
+    }
+
+    private sealed class Placement
+    {
+        public Counter Source { get; } = new();
+
+        public Counter Target { get; } = new();
+
+        public ClearBiblePlacement Read() => new(
+            Source.Placed,
+            Source.Total,
+            Target.Placed,
+            Target.Total,
+            Math.Max(Source.Verses, Target.Verses),
+            Source.Refused + Target.Refused);
+    }
 }

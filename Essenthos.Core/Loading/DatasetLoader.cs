@@ -104,7 +104,7 @@ internal sealed class DatasetLoader(
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
             await LinkTheBerean(resources, stoppingToken);
-            await CorroborateTheBerean(resources, stoppingToken);
+            await ReadTheHandMadeAlignments(resources, stoppingToken);
             await LinkThePrintedEditions(resources, stoppingToken);
             await LinkTheGreekWitnesses(stoppingToken);
             await LinkTheHebrewWitnesses(stoppingToken);
@@ -491,17 +491,41 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// A second person's answer to the question the Berean's own tables answer. Mostly it agrees,
-    /// and where it agrees it adds a claim rather than a link — which is the first time this corpus
-    /// has been able to record that two independent methods reached the same word pair.
+    /// The alignments Clear Bible's team made by hand, which are two different things here.
+    ///
+    /// On the Berean they are a second person's answer to the question the Berean's own tables
+    /// answer: mostly it agrees, and where it agrees it adds a claim rather than a link — the first
+    /// time this corpus could record that two independent methods reached the same word pair. On
+    /// the Reina-Valera they are the whole of what anybody has said, and every record becomes a
+    /// link.
     /// </summary>
-    private async Task CorroborateTheBerean(string resources, CancellationToken cancellationToken)
+    private async Task ReadTheHandMadeAlignments(string resources, CancellationToken cancellationToken)
     {
-        status.Starting("Clear Bible on the Berean");
+        status.Starting("Clear Bible's hand-made alignments");
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<Links.ClearBibleLinkLoader>();
-        status.Record(await loader.Load(Path.Combine(resources, "ClearBible"), cancellationToken));
+        var clearBible = Path.Combine(resources, "ClearBible");
+
+        status.Record(await loader.Load(
+            clearBible,
+            ClearBible.ClearBibleSet.Berean(BereanTextSource.Slug, NestleTextSource.Slug),
+            cancellationToken));
+
+        // The Reina-Valera's, which is not a second opinion but the only one: no source states a
+        // single Spanish correspondence otherwise, and the Spanish would otherwise reach the
+        // originals the way the Slavic texts do, through this project's own model.
+        status.Record(await loader.Load(
+            clearBible,
+            ClearBible.ClearBibleSet.ReinaValeraOldTestament(
+                EbibleTextSource.ReinaValera, BhsaTextSource.Slug),
+            cancellationToken));
+
+        status.Record(await loader.Load(
+            clearBible,
+            ClearBible.ClearBibleSet.ReinaValeraNewTestament(
+                EbibleTextSource.ReinaValera, NestleTextSource.Slug),
+            cancellationToken));
     }
 
     /// <summary>
