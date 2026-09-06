@@ -220,6 +220,32 @@ public sealed class EntityAnnotationTests : IDisposable
     }
 
     /// <summary>
+    /// Somebody else's annotation is not this loader's answer to whether it has run.
+    ///
+    /// The peoples are annotated onto the gentilic words a step earlier in the pipeline, so a pass
+    /// that skipped because <em>something</em> was annotated would skip on every cold database and
+    /// leave the corpus with no name resolutions in it at all — while logging that the words already
+    /// say whom they name.
+    /// </summary>
+    [Fact]
+    public async Task AnnotationsAnotherLoaderWroteDoNotStandInForThisOnes()
+    {
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = Hebrew(7).Id,
+            EntityId = _db.Entities.Single(e => e.Slug == "moses").Id,
+            Method = LinkMethod.Lexical,
+            Confidence = 0.8,
+            Source = "the gentilic Strong's Dictionary derives, resolving to exactly one people",
+            Note = "somebody else's row",
+        });
+        await _db.SaveChangesAsync();
+
+        var named = await Load();
+        named.Should().ContainKey(Hebrew(1).Id).WhoseValue.Should().Be("moses");
+    }
+
+    /// <summary>
     /// Where the number named one record to begin with, the marking only agreed with it and there
     /// was nothing to choose. That is what <c>strong-number</c> asserts, and it is true here.
     /// </summary>
@@ -281,6 +307,30 @@ public sealed class EntityAnnotationTests : IDisposable
         await _loader.Load();
 
         var carried = await _db.WordEntities.SingleAsync(a => a.WordId == rendering.Id);
+        carried.Method.Should().Be(LinkMethod.Lexical);
+    }
+
+    /// <summary>
+    /// And a word can have a rival of its own that the word it was reached from does not.
+    ///
+    /// Nothing had to be chosen to read <em>משה</em> as Moses. But the reached word carries H3778,
+    /// which Chaldea and the Chaldeans both bear, so of that word it is not true that no judgement
+    /// was required — and the check asks the question of the word on the page, not of the one
+    /// across the link. Where the editions differ this is the ordinary case rather than a corner:
+    /// Scrivener prints a name one man bears where Nestle prints one that many do.
+    /// </summary>
+    [Fact]
+    public async Task AReachedWordWithARivalOfItsOwnSaysSoToo()
+    {
+        var reached = _db.WordAt(_english, 1, 10, 1);
+        reached.StrongNumber = "H3778";
+        _db.SaveChanges();
+        Link(Hebrew(1), reached, LinkMethod.StatedBySource, null);
+
+        await _loader.Load();
+
+        var carried = await _db.WordEntities.SingleAsync(a => a.WordId == reached.Id);
+        carried.EntityId.Should().Be(_db.Entities.Single(e => e.Slug == "moses").Id);
         carried.Method.Should().Be(LinkMethod.Lexical);
     }
 
@@ -541,8 +591,8 @@ public sealed class EntityAnnotationTests : IDisposable
     {
         var outcome = await _loader.Load();
 
-        outcome.Contested.Should().Be(1);
-        outcome.Unanswered.Should().Be(2);
+        outcome.Hebrew.Contested.Should().Be(1);
+        outcome.Hebrew.Unanswered.Should().Be(2);
         outcome.ByText.Should().ContainSingle().Which.Text.Should().Be(EntityCandidates.Witness);
     }
 }
