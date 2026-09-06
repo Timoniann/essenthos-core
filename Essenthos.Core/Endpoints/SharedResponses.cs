@@ -147,6 +147,21 @@ internal record EntityRefResponse(string Type, string Slug, string Name)
     /// a process concluding it. Null is therefore the strongest value and not the weakest.
     /// </summary>
     public double? Confidence { get; init; }
+
+    /// <summary>
+    /// Who or what said so, in the words the row carries: the file, the reasoning and its version,
+    /// or the person. <see cref="Method"/> says what kind of claim it is and this says whose it is,
+    /// and the two together are what lets a card built from a model's reading of the passage be
+    /// told from one a lexicon resolved — which is the whole difference between an encyclopedia and
+    /// a plausible-looking guess.
+    /// </summary>
+    public string? Source { get; init; }
+
+    /// <summary>
+    /// The route or the reason, where the row carries one: the number the resolution went through,
+    /// the word it was carried from, or the sentence a reading gave for its answer.
+    /// </summary>
+    public string? Note { get; init; }
 }
 
 /// <param name="OriginalWordIds">

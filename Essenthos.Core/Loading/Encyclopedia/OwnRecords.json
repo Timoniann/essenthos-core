@@ -1,0 +1,89 @@
+{
+  "decidedBy": "the project owner, 2026-09-06, on the readings the adjudication could not settle — recorded as NOT-0170",
+  "policy": "Where a verse names somebody no dataset holds, this corpus writes the record rather than leaving the word blank or bending it onto the nearest listed candidate. Where the identification is open, the record says so and names who else it might be.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's ruling of 2026-09-06 — see NOT-0170",
+  "rulings": [
+    {
+      "wordId": 6855504,
+      "reference": "Nehemiah 10:2",
+      "strongNumber": "H5838",
+      "create": {
+        "slug": "azariah-the-covenant-priest",
+        "kind": "person",
+        "name": "Azariah",
+        "distinguisher": "a priest who sealed the covenant under Nehemiah (NEH 10:2)",
+        "notes": "The encyclopedia offered two men of this name and both are centuries out: azariah-7 is the son of Hilkiah in the pre-exilic high-priestly line, and azariah-15 is Hezekiah's chief priest. Neither can be sealing a covenant in Jerusalem in the fifth century. That azariah-7 carries this verse in its notes is the source contradicting its own distinguisher rather than evidence about the man."
+      },
+      "why": "The owner ruled that a post-exilic priest the datasets do not hold is a record this corpus writes, rather than a word left blank or bent onto a man who died two centuries earlier."
+    },
+    {
+      "wordId": 6856923,
+      "reference": "Nehemiah 12:33",
+      "strongNumber": "H5838",
+      "create": {
+        "slug": "azariah-of-the-wall-dedication",
+        "kind": "person",
+        "name": "Azariah",
+        "distinguisher": "walked in the dedication of the wall (NEH 12:33)",
+        "notes": "Whether the names of Nehemiah 12:33-34 are lay princes or the heads of priestly houses is what would decide who this is, and the text does not say."
+      },
+      "alternatives": [
+        {
+          "slug": "seraiah-6",
+          "reason": "The encyclopedia assigns this verse to the head of the house who returned in 538, whom Nehemiah 7:7 also calls Azariah. Against it: the same dataset's own kinship makes his son Meraiah head of the house in Joiakim's day, so the father walking at the dedication in 445 is hard to hold."
+        }
+      ],
+      "why": "The owner ruled a new record with notes on who he might theoretically be, rather than a forced merge onto either candidate."
+    },
+    {
+      "wordId": 6881451,
+      "reference": "2 Chronicles 17:7",
+      "strongNumber": "H5662",
+      "create": {
+        "slug": "obadiah-the-teaching-prince",
+        "kind": "person",
+        "name": "Obadiah",
+        "distinguisher": "a prince of Judah sent by Jehoshaphat to teach in the cities (2CH 17:7)",
+        "notes": "The encyclopedia offered Ahab's steward in the northern kingdom and a post-exilic Levite; neither is a prince of Judah under Jehoshaphat, and Strong keeps the prince as a separate man. That the steward's record names this verse in its own distinguisher is the source merging two men, not evidence that they are one."
+      },
+      "why": "The owner ruled that where both candidates are wrong and the referent is somebody no dataset holds, this corpus writes the record."
+    },
+    {
+      "wordId": 6667754,
+      "reference": "2 Kings 9:31",
+      "strongNumber": "H2174",
+      "create": {
+        "slug": "zimri-in-jezebels-cry",
+        "kind": "person",
+        "name": "Zimri",
+        "distinguisher": "whom Jezebel names as Jehu comes through the gate (2KI 9:31)",
+        "notes": "Jezebel's words can be read two ways and the corpus records the rhetoric rather than resolving it: she may be naming the historical usurper who killed his master and reigned seven days, or she may be calling Jehu himself a second Zimri. The encyclopedia's own data carries the vocative reading, by giving Jehu a name label of Zimri."
+      },
+      "alternatives": [
+        {
+          "slug": "zimri-2",
+          "reason": "The usurper who killed Elah and reigned seven days in Tirzah, whose end is the point of the taunt. On this reading the word names him and Jehu is only being compared to him."
+        },
+        {
+          "slug": "jehu-2",
+          "reason": "The man she is speaking to. On the vocative reading the word names Jehu, addressed by the name of the usurper he is being likened to."
+        }
+      ],
+      "why": "The owner ruled a new entity whose description says what it is, with the alternatives kept beside it rather than one of them chosen."
+    },
+    {
+      "wordId": 6596381,
+      "reference": "Judges 4:11",
+      "strongNumber": "H2246",
+      "existing": "hobab",
+      "alternatives": [
+        {
+          "slug": "reuel-2",
+          "reason": "Judges 4:11 calls Hobab Moses' chothen while Numbers 10:29 calls Hobab the son of Reuel and Exodus 2:18 calls Reuel the chothen. The word carries both father-in-law and brother-in-law, so Hobab may be Moses' brother-in-law and the son of the father-in-law — or Hobab and Reuel may be one man under two names. Moses may have had more than one wife and a man may be known by more than one name, so two records with a stated doubt is truer than one forced merge."
+        }
+      ],
+      "why": "The owner ruled a person distinct from Reuel, with the doubt recorded: possibly Moses' brother-in-law, possibly Reuel himself. The encyclopedia already holds Hobab as a man distinct from Reuel, so the ruling is a naming and a doubt rather than a second record for a man who has one."
+    }
+  ]
+}

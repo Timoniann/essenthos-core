@@ -34,5 +34,21 @@
              That is why a clean checkout can load the world layer with no fetch step at all. -->
         <Content Include="..\Resources\WorldHistory\**" LinkBase="Resources\WorldHistory" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
+    <ItemGroup>
+        <!-- The record of what a second pass found wrong, what it named instead, which answers a
+             later run replaced, and the owner's rulings on what none of them could settle. Inside
+             the assembly rather than beside it: a copy of the corpus that had the model's answers
+             and not these would load the readings somebody has already established are false and
+             the answers a later run superseded, and a file that can go missing is one that
+             eventually does. -->
+        <Content Remove="Loading\Encyclopedia\RefusedReadings.json" />
+        <Content Remove="Loading\Encyclopedia\SupersededReadings.json" />
+        <Content Remove="Loading\Encyclopedia\OwnRecords.json" />
+        <Content Remove="Loading\Encyclopedia\ReviewRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\RefusedReadings.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\SupersededReadings.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\OwnRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\ReviewRecords.json" />
+    </ItemGroup>
 
 </Project>

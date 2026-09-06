@@ -67,6 +67,8 @@ builder.Services.AddScoped<UssherAnnalsLoader>();
 builder.Services.AddScoped<OpenBiblePlaceLoader>();
 builder.Services.AddScoped<WorldHistoryLoader>();
 builder.Services.AddScoped<EntityAnnotationLoader>();
+builder.Services.AddScoped<OwnRecordLoader>();
+builder.Services.AddScoped<SenseReadingLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();

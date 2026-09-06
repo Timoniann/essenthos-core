@@ -172,6 +172,7 @@ internal static class EnumSpelling
         LinkMethod.Lexical => "lexical",
         LinkMethod.Aligner => "aligner",
         LinkMethod.Manual => "manual",
+        LinkMethod.ModelReading => "model-reading",
         _ => throw Unmapped(value),
     };
 
@@ -182,6 +183,7 @@ internal static class EnumSpelling
         "lexical" => LinkMethod.Lexical,
         "aligner" => LinkMethod.Aligner,
         "manual" => LinkMethod.Manual,
+        "model-reading" => LinkMethod.ModelReading,
         _ => throw Unreadable<LinkMethod>(stored),
     };
 

@@ -21,6 +21,14 @@ namespace Essenthos.Core.Endpoints;
 /// answer for the twenty-three men called Zechariah and the reason the reader can trust the card
 /// when it does appear.
 /// </para>
+///
+/// <para>
+/// A model's reading of the passage stands below every resolution the lexicon made, so the readings
+/// can only add answers where there were none and can never take one away: a word the numbers
+/// already settled shows the same person it showed before any reading was loaded. The card says
+/// which of the two it is — the method, the confidence and the source travel with it — because a
+/// reader who cannot tell a reading from a resolution is being asked to trust both equally.
+/// </para>
 /// </summary>
 internal static class Annotations
 {
@@ -42,7 +50,8 @@ internal static class Annotations
         var rows = await db.WordEntities
             .Where(a => ids.Contains(a.WordId))
             .Select(a => new Claimed(
-                a.WordId, a.Method, a.Confidence, a.Entity!.Kind, a.Entity.Slug, a.Entity.Name))
+                a.WordId, a.Method, a.Confidence, a.Source, a.Note,
+                a.Entity!.Kind, a.Entity.Slug, a.Entity.Name))
             .ToListAsync(cancellationToken);
 
         return Settle(rows);
@@ -87,9 +96,18 @@ internal static class Annotations
         {
             Method = EnumSpelling.Of(claimed.Method),
             Confidence = claimed.Confidence,
+            Source = claimed.Source,
+            Note = claimed.Note,
         };
 
     /// <summary>What a claim about one word says, flattened for the pick.</summary>
     private sealed record Claimed(
-        long WordId, LinkMethod Method, double? Confidence, EntityKind Kind, string Slug, string Name);
+        long WordId,
+        LinkMethod Method,
+        double? Confidence,
+        string Source,
+        string? Note,
+        EntityKind Kind,
+        string Slug,
+        string Name);
 }
