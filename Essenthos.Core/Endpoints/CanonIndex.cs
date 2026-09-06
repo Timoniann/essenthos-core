@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Endpoints;
@@ -119,16 +119,34 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
             using var scope = scopes.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            var texts = await db.Texts
-                .OrderBy(t => t.Slug)
-                .Select(t => new
+            // Whether a text has any links at all is asked one text at a time, on purpose. Written
+            // as a correlated subquery inside the projection below, it is evaluated once per row
+            // of the join — 586 times, once for every book of every text — and each evaluation
+            // scans the 4.9-million-row link table, because a filter that ORs two columns can use
+            // neither index. That was 46 seconds against a 30-second command timeout: /v1/corpora
+            // stopped answering the moment Swete's 51 books pushed it over. Asked here it is
+            // twenty-six index probes over thirteen texts, and each one is a millisecond.
+            var linked = new HashSet<int>();
+            foreach (var id in await db.Texts.Select(t => t.Id).ToListAsync(cancellationToken))
+            {
+                if (await db.Links.AnyAsync(l => l.FromTextId == id, cancellationToken)
+                    || await db.Links.AnyAsync(l => l.ToTextId == id, cancellationToken))
                 {
-                    t.Id,
-                    t.Slug,
-                    Books = t.Books.Select(b => b.CanonicalOrdinal).OrderBy(ordinal => ordinal).ToList(),
-                    Linked = db.Links.Any(l => l.FromTextId == t.Id || l.ToTextId == t.Id),
-                })
-                .ToListAsync(cancellationToken);
+                    linked.Add(id);
+                }
+            }
+
+            var texts = (await db.Texts
+                    .OrderBy(t => t.Slug)
+                    .Select(t => new
+                    {
+                        t.Id,
+                        t.Slug,
+                        Books = t.Books.Select(b => b.CanonicalOrdinal).OrderBy(ordinal => ordinal).ToList(),
+                    })
+                    .ToListAsync(cancellationToken))
+                .Select(t => new { t.Id, t.Slug, t.Books, Linked = linked.Contains(t.Id) })
+                .ToList();
 
             _chapterCounts = (await db.VerseReferences
                     .GroupBy(r => r.CanonicalBook)
