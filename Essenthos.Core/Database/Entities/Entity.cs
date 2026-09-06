@@ -66,7 +66,99 @@ public class Entity
 
     public ICollection<EntityVerse> Verses { get; set; } = [];
 
+    /// <summary>What established this record, where anything beyond its dataset did.</summary>
+    public ICollection<EntityClaim> Claims { get; set; } = [];
+
+    /// <summary>Who else this might be, where nobody can tell. Usually empty, and that is the point.</summary>
+    public ICollection<EntityAlternative> Alternatives { get; set; } = [];
+
     public override string ToString() => $"Entity({Kind} {Slug})";
+}
+
+/// <summary>
+/// What established a record, for the records this corpus writes itself.
+///
+/// <see cref="Entity.Source"/> answers the question for a record that was imported: BibleData says
+/// so, and a dataset's statement carries no confidence because it is testimony rather than a
+/// conclusion. It cannot answer it for a record that exists because a verse names somebody no
+/// dataset holds — there the honest answer is a method, a confidence and whoever decided, which is
+/// three fields and not one.
+///
+/// <para>
+/// So this is <see cref="LinkClaim"/>'s shape a third time, and deliberately so: the same four
+/// provenance constraints, the same vocabulary of methods, the same rule that an inference carries
+/// a number and a statement does not. A record with no claim is one whose <see cref="Entity.Source"/>
+/// is the whole answer, which is every record any dataset supplied.
+/// </para>
+/// </summary>
+[Index(nameof(EntityId))]
+[Index(nameof(EntityId), nameof(Method), nameof(Source), IsUnique = true)]
+public class EntityClaim
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int EntityId { get; set; }
+
+    public Entity? Entity { get; set; }
+
+    public LinkMethod Method { get; set; }
+
+    /// <summary>Null exactly where a person or a source stated it, as everywhere else here.</summary>
+    public double? Confidence { get; set; }
+
+    public required string Source { get; set; }
+
+    /// <summary>Why this record exists, in a sentence a reader can weigh.</summary>
+    public string? Note { get; set; }
+
+    public override string ToString() => $"EntityClaim({Method} on entity {EntityId})";
+}
+
+/// <summary>
+/// Who else a record might be, where the evidence does not decide.
+///
+/// Judges 4:11 calls Hobab Moses' father-in-law and Numbers 10:29 calls him the son of Reuel, whom
+/// Exodus 2:18 calls the father-in-law; the Hebrew word carries both father-in-law and
+/// brother-in-law, and the question is old and open. A corpus that must answer it picks one and
+/// looks certain. A corpus that may not answer it says nothing and looks empty. This is the third
+/// thing: the record names the man, and names the man it might instead be, and says why nobody can
+/// tell.
+///
+/// <para>
+/// It is on the record rather than on the occurrence because it is a statement about the person —
+/// <em>this Hobab may be Reuel under a second name</em> is true wherever he is named, not only in
+/// the verse that raised it. Where the alternative is somebody the encyclopedia does not hold,
+/// <see cref="AlternativeEntityId"/> is null and <see cref="Describes"/> is all there is, which is
+/// the same shape as the rest of this corpus's silences.
+/// </para>
+/// </summary>
+[Index(nameof(EntityId))]
+public class EntityAlternative
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int EntityId { get; set; }
+
+    public Entity? Entity { get; set; }
+
+    public int? AlternativeEntityId { get; set; }
+
+    public Entity? Alternative { get; set; }
+
+    /// <summary>The alternative in words, for one the encyclopedia holds no record of.</summary>
+    public string? Describes { get; set; }
+
+    /// <summary>Why it is open, which is the part a reader is actually owed.</summary>
+    public required string Reason { get; set; }
+
+    public required string Source { get; set; }
+
+    public override string ToString() =>
+        $"EntityAlternative({EntityId} may be {AlternativeEntityId?.ToString() ?? Describes})";
 }
 
 /// <summary>

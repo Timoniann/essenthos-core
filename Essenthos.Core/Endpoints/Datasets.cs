@@ -340,6 +340,11 @@ public static class Datasets
                 "the words left over once the Strong numbers were paired",
                 "the untagged English function words",
                 "the consonants both Hebrew witnesses write",
+                "a model's reading of the verse, for the names no number settles — carrying the "
+                + "model, the prompt version, the date of the run and a confidence measured against "
+                + "a second pass over the same answers",
+                "records written for people a verse names and no dataset holds, each with the verse "
+                + "it rests on and, where the identification is open, who else it might be",
             ]),
     ];
 

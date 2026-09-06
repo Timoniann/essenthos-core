@@ -349,6 +349,26 @@ internal static class EncyclopediaEndpoints
                 .OrderByDescending(row => row.Mentions)
                 .ToListAsync(cancellationToken);
 
+            // What established the record, and who else it might be. Both are empty for every
+            // record a dataset supplied, which is nearly all of them — the cost is two indexed
+            // reads that come back with nothing, and the gain is that a record this corpus wrote
+            // for itself can never reach a reader looking like one it merely carried.
+            var established = await db.EntityClaims
+                .Where(c => c.EntityId == entity.Id)
+                .Select(c => new { c.Method, c.Confidence, c.Source, c.Note })
+                .ToListAsync(cancellationToken);
+
+            var alternatives = await db.EntityAlternatives
+                .Where(a => a.EntityId == entity.Id)
+                .Select(a => new EntityAlternativeResponse(
+                    a.Alternative == null ? null : a.Alternative.Slug,
+                    a.Alternative == null ? null : a.Alternative.Name,
+                    a.Alternative == null ? null : a.Alternative.Distinguisher,
+                    a.Describes,
+                    a.Reason,
+                    a.Source))
+                .ToListAsync(cancellationToken);
+
             return Results.Ok(new EntityResponse(
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
@@ -375,7 +395,13 @@ internal static class EncyclopediaEndpoints
                 [
                     .. stated.Select(row => new EntityReferenceSourceResponse(
                         Datasets.Of(row.Source), row.Source, row.References, row.Mentions)),
-                ]));
+                ],
+                [
+                    .. established.Select(c => new EntityClaimResponse(
+                        EnumSpelling.Of(c.Method), c.Confidence, c.Source, Datasets.Of(c.Source), c.Note)),
+                ],
+                alternatives,
+                alternatives.Count > 0));
         });
 
         routes.MapGet("/entities/{slug}/references", async (
@@ -920,6 +946,21 @@ internal record EntityCoverageResponse(int Canon, IList<EntityLayerCoverageRespo
 /// entity; 1,417 New Testament namings use a word the New Testament gives both, and which of the
 /// two is meant is a reading of the text rather than a fact about the dataset.
 /// </param>
+/// <param name="Claims">
+/// What established this record, where anything beyond its dataset did. Empty for every record a
+/// dataset supplied, whose <paramref name="Source"/> is the whole answer; one entry, with a method
+/// and whoever decided, for a record this corpus wrote because a verse names somebody no dataset
+/// holds.
+/// </param>
+/// <param name="Alternatives">
+/// Who else this might be, where the evidence does not decide — and empty, which is the usual case,
+/// where it does. A record with alternatives is not a weaker record: it is one that has said out
+/// loud what a record without them is quietly assuming.
+/// </param>
+/// <param name="Unsettled">
+/// Whether the identification is open. Derived from <paramref name="Alternatives"/> rather than
+/// stored beside it, so the flag and the list cannot come apart.
+/// </param>
 internal record EntityResponse(
     string Slug,
     string Kind,
@@ -939,7 +980,33 @@ internal record EntityResponse(
     IList<EntityNameResponse> Names,
     IList<EntityRelationshipResponse> Relationships,
     IList<EventResponse> Events,
-    IList<EntityReferenceSourceResponse> ReferenceSources);
+    IList<EntityReferenceSourceResponse> ReferenceSources,
+    IList<EntityClaimResponse> Claims,
+    IList<EntityAlternativeResponse> Alternatives,
+    bool Unsettled);
+
+/// <param name="Confidence">
+/// How sure, and null exactly where a person or a source stated it rather than a process concluding
+/// it — the same rule the word annotations and the links follow.
+/// </param>
+internal record EntityClaimResponse(
+    string Method,
+    double? Confidence,
+    string Source,
+    string? Dataset,
+    string? Note);
+
+/// <param name="Slug">
+/// The alternative's own page, where the encyclopedia holds one. Null where it does not, in which
+/// case <paramref name="Describes"/> is all there is to say.
+/// </param>
+internal record EntityAlternativeResponse(
+    string? Slug,
+    string? Name,
+    string? Distinguisher,
+    string? Describes,
+    string Reason,
+    string Source);
 
 /// <summary>
 /// Who states that the text names this entity, and how much of the count is theirs.

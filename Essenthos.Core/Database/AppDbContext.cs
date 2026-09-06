@@ -78,6 +78,15 @@ public class AppDbContext : DbContext
     public DbSet<EntityVerse> EntityVerses { get; set; } = null!;
 
     /// <summary>
+    /// What established a record this corpus wrote itself. Empty for every record a dataset
+    /// supplied, whose <c>source</c> is the whole answer.
+    /// </summary>
+    public DbSet<EntityClaim> EntityClaims { get; set; } = null!;
+
+    /// <summary>Who else a record might be, where the evidence does not decide.</summary>
+    public DbSet<EntityAlternative> EntityAlternatives { get; set; } = null!;
+
+    /// <summary>
     /// Which word names which person or place. The encyclopedia says a verse names somebody; this
     /// says which word of it does, which is what a reader hovering a word is asking.
     /// </summary>
@@ -107,6 +116,34 @@ public class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
             entity.HasOne(r => r.To).WithMany().HasForeignKey(r => r.ToEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<EntityClaim>(entity =>
+        {
+            entity.Property(c => c.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(c => c.Entity)
+                .WithMany(e => e.Claims)
+                .HasForeignKey(c => c.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("entity_claim", t => AddProvenanceConstraints(t, "entity_claim"));
+        });
+
+        // An alternative going away must not take the record with it: the doubt is the record's,
+        // and a reader is better served by "may be somebody this corpus no longer holds" than by
+        // the whole person disappearing because a duplicate was merged away.
+        modelBuilder.Entity<EntityAlternative>(entity =>
+        {
+            entity.HasOne(a => a.Entity)
+                .WithMany(e => e.Alternatives)
+                .HasForeignKey(a => a.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(a => a.Alternative)
+                .WithMany()
+                .HasForeignKey(a => a.AlternativeEntityId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         // The claim is the dictionary's and the entity is only where it lands, so an entity going

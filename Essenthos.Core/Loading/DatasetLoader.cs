@@ -94,6 +94,8 @@ internal sealed class DatasetLoader(
             await LoadTheEncyclopedia(resources, stoppingToken);
             await ReadTheStatedKinship(stoppingToken);
             await SayWhichWordNamesWhom(stoppingToken);
+            await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
+            await ReadTheNamesNothingSettles(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -576,6 +578,34 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityAnnotationLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The people a verse names and no dataset holds. Before the readings rather than after them,
+    /// because the owner has ruled on five occurrences the readings were refused for, and those
+    /// words must already point somewhere when the reading pass declines to answer them.
+    /// </summary>
+    private async Task WriteTheRecordsNobodyElseHolds(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the records this corpus writes for itself");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<OwnRecordLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// Whom the words name that no number settles: the model's readings, as claims carrying the
+    /// model, the prompt and the date. Last, because it adds answers only where the resolutions
+    /// left none and has to see what they wrote.
+    /// </summary>
+    private async Task ReadTheNamesNothingSettles(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the model's readings of the contested names");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SenseReadingLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

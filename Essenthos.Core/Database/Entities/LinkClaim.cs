@@ -61,15 +61,26 @@ public class LinkClaim
 ///
 /// Testimony outranks inference, and a person outranks both: somebody who corrected a link by hand
 /// did it knowing what the sources said. Below that the order is how much a method knows before it
-/// starts — a stated number, then a lexicon, then a model that learned the pair from the text.
+/// starts — a stated number, then a reading of the passage, then a lexicon, then a model that
+/// learned the pair from the text.
+///
+/// <para>
+/// A model's reading sits below every stated thing and above the two methods that match forms
+/// without understanding them. That placement is what keeps it from displacing an annotation the
+/// lexicon already resolved: where a number names exactly one person, nothing a reading says can
+/// unseat it, and the reader keeps seeing the answer they saw before the readings were loaded.
+/// The numbers are ordinal and are compared only with each other, so they can be renumbered to make
+/// room without anything stored changing.
+/// </para>
 /// </summary>
 public static class ClaimStanding
 {
     public static int Of(LinkMethod method) => method switch
     {
-        LinkMethod.Manual => 5,
-        LinkMethod.StatedBySource => 4,
-        LinkMethod.StrongNumber => 3,
+        LinkMethod.Manual => 6,
+        LinkMethod.StatedBySource => 5,
+        LinkMethod.StrongNumber => 4,
+        LinkMethod.ModelReading => 3,
         LinkMethod.Lexical => 2,
         LinkMethod.Aligner => 1,
         _ => 0,
