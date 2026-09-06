@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -57,7 +57,9 @@ public sealed class EntityAnnotationTests : IDisposable
         _english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng",
             (1, 1, ["Moses"]),
             (1, 2, ["Zechariah"]),
-            (1, 8, ["Both"]));
+            (1, 8, ["Both"]),
+            (1, 9, ["Moses", "went"]),
+            (1, 10, ["strode"]));
 
         _db.SaveChanges();
 
@@ -357,6 +359,99 @@ public sealed class EntityAnnotationTests : IDisposable
 
         again.AlreadyLoaded.Should().BeTrue();
         (await _db.WordEntities.CountAsync()).Should().Be(first);
+    }
+
+    /// <summary>
+    /// The verb the aligner had nowhere else to put. Moses is named in this verse and rendered
+    /// firmly one word earlier, so the faint second reach from the same Hebrew word explains
+    /// nothing and is the aligner's leftover.
+    /// </summary>
+    [Fact]
+    public async Task AFaintLinkIsDroppedWhereTheVerseAlreadyRendersTheNameFirmly()
+    {
+        var rendering = _db.WordAt(_english, 1, 9, 1);
+        var leftover = _db.WordAt(_english, 1, 9, 2);
+        Link(Hebrew(1), rendering, LinkMethod.Aligner, 0.98);
+        Link(Hebrew(1), leftover, LinkMethod.Aligner, 0.53);
+
+        var named = await Load();
+
+        named.Should().ContainKey(rendering.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(leftover.Id);
+    }
+
+    /// <summary>
+    /// The same faint link with nothing better beside it. Half the faint links in the corpus are
+    /// true renderings an aligner scored badly, so a floor would take Nimrod along with the
+    /// leftovers; the annotation stays, carrying what the link is worth.
+    /// </summary>
+    [Fact]
+    public async Task AFaintLinkThatIsTheOnlyRenderingIsKept()
+    {
+        var only = _db.WordAt(_english, 1, 10, 1);
+        Link(Hebrew(1), only, LinkMethod.Aligner, 0.53);
+
+        var named = await Load();
+
+        named.Should().ContainKey(only.Id).WhoseValue.Should().Be("moses");
+        var carried = await _db.WordEntities.SingleAsync(a => a.WordId == only.Id);
+        carried.Confidence.Should().BeLessThan(0.7);
+    }
+
+    /// <summary>
+    /// A translation may put a word in a different verse from the one the Hebrew stands in, so a
+    /// firm rendering elsewhere says nothing about this verse and cannot be the reason to empty it.
+    /// </summary>
+    [Fact]
+    public async Task AFirmRenderingInAnotherVerseDoesNotDropAFaintOneHere()
+    {
+        var elsewhere = _db.WordAt(_english, 1, 9, 1);
+        var only = _db.WordAt(_english, 1, 10, 1);
+        Link(Hebrew(1), elsewhere, LinkMethod.Aligner, 0.98);
+        Link(Hebrew(1), only, LinkMethod.Aligner, 0.53);
+
+        var named = await Load();
+
+        named.Should().ContainKey(only.Id).WhoseValue.Should().Be("moses");
+    }
+
+    /// <summary>
+    /// Two words of one text can render one name between them — <em>of Abinoam</em> is two words in
+    /// the King James — and both stand near each other in confidence. Dropping the weaker of any
+    /// pair would take the second half of every such rendering, which is why only a faint link
+    /// loses.
+    /// </summary>
+    [Fact]
+    public async Task BothHalvesOfOneRenderingSurvive()
+    {
+        var first = _db.WordAt(_english, 1, 9, 1);
+        var second = _db.WordAt(_english, 1, 9, 2);
+        Link(Hebrew(1), first, LinkMethod.Aligner, 0.98);
+        Link(Hebrew(1), second, LinkMethod.Aligner, 0.95);
+
+        var named = await Load();
+
+        named.Should().ContainKey(first.Id).WhoseValue.Should().Be("moses");
+        named.Should().ContainKey(second.Id).WhoseValue.Should().Be("moses");
+    }
+
+    /// <summary>
+    /// A leftover that names somebody else does not get to make the word unresolvable. The reach
+    /// this loader refuses to weigh is a disagreement between two accounts it believes, and a faint
+    /// link the verse has already outweighed is not one of those.
+    /// </summary>
+    [Fact]
+    public async Task ADroppedLeftoverDoesNotVetoTheReadingItDisagreesWith()
+    {
+        var rendering = _db.WordAt(_english, 1, 9, 1);
+        var contested = _db.WordAt(_english, 1, 9, 2);
+        Link(Hebrew(3), rendering, LinkMethod.Aligner, 0.98);
+        Link(Hebrew(3), contested, LinkMethod.Aligner, 0.53);
+        Link(Hebrew(1), contested, LinkMethod.StatedBySource, null);
+
+        var named = await Load();
+
+        named.Should().ContainKey(contested.Id).WhoseValue.Should().Be("moses");
     }
 
     /// <summary>

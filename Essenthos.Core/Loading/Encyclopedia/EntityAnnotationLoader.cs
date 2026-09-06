@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -89,6 +89,18 @@ internal sealed record AnnotationOutcome(
 /// </para>
 ///
 /// <para>
+/// **A faint link is refused where the name is already rendered.** An aligner that cannot find a
+/// home for a translated word does not say so — it attaches the word to whatever it can score, and
+/// in a verse that names somebody that is often the name. So the Ukrainian <em>зійшов</em>, which
+/// renders <em>went up</em>, was reached from Abinoam at 0.53 and underlined as the man, in a verse
+/// that had already said Abinoam confidently one word earlier. That earlier word is the test: where
+/// the Hebrew name already reaches this verse of this text by a firm link, a faint one is the
+/// aligner's leftover and is dropped. Where it does not, the faint link is the only account the
+/// corpus has and it is kept at what it is worth — <em>Шевна</em> at 0.69 is Shebnah, and a
+/// floor low enough to catch the leftovers would have taken him too.
+/// </para>
+///
+/// <para>
 /// Idempotent on its own rows the way the encyclopedia's loaders are, so it sits in the start-up
 /// pipeline and costs one indexed existence check on a corpus that already has it.
 /// </para>
@@ -132,6 +144,29 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// claiming more than was measured.
     /// </summary>
     private const double DerivedName = 0.8;
+
+    /// <summary>
+    /// The confidence below which a link is not enough on its own to put a name on a word.
+    ///
+    /// It is not a floor, and nothing is dropped for being faint alone: a faint link is often the
+    /// only account the corpus has of a word, and a great many faint ones are true. Shebnah at
+    /// 0.69 and Esau at 0.66 sit here, and so do the 250 places the Ukrainian <em>Бог</em> stands
+    /// for <em>адонай</em>, none of which reaches 0.59. What this marks is a link weak enough to
+    /// lose to a better one, and losing is the only thing that happens to it.
+    /// </summary>
+    private const double Faint = 0.70;
+
+    /// <summary>
+    /// The confidence at which a link is taken to be the rendering, so that a faint link to the
+    /// same Hebrew word in the same verse has nothing left to explain.
+    ///
+    /// The gap between this and <see cref="Faint"/> is the point. Two words of one text can both
+    /// render one Hebrew name — <em>of Abinoam</em> is two words in the King James — and a rule
+    /// that dropped the weaker of any pair would take the second half of every such rendering. A
+    /// word that is part of the rendering scores near the one beside it; a word the aligner had
+    /// nowhere else to put does not.
+    /// </summary>
+    private const double Firm = 0.90;
 
     private const string Resolution =
         "BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name";
@@ -202,11 +237,26 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// links disagree about who is named and picking between them is the thing this loader does not
     /// do. Where they agree, the strongest link decides the confidence, because being reached twice
     /// is not weaker than being reached once.
+    ///
+    /// <para>
+    /// <c>rendered</c> asks of each Hebrew name, and of each verse it reaches, how well that verse
+    /// renders it at best; <c>supported</c> then drops the reaches that are faint in a verse where
+    /// the name is already rendered firmly. The comparison is per verse rather than per text on
+    /// purpose: a link may land in a verse the translation divided differently, and a firm
+    /// rendering three verses away is no reason to take away the only account this verse has.
+    /// </para>
+    ///
+    /// <para>
+    /// It happens before unanimity rather than after, so that a leftover cannot veto a good reading
+    /// by disagreeing with it.
+    /// </para>
     /// </summary>
     private const string Carry =
         """
         WITH reached AS (
             SELECT other.word_id,
+                   w.text_id,
+                   w.verse_id,
                    seed.entity_id,
                    coalesce(l.confidence, 1.0) AS carried,
                    seed.stated,
@@ -216,13 +266,25 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
             JOIN link_word other ON other.link_id = mine.link_id AND other.side <> mine.side
+            JOIN word w ON w.id = other.word_id
+        ),
+        rendered AS (
+            SELECT through, text_id, verse_id, max(carried) AS best
+            FROM reached GROUP BY 1, 2, 3
+        ),
+        supported AS (
+            SELECT r.*
+            FROM reached r
+            JOIN rendered d ON d.through = r.through
+                 AND d.text_id = r.text_id AND d.verse_id = r.verse_id
+            WHERE r.carried >= @faint OR d.best < @firm
         ),
         unanimous AS (
-            SELECT word_id FROM reached GROUP BY 1 HAVING count(DISTINCT entity_id) = 1
+            SELECT word_id FROM supported GROUP BY 1 HAVING count(DISTINCT entity_id) = 1
         ),
         strongest AS (
             SELECT DISTINCT ON (r.word_id) r.*
-            FROM reached r JOIN unanimous u ON u.word_id = r.word_id
+            FROM supported r JOIN unanimous u ON u.word_id = r.word_id
             ORDER BY r.word_id, r.carried DESC, r.through
         )
         INSERT INTO annotation (word_id, entity_id, carried, corroborated, stated, note)
@@ -302,7 +364,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         await Run(connection, transaction, Workspace, cancellationToken);
         await Run(connection, transaction, Seed, cancellationToken,
             ("witness", Witness), ("rendering", Rendering));
-        await Run(connection, transaction, Carry, cancellationToken, ("witness", Witness));
+        await Run(connection, transaction, Carry, cancellationToken,
+            ("witness", Witness), ("faint", Faint), ("firm", Firm));
 
         var method = EnumSpelling.Of(LinkMethod.StrongNumber);
         await Run(connection, transaction, Settle, cancellationToken,
