@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Nestle;
 using Essenthos.Core.Strong;
@@ -38,11 +38,17 @@ internal static class NestleTextSource
     {
         Editors = "Eberhard Nestle",
         Edition = "The 1904 British and Foreign Bible Society printing",
-        About = "Nestle collated no manuscripts for this text: he built it by combining the printed "
-                + "editions of Tischendorf, Westcott and Hort, and Weymouth, which is why it stands "
-                + "close to the modern critical text without being one. He published the first "
-                + "edition in 1898; the British and Foreign Bible Society printed the 1904 edition "
-                + "read here, and the Nestle name has been on their Greek New Testament ever since. "
+        About = "Nestle collated no manuscripts for this text: he built it by taking, at every place "
+                + "three printed editions disagreed, whichever reading two of them shared, which is "
+                + "why it stands close to the modern critical text without being one. The three were "
+                + "Tischendorf's eighth, Westcott and Hort, and Weymouth in the first edition of "
+                + "1898; from the third edition of 1901 Weymouth was replaced by Bernhard Weiss, and "
+                + "the 1904 printing read here is on the later three. The British and Foreign Bible "
+                + "Society printed it, and the Nestle name has been on their Greek New Testament "
+                + "ever since. Two of the three voters are in this corpus, so the vote can be seen "
+                + "rather than described: of these 137,779 words, 134,058 are where Tischendorf and "
+                + "Westcott-Hort agree, 1,184 are Tischendorf's alone, 1,935 are Westcott-Hort's "
+                + "alone, and 602 are neither, which makes them Weiss's. "
                 + "The digital edition was transcribed by Diego Renato dos Santos, given its "
                 + "morphology by Ulrik Sandborg-Petersen and marked up by Jonathan Robie.",
     };
