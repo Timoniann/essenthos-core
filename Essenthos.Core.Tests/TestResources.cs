@@ -41,6 +41,14 @@ internal static class TestResources
     /// <summary>The Kulish Bible, one USFM file per book, as eBible publishes it.</summary>
     public static string KulishFolder => System.IO.Path.Combine(ResolvedPath.Value, "Kulish");
 
+    /// <summary>
+    /// One of the German or Spanish Bibles, by the folder its fetch wrote — which is also the key
+    /// its definition is declared under, so a folder name that does not exist is refused by the
+    /// reader rather than read as an empty Bible.
+    /// </summary>
+    public static string EbibleFolder(string folder) =>
+        System.IO.Path.Combine(ResolvedPath.Value, folder);
+
     /// <summary>Robinson's composite, one file per book.</summary>
     public static string TextusReceptus(string book) => Path("TextusReceptus", "parsed", $"{book}.UTR");
 

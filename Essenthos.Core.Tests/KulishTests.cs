@@ -63,6 +63,11 @@ public class UsfmNoteTests
             .Should().Equal("рече", "до", "него", "Допусти", "тепер", "Тодї", "допустив", "Його");
     }
 
+    /// <summary>
+    /// The marker here is <c>\nd</c> rather than <c>\add</c>, which the reader has since been told
+    /// about: what is checked is that an undecided marker stops the load, not that any particular
+    /// one is undecided.
+    /// </summary>
     [Fact]
     public void AnInlineMarkerItHasNotBeenToldAboutIsAnError()
     {
@@ -70,12 +75,12 @@ public class UsfmNoteTests
             """
             \id GEN
             \c 1
-            \v 1 alpha \add beta\add* gamma
+            \v 1 alpha \nd beta\nd* gamma
             """;
 
         var act = () => UsfmReader.Read(unknown);
 
-        act.Should().Throw<InvalidOperationException>().WithMessage("*add*");
+        act.Should().Throw<InvalidOperationException>().WithMessage("*nd*");
     }
 }
 
