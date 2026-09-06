@@ -1,3 +1,5 @@
+using Essenthos.Core.TextusReceptus;
+
 namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <summary>
@@ -67,6 +69,16 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// only Luz was stated, Jerusalem where only Salem was, Zoar where only Bela was — so on the part
 /// that can be checked it has yet to be caught putting a wrong place on a name.
 /// </para>
+///
+/// <para>
+/// <strong>The Greek asks the same question and needs the same discipline.</strong> The
+/// encyclopedia carries a Greek Strong number beside the Hebrew one, and it carries it on Old
+/// Testament people as freely as the other column carries Hebrew numbers on New Testament ones:
+/// sixty-seven kings of Judah, Moab and Assyria are offered as the referent of βασιλεύς, thirteen
+/// Zechariahs of Chronicles and Nehemiah for Ζαχαρίας, and nine men called Jeshua for Ἰησοῦς.
+/// Reachability is the same rule read the other way round, and it removes 335 of those candidacies
+/// over 116 numbers.
+/// </para>
 /// </summary>
 internal static class EntityCandidates
 {
@@ -75,6 +87,24 @@ internal static class EntityCandidates
     /// them, and every other text reaches an entity through the links to this one.
     /// </summary>
     public const string Witness = "bhsa";
+
+    /// <summary>
+    /// The Greek witnesses, of which there are four rather than one.
+    ///
+    /// On the Hebrew side the witness is singular because BHSA is the only text that marks a name,
+    /// and everything else is reached through it. Nothing in the Greek marks a name at all, so what
+    /// is read there is the Strong number — and every one of these four states a Strong number on
+    /// every word it prints. Reading each of them is the same statement made four times; reaching
+    /// three of them through the fourth would be an alignment standing in for a number that is
+    /// already there, and Robinson and Stephanus are not linked to Nestle at all.
+    /// </summary>
+    public static readonly string[] GreekWitnesses =
+    [
+        NestleTextSource.Slug,
+        ByzantineTextSource.Slug,
+        TextusReceptusTextSource.Slug(Edition.Scrivener1894),
+        TextusReceptusTextSource.Slug(Edition.Stephanus1550),
+    ];
 
     /// <summary>
     /// The rendering the place join is read through. It has to be a text whose words are linked to
@@ -181,6 +211,53 @@ internal static class EntityCandidates
                  SELECT 1 FROM stated s WHERE s.number = r.number AND s.entity_id = r.entity_id)
          )
          SELECT named.number, named.entity_id, named.stated
+         FROM named
+         WHERE NOT EXISTS (SELECT 1 FROM entity_verse ev WHERE ev.entity_id = named.entity_id)
+            OR EXISTS (
+                SELECT 1 FROM entity_verse ev
+                JOIN held ON held.canonical_book = ev.canonical_book
+                WHERE ev.entity_id = named.entity_id)
+         """;
+
+    /// <summary>
+    /// The books the Greek witnesses hold between them. Written apart from <see cref="Held"/>
+    /// because there are four of them and none of them is the one the Hebrew rule reads.
+    /// </summary>
+    private const string GreekHeld =
+        """
+        SELECT DISTINCT r.canonical_book
+        FROM verse v
+        JOIN text t ON t.id = v.text_id AND t.slug = ANY(@witnesses)
+        JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+        """;
+
+    /// <summary>
+    /// The Greek numbers the encyclopedia states outright, read the same way as the Hebrew ones and
+    /// refusing a comma-joined value for the same reason: the numbers of the words of a title are
+    /// not the entity's name, and <em>the lion of the tribe of Judah</em> would otherwise put the
+    /// divine name on every article, preposition and noun of that sentence.
+    /// </summary>
+    private const string GreekStated =
+        """
+        SELECT DISTINCT n.greek_strong_number AS number, n.entity_id
+        FROM entity_name n
+        WHERE n.greek_strong_number IS NOT NULL AND position(',' IN n.greek_strong_number) = 0
+        """;
+
+    /// <summary>
+    /// Every entity a Greek Strong number could be naming in the New Testament. Takes
+    /// <c>@witnesses</c>.
+    ///
+    /// There is no counterpart here to the place join the Hebrew rule needs, and that is a fact
+    /// about the geocoding dataset rather than a gap: the places it supplies are the places of the
+    /// Hebrew Bible, and the ones the New Testament also names are reached by the Greek number the
+    /// encyclopedia already records for them.
+    /// </summary>
+    public static readonly string GreekNaming =
+        $"""
+         WITH held AS ({GreekHeld}),
+         named AS ({GreekStated})
+         SELECT named.number, named.entity_id
          FROM named
          WHERE NOT EXISTS (SELECT 1 FROM entity_verse ev WHERE ev.entity_id = named.entity_id)
             OR EXISTS (

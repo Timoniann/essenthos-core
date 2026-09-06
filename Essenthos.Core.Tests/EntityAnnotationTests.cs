@@ -464,8 +464,8 @@ public sealed class EntityAnnotationTests : IDisposable
     {
         var outcome = await _loader.Load();
 
-        outcome.Contested.Should().Be(1);
-        outcome.Unanswered.Should().Be(2);
+        outcome.Hebrew.Contested.Should().Be(1);
+        outcome.Hebrew.Unanswered.Should().Be(2);
         outcome.ByText.Should().ContainSingle().Which.Text.Should().Be(EntityCandidates.Witness);
     }
 }
