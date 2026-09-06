@@ -1,4 +1,9 @@
 {
+  "AmericanStandard1901": {
+    "bytes": 19357510,
+    "files": 67,
+    "sha256": "58c1766ac84589cdc39568411f59b5bc4f7330016b42169775aa29e6c8752e5e"
+  },
   "Berean": {
     "bytes": 95435158,
     "files": 3,
@@ -34,10 +39,20 @@
     "files": 67,
     "sha256": "6d6165ae6a757bd8ae8277599a0d238c13e57bb98426804b7c616cbd8cd98f3f"
   },
+  "Geneva1599": {
+    "bytes": 4447845,
+    "files": 67,
+    "sha256": "61da4938d5f311c6932df35d2e137b0c9417d730893b1372080d1bb08d1fcbc9"
+  },
   "Glaux": {
     "bytes": 116096549,
     "files": 60,
     "sha256": "67308d9dcae41b4589ae4997a401396de5659f6d21050e9b5c4e1246267c32e5"
+  },
+  "Jps1917": {
+    "bytes": 3422072,
+    "files": 40,
+    "sha256": "845999a6f62a79df764ca9a4bcda80e37745545d2a8258d92525fec34f1c3009"
   },
   "Kulish": {
     "bytes": 6326684,
@@ -99,6 +114,11 @@
     "files": 12,
     "sha256": "9f85cf44eac3240ab4546adc3d579f3056a44bafe7a2dd27e48aff9f495b8071"
   },
+  "Tyndale1534": {
+    "bytes": 1023063,
+    "files": 28,
+    "sha256": "1c4f93ad52cb63f8a3e8f6f2b30947fa78b036302ca8fb0a9799c2527b87f54c"
+  },
   "Tischendorf": {
     "bytes": 9935139,
     "files": 31,
@@ -108,6 +128,16 @@
     "bytes": 5790928,
     "files": 1,
     "sha256": "24704247b91c44728f58c4fdeba9072308ee5b714b4bbfea568ce8bb7fe55ca9"
+  },
+  "WorldEnglish": {
+    "bytes": 19025507,
+    "files": 67,
+    "sha256": "23e31cbe6e83a4416d44f088dc7d0168fbda4f6b20ce897b75ca48331b1b98f6"
+  },
+  "Young1898": {
+    "bytes": 4435509,
+    "files": 67,
+    "sha256": "38ba1a20b4fc22f907ac438ef24a0de418ec40931cd529de1c0d1833ff47edcc"
   },
   "WestcottHort": {
     "bytes": 3883476,
