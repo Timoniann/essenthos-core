@@ -213,6 +213,36 @@ internal static class EncyclopediaEndpoints
     internal static string? Language(string? language, string? lang) =>
         string.IsNullOrWhiteSpace(language) ? lang : language;
 
+    /// <summary>
+    /// How the index is ordered. Alphabetical is the default and the only order that answers
+    /// <em>where is the name I am looking for</em>; the two counts answer <em>who does this corpus
+    /// have most to say about</em>, and they are different numbers — 28,226 verses under 30,105
+    /// namings — so a client that offers a sort has to name which of them it used.
+    ///
+    /// It is a query parameter rather than something the client does to a page because the page is
+    /// a hundred of four and a half thousand rows: sorting what arrived would order the first
+    /// hundred alphabetical names by verse count and present that as the corpus's own ranking.
+    ///
+    /// Both counts descend, because the question they answer only has a useful end at the top, and
+    /// both break ties on the name so that a page boundary falls in the same place twice.
+    /// </summary>
+    private static IQueryable<Entity> Ordered(IQueryable<Entity> entities, string? sort) => sort switch
+    {
+        "verses" => entities
+            .OrderByDescending(e => e.Verses
+                .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                             + v.CanonicalVerse)
+                .Distinct().Count())
+            .ThenBy(e => e.Name).ThenBy(e => e.Slug),
+        "mentions" => entities
+            .OrderByDescending(e => e.Verses.Count)
+            .ThenBy(e => e.Name).ThenBy(e => e.Slug),
+        _ => entities.OrderBy(e => e.Name).ThenBy(e => e.Slug),
+    };
+
+    /// <summary>The orders <c>sort</c> accepts. Anything else is refused rather than ignored.</summary>
+    private static readonly string[] Sorts = ["name", "verses", "mentions"];
+
     public static void MapEncyclopedia(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/entities", async (
@@ -220,11 +250,18 @@ internal static class EncyclopediaEndpoints
             [FromQuery] string? kind,
             [FromQuery] string? language,
             [FromQuery] string? lang,
+            [FromQuery] string? sort,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
+            if (sort is { Length: > 0 } && !Sorts.Contains(sort))
+            {
+                return Results.BadRequest(new ProblemResponse(
+                    $"\"{sort}\" is not an order for this index. Try {string.Join(", ", Sorts)}."));
+            }
+
             var entities = db.Entities.AsQueryable();
 
             if (kind is { Length: > 0 })
@@ -252,8 +289,7 @@ internal static class EncyclopediaEndpoints
             }
 
             var total = await entities.CountAsync(cancellationToken);
-            var page = await entities
-                .OrderBy(e => e.Name).ThenBy(e => e.Slug)
+            var page = await Ordered(entities, sort)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 40, 1, MostPerPage))
                 .Select(Summary)
