@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +23,18 @@ internal record BookResponse(
     int ChapterCount)
 {
     public string? Section { get; init; }
+
+    /// <summary>
+    /// What a given text calls this book, in its own language, present only when a text was asked
+    /// for. Null where that text names no book at that ordinal — six of the Reina-Valera's, for
+    /// instance — and null on the plain canon listing, which is about the canon and not about any
+    /// one witness.
+    ///
+    /// It is served because a client that has to match what a reader typed — *Йов* for Job — cannot
+    /// do it from the English name, and the alternative is a copy of the names inside the client
+    /// that drifts from the corpus the moment a text is loaded or corrected (PRB-0381, PRB-0396).
+    /// </summary>
+    public string? NameNative { get; init; }
 }
 
 /// <param name="Canon">Which canon these books are, in which order.</param>
@@ -81,6 +93,8 @@ internal static class ReadEndpoints
 
         routes.MapGet("/books", async (
             [FromQuery] string? canon,
+            [FromQuery] string? corpus,
+            AppDbContext db,
             ICanonIndex index,
             CancellationToken cancellationToken) =>
         {
@@ -89,12 +103,29 @@ internal static class ReadEndpoints
                 return ApiResults.NotFound($"There is no canon \"{canon}\". Try one of: {Canons.Names}.");
             }
 
+            // Asked for a text, the listing also says what that text calls each book. An unknown
+            // identifier is refused rather than ignored: a client that misspells it would otherwise
+            // get the English names back and no sign that its question was dropped.
+            var native = new Dictionary<int, string>();
+            if (!string.IsNullOrWhiteSpace(corpus))
+            {
+                if (await index.Text(corpus, cancellationToken) is not { } text)
+                {
+                    return ApiResults.NotFound($"There is no text \"{corpus}\".");
+                }
+
+                native = await db.Books
+                    .Where(b => b.TextId == text.Id && b.NameNative != null)
+                    .ToDictionaryAsync(b => b.CanonicalOrdinal, b => b.NameNative!, cancellationToken);
+            }
+
             var items = new List<BookResponse>(wanted.BookCount);
             foreach (var ordinal in wanted.Ordinals)
             {
                 items.Add(await Book(index, ordinal, cancellationToken) with
                 {
                     Section = Canons.SectionOf(wanted, ordinal),
+                    NameNative = native.GetValueOrDefault(ordinal),
                 });
             }
 
