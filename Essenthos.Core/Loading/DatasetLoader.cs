@@ -58,6 +58,12 @@ internal sealed class DatasetLoader(
             await Load("Brenton's Septuagint", () => SeptuagintTextSource.Read(
                 Path.Combine(resources, "Septuagint")), stoppingToken);
 
+            // The second Greek Old Testament, and a diplomatic one: Codex Vaticanus as it stands
+            // where Brenton is a text printed to be translated from. They disagree about the verse
+            // division of most of the books they share, which is the whole reason to hold both.
+            await Load("Swete's Septuagint", () => SweteTextSource.Read(
+                Path.Combine(resources, "Swete")), stoppingToken);
+
             // The Torah as the Samaritan community transmitted it, which is the first text here
             // that disagrees with BHSA about the Hebrew rather than about a translation of it.
             await Load("the Samaritan Pentateuch", () => SamaritanTextSource.Read(

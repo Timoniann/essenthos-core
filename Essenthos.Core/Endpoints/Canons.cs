@@ -89,16 +89,21 @@ internal static class Canons
         ]);
 
     /// <summary>
-    /// Every book Brenton prints, in the order the files come in. This is the canon a Septuagint
-    /// reader wants and the one TSK-0020 loads against; Susanna, Bel and the Letter of Jeremiah
-    /// stand as books here because Brenton prints them as books.
+    /// Every book the Septuagint witnesses here print, in the order they print them. This is the
+    /// canon a Septuagint reader wants; Susanna, Bel and the Letter of Jeremiah stand as books
+    /// because both editions print them as books.
+    ///
+    /// The Psalms of Solomon are in the appendix rather than among the poetry, because that is
+    /// where Swete puts them and because no church has ever received them: they are bound into the
+    /// great Greek Bibles and listed in the index of Alexandrinus, which is a fact about the
+    /// manuscripts rather than a claim about the canon. Brenton does not print them at all.
     /// </summary>
     private static readonly CanonDefinition Septuagint = new(
         "septuagint",
         "Septuagint",
         "Scripture",
-        "Every book Brenton's Septuagint prints, in its own order. Esther and Daniel are the Greek " +
-        "ones, which are longer than the Hebrew rather than different books.",
+        "Every book the Greek Old Testament prints, in its own order. Esther and Daniel are the " +
+        "Greek ones, which are longer than the Hebrew rather than different books.",
         [
             new CanonSection("law", "Law", [1, 2, 3, 4, 5]),
             new CanonSection("histories", "Histories", [
@@ -109,6 +114,7 @@ internal static class Canons
                 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
                 23, 24, 25, 67, 76, 26, 27, 77, 78,
             ]),
+            new CanonSection("appendix", "Appendix", [84]),
         ]);
 
     private static readonly CanonDefinition[] All = [Protestant, Tanakh, Catholic, Orthodox, Septuagint];
