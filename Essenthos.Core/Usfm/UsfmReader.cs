@@ -67,7 +67,7 @@ internal sealed record UsfmWord(string Surface, string Trailer)
 
 /// <summary>
 /// Just enough USFM for the texts eBible publishes in it: Brenton's Septuagint, the Kulish
-/// Ukrainian Bible, and the German and Spanish translations.
+/// Ukrainian Bible, the German and Spanish translations, and the six English ones.
 ///
 /// The file is markers at the start of a line and running text after them, and these use almost
 /// none of the standard: <c>\id</c>, <c>\c</c>, <c>\v</c>, and a handful of paragraph marks that
@@ -96,7 +96,10 @@ internal static partial class UsfmReader
     /// psalm — so their content is kept and attached to whatever verse is open.
     /// </summary>
     private static readonly HashSet<string> Passage =
-        ["p", "m", "nb", "b", "q", "q1", "q2", "pi", "mi", "d", "s", "s1", "s2", "ms", "ms1", "sp", "li"];
+    [
+        "p", "m", "nb", "b", "q", "q1", "q2", "q3", "qc", "pi", "pi1", "mi", "d", "s", "s1", "s2",
+        "ms", "ms1", "sp", "li", "li1",
+    ];
 
     /// <summary>
     /// Markers that are titles, notes or metadata: read and discarded. The two that name the book —
@@ -501,7 +504,13 @@ internal static partial class UsfmReader
     /// marks 2,079 spans that way; treating it like a note would take most of the Gospels out of
     /// the corpus. Nothing here records who speaks, so what is lost is the claim and not the text,
     /// which is the right way round to lose something.
+    ///
+    /// <c>\qs</c> is Selah, which the American Standard Version and the World English Bible each
+    /// mark 74 times. It is a word of the psalm and not a note about it — BHSA holds it as a word of
+    /// the Hebrew — so the marker goes and the word stays. <c>\bk</c> is the title of a book quoted
+    /// inside a verse, which the World English Bible uses twice, for the Book of the Wars of the
+    /// LORD; the title is part of the sentence that names it.
     /// </summary>
-    [GeneratedRegex(@"\\wj\*?")]
+    [GeneratedRegex(@"\\(?:wj|qs|bk)\*?")]
     private static partial Regex Marked();
 }

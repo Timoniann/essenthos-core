@@ -97,6 +97,18 @@ internal sealed class DatasetLoader(
                     Path.Combine(resources, folder)), stoppingToken);
             }
 
+            // The English that is not the King James in other spelling: Tyndale, which the King
+            // James is largely a revision of, and five more each made from a different underlying
+            // text or by a different method. None of them carries a usable word map, so all six
+            // reach the originals through the aligner — Young's best, because Young translated one
+            // lexeme by one lexeme, which is what makes it a check on the aligner rather than only
+            // another consumer of it.
+            foreach (var (folder, definition) in EnglishTextSource.Definitions)
+            {
+                await Load(definition.Name, () => EnglishTextSource.Read(
+                    Path.Combine(resources, folder)), stoppingToken);
+            }
+
             await LoadTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);

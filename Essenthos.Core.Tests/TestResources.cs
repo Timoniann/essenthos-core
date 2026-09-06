@@ -42,9 +42,9 @@ internal static class TestResources
     public static string KulishFolder => System.IO.Path.Combine(ResolvedPath.Value, "Kulish");
 
     /// <summary>
-    /// One of the German or Spanish Bibles, by the folder its fetch wrote — which is also the key
-    /// its definition is declared under, so a folder name that does not exist is refused by the
-    /// reader rather than read as an empty Bible.
+    /// One of the Bibles eBible publishes in USFM — German, Spanish or English — by the folder its
+    /// fetch wrote, which is also the key its definition is declared under, so a folder name that
+    /// does not exist is refused by the reader rather than read as an empty Bible.
     /// </summary>
     public static string EbibleFolder(string folder) =>
         System.IO.Path.Combine(ResolvedPath.Value, folder);
