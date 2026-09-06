@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -110,7 +110,7 @@ internal sealed class SenseReadingLoader(
     /// The text the readings were asked about. Every other text is reached from it along the links
     /// that already exist, exactly as the resolutions are.
     /// </summary>
-    public const string Witness = EntityAnnotationLoader.Witness;
+    public const string Witness = EntityCandidates.Witness;
 
     /// <summary>
     /// How often a reading the model called <c>high</c> survived being read again.
