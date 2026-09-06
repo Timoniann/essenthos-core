@@ -30,8 +30,8 @@ public sealed class CorpusCheckTests : IDisposable
         _transaction = _db.Database.BeginTransaction();
         _check = new CorpusCheck(_db, NullLogger<CorpusCheck>.Instance);
 
-        _hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["בְּ", "רֵאשִׁית", "בָּרָא"]));
-        _english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["In", "beginning", "verily"]));
+        _hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["בְּ", "רֵאשִׁית", "בָּרָא"]));
+        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["In", "beginning", "verily"]));
         _db.SaveChanges();
 
         // The Hebrew preposition is a prefix and carries no lexical content, so reach must not count
@@ -55,7 +55,7 @@ public sealed class CorpusCheckTests : IDisposable
         Link(LinkRelation.Renders, english: 1, hebrew: 1);
         Link(LinkRelation.Renders, english: 2, hebrew: 2);
 
-        var coverage = (await _check.Measure()).Coverage.Single(c => c.Text == "kjv");
+        var coverage = (await _check.Measure()).Coverage.Single(c => c.Text == "KJV");
 
         coverage.Words.Should().Be(3);
         coverage.Rendered.Should().Be(2);
@@ -74,7 +74,7 @@ public sealed class CorpusCheckTests : IDisposable
         Link(LinkRelation.Renders, english: 1, hebrew: 1);
         Link(LinkRelation.Expands, english: 3, hebrew: null);
 
-        var coverage = (await _check.Measure()).Coverage.Single(c => c.Text == "kjv");
+        var coverage = (await _check.Measure()).Coverage.Single(c => c.Text == "KJV");
 
         coverage.Rendered.Should().Be(1);
         coverage.StatedAbsent.Should().Be(1);
@@ -88,7 +88,7 @@ public sealed class CorpusCheckTests : IDisposable
     [Fact]
     public async Task ATextNothingHasBeenAlignedToIsUnpairedRatherThanSilent()
     {
-        var coverage = (await _check.Measure()).Coverage.Single(c => c.Text == "kjv");
+        var coverage = (await _check.Measure()).Coverage.Single(c => c.Text == "KJV");
 
         coverage.Unpaired.Should().Be(3);
         coverage.Silent.Should().Be(0);
@@ -105,8 +105,8 @@ public sealed class CorpusCheckTests : IDisposable
 
         var reach = (await _check.Measure()).Reach.Single();
 
-        reach.Witness.Should().Be("bhsa");
-        reach.From.Should().Be("kjv");
+        reach.Witness.Should().Be("BHSA");
+        reach.From.Should().Be("KJV");
         reach.Lexical.Should().Be(2);
         reach.Reached.Should().Be(1);
     }
@@ -156,8 +156,8 @@ public sealed class CorpusCheckTests : IDisposable
 
         var absence = (await _check.Measure()).Absence.Single();
 
-        absence.Text.Should().Be("kjv");
-        absence.Against.Should().Be("bhsa");
+        absence.Text.Should().Be("KJV");
+        absence.Against.Should().Be("BHSA");
         absence.Expands.Should().Be(1);
         absence.Omits.Should().Be(1);
         absence.Books.Should().BeEquivalentTo([new BookAbsence(1, "Genesis", 1, 1)]);

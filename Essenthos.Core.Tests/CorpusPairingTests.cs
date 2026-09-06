@@ -38,10 +38,10 @@ public sealed class CorpusPairingTests : IDisposable
         _check = new CorpusCheck(_db, NullLogger<CorpusCheck>.Instance);
 
         // One chapter, and the Greek divides it into three verses where the Hebrew has two.
-        _hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        _hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (1, 1, ["בְּ", "רֵאשִׁית", "בָּרָא"]),
             (1, 2, ["אֵת", "הַ", "שָּׁמַיִם"]));
-        _greek = Corpus.Add(_db, "lxx-brenton", TextKind.PrintedEdition, "grc",
+        _greek = Corpus.Add(_db, "LXX-BRENTON", TextKind.PrintedEdition, "grc",
             (1, 1, ["ἐν", "ἀρχῇ", "ἐποίησεν"]),
             (1, 2, ["ὁ", "θεὸς", "τὸν"]),
             (1, 3, ["οὐρανὸν"]));
@@ -61,8 +61,8 @@ public sealed class CorpusPairingTests : IDisposable
 
         var pairing = (await _check.Measure()).Pairing.Single();
 
-        pairing.Text.Should().Be("lxx-brenton");
-        pairing.Against.Should().Be("bhsa");
+        pairing.Text.Should().Be("LXX-BRENTON");
+        pairing.Against.Should().Be("BHSA");
         pairing.Chapters.Should().Be(1);
         pairing.Divided.Should().Be(1);
     }

@@ -40,10 +40,10 @@ public sealed class SuperscriptionFrameTests : IDisposable
         _loader = new SuperscriptionFrameLoader(_db, NullLogger<SuperscriptionFrameLoader>.Instance);
         _verseLinks = new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance);
 
-        _hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        _hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (3, 1, ["מִזְמֹור", "לְדָוִד"]),
             (3, 2, ["יְהוָה", "מָה"]));
-        _slavic = Corpus.Add(_db, "rusv", TextKind.Translation, "rus",
+        _slavic = Corpus.Add(_db, "RUSV", TextKind.Translation, "rus",
             (3, 1, ["Псалом", "Давида", "Господи", "как"]));
         _db.SaveChanges();
 
@@ -109,7 +109,7 @@ public sealed class SuperscriptionFrameTests : IDisposable
 
         (await Crossings()).Should().Be(0);
 
-        var apart = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (3, 1, ["A", "Psalm"]));
+        var apart = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (3, 1, ["A", "Psalm"]));
         _db.SaveChanges();
         Link(_db.WordAt(_slavic, 3, 1, 3), _db.WordAt(apart, 3, 1, 1));
 

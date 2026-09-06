@@ -31,7 +31,7 @@ public class ComposedAgreementTests
     public void APairNothingStatesBecomesALinkOfItsOwn()
     {
         var (fresh, agreeing) = CompositionPipeline.Split(
-            [new RoutedLink(12, 22, 0.7, Route.Reduced)], Stated, "kjv");
+            [new RoutedLink(12, 22, 0.7, Route.Reduced)], Stated, "KJV");
 
         fresh.Should().ContainSingle().Which.From.Should().Be(12);
         agreeing.Should().BeEmpty();
@@ -41,7 +41,7 @@ public class ComposedAgreementTests
     public void APairASourceStatesBecomesAClaimOnTheLinkThatStatesIt()
     {
         var (fresh, agreeing) = CompositionPipeline.Split(
-            [new RoutedLink(11, 21, 0.7, Route.Reduced)], Stated, "kjv");
+            [new RoutedLink(11, 21, 0.7, Route.Reduced)], Stated, "KJV");
 
         fresh.Should().BeEmpty();
         agreeing.Should().ContainSingle();
@@ -57,10 +57,10 @@ public class ComposedAgreementTests
     public void TheClaimSaysWhichReadingsReachedThePair()
     {
         var (_, agreeing) = CompositionPipeline.Split(
-            [new RoutedLink(11, 21, 0.9, Route.Written | Route.Composed)], Stated, "kjv");
+            [new RoutedLink(11, 21, 0.9, Route.Written | Route.Composed)], Stated, "KJV");
 
-        agreeing[0].Source.Should().Be(Routes.Describe(Route.Written | Route.Composed, "kjv"));
-        agreeing[0].Source.Should().Contain("through kjv");
+        agreeing[0].Source.Should().Be(Routes.Describe(Route.Written | Route.Composed, "KJV"));
+        agreeing[0].Source.Should().Contain("through KJV");
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public class ComposedAgreementTests
     public void ThePairIsReadInTheDirectionItWasWritten()
     {
         var (fresh, agreeing) = CompositionPipeline.Split(
-            [new RoutedLink(21, 11, 0.7, Route.Reduced)], Stated, "kjv");
+            [new RoutedLink(21, 11, 0.7, Route.Reduced)], Stated, "KJV");
 
         fresh.Should().ContainSingle();
         agreeing.Should().BeEmpty();

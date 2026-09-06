@@ -1,4 +1,4 @@
-using Essenthos.Core.Database.Entities.Enums;
+﻿using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Usfm;
 
@@ -33,7 +33,7 @@ internal static class KulishTextSource
     /// nobody else uses. The identifier a reader might paste in wins over the identifier that reads
     /// most accurately, and what the number means is said on the row instead.
     /// </summary>
-    public const string Slug = "ukr1871";
+    public const string Slug = "UKR1871";
 
     /// <summary>
     /// The 66 books in canonical order, by the code each file states in its <c>\id</c> line. The

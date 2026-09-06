@@ -29,11 +29,11 @@ public sealed class GreekVariantTests : IDisposable
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM text");
 
-        _nestle = Corpus.Add(_db, "nestle1904", TextKind.CriticalEdition, "grc",
+        _nestle = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc",
             (1, 1, ["τὸν", "Ἀμώς", "δὲ"]),
             (1, 2, ["Δαυείδ", "τοῦ"]),
             (1, 3, ["Ἰησοῦ"]));
-        _scrivener = Corpus.Add(_db, "scrivener1894", TextKind.PrintedEdition, "grc",
+        _scrivener = Corpus.Add(_db, "SCRIVENER1894", TextKind.PrintedEdition, "grc",
             (1, 1, ["τον", "αμων", "δε"]),
             (1, 2, ["δαβιδ"]),
             (1, 3, ["ιησου", "χριστου"]));
@@ -108,7 +108,7 @@ public sealed class GreekVariantTests : IDisposable
     {
         _db.ChangeTracker.Clear();
         return await new GreekWitnessLinkLoader(_db, NullLogger<GreekWitnessLinkLoader>.Instance)
-            .Load("nestle1904", "scrivener1894");
+            .Load("NESTLE1904", "SCRIVENER1894");
     }
 
     /// <summary>The number each word carries, by verse and place. Everything here is chapter one.</summary>

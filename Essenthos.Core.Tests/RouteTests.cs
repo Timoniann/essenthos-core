@@ -101,8 +101,8 @@ public class RouteTests
     [Fact]
     public void TheSourceNamesEveryReadingThatFoundIt()
     {
-        Routes.Describe(Route.Written | Route.Composed, "kjv")
-            .Should().Be("SIL.Machine, aligned as written and through kjv");
-        Routes.Describe(Route.Reduced, "kjv").Should().Be("SIL.Machine, aligned as stems");
+        Routes.Describe(Route.Written | Route.Composed, "KJV")
+            .Should().Be("SIL.Machine, aligned as written and through KJV");
+        Routes.Describe(Route.Reduced, "KJV").Should().Be("SIL.Machine, aligned as stems");
     }
 }

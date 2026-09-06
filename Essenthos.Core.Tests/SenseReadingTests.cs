@@ -75,7 +75,7 @@ public sealed class SenseReadingTests : IDisposable
             (1, 5, ["זכריה"]),
             (1, 6, ["משה"]));
 
-        _english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng",
+        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (1, 1, ["Zechariah"]),
             (1, 6, ["Moses"]));
 

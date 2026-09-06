@@ -41,9 +41,9 @@ public sealed class OldTestamentLinkTests : IDisposable
     /// </summary>
     private void Seed()
     {
-        _kjv = Corpus.Add(_db, "kjv", TextKind.Translation, "eng",
+        _kjv = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (1, 1, ["In", "the", "beginning", "created"]));
-        _bhsa = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        _bhsa = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (1, 1, ["בְּ", "רֵאשִׁית", "בָּרָא", "אֵת"]));
         _db.SaveChanges();
     }

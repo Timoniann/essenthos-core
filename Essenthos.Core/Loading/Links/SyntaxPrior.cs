@@ -41,7 +41,7 @@ internal enum Cohesion
 /// What it is worth is smaller than the separation above suggests, and worth saying plainly: at
 /// matched coverage on King James against BHSA it moves precision by a fifth to three tenths of a
 /// point, and content precision by about half a point. The reason is that the model's own position
-/// score already knows part of what the syntax knows. What is left is real — <c>syntax kjv bhsa</c>
+/// score already knows part of what the syntax knows. What is left is real — <c>syntax KJV BHSA</c>
 /// shows the same ordering inside every band of the model's confidence, so it is not the confidence
 /// under another name — but it is a sharpening and not a step change.
 /// </summary>
@@ -85,7 +85,7 @@ internal sealed class SyntaxPrior
     /// What each relation is worth, as the log of how much likelier it is among the proposals a
     /// source agrees with than among the ones it does not.
     ///
-    /// These are measurements, not settings. <c>syntax kjv bhsa</c> counts all 490,276 proposals the
+    /// These are measurements, not settings. <c>syntax KJV BHSA</c> counts all 490,276 proposals the
     /// model makes against the King James mapping file and reports the five rates; the weight is the
     /// log ratio of the two conditional frequencies, which is what Bayes says to add to the log odds
     /// of a claim on learning a further fact about it. Rerunning that command is how these would be
@@ -93,7 +93,7 @@ internal sealed class SyntaxPrior
     ///
     /// They are taken against the file's own statements together with the lexical matches, rather
     /// than the statements alone, because the file is silent far more often than it contradicts and
-    /// the lexical matches fill part of that silence. <c>syntax kjv bhsa --stated</c> shows what
+    /// the lexical matches fill part of that silence. <c>syntax KJV BHSA --stated</c> shows what
     /// dropping them costs: the same ordering, and a top band that falls to 40.8% for the pairs the
     /// file never mentions — which measures the file's coverage rather than the model's accuracy,
     /// and would bias every weight through it.

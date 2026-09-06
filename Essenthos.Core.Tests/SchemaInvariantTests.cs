@@ -34,7 +34,7 @@ public sealed class SchemaInvariantTests : IDisposable
     [Fact]
     public void AVerseHasOnlyOnePrimaryPlacement()
     {
-        var text = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
+        var text = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
         _db.SaveChanges();
 
         _db.VerseReferences.Add(new VerseReference
@@ -56,7 +56,7 @@ public sealed class SchemaInvariantTests : IDisposable
     [Fact]
     public void AVerseMaySpanTwoCanonicalVerses()
     {
-        var text = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
+        var text = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
         _db.SaveChanges();
 
         _db.VerseReferences.Add(new VerseReference
@@ -81,8 +81,8 @@ public sealed class SchemaInvariantTests : IDisposable
     [Fact]
     public void TwoTextsMayShareACanonicalAddress()
     {
-        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
-        var english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["beginning"]));
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["beginning"]));
         _db.SaveChanges();
 
         var here = _db.VerseReferences
@@ -100,7 +100,7 @@ public sealed class SchemaInvariantTests : IDisposable
     [Fact]
     public void SurfaceAndTrailerComeBackExactly()
     {
-        var text = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["placeholder"]));
+        var text = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["placeholder"]));
         _db.SaveChanges();
 
         var word = _db.WordAt(text, 1, 1, 1);
@@ -117,7 +117,7 @@ public sealed class SchemaInvariantTests : IDisposable
     [Fact]
     public void MorphologyIsStoredAsJsonAndCanBeQueriedByKey()
     {
-        var text = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["בָּרָא"]));
+        var text = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["בָּרָא"]));
         _db.SaveChanges();
 
         var word = _db.WordAt(text, 1, 1, 1);
@@ -139,8 +139,8 @@ public sealed class SchemaInvariantTests : IDisposable
     [Fact]
     public void RemovingATextTakesItsStructureItsWordsAndItsLinks()
     {
-        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
-        var english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["beginning"]));
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["beginning"]));
         _db.SaveChanges();
 
         var link = new Link
@@ -170,12 +170,12 @@ public sealed class SchemaInvariantTests : IDisposable
     [Fact]
     public void ASlugNamesOneTextOnly()
     {
-        Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
+        Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
         _db.SaveChanges();
 
         _db.Texts.Add(new Text
         {
-            Slug = "bhsa",
+            Slug = "BHSA",
             Name = "another BHSA",
             Kind = TextKind.ManuscriptTradition,
             Language = "hbo",
@@ -191,9 +191,9 @@ public sealed class SchemaInvariantTests : IDisposable
     [Fact]
     public void ATextMayBeTranslatedFromMoreThanOneSource()
     {
-        var masoretic = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
-        var receptus = Corpus.Add(_db, "tr-scrivener", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
-        var english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["beginning"]));
+        var masoretic = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
+        var receptus = Corpus.Add(_db, "SCRIVENER1894", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["beginning"]));
         _db.SaveChanges();
 
         _db.TextRelations.AddRange(

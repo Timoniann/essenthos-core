@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Essenthos.Core.Database;
+using Essenthos.Core.Loading;
 using Essenthos.Core.TextusReceptus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -69,7 +70,7 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
     private const double Agreed = 0.8;
 
     /// <summary>The text the lemmas are written onto. GLAUx annotates no other text we serve.</summary>
-    public const string Septuagint = "lxx-brenton";
+    public const string Septuagint = SeptuagintTextSource.Slug;
 
     public async Task<GlauxOutcome> Load(string directory, CancellationToken cancellationToken = default)
     {

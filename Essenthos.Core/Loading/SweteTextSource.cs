@@ -1,4 +1,4 @@
-using Essenthos.Core.Database.Entities.Enums;
+﻿using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Swete;
 
@@ -17,7 +17,7 @@ namespace Essenthos.Core.Loading;
 /// reading a scholar can ask about, which is what a second witness is for.
 ///
 /// <para>
-/// **Its identifier is <c>lxx-swete</c> and it has no aliases.** Nothing else that publishes this
+/// **Its identifier is <c>LXX-SWETE</c> and it has no aliases.** Nothing else that publishes this
 /// edition could be checked at its source: Accordance's module code for it could not be read, the
 /// page refusing the request, and <c>LXX</c> belongs to a different Septuagint — CrossWire serves
 /// Rahlfs under it — which is why the alias table already refuses that spelling.
@@ -30,7 +30,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class SweteTextSource
 {
-    public const string Slug = "lxx-swete";
+    public const string Slug = "LXX-SWETE";
 
     private const string FileExtension = ".txt";
 

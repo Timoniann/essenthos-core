@@ -55,7 +55,7 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 7, ["פלמוני"]),
             (1, 11, ["כשׂדים"]));
 
-        _english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng",
+        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (1, 1, ["Moses"]),
             (1, 2, ["Zechariah"]),
             (1, 8, ["Both"]),

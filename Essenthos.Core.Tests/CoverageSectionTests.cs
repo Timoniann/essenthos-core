@@ -36,14 +36,14 @@ public sealed class CoverageSectionTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _check = new CorpusCheck(_db, NullLogger<CorpusCheck>.Instance);
 
-        _hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["בְּ", "רֵאשִׁית", "בָּרָא"]));
-        _greek = Corpus.Add(_db, "nestle1904", TextKind.CriticalEdition, "grc", (1, 1, ["Βίβλος", "γενέσεως"]));
-        _english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["In", "the", "beginning"]));
-        _russian = Corpus.Add(_db, "rusv", TextKind.Translation, "rus", (1, 1, ["Книга", "родства"]));
+        _hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["בְּ", "רֵאשִׁית", "בָּרָא"]));
+        _greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 1, ["Βίβλος", "γενέσεως"]));
+        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["In", "the", "beginning"]));
+        _russian = Corpus.Add(_db, "RUSV", TextKind.Translation, "rus", (1, 1, ["Книга", "родства"]));
 
         // A printed edition holding a verse the Hebrew does not, which is the shape of the whole
         // deuterocanon and of the sixty-five verses Brenton's Daniel 3 has beyond the Masoretic.
-        _septuagint = Corpus.Add(_db, "lxx-brenton", TextKind.PrintedEdition, "grc",
+        _septuagint = Corpus.Add(_db, "LXX-BRENTON", TextKind.PrintedEdition, "grc",
             (1, 1, ["ἐν", "ἀρχῇ"]), (1, 2, ["ἡ", "δὲ", "γῆ"]));
         _db.SaveChanges();
 
@@ -70,7 +70,7 @@ public sealed class CoverageSectionTests : IDisposable
     {
         var coverage = await Coverage();
 
-        coverage.Should().Contain(c => c.Text == "lxx-brenton");
+        coverage.Should().Contain(c => c.Text == "LXX-BRENTON");
     }
 
     /// <summary>
@@ -82,8 +82,8 @@ public sealed class CoverageSectionTests : IDisposable
     {
         var coverage = await Coverage();
 
-        coverage.Single(c => c.Text == "kjv").Section.Should().Be("old testament");
-        coverage.Single(c => c.Text == "rusv").Section.Should().Be("new testament");
+        coverage.Single(c => c.Text == "KJV").Section.Should().Be("old testament");
+        coverage.Single(c => c.Text == "RUSV").Section.Should().Be("new testament");
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ public sealed class CoverageSectionTests : IDisposable
     [Fact]
     public async Task AWordInAVerseNoWitnessHoldsIsUnpairedRatherThanSilent()
     {
-        var coverage = (await Coverage()).Single(c => c.Text == "lxx-brenton");
+        var coverage = (await Coverage()).Single(c => c.Text == "LXX-BRENTON");
 
         coverage.Rendered.Should().Be(1);
         coverage.Silent.Should().Be(1);
@@ -111,7 +111,7 @@ public sealed class CoverageSectionTests : IDisposable
     public async Task AWordWithNothingToReachIsOutsideTheShareRatherThanBelowIt()
     {
         var measures = await _check.Measure();
-        var coverage = measures.Coverage.Single(c => c.Text == "lxx-brenton");
+        var coverage = measures.Coverage.Single(c => c.Text == "LXX-BRENTON");
 
         coverage.Words.Should().Be(5);
         coverage.Promised.Should().Be(2);

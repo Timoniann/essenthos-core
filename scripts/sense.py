@@ -97,8 +97,10 @@ CONTAINER = 'essenthos-api-db-1'
 DATABASE = 'essenthos_core'
 USER = 'essenthos'
 
-WITNESS = 'bhsa'
-RENDERING = 'kjv'
+# Upper case, as every identifier the corpus publishes is. Matched case-insensitively all
+# the same, so this reads a database written under either spelling.
+WITNESS = 'BHSA'
+RENDERING = 'KJV'
 
 PROMPT_VERSION = 'sense-1'
 
@@ -133,7 +135,7 @@ NAMING = f"""
     WITH held AS (
         SELECT DISTINCT r.canonical_book
         FROM verse v
-        JOIN text t ON t.id = v.text_id AND t.slug = '{WITNESS}'
+        JOIN text t ON t.id = v.text_id AND upper(t.slug) = '{WITNESS}'
         JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
     ),
     stated AS (
@@ -155,7 +157,7 @@ NAMING = f"""
                count(*) OVER (PARTITION BY mine.link_id) AS names
         FROM link_word mine
         JOIN word w ON w.id = mine.word_id
-        JOIN text t ON t.id = w.text_id AND t.slug = '{WITNESS}'
+        JOIN text t ON t.id = w.text_id AND upper(t.slug) = '{WITNESS}'
         WHERE w.morphology->>'nameType' IS NOT NULL
           AND w.strong_number IS NOT NULL AND position(',' IN w.strong_number) = 0
     ),
@@ -168,7 +170,7 @@ NAMING = f"""
         JOIN verse_reference r ON r.verse_id = hebrew.verse_id AND r.is_primary
         JOIN link_word opposite ON opposite.link_id = naming.link_id AND opposite.side <> naming.side
         JOIN word english ON english.id = opposite.word_id
-        JOIN text et ON et.id = english.text_id AND et.slug = '{RENDERING}'
+        JOIN text et ON et.id = english.text_id AND upper(et.slug) = '{RENDERING}'
         WHERE naming.names = 1
     ),
     read AS (
@@ -284,7 +286,7 @@ def contested_numbers():
                             AND ev.canonical_verse = r.canonical_verse
                        WHERE r.verse_id = w.verse_id AND r.is_primary)) AS answered
             FROM word w
-            JOIN text t ON t.id = w.text_id AND t.slug = '{WITNESS}'
+            JOIN text t ON t.id = w.text_id AND upper(t.slug) = '{WITNESS}'
             WHERE w.morphology->>'nameType' IS NOT NULL
               AND w.strong_number IN ({CONTESTED})
             GROUP BY 1
@@ -346,7 +348,7 @@ def occurrences(numbers):
                    w.morphology->>'nameType' AS name_type, w.verse_id, w.position,
                    r.canonical_book AS b, r.canonical_chapter AS c, r.canonical_verse AS v
             FROM word w
-            JOIN text t ON t.id = w.text_id AND t.slug = '{WITNESS}'
+            JOIN text t ON t.id = w.text_id AND upper(t.slug) = '{WITNESS}'
             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
             WHERE w.morphology->>'nameType' IS NOT NULL
               AND w.strong_number IN ({quoted(numbers)})
@@ -357,7 +359,7 @@ def occurrences(numbers):
             FROM verse ve
             JOIN verse_reference r ON r.verse_id = ve.id AND r.is_primary
             JOIN word w ON w.verse_id = ve.id
-            WHERE ve.text_id = (SELECT id FROM text WHERE slug = '{RENDERING}')
+            WHERE ve.text_id = (SELECT id FROM text WHERE upper(slug) = '{RENDERING}')
               AND r.canonical_book IN (SELECT DISTINCT b FROM occ)
               AND r.canonical_chapter IN (SELECT DISTINCT c FROM occ)
             GROUP BY 1, 2, 3
@@ -387,7 +389,7 @@ def occurrences(numbers):
             FROM link_word mine
             JOIN link_word other ON other.link_id = mine.link_id AND other.side <> mine.side
             JOIN word k ON k.id = other.word_id
-                 AND k.text_id = (SELECT id FROM text WHERE slug = '{RENDERING}')
+                 AND k.text_id = (SELECT id FROM text WHERE upper(slug) = '{RENDERING}')
             WHERE mine.word_id = o.word_id
         ) aligned
     """)

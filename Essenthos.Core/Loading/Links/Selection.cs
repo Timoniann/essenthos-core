@@ -32,7 +32,7 @@ internal enum Selection
 /// that the corpus thinks is a unit.
 ///
 /// Which of the three rules is right is a question with an answer, so it is measured rather than
-/// argued — <c>score kjv bhsa</c> runs all three against the correspondences the file states.
+/// argued — <c>score KJV BHSA</c> runs all three against the correspondences the file states.
 /// </summary>
 internal static class Selections
 {

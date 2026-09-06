@@ -86,7 +86,7 @@ internal static class EntityCandidates
     /// The text whose proper nouns are read rather than derived. It is the only one that marks
     /// them, and every other text reaches an entity through the links to this one.
     /// </summary>
-    public const string Witness = "bhsa";
+    public const string Witness = BhsaTextSource.Slug;
 
     /// <summary>
     /// The Greek witnesses, of which there are four rather than one.
@@ -111,7 +111,7 @@ internal static class EntityCandidates
     /// the witness's and whose names are the names the geocoding dataset spells its places with,
     /// and the King James is both.
     /// </summary>
-    public const string Rendering = "kjv";
+    public const string Rendering = Bible4uTextSource.KingJames;
 
     /// <summary>
     /// The books the text being read actually holds, which is the grain reachability is decided at.

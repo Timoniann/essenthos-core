@@ -209,7 +209,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         string greekSlug,
         CancellationToken cancellationToken = default)
     {
-        var english = await db.Texts.SingleOrDefaultAsync(t => t.Slug == "kjv", cancellationToken);
+        var english = await db.Texts.SingleOrDefaultAsync(t => t.Slug == Bible4uTextSource.KingJames, cancellationToken);
         var greek = await db.Texts.SingleOrDefaultAsync(t => t.Slug == greekSlug, cancellationToken);
         if (english is null || greek is null)
         {

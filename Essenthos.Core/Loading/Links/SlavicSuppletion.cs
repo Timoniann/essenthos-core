@@ -27,10 +27,10 @@ namespace Essenthos.Core.Loading.Links;
 /// pipeline's own operating point, one target per source word at 0.25, counting only the source
 /// words the interlinear actually speaks about:
 ///
-///     ukr -> nestle1904   off   4,083 right of 4,401 proposed   92.8 %
-///     ukr -> nestle1904   on    4,100 right of 4,479 proposed   91.5 %
-///     ukr -> bhsa         off   1,880 right of 2,113 proposed   89.0 %
-///     ukr -> bhsa         on    1,875 right of 2,118 proposed   88.5 %
+///     UBIO -> NESTLE1904   off   4,083 right of 4,401 proposed   92.8 %
+///     UBIO -> NESTLE1904   on    4,100 right of 4,479 proposed   91.5 %
+///     UBIO -> BHSA         off   1,880 right of 2,113 proposed   89.0 %
+///     UBIO -> BHSA         on    1,875 right of 2,118 proposed   88.5 %
 ///
 /// Twelve more correct pairs in 10,403, and seventy-one more wrong ones. The table buys about four
 /// wrong links for every right one it adds, and the direction is the same in all twelve
@@ -39,8 +39,8 @@ namespace Essenthos.Core.Loading.Links;
 ///
 /// <para>
 /// **So it is off**, and the switch stays rather than the code being deleted, because the
-/// measurement is the valuable part and it has to remain repeatable: <c>score ukr nestle1904
-/// --stated</c> against <c>score ukr nestle1904 --stated --suppletion</c>. A pooling that does not
+/// measurement is the valuable part and it has to remain repeatable: <c>score UBIO NESTLE1904
+/// --stated</c> against <c>score UBIO NESTLE1904 --stated --suppletion</c>. A pooling that does not
 /// pay today may pay against a different scorer — a bilingual lexical prior would ask which
 /// <em>word</em> this form belongs to, which is the question this table answers and the stemmer
 /// does not.

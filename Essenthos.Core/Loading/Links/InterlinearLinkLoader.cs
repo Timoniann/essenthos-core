@@ -86,7 +86,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
 
         var started = Stopwatch.StartNew();
         var witnesses = new Dictionary<string, int>();
-        foreach (var slug in (string[])["bhsa", "nestle1904"])
+        foreach (var slug in (string[])[BhsaTextSource.Slug, NestleTextSource.Slug])
         {
             witnesses[slug] = await Text(slug, cancellationToken);
         }
@@ -111,7 +111,9 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
                 continue;
             }
 
-            var witness = witnesses[ordinal <= BookReferences.OldTestamentBookCount ? "bhsa" : "nestle1904"];
+            var witness = witnesses[ordinal <= BookReferences.OldTestamentBookCount
+                ? BhsaTextSource.Slug
+                : NestleTextSource.Slug];
             var read = Usfm3AlignmentReader.Read(File.ReadAllText(file));
             var here = await Words(translation, ordinal.Value, cancellationToken);
             var there = await Words(witness, ordinal.Value, cancellationToken);

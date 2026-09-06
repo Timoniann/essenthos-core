@@ -200,7 +200,7 @@ internal static class StrongEndpoints
             if (corpus is not { Length: > 0 })
             {
                 return Results.BadRequest(new ProblemResponse(
-                    "Name the text whose renderings you want, as ?corpus=kjv. GET /v1/corpora lists them."));
+                    "Name the text whose renderings you want, as ?corpus=KJV. GET /v1/corpora lists them."));
             }
 
             if (await canon.Text(corpus, cancellationToken) is not { } text)

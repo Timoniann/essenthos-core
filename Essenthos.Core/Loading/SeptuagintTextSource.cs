@@ -25,7 +25,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class SeptuagintTextSource
 {
-    public const string Slug = "lxx-brenton";
+    public const string Slug = "LXX-BRENTON";
 
     /// <summary>
     /// The books Brenton prints, in the order the files come in, which is his own, with each
