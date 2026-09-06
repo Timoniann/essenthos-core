@@ -218,7 +218,7 @@ internal static class EncyclopediaEndpoints
     /// Both counts descend, because the question they answer only has a useful end at the top, and
     /// both break ties on the name so that a page boundary falls in the same place twice.
     /// </summary>
-    private static IQueryable<Entity> Ordered(IQueryable<Entity> entities, string? sort) => sort switch
+    private static IQueryable<Entity> Ordered(IQueryable<Entity> entities, string? sort, string? q) => sort switch
     {
         "verses" => entities
             .OrderByDescending(e => e.Verses
@@ -229,8 +229,41 @@ internal static class EncyclopediaEndpoints
         "mentions" => entities
             .OrderByDescending(e => e.Verses.Count)
             .ThenBy(e => e.Name).ThenBy(e => e.Slug),
-        _ => entities.OrderBy(e => e.Name).ThenBy(e => e.Slug),
+        "name" => entities.OrderBy(e => e.Name).ThenBy(e => e.Slug),
+        _ => q is { Length: > 0 } ? ByRelevance(entities, q) : entities.OrderBy(e => e.Name).ThenBy(e => e.Slug),
     };
+
+    /// <summary>
+    /// A searched index is ordered by how well the row answers what was typed, not by the alphabet.
+    ///
+    /// <c>Judah</c> matches twenty-seven rows and alphabetical order puts Ahaz, Amaziah and Asa
+    /// above the man and the tribe the reader meant, because each of them is <em>king of Judah</em>
+    /// in the sentence under their name. The order is therefore: the entity actually called that,
+    /// then the ones whose name opens with it — Judas, Judaea — then everything the word merely
+    /// occurs in.
+    ///
+    /// Every other name an entity carries counts for the first band, because Peter is Cephas and a
+    /// reader who types the other name has typed the thing itself and not a mention of it. Inside a
+    /// band the corpus's own weight breaks the tie, so the Judah with a thousand namings comes
+    /// before the Judah with two.
+    ///
+    /// Alphabetical stays the default for an unsearched index, and <c>sort=name</c> asks for it
+    /// back: a listing being paged through is a list to find a name in, and reordering that by
+    /// relevance to an empty query would be reordering it by nothing.
+    /// </summary>
+    private static IQueryable<Entity> ByRelevance(IQueryable<Entity> entities, string q)
+    {
+        var exactly = LikePatterns.Exactly(q);
+        var opening = LikePatterns.StartingWith(q);
+
+        return entities
+            .OrderBy(e =>
+                EF.Functions.ILike(e.Name, exactly) || e.Names.Any(n => EF.Functions.ILike(n.Label, exactly))
+                    ? 0
+                    : EF.Functions.ILike(e.Name, opening) ? 1 : 2)
+            .ThenByDescending(e => e.Verses.Count)
+            .ThenBy(e => e.Name).ThenBy(e => e.Slug);
+    }
 
     /// <summary>The orders <c>sort</c> accepts. Anything else is refused rather than ignored.</summary>
     private static readonly string[] Sorts = ["name", "verses", "mentions"];
@@ -280,7 +313,7 @@ internal static class EncyclopediaEndpoints
             }
 
             var total = await entities.CountAsync(cancellationToken);
-            var page = await Ordered(entities, sort)
+            var page = await Ordered(entities, sort, q)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 40, 1, MostPerPage))
                 .Select(Summary)

@@ -27,6 +27,12 @@ internal static class LikePatterns
         return Escape(value);
     }
 
+    /// <summary>Matches the column when it opens with the value, ignoring case.</summary>
+    public static string StartingWith(string value)
+    {
+        return $"{Escape(value)}%";
+    }
+
     private static string Escape(string value)
     {
         if (!NeedsEscaping(value))
