@@ -134,6 +134,37 @@ public sealed class TextProvenanceTests
     }
 
     /// <summary>
+    /// The one field that answers "on what terms may we serve this" has to be able to say
+    /// ShareAlike, and two texts have to say it. The Ohienko said public domain, which three sources
+    /// claim by copying one another and none of them by a grant; Swete said plain attribution,
+    /// because until now the enum had no value for the clause its licence actually carries.
+    ///
+    /// Checked as a pair rather than one at a time: the fault was not two wrong rows, it was a
+    /// vocabulary that could not express the answer, so both rows were as right as they could be.
+    /// </summary>
+    [Fact]
+    public void EveryShareAlikeTextSaysShareAlike()
+    {
+        All.Where(definition => definition.Licence.Contains("SA", StringComparison.OrdinalIgnoreCase))
+            .Should().OnlyContain(definition => definition.Redistribution == Redistribution.ShareAlike)
+            .And.HaveCount(2);
+
+        Of(Bible4uTextSource.Ohienko).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(SweteTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
+    }
+
+    /// <summary>
+    /// bible4u serves its three files under one notice calling them public domain, and it is right
+    /// about two of them. A shared notice is not a licence for each thing it covers.
+    /// </summary>
+    [Fact]
+    public void TheOtherTwoBible4uTextsAreStillPublicDomain()
+    {
+        Of(Bible4uTextSource.KingJames).Redistribution.Should().Be(Redistribution.PublicDomain);
+        Of(Bible4uTextSource.Synodal).Redistribution.Should().Be(Redistribution.PublicDomain);
+    }
+
+    /// <summary>
     /// A publication year alone says the wrong thing about a revised text. Every digital King James
     /// is the modern standard text, and a row reading 1611 invites a reader to quote it as the 1611
     /// printing, which it is not.

@@ -125,7 +125,7 @@ internal static class SweteTextSource
                       + "machine-readable edition. Nobody holds the text itself.",
         Licence: "CC-BY-SA-4.0",
         LicenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-        Redistribution: Redistribution.PermittedWithAttribution,
+        Redistribution: Redistribution.ShareAlike,
         TextualFamily: "Septuagint")
     {
         Editors = "Henry Barclay Swete (1835-1917), Regius Professor of Divinity at Cambridge",

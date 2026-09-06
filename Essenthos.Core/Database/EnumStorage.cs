@@ -1,4 +1,4 @@
-using Essenthos.Core.Database.Entities.Enums;
+﻿using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Essenthos.Core.Database;
@@ -115,6 +115,7 @@ internal static class EnumSpelling
         Redistribution.PublicDomain => "public-domain",
         Redistribution.Permitted => "permitted",
         Redistribution.PermittedWithAttribution => "permitted-with-attribution",
+        Redistribution.ShareAlike => "share-alike",
         Redistribution.NonCommercialOnly => "non-commercial-only",
         Redistribution.Prohibited => "prohibited",
         _ => throw Unmapped(value),
@@ -126,6 +127,7 @@ internal static class EnumSpelling
         "public-domain" => Redistribution.PublicDomain,
         "permitted" => Redistribution.Permitted,
         "permitted-with-attribution" => Redistribution.PermittedWithAttribution,
+        "share-alike" => Redistribution.ShareAlike,
         "non-commercial-only" => Redistribution.NonCommercialOnly,
         "prohibited" => Redistribution.Prohibited,
         _ => throw Unreadable<Redistribution>(stored),
