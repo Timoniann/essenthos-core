@@ -1,4 +1,5 @@
 ﻿using Essenthos.Core;
+using Essenthos.Core.ClearBible;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
 using Essenthos.Core.Endpoints;
@@ -62,6 +63,7 @@ builder.Services.AddScoped<Essenthos.Core.Glaux.SeptuagintStrongLoader>();
 builder.Services.AddScoped<InterlinearLinkLoader>();
 builder.Services.AddScoped<BereanLinkLoader>();
 builder.Services.AddScoped<ClearBibleLinkLoader>();
+builder.Services.AddScoped<TaggedTextLinkLoader>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<UssherAnnalsLoader>();
@@ -198,6 +200,51 @@ if (args is ["syntax", var syntaxFrom, var syntaxTo, ..])
         Path.Combine(Path.GetTempPath(), "essenthos-align", $"{syntaxOne}-{syntaxTwo}"),
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
         args.Contains("--stated")));
+    return 0;
+}
+
+// A translation that arrived carrying its own Strong numbers, matched to a witness that carries
+// them too — the one route Luther 1912 has to the originals that is not our own inference. It is a
+// batch run for the same reason `align` is: which pairs are worth drawing is a judgement about the
+// texts, and a text tagged in one series says nothing about the other.
+if (args is ["strong", var strongFrom, var strongTo, ..])
+{
+    using var strongScope = app.Services.CreateScope();
+    var tagged = strongScope.ServiceProvider.GetRequiredService<TaggedTextLinkLoader>();
+    app.Logger.LogInformation(
+        "{Outcome}", await tagged.Load(Identifier(strongFrom), Identifier(strongTo)));
+
+    // The verse links for the pair just written. The startup pipeline does this for pairs the
+    // alignment commands leave behind, and a command that cannot be followed by a restart has to
+    // do it itself: without them every word link of a new pair reads as crossing a verse boundary
+    // nothing backs, which is an integrity check the corpus keeps at zero.
+    app.Logger.LogInformation(
+        "{Outcome}", await strongScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    return 0;
+}
+
+// Clear Bible's hand-made alignments, as a batch run for the same reason the startup pipeline is
+// not always available: a corpus already loaded gets them without a restart. Idempotent per set,
+// like the pipeline step it shares a loader with.
+if (args is ["clearbible", ..])
+{
+    using var clearScope = app.Services.CreateScope();
+    var clearBible = clearScope.ServiceProvider.GetRequiredService<ClearBibleLinkLoader>();
+    var folder = Path.Combine(
+        ResourcePaths.Read(app.Configuration, app.Environment.ContentRootPath), "ClearBible");
+
+    foreach (var set in new[]
+             {
+                 ClearBibleSet.Berean(BereanTextSource.Slug, NestleTextSource.Slug),
+                 ClearBibleSet.ReinaValeraOldTestament(EbibleTextSource.ReinaValera, BhsaTextSource.Slug),
+                 ClearBibleSet.ReinaValeraNewTestament(EbibleTextSource.ReinaValera, NestleTextSource.Slug),
+             })
+    {
+        app.Logger.LogInformation("{Outcome}", await clearBible.Load(folder, set));
+    }
+
+    app.Logger.LogInformation(
+        "{Outcome}", await clearScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
     return 0;
 }
 

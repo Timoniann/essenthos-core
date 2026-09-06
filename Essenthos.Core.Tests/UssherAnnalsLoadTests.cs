@@ -1,5 +1,6 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -116,6 +117,79 @@ public sealed class UssherAnnalsLoadTests : IDisposable
         (await _db.EventDates
             .Where(d => d.Event!.Source == UssherAnnalsLoader.Source)
             .AllAsync(d => d.Citation != null && d.Citation.StartsWith("¶")))
+        .Should().BeTrue();
+
+    /// <summary>
+    /// The one thing in the Annals that states an order. Ussher's year is the only date he gives and
+    /// his paragraph number is where he put the paragraph, so the number is carried as a position
+    /// rather than thrown away after it has been used to build a slug.
+    /// </summary>
+    [Fact]
+    public async Task EveryAnnalCarriesTheParagraphNumberAsThePositionItsSourceStated()
+    {
+        var annals = await _db.Events
+            .Where(e => e.Source == UssherAnnalsLoader.Source)
+            .Select(e => new
+            {
+                e.SequenceInYear,
+                Citation = e.Dates.Select(d => d.Citation).FirstOrDefault(),
+            })
+            .ToListAsync();
+
+        annals.Should().NotBeEmpty().And.OnlyContain(e => e.SequenceInYear != null);
+        annals.Where(e => e.Citation != null).Should()
+            .OnlyContain(e => e.Citation == "¶" + e.SequenceInYear);
+    }
+
+    /// <summary>
+    /// PRB-0156. A year is a tie here rather than an ordering: ninety-five paragraphs land on AD 33
+    /// and Ussher writes <em>the next day</em> and <em>on the third day</em> between them, so the
+    /// order he stated is the paragraph order and the year says nothing about it. He dates a
+    /// hundred and twenty-four paragraphs to that year; ninety-five of them cite a verse the corpus
+    /// holds, and the rest are not loaded.
+    ///
+    /// Two things this deliberately does not claim, both measured rather than supposed. Sorting the
+    /// slug does not disagree with him <em>today</em>: only the AD paragraphs are loaded, they run
+    /// 6142 to 7000, and no year holds numbers of two different widths, so <c>ussher-6401</c> and
+    /// its neighbours sort as text exactly as they sort as numbers. And no unsequenced row falls
+    /// anywhere here, because the busiest year holds nothing but Annals. Both of those are
+    /// accidents of what is loaded, so both are pinned where they can be built instead of hoped
+    /// for — <see cref="EventEraTests.WhatNoSourceOrderedIsDrawnAfterWhatOneDid"/>.
+    /// </summary>
+    [Fact]
+    public async Task AYearFullOfAnnalsIsDrawnInTheOrderUssherStated()
+    {
+        var busiest = await _db.Events
+            .Where(e => e.Source == UssherAnnalsLoader.Source && e.YearFromCreation != null)
+            .GroupBy(e => e.YearFromCreation)
+            .OrderByDescending(g => g.Count())
+            .Select(g => new { Year = g.Key, Events = g.Count() })
+            .FirstAsync();
+
+        busiest.Events.Should().BeGreaterThan(90, "the tie being broken here is a real one");
+
+        var drawn = await EncyclopediaEndpoints
+            .InOrder(_db.Events.Where(e => e.YearFromCreation == busiest.Year))
+            .Select(e => new { e.Slug, e.SequenceInYear })
+            .ToListAsync();
+
+        var stated = drawn.TakeWhile(e => e.SequenceInYear != null).ToList();
+
+        stated.Should().HaveCount(busiest.Events, "what a source ordered comes before what nothing did");
+        stated.Select(e => e.SequenceInYear!.Value).Should().BeInAscendingOrder();
+        drawn.Skip(stated.Count).Should().NotContain(e => e.SequenceInYear != null);
+    }
+
+    /// <summary>
+    /// Everything else keeps its silence. A year holding ninety-five events is the honest report of
+    /// a source that dated them and ordered none of them, and filling a position in would be
+    /// asserting an order nobody stated — the failure PRB-0156 asks not to trade the tie for.
+    /// </summary>
+    [Fact]
+    public async Task NothingASourceLeftUnorderedIsGivenAPosition() =>
+        (await _db.Events
+            .Where(e => e.Source != UssherAnnalsLoader.Source)
+            .AllAsync(e => e.SequenceInYear == null))
         .Should().BeTrue();
 
     /// <summary>

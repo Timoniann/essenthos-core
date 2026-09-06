@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Endpoints;
 using FluentAssertions;
@@ -134,11 +134,61 @@ public sealed class EventEraTests : IDisposable
         response.Era.Should().Be(era);
     }
 
+    /// <summary>
+    /// Whether a source put this event anywhere inside its year travels to the client, because the
+    /// list it arrives in is ordered either way and nothing else in the payload says which of the
+    /// two orders it is. A reader who cannot tell reads an arbitrary order as a chronology.
+    /// </summary>
+    [Theory]
+    [InlineData(6298, true)]
+    [InlineData(null, false)]
+    public async Task WhetherASourceStatedWhereItFallsInsideItsYearReachesTheClient(
+        int? sequenceInYear, bool sequenced)
+    {
+        Dated("placed", yearFromCreation: 3991, statedBceYear: null, sequenceInYear: sequenceInYear);
+
+        (await Response("placed")).Sequenced.Should().Be(sequenced);
+    }
+
+    /// <summary>
+    /// PRB-0156's other half, and the one the corpus cannot ask for itself: an event nobody put
+    /// anywhere inside its year is drawn after every event somebody did, rather than wherever the
+    /// database happens to sort a null.
+    ///
+    /// Built here rather than read off the Annals because the busiest year in the corpus holds
+    /// nothing but Annals and every Annal is sequenced, so the mixed year this is about does not
+    /// exist yet — it appears the moment a second dated source lands in one of Ussher's years.
+    /// </summary>
+    [Fact]
+    public async Task WhatNoSourceOrderedIsDrawnAfterWhatOneDid()
+    {
+        const int oneYear = 3991;
+
+        // The pair a text sort puts backwards — ordering-1000 precedes ordering-999 — which is what
+        // the slug tiebreak would do and no loaded row exercises, every paragraph number being four
+        // digits wide.
+        Dated("ordering-none", oneYear, statedBceYear: null);
+        Dated("ordering-1000", oneYear, statedBceYear: null, sequenceInYear: 1000);
+        Dated("ordering-999", oneYear, statedBceYear: null, sequenceInYear: 999);
+
+        var drawn = await EncyclopediaEndpoints
+            .InOrder(_db.Events.Where(e => e.Slug.StartsWith("ordering-")))
+            .Select(e => e.Slug)
+            .ToListAsync();
+
+        drawn.Should().Equal("ordering-999", "ordering-1000", "ordering-none");
+    }
+
     private async Task<EventResponse> Response(string slug) =>
         EncyclopediaEndpoints.Event(
             await _db.Events.Where(e => e.Slug == slug).Select(EncyclopediaEndpoints.Rows).SingleAsync());
 
-    private void Dated(string slug, int yearFromCreation, int? statedBceYear, int? ussherYear = null)
+    private void Dated(
+        string slug,
+        int yearFromCreation,
+        int? statedBceYear,
+        int? ussherYear = null,
+        int? sequenceInYear = null)
     {
         var happened = new Event
         {
@@ -147,6 +197,7 @@ public sealed class EventEraTests : IDisposable
             Source = "test",
             YearFromCreation = yearFromCreation,
             BceYear = statedBceYear,
+            SequenceInYear = sequenceInYear,
         };
         _db.Events.Add(happened);
         _db.SaveChanges();
