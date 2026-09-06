@@ -160,15 +160,22 @@ Resources/*/*
 # machine that did the fetching.
 !Resources/WorldHistory/**
 
+# The descriptor claims this project generated itself: what the encyclopedia says under a name,
+# read from Scripture rather than imported, and the only thing under Resources/ that is ours. It is
+# not reproducible from a fetch script -- reproducing it is another model run -- so it is carried.
+!Resources/Essenthos/**
+
 # JetBrains IDE settings
 .idea/
 
 # The database password reaches compose through this file, and it is not this repository's to carry.
 .env
 
-# A run of the sense harness: prompts, raw answers and the score report. Cheap to reproduce from
-# scripts/sense.py against the database, and not this repository's to carry.
+# A run of the sense harness or the descriptor pass: prompts, raw answers and the score report.
+# Cheap to reproduce from scripts/ against the database, and not this repository's to carry -- what
+# a descriptor run is kept for is published under Resources/Essenthos/descriptors/ instead.
 .sense/
+.descriptors/
 scripts/__pycache__/
 
 # A run of the lexicon harness: prompts, translations, judgements and the score report. Cheap to
