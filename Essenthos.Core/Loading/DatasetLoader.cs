@@ -98,6 +98,7 @@ internal sealed class DatasetLoader(
             }
 
             await LoadTheLexicon(resources, stoppingToken);
+            await TranslateTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
             await LemmatiseTheSeptuagint(resources, stoppingToken);
@@ -209,6 +210,20 @@ internal sealed class DatasetLoader(
             ResourcePaths.File(resources, "Strong", "StrongHebrew.xml"),
             ResourcePaths.File(resources, "Strong", "StrongGreek.xml"),
             cancellationToken));
+    }
+
+    /// <summary>
+    /// The same dictionary in a reader's own language, as a translation run published it. Directly
+    /// after the lexicon, because it stands beside those entries and refuses a number they do not
+    /// hold; before everything else, because nothing else depends on it.
+    /// </summary>
+    private async Task TranslateTheLexicon(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("Strong's concordance in a reader's language");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<StrongTranslationLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     /// <summary>
