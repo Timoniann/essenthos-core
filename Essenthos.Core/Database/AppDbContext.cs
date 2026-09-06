@@ -88,6 +88,18 @@ public class AppDbContext : DbContext
     public DbSet<EntityAlternative> EntityAlternatives { get; set; } = null!;
 
     /// <summary>
+    /// The ordered clauses this corpus says an entity is, out of which its description is rendered
+    /// in whatever language a reader asks for.
+    /// </summary>
+    public DbSet<EntityDescriptor> EntityDescriptors { get; set; } = null!;
+
+    /// <summary>Every method that says a clause is true, the way link claims do for links.</summary>
+    public DbSet<EntityDescriptorClaim> EntityDescriptorClaims { get; set; } = null!;
+
+    /// <summary>An entity's name in a reader's language, in the case a phrase puts it in.</summary>
+    public DbSet<EntityNameForm> EntityNameForms { get; set; } = null!;
+
+    /// <summary>
     /// Which word names which person, place or people. The encyclopedia says a verse names
     /// somebody; this says which word of it does, which is what a reader hovering a word is asking.
     /// </summary>
@@ -300,6 +312,81 @@ public class AppDbContext : DbContext
         ConfigureVerseLink(modelBuilder);
         ConfigureWordStrong(modelBuilder);
         ConfigureWordEntity(modelBuilder);
+        ConfigureEntityDescriptor(modelBuilder);
+    }
+
+    /// <summary>
+    /// The description this corpus writes for itself, and the name forms a language needs to render
+    /// it. Both cascade from the entity, and a clause cascades from its target too: a clause whose
+    /// target is gone names nothing, and prose is exactly what it must not fall back to.
+    /// </summary>
+    private static void ConfigureEntityDescriptor(ModelBuilder modelBuilder)
+    {
+        // Said on the table rather than only in the source, because the reader of a schema is
+        // usually somebody who has just found an unused-looking column and is deciding about it.
+        modelBuilder.Entity<Entity>()
+            .Property(e => e.Distinguisher)
+            .HasComment(
+                "The imported one-line description, in English, in the words of whichever dataset "
+                + "supplied it. It is no longer what a reader is shown — entity_descriptor is — and "
+                + "it is not dead: it is the record as imported, it is what the generated clauses "
+                + "are measured against, and it is the only description an entity nothing has been "
+                + "generated for has. Nothing writes it but the dataset loaders.");
+
+        modelBuilder.Entity<EntityDescriptor>(entity =>
+        {
+            entity.Property(d => d.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(d => d.Entity)
+                .WithMany()
+                .HasForeignKey(d => d.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(d => d.Target)
+                .WithMany()
+                .HasForeignKey(d => d.TargetEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable(
+                "entity_descriptor",
+                t => AddProvenanceConstraints(t, "entity_descriptor").HasComment(
+                    "One clause of what this corpus says an entity is, in its own voice: a "
+                    + "relation, an entity it holds, and the verse it was read from. The line a "
+                    + "reader sees is rendered from these per language, so every name in it is a "
+                    + "link. It replaces what entity.distinguisher was shown for; that column "
+                    + "stays, unchanged and unread by this layer."));
+        });
+
+        modelBuilder.Entity<EntityDescriptorClaim>(entity =>
+        {
+            entity.Property(c => c.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(c => c.EntityDescriptor)
+                .WithMany(d => d.Claims)
+                .HasForeignKey(c => c.EntityDescriptorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable(
+                "entity_descriptor_claim",
+                t => AddProvenanceConstraints(t, "entity_descriptor_claim"));
+        });
+
+        modelBuilder.Entity<EntityNameForm>(entity =>
+        {
+            entity.Property(f => f.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(f => f.Entity)
+                .WithMany()
+                .HasForeignKey(f => f.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable(
+                "entity_name_form",
+                t => AddProvenanceConstraints(t, "entity_name_form").HasComment(
+                    "An entity's name in a reader's language, in the grammatical case a phrase "
+                    + "puts it in. Produced with the name and never computed from it: a stemmer "
+                    + "guessing the genitive of a Hebrew proper name is wrong often and silently."));
+        });
     }
 
     /// <summary>

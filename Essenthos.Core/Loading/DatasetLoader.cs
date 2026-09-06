@@ -108,6 +108,7 @@ internal sealed class DatasetLoader(
             await SayWhichWordNamesWhom(stoppingToken);
             await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
             await ReadTheNamesNothingSettles(resources, stoppingToken);
+            await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -632,6 +633,23 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<SenseReadingLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// What each person, place and people is, in this corpus's own words rather than in the
+    /// sentence a dataset supplied. Last, because a clause names another entity and cites a verse
+    /// that entity is named in, so both the records and their references have to be there before
+    /// any of it can be checked.
+    /// </summary>
+    private async Task DescribeTheEntitiesInOurOwnWords(
+        string resources,
+        CancellationToken cancellationToken)
+    {
+        status.Starting("the descriptions this corpus writes for itself");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<EntityDescriptorLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
     }
 
