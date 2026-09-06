@@ -41,7 +41,7 @@ public sealed class TextProvenanceTests
     private static TextDefinition Of(string slug) => All.Single(definition => definition.Slug == slug);
 
     [Fact]
-    public void TheCorpusHoldsElevenTexts() => All.Should().HaveCount(11);
+    public void TheCorpusHoldsTwelveTexts() => All.Should().HaveCount(12);
 
     /// <summary>
     /// Every text says what it is. A licence and a year identify a file, not an edition, and the
@@ -79,6 +79,7 @@ public sealed class TextProvenanceTests
     [InlineData("kjv")]
     [InlineData("rusv")]
     [InlineData("ukr")]
+    [InlineData("ukr1871")]
     [InlineData("bsb")]
     public void EveryTranslationNamesItsTranslators(string slug)
     {
@@ -112,6 +113,24 @@ public sealed class TextProvenanceTests
 
         ukr.RightsNote.Should().Contain("British and Foreign Bible Society");
         ukr.RightsHolder.Should().Contain("British and Foreign Bible Society");
+    }
+
+    /// <summary>
+    /// There are two Ukrainian Bibles here now, sixty years and two rights positions apart, and the
+    /// rows have to be told apart by reading them rather than by knowing which is which. The one
+    /// with no dispute over it is the one that says so.
+    /// </summary>
+    [Fact]
+    public void TheSecondUkrainianTextIsKulishsAndItsRightsAreSettled()
+    {
+        var kulish = Of("ukr1871");
+
+        kulish.Language.Should().Be("ukr");
+        kulish.Translators.Should().Contain("Kulish").And.Contain("Puliui").And.Contain("Nechui-Levytsky");
+        kulish.PublishedYear.Should().Be(1903);
+        kulish.Redistribution.Should().Be(Redistribution.PublicDomain);
+        kulish.RightsHolder.Should().BeNull();
+        kulish.RightsNote.Should().Contain("life-plus-seventy");
     }
 
     /// <summary>

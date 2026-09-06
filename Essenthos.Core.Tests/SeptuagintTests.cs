@@ -1,5 +1,5 @@
 using Essenthos.Core.Loading;
-using Essenthos.Core.Septuagint;
+using Essenthos.Core.Usfm;
 using FluentAssertions;
 using Xunit;
 

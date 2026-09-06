@@ -63,6 +63,23 @@ public sealed class TextAliasTests
         CanonIndex.Resolve(Loaded, "synodal").Should().BeNull();
 
     /// <summary>
+    /// The corpus holds two Ukrainian Bibles now, and this is where confusing them would happen.
+    /// UKRK is YouVersion's and bolls.life's code for the Kulish text, and UkrKulish is CrossWire's
+    /// SWORD module for its New Testament; UKR is what Bible Gateway serves the Ohienko under, and
+    /// it is the Ohienko's own slug here. An alias that crossed them would answer a reader who
+    /// typed the right code with the wrong Ukrainian Bible, which is the one failure aliases can
+    /// cause and the reason each one has to name a publisher.
+    /// </summary>
+    [Theory]
+    [InlineData("ukrk", "ukr1871")]
+    [InlineData("UkrKulish", "ukr1871")]
+    [InlineData("ukr", "ukr")]
+    [InlineData("ubio", "ukr")]
+    public void EachUkrainianIdentifierReachesTheUkrainianBibleThatPublishesIt(
+        string spelling, string slug) =>
+        CanonIndex.Resolve(Loaded, spelling)!.Slug.Should().Be(slug);
+
+    /// <summary>
     /// A text's own slug wins over any alias, so declaring one can never take a request away from
     /// the text that owns the identifier. Checked with an alias deliberately pointed at the wrong
     /// text, because the ordering is what rules the failure out and nothing else does.

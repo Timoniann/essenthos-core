@@ -40,6 +40,18 @@ internal static class TextAliases
             // established which Ukrainian Bible this file is: its every \id line names the
             // translator and the 1962 edition.
             ["ukr"] = ["ubio"],
+
+            // UKRK is what YouVersion calls this translation at version 188 and what bolls.life
+            // keys it as, which are two publishers arriving at the same spelling rather than one
+            // copying the other — neither took the file from eBible, whose own identifier is the
+            // slug. UkrKulish is CrossWire's SWORD module and STEP Bible's version code for it;
+            // that module holds only the New Testament of 1871, so the alias answers with more of
+            // the translation than whoever typed it asked for, which is the right direction to be
+            // wrong in.
+            //
+            // Not UKR. Bible Gateway serves the Ohienko under it, and this corpus already answers
+            // to it for that text.
+            ["ukr1871"] = ["ukrk", "ukrkulish"],
         };
 
     private static readonly Dictionary<string, string> CanonicalBySpelling = Index();

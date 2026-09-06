@@ -1,9 +1,17 @@
 using System.Text.RegularExpressions;
 
-namespace Essenthos.Core.Septuagint;
+namespace Essenthos.Core.Usfm;
 
 /// <param name="Book">The three-letter code from <c>\id</c> — <c>GEN</c>, <c>TOB</c>, <c>DAG</c>.</param>
-internal sealed record UsfmBook(string Book, IReadOnlyList<UsfmChapter> Chapters);
+/// <param name="Name">
+/// What the edition calls this book in its own language, from <c>\toc1</c> where there is one and
+/// <c>\h</c> otherwise. Empty where it names it nowhere.
+///
+/// It is a title and not a verse, so it is not text — but it is the only place the edition says
+/// anything in its own words about the book as a whole, and a Ukrainian pane headed "Genesis" is a
+/// Ukrainian pane a Ukrainian reader has to translate back.
+/// </param>
+internal sealed record UsfmBook(string Book, IReadOnlyList<UsfmChapter> Chapters, string Name = "");
 
 internal sealed record UsfmChapter(int Number, IReadOnlyList<UsfmVerse> Verses);
 
@@ -18,16 +26,20 @@ internal sealed record UsfmVerse(int Number, IReadOnlyList<UsfmWord> Words, stri
 internal sealed record UsfmWord(string Surface, string Trailer);
 
 /// <summary>
-/// Just enough USFM for Brenton.
+/// Just enough USFM for the texts eBible publishes in it: Brenton's Septuagint, and the Kulish
+/// Ukrainian Bible.
 ///
-/// The file is markers at the start of a line and running text after them, and this one uses
-/// almost none of the standard: <c>\id</c>, <c>\c</c>, <c>\v</c>, and a handful of paragraph marks
-/// that carry no text of their own. Everything else — <c>\h</c>, <c>\toc</c>, <c>\mt</c> — is a
-/// title, and titles are not verses.
+/// The file is markers at the start of a line and running text after them, and these use almost
+/// none of the standard: <c>\id</c>, <c>\c</c>, <c>\v</c>, and a handful of paragraph marks that
+/// carry no text of their own. Everything else — <c>\h</c>, <c>\toc</c>, <c>\mt</c> — is a title,
+/// and titles are not verses.
 ///
-/// This is deliberately not a USFM implementation. It reads the file that is here, and says so
+/// This is deliberately not a USFM implementation. It reads the files that are here, and says so
 /// loudly when it meets a marker it has not been told about, rather than dropping the text after
-/// it and leaving a verse quietly short.
+/// it and leaving a verse quietly short. That promise now covers markers standing inside a line as
+/// well as at the start of one: the Ukrainian carries 204 footnotes and 2,079 spans marked as
+/// spoken by Jesus, and a reader that only knew about line-initial markers would have put both
+/// kinds of marker into the corpus as words, along with the footnotes' Ukrainian glosses.
 /// </summary>
 internal static partial class UsfmReader
 {
@@ -39,9 +51,12 @@ internal static partial class UsfmReader
     private static readonly HashSet<string> Passage =
         ["p", "m", "nb", "b", "q", "q1", "q2", "pi", "mi", "d", "s", "s1", "s2", "ms", "ms1", "sp", "li"];
 
-    /// <summary>Markers that are titles, notes or metadata: read and discarded.</summary>
+    /// <summary>
+    /// Markers that are titles, notes or metadata: read and discarded. The two that name the book —
+    /// <c>\h</c> and <c>\toc1</c> — are handled rather than discarded and so are not here.
+    /// </summary>
     private static readonly HashSet<string> Matter =
-        ["h", "toc1", "toc2", "toc3", "mt", "mt1", "mt2", "mt3", "is", "is1", "ip", "imt", "rem", "cl"];
+        ["toc2", "toc3", "mt", "mt1", "mt2", "mt3", "is", "is1", "ip", "imt", "rem", "cl", "ide"];
 
     public static UsfmBook Read(string content)
     {
@@ -52,6 +67,7 @@ internal static partial class UsfmReader
         var chapter = 0;
         var verse = 0;
         var label = string.Empty;
+        var title = string.Empty;
 
         void CloseVerse()
         {
@@ -134,6 +150,17 @@ internal static partial class UsfmReader
 
                     break;
 
+                // The running header comes first in the file and the table-of-contents name after
+                // it, and the second is the better of the two: \h is set in capitals for the top
+                // of a printed page, \toc1 is the book's name as it would be written.
+                case "h":
+                    title = title.Length == 0 ? rest : title;
+                    break;
+
+                case "toc1":
+                    title = rest;
+                    break;
+
                 default:
                     if (Passage.Contains(name))
                     {
@@ -154,7 +181,7 @@ internal static partial class UsfmReader
 
         return book is null
             ? throw new InvalidOperationException("The file has no \\id, so nothing says which book it is.")
-            : new UsfmBook(book, chapters);
+            : new UsfmBook(book, chapters, title);
     }
 
     /// <summary>
@@ -186,7 +213,17 @@ internal static partial class UsfmReader
     /// </summary>
     private static void Words(string text, List<UsfmWord> into)
     {
-        foreach (var token in text.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries))
+        var scripture = Marked().Replace(Note().Replace(text, string.Empty), string.Empty);
+        if (scripture.Contains('\\', StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"A USFM marker stands inside this line, and it is neither a note nor a span of the text: " +
+                $"\"{scripture.Trim()}\". Decide which of the two it is and add it to Note() or Marked() " +
+                "before reading a file that uses it — a marker nobody has decided about is split on "
+                + "whitespace and put in the corpus as words.");
+        }
+
+        foreach (var token in scripture.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries))
         {
             var end = token.Length;
             while (end > 0 && !char.IsLetterOrDigit(token[end - 1]) && token[end - 1] != 'ʼ')
@@ -211,4 +248,29 @@ internal static partial class UsfmReader
 
     [GeneratedRegex(@"^\\(?<marker>[a-z][a-z0-9]*)\*?(?<rest>.*)$")]
     private static partial Regex Marker();
+
+    /// <summary>
+    /// A footnote or a cross reference, from its opening marker to its closing one.
+    ///
+    /// The whole span leaves the text rather than being kept somewhere: it is the editor writing
+    /// about the verse, in a language and a register that are not the verse's — Kulish glosses
+    /// Едом as *Червоний* and Егова-Нїссі as *Господь-прапор* — and a corpus that tokenised it
+    /// would have those standing in Genesis as words nobody wrote there. Nothing here models a
+    /// note, and inventing a place for one on the way past would be worse than dropping it: it
+    /// would be a claim about the text made by a regex.
+    /// </summary>
+    [GeneratedRegex(@"\\(?<note>f|x)\s.*?\\\k<note>\*")]
+    private static partial Regex Note();
+
+    /// <summary>
+    /// A character marker wrapping words of the text rather than words about it. Only the marker
+    /// leaves and the words stay.
+    ///
+    /// <c>\wj</c> is the edition saying that what it encloses is spoken by Jesus, and the Ukrainian
+    /// marks 2,079 spans that way; treating it like a note would take most of the Gospels out of
+    /// the corpus. Nothing here records who speaks, so what is lost is the claim and not the text,
+    /// which is the right way round to lose something.
+    /// </summary>
+    [GeneratedRegex(@"\\wj\*?")]
+    private static partial Regex Marked();
 }

@@ -1,6 +1,6 @@
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
-using Essenthos.Core.Septuagint;
+using Essenthos.Core.Usfm;
 using Essenthos.Core.Utils;
 
 namespace Essenthos.Core.Loading;
