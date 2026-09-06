@@ -31,6 +31,7 @@ internal static class TextCorpus
         SamaritanTextSource.Definition,
         BereanTextSource.Definition,
         .. Bible4uTextSource.Definitions.Values,
+        KulishTextSource.Definition,
     ];
 
     /// <summary>The slugs of <see cref="Definitions"/>, which is what most checks actually want.</summary>

@@ -75,6 +75,11 @@ internal sealed class DatasetLoader(
                     ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation), stoppingToken);
             }
 
+            // The first complete Ukrainian Bible, and the only Ukrainian text the corpus holds that
+            // needs nobody's permission. It reads through the same USFM reader as Brenton.
+            await Load("the Kulish Bible", () => KulishTextSource.Read(
+                Path.Combine(resources, "Kulish")), stoppingToken);
+
             await LoadTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
