@@ -25,11 +25,33 @@ namespace Essenthos.Core.Tests;
 public sealed class SenseReadingTests : IDisposable
 {
     /// <summary>
-    /// A word the review files already speak about, so the shipped refusal list is what the test
-    /// exercises rather than a fixture standing in for it. Nehemiah 8:7 is one of the seven readings
-    /// the adjudication found the model wrong about.
+    /// A word the review files already speak about, so the shipped review is what the test
+    /// exercises rather than a fixture standing in for it. It is one of the eight occurrences the
+    /// audit read as the tribe of Benjamin rather than as Jacob's son, and the encyclopedia holds no
+    /// record a tribe could point at, so nothing is loaded for it either way.
     /// </summary>
-    private const long RefusedWord = 6854130;
+    private const long RefusedWord = 6536500;
+
+    /// <summary>The answer the review overturned there, which is what the verdict is about.</summary>
+    private const string RefusedAnswer = "benjamin";
+
+    /// <summary>
+    /// A word the review overturned and a later run then answered again, on a candidate list that
+    /// had since been repaired. The audit said the referent was the Judahite town and could not
+    /// name a record because none was on offer; the re-ask names <c>eshtemoa-3</c>, which is the
+    /// answer that must load.
+    /// </summary>
+    private const long ReaskedWord = 6859829;
+
+    /// <summary>What the first campaign answered there, and what the review overturned.</summary>
+    private const string ReaskedFirstAnswer = "eshtemoa";
+
+    /// <summary>
+    /// A word a ruling settles: Nehemiah 8:7, one of the seven readings the adjudication found the
+    /// model wrong about, where it named azariah-16 instead. The reading is not loaded and the word
+    /// is not left blank — the ruling annotates it.
+    /// </summary>
+    private const long RuledWord = 6854130;
 
     private readonly AppDbContext _db;
     private readonly string _readings;
@@ -68,6 +90,9 @@ public sealed class SenseReadingTests : IDisposable
 
         Person("zechariah-1", "Zechariah", "H2148");
         Person("zechariah-2", "Zechariah", "H2148");
+        Person(RefusedAnswer, "Benjamin", "H1144");
+        Person(ReaskedFirstAnswer, "Eshtemoa", "H851");
+        Person("eshtemoa-3", "Eshtemoa", "H851");
         var moses = Person("moses", "Moses", "H4872");
         _db.SaveChanges();
 
@@ -238,19 +263,51 @@ public sealed class SenseReadingTests : IDisposable
     public async Task AReadingASecondPassFoundWrongIsRefused()
     {
         _db.Database.ExecuteSqlRaw("UPDATE word SET id = {0} WHERE id = {1}", RefusedWord, Hebrew(1).Id);
-        Answer(RefusedWord, "zechariah-2", "high");
+        Answer(RefusedWord, RefusedAnswer, "high");
 
         var named = await Load();
         named.Should().NotContainKey(RefusedWord);
     }
 
     /// <summary>
-    /// The whole refusal list, asserted as counts so that a file quietly emptied by a bad
-    /// regeneration fails the build instead of silently loading seventy-four answers somebody has
-    /// already shown to be wrong.
+    /// A verdict is about a reading and not about a word. The name was asked again on a repaired
+    /// candidate list, the later answer is the one the review had asked for and could not offer, and
+    /// refusing the word on the strength of a verdict about the answer it no longer gives would undo
+    /// the whole second campaign without saying so.
     /// </summary>
     [Fact]
-    public void TheReviewFilesRefuseSeventyFourReadings()
+    public async Task AnAnswerALaterRunReplacedIsTheOneThatLoads()
+    {
+        _db.Database.ExecuteSqlRaw("UPDATE word SET id = {0} WHERE id = {1}", ReaskedWord, Hebrew(1).Id);
+        Answer(ReaskedWord, ReaskedFirstAnswer, "high");
+
+        var named = await Load();
+        named.Should().ContainKey(ReaskedWord)
+            .WhoseValue.Entity!.Slug.Should().Be("eshtemoa-3");
+    }
+
+    /// <summary>
+    /// A word a ruling settles is left to the ruling, which annotates it with the referent the
+    /// review named and the overturned reading recorded beside it. Loading the reading here as well
+    /// would put two answers on one word and leave the reader to tell which stood.
+    /// </summary>
+    [Fact]
+    public async Task AWordARulingSettlesIsNotAlsoAnnotatedFromTheReading()
+    {
+        _db.Database.ExecuteSqlRaw("UPDATE word SET id = {0} WHERE id = {1}", RuledWord, Hebrew(1).Id);
+        Answer(RuledWord, "zechariah-2", "high");
+
+        var named = await Load();
+        named.Should().NotContainKey(RuledWord);
+    }
+
+    /// <summary>
+    /// The whole review, asserted as counts so that a file quietly emptied by a bad regeneration
+    /// fails the build instead of silently loading answers somebody has already shown to be wrong —
+    /// or silently dropping the records the same review asked for.
+    /// </summary>
+    [Fact]
+    public void TheReviewFilesOverturnSeventyFourReadingsAndDisposeOfEveryOne()
     {
         var refused = SenseReadingFiles.Refused().Readings;
 
@@ -261,6 +318,43 @@ public sealed class SenseReadingTests : IDisposable
         refused.Count(r => r.Verdict == "contested").Should().Be(2);
         refused.Select(r => r.WordId).Should().OnlyHaveUniqueItems();
         refused.Should().OnlyContain(r => r.Why.Length > 0);
+
+        var review = SenseReadingFiles.ReviewRulings().Rulings;
+        var owner = SenseReadingFiles.Rulings().Rulings;
+        var replaced = SenseReadingFiles.Superseded().Readings.ToDictionary(r => r.WordId);
+
+        review.Should().HaveCount(33);
+        review.Count(r => r.Existing is not null).Should().Be(21);
+        review.Count(r => r.Create is not null).Should().Be(12);
+        review.Select(r => r.WordId).Should().NotIntersectWith(owner.Select(r => r.WordId));
+
+        // Every overturned reading is disposed of, and none of the four ways is silence: a ruling
+        // names the referent, the owner ruled on it, a later run replaced the answer the verdict was
+        // about, or the referent is a people and this encyclopedia has no kind one could point at.
+        var settled = review.Concat(owner).Select(r => r.WordId).ToHashSet();
+        var collective = refused
+            .Where(r => !settled.Contains(r.WordId))
+            .Where(r => !replaced.ContainsKey(r.WordId))
+            .ToList();
+
+        collective.Should().HaveCount(8);
+        collective.Should().OnlyContain(r => r.StrongNumber == "H1144");
+    }
+
+    /// <summary>
+    /// The record of what a later run replaced, asserted the same way and for the same reason: this
+    /// file is the only thing standing between the corpus and the answers the re-ask overturned.
+    /// </summary>
+    [Fact]
+    public void TheLaterRunReplacesFourHundredAndEightyAnswers()
+    {
+        var replaced = SenseReadingFiles.Superseded();
+
+        replaced.Readings.Should().HaveCount(480);
+        replaced.Readings.Select(r => r.WordId).Should().OnlyHaveUniqueItems();
+        replaced.Readings.Should().OnlyContain(r => r.Was != r.Now);
+        replaced.Model.Should().NotBeEmpty();
+        replaced.PromptVersion.Should().NotBeEmpty();
     }
 
     /// <summary>

@@ -345,6 +345,9 @@ public static class Datasets
                 + "a second pass over the same answers",
                 "records written for people a verse names and no dataset holds, each with the verse "
                 + "it rests on and, where the identification is open, who else it might be",
+                "a second reader's judgement, where a review of the readings overturned one and "
+                + "named the referent it found instead — carrying the reading it replaced and the "
+                + "argument that replaced it",
             ]),
     ];
 

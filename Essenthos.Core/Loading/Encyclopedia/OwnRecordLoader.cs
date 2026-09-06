@@ -54,6 +54,17 @@ internal sealed record OwnRecordOutcome(
 /// </para>
 ///
 /// <para>
+/// **The rulings arrive in files rather than in code, and there is more than one of them.** The
+/// owner's own decisions are one; the review of the model's readings is another, and it is the
+/// larger — where a second pass overturned a reading it also said whom the verse names, and that
+/// answer is a decision about one word in exactly the shape the owner's are. Each file says who
+/// decided and under what method, so what reaches the reader distinguishes a person's ruling from a
+/// review's without either of them being hidden. A reading that was overturned is never stored as
+/// an answer, and it is not thrown away either: it travels in the note beside the answer that
+/// replaced it, so a reader meeting the word learns what was considered and why it did not stand.
+/// </para>
+///
+/// <para>
 /// **The bulk pass is built and switched off, and the reason is a measurement rather than caution.**
 /// The readings name 1,403 occurrences whose referent the encyclopedia does not hold, in 306 groups
 /// — and 175 of them read <em>the kingdom of Judah</em>, 88 <em>kingdom of Judah</em>, 73 <em>the
@@ -85,9 +96,6 @@ internal sealed class OwnRecordLoader(
     /// </summary>
     private const string Ours = "Essenthos";
 
-    private const string RulingSource =
-        "Essenthos, on the project owner's ruling of 2026-09-06 — see NOT-0170";
-
     private const string ReadingSource =
         "Essenthos, from a model's reading naming a referent no dataset holds";
 
@@ -100,23 +108,57 @@ internal sealed class OwnRecordLoader(
         string resources,
         CancellationToken cancellationToken = default)
     {
-        if (await db.EntityClaims.AnyAsync(c => c.Source == RulingSource, cancellationToken))
+        var files = new[] { SenseReadingFiles.Rulings(), SenseReadingFiles.ReviewRulings() };
+        var sources = files.Select(f => f.Source).ToList();
+        if (await db.EntityClaims.AnyAsync(c => sources.Contains(c.Source), cancellationToken))
         {
-            logger.LogInformation("The owner's rulings are already recorded; nothing to do");
+            logger.LogInformation("The rulings are already recorded; nothing to do");
             return new OwnRecordOutcome(true, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
-        var rulings = SenseReadingFiles.Rulings();
-        var settled = new List<(OwnRecordRuling Ruling, Entity Referent)>(rulings.Rulings.Count);
+        int created = 0, unsettled = 0, named = 0, annotated = 0;
+
+        foreach (var file in files)
+        {
+            var (wrote, open, settled) = await Apply(file, cancellationToken);
+            created += wrote;
+            unsettled += open;
+            named += settled.Count;
+            annotated += settled.Count == 0
+                ? 0
+                : await Annotate(
+                    settled, EnumSpelling.ToLinkMethod(file.Method), file.Source, cancellationToken);
+        }
+
+        var withheld = await Bulk(resources, cancellationToken);
+        var outcome = new OwnRecordOutcome(
+            false, created, unsettled, named, annotated, withheld, started.Elapsed);
+        logger.LogInformation("Wrote: {Outcome}", outcome);
+        return outcome;
+    }
+
+    /// <summary>
+    /// One file of rulings: the records it asks for, the doubts it records beside them, and the seed
+    /// of words it settles.
+    ///
+    /// The owner's rulings and the review's are the same shape on purpose. What differs is who
+    /// decided and therefore what the claim says, and both of those come off the file's own header
+    /// rather than out of this code, so a third reviewer needs a file and not a branch here.
+    /// </summary>
+    private async Task<(int Created, int Unsettled, List<(long, int, double?, bool, string)> Settled)> Apply(
+        OwnRecordRulings file,
+        CancellationToken cancellationToken)
+    {
+        var settled = new List<(OwnRecordRuling Ruling, Entity Referent)>(file.Rulings.Count);
         int created = 0, unsettled = 0;
 
-        var verses = await Verses(rulings.Rulings.Select(r => r.WordId).ToList(), cancellationToken);
+        var verses = await Verses(file.Rulings.Select(r => r.WordId).ToList(), cancellationToken);
 
-        foreach (var ruling in rulings.Rulings)
+        foreach (var ruling in file.Rulings)
         {
             var referent = ruling.Create is { } record
-                ? await Write(record, verses.GetValueOrDefault(ruling.WordId), ruling.Why, cancellationToken)
+                ? await Write(record, verses.GetValueOrDefault(ruling.WordId), ruling.Why, file.Source, cancellationToken)
                 : await Existing(ruling.Existing!, cancellationToken);
 
             if (referent is null)
@@ -135,7 +177,7 @@ internal sealed class OwnRecordLoader(
                 created++;
             }
 
-            if (await Alternatives(referent, ruling, cancellationToken))
+            if (await Alternatives(referent, ruling, file.Source, cancellationToken))
             {
                 unsettled++;
             }
@@ -152,15 +194,7 @@ internal sealed class OwnRecordLoader(
                 s.Ruling.WordId, s.Referent.Id, null, false, s.Ruling.Why))
             .ToList();
 
-        var withheld = await Bulk(resources, cancellationToken);
-        var annotated = seed.Count == 0
-            ? 0
-            : await Annotate(seed, LinkMethod.Manual, RulingSource, cancellationToken);
-
-        var outcome = new OwnRecordOutcome(
-            false, created, unsettled, settled.Count, annotated, withheld, started.Elapsed);
-        logger.LogInformation("Wrote: {Outcome}", outcome);
-        return outcome;
+        return (created, unsettled, seed);
     }
 
     /// <summary>
@@ -171,6 +205,7 @@ internal sealed class OwnRecordLoader(
         OwnRecord record,
         (int Book, int Chapter, int Verse)? at,
         string why,
+        string source,
         CancellationToken cancellationToken)
     {
         var already = await db.Entities.FirstOrDefaultAsync(e => e.Slug == record.Slug, cancellationToken);
@@ -187,7 +222,7 @@ internal sealed class OwnRecordLoader(
             Distinguisher = record.Distinguisher,
             Notes = record.Notes,
             SourceId = SourceIdPrefix + record.Slug,
-            Source = RulingSource,
+            Source = source,
         };
         db.Entities.Add(entity);
 
@@ -199,7 +234,7 @@ internal sealed class OwnRecordLoader(
                 CanonicalChapter = address.Chapter,
                 CanonicalVerse = address.Verse,
                 Label = record.Name,
-                Source = RulingSource,
+                Source = source,
             });
         }
 
@@ -207,7 +242,7 @@ internal sealed class OwnRecordLoader(
         {
             Method = LinkMethod.Manual,
             Confidence = null,
-            Source = RulingSource,
+            Source = source,
             Note = why,
         });
 
@@ -224,6 +259,7 @@ internal sealed class OwnRecordLoader(
     private async Task<bool> Alternatives(
         Entity referent,
         OwnRecordRuling ruling,
+        string source,
         CancellationToken cancellationToken)
     {
         if (ruling.Alternatives is not { Count: > 0 } alternatives)
@@ -242,7 +278,7 @@ internal sealed class OwnRecordLoader(
                 Alternative = other,
                 Describes = other is null ? alternative.Describes ?? alternative.Slug : null,
                 Reason = alternative.Reason,
-                Source = RulingSource,
+                Source = source,
             });
         }
 
@@ -322,7 +358,7 @@ internal sealed class OwnRecordLoader(
             return 0;
         }
 
-        var (readings, _, _, _) = SenseReadingFiles.Read(directory);
+        var (readings, _, _, _, _) = SenseReadingFiles.Read(directory);
         var groups = readings
             .Where(r => r.Referent == SenseReading.Unlisted && !string.IsNullOrWhiteSpace(r.Names))
             .GroupBy(r => (r.StrongNumber, Description: r.Names!.Trim()), TupleComparer.Instance)
@@ -361,7 +397,7 @@ internal sealed class OwnRecordLoader(
                 "naming somebody no dataset here holds.");
 
             var entity = await Write(
-                record, verses.GetValueOrDefault(first.WordId), ReadingSource, cancellationToken);
+                record, verses.GetValueOrDefault(first.WordId), ReadingSource, ReadingSource, cancellationToken);
             await db.SaveChangesAsync(cancellationToken);
 
             foreach (var reading in group)

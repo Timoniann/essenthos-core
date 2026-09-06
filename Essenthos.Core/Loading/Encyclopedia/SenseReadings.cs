@@ -39,10 +39,19 @@ internal sealed record SenseReading(
 /// <summary>
 /// One reading a later pass found wrong, and what it found instead.
 ///
-/// These are evidence about the method rather than data about the text, and the difference is the
-/// whole reason this file exists: a reading that has been read a second time and contradicted is
-/// not a weaker annotation, it is not an annotation at all. Loading it with a lower confidence
-/// would be the corpus publishing something it knows to be false and hedging.
+/// A reading that has been read a second time and contradicted is not a weaker annotation: as an
+/// answer it is not an annotation at all, and loading it with a lower confidence would be the
+/// corpus publishing something it knows to be false and hedging. But the word still names somebody,
+/// so the verdict is not the end of it — where the review named a referent, that referent is a
+/// ruling in <c>ReviewRecords.json</c> and reaches the reader with this reading recorded beside it
+/// as the thing that was ruled out. What is refused here is the answer, never the question.
+///
+/// <para>
+/// A verdict is about a reading and not about a word, which is why <see cref="Reading"/> is stored
+/// and compared rather than assumed. A word a later run answered differently has not been reviewed
+/// at all, and refusing it on the strength of a verdict about the answer it no longer gives would
+/// throw away the re-ask silently.
+/// </para>
 /// </summary>
 internal sealed record RefusedReading(
     long WordId,
@@ -55,6 +64,42 @@ internal sealed record RefusedReading(
     string Why);
 
 internal sealed record RefusedReadings(string Reviewed, IReadOnlyList<RefusedReading> Readings);
+
+/// <summary>
+/// One answer a later run replaced, and what it replaced it with.
+///
+/// The readings were asked against a candidate list that was wrong in two directions at once: it
+/// offered people who appear only in the Greek New Testament as referents for Masoretic words, and
+/// it could offer none of the places the geocoding dataset supplies, because none of them carried a
+/// Strong number. Both were repaired, the names whose lists had changed were asked again, and 480
+/// answers moved.
+///
+/// <para>
+/// A word answered twice must load the later answer, and which of two answers is later is not
+/// something a file listing can be trusted to say — sorting run folders by name puts the second
+/// campaign first only by the accident of its spelling. So the supersession is recorded rather than
+/// inferred: it names the answer it replaces and the answer that stands, and applying it is correct
+/// whichever of the two a directory walk happened to reach first. It travels inside the assembly
+/// for the same reason the refusals do — a corpus holding the first campaign's answers and not this
+/// would silently undo the re-ask.
+/// </para>
+/// </summary>
+internal sealed record SupersededReading(
+    long WordId,
+    string StrongNumber,
+    string Was,
+    string Now,
+    string Confidence,
+    string? Reason);
+
+internal sealed record SupersededReadings(
+    string AskedAgain,
+    string Model,
+    string PromptVersion,
+    string Run,
+    int ReaskedNames,
+    int ReaskedOccurrences,
+    IReadOnlyList<SupersededReading> Readings);
 
 /// <summary>
 /// The owner's ruling on one occurrence: whom the word names, and whether that is somebody the
@@ -78,7 +123,20 @@ internal sealed record OwnRecord(
 
 internal sealed record OwnAlternative(string? Slug, string? Describes, string Reason);
 
-internal sealed record OwnRecordRulings(string DecidedBy, string Policy, IReadOnlyList<OwnRecordRuling> Rulings);
+/// <param name="Method">
+/// What kind of thing decided these. The owner's own rulings and the review's are the same shape and
+/// are not the same claim, so the file says which it is rather than the loader assuming.
+/// </param>
+/// <param name="Source">
+/// Who decided, in the words a reader gets on the card: the person, or the review with its models,
+/// its prompt version and its date.
+/// </param>
+internal sealed record OwnRecordRulings(
+    string DecidedBy,
+    string Policy,
+    string Method,
+    string Source,
+    IReadOnlyList<OwnRecordRuling> Rulings);
 
 /// <summary>
 /// Where the readings and the two review files are read from.
@@ -102,7 +160,12 @@ internal static class SenseReadingFiles
 
     private const string RefusedResource = "Essenthos.Core.Loading.Encyclopedia.RefusedReadings.json";
 
+    private const string SupersededResource =
+        "Essenthos.Core.Loading.Encyclopedia.SupersededReadings.json";
+
     private const string RulingsResource = "Essenthos.Core.Loading.Encyclopedia.OwnRecords.json";
+
+    private const string ReviewResource = "Essenthos.Core.Loading.Encyclopedia.ReviewRecords.json";
 
     private static readonly JsonSerializerOptions Shape = new()
     {
@@ -111,15 +174,24 @@ internal static class SenseReadingFiles
     };
 
     /// <summary>
-    /// Every answer of every run under a directory, the first answer for a word winning.
+    /// Every answer of every run under a directory, with the answers a later run replaced already
+    /// replaced.
     ///
-    /// A word answered twice in two shards is ordinary — 154 of the run's 10,147 rows are that, and
-    /// nearly all of them agree. A word answered two *different* ways is not, and it is returned
-    /// separately rather than resolved: two answers that contradict each other are not evidence for
-    /// either, and taking the first would make which shard finished first into a fact about the
-    /// text.
+    /// A word answered twice in two shards of one campaign is ordinary — 154 of the run's 10,147
+    /// rows are that, and nearly all of them agree. A word answered two *different* ways by one
+    /// campaign is not, and it is returned separately rather than resolved: two answers that
+    /// contradict each other are not evidence for either, and taking the first would make which
+    /// shard finished first into a fact about the text.
+    ///
+    /// <para>
+    /// A later campaign is the opposite case and must not be confused with it. Asking a name again
+    /// on a repaired candidate list is deliberate, its answer is the one that stands, and the
+    /// supersession says which answer it replaces — so it settles a word the first campaign
+    /// contradicted itself about, and it lands the same way whether or not the second campaign's
+    /// files are on this disk.
+    /// </para>
     /// </summary>
-    public static (IReadOnlyList<SenseReading> Readings, IReadOnlySet<long> Contradicted, int Answers, int Runs)
+    public static (IReadOnlyList<SenseReading> Readings, IReadOnlySet<long> Contradicted, int Answers, int Runs, int Superseded)
         Read(string directory)
     {
         var byWord = new Dictionary<long, SenseReading>();
@@ -159,12 +231,54 @@ internal static class SenseReadingFiles
             }
         }
 
-        return ([.. byWord.Values], contradicted, answers, runs);
+        var later = Superseded();
+        var superseded = 0;
+        foreach (var replacement in later.Readings)
+        {
+            if (!byWord.TryGetValue(replacement.WordId, out var earlier))
+            {
+                continue;
+            }
+
+            // A word the second campaign answered has been answered, whatever the first campaign
+            // did with it — including answering it two ways, which is what the second campaign was
+            // asked to settle.
+            contradicted.Remove(replacement.WordId);
+            if (earlier.Referent == replacement.Now)
+            {
+                continue;
+            }
+
+            superseded++;
+
+            // The description a model gives for a referent nobody holds is not carried in the
+            // record of what changed, so it is dropped rather than kept from the answer it
+            // replaced: a sentence about the earlier referent is not a description of this one.
+            byWord[replacement.WordId] = earlier with
+            {
+                Referent = replacement.Now,
+                Names = null,
+                Confidence = replacement.Confidence,
+                Reason = replacement.Reason,
+                PromptVersion = later.PromptVersion,
+                Model = later.Model,
+                Run = later.Run,
+            };
+        }
+
+        return ([.. byWord.Values], contradicted, answers, runs, superseded);
     }
 
     public static RefusedReadings Refused() => Embedded<RefusedReadings>(RefusedResource);
 
+    public static SupersededReadings Superseded() => Embedded<SupersededReadings>(SupersededResource);
+
     public static OwnRecordRulings Rulings() => Embedded<OwnRecordRulings>(RulingsResource);
+
+    /// <summary>What the review of the readings decided, in the same vocabulary as the owner's own
+    /// rulings, because it is the same kind of thing: a decision about one word, recorded where a
+    /// person can read it and disagree.</summary>
+    public static OwnRecordRulings ReviewRulings() => Embedded<OwnRecordRulings>(ReviewResource);
 
     private static T Embedded<T>(string name)
     {

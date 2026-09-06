@@ -23,7 +23,7 @@ namespace Essenthos.Core.Tests;
 public sealed class OwnRecordTests : IDisposable
 {
     private readonly AppDbContext _db;
-    private readonly OwnRecordRulings _rulings;
+    private readonly IReadOnlyList<OwnRecordRuling> _rulings;
     private readonly Text _hebrew;
     private readonly Text _english;
 
@@ -32,9 +32,13 @@ public sealed class OwnRecordTests : IDisposable
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
-        _rulings = SenseReadingFiles.Rulings();
+        _rulings =
+        [
+            .. SenseReadingFiles.Rulings().Rulings,
+            .. SenseReadingFiles.ReviewRulings().Rulings,
+        ];
 
-        var verses = _rulings.Rulings
+        var verses = _rulings
             .Select((ruling, position) => (Chapter: 1, Verse: position + 1, Words: new[] { ruling.StrongNumber }))
             .ToArray();
 
@@ -43,14 +47,14 @@ public sealed class OwnRecordTests : IDisposable
         _db.SaveChanges();
 
         // The words the rulings are about, at the ids the rulings name.
-        for (var position = 0; position < _rulings.Rulings.Count; position++)
+        for (var position = 0; position < _rulings.Count; position++)
         {
             var word = _db.WordAt(_hebrew, 1, position + 1, 1);
-            word.StrongNumber = _rulings.Rulings[position].StrongNumber;
+            word.StrongNumber = _rulings[position].StrongNumber;
             word.Morphology = JsonDocument.Parse("""{"pos": "subs", "nameType": "pers"}""");
             _db.SaveChanges();
             _db.Database.ExecuteSqlRaw(
-                "UPDATE word SET id = {0} WHERE id = {1}", _rulings.Rulings[position].WordId, word.Id);
+                "UPDATE word SET id = {0} WHERE id = {1}", _rulings[position].WordId, word.Id);
         }
 
         // The records the rulings point at or name as alternatives.
@@ -78,12 +82,12 @@ public sealed class OwnRecordTests : IDisposable
 
     /// <summary>Every record a ruling refers to and does not create.</summary>
     private IEnumerable<string> Named() =>
-        _rulings.Rulings
+        _rulings
             .SelectMany(r => new[] { r.Existing }
                 .Concat(r.Alternatives?.Select(a => a.Slug) ?? []))
             .Where(slug => slug is not null)
             .Select(slug => slug!)
-            .Where(slug => _rulings.Rulings.All(r => r.Create?.Slug != slug))
+            .Where(slug => _rulings.All(r => r.Create?.Slug != slug))
             .Distinct();
 
     private OwnRecordLoader Loader(bool bulk = false) =>
@@ -106,7 +110,7 @@ public sealed class OwnRecordTests : IDisposable
         await Load();
 
         var named = await _db.WordEntities.Include(a => a.Entity).ToListAsync();
-        named.Select(a => a.WordId).Should().BeEquivalentTo(_rulings.Rulings.Select(r => r.WordId));
+        named.Select(a => a.WordId).Should().BeEquivalentTo(_rulings.Select(r => r.WordId));
         named.Should().OnlyContain(a => a.Method == LinkMethod.Manual);
         named.Should().OnlyContain(a => a.Confidence == null);
     }
@@ -121,7 +125,7 @@ public sealed class OwnRecordTests : IDisposable
     {
         await Load();
 
-        foreach (var ruling in _rulings.Rulings.Where(r => r.Create is not null))
+        foreach (var ruling in _rulings.Where(r => r.Create is not null))
         {
             var written = await _db.Entities
                 .Include(e => e.Claims)
@@ -147,7 +151,7 @@ public sealed class OwnRecordTests : IDisposable
     {
         await Load();
 
-        var ruling = _rulings.Rulings.First(r => r.Create is not null);
+        var ruling = _rulings.First(r => r.Create is not null);
         var word = await _db.Words.SingleAsync(w => w.Id == ruling.WordId);
         var reference = await _db.VerseReferences.SingleAsync(r => r.VerseId == word.VerseId && r.IsPrimary);
         var rests = await _db.EntityVerses.SingleAsync(v => v.Entity!.Slug == ruling.Create!.Slug);
@@ -166,7 +170,7 @@ public sealed class OwnRecordTests : IDisposable
     {
         await Load();
 
-        foreach (var ruling in _rulings.Rulings.Where(r => r.Alternatives is { Count: > 0 }))
+        foreach (var ruling in _rulings.Where(r => r.Alternatives is { Count: > 0 }))
         {
             var slug = ruling.Create?.Slug ?? ruling.Existing!;
             var alternatives = await _db.EntityAlternatives
@@ -190,7 +194,7 @@ public sealed class OwnRecordTests : IDisposable
     {
         var outcome = await Load();
 
-        outcome.Created.Should().Be(_rulings.Rulings.Count(r => r.Create is not null));
+        outcome.Created.Should().Be(_rulings.Count(r => r.Create is not null));
         (await _db.Entities.CountAsync(e => e.Source.StartsWith("Essenthos")))
             .Should().Be(outcome.Created);
     }
@@ -203,7 +207,7 @@ public sealed class OwnRecordTests : IDisposable
     [Fact]
     public async Task ADecisionCarriedAcrossAnUncertainLinkPicksUpTheLinksConfidence()
     {
-        var ruling = _rulings.Rulings[0];
+        var ruling = _rulings[0];
         var hebrew = await _db.Words.SingleAsync(w => w.Id == ruling.WordId);
         var english = _db.WordAt(_english, 1, 1, 1);
 

@@ -1,6 +1,8 @@
 {
   "decidedBy": "the project owner, 2026-09-06, on the readings the adjudication could not settle — recorded as NOT-0170",
   "policy": "Where a verse names somebody no dataset holds, this corpus writes the record rather than leaving the word blank or bending it onto the nearest listed candidate. Where the identification is open, the record says so and names who else it might be.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's ruling of 2026-09-06 — see NOT-0170",
   "rulings": [
     {
       "wordId": 6855504,

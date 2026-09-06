@@ -7,10 +7,20 @@ using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
+/// <param name="Superseded">
+/// Answers a later run replaced, because the name was asked again on a repaired candidate list.
+/// Counted because a zero here would mean the second campaign was silently not being applied, and
+/// the whole point of asking again is that the later answer is the one that stands.
+/// </param>
 /// <param name="Refused">
-/// Readings a second pass read again and contradicted. They are counted rather than merely skipped,
-/// because a refusal is the most informative thing this loader does and a number that quietly went
-/// to zero would mean the review files had stopped being read.
+/// Readings a second pass read again and contradicted, whose answer has not changed since. Counted
+/// rather than merely skipped, because a number that quietly went to zero would mean the review
+/// files had stopped being read.
+/// </param>
+/// <param name="Decided">
+/// Words a ruling settles — the owner's, or the review naming the referent it found instead. The
+/// reading is not loaded for them and the word is not left blank: a ruling annotates it, with what
+/// was ruled out recorded beside the answer.
 /// </param>
 /// <param name="Unlisted">
 /// Occurrences where the model said the encyclopedia holds nobody who fits. Not a failure — it is
@@ -27,7 +37,9 @@ internal sealed record SenseReadingOutcome(
     int Runs,
     int Answers,
     int Occurrences,
+    int Superseded,
     int Refused,
+    int Decided,
     int Contradicted,
     int Unlisted,
     int Unclear,
@@ -43,8 +55,10 @@ internal sealed record SenseReadingOutcome(
         : NoReadings ? "no model readings are on this disk, so nothing was loaded from them"
         : $"{Annotated} words name a person or a place on a model's reading, from {Occurrences} " +
           $"occurrences answered over {Runs} runs, in {Elapsed}: {Corroborated} of them in a verse " +
-          "the encyclopedia independently says that entity is named in. Not loaded: " +
-          $"{Refused} readings a second pass found wrong, {Contradicted} a run answered two ways, " +
+          $"the encyclopedia independently says that entity is named in, and {Superseded} of them " +
+          "answered again on a repaired candidate list. Not loaded: " +
+          $"{Refused} readings a second pass found wrong, {Decided} a ruling settles instead, " +
+          $"{Contradicted} a run answered two ways, " +
           $"{Unlisted} naming somebody the encyclopedia does not hold, {Unclear} the model would not " +
           $"answer, {Unmeasured} in a confidence band nobody has measured, and {Unresolvable} naming " +
           "a record that is no longer there. Per text: " +
@@ -66,9 +80,19 @@ internal sealed record SenseReadingOutcome(
 /// answer where there was none and can never displace one. The confidence is the measured share of
 /// readings in that band that survived a second pass, not a number chosen to look right. The model,
 /// the prompt version and the date of the run travel into the claim, so a reader who wants to know
-/// who said this gets a model and a date rather than the corpus's own voice. And seventy-four
-/// answers that a second pass read again and contradicted are refused outright, because a reading
-/// known to be wrong is evidence about the method and not data about the text.
+/// who said this gets a model and a date rather than the corpus's own voice. And an answer a second
+/// pass read again and contradicted is never loaded as the answer, because a reading known to be
+/// wrong is evidence about the method and not data about the text.
+/// </para>
+///
+/// <para>
+/// **What is refused here is the answer and never the question.** The word still names somebody, so
+/// a verdict hands the word on rather than dropping it: where the review named the referent it
+/// found instead, that referent is a ruling and the overturned reading travels with it as the thing
+/// that was ruled out; where it named somebody no dataset holds, the record is written; and where
+/// nobody could tell, the record says so and names the candidates. A verdict is also about a
+/// reading and not about a word, so a name asked again on a repaired candidate list is judged on
+/// the answer it gives now.
 /// </para>
 ///
 /// <para>
@@ -148,11 +172,12 @@ internal sealed class SenseReadingLoader(
         }
 
         var started = Stopwatch.StartNew();
-        var (readings, contradicted, answers, runs) = SenseReadingFiles.Read(directory);
+        var (readings, contradicted, answers, runs, superseded) = SenseReadingFiles.Read(directory);
         var refused = SenseReadingFiles.Refused().Readings.ToDictionary(r => r.WordId);
+        var ruled = Ruled();
 
         var wanted = new List<SenseReading>(readings.Count);
-        int unlisted = 0, unclear = 0, unmeasured = 0, blocked = 0;
+        int unlisted = 0, unclear = 0, unmeasured = 0, blocked = 0, decided = 0;
         foreach (var reading in readings)
         {
             if (reading.Referent == SenseReading.Unlisted)
@@ -163,7 +188,11 @@ internal sealed class SenseReadingLoader(
             {
                 unclear++;
             }
-            else if (refused.ContainsKey(reading.WordId) || contradicted.Contains(reading.WordId))
+            else if (ruled.Contains(reading.WordId))
+            {
+                decided++;
+            }
+            else if (Overturned(refused, reading) || contradicted.Contains(reading.WordId))
             {
                 blocked++;
             }
@@ -205,7 +234,8 @@ internal sealed class SenseReadingLoader(
                 + "loaded yet; both are earlier steps of the same pipeline");
             return Nothing(alreadyLoaded: false) with
             {
-                Runs = runs, Answers = answers, Occurrences = readings.Count, Refused = blocked,
+                Runs = runs, Answers = answers, Occurrences = readings.Count,
+                Superseded = superseded, Refused = blocked, Decided = decided,
                 Contradicted = contradicted.Count, Unlisted = unlisted, Unclear = unclear,
                 Unmeasured = unmeasured, Unresolvable = unresolvable, Elapsed = started.Elapsed,
             };
@@ -238,15 +268,42 @@ internal sealed class SenseReadingLoader(
         await transaction.CommitAsync(cancellationToken);
 
         var outcome = new SenseReadingOutcome(
-            false, false, runs, answers, readings.Count, blocked, contradicted.Count, unlisted,
-            unclear, unmeasured, unresolvable, byText.Sum(t => t.Words), corroborated, byText,
-            started.Elapsed);
+            false, false, runs, answers, readings.Count, superseded, blocked, decided,
+            contradicted.Count, unlisted, unclear, unmeasured, unresolvable,
+            byText.Sum(t => t.Words), corroborated, byText, started.Elapsed);
         logger.LogInformation("Read: {Outcome}", outcome);
         return outcome;
     }
 
+    /// <summary>
+    /// Whether a second pass overturned the answer this reading actually gives.
+    ///
+    /// The verdict names the reading it overturned, and it is compared rather than assumed, because
+    /// a word that has since been asked again on a repaired candidate list gives a different answer
+    /// and nobody has reviewed that one. Refusing it on the strength of a verdict about the answer
+    /// it no longer gives would throw away the second campaign without saying so — and where the
+    /// re-ask arrived at what the review said, refusing would drop the very answer the review asked
+    /// for.
+    /// </summary>
+    private static bool Overturned(
+        IReadOnlyDictionary<long, RefusedReading> refused,
+        SenseReading reading) =>
+        refused.TryGetValue(reading.WordId, out var verdict)
+        && string.Equals(verdict.Reading, reading.Referent, StringComparison.Ordinal);
+
+    /// <summary>
+    /// Every word a ruling has settled, whether the owner's or the review's. A decision beats a
+    /// reading, and the two loaders would otherwise both annotate the word — the ruling with the
+    /// referent somebody decided on and this with the one that was overturned.
+    /// </summary>
+    private static HashSet<long> Ruled() =>
+    [
+        .. SenseReadingFiles.Rulings().Rulings.Select(r => r.WordId),
+        .. SenseReadingFiles.ReviewRulings().Rulings.Select(r => r.WordId),
+    ];
+
     private static SenseReadingOutcome Nothing(bool alreadyLoaded) =>
-        new(alreadyLoaded, !alreadyLoaded, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
+        new(alreadyLoaded, !alreadyLoaded, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
 
     /// <summary>
     /// Where the run folders are. Under the corpus sources by default, because that is what they

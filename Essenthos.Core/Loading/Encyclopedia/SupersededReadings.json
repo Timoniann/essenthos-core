@@ -1,0 +1,3850 @@
+{
+  "askedAgain": "2026-09-06, after the candidate lists were repaired: New Testament people were taken out of the Hebrew names and OpenBible's 1,233 places were joined to their Strong numbers, so 94 of the 515 names were being answered against a list that was wrong in two directions at once. The 75 of them that were still questions were extracted afresh and asked again, prompt sense-1 unchanged, and these are the answers that moved.",
+  "model": "claude-sonnet-5",
+  "promptVersion": "sense-1",
+  "run": "2026-09-06T03:07:07+00:00",
+  "reaskedNames": 75,
+  "reaskedOccurrences": 3151,
+  "readings": [
+    {
+      "wordId": 6467653,
+      "strongNumber": "H2341",
+      "was": "unclear",
+      "now": "havilah-3",
+      "confidence": "medium",
+      "reason": "Eden region encircled by the Pison river with gold, a distinct territory from the genealogical Havilahs."
+    },
+    {
+      "wordId": 6472965,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Plain of Mamre located in Hebron; place name."
+    },
+    {
+      "wordId": 6477516,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Kirjatharba equated with Hebron; place, city in Canaan."
+    },
+    {
+      "wordId": 6477846,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Mamre equated with Hebron; place name."
+    },
+    {
+      "wordId": 6479453,
+      "strongNumber": "H2341",
+      "was": "unclear",
+      "now": "havilah-4",
+      "confidence": "medium",
+      "reason": "Names the Arabian boundary of Ishmaelite territory, the region called Havilah in item 2 of the lexicon."
+    },
+    {
+      "wordId": 6486276,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "City of Arbah, Hebron, where Abraham/Isaac sojourned; place."
+    },
+    {
+      "wordId": 6487199,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Vale of Hebron; geographic location."
+    },
+    {
+      "wordId": 6537297,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Camp of Judah' names the tribal division marching in the wilderness census, not the patriarch."
+    },
+    {
+      "wordId": 6540887,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Tribe of Judah' (matteh) identifies Nahshon's tribal affiliation, not the person Judah."
+    },
+    {
+      "wordId": 6543247,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Camp of the children of Judah' is the marching division named for the tribe."
+    },
+    {
+      "wordId": 6544689,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Tribe of Judah, Caleb' names Caleb's tribal affiliation, not the ancestor himself."
+    },
+    {
+      "wordId": 6544698,
+      "strongNumber": "H3130",
+      "was": "joseph-2",
+      "now": "joseph",
+      "confidence": "high",
+      "reason": "Igal son of Joseph, matches candidate joseph-2's context but no distinct record so keep as tribal patriarch is wrong—see note."
+    },
+    {
+      "wordId": 6544884,
+      "strongNumber": "H7340",
+      "was": "unlisted",
+      "now": "rehob-3",
+      "confidence": "medium",
+      "reason": "Far-north site near entrance of Hamath matches Beth-rehob region, not the Asher towns."
+    },
+    {
+      "wordId": 6544896,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "City reached by spies, home of Anakim; place."
+    },
+    {
+      "wordId": 6544907,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "'Hebron was built seven years before Zoan'; place."
+    },
+    {
+      "wordId": 6550576,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" by Jordan near Jericho, the same distinct locale as Deut 34:1/8."
+    },
+    {
+      "wordId": 6551566,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "mesopotamia",
+      "confidence": "high",
+      "reason": "Balaam summoned from 'Aram, mountains of the east' = Pethor of Mesopotamia (cf. Deut 23:4)."
+    },
+    {
+      "wordId": 6552746,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" by Jordan near Jericho, the recurring distinct locale."
+    },
+    {
+      "wordId": 6553018,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Census total 'families of Judah' sums the numbered tribal contingent, not the patriarch."
+    },
+    {
+      "wordId": 6553615,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "Same \"plains of Moab\" formula as the Deut 34/Josh 13 attestations."
+    },
+    {
+      "wordId": 6555873,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" camp location by Jordan near Jericho."
+    },
+    {
+      "wordId": 6557747,
+      "strongNumber": "H8480",
+      "was": "unlisted",
+      "now": "tahath-4",
+      "confidence": "high",
+      "reason": "Wilderness encampment station in itinerary list."
+    },
+    {
+      "wordId": 6557751,
+      "strongNumber": "H8480",
+      "was": "unlisted",
+      "now": "tahath-4",
+      "confidence": "high",
+      "reason": "Same wilderness station, departure notice."
+    },
+    {
+      "wordId": 6557993,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" by Jordan near Jericho."
+    },
+    {
+      "wordId": 6558008,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" — same recurring specific locale."
+    },
+    {
+      "wordId": 6558016,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" where the Lord spoke to Moses."
+    },
+    {
+      "wordId": 6558478,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Tribe of Judah, Caleb' names Caleb's tribal affiliation for land division."
+    },
+    {
+      "wordId": 6558580,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" — same recurring locale by Jordan near Jericho."
+    },
+    {
+      "wordId": 6559556,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" — closing formula of the same distinct locale."
+    },
+    {
+      "wordId": 6574661,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Listed among tribal names standing on Gerizim to bless, representing the tribe."
+    },
+    {
+      "wordId": 6579074,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Moses's blessing addresses the tribe's future ('bring him to his people'), not the deceased patriarch."
+    },
+    {
+      "wordId": 6579080,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Same blessing continues addressing the tribe collectively, paired with Reuben and Levi."
+    },
+    {
+      "wordId": 6579448,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" (ערבות מואב), the exact phrase pattern unique to moab-3's attestations."
+    },
+    {
+      "wordId": 6579485,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Land of Judah unto the utmost sea' explicitly names the geographic territory shown to Moses."
+    },
+    {
+      "wordId": 6579592,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" (ערבות מואב), matching moab-3's exclusive attestation pattern."
+    },
+    {
+      "wordId": 6582858,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Achan's genealogy notes his tribal affiliation, 'of the tribe of Judah.'"
+    },
+    {
+      "wordId": 6583274,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Tribe of Judah was taken' in the lot-casting to find Achan refers to the tribe."
+    },
+    {
+      "wordId": 6583279,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Family of Judah' in the lot-casting narrows to a clan within the tribe."
+    },
+    {
+      "wordId": 6583316,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Repeats Achan's tribal identification, 'of the tribe of Judah.'"
+    },
+    {
+      "wordId": 6585229,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "King of Hebron among Amorite city-kings; place."
+    },
+    {
+      "wordId": 6585231,
+      "strongNumber": "H3412",
+      "was": "unlisted",
+      "now": "jarmuth",
+      "confidence": "high",
+      "reason": "Canaanite king-city grouped with Hebron, Lachish, Eglon in the lowlands."
+    },
+    {
+      "wordId": 6585650,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "King of Hebron, one of five kings; place."
+    },
+    {
+      "wordId": 6585653,
+      "strongNumber": "H3412",
+      "was": "unlisted",
+      "now": "jarmuth",
+      "confidence": "high",
+      "reason": "Same five-king list as Joshua 10:5."
+    },
+    {
+      "wordId": 6586004,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "City Joshua fought against; place."
+    },
+    {
+      "wordId": 6586087,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "City conquered by Joshua, parallel to Debir; place."
+    },
+    {
+      "wordId": 6586706,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Anakim cut off from Hebron; place."
+    },
+    {
+      "wordId": 6586715,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Mountains of Judah' names the hill-country region, a geographic area."
+    },
+    {
+      "wordId": 6587023,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "King of Hebron in list of defeated kings; place."
+    },
+    {
+      "wordId": 6587026,
+      "strongNumber": "H3412",
+      "was": "unlisted",
+      "now": "jarmuth",
+      "confidence": "high",
+      "reason": "Same conquered-kings list continuing the Canaanite city referent."
+    },
+    {
+      "wordId": 6587065,
+      "strongNumber": "H2660",
+      "was": "unlisted",
+      "now": "hepher-3",
+      "confidence": "high",
+      "reason": "Marked topo; king of Hepher among conquered Canaanite towns."
+    },
+    {
+      "wordId": 6587399,
+      "strongNumber": "H4601",
+      "was": "unlisted",
+      "now": "maacah-9",
+      "confidence": "high",
+      "reason": "Region paired with Geshur, 'Maacath dwelt among Israel' — a place name."
+    },
+    {
+      "wordId": 6587732,
+      "strongNumber": "H4124",
+      "was": "moab-2",
+      "now": "moab-3",
+      "confidence": "high",
+      "reason": "\"Plains of Moab\" (ערבות מואב), same formulaic phrase as moab-3's list (Numbers itinerary texts)."
+    },
+    {
+      "wordId": 6587876,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Children of Judah came unto Joshua' names the tribe acting collectively at Gilgal."
+    },
+    {
+      "wordId": 6588099,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Given to Caleb as inheritance; place."
+    },
+    {
+      "wordId": 6588109,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Inheritance of Caleb unto this day; place."
+    },
+    {
+      "wordId": 6588132,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Former name Kirjatharba; place."
+    },
+    {
+      "wordId": 6588157,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Introduces the land allotment given by lot to the tribe of Judah."
+    },
+    {
+      "wordId": 6588203,
+      "strongNumber": "H2696",
+      "was": "unlisted",
+      "now": "hezron-3",
+      "confidence": "medium",
+      "reason": "Border-point name in south Judah's boundary description, a place not a person."
+    },
+    {
+      "wordId": 6588431,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Border of the children of Judah' identifies the tribe whose allotment is bounded."
+    },
+    {
+      "wordId": 6588445,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Caleb's portion given 'among the children of Judah' refers to the tribe."
+    },
+    {
+      "wordId": 6588457,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "City of Arba given to Caleb; place."
+    },
+    {
+      "wordId": 6588577,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Inheritance of the tribe of the children of Judah' names the tribe's land grant."
+    },
+    {
+      "wordId": 6588589,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Lists cities belonging to 'the tribe of the children of Judah.'"
+    },
+    {
+      "wordId": 6588598,
+      "strongNumber": "H5740",
+      "was": "unlisted",
+      "now": "eder-3",
+      "confidence": "high",
+      "reason": "Listed among southern Judah towns toward Edom border, a place not a person."
+    },
+    {
+      "wordId": 6588613,
+      "strongNumber": "H2128",
+      "was": "unlisted",
+      "now": "ziph-4",
+      "confidence": "high",
+      "reason": "Listed with Ithnan and Telem, matching this Ziph's location in southern Judah between them."
+    },
+    {
+      "wordId": 6588622,
+      "strongNumber": "H2696",
+      "was": "unlisted",
+      "now": "hezron-3",
+      "confidence": "medium",
+      "reason": "Town in south Judah city list, identified with Hazor; a place, not a person."
+    },
+    {
+      "wordId": 6588689,
+      "strongNumber": "H3412",
+      "was": "unlisted",
+      "now": "jarmuth",
+      "confidence": "high",
+      "reason": "Listed with Adullam, Socoh, Azekah, towns of the Judah lowlands."
+    },
+    {
+      "wordId": 6588760,
+      "strongNumber": "H4762",
+      "was": "unlisted",
+      "now": "mareshah-3",
+      "confidence": "high",
+      "reason": "Listed among lowland cities of Judah (Keilah, Achzib) — the place."
+    },
+    {
+      "wordId": 6588817,
+      "strongNumber": "H851",
+      "was": "unlisted",
+      "now": "eshtemoa-3",
+      "confidence": "high",
+      "reason": "Listed among Judah's towns (Anab, Eshtemoh, Anim); a place."
+    },
+    {
+      "wordId": 6588847,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Kirjatharba is Hebron, city in Judah's list; place."
+    },
+    {
+      "wordId": 6588857,
+      "strongNumber": "H2128",
+      "was": "unlisted",
+      "now": "ziph-3",
+      "confidence": "high",
+      "reason": "Listed with Maon, Carmel, Juttah — the hill-country town southeast of Hebron."
+    },
+    {
+      "wordId": 6588861,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-3",
+      "confidence": "high",
+      "reason": "Listed among Judah hill-country towns near Juttah, Maon, Ziph."
+    },
+    {
+      "wordId": 6588926,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Children of Judah could not drive out' the Jebusites refers to the tribe's failed conquest."
+    },
+    {
+      "wordId": 6588935,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Jebusites dwelling 'with the children of Judah' names the tribe sharing Jerusalem."
+    },
+    {
+      "wordId": 6589163,
+      "strongNumber": "H44",
+      "was": "abiezer-2",
+      "now": "iezer",
+      "confidence": "high",
+      "reason": "Same six Manassite clans (Helek, Asriel, Shechem, Hepher, Shemida) as Numbers 26:30's sons of Gilead."
+    },
+    {
+      "wordId": 6589560,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Valley of Jezreel by Bethshean, the northern plain, not the Judah town."
+    },
+    {
+      "wordId": 6589696,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Judah shall abide in their coast on the south' personifies the tribe receiving its portion."
+    },
+    {
+      "wordId": 6589870,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Benjamin's border lies 'between the children of Judah and the children of Joseph,' i.e. the tribes."
+    },
+    {
+      "wordId": 6589960,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Kirjath-jearim called 'a city of the children of Judah' identifies tribal ownership."
+    },
+    {
+      "wordId": 6590147,
+      "strongNumber": "H7552",
+      "was": "unlisted",
+      "now": "rekem-3",
+      "confidence": "high",
+      "reason": "Topo name type; town listed among Benjamin's cities, matches place candidate."
+    },
+    {
+      "wordId": 6590195,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Simeon's inheritance lies within that 'of the children of Judah,' the tribe."
+    },
+    {
+      "wordId": 6590268,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Portion of the children of Judah' names the tribe from whose excess land Simeon was given."
+    },
+    {
+      "wordId": 6590276,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Same verse repeats 'children of Judah' as the tribe whose share was too large."
+    },
+    {
+      "wordId": 6590342,
+      "strongNumber": "H3309",
+      "was": "unlisted",
+      "now": "japhia-3",
+      "confidence": "high",
+      "reason": "Marked topo; town on Zebulun/Issachar border, matching the place candidate."
+    },
+    {
+      "wordId": 6590415,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Border town of Issachar with Chesulloth and Shunem, the northern Jezreel."
+    },
+    {
+      "wordId": 6590538,
+      "strongNumber": "H7340",
+      "was": "unlisted",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "One of two identically named Asher towns; text gives no way to distinguish them."
+    },
+    {
+      "wordId": 6590575,
+      "strongNumber": "H7340",
+      "was": "unlisted",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "Second same-named Asher town in same list; no textual marker distinguishes the two."
+    },
+    {
+      "wordId": 6590653,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "low",
+      "reason": "Naphtali's border 'toucheth Judah' at Jordan is a well-known textual crux; sense genuinely uncertain."
+    },
+    {
+      "wordId": 6591076,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "City of refuge, Kirjatharba is Hebron; place."
+    },
+    {
+      "wordId": 6591079,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "'Mountain of Judah' locates Hebron/Kirjath-arba within the region, a geographic reference."
+    },
+    {
+      "wordId": 6591245,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Levitical cities allotted 'out of the tribe of Judah' names the tribe."
+    },
+    {
+      "wordId": 6591364,
+      "strongNumber": "H3063",
+      "was": "judah",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Cities given 'out of the tribe of the children of Judah' to Levites names the tribe."
+    },
+    {
+      "wordId": 6591407,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "City given to Aaron's descendants; place."
+    },
+    {
+      "wordId": 6591443,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "City of refuge given to priests; place."
+    },
+    {
+      "wordId": 6591461,
+      "strongNumber": "H851",
+      "was": "unlisted",
+      "now": "eshtemoa-3",
+      "confidence": "high",
+      "reason": "Levitical city given with suburbs to Aaron's sons; a place."
+    },
+    {
+      "wordId": 6591518,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "City allotted to the priests among the Benjamite towns; clearly the place."
+    },
+    {
+      "wordId": 6591699,
+      "strongNumber": "H3412",
+      "was": "unlisted",
+      "now": "jarmuth-2",
+      "confidence": "high",
+      "reason": "Levitical city allotted from Issachar's tribe, the Gershonite-Levite Jarmuth."
+    },
+    {
+      "wordId": 6591720,
+      "strongNumber": "H5658",
+      "was": "unlisted",
+      "now": "abdon-4",
+      "confidence": "high",
+      "reason": "Listed among Levitical cities of Asher with suburbs, plainly a place."
+    },
+    {
+      "wordId": 6591731,
+      "strongNumber": "H7340",
+      "was": "unlisted",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "Levitical-city Rehob could be either of the two identically named Asher towns."
+    },
+    {
+      "wordId": 6594409,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Canaanites dwelling there, formerly Kirjatharba; place."
+    },
+    {
+      "wordId": 6594412,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Name of Hebron formerly Kirjatharba; place."
+    },
+    {
+      "wordId": 6594622,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Given to Caleb as Moses said; place."
+    },
+    {
+      "wordId": 6594875,
+      "strongNumber": "H7340",
+      "was": "unlisted",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "Order (Aphek-Rehob) parallels Josh 19:30, but which of the two towns remains undetermined."
+    },
+    {
+      "wordId": 6595689,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "mesopotamia",
+      "confidence": "high",
+      "reason": "Same king Chushan-rishathaim already called king of Mesopotamia (Aram-naharaim) in Judg 3:8."
+    },
+    {
+      "wordId": 6597984,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Valley of Jezreel where Midian camped, the northern plain near Gideon."
+    },
+    {
+      "wordId": 6597998,
+      "strongNumber": "H44",
+      "was": "abiezer-2",
+      "now": "iezer",
+      "confidence": "medium",
+      "reason": "Gideon's Abiezrite clan is the Manassite/Gilead clan named for this ancestor."
+    },
+    {
+      "wordId": 6598942,
+      "strongNumber": "H44",
+      "was": "abiezer-2",
+      "now": "iezer",
+      "confidence": "medium",
+      "reason": "Same Abiezrite clan reference as Judges 6:34."
+    },
+    {
+      "wordId": 6600968,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "medium",
+      "reason": "'Gods of Aram' listed among neighboring national pantheons, i.e. the general Syrian nation."
+    },
+    {
+      "wordId": 6604052,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Hill before Hebron, geographic reference; place."
+    },
+    {
+      "wordId": 6608058,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Part of compound city-name Jabesh-gilead (lexicon sense 2), not the region or a person."
+    },
+    {
+      "wordId": 6613614,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Compound city-name Jabesh-gilead besieged by Nahash, distinct from the region."
+    },
+    {
+      "wordId": 6613809,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Compound city-name Jabesh-gilead, the besieged town."
+    },
+    {
+      "wordId": 6616445,
+      "strongNumber": "H2341",
+      "was": "unclear",
+      "now": "havilah-5",
+      "confidence": "medium",
+      "reason": "Identical 'Havilah unto Shur, before Egypt' boundary formula as Gen 25:18, treated as the parallel place entry."
+    },
+    {
+      "wordId": 6622601,
+      "strongNumber": "H2128",
+      "was": "unlisted",
+      "now": "ziph-3",
+      "confidence": "high",
+      "reason": "\"Went to Ziph\" (directional -ah) names the town itself, near Maon/Hebron."
+    },
+    {
+      "wordId": 6624291,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-5",
+      "confidence": "high",
+      "reason": "Ahinoam of Jezreel, David's wife; matches candidate's attested Ahinoam verses."
+    },
+    {
+      "wordId": 6625903,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Israel's camp by a spring, setting for the Gilboa campaign in the north."
+    },
+    {
+      "wordId": 6626201,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Philistines march to Jezreel, same Gilboa campaign context."
+    },
+    {
+      "wordId": 6626890,
+      "strongNumber": "H851",
+      "was": "unlisted",
+      "now": "eshtemoa-3",
+      "confidence": "high",
+      "reason": "Town among places David sent spoil to; a place, not a person."
+    },
+    {
+      "wordId": 6626929,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "One of places David and men frequented; place."
+    },
+    {
+      "wordId": 6627178,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Inhabitants of the specific city Jabesh-gilead, not the region."
+    },
+    {
+      "wordId": 6627753,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "David goes up to Hebron per divine instruction; place."
+    },
+    {
+      "wordId": 6627784,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "David's men dwell in cities of Hebron; place."
+    },
+    {
+      "wordId": 6627807,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Men of the city Jabesh-gilead who buried Saul."
+    },
+    {
+      "wordId": 6627819,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Same city Jabesh-gilead as prior verse."
+    },
+    {
+      "wordId": 6627913,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "medium",
+      "reason": "Region under Ishbosheth alongside Ephraim/Benjamin, the northern Jezreel district."
+    },
+    {
+      "wordId": 6627954,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "David reigned as king in Hebron; place."
+    },
+    {
+      "wordId": 6628448,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Joab and men arrive at Hebron; place."
+    },
+    {
+      "wordId": 6628478,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Sons born to David in Hebron; place."
+    },
+    {
+      "wordId": 6628531,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Sixth son born to David in Hebron; place."
+    },
+    {
+      "wordId": 6628848,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Abner speaks to David in Hebron; place."
+    },
+    {
+      "wordId": 6628867,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Abner comes to David at Hebron, the city; David's capital during this period."
+    },
+    {
+      "wordId": 6628941,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Abner not with David in Hebron, the city, same narrative context."
+    },
+    {
+      "wordId": 6629046,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Abner returns to Hebron the city where Joab kills him."
+    },
+    {
+      "wordId": 6629178,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Abner buried in Hebron the city."
+    },
+    {
+      "wordId": 6629370,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Abner died in Hebron the city."
+    },
+    {
+      "wordId": 6629441,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "News of Saul and Jonathan's deaths at Gilboa came from Jezreel."
+    },
+    {
+      "wordId": 6629544,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Ishbosheth's head brought to David at Hebron the city."
+    },
+    {
+      "wordId": 6629678,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Hanged bodies over pool in Hebron, the city."
+    },
+    {
+      "wordId": 6629690,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Buried in sepulchre of Abner in Hebron, the city."
+    },
+    {
+      "wordId": 6629698,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Tribes of Israel come to David at Hebron, the city, to make him king."
+    },
+    {
+      "wordId": 6629751,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Elders of Israel come to Hebron the city to anoint David king."
+    },
+    {
+      "wordId": 6629760,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Covenant made in Hebron, the city, same verse as above."
+    },
+    {
+      "wordId": 6629782,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "David reigned in Hebron the city over Judah seven years."
+    },
+    {
+      "wordId": 6629971,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "David came from Hebron the city to Jerusalem."
+    },
+    {
+      "wordId": 6631453,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram-Damascus aiding Hadadezer; parallels the Syrian kingdom narrative (cf. 1 Chr 19)."
+    },
+    {
+      "wordId": 6631465,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same verse/event as previous occurrence, the Syrian kingdom David defeated."
+    },
+    {
+      "wordId": 6631476,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Garrisons in Aram-Damascus, the Syrian kingdom subdued by David."
+    },
+    {
+      "wordId": 6631480,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "'Aram became servants to David' - the Syrian nation just mentioned."
+    },
+    {
+      "wordId": 6631604,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Spoil list 'of Syria...Moab...Ammon' - standard nation-list usage matching syria candidate."
+    },
+    {
+      "wordId": 6632169,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "medium",
+      "reason": "Aram-Beth-Rehob, an Aramean city-state hired by Ammon; general Syrian-nation term fits best."
+    },
+    {
+      "wordId": 6632173,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "medium",
+      "reason": "Aram-Zobah, allied Aramean force; no specific candidate exists for this city-state."
+    },
+    {
+      "wordId": 6632181,
+      "strongNumber": "H4601",
+      "was": "unlisted",
+      "now": "maacah-9",
+      "confidence": "high",
+      "reason": "King of Maacah is a territorial ruler among Syrian kingdoms, not a person candidate."
+    },
+    {
+      "wordId": 6632216,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Continues the same Zobah/Rehob Aramean coalition of v.6, i.e. the Syrian forces."
+    },
+    {
+      "wordId": 6632219,
+      "strongNumber": "H7340",
+      "was": "unlisted",
+      "now": "rehob-3",
+      "confidence": "high",
+      "reason": "Verse 6 names 'Syrians of Bethrehob'; v8's 'Rehob' is that same region, not a person."
+    },
+    {
+      "wordId": 6632224,
+      "strongNumber": "H4601",
+      "was": "unlisted",
+      "now": "maacah-9",
+      "confidence": "high",
+      "reason": "Listed among Zoba, Rehob, Ishtob — a place/kingdom name."
+    },
+    {
+      "wordId": 6632254,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Joab arrays against Aram, the same Syrian coalition just introduced."
+    },
+    {
+      "wordId": 6632275,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Joab's speech about 'the Syrians' being too strong, same battle narrative."
+    },
+    {
+      "wordId": 6632321,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Battle against Aram, continuing the same Syrian-coalition narrative."
+    },
+    {
+      "wordId": 6632332,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "'Aram fled' - same Syrian force from the preceding verses."
+    },
+    {
+      "wordId": 6632354,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram regrouping after defeat, same Syrian coalition."
+    },
+    {
+      "wordId": 6632369,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Hadadezer brings out Aram from beyond the river - the Syrian kingdom's forces."
+    },
+    {
+      "wordId": 6632404,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram arrayed against David, continuing the Syrian-kingdom war narrative."
+    },
+    {
+      "wordId": 6632413,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram fled before Israel - same Syrian army of the Hadadezer campaign."
+    },
+    {
+      "wordId": 6632421,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "David slew of Aram - same Syrian army just defeated."
+    },
+    {
+      "wordId": 6632458,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram made peace with Israel after the war - the Syrian kingdom under Hadadezer."
+    },
+    {
+      "wordId": 6635809,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Absalom vowed to worship the Lord in Hebron the city."
+    },
+    {
+      "wordId": 6635819,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "aram-4",
+      "confidence": "medium",
+      "reason": "Geshur 'in Aram' pairs with 1 Chr 2:23's Geshur-and-Aram district near Bashan/Gilead."
+    },
+    {
+      "wordId": 6635843,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Absalom went to Hebron the city."
+    },
+    {
+      "wordId": 6635865,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Absalom proclaimed king in Hebron the city."
+    },
+    {
+      "wordId": 6640791,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Men of the city Jabesh-gilead who stole Saul's bones."
+    },
+    {
+      "wordId": 6643001,
+      "strongNumber": "H8096",
+      "was": "unclear",
+      "now": "shimei-2",
+      "confidence": "medium",
+      "reason": "Court figure loyal to David, plausibly the same Shimei later confined by Solomon."
+    },
+    {
+      "wordId": 6644304,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "David reigned seven years in Hebron the city."
+    },
+    {
+      "wordId": 6644620,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Abiathar sent to his fields at Anathoth, the town, not a person."
+    },
+    {
+      "wordId": 6645967,
+      "strongNumber": "H2660",
+      "was": "unlisted",
+      "now": "hepher-3",
+      "confidence": "high",
+      "reason": "Marked topo; 'land of Hepher' as a district under Solomon."
+    },
+    {
+      "wordId": 6645995,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Solomon's district near Bethshean and Megiddo, the northern Jezreel."
+    },
+    {
+      "wordId": 6646009,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Part of the compound city-name Ramoth-gilead, Geber's district capital."
+    },
+    {
+      "wordId": 6651592,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-5",
+      "confidence": "high",
+      "reason": "Solomon's Red Sea/Ophir fleet at Ezion-geber; 'navy of Tarshish' is the ship-class idiom."
+    },
+    {
+      "wordId": 6651608,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-5",
+      "confidence": "high",
+      "reason": "Same verse, same Ezion-geber/Ophir fleet; ship-class idiom, not the Mediterranean port."
+    },
+    {
+      "wordId": 6651775,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "'Kings of Aram' trading horses; parallels 2 Chr 1:17, already tied to syria candidate."
+    },
+    {
+      "wordId": 6652285,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Rezon reigned over Aram from Damascus, the Syrian kingdom."
+    },
+    {
+      "wordId": 6655452,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Ben-hadad king of Aram dwelling at Damascus, standard Syrian-kingdom reference."
+    },
+    {
+      "wordId": 6658140,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Ahab's royal city where he rode after the drought ended."
+    },
+    {
+      "wordId": 6658157,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Same entrance of Ahab's city Jezreel Elijah ran to."
+    },
+    {
+      "wordId": 6658532,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Hazael anointed king over Aram, the Damascus-centered Syrian kingdom."
+    },
+    {
+      "wordId": 6658694,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Ben-hadad king of Aram besieging Samaria, the Syrian kingdom."
+    },
+    {
+      "wordId": 6659133,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram's army fleeing Israel, same Syrian-kingdom battle narrative."
+    },
+    {
+      "wordId": 6659141,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Ben-hadad king of Aram escaping, same Syrian-kingdom king as elsewhere in chapter."
+    },
+    {
+      "wordId": 6659162,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same Benhadad-Israel war narrative as 1 Kings 20:20, attested under Syria."
+    },
+    {
+      "wordId": 6659190,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram/Syria in same 1 Kings 20 narrative as v.20, attested under Syria."
+    },
+    {
+      "wordId": 6659196,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Continuing 1 Kings 20 narrative classed under Syria (cf. v.20)."
+    },
+    {
+      "wordId": 6659283,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Benhadad's Aram/Syria army in same continuous 1 Kings 20 narrative."
+    },
+    {
+      "wordId": 6659312,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same battle narrative (1 Kings 20) as the Syria-attested v.20."
+    },
+    {
+      "wordId": 6659335,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Continuation of the same Aram/Syria war narrative in 1 Kings 20."
+    },
+    {
+      "wordId": 6659384,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same 1 Kings 20 battle account classed under Syria."
+    },
+    {
+      "wordId": 6659765,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Naboth's vineyard beside Ahab's palace in Jezreel."
+    },
+    {
+      "wordId": 6660289,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Wall of Jezreel where Jezebel's death is foretold, Ahab's city."
+    },
+    {
+      "wordId": 6660422,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Continuation of Benhadad/Israel conflict from 1 Kings 20, same kingdom."
+    },
+    {
+      "wordId": 6660452,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead, the contested city."
+    },
+    {
+      "wordId": 6660462,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram/Syria, same Benhadad narrative continuing from ch.20."
+    },
+    {
+      "wordId": 6660474,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead, the battle target."
+    },
+    {
+      "wordId": 6660523,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead, prophets' consultation."
+    },
+    {
+      "wordId": 6660645,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same Ramoth-gilead campaign against the king of Aram/Syria."
+    },
+    {
+      "wordId": 6660658,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead in prophets' oracle."
+    },
+    {
+      "wordId": 6660729,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead, Micaiah's oracle."
+    },
+    {
+      "wordId": 6660852,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead in the vision of Ahab's fall."
+    },
+    {
+      "wordId": 6661030,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead, the campaign destination."
+    },
+    {
+      "wordId": 6661058,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram/Syria commanding chariot captains, same 1 Kings 22 narrative."
+    },
+    {
+      "wordId": 6661176,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Battle against Aram/Syria concluding the 1 Kings 22 narrative."
+    },
+    {
+      "wordId": 6661410,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-5",
+      "confidence": "high",
+      "reason": "Ships of Tarshish explicitly built to sail to Ophir, so it names a ship type, not the place."
+    },
+    {
+      "wordId": 6664221,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Naaman captain of king of Aram/Syria; same kingdom as 2 Kings 8:29 entry."
+    },
+    {
+      "wordId": 6664237,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same verse (2 Kings 5:1), deliverance given to Aram/Syria the nation."
+    },
+    {
+      "wordId": 6664246,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram/Syrian raiding bands, same Naaman narrative as 5:1."
+    },
+    {
+      "wordId": 6664303,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram/Syria sending Naaman, continuing same narrative."
+    },
+    {
+      "wordId": 6665047,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram/Syria warring with Israel, same royal line as Naaman narrative."
+    },
+    {
+      "wordId": 6665082,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram/Syrian forces in same Elisha-war narrative as 6:8."
+    },
+    {
+      "wordId": 6665111,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram/Syria troubled, continuing same 2 Kings 6 narrative."
+    },
+    {
+      "wordId": 6665414,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Bands of Aram/Syria, same royal conflict narrative continuing."
+    },
+    {
+      "wordId": 6665428,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Benhadad king of Aram/Syria besieging Samaria, same narrative thread."
+    },
+    {
+      "wordId": 6665793,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Camp of Aram/Syria during the siege of Samaria narrative."
+    },
+    {
+      "wordId": 6665811,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same siege narrative, camp of Aram/Syria."
+    },
+    {
+      "wordId": 6665817,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same verse and narrative as prior occurrence, camp of Aram/Syria."
+    },
+    {
+      "wordId": 6665828,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram/Syrian camp routed by divinely-caused panic, same narrative."
+    },
+    {
+      "wordId": 6665984,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Camp of Aram/Syria found abandoned, continuing same story."
+    },
+    {
+      "wordId": 6666033,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King recounts what Aram/Syria had done, same siege narrative."
+    },
+    {
+      "wordId": 6666112,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Scouts sent after the camp of Aram/Syria, same narrative continuing."
+    },
+    {
+      "wordId": 6666135,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Goods cast away by fleeing Aram/Syria, same episode conclusion."
+    },
+    {
+      "wordId": 6666155,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "People plunder the camp of Aram/Syria, same siege narrative."
+    },
+    {
+      "wordId": 6666483,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Benhadad king of Aram/Syria sick, matches Syria-attested 2 Kings 8:29 context."
+    },
+    {
+      "wordId": 6666554,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Benhadad king of Aram/Syria, same Hazael narrative as 2 Kings 8:29."
+    },
+    {
+      "wordId": 6666650,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Hazael becomes king of Aram-Damascus, the kingdom throughout Kings narratives."
+    },
+    {
+      "wordId": 6666952,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Hazael king of Aram/Syria in war narrative, same kingdom as parallel Kings texts."
+    },
+    {
+      "wordId": 6666955,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead, where Joram was wounded."
+    },
+    {
+      "wordId": 6666969,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Joram healed in Jezreel, the royal city, per 2 Kings narrative."
+    },
+    {
+      "wordId": 6666984,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Continuation of same Hazael-Joram war narrative, kingdom of Aram-Damascus."
+    },
+    {
+      "wordId": 6666999,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Second mention same verse, same royal city Jezreel."
+    },
+    {
+      "wordId": 6667031,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead, Elisha's servant's destination."
+    },
+    {
+      "wordId": 6667093,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead, destination of the young prophet."
+    },
+    {
+      "wordId": 6667211,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Portion of Jezreel where Jezebel dies, Ahab's city."
+    },
+    {
+      "wordId": 6667312,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Compound name Ramoth-gilead, kept by Joram against Hazael."
+    },
+    {
+      "wordId": 6667321,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Hazael king of Aram, same Kings narrative kingdom."
+    },
+    {
+      "wordId": 6667330,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Joram healed in Jezreel before Jehu's coup, the royal city."
+    },
+    {
+      "wordId": 6667342,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Continuation of Jehu/Hazael narrative, kingdom of Aram-Damascus."
+    },
+    {
+      "wordId": 6667360,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Message not to escape to tell it in Jezreel, same city."
+    },
+    {
+      "wordId": 6667366,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Jehu rides to Jezreel where Joram lay, the royal city."
+    },
+    {
+      "wordId": 6667388,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Watchman on tower in Jezreel spots Jehu's approach."
+    },
+    {
+      "wordId": 6667725,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Jehu comes to Jezreel, Jezebel looks from the window."
+    },
+    {
+      "wordId": 6667754,
+      "strongNumber": "H2174",
+      "was": "zimri-2",
+      "now": "jehu-2",
+      "confidence": "medium",
+      "reason": "Jezebel vocatively taunts Jehu himself, likening him to the regicide Zimri."
+    },
+    {
+      "wordId": 6667854,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Portion of Jezreel fulfilling Elijah's prophecy about Jezebel."
+    },
+    {
+      "wordId": 6667873,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Same prophecy fulfillment, portion of Jezreel."
+    },
+    {
+      "wordId": 6667895,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Rulers of Jezreel addressed by Jehu, Ahab's capital."
+    },
+    {
+      "wordId": 6668034,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Summons to come to Jehu at Jezreel, the royal city."
+    },
+    {
+      "wordId": 6668074,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Heads sent to Jehu at Jezreel, same royal city."
+    },
+    {
+      "wordId": 6668167,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Jehu slays Ahab's house remnant in Jezreel, the royal city."
+    },
+    {
+      "wordId": 6669720,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Hazael king of Aram attacks Gath/Jerusalem, kingdom of Aram-Damascus."
+    },
+    {
+      "wordId": 6669777,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same passage, Jehoash sends tribute to Hazael king of Aram."
+    },
+    {
+      "wordId": 6669899,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Hazael and Benhadad kings of Aram oppressing Israel, kingdom of Aram-Damascus."
+    },
+    {
+      "wordId": 6669928,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Continuation, king of Aram oppressing Israel under Jehoahaz."
+    },
+    {
+      "wordId": 6669990,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram destroyed Jehoahaz's army, same kingdom narrative."
+    },
+    {
+      "wordId": 6670253,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Elisha's prophecy about smiting Aram, the Aramean kingdom via Joash."
+    },
+    {
+      "wordId": 6670262,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same verse, second mention of Aram the kingdom."
+    },
+    {
+      "wordId": 6670314,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Hazael king of Aram oppressed Israel, kingdom of Aram-Damascus."
+    },
+    {
+      "wordId": 6670353,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Death of Hazael king of Aram, succeeded by Benhadad, same kingdom."
+    },
+    {
+      "wordId": 6671781,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Rezin king of Aram sent against Judah, the Aram-Damascus kingdom (cf. Isaiah 7)."
+    },
+    {
+      "wordId": 6671891,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Rezin king of Aram besieges Jerusalem, same kingdom as Isaiah 7 parallel."
+    },
+    {
+      "wordId": 6671919,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same verse, Rezin king of Aram recovering Elath for the kingdom."
+    },
+    {
+      "wordId": 6671923,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Rezin recovered Elath 'to Aram', the kingdom of Aram-Damascus."
+    },
+    {
+      "wordId": 6671963,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Ahaz seeks rescue from hand of king of Aram, same kingdom."
+    },
+    {
+      "wordId": 6674353,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "high",
+      "reason": "Tirhakah, historical 25th-Dynasty king ruling the land of Cush/Nubia."
+    },
+    {
+      "wordId": 6677682,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Bands of Aram/Syrians sent against Judah alongside Chaldees, Moab, Ammon - the kingdom."
+    },
+    {
+      "wordId": 6679558,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "unclear",
+      "confidence": "medium",
+      "reason": "Stock phrase for human grandeur with no anchor to literal port or ship-type sense."
+    },
+    {
+      "wordId": 6681019,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Rezin king of Aram allied with Pekah against Jerusalem."
+    },
+    {
+      "wordId": 6681045,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram confederate with Ephraim, same Syro-Ephraimite war."
+    },
+    {
+      "wordId": 6681112,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Rezin with Aram, continuing Syro-Ephraimite crisis narrative."
+    },
+    {
+      "wordId": 6681120,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram counseling evil against Judah with Ephraim."
+    },
+    {
+      "wordId": 6681155,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Head of Aram is Damascus, head of Damascus is Rezin."
+    },
+    {
+      "wordId": 6682098,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram (Syrians) and Philistines devouring Israel, same war era."
+    },
+    {
+      "wordId": 6682797,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Addressed as 'poor Anathoth' among towns in Assyria's approach to Jerusalem; the place."
+    },
+    {
+      "wordId": 6683052,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "medium",
+      "reason": "Listed among lands of dispersion with Egypt, Pathros; standard toponym."
+    },
+    {
+      "wordId": 6684510,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Remnant of Aram paired with fall of Damascus kingdom."
+    },
+    {
+      "wordId": 6684738,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "high",
+      "reason": "Rivers of Cush, standard geographic description of the territory."
+    },
+    {
+      "wordId": 6685428,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "high",
+      "reason": "Egypt and Cush as sign-targets, standard territorial pairing."
+    },
+    {
+      "wordId": 6685439,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "ethiopia",
+      "confidence": "medium",
+      "reason": "KJV renders 'the Ethiopians' as captive people, an ethnic/people sense."
+    },
+    {
+      "wordId": 6685456,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "high",
+      "reason": "Continues Egypt/Cush pairing as territories, source of expectation."
+    },
+    {
+      "wordId": 6686179,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "medium",
+      "reason": "Opens Tyre oracle naming the real Mediterranean Tarshish again in vv.6,10."
+    },
+    {
+      "wordId": 6686243,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Literal destination: refugees told to 'pass over to Tarshish.'"
+    },
+    {
+      "wordId": 6686293,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "'Daughter of Tarshish' personifies the actual trading city/colony."
+    },
+    {
+      "wordId": 6686352,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "medium",
+      "reason": "Closes the same Tyre-Tarshish oracle begun in v.1, literal place."
+    },
+    {
+      "wordId": 6691191,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "high",
+      "reason": "Parallel to 2 Kings 19:9, Tirhakah king of Cush/Nubia."
+    },
+    {
+      "wordId": 6693752,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "medium",
+      "reason": "Egypt, Cush and Seba named as territories given as ransom."
+    },
+    {
+      "wordId": 6694868,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "medium",
+      "reason": "Merchandise of Egypt and Cush, standard territorial/economic reference."
+    },
+    {
+      "wordId": 6699467,
+      "strongNumber": "H5891",
+      "was": "unlisted",
+      "now": "ephah-4",
+      "confidence": "high",
+      "reason": "Marked topo, paired with Midian as a region whose people bring gold/incense."
+    },
+    {
+      "wordId": 6699514,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "unclear",
+      "confidence": "medium",
+      "reason": "No contextual anchor deciding literal port vs generic large-ship idiom."
+    },
+    {
+      "wordId": 6701600,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Listed with real nations Pul, Lud, Tubal, Javan as destinations."
+    },
+    {
+      "wordId": 6701603,
+      "strongNumber": "H3865",
+      "was": "unlisted",
+      "now": "lud-3",
+      "confidence": "medium",
+      "reason": "Grouped with Tarshish, Tubal, Javan as a distant nation, fitting Lydia."
+    },
+    {
+      "wordId": 6701773,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Jeremiah's hometown, a priestly city in Benjamin; the place."
+    },
+    {
+      "wordId": 6706798,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Real source region for imported refined silver, paired with Uphaz."
+    },
+    {
+      "wordId": 6707547,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "'Men of Anathoth' who threatened Jeremiah, referring to the town's inhabitants."
+    },
+    {
+      "wordId": 6707595,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Continues the oracle against the men of Anathoth, the town."
+    },
+    {
+      "wordId": 6714217,
+      "strongNumber": "H5780",
+      "was": "unlisted",
+      "now": "uz-4",
+      "confidence": "high",
+      "reason": "'Land of Uz' among listed nations/territories, a place, not a person."
+    },
+    {
+      "wordId": 6714268,
+      "strongNumber": "H1719",
+      "was": "unlisted",
+      "now": "dedan-3",
+      "confidence": "medium",
+      "reason": "Listed among nations/peoples (Tema, Buz) receiving the cup, i.e. the Arabian territory."
+    },
+    {
+      "wordId": 6714274,
+      "strongNumber": "H938",
+      "was": "unlisted",
+      "now": "buz-3",
+      "confidence": "high",
+      "reason": "Listed with Dedan and Tema as a region/place under judgment, not a person."
+    },
+    {
+      "wordId": 6714300,
+      "strongNumber": "H2174",
+      "was": "unlisted",
+      "now": "zimri-4",
+      "confidence": "medium",
+      "reason": "Named among kings of Arabian/eastern peoples (gens), the Arabian tribe Zimri, not a person."
+    },
+    {
+      "wordId": 6718370,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Field located in Anathoth, the town near Jerusalem."
+    },
+    {
+      "wordId": 6718400,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Field in Anathoth in the land of Benjamin; the place."
+    },
+    {
+      "wordId": 6718434,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Purchase of the field in Anathoth; the place."
+    },
+    {
+      "wordId": 6720739,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Army of Aram/Syrians feared alongside Chaldeans, national army."
+    },
+    {
+      "wordId": 6726608,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "ethiopia",
+      "confidence": "medium",
+      "reason": "KJV 'the Ethiopians' as warrior people alongside Libyans, ethnic sense."
+    },
+    {
+      "wordId": 6728039,
+      "strongNumber": "H1719",
+      "was": "unlisted",
+      "now": "dedan-3",
+      "confidence": "high",
+      "reason": "\"Inhabitants of Dedan\" fleeing Edom's judgment refers to the Arabian territory/tribe."
+    },
+    {
+      "wordId": 6738826,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Daughters of Aram paralleled with daughters of Philistia, nations."
+    },
+    {
+      "wordId": 6744070,
+      "strongNumber": "H1719",
+      "was": "unlisted",
+      "now": "dedan-3",
+      "confidence": "high",
+      "reason": "Paired with Teman as a place struck by sword judgment on Edom's region."
+    },
+    {
+      "wordId": 6744718,
+      "strongNumber": "H3865",
+      "was": "unlisted",
+      "now": "lud-3",
+      "confidence": "medium",
+      "reason": "Listed with Persia and Phut as foreign mercenaries in Tyre's army, i.e. Lydia."
+    },
+    {
+      "wordId": 6744754,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Named directly as Tyre's actual trading partner supplying metals."
+    },
+    {
+      "wordId": 6744771,
+      "strongNumber": "H4902",
+      "was": "meshech",
+      "now": "meshech-2",
+      "confidence": "high",
+      "reason": "Meshech named among trading nations with Tyre, i.e. the people/land."
+    },
+    {
+      "wordId": 6744793,
+      "strongNumber": "H1719",
+      "was": "unlisted",
+      "now": "dedan-3",
+      "confidence": "high",
+      "reason": "\"Men of Dedan\" as Tyre's merchants denotes the trading territory, not an individual."
+    },
+    {
+      "wordId": 6744805,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram as trading nation/merchant partner of Tyre."
+    },
+    {
+      "wordId": 6744874,
+      "strongNumber": "H1719",
+      "was": "unlisted",
+      "now": "dedan-3",
+      "confidence": "high",
+      "reason": "Listed alongside Arabia/Kedar as a trading partner territory of Tyre."
+    },
+    {
+      "wordId": 6744947,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "medium",
+      "reason": "Same Tyre trade-list chapter as v.12's literal Tarshish partner."
+    },
+    {
+      "wordId": 6746095,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "high",
+      "reason": "Pain in Cush alongside Egypt, standard territorial reference."
+    },
+    {
+      "wordId": 6746107,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "high",
+      "reason": "Listed with Put, Lud as allied lands/nations of Egypt."
+    },
+    {
+      "wordId": 6746192,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "ethiopia",
+      "confidence": "medium",
+      "reason": "KJV 'the careless Ethiopians' as a frightened people, ethnic sense."
+    },
+    {
+      "wordId": 6747410,
+      "strongNumber": "H4902",
+      "was": "meshech",
+      "now": "meshech-2",
+      "confidence": "high",
+      "reason": "Meshech listed among slain nations, referring to the people/land."
+    },
+    {
+      "wordId": 6750605,
+      "strongNumber": "H4902",
+      "was": "meshech",
+      "now": "meshech-2",
+      "confidence": "high",
+      "reason": "Chief prince 'of Meshech' names the nation, not the ancestor."
+    },
+    {
+      "wordId": 6750622,
+      "strongNumber": "H4902",
+      "was": "meshech",
+      "now": "meshech-2",
+      "confidence": "high",
+      "reason": "Same Gog oracle repeating the nation Meshech."
+    },
+    {
+      "wordId": 6750654,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "high",
+      "reason": "Persia, Cush, Put listed as allied territories in Gog's army."
+    },
+    {
+      "wordId": 6750823,
+      "strongNumber": "H1719",
+      "was": "unlisted",
+      "now": "dedan-3",
+      "confidence": "high",
+      "reason": "Paired with Sheba and Tarshish merchants, denoting the Arabian trading territory."
+    },
+    {
+      "wordId": 6750826,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Merchants of Tarshish grouped with real Sheba and Dedan."
+    },
+    {
+      "wordId": 6751130,
+      "strongNumber": "H4902",
+      "was": "meshech",
+      "now": "meshech-2",
+      "confidence": "high",
+      "reason": "Same Gog oracle repeating the nation Meshech."
+    },
+    {
+      "wordId": 6757760,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Blood of Jezreel avenged on house of Jehu, the place of the massacre."
+    },
+    {
+      "wordId": 6757783,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Valley of Jezreel where Israel's bow will be broken."
+    },
+    {
+      "wordId": 6757908,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "medium",
+      "reason": "Day of Jezreel marked topo, referring to the place despite name wordplay."
+    },
+    {
+      "wordId": 6760425,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "mesopotamia",
+      "confidence": "medium",
+      "reason": "Jacob's flight to 'field of Aram' = Paddan-aram/Laban's country, i.e. Mesopotamia region."
+    },
+    {
+      "wordId": 6764745,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram brought up from Kir, echoing Amos 1:5 on Syria's exile."
+    },
+    {
+      "wordId": 6765349,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Jonah's literal flight destination by ship from Joppa."
+    },
+    {
+      "wordId": 6765361,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Same verse, literal destination ship."
+    },
+    {
+      "wordId": 6765371,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Same verse, literal destination reiterated."
+    },
+    {
+      "wordId": 6766080,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Jonah recalls the same literal flight destination in his prayer."
+    },
+    {
+      "wordId": 6766556,
+      "strongNumber": "H4762",
+      "was": "unlisted",
+      "now": "mareshah-3",
+      "confidence": "high",
+      "reason": "\"Inhabitant of Mareshah\" addresses the town, paired with Adullam."
+    },
+    {
+      "wordId": 6768763,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "high",
+      "reason": "Cush and Egypt named as national strength/territory, standard toponym."
+    },
+    {
+      "wordId": 6770674,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "medium",
+      "reason": "Rivers of Cush, standard geographic description matching Isaiah 18:1."
+    },
+    {
+      "wordId": 6785114,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "unclear",
+      "confidence": "medium",
+      "reason": "Bare 'ships of Tarshish' with no context deciding literal port vs ship-class sense."
+    },
+    {
+      "wordId": 6788332,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "medium",
+      "reason": "Paired with Egypt as a territory/nation, standard land-of-Cush sense."
+    },
+    {
+      "wordId": 6789160,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Kings of Tarshish paired with real Sheba and Seba as tribute-bearing nations."
+    },
+    {
+      "wordId": 6792264,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "medium",
+      "reason": "Listed among named nations/territories (Philistia, Tyre); standard toponym."
+    },
+    {
+      "wordId": 6799459,
+      "strongNumber": "H4902",
+      "was": "meshech",
+      "now": "meshech-2",
+      "confidence": "medium",
+      "reason": "Poetic reference to a distant barbarous nation/land, not the individual ancestor."
+    },
+    {
+      "wordId": 6800257,
+      "strongNumber": "H672",
+      "was": "bethlehem",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "Lexicon itself flags this verse as possibly Ephraim, not Bethlehem; evidence undecided."
+    },
+    {
+      "wordId": 6802789,
+      "strongNumber": "H5780",
+      "was": "unlisted",
+      "now": "uz-4",
+      "confidence": "high",
+      "reason": "'Land of Uz' (topo) is Job's homeland, matching the place candidate."
+    },
+    {
+      "wordId": 6809530,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "medium",
+      "reason": "Topaz sourced from the land of Cush, standard geographic sense."
+    },
+    {
+      "wordId": 6832016,
+      "strongNumber": "H5780",
+      "was": "unlisted",
+      "now": "uz-4",
+      "confidence": "high",
+      "reason": "'Land of Uz' as territory dwelt in by Edom, a place, not a person."
+    },
+    {
+      "wordId": 6832231,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "medium",
+      "reason": "Southern boundary of Persian empire, standard land-of-Cush toponym."
+    },
+    {
+      "wordId": 6835683,
+      "strongNumber": "H3568",
+      "was": "cush-3",
+      "now": "cush-4",
+      "confidence": "medium",
+      "reason": "Same India-to-Cush satrapy formula as Esther 1:1, standard toponym."
+    },
+    {
+      "wordId": 6845369,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "'Men of Anathoth' census entry refers to the town."
+    },
+    {
+      "wordId": 6845375,
+      "strongNumber": "H5820",
+      "was": "unlisted",
+      "now": "azmaveth-5",
+      "confidence": "medium",
+      "reason": "Parallels Nehemiah 7:28's 'men of Beth-azmaveth' in the same census list; a town, not a person."
+    },
+    {
+      "wordId": 6845472,
+      "strongNumber": "H3442",
+      "was": "unclear",
+      "now": "jeshua",
+      "confidence": "medium",
+      "reason": "\"House of Jeshua\" names a priestly course, matching the ninth course-head of 1 Chr 24:11."
+    },
+    {
+      "wordId": 6845655,
+      "strongNumber": "H564",
+      "was": "unlisted",
+      "now": "immer-4",
+      "confidence": "high",
+      "reason": "Listed among Babylonian place names (Tel-melah, Tel-harsa, Cherub, Addan), not a person."
+    },
+    {
+      "wordId": 6853416,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Parallel census list to Ezra 2:23, referring to the town."
+    },
+    {
+      "wordId": 6853514,
+      "strongNumber": "H3442",
+      "was": "unclear",
+      "now": "jeshua",
+      "confidence": "medium",
+      "reason": "Parallel to Ezra 2:36; \"house of Jeshua\" is the priestly course of 1 Chr 24:11."
+    },
+    {
+      "wordId": 6853688,
+      "strongNumber": "H564",
+      "was": "unlisted",
+      "now": "immer-4",
+      "confidence": "high",
+      "reason": "Parallels Ezra 2:59's place-name list (Tel-melah, Tel-harsa, Cherub, Addon)."
+    },
+    {
+      "wordId": 6855512,
+      "strongNumber": "H2766",
+      "was": "unlisted",
+      "now": "harim-3",
+      "confidence": "medium",
+      "reason": "Appears in the priests' section of covenant signers, matching the priestly Harim clan."
+    },
+    {
+      "wordId": 6855545,
+      "strongNumber": "H2605",
+      "was": "unlisted",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "This Hanan is a Levite 'brother' in v9-13, not matching either non-Levite candidate."
+    },
+    {
+      "wordId": 6855585,
+      "strongNumber": "H2605",
+      "was": "hanan-5",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "One of two identically-described 'chief of the people' Hanans; can't tell which key."
+    },
+    {
+      "wordId": 6855588,
+      "strongNumber": "H2608",
+      "was": "hananiah-7",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Appears in the list of lay leaders sealing the covenant, a role no candidate describes."
+    },
+    {
+      "wordId": 6855599,
+      "strongNumber": "H2605",
+      "was": "hanan-6",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "Second identically-described 'chief of the people' Hanan; can't tell which key."
+    },
+    {
+      "wordId": 6855602,
+      "strongNumber": "H2766",
+      "was": "unlisted",
+      "now": "harim-2",
+      "confidence": "medium",
+      "reason": "Appears among 'chiefs of the people' (lay clans), matching the lay Harim family."
+    },
+    {
+      "wordId": 6856448,
+      "strongNumber": "H3442",
+      "was": "unlisted",
+      "now": "jeshua-9",
+      "confidence": "high",
+      "reason": "Marked topo; listed among towns of Judah re-inhabited after the exile."
+    },
+    {
+      "wordId": 6856481,
+      "strongNumber": "H3412",
+      "was": "unlisted",
+      "now": "jarmuth",
+      "confidence": "high",
+      "reason": "Listed with Zareah, Adullam, Azekah, Lachish, the Judah lowland towns."
+    },
+    {
+      "wordId": 6856512,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Listed among resettled Benjamite villages; the place."
+    },
+    {
+      "wordId": 6857099,
+      "strongNumber": "H2148",
+      "was": "zechariah-22",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Separate priestly list from 12:35's Zechariah; no candidate covers NEH 12:41."
+    },
+    {
+      "wordId": 6857100,
+      "strongNumber": "H2608",
+      "was": "hananiah-9",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "A priest with trumpets at the dedication; may be the same course-head as 12:12 or a different priest."
+    },
+    {
+      "wordId": 6858674,
+      "strongNumber": "H2174",
+      "was": "unlisted",
+      "now": "zabdi",
+      "confidence": "medium",
+      "reason": "Sons of Zerah list names Zimri as father of Carmi, identified with Zabdi of Josh 7:1."
+    },
+    {
+      "wordId": 6858850,
+      "strongNumber": "H1568",
+      "was": "gilead",
+      "now": "unclear",
+      "confidence": "high",
+      "reason": "Genealogy: 'Machir the father of Gilead' matches the son-of-Machir candidate."
+    },
+    {
+      "wordId": 6858868,
+      "strongNumber": "H2971",
+      "was": "jair",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Here Jair is \"son of Segub\" via Hezron/Machir, a distinct lineage from Manasseh's Jair."
+    },
+    {
+      "wordId": 6858884,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "aram-4",
+      "confidence": "medium",
+      "reason": "A territory taken alongside Geshur, a place named Aram not the Damascus kingdom."
+    },
+    {
+      "wordId": 6858887,
+      "strongNumber": "H2971",
+      "was": "jair",
+      "now": "unlisted",
+      "confidence": "medium",
+      "reason": "Continues the Segub genealogy of 2:22, a separately traced Jair figure."
+    },
+    {
+      "wordId": 6858902,
+      "strongNumber": "H1568",
+      "was": "gilead",
+      "now": "unclear",
+      "confidence": "high",
+      "reason": "Repeats 'Machir the father of Gilead', the same person as 2:21."
+    },
+    {
+      "wordId": 6859314,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "David's sons born to him in Hebron the city."
+    },
+    {
+      "wordId": 6859358,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Six sons born in Hebron the city where David reigned."
+    },
+    {
+      "wordId": 6859829,
+      "strongNumber": "H851",
+      "was": "eshtemoa",
+      "now": "eshtemoa-3",
+      "confidence": "medium",
+      "reason": "'Father of Eshtemoa' follows Chronicles' town-founder idiom (cf. Gedor, Socho, Zanoah nearby); BHSA tags it topo."
+    },
+    {
+      "wordId": 6859869,
+      "strongNumber": "H851",
+      "was": "eshtemoa-2",
+      "now": "eshtemoa-3",
+      "confidence": "medium",
+      "reason": "Paired with 'father of Keilah' (a known town) in same clause; BHSA tags it topo, indicating the town."
+    },
+    {
+      "wordId": 6859897,
+      "strongNumber": "H4762",
+      "was": "unlisted",
+      "now": "mareshah-2",
+      "confidence": "high",
+      "reason": "Explicit: \"Laadah the father of Mareshah.\""
+    },
+    {
+      "wordId": 6860261,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Parallels literal brothers Reuben and Joseph as sons of Jacob who prevailed among them."
+    },
+    {
+      "wordId": 6861241,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Hebron given as a Levitical city in the land of Judah."
+    },
+    {
+      "wordId": 6861272,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Hebron listed as a city of refuge given to sons of Aaron."
+    },
+    {
+      "wordId": 6861284,
+      "strongNumber": "H851",
+      "was": "unlisted",
+      "now": "eshtemoa-3",
+      "confidence": "high",
+      "reason": "Levitical city list parallel to Joshua 21:14; a place."
+    },
+    {
+      "wordId": 6861322,
+      "strongNumber": "H5964",
+      "was": "unlisted",
+      "now": "alemeth-3",
+      "confidence": "high",
+      "reason": "Listed among Benjamite cities (Geba, Alemeth, Anathoth) given to Levites; clearly a place."
+    },
+    {
+      "wordId": 6861328,
+      "strongNumber": "H6068",
+      "was": "unlisted",
+      "now": "anathoth-3",
+      "confidence": "high",
+      "reason": "Levitical city list in Benjamin's territory; the place."
+    },
+    {
+      "wordId": 6861589,
+      "strongNumber": "H5658",
+      "was": "unlisted",
+      "now": "abdon-4",
+      "confidence": "high",
+      "reason": "Parallel to Joshua 21:30, city with suburbs in tribe of Asher."
+    },
+    {
+      "wordId": 6861601,
+      "strongNumber": "H7340",
+      "was": "unlisted",
+      "now": "unclear",
+      "confidence": "low",
+      "reason": "Parallel to Josh 21:31's Levitical list; same ambiguity between the two Asher towns."
+    },
+    {
+      "wordId": 6861957,
+      "strongNumber": "H1568",
+      "was": "gilead",
+      "now": "unclear",
+      "confidence": "high",
+      "reason": "'Machir the father of Gilead' — matches son of Machir, grandson of Manasseh."
+    },
+    {
+      "wordId": 6862006,
+      "strongNumber": "H1568",
+      "was": "gilead",
+      "now": "unclear",
+      "confidence": "high",
+      "reason": "'Sons of Gilead the son of Machir, son of Manasseh' identical genealogy."
+    },
+    {
+      "wordId": 6862540,
+      "strongNumber": "H8096",
+      "was": "unlisted",
+      "now": "shema-3",
+      "confidence": "medium",
+      "reason": "Shimhi paired with Beriah as Aijalon-clan head, plausibly same as Shema of v.13."
+    },
+    {
+      "wordId": 6863681,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "unlisted",
+      "confidence": "high",
+      "reason": "Part of compound city name Jabesh-gilead, not a candidate; not the bare region either."
+    },
+    {
+      "wordId": 6863765,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "All Israel gathers to David at Hebron the city."
+    },
+    {
+      "wordId": 6863816,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Elders come to king at Hebron the city to anoint David."
+    },
+    {
+      "wordId": 6863823,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Covenant made in Hebron the city, same verse."
+    },
+    {
+      "wordId": 6864914,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Armed men come to David at Hebron the city."
+    },
+    {
+      "wordId": 6865146,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Men of war come to Hebron the city to make David king."
+    },
+    {
+      "wordId": 6867632,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram of Damascus aiding Hadarezer against David, the Aram-Damascus kingdom."
+    },
+    {
+      "wordId": 6867644,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same verse, David slew of the Aramean kingdom's men."
+    },
+    {
+      "wordId": 6867654,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "David garrisons Aram of Damascus, the kingdom."
+    },
+    {
+      "wordId": 6867658,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram became servants to David, same kingdom narrative."
+    },
+    {
+      "wordId": 6868076,
+      "strongNumber": "H4601",
+      "was": "unlisted",
+      "now": "maacah-9",
+      "confidence": "high",
+      "reason": "'King of Maachah' hiring mercenaries, a territorial kingdom, per parallel 2 Sam 10:6."
+    },
+    {
+      "wordId": 6868154,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Joab arrays against Aram in Ammonite war, the Aramean kingdom (cf 1 Chr 19:17)."
+    },
+    {
+      "wordId": 6868176,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Joab speaks of Aram being too strong, same kingdom narrative."
+    },
+    {
+      "wordId": 6868216,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Joab draws near before Aram in battle, same kingdom."
+    },
+    {
+      "wordId": 6868230,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Ammon sees Aram fled, same kingdom narrative."
+    },
+    {
+      "wordId": 6868249,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram regroups after defeat before Israel, same Aram-Damascus kingdom narrative."
+    },
+    {
+      "wordId": 6868261,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Kingdom of Aram-Damascus fighting Israel with Hadarezer's forces; KJV 'Syrians'."
+    },
+    {
+      "wordId": 6868298,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same Aram-Damascus war narrative as preceding verse."
+    },
+    {
+      "wordId": 6868305,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same Aram-Damascus battle context, fleeing before Israel."
+    },
+    {
+      "wordId": 6868314,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same Aram-Damascus battle, David's slaughter of Syrian troops."
+    },
+    {
+      "wordId": 6868348,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Aram-Damascus refusing further help to Ammon after defeat."
+    },
+    {
+      "wordId": 6872000,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "gilead-5",
+      "confidence": "medium",
+      "reason": "Territorial name of the Manasseh half-tribe's Transjordan inheritance, tied to Gilead's line."
+    },
+    {
+      "wordId": 6873512,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "David reigned seven years in Hebron the city."
+    },
+    {
+      "wordId": 6873990,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Kings of Syria buying horses/chariots from Solomon's traders."
+    },
+    {
+      "wordId": 6878292,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-5",
+      "confidence": "high",
+      "reason": "Parallel to 1 Kings 10:22's Solomon-Hiram trading fleet; ship-class idiom."
+    },
+    {
+      "wordId": 6878302,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-5",
+      "confidence": "high",
+      "reason": "Same verse, same fleet; ship-class idiom."
+    },
+    {
+      "wordId": 6879087,
+      "strongNumber": "H4762",
+      "was": "unlisted",
+      "now": "mareshah-3",
+      "confidence": "high",
+      "reason": "Listed among fortified cities (Gath, Ziph) — the place."
+    },
+    {
+      "wordId": 6879090,
+      "strongNumber": "H2128",
+      "was": "unlisted",
+      "now": "ziph-3",
+      "confidence": "medium",
+      "reason": "Fortified city listed with Hebron-area towns (Mareshah, Adoraim), matching the Tell Zif site."
+    },
+    {
+      "wordId": 6879108,
+      "strongNumber": "H2275",
+      "was": "unlisted",
+      "now": "hebron-3",
+      "confidence": "high",
+      "reason": "Hebron listed among fortified cities in Judah and Benjamin."
+    },
+    {
+      "wordId": 6880068,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Refers to the kingdom/army of Judah under Abijah, not the patriarch."
+    },
+    {
+      "wordId": 6880076,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Same battle narrative; Judah as the kingdom/army."
+    },
+    {
+      "wordId": 6880098,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'men of Judah' - the people/kingdom of Judah."
+    },
+    {
+      "wordId": 6880104,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'men of Judah' - the people/kingdom of Judah."
+    },
+    {
+      "wordId": 6880118,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Paired with Abijah as the kingdom of Judah in battle."
+    },
+    {
+      "wordId": 6880125,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Israel fled before Judah - the kingdom's army."
+    },
+    {
+      "wordId": 6880161,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'children of Judah' as the kingdom/people who prevailed."
+    },
+    {
+      "wordId": 6880297,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Asa commanded Judah (the kingdom) to seek the Lord."
+    },
+    {
+      "wordId": 6880317,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'cities of Judah' - territorial reference to the kingdom."
+    },
+    {
+      "wordId": 6880336,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'fenced cities in Judah' - territory of the kingdom."
+    },
+    {
+      "wordId": 6880357,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Asa addressing Judah as a people/kingdom."
+    },
+    {
+      "wordId": 6880402,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Army count 'out of Judah' - the tribe/kingdom."
+    },
+    {
+      "wordId": 6880439,
+      "strongNumber": "H4762",
+      "was": "unlisted",
+      "now": "mareshah-3",
+      "confidence": "high",
+      "reason": "Battle site where Zerah the Ethiopian met Asa — the town."
+    },
+    {
+      "wordId": 6880452,
+      "strongNumber": "H4762",
+      "was": "unlisted",
+      "now": "mareshah-3",
+      "confidence": "high",
+      "reason": "Same battle narrative continues at the town of Mareshah."
+    },
+    {
+      "wordId": 6880505,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Battle context, Judah as the army/kingdom of Asa."
+    },
+    {
+      "wordId": 6880602,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'all Judah and Benjamin' - tribal/kingdom reference."
+    },
+    {
+      "wordId": 6880725,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'land of Judah and Benjamin' - territorial reference."
+    },
+    {
+      "wordId": 6880751,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Gathering 'all Judah and Benjamin' - tribal reference."
+    },
+    {
+      "wordId": 6880872,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'all Judah rejoiced' - the people/kingdom."
+    },
+    {
+      "wordId": 6880976,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Baasha king of Israel came up against Judah - the kingdom."
+    },
+    {
+      "wordId": 6880991,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'king of Judah' - Asa's kingdom."
+    },
+    {
+      "wordId": 6881011,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Ben-hadad king of Aram dwelling at Damascus."
+    },
+    {
+      "wordId": 6881102,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Asa took 'all Judah' - the kingdom's forces."
+    },
+    {
+      "wordId": 6881137,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'king of Judah' - Asa's kingdom."
+    },
+    {
+      "wordId": 6881145,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram whom Asa relied on, per Hanani's rebuke."
+    },
+    {
+      "wordId": 6881157,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same verse, repeated reference to king of Aram/Syria."
+    },
+    {
+      "wordId": 6881255,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'book of the kings of Judah and Israel' - the kingdom."
+    },
+    {
+      "wordId": 6881347,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'fenced cities of Judah' - territorial reference."
+    },
+    {
+      "wordId": 6881355,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'land of Judah' - territorial reference."
+    },
+    {
+      "wordId": 6881408,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'all Judah brought...presents' - the kingdom's people."
+    },
+    {
+      "wordId": 6881437,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "High places removed 'from Judah' - the kingdom's territory."
+    },
+    {
+      "wordId": 6881465,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'cities of Judah' - territorial reference."
+    },
+    {
+      "wordId": 6881499,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Teaching 'in Judah' - the kingdom's territory."
+    },
+    {
+      "wordId": 6881510,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'cities of Judah' - territorial reference."
+    },
+    {
+      "wordId": 6881527,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Kingdoms 'round about Judah' - the kingdom/territory."
+    },
+    {
+      "wordId": 6881574,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Jehoshaphat built 'in Judah' - the kingdom's territory."
+    },
+    {
+      "wordId": 6881586,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'cities of Judah' - territorial reference."
+    },
+    {
+      "wordId": 6881601,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "Military divisions 'of Judah' - the tribe/kingdom."
+    },
+    {
+      "wordId": 6881687,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'throughout all Judah' - territorial reference to the kingdom."
+    },
+    {
+      "wordId": 6881731,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Ahab persuades Jehoshaphat to go up to Ramoth-gilead, the city, per parallel 1 Kings 22 account."
+    },
+    {
+      "wordId": 6881740,
+      "strongNumber": "H3063",
+      "was": "unlisted",
+      "now": "judah",
+      "confidence": "high",
+      "reason": "'king of Judah' - Jehoshaphat's kingdom."
+    },
+    {
+      "wordId": 6881745,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "'Wilt thou go with me to Ramoth-gilead' — the city named in the war campaign."
+    },
+    {
+      "wordId": 6881791,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "'Go up to Ramoth-gilead to battle' — the city."
+    },
+    {
+      "wordId": 6881920,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Zedekiah's prophecy against Aram in Ahab/Jehoshaphat war narrative."
+    },
+    {
+      "wordId": 6881933,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Prophets urge 'go up to Ramoth-gilead' — the city."
+    },
+    {
+      "wordId": 6882003,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Micaiah asked about going to Ramoth-gilead — the city."
+    },
+    {
+      "wordId": 6882123,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "'Fall at Ramoth-gilead' — the city, matching 1 Kings 22 parallel."
+    },
+    {
+      "wordId": 6882302,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "Kings march 'to Ramoth-gilead' — the city."
+    },
+    {
+      "wordId": 6882330,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram commanding chariot captains at Ramoth-gilead battle."
+    },
+    {
+      "wordId": 6882453,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Israel's king positioned against Aram's forces till evening."
+    },
+    {
+      "wordId": 6883559,
+      "strongNumber": "H4762",
+      "was": "unlisted",
+      "now": "mareshah-3",
+      "confidence": "high",
+      "reason": "\"Eliezer... of Mareshah\" names his hometown, the place."
+    },
+    {
+      "wordId": 6883581,
+      "strongNumber": "H8659",
+      "was": "unlisted",
+      "now": "tarshish-4",
+      "confidence": "high",
+      "reason": "Literal sailing destination, continuing 2 Chronicles 20:36's Tarshish."
+    },
+    {
+      "wordId": 6884143,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Hazael king of Aram at war with Jehoram at Ramoth-gilead."
+    },
+    {
+      "wordId": 6884146,
+      "strongNumber": "H1568",
+      "was": "gilead-4",
+      "now": "ramothgilead",
+      "confidence": "high",
+      "reason": "War against Hazael 'at Ramoth-gilead' — the city, per 2 Kings 8-9 parallel."
+    },
+    {
+      "wordId": 6884158,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Parallel to 2 Kings 8:29, Joram healed in the royal city Jezreel."
+    },
+    {
+      "wordId": 6884172,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Same Hazael, king of Aram, wounding of Jehoram narrative."
+    },
+    {
+      "wordId": 6884187,
+      "strongNumber": "H3157",
+      "was": "unlisted",
+      "now": "jezreel-4",
+      "confidence": "high",
+      "reason": "Same verse, Ahaziah visits Jehoram in Jezreel."
+    },
+    {
+      "wordId": 6885529,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Host of Aram invading Judah, sending spoil to Damascus."
+    },
+    {
+      "wordId": 6885558,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Small Aramean force defeating large Judean army, per context."
+    },
+    {
+      "wordId": 6887176,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "King of Aram capturing Ahaz's people, taken to Damascus."
+    },
+    {
+      "wordId": 6887631,
+      "strongNumber": "H758",
+      "was": "unlisted",
+      "now": "syria",
+      "confidence": "high",
+      "reason": "Gods of kings of Aram/Damascus that Ahaz sacrifices to."
+    }
+  ]
+}
