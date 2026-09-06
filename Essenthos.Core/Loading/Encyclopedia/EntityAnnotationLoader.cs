@@ -80,6 +80,15 @@ internal sealed record AnnotationOutcome(
 /// </para>
 ///
 /// <para>
+/// **Where that kind is doing more than agreeing, the row says so.** Most numbers name one record
+/// and the marking only confirms it, and those annotations needed nobody. Some are borne by two —
+/// H3778 is Chaldea and the Chaldeans both — and there the marking is not confirming an answer but
+/// picking one, on the word's own form. That is a different claim and it is written as a different
+/// method, so a reader can tell the occurrences nothing had to decide from the ones a lexical
+/// analysis decided.
+/// </para>
+///
+/// <para>
 /// **The annotation then travels on the links that already exist.** A King James word linked to an
 /// annotated Hebrew word names what that Hebrew word names, and the confidence of the link is
 /// carried into the confidence of the annotation, so a word reached by a source's own mapping is
@@ -171,6 +180,25 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const string Resolution =
         "BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name";
 
+    /// <summary>
+    /// The method for an occurrence whose number is borne by more than one record, where the name
+    /// type is therefore not agreeing with the only answer but choosing among several.
+    ///
+    /// <see cref="LinkMethod.StrongNumber"/> means that nothing had to be chosen, and saying it
+    /// where something was is a claim of the wrong kind however right the answer: the source string
+    /// on the row already names BHSA's marking as half of what established it, and the method
+    /// contradicted it. <see cref="LinkMethod.Lexical"/> is the method for a conclusion the word's
+    /// form reached, which is what the marking is, and it is what the reader is shown as <em>by the
+    /// form of the word</em>.
+    ///
+    /// <para>
+    /// It stands below a reading of the verse rather than above one, and that is the point rather
+    /// than a cost. A marking says which kind of thing the lexeme names; somebody who read the
+    /// sentence knows more than that, and where the two disagree the sentence should win.
+    /// </para>
+    /// </summary>
+    private const LinkMethod ByTheForm = LinkMethod.Lexical;
+
     private const string Derivation =
         "BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders " +
         "it in a verse the geocoding dataset says the place is named in";
@@ -202,6 +230,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             carried double precision NOT NULL,
             corroborated boolean NOT NULL,
             stated boolean NOT NULL,
+            distinguished boolean NOT NULL,
             note text NOT NULL)
         """;
 
@@ -209,11 +238,24 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// The Hebrew occurrences that resolve without anyone choosing. <c>carried</c> is 1 because
     /// nothing was crossed to reach them; the words of other texts divide it by what their link is
     /// worth.
+    ///
+    /// <para>
+    /// <c>distinguished</c> is whether the name type had to rule a rival out rather than merely
+    /// agree with the only answer there was. It asks of the whole encyclopedia and not of the
+    /// candidate list, which is deliberate: the list holds people and places because those are the
+    /// only things a word marked <c>pers</c> or <c>topo</c> can be, and it is that very exclusion —
+    /// a fact about the word's form, not about its number — that this column is recording. H3778 is
+    /// Chaldea to the encyclopedia and the Chaldeans as well, and the fifteen occurrences of the
+    /// land are the land because BHSA analyses them as a singular toponym rather than as the plural
+    /// gentilic it keeps as a separate lexeme. That is a lexical judgement and the row says so.
+    /// </para>
     /// </summary>
     private static readonly string Seed =
         $"""
-         INSERT INTO annotation (word_id, entity_id, carried, corroborated, stated, note)
+         INSERT INTO annotation (word_id, entity_id, carried, corroborated, stated, distinguished, note)
          SELECT w.id, resolved.entity_id, 1.0, agreed.named, resolved.stated,
+                (SELECT count(DISTINCT n.entity_id) FROM entity_name n
+                 WHERE n.hebrew_strong_number = w.strong_number) > 1,
                 w.strong_number || ', which BHSA marks ' || (w.morphology->>'nameType')
          FROM word w
          JOIN text t ON t.id = w.text_id AND t.slug = @witness
@@ -260,6 +302,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                    seed.entity_id,
                    coalesce(l.confidence, 1.0) AS carried,
                    seed.stated,
+                   seed.distinguished,
                    l.method,
                    seed.word_id AS through
             FROM annotation seed
@@ -287,8 +330,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             FROM supported r JOIN unanimous u ON u.word_id = r.word_id
             ORDER BY r.word_id, r.carried DESC, r.through
         )
-        INSERT INTO annotation (word_id, entity_id, carried, corroborated, stated, note)
-        SELECT s.word_id, s.entity_id, s.carried, agreed.named, s.stated,
+        INSERT INTO annotation (word_id, entity_id, carried, corroborated, stated, distinguished, note)
+        SELECT s.word_id, s.entity_id, s.carried, agreed.named, s.stated, s.distinguished,
                'through ' || @witness || ' word ' || s.through || ', linked by ' || s.method
         FROM strongest s
         JOIN word w ON w.id = s.word_id
@@ -302,10 +345,20 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         ON CONFLICT (word_id) DO NOTHING
         """;
 
+    /// <summary>
+    /// The conclusion, with the method the row actually earned.
+    ///
+    /// <c>@method</c> is the resolution that needed nobody, and it is the honest answer for the
+    /// overwhelming majority: the number named one record in the whole encyclopedia and the name
+    /// type only agreed with it. <c>@form</c> is for the rest, where the number is several records'
+    /// and the marking is what chose between them — the annotation is then as good as BHSA's
+    /// analysis of that word and no better, and a reader is owed the difference.
+    /// </summary>
     private const string Settle =
         """
         INSERT INTO word_entity (word_id, entity_id, method, confidence, source, note)
-        SELECT a.word_id, a.entity_id, @method,
+        SELECT a.word_id, a.entity_id,
+               CASE WHEN a.distinguished THEN @form ELSE @method END,
                (CASE WHEN NOT a.stated THEN @derived
                      WHEN a.corroborated THEN @corroborated
                      ELSE @resolution END) * a.carried,
@@ -330,7 +383,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const string Claim =
         """
         INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
-        SELECT a.id, @method, @confidence * w.carried, @source, a.note
+        SELECT a.id, CASE WHEN w.distinguished THEN @form ELSE @method END,
+               @confidence * w.carried, @source, a.note
         FROM word_entity a
         JOIN annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
         WHERE w.stated = @stated AND (NOT @corroboration OR w.corroborated)
@@ -368,18 +422,19 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             ("witness", Witness), ("faint", Faint), ("firm", Firm));
 
         var method = EnumSpelling.Of(LinkMethod.StrongNumber);
+        var form = EnumSpelling.Of(ByTheForm);
         await Run(connection, transaction, Settle, cancellationToken,
-            ("method", method), ("source", Resolution), ("derivation", Derivation),
+            ("method", method), ("form", form), ("source", Resolution), ("derivation", Derivation),
             ("resolution", NameResolution), ("corroborated", Corroborated), ("derived", DerivedName));
 
         await Run(connection, transaction, Claim, cancellationToken,
-            ("method", method), ("source", Resolution),
+            ("method", method), ("form", form), ("source", Resolution),
             ("confidence", NameResolution), ("stated", true), ("corroboration", false));
         await Run(connection, transaction, Claim, cancellationToken,
-            ("method", method), ("source", Derivation),
+            ("method", method), ("form", form), ("source", Derivation),
             ("confidence", DerivedName), ("stated", false), ("corroboration", false));
         await Run(connection, transaction, Claim, cancellationToken,
-            ("method", method), ("source", VerseList),
+            ("method", method), ("form", form), ("source", VerseList),
             ("confidence", Corroborated), ("stated", true), ("corroboration", true));
 
         var byText = await ByText(connection, transaction, cancellationToken);

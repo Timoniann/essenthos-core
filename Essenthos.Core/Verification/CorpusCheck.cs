@@ -418,7 +418,15 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         // say which of them a verse means. Leaving such a word unannotated is the right answer, so
         // an annotation resolved through a number several people or places share is not an
         // incomplete answer -- it is a confident wrong one, and a reader cannot tell it from
-        // scholarship.
+        // scholarship. `strong-number` is the method that says nothing had to be chosen; where the
+        // number is several records' and something else did the choosing -- the word's own form,
+        // a reading, a person -- that method is the one on the row, and the row is not this.
+        //
+        // The name is looked for under whichever number the word carries. Asking only the Hebrew
+        // column made the check unable to fail on a Greek word by construction, since a word
+        // carrying G#### can never equal an H#### however wrong the annotation on it is, and half
+        // the corpus was outside a guard that reported itself as passing. The two columns never
+        // hold each other's prefix, so one comparison against either is exact.
         ("words a name-resolution annotated although the name is several people's",
             """
             SELECT count(*) FROM word_entity a
@@ -426,7 +434,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             WHERE a.method = 'strong-number'
               AND w.strong_number IS NOT NULL
               AND (SELECT count(DISTINCT n.entity_id) FROM entity_name n
-                   WHERE n.hebrew_strong_number = w.strong_number) > 1
+                   WHERE n.hebrew_strong_number = w.strong_number
+                      OR n.greek_strong_number = w.strong_number) > 1
             """),
 
         // Two links naming exactly the same words in the same pair of texts are not two facts.

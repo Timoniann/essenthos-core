@@ -134,8 +134,9 @@ internal record EntityRefResponse(string Type, string Slug, string Name)
 {
     /// <summary>
     /// What established this, as the link provenance spells it: <c>strong-number</c> where the name
-    /// resolved through the lexicon, <c>manual</c> where a person said so. Null only for an older
-    /// annotation that predates the field.
+    /// resolved through the lexicon and nothing had to be chosen, <c>lexical</c> where the number
+    /// is several records' and the form of the word chose between them, <c>manual</c> where a
+    /// person said so. Null only for an older annotation that predates the field.
     ///
     /// It is here because the alternative was a card that says <em>Moses</em> in the same voice
     /// whether a source stated it or something guessed, and a reader cannot ask afterwards.

@@ -119,6 +119,28 @@ internal sealed class PeopleLoader(
         "the gentilic Strong's Dictionary derives, resolving to exactly one people";
 
     /// <summary>
+    /// What established it, and the reason it is not the method a proper noun's resolution carries.
+    ///
+    /// <see cref="LinkMethod.StrongNumber"/> means that nothing had to be chosen — the number named
+    /// one record and the occurrence resolved without anybody weighing anything. That is not what
+    /// happens here. A gentilic shares its number with the person or the place it is derived from:
+    /// H6430 is Goliath as well as the Philistines and H3778 is Chaldea as well as the Chaldeans,
+    /// so the number alone leaves the answer open and something else closes it. What closes it is
+    /// the word's own form — Strong states the derivation and BHSA marks the lexeme a gentilic —
+    /// and <see cref="LinkMethod.Lexical"/> is the method that says exactly that, which the reader
+    /// is shown as <em>by the form of the word</em>.
+    ///
+    /// <para>
+    /// It carries a confidence either way, so the provenance constraints are indifferent between
+    /// the two: only a source's testimony and a person's hand may leave that column null. What
+    /// moves is the standing, from above a reading of the verse to below one, and that is the right
+    /// way round — a gentilic tells you the kind of thing a word names and not which occurrence of
+    /// it, and somebody who read the sentence knows more than the form does.
+    /// </para>
+    /// </summary>
+    private const LinkMethod ByTheForm = LinkMethod.Lexical;
+
+    /// <summary>
     /// The same room the ordinary name resolution leaves, and for the same reason: nothing in the
     /// data contradicts the annotation, and what is short of certainty is that this layer is a
     /// hundred and seventy-four peoples and the text names more than that.
@@ -398,7 +420,7 @@ internal sealed class PeopleLoader(
         await Annotating.Run(connection, transaction, Annotating.Carry, cancellationToken,
             ("witness", EntityCandidates.Witness));
 
-        var spelled = EnumSpelling.Of(LinkMethod.StrongNumber);
+        var spelled = EnumSpelling.Of(ByTheForm);
         await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
             ("method", spelled), ("source", ByTheGentilic));
         await Annotating.Run(connection, transaction, Annotating.Claim, cancellationToken,

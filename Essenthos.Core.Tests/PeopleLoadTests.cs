@@ -242,6 +242,13 @@ public sealed class PeopleLoadTests : IDisposable
     /// A word carrying a gentilic <em>is</em> the people's name, so it resolves the way a proper
     /// noun does — and where BHSA marks the same lexeme as somebody's own name, it does not, because
     /// that occurrence is a man and not a nation.
+    ///
+    /// <para>
+    /// The method is the form and not the number. A gentilic shares its number with whoever it is
+    /// derived from, so the number leaves the answer open and the shape of the word closes it;
+    /// <c>strong-number</c> would be claiming that nothing had to be chosen here, which is the one
+    /// thing that is not true of this path.
+    /// </para>
     /// </summary>
     [Fact]
     public async Task AGentilicWordNamesThePeopleUnlessItIsSomebodysName()
@@ -255,7 +262,7 @@ public sealed class PeopleLoadTests : IDisposable
 
         annotated.Should().ContainSingle();
         annotated[0].WordId.Should().Be(_db.WordAt(_hebrew, 1, _rulings.Count + 1, 1).Id);
-        annotated[0].Method.Should().Be(LinkMethod.StrongNumber);
+        annotated[0].Method.Should().Be(LinkMethod.Lexical);
         annotated[0].Confidence.Should().Be(0.9);
     }
 

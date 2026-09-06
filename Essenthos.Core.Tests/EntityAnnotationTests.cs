@@ -52,7 +52,8 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 4, ["מלך"]),
             (1, 5, ["כנען"]),
             (1, 6, ["ישראל"]),
-            (1, 7, ["פלמוני"]));
+            (1, 7, ["פלמוני"]),
+            (1, 11, ["כשׂדים"]));
 
         _english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng",
             (1, 1, ["Moses"]),
@@ -70,6 +71,7 @@ public sealed class EntityAnnotationTests : IDisposable
         Annotate(5, "H3667", "topo");
         Annotate(6, "H3478", "pers,gens,topo");
         Annotate(7, "H8888", "pers");
+        Annotate(11, "H3778", "topo");
 
         var moses = Person("moses", "Moses", "H4872");
         Person("zechariah-1", "Zechariah", "H2148");
@@ -87,6 +89,13 @@ public sealed class EntityAnnotationTests : IDisposable
 
         // The name BHSA itself declines to classify: person, people or place, on every occurrence.
         Person("jacob", "Israel", "H3478");
+
+        // The land and the nation named for it, which are one Strong number and two records. A
+        // people can never answer a word BHSA marks topo, so the candidate list still holds one
+        // entity and the occurrence still resolves — but the marking is what made it resolve, and
+        // that is a claim of a different kind from a number that named one thing to begin with.
+        Place("chaldea", "Chaldea", "H3778");
+        People("chaldeans", "Chaldeans", "H3778");
 
         _db.SaveChanges();
 
@@ -122,6 +131,9 @@ public sealed class EntityAnnotationTests : IDisposable
 
     private Entity Place(string slug, string name, string? number) =>
         Add(slug, name, EntityKind.Place, number);
+
+    private Entity People(string slug, string name, string? number) =>
+        Add(slug, name, EntityKind.People, number);
 
     private Entity Add(string slug, string name, EntityKind kind, string? number)
     {
@@ -205,6 +217,71 @@ public sealed class EntityAnnotationTests : IDisposable
     {
         var named = await Load();
         named.Should().ContainKey(Hebrew(3).Id).WhoseValue.Should().Be("jerusalem");
+    }
+
+    /// <summary>
+    /// Where the number named one record to begin with, the marking only agreed with it and there
+    /// was nothing to choose. That is what <c>strong-number</c> asserts, and it is true here.
+    /// </summary>
+    [Fact]
+    public async Task ANameNothingHadToChooseBetweenKeepsTheNumberAsItsMethod()
+    {
+        await _loader.Load();
+
+        var moses = await _db.WordEntities.SingleAsync(a => a.WordId == Hebrew(1).Id);
+        moses.Method.Should().Be(LinkMethod.StrongNumber);
+    }
+
+    /// <summary>
+    /// And where it did not. H3778 is Chaldea and the Chaldeans alike, so the number leaves the
+    /// answer open; what settles it is BHSA analysing this occurrence as a toponym, which is a fact
+    /// about the form of the word. Claiming <c>strong-number</c> there says no judgement was
+    /// required, and a reader has no way to tell that from a name only one record ever bore.
+    /// </summary>
+    [Fact]
+    public async Task ANameTheMarkingHadToChooseBetweenIsWrittenAsTheFormOfTheWord()
+    {
+        var named = await Load();
+        named.Should().ContainKey(Hebrew(11).Id).WhoseValue.Should().Be("chaldea");
+
+        var chaldea = await _db.WordEntities.SingleAsync(a => a.WordId == Hebrew(11).Id);
+        chaldea.Method.Should().Be(LinkMethod.Lexical);
+        chaldea.Confidence.Should().Be(0.9);
+    }
+
+    /// <summary>
+    /// The claims go where the conclusion goes. An annotation whose method says the form decided it
+    /// and whose only claim says the number did is a row that contradicts itself, and the claim is
+    /// where an audit of provenance looks.
+    /// </summary>
+    [Fact]
+    public async Task TheClaimOnSuchAnAnnotationSaysTheSame()
+    {
+        await _loader.Load();
+
+        var chaldea = await _db.WordEntities.SingleAsync(a => a.WordId == Hebrew(11).Id);
+        var claims = await _db.WordEntityClaims
+            .Where(c => c.WordEntityId == chaldea.Id)
+            .ToListAsync();
+
+        claims.Should().NotBeEmpty();
+        claims.Should().OnlyContain(c => c.Method == LinkMethod.Lexical);
+    }
+
+    /// <summary>
+    /// And it travels. A translated word is as good as the Hebrew word it renders, so it cannot
+    /// claim a resolution the Hebrew word did not make.
+    /// </summary>
+    [Fact]
+    public async Task TheFormTravelsToTheWordThatRendersIt()
+    {
+        var rendering = _db.WordAt(_english, 1, 10, 1);
+        Link(Hebrew(11), rendering, LinkMethod.StatedBySource, null);
+
+        await _loader.Load();
+
+        var carried = await _db.WordEntities.SingleAsync(a => a.WordId == rendering.Id);
+        carried.Method.Should().Be(LinkMethod.Lexical);
     }
 
     /// <summary>
