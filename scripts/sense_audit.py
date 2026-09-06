@@ -555,16 +555,54 @@ def call(prompt, model, system_prompt):
         sense.SYSTEM_PROMPT = original
 
 
+def every_same_name_pair(by_number):
+    """
+    Every pair of same-kind records that share a name, whether or not anything else points at them.
+
+    `suspect_pairs` needs a second signal -- a shared verse, a shared father, an overlapping
+    attestation -- and that is what makes it cheap enough to stratify on. It is also what makes it
+    miss the plainest duplicates: Judges 9's Abimelech is held twice with nothing in either record
+    to say so, and the occurrence pass found it while the pair detector did not. This is the
+    exhaustive form, for asking about the records themselves rather than about a stratum.
+    """
+    found = collections.defaultdict(list)
+    for number, under_name in by_number.items():
+        for i in range(len(under_name)):
+            for j in range(i + 1, len(under_name)):
+                a, b = under_name[i], under_name[j]
+                if a['kind'] != b['kind']:
+                    continue
+                left, right = normalised(a['name']), normalised(b['name'])
+                if left != right and difflib.SequenceMatcher(
+                        None, left, right).ratio() < NAME_SIMILARITY:
+                    continue
+                found[number].append({'a': a['key'], 'b': b['key'],
+                                      'why': resemblance(a, b) or ['they share a name']})
+    return found
+
+
 def records(args):
     """Ask, name by name, which of the look-alike records are one referent written twice."""
-    pairs = load_strata(args.dir)['suspect_pairs']
+    strata = load_strata(args.dir)
+    if args.exhaustive:
+        by_all = collections.defaultdict(list)
+        for record in sense.candidates(sorted({a['strong_number'] for a in strata['agreements']})):
+            by_all[record['number']].append(record)
+        pairs = every_same_name_pair(by_all)
+    else:
+        pairs = strata['suspect_pairs']
     numbers = sorted(pairs)
+    if args.shards > 1:
+        numbers = [n for i, n in enumerate(numbers) if i % args.shards == args.shard]
     by_number = collections.defaultdict(list)
     for record in sense.candidates(numbers):
         by_number[record['number']].append(record)
     entries = {e['number']: e for e in sense.lexicon(numbers)}
 
-    path = os.path.join(args.dir, 'records.jsonl')
+    # One file per shard: several of these run at once and appending to one file from all of them
+    # is how a half-written line gets in.
+    path = os.path.join(args.dir, f'records-all-{args.shard:02d}.jsonl' if args.exhaustive
+                        else 'records.jsonl')
     done = set()
     if os.path.exists(path):
         with open(path, encoding='utf-8') as handle:
@@ -626,13 +664,17 @@ def report(args):
                 row = json.loads(line)
                 judged[row['word_id']] = row
 
-    duplicates, distinct = [], []
-    records_path = os.path.join(args.dir, 'records.jsonl')
-    if os.path.exists(records_path):
+    duplicates, distinct, seen_pairs = [], [], set()
+    for records_path in sorted(glob.glob(os.path.join(args.dir, 'records*.jsonl'))):
         for line in open(records_path, encoding='utf-8'):
-            if line.strip():
-                row = json.loads(line)
-                (duplicates if row['same'] else distinct).append(row)
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            pair = (row['strong_number'], *sorted((row['a'], row['b'])))
+            if pair in seen_pairs:
+                continue
+            seen_pairs.add(pair)
+            (duplicates if row['same'] else distinct).append(row)
 
     per_stratum = collections.defaultdict(collections.Counter)
     for row in judged.values():
@@ -746,6 +788,11 @@ def report(args):
           f'{len(strata["answered_twice_differently"])} of those pairs of answers differed.')
     write(f'- {len(strata["agreements"])} distinct agreements. The 8,198 previously reported summed '
           f'the shards\' scores rather than the words, and counted the overlap twice.')
+    unjudged = [a for a in strata['agreements'] if a['word_id'] not in judged]
+    if unjudged:
+        write(f'- {len(unjudged)} of them carry no verdict, because the reply covering them came '
+              f'back one row short on every attempt: '
+              + ', '.join(f'{a["strong_number"]} word {a["word_id"]}' for a in unjudged[:10]) + '.')
 
     text = '\n'.join(lines) + '\n'
     payload = {
@@ -805,6 +852,10 @@ def main():
     recorder = commands.add_parser('records', help='adjudicate the look-alike records')
     recorder.add_argument('--dir', required=True)
     recorder.add_argument('--model', default='opus')
+    recorder.add_argument('--exhaustive', action='store_true',
+                          help='ask about every same-name pair, not only the ones with a signal')
+    recorder.add_argument('--shard', type=int, default=0)
+    recorder.add_argument('--shards', type=int, default=1)
     recorder.add_argument('--again', action='store_true')
     recorder.set_defaults(run=records)
 
