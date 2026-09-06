@@ -58,6 +58,12 @@ internal static class TestResources
 
     public static string ByzantineFolder => System.IO.Path.Combine(ResolvedPath.Value, "Byzantine");
 
+    /// <summary>
+    /// MorphGNT's parsing of the SBLGNT, one file per book. Empty where the fetch script has not
+    /// been run, which the tests over it check for rather than failing on a missing folder.
+    /// </summary>
+    public static string MorphGntFolder => System.IO.Path.Combine(ResolvedPath.Value, "MorphGnt");
+
     public static string Etcbc => System.IO.Path.Combine(ResolvedPath.Value, "etcbc");
 
     /// <summary>The Text-Fabric dataset of the Samaritan Pentateuch, one file per feature.</summary>

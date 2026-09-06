@@ -60,6 +60,13 @@ public class AppDbContext : DbContext
     public DbSet<WordStrong> WordStrongs { get; set; } = null!;
 
     /// <summary>
+    /// Second analyses of a word, from a source other than the text it belongs to. Separate from
+    /// <c>word.morphology</c>, which is what that word's own edition says, and never merged into
+    /// it: two morphologies that disagree are a finding, not a field to overwrite.
+    /// </summary>
+    public DbSet<WordParsing> WordParsings { get; set; } = null!;
+
+    /// <summary>
     /// Which peoples the dictionary says are named after whom, read out of its own prose. Keyed on
     /// the lexeme rather than on two entities, because the claim is about two words; both ends
     /// reach a page where the encyclopedia holds one.
@@ -299,6 +306,7 @@ public class AppDbContext : DbContext
         ConfigureLink(modelBuilder);
         ConfigureVerseLink(modelBuilder);
         ConfigureWordStrong(modelBuilder);
+        ConfigureWordParsing(modelBuilder);
         ConfigureWordEntity(modelBuilder);
     }
 
@@ -405,6 +413,24 @@ public class AppDbContext : DbContext
             // The same rules the links live under, and for the same reason: a proposal that carried
             // no confidence while claiming to be inferred would read as testimony.
             entity.ToTable("word_strong", t => AddProvenanceConstraints(t, "word_strong"));
+        });
+    }
+
+    private static void ConfigureWordParsing(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<WordParsing>(entity =>
+        {
+            entity.Property(p => p.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(p => p.Word)
+                .WithMany()
+                .HasForeignKey(p => p.WordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // The same rules again, and here they carry the weight: a second morphology is exactly
+            // the kind of claim that reads as scholarship, and most of the reasoning that put one
+            // on a word is the reasoning about which word it belongs to.
+            entity.ToTable("word_parsing", t => AddProvenanceConstraints(t, "word_parsing"));
         });
     }
 
