@@ -66,6 +66,7 @@ builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<UssherAnnalsLoader>();
 builder.Services.AddScoped<OpenBiblePlaceLoader>();
 builder.Services.AddScoped<WorldHistoryLoader>();
+builder.Services.AddScoped<PeopleLoader>();
 builder.Services.AddScoped<EntityAnnotationLoader>();
 builder.Services.AddScoped<OwnRecordLoader>();
 builder.Services.AddScoped<SenseReadingLoader>();

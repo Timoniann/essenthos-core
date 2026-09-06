@@ -348,6 +348,8 @@ public static class Datasets
                 "a second reader's judgement, where a review of the readings overturned one and "
                 + "named the referent it found instead — carrying the reading it replaced and the "
                 + "argument that replaced it",
+                "the gentilic Strong's Dictionary derives, resolving to exactly one people",
+                "a reading of the verse naming a people the encyclopedia did not hold",
             ]),
     ];
 

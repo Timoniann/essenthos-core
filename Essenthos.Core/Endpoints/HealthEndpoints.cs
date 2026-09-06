@@ -30,7 +30,8 @@ internal static class HealthEndpoints
                 texts.Count(t => t.Kind == TextKind.Translation),
                 await db.StrongEntries.CountAsync(cancellationToken),
                 await db.Entities.CountAsync(e => e.Kind == EntityKind.Person, cancellationToken),
-                await db.Entities.CountAsync(e => e.Kind == EntityKind.Place, cancellationToken));
+                await db.Entities.CountAsync(e => e.Kind == EntityKind.Place, cancellationToken),
+                await db.Entities.CountAsync(e => e.Kind == EntityKind.People, cancellationToken));
 
             var verified = await db.VerificationRuns
                 .OrderByDescending(v => v.RanAt)
@@ -136,9 +137,12 @@ internal record VerificationReportResponse(
 
 internal record ProblemResponse(string Message);
 
+/// <param name="People">Persons. The name predates the kind below it and is not worth moving.</param>
+/// <param name="Peoples">Nations, tribes and clans — the collectives the text speaks of as one.</param>
 internal record DatasetCountsResponse(
     int OriginalWords,
     int Translations,
     int StrongEntries,
     int People,
-    int Places);
+    int Places,
+    int Peoples);

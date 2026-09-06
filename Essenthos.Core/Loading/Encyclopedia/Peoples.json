@@ -1,0 +1,232 @@
+{
+  "decidedBy": "the project owner, 2026-09-06 — a people is a kind, and the tribes are records",
+  "policy": "A people record is written where a source states that a collective exists and says what it is named after. Strong's Dictionary states it for every gentilic lexeme it derives, and those records are made from his entries. It does not state it for the tribes of Israel, whose name in Hebrew is the ancestor's own name standing for his descendants — so the tribes are named here, one record each, resting on the ancestor the encyclopedia already holds and on BHSA marking that name gens where it stands for the people. A record is never written because a word was marked gens and nothing else says who they are.",
+  "source": "Essenthos, on the project owner's decision of 2026-09-06 that a people is a kind of entity",
+  "witness": "BHSA marks a name gens where it stands for the descent group rather than for the man",
+  "tribes": [
+    {
+      "slug": "israelites",
+      "name": "Israelites",
+      "distinguisher": "the people descended from Jacob, whom the text also calls Israel",
+      "origin": "jacob",
+      "collectiveNumber": "H3478",
+      "gentilicNumbers": ["H3481"],
+      "why": "H3478 is the largest collective in the Hebrew Bible: BHSA marks it pers, gens and topo together on 2,467 words, which is the same three-way shrug it gives every tribal name, and the overwhelming majority of them are the people rather than the man. Strong derives H3481 from it and calls the result a descendant of Israel, so the gentilic and the collective name one thing and this is that thing.",
+      "notes": "The record for the man is jacob, which is where the patriarch's own life belongs. This is the people, and a word naming the nation reaches here rather than reaching a page about a birth in Genesis."
+    },
+    {
+      "slug": "reubenites",
+      "name": "Reubenites",
+      "distinguisher": "the tribe descended from Reuben, Jacob's firstborn",
+      "origin": "reuben",
+      "collectiveNumber": "H7205",
+      "gentilicNumbers": ["H7206"],
+      "why": "Strong derives H7206 from H7205 and calls the result a Reubenite, a descendant of Reuben; BHSA marks 71 occurrences of H7205 itself gens."
+    },
+    {
+      "slug": "simeonites",
+      "name": "Simeonites",
+      "distinguisher": "the tribe descended from Simeon, Jacob's second son",
+      "origin": "simeon",
+      "collectiveNumber": "H8095",
+      "gentilicNumbers": ["H8099"],
+      "why": "Strong derives H8099 from H8095 and calls the result a Shimonite, a descendant of Shimon; BHSA marks 42 occurrences of H8095 itself gens."
+    },
+    {
+      "slug": "levites",
+      "name": "Levites",
+      "distinguisher": "the tribe descended from Levi, Jacob's third son, set apart to the sanctuary",
+      "origin": "levi",
+      "collectiveNumber": "H3878",
+      "gentilicNumbers": ["H3881"],
+      "why": "Strong derives H3881 from H3878 and calls the result a Levite, a descendant of Levi; BHSA marks 48 occurrences of H3878 itself gens.",
+      "notes": "Strong's King James list spells the gentilic Leviite, which is a slip of the printed dictionary rather than a name anybody uses. The record is named Levites."
+    },
+    {
+      "slug": "judahites",
+      "name": "Judahites",
+      "distinguisher": "the tribe descended from Judah, Jacob's fourth son, and the people of the kingdom that kept his name",
+      "origin": "judah",
+      "collectiveNumber": "H3063",
+      "gentilicNumbers": ["H3064", "H3062"],
+      "why": "H3063 is the second-largest collective in the Hebrew Bible and the single largest gap this corpus had: BHSA marks 800 of its words pers, gens and topo at once, and an audit of 8,092 occurrences found the collective reading of it to be the largest class of dissent there was. Strong derives H3064 and its Aramaic counterpart H3062 from it and glosses both a descendant of Judah, i.e. a Jew.",
+      "notes": "Strong's entry runs the tribe and the post-exilic Jews together — a Jehudite, i.e. Judaite or Jew, or descendant of Jehudah — and this corpus does not separate them either, because nothing in the Hebrew word does. What the record refuses is the other conflation: the kingdom and the territory of Judah are a polity and a land, not a people, and an occurrence naming those is left unannotated rather than folded in here."
+    },
+    {
+      "slug": "danites",
+      "name": "Danites",
+      "distinguisher": "the tribe descended from Dan, Jacob's fifth son",
+      "origin": "dan",
+      "collectiveNumber": "H1835",
+      "gentilicNumbers": ["H1839"],
+      "why": "Strong derives H1839 from H1835 and calls the result a Danite, often collectively, descendants of Dan; BHSA marks 70 occurrences of H1835 itself gens."
+    },
+    {
+      "slug": "naphtalites",
+      "name": "Naphtalites",
+      "distinguisher": "the tribe descended from Naphtali, Jacob's sixth son",
+      "origin": "naphtali",
+      "collectiveNumber": "H5321",
+      "why": "Strong derives no gentilic from H5321, so this record rests on the corpus's own witness alone: BHSA marks 50 occurrences of the name pers, gens and topo together, which is what it marks every tribal name whose word does duty for the man, the people and the land. The name here is ours, formed as the rest of this layer is."
+    },
+    {
+      "slug": "gadites",
+      "name": "Gadites",
+      "distinguisher": "the tribe descended from Gad, Jacob's seventh son",
+      "origin": "gad",
+      "collectiveNumber": "H1410",
+      "gentilicNumbers": ["H1425"],
+      "why": "Strong derives H1425 from H1410 and calls the result a Gadite, collectively, descendants of Gad; BHSA marks 71 occurrences of H1410 itself gens."
+    },
+    {
+      "slug": "asherites",
+      "name": "Asherites",
+      "distinguisher": "the tribe descended from Asher, Jacob's eighth son",
+      "origin": "asher",
+      "collectiveNumber": "H836",
+      "gentilicNumbers": ["H843"],
+      "why": "Strong derives H843 from H836 and calls the result an Asherite, collectively, descendants of Asher; BHSA marks 43 occurrences of H836 itself gens."
+    },
+    {
+      "slug": "issacharites",
+      "name": "Issacharites",
+      "distinguisher": "the tribe descended from Issachar, Jacob's ninth son",
+      "origin": "issachar",
+      "collectiveNumber": "H3485",
+      "why": "Strong derives no gentilic from H3485, so this record rests on the corpus's own witness alone: BHSA marks 41 occurrences of the name pers, gens and topo together. Thirty occurrences of it were read as naming the tribe by a model that could name no record, which is the demand this answers."
+    },
+    {
+      "slug": "zebulonites",
+      "name": "Zebulonites",
+      "distinguisher": "the tribe descended from Zebulun, Jacob's tenth son",
+      "origin": "zebulun",
+      "collectiveNumber": "H2074",
+      "gentilicNumbers": ["H2075"],
+      "why": "Strong derives H2075 from H2074 and calls the result a Zebulonite, a descendant of Zebulun; BHSA marks 45 occurrences of H2074 itself gens.",
+      "notes": "Spelled as the King James spells the gentilic, which is Zebulonite against the Zebulun of the name itself."
+    },
+    {
+      "slug": "ephraimites",
+      "name": "Ephraimites",
+      "distinguisher": "the tribe descended from Ephraim, Joseph's second son",
+      "origin": "ephraim",
+      "collectiveNumber": "H669",
+      "why": "BHSA marks 178 occurrences of H669 pers, gens and topo together, which is more than it marks any tribal name but Israel and Judah. Strong's H673 is deliberately not claimed here: his entry reads an Ephrathite or an Ephraimite and derives it from Ephrath, so it names two peoples at once and is kept as its own record under the first of them."
+    },
+    {
+      "slug": "manassites",
+      "name": "Manassites",
+      "distinguisher": "the tribe descended from Manasseh, Joseph's firstborn",
+      "origin": "manasseh",
+      "collectiveNumber": "H4519",
+      "why": "Strong derives no gentilic from H4519, so this record rests on the corpus's own witness alone: BHSA marks 145 occurrences of the name pers and gens together. The name is the King James's own word for them."
+    },
+    {
+      "slug": "benjaminites",
+      "name": "Benjaminites",
+      "distinguisher": "the tribe descended from Benjamin, Jacob's twelfth son",
+      "origin": "benjamin",
+      "collectiveNumber": "H1144",
+      "gentilicNumbers": ["H1145"],
+      "why": "BHSA marks 163 occurrences of H1144 pers, gens and topo together. Strong's own gentilic for this tribe is H1145, and he does derive it from H1144 — but he says so at the end of a derivation that first lists five spellings of the compound, and the gentilic parse takes only a clause that states one origin and nothing else, so it is not among the 160 it read. The record therefore stands on the corpus's own witness and names H1145 as the people's name rather than being made from his entry. Eight occurrences of the bare name were read as the patriarch, overturned by an audit that named the tribe instead, and refused by the loader because writing a person called the tribe of Benjamin would have been a falsehood of our own making. They are the rulings below.",
+      "notes": "H3228, which Strong derives from Jamin, is a different people and keeps its own record as the Jaminites; his entry points at H1145 for this one."
+    }
+  ],
+  "namings": [
+    {
+      "number": "H2680",
+      "name": "Manahethites",
+      "why": "The King James prints half of the Manahethites, which is a phrase and not a word; Strong's own English for the entry is a Chatsi-ham-Menachtite, which is a transliteration and not a name."
+    },
+    {
+      "number": "H3172",
+      "name": "Jehielites",
+      "why": "Strong lists the King James's Jehieli, which is the Hebrew form rather than an English gentilic. His own English is a Jechielite."
+    },
+    {
+      "number": "H373",
+      "name": "Jeezerites",
+      "why": "The King James spells this Jeezerites at Numbers 26:30 and spells H3340 Jezerites at Numbers 26:49; Strong's own English gives them the same shape, and two peoples cannot share a name here."
+    },
+    {
+      "number": "H4075",
+      "name": "Medes",
+      "why": "Strong's own English is a Madian, a native of Madai; the King James renders it Mede."
+    },
+    {
+      "number": "H5436",
+      "name": "Sebaites",
+      "why": "The King James renders this and H7615 alike as Sabean. Strong's own English keeps them apart — a Sebaite of Seba here, a Shebaite of Sheba there — and this takes his."
+    },
+    {
+      "number": "H5680",
+      "name": "Hebrews",
+      "why": "Strong's own English is an Eberite and he glosses it i.e. Hebrew in the same clause; the King James renders it Hebrew throughout."
+    },
+    {
+      "number": "H673",
+      "name": "Ephrathites",
+      "why": "Strong's entry names two peoples at once — an Ephrathite or an Ephraimite — and derives the word from Ephrath, which is Bethlehem. The first of the two is what this record is, and the tribe of Ephraim is held separately."
+    },
+    {
+      "number": "H6876",
+      "name": "Tyrians",
+      "why": "Strong's own English is a Tsorite, a transliteration, and the King James renders it only as the phrase man of Tyre. So the name here is ours, formed from the city as the King James spells it, and it is the one name in this layer that neither source states outright."
+    },
+    {
+      "number": "H8118",
+      "name": "Samaritans",
+      "why": "The King James's own word. Strong's English is a Shomeronite, which nobody uses."
+    }
+  ],
+  "rulings": [
+    {
+      "wordId": 6536500,
+      "people": "benjaminites",
+      "reference": "Numbers 1:11",
+      "why": "The bare name stands for the census tribe whose chief is Abidan, not for Jacob's son. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin, which the encyclopedia could not hold."
+    },
+    {
+      "wordId": 6536863,
+      "people": "benjaminites",
+      "reference": "Numbers 1:36",
+      "why": "The census of the Benjaminites by families and fathers' houses; the referent is the tribe. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
+    },
+    {
+      "wordId": 6536885,
+      "people": "benjaminites",
+      "reference": "Numbers 1:37",
+      "why": "The tribe of Benjamin numbering 35,400 is the collective, and no person was on the candidate list. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
+    },
+    {
+      "wordId": 6537478,
+      "people": "benjaminites",
+      "reference": "Numbers 2:22",
+      "why": "The camp arrangement names the tribe, maṭṭeh Binyamin, a group no listed person-candidate covers. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
+    },
+    {
+      "wordId": 6537483,
+      "people": "benjaminites",
+      "reference": "Numbers 2:22",
+      "why": "Sons of Benjamin here is the tribe Abidan leads, not the patriarch's own sons. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
+    },
+    {
+      "wordId": 6541534,
+      "people": "benjaminites",
+      "reference": "Numbers 7:60",
+      "why": "Abidan is prince over the tribal body, and the name denotes the tribe at the offering. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
+    },
+    {
+      "wordId": 6543364,
+      "people": "benjaminites",
+      "reference": "Numbers 10:24",
+      "why": "The marching order of the tribe's host; the referent is the collective. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
+    },
+    {
+      "wordId": 6544707,
+      "people": "benjaminites",
+      "reference": "Numbers 13:9",
+      "why": "The spy list by tribe: Palti represents the tribe of Benjamin, not the individual patriarch. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
+    }
+  ]
+}
