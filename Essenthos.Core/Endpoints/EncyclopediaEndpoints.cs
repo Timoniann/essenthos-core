@@ -204,11 +204,22 @@ internal static class EncyclopediaEndpoints
                     .ToList());
     }
 
+    /// <summary>
+    /// Which language a description was asked for in. <c>language</c> is the spelling this API
+    /// already uses, on <c>/v1/strong</c>; <c>lang</c> is accepted beside it because the client
+    /// shipped that one, and a query parameter nobody reads fails by rendering the wrong language
+    /// rather than by saying anything.
+    /// </summary>
+    internal static string? Language(string? language, string? lang) =>
+        string.IsNullOrWhiteSpace(language) ? lang : language;
+
     public static void MapEncyclopedia(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/entities", async (
             [FromQuery] string? q,
             [FromQuery] string? kind,
+            [FromQuery] string? language,
+            [FromQuery] string? lang,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
@@ -248,7 +259,17 @@ internal static class EncyclopediaEndpoints
                 .Select(Summary)
                 .ToListAsync(cancellationToken);
 
-            return Results.Ok(new EntityListResponse(total, page));
+            var described = await Descriptors.Of(
+                db, page.Select(e => e.Slug), Language(language, lang), cancellationToken);
+
+            return Results.Ok(new EntityListResponse(
+                total,
+                [
+                    .. page.Select(e => e with
+                    {
+                        Descriptor = described.GetValueOrDefault(e.Slug),
+                    }),
+                ]));
         });
 
         // How far each layer of the encyclopedia actually reaches, measured rather than declared.
@@ -266,6 +287,8 @@ internal static class EncyclopediaEndpoints
 
         routes.MapGet("/entities/{slug}", async (
             string slug,
+            [FromQuery] string? language,
+            [FromQuery] string? lang,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
@@ -409,7 +432,11 @@ internal static class EncyclopediaEndpoints
                         EnumSpelling.Of(c.Method), c.Confidence, c.Source, Datasets.Of(c.Source), c.Note)),
                 ],
                 alternatives,
-                alternatives.Count > 0));
+                alternatives.Count > 0)
+            {
+                Descriptor = await Descriptors.Of(
+                    db, entity.Slug, Language(language, lang), cancellationToken),
+            });
         });
 
         routes.MapGet("/entities/{slug}/references", async (
@@ -893,7 +920,14 @@ internal record EntitySummaryResponse(
     string Name,
     string? Distinguisher,
     int References,
-    int Mentions);
+    int Mentions)
+{
+    /// <summary>
+    /// What this corpus says the entity is, as the pieces of a line whose every name is a link, in
+    /// the language it says it is in. Null where nothing has been generated for this entity yet.
+    /// </summary>
+    public EntityDescriptorResponse? Descriptor { get; init; }
+}
 
 internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items);
 
@@ -992,7 +1026,23 @@ internal record EntityResponse(
     IList<EntityReferenceSourceResponse> ReferenceSources,
     IList<EntityClaimResponse> Claims,
     IList<EntityAlternativeResponse> Alternatives,
-    bool Unsettled);
+    bool Unsettled)
+{
+    /// <summary>
+    /// What this corpus says the entity is: the pieces of a line, each name among them carrying the
+    /// entity it names complete enough to be linked, and the claims the line was made of with the
+    /// verse each was read from. <see cref="EntityDescriptorResponse.Language"/> says which language
+    /// it came out in, which is not always the one asked for.
+    ///
+    /// <para>
+    /// It is what <paramref name="Distinguisher"/> was being shown for, and it replaces it — but
+    /// that field stays on the wire while the client is changed, because a field that vanishes
+    /// mid-flight breaks whoever is reading it. Null where nothing has been generated for this
+    /// entity.
+    /// </para>
+    /// </summary>
+    public EntityDescriptorResponse? Descriptor { get; init; }
+}
 
 /// <param name="Confidence">
 /// How sure, and null exactly where a person or a source stated it rather than a process concluding

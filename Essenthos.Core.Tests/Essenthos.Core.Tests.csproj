@@ -36,4 +36,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Essenthos.Core\Essenthos.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- The descriptor fixtures. The real files are the output of a generation pass and stay out
+         of the repository like the rest of the corpus; these are written here so the loader can be
+         exercised without a gigabyte of it, and so the refusals have something to refuse. -->
+    <Content Include="Resources\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
