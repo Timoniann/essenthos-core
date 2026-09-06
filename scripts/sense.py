@@ -1,11 +1,11 @@
 """
 Which of the men called Zechariah does this word mean? Ask a model, and measure how often it is right.
 
-515 proper-noun Strong numbers answer with more than one person or place, over 9,996 Hebrew
+628 proper-noun Strong numbers answer with more than one person or place, over 11,396 Hebrew
 occurrences, and nothing in the corpus says which referent an occurrence carries: BHSA's name type
 is a property of the lemma, not of the word, and Strong's own entry names the man and the land in
 one sentence. Only reading fills that gap. This is the harness that does the reading and, more
-importantly, the measurement that says whether the reading may be believed -- 8,508 of those
+importantly, the measurement that says whether the reading may be believed -- 10,122 of those
 occurrences already have an answer from the encyclopedia's verse lists, so the model can be run
 over ground somebody else has already covered and scored against it before it is trusted anywhere
 new.
@@ -15,8 +15,10 @@ new.
     python scripts/sense.py ask   --dir .sense/run-11
     python scripts/sense.py score --dir .sense/run-11
 
-Four things about the design are load-bearing, and each of them is a way the number could have been
-made meaningless:
+Six things about the design are load-bearing, and each of them is a way the number could have been
+made meaningless. The first three are the candidate list, which is stated once in `NAMING` and once
+in `EntityCandidates` on the loader's side, because a measurement of a list nobody will be offered
+measures nothing:
 
 **A comma-joined Strong label is not a name.** `H4428,H3389` on the entity Adonizedek says what the
 words of the title *king of Jerusalem* are. Read as a name it makes H3389 mean the man rather than
@@ -25,6 +27,19 @@ servant of the LORD* is a title too. Only single-number labels are read here, wh
 the annotation loader follows. Reading the commas instead inflates this population from 9,996
 occurrences to 20,880 and its answered part from 8,508 to 18,855 -- entirely with candidates that
 are not candidates.
+
+**A candidate has to be reachable from the text being read.** The encyclopedia records the Hebrew
+Strong number on a person who appears only in Greek, because Judas is Judah in Greek and Mary is
+Miriam; taken as a candidate list that makes Judas Iscariot one of eleven answers for a word of
+Numbers. An entity is refused where it is attested and every attestation falls outside the books
+this text holds, and kept where it is attested nowhere at all, because a silence in the dataset is
+not a fact about the text.
+
+**A place with no Strong number is still a place.** The geocoding dataset supplies nine tenths of
+the corpus's places and carries no Strong numbers, so a word BHSA marks as a place had only people
+to offer and the answer `unlisted` was forced for names the corpus was holding. The join is built
+from the King James rendering rather than read: see `EntityCandidates` for what it takes and what
+it refuses.
 
 **The answer is removed from the prompt.** Each candidate is shown the verses the encyclopedia
 already attests it in, because that is what lets a model reason by parallel -- but every verse being
@@ -110,15 +125,80 @@ BOOKS = [
     'Malachi',
 ]
 
-# Only a label that is a single number is read. See the module docstring for what the commas are.
-NAMING = """
-    SELECT DISTINCT n.hebrew_strong_number AS number, n.entity_id
-    FROM entity_name n
-    WHERE n.hebrew_strong_number IS NOT NULL AND position(',' IN n.hebrew_strong_number) = 0
+# Who a word could be naming. This is the same rule as EntityCandidates in the loader, said again
+# because the two run in different languages against the same database, and they have to agree: a
+# harness that measured a list the corpus will not offer would be measuring nothing. See the module
+# docstring for the three things it turns on, and that class for the reasoning behind each.
+NAMING = f"""
+    WITH held AS (
+        SELECT DISTINCT r.canonical_book
+        FROM verse v
+        JOIN text t ON t.id = v.text_id AND t.slug = '{WITNESS}'
+        JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+    ),
+    stated AS (
+        SELECT DISTINCT n.hebrew_strong_number AS number, n.entity_id
+        FROM entity_name n
+        WHERE n.hebrew_strong_number IS NOT NULL AND position(',' IN n.hebrew_strong_number) = 0
+    ),
+    placed AS (
+        SELECT e.id AS entity_id,
+               lower(regexp_replace(e.name, '[^A-Za-z]', '', 'g')) AS spelling,
+               ev.canonical_book AS book, ev.canonical_chapter AS chapter,
+               ev.canonical_verse AS verse
+        FROM entity e
+        JOIN entity_verse ev ON ev.entity_id = e.id
+        WHERE e.kind = 'place' AND e.open_bible_id IS NOT NULL
+    ),
+    naming AS (
+        SELECT mine.link_id, mine.word_id, mine.side,
+               count(*) OVER (PARTITION BY mine.link_id) AS names
+        FROM link_word mine
+        JOIN word w ON w.id = mine.word_id
+        JOIN text t ON t.id = w.text_id AND t.slug = '{WITNESS}'
+        WHERE w.morphology->>'nameType' IS NOT NULL
+          AND w.strong_number IS NOT NULL AND position(',' IN w.strong_number) = 0
+    ),
+    rendered AS (
+        SELECT DISTINCT r.canonical_book AS book, r.canonical_chapter AS chapter,
+                        r.canonical_verse AS verse, hebrew.strong_number AS number,
+                        lower(regexp_replace(english.text, '[^A-Za-z]', '', 'g')) AS spelling
+        FROM naming
+        JOIN word hebrew ON hebrew.id = naming.word_id
+        JOIN verse_reference r ON r.verse_id = hebrew.verse_id AND r.is_primary
+        JOIN link_word opposite ON opposite.link_id = naming.link_id AND opposite.side <> naming.side
+        JOIN word english ON english.id = opposite.word_id
+        JOIN text et ON et.id = english.text_id AND et.slug = '{RENDERING}'
+        WHERE naming.names = 1
+    ),
+    read AS (
+        SELECT DISTINCT rendered.number, placed.entity_id
+        FROM placed
+        JOIN rendered ON rendered.book = placed.book AND rendered.chapter = placed.chapter
+                     AND rendered.verse = placed.verse AND rendered.spelling = placed.spelling
+    ),
+    candidate AS (
+        SELECT number, entity_id, true AS stated FROM stated
+        UNION
+        SELECT number, entity_id, false FROM read r
+        WHERE NOT EXISTS (
+            SELECT 1 FROM stated s WHERE s.number = r.number AND s.entity_id = r.entity_id)
+    )
+    SELECT candidate.number, candidate.entity_id, candidate.stated
+    FROM candidate
+    WHERE NOT EXISTS (SELECT 1 FROM entity_verse ev WHERE ev.entity_id = candidate.entity_id)
+       OR EXISTS (
+           SELECT 1 FROM entity_verse ev
+           JOIN held ON held.canonical_book = ev.canonical_book
+           WHERE ev.entity_id = candidate.entity_id)
 """
 
-CONTESTED = f"""
-    SELECT number FROM ({NAMING}) named GROUP BY 1 HAVING count(*) > 1
+# The rule is expensive enough that a query which inlined it three times would run it three times,
+# so every query below opens with it as one materialised CTE and joins to `named` by name.
+NAMED = f'WITH named AS MATERIALIZED ({NAMING})'
+
+CONTESTED = """
+    SELECT number FROM named GROUP BY 1 HAVING count(*) > 1
 """
 
 SYSTEM_PROMPT = """\
@@ -184,6 +264,7 @@ def quoted(numbers):
 def contested_numbers():
     """Every proper-noun Strong number the encyclopedia answers with more than one entity."""
     return psql(f"""
+        {NAMED}
         SELECT coalesce(json_agg(json_build_object(
                    'number', o.number,
                    'candidates', o.candidates,
@@ -191,12 +272,12 @@ def contested_numbers():
                    'answered', o.answered) ORDER BY o.number), '[]')
         FROM (
             SELECT w.strong_number AS number,
-                   (SELECT count(*) FROM ({NAMING}) n WHERE n.number = w.strong_number) AS candidates,
+                   (SELECT count(*) FROM named n WHERE n.number = w.strong_number) AS candidates,
                    count(*) AS occurrences,
                    count(*) FILTER (WHERE EXISTS (
                        SELECT 1
                        FROM verse_reference r
-                       JOIN ({NAMING}) n ON n.number = w.strong_number
+                       JOIN named n ON n.number = w.strong_number
                        JOIN entity_verse ev ON ev.entity_id = n.entity_id
                             AND ev.canonical_book = r.canonical_book
                             AND ev.canonical_chapter = r.canonical_chapter
@@ -223,7 +304,15 @@ def lexicon(numbers):
 
 
 def candidates(numbers):
+    """
+    The candidates for these numbers, as the model is shown them.
+
+    The label and the meaning are joined outwards on purpose: a place reached by the corpus's own
+    reading of the King James rendering has no name row to carry them, and dropping it for want of
+    a label would put back the gap the join was built to close. Its own name stands in.
+    """
     return psql(f"""
+        {NAMED}
         SELECT coalesce(json_agg(json_build_object(
                    'number', c.number, 'entity_id', c.entity_id, 'key', c.slug,
                    'kind', c.kind, 'name', c.name, 'distinguisher', c.distinguisher,
@@ -231,13 +320,13 @@ def candidates(numbers):
                    ORDER BY c.number, c.slug), '[]')
         FROM (
             SELECT n.number, e.id AS entity_id, e.slug, e.kind, e.name, e.distinguisher,
-                   min(en.label) AS label, min(en.meaning) AS meaning,
+                   coalesce(min(en.label), e.name) AS label, min(en.meaning) AS meaning,
                    (SELECT coalesce(json_agg(json_build_array(
                                 ev.canonical_book, ev.canonical_chapter, ev.canonical_verse)), '[]')
                     FROM entity_verse ev WHERE ev.entity_id = e.id) AS attested
-            FROM ({NAMING}) n
+            FROM named n
             JOIN entity e ON e.id = n.entity_id
-            JOIN entity_name en ON en.entity_id = e.id AND en.hebrew_strong_number = n.number
+            LEFT JOIN entity_name en ON en.entity_id = e.id AND en.hebrew_strong_number = n.number
             WHERE n.number IN ({quoted(numbers)})
             GROUP BY 1, 2, 3, 4, 5, 6
         ) c
@@ -312,13 +401,14 @@ def witness_answers(word_ids):
     """
     ids = ', '.join(str(int(i)) for i in word_ids)
     return psql(f"""
+        {NAMED}
         SELECT coalesce(json_object_agg(a.word_id, a.entities), '{{}}')
         FROM (
             SELECT w.id AS word_id,
                    coalesce(json_agg(DISTINCT e.slug) FILTER (WHERE e.slug IS NOT NULL), '[]') AS entities
             FROM word w
             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
-            LEFT JOIN ({NAMING}) n ON n.number = w.strong_number
+            LEFT JOIN named n ON n.number = w.strong_number
             LEFT JOIN entity_verse ev ON ev.entity_id = n.entity_id
                  AND ev.canonical_book = r.canonical_book
                  AND ev.canonical_chapter = r.canonical_chapter

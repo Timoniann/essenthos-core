@@ -17,6 +17,11 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// of them this verse means.
 /// </param>
 /// <param name="Unanswered">Numbers it answers with nobody at all.</param>
+/// <param name="Derived">
+/// Of the annotations, how many rest on a name the corpus worked out rather than one the
+/// encyclopedia stated. They are the places the geocoding dataset supplied, which carry no Strong
+/// number of their own, and they are counted apart because they are worth less.
+/// </param>
 /// <param name="ByText">What each text ended up with, so the reach is a count rather than a hope.</param>
 internal sealed record AnnotationOutcome(
     bool AlreadyLoaded,
@@ -25,6 +30,7 @@ internal sealed record AnnotationOutcome(
     int Unanswered,
     int Annotated,
     int Corroborated,
+    int Derived,
     IReadOnlyList<(string Text, int Words)> ByText,
     TimeSpan Elapsed)
 {
@@ -33,7 +39,8 @@ internal sealed record AnnotationOutcome(
             ? "the words are already annotated with the people and places they name"
             : $"{Annotated} words name a person or a place, over {Resolved} Strong numbers that answer with " +
               $"exactly one, in {Elapsed}: {Corroborated} of them in a verse the encyclopedia independently " +
-              $"says that entity is named in. {Contested} numbers answer with several and {Unanswered} with " +
+              $"says that entity is named in, and {Derived} on a name the corpus worked out rather than " +
+              $"read. {Contested} numbers answer with several and {Unanswered} with " +
               "nobody, and both are left unannotated. Per text: " +
               string.Join(", ", ByText.Select(t => $"{t.Text} {t.Words}"));
 }
@@ -56,16 +63,20 @@ internal sealed record AnnotationOutcome(
 /// </para>
 ///
 /// <para>
-/// **Two exclusions are worth naming, because the obvious reading of the data gets both wrong.**
-/// A label whose Strong number is a list — <c>H4428,H3389</c> for <em>King of Jerusalem</em> — says
-/// what the words of a title are, not what the entity is called, and reading it as a name puts the
-/// city of Jerusalem on the man Adonizedek and the place Tsereth-hash-Shachar on Jesus. And BHSA's
-/// name type is a property of the lemma rather than of the occurrence: all 2,467 occurrences of
-/// Israel are marked <c>pers,gens,topo</c>, which says the name can be a person, a people or a
-/// place and never that it is one here. So an occurrence is taken only where BHSA commits to a
-/// single kind and the encyclopedia's entity is that kind. Where it does not commit, nothing is
-/// written — which is the same discipline that keeps the land of Canaan from being annotated as the
-/// person Canaan.
+/// **Who the candidates are is not decided here.** <see cref="EntityCandidates"/> states that once,
+/// for this loader and for the reading harness alike, and it is worth reading before this file: it
+/// is where a title's Strong numbers are refused as names, where a person who appears only in Greek
+/// is refused as the referent of a Masoretic word, and where the geocoding dataset's places are
+/// given the Hebrew names that make them reachable at all.
+/// </para>
+///
+/// <para>
+/// **The one exclusion that belongs here** is the kind. BHSA's name type is a property of the lemma
+/// rather than of the occurrence: all 2,467 occurrences of Israel are marked <c>pers,gens,topo</c>,
+/// which says the name can be a person, a people or a place and never that it is one here. So an
+/// occurrence is taken only where BHSA commits to a single kind and the entity is that kind. Where
+/// it does not commit, nothing is written — which is the discipline that keeps the land of Canaan
+/// from being annotated as the person Canaan.
 /// </para>
 ///
 /// <para>
@@ -84,11 +95,9 @@ internal sealed record AnnotationOutcome(
 /// </summary>
 internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnnotationLoader> logger)
 {
-    /// <summary>
-    /// The text whose annotation is read rather than derived. It is the only one here that marks
-    /// its proper nouns, and every other text is reached from it through the links.
-    /// </summary>
-    public const string Witness = "bhsa";
+    private const string Witness = EntityCandidates.Witness;
+
+    private const string Rendering = EntityCandidates.Rendering;
 
     /// <summary>
     /// How sure the corpus is that an occurrence of a name names the one entity that bears it.
@@ -111,8 +120,25 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </summary>
     private const double Corroborated = 0.99;
 
+    /// <summary>
+    /// The same, where the name itself is the corpus's own conclusion rather than the
+    /// encyclopedia's statement — the places the geocoding dataset supplied, which carry no Strong
+    /// number and are reached by reading the King James rendering back onto the Hebrew word.
+    ///
+    /// Lower than a stated name, and deliberately so. It carries the same room for an encyclopedia
+    /// that will grow, plus the derivation's own risk: on the hundred-odd places the other dataset
+    /// had already joined by hand it has yet to be caught naming the wrong one, but a hundred is
+    /// what could be checked out of six hundred and fifty, and a number that hid that would be
+    /// claiming more than was measured.
+    /// </summary>
+    private const double DerivedName = 0.8;
+
     private const string Resolution =
         "BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name";
+
+    private const string Derivation =
+        "BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders " +
+        "it in a verse the geocoding dataset says the place is named in";
 
     private const string VerseList =
         "the encyclopedia's own list of the verses each entity is named in";
@@ -125,25 +151,11 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </summary>
     private const int Patient = 1800;
 
-    /// <summary>
-    /// Every entity a Strong number is the name of.
-    ///
-    /// Only a label that is a single number is read. A comma-joined value is the numbers of the
-    /// words of a title, and the words of a title are not the entity's name: taken as one, H3389
-    /// stops being Jerusalem and becomes Adonizedek, who is called king of it.
-    /// </summary>
-    private const string Naming =
-        """
-        SELECT DISTINCT n.hebrew_strong_number AS number, n.entity_id
-        FROM entity_name n
-        WHERE n.hebrew_strong_number IS NOT NULL AND position(',' IN n.hebrew_strong_number) = 0
-        """;
-
     /// <summary>The numbers that name exactly one entity, which are the only ones annotated.</summary>
     private static readonly string Resolvable =
         $"""
-         SELECT number, min(entity_id) AS entity_id
-         FROM ({Naming}) named
+         SELECT number, min(entity_id) AS entity_id, bool_and(stated) AS stated
+         FROM ({EntityCandidates.Naming}) named
          GROUP BY 1 HAVING count(*) = 1
          """;
 
@@ -154,6 +166,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             entity_id integer NOT NULL,
             carried double precision NOT NULL,
             corroborated boolean NOT NULL,
+            stated boolean NOT NULL,
             note text NOT NULL)
         """;
 
@@ -164,8 +177,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </summary>
     private static readonly string Seed =
         $"""
-         INSERT INTO annotation (word_id, entity_id, carried, corroborated, note)
-         SELECT w.id, resolved.entity_id, 1.0, agreed.named,
+         INSERT INTO annotation (word_id, entity_id, carried, corroborated, stated, note)
+         SELECT w.id, resolved.entity_id, 1.0, agreed.named, resolved.stated,
                 w.strong_number || ', which BHSA marks ' || (w.morphology->>'nameType')
          FROM word w
          JOIN text t ON t.id = w.text_id AND t.slug = @witness
@@ -196,6 +209,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             SELECT other.word_id,
                    seed.entity_id,
                    coalesce(l.confidence, 1.0) AS carried,
+                   seed.stated,
                    l.method,
                    seed.word_id AS through
             FROM annotation seed
@@ -211,8 +225,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             FROM reached r JOIN unanimous u ON u.word_id = r.word_id
             ORDER BY r.word_id, r.carried DESC, r.through
         )
-        INSERT INTO annotation (word_id, entity_id, carried, corroborated, note)
-        SELECT s.word_id, s.entity_id, s.carried, agreed.named,
+        INSERT INTO annotation (word_id, entity_id, carried, corroborated, stated, note)
+        SELECT s.word_id, s.entity_id, s.carried, agreed.named, s.stated,
                'through ' || @witness || ' word ' || s.through || ', linked by ' || s.method
         FROM strongest s
         JOIN word w ON w.id = s.word_id
@@ -230,8 +244,10 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         """
         INSERT INTO word_entity (word_id, entity_id, method, confidence, source, note)
         SELECT a.word_id, a.entity_id, @method,
-               (CASE WHEN a.corroborated THEN @corroborated ELSE @resolution END) * a.carried,
-               @source, a.note
+               (CASE WHEN NOT a.stated THEN @derived
+                     WHEN a.corroborated THEN @corroborated
+                     ELSE @resolution END) * a.carried,
+               CASE WHEN a.stated THEN @source ELSE @derivation END, a.note
         FROM annotation a
         ON CONFLICT (word_id, entity_id) DO NOTHING
         """;
@@ -240,6 +256,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// The resolution's own claim, and the verse list's where it agrees. Written in the same
     /// transaction as the annotation: an annotation nothing claims is invisible to the agreement
     /// measure, which is the failure link_claim was already caught by once.
+    ///
+    /// <para>
+    /// <c>@stated</c> selects which half of the annotations the claim is about, because a stated
+    /// name and a derived one are two different assertions and each has to name what made it. The
+    /// verse list is a claim only about the stated half: for a derived name the verse list is not a
+    /// second opinion but the very evidence the derivation was read from, and writing it as
+    /// corroboration would be the corpus agreeing with itself.
+    /// </para>
     /// </summary>
     private const string Claim =
         """
@@ -247,7 +271,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         SELECT a.id, @method, @confidence * w.carried, @source, a.note
         FROM word_entity a
         JOIN annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
-        WHERE NOT @corroboration OR w.corroborated
+        WHERE w.stated = @stated AND (NOT @corroboration OR w.corroborated)
         ON CONFLICT DO NOTHING
         """;
 
@@ -256,7 +280,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         if (await db.WordEntities.AnyAsync(cancellationToken))
         {
             logger.LogInformation("The words already say whom they name; nothing to do");
-            return new AnnotationOutcome(true, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
+            return new AnnotationOutcome(true, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -271,33 +295,38 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                 "annotated. Either the encyclopedia has not been loaded yet or {Witness} is not in the " +
                 "corpus; both are earlier steps of the same pipeline",
                 Witness);
-            return new AnnotationOutcome(false, 0, contested, unanswered, 0, 0, [], started.Elapsed);
+            return new AnnotationOutcome(false, 0, contested, unanswered, 0, 0, 0, [], started.Elapsed);
         }
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await Run(connection, transaction, Workspace, cancellationToken);
-        await Run(connection, transaction, Seed, cancellationToken, ("witness", Witness));
+        await Run(connection, transaction, Seed, cancellationToken,
+            ("witness", Witness), ("rendering", Rendering));
         await Run(connection, transaction, Carry, cancellationToken, ("witness", Witness));
 
         var method = EnumSpelling.Of(LinkMethod.StrongNumber);
         await Run(connection, transaction, Settle, cancellationToken,
-            ("method", method), ("source", Resolution),
-            ("resolution", NameResolution), ("corroborated", Corroborated));
+            ("method", method), ("source", Resolution), ("derivation", Derivation),
+            ("resolution", NameResolution), ("corroborated", Corroborated), ("derived", DerivedName));
 
         await Run(connection, transaction, Claim, cancellationToken,
             ("method", method), ("source", Resolution),
-            ("confidence", NameResolution), ("corroboration", false));
+            ("confidence", NameResolution), ("stated", true), ("corroboration", false));
+        await Run(connection, transaction, Claim, cancellationToken,
+            ("method", method), ("source", Derivation),
+            ("confidence", DerivedName), ("stated", false), ("corroboration", false));
         await Run(connection, transaction, Claim, cancellationToken,
             ("method", method), ("source", VerseList),
-            ("confidence", Corroborated), ("corroboration", true));
+            ("confidence", Corroborated), ("stated", true), ("corroboration", true));
 
         var byText = await ByText(connection, transaction, cancellationToken);
-        var corroborated = await Corroboration(connection, transaction, cancellationToken);
+        var corroborated = await Corroboration(connection, transaction, VerseList, cancellationToken);
+        var derived = await Corroboration(connection, transaction, Derivation, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
         var outcome = new AnnotationOutcome(
-            false, resolved, contested, unanswered, byText.Sum(t => t.Words), corroborated, byText,
-            started.Elapsed);
+            false, resolved, contested, unanswered, byText.Sum(t => t.Words), corroborated, derived,
+            byText, started.Elapsed);
         logger.LogInformation("Annotated: {Outcome}", outcome);
         return outcome;
     }
@@ -320,7 +349,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
              answered AS (
                  SELECT p.number, count(DISTINCT n.entity_id) AS entities
                  FROM proper p
-                 LEFT JOIN ({Naming}) n ON n.number = p.number
+                 LEFT JOIN ({EntityCandidates.Naming}) n ON n.number = p.number
                  GROUP BY 1
              )
              SELECT count(*) FILTER (WHERE entities = 1),
@@ -331,6 +360,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
 
         await using var command = new NpgsqlCommand(sql, connection);
         command.Parameters.AddWithValue("witness", Witness);
+        command.Parameters.AddWithValue("rendering", Rendering);
         command.CommandTimeout = Patient;
 
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -360,9 +390,11 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         return counts;
     }
 
+    /// <summary>How many annotations one named source spoke for.</summary>
     private static async Task<int> Corroboration(
         NpgsqlConnection connection,
         IDbContextTransaction transaction,
+        string source,
         CancellationToken cancellationToken)
     {
         await using var command = new NpgsqlCommand(
@@ -370,7 +402,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             "WHERE c.word_entity_id = a.id AND c.source = @source)",
             connection,
             (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.Parameters.AddWithValue("source", VerseList);
+        command.Parameters.AddWithValue("source", source);
         command.CommandTimeout = Patient;
         return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
