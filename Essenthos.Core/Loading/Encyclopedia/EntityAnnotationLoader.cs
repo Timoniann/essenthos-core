@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
@@ -17,6 +18,19 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// of them this verse means.
 /// </param>
 /// <param name="Unanswered">Numbers it answers with nobody at all.</param>
+internal sealed record NameAnswers(int Resolved, int Contested, int Unanswered)
+{
+    public override string ToString() =>
+        $"{Resolved} answer with exactly one, {Contested} with several and {Unanswered} with nobody";
+}
+
+/// <param name="Hebrew">What the encyclopedia answers for the names BHSA marks.</param>
+/// <param name="Greek">The same for the names the lexicon writes with a capital.</param>
+/// <param name="Refused">
+/// Of the Greek numbers that answered with exactly one entity, how many no Greek text vouches for —
+/// the encyclopedia spells the name in a way no witness and no lexicon writes under that number, so
+/// the join is somebody's slip rather than a fact about the text and nothing is written from it.
+/// </param>
 /// <param name="Derived">
 /// Of the annotations, how many rest on a name the corpus worked out rather than one the
 /// encyclopedia stated. They are the places the geocoding dataset supplied, which carry no Strong
@@ -25,9 +39,9 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="ByText">What each text ended up with, so the reach is a count rather than a hope.</param>
 internal sealed record AnnotationOutcome(
     bool AlreadyLoaded,
-    int Resolved,
-    int Contested,
-    int Unanswered,
+    NameAnswers Hebrew,
+    NameAnswers Greek,
+    int Refused,
     int Annotated,
     int Corroborated,
     int Derived,
@@ -37,11 +51,11 @@ internal sealed record AnnotationOutcome(
     public override string ToString() =>
         AlreadyLoaded
             ? "the words are already annotated with the people and places they name"
-            : $"{Annotated} words name a person or a place, over {Resolved} Strong numbers that answer with " +
-              $"exactly one, in {Elapsed}: {Corroborated} of them in a verse the encyclopedia independently " +
-              $"says that entity is named in, and {Derived} on a name the corpus worked out rather than " +
-              $"read. {Contested} numbers answer with several and {Unanswered} with " +
-              "nobody, and both are left unannotated. Per text: " +
+            : $"{Annotated} words name a person or a place in {Elapsed}: {Corroborated} of them in a " +
+              $"verse the encyclopedia independently says that entity is named in, and {Derived} on a " +
+              $"name the corpus worked out rather than read. Of the Hebrew numbers {Hebrew}; of the " +
+              $"Greek {Greek}, and {Refused} of the resolved ones are refused because no Greek text " +
+              "spells the name the way the encyclopedia does. Per text: " +
               string.Join(", ", ByText.Select(t => $"{t.Text} {t.Words}"));
 }
 
@@ -80,19 +94,49 @@ internal sealed record AnnotationOutcome(
 /// </para>
 ///
 /// <para>
-/// **Where that kind is doing more than agreeing, the row says so.** Most numbers name one record
-/// and the marking only confirms it, and those annotations needed nobody. Some are borne by two —
-/// H3778 is Chaldea and the Chaldeans both — and there the marking is not confirming an answer but
-/// picking one, on the word's own form. That is a different claim and it is written as a different
+/// **The Greek has no such marking, so its gate is built rather than read.** Nestle's morphology
+/// says <c>noun</c> 28,394 times and never <em>proper noun</em>, and the lexicon has no
+/// proper-noun flag for a Greek entry either. What it does have is a capital letter: 587 of its
+/// 5,523 Greek lemmas are written with one, and that is what a lexicographer writing Παῦλος rather
+/// than παῦλος is saying. Three things were checked before it was trusted. Robinson's parsing of
+/// the Byzantine text tags 177 numbers as proper nouns independently, and the capital agrees with
+/// 175 of them — the two it misses are <em>Gabbatha</em> and <em>cherubim</em>, transliterated
+/// once each and nobody's name. Nestle's own lemmatisation is a second independent capitalisation
+/// and the two agree on 5,318 of 5,330 numbers, the twelve disagreements being titles and
+/// loanwords totalling thirty words. And against the encyclopedia's own list of the verses each
+/// entity is named in, the capitalised numbers land where it says the entity is 93.2% of the time
+/// and the uncapitalised ones 22.2% — because the uncapitalised ones are ἔρχομαι offered as Jesus,
+/// ἡμέρα as Jemimah, ζωή as Eve and μέν as Menna, 2,622 words of the New Testament that would
+/// otherwise have been annotated with a person.
+/// </para>
+///
+/// <para>
+/// **And the Greek join is checked against the text before it is used.** The encyclopedia's Greek
+/// Strong numbers are less careful than its Hebrew ones: it gives Ἰωδά the number of Ἰούδας, which
+/// resolves to exactly one entity and would have put a walk-on of Luke's genealogy on all 151
+/// occurrences of Judas in four Greek texts. So a number is taken only where the encyclopedia's own
+/// spelling of the name is one the Greek actually writes under it — the lexicon's lemma, a witness's
+/// lemma, or a form some witness prints. That refuses two numbers of 269: Ἰωδά, and Philemon, whose
+/// Greek column holds the transliteration rather than the Greek.
+/// </para>
+///
+/// <para>
+/// **Where either gate is doing more than agreeing, the row says so.** Most numbers name one record
+/// of the encyclopedia and the gate only confirms it, and those annotations needed nobody. Some are
+/// borne by two — H3778 is Chaldea and the Chaldeans both, and a Greek number is as readily an Old
+/// Testament man's as a New Testament one's — and there the gate is not confirming an answer but
+/// picking one: on the Hebrew side by the word's own form, on the Greek by that and by where the
+/// encyclopedia attests each rival. That is a different claim and it is written as a different
 /// method, so a reader can tell the occurrences nothing had to decide from the ones a lexical
-/// analysis decided.
+/// analysis decided. The question is asked under whichever column the word's number lives in,
+/// which is the same question the corpus check asks of what was written.
 /// </para>
 ///
 /// <para>
 /// **The annotation then travels on the links that already exist.** A King James word linked to an
 /// annotated Hebrew word names what that Hebrew word names, and the confidence of the link is
 /// carried into the confidence of the annotation, so a word reached by a source's own mapping is
-/// not stored looking like one an aligner guessed at. One hop only, and always from the Hebrew: a
+/// not stored looking like one an aligner guessed at. One hop only, and always from a witness: a
 /// second hop through another translation would be an inference about an inference, and the reader
 /// would have no way to see that it was.
 /// </para>
@@ -103,10 +147,10 @@ internal sealed record AnnotationOutcome(
 /// in a verse that names somebody that is often the name. So the Ukrainian <em>зійшов</em>, which
 /// renders <em>went up</em>, was reached from Abinoam at 0.53 and underlined as the man, in a verse
 /// that had already said Abinoam confidently one word earlier. That earlier word is the test: where
-/// the Hebrew name already reaches this verse of this text by a firm link, a faint one is the
-/// aligner's leftover and is dropped. Where it does not, the faint link is the only account the
-/// corpus has and it is kept at what it is worth — <em>Шевна</em> at 0.69 is Shebnah, and a
-/// floor low enough to catch the leftovers would have taken him too.
+/// the name already reaches this verse of this text by a firm link, a faint one is the aligner's
+/// leftover and is dropped. Where it does not, the faint link is the only account the corpus has
+/// and it is kept at what it is worth — <em>Шевна</em> at 0.69 is Shebnah, and a floor low enough
+/// to catch the leftovers would have taken him too.
 /// </para>
 ///
 /// <para>
@@ -120,6 +164,9 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
 
     private const string Rendering = EntityCandidates.Rendering;
 
+    /// <summary>The language the Greek spellings are folded as, which is what the fold keys on.</summary>
+    private const string Greek = "grc";
+
     /// <summary>
     /// How sure the corpus is that an occurrence of a name names the one entity that bears it.
     ///
@@ -132,12 +179,25 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const double NameResolution = 0.9;
 
     /// <summary>
+    /// The same for a Greek name, and lower, because two of its three supports are weaker.
+    ///
+    /// It carries the same room for an encyclopedia that will grow. On top of that the proper-noun
+    /// class is the lexicon's capital letter rather than the witness's own marking — measured, and
+    /// the measurements are in the class comment, but measured against two sources rather than
+    /// stated by the text being read. And the encyclopedia's Greek numbers have been caught being
+    /// wrong in a way its Hebrew ones have not: one is another name's number outright, and
+    /// thirty-four rows carry an extended numbering that is not Strong's, whose homograph letter is
+    /// dropped on the way in and lands them on a different lemma.
+    /// </summary>
+    private const double GreekNameResolution = 0.85;
+
+    /// <summary>
     /// The same, where the encyclopedia's own list of verses says this entity is named in this
     /// verse. That list is compiled from the datasets' reading of the text and not from Strong
     /// numbers, so it is a second and independent answer to the same question, and where the two
     /// agree the only thing left open is the one above. Measured over the Hebrew, they agree on
-    /// 13,587 of 14,138 occurrences; almost every disagreement is the list being silent about a
-    /// verse rather than naming somebody else.
+    /// 13,587 of 14,138 occurrences; over the Greek, on 5,458 of 5,722. Almost every disagreement
+    /// is the list being silent about a verse rather than naming somebody else.
     /// </summary>
     private const double Corroborated = 0.99;
 
@@ -180,16 +240,34 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const string Resolution =
         "BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name";
 
+    private const string GreekResolution =
+        "the lexicon's capitalised lemma, the Greek Strong number the encyclopedia records for the " +
+        "name, and the Greek text spelling that name the way the encyclopedia spells it";
+
     /// <summary>
-    /// The method for an occurrence whose number is borne by more than one record, where the name
-    /// type is therefore not agreeing with the only answer but choosing among several.
+    /// The same where the number is borne by more than one record, which on the Greek side is not
+    /// the same statement.
+    ///
+    /// The Hebrew names its chooser already — the marking is half of what the resolution rests on,
+    /// and the marking is what rules the rival out. Here the gate is the lexicon's and the rival is
+    /// ruled out by reachability: every one of the forty-six is an Old Testament namesake the
+    /// encyclopedia attests in no book any Greek witness holds. Leaving that unsaid would credit
+    /// the answer to the spelling, which did not make it.
+    /// </summary>
+    private const string GreekDistinction =
+        GreekResolution + ", and, the number being borne by several records, the others being " +
+        "named in no book the Greek holds";
+
+    /// <summary>
+    /// The method for an occurrence whose number is borne by more than one record, where the gate
+    /// is therefore not agreeing with the only answer but choosing among several.
     ///
     /// <see cref="LinkMethod.StrongNumber"/> means that nothing had to be chosen, and saying it
     /// where something was is a claim of the wrong kind however right the answer: the source string
-    /// on the row already names BHSA's marking as half of what established it, and the method
-    /// contradicted it. <see cref="LinkMethod.Lexical"/> is the method for a conclusion the word's
-    /// form reached, which is what the marking is, and it is what the reader is shown as <em>by the
-    /// form of the word</em>.
+    /// on the row already names the marking, or the lexicon's lemma, as half of what established
+    /// it, and the method contradicted it. <see cref="LinkMethod.Lexical"/> is the method for a
+    /// conclusion the word's form reached, which is what both gates are, and it is what the reader
+    /// is shown as <em>by the form of the word</em>.
     ///
     /// <para>
     /// It stands below a reading of the verse rather than above one, and that is the point rather
@@ -214,6 +292,9 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </summary>
     private const int Patient = 1800;
 
+    /// <summary>What a language answers when nothing of it is loaded, or nothing was asked.</summary>
+    private static readonly NameAnswers Nothing = new(0, 0, 0);
+
     /// <summary>The numbers that name exactly one entity, which are the only ones annotated.</summary>
     private static readonly string Resolvable =
         $"""
@@ -222,6 +303,108 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          GROUP BY 1 HAVING count(*) = 1
          """;
 
+    /// <summary>
+    /// A word of a Greek witness that is a noun, in whichever dialect of morphology its text
+    /// carries: Nestle's own part of speech, or Robinson's tag, whose first field is the class.
+    ///
+    /// It is the occurrence-level half of the gate, and what it keeps out is the gentilic — 197
+    /// occurrences of Ἰουδαῖος, <em>Jewish</em>, and thirty other adjectives and adverbs formed
+    /// from a name. Being Roman is not being Rome.
+    /// </summary>
+    private const string GreekNoun =
+        "(w.morphology->>'pos' = 'noun' OR w.morphology->>'robinson' LIKE 'N-%')";
+
+    /// <summary>
+    /// The Greek numbers the lexicon writes as a name and the encyclopedia answers with exactly one
+    /// entity. Takes <c>@witnesses</c>.
+    /// </summary>
+    private static readonly string GreekResolvable =
+        $"""
+         SELECT number, min(entity_id) AS entity_id
+         FROM ({EntityCandidates.GreekNaming}) named
+         WHERE EXISTS (
+             SELECT 1 FROM strong_entry lexicon
+             WHERE lexicon.strong_number = named.number
+               AND lower(left(lexicon.lemma, 1)) <> left(lexicon.lemma, 1))
+         GROUP BY 1 HAVING count(*) = 1
+         """;
+
+    /// <summary>
+    /// What the encyclopedia calls each of those names, beside what the lexicon calls it. One row
+    /// per spelling the encyclopedia offers, so a name it records twice is checked twice.
+    /// </summary>
+    private static readonly string Claimed =
+        $"""
+         SELECT DISTINCT resolved.number, n.greek, lexicon.lemma
+         FROM ({GreekResolvable}) resolved
+         JOIN entity_name n ON n.entity_id = resolved.entity_id
+              AND n.greek_strong_number = resolved.number AND n.greek IS NOT NULL
+         JOIN strong_entry lexicon ON lexicon.strong_number = resolved.number
+         """;
+
+    /// <summary>
+    /// Every spelling the Greek texts themselves write under one of those numbers: the form as
+    /// printed and the lemma the edition gives it. Both are needed. A name the New Testament never
+    /// puts in the nominative — Ἰορδάνης, Δαμασκός, Ζεβεδαῖος — is printed only in oblique cases
+    /// and would be unrecognisable against the encyclopedia's citation form; a name whose editions
+    /// spell it differently — Μαθθίας against Ματθίας, Σάπφιρα against Σαπφείρη — matches the lemma
+    /// of one edition where it matches neither the lexicon nor the other.
+    /// </summary>
+    private static readonly string Printed =
+        $"""
+         SELECT DISTINCT w.strong_number, w.normalised_text, w.lemma
+         FROM word w
+         JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
+         JOIN ({GreekResolvable}) resolved ON resolved.number = w.strong_number
+         """;
+
+    /// <summary>
+    /// Whether the number the word carries is borne by more than one record of the encyclopedia, so
+    /// that the occurrence resolved by ruling a rival out rather than by agreeing with the only
+    /// answer there was.
+    ///
+    /// <para>
+    /// It asks of the whole encyclopedia and not of the candidate list, which is deliberate: the
+    /// Hebrew list holds people and places because those are the only things a word marked
+    /// <c>pers</c> or <c>topo</c> can be, the Greek list holds only what the Greek witnesses reach,
+    /// and it is those very exclusions that this is recording. H3778 is Chaldea to the encyclopedia
+    /// and the Chaldeans as well, and the fifteen occurrences of the land are the land because BHSA
+    /// analyses them as a singular toponym rather than as the plural gentilic it keeps as a
+    /// separate lexeme. Ἐλεάζαρ is Matthew's Eleazar and nine men of the Old Testament, and the
+    /// occurrence is Matthew's because the other nine are named nowhere the Greek reaches.
+    /// </para>
+    ///
+    /// <para>
+    /// Asked of both columns at once, because that is the question the corpus check asks of what
+    /// was written and the two have to be the same question. The columns never hold each other's
+    /// prefix, so one comparison against either is exact; a loader asking only the Hebrew one would
+    /// leave the Greek half writing on 46 numbers the very claim the check exists to refuse.
+    /// </para>
+    /// </summary>
+    private const string Distinguished =
+        """
+        (SELECT count(DISTINCT n.entity_id) FROM entity_name n
+         WHERE n.hebrew_strong_number = w.strong_number
+            OR n.greek_strong_number = w.strong_number) > 1
+        """;
+
+    /// <summary>
+    /// Where the annotation is assembled before anything is written.
+    ///
+    /// <c>resolution</c> is what the name is worth before the verse list and the links are taken
+    /// into account, <c>source</c> is what established it in the words the row will carry, and
+    /// <c>distinguished</c> is whether anything had to be chosen. All three are on the row rather
+    /// than derived from it, because a Hebrew name, a Greek one and a place the corpus worked out
+    /// are three different assertions and the step that carries them onto a translation does not
+    /// know which it is carrying.
+    ///
+    /// <para>
+    /// Both drop themselves at commit. A temporary table outlives its transaction and belongs to
+    /// the connection, and connections here are pooled, so without this a second load in one
+    /// process fails on <em>relation already exists</em> — a start-up crash a long way from its
+    /// cause.
+    /// </para>
+    /// </summary>
     private const string Workspace =
         """
         CREATE TEMP TABLE annotation (
@@ -231,7 +414,11 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             corroborated boolean NOT NULL,
             stated boolean NOT NULL,
             distinguished boolean NOT NULL,
+            resolution double precision NOT NULL,
+            source text NOT NULL,
             note text NOT NULL)
+        ON COMMIT DROP;
+        CREATE TEMP TABLE attested (number text PRIMARY KEY) ON COMMIT DROP
         """;
 
     /// <summary>
@@ -240,22 +427,19 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// worth.
     ///
     /// <para>
-    /// <c>distinguished</c> is whether the name type had to rule a rival out rather than merely
-    /// agree with the only answer there was. It asks of the whole encyclopedia and not of the
-    /// candidate list, which is deliberate: the list holds people and places because those are the
-    /// only things a word marked <c>pers</c> or <c>topo</c> can be, and it is that very exclusion —
-    /// a fact about the word's form, not about its number — that this column is recording. H3778 is
-    /// Chaldea to the encyclopedia and the Chaldeans as well, and the fifteen occurrences of the
-    /// land are the land because BHSA analyses them as a singular toponym rather than as the plural
-    /// gentilic it keeps as a separate lexeme. That is a lexical judgement and the row says so.
+    /// Where the number is several records' it is BHSA's marking that rules the rivals out, and
+    /// <see cref="Distinguished"/> is what records that something was ruled out at all.
     /// </para>
     /// </summary>
     private static readonly string Seed =
         $"""
-         INSERT INTO annotation (word_id, entity_id, carried, corroborated, stated, distinguished, note)
+         INSERT INTO annotation
+             (word_id, entity_id, carried, corroborated, stated, distinguished, resolution, source,
+              note)
          SELECT w.id, resolved.entity_id, 1.0, agreed.named, resolved.stated,
-                (SELECT count(DISTINCT n.entity_id) FROM entity_name n
-                 WHERE n.hebrew_strong_number = w.strong_number) > 1,
+                {Distinguished},
+                CASE WHEN resolved.stated THEN @resolution ELSE @derived END,
+                CASE WHEN resolved.stated THEN @source ELSE @derivation END,
                 w.strong_number || ', which BHSA marks ' || (w.morphology->>'nameType')
          FROM word w
          JOIN text t ON t.id = w.text_id AND t.slug = @witness
@@ -273,15 +457,56 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          """;
 
     /// <summary>
-    /// The same annotations on every word the links say stands for one of those Hebrew words.
+    /// The same for the Greek, read from each of the four witnesses rather than carried into three
+    /// of them, because every one of them states the number this rests on.
     ///
-    /// A word reached from two Hebrew words that name two different entities is left alone: the
+    /// There is no kind test to make. The Hebrew needs one because BHSA's marking says what a name
+    /// <em>can</em> be and the entity says what it is; here the entity is the only answer either
+    /// side gives, and a number that answers with one entity has nothing to disagree with.
+    ///
+    /// <para>
+    /// <see cref="Distinguished"/> is asked here for the same reason it is asked of the Hebrew and
+    /// with more to catch: the encyclopedia bears a Greek number on an Old Testament namesake as
+    /// readily as it bears a Hebrew one on a New Testament man, so on 46 of the 273 numbers that
+    /// resolve, something was ruled out. What ruled it out is reachability rather than the
+    /// spelling, and <see cref="GreekDistinction"/> is the source that says so.
+    /// </para>
+    /// </summary>
+    private static readonly string GreekSeed =
+        $"""
+         INSERT INTO annotation
+             (word_id, entity_id, carried, corroborated, stated, distinguished, resolution, source,
+              note)
+         SELECT w.id, resolved.entity_id, 1.0, agreed.named, true, rivals.several, @resolution,
+                CASE WHEN rivals.several THEN @distinction ELSE @source END,
+                w.strong_number || ', which the lexicon writes as the name ' || lexicon.lemma
+         FROM word w
+         JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
+         JOIN ({GreekResolvable}) resolved ON resolved.number = w.strong_number
+         JOIN attested ON attested.number = resolved.number
+         JOIN strong_entry lexicon ON lexicon.strong_number = w.strong_number
+         CROSS JOIN LATERAL (SELECT {Distinguished} AS several) rivals
+         CROSS JOIN LATERAL (SELECT EXISTS (
+             SELECT 1 FROM verse_reference r
+             JOIN entity_verse ev ON ev.entity_id = resolved.entity_id
+                  AND ev.canonical_book = r.canonical_book
+                  AND ev.canonical_chapter = r.canonical_chapter
+                  AND ev.canonical_verse = r.canonical_verse
+             WHERE r.verse_id = w.verse_id AND r.is_primary) AS named) agreed
+         WHERE {GreekNoun}
+         ON CONFLICT (word_id) DO NOTHING
+         """;
+
+    /// <summary>
+    /// The same annotations on every word the links say stands for one of those witness words.
+    ///
+    /// A word reached from two witness words that name two different entities is left alone: the
     /// links disagree about who is named and picking between them is the thing this loader does not
     /// do. Where they agree, the strongest link decides the confidence, because being reached twice
     /// is not weaker than being reached once.
     ///
     /// <para>
-    /// <c>rendered</c> asks of each Hebrew name, and of each verse it reaches, how well that verse
+    /// <c>rendered</c> asks of each witness name, and of each verse it reaches, how well that verse
     /// renders it at best; <c>supported</c> then drops the reaches that are faint in a verse where
     /// the name is already rendered firmly. The comparison is per verse rather than per text on
     /// purpose: a link may land in a verse the translation divided differently, and a firm
@@ -292,9 +517,18 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// It happens before unanimity rather than after, so that a leftover cannot veto a good reading
     /// by disagreeing with it.
     /// </para>
+    ///
+    /// <para>
+    /// A reached word is <see cref="Distinguished"/> if the witness word was, and also if its own
+    /// name is several records' — which is not the same question. The editions differ, and where
+    /// they do the reached word is not the word that resolved: Scrivener prints Ἰωσῆς, which one
+    /// man bears, at four places Nestle prints Ἰωσήφ or Ἰησοῦς, which many do. Reading the Nestle
+    /// word as that man is a conclusion about a variant, and calling it a resolution that needed
+    /// nobody would say of the word on the page something true only of the word beside it.
+    /// </para>
     /// </summary>
-    private const string Carry =
-        """
+    private static readonly string Carry =
+        $"""
         WITH reached AS (
             SELECT other.word_id,
                    w.text_id,
@@ -303,9 +537,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                    coalesce(l.confidence, 1.0) AS carried,
                    seed.stated,
                    seed.distinguished,
+                   seed.resolution,
+                   seed.source,
                    l.method,
-                   seed.word_id AS through
+                   seed.word_id AS through,
+                   witness.slug AS spoken_by
             FROM annotation seed
+            JOIN word origin ON origin.id = seed.word_id
+            JOIN text witness ON witness.id = origin.text_id
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
             JOIN link_word other ON other.link_id = mine.link_id AND other.side <> mine.side
@@ -330,9 +569,13 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             FROM supported r JOIN unanimous u ON u.word_id = r.word_id
             ORDER BY r.word_id, r.carried DESC, r.through
         )
-        INSERT INTO annotation (word_id, entity_id, carried, corroborated, stated, distinguished, note)
-        SELECT s.word_id, s.entity_id, s.carried, agreed.named, s.stated, s.distinguished,
-               'through ' || @witness || ' word ' || s.through || ', linked by ' || s.method
+        INSERT INTO annotation
+            (word_id, entity_id, carried, corroborated, stated, distinguished, resolution, source,
+             note)
+        SELECT s.word_id, s.entity_id, s.carried, agreed.named, s.stated,
+               s.distinguished OR {Distinguished},
+               s.resolution, s.source,
+               'through ' || s.spoken_by || ' word ' || s.through || ', linked by ' || s.method
         FROM strongest s
         JOIN word w ON w.id = s.word_id
         CROSS JOIN LATERAL (SELECT EXISTS (
@@ -349,93 +592,121 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// The conclusion, with the method the row actually earned.
     ///
     /// <c>@method</c> is the resolution that needed nobody, and it is the honest answer for the
-    /// overwhelming majority: the number named one record in the whole encyclopedia and the name
-    /// type only agreed with it. <c>@form</c> is for the rest, where the number is several records'
-    /// and the marking is what chose between them — the annotation is then as good as BHSA's
-    /// analysis of that word and no better, and a reader is owed the difference.
+    /// overwhelming majority: the number named one record in the whole encyclopedia and the gate
+    /// only agreed with it. <c>@form</c> is for the rest, where the number is several records' and
+    /// the gate is what chose between them — the annotation is then as good as BHSA's analysis of
+    /// that word, or as the encyclopedia's account of where the rivals are named, and no better. A
+    /// reader is owed the difference, and the row's own source says which of the two it was.
     /// </summary>
     private const string Settle =
         """
         INSERT INTO word_entity (word_id, entity_id, method, confidence, source, note)
         SELECT a.word_id, a.entity_id,
                CASE WHEN a.distinguished THEN @form ELSE @method END,
-               (CASE WHEN NOT a.stated THEN @derived
-                     WHEN a.corroborated THEN @corroborated
-                     ELSE @resolution END) * a.carried,
-               CASE WHEN a.stated THEN @source ELSE @derivation END, a.note
+               (CASE WHEN a.stated AND a.corroborated THEN @corroborated
+                     ELSE a.resolution END) * a.carried,
+               a.source, a.note
         FROM annotation a
         ON CONFLICT (word_id, entity_id) DO NOTHING
         """;
 
     /// <summary>
-    /// The resolution's own claim, and the verse list's where it agrees. Written in the same
-    /// transaction as the annotation: an annotation nothing claims is invisible to the agreement
-    /// measure, which is the failure link_claim was already caught by once.
-    ///
-    /// <para>
-    /// <c>@stated</c> selects which half of the annotations the claim is about, because a stated
-    /// name and a derived one are two different assertions and each has to name what made it. The
-    /// verse list is a claim only about the stated half: for a derived name the verse list is not a
-    /// second opinion but the very evidence the derivation was read from, and writing it as
-    /// corroboration would be the corpus agreeing with itself.
-    /// </para>
+    /// The resolution's own claim. Written in the same transaction as the annotation: an annotation
+    /// nothing claims is invisible to the agreement measure, which is the failure link_claim was
+    /// already caught by once.
     /// </summary>
     private const string Claim =
+        """
+        INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
+        SELECT a.id, CASE WHEN w.distinguished THEN @form ELSE @method END,
+               w.resolution * w.carried, w.source, a.note
+        FROM word_entity a
+        JOIN annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
+        ON CONFLICT DO NOTHING
+        """;
+
+    /// <summary>
+    /// The verse list's claim, where it agrees.
+    ///
+    /// It is a claim only about the stated half: for a derived name the verse list is not a second
+    /// opinion but the very evidence the derivation was read from, and writing it as corroboration
+    /// would be the corpus agreeing with itself.
+    /// </summary>
+    private const string Agreement =
         """
         INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
         SELECT a.id, CASE WHEN w.distinguished THEN @form ELSE @method END,
                @confidence * w.carried, @source, a.note
         FROM word_entity a
         JOIN annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
-        WHERE w.stated = @stated AND (NOT @corroboration OR w.corroborated)
+        WHERE w.stated AND w.corroborated
         ON CONFLICT DO NOTHING
         """;
 
+    /// <summary>
+    /// Everything this loader writes into <c>word_entity</c>, which is what its idempotence is
+    /// asked about.
+    ///
+    /// Asking whether <em>anything</em> is annotated answers yes on a corpus where the peoples have
+    /// been written, because they are annotated onto the gentilic words a step earlier — so on a
+    /// cold database this loader would find rows it did not write and skip the whole pass, and the
+    /// corpus would come up with no name resolutions in it and nothing saying so. Its own rows are
+    /// the only question it can ask, and it is the question <c>SenseReadingLoader</c> already asks.
+    /// </summary>
+    private static readonly string[] Written =
+        [Resolution, GreekResolution, GreekDistinction, Derivation];
+
     public async Task<AnnotationOutcome> Load(CancellationToken cancellationToken = default)
     {
-        if (await db.WordEntities.AnyAsync(cancellationToken))
+        if (await db.WordEntities.AnyAsync(a => Written.Contains(a.Source), cancellationToken))
         {
             logger.LogInformation("The words already say whom they name; nothing to do");
-            return new AnnotationOutcome(true, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
+            return new AnnotationOutcome(
+                true, Nothing, Nothing, 0, 0, 0, 0, [], TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var (resolved, contested, unanswered) = await Answers(connection, cancellationToken);
-        if (resolved == 0)
+        var hebrew = await Answers(connection, HebrewNumbers, EntityCandidates.Naming,
+            cancellationToken, ("witness", Witness), ("rendering", Rendering));
+        var greek = await Answers(connection, GreekNumbers, EntityCandidates.GreekNaming,
+            cancellationToken, ("witnesses", EntityCandidates.GreekWitnesses));
+
+        if (hebrew.Resolved == 0 && greek.Resolved == 0)
         {
             logger.LogWarning(
                 "No proper-noun Strong number resolves to a single person or place, so nothing can be " +
-                "annotated. Either the encyclopedia has not been loaded yet or {Witness} is not in the " +
-                "corpus; both are earlier steps of the same pipeline",
+                "annotated. Either the encyclopedia has not been loaded yet or neither {Witness} nor " +
+                "the Greek witnesses are in the corpus; both are earlier steps of the same pipeline",
                 Witness);
-            return new AnnotationOutcome(false, 0, contested, unanswered, 0, 0, 0, [], started.Elapsed);
+            return new AnnotationOutcome(false, hebrew, greek, 0, 0, 0, 0, [], started.Elapsed);
         }
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await Run(connection, transaction, Workspace, cancellationToken);
         await Run(connection, transaction, Seed, cancellationToken,
-            ("witness", Witness), ("rendering", Rendering));
+            ("witness", Witness), ("rendering", Rendering), ("source", Resolution),
+            ("derivation", Derivation), ("resolution", NameResolution), ("derived", DerivedName));
+
+        var refused = await Attest(connection, transaction, cancellationToken);
+        await Run(connection, transaction, GreekSeed, cancellationToken,
+            ("witnesses", EntityCandidates.GreekWitnesses), ("source", GreekResolution),
+            ("distinction", GreekDistinction), ("resolution", GreekNameResolution));
+
         await Run(connection, transaction, Carry, cancellationToken,
-            ("witness", Witness), ("faint", Faint), ("firm", Firm));
+            ("faint", Faint), ("firm", Firm));
 
         var method = EnumSpelling.Of(LinkMethod.StrongNumber);
         var form = EnumSpelling.Of(ByTheForm);
         await Run(connection, transaction, Settle, cancellationToken,
-            ("method", method), ("form", form), ("source", Resolution), ("derivation", Derivation),
-            ("resolution", NameResolution), ("corroborated", Corroborated), ("derived", DerivedName));
-
+            ("method", method), ("form", form), ("corroborated", Corroborated));
         await Run(connection, transaction, Claim, cancellationToken,
-            ("method", method), ("form", form), ("source", Resolution),
-            ("confidence", NameResolution), ("stated", true), ("corroboration", false));
-        await Run(connection, transaction, Claim, cancellationToken,
-            ("method", method), ("form", form), ("source", Derivation),
-            ("confidence", DerivedName), ("stated", false), ("corroboration", false));
-        await Run(connection, transaction, Claim, cancellationToken,
+            ("method", method), ("form", form));
+        await Run(connection, transaction, Agreement, cancellationToken,
             ("method", method), ("form", form), ("source", VerseList),
-            ("confidence", Corroborated), ("stated", true), ("corroboration", true));
+            ("confidence", Corroborated));
 
         var byText = await ByText(connection, transaction, cancellationToken);
         var corroborated = await Corroboration(connection, transaction, VerseList, cancellationToken);
@@ -443,31 +714,114 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         await transaction.CommitAsync(cancellationToken);
 
         var outcome = new AnnotationOutcome(
-            false, resolved, contested, unanswered, byText.Sum(t => t.Words), corroborated, derived,
+            false, hebrew, greek, refused, byText.Sum(t => t.Words), corroborated, derived,
             byText, started.Elapsed);
         logger.LogInformation("Annotated: {Outcome}", outcome);
         return outcome;
     }
 
+    /// <summary>The numbers BHSA marks as names, which is the population the Hebrew half answers.</summary>
+    private const string HebrewNumbers =
+        """
+        SELECT DISTINCT w.strong_number AS number
+        FROM word w JOIN text t ON t.id = w.text_id AND t.slug = @witness
+        WHERE w.morphology->>'nameType' IS NOT NULL AND w.strong_number IS NOT NULL
+        """;
+
+    /// <summary>The same for the Greek: a noun whose lexicon lemma is written with a capital.</summary>
+    private static readonly string GreekNumbers =
+        $"""
+         SELECT DISTINCT w.strong_number AS number
+         FROM word w
+         JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
+         JOIN strong_entry lexicon ON lexicon.strong_number = w.strong_number
+              AND lower(left(lexicon.lemma, 1)) <> left(lexicon.lemma, 1)
+         WHERE {GreekNoun}
+         """;
+
     /// <summary>
-    /// How many proper-noun numbers the encyclopedia answers with one entity, with several, and
-    /// with nobody. The second and third are the size of the work this loader deliberately does not
-    /// do, and they belong in the record beside what it did.
+    /// Which Greek numbers the text vouches for, and how many resolved ones it does not.
+    ///
+    /// The comparison is on the folded spelling, and the fold is the one the corpus already ran
+    /// over every word — <see cref="WordFolding"/>, in C#, because a fold written a second time in
+    /// SQL is a fold that will one day disagree with itself and refuse a name that is there. So the
+    /// spellings are read out, folded here against the folded forms the words already carry, and
+    /// the numbers that survive are handed back to the seed as a table.
     /// </summary>
-    private async Task<(int Resolved, int Contested, int Unanswered)> Answers(
-        NpgsqlConnection connection, CancellationToken cancellationToken)
+    private async Task<int> Attest(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        CancellationToken cancellationToken)
+    {
+        var claimed = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+        var writes = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+
+        await foreach (var row in Rows(connection, transaction, Claimed, cancellationToken,
+                           ("witnesses", EntityCandidates.GreekWitnesses)))
+        {
+            Remember(claimed, row.GetString(0), row.IsDBNull(1) ? null : row.GetString(1));
+            Remember(writes, row.GetString(0), row.IsDBNull(2) ? null : row.GetString(2));
+        }
+
+        await foreach (var row in Rows(connection, transaction, Printed, cancellationToken,
+                           ("witnesses", EntityCandidates.GreekWitnesses)))
+        {
+            var number = row.GetString(0);
+            if (!row.IsDBNull(1))
+            {
+                (writes.TryGetValue(number, out var folded) ? folded : writes[number] = [])
+                    .Add(row.GetString(1));
+            }
+
+            Remember(writes, number, row.IsDBNull(2) ? null : row.GetString(2));
+        }
+
+        var attested = claimed
+            .Where(name => writes.TryGetValue(name.Key, out var spellings) && spellings.Overlaps(name.Value))
+            .Select(name => name.Key)
+            .ToArray();
+
+        await Run(connection, transaction,
+            "INSERT INTO attested (number) SELECT unnest(@numbers)", cancellationToken,
+            ("numbers", attested));
+
+        return claimed.Count - attested.Length;
+    }
+
+    private static void Remember(Dictionary<string, HashSet<string>> spellings, string number, string? spelling)
+    {
+        if (spelling is null)
+        {
+            return;
+        }
+
+        if (!spellings.TryGetValue(number, out var folded))
+        {
+            spellings[number] = folded = new HashSet<string>(StringComparer.Ordinal);
+        }
+
+        folded.Add(WordFolding.Fold(spelling, Greek));
+    }
+
+    /// <summary>
+    /// How many of one language's proper-noun numbers the encyclopedia answers with one entity,
+    /// with several, and with nobody. The second and third are the size of the work this loader
+    /// deliberately does not do, and they belong in the record beside what it did.
+    /// </summary>
+    private static async Task<NameAnswers> Answers(
+        NpgsqlConnection connection,
+        string numbers,
+        string naming,
+        CancellationToken cancellationToken,
+        params (string Name, object Value)[] parameters)
     {
         var sql =
             $"""
-             WITH proper AS (
-                 SELECT DISTINCT w.strong_number AS number
-                 FROM word w JOIN text t ON t.id = w.text_id AND t.slug = @witness
-                 WHERE w.morphology->>'nameType' IS NOT NULL AND w.strong_number IS NOT NULL
-             ),
+             WITH proper AS ({numbers}),
              answered AS (
                  SELECT p.number, count(DISTINCT n.entity_id) AS entities
                  FROM proper p
-                 LEFT JOIN ({EntityCandidates.Naming}) n ON n.number = p.number
+                 LEFT JOIN ({naming}) n ON n.number = p.number
                  GROUP BY 1
              )
              SELECT count(*) FILTER (WHERE entities = 1),
@@ -477,13 +831,17 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
              """;
 
         await using var command = new NpgsqlCommand(sql, connection);
-        command.Parameters.AddWithValue("witness", Witness);
-        command.Parameters.AddWithValue("rendering", Rendering);
+        foreach (var (name, value) in parameters)
+        {
+            command.Parameters.AddWithValue(name, value);
+        }
+
         command.CommandTimeout = Patient;
 
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         await reader.ReadAsync(cancellationToken);
-        return ((int)reader.GetInt64(0), (int)reader.GetInt64(1), (int)reader.GetInt64(2));
+        return new NameAnswers(
+            (int)reader.GetInt64(0), (int)reader.GetInt64(1), (int)reader.GetInt64(2));
     }
 
     private static async Task<IReadOnlyList<(string Text, int Words)>> ByText(
@@ -491,18 +849,13 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         IDbContextTransaction transaction,
         CancellationToken cancellationToken)
     {
-        await using var command = new NpgsqlCommand(
-            "SELECT t.slug, count(*) FROM word_entity a JOIN word w ON w.id = a.word_id " +
-            "JOIN text t ON t.id = w.text_id GROUP BY 1 ORDER BY 2 DESC",
-            connection,
-            (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.CommandTimeout = Patient;
-
         var counts = new List<(string, int)>();
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
+        await foreach (var row in Rows(connection, transaction,
+                           "SELECT t.slug, count(*) FROM word_entity a JOIN word w ON w.id = a.word_id " +
+                           "JOIN text t ON t.id = w.text_id GROUP BY 1 ORDER BY 2 DESC",
+                           cancellationToken))
         {
-            counts.Add((reader.GetString(0), (int)reader.GetInt64(1)));
+            counts.Add((row.GetString(0), (int)row.GetInt64(1)));
         }
 
         return counts;
@@ -523,6 +876,28 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         command.Parameters.AddWithValue("source", source);
         command.CommandTimeout = Patient;
         return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
+    }
+
+    private static async IAsyncEnumerable<NpgsqlDataReader> Rows(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        string sql,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken,
+        params (string Name, object Value)[] parameters)
+    {
+        await using var command = new NpgsqlCommand(
+            sql, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+        foreach (var (name, value) in parameters)
+        {
+            command.Parameters.AddWithValue(name, value);
+        }
+
+        command.CommandTimeout = Patient;
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            yield return reader;
+        }
     }
 
     private static async Task Run(
