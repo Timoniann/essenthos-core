@@ -84,6 +84,7 @@ internal sealed class DatasetLoader(
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
             await LemmatiseTheSeptuagint(resources, stoppingToken);
+            await AnnotateTheGreek(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
             await LinkTheBerean(resources, stoppingToken);
@@ -433,6 +434,21 @@ internal sealed class DatasetLoader(
         // our reasoning rather than anybody's testimony.
         var numbers = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Glaux.SeptuagintStrongLoader>();
         status.Record(await numbers.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// MACULA Greek's annotation of Nestle 1904, which is where the Greek New Testament's words
+    /// first get a stated proper-noun class instead of one worked out from a capital letter. It
+    /// runs after the corpus loader and needs nothing from the links: it is published over the same
+    /// edition, so a word is found by its address and not by anything it is joined to.
+    /// </summary>
+    private async Task AnnotateTheGreek(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("MACULA's annotation of the Greek");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<MaculaAnnotationLoader>();
+        status.Record(await loader.Load(Path.Combine(resources, "Macula"), cancellationToken));
     }
 
     /// <summary>

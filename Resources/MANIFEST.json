@@ -39,6 +39,11 @@
     "files": 67,
     "sha256": "fb516be6328b9e3aeca87aa955668fac0af0a44be09fdbe308e2470523b38c62"
   },
+  "Macula": {
+    "bytes": 19571736,
+    "files": 3,
+    "sha256": "1af2faa0cd1407395f989cb7903536751c511c90dda3090d95a486d25cf20bd0"
+  },
   "Nestle1904": {
     "bytes": 43631728,
     "files": 2,
