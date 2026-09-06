@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -9,20 +10,19 @@ using NpgsqlTypes;
 namespace Essenthos.Core.Loading.Links;
 
 /// <param name="Expanded">
-/// Words the Samaritan has and the Masoretic has not. This and <paramref name="Omitted"/> are the
-/// numbers this text was loaded for: the corpus has never before been able to say, in Hebrew, that
-/// one witness carries a word another does not.
+/// Words the first edition prints and the second does not. This and <paramref name="Omitted"/> are
+/// what a second Septuagint was loaded for: until now no Greek word of either edition could be
+/// shown against the other's, and the deuterocanon had no counterpart in this corpus at all.
 /// </param>
-/// <param name="Omitted">Words the Masoretic has and the Samaritan has not.</param>
+/// <param name="Omitted">Words the second edition prints and the first does not.</param>
 /// <param name="Unpaired">
-/// Verses one text numbers and the other does not — the altar of incense, which the Samaritan sets
-/// after Exodus 26:35 rather than at Exodus 30, and Deuteronomy 34:2-3, which it writes as part of
-/// 34:1. No link is written for either: the words are not missing, they are somewhere else, and an
-/// <c>omits</c> there would be a false statement rather than an incomplete one.
+/// Addresses one edition fills and the other does not — the Psalms of Solomon, which Brenton does
+/// not print, and Ecclesiastes, which this transcription of Swete does not supply. No link is
+/// written for either: a book the other edition never contained is not a word it omits.
 /// </param>
-internal sealed record SamaritanLinkOutcome(
+internal sealed record SeptuagintLinkOutcome(
     bool AlreadyLoaded,
-    int Verses,
+    int Addresses,
     int Links,
     int Identical,
     int Differing,
@@ -34,43 +34,49 @@ internal sealed record SamaritanLinkOutcome(
 {
     public override string ToString() =>
         AlreadyLoaded
-            ? "the Samaritan Pentateuch is already linked to BHSA"
-            : $"{Links} links over {Verses} verses in {Elapsed}: {Identical} where the two witnesses write the " +
-              $"same consonants, {Differing} where they write the same word differently, {Expanded} the " +
-              $"Samaritan has and the Masoretic has not, {Omitted} the Masoretic has and the Samaritan has " +
-              $"not, over {Unpaired} verses one numbers and the other does not. Plus and minus per book: " +
+            ? "the two Septuagints are already linked"
+            : $"{Links} links over {Addresses} shared addresses in {Elapsed}: {Identical} where the two " +
+              $"editions write the same letters, {Differing} where they write the same word differently, " +
+              $"{Expanded} the first prints and the second does not, {Omitted} the second prints and the " +
+              $"first does not, over {Unpaired} addresses only one of them fills. Plus and minus per book: " +
               string.Join("; ", ByBook.Select(b => $"{b.Book} +{b.Expanded} -{b.Omitted}"));
 }
 
 /// <summary>
-/// The Samaritan Pentateuch against BHSA, word for word.
+/// Swete's Septuagint against Brenton's, word for word.
 ///
-/// Nobody states this correspondence — there is no Samaritan-to-Masoretic word mapping anywhere —
-/// so every link here is an inference, says <c>lexical</c>, and carries a confidence. What makes
-/// the inference cheap is that both datasets come out of the same ETCBC encoding practice and cut
-/// words into the same morphemes: <c>בראשית</c> is <c>ב</c> then <c>ראשית</c> on both sides. So the
-/// two verses can be laid against each other letter for letter rather than guessed at.
+/// Two Greek editions of one work, which is the pairing this corpus was rebuilt to hold and the one
+/// it has been unable to make: Swete arrived linked to nothing at all, and Brenton's deuterocanon —
+/// Tobit, Judith, the Maccabees, Sirach, Wisdom — stood against nothing, because BHSA has no such
+/// books and BHSA was the only Old Testament witness here.
 ///
 /// <para>
-/// The pairing is an alignment over the consonants of one verse against the consonants of the same
-/// verse in the other text, and its scoring is the whole of the honesty here. Two words pair when
-/// they are the same consonants, or when they are the same lexeme, or when they differ by a letter
-/// or two — which is the Samaritan writing plene where the Masoretic writes defective, and is by
-/// far the commonest difference between them. Two words that are none of those never pair: the
-/// score for it is set below the cost of leaving both unpaired, so the alignment prefers to say
-/// <em>this one has a word the other has not, twice</em> over inventing a correspondence.
+/// Nothing about it is the aligner's problem. Both sides are Greek, so the evidence is the letters
+/// each edition prints, and <see cref="WitnessAlignment"/> either finds them or reports that it did
+/// not. That is the same method the Samaritan Pentateuch is joined to BHSA by, and it is why these
+/// links carry a confidence near certainty where a Slavic translation's carry a model's guess.
 /// </para>
 ///
 /// <para>
-/// Which side lacks the word is the relation's to carry, and a link with one empty side cannot say
-/// it for itself: <c>expands</c> names words on the <c>from</c> side alone, which is the Samaritan,
-/// and <c>omits</c> names words on the <c>to</c> side alone, which is BHSA.
+/// The two do not read the same text and are not meant to. Swete printed Codex Vaticanus as it
+/// stands; Brenton printed a text to be translated from. So this writes far more absences than the
+/// two Greek New Testaments do against each other, and every one of them is a reading a scholar can
+/// ask about rather than a defect in the join.
+/// </para>
+///
+/// <para>
+/// **The join is the canonical frame, not the editions' own numbering.** Both declare the
+/// Septuagint versification and they still divide their text differently in most of the books they
+/// share — that difference is the reason to hold both — so the addresses they agree on are the
+/// frame's, which is what the frame loaders placed them at. An address either edition
+/// fills with more than one verse is taken whole, so the words of both verses stand in one bag and
+/// no link crosses a boundary the frame does not already join.
 /// </para>
 /// </summary>
-internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLinkLoader> logger)
+internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLinkLoader> logger)
 {
     private const string Source =
-        "the consonants both Hebrew witnesses write, aligned within each verse";
+        "the letters both Greek editions print, aligned within each verse of the canonical frame";
 
     private const string LinkImport =
         """
@@ -81,7 +87,7 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
     private const string LinkWordImport =
         "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
 
-    public async Task<SamaritanLinkOutcome> Load(
+    public async Task<SeptuagintLinkOutcome> Load(
         string fromSlug,
         string toSlug,
         CancellationToken cancellationToken = default)
@@ -89,32 +95,30 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
 
-        if (from.Versification != to.Versification || from.Versification == Versification.Unknown)
+        if (from.Language != to.Language)
         {
             throw new InvalidOperationException(
-                $"\"{fromSlug}\" numbers its verses as {from.Versification} and \"{toSlug}\" as " +
-                $"{to.Versification}. This joins the two on the numbering they both use, so it needs both " +
-                "to say what that numbering is and needs it to be the same one; a pair that follows two " +
-                "schemes needs a loader that reads verse_reference instead.");
+                $"\"{fromSlug}\" is in {from.Language} and \"{toSlug}\" is in {to.Language}. This compares two " +
+                "witnesses by the letters they write, which is only evidence while both write the same " +
+                "alphabet; a pair in two languages needs the aligner.");
         }
 
         if (await db.Links.AnyAsync(l => l.FromTextId == from.Id && l.ToTextId == to.Id, cancellationToken))
         {
             logger.LogInformation("{From} and {To} are already linked; nothing to do", fromSlug, toSlug);
-            return new SamaritanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
+            return new SeptuagintLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
         var here = await Words(from.Id, cancellationToken);
         var there = await Words(to.Id, cancellationToken);
 
-        var drafts = new List<HebrewDraft>(130_000);
+        var drafts = new List<GreekDraft>(600_000);
         var byBook = new SortedDictionary<int, (int Expanded, int Omitted)>();
-        var verses = 0;
+        var addresses = 0;
         var unpaired = 0;
 
-        foreach (var (address, left) in here.OrderBy(entry => entry.Key.Book)
-                     .ThenBy(entry => entry.Key.Chapter).ThenBy(entry => entry.Key.Verse))
+        foreach (var (address, left) in here.OrderBy(entry => entry.Key))
         {
             if (!there.TryGetValue(address, out var right))
             {
@@ -122,7 +126,7 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
                 continue;
             }
 
-            verses++;
+            addresses++;
             var before = drafts.Count;
             Pair(left, right, drafts);
 
@@ -142,9 +146,9 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
 
         await Write(from.Id, to.Id, drafts, cancellationToken);
 
-        var outcome = new SamaritanLinkOutcome(
+        var outcome = new SeptuagintLinkOutcome(
             false,
-            verses,
+            addresses,
             drafts.Count,
             drafts.Count(d => d.Relation == LinkRelation.Equals),
             drafts.Count(d => d.Relation == LinkRelation.Renders),
@@ -162,18 +166,17 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
     }
 
     /// <summary>
-    /// One verse of each witness laid against the other. The alignment decides what corresponds to
-    /// what and how sure it is; this only turns its answer into rows, and the ids it hands back are
-    /// positions within the two verses.
+    /// One address of each edition laid against the other. The alignment decides what corresponds to
+    /// what and how sure it is; this only turns its answer into rows.
     /// </summary>
-    private static void Pair(List<HebrewWord> left, List<HebrewWord> right, List<HebrewDraft> drafts)
+    private static void Pair(List<GreekWord> left, List<GreekWord> right, List<GreekDraft> drafts)
     {
         var forms = WitnessAlignment.Pair(
             [.. left.Select(w => w.Form)], [.. right.Select(w => w.Form)]);
 
         foreach (var pairing in forms)
         {
-            drafts.Add(new HebrewDraft(
+            drafts.Add(new GreekDraft(
                 pairing.Relation,
                 [.. pairing.From.Select(at => left[at].Id)],
                 [.. pairing.To.Select(at => right[at].Id)],
@@ -182,46 +185,51 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
     }
 
     /// <summary>
-    /// Both witnesses' words, keyed by the address each gives the verse. They follow the same
-    /// numbering, so this is the texts' own addresses rather than the shared frame — which is the
-    /// stronger join here: the frame collapses BHSA's Numbers 25:19 and 26:1 onto one canonical
-    /// address, and the two texts number that pair identically.
+    /// An edition's words, keyed by the address the frame places each verse at and ordered as the
+    /// edition prints them.
+    ///
+    /// Brenton carries a lemma on nearly every word and Swete carries none, so the lexeme half of a
+    /// form is empty on one side of this pair and the alignment falls back to the letters. That is a
+    /// fact about the sources rather than about the method: give Swete lemmas and the same code
+    /// gains a second kind of evidence without changing.
     /// </summary>
-    private async Task<Dictionary<(int Book, int Chapter, int Verse), List<HebrewWord>>> Words(
+    private async Task<Dictionary<(int Book, int Chapter, int Verse), List<GreekWord>>> Words(
         int textId,
         CancellationToken cancellationToken)
     {
-        var rows = await db.Words
-            .Where(w => w.TextId == textId)
-            .Select(w => new
+        var rows = await db.VerseReferences
+            .Where(r => r.IsPrimary && r.Verse!.TextId == textId)
+            .SelectMany(r => r.Verse!.Words.Select(w => new
             {
-                Book = w.Verse!.Book!.CanonicalOrdinal,
-                Chapter = w.Verse!.ChapterNumber,
-                Verse = w.Verse!.Number,
+                r.CanonicalBook,
+                r.CanonicalChapter,
+                r.CanonicalVerse,
+                r.Verse!.ChapterNumber,
+                VerseNumber = r.Verse!.Number,
                 w.Id,
                 w.Position,
                 w.Surface,
                 w.Lemma,
-            })
+            }))
             .ToListAsync(cancellationToken);
 
         return rows
-            .GroupBy(r => (r.Book, r.Chapter, r.Verse))
+            .GroupBy(r => (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse))
             .ToDictionary(
                 group => group.Key,
                 group => group
-                    .OrderBy(r => r.Position)
-                    .Select(r => new HebrewWord(
+                    .OrderBy(r => r.ChapterNumber).ThenBy(r => r.VerseNumber).ThenBy(r => r.Position)
+                    .Select(r => new GreekWord(
                         r.Id,
                         new WitnessForm(
-                            HebrewLetters.Of(r.Surface), HebrewLetters.Of(r.Lemma ?? string.Empty))))
+                            GreekLetters.Bare(r.Surface), GreekLetters.Bare(r.Lemma ?? string.Empty))))
                     .ToList());
     }
 
     private async Task Write(
         int fromTextId,
         int toTextId,
-        List<HebrewDraft> drafts,
+        List<GreekDraft> drafts,
         CancellationToken cancellationToken)
     {
         if (drafts.Count == 0)
@@ -308,9 +316,9 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
             $"The text \"{slug}\" must be loaded before it can be linked. This reads its words; it does not " +
             "create them.");
 
-    private sealed record HebrewWord(long Id, WitnessForm Form);
+    private sealed record GreekWord(long Id, WitnessForm Form);
 
-    private sealed record HebrewDraft(
+    private sealed record GreekDraft(
         LinkRelation Relation,
         List<long> From,
         List<long> To,

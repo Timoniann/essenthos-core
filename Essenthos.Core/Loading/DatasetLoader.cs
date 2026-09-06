@@ -97,6 +97,7 @@ internal sealed class DatasetLoader(
             await LinkThePrintedEditions(resources, stoppingToken);
             await LinkTheGreekWitnesses(stoppingToken);
             await LinkTheHebrewWitnesses(stoppingToken);
+            await LinkTheTwoSeptuagints(stoppingToken);
             await GiveEveryWordASearchableForm(stoppingToken);
             await JoinTheWordsThatArePrintedTogether(stoppingToken);
             await LinkFromTheInterlinear(resources, stoppingToken);
@@ -363,6 +364,23 @@ internal sealed class DatasetLoader(
         var loader = scope.ServiceProvider.GetRequiredService<SamaritanLinkLoader>();
         status.Record(await loader.Load(
             SamaritanTextSource.Slug, BhsaTextSource.Slug, cancellationToken));
+    }
+
+    /// <summary>
+    /// Swete's Septuagint against Brenton's. Swete is the <c>from</c> because Swete is the text
+    /// that arrived reaching nothing, which is the same reason the Samaritan is the <c>from</c>
+    /// against BHSA and Nestle is against Scrivener: the newly linked witness names the one that
+    /// already stands in the corpus. It also puts Brenton's deuterocanon opposite a Greek text for
+    /// the first time — BHSA has no such books, so until now those words stood against nothing.
+    /// </summary>
+    private async Task LinkTheTwoSeptuagints(CancellationToken cancellationToken)
+    {
+        status.Starting("the two Septuagints to each other");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SeptuagintLinkLoader>();
+        status.Record(await loader.Load(
+            SweteTextSource.Slug, SeptuagintTextSource.Slug, cancellationToken));
     }
 
     /// <summary>

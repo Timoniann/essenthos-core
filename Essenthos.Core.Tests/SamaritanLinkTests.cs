@@ -140,14 +140,14 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
         var samaritan = Verses(SamaritanTextSource.Read(TestResources.Samaritan));
         var masoretic = Verses(BhsaTextSource.Build(Bhsa()));
 
-        var pairings = HebrewWitnessAlignment.Pair(samaritan[(1, 1, 11)], masoretic[(1, 1, 11)]);
+        var pairings = WitnessAlignment.Pair(samaritan[(1, 1, 11)], masoretic[(1, 1, 11)]);
 
         var expansions = pairings.Where(p => p.Relation == LinkRelation.Expands).ToList();
         var only = expansions.Should().ContainSingle().Which;
 
         only.To.Should().BeEmpty();
-        samaritan[(1, 1, 11)][only.From.Should().ContainSingle().Which].Consonants.Should().Be("ו");
-        only.Confidence.Should().Be(HebrewWitnessAlignment.AbsenceWhereTheyAgree);
+        samaritan[(1, 1, 11)][only.From.Should().ContainSingle().Which].Letters.Should().Be("ו");
+        only.Confidence.Should().Be(WitnessAlignment.AbsenceWhereTheyAgree);
         pairings.Should().NotContain(p => p.Relation == LinkRelation.Omits);
     }
 
@@ -159,9 +159,9 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
     [Fact]
     public void UnrelatedWordsAreNeverPaired()
     {
-        var pairings = HebrewWitnessAlignment.Pair(
-            [new HebrewForm("אלהים", "אלהים")],
-            [new HebrewForm("ארץ", "ארץ")]);
+        var pairings = WitnessAlignment.Pair(
+            [new WitnessForm("אלהים", "אלהים")],
+            [new WitnessForm("ארץ", "ארץ")]);
 
         pairings.Select(p => p.Relation).Should()
             .BeEquivalentTo([LinkRelation.Expands, LinkRelation.Omits]);
@@ -174,13 +174,13 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
     [Fact]
     public void PleneAndDefectiveSpellingsOfOneWordAreOnePair()
     {
-        var pairings = HebrewWitnessAlignment.Pair(
-            [new HebrewForm("מאורות", "מאור")],
-            [new HebrewForm("מאורת", "מאור")]);
+        var pairings = WitnessAlignment.Pair(
+            [new WitnessForm("מאורות", "מאור")],
+            [new WitnessForm("מאורת", "מאור")]);
 
         var only = pairings.Should().ContainSingle().Which;
         only.Relation.Should().Be(LinkRelation.Renders);
-        only.Confidence.Should().Be(HebrewWitnessAlignment.LexemeAgrees);
+        only.Confidence.Should().Be(WitnessAlignment.LexemeAgrees);
     }
 
     /// <summary>
@@ -191,29 +191,29 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
     [Fact]
     public void AnAbsenceCarriesTheConfidenceOfTheVerseItStandsIn()
     {
-        var together = HebrewWitnessAlignment.Pair(
-            [new HebrewForm("ו", "ו"), new HebrewForm("עץ", "עץ"), new HebrewForm("פרי", "פרי")],
-            [new HebrewForm("עץ", "עץ"), new HebrewForm("פרי", "פרי")]);
+        var together = WitnessAlignment.Pair(
+            [new WitnessForm("ו", "ו"), new WitnessForm("עץ", "עץ"), new WitnessForm("פרי", "פרי")],
+            [new WitnessForm("עץ", "עץ"), new WitnessForm("פרי", "פרי")]);
 
-        var apart = HebrewWitnessAlignment.Pair(
-            [new HebrewForm("ו", "ו"), new HebrewForm("עץ", "עץ"), new HebrewForm("פרי", "פרי")],
-            [new HebrewForm("אלהים", "אלהים"), new HebrewForm("שמים", "שמים")]);
+        var apart = WitnessAlignment.Pair(
+            [new WitnessForm("ו", "ו"), new WitnessForm("עץ", "עץ"), new WitnessForm("פרי", "פרי")],
+            [new WitnessForm("אלהים", "אלהים"), new WitnessForm("שמים", "שמים")]);
 
         together.Single(p => p.Relation == LinkRelation.Expands).Confidence
-            .Should().Be(HebrewWitnessAlignment.AbsenceWhereTheyAgree);
+            .Should().Be(WitnessAlignment.AbsenceWhereTheyAgree);
         apart.Where(p => p.Relation == LinkRelation.Expands).Should()
-            .OnlyContain(p => p.Confidence == HebrewWitnessAlignment.AbsenceWhereTheyDoNot);
+            .OnlyContain(p => p.Confidence == WitnessAlignment.AbsenceWhereTheyDoNot);
     }
 
     private static BhsaProject Bhsa() => BhsaProject.Load(TestResources.Etcbc);
 
-    private static Dictionary<(int Book, int Chapter, int Verse), List<HebrewForm>> Verses(TextSource source) =>
+    private static Dictionary<(int Book, int Chapter, int Verse), List<WitnessForm>> Verses(TextSource source) =>
         source.Books
             .SelectMany(book => book.Chapters
                 .SelectMany(chapter => chapter.Verses
                     .Select(verse => ((book.CanonicalOrdinal, chapter.Number, verse.Number),
                         verse.Words
-                            .Select(w => new HebrewForm(
+                            .Select(w => new WitnessForm(
                                 HebrewLetters.Of(w.Surface), HebrewLetters.Of(w.Lemma ?? string.Empty)))
                             .ToList()))))
             .ToDictionary(entry => entry.Item1, entry => entry.Item2);
@@ -251,9 +251,9 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
             verses++;
             samaritanWords += left.Count;
             masoreticWords += right.Count;
-            elided += right.Count(form => form.Consonants.Length == 0);
+            elided += right.Count(form => form.Letters.Length == 0);
 
-            var pairings = HebrewWitnessAlignment.Pair(left, right);
+            var pairings = WitnessAlignment.Pair(left, right);
             var here = new HashSet<int>();
             var there = new HashSet<int>();
 
@@ -264,7 +264,7 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
                 masoreticCovered += pairing.To.Count;
                 twice += pairing.From.Count(at => !here.Add(at)) + pairing.To.Count(at => !there.Add(at));
 
-                if (pairing.To.Count > 0 && pairing.To.All(at => right[at].Consonants.Length == 0))
+                if (pairing.To.Count > 0 && pairing.To.All(at => right[at].Letters.Length == 0))
                 {
                     elidedAlone++;
                 }

@@ -2,51 +2,61 @@ using Essenthos.Core.Database.Entities.Enums;
 
 namespace Essenthos.Core.Loading.Links;
 
-/// <param name="Consonants">The word with the pointing and the punctuation set aside.</param>
+/// <param name="Letters">
+/// The word as both witnesses would have written it: the consonants of a Hebrew word, the bare
+/// alphabet of a Greek one, with the pointing, the accents and the punctuation set aside.
+/// </param>
 /// <param name="Lexeme">Its dictionary form, folded the same way, or empty where it has none.</param>
-internal readonly record struct HebrewForm(string Consonants, string Lexeme);
+internal readonly record struct WitnessForm(string Letters, string Lexeme);
 
 /// <param name="From">
 /// Which words of the first verse this is, counting from zero. Empty where the first witness has
 /// none, which is what an <see cref="LinkRelation.Omits"/> says.
 /// </param>
 /// <param name="To">The same for the second verse, and empty for <see cref="LinkRelation.Expands"/>.</param>
-internal readonly record struct HebrewPairing(
+internal readonly record struct WitnessPairing(
     IReadOnlyList<int> From,
     IReadOnlyList<int> To,
     LinkRelation Relation,
     double Confidence);
 
 /// <summary>
-/// One verse of one Hebrew witness laid against the same verse of another, word for word.
+/// One verse of one witness laid against the same verse of another in the same language, word for
+/// word.
+///
+/// Two witnesses of one text are compared by their words, and nothing else is needed: the Samaritan
+/// Pentateuch against BHSA, Swete's Septuagint against Brenton's. That is a different kind of claim
+/// from a translation's, which no source states and only a model can guess at — here the evidence
+/// is the letters on the page, and the alignment either finds them or says it did not.
 ///
 /// It is separate from the loader that writes the links because it is the part with an argument in
 /// it: which words the alignment is willing to call the same word, and how sure it is. That
 /// argument is checkable against the texts themselves and needs no database to check.
 ///
 /// <para>
-/// **Nothing is paired without evidence.** Two words pair when they are the same consonants, when
-/// they are the same lexeme, or when they differ by a letter or two — which is one tradition
-/// writing the vowel letter the other leaves out, and is most of the difference between the
-/// Samaritan and the Masoretic. Anything else scores below the cost of leaving both words
-/// unpaired, so the alignment says <em>each has a word the other has not</em> rather than
-/// inventing a correspondence to close the gap. That is the whole reason the plus and minus counts
-/// mean anything.
+/// **Nothing is paired without evidence.** Two words pair when they are the same letters, when they
+/// are the same lexeme, or when they differ by a letter or two — which is one tradition writing the
+/// vowel letter the other leaves out, or one Greek edition writing ει where the other writes ι, and
+/// is most of the difference between witnesses in either language. Anything else scores below the
+/// cost of leaving both words unpaired, so the alignment says <em>each has a word the other has
+/// not</em> rather than inventing a correspondence to close the gap. That is the whole reason the
+/// plus and minus counts mean anything.
 /// </para>
 /// </summary>
-internal static class HebrewWitnessAlignment
+internal static class WitnessAlignment
 {
-    /// <summary>Both witnesses write the same consonants. There is nothing left to establish.</summary>
+    /// <summary>Both witnesses write the same letters. There is nothing left to establish.</summary>
     public const double Identical = 0.95;
 
     /// <summary>
-    /// Different consonants, the same lexeme. The two datasets lemmatise independently, so
-    /// agreement here is a second analysis reaching the same word rather than the same string twice.
+    /// Different letters, the same lexeme. The two datasets lemmatise independently, so agreement
+    /// here is a second analysis reaching the same word rather than the same string twice. It is
+    /// unreachable for a pair where only one side carries lemmas, which is Swete against Brenton.
     /// </summary>
     public const double LexemeAgrees = 0.85;
 
     /// <summary>
-    /// Different consonants and no lemma agreement, but within a letter or two. The spelling is the
+    /// Different letters and no lemma agreement, but within a letter or two. The spelling is the
     /// whole of the evidence.
     /// </summary>
     public const double Spelling = 0.75;
@@ -61,8 +71,8 @@ internal static class HebrewWitnessAlignment
     public const double AbsenceWhereTheyDoNot = 0.65;
 
     /// <summary>
-    /// How much of the shorter verse must match consonant for consonant before an absence in it is
-    /// read as the strong kind. Below this it is the alignment itself that is in doubt.
+    /// How much of the shorter verse must match letter for letter before an absence in it is read
+    /// as the strong kind. Below this it is the alignment itself that is in doubt.
     /// </summary>
     private const double Agreement = 0.75;
 
@@ -81,8 +91,9 @@ internal static class HebrewWitnessAlignment
 
     /// <summary>
     /// How many letters two spellings of one word may differ by. One covers the plene and defective
-    /// writing that is most of the difference between these traditions; two is allowed only on a
-    /// word long enough that two letters are still a small part of it.
+    /// writing that is most of the difference between the Hebrew traditions and the itacism that is
+    /// most of the difference between the Greek ones; two is allowed only on a word long enough
+    /// that two letters are still a small part of it.
     /// </summary>
     private const int SpellingDistance = 2;
 
@@ -94,14 +105,14 @@ internal static class HebrewWitnessAlignment
     /// has a word the second has not, <see cref="LinkRelation.Omits"/> where the second has one it
     /// has not.
     /// </summary>
-    public static List<HebrewPairing> Pair(IReadOnlyList<HebrewForm> left, IReadOnlyList<HebrewForm> right)
+    public static List<WitnessPairing> Pair(IReadOnlyList<WitnessForm> left, IReadOnlyList<WitnessForm> right)
     {
         var here = Written(left);
         var there = Written(right);
         var steps = Align(Forms(left, here), Forms(right, there));
 
         var matched = steps.Count(step => step.From >= 0 && step.To >= 0
-                                          && left[here[step.From]].Consonants == right[there[step.To]].Consonants);
+                                          && left[here[step.From]].Letters == right[there[step.To]].Letters);
         var shorter = Math.Min(here.Count, there.Count);
         var absence = shorter > 0 && (double)matched / shorter >= Agreement
             ? AbsenceWhereTheyAgree
@@ -114,7 +125,7 @@ internal static class HebrewWitnessAlignment
                 ? new Correspondence([], [there[to]], LinkRelation.Omits, absence)
                 : to < 0
                     ? new Correspondence([here[from]], [], LinkRelation.Expands, absence)
-                    : left[here[from]].Consonants == right[there[to]].Consonants
+                    : left[here[from]].Letters == right[there[to]].Letters
                         ? new Correspondence([here[from]], [there[to]], LinkRelation.Equals, Identical)
                         : new Correspondence(
                             [here[from]],
@@ -128,25 +139,26 @@ internal static class HebrewWitnessAlignment
         Attach(left.Count, here, pairings, correspondence => correspondence.From);
         Attach(right.Count, there, pairings, correspondence => correspondence.To);
 
-        return [.. pairings.Select(c => new HebrewPairing(c.From, c.To, c.Relation, c.Confidence))];
+        return [.. pairings.Select(c => new WitnessPairing(c.From, c.To, c.Relation, c.Confidence))];
     }
 
     /// <summary>
     /// Which words of a verse print letters. BHSA records the definite article that has assimilated
     /// into the preposition before it as a word of its own with no letters at all — 1,681 of them
-    /// in the Pentateuch — and the Samaritan dataset records no such thing.
+    /// in the Pentateuch — and the Samaritan dataset records no such thing. A Greek edition has no
+    /// such words, so this holds nothing back there and costs one pass.
     ///
     /// Left in the alignment they would each become a word the Samaritan lacks, and the corpus
     /// would say the Samaritan omits an article 1,681 times where nothing is omitted and the two
     /// traditions write the identical letters. So they are held back from the alignment and put
     /// into it afterwards, beside the word they were pronounced with.
     /// </summary>
-    private static List<int> Written(IReadOnlyList<HebrewForm> verse)
+    private static List<int> Written(IReadOnlyList<WitnessForm> verse)
     {
         var written = new List<int>(verse.Count);
         for (var i = 0; i < verse.Count; i++)
         {
-            if (verse[i].Consonants.Length > 0)
+            if (verse[i].Letters.Length > 0)
             {
                 written.Add(i);
             }
@@ -155,7 +167,7 @@ internal static class HebrewWitnessAlignment
         return written;
     }
 
-    private static List<HebrewForm> Forms(IReadOnlyList<HebrewForm> verse, List<int> written) =>
+    private static List<WitnessForm> Forms(IReadOnlyList<WitnessForm> verse, List<int> written) =>
         [.. written.Select(at => verse[at])];
 
     /// <summary>
@@ -209,11 +221,11 @@ internal static class HebrewWitnessAlignment
         double Confidence);
 
     /// <summary>
-    /// Needleman-Wunsch over two verses of morphemes. The verses run together almost everywhere, so
-    /// the matrix is a few hundred cells and the whole Pentateuch is a second's work; nothing here
-    /// is worth a heuristic that would be harder to explain.
+    /// Needleman-Wunsch over two verses. The verses run together almost everywhere, so the matrix
+    /// is a few hundred cells and the whole Pentateuch is a second's work; nothing here is worth a
+    /// heuristic that would be harder to explain.
     /// </summary>
-    private static List<(int From, int To)> Align(IReadOnlyList<HebrewForm> left, IReadOnlyList<HebrewForm> right)
+    private static List<(int From, int To)> Align(IReadOnlyList<WitnessForm> left, IReadOnlyList<WitnessForm> right)
     {
         var rows = left.Count + 1;
         var columns = right.Count + 1;
@@ -269,9 +281,9 @@ internal static class HebrewWitnessAlignment
         return steps;
     }
 
-    private static int Similarity(HebrewForm left, HebrewForm right)
+    private static int Similarity(WitnessForm left, WitnessForm right)
     {
-        if (left.Consonants == right.Consonants)
+        if (left.Letters == right.Letters)
         {
             return IdenticalScore;
         }
@@ -281,15 +293,15 @@ internal static class HebrewWitnessAlignment
             return LexemeScore;
         }
 
-        var distance = Distance(left.Consonants, right.Consonants);
+        var distance = Distance(left.Letters, right.Letters);
         return distance == 1
                || (distance == SpellingDistance
-                   && Math.Max(left.Consonants.Length, right.Consonants.Length) >= LongEnoughForTwo)
+                   && Math.Max(left.Letters.Length, right.Letters.Length) >= LongEnoughForTwo)
             ? SpellingScore
             : UnrelatedScore;
     }
 
-    private static bool ShareALexeme(HebrewForm left, HebrewForm right) =>
+    private static bool ShareALexeme(WitnessForm left, WitnessForm right) =>
         left.Lexeme.Length > 0 && left.Lexeme == right.Lexeme;
 
     /// <summary>
