@@ -398,6 +398,36 @@ public class Event
 
     public int? AgeAtEvent { get; set; }
 
+    /// <summary>
+    /// Where the source itself puts this among the things it narrates, where it puts it anywhere —
+    /// and null, which is most rows, where no source states an order at all.
+    ///
+    /// <para>
+    /// **It is a stated position and never a date, and the two are not the same kind of fact.**
+    /// <see cref="YearFromCreation"/> is computed and shows its arithmetic in
+    /// <see cref="Calculation"/>; this is a claim a source made in so many words. Ussher writes
+    /// <em>the next day</em> and <em>on the third day</em> across four paragraphs he dates to one
+    /// year, so what he states there is a sequence and not a day — and a month and day column would
+    /// have to be filled by inventing one. The number itself is his own paragraph number, so it is
+    /// checkable against the work: <c>¶6298</c> is on the row's <see cref="EventDate.Citation"/>.
+    /// </para>
+    ///
+    /// <para>
+    /// **Null is the answer for anything nobody ordered, and it stays null.** Most of the corpus is
+    /// dated to a year and placed nowhere within it, and giving those a position would be asserting
+    /// an order no source states — worse than the tie, because the tie is visible and the invention
+    /// is not. So a reader is told which it is: <c>sequenced</c> on the wire is true for exactly the
+    /// rows this is set on.
+    /// </para>
+    ///
+    /// <para>
+    /// **It breaks ties on <see cref="YearFromCreation"/> and never moves the axis** (RUL-0107).
+    /// The numbers are one source's own and mean nothing beside another's, so they order events
+    /// within one year and are not a second axis, an offset, or a fraction of a year.
+    /// </para>
+    /// </summary>
+    public int? SequenceInYear { get; set; }
+
     /// <summary>The arithmetic, in a sentence, so the year can be checked rather than believed.</summary>
     public string? Calculation { get; set; }
 

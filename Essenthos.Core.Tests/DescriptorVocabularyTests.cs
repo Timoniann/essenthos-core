@@ -54,6 +54,34 @@ public sealed class DescriptorVocabularyTests
             .Should().OnlyContain(c => GrammaticalCases.All.Contains(c));
 
     /// <summary>
+    /// The four clauses a place page is made of, in the two languages that inflect: each asks for
+    /// the locative, and none of them may quietly go back to asking for the genitive.
+    ///
+    /// It is asserted rather than left to the table because the genitive is what DOC-0191 asks a
+    /// generation pass for, so a phrasing that asks for it renders today and a phrasing that asks
+    /// for the locative renders the English name until TSK-0364's pass lands. Making the line look
+    /// finished is exactly the wrong reason to change one back, and it is a one-word edit.
+    /// </summary>
+    [Theory]
+    [InlineData("ukr")]
+    [InlineData("rus")]
+    public void EveryClauseThatPutsAPlaceSomewhereAsksForTheLocative(string language)
+    {
+        string[] somewhere =
+        [
+            DescriptorRelations.LivedIn,
+            DescriptorRelations.BuriedIn,
+            DescriptorRelations.CityIn,
+            DescriptorRelations.MountainIn,
+        ];
+
+        var phrasings = DescriptorPhrasings.For(language)!;
+
+        somewhere.Select(relation => phrasings[relation].Case)
+            .Should().AllBe(GrammaticalCases.Locative);
+    }
+
+    /// <summary>
     /// A language nothing has phrasings for has none, and is answered in English instead of being
     /// refused. The alternative on the page is the imported sentence, which is English too and is
     /// somebody else's prose with no link in it.

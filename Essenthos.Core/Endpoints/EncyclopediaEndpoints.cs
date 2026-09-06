@@ -379,9 +379,7 @@ internal static class EncyclopediaEndpoints
                     Reference(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), r.Notes))
                 .ToListAsync(cancellationToken);
 
-            var events = await db.Events
-                .Where(e => e.EntityId == entity.Id)
-                .OrderBy(e => e.YearFromCreation)
+            var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
                 .ToListAsync(cancellationToken);
 
@@ -560,8 +558,7 @@ internal static class EncyclopediaEndpoints
             }
 
             var total = await events.CountAsync(cancellationToken);
-            var page = await events
-                .OrderBy(e => e.YearFromCreation).ThenBy(e => e.Slug)
+            var page = await InOrder(events)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
                 .Select(Rows)
@@ -657,8 +654,7 @@ internal static class EncyclopediaEndpoints
                 .OrderBy(c => c.Position)
                 .ToListAsync(cancellationToken);
 
-            var events = await db.Events
-                .OrderBy(e => e.YearFromCreation).ThenBy(e => e.Slug)
+            var events = await InOrder(db.Events)
                 .Select(e => new
                 {
                     e.Id,
@@ -668,6 +664,7 @@ internal static class EncyclopediaEndpoints
                     e.Realm,
                     e.Region,
                     e.Uri,
+                    e.SequenceInYear,
                     EntitySlug = e.Entity == null ? null : e.Entity.Slug,
                 })
                 .ToListAsync(cancellationToken);
@@ -726,6 +723,7 @@ internal static class EncyclopediaEndpoints
                         e.Region,
                         e.Uri,
                         e.EntitySlug,
+                        e.SequenceInYear != null,
                         years.GetValueOrDefault(e.Id) ?? [])),
                 ],
                 [
@@ -846,6 +844,35 @@ internal static class EncyclopediaEndpoints
     private const int LastYearBeforeChrist = 3961;
 
     /// <summary>
+    /// Events in the order a timeline draws them: by the year, then by whatever order a source
+    /// stated inside that year, then by the slug so that what nobody ordered is at least stable.
+    ///
+    /// <para>
+    /// The year alone does not order them. Ussher dates dozens of paragraphs to AD 33, and writes
+    /// <em>the next day</em> and <em>on the third day</em> across them, so the year is a tie and his
+    /// paragraphs are the tiebreak he himself stated. The tiebreak before this was the slug, which
+    /// is a name and not a position: it sorts <c>ussher-{paragraph}</c> as text, so it agrees with
+    /// him only while every loaded paragraph number has the same number of digits, and it says
+    /// nothing at all about the order of two rows from different sources in one year.
+    /// </para>
+    ///
+    /// <para>
+    /// **Nothing invents a position for a row that has none.** The null check is written out rather
+    /// than left to the database's own idea of where nulls sort, because it is the whole claim this
+    /// ordering makes: what a source ordered comes in that order, and what nobody ordered follows
+    /// it. <see cref="EventResponse.Sequenced"/> says which of the two a row is, so a client is
+    /// never left reading an arbitrary order as a chronology.
+    /// </para>
+    /// </summary>
+    internal static IOrderedQueryable<Database.Entities.Event> InOrder(
+        IQueryable<Database.Entities.Event> events) =>
+        events
+            .OrderBy(e => e.YearFromCreation)
+            .ThenBy(e => e.SequenceInYear == null)
+            .ThenBy(e => e.SequenceInYear)
+            .ThenBy(e => e.Slug);
+
+    /// <summary>
     /// An event with the people and the dates it needs, projected in the query.
     ///
     /// One expression, used by both places that return events, because reading a navigation
@@ -924,6 +951,7 @@ internal static class EncyclopediaEndpoints
             Datasets.Of(e.Source),
             dates)
         {
+            Sequenced = e.SequenceInYear is not null,
             // Only where no reckoning states this event at all does the base zero point stand in;
             // it is the same number the default chronology holds.
             Era = reckoning?.Era
@@ -1222,6 +1250,18 @@ internal record EventResponse(
     IList<EventDateResponse> Dates)
 {
     /// <summary>
+    /// Whether a source states where this falls inside its year, or whether the year is the whole
+    /// of what anybody said.
+    ///
+    /// False for most of the corpus, and that is the honest answer rather than a missing one: a
+    /// year holds ninety-five events and only some of them were ever put in an order.
+    /// Where this is true the position in a list of events is a claim; where it is false the
+    /// position is only stable, and a reader should be told so rather than left to infer a
+    /// chronology from it.
+    /// </summary>
+    public bool Sequenced { get; init; }
+
+    /// <summary>
     /// <c>BCE</c> or <c>CE</c>, saying which side of the turn <see cref="BceYear"/> falls on: the
     /// year from creation carries no sign and keeps counting past the turn, so a bare <c>8</c>
     /// could mean either side of it. The same two words as <see cref="EventDateResponse.Era"/>,
@@ -1309,6 +1349,16 @@ internal record ChronologyResponse(
     int LastAnnoMundiBeforeTheCommonEra,
     bool IsDefault);
 
+/// <param name="Sequenced">
+/// Whether this event's place among the others of its year is something a source stated, or only
+/// where the list happened to put it.
+///
+/// The items arrive in the order they are to be drawn, and for most of them that order inside a
+/// year is arbitrary — the year is all anybody said. Ussher dates ninety-five paragraphs to AD 33
+/// and narrates them in order, so those are a sequence and the crucifixion precedes the
+/// resurrection because he says so. Without this a client cannot tell one from the other, and would
+/// have to read an arbitrary order as a chronology.
+/// </param>
 /// <param name="Years">
 /// The year each chronology gives this event, keyed by chronology slug. A chronology that says
 /// nothing about it is absent rather than null — silence and zero are different facts.
@@ -1321,6 +1371,7 @@ internal record TimelineEventResponse(
     string? Region,
     string? Uri,
     string? EntitySlug,
+    bool Sequenced,
     IDictionary<string, int> Years);
 
 /// <param name="Level">
