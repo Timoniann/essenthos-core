@@ -29,6 +29,11 @@
     "files": 21,
     "sha256": "6bc7a1c8b157263c925362117b29a600e75aa9034bd9f68b87883b3b7a59b23e"
   },
+  "Elberfelder1905": {
+    "bytes": 4596093,
+    "files": 67,
+    "sha256": "6d6165ae6a757bd8ae8277599a0d238c13e57bb98426804b7c616cbd8cd98f3f"
+  },
   "Glaux": {
     "bytes": 116096549,
     "files": 60,
@@ -39,6 +44,11 @@
     "files": 67,
     "sha256": "fb516be6328b9e3aeca87aa955668fac0af0a44be09fdbe308e2470523b38c62"
   },
+  "Luther1912": {
+    "bytes": 12051654,
+    "files": 67,
+    "sha256": "d8d763a6336f9fcb01aceb0b861a0bf99486356c70b2bf18d8e537613b33f22a"
+  },
   "Nestle1904": {
     "bytes": 43631728,
     "files": 2,
@@ -48,6 +58,11 @@
     "bytes": 11622625,
     "files": 3,
     "sha256": "3812bea6b4d41e3bc56959d4623be35ce3a38579c3af15b030994a157a24ae04"
+  },
+  "ReinaValera1909": {
+    "bytes": 12465900,
+    "files": 67,
+    "sha256": "96ff91f4969ed7149e5301a97d6ca0d4c17c3f3824fa256804a1108c01d9792e"
   },
   "STEPBible": {
     "bytes": 70208423,

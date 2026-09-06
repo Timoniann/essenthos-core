@@ -86,6 +86,17 @@ internal sealed class DatasetLoader(
             await Load("the Kulish Bible", () => KulishTextSource.Read(
                 Path.Combine(resources, "Kulish")), stoppingToken);
 
+            // The German and the Spanish, which the interface is to speak and the corpus had no
+            // text in. Luther carries Strong numbers on its own words, which is the only route to
+            // the originals German has that is not this project's own inference; the Spanish
+            // reaches them through an alignment somebody else published, and its own tagging is
+            // deliberately not loaded.
+            foreach (var (folder, definition) in EbibleTextSource.Definitions)
+            {
+                await Load(definition.Name, () => EbibleTextSource.Read(
+                    Path.Combine(resources, folder)), stoppingToken);
+            }
+
             await LoadTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
