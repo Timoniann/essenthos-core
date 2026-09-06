@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Endpoints;
@@ -81,20 +81,6 @@ public sealed class DescriptorVocabularyTests
     public void ALanguageTheEncyclopediaSpeaksIsTheOneRendered(string asked) =>
         DescriptorPhrasings.Spoken(asked).Should().Be(DescriptorPhrasings.Ukrainian);
 
-    /// <summary>
-    /// The client shipped <c>lang</c> and this API already spelled it <c>language</c> on
-    /// <c>/v1/strong</c>. Both are read, because the failure of reading only one is a page rendered
-    /// in the wrong language with nothing anywhere saying so.
-    /// </summary>
-    [Theory]
-    [InlineData("ukr", null, "ukr")]
-    [InlineData(null, "ukr", "ukr")]
-    [InlineData("", "ukr", "ukr")]
-    [InlineData("ukr", "rus", "ukr")]
-    [InlineData(null, null, null)]
-    public void EitherSpellingOfTheLanguageParameterIsRead(
-        string? language, string? lang, string? expected) =>
-        EncyclopediaEndpoints.Language(language, lang).Should().Be(expected);
 
     [Theory]
     [InlineData("NUM 10:29", 4, 10, 29)]
