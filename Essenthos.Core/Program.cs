@@ -269,6 +269,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 var v1 = app.MapGroup("/v1");
 v1.MapHealth();
 v1.MapRead();
+v1.MapVerses();
 v1.MapParallel();
 v1.MapStrong();
 v1.MapSyntax();
