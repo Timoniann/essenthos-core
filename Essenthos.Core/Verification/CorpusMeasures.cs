@@ -301,8 +301,10 @@ internal sealed record CorpusMeasures(
     /// <see cref="Words"/>. Nothing is missing here that was ever promised, and a corpus that
     /// reported it as unreached would be reporting which books the canon contains.
     ///
-    /// It is not small: Brenton's deuterocanon alone is 98,670 words, and no text in this corpus
-    /// holds a single book beyond the sixty-six for any of it to correspond to.
+    /// It is not small: Brenton's deuterocanon alone is 98,670 words. Swete prints those books too
+    /// and answers 84,771 of them, and they are still counted here — coverage reads a link from its
+    /// <c>from</c> side, and Brenton is the <c>to</c> of that pair, so a text reached only as a
+    /// target is reported as reached by nothing.
     /// </summary>
     public int UnpairedWords => Coverage.Sum(c => c.Unpaired);
 
