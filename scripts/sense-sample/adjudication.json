@@ -1,0 +1,2680 @@
+{
+ "of": "the 83 rows in full-run.disagreements.json",
+ "judged": "2026-09-06",
+ "method": "evidence rebuilt from essenthos_core with scripts/sense.py extract; judged by claude-opus-5; every case escalated to claude-fable-5-1 in a one-shot call batched by Strong number, with both earlier answers shown",
+ "counts": {
+  "source-wrong": 57,
+  "model-wrong": 7,
+  "duplicate-records": 13,
+  "contested": 2,
+  "both-wrong": 4
+ },
+ "model_wrong": 7,
+ "rows": 83,
+ "distinct_occurrences": 82,
+ "repeat_note": "Ezra 10:31 word 6850099 appears twice, answered in two shards with the same answer both times; 154 of the run's 10,147 answer rows are such repeats",
+ "population_the_verse_lists_decide": 8175,
+ "agreements_not_audited": 8093,
+ "accuracy_floor": 99.9144,
+ "accuracy_floor_counting_undecided_as_errors": 99.841,
+ "accuracy_caveat": "a floor only: the agreements were never audited, and BibleData is wrong systematically on several names, so an agreement may be a shared error",
+ "fable_agreed_at_first_pass": 68,
+ "cases": [
+  {
+   "case": 1,
+   "word_id": 6862917,
+   "strong_number": "H6659",
+   "reference": "1 Chronicles 9:11",
+   "verse": "And Azariah the son of Hilkiah, the son of Meshullam, the son of Zadok, the son of Meraioth, the son of Ahitub, the ruler of the house of God;",
+   "hebrew_word": "צָדֹ֗וק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zadok-6",
+    "confidence": "high",
+    "reason": "Zadok son of Meraioth, father's line to Meshullam, matches Neh 11:11 genealogy exactly.",
+    "distinguisher": "son of Meraioth (NEH 11:11)"
+   },
+   "bibledata": {
+    "referent": "zadok-3",
+    "distinguisher": "(grand)son of Ahitub and father of Shallum (1CH 6:12)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "zadok-3",
+   "confidence": "high",
+   "reasoning": "1 Chronicles 9:11 and Nehemiah 11:11 are the same chain, so both records are right about the man: zadok-3 is anchored on 1 Chronicles 6:12 and Ezra 7:2 and zadok-6 exists for the Nehemiah verse alone. zadok-3 should survive and absorb zadok-6, and zadok-6's other verse, Nehemiah 13:13, is the scribe-treasurer and a third man who needs a record of his own.",
+   "revised_after_fable": "I had called this source-wrong with zadok-6 as the referent. Fable is right that neither record is wrong about the person, which is what duplicate-records means, and that zadok-3 is the better survivor because it carries the two anchoring genealogies.",
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "zadok-3",
+    "confidence": "high",
+    "reason": "1 Chr 9:11's chain (Hilkiah–Meshullam–Zadok–Meraioth–Ahitub) is verbatim Neh 11:11 and matches 1 Chr 6:12 / Ezra 7:2 with Shallum=Meshullam; zadok-3 and zadok-6 are the same later Zadok held twice.",
+    "survivor": "zadok-3 survives and absorbs zadok-6 (Neh 11:11 merges in; zadok-6's Neh 13:13, the scribe-treasurer, is a different man and should get its own record)"
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 2,
+   "word_id": 6865955,
+   "strong_number": "H6659",
+   "reference": "1 Chronicles 15:11",
+   "verse": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,",
+   "hebrew_word": "צָדֹ֥וק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "David calls for Zadok and Abiathar the priests.",
+    "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)"
+   },
+   "bibledata": {
+    "referent": "zadok-3",
+    "distinguisher": "(grand)son of Ahitub and father of Shallum (1CH 6:12)"
+   },
+   "verdict": "source-wrong",
+   "referent": "zadok",
+   "confidence": "high",
+   "reasoning": "David calling for Zadok and Abiathar the priests is the high priest of 2 Samuel 8:17, not the later Zadok of the Ezra genealogy.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "David summons 'Zadok and Abiathar the priests'; this is the Davidic high priest of 2 Sam 8:17 and 15:24, not the post-Davidic genealogical Zadok that zadok-3's own distinguisher describes.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 3,
+   "word_id": 6866885,
+   "strong_number": "H6659",
+   "reference": "1 Chronicles 16:39",
+   "verse": "And Zadok the priest, and his brethren the priests, before the tabernacle of the Lord in the high place that was at Gibeon,",
+   "hebrew_word": "צָדֹ֣וק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "Zadok the priest ministering at Gibeon under David.",
+    "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)"
+   },
+   "bibledata": {
+    "referent": "zadok-3",
+    "distinguisher": "(grand)son of Ahitub and father of Shallum (1CH 6:12)"
+   },
+   "verdict": "source-wrong",
+   "referent": "zadok",
+   "confidence": "high",
+   "reasoning": "Zadok the priest before the tabernacle at Gibeon under David is the high priest; zadok-3 belongs to the later line that ends in Ezra.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "Zadok the priest stationed by David before the tabernacle at Gibeon is David's high priest; zadok-3 (ancestor of Hilkiah) lived generations later.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 4,
+   "word_id": 6752759,
+   "strong_number": "H6659",
+   "reference": "Ezekiel 40:46",
+   "verse": "And the chamber whose prospect is toward the north is for the priests, the keepers of the charge of the altar: these are the sons of Zadok among the sons of Levi, which come near to the Lord to minister unto him.",
+   "hebrew_word": "צָדֹ֗וק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "Sons of Zadok denotes the priestly line descended from David's high priest Zadok.",
+    "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)"
+   },
+   "bibledata": {
+    "referent": "zadok-3",
+    "distinguisher": "(grand)son of Ahitub and father of Shallum (1CH 6:12)"
+   },
+   "verdict": "source-wrong",
+   "referent": "zadok",
+   "confidence": "high",
+   "reasoning": "Ezekiel's sons of Zadok are the Zadokite priesthood, whose eponym is David's high priest.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "'Sons of Zadok' is the Zadokite priestly line founded by Solomon's high priest (1 Kgs 2:35), the same 'house of Zadok' BibleData itself files under zadok at 2 Chr 31:10.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 5,
+   "word_id": 6754325,
+   "strong_number": "H6659",
+   "reference": "Ezekiel 43:19",
+   "verse": "And thou shalt give to the priests the Levites that be of the seed of Zadok, which approach unto me, to minister unto me, saith the Lord God, a young bullock for a sin offering.",
+   "hebrew_word": "צָדֹ֜וק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "Seed of Zadok, same priestly lineage as Ezekiel's other references.",
+    "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)"
+   },
+   "bibledata": {
+    "referent": "zadok-3",
+    "distinguisher": "(grand)son of Ahitub and father of Shallum (1CH 6:12)"
+   },
+   "verdict": "source-wrong",
+   "referent": "zadok",
+   "confidence": "high",
+   "reasoning": "The seed of Zadok is the same Zadokite line.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "'Seed of Zadok' names the legitimate priesthood descended from David's high priest; zadok-3 is a bare genealogical name with no founding role.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 6,
+   "word_id": 6754843,
+   "strong_number": "H6659",
+   "reference": "Ezekiel 44:15",
+   "verse": "But the priests the Levites, the sons of Zadok, that kept the charge of my sanctuary when the children of Israel went astray from me, they shall come near to me to minister unto me, and they shall stand before me to offer unto me the fat and the blood, saith the Lord God:",
+   "hebrew_word": "צָדֹ֗וק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "Sons of Zadok, priestly line, consistent with Ezekiel's usage elsewhere.",
+    "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)"
+   },
+   "bibledata": {
+    "referent": "zadok-3",
+    "distinguisher": "(grand)son of Ahitub and father of Shallum (1CH 6:12)"
+   },
+   "verdict": "source-wrong",
+   "referent": "zadok",
+   "confidence": "high",
+   "reasoning": "The sons of Zadok who kept the charge of the sanctuary are the Zadokite priesthood.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "The priests 'the sons of Zadok that kept the charge of my sanctuary' are the Jerusalem line established under Solomon in place of Abiathar's house; the eponym is the Davidic high priest.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 7,
+   "word_id": 6757161,
+   "strong_number": "H6659",
+   "reference": "Ezekiel 48:11",
+   "verse": "It shall be for the priests that are sanctified of the sons of Zadok; which have kept my charge, which went not astray when the children of Israel went astray, as the Levites went astray.",
+   "hebrew_word": "צָדֹ֔וק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "Sons of Zadok, priestly line, consistent with Ezekiel's usage elsewhere.",
+    "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)"
+   },
+   "bibledata": {
+    "referent": "zadok-3",
+    "distinguisher": "(grand)son of Ahitub and father of Shallum (1CH 6:12)"
+   },
+   "verdict": "source-wrong",
+   "referent": "zadok",
+   "confidence": "high",
+   "reasoning": "The same Zadokite line as Ezekiel 40, 43 and 44.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "zadok",
+    "confidence": "high",
+    "reason": "Same Zadokite formula as 40:46, 43:19, 44:15; the eponym is David's and Solomon's high priest, not the later Zadok of 1 Chr 6:12.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 8,
+   "word_id": 6889628,
+   "strong_number": "H5838",
+   "reference": "2 Chronicles 31:13",
+   "verse": "And Jehiel, and Azaziah, and Nahath, and Asahel, and Jerimoth, and Jozabad, and Eliel, and Ismachiah, and Mahath, and Benaiah, were overseers under the hand of Cononiah and Shimei his brother, at the commandment of Hezekiah the king, and Azariah the ruler of the house of God.",
+   "hebrew_word": "עֲזַרְיָ֖הוּ",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "azariah-15",
+    "confidence": "high",
+    "reason": "Same Hezekiah temple-reform narrative, ruler of house of God, same chief priest.",
+    "distinguisher": "chief priest of the house of Zadok (2CH 31:10)"
+   },
+   "bibledata": {
+    "referent": "azariah-7",
+    "distinguisher": "son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and priest (EZR 2:2, NEH 7:7, NEH 12:1), explained the law to the people (NEH 8:7)"
+   },
+   "verdict": "source-wrong",
+   "referent": "azariah-15",
+   "confidence": "high",
+   "reasoning": "2 Chronicles 31:10 names Azariah the chief priest of the house of Zadok three verses earlier, and 31:13 calls the same man the ruler of the house of God. azariah-7 is the pre-exilic son of Hilkiah of 1 Chronicles 6:13.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "azariah-15",
+    "confidence": "high",
+    "reason": "The 'ruler of the house of God' acting with Hezekiah in 31:13 is the chief priest Azariah of 31:10 three verses earlier; azariah-7 (son of Hilkiah, grandfather of the exiled Jehozadak) belongs to Josiah's generation and BibleData's own kinship contradicts placing him under Hezekiah.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 9,
+   "word_id": 6854130,
+   "strong_number": "H5838",
+   "reference": "Nehemiah 8:7",
+   "verse": "Also Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai, Hodijah, Maaseiah, Kelita, Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law: and the people stood in their place.",
+   "hebrew_word": "עֲזַרְיָה֩",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "azariah-7",
+    "confidence": "high",
+    "reason": "Distinguisher explicitly cites Nehemiah 8:7, explained the law to the people.",
+    "distinguisher": "son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and priest (EZR 2:2, NEH 7:7, NEH 12:1), explained the law to the people (NEH 8:7)"
+   },
+   "bibledata": {
+    "referent": "azariah-16",
+    "distinguisher": "carried out repairs beside his house (NEH 3:23)"
+   },
+   "verdict": "model-wrong",
+   "referent": "azariah-16",
+   "confidence": "medium",
+   "reasoning": "azariah-7 is the son of Hilkiah of 1 Chronicles 6:13, father of the Seraiah killed at the fall of Jerusalem; he cannot stand in Ezra's assembly. The model was reading BibleData's distinguisher, which cites Nehemiah 8:7 although its own verse list does not.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "model-wrong",
+    "referent": "azariah-16",
+    "confidence": "medium",
+    "reason": "azariah-7 is the pre-exilic son of Hilkiah and cannot teach the law in 445 BC; the model trusted a distinguisher whose Ezra-Nehemiah citations are a conflation. azariah-16 is the only listed record of the right period, though its identification of the Levite teacher with the wall-builder son of Maaseiah is unproven and would better be a separate record.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 10,
+   "word_id": 6855504,
+   "strong_number": "H5838",
+   "reference": "Nehemiah 10:2",
+   "verse": "Seraiah, Azariah, Jeremiah,",
+   "hebrew_word": "עֲזַרְיָ֖ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "azariah-7",
+    "confidence": "medium",
+    "reason": "Post-exilic priest sealing the covenant, fitting azariah-7's Ezra-Nehemiah era role.",
+    "distinguisher": "son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and priest (EZR 2:2, NEH 7:7, NEH 12:1), explained the law to the people (NEH 8:7)"
+   },
+   "bibledata": {
+    "referent": "azariah-15",
+    "distinguisher": "chief priest of the house of Zadok (2CH 31:10)"
+   },
+   "verdict": "both-wrong",
+   "referent": "none",
+   "confidence": "medium",
+   "reasoning": "azariah-15 is Hezekiah's chief priest and cannot seal Nehemiah's covenant; azariah-7 is older still. The Azariah of Nehemiah 10:2 is a post-exilic priest the encyclopedia does not hold.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "both-wrong",
+    "referent": "none",
+    "confidence": "high",
+    "reason": "The sealing priests of Neh 10:2 are post-exilic; azariah-15 is Hezekiah's chief priest and azariah-7 is the pre-exilic son of Hilkiah, both centuries too early, and seraiah-6 is excluded because Seraiah is listed beside him in the same verse. This is a distinct post-exilic priest (Strong's #9) with no record in the list.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 11,
+   "word_id": 6856923,
+   "strong_number": "H5838",
+   "reference": "Nehemiah 12:33",
+   "verse": "And Azariah, Ezra, and Meshullam,",
+   "hebrew_word": "עֲזַרְיָ֥ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "azariah-7",
+    "confidence": "medium",
+    "reason": "Priest in wall-dedication procession, likely the same restoration-era Azariah.",
+    "distinguisher": "son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and priest (EZR 2:2, NEH 7:7, NEH 12:1), explained the law to the people (NEH 8:7)"
+   },
+   "bibledata": {
+    "referent": "seraiah-6",
+    "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7) [called Azariah in NEH 7:7]"
+   },
+   "verdict": "both-wrong",
+   "referent": "undecided",
+   "confidence": "medium",
+   "reasoning": "azariah-7 is pre-exilic and cannot march in Nehemiah's dedication. But seraiah-6 is the head who returned in 538, and BibleData's own graph makes his son Meraiah head of the house in Joiakim's day, so the father walking in 445 is implausible too. Whether the names in Nehemiah 12:33-34 are lay princes or priestly houses is what would decide it, and the text does not say.",
+   "revised_after_fable": "I had called this model-wrong with seraiah-6 as the referent, accepting BibleData's Seraiah-called-Azariah identification. Fable's chronology against seraiah-6 is sound and I had not weighed it.",
+   "fable": {
+    "verdict": "both-wrong",
+    "referent": "undecided",
+    "confidence": "medium",
+    "reason": "azariah-7 is pre-exilic; seraiah-6 returned in 538 and BibleData's own record makes his son Meraiah head of the house in Nehemiah's day, so the father marching in 445 is implausible. Whether this Azariah is the lay wall-builder azariah-16 (he walks with the princes of Judah) or the Neh 10:2 priest (the names echo priestly houses) the text does not settle.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 12,
+   "word_id": 6848942,
+   "strong_number": "H3442",
+   "reference": "Ezra 8:33",
+   "verse": "Now on the fourth day was the silver and the gold and the vessels weighed in the house of our God by the hand of Meremoth the son of Uriah the priest; and with him was Eleazar the son of Phinehas; and with them was Jozabad the son of Jeshua, and Noadiah the son of Binnui, Levites;",
+   "hebrew_word": "יֵשׁ֛וּעַ",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "jeshua-5",
+    "confidence": "medium",
+    "reason": "Jozabad's father Jeshua best fits the returned Levitical family head of Ezra 2:40.",
+    "distinguisher": "Levite whose sons (descendants) returned to Judah after captivity (EZR 2:40)"
+   },
+   "bibledata": {
+    "referent": "jeshua-3",
+    "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)"
+   },
+   "verdict": "source-wrong",
+   "referent": "jeshua-5",
+   "confidence": "high",
+   "reasoning": "BibleData's own kinship graph makes jeshua-5 the father of jozabad-5, and jozabad-5 is its record for the Levite of Ezra 8:33. Its verse list contradicts its graph by putting the verse on jeshua-3, the high priest, whose son was Joiakim.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "jeshua-5",
+    "confidence": "high",
+    "reason": "Jozabad son of Jeshua is expressly a Levite, so his father cannot be the Aaronide high priest Jeshua son of Jozadak; he belongs to the Levitical house of Ezra 2:40, and BibleData's own kinship table already records jeshua-5 as father of jozabad-5, contradicting its verse list.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 13,
+   "word_id": 6856585,
+   "strong_number": "H3442",
+   "reference": "Nehemiah 12:8",
+   "verse": "Moreover the Levites: Jeshua, Binnui, Kadmiel, Sherebiah, Judah, and Mattaniah, which was over the thanksgiving, he and his brethren.",
+   "hebrew_word": "יֵשׁ֧וּעַ",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "jeshua-7",
+    "confidence": "medium",
+    "reason": "Leading Levite grouped with Kadmiel and Sherebiah, as in Neh 8:7/9:4-5.",
+    "distinguisher": "explained the law to the people (NEH 8:7), stood on the Levites platform (NEH 9:4), and exhorted Israel to bless the Lord (NEH 9:5)"
+   },
+   "bibledata": {
+    "referent": "jeshua-5",
+    "distinguisher": "Levite whose sons (descendants) returned to Judah after captivity (EZR 2:40)"
+   },
+   "verdict": "model-wrong",
+   "referent": "jeshua-5",
+   "confidence": "medium",
+   "reasoning": "Ezra 2:40 pairs Jeshua and Kadmiel as the returning Levite houses, exactly as Nehemiah 12:8 does. jeshua-7 is the Levite of Nehemiah 8:7 and 9:4.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "model-wrong",
+    "referent": "jeshua-5",
+    "confidence": "medium",
+    "reason": "Neh 12:1-9 is the roster of those who came up with Zerubbabel and Jeshua, i.e. the same return generation as Ezra 2:40, so the Levite Jeshua here is the returning house-head jeshua-5; the Neh 8-9 Levite (jeshua-7) is two or three generations later, and the recurrence of Kadmiel and Sherebiah reflects persistent house names, not identity of person.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 14,
+   "word_id": 6856606,
+   "strong_number": "H3442",
+   "reference": "Nehemiah 12:10",
+   "verse": "And Jeshua begat Joiakim, Joiakim also begat Eliashib, and Eliashib begat Joiada,",
+   "hebrew_word": "יֵשׁ֖וּעַ",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "jeshua-3",
+    "confidence": "high",
+    "reason": "Genealogy: Jeshua begat Joiakim begat Eliashib, the high-priestly line.",
+    "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)"
+   },
+   "bibledata": {
+    "referent": "jeshua-7",
+    "distinguisher": "explained the law to the people (NEH 8:7), stood on the Levites platform (NEH 9:4), and exhorted Israel to bless the Lord (NEH 9:5)"
+   },
+   "verdict": "source-wrong",
+   "referent": "jeshua-3",
+   "confidence": "high",
+   "reasoning": "Jeshua begat Joiakim, Joiakim Eliashib, Eliashib Joiada is the high-priestly succession, and Nehemiah 12:26 spells it out: Joiakim the son of Jeshua, the son of Jozadak.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "jeshua-3",
+    "confidence": "high",
+    "reason": "'Jeshua begat Joiakim... Eliashib... Joiada... Jaddua' is the high-priestly succession, and Neh 12:26 (which BibleData itself assigns to jeshua-3) names Joiakim as son of Jeshua son of Jozadak; filing it under the Levite jeshua-7 contradicts BibleData's own evidence and spawned a spurious jeshua-7 -> joiakim edge.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 15,
+   "word_id": 6655793,
+   "strong_number": "H281",
+   "reference": "1 Kings 15:33",
+   "verse": "In the third year of Asa king of Judah began Baasha the son of Ahijah to reign over all Israel in Tirzah, twenty and four years.",
+   "hebrew_word": "אֲחִיָּ֤ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "ahijah-3",
+    "confidence": "high",
+    "reason": "'Baasha the son of Ahijah' - father of Baasha again.",
+    "distinguisher": "of the house of Issachar, father of Baasha (1KI 15:27)"
+   },
+   "bibledata": {
+    "referent": "ahijah",
+    "distinguisher": "priest at Shiloh, nephew of Ichabod (1 SA 14:3), and prophet (1KI 11:29)"
+   },
+   "verdict": "source-wrong",
+   "referent": "ahijah-3",
+   "confidence": "high",
+   "reasoning": "BibleData's ahijah-3 is by its own distinguisher the father of Baasha, and the verse says Baasha the son of Ahijah.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "ahijah-3",
+    "confidence": "high",
+    "reason": "The word is the patronymic in 'Baasha the son of Ahijah', identical to 1 Kings 15:27, 21:22 and 2 Kings 9:9, which BibleData itself assigns to ahijah-3 (father of Baasha, kinship father->baasha). The verse-list entry under the Shilonite prophet contradicts BibleData's own distinguisher and edges and is an indexing slip.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 16,
+   "word_id": 6881451,
+   "strong_number": "H5662",
+   "reference": "2 Chronicles 17:7",
+   "verse": "Also in the third year of his reign he sent to his princes, even to Benhail, and to Obadiah, and to Zechariah, and to Nethaneel, and to Michaiah, to teach in the cities of Judah.",
+   "hebrew_word": "עֹבַדְיָ֣ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "obadiah",
+    "confidence": "high",
+    "reason": "Sent by Jehoshaphat to teach, matching this candidate's own distinguisher verse.",
+    "distinguisher": "feared the Lord (1KI 18:3), sent by Jehoshaphat to teach (2CH 17:7)"
+   },
+   "bibledata": {
+    "referent": "obadiah-5",
+    "distinguisher": "son of Shemaiah (1CH 9:16)"
+   },
+   "verdict": "both-wrong",
+   "referent": "none",
+   "confidence": "medium",
+   "reasoning": "The Obadiah of 2 Chronicles 17:7 is a prince of Judah sent to teach; obadiah is Ahab's steward in the northern kingdom and obadiah-5 a post-exilic Levite. Strong keeps the prince as a separate man and the encyclopedia does not hold him.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "both-wrong",
+    "referent": "none",
+    "confidence": "high",
+    "reason": "The Obadiah of 2 Chr 17:7 is one of Jehoshaphat's Judahite princes (c. 870 BCE), distinguished from the Levites of v. 8; obadiah-5 is a post-exilic Levite (1 Chr 9:16 / Neh 11:17) and obadiah is Ahab's steward in Israel (1 Kgs 18), whose distinguisher clause about 2 Chr 17:7 is an unsupported conflation. No BibleData record exists for this man (Strong's #10, prince of Judah under Jehoshaphat).",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 17,
+   "word_id": 6856590,
+   "strong_number": "H4983",
+   "reference": "Nehemiah 12:8",
+   "verse": "Moreover the Levites: Jeshua, Binnui, Kadmiel, Sherebiah, Judah, and Mattaniah, which was over the thanksgiving, he and his brethren.",
+   "hebrew_word": "מַתַּנְיָ֑ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "mattaniah-2",
+    "confidence": "high",
+    "reason": "Candidate's distinguisher explicitly cites this verse: over the thanksgiving.",
+    "distinguisher": "son of Mica (1CH 9:15), Levite (NEH 12:8)"
+   },
+   "bibledata": {
+    "referent": "mattaniah-9",
+    "distinguisher": "descendant of Mica (NEH 11:17), gatekeeper (NEH 12:25)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "mattaniah-9",
+   "confidence": "medium",
+   "reasoning": "1 Chronicles 9:15 and Nehemiah 11:17 are parallel lists of the same man, Mattaniah son of Micha of the sons of Asaph, so mattaniah-2 and mattaniah-9 are one person twice. Nehemiah 12:8 says he was over the thanksgiving, which is Nehemiah 11:17's own phrase.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "mattaniah-9",
+    "confidence": "high",
+    "reason": "Neh 12:8's Mattaniah over the thanksgiving, paired with Bakbukiah, is the Mattaniah son of Mica of Neh 11:17 and its Chronicles parallel 1 Chr 9:15; BibleData holds that one Asaphite under both mattaniah-2 (1 Chr 9:15, whose distinguisher itself cites Neh 12:8) and mattaniah-9 (Neh 11:17). The chronological stretch from Zerubbabel to Nehemiah is a real wrinkle but does not yield a distinct candidate record.",
+    "survivor": "mattaniah-9 survives and absorbs mattaniah-2 (taking 1 Chr 9:15); mattaniah-2's 2 Chr 20:14 attestation belongs to a different, Jehoshaphat-era Mattaniah and should be split into its own record"
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 18,
+   "word_id": 6850099,
+   "strong_number": "H2766",
+   "reference": "Ezra 10:31",
+   "verse": "And of the sons of Harim; Eliezer, Ishijah, Malchiah, Shemaiah, Shimeon,",
+   "hebrew_word": "חָרִ֑ם",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "harim-2",
+    "confidence": "high",
+    "reason": "Listed among lay 'Israel' families (Ezra 10:25ff), the lay Harim family.",
+    "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:32)"
+   },
+   "bibledata": {
+    "referent": "harim-3",
+    "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:39)"
+   },
+   "verdict": "source-wrong",
+   "referent": "harim-2",
+   "confidence": "high",
+   "reasoning": "Ezra 10:25 begins the lay families - moreover of Israel - and 10:31 stands inside that section, so this Harim is the lay house of Ezra 2:32. The priestly Harim of Ezra 2:39 is answered at 10:21.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "harim-2",
+    "confidence": "high",
+    "reason": "Same word as above: the lay Harim clan of Ezra 2:32, confirmed by the chapter's priest/laity structure and by BibleData's harim-2 kinship record listing exactly the sons of Ezra 10:31-32; the verse list's harim-3 is the priestly clan of 10:21.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 19,
+   "word_id": 6859629,
+   "strong_number": "H672",
+   "reference": "1 Chronicles 4:4",
+   "verse": "And Penuel the father of Gedor, and Ezer the father of Hushah. These are the sons of Hur, the firstborn of Ephratah, the father of Bethlehem.",
+   "hebrew_word": "אֶפְרָ֔תָה",
+   "bhsa_name_type": "topo,pers",
+   "model": {
+    "referent": "ephrath",
+    "confidence": "medium",
+    "reason": "Again Hur is 'firstborn of Ephratah,' echoing 1 Chr 2:19/2:50 genealogical link to his mother.",
+    "distinguisher": "second wife of Chelubai [Caleb] (1CH 2:19)"
+   },
+   "bibledata": {
+    "referent": "bethlehem",
+    "distinguisher": null
+   },
+   "verdict": "source-wrong",
+   "referent": "ephrath",
+   "confidence": "high",
+   "reasoning": "1 Chronicles 4:4 contains two words BibleData's bethlehem record answers for: אֶפְרָתָה (H672) and בֵּית לָחֶם (H1035), because that record carries a name label for each. Its attestation of the verse is for the second word, and the scoring read it as the answer for the first. Judged on the marked word, *Hur the firstborn of Ephratah* repeats 1 Chronicles 2:19 and 2:50, where Ephrath is Caleb's wife and Hur's mother — BibleData's own ephrath record.",
+   "revised_after_fable": "I had called this contested, on BHSA's topo,pers marking and the place-name reading of Ephratah. Fable found the mechanism: the verse holds Bethlehem as a separate word, so BibleData never answered for this one. Verified in the database — 1 Chronicles 4:4 word 6859631 is בֵּית לָחֶם, H1035.",
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "ephrath",
+    "confidence": "high",
+    "reason": "BibleData's 'bethlehem' for this verse is the verse-level attestation of the other word, בֵּית לָחֶם (H1035), not of אֶפְרָתָה; 'Hur the firstborn of Ephrathah' repeats 1 Chr 2:19/2:50, where Ephrath is Caleb's wife and Hur's mother, i.e. BibleData's own 'ephrath' record.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 20,
+   "word_id": 6486326,
+   "strong_number": "H5711",
+   "reference": "Genesis 36:2",
+   "verse": "Esau took his wives of the daughters of Canaan; Adah the daughter of Elon the Hittite, and Aholibamah the daughter of Anah the daughter of Zibeon the Hivite;",
+   "hebrew_word": "עָדָ֗ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "Adah, daughter of Elon the Hittite, is Gen 26:34's Bashemath under a variant name.",
+    "distinguisher": "daughter of Elon the Hittite, and wife of Esau (GEN 26:34)"
+   },
+   "bibledata": {
+    "referent": "adah",
+    "distinguisher": "wife of Lamech (GEN 4:19)"
+   },
+   "verdict": "source-wrong",
+   "referent": "basemath",
+   "confidence": "high",
+   "reasoning": "BibleData's basemath record carries Adah as one of its own name labels for Esau's wife, and its adah record is the wife of Lamech by its own distinguisher. Genesis 36 cannot be Lamech's wife however the Adah and Bashemath identification is settled.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "The Hebrew names her 'Adah daughter of Elon the Hittite', Esau's wife; BibleData's own `basemath` record carries the label Adah=H5711, the distinguisher 'daughter of Elon the Hittite, wife of Esau', and kinship daughter→elon/wife→esau, while `adah`'s distinguisher and kinship are Lamech's antediluvian wife. The `adah` verse list contradicts its own record.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 21,
+   "word_id": 6486349,
+   "strong_number": "H5711",
+   "reference": "Genesis 36:4",
+   "verse": "And Adah bare to Esau Eliphaz; and Bashemath bare Reuel;",
+   "hebrew_word": "עָדָ֛ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "Same Adah of 36:2, Elon's daughter, mother of Eliphaz.",
+    "distinguisher": "daughter of Elon the Hittite, and wife of Esau (GEN 26:34)"
+   },
+   "bibledata": {
+    "referent": "adah",
+    "distinguisher": "wife of Lamech (GEN 4:19)"
+   },
+   "verdict": "source-wrong",
+   "referent": "basemath",
+   "confidence": "high",
+   "reasoning": "Adah bearing Eliphaz to Esau is not the wife of Lamech.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "This Adah bears Eliphaz to Esau; `basemath` has the edge mother→eliphaz and wife→esau, whereas `adah` is mother of Jabal and Jubal and wife of Lamech. Only the verse list of `adah` claims this verse, against its distinguisher and kinship.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 22,
+   "word_id": 6486461,
+   "strong_number": "H5711",
+   "reference": "Genesis 36:10",
+   "verse": "These are the names of Esau's sons; Eliphaz the son of Adah the wife of Esau, Reuel the son of Bashemath the wife of Esau.",
+   "hebrew_word": "עָדָה֙",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "Eliphaz's mother, same Elon's-daughter wife as 36:2/4.",
+    "distinguisher": "daughter of Elon the Hittite, and wife of Esau (GEN 26:34)"
+   },
+   "bibledata": {
+    "referent": "adah",
+    "distinguisher": "wife of Lamech (GEN 4:19)"
+   },
+   "verdict": "source-wrong",
+   "referent": "basemath",
+   "confidence": "high",
+   "reasoning": "Eliphaz the son of Adah the wife of Esau.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "'Eliphaz son of Adah the wife of Esau' matches `basemath`'s kinship (mother→eliphaz, wife→esau) exactly and cannot be Lamech's wife. The neighbouring Bashemath (H1315, mother of Reuel) is a different lexeme and a different wife, so there is no word-level ambiguity.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 23,
+   "word_id": 6486496,
+   "strong_number": "H5711",
+   "reference": "Genesis 36:12",
+   "verse": "And Timna was concubine to Eliphaz Esau's son; and she bare to Eliphaz Amalek: these were the sons of Adah Esau's wife.",
+   "hebrew_word": "עָדָ֖ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "Continues genealogy of Eliphaz's mother, Elon's daughter.",
+    "distinguisher": "daughter of Elon the Hittite, and wife of Esau (GEN 26:34)"
+   },
+   "bibledata": {
+    "referent": "adah",
+    "distinguisher": "wife of Lamech (GEN 4:19)"
+   },
+   "verdict": "source-wrong",
+   "referent": "basemath",
+   "confidence": "high",
+   "reasoning": "The sons of Adah, Esau's wife.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "'These were the sons of Adah, Esau's wife' closes the Eliphaz clan list; the woman is Esau's Hittite wife, held by BibleData under `basemath` with the Adah=H5711 label. Assigning it to Lamech's wife contradicts `adah`'s own distinguisher and kinship.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 24,
+   "word_id": 6486568,
+   "strong_number": "H5711",
+   "reference": "Genesis 36:16",
+   "verse": "Duke Korah, duke Gatam, and duke Amalek: these are the dukes that came of Eliphaz in the land of Edom; these were the sons of Adah.",
+   "hebrew_word": "עָדָֽה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "Dukes descending from Eliphaz son of this same Adah.",
+    "distinguisher": "daughter of Elon the Hittite, and wife of Esau (GEN 26:34)"
+   },
+   "bibledata": {
+    "referent": "adah",
+    "distinguisher": "wife of Lamech (GEN 4:19)"
+   },
+   "verdict": "source-wrong",
+   "referent": "basemath",
+   "confidence": "high",
+   "reasoning": "The sons of Adah in Esau's Edomite chief list.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "basemath",
+    "confidence": "high",
+    "reason": "'These were the sons of Adah' sums up the chieftains descended from Eliphaz, Esau's firstborn by Adah; the referent is Esau's wife, i.e. BibleData's `basemath` record, not the antediluvian Adah of Genesis 4 that the `adah` record's distinguisher and kinship describe.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 25,
+   "word_id": 6589163,
+   "strong_number": "H44",
+   "reference": "Joshua 17:2",
+   "verse": "There was also a lot for the rest of the children of Manasseh by their families; for the children of Abiezer, and for the children of Helek, and for the children of Asriel, and for the children of Shechem, and for the children of Hepher, and for the children of Shemida: these were the male children of Manasseh the son of Joseph by their families.",
+   "hebrew_word": "אֲבִיעֶ֜זֶר",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "abiezer-2",
+    "confidence": "high",
+    "reason": "Manassite clan, son of Gilead's sister Hammolecheth per 1 Chr 7:18.",
+    "distinguisher": "son of Hammolecheth (1CH 7:18)"
+   },
+   "bibledata": {
+    "referent": "iezer",
+    "distinguisher": "son of Gilead (NUM 26:30)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "iezer",
+   "confidence": "medium",
+   "reasoning": "Strong states that the Manassite Abiezer is called a son of Gilead and also the son of Gilead's sister, so iezer (Numbers 26:30) and abiezer-2 (1 Chronicles 7:18) are one man held twice.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "iezer",
+    "confidence": "high",
+    "reason": "Josh 17:2's six-clan list is identical to Num 26:30-32 where the first clan is spelled Iezer, so this is the Manassite clan eponym BibleData holds as `iezer`; the model's `abiezer-2` (son of Hammolecheth, 1 Chr 7:18) is the Chronicler's re-parented version of the same clan founder, i.e. the same man under a second record.",
+    "survivor": "iezer survives, absorbing abiezer-2 (carry over 1 Chr 7:18 and the Hammolecheth edge as an alternative genealogy)"
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 26,
+   "word_id": 6598942,
+   "strong_number": "H44",
+   "reference": "Judges 8:2",
+   "verse": "And he said unto them, What have I done now in comparison of you? Is not the gleaning of the grapes of Ephraim better than the vintage of Abiezer?",
+   "hebrew_word": "אֲבִיעֶֽזֶר",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "abiezer-2",
+    "confidence": "high",
+    "reason": "Same Manassite clan tied to Gideon's vintage/harvest imagery.",
+    "distinguisher": "son of Hammolecheth (1CH 7:18)"
+   },
+   "bibledata": {
+    "referent": "iezer",
+    "distinguisher": "son of Gilead (NUM 26:30)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "iezer",
+   "confidence": "medium",
+   "reasoning": "The same clan and the same man; the vintage of Abiezer is Gideon's Manassite house.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "iezer",
+    "confidence": "high",
+    "reason": "'The vintage of Abiezer' is Gideon's own clan (Joash the Abiezrite, Judg 6:11, 6:34, 8:32), the Manassite clan of Num 26:30/Josh 17:2 that BibleData's `iezer` record already links to Joash; the model's `abiezer-2` names the same clan eponym via 1 Chr 7:18.",
+    "survivor": "iezer survives, absorbing abiezer-2"
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 27,
+   "word_id": 6667754,
+   "strong_number": "H2174",
+   "reference": "2 Kings 9:31",
+   "verse": "And as Jehu entered in at the gate, she said, Had Zimri peace, who slew his master?",
+   "hebrew_word": "זִמְרִ֖י",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zimri-2",
+    "confidence": "high",
+    "reason": "Jezebel alludes to Zimri who slew his master, the earlier usurper king.",
+    "distinguisher": "commander of Elah's chariots (1KI 16:9)"
+   },
+   "bibledata": {
+    "referent": "jehu-2",
+    "distinguisher": "anointed king over Israel (1KI 19:16) at the direction of Elisha (2KI 9:1-3)"
+   },
+   "verdict": "contested",
+   "referent": "undecided",
+   "confidence": "low",
+   "reasoning": "Jezebel's words can be read as naming the historical usurper Zimri or as addressing Jehu himself as a second Zimri, and the vocative reading is what BibleData has recorded by giving Jehu a Zimri name label.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "contested",
+    "referent": "undecided",
+    "confidence": "medium",
+    "reason": "The only Zimri who 'slew his master' is the usurper of 1 Kings 16 (zimri-2), but the word is either the subject of a rhetorical question about him (KJV) or a vocative epithet flung at Jehu (most modern readers); the evidence does not settle the syntax, and how a dataset links antonomasia is a scheme decision. If forced to one node, zimri-2 is the more defensible link, since 'Zimri' is never Jehu's name and BibleData's label on jehu-2 treats an epithet as a name.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 28,
+   "word_id": 6870953,
+   "strong_number": "H3406",
+   "reference": "1 Chronicles 25:22",
+   "verse": "The fifteenth to Jeremoth, he, his sons, and his brethren, were twelve:",
+   "hebrew_word": "ירֵמֹ֔ות",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "jerimoth-3",
+    "confidence": "high",
+    "reason": "The fifteenth lot, matching candidate's exact distinguisher (chosen fifteenth by lot).",
+    "distinguisher": "son of Heman_3 (1CH 25:4), chosen fifteenth by lot (1CH 25:22)"
+   },
+   "bibledata": {
+    "referent": "jeremoth-3",
+    "distinguisher": "descendant of Mushi (1CH 23:23)"
+   },
+   "verdict": "source-wrong",
+   "referent": "jerimoth-3",
+   "confidence": "high",
+   "reasoning": "1 Chronicles 25 casts lots among the sons of Asaph, Jeduthun and Heman, and Jerimoth is named in 25:4 among Heman's sons; jeremoth-3 is a Merarite of the Levite courses of 1 Chronicles 23 and 24, not a singer.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "jerimoth-3",
+    "confidence": "high",
+    "reason": "The lots of 1 Chronicles 25:9-31 are distributed exclusively among the sons of Asaph, Jeduthun, and Heman named in 25:2-4, and the fifteenth lot falls to Heman's son Jerimoth; BibleData's own distinguisher for jerimoth-3 cites 1CH 25:22, but its verse list misfiles the verse under the Merarite jeremoth-3 (descendant of Mushi), a different man from a different roster.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 29,
+   "word_id": 6856587,
+   "strong_number": "H6934",
+   "reference": "Nehemiah 12:8",
+   "verse": "Moreover the Levites: Jeshua, Binnui, Kadmiel, Sherebiah, Judah, and Mattaniah, which was over the thanksgiving, he and his brethren.",
+   "hebrew_word": "קַדְמִיאֵ֥ל",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "kadmiel",
+    "confidence": "medium",
+    "reason": "Listed 'in the days of Jeshua,' marking this as the earlier returnee-era Kadmiel.",
+    "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:40)"
+   },
+   "bibledata": {
+    "referent": "kadmiel-2",
+    "distinguisher": "stood on the Levites platform (NEH 9:4) and exhorted Israel to bless the Lord (NEH 9:5)"
+   },
+   "verdict": "source-wrong",
+   "referent": "kadmiel",
+   "confidence": "high",
+   "reasoning": "Nehemiah 12:1 opens the roster of those who came up with Zerubbabel and Jeshua and 12:7 closes it *in the days of Jeshua*; 12:8 continues it for the Levites. BibleData's split between the two Kadmiels is by era — kadmiel the returnee, kadmiel-2 the Levite of Nehemiah 9 and 10 — and a verse the text dates to Jeshua's day belongs on the returnee's side of its own split.",
+   "revised_after_fable": "I had called this duplicate-records on Strong's holding only one Kadmiel. Fable's point is better: whether the two records should be one is a question about the whole name, and within the split BibleData actually made, this verse is on the wrong side of it.",
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "kadmiel",
+    "confidence": "high",
+    "reason": "Nehemiah 12:8 continues the list of Levites who came up with Zerubbabel and Jeshua (12:1, 12:7 'in the days of Jeshua'), i.e. the returnee Kadmiel of Ezra 2:40 / 3:9, whereas kadmiel-2 is by BibleData's own distinguisher the Nehemiah-era Levite of 9:4–5 and 10:9; the verse list contradicts the record's own era-based definition. Residual doubt is only whether the two records are really one Levitical house, which is a Strong-number-wide question and does not change the answer for this word.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 30,
+   "word_id": 6652648,
+   "strong_number": "H7895",
+   "reference": "1 Kings 11:40",
+   "verse": "Solomon sought therefore to kill Jeroboam. And Jeroboam arose, and fled into Egypt, unto Shishak king of Egypt, and was in Egypt until the death of Solomon.",
+   "hebrew_word": "שִׁישַׁ֣ק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Jeroboam fled to Shishak king of Egypt, same figure as in 1Ki 14:25.",
+    "distinguisher": "King of Egypt (1KI 14:25)"
+   },
+   "bibledata": {
+    "referent": "pharaoh-5",
+    "distinguisher": "Pharaoh, father of Solomon's wife (1KI 3:1, 9:16)"
+   },
+   "verdict": "source-wrong",
+   "referent": "shishak",
+   "confidence": "high",
+   "reasoning": "The verse says Shishak king of Egypt and BibleData's pharaoh-5 is by its own distinguisher the father of Solomon's wife. BibleData holds a shishak record and gives it no verses at all.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "The text names Shishak precisely to distinguish him from the unnamed Pharaoh who was Solomon's father-in-law; BibleData's own `shishak` record (distinguisher 1KI 14:25) and its `pharaoh-5` distinguisher (father of Solomon's wife) both contradict placing this verse under pharaoh-5.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 31,
+   "word_id": 6655000,
+   "strong_number": "H7895",
+   "reference": "1 Kings 14:25",
+   "verse": "And it came to pass in the fifth year of king Rehoboam, that Shishak king of Egypt came up against Jerusalem:",
+   "hebrew_word": "שׁושׁק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Shishak king of Egypt attacked Jerusalem under Rehoboam; the Shishak candidate.",
+    "distinguisher": "King of Egypt (1KI 14:25)"
+   },
+   "bibledata": {
+    "referent": "pharaoh-5",
+    "distinguisher": "Pharaoh, father of Solomon's wife (1KI 3:1, 9:16)"
+   },
+   "verdict": "source-wrong",
+   "referent": "shishak",
+   "confidence": "high",
+   "reasoning": "Shishak king of Egypt came up against Jerusalem in Rehoboam's fifth year.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Ketiv שׁושׁק / Qere שִׁישַׁק is the king who plundered Jerusalem in Rehoboam's fifth year — the very verse BibleData's `shishak` distinguisher cites — not Solomon's allied father-in-law of 1KI 3:1.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 32,
+   "word_id": 6879410,
+   "strong_number": "H7895",
+   "reference": "2 Chronicles 12:2",
+   "verse": "And it came to pass, that in the fifth year of king Rehoboam Shishak king of Egypt came up against Jerusalem, because they had transgressed against the Lord,",
+   "hebrew_word": "שִׁישַׁ֥ק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Same event, Shishak king of Egypt attacking Jerusalem in Rehoboam's 5th year.",
+    "distinguisher": "King of Egypt (1KI 14:25)"
+   },
+   "bibledata": {
+    "referent": "pharaoh-5",
+    "distinguisher": "Pharaoh, father of Solomon's wife (1KI 3:1, 9:16)"
+   },
+   "verdict": "source-wrong",
+   "referent": "shishak",
+   "confidence": "high",
+   "reasoning": "The Chronicler's account of the same campaign.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Chronicles' parallel to 1KI 14:25; same named hostile king of Egypt, whom BibleData's own separate `shishak` record was created for.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 33,
+   "word_id": 6879473,
+   "strong_number": "H7895",
+   "reference": "2 Chronicles 12:5",
+   "verse": "Then came Shemaiah the prophet to Rehoboam, and to the princes of Judah, that were gathered together to Jerusalem because of Shishak, and said unto them, Thus saith the Lord, Ye have forsaken me, and therefore have I also left you in the hand of Shishak.",
+   "hebrew_word": "שִׁישָׁ֑ק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Same Shishak narrative in 2 Chronicles 12.",
+    "distinguisher": "King of Egypt (1KI 14:25)"
+   },
+   "bibledata": {
+    "referent": "pharaoh-5",
+    "distinguisher": "Pharaoh, father of Solomon's wife (1KI 3:1, 9:16)"
+   },
+   "verdict": "source-wrong",
+   "referent": "shishak",
+   "confidence": "high",
+   "reasoning": "Shemaiah's oracle names Shishak.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "First of two Shishak occurrences in 2CH 12:5, both referring to the invader of Rehoboam's day; identifying him with the father-in-law Pharaoh is an unattested harmonisation that BibleData's own distinguishers do not make.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 34,
+   "word_id": 6879490,
+   "strong_number": "H7895",
+   "reference": "2 Chronicles 12:5",
+   "verse": "Then came Shemaiah the prophet to Rehoboam, and to the princes of Judah, that were gathered together to Jerusalem because of Shishak, and said unto them, Thus saith the Lord, Ye have forsaken me, and therefore have I also left you in the hand of Shishak.",
+   "hebrew_word": "שִׁישָֽׁק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Same Shishak narrative in 2 Chronicles 12.",
+    "distinguisher": "King of Egypt (1KI 14:25)"
+   },
+   "bibledata": {
+    "referent": "pharaoh-5",
+    "distinguisher": "Pharaoh, father of Solomon's wife (1KI 3:1, 9:16)"
+   },
+   "verdict": "source-wrong",
+   "referent": "shishak",
+   "confidence": "high",
+   "reasoning": "The second Shishak of the same verse.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Second Shishak occurrence in 2CH 12:5 ('into the hand of Shishak'); same invader, same misassignment to the father-in-law record.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 35,
+   "word_id": 6879533,
+   "strong_number": "H7895",
+   "reference": "2 Chronicles 12:7",
+   "verse": "And when the Lord saw that they humbled themselves, the word of the Lord came to Shemaiah, saying, They have humbled themselves; therefore I will not destroy them, but I will grant them some deliverance; and my wrath shall not be poured out upon Jerusalem by the hand of Shishak.",
+   "hebrew_word": "שִׁישָֽׁק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Same Shishak narrative in 2 Chronicles 12.",
+    "distinguisher": "King of Egypt (1KI 14:25)"
+   },
+   "bibledata": {
+    "referent": "pharaoh-5",
+    "distinguisher": "Pharaoh, father of Solomon's wife (1KI 3:1, 9:16)"
+   },
+   "verdict": "source-wrong",
+   "referent": "shishak",
+   "confidence": "high",
+   "reasoning": "By the hand of Shishak.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "'By the hand of Shishak' continues the 2CH 12 invasion narrative; the referent is the `shishak` record, not the unnamed Pharaoh of Solomon's marriage alliance.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 36,
+   "word_id": 6879549,
+   "strong_number": "H7895",
+   "reference": "2 Chronicles 12:9",
+   "verse": "So Shishak king of Egypt came up against Jerusalem, and took away the treasures of the house of the Lord, and the treasures of the king's house; he took all: he carried away also the shields of gold which Solomon had made.",
+   "hebrew_word": "שִׁישַׁ֥ק",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "Same Shishak narrative in 2 Chronicles 12.",
+    "distinguisher": "King of Egypt (1KI 14:25)"
+   },
+   "bibledata": {
+    "referent": "pharaoh-5",
+    "distinguisher": "Pharaoh, father of Solomon's wife (1KI 3:1, 9:16)"
+   },
+   "verdict": "source-wrong",
+   "referent": "shishak",
+   "confidence": "high",
+   "reasoning": "Shishak king of Egypt took the treasures.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "shishak",
+    "confidence": "high",
+    "reason": "The temple raid itself, parallel to 1KI 14:25–26; BibleData's verse list contradicts both of its own distinguishers by filing it under Solomon's father-in-law.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 37,
+   "word_id": 6865923,
+   "strong_number": "H469",
+   "reference": "1 Chronicles 15:8",
+   "verse": "Of the sons of Elizaphan; Shemaiah the chief, and his brethren two hundred:",
+   "hebrew_word": "אֱלִֽיצָפָ֑ן",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "elzaphan",
+    "confidence": "medium",
+    "reason": "Levitical family group distinct from Uzziel's line listed separately; likely Kohathite Elzaphan's descendants.",
+    "distinguisher": "son of Uzziel (EXO 6:22)"
+   },
+   "bibledata": {
+    "referent": "elizaphan",
+    "distinguisher": "the leader of the tribe of Zebulun (NUM 34:25) to apportion the Land (NUM 34:17)"
+   },
+   "verdict": "source-wrong",
+   "referent": "elzaphan",
+   "confidence": "high",
+   "reasoning": "1 Chronicles 15:5-10 lists the Levite houses - Kohath, Merari, Gershom, Elizaphan, Hebron, Uzziel - so the sons of Elizaphan are the Kohathite house of Elzaphan son of Uzziel, not the prince of Zebulun. The two are distinct men, not a duplicate pair.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "elzaphan",
+    "confidence": "high",
+    "reason": "1 Chr 15:8 lists Kohathite Levitical houses (Hebron, Uzziel, Elizaphan) and parallels 2 Chr 29:13, which BibleData itself files under elzaphan; BibleData's own kinship edges make shemaiah-7 of this verse a descendant of elzaphan. The Zebulunite of Num 34:25 cannot head a Levitical clan, so the verse-list assignment contradicts the record's own evidence.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 38,
+   "word_id": 6855573,
+   "strong_number": "H2828",
+   "reference": "Nehemiah 10:18",
+   "verse": "Hodijah, Hashum, Bezai,",
+   "hebrew_word": "חָשֻׁ֖ם",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "hashum",
+    "confidence": "high",
+    "reason": "Covenant-sealer list order matches the Ezra2/Neh7 family sequence, identifying this as the family head.",
+    "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:19)"
+   },
+   "bibledata": {
+    "referent": "hashum-2",
+    "distinguisher": "stood on Ezra's left hand as he read from the Law (NEH 8:4)"
+   },
+   "verdict": "source-wrong",
+   "referent": "hashum",
+   "confidence": "medium",
+   "reasoning": "Nehemiah 10:14 opens the chief of the people, and the sealers from there on are lay family heads in the order of Ezra 2 and Nehemiah 7; hashum-2 is the man who stood beside Ezra at the reading.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "hashum",
+    "confidence": "high",
+    "reason": "Neh 10:15-28 is a list of 'heads of the people' by clan name paralleling Ezra 2 / Neh 7, and the sequence Ater, Hezekiah ... Hashum, Bezai, Hariph, Anathoth, Nebai matches Ezra 2:16-19, 29-30 exactly, so Hashum here is the returnee clan of Ezra 2:19 / Neh 7:22, not the individual of Neh 8:4.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 39,
+   "word_id": 6861066,
+   "strong_number": "H43",
+   "reference": "1 Chronicles 6:37",
+   "verse": "The son of Tahath, the son of Assir, the son of Ebiasaph, the son of Korah,",
+   "hebrew_word": "אֶבְיָסָ֖ף",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "abiasaph",
+    "confidence": "high",
+    "reason": "Genealogy makes him son of Korah directly (Assir son of Ebiasaph son of Korah).",
+    "distinguisher": "son of Korah (EXO 6:24)"
+   },
+   "bibledata": {
+    "referent": "ebiasaph",
+    "distinguisher": "son of Elkanah (1CH 6:23)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "abiasaph",
+   "confidence": "high",
+   "reasoning": "Strong H43 holds one referent, a son or descendant of Korah, and abiasaph already carries Ebiasaph as one of its name labels. abiasaph should survive and absorb ebiasaph.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "abiasaph",
+    "confidence": "medium",
+    "reason": "1 Chr 6:37 explicitly makes this Ebiasaph the son of Korah, contradicting the 'son of Elkanah' distinguisher of the record BibleData files it under; with Exod 6:24, 1 Chr 9:19 and 26:1 all agreeing on son-of-Korah, the 6:23 'son of Elkanah' is the same man in a garbled chain, not a second person.",
+    "survivor": "abiasaph survives; it absorbs ebiasaph (1 Chr 6:23, 6:37 and the father-of-Assir edge)"
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 40,
+   "word_id": 6605787,
+   "strong_number": "H1835",
+   "reference": "Judges 18:29",
+   "verse": "And they called the name of the city Dan, after the name of Dan their father, who was born unto Israel: howbeit the name of the city was Laish at the first.",
+   "hebrew_word": "דָּ֣ן",
+   "bhsa_name_type": "pers,gens,topo",
+   "model": {
+    "referent": "dan",
+    "confidence": "high",
+    "reason": "'After the name of Dan their father' — the ancestor.",
+    "distinguisher": "fifth-born son of Jacob (GEN 30:5), son of Bilhah, Rachel's handmaid"
+   },
+   "bibledata": {
+    "referent": "dan-2",
+    "distinguisher": null
+   },
+   "verdict": "source-wrong",
+   "referent": "dan",
+   "confidence": "high",
+   "reasoning": "The marked word is the second Dan of the verse, in the phrase after the name of Dan their father, and BibleData's verse list holds only the city for this verse. A verse-level list cannot separate the two words.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "dan",
+    "confidence": "high",
+    "reason": "The marked word is 'Dan their father, who was born to Israel' — the patriarch, son of Jacob, not the city. BibleData's verse-level list only captured the first occurrence in the verse (the city, dan-2) and cannot distinguish the second.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 41,
+   "word_id": 6860842,
+   "strong_number": "H8304",
+   "reference": "1 Chronicles 6:14",
+   "verse": "And Azariah begat Seraiah, and Seraiah begat Jehozadak,",
+   "hebrew_word": "שְׂרָיָ֔ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "seraiah-2",
+    "confidence": "high",
+    "reason": "Azariah begat Seraiah, Seraiah begat Jehozadak — matches high-priest genealogy.",
+    "distinguisher": "the chief priest (2KI 25:18) who was killed by the king of Babylon (2KI 25:21)"
+   },
+   "bibledata": {
+    "referent": "seraiah-5",
+    "distinguisher": "son of Asiel (1CH 4:35), Simeonite (1CH 4:24)"
+   },
+   "verdict": "source-wrong",
+   "referent": "seraiah-2",
+   "confidence": "high",
+   "reasoning": "Seraiah who begat Jehozadak is the chief priest of 2 Kings 25:18, and BibleData's own kinship graph says seraiah-2 is the father of jehozadak. seraiah-5 is a Simeonite of 1 Chronicles 4:35.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "seraiah-2",
+    "confidence": "high",
+    "reason": "1 Chr 6:14 is the high-priestly line (Hilkiah → Azariah → Seraiah → Jehozadak, who went into exile, v. 15), i.e. the chief priest of 2 Kgs 25:18 / Jer 52:24 / Ezra 7:1; BibleData's own seraiah-2 kinship (son of azariah-7, father of jehozadak) is drawn from this very verse, while seraiah-5 is the unrelated Simeonite son of Asiel.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 42,
+   "word_id": 6860844,
+   "strong_number": "H8304",
+   "reference": "1 Chronicles 6:14",
+   "verse": "And Azariah begat Seraiah, and Seraiah begat Jehozadak,",
+   "hebrew_word": "שְׂרָיָ֖ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "seraiah-2",
+    "confidence": "high",
+    "reason": "Same clause, same Seraiah who begat Jehozadak, the chief priest.",
+    "distinguisher": "the chief priest (2KI 25:18) who was killed by the king of Babylon (2KI 25:21)"
+   },
+   "bibledata": {
+    "referent": "seraiah-5",
+    "distinguisher": "son of Asiel (1CH 4:35), Simeonite (1CH 4:24)"
+   },
+   "verdict": "source-wrong",
+   "referent": "seraiah-2",
+   "confidence": "high",
+   "reasoning": "The second Seraiah of the same clause, the same man.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "seraiah-2",
+    "confidence": "high",
+    "reason": "Second mention of the same man in one chain link ('Azariah begat Seraiah, and Seraiah begat Jehozadak'); the father-of-Jehozadak edge on seraiah-2 comes only from here, and the Simeonite seraiah-5 cannot be meant.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 43,
+   "word_id": 6856639,
+   "strong_number": "H8304",
+   "reference": "Nehemiah 12:12",
+   "verse": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;",
+   "hebrew_word": "שְׂרָיָ֣ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "seraiah-6",
+    "confidence": "medium",
+    "reason": "Priestly course named for Seraiah of Neh 12:1, same returnee family head.",
+    "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7) [called Azariah in NEH 7:7]"
+   },
+   "bibledata": {
+    "referent": "seraiah-8",
+    "distinguisher": "priest, son of Hilkiah (NEH 11:11)"
+   },
+   "verdict": "source-wrong",
+   "referent": "seraiah-6",
+   "confidence": "medium",
+   "reasoning": "Nehemiah 12:12 names the priestly houses of 12:1-7, where Seraiah stands first, and BibleData's own graph makes seraiah-6 the father of meraiah, which is the very pairing this verse records.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "seraiah-6",
+    "confidence": "high",
+    "reason": "Neh 12:12–21 repeats the priestly house names of 12:1–7 in the same order with the next generation's heads ('of Seraiah, Meraiah'), so the eponym here is the Seraiah of 12:1, which BibleData assigns to seraiah-6 and whose 'father -> meraiah' edge is itself derived from this verse; the verse list's seraiah-8 (son of Hilkiah, Neh 11:11) contradicts BibleData's own kinship, though whether seraiah-6 and seraiah-8 are ultimately one priestly house remains an open, separate question.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 44,
+   "word_id": 6481805,
+   "strong_number": "H5152",
+   "reference": "Genesis 29:5",
+   "verse": "And he said unto them, Know ye Laban the son of Nahor? And they said, We know him.",
+   "hebrew_word": "נָחֹ֑ור",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "nahor-2",
+    "confidence": "high",
+    "reason": "Laban descends from Bethuel son of Nahor, Abraham's brother.",
+    "distinguisher": "son of Terah (GEN 11:26)"
+   },
+   "bibledata": {
+    "referent": "nahor",
+    "distinguisher": "son of Serug (GEN 11:22)"
+   },
+   "verdict": "source-wrong",
+   "referent": "nahor-2",
+   "confidence": "high",
+   "reasoning": "Laban descends from Bethuel son of Nahor, Abraham's brother, whom BibleData holds as nahor-2.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "nahor-2",
+    "confidence": "high",
+    "reason": "Laban is son of Bethuel (Gen 28:5), and Bethuel is the son of Nahor and Milcah (Gen 22:22-23; 24:15, 24, 47), so 'son of Nahor' means grandson of Abraham's brother; BibleData's verse list contradicts its own 'son of Serug' distinguisher here.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 45,
+   "word_id": 6484158,
+   "strong_number": "H5152",
+   "reference": "Genesis 31:53",
+   "verse": "The God of Abraham, and the God of Nahor, the God of their father, judge betwixt us. And Jacob sware by the fear of his father Isaac.",
+   "hebrew_word": "נָחֹור֙",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "nahor-2",
+    "confidence": "high",
+    "reason": "God of Abraham and God of Nahor his brother, sons of Terah.",
+    "distinguisher": "son of Terah (GEN 11:26)"
+   },
+   "bibledata": {
+    "referent": "nahor",
+    "distinguisher": "son of Serug (GEN 11:22)"
+   },
+   "verdict": "source-wrong",
+   "referent": "nahor-2",
+   "confidence": "high",
+   "reasoning": "The God of Abraham and the God of Nahor, the God of their father - their father is Terah, so Nahor is Abraham's brother.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "nahor-2",
+    "confidence": "high",
+    "reason": "'The God of Abraham and the God of Nahor, the God of their father' pairs the two sons of Terah (Gen 11:26-27; Josh 24:2, which BibleData itself files under nahor-2); the elder Nahor shares no father with Abraham, so only Abraham's brother fits.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 46,
+   "word_id": 6847735,
+   "strong_number": "H568",
+   "reference": "Ezra 7:3",
+   "verse": "The son of Amariah, the son of Azariah, the son of Meraioth,",
+   "hebrew_word": "אֲמַרְיָ֥ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "amariah-2",
+    "confidence": "high",
+    "reason": "Ezra's ancestor: son of Azariah, father-line to Ahitub, as in 1Chr6:11.",
+    "distinguisher": "son of Azariah and father of Ahitub (1CH 6:11), Levite (1CH 6:1), chief priest (2CH 19:11)"
+   },
+   "bibledata": {
+    "referent": "amariah",
+    "distinguisher": "son of Meraioth (1CH 6:7) and father of Ahitub (1CH 6:7)"
+   },
+   "verdict": "source-wrong",
+   "referent": "amariah-2",
+   "confidence": "medium",
+   "reasoning": "Ezra's chain runs Ahitub, Zadok, Shallum, and it is 1 Chronicles 6:11-13 that has Amariah begetting the Ahitub whose Zadok begat Shallum. The Amariah of 1 Chronicles 6:7 fathers the earlier Ahitub, whose Zadok begat Ahimaaz.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "amariah-2",
+    "confidence": "high",
+    "reason": "Ezra 7:3 calls this Amariah 'son of Azariah' and places him under Ahitub–Zadok–Shallum, which matches the second Amariah of 1 Chr 6:11-12 (BibleData's own amariah-2, 'son of Azariah and father of Ahitub'), not the first Amariah son of Meraioth; the Meraioth in the same verse results from Ezra's abridgment that skips six generations.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 47,
+   "word_id": 6845696,
+   "strong_number": "H1271",
+   "reference": "Ezra 2:61",
+   "verse": "And of the children of the priests: the children of Habaiah, the children of Koz, the children of Barzillai; which took a wife of the daughters of Barzillai the Gileadite, and was called after their name:",
+   "hebrew_word": "בַּרְזִלַּ֤י",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "barzillai",
+    "confidence": "high",
+    "reason": "Explicitly 'Barzillai the Gileadite', the father-in-law.",
+    "distinguisher": "the Gileadite from Rogelim (2SA 17:27)"
+   },
+   "bibledata": {
+    "referent": "barzillai-3",
+    "distinguisher": "man who took a wife from the the daughters of Barzillai and was called by their name (EZR 2:61)"
+   },
+   "verdict": "source-wrong",
+   "referent": "barzillai",
+   "confidence": "high",
+   "reasoning": "The marked word is the second Barzillai of the verse and carries the gentilic the Gileadite; barzillai-3 is by BibleData's own distinguisher the priest who married into that family, which is the verse's first Barzillai.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "barzillai",
+    "confidence": "high",
+    "reason": "The marked word carries the gentilic הַגִּלְעָדִי, the title of the Barzillai of Rogelim (2Sa 17:27; 19:32; 1Ki 2:7), and is the father-in-law whose name the priestly clan adopted; BibleData's verse-level list assigns both Barzillais of the verse to barzillai-3, whose own distinguisher describes the priest (the verse's first occurrence), not the Gileadite.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 48,
+   "word_id": 6853729,
+   "strong_number": "H1271",
+   "reference": "Nehemiah 7:63",
+   "verse": "And of the priests: the children of Habaiah, the children of Koz, the children of Barzillai, which took one of the daughters of Barzillai the Gileadite to wife, and was called after their name.",
+   "hebrew_word": "בַּרְזִלַּ֤י",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "barzillai",
+    "confidence": "high",
+    "reason": "Explicitly 'Barzillai the Gileadite', matching Ezra parallel.",
+    "distinguisher": "the Gileadite from Rogelim (2SA 17:27)"
+   },
+   "bibledata": {
+    "referent": "barzillai-3",
+    "distinguisher": "man who took a wife from the the daughters of Barzillai and was called by their name (EZR 2:61)"
+   },
+   "verdict": "source-wrong",
+   "referent": "barzillai",
+   "confidence": "high",
+   "reasoning": "The Nehemiah parallel of Ezra 2:61, the same phrase and the same word.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "barzillai",
+    "confidence": "high",
+    "reason": "Identical phrase to the Ezra 2:61 parallel: 'Barzillai the Gileadite' is the man from Rogelim (BibleData's barzillai), while barzillai-3 is by its own distinguisher the priest who married his daughter; the verse-level list cannot separate the two occurrences and misassigns this one.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 49,
+   "word_id": 6856568,
+   "strong_number": "H3048",
+   "reference": "Nehemiah 12:6",
+   "verse": "Shemaiah, and Joiarib, Jedaiah,",
+   "hebrew_word": "יְדַֽעְיָֽה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "jedaiah-2",
+    "confidence": "high",
+    "reason": "Priest who returned with Zerubbabel, matches distinguisher exactly.",
+    "distinguisher": "priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshua (EZR 2:36)"
+   },
+   "bibledata": {
+    "referent": "jedaiah-5",
+    "distinguisher": "priest, son of Joiarib (NEH 11:10, NEH 12:7)"
+   },
+   "verdict": "source-wrong",
+   "referent": "jedaiah-2",
+   "confidence": "high",
+   "reasoning": "Nehemiah 12:1-7 and 12:12-21 run in the same order, so 12:6's Jedaiah, after Joiarib, is the house whose head is Uzzi in 12:19, and 12:7's is the house whose head is Nethaneel in 12:21. jedaiah-2's distinguisher cites 12:6 and its kinship names Uzzi; jedaiah-5's cites 12:7 and names Nethaneel. The verse lists have 12:6 and 12:7 exchanged.",
+   "revised_after_fable": "I had called this contested. Fable laid the two lists side by side and showed that three signals in each record agree and only the verse list dissents, which settles it.",
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "jedaiah-2",
+    "confidence": "high",
+    "reason": "Neh 12:6's Jedaiah (paired with Joiarib) is the house headed by Uzzi in the parallel 12:19; jedaiah-2's own distinguisher cites NEH 12:6 and its kinship names Uzzi as son, so BibleData's verse-list entry contradicts its own record — the 12:6/12:7 entries are simply swapped between jedaiah-2 and jedaiah-5.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 50,
+   "word_id": 6856572,
+   "strong_number": "H3048",
+   "reference": "Nehemiah 12:7",
+   "verse": "Sallu, Amok, Hilkiah, Jedaiah. These were the chief of the priests and of their brethren in the days of Jeshua.",
+   "hebrew_word": "יְדַֽעְיָ֑ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "jedaiah-5",
+    "confidence": "high",
+    "reason": "Second Jedaiah of the same returnee list, matches son-of-Joiarib distinguisher (NEH 12:7).",
+    "distinguisher": "priest, son of Joiarib (NEH 11:10, NEH 12:7)"
+   },
+   "bibledata": {
+    "referent": "jedaiah-2",
+    "distinguisher": "priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshua (EZR 2:36)"
+   },
+   "verdict": "source-wrong",
+   "referent": "jedaiah-5",
+   "confidence": "high",
+   "reasoning": "The other half of the same swap: 12:7's Jedaiah follows Hilkiah, and 12:21 gives that house's head as Nethaneel, which is jedaiah-5's own kinship edge.",
+   "revised_after_fable": "I had called this contested, for the same reason as case 49.",
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "jedaiah-5",
+    "confidence": "high",
+    "reason": "Neh 12:7's Jedaiah (after Hilkiah) is the house headed by Nethaneel in the parallel 12:21; jedaiah-5's distinguisher cites NEH 12:7 and its kinship names Nethanel as son, so the verse list's assignment of 12:7 to jedaiah-2 is the swapped half of the same error.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 51,
+   "word_id": 6870934,
+   "strong_number": "H7619",
+   "reference": "1 Chronicles 25:20",
+   "verse": "The thirteenth to Shubael, he, his sons, and his brethren, were twelve:",
+   "hebrew_word": "שֽׁוּבָאֵ֔ל",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shebuel-2",
+    "confidence": "high",
+    "reason": "'The thirteenth to Shubael' matches candidate's 'chosen thirteenth by lot.'",
+    "distinguisher": "son of Heman_3 (1CH 25:4), chosen thirteenth by lot (1CH 25:20)"
+   },
+   "bibledata": {
+    "referent": "shebuel",
+    "distinguisher": "descendant of Gershom (1CH 23:16), officer over the treasures (1CH 26:24)"
+   },
+   "verdict": "source-wrong",
+   "referent": "shebuel-2",
+   "confidence": "high",
+   "reasoning": "The thirteenth lot in 1 Chronicles 25 falls among the sons of Asaph, Jeduthun and Heman, and Shubael is named in 25:4 among Heman's sons; shebuel is the Gershomite treasurer of 1 Chronicles 26:24.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "shebuel-2",
+    "confidence": "high",
+    "reason": "The lot list of 1 Chr 25:9–31 distributes exactly the singers named in 25:2–4, and the thirteenth lot goes to Shubael = Shebuel son of Heman (25:4); the Gershonite treasurer of 23:16/24:20/26:24 is not among the musicians. BibleData's own distinguisher for shebuel-2 already cites 1CH 25:20, contradicting its verse list, and the distinguisher is the half that matches the text.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 52,
+   "word_id": 6863113,
+   "strong_number": "H8050",
+   "reference": "1 Chronicles 9:22",
+   "verse": "All these which were chosen to be porters in the gates were two hundred and twelve. These were reckoned by their genealogy in their villages, whom David and Samuel the seer did ordain in their set office.",
+   "hebrew_word": "שְׁמוּאֵ֥ל",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "samuel-2",
+    "confidence": "high",
+    "reason": "David and Samuel the seer ordained the porters.",
+    "distinguisher": "son of Elkanah and Hannah (1SA 1:20)"
+   },
+   "bibledata": {
+    "referent": "samuel",
+    "distinguisher": "the leader of the tribe of Simeon (NUM 34:20) to apportion the Land (NUM 34:17)"
+   },
+   "verdict": "source-wrong",
+   "referent": "samuel-2",
+   "confidence": "high",
+   "reasoning": "David and Samuel the seer ordaining the porters is the prophet; samuel is the Simeonite prince of Numbers 34:20.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "samuel-2",
+    "confidence": "high",
+    "reason": "The word is 'Samuel the seer' paired with David — the prophet's title (1 Sam 9:9, 1 Chr 26:28, 29:29) and era; BibleData's `samuel` record is by its own distinguisher and kinship (son of Ammihud) the Simeonite prince of Numbers 34:20, so its verse list is misfiled here.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 53,
+   "word_id": 6863840,
+   "strong_number": "H8050",
+   "reference": "1 Chronicles 11:3",
+   "verse": "Therefore came all the elders of Israel to the king to Hebron; and David made a covenant with them in Hebron before the Lord; and they anointed David king over Israel, according to the word of the Lord by Samuel.",
+   "hebrew_word": "שְׁמוּאֵֽל",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "samuel-2",
+    "confidence": "high",
+    "reason": "David anointed king according to word of the Lord by Samuel.",
+    "distinguisher": "son of Elkanah and Hannah (1SA 1:20)"
+   },
+   "bibledata": {
+    "referent": "samuel",
+    "distinguisher": "the leader of the tribe of Simeon (NUM 34:20) to apportion the Land (NUM 34:17)"
+   },
+   "verdict": "source-wrong",
+   "referent": "samuel-2",
+   "confidence": "high",
+   "reasoning": "Anointed king according to the word of the Lord by Samuel - the prophet.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "samuel-2",
+    "confidence": "high",
+    "reason": "'The word of the LORD by the hand of Samuel' concerning David's kingship points to the prophet's anointing of David (1 Sam 16) and his oracle against Saul (1 Sam 15:28); the Simeonite Shemuel of Numbers 34 cannot be meant, so BibleData's `samuel` verse list is wrong at this verse.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 54,
+   "word_id": 6860483,
+   "strong_number": "H3379",
+   "reference": "1 Chronicles 5:17",
+   "verse": "All these were reckoned by genealogies in the days of Jotham king of Judah, and in the days of Jeroboam king of Israel.",
+   "hebrew_word": "יָרָבְעָ֥ם",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "jeroboam-2",
+    "confidence": "medium",
+    "reason": "Paired with Jotham king of Judah, chronologically fits Jeroboam II's era.",
+    "distinguisher": "King of Israel (2KI 13:13), son of Joash [Jehoash] (2KI 14:16)"
+   },
+   "bibledata": {
+    "referent": "jeroboam",
+    "distinguisher": "Solomon's servant, son of Nebat, who rebelled against him (1KI 11:26), and was later made king of Israel (1KI 12:20)"
+   },
+   "verdict": "source-wrong",
+   "referent": "jeroboam-2",
+   "confidence": "high",
+   "reasoning": "Jotham of Judah and Jeroboam of Israel are named as contemporaries; Jeroboam son of Nebat is two centuries earlier.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "jeroboam-2",
+    "confidence": "high",
+    "reason": "The verse dates the Transjordan register 'in the days of Jotham king of Judah' (c. 750–732 BCE); the only Jeroboam whose reign is contemporaneous is Jeroboam II son of Joash, while Jeroboam I died some 150 years earlier. BibleData's verse list put the verse under the son-of-Nebat record against its own definition of jeroboam-2.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 55,
+   "word_id": 6855548,
+   "strong_number": "H2811",
+   "reference": "Nehemiah 10:11",
+   "verse": "Micha, Rehob, Hashabiah,",
+   "hebrew_word": "חֲשַׁבְיָֽה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "hashabiah",
+    "confidence": "high",
+    "reason": "Candidate's own citation names this verse among Levites sealing the covenant.",
+    "distinguisher": "son of Amaziah (1CH 6:45), Levite during the return (NEH 10:11, NEH 12:24)"
+   },
+   "bibledata": {
+    "referent": "hashabiah-4",
+    "distinguisher": "Levite sent to Ezra (EZR 8:19)"
+   },
+   "verdict": "model-wrong",
+   "referent": "hashabiah-4",
+   "confidence": "medium",
+   "reasoning": "hashabiah is the Merarite son of Amaziah of 1 Chronicles 6:45, an ancestor of the exile, and cannot seal Nehemiah's covenant. The model followed BibleData's distinguisher, which cites Nehemiah 10:11 although its verse list does not.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "model-wrong",
+    "referent": "hashabiah-4",
+    "confidence": "high",
+    "reason": "The model followed the stray '(NEH 10:11, NEH 12:24)' tail in the distinguisher of `hashabiah`, whose verse list and kinship edges (son of Amaziah, 1 Chr 6:45) make him a David-era ancestor of Ethan, impossible among Nehemiah's covenant-sealers. The sealer paired with Sherebiah is the Levite who came up with Ezra (Ezra 8:19, 24), i.e. hashabiah-4; the empty stub hashabiah-6 should be folded into it.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 56,
+   "word_id": 6856743,
+   "strong_number": "H2811",
+   "reference": "Nehemiah 12:24",
+   "verse": "And the chief of the Levites: Hashabiah, Sherebiah, and Jeshua the son of Kadmiel, with their brethren over against them, to praise and to give thanks, according to the commandment of David the man of God, ward over against ward.",
+   "hebrew_word": "חֲשַׁבְיָ֨ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "hashabiah-4",
+    "confidence": "medium",
+    "reason": "Paired with Sherebiah as chief of Levites, matching the Ezra 8:24 duo reappearing.",
+    "distinguisher": "Levite sent to Ezra (EZR 8:19)"
+   },
+   "bibledata": {
+    "referent": "hashabiah-7",
+    "distinguisher": "son of Mattaniah (NEH 11:22)"
+   },
+   "verdict": "source-wrong",
+   "referent": "hashabiah-4",
+   "confidence": "high",
+   "reasoning": "BibleData's hashabiah-7 is, on its own kinship edges, the great-grandfather of Uzzi the serving overseer of Nehemiah 11:22, so he cannot be a chief of the Levites in the same generation. Hashabiah with Sherebiah and Jeshua son of Kadmiel is the company of Ezra 8:18-24 and Nehemiah 9 and 10.",
+   "revised_after_fable": "I had called this contested between hashabiah-4 and hashabiah-7. The generation count in Nehemiah 11:22 rules hashabiah-7 out and I had not read it that closely.",
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "hashabiah-4",
+    "confidence": "high",
+    "reason": "BibleData's hashabiah-7 is, by its own kinship edges, the great-grandfather of Uzzi the current overseer (Neh 11:22), so he cannot be a serving chief Levite in Nehemiah's day. The trio Hashabiah–Sherebiah–Jeshua b. Kadmiel is the Ezra 8 / Neh 9–10 company, making this the same man as Ezra 8:19, 24 and Neh 10:11.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 57,
+   "word_id": 6858439,
+   "strong_number": "H6034",
+   "reference": "1 Chronicles 1:41",
+   "verse": "The sons of Anah; Dishon. And the sons of Dishon; Amram, and Eshban, and Ithran, and Cheran.",
+   "hebrew_word": "עֲנָ֖ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "beeri",
+    "confidence": "high",
+    "reason": "Sons of Anah: Dishon, parallel to Genesis 36:25's same Anah.",
+    "distinguisher": "the Hittite (GEN 26:34), also called Anah (GEN 36:2)"
+   },
+   "bibledata": {
+    "referent": "anah",
+    "distinguisher": "son of Seir (GEN 36:20) and chief in Edom (GEN 36:29)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "anah",
+   "confidence": "medium",
+   "reasoning": "1 Chronicles 1:41 abridges Genesis 36:25 and stands in the fourth-son-of-Seir slot opened at 1:38, and the Anah who fathers Dishon and Aholibamah is the Anah counted among Seir's sons. anah should survive and absorb the Anah-labelled verses of beeri; Genesis 26:34 should stay behind as a bare Beeri-the-Hittite record, because equating Beeri with Anah is rabbinic harmonisation the Hebrew does not make.",
+   "revised_after_fable": "I had called this source-wrong with beeri as the referent, taking BibleData's two Anahs at face value. Fable's reading — that the doubled genealogy is the text's own and the two records are one man — is better, and it also exposes the Beeri identification as an inference rather than a reading.",
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "anah",
+    "confidence": "medium",
+    "reason": "1 Chr 1:41 'sons of Anah: Dishon' copies Gen 36:25 in the fourth-son-of-Seir slot of 1:38, and Gen 36:25/36:2/36:14 make this Dishon-and-Aholibamah-fathering Anah the son of Zibeon counted among Seir's sons — one man that BibleData splits between `anah` and the composite `beeri`.",
+    "survivor": "anah survives, absorbing the Anah-labelled verses and Dishon/Aholibamah/Zibeon edges of beeri; Gen 26:34 should remain as a separate Beeri-the-Hittite record, since the Beeri=Anah equation is rabbinic harmonization, not the Hebrew text"
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 58,
+   "word_id": 6843688,
+   "strong_number": "H1867",
+   "reference": "Daniel 11:1",
+   "verse": "Also I in the first year of Darius the Mede, even I, stood to confirm and to strengthen him.",
+   "hebrew_word": "דָרְיָ֖וֶשׁ",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "darius-2",
+    "confidence": "medium",
+    "reason": "Same 'first year of Darius the Mede' framing as Dan 9:1's genealogical identification.",
+    "distinguisher": "son of Ahaseurus, a Mede (DAN 9:1)"
+   },
+   "bibledata": {
+    "referent": "darius",
+    "distinguisher": "King of Persia (EZR 4:5)"
+   },
+   "verdict": "source-wrong",
+   "referent": "darius-2",
+   "confidence": "high",
+   "reasoning": "Darius the Mede is the son of Ahasuerus of Daniel 9:1, not the Persian of Ezra 4:5.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "darius-2",
+    "confidence": "high",
+    "reason": "The Hebrew reads דָרְיָוֶשׁ הַמָּדִי, 'Darius the Mede,' the same man Dan 9:1 calls son of Ahasuerus of Median seed, whom BibleData itself holds as darius-2; the darius record is distinguished as the Persian king of Ezra 4:5 (Darius Hystaspes), so its verse list contradicts its own distinguisher by including this verse.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 59,
+   "word_id": 6845479,
+   "strong_number": "H564",
+   "reference": "Ezra 2:37",
+   "verse": "The children of Immer, a thousand fifty and two.",
+   "hebrew_word": "אִמֵּ֔ר",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "immer",
+    "confidence": "high",
+    "reason": "Distinguisher explicitly cites this verse for the priestly clan count.",
+    "distinguisher": "father of Meshillemith (1CH 9:12), priest (EZR 2:37, NEH 7:40)"
+   },
+   "bibledata": {
+    "referent": "immer-2",
+    "distinguisher": "sixteenth-chosen priest for the twenty-four courses (1CH 24:14)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "immer-2",
+   "confidence": "high",
+   "reasoning": "Both records claim this verse: immer by its distinguisher and immer-2 by its verse list, and both describe the same priestly clan founded by the sixteenth course of 1 Chronicles 24:14. The 1,052 children of Immer are that course counted by clan. immer-2 should survive, since its distinguisher, verse list and kinship agree with each other.",
+   "revised_after_fable": "I had called this contested because both records are priestly Immers. Fable's observation that the two halves of one record and the whole of the other claim the same verses is the definition of a duplicate, and I had read the same contradiction without drawing that conclusion.",
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "immer-2",
+    "confidence": "high",
+    "reason": "The 1,052 'children of Immer' are the priestly course founded in 1 Chr 24:14 counted by clan; BibleData's `immer` claims this verse in its distinguisher while `immer-2` holds it in its verse list, so the one clan eponym sits under two records.",
+    "survivor": "immer-2 survives, absorbing immer"
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 60,
+   "word_id": 6849958,
+   "strong_number": "H564",
+   "reference": "Ezra 10:20",
+   "verse": "And of the sons of Immer; Hanani, and Zebadiah.",
+   "hebrew_word": "אִמֵּ֔ר",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "immer",
+    "confidence": "medium",
+    "reason": "Sons of Immer clan, same priestly lineage counted in Ezra 2:37.",
+    "distinguisher": "father of Meshillemith (1CH 9:12), priest (EZR 2:37, NEH 7:40)"
+   },
+   "bibledata": {
+    "referent": "immer-2",
+    "distinguisher": "sixteenth-chosen priest for the twenty-four courses (1CH 24:14)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "immer-2",
+   "confidence": "high",
+   "reasoning": "The sons of Immer at Ezra 10:20 are Hanani and Zebadiah, and BibleData records them as descendants of immer while filing the verse under immer-2 — one clan, two records.",
+   "revised_after_fable": "I had called this contested, for the same reason as case 59.",
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "immer-2",
+    "confidence": "high",
+    "reason": "Hanani and Zebadiah are priests of the house of Immer (the Ezra 2 priestly clans in order); `immer` carries the kinship edges to hanani-3 and zebadiah-9 while `immer-2` carries the verse, the same man split across two records.",
+    "survivor": "immer-2 survives, absorbing immer"
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 61,
+   "word_id": 6853521,
+   "strong_number": "H564",
+   "reference": "Nehemiah 7:40",
+   "verse": "The children of Immer, a thousand fifty and two.",
+   "hebrew_word": "אִמֵּ֔ר",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "immer",
+    "confidence": "high",
+    "reason": "Distinguisher explicitly cites this verse, duplicate of Ezra 2:37's list.",
+    "distinguisher": "father of Meshillemith (1CH 9:12), priest (EZR 2:37, NEH 7:40)"
+   },
+   "bibledata": {
+    "referent": "immer-2",
+    "distinguisher": "sixteenth-chosen priest for the twenty-four courses (1CH 24:14)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "immer-2",
+   "confidence": "high",
+   "reasoning": "The Nehemiah 7:40 parallel of Ezra 2:37, the same clan under the same two records.",
+   "revised_after_fable": "I had called this contested, for the same reason as case 59.",
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "immer-2",
+    "confidence": "high",
+    "reason": "Verbatim parallel of Ezra 2:37; both `immer` (distinguisher) and `immer-2` (verse list) claim it for the same clan eponym of 1 Chr 24:14.",
+    "survivor": "immer-2 survives, absorbing immer"
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 62,
+   "word_id": 6854125,
+   "strong_number": "H6126",
+   "reference": "Nehemiah 8:7",
+   "verse": "Also Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai, Hodijah, Maaseiah, Kelita, Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law: and the people stood in their place.",
+   "hebrew_word": "עַקּ֡וּב",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "akkub-3",
+    "confidence": "high",
+    "reason": "Listed among Levites who helped expound the law, matching Nehemiah 8:7 distinguisher.",
+    "distinguisher": "temple servant (EZR 2:45), explained the law to the people (NEH 8:7)"
+   },
+   "bibledata": {
+    "referent": "akkub-2",
+    "distinguisher": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)"
+   },
+   "verdict": "model-wrong",
+   "referent": "akkub-2",
+   "confidence": "medium",
+   "reasoning": "Ezra 2 separates the returnees by class, and akkub-3 is a head of Nethinim at 2:45 — temple servants, not Levites — so he cannot be one of the Levites expounding the law in Nehemiah's day. The model followed akkub-3's distinguisher, which cites Nehemiah 8:7 against its own verse list. akkub-2 the gatekeeper is a Levite of the right generation and the only record that fits, though Strong keeps the law-expounder as a separate man and the encyclopedia may simply not hold him.",
+   "revised_after_fable": "I had called this both-wrong on Strong's separating the two. Fable is right that Strong's numbering counts contexts rather than men, and that the class boundary in Ezra 2 rules akkub-3 out decisively while nothing rules akkub-2 out.",
+   "fable": {
+    "verdict": "model-wrong",
+    "referent": "akkub-2",
+    "confidence": "medium",
+    "reason": "akkub-3 is a Nethinim family head of the 538 return (Ezra 2:45, a class distinct from Levites, and dropped in Neh 7:48), so it cannot be a Levite teaching Torah in Nehemiah's day; the model followed the record's erroneous '(NEH 8:7)' distinguisher, which its own verse list contradicts. The gatekeeper akkub-2 is a Levite contemporary of Nehemiah (Neh 11:19; 12:25) and the only record that fits, though the lexica's view that Neh 8:7 names a separate Levite (Strong's #5, no BibleData record) cannot be excluded.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 63,
+   "word_id": 6858440,
+   "strong_number": "H1787",
+   "reference": "1 Chronicles 1:41",
+   "verse": "The sons of Anah; Dishon. And the sons of Dishon; Amram, and Eshban, and Ithran, and Cheran.",
+   "hebrew_word": "דִּישֹׁ֑ון",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "dishon-2",
+    "confidence": "high",
+    "reason": "\"Sons of Anah: Dishon\" parallels Genesis 36:25, son of Anah.",
+    "distinguisher": "son of Anah (GEN 36:25)"
+   },
+   "bibledata": {
+    "referent": "dishon",
+    "distinguisher": "son of Seir (GEN 36:21) and chief in Edom (GEN 36:29)"
+   },
+   "verdict": "source-wrong",
+   "referent": "dishon-2",
+   "confidence": "medium",
+   "reasoning": "The sons of Anah, Dishon - the Dishon of Genesis 36:25, Anah's son. dishon is Seir's son, already named in verse 38.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "dishon-2",
+    "confidence": "high",
+    "reason": "\"The sons of Anah: Dishon\" in 1 Chr 1:41 reproduces Gen 36:25, which BibleData itself assigns to dishon-2 (distinguisher 'son of Anah'); the son of Seir appears in the Chronicler's list at 1:38, not 1:41.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 64,
+   "word_id": 6858443,
+   "strong_number": "H1787",
+   "reference": "1 Chronicles 1:41",
+   "verse": "The sons of Anah; Dishon. And the sons of Dishon; Amram, and Eshban, and Ithran, and Cheran.",
+   "hebrew_word": "דִישֹׁ֔ון",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "dishon-2",
+    "confidence": "high",
+    "reason": "Sons Hemdan(Amram)/Eshban/Ithran/Cheran match Gen 36:26, same Dishon son of Anah.",
+    "distinguisher": "son of Anah (GEN 36:25)"
+   },
+   "bibledata": {
+    "referent": "dishon",
+    "distinguisher": "son of Seir (GEN 36:21) and chief in Edom (GEN 36:29)"
+   },
+   "verdict": "source-wrong",
+   "referent": "dishon-2",
+   "confidence": "medium",
+   "reasoning": "The sons of Dishon - Hamran, Eshban, Ithran and Cheran - are Genesis 36:26's sons of Anah's Dishon.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "dishon-2",
+    "confidence": "high",
+    "reason": "The Dishon whose sons are Hamran/Hemdan, Eshban, Ithran, Cheran is exactly dishon-2 per BibleData's own kinship edges and Gen 36:26; both occurrences in the verse are the same son of Anah, so the verse-level placement under dishon is wrong for both.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 65,
+   "word_id": 6721263,
+   "strong_number": "H1587",
+   "reference": "Jeremiah 36:11",
+   "verse": "When Michaiah the son of Gemariah, the son of Shaphan, had heard out of the book all the words of the Lord,",
+   "hebrew_word": "גְּמַרְיָ֧הוּ",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "gemariah-2",
+    "confidence": "high",
+    "reason": "Explicitly son of Shaphan the scribe, matching that candidate.",
+    "distinguisher": "son of Shaphan the scribe (JER 36:10)"
+   },
+   "bibledata": {
+    "referent": "gemariah",
+    "distinguisher": "son of Hilkiah (JER 29:3)"
+   },
+   "verdict": "source-wrong",
+   "referent": "gemariah-2",
+   "confidence": "high",
+   "reasoning": "The verse says Gemariah the son of Shaphan, which is BibleData's gemariah-2 - a record it gives no verses at all, having put all four Jeremiah 36 verses on the son of Hilkiah.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "gemariah-2",
+    "confidence": "high",
+    "reason": "The Hebrew reads מִכָיְהוּ בֶן גְּמַרְיָהוּ בֶן שָׁפָן — son of Shaphan and father of Micaiah — exactly the kinship edges BibleData records for gemariah-2; its verse list filed the verse under the son of Hilkiah, contradicting its own distinguisher and genealogy.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 66,
+   "word_id": 6721302,
+   "strong_number": "H1587",
+   "reference": "Jeremiah 36:12",
+   "verse": "Then he went down into the king's house, into the scribe's chamber: and, lo, all the princes sat there, even Elishama the scribe, and Delaiah the son of Shemaiah, and Elnathan the son of Achbor, and Gemariah the son of Shaphan, and Zedekiah the son of Hananiah, and all the princes.",
+   "hebrew_word": "גְמַרְיָ֧הוּ",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "gemariah-2",
+    "confidence": "high",
+    "reason": "Same list, explicitly Gemariah son of Shaphan.",
+    "distinguisher": "son of Shaphan the scribe (JER 36:10)"
+   },
+   "bibledata": {
+    "referent": "gemariah",
+    "distinguisher": "son of Hilkiah (JER 29:3)"
+   },
+   "verdict": "source-wrong",
+   "referent": "gemariah-2",
+   "confidence": "high",
+   "reasoning": "Gemariah the son of Shaphan, named in the list of princes.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "gemariah-2",
+    "confidence": "high",
+    "reason": "The text gives the patronym explicitly, וּגְמַרְיָהוּ בֶן שָׁפָן, among Jehoiakim's princes; only gemariah-2 is son of Shaphan, and BibleData's verse list contradicts its own record distinguisher.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 67,
+   "word_id": 6721621,
+   "strong_number": "H1587",
+   "reference": "Jeremiah 36:25",
+   "verse": "Nevertheless Elnathan and Delaiah and Gemariah had made intercession to the king that he would not burn the roll: but he would not hear them.",
+   "hebrew_word": "גְמַרְיָ֨הוּ֙",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "gemariah-2",
+    "confidence": "high",
+    "reason": "Same episode as 36:11-12, same Gemariah son of Shaphan.",
+    "distinguisher": "son of Shaphan the scribe (JER 36:10)"
+   },
+   "bibledata": {
+    "referent": "gemariah",
+    "distinguisher": "son of Hilkiah (JER 29:3)"
+   },
+   "verdict": "source-wrong",
+   "referent": "gemariah-2",
+   "confidence": "high",
+   "reasoning": "The same episode and the same three princes.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "gemariah-2",
+    "confidence": "high",
+    "reason": "Elnathan, Delaiah, and Gemariah in 36:25 are the same three princes named with patronyms in 36:12 (Achbor, Shemaiah, Shaphan), continuing the same scene before the king; no son of Hilkiah appears in Jeremiah 36.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 68,
+   "word_id": 6871069,
+   "strong_number": "H2148",
+   "reference": "1 Chronicles 26:2",
+   "verse": "And the sons of Meshelemiah were, Zechariah the firstborn, Jediael the second, Zebadiah the third, Jathniel the fourth,",
+   "hebrew_word": "זְכַרְיָ֤הוּ",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zechariah-4",
+    "confidence": "high",
+    "reason": "Firstborn son of Meshelemiah, same family as 1Ch9:21 gatekeeper.",
+    "distinguisher": "son of Meshelemiah [Shallum] (1CH 9:21), gatekeeper (1CH 26:14)"
+   },
+   "bibledata": {
+    "referent": "zechariah-5",
+    "distinguisher": "second rank Levite, gatekeeper (1CH 15:18), a trumpeter (1CH 15:24)"
+   },
+   "verdict": "source-wrong",
+   "referent": "zechariah-4",
+   "confidence": "high",
+   "reasoning": "Zechariah the firstborn son of Meshelemiah is 1 Chronicles 9:21's porter; zechariah-5 is the musician of 1 Chronicles 15:18-24.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "zechariah-4",
+    "confidence": "high",
+    "reason": "The word is 'Zechariah the firstborn' of Meshelemiah the Korahite (26:1-2), the same man 9:21 calls 'Zechariah son of Meshelemiah, gatekeeper' — BibleData's own zechariah-4 record; the verse list misfiles it under zechariah-5, the 15:18/16:5 musician, whom the text never links to Meshelemiah.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 69,
+   "word_id": 6871262,
+   "strong_number": "H2148",
+   "reference": "1 Chronicles 26:14",
+   "verse": "And the lot eastward fell to Shelemiah. Then for Zechariah his son, a wise counsellor, they cast lots; and his lot came out northward.",
+   "hebrew_word": "זְכַרְיָ֨הוּ",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "zechariah-4",
+    "confidence": "high",
+    "reason": "Son of Shelemiah (=Meshelemiah), same gatekeeper family as 26:2.",
+    "distinguisher": "son of Meshelemiah [Shallum] (1CH 9:21), gatekeeper (1CH 26:14)"
+   },
+   "bibledata": {
+    "referent": "zechariah-5",
+    "distinguisher": "second rank Levite, gatekeeper (1CH 15:18), a trumpeter (1CH 15:24)"
+   },
+   "verdict": "source-wrong",
+   "referent": "zechariah-4",
+   "confidence": "high",
+   "reasoning": "Zechariah his son, the son of Shelemiah - Meshelemiah - of the gatekeeper family of verse 2.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "zechariah-4",
+    "confidence": "high",
+    "reason": "'Zechariah his son' after Shelemiah (= Meshelemiah of 26:1, 2, 9) is the firstborn gatekeeper of 26:2 and 9:21; zechariah-4's own distinguisher cites 1CH 26:14 while its verse list omits it, and I trust the distinguisher because the filiation in the Hebrew settles it.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 70,
+   "word_id": 6892506,
+   "strong_number": "H623",
+   "reference": "2 Chronicles 35:15",
+   "verse": "And the singers the sons of Asaph were in their place, according to the commandment of David, and Asaph, and Heman, and Jeduthun the king's seer; and the porters waited at every gate; they might not depart from their service; for their brethren the Levites prepared for them.",
+   "hebrew_word": "אָסָ֜ף",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "asaph-2",
+    "confidence": "high",
+    "reason": "Sons of Asaph in their place per commandment of David and Asaph, the musician's guild.",
+    "distinguisher": "son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9)"
+   },
+   "bibledata": {
+    "referent": "asaph-3",
+    "distinguisher": "father of Zichri (1CH 9:15), singer (EZR 2:41, NEH 7:44)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "asaph-2",
+   "confidence": "medium",
+   "reasoning": "asaph-3 is described by the guild's post-exilic appearances and asaph-2 by the Davidic musician himself, but the sons of Asaph are descendants of one man; the two records are one person split between his life and his guild.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "asaph-2",
+    "confidence": "high",
+    "reason": "\"The singers the sons of Asaph\" is the guild named for the Davidic Asaph, and the same verse grounds that guild in his own commandment; BibleData's asaph-3 is the same man filed a second time as guild-eponym, as its own kinship (asaph-2 ancestor of mattaniah-4, whose verse Neh 11:17 sits under asaph-3) shows.",
+    "survivor": "asaph-2 survives and absorbs asaph-3"
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 71,
+   "word_id": 6892513,
+   "strong_number": "H623",
+   "reference": "2 Chronicles 35:15",
+   "verse": "And the singers the sons of Asaph were in their place, according to the commandment of David, and Asaph, and Heman, and Jeduthun the king's seer; and the porters waited at every gate; they might not depart from their service; for their brethren the Levites prepared for them.",
+   "hebrew_word": "אָסָ֞ף",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "asaph-2",
+    "confidence": "high",
+    "reason": "Same verse, 'commandment of David and Asaph' the original chief musician.",
+    "distinguisher": "son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9)"
+   },
+   "bibledata": {
+    "referent": "asaph-3",
+    "distinguisher": "father of Zichri (1CH 9:15), singer (EZR 2:41, NEH 7:44)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "asaph-2",
+   "confidence": "high",
+   "reasoning": "asaph-3 is the Davidic Asaph filed a second time as the guild's ancestor: BibleData's own kinship makes Mattaniah of Nehemiah 11:17 a descendant of asaph-2 while filing that verse under asaph-3. So BibleData is not wrong about the man here, only about which of its two records for him it used.",
+   "revised_after_fable": "I had called this source-wrong because *the commandment of David, and Asaph, and Heman, and Jeduthun* is unmistakably the Davidic musician. That is still true, but if the two records are one man then the source is not wrong about who is meant, and the same verdict should cover all three Asaph occurrences.",
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "asaph-2",
+    "confidence": "high",
+    "reason": "The name stands in the fixed Davidic triad Asaph–Heman–Jeduthun (1 Chr 25:1; 2 Chr 5:12; 29:13), David's contemporary, which even BibleData's own asaph-2 distinguisher describes; the asaph-3 label here is a verse-level artefact of the duplicate record.",
+    "survivor": "asaph-2 survives and absorbs asaph-3"
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 72,
+   "word_id": 6846158,
+   "strong_number": "H623",
+   "reference": "Ezra 3:10",
+   "verse": "And when the builders laid the foundation of the temple of the Lord, they set the priests in their apparel with trumpets, and the Levites the sons of Asaph with cymbals, to praise the Lord, after the ordinance of David king of Israel.",
+   "hebrew_word": "אָסָף֙",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "asaph-2",
+    "confidence": "medium",
+    "reason": "Cymbals 'after the ordinance of David' point to the original Davidic musician's guild.",
+    "distinguisher": "son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9)"
+   },
+   "bibledata": {
+    "referent": "asaph-3",
+    "distinguisher": "father of Zichri (1CH 9:15), singer (EZR 2:41, NEH 7:44)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "asaph-2",
+   "confidence": "medium",
+   "reasoning": "The Levites the sons of Asaph with cymbals after the ordinance of David - the same guild and the same eponym.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "asaph-2",
+    "confidence": "high",
+    "reason": "\"The Levites the sons of Asaph\" acting \"after the ordinance of David\" is the singers' guild of the Davidic Asaph; no verse anywhere introduces a second singer-Asaph, so asaph-3 is a redundant record for the same man.",
+    "survivor": "asaph-2 survives and absorbs asaph-3"
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 73,
+   "word_id": 6860944,
+   "strong_number": "H511",
+   "reference": "1 Chronicles 6:26",
+   "verse": "As for Elkanah: the sons of Elkanah; Zophai his son, and Nahath his son,",
+   "hebrew_word": "אֶלְקָנָ֑ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "elkanah-4",
+    "confidence": "high",
+    "reason": "'As for Elkanah' resumes the Elkanah just named as father of Amasai/Ahimoth in v.25.",
+    "distinguisher": "father of Amasai and Ahimoth (1CH 6:25) and son of Joel (1CH 6:36)"
+   },
+   "bibledata": {
+    "referent": "elkanah-5",
+    "distinguisher": "father of Zophai [Zuph] (1CH 6:26) and son of Mahath (1CH 6:35)"
+   },
+   "verdict": "model-wrong",
+   "referent": "elkanah-5",
+   "confidence": "medium",
+   "reasoning": "The ascending line of 1 Chronicles 6:35 runs Zuph, Elkanah, Mahath, Amasai, Elkanah, so the Elkanah whose son is Zophai stands one generation below Amasai's father. elkanah-4 is that father.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "model-wrong",
+    "referent": "elkanah-5",
+    "confidence": "high",
+    "reason": "The first Elkanah of 6:26 is the father of Zophai/Zuph on every reading (ketiv 'his son' = son of Ahimoth/Mahath; qere casus pendens resumed by the same name; or dittography), and 6:35 makes Zuph's father the Elkanah son of Mahath, three generations below the Elkanah of v.25. The model's 'as for' resumption rests on the KJV gloss and would contradict the parallel pedigree.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 74,
+   "word_id": 6855562,
+   "strong_number": "H1137",
+   "reference": "Nehemiah 10:14",
+   "verse": "The chief of the people; Parosh, Pahathmoab, Elam, Zatthu, Bani,",
+   "hebrew_word": "בָּנִֽי",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "bani-3",
+    "confidence": "high",
+    "reason": "Candidate distinguisher explicitly cites this verse as lay leader Bani.",
+    "distinguisher": "descendant of Perez (1CH 9:4) and leader during the return (NEH 10:14)"
+   },
+   "bibledata": {
+    "referent": "bani-6",
+    "distinguisher": "father of Rehum (NEH 3:17)"
+   },
+   "verdict": "both-wrong",
+   "referent": "bani-4",
+   "confidence": "medium",
+   "reasoning": "Parosh, Pahath-moab, Elam, Zattu, Bani is the order of Ezra 2:3-10, so this is the lay house of Ezra 2:10, which BibleData holds as bani-4 — a record neither side named. bani-6 is a Levite line and cannot stand in the lay block; bani-3 is the pre-exilic Judahite of 1 Chronicles 9:4 whose own verse list disowns the distinguisher's claim to this verse.",
+   "revised_after_fable": "Same verdict as before; Fable named the record that fits, which I had left as none.",
+   "fable": {
+    "verdict": "both-wrong",
+    "referent": "bani-4",
+    "confidence": "medium",
+    "reason": "Neh 10:14 lists 'heads of the people' under their Ezra 2 clan names (Parosh, Pahath-moab, Elam, Zattu, Bani, Azgad, Bebai...), so this Bani is the eponymous lay family of Ezra 2:10 = bani-4; bani-6 is a Levite lineage (Neh 3:17) and cannot sit in the lay block, and bani-3 is the pre-exilic Judahite of 1 Chr 9:4 whose own verse list disowns the distinguisher's claim to 10:14.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 75,
+   "word_id": 6721910,
+   "strong_number": "H8018",
+   "reference": "Jeremiah 37:3",
+   "verse": "And Zedekiah the king sent Jehucal the son of Shelemiah and Zephaniah the son of Maaseiah the priest to the prophet Jeremiah, saying, Pray now unto the Lord our God for us.",
+   "hebrew_word": "שֶֽׁלֶמְיָ֗ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shelemiah-8",
+    "confidence": "high",
+    "reason": "Father of Jehucal/Jucal, same person named again in Jer 38:1.",
+    "distinguisher": "father of Jucal (JER 38:1)"
+   },
+   "bibledata": {
+    "referent": "shelemiah-6",
+    "distinguisher": "son of Adbeel, sent to sieze Baruch and Jeremiah (JER 36:26)"
+   },
+   "verdict": "source-wrong",
+   "referent": "shelemiah-8",
+   "confidence": "medium",
+   "reasoning": "Jehucal son of Shelemiah in 37:3 is Jucal son of Shelemiah in 38:1, which is shelemiah-8. shelemiah-6 is the son of Abdeel sent to seize Baruch, and BibleData has given it both Abdeel as father and Jehucal as son.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "shelemiah-8",
+    "confidence": "medium",
+    "reason": "Jehucal (37:3) and Jucal (38:1) are certainly the same son of Shelemiah under Zedekiah, so the father here is the man of Jer 38:1, shelemiah-8; BibleData's placement under shelemiah-6 rests on an unsupported identification of Jehucal's father with Abdeel's son of 604 BC, which BibleData itself contradicts by keeping shelemiah-8 separate.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 76,
+   "word_id": 6596381,
+   "strong_number": "H2246",
+   "reference": "Judges 4:11",
+   "verse": "Now Heber the Kenite, which was of the children of Hobab the father in law of Moses, had severed himself from the Kenites, and pitched his tent unto the plain of Zaanaim, which is by Kedesh.",
+   "hebrew_word": "חֹבָ֖ב",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "hobab",
+    "confidence": "high",
+    "reason": "Explicitly called father-in-law of Moses, same figure as in Numbers 10:29.",
+    "distinguisher": "the son of Reuel, Moses' father-in-law (NUM 10:29)"
+   },
+   "bibledata": {
+    "referent": "reuel-2",
+    "distinguisher": "Moses' father-in-law (EXO 2:18, NUM 10:29)"
+   },
+   "verdict": "contested",
+   "referent": "undecided",
+   "confidence": "low",
+   "reasoning": "Judges 4:11 calls Hobab Moses' father-in-law while Numbers 10:29 calls Hobab the son of Reuel and Exodus 2:18 calls Reuel the father-in-law. The Hebrew chothen is read as father-in-law or as brother-in-law, and the question is old and unresolved.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "contested",
+    "referent": "undecided",
+    "confidence": "medium",
+    "reason": "The Hobab of Judg 4:11 is certainly the Hobab of Num 10:29, but whether that man is Moses' father-in-law (Jethro/Reuel, record reuel-2 — favored by חֹתֵן always meaning wife's father) or Reuel's son and Moses' brother-in-law (record hobab — favored by בֶּן־רְעוּאֵל in Num 10:29) is an unresolved crux; BibleData itself hedges by assigning Num 10:29 to both. Whatever is decided, Judg 4:11 and Num 10:29 must go to the same record.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 77,
+   "word_id": 6886221,
+   "strong_number": "H3059",
+   "reference": "2 Chronicles 25:23",
+   "verse": "And Joash the king of Israel took Amaziah king of Judah, the son of Joash, the son of Jehoahaz, at Bethshemesh, and brought him to Jerusalem, and brake down the wall of Jerusalem from the gate of Ephraim to the corner gate, four hundred cubits.",
+   "hebrew_word": "יְהֹואָחָ֗ז",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "jehoahaz",
+    "confidence": "high",
+    "reason": "Joash king of Israel, son of Jehoahaz, in same account.",
+    "distinguisher": "King of Israel, son of Jehu (2KI 10:35)"
+   },
+   "bibledata": {
+    "referent": "ahaziah-2",
+    "distinguisher": "King of Judah, youngest (2CH 21:17) son of Jehoram (2KI 8:24) son of Jehoshapat"
+   },
+   "verdict": "model-wrong",
+   "referent": "ahaziah-2",
+   "confidence": "high",
+   "reasoning": "Amaziah of Judah's father was Joash of Judah and his grandfather Ahaziah, whom the Chronicler spells Jehoahaz here and at 21:17. Jehoahaz of Israel is the father of the Joash who took Amaziah captive, not Amaziah's own grandfather.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "model-wrong",
+    "referent": "ahaziah-2",
+    "confidence": "high",
+    "reason": "The בֶּן chain 'son of Joash, son of Jehoahaz' modifies Amaziah king of Judah (the object), whose grandfather was Ahaziah of Judah, spelled Jehoahaz by the Chronicler as in 2 Chr 21:17; the parallel 2 Kings 14:13 reads 'son of Jehoash the son of Ahaziah'. The model attached the patronymic to the Israelite Joash, the verse's post-verbal subject, which carries no patronymic.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 78,
+   "word_id": 6847733,
+   "strong_number": "H285",
+   "reference": "Ezra 7:2",
+   "verse": "The son of Shallum, the son of Zadok, the son of Ahitub,",
+   "hebrew_word": "אֲחִיטֽוּב",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "ahitub-3",
+    "confidence": "medium",
+    "reason": "Ezra's genealogy chain (Ahitub-Zadok-Shallum-Hilkiah-Azariah-Seraiah) matches the later Ahitub of 1CH6:11-12.",
+    "distinguisher": "son of Amariah (1CH 6:11), Levite (1CH 6:1), father of Meraioth (1CH 9:11)"
+   },
+   "bibledata": {
+    "referent": "ahitub-2",
+    "distinguisher": "(grand) father of Zadok the priest (2SA 8:17, 1CH 9:11), son of Amariah (1CH 6:11)"
+   },
+   "verdict": "source-wrong",
+   "referent": "ahitub-3",
+   "confidence": "medium",
+   "reasoning": "Ezra 7:2 has Ahitub's son Zadok and Zadok's son Shallum, which is the 1 Chronicles 6:11-12 line; ahitub-2's Zadok begets Ahimaaz.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "ahitub-3",
+    "confidence": "high",
+    "reason": "Ezra's chain Seraiah–Azariah–Hilkiah–Shallum–Zadok–Ahitub reproduces 1 Chr 6:11–14 exactly; only the second Zadok fathers Shallum, so this Ahitub is the 1 Chr 6:11–12 man BibleData holds as ahitub-3, not David's Zadok's father (ahitub-2). BibleData's own verse list for ahitub-2 is otherwise coherent for the first Ahitub; its mis-cited distinguisher led the Ezra verse astray.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 79,
+   "word_id": 6856184,
+   "strong_number": "H285",
+   "reference": "Nehemiah 11:11",
+   "verse": "Seraiah the son of Hilkiah, the son of Meshullam, the son of Zadok, the son of Meraioth, the son of Ahitub, was the ruler of the house of God.",
+   "hebrew_word": "אֲחִיט֔וּב",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "ahitub-3",
+    "confidence": "high",
+    "reason": "Parallel list to 1CH9:11 with identical Zadok-Meraioth-Ahitub chain.",
+    "distinguisher": "son of Amariah (1CH 6:11), Levite (1CH 6:1), father of Meraioth (1CH 9:11)"
+   },
+   "bibledata": {
+    "referent": "ahitub-4",
+    "distinguisher": "leader of the house of God (NEH 11:11)"
+   },
+   "verdict": "duplicate-records",
+   "referent": "ahitub-3",
+   "confidence": "medium",
+   "reasoning": "Nehemiah 11:11 and 1 Chronicles 9:11 are the same chain, and ahitub-4 exists only for the Nehemiah verse while ahitub-3 holds the Chronicles one.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "duplicate-records",
+    "referent": "ahitub-3",
+    "confidence": "high",
+    "reason": "Neh 11:11 and 1 Chr 9:11 give the identical chain Hilkiah–Meshullam–Zadok–Meraioth–Ahitub, so this is the same man BibleData already assigns to ahitub-3 at 1 Chr 9:11; ahitub-4 (with its twin meraioth-3) is a duplicate created from the Nehemiah parallel.",
+    "survivor": "ahitub-3 survives, absorbing ahitub-4"
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 80,
+   "word_id": 6855551,
+   "strong_number": "H7645",
+   "reference": "Nehemiah 10:12",
+   "verse": "Zaccur, Sherebiah, Shebaniah,",
+   "hebrew_word": "שְׁבַנְיָֽה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "shebaniah-4",
+    "confidence": "high",
+    "reason": "Candidate explicitly cited as appearing at both v10 and v12 of the Levite sealers list.",
+    "distinguisher": "second Levite named Shebaniah in the sealed document of NEH 10:1-27 (v10 and v12)"
+   },
+   "bibledata": {
+    "referent": "shebaniah-2",
+    "distinguisher": "stood on the Levites platform (NEH 9:4) and exhorted Israel to bless the Lord (NEH 9:5)"
+   },
+   "verdict": "model-wrong",
+   "referent": "shebaniah-2",
+   "confidence": "medium",
+   "reasoning": "BibleData partitions the four Shebaniahs of Nehemiah 10 cleanly — the priest at 10:4, shebaniah-4 at 10:10, shebaniah-2 at 10:12 — and the parenthetical *(v10 and v12)* in shebaniah-4's distinguisher reads more naturally as *the two Levite Shebaniahs are at v10 and v12, and this is the other one* than as a claim to both. The model's reading puts two records on one word. What the text does not settle is which of the two sealers is the Levite of Nehemiah 9:4, and BibleData's answer to that is a convention rather than a demonstration.",
+   "revised_after_fable": "I had called this contested, and the earlier phase-2 report called it a case where nothing decides it. That is still true of which sealer is which; it is not true of this word, because within BibleData's partition only one record claims it.",
+   "fable": {
+    "verdict": "model-wrong",
+    "referent": "shebaniah-2",
+    "confidence": "medium",
+    "reason": "The Levite sealers list has two Shebaniahs (10:10 and 10:12); BibleData's verse lists partition them cleanly as shebaniah-4 at 10:10 and shebaniah-2 (the 9:4-5 platform Levite) at 10:12, and Sonnet's answer rests on misreading the ambiguous parenthetical '(v10 and v12)' in shebaniah-4's distinguisher as a double attestation, which would put two records on one word. Confidence is medium only because the text itself cannot show which of the two sealers is the 9:4 man; the assignment is BibleData's coherent convention, not a demonstrable identification.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": false
+  },
+  {
+   "case": 81,
+   "word_id": 6711709,
+   "strong_number": "H4441",
+   "reference": "Jeremiah 21:1",
+   "verse": "The word which came unto Jeremiah from the Lord, when king Zedekiah sent unto him Pashur the son of Melchiah, and Zephaniah the son of Maaseiah the priest, saying,",
+   "hebrew_word": "מַלְכִּיָּ֔ה",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "malchijah-10",
+    "confidence": "medium",
+    "reason": "Pashur son of Malchiah, same father-son pair identified with this candidate at Jer 38:1.",
+    "distinguisher": "father of Pashhur (JER 38:1) and son of King Zedekiah (JER 38:6)"
+   },
+   "bibledata": {
+    "referent": "malchijah-2",
+    "distinguisher": "father of Pashhur (1CH 9:12), stood on Ezra's left hand as he read from the Law (NEH 8:4)"
+   },
+   "verdict": "source-wrong",
+   "referent": "malchijah-10",
+   "confidence": "medium",
+   "reasoning": "Pashhur son of Malchiah of Jeremiah 21:1 is the same man as Jeremiah 38:1; malchijah-2 is the priestly ancestor of the Pashhur of 1 Chronicles 9:12.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "malchijah-10",
+    "confidence": "high",
+    "reason": "Jer 21:1 and Jer 38:1 name the identical pair 'Pashhur son of Malchiah' under the same king Zedekiah, and BibleData itself files 38:1 under malchijah-10; malchijah-2's verse list makes him a contemporary of Nehemiah (Neh 8:4, 10:3, 12:42), which is chronologically impossible for the father of a royal official of 588. Whether this Malchiah is also the 1 Chr 9:12 priestly ancestor remains open, but that would be a later split-and-merge of malchijah-2, not a reason to keep this verse under it.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 82,
+   "word_id": 6850099,
+   "strong_number": "H2766",
+   "reference": "Ezra 10:31",
+   "verse": "And of the sons of Harim; Eliezer, Ishijah, Malchiah, Shemaiah, Shimeon,",
+   "hebrew_word": "חָרִ֑ם",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "harim-2",
+    "confidence": "medium",
+    "reason": "Listed among lay 'of Israel' families with foreign wives, same clan as EZR 2:32.",
+    "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:32)"
+   },
+   "bibledata": {
+    "referent": "harim-3",
+    "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:39)"
+   },
+   "verdict": "source-wrong",
+   "referent": "harim-2",
+   "confidence": "high",
+   "reasoning": "The same word as case 18, answered twice in two runs.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "harim-2",
+    "confidence": "high",
+    "reason": "Same word as above: the lay Harim clan of Ezra 2:32, confirmed by the chapter's priest/laity structure and by BibleData's harim-2 kinship record listing exactly the sons of Ezra 10:31-32; the verse list's harim-3 is the priestly clan of 10:21.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  },
+  {
+   "case": 83,
+   "word_id": 6666988,
+   "strong_number": "H3088",
+   "reference": "2 Kings 8:29",
+   "verse": "And king Joram went back to be healed in Jezreel of the wounds which the Syrians had given him at Ramah, when he fought against Hazael king of Syria. And Ahaziah the son of Jehoram king of Judah went down to see Joram the son of Ahab in Jezreel, because he was sick.",
+   "hebrew_word": "יְהֹורָ֜ם",
+   "bhsa_name_type": "pers",
+   "model": {
+    "referent": "jehoram",
+    "confidence": "high",
+    "reason": "\"Ahaziah son of Jehoram king of Judah\" contrasted with Joram son of Ahab in same verse.",
+    "distinguisher": "King of Judah and son of Jehoshaphat (1KI 22:50)"
+   },
+   "bibledata": {
+    "referent": "jehoram-2",
+    "distinguisher": "King of Israel (2KI 1:17) and son of Ahab (2KI 3:1)"
+   },
+   "verdict": "source-wrong",
+   "referent": "jehoram",
+   "confidence": "high",
+   "reasoning": "Ahaziah the son of Jehoram king of Judah, set against Joram the son of Ahab in the same verse.",
+   "revised_after_fable": null,
+   "fable": {
+    "verdict": "source-wrong",
+    "referent": "jehoram",
+    "confidence": "high",
+    "reason": "The marked H3088 word is in the phrase 'Ahaziah son of Jehoram king of Judah', explicitly the Judahite king and father of Ahaziah, contrasted in the same verse with Joram (H3141) son of Ahab; BibleData's verse-level list only registers the Israelite king here and omits the Judahite one.",
+    "survivor": null
+   },
+   "fable_agreed_before_revision": true
+  }
+ ]
+}
