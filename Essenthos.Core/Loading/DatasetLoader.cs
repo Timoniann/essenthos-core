@@ -396,7 +396,7 @@ internal sealed class DatasetLoader(
         var loader = scope.ServiceProvider.GetRequiredService<InterlinearLinkLoader>();
         status.Record(await loader.Load(
             Path.Combine(resources, "Door43", "uk_ubio"),
-            "ukr",
+            Bible4uTextSource.Ohienko,
             "unfoldingWord's Ukrainian Bible Interlinear Ogienko, git.door43.org/uk_ts/uk_ubio, CC BY-SA 4.0",
             cancellationToken));
 
@@ -404,7 +404,7 @@ internal sealed class DatasetLoader(
 
         status.Record(await loader.Load(
             Path.Combine(resources, "Door43", "ru_rsb"),
-            "rusv",
+            Bible4uTextSource.Synodal,
             "Door43 Russian Synodal alignment of Titus, Philemon and 2 John, made in "
             + "translationCore and published at git.door43.org under CC0 1.0",
             cancellationToken));

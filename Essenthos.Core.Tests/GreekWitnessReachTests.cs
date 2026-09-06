@@ -41,7 +41,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
 
     /// <summary>
     /// The scratch database is shared by every class in this collection, and several of them build
-    /// a <c>kjv</c> or a <c>bhsa</c> inside a transaction they roll back, which assumes the table
+    /// a <c>KJV</c> or a <c>BHSA</c> inside a transaction they roll back, which assumes the table
     /// is empty. So this empties it either side.
     ///
     /// <c>TRUNCATE</c> rather than <c>DELETE</c>, which is what the small classes use: deleting a
@@ -69,7 +69,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
         ),
         english AS (
             SELECT w.id, w.strong_number FROM word w
-            JOIN text t ON t.id = w.text_id AND t.slug = 'kjv'
+            JOIN text t ON t.id = w.text_id AND t.slug = @english
             JOIN placed p ON p.verse_id = w.verse_id AND p.book BETWEEN 40 AND 66
         ),
         reached AS (
@@ -202,7 +202,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
             var loader = new GreekWitnessLinkLoader(db, NullLogger<GreekWitnessLinkLoader>.Instance);
             var outcome = await loader.Load(witness, Scrivener);
             apart[witness] = outcome.Differing + outcome.Missing + outcome.Added;
-            output.WriteLine($"{witness} against scrivener1894: {outcome}");
+            output.WriteLine($"{witness} against {Scrivener}: {outcome}");
         }
 
         return apart;
@@ -215,6 +215,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
 
         await using var command = connection.CreateCommand();
         command.CommandText = ReachedSql;
+        command.Parameters.AddWithValue("english", Bible4uTextSource.KingJames);
         command.Parameters.AddWithValue("witnesses", witnesses);
 
         await using var reader = await command.ExecuteReaderAsync();

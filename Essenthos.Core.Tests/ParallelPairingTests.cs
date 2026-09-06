@@ -40,8 +40,8 @@ public sealed class ParallelPairingTests : IDisposable
     {
         // The English text numbers this passage chapter 3; the Hebrew numbers it chapter 4. Both
         // belong at canonical 3, which is the only thing that makes them comparable.
-        var english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (3, 1, ["For", "behold"]));
-        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (4, 1, ["כִּי", "הִנֵּה"]));
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (3, 1, ["For", "behold"]));
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (4, 1, ["כִּי", "הִנֵּה"]));
         _db.SaveChanges();
 
         Place(english, 3, 1, canonicalChapter: 3, canonicalVerse: 1);
@@ -64,7 +64,7 @@ public sealed class ParallelPairingTests : IDisposable
     [Fact]
     public async Task TheHebrewChapterOfTheSameNumberIsADifferentPassage()
     {
-        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (3, 1, ["וְהָיָה"]),
             (4, 1, ["כִּי"]));
         _db.SaveChanges();
@@ -88,7 +88,7 @@ public sealed class ParallelPairingTests : IDisposable
     [Fact]
     public async Task ATextWithNoVerseAtAnAddressAnswersNothingRatherThanEmptiness()
     {
-        var greek = Corpus.Add(_db, "nestle1904", TextKind.CriticalEdition, "grc", (1, 1, ["Ἐν"]));
+        var greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 1, ["Ἐν"]));
         _db.SaveChanges();
         Place(greek, 1, 1, canonicalChapter: 1, canonicalVerse: 1);
         _db.SaveChanges();
@@ -188,7 +188,7 @@ public sealed class ParallelPairingTests : IDisposable
     [Fact]
     public async Task ACellSaysWhatTheEditionItselfCallsTheVerse()
     {
-        var synodal = Corpus.Add(_db, "rusv", TextKind.Translation, "rus",
+        var synodal = Corpus.Add(_db, "RUSV", TextKind.Translation, "rus",
             (1, 1, ["Блаженны", "непорочные"]),
             (1, 2, ["Спаси", "Господи"]),
             (1, 3, ["Хвалите", "Господа"]));
@@ -220,8 +220,8 @@ public sealed class ParallelPairingTests : IDisposable
     /// <summary>Two texts of one verse each, already sitting at the same canonical address.</summary>
     private (Text Greek, Text Hebrew) Pair()
     {
-        var greek = Corpus.Add(_db, "lxx-brenton", TextKind.Translation, "eng", (1, 1, ["a", "spreading", "trunk"]));
-        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["a", "doe", "loosed"]));
+        var greek = Corpus.Add(_db, "LXX-BRENTON", TextKind.Translation, "eng", (1, 1, ["a", "spreading", "trunk"]));
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["a", "doe", "loosed"]));
         _db.SaveChanges();
         return (greek, hebrew);
     }

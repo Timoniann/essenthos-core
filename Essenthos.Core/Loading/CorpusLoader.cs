@@ -2,6 +2,7 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
@@ -81,10 +82,30 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         source.Definition.Validate();
 
         var slug = source.Definition.Slug;
-        if (await db.Texts.AnyAsync(t => t.Slug == slug, cancellationToken))
+        var held = await db.Texts.Select(t => t.Slug).ToListAsync(cancellationToken);
+
+        // Case-insensitively, because that is how an identifier is matched everywhere else and
+        // because the alternative is to load a whole second copy of a text over a spelling. A
+        // database written before the identifiers were capitalised holds "kjv"; the definition now
+        // says "KJV"; and `=` would answer that the King James is not loaded.
+        if (held.Any(other => string.Equals(other, slug, StringComparison.OrdinalIgnoreCase)))
         {
             logger.LogInformation("Text {Slug} is already loaded; nothing to do", slug);
             return new LoadOutcome(slug, AlreadyLoaded: true, 0, 0, 0, 0, TimeSpan.Zero);
+        }
+
+        // A rename cannot be recognised by comparing spellings, so it is recognised by the
+        // declaration that records it: this text answers to that identifier, and a row holding it
+        // is this text under the name it used to have. Loading over the top would put a second
+        // Ohienko Bible beside the first, 600,000 words that no unique index refuses because the
+        // two slugs genuinely differ, and every link in the corpus pointing at the older one.
+        if (held.FirstOrDefault(other =>
+                TextAliases.Of(slug).Contains(other, StringComparer.OrdinalIgnoreCase)) is { } renamed)
+        {
+            throw new InvalidOperationException(
+                $"The corpus holds \"{renamed}\", which is an identifier \"{slug}\" answers to, so this text is " +
+                "already loaded under the name it used to have. Apply the migration that renames it before " +
+                "starting; loading now would write a second copy of the whole text.");
         }
 
         var started = Stopwatch.StartNew();

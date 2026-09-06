@@ -23,7 +23,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class ByzantineTextSource
 {
-    public const string Slug = "robinsonpierpont2018";
+    public const string Slug = "ROBINSONPIERPONT2018";
 
     /// <summary>
     /// The file stem of each book. The repository numbers them in canonical order and the New

@@ -35,7 +35,7 @@ public sealed class LinkShapeTests : IDisposable
     [Fact]
     public void TwoWordsRenderingOneAreOneLinkNamingAllThree()
     {
-        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (1, 1, ["הַכֹּהֵן", "הַגָּדוֹל"]));
         var greek = Corpus.Add(_db, "lxx", TextKind.Translation, "grc",
             (1, 1, ["ἀρχιερεύς"]));
@@ -67,7 +67,7 @@ public sealed class LinkShapeTests : IDisposable
     [Fact]
     public void TwoWordsRenderingOneDoNotTherebyCorrespondToEachOther()
     {
-        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (1, 1, ["הַכֹּהֵן", "הַגָּדוֹל"]));
         var greek = Corpus.Add(_db, "lxx", TextKind.Translation, "grc", (1, 1, ["ἀρχιερεύς"]));
         _db.SaveChanges();
@@ -97,7 +97,7 @@ public sealed class LinkShapeTests : IDisposable
     [Fact]
     public void EitherWordOfAPairReachesTheSameCounterpartAndTheCounterpartReachesBoth()
     {
-        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (1, 1, ["הַכֹּהֵן", "הַגָּדוֹל"]));
         var greek = Corpus.Add(_db, "lxx", TextKind.Translation, "grc", (1, 1, ["ἀρχιερεύς"]));
         _db.SaveChanges();
@@ -145,8 +145,8 @@ public sealed class LinkShapeTests : IDisposable
     [Fact]
     public void AWordTheTranslationSuppliesHasNothingOnTheSourceSide()
     {
-        var english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["the", "beginning"]));
-        var greek = Corpus.Add(_db, "nestle1904", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["the", "beginning"]));
+        var greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
         _db.SaveChanges();
 
         var link = new Link
@@ -174,8 +174,8 @@ public sealed class LinkShapeTests : IDisposable
     [Fact]
     public void AReadingOneWitnessLacksIsStoredAsARowRatherThanAsSilence()
     {
-        var nestle = Corpus.Add(_db, "nestle1904", TextKind.CriticalEdition, "grc", (1, 18, ["μονογενὴς", "θεὸς"]));
-        var receptus = Corpus.Add(_db, "tr-scrivener", TextKind.CriticalEdition, "grc",
+        var nestle = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 18, ["μονογενὴς", "θεὸς"]));
+        var receptus = Corpus.Add(_db, "SCRIVENER1894", TextKind.CriticalEdition, "grc",
             (1, 18, ["μονογενὴς", "υἱός"]));
         _db.SaveChanges();
 
@@ -209,10 +209,10 @@ public sealed class LinkShapeTests : IDisposable
     [Fact]
     public void ALinkMayNameWordsOnBothSidesOfAVerseBoundary()
     {
-        var hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (1, 1, ["רֵאשִׁית"]),
             (1, 2, ["וְהָאָרֶץ"]));
-        var english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["beginning", "earth"]));
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["beginning", "earth"]));
         _db.SaveChanges();
 
         var link = new Link
@@ -248,8 +248,8 @@ public sealed class LinkShapeTests : IDisposable
     [Fact]
     public void TwoGreekWitnessesEachHaveTheirOwnBooksAndWords()
     {
-        var nestle = Corpus.Add(_db, "nestle1904", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
-        var receptus = Corpus.Add(_db, "tr-scrivener", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
+        var nestle = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
+        var receptus = Corpus.Add(_db, "SCRIVENER1894", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
         _db.SaveChanges();
 
         var books = _db.Books

@@ -25,8 +25,8 @@ public sealed class LinkProvenanceTests : IDisposable
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
-        _from = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
-        _to = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["beginning"]));
+        _from = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
+        _to = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["beginning"]));
         _db.SaveChanges();
     }
 

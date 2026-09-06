@@ -25,7 +25,7 @@ public sealed class WordGroupTests : IDisposable
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
-        _hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        _hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (1, 1, ["בְּ", "רֵאשִׁית", "בָּרָא", "אֱלֹהִים"]));
         _db.SaveChanges();
     }

@@ -91,8 +91,8 @@ internal record CorpusResponse(
 
     /// <summary>
     /// The other identifiers this text answers to, where other Bible software spells it
-    /// differently: the Synodal is <c>syno</c> at YouVersion as well
-    /// as <c>rusv</c> here. Any of them may be sent in a path or in <c>?corpora=</c>, and
+    /// differently: the Synodal is <c>SYNO</c> at YouVersion as well
+    /// as <c>RUSV</c> here. Any of them may be sent in a path or in <c>?corpora=</c>, and
     /// <see cref="Id"/> is what comes back — a client that stores what it received keeps the
     /// canonical spelling. Null where a text has no other name, so a client can offer them without
     /// knowing which texts have any.

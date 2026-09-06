@@ -76,10 +76,10 @@ public sealed class TextProvenanceTests
     /// is why the field takes a body — not why it may be left empty.
     /// </summary>
     [Theory]
-    [InlineData("kjv")]
-    [InlineData("rusv")]
-    [InlineData("ukr")]
-    [InlineData("bsb")]
+    [InlineData(Bible4uTextSource.KingJames)]
+    [InlineData(Bible4uTextSource.Synodal)]
+    [InlineData(Bible4uTextSource.Ohienko)]
+    [InlineData(BereanTextSource.Slug)]
     public void EveryTranslationNamesItsTranslators(string slug)
     {
         var definition = Of(slug);
@@ -92,7 +92,7 @@ public sealed class TextProvenanceTests
     [Fact]
     public void TheUkrainianTextIsOhienkosAndSaysSo()
     {
-        var ukr = Of("ukr");
+        var ukr = Of(Bible4uTextSource.Ohienko);
 
         ukr.Name.Should().Be("Ohienko Bible");
         ukr.Translators.Should().Contain("Ohienko");
@@ -108,7 +108,7 @@ public sealed class TextProvenanceTests
     [Fact]
     public void TheUkrainianTextCarriesTheNoticeThatDisputesItsLicence()
     {
-        var ukr = Of("ukr");
+        var ukr = Of(Bible4uTextSource.Ohienko);
 
         ukr.RightsNote.Should().Contain("British and Foreign Bible Society");
         ukr.RightsHolder.Should().Contain("British and Foreign Bible Society");
@@ -122,7 +122,7 @@ public sealed class TextProvenanceTests
     [Fact]
     public void TheKingJamesSaysWhichEditionItIs()
     {
-        var kjv = Of("kjv");
+        var kjv = Of(Bible4uTextSource.KingJames);
 
         kjv.PublishedYear.Should().Be(1611);
         kjv.EditionYear.Should().Be(1769);

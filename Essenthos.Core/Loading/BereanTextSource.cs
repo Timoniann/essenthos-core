@@ -22,7 +22,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class BereanTextSource
 {
-    public const string Slug = "bsb";
+    public const string Slug = "BSB";
 
     public static TextDefinition Definition { get; } = new(
         Slug: Slug,

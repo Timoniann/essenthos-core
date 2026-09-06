@@ -23,7 +23,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class SamaritanTextSource
 {
-    public const string Slug = "sp";
+    public const string Slug = "SP";
 
     /// <summary>
     /// CC BY-NC 4.0, read from the DT-UCPH repository on 2026-09-04. The repository states its

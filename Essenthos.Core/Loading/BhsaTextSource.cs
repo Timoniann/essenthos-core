@@ -13,7 +13,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class BhsaTextSource
 {
-    public const string Slug = "bhsa";
+    public const string Slug = "BHSA";
 
     /// <summary>
     /// CC BY-NC 4.0, read from the ETCBC repository on 2026-08-31. The annotation is the Eep

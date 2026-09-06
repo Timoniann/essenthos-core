@@ -40,7 +40,7 @@ internal sealed record AlignmentOutcome(
 internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeline> logger)
 {
     /// <summary>
-    /// Measured with <c>score kjv bhsa</c> against the 625,826 correspondences the mapping file
+    /// Measured with <c>score KJV BHSA</c> against the 625,826 correspondences the mapping file
     /// states, so this number is a measurement anyone can repeat and not one somebody chose.
     ///
     ///     min    kept   content precision   where the file answers

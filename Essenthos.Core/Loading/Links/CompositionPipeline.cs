@@ -220,7 +220,7 @@ internal sealed class CompositionPipeline(
     ///
     /// **How much less is measured, not assumed.** This was 1/n, which is what a pure n-way choice
     /// would cost, and it was between two and three times too harsh. Against the 2,647 links the
-    /// Ukrainian interlinear states, the path ukr -&gt; kjv -&gt; original agrees with the interlinear:
+    /// Ukrainian interlinear states, the path UBIO -&gt; KJV -&gt; original agrees with the interlinear:
     ///
     /// <code>
     /// English words on the middle link   proposals   agrees

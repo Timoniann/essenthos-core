@@ -11,8 +11,8 @@ namespace Essenthos.Core.Loading.Links;
 /// King James twice — once as written and once reduced — and scored against the correspondences the
 /// Strong numbers state:
 ///
-///     nestle1904 as written   62.1 % precision, 46.8 % recall
-///     nestle1904 as lemmas    75.7 % precision, 51.2 % recall
+///     NESTLE1904 as written   62.1 % precision, 46.8 % recall
+///     NESTLE1904 as lemmas    75.7 % precision, 51.2 % recall
 ///
 /// Thirteen points. The reason is arithmetic rather than linguistic: a model learns which words
 /// correspond by seeing them co-occur, and 47% of the Synodal's forms and 49% of the Ukrainian's

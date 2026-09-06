@@ -34,10 +34,10 @@ public sealed class SamaritanLinkLoadTests : IDisposable
         // Genesis 1:11, where the Samaritan has a word the Masoretic has not; and the shape of
         // Genesis 1:5, where BHSA records the article that assimilated into the preposition as a
         // word of its own and prints nothing for it.
-        _samaritan = Corpus.Add(_db, "sp", TextKind.ManuscriptTradition, "hbo",
+        _samaritan = Corpus.Add(_db, "SP", TextKind.ManuscriptTradition, "hbo",
             (1, 11, ["ו", "עץ", "פרי"]),
             (1, 5, ["ל", "אור"]));
-        _masoretic = Corpus.Add(_db, "bhsa", TextKind.CriticalEdition, "hbo",
+        _masoretic = Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo",
             (1, 11, ["עץ", "פרי"]),
             (1, 5, ["ל", "", "אור"]));
 

@@ -43,7 +43,7 @@ public sealed class OwnRecordTests : IDisposable
             .ToArray();
 
         _hebrew = Corpus.Add(_db, SenseReadingLoader.Witness, TextKind.CriticalEdition, "hbo", verses);
-        _english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng", (1, 1, ["Azariah"]));
+        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["Azariah"]));
         _db.SaveChanges();
 
         // The words the rulings are about, at the ids the rulings name.

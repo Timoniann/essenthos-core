@@ -29,7 +29,7 @@ public sealed class StrongLexiconTests : IDisposable
         _transaction = _db.Database.BeginTransaction();
         _loader = new StrongLexiconLoader(_db, NullLogger<StrongLexiconLoader>.Instance);
 
-        _hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo", (1, 1, ["בְּ", "אֱלֹהִים", "רֵאשִׁית"]));
+        _hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["בְּ", "אֱלֹהִים", "רֵאשִׁית"]));
         _db.SaveChanges();
     }
 

@@ -47,9 +47,9 @@ public sealed class CoveredVerseTests : IDisposable
         _loader = new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance);
 
         // One Hebrew verse against two English ones, which is the shape of all three splits.
-        _hebrew = Corpus.Add(_db, "bhsa", TextKind.ManuscriptTradition, "hbo",
+        _hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (1, 5, ["הֲלֹוא", "קָרָאתָ"]));
-        _english = Corpus.Add(_db, "kjv", TextKind.Translation, "eng",
+        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (1, 5, ["Oh", "that"]),
             (1, 6, ["thou", "wouldest"]));
         _db.SaveChanges();

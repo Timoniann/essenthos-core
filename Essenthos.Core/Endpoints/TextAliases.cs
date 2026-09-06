@@ -1,4 +1,6 @@
-﻿namespace Essenthos.Core.Endpoints;
+﻿using Essenthos.Core.Loading;
+
+namespace Essenthos.Core.Endpoints;
 
 /// <summary>
 /// The other identifiers a text answers to.
@@ -8,6 +10,10 @@
 /// reader pasting a reference from one of them into a URL here should reach the text rather than a
 /// 404. Only the canonical slug is ever answered with, so an alias is a way in and never a second
 /// name for the same text in a response.
+///
+/// An identifier this project itself once published is an alias like any other. That is the whole
+/// mechanism a rename rests on: the old spelling keeps resolving for ever, and every response moves
+/// to the new one, so no URL and no saved reading position is broken by the change.
 ///
 /// The declarations live here rather than on the <c>text</c> row for two reasons. A row is written
 /// once — the loader returns early for a text that is already loaded — so a column would reach
@@ -34,12 +40,13 @@ internal static class TextAliases
             // Bible Gateway spells the Russian Synodal RUSV, which is where our slug already
             // agrees with the field, and YouVersion spells it SYNO at version 400. Both name the
             // same 1876 translation.
-            ["rusv"] = ["syno"],
+            [Bible4uTextSource.Synodal] = ["SYNO"],
 
-            // Door43 publishes the Ohienko text as uk_ubio, and that identifier is what
-            // established which Ukrainian Bible this file is: its every \id line names the
-            // translator and the 1962 edition.
-            ["ukr"] = ["ubio"],
+            // UKR was this text's own identifier until it was found to be a language code rather
+            // than an edition, and it is kept so that no URL, saved reading position or reference
+            // pasted from anywhere that still spells it that way stops resolving. UKR1962 is what
+            // API.Bible and the Digital Bible Library call the same edition.
+            [Bible4uTextSource.Ohienko] = ["UKR", "UKR1962"],
         };
 
     private static readonly Dictionary<string, string> CanonicalBySpelling = Index();

@@ -24,9 +24,35 @@ internal static class Bible4uTextSource
         "Everyone is permitted to copy, modify and distribute copies of this document for free as long as " +
         "it's Biblical content remains unchanged.";
 
+    /// <summary>
+    /// The King James, by the identifier the world spells it with. Named here because three
+    /// loaders read this text by name — it is the English every entity annotation and every place
+    /// join is read through — and a literal in each of them is three places to forget.
+    /// </summary>
+    public const string KingJames = "KJV";
+
+    /// <summary>The Russian Synodal, spelled as Bible Gateway spells it.</summary>
+    public const string Synodal = "RUSV";
+
+    /// <summary>
+    /// Ohienko's Ukrainian Bible.
+    ///
+    /// Not <c>UKR</c>, which is the ISO 639-2 code for the Ukrainian *language* and says nothing
+    /// about which Ukrainian Bible this is — it named an edition only because bible4u's file is
+    /// called that. UBIO is the identifier the field publishes this translation under: YouVersion
+    /// carries it as version 186, bolls.life keys it <c>ubio</c>, and Door43 publishes the text as
+    /// <c>uk_ubio</c>. Both older spellings stay reachable as aliases.
+    /// </summary>
+    public const string Ohienko = "UBIO";
+
+    /// <summary>
+    /// bible4u names its files by the language, not by the edition, and one of the three no longer
+    /// agrees with the identifier we publish that text under. Keyed by the file, therefore, so the
+    /// download and the slug can differ without either of them being guessed from the other.
+    /// </summary>
     private static readonly Dictionary<string, TextDefinition> Known = new(StringComparer.OrdinalIgnoreCase)
     {
-        ["KJV"] = Definition("kjv", "King James Version", null, "eng", 1611, "Byzantine") with
+        ["KJV"] = Definition("KJV", KingJames, "King James Version", null, "eng", 1611, "Byzantine") with
         {
             Translators = "The six companies of about forty-seven translators appointed by James VI and I",
             Edition = "The modern standard text, not the 1611 printing",
@@ -40,7 +66,8 @@ internal static class Bible4uTextSource
                 + "follows exactly has not been established.",
         },
 
-        ["RUSV"] = Definition("rusv", "Russian Synodal Version", "Синодальный перевод", "rus", 1876, "Mixed") with
+        ["RUSV"] = Definition(
+            "RUSV", Synodal, "Russian Synodal Version", "Синодальный перевод", "rus", 1876, "Mixed") with
         {
             Translators =
                 "The four Orthodox theological academies of Saint Petersburg, Moscow, Kazan and Kiev, "
@@ -57,7 +84,8 @@ internal static class Bible4uTextSource
         // The owner's question, and it had no answer in the row: "Ukrainian Bible" names no
         // translator, and 1962 is when the finished translation was first printed rather than when
         // it was made. Both are established here.
-        ["UKR"] = Definition("ukr", "Ohienko Bible", "Біблія в перекладі Івана Огієнка", "ukr", 1962, null) with
+        ["UKR"] = Definition(
+            "UKR", Ohienko, "Ohienko Bible", "Біблія в перекладі Івана Огієнка", "ukr", 1962, null) with
         {
             Translators = "Ivan Ohienko, Metropolitan Ilarion (1882-1972)",
             RightsHolder = "British and Foreign Bible Society, which published the 1962 edition",
@@ -167,7 +195,13 @@ internal static class Bible4uTextSource
             OpensBeforeItsStatedAddress = VerseWords.OpensBeforeItsStatedAddress(verse.Text),
         };
 
+    /// <param name="file">
+    /// What bible4u calls the download. It is not the slug and must not be derived from one: the
+    /// Ukrainian is <c>UKR_xml.tar.gz</c> there whatever this project publishes the edition as, and
+    /// a URL built from the slug would point at a file bible4u does not have.
+    /// </param>
     private static TextDefinition Definition(
+        string file,
         string slug,
         string name,
         string? nameNative,
@@ -182,7 +216,7 @@ internal static class Bible4uTextSource
         Direction: TextDirection.LeftToRight,
         Versification: Versification.English,
         PublishedYear: publishedYear,
-        SourceUrl: $"https://bible4u.net/static/bible_files/xml/{slug.ToUpperInvariant()}_xml.tar.gz",
+        SourceUrl: $"https://bible4u.net/static/bible_files/xml/{file}_xml.tar.gz",
         RightsHolder: null,
         Licence: Rights,
         LicenceUrl: "https://bible4u.net/",

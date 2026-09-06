@@ -86,6 +86,12 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
         "the API's own log.");
 }));
 
+// A text identifier as the corpus spells it, from one typed at a shell in whatever case came to
+// hand. The pipelines below compare it to the column, and the workspace they leave in the temp
+// folder is named after it: without this, `align kjv bhsa` finds no text, and on a file system that
+// tells KJV-BHSA from kjv-bhsa the same pair would train a second model beside the first.
+static string Identifier(string typed) => typed.ToUpperInvariant();
+
 // Alignment is computed once per pair of texts, not per request, so it is a batch run rather than
 // part of the startup pipeline: an API that trains a model before it answers is the shape PRB-0005
 // warned about.
@@ -100,9 +106,9 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
     var composer = composeScope.ServiceProvider.GetRequiredService<CompositionPipeline>();
     var least = Array.IndexOf(args, "--min");
     app.Logger.LogInformation("{Outcome}", await composer.Run(
-        composeFrom,
-        composeVia,
-        composeTo,
+        Identifier(composeFrom),
+        Identifier(composeVia),
+        Identifier(composeTo),
         least >= 0 && least + 1 < args.Length
             ? double.Parse(args[least + 1], System.Globalization.CultureInfo.InvariantCulture)
             : AlignmentPipeline.DefaultMinimumConfidence));
@@ -155,11 +161,13 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
 {
     using var scoreScope = app.Services.CreateScope();
     var scorer = scoreScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
+    var scoreOne = Identifier(scoreFrom);
+    var scoreTwo = Identifier(scoreTo);
     app.Logger.LogInformation("\n{Report}", await scorer.Measure(
-        scoreFrom,
-        scoreTo,
+        scoreOne,
+        scoreTwo,
         Path.Combine(Path.GetTempPath(), "essenthos-align",
-            $"{scoreFrom}-{scoreTo}{(args.Contains("--surface") ? "-surface" : string.Empty)}" +
+            $"{scoreOne}-{scoreTwo}{(args.Contains("--surface") ? "-surface" : string.Empty)}" +
             $"{(args.Contains("--suppletion") ? "-suppletion" : string.Empty)}"),
         args.Contains("--min")
             ? [.. args[Array.IndexOf(args, "--min") + 1].Split(',')
@@ -179,10 +187,12 @@ if (args is ["syntax", var syntaxFrom, var syntaxTo, ..])
 {
     using var syntaxScope = app.Services.CreateScope();
     var prior = syntaxScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
+    var syntaxOne = Identifier(syntaxFrom);
+    var syntaxTwo = Identifier(syntaxTo);
     app.Logger.LogInformation("\n{Report}", await prior.Diagnose(
-        syntaxFrom,
-        syntaxTo,
-        Path.Combine(Path.GetTempPath(), "essenthos-align", $"{syntaxFrom}-{syntaxTo}"),
+        syntaxOne,
+        syntaxTwo,
+        Path.Combine(Path.GetTempPath(), "essenthos-align", $"{syntaxOne}-{syntaxTwo}"),
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
         args.Contains("--stated")));
     return 0;
@@ -193,10 +203,12 @@ if (args is ["align", var alignFrom, var alignTo, ..])
     using var alignScope = app.Services.CreateScope();
     var pipeline = alignScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
     var confidence = Array.IndexOf(args, "--min");
+    var alignOne = Identifier(alignFrom);
+    var alignTwo = Identifier(alignTo);
     app.Logger.LogInformation("{Outcome}", await pipeline.Run(
-        alignFrom,
-        alignTo,
-        Path.Combine(Path.GetTempPath(), "essenthos-align", $"{alignFrom}-{alignTo}"),
+        alignOne,
+        alignTwo,
+        Path.Combine(Path.GetTempPath(), "essenthos-align", $"{alignOne}-{alignTwo}"),
         confidence >= 0 && confidence + 1 < args.Length
             ? double.Parse(args[confidence + 1], System.Globalization.CultureInfo.InvariantCulture)
             : AlignmentPipeline.DefaultMinimumConfidence,

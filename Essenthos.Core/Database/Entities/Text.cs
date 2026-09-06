@@ -19,9 +19,16 @@ public class Text
     public int Id { get; set; }
 
     /// <summary>
-    /// The public identifier, stable and lower case: <c>bhsa</c>, <c>nestle1904</c>,
-    /// <c>tr-scrivener</c>, <c>lxx-rahlfs</c>, <c>kjv</c>, <c>rusv</c>. It appears in every word
-    /// address the API hands out, so it may not change once a text is published.
+    /// The public identifier, in the spelling the world uses for this text and therefore upper
+    /// case: <c>BHSA</c>, <c>NESTLE1904</c>, <c>SCRIVENER1894</c>, <c>LXX-BRENTON</c>, <c>KJV</c>,
+    /// <c>RUSV</c>, <c>UBIO</c>. Every piece of Bible software there is writes a version code that
+    /// way, and a reader who has seen KJV everywhere else should not have to learn that this one
+    /// place spells it differently.
+    ///
+    /// It appears in every word address the API hands out, so changing one is a rename rather than
+    /// an edit: the old spelling is declared in <c>TextAliases</c> and keeps resolving for ever, and
+    /// every response moves to the new one. Case never decides which text is reached, so
+    /// capitalising an identifier breaks nothing that was already stored.
     /// </summary>
     public required string Slug { get; set; }
 

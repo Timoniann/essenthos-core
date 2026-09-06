@@ -1,4 +1,6 @@
-﻿namespace Essenthos.Core.Endpoints;
+﻿using Essenthos.Core.Loading;
+
+namespace Essenthos.Core.Endpoints;
 
 /// <summary>
 /// The datasets that are not texts, and which row came from which.
@@ -287,7 +289,7 @@ public static class Datasets
             + "that makes the Greek Old Testament searchable by word rather than by spelling. Only "
             + "the lexical table is taken: GLAUx's own Greek text is not loaded, and its lemmas are "
             + "applied to the Brenton text already served.",
-            "GLAUx", Lemmas: "lxx-brenton",
+            "GLAUx", Lemmas: SeptuagintTextSource.Slug,
             Obliges: "ShareAlike: the lemmas taken from here, and anything published from them, are "
                 + "offered under CC BY-SA 3.0 in turn. Only the lexical table is taken and the "
                 + "Brenton text it annotates is public domain, which is what keeps the clause on "

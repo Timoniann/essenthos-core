@@ -37,7 +37,7 @@ internal static class TextusReceptusTextSource
             : throw new InvalidOperationException($"The Textus Receptus has no book \"{book}\".");
 
     public static string Slug(Edition edition) =>
-        edition == Edition.Scrivener1894 ? "scrivener1894" : "stephanus1550";
+        edition == Edition.Scrivener1894 ? "SCRIVENER1894" : "STEPHANUS1550";
 
     /// <summary>
     /// Both editions are long out of copyright, and Robinson's parsing and Strong numbers are

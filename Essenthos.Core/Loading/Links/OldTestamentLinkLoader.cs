@@ -174,7 +174,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         TahotSegmentation? segmentation = null,
         CancellationToken cancellationToken = default)
     {
-        var english = await db.Texts.SingleOrDefaultAsync(t => t.Slug == "kjv", cancellationToken);
+        var english = await db.Texts.SingleOrDefaultAsync(t => t.Slug == Bible4uTextSource.KingJames, cancellationToken);
         var hebrew = await db.Texts.SingleOrDefaultAsync(t => t.Slug == BhsaTextSource.Slug, cancellationToken);
         if (english is null || hebrew is null)
         {

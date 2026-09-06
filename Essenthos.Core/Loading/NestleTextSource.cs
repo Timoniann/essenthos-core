@@ -12,7 +12,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class NestleTextSource
 {
-    public const string Slug = "nestle1904";
+    public const string Slug = "NESTLE1904";
 
     /// <summary>
     /// The 1904 edition is out of copyright; the transcription, morphology and Strong numbers are
