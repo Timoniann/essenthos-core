@@ -19,11 +19,25 @@ if (builder.Environment.IsDevelopment())
     builder.Configuration.AddUserSecrets<Program>();
 }
 
+// Both of these are read here, once, and never inside a lambda that runs later.
+//
+// `builder.Configuration` is a ConfigurationManager and it is disposed when the application is
+// built. A lambda that closes over it and runs afterwards — which is what every options callback
+// does — reads a dead object, and a dead ConfigurationManager does not throw: it answers null to
+// everything. So the password was found at startup and absent an hour later, and the API served
+// every database endpoint with "No database password" while its user secrets sat there correctly
+// set (PRB-0414). The CORS policy had the same shape and silently fell back to the defaults.
+//
+// Reading eagerly also moves the failure to where it can be seen. A missing password now stops the
+// process at startup, with the message, instead of answering 500 to a request nobody is watching.
+var allowedOrigins = CorsOrigins.Read(builder.Configuration);
+var databaseConnection = DatabaseConnection.Read(builder.Configuration);
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins(CorsOrigins.Read(builder.Configuration))
+        policy.WithOrigins(allowedOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -37,7 +51,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 {
-    optionsBuilder.UseNpgsql(DatabaseConnection.Read(builder.Configuration));
+    optionsBuilder.UseNpgsql(databaseConnection);
 });
 
 builder.Services.AddScoped<CorpusLoader>();
