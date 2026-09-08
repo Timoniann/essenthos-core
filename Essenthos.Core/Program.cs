@@ -14,10 +14,15 @@ var builder = WebApplication.CreateSlimBuilder(args);
 
 // The slim builder does not read user secrets, and the database password is deliberately not in
 // appsettings.json, so development has nowhere else to find it.
-if (builder.Environment.IsDevelopment())
-{
-    builder.Configuration.AddUserSecrets<Program>();
-}
+//
+// Read unconditionally rather than only in Development. The gate was one more thing that had to be
+// right before the API could start, and it depended on the launch profile setting the environment,
+// which depended on avioniq passing --launch-profile, which depended on nothing upstream having
+// already set ASPNETCORE_ENVIRONMENT. Each link is invisible when it breaks: the failure is not
+// "the environment is wrong", it is "no database password", pointing at a secret that is sitting
+// there correctly set. On a deployed machine there is no secrets file, the provider is empty, and
+// the environment variable that supplies the password there is unaffected.
+builder.Configuration.AddUserSecrets<Program>(optional: true);
 
 // Both of these are read here, once, and never inside a lambda that runs later.
 //
