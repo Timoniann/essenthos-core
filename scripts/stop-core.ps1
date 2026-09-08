@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Stops the rebuild's API, including the process `dotnet run` leaves behind.
 
@@ -32,8 +32,13 @@ if ($listeners.Count -eq 0) {
     exit 0
 }
 
-foreach ($pid in ($listeners.OwningProcess | Sort-Object -Unique)) {
-    $process = Get-Process -Id $pid -ErrorAction SilentlyContinue
+# Not $pid: PowerShell has $PID as a read-only automatic variable holding this shell's own id, and
+# variables are case-insensitive, so `foreach ($pid in ...)` throws "Cannot overwrite variable PID
+# because it is read-only or constant" the moment there is a listener to kill. This script therefore
+# only ever succeeded when there was nothing to do, and threw in exactly the case it exists for --
+# which is why orphans survived every stop and the next start found the port held (PRB-0417).
+foreach ($listenerId in ($listeners.OwningProcess | Sort-Object -Unique)) {
+    $process = Get-Process -Id $listenerId -ErrorAction SilentlyContinue
     if (-not $process) { continue }
 
     Write-Host ("Stopping {0} (pid {1}, started {2})" -f $process.ProcessName, $process.Id, $process.StartTime)
