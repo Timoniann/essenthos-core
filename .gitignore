@@ -185,3 +185,7 @@ scripts/__pycache__/
 # A run of the lexicon harness: prompts, translations, judgements and the score report. Cheap to
 # reproduce from scripts/lexicon.py, and not this repository's to carry.
 .lexicon/
+
+# A run of the place harness: the candidate index, the cross-tabulation, the pilot slice and the
+# OpenBible match. Seconds to reproduce from scripts/places.py against the database.
+.places/
