@@ -261,7 +261,7 @@ internal sealed class EntityDescriptorLoader(
     /// <summary>
     /// The name forms this record carries, as rows. A language with no form for an entity is a gap
     /// the rendering fills with the English name; an empty form is not a gap but a mistake, and is
-    /// not stored.
+    /// not stored, and a preposition the phrase supplies for itself is taken off (PRB-0435).
     /// </summary>
     private static readonly IReadOnlyDictionary<string, Dictionary<string, string>> NoNames =
         new Dictionary<string, Dictionary<string, string>>(StringComparer.Ordinal);
@@ -278,12 +278,18 @@ internal sealed class EntityDescriptorLoader(
                     continue;
                 }
 
+                var bare = NameForms.Bare(language, form);
+                if (bare.Length == 0)
+                {
+                    continue;
+                }
+
                 db.EntityNameForms.Add(new EntityNameForm
                 {
                     EntityId = entityId,
                     Language = language,
                     GrammaticalCase = grammaticalCase,
-                    Form = form,
+                    Form = bare,
                     Method = LinkMethod.ModelReading,
                     Confidence = 1,
                     Source = source,

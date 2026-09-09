@@ -22,28 +22,30 @@ internal sealed record Phrasing(string Before, string Case, string After = "");
 /// say. The alternative is a reader meeting <c>father-in-law-of</c> on a page.
 ///
 /// <para>
-/// **A language with no table here is answered in English, and the answer says so.** The tables are
-/// English, Ukrainian and Russian. German is not here on purpose: <em>vom Volk der Moabiter</em> and
-/// <em>Prophet für Israel</em> are choices somebody who reads German has to make, and a phrasing
-/// per relation guessed by somebody who does not would reach a German reader looking exactly as
-/// authoritative as the three that were checked. So a German reader gets the English line, named as
-/// English — which is what the alternative already was, since the only other thing to show is
-/// <see cref="Database.Entities.Entity.Distinguisher"/>, an English sentence somebody else wrote
-/// with no link in it. <see cref="Spoken"/> is where that is decided, and it is what
-/// <c>descriptor.language</c> carries, so a client never puts one language's grammar around another
-/// language's name.
+/// **The tables are the languages the interface is written in**, which FTR-0280 settled as English,
+/// Ukrainian, German and Spanish. Russian had a table before that and no longer does: the client
+/// carries no Russian catalogue, so a Russian line had nothing around it to be read in, and a
+/// phrasing table for a language the product does not offer is a sentence nobody can reach. The
+/// Russian forms in <see cref="Database.Entities.EntityNameForm"/> are left where they are — they
+/// cost nothing to keep and a table is cheap to write again — but nothing renders them.
+/// </para>
+///
+/// <para>
+/// **A language with no table here is answered in English, and the answer says so.**
+/// <see cref="Spoken"/> is where that is decided, and it is what <c>descriptor.language</c>
+/// carries, so a client never puts one language's grammar around another language's name.
 /// </para>
 ///
 /// <para>
 /// **The four clauses a place page is made of ask for the locative, and no genitive stands in.**
 /// <c>lived-in</c>, <c>buried-in</c>, <c>city-in</c> and <c>mountain-in</c> put their target in it
-/// in both Slavic languages — <em>жив у Вифлеємі</em>, not <em>жив у Вифлеєма</em> — so each
-/// phrasing asks for the case its own phrase puts the name in rather than for the genitive the
-/// rest take. <c>gate-of</c> is the near miss: it names a place and still takes the genitive,
-/// because <em>брама Єрусалима</em> says whose the gate is rather than where it stands.
-/// <c>lived-in</c> was phrased around the gap once, as
-/// <em>мешканець Вифлеєма</em>, while nothing produced a locative; that says something else — an
-/// inhabitant rather than someone who lived there — and it is no longer needed.
+/// in Ukrainian — <em>жив у Вифлеємі</em>, not <em>жив у Вифлеєма</em> — so each phrasing asks for
+/// the case its own phrase puts the name in rather than for the genitive the other fifty-three
+/// take. <c>gate-of</c> is the near miss: it names a place and still takes the genitive, because
+/// <em>брама Єрусалима</em> says whose the gate is rather than where it stands. <c>lived-in</c> was
+/// phrased around the gap once, as <em>мешканець Вифлеєма</em>, while nothing produced a locative;
+/// that says something else — an inhabitant rather than someone who lived there — and it is no
+/// longer needed.
 ///
 /// A form the generation pass has not produced falls back to the English name and never to another
 /// case: <em>жив у Hebron</em> is visibly a gap, and <em>жив у Хеврона</em> would read as Ukrainian
@@ -56,7 +58,9 @@ internal static class DescriptorPhrasings
 
     public const string Ukrainian = "ukr";
 
-    public const string Russian = "rus";
+    public const string German = "deu";
+
+    public const string Spanish = "spa";
 
     /// <summary>What separates two clauses of one description, in every language carried.</summary>
     public const string Separator = ", ";
@@ -235,66 +239,161 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.Near] = new("біля ", Genitive),
         };
 
-    private static IReadOnlyDictionary<string, Phrasing> Rus { get; } =
+    /// <summary>
+    /// German, whose genitive is the one thing about it that is regular here: a Biblical name takes
+    /// <em>-s</em> and stands without an article — <em>Sohn Aarons</em>, <em>Knecht Gottes</em> —
+    /// which is the form <c>deu</c> already holds beside the nominative.
+    ///
+    /// <para>
+    /// Where the German phrase does not want a genitive it asks for the nominative rather than
+    /// bending the sentence to use one. <em>vom Stamm Levi</em> names the tribe plainly and
+    /// <em>vom Stamm Levis</em> would be wrong; a place after a preposition is the dative, which
+    /// for a proper name is the nominative unchanged, so <em>begraben in Hebron</em> needs no
+    /// fourth case in the table. The two homicide clauses lean on that twice more: the agent of a
+    /// passive takes <em>von</em> and the dative, and the object of <em>töten</em> takes an
+    /// accusative, and a proper name marks neither.
+    /// </para>
+    /// </summary>
+    private static IReadOnlyDictionary<string, Phrasing> Deu { get; } =
         new Dictionary<string, Phrasing>(StringComparer.Ordinal)
         {
-            [DescriptorRelations.SonOf] = new("сын ", Genitive),
-            [DescriptorRelations.DaughterOf] = new("дочь ", Genitive),
-            [DescriptorRelations.FatherOf] = new("отец ", Genitive),
-            [DescriptorRelations.MotherOf] = new("мать ", Genitive),
-            [DescriptorRelations.BrotherOf] = new("брат ", Genitive),
-            [DescriptorRelations.SisterOf] = new("сестра ", Genitive),
-            [DescriptorRelations.HusbandOf] = new("муж ", Genitive),
-            [DescriptorRelations.WifeOf] = new("жена ", Genitive),
-            [DescriptorRelations.HalfBrotherOf] = new("сводный брат ", Genitive),
-            [DescriptorRelations.HalfSisterOf] = new("сводная сестра ", Genitive),
-            [DescriptorRelations.GrandfatherOf] = new("дед ", Genitive),
-            [DescriptorRelations.GrandmotherOf] = new("бабушка ", Genitive),
-            [DescriptorRelations.GrandsonOf] = new("внук ", Genitive),
-            [DescriptorRelations.GranddaughterOf] = new("внучка ", Genitive),
-            [DescriptorRelations.UncleOf] = new("дядя ", Genitive),
-            [DescriptorRelations.AuntOf] = new("тетя ", Genitive),
-            [DescriptorRelations.NephewOf] = new("племянник ", Genitive),
-            [DescriptorRelations.NieceOf] = new("племянница ", Genitive),
-            [DescriptorRelations.AncestorOf] = new("предок ", Genitive),
-            [DescriptorRelations.DescendantOf] = new("потомок ", Genitive),
-            [DescriptorRelations.FatherInLawOf] = new("тесть ", Genitive),
-            [DescriptorRelations.MotherInLawOf] = new("теща ", Genitive),
-            [DescriptorRelations.SonInLawOf] = new("зять ", Genitive),
-            [DescriptorRelations.DaughterInLawOf] = new("невестка ", Genitive),
-            [DescriptorRelations.BrotherInLawOf] = new("свояк ", Genitive),
-            [DescriptorRelations.SisterInLawOf] = new("свояченица ", Genitive),
-            [DescriptorRelations.ConcubineOf] = new("наложница ", Genitive),
-            [DescriptorRelations.KingOf] = new("царь ", Genitive),
-            [DescriptorRelations.QueenOf] = new("царица ", Genitive),
-            [DescriptorRelations.ProphetTo] = new("пророк ", Genitive),
-            [DescriptorRelations.PriestOf] = new("священник ", Genitive),
-            [DescriptorRelations.JudgeOf] = new("судья ", Genitive),
-            [DescriptorRelations.HighPriestOf] = new("первосвященник ", Genitive),
-            [DescriptorRelations.CommanderOf] = new("военачальник ", Genitive),
-            [DescriptorRelations.GovernorOf] = new("наместник ", Genitive),
-            [DescriptorRelations.TetrarchOf] = new("тетрарх ", Genitive),
-            [DescriptorRelations.ServantOf] = new("слуга ", Genitive),
-            [DescriptorRelations.MasterOf] = new("господин ", Genitive),
-            [DescriptorRelations.DiscipleOf] = new("ученик ", Genitive),
-            [DescriptorRelations.ApostleOf] = new("апостол ", Genitive),
-            [DescriptorRelations.ScribeOf] = new("писец ", Genitive),
-            [DescriptorRelations.CompanionOf] = new("товарищ ", Genitive),
-            [DescriptorRelations.KilledBy] = new("погиб от руки ", Genitive),
-            [DescriptorRelations.KillerOf] = new("убийца ", Genitive),
-            [DescriptorRelations.AngelOf] = new("ангел ", Genitive),
-            [DescriptorRelations.OfTribe] = new("из колена ", Genitive),
-            [DescriptorRelations.OfPeople] = new("из народа ", Genitive),
-            [DescriptorRelations.FromPlace] = new("из ", Genitive),
-            [DescriptorRelations.LivedIn] = new("жил в ", Locative),
-            [DescriptorRelations.BuriedIn] = new("похоронен в ", Locative),
-            [DescriptorRelations.DescendantsOf] = new("потомки ", Genitive),
-            [DescriptorRelations.CityIn] = new("город в ", Locative),
-            [DescriptorRelations.RegionOf] = new("область ", Genitive),
-            [DescriptorRelations.RiverOf] = new("река ", Genitive),
-            [DescriptorRelations.MountainIn] = new("гора в ", Locative),
-            [DescriptorRelations.GateOf] = new("ворота ", Genitive),
-            [DescriptorRelations.Near] = new("около ", Genitive),
+            [DescriptorRelations.SonOf] = new("Sohn ", Genitive),
+            [DescriptorRelations.DaughterOf] = new("Tochter ", Genitive),
+            [DescriptorRelations.FatherOf] = new("Vater ", Genitive),
+            [DescriptorRelations.MotherOf] = new("Mutter ", Genitive),
+            [DescriptorRelations.BrotherOf] = new("Bruder ", Genitive),
+            [DescriptorRelations.SisterOf] = new("Schwester ", Genitive),
+            [DescriptorRelations.HusbandOf] = new("Mann ", Genitive),
+            [DescriptorRelations.WifeOf] = new("Frau ", Genitive),
+            [DescriptorRelations.HalfBrotherOf] = new("Halbbruder ", Genitive),
+            [DescriptorRelations.HalfSisterOf] = new("Halbschwester ", Genitive),
+            [DescriptorRelations.GrandfatherOf] = new("Großvater ", Genitive),
+            [DescriptorRelations.GrandmotherOf] = new("Großmutter ", Genitive),
+            [DescriptorRelations.GrandsonOf] = new("Enkel ", Genitive),
+            [DescriptorRelations.GranddaughterOf] = new("Enkelin ", Genitive),
+            [DescriptorRelations.UncleOf] = new("Onkel ", Genitive),
+            [DescriptorRelations.AuntOf] = new("Tante ", Genitive),
+            [DescriptorRelations.NephewOf] = new("Neffe ", Genitive),
+            [DescriptorRelations.NieceOf] = new("Nichte ", Genitive),
+            [DescriptorRelations.AncestorOf] = new("Vorfahr ", Genitive),
+            [DescriptorRelations.DescendantOf] = new("Nachkomme ", Genitive),
+            [DescriptorRelations.FatherInLawOf] = new("Schwiegervater ", Genitive),
+            [DescriptorRelations.MotherInLawOf] = new("Schwiegermutter ", Genitive),
+            [DescriptorRelations.SonInLawOf] = new("Schwiegersohn ", Genitive),
+            [DescriptorRelations.DaughterInLawOf] = new("Schwiegertochter ", Genitive),
+
+            // Schwager and Schwägerin keep the same silence the Ukrainian pair does: they say a
+            // marriage stands between the two and not which side of it the tie runs through, which
+            // is all the claim says.
+            [DescriptorRelations.BrotherInLawOf] = new("Schwager ", Genitive),
+            [DescriptorRelations.SisterInLawOf] = new("Schwägerin ", Genitive),
+            [DescriptorRelations.ConcubineOf] = new("Nebenfrau ", Genitive),
+            [DescriptorRelations.KingOf] = new("König ", Genitive),
+            [DescriptorRelations.QueenOf] = new("Königin ", Genitive),
+            [DescriptorRelations.ProphetTo] = new("Prophet für ", Nominative),
+            [DescriptorRelations.PriestOf] = new("Priester ", Genitive),
+            [DescriptorRelations.JudgeOf] = new("Richter ", Genitive),
+            [DescriptorRelations.HighPriestOf] = new("Hoherpriester ", Genitive),
+            [DescriptorRelations.CommanderOf] = new("Feldhauptmann ", Genitive),
+            [DescriptorRelations.GovernorOf] = new("Statthalter ", Genitive),
+            [DescriptorRelations.TetrarchOf] = new("Tetrarch ", Genitive),
+            [DescriptorRelations.ServantOf] = new("Knecht ", Genitive),
+            [DescriptorRelations.MasterOf] = new("Herr ", Genitive),
+            [DescriptorRelations.DiscipleOf] = new("Jünger ", Genitive),
+            [DescriptorRelations.ApostleOf] = new("Apostel ", Genitive),
+            [DescriptorRelations.ScribeOf] = new("Schreiber ", Genitive),
+            [DescriptorRelations.CompanionOf] = new("Gefährte ", Genitive),
+
+            // Neither homicide clause calls the killing a crime, because the relation does not:
+            // Mörder would convict David of Goliath. The plain verb states what happened and
+            // leaves the rest to the verse the clause carries.
+            [DescriptorRelations.KilledBy] = new("getötet von ", Nominative),
+            [DescriptorRelations.KillerOf] = new("tötete ", Nominative),
+            [DescriptorRelations.AngelOf] = new("Engel ", Genitive),
+            [DescriptorRelations.OfTribe] = new("vom Stamm ", Nominative),
+            [DescriptorRelations.OfPeople] = new("aus dem Volk der ", Nominative),
+            [DescriptorRelations.FromPlace] = new("aus ", Nominative),
+            [DescriptorRelations.LivedIn] = new("wohnte in ", Nominative),
+            [DescriptorRelations.BuriedIn] = new("begraben in ", Nominative),
+            [DescriptorRelations.DescendantsOf] = new("Nachkommen ", Genitive),
+            [DescriptorRelations.CityIn] = new("eine Stadt in ", Nominative),
+            [DescriptorRelations.RegionOf] = new("eine Landschaft in ", Nominative),
+            [DescriptorRelations.RiverOf] = new("ein Fluss in ", Nominative),
+            [DescriptorRelations.MountainIn] = new("ein Berg in ", Nominative),
+            [DescriptorRelations.GateOf] = new("ein Tor ", Genitive),
+            [DescriptorRelations.Near] = new("bei ", Nominative),
+        };
+
+    /// <summary>
+    /// Spanish, which inflects a name for nothing and says <em>de</em>. Every phrasing takes the
+    /// nominative, and <c>spa</c> is asked for that one form for the same reason.
+    ///
+    /// <para>
+    /// <c>killer-of</c> is the one clause that does not say <em>de</em>. Spanish has no neutral
+    /// agent noun for it — <em>matador</em> belongs to a bullring and <em>asesino</em> convicts —
+    /// so it is the verb, and the verb takes the personal <em>a</em>: <em>dio muerte a Goliat</em>.
+    /// </para>
+    /// </summary>
+    private static IReadOnlyDictionary<string, Phrasing> Spa { get; } =
+        new Dictionary<string, Phrasing>(StringComparer.Ordinal)
+        {
+            [DescriptorRelations.SonOf] = new("hijo de ", Nominative),
+            [DescriptorRelations.DaughterOf] = new("hija de ", Nominative),
+            [DescriptorRelations.FatherOf] = new("padre de ", Nominative),
+            [DescriptorRelations.MotherOf] = new("madre de ", Nominative),
+            [DescriptorRelations.BrotherOf] = new("hermano de ", Nominative),
+            [DescriptorRelations.SisterOf] = new("hermana de ", Nominative),
+            [DescriptorRelations.HusbandOf] = new("marido de ", Nominative),
+            [DescriptorRelations.WifeOf] = new("mujer de ", Nominative),
+            [DescriptorRelations.HalfBrotherOf] = new("medio hermano de ", Nominative),
+            [DescriptorRelations.HalfSisterOf] = new("media hermana de ", Nominative),
+            [DescriptorRelations.GrandfatherOf] = new("abuelo de ", Nominative),
+            [DescriptorRelations.GrandmotherOf] = new("abuela de ", Nominative),
+            [DescriptorRelations.GrandsonOf] = new("nieto de ", Nominative),
+            [DescriptorRelations.GranddaughterOf] = new("nieta de ", Nominative),
+            [DescriptorRelations.UncleOf] = new("tío de ", Nominative),
+            [DescriptorRelations.AuntOf] = new("tía de ", Nominative),
+            [DescriptorRelations.NephewOf] = new("sobrino de ", Nominative),
+            [DescriptorRelations.NieceOf] = new("sobrina de ", Nominative),
+            [DescriptorRelations.AncestorOf] = new("antepasado de ", Nominative),
+            [DescriptorRelations.DescendantOf] = new("descendiente de ", Nominative),
+            [DescriptorRelations.FatherInLawOf] = new("suegro de ", Nominative),
+            [DescriptorRelations.MotherInLawOf] = new("suegra de ", Nominative),
+            [DescriptorRelations.SonInLawOf] = new("yerno de ", Nominative),
+            [DescriptorRelations.DaughterInLawOf] = new("nuera de ", Nominative),
+            [DescriptorRelations.BrotherInLawOf] = new("cuñado de ", Nominative),
+            [DescriptorRelations.SisterInLawOf] = new("cuñada de ", Nominative),
+            [DescriptorRelations.ConcubineOf] = new("concubina de ", Nominative),
+            [DescriptorRelations.KingOf] = new("rey de ", Nominative),
+            [DescriptorRelations.QueenOf] = new("reina de ", Nominative),
+            [DescriptorRelations.ProphetTo] = new("profeta de ", Nominative),
+            [DescriptorRelations.PriestOf] = new("sacerdote de ", Nominative),
+            [DescriptorRelations.JudgeOf] = new("juez de ", Nominative),
+            [DescriptorRelations.HighPriestOf] = new("sumo sacerdote de ", Nominative),
+            [DescriptorRelations.CommanderOf] = new("capitán del ejército de ", Nominative),
+            [DescriptorRelations.GovernorOf] = new("gobernador de ", Nominative),
+            [DescriptorRelations.TetrarchOf] = new("tetrarca de ", Nominative),
+            [DescriptorRelations.ServantOf] = new("siervo de ", Nominative),
+            [DescriptorRelations.MasterOf] = new("amo de ", Nominative),
+            [DescriptorRelations.DiscipleOf] = new("discípulo de ", Nominative),
+            [DescriptorRelations.ApostleOf] = new("apóstol de ", Nominative),
+            [DescriptorRelations.ScribeOf] = new("escriba de ", Nominative),
+            [DescriptorRelations.CompanionOf] = new("compañero de ", Nominative),
+            [DescriptorRelations.KilledBy] = new("muerto a manos de ", Nominative),
+            [DescriptorRelations.KillerOf] = new("dio muerte a ", Nominative),
+            [DescriptorRelations.AngelOf] = new("ángel de ", Nominative),
+            [DescriptorRelations.OfTribe] = new("de la tribu de ", Nominative),
+            [DescriptorRelations.OfPeople] = new("del pueblo de los ", Nominative),
+            [DescriptorRelations.FromPlace] = new("de ", Nominative),
+            [DescriptorRelations.LivedIn] = new("habitó en ", Nominative),
+            [DescriptorRelations.BuriedIn] = new("sepultado en ", Nominative),
+            [DescriptorRelations.DescendantsOf] = new("descendientes de ", Nominative),
+            [DescriptorRelations.CityIn] = new("una ciudad en ", Nominative),
+            [DescriptorRelations.RegionOf] = new("una región de ", Nominative),
+            [DescriptorRelations.RiverOf] = new("un río de ", Nominative),
+            [DescriptorRelations.MountainIn] = new("un monte en ", Nominative),
+            [DescriptorRelations.GateOf] = new("una puerta de ", Nominative),
+            [DescriptorRelations.Near] = new("cerca de ", Nominative),
         };
 
     private static readonly IReadOnlyDictionary<string, IReadOnlyDictionary<string, Phrasing>>
@@ -302,6 +401,7 @@ internal static class DescriptorPhrasings
         {
             [English] = Eng,
             [Ukrainian] = Ukr,
-            [Russian] = Rus,
+            [German] = Deu,
+            [Spanish] = Spa,
         };
 }
