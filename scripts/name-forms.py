@@ -83,10 +83,6 @@ CASES = {
     'rus': ['nominative', 'genitive', 'locative'],
 }
 
-# The locative is what a place page is made of -- four of the thirty-eight relations put the name in
-# it -- and it is meaningless for a person nobody is said to live in.
-LOCATIVE_KINDS = {'place'}
-
 VERSES_SHOWN = 4
 BATCH_ENTITIES = 8
 
