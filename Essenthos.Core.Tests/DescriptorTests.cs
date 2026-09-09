@@ -63,6 +63,16 @@ public sealed class DescriptorTests : IDisposable
         Add("cain-1", EntityKind.Person, "Cain", null, (1, 4, 16));
         Add("nod-1", EntityKind.Place, "Nod", null, (1, 4, 16));
 
+        // The clauses the vocabulary could not hold before it was widened. Haran is the one no pass
+        // produced a Ukrainian genitive for, so he is what the fallback is proved on here.
+        Add("lot-1", EntityKind.Person, "Lot", null, (1, 11, 27), (1, 12, 5));
+        Add("abram-1", EntityKind.Person, "Abram", null, (1, 12, 5));
+        Add("haran-1", EntityKind.Person, "Haran", null, (1, 11, 27));
+        Add("azrikam-4", EntityKind.Person, "Azrikam", null, (14, 28, 7));
+        Add("zichri-1", EntityKind.Person, "Zichri", null, (14, 28, 7));
+        Add("jerusalem-1", EntityKind.Place, "Jerusalem", null, (16, 3, 29));
+        Add("eastgate-1", EntityKind.Place, "East Gate", null, (16, 3, 29));
+
         _db.SaveChanges();
     }
 
@@ -314,6 +324,55 @@ public sealed class DescriptorTests : IDisposable
                 [GrammaticalCases.Genitive] = "Нода",
             },
             "the genitive is there and is deliberately not what the locative falls back to");
+    }
+
+    /// <summary>
+    /// The clauses the closed vocabulary could not state until it was widened, rendered rather than
+    /// refused. Lot is the page this is measured on: the two things most often said about him are
+    /// that he is Haran's son and Abram's nephew, and only the first of them could be written.
+    /// </summary>
+    [Fact]
+    public async Task TheWidenedVocabularyStatesWhatTheNarrowOneRefused()
+    {
+        var outcome = await Load("widened");
+
+        outcome.Refused.UnknownRelation.Should().Be(0);
+
+        Line(await Read("lot-1", DescriptorPhrasings.English))
+            .Should().Be("nephew of Abram, son of Haran");
+        Line(await Read("abram-1", DescriptorPhrasings.Ukrainian)).Should().Be("дядько Лота");
+        Line(await Read("azrikam-4", DescriptorPhrasings.Ukrainian))
+            .Should().Be("намісник Єрусалима, загинув від руки Зіхрі");
+        Line(await Read("zichri-1", DescriptorPhrasings.Ukrainian)).Should().Be("вбивця Азрікама");
+    }
+
+    /// <summary>
+    /// A gate belongs to a city rather than standing in one, so it takes the genitive and not the
+    /// locative the four clauses a place page is otherwise made of take.
+    /// </summary>
+    [Fact]
+    public async Task AGateIsSaidToBeItsCitysAndNotToBeInIt()
+    {
+        await Load("widened");
+
+        Line(await Read("eastgate-1", DescriptorPhrasings.Ukrainian))
+            .Should().Be("брама Єрусалима");
+        Line(await Read("eastgate-1", DescriptorPhrasings.English))
+            .Should().Be("a gate of Jerusalem");
+    }
+
+    /// <summary>
+    /// The other path, and the one every new relation is on until a pass produces forms for its
+    /// targets: a target with no genitive renders as the English name. <em>син Харана</em> would
+    /// read as Ukrainian and be a guess; <em>син Haran</em> is visibly a gap.
+    /// </summary>
+    [Fact]
+    public async Task ANewRelationWithNoFormForItsTargetFallsBackToTheEnglishName()
+    {
+        await Load("widened");
+
+        Line(await Read("lot-1", DescriptorPhrasings.Ukrainian))
+            .Should().Be("племінник Аврама, син Haran");
     }
 
     /// <summary>

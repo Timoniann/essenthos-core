@@ -82,6 +82,38 @@ public sealed class DescriptorVocabularyTests
     }
 
     /// <summary>
+    /// Every widening of the vocabulary asks for a case a pass has already been asked to produce.
+    ///
+    /// The instrumental is the one that would otherwise have crept in: <em>убитий Зіхрі</em> wants
+    /// it, no entity in the corpus has a form in it, and a clause asking for one would render the
+    /// English name for every entity there is rather than for the few that are missing a form.
+    /// </summary>
+    [Theory]
+    [InlineData("ukr")]
+    [InlineData("rus")]
+    public void NoRelationAsksForACaseNoPassHasBeenAskedToProduce(string language)
+    {
+        string[] widened =
+        [
+            DescriptorRelations.HalfBrotherOf, DescriptorRelations.HalfSisterOf,
+            DescriptorRelations.GrandsonOf, DescriptorRelations.GranddaughterOf,
+            DescriptorRelations.UncleOf, DescriptorRelations.AuntOf,
+            DescriptorRelations.NephewOf, DescriptorRelations.NieceOf,
+            DescriptorRelations.BrotherInLawOf, DescriptorRelations.SisterInLawOf,
+            DescriptorRelations.ConcubineOf,
+            DescriptorRelations.GovernorOf, DescriptorRelations.TetrarchOf,
+            DescriptorRelations.MasterOf, DescriptorRelations.CompanionOf,
+            DescriptorRelations.KilledBy, DescriptorRelations.KillerOf,
+            DescriptorRelations.AngelOf, DescriptorRelations.GateOf,
+        ];
+
+        var phrasings = DescriptorPhrasings.For(language)!;
+
+        widened.Select(relation => phrasings[relation].Case)
+            .Should().AllBe(GrammaticalCases.Genitive);
+    }
+
+    /// <summary>
     /// A language nothing has phrasings for has none, and is answered in English instead of being
     /// refused. The alternative on the page is the imported sentence, which is English too and is
     /// somebody else's prose with no link in it.

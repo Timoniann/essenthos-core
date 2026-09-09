@@ -24,8 +24,8 @@ internal sealed record Phrasing(string Before, string Case, string After = "");
 /// <para>
 /// **A language with no table here is answered in English, and the answer says so.** The tables are
 /// English, Ukrainian and Russian. German is not here on purpose: <em>vom Volk der Moabiter</em> and
-/// <em>Prophet für Israel</em> are choices somebody who reads German has to make, and thirty-eight
-/// phrasings guessed by somebody who does not would reach a German reader looking exactly as
+/// <em>Prophet für Israel</em> are choices somebody who reads German has to make, and a phrasing
+/// per relation guessed by somebody who does not would reach a German reader looking exactly as
 /// authoritative as the three that were checked. So a German reader gets the English line, named as
 /// English — which is what the alternative already was, since the only other thing to show is
 /// <see cref="Database.Entities.Entity.Distinguisher"/>, an English sentence somebody else wrote
@@ -39,7 +39,9 @@ internal sealed record Phrasing(string Before, string Case, string After = "");
 /// <c>lived-in</c>, <c>buried-in</c>, <c>city-in</c> and <c>mountain-in</c> put their target in it
 /// in both Slavic languages — <em>жив у Вифлеємі</em>, not <em>жив у Вифлеєма</em> — so each
 /// phrasing asks for the case its own phrase puts the name in rather than for the genitive the
-/// other thirty-four take. <c>lived-in</c> was phrased around the gap once, as
+/// rest take. <c>gate-of</c> is the near miss: it names a place and still takes the genitive,
+/// because <em>брама Єрусалима</em> says whose the gate is rather than where it stands.
+/// <c>lived-in</c> was phrased around the gap once, as
 /// <em>мешканець Вифлеєма</em>, while nothing produced a locative; that says something else — an
 /// inhabitant rather than someone who lived there — and it is no longer needed.
 ///
@@ -108,14 +110,25 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.SisterOf] = new("sister of ", Nominative),
             [DescriptorRelations.HusbandOf] = new("husband of ", Nominative),
             [DescriptorRelations.WifeOf] = new("wife of ", Nominative),
+            [DescriptorRelations.HalfBrotherOf] = new("half-brother of ", Nominative),
+            [DescriptorRelations.HalfSisterOf] = new("half-sister of ", Nominative),
             [DescriptorRelations.GrandfatherOf] = new("grandfather of ", Nominative),
             [DescriptorRelations.GrandmotherOf] = new("grandmother of ", Nominative),
+            [DescriptorRelations.GrandsonOf] = new("grandson of ", Nominative),
+            [DescriptorRelations.GranddaughterOf] = new("granddaughter of ", Nominative),
+            [DescriptorRelations.UncleOf] = new("uncle of ", Nominative),
+            [DescriptorRelations.AuntOf] = new("aunt of ", Nominative),
+            [DescriptorRelations.NephewOf] = new("nephew of ", Nominative),
+            [DescriptorRelations.NieceOf] = new("niece of ", Nominative),
             [DescriptorRelations.AncestorOf] = new("ancestor of ", Nominative),
             [DescriptorRelations.DescendantOf] = new("descendant of ", Nominative),
             [DescriptorRelations.FatherInLawOf] = new("father-in-law of ", Nominative),
             [DescriptorRelations.MotherInLawOf] = new("mother-in-law of ", Nominative),
             [DescriptorRelations.SonInLawOf] = new("son-in-law of ", Nominative),
             [DescriptorRelations.DaughterInLawOf] = new("daughter-in-law of ", Nominative),
+            [DescriptorRelations.BrotherInLawOf] = new("brother-in-law of ", Nominative),
+            [DescriptorRelations.SisterInLawOf] = new("sister-in-law of ", Nominative),
+            [DescriptorRelations.ConcubineOf] = new("concubine of ", Nominative),
             [DescriptorRelations.KingOf] = new("king of ", Nominative),
             [DescriptorRelations.QueenOf] = new("queen of ", Nominative),
             [DescriptorRelations.ProphetTo] = new("prophet to ", Nominative),
@@ -123,10 +136,17 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.JudgeOf] = new("judge of ", Nominative),
             [DescriptorRelations.HighPriestOf] = new("high priest of ", Nominative),
             [DescriptorRelations.CommanderOf] = new("commander of ", Nominative),
+            [DescriptorRelations.GovernorOf] = new("governor of ", Nominative),
+            [DescriptorRelations.TetrarchOf] = new("tetrarch of ", Nominative),
             [DescriptorRelations.ServantOf] = new("servant of ", Nominative),
+            [DescriptorRelations.MasterOf] = new("master of ", Nominative),
             [DescriptorRelations.DiscipleOf] = new("disciple of ", Nominative),
             [DescriptorRelations.ApostleOf] = new("apostle of ", Nominative),
             [DescriptorRelations.ScribeOf] = new("scribe of ", Nominative),
+            [DescriptorRelations.CompanionOf] = new("companion of ", Nominative),
+            [DescriptorRelations.KilledBy] = new("killed by ", Nominative),
+            [DescriptorRelations.KillerOf] = new("killer of ", Nominative),
+            [DescriptorRelations.AngelOf] = new("angel of ", Nominative),
             [DescriptorRelations.OfTribe] = new("of the tribe of ", Nominative),
             [DescriptorRelations.OfPeople] = new("one of the ", Nominative),
             [DescriptorRelations.FromPlace] = new("from ", Nominative),
@@ -137,6 +157,7 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.RegionOf] = new("a region of ", Nominative),
             [DescriptorRelations.RiverOf] = new("a river of ", Nominative),
             [DescriptorRelations.MountainIn] = new("a mountain in ", Nominative),
+            [DescriptorRelations.GateOf] = new("a gate of ", Nominative),
             [DescriptorRelations.Near] = new("near ", Nominative),
         };
 
@@ -155,14 +176,29 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.SisterOf] = new("сестра ", Genitive),
             [DescriptorRelations.HusbandOf] = new("чоловік ", Genitive),
             [DescriptorRelations.WifeOf] = new("дружина ", Genitive),
+            [DescriptorRelations.HalfBrotherOf] = new("зведений брат ", Genitive),
+            [DescriptorRelations.HalfSisterOf] = new("зведена сестра ", Genitive),
             [DescriptorRelations.GrandfatherOf] = new("дід ", Genitive),
             [DescriptorRelations.GrandmotherOf] = new("бабуся ", Genitive),
+            [DescriptorRelations.GrandsonOf] = new("онук ", Genitive),
+            [DescriptorRelations.GranddaughterOf] = new("онука ", Genitive),
+            [DescriptorRelations.UncleOf] = new("дядько ", Genitive),
+            [DescriptorRelations.AuntOf] = new("тітка ", Genitive),
+            [DescriptorRelations.NephewOf] = new("племінник ", Genitive),
+            [DescriptorRelations.NieceOf] = new("племінниця ", Genitive),
             [DescriptorRelations.AncestorOf] = new("предок ", Genitive),
             [DescriptorRelations.DescendantOf] = new("нащадок ", Genitive),
             [DescriptorRelations.FatherInLawOf] = new("тесть ", Genitive),
             [DescriptorRelations.MotherInLawOf] = new("теща ", Genitive),
             [DescriptorRelations.SonInLawOf] = new("зять ", Genitive),
             [DescriptorRelations.DaughterInLawOf] = new("невістка ", Genitive),
+
+            // Свояк and своячка are the members of the sibling-in-law set that do not say which
+            // side of the marriage the tie runs through; шурин and дівер both do, and the claim
+            // does not.
+            [DescriptorRelations.BrotherInLawOf] = new("свояк ", Genitive),
+            [DescriptorRelations.SisterInLawOf] = new("своячка ", Genitive),
+            [DescriptorRelations.ConcubineOf] = new("наложниця ", Genitive),
             [DescriptorRelations.KingOf] = new("цар ", Genitive),
             [DescriptorRelations.QueenOf] = new("цариця ", Genitive),
             [DescriptorRelations.ProphetTo] = new("пророк ", Genitive),
@@ -170,10 +206,21 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.JudgeOf] = new("суддя ", Genitive),
             [DescriptorRelations.HighPriestOf] = new("первосвященник ", Genitive),
             [DescriptorRelations.CommanderOf] = new("воєначальник ", Genitive),
+            [DescriptorRelations.GovernorOf] = new("намісник ", Genitive),
+            [DescriptorRelations.TetrarchOf] = new("тетрарх ", Genitive),
             [DescriptorRelations.ServantOf] = new("слуга ", Genitive),
+            [DescriptorRelations.MasterOf] = new("господар ", Genitive),
             [DescriptorRelations.DiscipleOf] = new("учень ", Genitive),
             [DescriptorRelations.ApostleOf] = new("апостол ", Genitive),
             [DescriptorRelations.ScribeOf] = new("писар ", Genitive),
+            [DescriptorRelations.CompanionOf] = new("товариш ", Genitive),
+
+            // "Загинув від руки X" rather than the instrumental "убитий X" the phrase would
+            // otherwise want: the instrumental is a case no pass has produced a form in, and a
+            // clause asking for one would render the English name for every entity in the corpus.
+            [DescriptorRelations.KilledBy] = new("загинув від руки ", Genitive),
+            [DescriptorRelations.KillerOf] = new("вбивця ", Genitive),
+            [DescriptorRelations.AngelOf] = new("ангел ", Genitive),
             [DescriptorRelations.OfTribe] = new("з племені ", Genitive),
             [DescriptorRelations.OfPeople] = new("з народу ", Genitive),
             [DescriptorRelations.FromPlace] = new("з ", Genitive),
@@ -184,6 +231,7 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.RegionOf] = new("область ", Genitive),
             [DescriptorRelations.RiverOf] = new("річка ", Genitive),
             [DescriptorRelations.MountainIn] = new("гора в ", Locative),
+            [DescriptorRelations.GateOf] = new("брама ", Genitive),
             [DescriptorRelations.Near] = new("біля ", Genitive),
         };
 
@@ -198,14 +246,25 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.SisterOf] = new("сестра ", Genitive),
             [DescriptorRelations.HusbandOf] = new("муж ", Genitive),
             [DescriptorRelations.WifeOf] = new("жена ", Genitive),
+            [DescriptorRelations.HalfBrotherOf] = new("сводный брат ", Genitive),
+            [DescriptorRelations.HalfSisterOf] = new("сводная сестра ", Genitive),
             [DescriptorRelations.GrandfatherOf] = new("дед ", Genitive),
             [DescriptorRelations.GrandmotherOf] = new("бабушка ", Genitive),
+            [DescriptorRelations.GrandsonOf] = new("внук ", Genitive),
+            [DescriptorRelations.GranddaughterOf] = new("внучка ", Genitive),
+            [DescriptorRelations.UncleOf] = new("дядя ", Genitive),
+            [DescriptorRelations.AuntOf] = new("тетя ", Genitive),
+            [DescriptorRelations.NephewOf] = new("племянник ", Genitive),
+            [DescriptorRelations.NieceOf] = new("племянница ", Genitive),
             [DescriptorRelations.AncestorOf] = new("предок ", Genitive),
             [DescriptorRelations.DescendantOf] = new("потомок ", Genitive),
             [DescriptorRelations.FatherInLawOf] = new("тесть ", Genitive),
             [DescriptorRelations.MotherInLawOf] = new("теща ", Genitive),
             [DescriptorRelations.SonInLawOf] = new("зять ", Genitive),
             [DescriptorRelations.DaughterInLawOf] = new("невестка ", Genitive),
+            [DescriptorRelations.BrotherInLawOf] = new("свояк ", Genitive),
+            [DescriptorRelations.SisterInLawOf] = new("свояченица ", Genitive),
+            [DescriptorRelations.ConcubineOf] = new("наложница ", Genitive),
             [DescriptorRelations.KingOf] = new("царь ", Genitive),
             [DescriptorRelations.QueenOf] = new("царица ", Genitive),
             [DescriptorRelations.ProphetTo] = new("пророк ", Genitive),
@@ -213,10 +272,17 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.JudgeOf] = new("судья ", Genitive),
             [DescriptorRelations.HighPriestOf] = new("первосвященник ", Genitive),
             [DescriptorRelations.CommanderOf] = new("военачальник ", Genitive),
+            [DescriptorRelations.GovernorOf] = new("наместник ", Genitive),
+            [DescriptorRelations.TetrarchOf] = new("тетрарх ", Genitive),
             [DescriptorRelations.ServantOf] = new("слуга ", Genitive),
+            [DescriptorRelations.MasterOf] = new("господин ", Genitive),
             [DescriptorRelations.DiscipleOf] = new("ученик ", Genitive),
             [DescriptorRelations.ApostleOf] = new("апостол ", Genitive),
             [DescriptorRelations.ScribeOf] = new("писец ", Genitive),
+            [DescriptorRelations.CompanionOf] = new("товарищ ", Genitive),
+            [DescriptorRelations.KilledBy] = new("погиб от руки ", Genitive),
+            [DescriptorRelations.KillerOf] = new("убийца ", Genitive),
+            [DescriptorRelations.AngelOf] = new("ангел ", Genitive),
             [DescriptorRelations.OfTribe] = new("из колена ", Genitive),
             [DescriptorRelations.OfPeople] = new("из народа ", Genitive),
             [DescriptorRelations.FromPlace] = new("из ", Genitive),
@@ -227,6 +293,7 @@ internal static class DescriptorPhrasings
             [DescriptorRelations.RegionOf] = new("область ", Genitive),
             [DescriptorRelations.RiverOf] = new("река ", Genitive),
             [DescriptorRelations.MountainIn] = new("гора в ", Locative),
+            [DescriptorRelations.GateOf] = new("ворота ", Genitive),
             [DescriptorRelations.Near] = new("около ", Genitive),
         };
 
