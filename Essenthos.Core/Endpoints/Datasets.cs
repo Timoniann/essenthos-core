@@ -352,6 +352,11 @@ public static class Datasets
                 + "argument that replaced it",
                 "the gentilic Strong's Dictionary derives, resolving to exactly one people",
                 "a reading of the verse naming a people the encyclopedia did not hold",
+                // Literally how the rows begin, because these double as the source-string
+                // prefixes the dataset claims: the English of the lexicon is public domain and the
+                // rendering into a reader's language is this project's, so the row names the model,
+                // the prompt version and the day, and the English stays beside it.
+                StrongTranslationLoader.SourcePrefix,
             ]),
     ];
 

@@ -54,6 +54,11 @@ public class AppDbContext : DbContext
     public DbSet<StrongEntry> StrongEntries { get; set; } = null!;
 
     /// <summary>
+    /// Strong's four prose fields in a reader's language, beside the English rather than over it.
+    /// </summary>
+    public DbSet<StrongEntryTranslation> StrongEntryTranslations { get; set; } = null!;
+
+    /// <summary>
     /// Strong numbers proposed for a word, with what proposed them. Separate from
     /// <c>word.strong_number</c>, which means a source stated it.
     /// </summary>
@@ -190,6 +195,42 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(g => g.PeopleEntityId)
                 .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        // The dictionary in a reader's language. Three of the four provenance constraints hold
+        // here; the fourth, which requires an inference to carry a confidence, does not, and the
+        // table comment says why rather than leaving a reader of the schema to wonder which of the
+        // two rules was forgotten.
+        modelBuilder.Entity<StrongEntryTranslation>(entity =>
+        {
+            entity.Property(t => t.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.ToTable("strong_entry_translation", table =>
+            {
+                table.HasCheckConstraint(
+                    "ck_strong_entry_translation_confidence_range",
+                    "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
+
+                table.HasCheckConstraint(
+                    "ck_strong_entry_translation_source_not_empty",
+                    "length(btrim(\"source\")) > 0");
+
+                table.HasCheckConstraint(
+                    "ck_strong_entry_translation_says_something",
+                    "\"definition\" IS NOT NULL OR \"derivation\" IS NOT NULL "
+                    + "OR \"kjv_definition\" IS NOT NULL OR \"detailed_definition\" IS NOT NULL");
+
+                table.HasComment(
+                    "Strong's four prose fields in one other language, next to the English and "
+                    + "never over it. Only these four are language; the lemma, the transliteration, "
+                    + "the morphology code and the see-also numbers are identifiers and are not "
+                    + "here, because a translated identifier breaks a lookup silently. A row is a "
+                    + "machine's reading of Strong rather than Strong in another language, and "
+                    + "source says which machine, under which prompt, on which day. It carries no "
+                    + "confidence where every other inference in this corpus must: there is no "
+                    + "candidate set to be sure between, and what a reader checks it against is the "
+                    + "English on strong_entry, not a number nobody measured.");
+            });
         });
 
         modelBuilder.Entity<Text>(entity =>

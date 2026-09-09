@@ -74,7 +74,7 @@ CONTAINER = 'essenthos-api-db-1'
 DATABASE = 'essenthos_core'
 USER = 'essenthos'
 
-PROMPT_VERSION = 'lexicon-2'
+PROMPT_VERSION = 'lexicon-3'
 JUDGE_VERSION = 'lexicon-judge-1'
 
 # The four fields that are language. Everything else on the entry is a key into something.
@@ -87,10 +87,33 @@ PROSE = ('definition', 'derivation', 'kjv_definition', 'detailed_definition')
 BATCH_ENTRIES = 8
 BATCH_CHARACTERS = 6000
 
+# A batch is two to three minutes of output tokens, so fifteen is not a budget: it is the point past
+# which the call is not coming back. Without it a worker blocked on a dead pipe costs the run a sixth
+# of its throughput for as long as the run lasts, and says nothing while it does.
+CALL_TIMEOUT_SECONDS = 900
+
+# The subscription's rate limit is the one failure that is certain to happen on a run this long, and
+# it is not a defect: it clears on its own. Six agents were killed by it in one afternoon, so a batch
+# that hits it waits and asks again rather than being recorded as a failure. The waits are long
+# because the window it is waiting for is measured in minutes, not seconds.
+RETRY_WAITS = (60, 180, 420, 900)
+RATE_LIMITED = ('rate limit', 'rate_limit', 'usage limit', 'too many requests',
+                '429', 'overloaded', 'quota')
+
 LANGUAGES = {
     'uk': 'Ukrainian',
     'de': 'German',
     'es': 'Spanish',
+}
+
+# What the corpus calls the same languages. Every text, name form and phrasing in the database is
+# tagged with a three-letter code, so a published file that says `uk` is a file the loader has to
+# translate before it can join anything -- and a language column with two spellings of Ukrainian in
+# it is a column that silently answers half a question.
+CORPUS_LANGUAGES = {
+    'uk': 'ukr',
+    'de': 'deu',
+    'es': 'spa',
 }
 
 # Strong writes with a fixed vocabulary of about thirty qualifiers, and they are the whole difficulty.
@@ -104,12 +127,16 @@ LANGUAGES = {
 # prompt version 1 again, and the pilot measured what that costs.
 GLOSSARY = {
     'uk': [
-        ('figuratively', 'переносно, у переносному значенні'),
+        ('i.e.', 'тобто'),
+        ('figuratively', 'переносно'),
         ('a primitive root', 'первісний корінь'),
-        ('by implication', 'звідси; як наслідок — a sense derived from the head sense, never «за значенням»'),
-        ('properly', 'власне, у власному значенні'),
+        ('by implication', 'у похідному значенні — the sense is derived from the head sense rather '
+                           'than stated by it. Never «звідси», which is *hence*; never «переносно», '
+                           'which is *figuratively*; never «за значенням» or «опосередковано»'),
+        ('properly', 'власне'),
+        ('literally', 'буквально'),
         ('an unused root', 'невживаний корінь'),
-        ('specially', 'зокрема, особливо'),
+        ('specially', 'особливо'),
         ('the base of', 'основа слова: «від основи G2865»'),
         ('compare', 'порівн.'),
         ('of Hebrew origin', 'єврейського походження'),
@@ -118,7 +145,8 @@ GLOSSARY = {
         ('by analogy', 'за аналогією'),
         ('denominative', 'відіменникове (деномінатив)'),
         ('akin to', 'споріднене з'),
-        ('by extension', 'у розширеному значенні'),
+        ('by extension', 'у ширшому значенні'),
+        ('hence', 'звідси'),
         ('adverbially', 'прислівниково'),
         ('of foreign origin', 'чужомовного походження'),
         ('patronymic', 'патронім, по батькові'),
@@ -170,6 +198,11 @@ the closest one and keep the Latin or Greek term in brackets after it rather tha
 Strong writes with a fixed vocabulary, and these are its settled {language} equivalents. Use them:
 
 {glossary}
+
+The connectives above -- properly, literally, figuratively, by implication, by extension, hence,
+specially, i.e. -- each mark a different relation between one sense and the next, and Strong chooses
+between them deliberately. Never render two of them by the same {language} word: a distinction he
+makes hundreds of times disappears and no reader can see that it has.
 
 Leave these in Latin letters wherever they appear, because they are the names every grammar uses:
 {untranslated}.
@@ -363,6 +396,71 @@ def extract(args):
     print(f'{len(selected)} entries in {len(manifest["batches"])} batches -> {args.dir}')
 
 
+# ---------------------------------------------------------------------------- sample
+
+
+def sample(args):
+    """
+    A finished run, narrowed to a fresh sample of it, so the second reading can be afforded.
+
+    Judging is the expensive half -- opus over 14,197 entries is several times the translation it is
+    checking, and it measures the same thing a sample does. So the whole corpus is translated and a
+    few hundred of it are judged, and this is what puts those few hundred somewhere `judge` can run.
+    The sample is drawn from the answers rather than from the database, with its own seed, so it is
+    a fresh draw and not the pilot's 300 again.
+    """
+    with open(os.path.join(args.source, 'manifest.json'), encoding='utf-8') as handle:
+        manifest = json.load(handle)
+    with open(os.path.join(args.source, 'source.json'), encoding='utf-8') as handle:
+        source = {e['strong_number']: e for e in json.load(handle)}
+
+    answers = {r['strong_number']: r for r in read(os.path.join(args.source, 'answers.jsonl'))}
+    numbers = sorted(answers, key=lambda n: (n[0], int(n[1:])))
+    if not numbers:
+        raise SystemExit(f'{args.source} has no answers to sample. Run `ask --dir {args.source}`.')
+
+    drawn = list(numbers)
+    random.Random(args.seed).shuffle(drawn)
+    drawn = sorted(drawn[:args.size], key=lambda n: (n[0], int(n[1:])))
+
+    os.makedirs(os.path.join(args.dir, 'batches'), exist_ok=True)
+    taken = {
+        **manifest,
+        'sample': len(drawn),
+        'seed': args.seed,
+        'entries': len(drawn),
+        'sampled_from': args.source,
+        'extracted': datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds'),
+        'batches': [],
+    }
+    for index, group in enumerate(batched([source[n] for n in drawn])):
+        name = f'batch-{index:04d}'
+        payload = {
+            'batch': name,
+            'language': manifest['language_name'],
+            'prompt_version': manifest['prompt_version'],
+            'entries': [asking(e) for e in group],
+        }
+        with open(os.path.join(args.dir, 'batches', name + '.json'), 'w', encoding='utf-8') as out:
+            json.dump(payload, out, ensure_ascii=False, indent=1)
+        taken['batches'].append({
+            'batch': name,
+            'numbers': [e['strong_number'] for e in group],
+            'characters': sum(len(e.get(f) or '') for e in group for f in PROSE),
+        })
+
+    with open(os.path.join(args.dir, 'source.json'), 'w', encoding='utf-8') as out:
+        json.dump([source[n] for n in drawn], out, ensure_ascii=False, indent=1)
+    with open(os.path.join(args.dir, 'manifest.json'), 'w', encoding='utf-8') as out:
+        json.dump(taken, out, ensure_ascii=False, indent=1)
+    with open(os.path.join(args.dir, 'answers.jsonl'), 'w', encoding='utf-8') as out:
+        for number in drawn:
+            out.write(json.dumps(answers[number], ensure_ascii=False) + '\n')
+
+    print(f'{len(drawn)} of {len(numbers)} answered entries, seed {args.seed} '
+          f'-> {args.dir}, in {len(taken["batches"])} batches')
+
+
 # ---------------------------------------------------------------------------- ask
 
 
@@ -393,18 +491,49 @@ def call(prompt, system, model):
         '--disallowed-tools', 'Bash Read Write Edit Glob Grep WebFetch WebSearch Task Agent TodoWrite',
         '--max-turns', '1',
     ]
-    process = subprocess.run(
-        command, input=prompt.encode('utf-8'),
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    try:
+        process = subprocess.run(
+            command, input=prompt.encode('utf-8'),
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=CALL_TIMEOUT_SECONDS)
+    except subprocess.TimeoutExpired:
+        return None, f'the call did not return within {CALL_TIMEOUT_SECONDS}s and was killed'
     if process.returncode != 0:
         # An empty stderr is not "no error": read as a falsy failure it killed a sense.py run forty
         # batches in. Say something whatever the process said.
         said = process.stderr.decode('utf-8', 'replace').strip()
-        return None, said or f'the harness exited {process.returncode} and said nothing'
+        out = process.stdout.decode('utf-8', 'replace').strip()
+        return None, said or out[:400] or f'the harness exited {process.returncode} and said nothing'
     try:
-        return json.loads(process.stdout.decode('utf-8', 'replace')), None
+        outcome = json.loads(process.stdout.decode('utf-8', 'replace'))
     except json.JSONDecodeError as broken:
         return None, f'the harness did not return JSON: {broken}'
+    if outcome.get('is_error'):
+        said = str(outcome.get('result') or outcome.get('subtype') or 'no reason given')
+        return None, f'the model reported an error: {said[:400]}'
+    return outcome, None
+
+
+def rate_limited(why):
+    lowered = (why or '').lower()
+    return any(marker in lowered for marker in RATE_LIMITED)
+
+
+def call_with_retries(prompt, system, model, say):
+    """
+    The same call, waited out rather than given up on. A rate limit is a wait, not a failure: it
+    clears by itself and the alternative is a five-hour run stopping an hour in with nothing wrong.
+    Everything else gets one retry, because a transient network fault looks the same as a permanent
+    one from here and re-asking is cheaper than re-running the whole batch tomorrow.
+    """
+    for attempt, wait in enumerate(RETRY_WAITS + (None,)):
+        outcome, why = call(prompt, system, model)
+        if outcome is not None or wait is None:
+            return outcome, why
+        if not rate_limited(why) and attempt >= 1:
+            return outcome, why
+        say(f'{why} -- waiting {wait}s and asking again')
+        time.sleep(wait)
+    return None, 'unreachable'
 
 
 ARRAY = re.compile(r'\[.*\]', re.S)
@@ -427,7 +556,7 @@ def parse(result):
     return answers if isinstance(answers, list) else None
 
 
-def run_batches(args, path, system_of, payload_of, row_of):
+def run_batches(args, path, system_of, payload_of, row_of, expected_of=None):
     """
     The loop `ask` and `judge` share: skip what is answered, call, parse, append, and never let a
     failed batch stop the ones after it. Resumable because the file is the state, so a run that dies
@@ -437,33 +566,56 @@ def run_batches(args, path, system_of, payload_of, row_of):
     time is output tokens, not overhead -- so the whole lexicon run is a day and a half in series and
     a few hours at eight workers. The file is appended under a lock and a row names its own batch,
     so the ordering of the file means nothing and does not have to.
+
+    What counts as answered is every number of a batch having a row, not the batch having been
+    called. A model that returns seven of eight entries leaves the eighth with nothing to say it is
+    missing, and a resume that trusts the batch name never comes back for it -- one silently absent
+    entry in fourteen thousand is exactly the failure nobody notices.
     """
     with open(os.path.join(args.dir, 'manifest.json'), encoding='utf-8') as handle:
         manifest = json.load(handle)
 
-    done = set()
+    answered = set()
     if os.path.exists(path):
         with open(path, encoding='utf-8') as handle:
-            done = {json.loads(line)['batch'] for line in handle if line.strip()}
+            answered = {json.loads(line)['strong_number'] for line in handle if line.strip()}
 
     run = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds')
     system = system_of(manifest)
-    pending = [e for e in manifest['batches'] if e['batch'] not in done or args.again]
+    expected_of = expected_of or (lambda entry: entry['numbers'])
+    pending = [e for e in manifest['batches']
+               if args.again or any(n not in answered for n in expected_of(e))]
     lock = threading.Lock()
     started = time.time()
     spent, called, failures, written = 0.0, 0, [], 0
 
+    def note(line):
+        with lock:
+            print(line, flush=True)
+
     def one(entry):
+        try:
+            translate(entry)
+        except Exception as broken:
+            # One batch is one batch. A run of 1,775 that dies because the 900th raised has thrown
+            # away four hours of the other 899, and pool.map propagates by default.
+            with lock:
+                failures.append((entry['batch'], f'{type(broken).__name__}: {broken}'))
+                print(f'{entry["batch"]}: {type(broken).__name__}: {broken}', flush=True)
+
+    def translate(entry):
         nonlocal spent, called, written
         name = entry['batch']
         payload = payload_of(args, manifest, name)
         if payload is None:
             return
-        outcome, failed = call(json.dumps(payload, ensure_ascii=False, indent=1), system, args.model)
+        outcome, failed = call_with_retries(
+            json.dumps(payload, ensure_ascii=False, indent=1), system, args.model,
+            lambda why, name=name: note(f'{name}: {why}'))
         if failed:
             with lock:
                 failures.append((name, failed))
-                print(f'{name}: {failed}')
+                print(f'{name}: {failed}', flush=True)
             return
 
         model = next(iter(outcome.get('modelUsage') or {'unknown': None}))
@@ -471,7 +623,7 @@ def run_batches(args, path, system_of, payload_of, row_of):
         if answers is None:
             with lock:
                 failures.append((name, 'no JSON array in the reply'))
-                print(f'{name}: no JSON array in the reply')
+                print(f'{name}: no JSON array in the reply', flush=True)
             return
 
         rows, seen = [], set()
@@ -483,7 +635,7 @@ def run_batches(args, path, system_of, payload_of, row_of):
             row = row_of(payload, answer, name, model, run)
             if row is not None:
                 rows.append(row)
-        missing = [n for n in entry['numbers'] if n not in seen]
+        missing = [n for n in expected_of(entry) if n not in seen]
 
         with lock:
             spent += outcome.get('total_cost_usd') or 0.0
@@ -494,13 +646,17 @@ def run_batches(args, path, system_of, payload_of, row_of):
             with open(path, 'a', encoding='utf-8') as handle:
                 for row in rows:
                     handle.write(json.dumps(row, ensure_ascii=False) + '\n')
+            elapsed = time.time() - started
+            left = (elapsed / called) * (len(pending) - called)
             print(f'{name}: {len(rows)} rows | {called}/{len(pending)} batches, '
-                  f'{written} rows, {time.time() - started:.0f}s, ${spent:.3f}')
+                  f'{written} rows, {elapsed / 60:.0f}m elapsed, ~{left / 60:.0f}m left, '
+                  f'${spent:.3f}', flush=True)
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
         list(pool.map(one, pending))
 
-    print(f'{called} calls, ${spent:.3f}, {time.time() - started:.0f}s, {len(failures)} failures')
+    print(f'{called} calls, ${spent:.3f}, {(time.time() - started) / 60:.0f}m, '
+          f'{len(failures)} failures', flush=True)
     for name, why in failures:
         print(f'  {name}: {why}')
 
@@ -708,7 +864,13 @@ def judge(args):
             'method': 'model-judgement',
         }
 
-    run_batches(args, os.path.join(args.dir, 'judgements.jsonl'), system_of, payload_of, row_of)
+    def expected_of(entry):
+        # An entry that was never translated can never be judged, so it must not keep its batch
+        # looking unfinished for ever.
+        return [n for n in entry['numbers'] if n in answers]
+
+    run_batches(args, os.path.join(args.dir, 'judgements.jsonl'),
+                system_of, payload_of, row_of, expected_of)
 
 
 # ---------------------------------------------------------------------------- score
@@ -765,7 +927,8 @@ def score(args):
         kinds[failure['kind']] = kinds.get(failure['kind'], 0) + 1
 
     lines = [
-        f'# {manifest["language_name"]} lexicon pilot',
+        f'# {manifest["language_name"]} lexicon'
+        + (f' -- a sample of {manifest["sample"]}' if manifest.get('sample') else ' -- the whole of it'),
         '',
         f'- selected: {asked} entries, seed {manifest["seed"]}, prompt {manifest["prompt_version"]}',
         f'- translated: {len(answers)}',
@@ -882,7 +1045,7 @@ def publish(args):
         for row in sorted(rows, key=lambda r: (r['strong_number'][0], int(r['strong_number'][1:]))):
             published = {
                 'strong_number': row['strong_number'],
-                'language': manifest['language'],
+                'language': CORPUS_LANGUAGES[manifest['language']],
                 'method': row['method'],
                 'model': row['model'],
                 'prompt_version': row['prompt_version'],
@@ -891,6 +1054,10 @@ def publish(args):
             for field in PROSE:
                 if row.get(field):
                     published[field] = row[field]
+            # The only doubt the run produces per row, and it is the translator's own rather than a
+            # rule's, so it travels with the text instead of being turned into a score.
+            if row.get('uncertain'):
+                published['uncertain'] = row['uncertain']
             handle.write(json.dumps(published, ensure_ascii=False) + '\n')
 
     licence = os.path.join(os.path.dirname(args.out) or '.', 'LICENCE.md')
@@ -920,6 +1087,13 @@ def main():
     two.add_argument('--again', action='store_true')
     two.add_argument('--workers', type=int, default=6)
     two.set_defaults(run=ask)
+
+    fresh = sub.add_parser('sample', help="a finished run's answers, narrowed to a fresh sample")
+    fresh.add_argument('--from', dest='source', required=True, help='a directory `ask` has finished')
+    fresh.add_argument('--out', dest='dir', required=True)
+    fresh.add_argument('--size', type=int, default=500)
+    fresh.add_argument('--seed', type=int, default=23)
+    fresh.set_defaults(run=sample)
 
     three = sub.add_parser('check', help='the deterministic failures')
     three.add_argument('--dir', required=True)

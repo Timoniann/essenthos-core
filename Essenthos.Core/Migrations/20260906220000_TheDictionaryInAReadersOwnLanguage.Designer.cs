@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260906220000_TheDictionaryInAReadersOwnLanguage")]
+    partial class TheDictionaryInAReadersOwnLanguage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -791,10 +794,6 @@ namespace Essenthos.Core.Migrations
                     b.Property<string>("Region")
                         .HasColumnType("text")
                         .HasColumnName("region");
-
-                    b.Property<int?>("SequenceInYear")
-                        .HasColumnType("integer")
-                        .HasColumnName("sequence_in_year");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -2009,68 +2008,6 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("word_group_word", (string)null);
                 });
 
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordParsing", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<double?>("Confidence")
-                        .HasColumnType("double precision")
-                        .HasColumnName("confidence");
-
-                    b.Property<string>("Lemma")
-                        .HasColumnType("text")
-                        .HasColumnName("lemma");
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("method");
-
-                    b.Property<JsonDocument>("Morphology")
-                        .IsRequired()
-                        .HasColumnType("jsonb")
-                        .HasColumnName("morphology");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text")
-                        .HasColumnName("note");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.Property<long>("WordId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("word_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_word_parsing");
-
-                    b.HasIndex("WordId")
-                        .HasDatabaseName("ix_word_parsing_word_id");
-
-                    b.HasIndex("WordId", "Source")
-                        .IsUnique()
-                        .HasDatabaseName("ix_word_parsing_word_id_source");
-
-                    b.ToTable("word_parsing", null, t =>
-                        {
-                            t.HasCheckConstraint("ck_word_parsing_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
-
-                            t.HasCheckConstraint("ck_word_parsing_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
-
-                            t.HasCheckConstraint("ck_word_parsing_source_not_empty", "length(btrim(\"source\")) > 0");
-
-                            t.HasCheckConstraint("ck_word_parsing_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
-                        });
-                });
-
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordStrong", b =>
                 {
                     b.Property<long>("Id")
@@ -2659,18 +2596,6 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Word");
 
                     b.Navigation("WordGroup");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordParsing", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.Word", "Word")
-                        .WithMany()
-                        .HasForeignKey("WordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_word_parsing_word_word_id");
-
-                    b.Navigation("Word");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordStrong", b =>
