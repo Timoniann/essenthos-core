@@ -164,7 +164,7 @@ public sealed class NameFormTests : IDisposable
     /// PRB-0435: <c>DescriptorPhrasings</c> renders <em>похований у </em> and then the locative, so
     /// a locative that carries its own preposition reaches a reader as <em>похований у в Авані</em>.
     /// The preposition comes off on the way in, and a stored form carrying one is superseded rather
-    /// than left standing — which is what makes the 84 rows already in the corpus repairable by a
+    /// than left standing — which is what makes the rows already in the corpus repairable by a
     /// later file.
     /// </summary>
     [Fact]
@@ -179,6 +179,34 @@ public sealed class NameFormTests : IDisposable
         outcome.Repaired.Should().Be(1, "the corpus held \"в Хевроні\"");
         outcome.Refused.AlreadyHeld.Should().Be(0);
         (await Form("hebron", "ukr", GrammaticalCases.Locative))!.Form.Should().Be("Хевроні");
+    }
+
+    /// <summary>
+    /// Two files naming one entity settle it form by form, not record by record.
+    ///
+    /// It is the ordinary case rather than a re-run: a repair pass puts back the locatives PRB-0435
+    /// broke and a target pass asks for the four languages the client speaks, and neither is the
+    /// other's second attempt. Taking the later record whole dropped whatever it happened not to
+    /// carry — the locative here, and a Spanish nominative in the other direction — and the row it
+    /// dropped was one nothing would ask for again, because the entity counts as declined.
+    /// </summary>
+    [Fact]
+    public async Task ALaterFileFillsWhatAnEarlierOneLeftOutAndOverwritesOnlyWhatItAlsoSays()
+    {
+        var outcome = await Decline("twofiles");
+
+        outcome.Replaced.Should().Be(1, "both files give Hebron a Ukrainian nominative");
+        outcome.Forms.Should().Be(5);
+
+        var locative = await Form("hebron", "ukr", GrammaticalCases.Locative);
+        locative!.Form.Should().Be("Хевроні", "the preposition comes off on the way in");
+        locative.Source.Should().Contain("the earlier pass", "the later file has no locative");
+
+        var nominative = await Form("hebron", "ukr", GrammaticalCases.Nominative);
+        nominative!.Form.Should().Be("Хеврін");
+        nominative.Source.Should().Contain("the later pass");
+
+        (await Form("hebron", "spa", GrammaticalCases.Nominative))!.Form.Should().Be("Hebrón");
     }
 
     /// <summary>

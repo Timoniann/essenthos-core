@@ -748,7 +748,13 @@ SOURCE = re.compile(r'^.* by (?P<model>.+), asked (?P<asked>.+)$')
 
 def republish(args):
     """
-    PRB-0435's 84 rows, as a file that supersedes them: the same forms, without the preposition.
+    Every loaded form carrying its own preposition, as a file that supersedes it: the same form
+    without it.
+
+    Read off the database as it stands rather than off a list, because the generation pass is still
+    running and every batch it loads adds more of them -- 84 rows over 1,167 entities when PRB-0435
+    was filed, 399 over 4,457 a day later. So this is re-run rather than kept, and the file it
+    writes is replaced whole.
 
     Asking again does not close this. The run that was asked produced a Ukrainian locative for 11 of
     the 49 entities and left the rest out, which is the prompt's rule working -- a form the model

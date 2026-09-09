@@ -46,7 +46,134 @@ internal static class Annotating
         """;
 
     /// <summary>
-    /// The same annotations on every word the links say stands for one of the seeded words.
+    /// An English possessive, which is where a name stops and the thing it possesses begins:
+    /// <em>Terah's</em> in <em>Terah's lifetime</em>, <em>Jerusalem's</em> in <em>for Jerusalem's
+    /// sake</em>. The plural form ends at the apostrophe, so the <c>s</c> is optional, and the
+    /// King James writes <em>LORD'S</em>, so the match ignores case.
+    /// </summary>
+    private const string Possessive = "[''’]s?$";
+
+    /// <summary>
+    /// Everything a spelling is compared without — the apostrophe of a possessive, the hyphen of
+    /// <em>Beth-shemesh</em>, the point of an abbreviation.
+    /// </summary>
+    private const string Ornament = "[^[:alnum:]]";
+
+    /// <summary>
+    /// The names the encyclopedia records for one entity, each taken whole.
+    ///
+    /// A label of several words contributes nothing, and that is the point rather than a
+    /// simplification: the Nile's <em>River of Egypt</em> and the Euphrates' <em>the great
+    /// river</em> would otherwise put <em>of</em> and <em>the</em> among the spellings a person is
+    /// known by, and a rule that moves a naming towards a name would move it onto the article.
+    /// A title does the same with <em>servant</em> and <em>king</em>, so titles are left out
+    /// entirely; what is wanted here is what somebody is called, not what they are.
+    ///
+    /// <para>
+    /// The record's own name and its slug are names as much as the label rows are, and the slug's
+    /// trailing number is the encyclopedia telling two men of one name apart rather than part of
+    /// either name.
+    /// </para>
+    /// </summary>
+    private const string Names =
+        """
+        SELECT lower(known.spelling) AS spelling
+        FROM (
+            SELECT e.name AS spelling FROM entity e WHERE e.id = seed.entity_id
+            UNION ALL
+            SELECT regexp_replace(e.slug, '-[0-9]+$', '') FROM entity e WHERE e.id = seed.entity_id
+            UNION ALL
+            SELECT n.label FROM entity_name n
+            WHERE n.entity_id = seed.entity_id AND coalesce(n.kind, '') NOT IN ('title', 'description')
+            UNION ALL
+            SELECT n.hebrew_transliterated FROM entity_name n
+            WHERE n.entity_id = seed.entity_id AND coalesce(n.kind, '') NOT IN ('title', 'description')
+            UNION ALL
+            SELECT n.greek_transliterated FROM entity_name n
+            WHERE n.entity_id = seed.entity_id AND coalesce(n.kind, '') NOT IN ('title', 'description')) known
+        WHERE known.spelling ~ '^[[:alnum:]]+$'
+        """;
+
+    /// <summary>
+    /// How alike a word and one of those names must be before the name is allowed to move the
+    /// naming off the head. Trigram similarity, so it is a fraction and not a distance.
+    ///
+    /// <para>
+    /// Half is where the measurement puts the line. Below it the corpus offers 86 displacements and
+    /// 83 of them are the word <em>the</em>, which shares two trigrams with the Greek
+    /// <em>theou</em> and scores 0.43 against it; <em>and</em> against <em>Andrew</em> and
+    /// <em>thee</em> against <em>theou</em> are the rest. Above it there are 217 and they are the
+    /// entity's own spelling or a form of it — <em>Canaanitish</em> at 0.53, <em>Benjamites</em> at
+    /// 0.71, and the exact matches at 1. What the line costs is five displacements the corpus
+    /// would have been right to make: <em>Dan</em> against <em>Danites</em> and <em>Judah</em>
+    /// against <em>Judahites</em> at 0.33 and 0.45, and <em>Pochereth</em> at 0.45. Those keep the
+    /// head, which is where they already were.
+    /// </para>
+    ///
+    /// <para>
+    /// Written as text rather than as a number because it is spliced into SQL, and a double
+    /// formatted under a comma locale is not a number Postgres can read.
+    /// </para>
+    /// </summary>
+    private const string Convincing = "0.5";
+
+    /// <summary>
+    /// The word of a link's other side that the naming lands on.
+    ///
+    /// A link names a set of words on each side, and a source's own translation table routinely
+    /// puts a phrase opposite a single original word, because that is what translation does: תֶּרַח
+    /// in construct is <em>of Terah</em>, and the table has nowhere but the name to park the
+    /// <em>When</em> that opens the clause. Handing the entity to every word of that set is what
+    /// annotates <em>the</em>, <em>of</em> and <em>When</em> as people.
+    ///
+    /// <para>
+    /// The naming goes to the set's head, and the head is its last word. That is not a guess about
+    /// English: it is the ruled word in every one of the 332 groups a person has decided, and where
+    /// it and the longest word disagree — 1,902 words of the two English texts — the last word is
+    /// the name and the longest is <em>then</em>, <em>from</em>, <em>when</em> or
+    /// <em>against</em>. The original sides read the same way, an article or a preposition standing
+    /// before the name it is prefixed to rather than after it.
+    /// </para>
+    ///
+    /// <para>
+    /// The exception is a possessive, which closes the name from the other end: in <em>Terah's
+    /// lifetime</em> the last word is the thing possessed and the name is the word before it. Only
+    /// the word immediately before the last one is read that way — further back and the group is a
+    /// clause rather than a possessive phrase, and its head is the last word again.
+    /// </para>
+    ///
+    /// <para>
+    /// Position decides only where the entity's own name does not. Where the source grouped two
+    /// names into one correspondence the head is the wrong one of them — the Berean puts
+    /// <em>Tahrea and Ahaz</em> opposite <em>וְ תַחְרֵעַ</em>, so the last word says Ahaz is Tahrea
+    /// and leaves Tahrea unmarked, which reads as a fact where the article read as noise. So a word
+    /// the encyclopedia records as this entity's name takes the naming from the head, and nothing
+    /// else does: below <see cref="Convincing"/> every word of the group scores nothing and the
+    /// order is the positional one, untouched.
+    /// </para>
+    /// </summary>
+    public const string Head =
+        $"""
+         SELECT peer.word_id
+         FROM (
+             SELECT lw.word_id, hw.verse_id, hw.position,
+                    hw.text ~* '{Possessive}'
+                        AND row_number() OVER (ORDER BY hw.verse_id DESC, hw.position DESC) = 2
+                        AS closes,
+                    coalesce((
+                        SELECT max(similarity(
+                            lower(regexp_replace(hw.text, '{Ornament}', '', 'g')), known.spelling))
+                        FROM ({Names}) known), 0) AS named
+             FROM link_word lw
+             JOIN word hw ON hw.id = lw.word_id
+             WHERE lw.link_id = mine.link_id AND lw.side <> mine.side) peer
+         ORDER BY CASE WHEN peer.named >= {Convincing} THEN peer.named ELSE 0 END DESC,
+                  peer.closes DESC, peer.verse_id DESC, peer.position DESC
+         LIMIT 1
+         """;
+
+    /// <summary>
+    /// The same annotations on the word each link says stands for one of the seeded words.
     ///
     /// A word reached from two seeded words that name two different entities is left alone: the
     /// links disagree about who is named, and picking between them is the judgement none of these
@@ -61,7 +188,7 @@ internal static class Annotating
     /// </para>
     /// </summary>
     public const string Carry =
-        """
+        $"""
         WITH reached AS (
             SELECT other.word_id,
                    seed.entity_id,
@@ -73,7 +200,7 @@ internal static class Annotating
             FROM pending_annotation seed
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
-            JOIN link_word other ON other.link_id = mine.link_id AND other.side <> mine.side
+            CROSS JOIN LATERAL ({Head}) other
         ),
         unanimous AS (
             SELECT word_id FROM reached GROUP BY 1 HAVING count(DISTINCT entity_id) = 1

@@ -51,16 +51,21 @@ internal static class NameFormFiles
     /// <summary>
     /// Every record of every file under a directory, in the order the files sort and the lines run.
     ///
-    /// An entity written twice is the later file's, because a re-generated batch is meant to
-    /// replace the one before it. That is decided here rather than by which file a directory walk
-    /// reached first.
+    /// <para>
+    /// **Every record, including a second one for an entity an earlier file already named.** Two
+    /// passes name the same entity for different reasons — one asks for the four languages the
+    /// client speaks, another puts back a form that carried its own preposition — and neither is a
+    /// re-run of the other. Dropping the earlier record whole lost whatever the later one happened
+    /// not to carry, in both directions: the repair file kept a Ukrainian locative the target run
+    /// had no answer for, and the target run kept a Spanish nominative the repair file was never
+    /// about. Which of two forms of one name wins is decided per form, by
+    /// <see cref="EntityNameFormLoader"/>, where the row that loses can be counted.
+    /// </para>
     /// </summary>
-    public static (IReadOnlyList<NameFormRecord> Records, int Files, int Replaced) Read(string directory)
+    public static (IReadOnlyList<NameFormRecord> Records, int Files) Read(string directory)
     {
-        var bySlug = new Dictionary<string, NameFormRecord>(StringComparer.Ordinal);
-        var order = new List<string>();
+        var records = new List<NameFormRecord>();
         var files = 0;
-        var replaced = 0;
 
         foreach (var file in Directory
                      .EnumerateFiles(directory, FilePattern, SearchOption.AllDirectories)
@@ -86,19 +91,10 @@ internal static class NameFormFiles
                         "name, given as its slug in \"entity\".");
                 }
 
-                if (bySlug.ContainsKey(record.Entity))
-                {
-                    replaced++;
-                }
-                else
-                {
-                    order.Add(record.Entity);
-                }
-
-                bySlug[record.Entity] = record;
+                records.Add(record);
             }
         }
 
-        return ([.. order.Select(slug => bySlug[slug])], files, replaced);
+        return (records, files);
     }
 }

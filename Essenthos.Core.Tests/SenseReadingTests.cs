@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -77,6 +77,8 @@ public sealed class SenseReadingTests : IDisposable
 
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (1, 1, ["Zechariah"]),
+            (1, 2, ["of", "Zechariah"]),
+            (1, 3, ["Zechariah", "and", "Benjamin"]),
             (1, 6, ["Moses"]));
 
         _db.SaveChanges();
@@ -389,6 +391,73 @@ public sealed class SenseReadingTests : IDisposable
         (await _db.WordEntityClaims.CountAsync(c => c.WordEntityId == corroborated.Id)).Should().Be(2);
         (await _db.WordEntityClaims.CountAsync(c => c.WordEntityId == alone.Id)).Should().Be(1);
         corroborated.Confidence.Should().Be(alone.Confidence);
+    }
+
+    /// <summary>
+    /// And it travels to the head of the phrase, not to every word of it. A translation table names
+    /// a phrase opposite one original word — <em>of Zechariah</em> for one Hebrew word — and a
+    /// reading handed to all of them annotates the preposition as the man.
+    /// </summary>
+    [Fact]
+    public async Task AReadingTravelsToTheHeadOfThePhraseAndNoFurther()
+    {
+        Answer(Hebrew(2).Id, "zechariah-2", "high");
+
+        var supplied = _db.WordAt(_english, 1, 2, 1);
+        var name = _db.WordAt(_english, 1, 2, 2);
+        var link = new Link
+        {
+            FromTextId = Hebrew(2).TextId,
+            ToTextId = supplied.TextId,
+            Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource,
+            Source = "a test",
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = Hebrew(2), Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = supplied, Side = LinkSide.To });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = name, Side = LinkSide.To });
+        _db.SaveChanges();
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id);
+        named.Should().NotContainKey(supplied.Id);
+    }
+
+    /// <summary>
+    /// And the head is the name where the phrase holds two of them. A table that groups
+    /// <em>Zechariah and Benjamin</em> opposite one Hebrew word states one correspondence where
+    /// there are two, and the last word of it is the other man.
+    /// </summary>
+    [Fact]
+    public async Task AReadingLandsOnTheNameRatherThanOnTheOtherManInThePhrase()
+    {
+        Answer(Hebrew(3).Id, "zechariah-2", "high");
+
+        var name = _db.WordAt(_english, 1, 3, 1);
+        var joined = _db.WordAt(_english, 1, 3, 2);
+        var other = _db.WordAt(_english, 1, 3, 3);
+        var link = new Link
+        {
+            FromTextId = Hebrew(3).TextId,
+            ToTextId = name.TextId,
+            Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource,
+            Source = "a test",
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = Hebrew(3), Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = name, Side = LinkSide.To });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = joined, Side = LinkSide.To });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = other, Side = LinkSide.To });
+        _db.SaveChanges();
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id);
+        named.Should().NotContainKey(joined.Id);
+        named.Should().NotContainKey(other.Id);
     }
 
     [Fact]

@@ -60,7 +60,11 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 2, ["Zechariah"]),
             (1, 8, ["Both"]),
             (1, 9, ["Moses", "went"]),
-            (1, 10, ["strode"]));
+            (1, 10, ["strode"]),
+            (1, 12, ["When", "of", "Moses"]),
+            (1, 13, ["Moses’s", "lifetime"]),
+            (1, 14, ["Moses", "and", "Aaron"]),
+            (1, 15, ["set", "out"]));
 
         _db.SaveChanges();
 
@@ -175,6 +179,31 @@ public sealed class EntityAnnotationTests : IDisposable
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = to, Side = LinkSide.To });
+        _db.SaveChanges();
+    }
+
+    /// <summary>
+    /// One link naming a phrase opposite a single original word, which is the shape a translation's
+    /// own table states and an aligner never produces.
+    /// </summary>
+    private void Phrase(Word from, params Word[] to)
+    {
+        var link = new Link
+        {
+            FromTextId = from.TextId,
+            ToTextId = to[0].TextId,
+            Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource,
+            Source = "a test",
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });
+
+        foreach (var word in to)
+        {
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = word, Side = LinkSide.To });
+        }
+
         _db.SaveChanges();
     }
 
@@ -560,6 +589,83 @@ public sealed class EntityAnnotationTests : IDisposable
 
         named.Should().ContainKey(first.Id).WhoseValue.Should().Be("moses");
         named.Should().ContainKey(second.Id).WhoseValue.Should().Be("moses");
+    }
+
+    /// <summary>
+    /// A translation's own table states that a phrase renders one original word, because that is
+    /// what translation does: תֶּרַח in construct is <em>of Terah</em>, and the table has nowhere
+    /// but the name to park the <em>When</em> that opens the clause. Giving the person to every
+    /// word of the phrase is what puts the definite article on the page as a man.
+    /// </summary>
+    [Fact]
+    public async Task OnlyTheHeadOfThePhraseALinkNamesIsAnnotated()
+    {
+        var opening = _db.WordAt(_english, 1, 12, 1);
+        var supplied = _db.WordAt(_english, 1, 12, 2);
+        var name = _db.WordAt(_english, 1, 12, 3);
+        Phrase(Hebrew(1), opening, supplied, name);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(opening.Id);
+        named.Should().NotContainKey(supplied.Id);
+    }
+
+    /// <summary>
+    /// A possessive closes the name from the other end: the last word of <em>Terah's lifetime</em>
+    /// is the thing possessed and the man is the word before it.
+    /// </summary>
+    [Fact]
+    public async Task APossessiveEndsTheNameBeforeTheLastWordOfThePhrase()
+    {
+        var name = _db.WordAt(_english, 1, 13, 1);
+        var possessed = _db.WordAt(_english, 1, 13, 2);
+        Phrase(Hebrew(1), name, possessed);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(possessed.Id);
+    }
+
+    /// <summary>
+    /// Where the source grouped two names into one correspondence the head is the wrong one of
+    /// them, and a man named as a different man reads as a fact where an article read as noise.
+    /// The Berean puts <em>Tahrea and Ahaz</em> opposite <em>וְ תַחְרֵעַ</em>, so the last word
+    /// says Ahaz is Tahrea and leaves Tahrea unmarked.
+    /// </summary>
+    [Fact]
+    public async Task TheNameTheEncyclopediaRecordsTakesThePhraseFromItsLastWord()
+    {
+        var name = _db.WordAt(_english, 1, 14, 1);
+        var joined = _db.WordAt(_english, 1, 14, 2);
+        var other = _db.WordAt(_english, 1, 14, 3);
+        Phrase(Hebrew(1), name, joined, other);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(joined.Id);
+        named.Should().NotContainKey(other.Id);
+    }
+
+    /// <summary>
+    /// And it takes it only when it is the entity's own spelling. A phrase holding no name the
+    /// encyclopedia records is ordered by position as before, because a word that merely shares a
+    /// trigram or two with a name is not evidence of anything.
+    /// </summary>
+    [Fact]
+    public async Task APhraseHoldingNoRecordedNameIsStillHeadedByItsLastWord()
+    {
+        var opening = _db.WordAt(_english, 1, 15, 1);
+        var last = _db.WordAt(_english, 1, 15, 2);
+        Phrase(Hebrew(1), opening, last);
+
+        var named = await Load();
+
+        named.Should().ContainKey(last.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(opening.Id);
     }
 
     /// <summary>

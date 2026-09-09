@@ -152,8 +152,9 @@ public class EntityDescriptorClaim
 /// <summary>
 /// The name of an entity in one language, in one grammatical case.
 ///
-/// Ukrainian and Russian put the target of these phrases in the genitive — <em>тесть Мойсея</em>,
-/// not <em>тесть Мойсей</em> — so a rendering needs the name in the form the phrase puts it in, and
+/// Ukrainian and German put the target of most of these phrases in the genitive —
+/// <em>тесть Мойсея</em>, not <em>тесть Мойсей</em>, and <em>Sohn Aarons</em>, not
+/// <em>Sohn Aaron</em> — so a rendering needs the name in the form the phrase puts it in, and
 /// there is nowhere else in the corpus to keep one. <see cref="EntityName"/> holds what a source
 /// calls an entity, in the source's language; this holds what we call it, in a reader's.
 ///
@@ -251,10 +252,21 @@ public static class DescriptorRelations
     public const string GrandmotherOf = "grandmother-of";
     public const string AncestorOf = "ancestor-of";
     public const string DescendantOf = "descendant-of";
+    public const string HalfBrotherOf = "half-brother-of";
+    public const string HalfSisterOf = "half-sister-of";
+    public const string GrandsonOf = "grandson-of";
+    public const string GranddaughterOf = "granddaughter-of";
+    public const string UncleOf = "uncle-of";
+    public const string AuntOf = "aunt-of";
+    public const string NephewOf = "nephew-of";
+    public const string NieceOf = "niece-of";
     public const string FatherInLawOf = "father-in-law-of";
     public const string MotherInLawOf = "mother-in-law-of";
     public const string SonInLawOf = "son-in-law-of";
     public const string DaughterInLawOf = "daughter-in-law-of";
+    public const string BrotherInLawOf = "brother-in-law-of";
+    public const string SisterInLawOf = "sister-in-law-of";
+    public const string ConcubineOf = "concubine-of";
 
     public const string KingOf = "king-of";
     public const string QueenOf = "queen-of";
@@ -263,10 +275,29 @@ public static class DescriptorRelations
     public const string JudgeOf = "judge-of";
     public const string HighPriestOf = "high-priest-of";
     public const string CommanderOf = "commander-of";
+    public const string GovernorOf = "governor-of";
+    public const string TetrarchOf = "tetrarch-of";
     public const string ServantOf = "servant-of";
+    public const string MasterOf = "master-of";
     public const string DiscipleOf = "disciple-of";
     public const string ApostleOf = "apostle-of";
     public const string ScribeOf = "scribe-of";
+    public const string CompanionOf = "companion-of";
+
+    /// <summary>
+    /// What one entity is to another in a killing, both ways round: a minor figure named only as
+    /// the person somebody struck down has this and nothing else to say, and the person who struck
+    /// them is often remembered for exactly that.
+    /// </summary>
+    public const string KilledBy = "killed-by";
+
+    public const string KillerOf = "killer-of";
+
+    /// <summary>
+    /// A being the text defines by whom or what it belongs to, rather than by descent —
+    /// <em>the angel of the bottomless pit</em>, <em>the angel of the LORD</em>.
+    /// </summary>
+    public const string AngelOf = "angel-of";
 
     public const string OfTribe = "of-tribe";
     public const string OfPeople = "of-people";
@@ -284,17 +315,30 @@ public static class DescriptorRelations
     public const string RegionOf = "region-of";
     public const string RiverOf = "river-of";
     public const string MountainIn = "mountain-in";
+
+    /// <summary>
+    /// Which wall or city a named gate belongs to. It is possessive and not locational, so it takes
+    /// the genitive and not the locative the four clauses around it take.
+    /// </summary>
+    public const string GateOf = "gate-of";
+
     public const string Near = "near";
 
     public static readonly IReadOnlySet<string> All = new HashSet<string>(StringComparer.Ordinal)
     {
         SonOf, DaughterOf, FatherOf, MotherOf, BrotherOf, SisterOf, HusbandOf, WifeOf,
-        GrandfatherOf, GrandmotherOf, AncestorOf, DescendantOf,
+        HalfBrotherOf, HalfSisterOf,
+        GrandfatherOf, GrandmotherOf, GrandsonOf, GranddaughterOf,
+        UncleOf, AuntOf, NephewOf, NieceOf,
+        AncestorOf, DescendantOf,
         FatherInLawOf, MotherInLawOf, SonInLawOf, DaughterInLawOf,
+        BrotherInLawOf, SisterInLawOf, ConcubineOf,
         KingOf, QueenOf, ProphetTo, PriestOf, JudgeOf, HighPriestOf,
-        CommanderOf, ServantOf, DiscipleOf, ApostleOf, ScribeOf,
+        CommanderOf, GovernorOf, TetrarchOf, ServantOf, MasterOf,
+        DiscipleOf, ApostleOf, ScribeOf, CompanionOf,
+        KilledBy, KillerOf, AngelOf,
         OfTribe, OfPeople, FromPlace, LivedIn, BuriedIn,
         DescendantsOf,
-        CityIn, RegionOf, RiverOf, MountainIn, Near,
+        CityIn, RegionOf, RiverOf, MountainIn, GateOf, Near,
     };
 }

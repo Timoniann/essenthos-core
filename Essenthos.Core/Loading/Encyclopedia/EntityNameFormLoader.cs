@@ -41,7 +41,7 @@ internal sealed record NameFormOutcome(
         : NoFiles ? "no name-form files are on this disk, so nothing was loaded from them"
         : $"{Declined} entities decline their names in {Forms} forms, read from {Records} records " +
           $"over {Files} files in {Elapsed}. {Skipped} entities had already been declined by this " +
-          $"loader and were left alone, {Replaced} records were superseded by a later file, " +
+          $"loader and were left alone, {Replaced} forms were superseded by a later file, " +
           $"{Repaired} forms replaced one that carried its own preposition, and {Bared} forms had " +
           $"one taken off on the way in. Refused: {Refused}.";
 }
@@ -110,7 +110,7 @@ internal sealed class EntityNameFormLoader(
         }
 
         var started = Stopwatch.StartNew();
-        var (records, files, replaced) = NameFormFiles.Read(directory);
+        var (records, files) = NameFormFiles.Read(directory);
         if (records.Count == 0)
         {
             return Nothing(alreadyLoaded: false) with { Files = files, Elapsed = started.Elapsed };
@@ -121,7 +121,13 @@ internal sealed class EntityNameFormLoader(
         var held = await Held(entities.Values, cancellationToken);
 
         int unknownEntity = 0, unknownCase = 0, empty = 0, alreadyHeld = 0;
-        int skipped = 0, forms = 0, repaired = 0, bared = 0, wrote = 0;
+        int skipped = 0, repaired = 0, bared = 0, replaced = 0;
+
+        // What this run has settled per form rather than per entity: the row it wrote, or null
+        // where the corpus already held a sound one. Two files naming one entity is ordinary here
+        // — a repair pass and a target pass are about different halves of the same name — so a
+        // second record fills what the first left out and overwrites only what it also says.
+        var decided = new Dictionary<(int Entity, string Language, string Case), EntityNameForm?>();
 
         foreach (var record in records)
         {
@@ -138,7 +144,6 @@ internal sealed class EntityNameFormLoader(
             }
 
             var source = Source(record);
-            var written = 0;
             foreach (var (language, cases) in record.Names ?? NoNames)
             {
                 foreach (var (grammaticalCase, given) in cases)
@@ -167,11 +172,26 @@ internal sealed class EntityNameFormLoader(
                         bared++;
                     }
 
-                    if (held.TryGetValue((entityId, language, grammaticalCase), out var standing))
+                    var key = (entityId, language, grammaticalCase);
+                    if (decided.TryGetValue(key, out var earlier))
+                    {
+                        if (earlier is null)
+                        {
+                            continue;
+                        }
+
+                        earlier.Form = form;
+                        earlier.Source = source;
+                        replaced++;
+                        continue;
+                    }
+
+                    if (held.TryGetValue(key, out var standing))
                     {
                         if (NameForms.Bare(language, standing.Form) == standing.Form)
                         {
                             alreadyHeld++;
+                            decided[key] = null;
                             continue;
                         }
 
@@ -182,7 +202,7 @@ internal sealed class EntityNameFormLoader(
                         repaired++;
                     }
 
-                    db.EntityNameForms.Add(new EntityNameForm
+                    var row = new EntityNameForm
                     {
                         EntityId = entityId,
                         Language = language,
@@ -191,18 +211,20 @@ internal sealed class EntityNameFormLoader(
                         Method = LinkMethod.ModelReading,
                         Confidence = 1,
                         Source = source,
-                    });
+                    };
 
-                    written++;
+                    db.EntityNameForms.Add(row);
+                    decided[key] = row;
                 }
             }
-
-            forms += written;
-            if (written > 0)
-            {
-                wrote++;
-            }
         }
+
+        var forms = decided.Values.Count(row => row is not null);
+        var wrote = decided
+            .Where(pair => pair.Value is not null)
+            .Select(pair => pair.Key.Entity)
+            .Distinct()
+            .Count();
 
         var refused = new NameFormRefusals(unknownEntity, unknownCase, empty, alreadyHeld);
 

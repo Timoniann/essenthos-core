@@ -63,6 +63,18 @@ public sealed class DescriptorTests : IDisposable
         Add("cain-1", EntityKind.Person, "Cain", null, (1, 4, 16));
         Add("nod-1", EntityKind.Place, "Nod", null, (1, 4, 16));
 
+        // The clauses the vocabulary could not hold before it was widened. Haran is the one no pass
+        // produced a Ukrainian genitive for, so he is what the fallback is proved on here.
+        Add("lot-1", EntityKind.Person, "Lot", null, (1, 11, 27), (1, 12, 5), (1, 13, 12));
+        Add("abram-1", EntityKind.Person, "Abram", null, (1, 12, 5));
+        Add("haran-1", EntityKind.Person, "Haran", null, (1, 11, 27));
+        Add("terah-1", EntityKind.Person, "Terah", null, (1, 11, 27));
+        Add("jordanvalley-1", EntityKind.Place, "Valley of the Jordan", null, (1, 13, 12));
+        Add("azrikam-4", EntityKind.Person, "Azrikam", null, (14, 28, 7));
+        Add("zichri-1", EntityKind.Person, "Zichri", null, (14, 28, 7));
+        Add("jerusalem-1", EntityKind.Place, "Jerusalem", null, (16, 3, 29));
+        Add("eastgate-1", EntityKind.Place, "East Gate", null, (16, 3, 29));
+
         _db.SaveChanges();
     }
 
@@ -314,6 +326,106 @@ public sealed class DescriptorTests : IDisposable
                 [GrammaticalCases.Genitive] = "Нода",
             },
             "the genitive is there and is deliberately not what the locative falls back to");
+    }
+
+    /// <summary>
+    /// The clauses the closed vocabulary could not state until it was widened, rendered rather than
+    /// refused. Lot is the page this is measured on: the two things most often said about him are
+    /// that he is Haran's son and Abram's nephew, and only the first of them could be written.
+    /// </summary>
+    [Fact]
+    public async Task TheWidenedVocabularyStatesWhatTheNarrowOneRefused()
+    {
+        var outcome = await Load("widened");
+
+        outcome.Refused.UnknownRelation.Should().Be(0);
+
+        Line(await Read("lot-1", DescriptorPhrasings.English))
+            .Should().Be("nephew of Abram, son of Haran");
+        Line(await Read("abram-1", DescriptorPhrasings.Ukrainian)).Should().Be("дядько Лота");
+        Line(await Read("azrikam-4", DescriptorPhrasings.Ukrainian))
+            .Should().Be("намісник Єрусалима, загинув від руки Зіхрі");
+        Line(await Read("zichri-1", DescriptorPhrasings.Ukrainian)).Should().Be("вбивця Азрікама");
+    }
+
+    /// <summary>
+    /// The same clauses in the two languages the encyclopedia gained when it stopped speaking
+    /// Russian. German declines the target and Spanish does not, which is the whole difference
+    /// between the two tables.
+    ///
+    /// <para>
+    /// The homicide pair is what both languages had to be argued about: <em>Mörder</em> and
+    /// <em>asesino</em> would convict, and the relation says only who killed whom, so both
+    /// languages say it with a verb and neither asks for a case its pass does not produce.
+    /// </para>
+    /// </summary>
+    [Fact]
+    public async Task TheWidenedVocabularyIsSaidInGermanAndInSpanish()
+    {
+        await Load("widened");
+
+        Line(await Read("lot-1", DescriptorPhrasings.German))
+            .Should().Be("Neffe Abrams, Sohn Harans");
+        Line(await Read("lot-1", DescriptorPhrasings.Spanish))
+            .Should().Be("sobrino de Abram, hijo de Harán");
+
+        Line(await Read("azrikam-4", DescriptorPhrasings.German))
+            .Should().Be("Statthalter Jerusalems, getötet von Sichri");
+        Line(await Read("zichri-1", DescriptorPhrasings.German)).Should().Be("tötete Asrikam");
+        Line(await Read("zichri-1", DescriptorPhrasings.Spanish))
+            .Should().Be("dio muerte a Azricam");
+
+        Line(await Read("eastgate-1", DescriptorPhrasings.German))
+            .Should().Be("ein Tor Jerusalems");
+        Line(await Read("eastgate-1", DescriptorPhrasings.Spanish))
+            .Should().Be("una puerta de Jerusalén");
+    }
+
+    /// <summary>
+    /// PRB-0435 on the page it was reported from. Lot's three clauses are what the corpus holds for
+    /// him today, and the third of them read <em>жив у в околиці Йорданській</em>, because the
+    /// phrasing supplies <em>у</em> and the form the pass wrote supplied <em>в</em> as well.
+    ///
+    /// The preposition comes off the form on the way in rather than off the line at render time:
+    /// nothing at render time knows which words of a form are the name, and <em>у Хеврона</em>
+    /// cannot be told from <em>у</em> plus <em>Хеврона</em> without knowing the answer already.
+    /// </summary>
+    [Fact]
+    public async Task APlaceWhoseFormCarriesItsOwnPrepositionIsStillSaidWithOne()
+    {
+        await Load("doubled");
+
+        Line(await Read("lot-1", DescriptorPhrasings.Ukrainian))
+            .Should().Be("син Гарана, нащадок Тераха, жив у околиці Йорданській");
+    }
+
+    /// <summary>
+    /// A gate belongs to a city rather than standing in one, so it takes the genitive and not the
+    /// locative the four clauses a place page is otherwise made of take.
+    /// </summary>
+    [Fact]
+    public async Task AGateIsSaidToBeItsCitysAndNotToBeInIt()
+    {
+        await Load("widened");
+
+        Line(await Read("eastgate-1", DescriptorPhrasings.Ukrainian))
+            .Should().Be("брама Єрусалима");
+        Line(await Read("eastgate-1", DescriptorPhrasings.English))
+            .Should().Be("a gate of Jerusalem");
+    }
+
+    /// <summary>
+    /// The other path, and the one every new relation is on until a pass produces forms for its
+    /// targets: a target with no genitive renders as the English name. <em>син Харана</em> would
+    /// read as Ukrainian and be a guess; <em>син Haran</em> is visibly a gap.
+    /// </summary>
+    [Fact]
+    public async Task ANewRelationWithNoFormForItsTargetFallsBackToTheEnglishName()
+    {
+        await Load("widened");
+
+        Line(await Read("lot-1", DescriptorPhrasings.Ukrainian))
+            .Should().Be("племінник Аврама, син Haran");
     }
 
     /// <summary>

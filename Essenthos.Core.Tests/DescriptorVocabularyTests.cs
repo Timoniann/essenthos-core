@@ -81,6 +81,54 @@ public sealed class DescriptorVocabularyTests
     }
 
     /// <summary>
+    /// Every widening of the vocabulary asks for a case a pass has already been asked to produce.
+    ///
+    /// The instrumental is the one that would otherwise have crept in: <em>убитий Зіхрі</em> wants
+    /// it, no entity in the corpus has a form in it, and a clause asking for one would render the
+    /// English name for every entity there is rather than for the few that are missing a form.
+    /// </summary>
+    [Theory]
+    [InlineData("ukr")]
+    public void NoRelationAsksForACaseNoPassHasBeenAskedToProduce(string language)
+    {
+        string[] widened =
+        [
+            DescriptorRelations.HalfBrotherOf, DescriptorRelations.HalfSisterOf,
+            DescriptorRelations.GrandsonOf, DescriptorRelations.GranddaughterOf,
+            DescriptorRelations.UncleOf, DescriptorRelations.AuntOf,
+            DescriptorRelations.NephewOf, DescriptorRelations.NieceOf,
+            DescriptorRelations.BrotherInLawOf, DescriptorRelations.SisterInLawOf,
+            DescriptorRelations.ConcubineOf,
+            DescriptorRelations.GovernorOf, DescriptorRelations.TetrarchOf,
+            DescriptorRelations.MasterOf, DescriptorRelations.CompanionOf,
+            DescriptorRelations.KilledBy, DescriptorRelations.KillerOf,
+            DescriptorRelations.AngelOf, DescriptorRelations.GateOf,
+        ];
+
+        var phrasings = DescriptorPhrasings.For(language)!;
+
+        widened.Select(relation => phrasings[relation].Case)
+            .Should().AllBe(GrammaticalCases.Genitive);
+    }
+
+    /// <summary>
+    /// No language asks for a case its own generation pass was never asked for. DOC-0191 says what
+    /// each pass produces — three forms for Ukrainian, two for German, the nominative alone for
+    /// English and Spanish — and a phrasing that reaches past them renders the English name for
+    /// every entity in the corpus rather than for the few missing a form.
+    /// </summary>
+    [Theory]
+    [InlineData("eng", GrammaticalCases.Nominative)]
+    [InlineData("spa", GrammaticalCases.Nominative)]
+    [InlineData("deu", GrammaticalCases.Nominative, GrammaticalCases.Genitive)]
+    [InlineData("ukr", GrammaticalCases.Nominative, GrammaticalCases.Genitive,
+        GrammaticalCases.Locative)]
+    public void NoLanguageAsksForACaseItsOwnPassDoesNotProduce(string language, params string[] produced) =>
+        DescriptorPhrasings.For(language)!.Values
+            .Select(p => p.Case)
+            .Should().OnlyContain(c => produced.Contains(c));
+
+    /// <summary>
     /// A language nothing has phrasings for has none, and is answered in English instead of being
     /// refused. The alternative on the page is the imported sentence, which is English too and is
     /// somebody else's prose with no link in it.

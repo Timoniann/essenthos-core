@@ -143,6 +143,7 @@ internal sealed class DatasetLoader(
             await SayWhichWordNamesWhom(stoppingToken);
             await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
             await ReadTheNamesNothingSettles(resources, stoppingToken);
+            await CiteTheVersesOurOwnWordsName(stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
 
@@ -776,6 +777,21 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<SenseReadingLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// Where a person or a place is named, read off the words this corpus annotated rather than
+    /// taken from a dataset's list. After every step that writes an annotation and before the
+    /// descriptions, which cite these references and would otherwise be checked against a verse
+    /// list that is still a dataset's.
+    /// </summary>
+    private async Task CiteTheVersesOurOwnWordsName(CancellationToken cancellationToken)
+    {
+        status.Starting("the references this corpus reads for itself");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>
