@@ -62,7 +62,9 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 9, ["Moses", "went"]),
             (1, 10, ["strode"]),
             (1, 12, ["When", "of", "Moses"]),
-            (1, 13, ["Moses’s", "lifetime"]));
+            (1, 13, ["Moses’s", "lifetime"]),
+            (1, 14, ["Moses", "and", "Aaron"]),
+            (1, 15, ["set", "out"]));
 
         _db.SaveChanges();
 
@@ -625,6 +627,45 @@ public sealed class EntityAnnotationTests : IDisposable
 
         named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
         named.Should().NotContainKey(possessed.Id);
+    }
+
+    /// <summary>
+    /// Where the source grouped two names into one correspondence the head is the wrong one of
+    /// them, and a man named as a different man reads as a fact where an article read as noise.
+    /// The Berean puts <em>Tahrea and Ahaz</em> opposite <em>וְ תַחְרֵעַ</em>, so the last word
+    /// says Ahaz is Tahrea and leaves Tahrea unmarked.
+    /// </summary>
+    [Fact]
+    public async Task TheNameTheEncyclopediaRecordsTakesThePhraseFromItsLastWord()
+    {
+        var name = _db.WordAt(_english, 1, 14, 1);
+        var joined = _db.WordAt(_english, 1, 14, 2);
+        var other = _db.WordAt(_english, 1, 14, 3);
+        Phrase(Hebrew(1), name, joined, other);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(joined.Id);
+        named.Should().NotContainKey(other.Id);
+    }
+
+    /// <summary>
+    /// And it takes it only when it is the entity's own spelling. A phrase holding no name the
+    /// encyclopedia records is ordered by position as before, because a word that merely shares a
+    /// trigram or two with a name is not evidence of anything.
+    /// </summary>
+    [Fact]
+    public async Task APhraseHoldingNoRecordedNameIsStillHeadedByItsLastWord()
+    {
+        var opening = _db.WordAt(_english, 1, 15, 1);
+        var last = _db.WordAt(_english, 1, 15, 2);
+        Phrase(Hebrew(1), opening, last);
+
+        var named = await Load();
+
+        named.Should().ContainKey(last.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(opening.Id);
     }
 
     /// <summary>

@@ -24,10 +24,18 @@ namespace Essenthos.Core.Migrations
             // person 7,470 times in the Berean and "of" 6,230.
             //
             // The loader now carries the naming to the set's head and this removes what it would no
-            // longer write: 21,885 annotations in the Berean and 17,470 in the King James, taking
-            // the share of them sitting on a function word from 45.2% to 4.3% and from 25.2% to
-            // 1.7%. Nothing else in the corpus is touched to speak of -- 40 rows in the Ukrainian
+            // longer write: 21,873 annotations in the Berean and 17,466 in the King James, taking
+            // the share of them sitting on a function word from 45.2% to 3.9% and from 38.3% to
+            // 0.5%. Nothing else in the corpus is touched to speak of -- 38 rows in the Ukrainian
             // and one in the Synodal -- because an aligner names one word at a time.
+            //
+            // The head is the set's last word except where one of its words is a name the
+            // encyclopedia records for the entity, which takes the naming from it. Position alone
+            // picks the wrong one of two names the source grouped together: the Berean puts
+            // "Tahrea and Ahaz" opposite one Hebrew pair, so the last word said Ahaz is Tahrea and
+            // left Tahrea unmarked, which reads as a fact where the article read as noise. 217
+            // annotations move that way, 216 of them onto a word this same statement would
+            // otherwise have deleted, and two of the 217 move onto one word.
             //
             // Rows a person's ruling stands on are removed with the rest, and that is deliberate.
             // A ruling seeds one word of the witness and the carrying is what spread it, so the
@@ -48,8 +56,14 @@ namespace Essenthos.Core.Migrations
             // The temporary table needs a name no earlier migration has used: every pending
             // migration runs inside one transaction, and ON COMMIT DROP waits for that transaction
             // rather than for the migration.
+            //
+            // Trigram similarity is how alike two spellings are, and a database the corpus is built
+            // into fresh has no pg_trgm in it. It is a contrib module of Postgres itself, under the
+            // same licence, and marked trusted, so the owner of the database can create it.
             migrationBuilder.Sql(
                 """
+                CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
                 CREATE TEMP TABLE past_the_head ON COMMIT DROP AS
                 SELECT a.id AS annotation
                 FROM word_entity a
@@ -70,11 +84,38 @@ namespace Essenthos.Core.Migrations
                                        hw.text ~* '[''’]s?$'
                                            AND row_number() OVER (
                                                ORDER BY hw.verse_id DESC, hw.position DESC) = 2
-                                           AS closes
+                                           AS closes,
+                                       coalesce((
+                                           SELECT max(similarity(
+                                               lower(regexp_replace(hw.text, '[^[:alnum:]]', '', 'g')),
+                                               lower(known.spelling)))
+                                           FROM (
+                                               SELECT e.name AS spelling FROM entity e
+                                               WHERE e.id = a.entity_id
+                                               UNION ALL
+                                               SELECT regexp_replace(e.slug, '-[0-9]+$', '')
+                                               FROM entity e WHERE e.id = a.entity_id
+                                               UNION ALL
+                                               SELECT n.label FROM entity_name n
+                                               WHERE n.entity_id = a.entity_id
+                                                 AND coalesce(n.kind, '')
+                                                     NOT IN ('title', 'description')
+                                               UNION ALL
+                                               SELECT n.hebrew_transliterated FROM entity_name n
+                                               WHERE n.entity_id = a.entity_id
+                                                 AND coalesce(n.kind, '')
+                                                     NOT IN ('title', 'description')
+                                               UNION ALL
+                                               SELECT n.greek_transliterated FROM entity_name n
+                                               WHERE n.entity_id = a.entity_id
+                                                 AND coalesce(n.kind, '')
+                                                     NOT IN ('title', 'description')) known
+                                           WHERE known.spelling ~ '^[[:alnum:]]+$'), 0) AS named
                                 FROM link_word lw
                                 JOIN word hw ON hw.id = lw.word_id
                                 WHERE lw.link_id = mine.link_id AND lw.side = mine.side) peer
-                            ORDER BY peer.closes DESC, peer.verse_id DESC, peer.position DESC
+                            ORDER BY CASE WHEN peer.named >= 0.5 THEN peer.named ELSE 0 END DESC,
+                                     peer.closes DESC, peer.verse_id DESC, peer.position DESC
                             LIMIT 1));
 
                 DELETE FROM word_entity WHERE id IN (SELECT annotation FROM past_the_head);

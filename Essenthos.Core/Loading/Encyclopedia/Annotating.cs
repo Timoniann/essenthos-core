@@ -54,6 +54,70 @@ internal static class Annotating
     private const string Possessive = "[''’]s?$";
 
     /// <summary>
+    /// Everything a spelling is compared without — the apostrophe of a possessive, the hyphen of
+    /// <em>Beth-shemesh</em>, the point of an abbreviation.
+    /// </summary>
+    private const string Ornament = "[^[:alnum:]]";
+
+    /// <summary>
+    /// The names the encyclopedia records for one entity, each taken whole.
+    ///
+    /// A label of several words contributes nothing, and that is the point rather than a
+    /// simplification: the Nile's <em>River of Egypt</em> and the Euphrates' <em>the great
+    /// river</em> would otherwise put <em>of</em> and <em>the</em> among the spellings a person is
+    /// known by, and a rule that moves a naming towards a name would move it onto the article.
+    /// A title does the same with <em>servant</em> and <em>king</em>, so titles are left out
+    /// entirely; what is wanted here is what somebody is called, not what they are.
+    ///
+    /// <para>
+    /// The record's own name and its slug are names as much as the label rows are, and the slug's
+    /// trailing number is the encyclopedia telling two men of one name apart rather than part of
+    /// either name.
+    /// </para>
+    /// </summary>
+    private const string Names =
+        """
+        SELECT lower(known.spelling) AS spelling
+        FROM (
+            SELECT e.name AS spelling FROM entity e WHERE e.id = seed.entity_id
+            UNION ALL
+            SELECT regexp_replace(e.slug, '-[0-9]+$', '') FROM entity e WHERE e.id = seed.entity_id
+            UNION ALL
+            SELECT n.label FROM entity_name n
+            WHERE n.entity_id = seed.entity_id AND coalesce(n.kind, '') NOT IN ('title', 'description')
+            UNION ALL
+            SELECT n.hebrew_transliterated FROM entity_name n
+            WHERE n.entity_id = seed.entity_id AND coalesce(n.kind, '') NOT IN ('title', 'description')
+            UNION ALL
+            SELECT n.greek_transliterated FROM entity_name n
+            WHERE n.entity_id = seed.entity_id AND coalesce(n.kind, '') NOT IN ('title', 'description')) known
+        WHERE known.spelling ~ '^[[:alnum:]]+$'
+        """;
+
+    /// <summary>
+    /// How alike a word and one of those names must be before the name is allowed to move the
+    /// naming off the head. Trigram similarity, so it is a fraction and not a distance.
+    ///
+    /// <para>
+    /// Half is where the measurement puts the line. Below it the corpus offers 86 displacements and
+    /// 83 of them are the word <em>the</em>, which shares two trigrams with the Greek
+    /// <em>theou</em> and scores 0.43 against it; <em>and</em> against <em>Andrew</em> and
+    /// <em>thee</em> against <em>theou</em> are the rest. Above it there are 217 and they are the
+    /// entity's own spelling or a form of it — <em>Canaanitish</em> at 0.53, <em>Benjamites</em> at
+    /// 0.71, and the exact matches at 1. What the line costs is five displacements the corpus
+    /// would have been right to make: <em>Dan</em> against <em>Danites</em> and <em>Judah</em>
+    /// against <em>Judahites</em> at 0.33 and 0.45, and <em>Pochereth</em> at 0.45. Those keep the
+    /// head, which is where they already were.
+    /// </para>
+    ///
+    /// <para>
+    /// Written as text rather than as a number because it is spliced into SQL, and a double
+    /// formatted under a comma locale is not a number Postgres can read.
+    /// </para>
+    /// </summary>
+    private const string Convincing = "0.5";
+
+    /// <summary>
     /// The word of a link's other side that the naming lands on.
     ///
     /// A link names a set of words on each side, and a source's own translation table routinely
@@ -77,6 +141,16 @@ internal static class Annotating
     /// the word immediately before the last one is read that way — further back and the group is a
     /// clause rather than a possessive phrase, and its head is the last word again.
     /// </para>
+    ///
+    /// <para>
+    /// Position decides only where the entity's own name does not. Where the source grouped two
+    /// names into one correspondence the head is the wrong one of them — the Berean puts
+    /// <em>Tahrea and Ahaz</em> opposite <em>וְ תַחְרֵעַ</em>, so the last word says Ahaz is Tahrea
+    /// and leaves Tahrea unmarked, which reads as a fact where the article read as noise. So a word
+    /// the encyclopedia records as this entity's name takes the naming from the head, and nothing
+    /// else does: below <see cref="Convincing"/> every word of the group scores nothing and the
+    /// order is the positional one, untouched.
+    /// </para>
     /// </summary>
     public const string Head =
         $"""
@@ -85,11 +159,16 @@ internal static class Annotating
              SELECT lw.word_id, hw.verse_id, hw.position,
                     hw.text ~* '{Possessive}'
                         AND row_number() OVER (ORDER BY hw.verse_id DESC, hw.position DESC) = 2
-                        AS closes
+                        AS closes,
+                    coalesce((
+                        SELECT max(similarity(
+                            lower(regexp_replace(hw.text, '{Ornament}', '', 'g')), known.spelling))
+                        FROM ({Names}) known), 0) AS named
              FROM link_word lw
              JOIN word hw ON hw.id = lw.word_id
              WHERE lw.link_id = mine.link_id AND lw.side <> mine.side) peer
-         ORDER BY peer.closes DESC, peer.verse_id DESC, peer.position DESC
+         ORDER BY CASE WHEN peer.named >= {Convincing} THEN peer.named ELSE 0 END DESC,
+                  peer.closes DESC, peer.verse_id DESC, peer.position DESC
          LIMIT 1
          """;
 
