@@ -46,7 +46,55 @@ internal static class Annotating
         """;
 
     /// <summary>
-    /// The same annotations on every word the links say stands for one of the seeded words.
+    /// An English possessive, which is where a name stops and the thing it possesses begins:
+    /// <em>Terah's</em> in <em>Terah's lifetime</em>, <em>Jerusalem's</em> in <em>for Jerusalem's
+    /// sake</em>. The plural form ends at the apostrophe, so the <c>s</c> is optional, and the
+    /// King James writes <em>LORD'S</em>, so the match ignores case.
+    /// </summary>
+    private const string Possessive = "[''’]s?$";
+
+    /// <summary>
+    /// The word of a link's other side that the naming lands on.
+    ///
+    /// A link names a set of words on each side, and a source's own translation table routinely
+    /// puts a phrase opposite a single original word, because that is what translation does: תֶּרַח
+    /// in construct is <em>of Terah</em>, and the table has nowhere but the name to park the
+    /// <em>When</em> that opens the clause. Handing the entity to every word of that set is what
+    /// annotates <em>the</em>, <em>of</em> and <em>When</em> as people.
+    ///
+    /// <para>
+    /// The naming goes to the set's head, and the head is its last word. That is not a guess about
+    /// English: it is the ruled word in every one of the 332 groups a person has decided, and where
+    /// it and the longest word disagree — 1,902 words of the two English texts — the last word is
+    /// the name and the longest is <em>then</em>, <em>from</em>, <em>when</em> or
+    /// <em>against</em>. The original sides read the same way, an article or a preposition standing
+    /// before the name it is prefixed to rather than after it.
+    /// </para>
+    ///
+    /// <para>
+    /// The exception is a possessive, which closes the name from the other end: in <em>Terah's
+    /// lifetime</em> the last word is the thing possessed and the name is the word before it. Only
+    /// the word immediately before the last one is read that way — further back and the group is a
+    /// clause rather than a possessive phrase, and its head is the last word again.
+    /// </para>
+    /// </summary>
+    public const string Head =
+        $"""
+         SELECT peer.word_id
+         FROM (
+             SELECT lw.word_id, hw.verse_id, hw.position,
+                    hw.text ~* '{Possessive}'
+                        AND row_number() OVER (ORDER BY hw.verse_id DESC, hw.position DESC) = 2
+                        AS closes
+             FROM link_word lw
+             JOIN word hw ON hw.id = lw.word_id
+             WHERE lw.link_id = mine.link_id AND lw.side <> mine.side) peer
+         ORDER BY peer.closes DESC, peer.verse_id DESC, peer.position DESC
+         LIMIT 1
+         """;
+
+    /// <summary>
+    /// The same annotations on the word each link says stands for one of the seeded words.
     ///
     /// A word reached from two seeded words that name two different entities is left alone: the
     /// links disagree about who is named, and picking between them is the judgement none of these
@@ -61,7 +109,7 @@ internal static class Annotating
     /// </para>
     /// </summary>
     public const string Carry =
-        """
+        $"""
         WITH reached AS (
             SELECT other.word_id,
                    seed.entity_id,
@@ -73,7 +121,7 @@ internal static class Annotating
             FROM pending_annotation seed
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
-            JOIN link_word other ON other.link_id = mine.link_id AND other.side <> mine.side
+            CROSS JOIN LATERAL ({Head}) other
         ),
         unanimous AS (
             SELECT word_id FROM reached GROUP BY 1 HAVING count(DISTINCT entity_id) = 1
