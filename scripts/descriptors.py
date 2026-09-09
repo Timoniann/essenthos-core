@@ -8,11 +8,19 @@ verses the encyclopedia already attests the entity in, with the name forms every
 produced beside them. DOC-0191 is the contract for what comes out; this writes it and nothing else.
 
     python scripts/descriptors.py extract --out .descriptors/pilot --sample 300 --seed 11
-    python scripts/descriptors.py ask     --dir .descriptors/pilot --workers 4
+    python scripts/descriptors.py ask     --dir .descriptors/pilot --workers 4 --effort low
     python scripts/descriptors.py score   --dir .descriptors/pilot
     python scripts/descriptors.py publish --dir .descriptors/pilot
 
-Five things about the design are load-bearing, and each is a way the output could have been made
+To ask a second time about part of a corpus already described -- because the vocabulary widened, or
+because the verses shown were too narrow -- name the entities, show the context, and publish under a
+prefix that sorts after the run being superseded:
+
+    python scripts/descriptors.py extract --out .descriptors/reask --only reask.txt --context
+    python scripts/descriptors.py ask     --dir .descriptors/reask --workers 3 --effort low
+    python scripts/descriptors.py publish --dir .descriptors/reask --against .descriptors/full --prefix reask
+
+Six things about the design are load-bearing, and each is a way the output could have been made
 worthless rather than merely wrong:
 
 **BibleData's sentence is never shown to the model.** Not the entity's `distinguisher` and not any
@@ -25,9 +33,16 @@ relations exist in the same database and would answer most of the question outri
 them; `extract` must not, and the one place that could leak them -- the candidate list -- is built
 from shared verses instead.
 
-**A claim can only cite a verse the entity was shown.** The verses shown are the entity's own
-`entity_verse` rows, which is exactly what the loader will accept, so every surviving claim is
-loadable by construction. A reference outside that set is dropped and counted rather than kept.
+**A claim can only cite one of the entity's own verses.** Those are its `entity_verse` rows, which
+is exactly what the loader will accept, so every surviving claim is loadable by construction. A
+reference outside that set is dropped and counted rather than kept.
+
+**The verses around a register line are shown, and are not citable.** *And his firstborn son Abdon,
+and Zur, and Kish* names no father and *And Elioenai, and Jaakobah* no house; the verse before and
+the `the sons of X` heading above carry what the line is missing, and without them the model can
+only be silent about a name the encyclopedia does hold something about. They go in `context`, they
+are offered only for a verse that is a bare list of names, and `validate` does not add them to the
+references a claim may cite.
 
 **A target we do not hold is not a claim.** It goes in `unresolved` as a plain string, so the gap is
 countable. A claim whose target does not resolve to a slug is never turned into prose.
@@ -87,22 +102,39 @@ BOOKS = [
 # and counted, rather than written out for the loader to refuse one file at a time.
 RELATIONS = [
     'son-of', 'daughter-of', 'father-of', 'mother-of', 'brother-of', 'sister-of',
-    'husband-of', 'wife-of', 'grandfather-of', 'grandmother-of',
+    'husband-of', 'wife-of', 'concubine-of',
+    'half-brother-of', 'half-sister-of',
+    'grandfather-of', 'grandmother-of', 'grandson-of', 'granddaughter-of',
+    'uncle-of', 'aunt-of', 'nephew-of', 'niece-of',
     'ancestor-of', 'descendant-of',
     'father-in-law-of', 'mother-in-law-of', 'son-in-law-of', 'daughter-in-law-of',
+    'brother-in-law-of', 'sister-in-law-of',
     'king-of', 'queen-of', 'prophet-to', 'priest-of', 'judge-of', 'high-priest-of',
-    'commander-of', 'servant-of', 'disciple-of', 'apostle-of', 'scribe-of',
+    'commander-of', 'governor-of', 'tetrarch-of',
+    'servant-of', 'master-of', 'disciple-of', 'apostle-of', 'scribe-of', 'companion-of',
+    'killed-by', 'killer-of', 'angel-of',
     'of-tribe', 'of-people', 'from-place', 'lived-in', 'buried-in',
     'descendants-of',
-    'city-in', 'region-of', 'river-of', 'mountain-in', 'near',
+    'city-in', 'region-of', 'river-of', 'mountain-in', 'gate-of', 'near',
 ]
+
+# The nineteen TSK-0424 added. A re-ask of an entity the first pass already described earns its
+# place by using one of these; anything else it says, the pass before it could have said too.
+WIDENED = {
+    'concubine-of', 'half-brother-of', 'half-sister-of', 'grandson-of', 'granddaughter-of',
+    'uncle-of', 'aunt-of', 'nephew-of', 'niece-of', 'brother-in-law-of', 'sister-in-law-of',
+    'governor-of', 'tetrarch-of', 'master-of', 'companion-of',
+    'killed-by', 'killer-of', 'angel-of', 'gate-of',
+}
+
+assert WIDENED <= set(RELATIONS)
 
 LANGUAGES = ['eng', 'ukr', 'rus', 'deu']
 
 # The nominative and the genitive are what DOC-0191 asks for; the locative is what PRB-0361 found
 # missing, because *похований у Хевроні* has no genitive that stands in for it and four of the
-# thirty-eight relations are exactly the ones a place page is made of. The loader already stores one
-# where a pass supplies it.
+# relations are exactly the ones a place page is made of. The loader already stores one where a
+# pass supplies it.
 FORMS = ['nominative', 'genitive', 'locative']
 
 # How much of an entity is shown. A name borne through four hundred verses is established by its
@@ -122,6 +154,24 @@ CANDIDATE_REFERENCES_SHOWN = 4
 # five men called Judah where the verse means one of them -- which is a question, not an error.
 NAMED_CANDIDATES_SHOWN = 18
 SHORTEST_NAME_MATCHED = 4
+
+# The verses around an entity's own, for the register line that says nothing by itself. Of the
+# 1,236 entities the first full pass could not describe, 403 were shown nothing but a bare name
+# list, and the two ways the claim sits just outside it are different: *And his firstborn son
+# Abdon, and Zur, and Kish* has its father in the verse immediately before, while *And Elioenai,
+# and Jaakobah* belongs to a `the sons of X` heading a dozen verses above. Neighbours reach the
+# first and not the second, so both are taken -- and the headings are walked back to rather than
+# the chapter's opening being used, because 1 Chronicles 4 opens with Judah and turns to Simeon at
+# verse 24, so the top of the chapter is a confident wrong answer.
+CONTEXT_NEIGHBOURS = 1
+CONTEXT_HEADINGS = 2
+HEADING_REACH = 40
+CONTEXT_VERSES_SHOWN = 8
+
+# A segment of three words or fewer beginning with a capital is a name standing on its own. Two
+# thirds of a verse made of those, and at least three of them, is a register rather than a sentence.
+SHORT_SEGMENT_WORDS = 3
+LIST_SEGMENTS_LEAST = 3
 
 # The batch shape. The harness overhead is per call, so one entity per call costs several times what
 # eight do; the verse budget is the other half of it, because eight entities is cheap until one of
@@ -145,6 +195,22 @@ marked `named in the text` was found by matching the King James spelling, so it 
 of several who bear the name, or no one at all -- its `attested_in` references are there for you to
 tell which. Both are offers, never answers.
 
+Some entities also carry `context`: verses standing around their own, given because a name in a
+register says nothing on its own and the line that governs it is a verse or two away. *And his
+firstborn son Abdon, and Zur, and Kish* names no father; the verse before it does. *And Elioenai,
+and Jaakobah* belongs to whichever *the sons of X* heading it falls under, and that heading is in
+the context.
+
+**Read the context, cite your own verses.** A `context` verse is there to tell you who *his* is and
+whose register this is; it is not a reference you may use. Every claim's `reference` must still be
+one of the entity's own `verses`, because those are the verses the entity is recorded as occurring
+in and the only ones a reader can be sent to. So `abdon-3 son-of jeiel` cites the verse that calls
+him a firstborn son, not the one that names his father.
+
+The context is for finding the head of the register -- *the sons of Shashak*, *of the sons of Bani*,
+*they that came to David to Ziklag* -- and the claim to make from it is about that head. It is not a
+licence to relate the entity to the names printed beside it.
+
 Two rules decide almost every case:
 
 - **Cite a verse from the list you were given for that entity.** A claim's `reference` must be one
@@ -159,14 +225,20 @@ the target" -- `son-of` means the entity is the son of the target, `father-in-la
 entity is the target's father-in-law:
 
   kinship   son-of daughter-of father-of mother-of brother-of sister-of
-            husband-of wife-of grandfather-of grandmother-of
+            husband-of wife-of concubine-of
+            half-brother-of half-sister-of
+            grandfather-of grandmother-of grandson-of granddaughter-of
+            uncle-of aunt-of nephew-of niece-of
             ancestor-of descendant-of
             father-in-law-of mother-in-law-of son-in-law-of daughter-in-law-of
+            brother-in-law-of sister-in-law-of
   office    king-of queen-of prophet-to priest-of judge-of high-priest-of
-            commander-of servant-of disciple-of apostle-of scribe-of
-  belonging of-tribe of-people from-place lived-in buried-in
+            commander-of governor-of tetrarch-of
+            servant-of master-of disciple-of apostle-of scribe-of companion-of
+  violence  killed-by killer-of
+  belonging of-tribe of-people from-place lived-in buried-in angel-of
   peoples   descendants-of
-  places    city-in region-of river-of mountain-in near
+  places    city-in region-of river-of mountain-in gate-of near
 
 A relation outside that list is thrown away, so a claim that needs one is a claim not to make.
 
@@ -180,8 +252,23 @@ Three readings go wrong often enough to be worth naming:
   standing next to another name in that enumeration is not `near`, and the towns of one list are
   often far apart. Claim `city-in` or `region-of` for the territory the list belongs to, and leave
   `near` for a verse that actually places one beside the other.
+- **The same is true of men, and it is the commonest way to be wrong here.** *And Abdon, and Zichri,
+  and Hanan* relates each of them to the head the register names -- `son-of` or `descendant-of`
+  **Shashak** -- and to no one printed beside them. Never make `brother-of` or `companion-of` out of
+  adjacency. If the register names no head even in the context, the honest answer is no claim.
 - **A gentilic is a people, not a place.** *Ahimelech the Hittite* is `of-people` the Hittites;
   *a man of Bethlehem* is `from-place`.
+- **A half-sibling needs the verse to say the parents differ.** *Sons of David by his wives* beside
+  *the sons of the concubines* is `half-brother-of`; two men called sons of one father with no
+  second mother named is `brother-of`. Never soften `brother-of` into `half-brother-of` to be safe.
+- **`killed-by` is the person killed, `killer-of` the one who killed.** *Zichri slew Maaseiah* makes
+  `maaseiah killed-by zichri` and `zichri killer-of maaseiah`. Both are worth stating; a battle in
+  which somebody merely took part is neither.
+
+`companion-of` is for a verse that says two people went, worked, were sent or stood together --
+*Barnabas and Saul*, *his fellowprisoner*, *repaired next unto him* -- and never for two names that
+merely occur in one list.
+`angel-of` is a being the text defines by whose it is, as in *the angel of the LORD*.
 
 Order the claims the way the sentence would run: the one that identifies the entity first. Two or
 three good claims beat six weak ones -- this is a line under a name, not a biography. Give a
@@ -325,19 +412,27 @@ def answer_key():
 
 
 # BibleData's type names against DOC-0191's vocabulary, in the same direction. What is absent is
-# absent from the vocabulary, not from the mapping: half-brother, brother-in-law, uncle, nephew,
-# cousin, concubine, grandson, master, killer and victim have no relation to be scored against, and
-# `score` counts them so the size of that gap is visible rather than assumed.
+# absent from the vocabulary, not from the mapping: cousin, ally, rabbi, patron, client and lady
+# have no relation to be scored against, and `score` counts them so the size of that gap is visible
+# rather than assumed. `victim` is scored as `killed-by` only because the homicides are what the
+# vocabulary took; its rape rows will read as disagreements, which is the honest outcome.
 KEY_RELATIONS = {
     'son': 'son-of', 'daughter': 'daughter-of', 'father': 'father-of', 'mother': 'mother-of',
     'brother': 'brother-of', 'sister': 'sister-of',
     'husband': 'husband-of', 'wife': 'wife-of',
+    'half-brother': 'half-brother-of', 'half-sister': 'half-sister-of',
     'grandfather': 'grandfather-of', 'grandmother': 'grandmother-of',
+    'grandson': 'grandson-of', 'granddaughter': 'granddaughter-of',
+    'uncle': 'uncle-of', 'aunt': 'aunt-of', 'nephew': 'nephew-of', 'niece': 'niece-of',
     'ancestor': 'ancestor-of', 'descendant': 'descendant-of',
     'father-in-law': 'father-in-law-of', 'mother-in-law': 'mother-in-law-of',
     'son-in-law': 'son-in-law-of', 'daughter-in-law': 'daughter-in-law-of',
-    'servant': 'servant-of', 'disciple': 'disciple-of', 'apostle': 'apostle-of',
+    'brother-in-law': 'brother-in-law-of', 'sister-in-law': 'sister-in-law-of',
+    'concubine': 'concubine-of',
+    'servant': 'servant-of', 'master': 'master-of',
+    'disciple': 'disciple-of', 'apostle': 'apostle-of',
     'king': 'king-of',
+    'killer': 'killer-of', 'killed by': 'killed-by', 'victim': 'killed-by',
 }
 
 
@@ -378,6 +473,64 @@ def shown_verses(all_of_them):
     room = VERSES_SHOWN - VERSES_FROM_THE_HEAD
     step = max(1, len(tail) // room)
     return head + tail[::step][:room]
+
+
+LIST_SEGMENT = re.compile(r'[,;:]| and ')
+LIST_OPENER = re.compile(r'^\s*(?:And|Also|Now|Then)\s+')
+
+# The word an enumeration repeats before each name, which the name has to be seen past: Jeremiah 48
+# is *and upon Kiriathaim, and upon Bethgamul*, Nehemiah 11 is *and at Jeshua, and at Moladah*.
+LIST_PREPOSITION = re.compile(r'^(?:and\s+)?(?:upon|unto|at|of|in|to|from|by|with)\s+', re.I)
+
+
+def list_shaped(line):
+    """A verse that is a register of names rather than a sentence about anybody."""
+    parts = [LIST_PREPOSITION.sub('', part.strip(' .,;:()'))
+             for part in LIST_SEGMENT.split(LIST_OPENER.sub('', (line or '').strip()))]
+    parts = [part for part in parts if part]
+    if len(parts) < LIST_SEGMENTS_LEAST:
+        return False
+    bare = sum(1 for part in parts
+               if len(part.split()) <= SHORT_SEGMENT_WORDS and part[:1].isupper())
+    return bare >= LIST_SEGMENTS_LEAST and bare * 3 >= len(parts) * 2
+
+
+HEADING = re.compile(
+    r'\b(?:the sons of|the children of|the daughters of|these are|these were|now these'
+    r'|out of the tribe of|the famil(?:y|ies) of|the house of|the men of|the number of'
+    r'|the inheritance of|heads of the fathers|begat|dwelt|dwelleth)\b', re.I)
+
+
+def context_verses(shown, lines):
+    """
+    The verses standing around a register line, so a name in a list has something to be read against.
+
+    Two kinds, answering different questions: the neighbours resolve a pronoun, and the heading says
+    whose register this is. A heading is looked for in both directions and taken nearest first,
+    because 1 Chronicles 8 closes a run of names with *the sons of Shashak* where Ezra 10 opens one
+    with *of the sons of Bani*, and reading only upwards gets one of the two wrong.
+
+    Only a list-shaped verse gets any of this, so an entity shown whole sentences pays nothing.
+    """
+    owned = set(shown)
+    picked = []
+    for book, chapter, verse in shown:
+        if not list_shaped(lines.get((book, chapter, verse))):
+            continue
+        around = [(book, chapter, verse + step)
+                  for step in range(-CONTEXT_NEIGHBOURS, CONTEXT_NEIGHBOURS + 1) if step]
+        headings = []
+        for distance in range(1, HEADING_REACH + 1):
+            for key in ((book, chapter, verse - distance), (book, chapter, verse + distance)):
+                line = lines.get(key)
+                if line and HEADING.search(line) and len(headings) < CONTEXT_HEADINGS:
+                    headings.append(key)
+            if len(headings) == CONTEXT_HEADINGS:
+                break
+        for key in around + headings:
+            if key in lines and key not in owned and key not in picked:
+                picked.append(key)
+    return sorted(picked[:CONTEXT_VERSES_SHOWN])
 
 
 def proper_name(entity):
@@ -424,7 +577,7 @@ def named_in(line, index):
     return found
 
 
-def build(entity, verses, by_verse, texts, by_slug, index):
+def build(entity, verses, by_verse, texts, by_slug, index, with_context=False):
     """One entity as the model sees it: its name, its verses, and who else stands in them."""
     name_row = proper_name(entity)
     shown = shown_verses(verses)
@@ -470,7 +623,7 @@ def build(entity, verses, by_verse, texts, by_slug, index):
             line['russian'] = texts[RUSSIAN].get(key)
         lines.append(line)
 
-    return {
+    payload = {
         'entity': entity['slug'],
         'kind': entity['kind'],
         'name': entity['name'],
@@ -485,6 +638,12 @@ def build(entity, verses, by_verse, texts, by_slug, index):
         'verses': lines,
         'candidates': candidates,
     }
+
+    around = context_verses(shown, texts[RENDERING]) if with_context else []
+    if around:
+        payload['context'] = [{'reference': reference(*key), 'king_james': texts[RENDERING][key]}
+                              for key in around]
+    return payload
 
 
 def keyed(rows):
@@ -505,12 +664,23 @@ def extract(args):
     held = corpus(args.cache)
     by_slug = {e['slug']: e for e in held['entities']}
     for entity in held['entities']:
-        entity['verses'] = [tuple(v) for v in entity['verses']]
+        # `entity_verse` holds a row per annotated word, so an entity named twice in one verse has
+        # that verse twice. Shown twice it costs the verse budget and tells the model nothing.
+        entity['verses'] = list(dict.fromkeys(tuple(v) for v in entity['verses']))
     by_verse = occupants(held['occupancy'])
     texts = {name: keyed(held[name]) for name in (RENDERING, UKRAINIAN, RUSSIAN)}
 
     kinds = set(args.kinds)
     pool = [e for e in held['entities'] if e['kind'] in kinds and e['verses']]
+
+    if args.only:
+        with open(args.only, encoding='utf-8') as handle:
+            wanted = {line.strip() for line in handle if line.strip()}
+        pool = [e for e in pool if e['slug'] in wanted]
+        absent = wanted - {e['slug'] for e in pool}
+        if absent:
+            print(f'{len(absent)} of the {len(wanted)} named slugs are not entities with verses, '
+                  f'and are skipped: {", ".join(sorted(absent)[:8])}')
 
     if args.sample:
         key = {}
@@ -537,6 +707,9 @@ def extract(args):
                'prefer_scorable': bool(args.prefer_scorable), 'drawn': len(pool)}
     else:
         how = {'kind': 'all', 'kinds': sorted(kinds), 'drawn': len(pool)}
+    if args.only:
+        how = dict(how, kind='named', only=os.path.basename(args.only), drawn=len(pool))
+    how['context'] = bool(args.context)
 
     os.makedirs(os.path.join(args.dir, 'batches'), exist_ok=True)
     manifest = {
@@ -550,13 +723,14 @@ def extract(args):
     index = name_index(held['entities'])
     batch, verses_in_batch, plan = [], 0, []
     for entity in pool:
-        payload = build(entity, entity['verses'], by_verse, texts, by_slug, index)
+        payload = build(entity, entity['verses'], by_verse, texts, by_slug, index, args.context)
+        cost = len(payload['verses']) + len(payload.get('context', ()))
         if batch and (len(batch) >= args.batch_entities
-                      or verses_in_batch + len(payload['verses']) > args.batch_verses):
+                      or verses_in_batch + cost > args.batch_verses):
             plan.append(batch)
             batch, verses_in_batch = [], 0
         batch.append(payload)
-        verses_in_batch += len(payload['verses'])
+        verses_in_batch += cost
     if batch:
         plan.append(batch)
 
@@ -568,13 +742,15 @@ def extract(args):
         manifest['batches'].append({
             'batch': name,
             'entities': [e['entity'] for e in group],
-            'verses': sum(len(e['verses']) for e in group),
+            'verses': sum(len(e['verses']) + len(e.get('context', ())) for e in group),
         })
 
     with open(os.path.join(args.dir, 'manifest.json'), 'w', encoding='utf-8') as handle:
         json.dump(manifest, handle, ensure_ascii=False, indent=1)
 
-    print(f'{len(pool)} entities, {len(plan)} batches -> {args.dir}')
+    with_context = sum(1 for group in plan for e in group if e.get('context'))
+    print(f'{len(pool)} entities, {len(plan)} batches, '
+          f'{with_context} shown the verses around a register line -> {args.dir}')
 
 
 def executable():
@@ -597,7 +773,7 @@ CALL_TIMEOUT = 600
 CALL_ATTEMPTS = 2
 
 
-def call(prompt, model):
+def call(prompt, model, effort):
     """
     One batch, one call, one turn, no tools and no session. The flags are what turn the CLI into a
     worker rather than an agent; --bare looks like the right one and is not, because it reads auth
@@ -611,7 +787,7 @@ def call(prompt, model):
         '--setting-sources', '', '--no-session-persistence', '--disable-slash-commands',
         '--disallowed-tools', 'Bash Read Write Edit Glob Grep WebFetch WebSearch Task Agent TodoWrite',
         '--max-turns', '1',
-    ]
+    ] + (['--effort', effort] if effort else [])
     for attempt in range(CALL_ATTEMPTS):
         last = None
         try:
@@ -740,7 +916,8 @@ def ask(args):
     rejected_path = os.path.join(args.dir, 'rejected.jsonl')
 
     with open(os.path.join(args.dir, 'asked.json'), 'w', encoding='utf-8') as handle:
-        json.dump({'prompt_version': PROMPT_VERSION, 'model': args.model, 'asked': today},
+        json.dump({'prompt_version': PROMPT_VERSION, 'model': args.model,
+                   'effort': args.effort, 'asked': today},
                   handle, ensure_ascii=False, indent=1)
 
     pending = [entry for entry in manifest['batches']
@@ -756,7 +933,8 @@ def ask(args):
         asked = {e['entity']: e for e in payload['entities']}
 
         started = time.time()
-        outcome, failed = call(json.dumps(payload, ensure_ascii=False, indent=1), args.model)
+        outcome, failed = call(json.dumps(payload, ensure_ascii=False, indent=1),
+                               args.model, args.effort)
         if failed:
             with lock:
                 totals['failed'] += 1
@@ -845,6 +1023,22 @@ INVERSE = {
     'mother-in-law-of': {'son-in-law-of', 'daughter-in-law-of'},
     'son-in-law-of': {'father-in-law-of', 'mother-in-law-of'},
     'daughter-in-law-of': {'father-in-law-of', 'mother-in-law-of'},
+    'half-brother-of': {'half-brother-of', 'half-sister-of'},
+    'half-sister-of': {'half-brother-of', 'half-sister-of'},
+    'grandfather-of': {'grandson-of', 'granddaughter-of'},
+    'grandmother-of': {'grandson-of', 'granddaughter-of'},
+    'grandson-of': {'grandfather-of', 'grandmother-of'},
+    'granddaughter-of': {'grandfather-of', 'grandmother-of'},
+    'uncle-of': {'nephew-of', 'niece-of'},
+    'aunt-of': {'nephew-of', 'niece-of'},
+    'nephew-of': {'uncle-of', 'aunt-of'},
+    'niece-of': {'uncle-of', 'aunt-of'},
+    'brother-in-law-of': {'brother-in-law-of', 'sister-in-law-of'},
+    'sister-in-law-of': {'brother-in-law-of', 'sister-in-law-of'},
+    'servant-of': {'master-of'},
+    'master-of': {'servant-of'},
+    'killed-by': {'killer-of'},
+    'killer-of': {'killed-by'},
 }
 
 
@@ -1034,19 +1228,48 @@ def score(args):
     print(report)
 
 
+def improves(now, before):
+    """
+    Whether a re-asked record says more than the one it would supersede.
+
+    A re-ask is not free of risk: the loader takes the later file whole, so a second answer with
+    fewer claims than the first makes the page worse. It earns its place by filling a silence, by
+    using one of the relations the vocabulary did not have, or by not shrinking.
+    """
+    if before is None or not before['claims']:
+        return True
+    if any(claim['relation'] in WIDENED for claim in now['claims']):
+        return True
+    return len(now['claims']) >= len(before['claims'])
+
+
 def publish(args):
     rows = descriptors(args.dir)
     if not rows:
         raise SystemExit(f'{args.dir}/out is empty. Run "ask --dir {args.dir}" first.')
+    earlier = {row['entity']: row for row in descriptors(args.against)} if args.against else {}
     os.makedirs(args.to, exist_ok=True)
     out_dir = os.path.join(args.dir, 'out')
-    written = 0
-    for name in sorted(os.listdir(out_dir)):
-        if name.endswith('.jsonl'):
-            shutil.copyfile(os.path.join(out_dir, name), os.path.join(args.to, name))
-            written += 1
-    print(f'{written} files, {len(rows)} entities, '
-          f'{sum(len(r["claims"]) for r in rows)} claims -> {args.to}')
+    written, entities, claims, withheld = 0, 0, 0, 0
+    for name in sorted(name for name in os.listdir(out_dir) if name.endswith('.jsonl')):
+        with open(os.path.join(out_dir, name), encoding='utf-8') as handle:
+            keep = [json.loads(line) for line in handle if line.strip()]
+        if args.against:
+            asked_for = len(keep)
+            keep = [row for row in keep if improves(row, earlier.get(row['entity']))]
+            withheld += asked_for - len(keep)
+        if not keep:
+            continue
+        target = os.path.join(args.to, f'{args.prefix}-{written:04d}.jsonl')
+        with open(target, 'w', encoding='utf-8') as handle:
+            for row in keep:
+                handle.write(json.dumps(row, ensure_ascii=False) + '\n')
+        written += 1
+        entities += len(keep)
+        claims += sum(len(row['claims']) for row in keep)
+    print(f'{written} files, {entities} entities, {claims} claims -> {args.to}'
+          + (f'; {withheld} records withheld because they said less than {args.against} already had'
+             if args.against else ''))
 
 
 def main():
@@ -1062,6 +1285,11 @@ def main():
     extractor.add_argument('--seed', type=int, default=1)
     extractor.add_argument('--prefer-scorable', action='store_true',
                            help='weight the sample towards entities BibleData says something about')
+    extractor.add_argument('--only',
+                           help='a file of entity slugs, one per line: extract only these')
+    extractor.add_argument('--context', action='store_true',
+                           help='show the verses around a register line, for the entities whose '
+                                'own verses are a bare list of names')
     extractor.add_argument('--batch-entities', type=int, default=BATCH_ENTITIES)
     extractor.add_argument('--batch-verses', type=int, default=BATCH_VERSES)
     extractor.set_defaults(run=extract)
@@ -1070,6 +1298,10 @@ def main():
     asker.add_argument('--dir', required=True)
     asker.add_argument('--model', default='sonnet')
     asker.add_argument('--workers', type=int, default=4)
+    asker.add_argument('--effort', default=None,
+                       help='low, medium, high, xhigh or max. The CLI thinks by default and the '
+                            'bill is mostly thinking tokens; PRB-0437 measured low as cheaper and '
+                            'no worse.')
     asker.add_argument('--again', action='store_true', help='re-run batches that already answered')
     asker.set_defaults(run=ask)
 
@@ -1081,6 +1313,13 @@ def main():
     publisher = commands.add_parser('publish', help='copy the validated batches into Resources')
     publisher.add_argument('--dir', required=True)
     publisher.add_argument('--to', default=os.path.join('Resources', 'Essenthos', 'descriptors'))
+    publisher.add_argument('--prefix', default='batch',
+                           help='what the published files are named. The loader keeps the record '
+                                'from the file that sorts last, so a run meant to supersede an '
+                                'earlier one needs a prefix that sorts after it.')
+    publisher.add_argument('--against',
+                           help="an earlier run's directory: publish a record only where it says "
+                                'more than that run already said about the same entity')
     publisher.set_defaults(run=publish)
 
     args = parser.parse_args()
