@@ -128,8 +128,10 @@ internal sealed class EntityDescriptorLoader(
         var entities = await Slugs(records, cancellationToken);
         var described = await Described(entities.Values, cancellationToken);
 
-        // A record for an entity this loader already described, published under a different source,
-        // is a re-ask: the vocabulary widened or the prompt changed and the pass was asked again.
+        // A record for an entity this loader already described, published in a file it has not
+        // read, is a re-ask: the vocabulary widened or the prompt changed and the pass was asked
+        // again. The file is what tells them apart -- both passes ran as claude-sonnet-5 on
+        // 2026-09-09, so the credit a reader sees is the same string on both.
         // The file set settles that by taking the file that sorts last, and the database has to
         // settle it the same way or the two disagree — the later file wins on disk and the reader
         // keeps the first answer for ever (PRB-0449). Same source, and there is nothing to do: that
@@ -137,7 +139,7 @@ internal sealed class EntityDescriptorLoader(
         var superseded = records
             .Where(record => entities.TryGetValue(record.Entity, out var id)
                 && described.TryGetValue(id, out var loaded)
-                && !loaded.Contains(Source(record)))
+                && !loaded.Contains(record.File))
             .Select(record => entities[record.Entity])
             .ToHashSet();
 
@@ -166,7 +168,7 @@ internal sealed class EntityDescriptorLoader(
             }
 
             var source = Source(record);
-            if (described.TryGetValue(entityId, out var loaded) && loaded.Contains(source))
+            if (described.TryGetValue(entityId, out var loaded) && loaded.Contains(record.File))
             {
                 skipped++;
                 continue;
@@ -217,6 +219,7 @@ internal sealed class EntityDescriptorLoader(
                     Method = LinkMethod.ModelReading,
                     Confidence = confidence,
                     Source = source,
+                    Run = record.File,
                     Note = claim.Reason,
                     Claims =
                     [
@@ -331,6 +334,7 @@ internal sealed class EntityDescriptorLoader(
                     Method = LinkMethod.ModelReading,
                     Confidence = 1,
                     Source = source,
+                    Run = record.File,
                 });
 
                 written++;
@@ -369,31 +373,40 @@ internal sealed class EntityDescriptorLoader(
     /// make those records look untouched and write their forms again on every boot.
     /// </para>
     /// </summary>
+    /// <summary>
+    /// What this loader already wrote about these entities, and which file of which pass each row
+    /// came from. Per entity, because the passes arrive in batches over days and a second batch has
+    /// to load beside the first; per file, because a re-ask is the same model on the same date and
+    /// there is nothing else to tell it from the batch it corrects.
+    /// </summary>
     private async Task<Dictionary<int, HashSet<string>>> Described(
         IReadOnlyCollection<int> entities,
         CancellationToken cancellationToken)
     {
         var clauses = await db.EntityDescriptors
             .Where(d => entities.Contains(d.EntityId) && d.Source.StartsWith(SourcePrefix))
-            .Select(d => new { d.EntityId, d.Source })
+            .Select(d => new { d.EntityId, d.Run })
             .Distinct()
             .ToListAsync(cancellationToken);
 
         var forms = await db.EntityNameForms
             .Where(f => entities.Contains(f.EntityId) && f.Source.StartsWith(SourcePrefix))
-            .Select(f => new { f.EntityId, f.Source })
+            .Select(f => new { f.EntityId, f.Run })
             .Distinct()
             .ToListAsync(cancellationToken);
 
         var described = new Dictionary<int, HashSet<string>>();
         foreach (var row in clauses.Concat(forms))
         {
-            if (!described.TryGetValue(row.EntityId, out var sources))
+            if (!described.TryGetValue(row.EntityId, out var runs))
             {
-                described[row.EntityId] = sources = new HashSet<string>(StringComparer.Ordinal);
+                described[row.EntityId] = runs = new HashSet<string>(StringComparer.Ordinal);
             }
 
-            sources.Add(row.Source);
+            // A row loaded before the run was recorded answers for no file, so no file matches it
+            // and the first load after this one reads it again. That is the intent: a blank cannot
+            // be compared, and trusting it would keep exactly the stale answers this fixes.
+            runs.Add(row.Run ?? string.Empty);
         }
 
         return described;

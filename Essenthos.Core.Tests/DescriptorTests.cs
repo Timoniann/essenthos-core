@@ -140,10 +140,16 @@ public sealed class DescriptorTests : IDisposable
         Descriptors.Of(_db, slug, language, default);
 
     /// <summary>
-    /// The re-ask, which is what a widened vocabulary produces: the same entity answered again,
-    /// under a later date, in a file published after the first. The file set already settled this
-    /// by taking the file that sorts last; before PRB-0449 the database did not, so the later
-    /// answer loaded on a fresh corpus and never reached one that already held the first.
+    /// The re-ask, which is what a widened vocabulary produces: the same entity answered again, in
+    /// a file published after the first. The file set already settled this by taking the file that
+    /// sorts last; before PRB-0449 the database did not, so the later answer loaded on a fresh
+    /// corpus and never reached one that already held the first.
+    ///
+    /// <para>
+    /// The two records carry the same model and the same date on purpose, because the re-ask that
+    /// found this ran hours after the batch it corrects. The credit a reader sees is one string on
+    /// both, so the file is the only thing that tells them apart.
+    /// </para>
     /// </summary>
     [Fact]
     public async Task ALaterPassAboutAnEntityAlreadyDescribedReplacesWhatIsLoaded()
@@ -166,8 +172,9 @@ public sealed class DescriptorTests : IDisposable
             .ToListAsync();
 
         clauses.Select(c => c.Relation).Should().Equal("son-of", "father-in-law-of");
-        clauses.Should().OnlyContain(c => c.Source.EndsWith("asked 2026-09-09"),
-            "nothing of the superseded pass is left beside the new answer");
+        clauses.Should().OnlyContain(c => c.Run == "reask-0001.jsonl",
+            "nothing of the superseded pass is left beside the new answer, and the two are told "
+            + "apart by their files because their credits are the same string");
     }
 
     /// <summary>

@@ -105,6 +105,17 @@ public class EntityDescriptor
     /// <summary>The model and the date of the run, or the person. Never empty.</summary>
     public required string Source { get; set; }
 
+    /// <summary>
+    /// The file of the generation pass this row was read from, where the loader recorded one.
+    ///
+    /// Not for a reader: <see cref="Source"/> is what a page credits. This is how one pass is told
+    /// from another when the loader asks whether it has already stored an answer, and nothing else
+    /// on the row can do it — a re-ask carries the same model and the same date as the batch it
+    /// corrects. Null on rows loaded before it was recorded, which is why the first load after this
+    /// re-reads them from the files rather than trusting a blank (PRB-0449).
+    /// </summary>
+    public string? Run { get; set; }
+
     /// <summary>Why, where it is worth reading. Usually the model's own sentence for the clause.</summary>
     public string? Note { get; set; }
 
@@ -202,6 +213,17 @@ public class EntityNameForm
 
     /// <summary>The model and the date, or the person. Never empty.</summary>
     public required string Source { get; set; }
+
+    /// <summary>
+    /// The file of the generation pass this row was read from, where the loader recorded one.
+    ///
+    /// Not for a reader: <see cref="Source"/> is what a page credits. This is how one pass is told
+    /// from another when the loader asks whether it has already stored an answer, and nothing else
+    /// on the row can do it — a re-ask carries the same model and the same date as the batch it
+    /// corrects. Null on rows loaded before it was recorded, which is why the first load after this
+    /// re-reads them from the files rather than trusting a blank (PRB-0449).
+    /// </summary>
+    public string? Run { get; set; }
 
     public override string ToString() => $"EntityNameForm({EntityId} {Language} {GrammaticalCase})";
 }

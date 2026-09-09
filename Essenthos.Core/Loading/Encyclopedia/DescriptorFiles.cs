@@ -43,7 +43,19 @@ internal sealed record DescriptorRecord(
     IReadOnlyDictionary<string, Dictionary<string, string>>? Names,
     IReadOnlyList<string>? Unresolved,
     string Model,
-    string AskedAt);
+    string AskedAt)
+{
+    /// <summary>
+    /// The file this record was read from, set by the reader rather than written in the file.
+    ///
+    /// It is how one pass is told from another, and nothing else in a record is. A re-ask carries
+    /// the same model and the same date as the batch it corrects — both passes ran on 2026-09-09 —
+    /// so a loader asking whether it has already stored this answer would compare two identical
+    /// strings and keep the old one (PRB-0449). The file name is what the file set already settles
+    /// supersession by, and this carries that answer down to the database.
+    /// </summary>
+    public string File { get; init; } = string.Empty;
+}
 
 /// <summary>
 /// Where the descriptor files are read from, and what one line of one has to be.
@@ -114,7 +126,7 @@ internal static class DescriptorFiles
                     order.Add(record.Entity);
                 }
 
-                bySlug[record.Entity] = record;
+                bySlug[record.Entity] = record with { File = Path.GetFileName(file) };
             }
         }
 
