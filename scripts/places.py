@@ -1,54 +1,73 @@
 """
-What a place register of our own would hold, measured before any of it is built.
+The place register: which Strong numbers name a place, why, and what the gazetteer has to say beside
+each of them.
 
 Persons are enumerable because 3,010 of 3,026 already carry a name record with a Strong number.
-Places are not: 1,234 of the 1,351 we hold came from OpenBible, which supplies a label and
-coordinates and no Strong number at all, so there is no index to disambiguate. This harness builds
-the index the way the 164 peoples were built -- out of Strong and the occurrences already loaded --
-and measures it against what we hold and against OpenBible, so the owner can price the register
-before it exists.
+Places were not: 1,233 of the 1,351 held came from OpenBible, which supplies a label and coordinates
+and no Strong number at all, so nothing joined a place to a word and there was no index to
+disambiguate. This builds the index the way the 164 peoples were built -- out of Strong and the
+occurrences already loaded -- decides each entry from four witnesses, and publishes the result for
+`PlaceRegisterLoader` to read.
 
     python scripts/places.py enumerate --out .places/run     # the free pass, from the lexicon
     python scripts/places.py occurrences --dir .places/run   # where the candidates stand, per text
     python scripts/places.py witness --dir .places/run       # BHSA's name types, the third witness
     python scripts/places.py compare --dir .places/run       # ours vs the 1,351 vs OpenBible's 1,233
+    python scripts/places.py ask --dir .places/run --all --model sonnet --effort medium
+    python scripts/places.py check --dir .places/run --model sonnet --effort medium
+    python scripts/places.py register --dir .places/run      # the four witnesses decided
+    python scripts/places.py publish --dir .places/run       # into Resources/Essenthos/places
+    python scripts/places.py gap --dir .places/run           # theirs nothing of ours reaches, why
+
+and, for pricing a run before paying for it rather than building one:
+
     python scripts/places.py sample --dir .places/run --size 150
     python scripts/places.py ask --dir .places/run --model sonnet --effort medium
     python scripts/places.py match --dir .places/run         # the OpenBible link, as a claim of ours
     python scripts/places.py project --dir .places/run       # what it would yield and what it costs
 
-Three things about the design are load-bearing:
+Four things about the design are load-bearing:
 
-**Nothing here writes to the database.** Every subcommand reads. `enumerate` leaves files under the
-run directory and the register itself is somebody else's commit.
+**Nothing here writes to the database.** Every subcommand reads. What it writes is files: the run
+directory, and the published register under `Resources/Essenthos/places`, which the loader reads.
 
-**The lexicon is asked twice, and the corpus is a third witness.** Strong
-tags a Hebrew entry `n-pr-loc` and separately writes a gloss that names a place; where the two agree
-the classification costs nothing and where they disagree somebody has to read. That cross-tabulation
-is the whole estimate, and it is printed rather than summarised. BHSA then annotates the Hebrew
-word itself with what its name names, which is nobody's reading of the dictionary and settles a
-third of what the dictionary left open.
+**The lexicon is asked twice, and the corpus is a third witness.** Strong tags a Hebrew entry
+`n-pr-loc` and separately writes a gloss that names a place; where the two agree the classification
+costs nothing and where they disagree somebody has to read. That cross-tabulation is the whole cost
+model, and it is printed rather than summarised. BHSA then annotates the Hebrew word itself with what
+its name names, which is nobody's reading of the dictionary and settles a third of what the
+dictionary left open.
+
+**A positive that rests on a reading is read twice.** The first reading calls a hamlet, a park and a
+river places -- common nouns whose definitions happen to describe a place -- and a register is not
+the place to carry that rate. So an entry the free pass does not keep and BHSA does not settle needs
+both `ask` and `check` to name a place before it becomes a record. The second reading refuses two in
+five of them.
 
 **The OpenBible link is measured in both directions.** Once the register is ours, `open_bible_id`
 stops being inherited and becomes a claim we make by matching. What a match rate cannot say is what
-the reader loses, so the run reports how many OpenBible records nothing of ours reaches, and writes
-the failures out to be read rather than counted.
+the reader loses, so `gap` reports how many OpenBible records nothing of ours reaches and asks the
+lexicon why for each one.
 
 A run leaves:
 
     candidates.json    every Strong entry the pass considered, its evidence and its tier
     cross-tab.md       the tag against the gloss, which is the cost model
     occurrences.json   how many words of which text each candidate stands at
-    witness.md         BHSA's own nameType against the tier the lexicon put each entry in
+    witness.md/.json   BHSA's own nameType against the tier the lexicon put each entry in
     compare.md         our enumeration against the entities we hold and against OpenBible
+    out/batch-*.jsonl  the reading of each batch, written as it arrives so a resumed run pays once
+    check/batch-*.jsonl the second reading of the positives that rest on the first
+    register.json      every entry decided, kept or refused, with the reason
+    gap.md             the OpenBible records nothing of ours reaches, each asked why
     sample.json        the pilot slice, its strata and its seed
-    out/ask.jsonl      one object per entry the model read, with the model and the cost
     match.md           the OpenBible match, both directions, with the failures read out
     project.md         the slice's rates against the population, the yield and the bill
 """
 
 import argparse
 import concurrent.futures
+import datetime
 import json
 import os
 import random
@@ -101,23 +120,29 @@ def array_literal(numbers):
 # capital of Persia* once each, and a list that only took the common ones would call the rare ones
 # unreadable and pay a model to read what the dictionary already says.
 PLACE_NOUNS = (
-    r'place|places|city|cities|town|towns|village|villages|hamlet|hamlets|capital|citadel|citadels'
-    r'|fort|fortress|castle|tower|sanctuary|gate|gates|pass|peak|peaks|mountain|mountains|mount'
-    r'|hill|hills|ridge|rock|cave|cliff|river|rivers|brook|brooks|stream|streams|spring|springs'
-    r'|fountain|fountains|well|wells|pool|pools|lake|sea|seas|island|islands|isle|isles|port'
-    r'|harbour|harbor|bay|region|regions|district|districts|country|countries|land|lands|territory'
-    r'|territories|province|provinces|border|borders|valley|valleys|plain|plains|desert|deserts'
-    r'|wilderness|meadow|oasis|station|stations|encampment|camp|road|highway|quarter|locality|site'
-    r'|cairn'
+    r'place|places|city|cities|town|towns|village|villages|hamlet|hamlets|capital|capitol|citadel'
+    r'|citadels|fort|fortress|castle|tower|sanctuary|gate|gates|pass|peak|peaks|summit|summits'
+    r'|mountain|mountains|mount|hill|hills|knoll|ridge|rock|cave|cliff|slope|slopes|river|rivers'
+    r'|brook|brooks|stream|streams|spring|springs|fountain|fountains|well|wells|pool|pools|lake'
+    r'|sea|seas|island|islands|islet|islets|isle|isles|port|harbour|harbor|bay|gulf|coast|coasts'
+    r'|shore|shores|shoal|shoals|ford|fords|region|regions|district|districts|country|countries'
+    r'|land|lands|lowland|lowlands|territory|territories|province|provinces|border|borders|valley'
+    r'|valleys|plain|plains|desert|deserts|wilderness|meadow|oasis|garden|gardens|orchard|vineyard'
+    r'|station|stations|encampment|camp|road|highway|quarter|locality|site|cairn'
+)
+
+# The determiner or count in front of the classifying noun, which is what separates a definition
+# that names a place from one that merely mentions one: G4342 says *in a place* and is a verb, and a
+# bare search for *a place* calls it a place name.
+DETERMINERS = (
+    r'a|an|the|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|several'
+    r'|his|her|its|their'
 )
 
 # A place clause is a classifying noun standing in a naming construction -- *a place in Palestine*,
-# *the name of two places*, *a Philistine city*. The article or the count in front is what separates
-# a definition that names a place from one that merely mentions one: G4342 says *in a place* and is
-# a verb, and a bare search for *a place* calls it a place name.
+# *the name of two places*, *a Philistine city*.
 PLACE_CLAUSE = re.compile(
-    r'\b(?:a|an|the|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|several'
-    r'|his|her|its|their)\b'
+    r'\b(?:' + DETERMINERS + r')\b'
     r'(?:\s+[\w-]+){0,3}?\s+'
     r'(?:' + PLACE_NOUNS + r')\b',
     re.IGNORECASE)
@@ -127,6 +152,25 @@ PLACE_CLAUSE = re.compile(
 # and about half of them are places -- the other half are *Mara, a symbolic name of Naomi*. So the
 # cue is enough to reach for the entry and never enough to settle it: it goes to a reader.
 SYMBOLIC = re.compile(r'\b(?:symbolic|symbolical|emblematic)\s+name\b', re.IGNORECASE)
+
+# The eponym construction: a man, and after him the people who descend from him and the country
+# they hold. Strong writes it of Ammon -- *a son of Lot; also his posterity and their country* -- and
+# of Ashkenaz, Gomer, Meshech, Tubal and Kedar, and the gazetteer files every one of them as a
+# region. Where he names the country outright the place clause above already has it; where he stops
+# at the posterity it is a people and only a reader can say whether the text also uses the name of
+# where they live. So it reaches the entry and never settles it.
+EPONYM = re.compile(
+    r'\b(?:also|including|and)\b[^;]{0,30}?\b(?:his|her|their)\s+'
+    r'(?:posterity|descendants|descendents|offspring|progeny)\b'
+    r'|\bthe people descended from\b'
+    r'|\bname of\s+(?:[\w-]+\s+){0,2}?(?:nations?|tribes?|peoples?)\b',
+    re.IGNORECASE)
+
+# *Merathajim, an epithet of Babylon*, *Ephrath, another name for Bethlehem*. He classifies these
+# with no geographical noun at all, and whether the second name is a place is a question about the
+# first one. Same standing as the symbolic names: enough to reach the entry, never enough to settle
+# it.
+SECOND_NAME = re.compile(r'\ban epithet of\b|\banother name for\b', re.IGNORECASE)
 
 # What Strong writes when the same entry also names a person. The place register does not lose these
 # -- H2275 is Hebron the town and two men, and forcing one entry to be one thing is the error -- but
@@ -219,8 +263,10 @@ def classify(entry):
         count = COUNTS.get(word) or (int(word) if word.isdigit() else None)
 
     symbolic = bool(SYMBOLIC.search(definition))
+    eponym = bool(EPONYM.search(definition))
+    second_name = bool(SECOND_NAME.search(definition))
 
-    if symbolic and not place:
+    if (symbolic or eponym or second_name) and not place:
         tier = 'read'
     elif tagged and place and not refused:
         tier = 'agreed'
@@ -244,6 +290,8 @@ def classify(entry):
         'gloss_person': person,
         'gloss_refuses': refused,
         'gloss_symbolic': symbolic,
+        'gloss_eponym': eponym,
+        'gloss_second_name': second_name,
         'proper': proper,
         'bare': bare,
         'stated_places': count,
@@ -251,13 +299,33 @@ def classify(entry):
     }
 
 
-CANDIDATE_SQL = r"""
+def posix(pattern):
+    """
+    One of the patterns above as PostgreSQL writes it. Only the word boundary differs: Python spells
+    it \\b and an advanced regular expression spells it \\y, and everything else in these patterns is
+    common to both. Writing the alternations once is the point -- the noun list and the SQL that
+    fetches the rows it reads had drifted apart, and every noun in one and not the other was an entry
+    the classifier never saw.
+    """
+    return pattern.replace(r'\b', r'\y').replace("'", "''")
+
+
+def candidate_sql():
+    """
+    The rows the free pass considers. Deliberately looser than the classifier: the window between
+    the determiner and the noun is any 40 characters short of a semicolon rather than three words,
+    so the prefilter is a superset of what `classify` will keep and nothing is settled here.
+    """
+    clause = posix(r'\b(?:' + DETERMINERS + r')\b[^;]{0,40}\b(?:' + PLACE_NOUNS + r')\b')
+    return f"""
 select coalesce(json_agg(row_to_json(e) order by e.number), '[]'::json) from (
   select strong_number as number, lemma, transliteration, definition, morphology
   from strong_entry
   where morphology like '%loc%'
-     or definition ~* '\m(a|an|the|one|two|three|four|five|six|seven|eight|nine|ten|his|her|its|their)\M[^;]{0,40}\m(place|places|city|cities|town|towns|village|hamlet|capital|citadel|castle|tower|gate|pass|peak|mountain|mountains|mount|hill|hills|rock|cave|river|rivers|brook|stream|spring|fountain|well|pool|lake|sea|island|isle|port|region|regions|district|country|land|territory|province|valley|plain|desert|wilderness|meadow|station|encampment|camp|cairn)\M'
-     or definition ~* '\m(symbolic|symbolical|emblematic) name\M'
+     or definition ~* '{clause}'
+     or definition ~* '{posix(SYMBOLIC.pattern)}'
+     or definition ~* '{posix(EPONYM.pattern)}'
+     or definition ~* '{posix(SECOND_NAME.pattern)}'
 ) e;
 """
 
@@ -266,7 +334,7 @@ def enumerate_(args):
     directory = args.out
     os.makedirs(directory, exist_ok=True)
 
-    entries = psql(CANDIDATE_SQL) or []
+    entries = psql(candidate_sql()) or []
     rows = [classify(entry) for entry in entries]
     rows.sort(key=lambda row: (row['number'][0], int(row['number'][1:])))
 
@@ -445,9 +513,13 @@ def witness(args):
             'NUMBERS', array_literal([row['number'] for row in hebrew]))) or []:
         tags.setdefault(entry['number'], set()).add(entry['name_type'])
 
+    said = {row['number']: verdict(tags.get(row['number'], set())) for row in hebrew}
+    with open(os.path.join(directory, 'witness.json'), 'w', encoding='utf-8') as handle:
+        json.dump(said, handle, ensure_ascii=False, indent=1)
+
     table = {}
     for row in hebrew:
-        key = (row['tier'], verdict(tags.get(row['number'], set())))
+        key = (row['tier'], said[row['number']])
         table[key] = table.get(key, 0) + 1
 
     lines = ['# What BHSA says, which is nobody\'s reading of the dictionary', '',
@@ -695,10 +767,10 @@ The morphology tag is Strong's own and is sometimes wrong; the gloss is the evid
 beyond what the entry states."""
 
 
-def call(prompt, model, effort=None):
+def call(prompt, model, effort=None, system=None):
     command = [
         os.environ.get('CLAUDE') or executable(),
-        '-p', '--system-prompt', SYSTEM, '--model', model,
+        '-p', '--system-prompt', system or SYSTEM, '--model', model,
         '--output-format', 'json',
         '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}',
         '--setting-sources', '', '--no-session-persistence', '--disable-slash-commands',
@@ -750,79 +822,227 @@ def parse(result):
 
 BATCH_ENTRIES = 10
 
+# The second reading, over the entries the first one admits that nothing else does. It is a
+# different question deliberately: the first asks what the entry names and this asks whether the
+# headword itself is the name, which is where the first one was measured wrong -- it called *a
+# hamlet*, *a park, i.e. an Eden* and *a river, especially the Euphrates* places, and every one of
+# those is a common noun the entry happens to define with a place in it.
+CHECK = """You read entries of Strong's dictionary. Somebody has proposed each of these as the name
+of a geographical place, and your job is to say whether the entry bears that out.
+
+Answer with a JSON array, one object per entry, in the order given, and nothing else:
+
+  {"number": "H1234", "place": true, "why": "..."}
+
+  place  -- true only if the HEADWORD ITSELF is a proper name borne by a settlement, region,
+            mountain, river or named site. False for a common noun that means a kind of place (a
+            hamlet, a park, a river, a valley), false for a gentilic naming the people rather than
+            the land, false for a personal name, a deity, an epithet used of a person, and false
+            where the entry only mentions a place in explaining something else.
+  why    -- one short clause, quoting the words of the entry that decide it.
+
+Judge the entry as written. Do not bring knowledge of the place from outside it."""
+
+
+def batches_of(entries):
+    return [entries[at:at + BATCH_ENTRIES] for at in range(0, len(entries), BATCH_ENTRIES)]
+
+
+def payload_of(batch):
+    return json.dumps(
+        [{'number': row['number'], 'lemma': row.get('lemma'),
+          'transliteration': row.get('transliteration'),
+          'morphology': row['morphology'], 'definition': row['definition']} for row in batch],
+        ensure_ascii=False, indent=1)
+
+
+def run_batches(directory, folder, entries, system, args, shape):
+    """
+    One reading of a set of entries, batch by batch, with each batch's answers written the moment
+    they arrive. Resumable for the reason that matters at this size: a run that dies at entry 900
+    has already paid for 900 entries, and re-asking them is money spent twice for an answer already
+    on disk.
+    """
+    out = os.path.join(directory, folder)
+    os.makedirs(out, exist_ok=True)
+    today = datetime.date.today().isoformat()
+
+    numbered = list(enumerate(batches_of(entries)))
+    pending = [(index, batch) for index, batch in numbered
+               if args.again or not os.path.exists(os.path.join(out, f'batch-{index:04d}.jsonl'))]
+    if not pending:
+        print(f'{folder}: every batch already has answers. Pass --again to run them anyway.')
+        return 0.0, 0.0, len(numbered)
+
+    lock = threading.Lock()
+    started = time.time()
+    total = [0.0]
+    done = [0]
+
+    def one(job):
+        index, batch = job
+        outcome, failure = call(payload_of(batch), args.model, args.effort, system)
+        if failure:
+            with lock:
+                print(f'batch-{index:04d}: {failure}', flush=True)
+            return
+        cost = outcome.get('total_cost_usd') or 0.0
+        model = next(iter(outcome.get('modelUsage') or {}), args.model)
+        answers = parse(outcome.get('result'))
+        if answers is None:
+            with lock:
+                total[0] += cost
+                print(f'batch-{index:04d}: the reply held no JSON array', flush=True)
+            return
+
+        by_number = {str(answer.get('number')): answer
+                     for answer in answers if isinstance(answer, dict)}
+        rows = [shape(row, by_number.get(row['number']), model, today,
+                      round(cost / max(1, len(batch)), 6)) for row in batch]
+
+        with lock:
+            with open(os.path.join(out, f'batch-{index:04d}.jsonl'), 'w', encoding='utf-8') as handle:
+                for written in rows:
+                    handle.write(json.dumps(written, ensure_ascii=False) + '\n')
+            total[0] += cost
+            done[0] += len(rows)
+            print(f'[{done[0]}/{len(entries)}] batch-{index:04d} ${cost:.4f}', flush=True)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
+        list(pool.map(one, pending))
+
+    return total[0], time.time() - started, len(numbered)
+
+
+def collect(directory, folder):
+    out = os.path.join(directory, folder)
+    if not os.path.isdir(out):
+        return []
+    rows = []
+    for name in sorted(name for name in os.listdir(out) if re.fullmatch(r'batch-\d+\.jsonl', name)):
+        with open(os.path.join(out, name), encoding='utf-8') as handle:
+            rows += [json.loads(line) for line in handle if line.strip()]
+    return rows
+
+
+def reading_row(row, answer, model, today, cost):
+    return {
+        'number': row['number'], 'tier': row['tier'], 'definition': row['definition'],
+        'morphology': row['morphology'],
+        'free_place': row['tier'] in KEPT,
+        'free_places': row['stated_places'],
+        'model_place': answer.get('place') if answer else None,
+        'model_places': answer.get('places') if answer else None,
+        'model_person': answer.get('person') if answer else None,
+        'why': answer.get('why') if answer else None,
+        'model': model, 'askedAt': today, 'cost': cost,
+    }
+
+
+def entries_for(args):
+    """The slice by default, and the whole net when the run is the register's rather than a pilot's."""
+    if args.all:
+        with open(os.path.join(args.dir, 'candidates.json'), encoding='utf-8') as handle:
+            rows = json.load(handle)
+    else:
+        with open(os.path.join(args.dir, 'sample.json'), encoding='utf-8') as handle:
+            rows = json.load(handle)['entries']
+    return [row for row in rows if args.tier in (None, row['tier'])]
+
+
+def summarise(directory, folder, name, model, effort, cost, seconds, rows):
+    """
+    What one reading cost, accumulated across resumed runs. The per-entry costs on the rows are the
+    truth -- a resumed run only pays for what it asked -- so the bill is summed from them and the
+    wall clock is added up rather than measured, which is what it actually took.
+    """
+    path = os.path.join(directory, folder, name)
+    before = {}
+    if os.path.exists(path):
+        with open(path, encoding='utf-8') as handle:
+            before = json.load(handle)
+    record = {
+        'model': model, 'effort': effort, 'entries': len(rows),
+        'cost': round(sum(row.get('cost') or 0.0 for row in rows), 4),
+        'paid_this_run': round(cost, 4),
+        'seconds': round((before.get('seconds') or 0.0) + seconds, 1),
+        'prompt_version': PROMPT_VERSION,
+    }
+    with open(path, 'w', encoding='utf-8') as handle:
+        json.dump(record, handle, indent=1)
+    return record
+
 
 def ask(args):
     directory = args.dir
-    with open(os.path.join(directory, 'sample.json'), encoding='utf-8') as handle:
-        chosen = json.load(handle)
-    entries = [row for row in chosen['entries'] if args.tier in (None, row['tier'])]
-    os.makedirs(os.path.join(directory, 'out'), exist_ok=True)
+    entries = entries_for(args)
+    cost, seconds, _ = run_batches(directory, 'out', entries, SYSTEM, args, reading_row)
 
-    batches = [entries[at:at + BATCH_ENTRIES] for at in range(0, len(entries), BATCH_ENTRIES)]
-    written, lock = [], threading.Lock()
-    started = time.time()
-
-    def one(batch):
-        payload = [{'number': row['number'], 'lemma': row['lemma'],
-                    'transliteration': row['transliteration'],
-                    'morphology': row['morphology'], 'definition': row['definition']}
-                   for row in batch]
-        outcome, failure = call(json.dumps(payload, ensure_ascii=False, indent=1),
-                                args.model, args.effort)
-        if failure:
-            return [], 0.0, failure
-        cost = outcome.get('total_cost_usd') or 0.0
-        answers = parse(outcome.get('result'))
-        if answers is None:
-            return [], cost, 'the reply held no JSON array'
-        by_number = {str(answer.get('number')): answer
-                     for answer in answers if isinstance(answer, dict)}
-        rows = []
-        for row in batch:
-            answer = by_number.get(row['number'])
-            rows.append({
-                'number': row['number'], 'tier': row['tier'], 'definition': row['definition'],
-                'morphology': row['morphology'],
-                'free_place': row['tier'] in KEPT,
-                'free_places': row['stated_places'],
-                'model_place': answer.get('place') if answer else None,
-                'model_places': answer.get('places') if answer else None,
-                'model_person': answer.get('person') if answer else None,
-                'why': answer.get('why') if answer else None,
-                'model': args.model, 'effort': args.effort,
-                'cost': round(cost / max(1, len(batch)), 6),
-            })
-        return rows, cost, None
-
-    total = 0.0
-    with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
-        for rows, cost, failure in pool.map(one, batches):
-            with lock:
-                total += cost
-                written.extend(rows)
-                print(f'[{len(written)}/{len(entries)}] ${cost:.4f}'
-                      + (f'  {failure}' if failure else ''), flush=True)
-
-    elapsed = time.time() - started
+    rows = collect(directory, 'out')
     with open(os.path.join(directory, 'out', 'ask.jsonl'), 'w', encoding='utf-8') as handle:
-        for row in written:
+        for row in rows:
             handle.write(json.dumps(row, ensure_ascii=False) + '\n')
-    with open(os.path.join(directory, 'out', 'ask.json'), 'w', encoding='utf-8') as handle:
-        json.dump({'model': args.model, 'effort': args.effort, 'entries': len(written),
-                   'cost': round(total, 4), 'seconds': round(elapsed, 1),
-                   'prompt_version': PROMPT_VERSION}, handle, indent=1)
+    record = summarise(directory, 'out', 'ask.json', args.model, args.effort, cost, seconds, rows)
 
-    answered = [row for row in written if row['model_place'] is not None]
-    print(f'{len(answered)} of {len(entries)} answered, ${total:.4f} in {elapsed:.0f}s -- '
-          f'${total / max(1, len(answered)):.5f} an entry, '
-          f'{elapsed / max(1, len(answered)):.2f}s an entry.')
+    answered = [row for row in rows if row['model_place'] is not None]
+    print(f"{len(answered)} of {len(entries)} answered, ${record['cost']:.4f} in "
+          f"{record['seconds']:.0f}s -- ${record['cost'] / max(1, len(answered)):.5f} an entry, "
+          f"{record['seconds'] / max(1, len(answered)):.2f}s an entry.")
     agree = sum(1 for row in answered if bool(row['model_place']) == bool(row['free_place']))
     print(f'{agree} of {len(answered)} agree with the free pass on whether it is a place.')
     for tier in TIERS:
         kept = [row for row in answered if row['tier'] == tier]
         if kept:
             same = sum(1 for row in kept if bool(row['model_place']) == bool(row['free_place']))
-            print(f'  {tier:<12} {same}/{len(kept)} agree')
+            places = sum(1 for row in kept if row['model_place'])
+            print(f'  {tier:<12} {same}/{len(kept)} agree, {places} called a place')
+    return 0
+
+
+def check_row(row, answer, model, today, cost):
+    return {
+        'number': row['number'], 'tier': row['tier'],
+        'place': answer.get('place') if answer else None,
+        'why': answer.get('why') if answer else None,
+        'model': model, 'askedAt': today, 'cost': cost,
+    }
+
+
+def check(args):
+    """
+    The second reading, over the positives that decide something. An entry the free pass keeps is
+    already carried by Strong's tag and Strong's gloss and the reading is a third witness to it;
+    what rests on the reading alone is a positive in the tiers the free pass does not keep, and that
+    is where the pilot measured the first reading wrong three times in seven.
+    """
+    directory = args.dir
+    read = {row['number']: row for row in collect(directory, 'out')}
+    if not read:
+        raise SystemExit(f'{directory}/out holds no readings. Run "ask --dir {directory} --all" first.')
+
+    with open(os.path.join(directory, 'candidates.json'), encoding='utf-8') as handle:
+        rows = json.load(handle)
+
+    decisive = [row for row in rows
+                if row['tier'] not in KEPT
+                and (read.get(row['number']) or {}).get('model_place')]
+    print(f'{len(decisive)} positives rest on the reading alone and are asked again.')
+
+    cost, seconds, _ = run_batches(directory, 'check', decisive, CHECK, args, check_row)
+    checked = collect(directory, 'check')
+    record = summarise(directory, 'check', 'check.json', args.model, args.effort,
+                       cost, seconds, checked)
+
+    answered = [row for row in checked if row['place'] is not None]
+    upheld = sum(1 for row in answered if row['place'])
+    print(f"{len(answered)} answered, ${record['cost']:.4f} in {record['seconds']:.0f}s. "
+          f'{upheld} upheld, {len(answered) - upheld} rejected '
+          f'({(len(answered) - upheld) / max(1, len(answered)):.0%} of the positives that rest on '
+          f'the reading alone).')
+    for tier in TIERS:
+        kept = [row for row in answered if row['tier'] == tier]
+        if kept:
+            print(f'  {tier:<12} {sum(1 for row in kept if row["place"])}/{len(kept)} upheld')
     return 0
 
 
@@ -1033,6 +1253,332 @@ def match(args):
     return 0
 
 
+# ---------------------------------------------------------------------------- what ours misses
+
+
+LEXICON_SQL = """
+select coalesce(json_agg(row_to_json(e)), '[]'::json) from (
+  select strong_number as number, lemma, transliteration, definition, morphology, kjv_definition
+  from strong_entry
+) e;
+"""
+
+
+def lexicon_index():
+    """
+    Every name the whole lexicon offers, not only the candidates', so that an OpenBible record
+    nothing of ours reaches can be asked the one question that matters: does Strong head this name
+    at all? A miss the lexicon has an entry for is the net's fault and free to fix; a miss it has no
+    entry for is the register's honest edge.
+    """
+    entries = psql(LEXICON_SQL) or []
+    kjv = {}
+    for entry in entries:
+        names = set()
+        for part in re.split(r'[,;.]', entry.get('kjv_definition') or ''):
+            part = part.strip(' .+')
+            if part and not RENDERING_NOISE.match(part):
+                names.add(part)
+        if names:
+            kjv[entry['number']] = sorted(names)
+
+    strict, loose = {}, {}
+    for entry in entries:
+        for name in candidate_names(entry, kjv):
+            strict.setdefault(normalise(name), []).append(entry['number'])
+            loose.setdefault(loosely(name), []).append(entry['number'])
+    return entries, strict, loose
+
+
+# Why one of their records is not one of ours, in the order the answers cost something to act on.
+WHY = ('the net has it', 'the net missed it', 'only under a fold of the spelling', 'no entry at all')
+
+
+def gap(args):
+    """
+    The OpenBible records nothing of ours reaches, each asked why. Section 6 of the pilot read this
+    list by hand; this is the same reading done by the lexicon so that the widening it argues for
+    can be aimed at the entries it would actually recover.
+    """
+    directory = args.dir
+    with open(os.path.join(directory, 'candidates.json'), encoding='utf-8') as handle:
+        rows = json.load(handle)
+    tiers = {row['number']: row['tier'] for row in rows}
+
+    # The register once it has been decided, and the free pass alone before that, so the same
+    # command answers the question at whichever stage the run has reached.
+    decided = os.path.join(directory, 'register.json')
+    if os.path.exists(decided):
+        with open(decided, encoding='utf-8') as handle:
+            entries = [record for record in json.load(handle) if record['kept']]
+    else:
+        kjv = renderings([row['number'] for row in rows])
+        entries = [dict(row, names=sorted(candidate_names(row, kjv)))
+                   for row in rows if row['tier'] in KEPT]
+
+    held = psql(HELD_SQL) or []
+    open_bible = [place for place in held if place['source'].startswith('OpenBible')]
+
+    open_index = {}
+    for place in open_bible:
+        for name in held_names(place):
+            open_index.setdefault(normalise(name), []).append(place)
+
+    matched = {place['id']
+               for entry in entries
+               for name in entry['names']
+               for place in open_index.get(normalise(name), ())}
+    unreached = [place for place in open_bible if place['id'] not in matched]
+
+    _, strict, loose = lexicon_index()
+
+    verdicts = {}
+    for place in unreached:
+        names = held_names(place)
+        heads = sorted({number for name in names for number in strict.get(normalise(name), ())})
+        folded = sorted({number for name in names for number in loose.get(loosely(name), ())})
+        if any(number in tiers for number in heads):
+            why = 'the net has it'
+        elif heads:
+            why = 'the net missed it'
+        elif folded:
+            why = 'only under a fold of the spelling'
+        else:
+            why = 'no entry at all'
+        verdicts[place['id']] = (why, heads, folded, place)
+
+    counted = {why: 0 for why in WHY}
+    for why, _, _, _ in verdicts.values():
+        counted[why] += 1
+
+    lines = ['# Their records nothing of ours reaches, asked why', '',
+             f'{len(unreached)} of OpenBible\'s {len(open_bible)} records are reached by nothing '
+             f'among the {len(entries)} of ours. Each is looked up in the whole lexicon rather than '
+             f'in the candidate list, because the question is whether Strong heads the name at '
+             f'all.', '',
+             '| why | records |', '|---|---|']
+    for why in WHY:
+        lines.append(f'| {why} | {counted[why]} |')
+
+    missed = [(why, heads, place) for why, heads, _, place in verdicts.values()
+              if why == 'the net missed it']
+    lines += ['', '## The ones the net missed, which is the part that is free to fix', '',
+              f'{len(missed)} records name an entry the lexicon heads and the net never considered. '
+              f'The entry is printed with the part of speech Strong gives it, because what the net '
+              f'has to learn is the construction, not the name.', '']
+
+    detail = {}
+    if missed:
+        wanted = sorted({number for _, heads, _ in missed for number in heads})
+        for entry in psql(
+                "select coalesce(json_agg(row_to_json(m)), '[]'::json) from ("
+                "select strong_number as number, morphology, definition from strong_entry "
+                f"where strong_number = any ({array_literal(wanted)})) m;") or []:
+            detail[entry['number']] = entry
+
+    for _, heads, place in sorted(missed, key=lambda item: item[2]['name']):
+        for number in heads:
+            entry = detail.get(number, {})
+            lines.append(f'- **{place["name"]}** `{number}` [{entry.get("morphology") or "-"}] '
+                         f'{(entry.get("definition") or "")[:150]}')
+
+    for why in ('the net has it', 'only under a fold of the spelling', 'no entry at all'):
+        rest = [place for said, _, _, place in verdicts.values() if said == why]
+        lines += ['', f'## {why} — {len(rest)}', '']
+        for place in sorted(rest, key=lambda place: place['name'])[:60]:
+            found = verdicts[place['id']][1] or verdicts[place['id']][2]
+            tier = ', '.join(f'{number} {tiers.get(number, "off the net")}' for number in found[:3])
+            lines.append(f'- {place["name"]}' + (f' — {tier}' if tier else ''))
+        if len(rest) > 60:
+            lines.append(f'- and {len(rest) - 60} more')
+
+    with open(os.path.join(directory, 'gap.md'), 'w', encoding='utf-8') as handle:
+        handle.write('\n'.join(lines) + '\n')
+    print('\n'.join(lines[:6 + len(WHY)]))
+    print(f'... written to {os.path.join(directory, "gap.md")}')
+    return 0
+
+
+# ---------------------------------------------------------------------------- the register itself
+
+
+# What a record is titled by, where the King James rendering nobody uses would be a worse title than
+# the one everybody does. Strong lists both -- *Gazer, Gezer* -- and the gazetteer's own spelling is
+# the tie-break, so the page is found under the name a reader types.
+def register_name(row, kjv, held_index):
+    offered = kjv.get(row['number']) or []
+    for name in offered:
+        if normalise(name) in held_index:
+            return name
+    if offered:
+        return offered[0]
+    head = HEAD_NAME.match(row['definition'] or '')
+    if head and head.group(1).strip():
+        return head.group(1).strip()
+    return (row['transliteration'] or row['number']).strip()
+
+
+def decide(row, standing, said, reading, checked):
+    """
+    Whether one entry becomes a record, from the four witnesses and in the order they are worth
+    something. It is written as one function because every count in the report is this rule applied,
+    and a rule stated in two places is a rule that disagrees with itself.
+
+    The free pass carries an entry it keeps unless *both* the other witnesses refuse it — a reading
+    on its own does not overturn Strong's tag and Strong's gloss agreeing. What the free pass leaves
+    open goes to BHSA first, because its answer is an annotation of the text and costs nothing, and
+    only what BHSA cannot settle rests on the readings. A positive resting on the readings needs
+    both of them: the first was measured over-eager on common nouns three times in seven, and a
+    register is not the place to carry that rate.
+    """
+    place = None if reading is None else reading.get('model_place')
+    upheld = None if checked is None else checked.get('place')
+
+    if not standing:
+        return False, 'no word of any text stands at it'
+
+    if row['tier'] in KEPT:
+        if place is False and said == 'never topo':
+            return False, ('the tag and the gloss keep it, and a reading of the entry and BHSA '
+                           'both refuse it')
+        return True, TIERS[row['tier']]
+
+    if row['tier'] == 'read':
+        if said == 'topo alone':
+            return True, 'the lexicon left it open and BHSA marks the word a place and nothing else'
+        if said == 'never topo':
+            return False, 'the lexicon left it open and BHSA never marks the word a place'
+        if place and upheld:
+            return True, 'the lexicon left it open and two readings of the entry name a place'
+        if place and upheld is False:
+            return False, 'a first reading named a place and a second refused it'
+        return False, 'the lexicon left it open and nothing settled it'
+
+    if place and upheld:
+        return True, ('Strong parts the headword a common noun and two readings of the entry name '
+                      'a place under it')
+    if place and upheld is False:
+        return False, 'a first reading named a place and a second refused it'
+    return False, TIERS['common']
+
+
+def register(args):
+    """
+    The register, as one line per entry the net considered — the refusals with it, because what a
+    register is asked next is why something is not in it.
+    """
+    directory = args.dir
+    with open(os.path.join(directory, 'candidates.json'), encoding='utf-8') as handle:
+        rows = json.load(handle)
+    with open(os.path.join(directory, 'occurrences.json'), encoding='utf-8') as handle:
+        standing = json.load(handle)['per_number']
+    with open(os.path.join(directory, 'witness.json'), encoding='utf-8') as handle:
+        witnessed = json.load(handle)
+
+    readings = {row['number']: row for row in collect(directory, 'out')}
+    checks = {row['number']: row for row in collect(directory, 'check')}
+
+    held = psql(HELD_SQL) or []
+    held_index = {normalise(name) for place in held for name in held_names(place)}
+    kjv = renderings([row['number'] for row in rows])
+
+    records = []
+    for row in rows:
+        reading = readings.get(row['number'])
+        checked = checks.get(row['number'])
+        kept, why = decide(row, row['number'] in standing, witnessed.get(row['number']),
+                           reading, checked)
+        records.append({
+            'number': row['number'],
+            'name': register_name(row, kjv, held_index),
+            'names': sorted(candidate_names(row, kjv)),
+            'transliteration': row['transliteration'],
+            'definition': row['definition'],
+            'morphology': row['morphology'],
+            'kept': kept,
+            'why': why,
+            'tier': row['tier'],
+            'witness': witnessed.get(row['number']),
+            'statedPlaces': row['stated_places'],
+            'person': row['gloss_person'],
+            'reading': None if reading is None else {
+                'place': reading['model_place'], 'places': reading['model_places'],
+                'person': reading['model_person'], 'why': reading['why'],
+                'model': reading['model'], 'askedAt': reading['askedAt']},
+            'check': None if checked is None else {
+                'place': checked['place'], 'why': checked['why'],
+                'model': checked['model'], 'askedAt': checked['askedAt']},
+        })
+
+    open_index, any_index = {}, {}
+    for place in held:
+        for name in held_names(place):
+            key = normalise(name)
+            any_index.setdefault(key, []).append(place)
+            if place['source'].startswith('OpenBible'):
+                open_index.setdefault(key, []).append(place)
+
+    open_bible = [place for place in held if place['source'].startswith('OpenBible')]
+    kept = [record for record in records if record['kept']]
+
+    def hits(record, index):
+        return {place['id'] for name in record['names'] + [record['name']]
+                for place in index.get(normalise(name), ())}
+
+    linked = [record for record in kept if hits(record, open_index)]
+    anywhere = [record for record in kept if hits(record, any_index)]
+    touched = {found for record in kept for found in hits(record, open_index)}
+
+    with open(os.path.join(directory, 'register.json'), 'w', encoding='utf-8') as handle:
+        json.dump(records, handle, ensure_ascii=False, indent=1)
+
+    print(f'{len(kept)} records of {len(records)} entries considered.')
+    print(f'  {"linked":<12} {len(linked):>5} of {len(kept)} records reach an OpenBible record '
+          f'({len(linked) / max(1, len(kept)):.1%})')
+    print(f'  {"reached":<12} {len(touched):>5} of {len(open_bible)} OpenBible records are reached '
+          f'({len(touched) / max(1, len(open_bible)):.1%})')
+    print(f'  {"held":<12} {len(anywhere):>5} reach a held place of any source; '
+          f'{len(kept) - len(anywhere)} reach nothing held and are added')
+    for tier in TIERS:
+        taken = [record for record in records if record['tier'] == tier]
+        print(f'  {tier:<12} {sum(1 for record in taken if record["kept"]):>5} of {len(taken):>5}')
+    read_only = [record for record in kept if record['tier'] not in KEPT]
+    print(f'  {"admitted":<12} {len(read_only):>5}   records nothing but the readings or BHSA admits')
+    dropped = [record for record in records if record['tier'] in KEPT and not record['kept']]
+    print(f'  {"withdrawn":<12} {len(dropped):>5}   the free pass kept and the register does not')
+    return 0
+
+
+REGISTER_BATCH = 100
+
+
+def publish(args):
+    """
+    The register as the corpus carries it: newline-delimited JSON under this project's own folder,
+    the way every other pass that cost a model run is published.
+    """
+    directory = args.dir
+    with open(os.path.join(directory, 'register.json'), encoding='utf-8') as handle:
+        records = json.load(handle)
+
+    os.makedirs(args.to, exist_ok=True)
+    for stale in os.listdir(args.to):
+        if re.fullmatch(rf'{args.prefix}-\d+\.jsonl', stale):
+            os.remove(os.path.join(args.to, stale))
+
+    written = 0
+    for at in range(0, len(records), REGISTER_BATCH):
+        target = os.path.join(args.to, f'{args.prefix}-{written:04d}.jsonl')
+        with open(target, 'w', encoding='utf-8') as handle:
+            for record in records[at:at + REGISTER_BATCH]:
+                handle.write(json.dumps(record, ensure_ascii=False) + '\n')
+        written += 1
+
+    print(f'{written} files, {len(records)} entries, '
+          f'{sum(1 for record in records if record["kept"])} of them records -> {args.to}')
+    return 0
+
+
 # ---------------------------------------------------------------------------- the projection
 
 
@@ -1122,7 +1668,7 @@ def project(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='What a place register of our own would hold.')
+    parser = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
     sub = parser.add_subparsers(dest='command', required=True)
 
     lister = sub.add_parser('enumerate', help='the free pass over the lexicon')
@@ -1153,12 +1699,39 @@ def main():
     asker.add_argument('--effort', default=None,
                        help='passed straight to the CLI; leaving it off is the extended default')
     asker.add_argument('--tier', default=None)
+    asker.add_argument('--all', action='store_true',
+                       help='read the whole net rather than the pilot slice')
+    asker.add_argument('--again', action='store_true',
+                       help='re-run batches that already answered')
     asker.add_argument('--workers', type=int, default=3)
     asker.set_defaults(run=ask)
+
+    checker = sub.add_parser('check', help='read the positives that rest on the reading alone again')
+    checker.add_argument('--dir', default='.places/run')
+    checker.add_argument('--model', default='sonnet')
+    checker.add_argument('--effort', default=None)
+    checker.add_argument('--tier', default=None)
+    checker.add_argument('--again', action='store_true')
+    checker.add_argument('--workers', type=int, default=3)
+    checker.set_defaults(run=check)
 
     matcher = sub.add_parser('match', help='the OpenBible match on the slice')
     matcher.add_argument('--dir', default='.places/run')
     matcher.set_defaults(run=match)
+
+    gapper = sub.add_parser('gap', help='their records nothing of ours reaches, asked why')
+    gapper.add_argument('--dir', default='.places/run')
+    gapper.set_defaults(run=gap)
+
+    decider = sub.add_parser('register', help='the four witnesses decided, one line per entry')
+    decider.add_argument('--dir', default='.places/run')
+    decider.set_defaults(run=register)
+
+    publisher = sub.add_parser('publish', help='the register into the corpus, for the loader to read')
+    publisher.add_argument('--dir', default='.places/run')
+    publisher.add_argument('--to', default=os.path.join('Resources', 'Essenthos', 'places'))
+    publisher.add_argument('--prefix', default='register')
+    publisher.set_defaults(run=publish)
 
     projector = sub.add_parser('project', help='what the whole pass would yield and cost')
     projector.add_argument('--dir', default='.places/run')

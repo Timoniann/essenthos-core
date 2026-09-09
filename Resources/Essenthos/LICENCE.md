@@ -38,3 +38,24 @@ described. Newline-delimited JSON, one object per entity, read by `EntityNameFor
   verses this corpus already attests the entity in were shown, and no verse text is reproduced here.
 - **Terms.** Ours, under the project's own licence. How a name declines in a language is not
   anyone's property; the selection, the check and the readings here are this project's.
+
+## places/
+
+Which Strong numbers name a place, and why — one line per lexicon entry the pass considered, the
+refusals with the records, because what a register is asked next is why something is not in it.
+Newline-delimited JSON, read by `PlaceRegisterLoader`.
+
+- **Made by** Essenthos, by `scripts/places.py` against the `essenthos_core` database. Each line
+  carries the tier the free pass put the entry in, the name type BHSA marks on the word, and the
+  readings — each with the model that produced it and the date it was asked, so the whole pass is
+  identifiable and removable.
+- **Read from** Strong's Dictionary, whose entries are public domain and are quoted here in the
+  `definition` field for exactly that reason: what established a record has to be readable beside
+  it. The name types are BHSA's, which is attributed where it is loaded, and no annotation of it is
+  reproduced — only which of four verdicts it amounts to for a lexeme.
+- **Not read from** OpenBible.info. The register is built without the gazetteer and then meets it;
+  the link between the two is established by matching the names, is recorded on the entity it
+  reaches, and OpenBible keeps the credit for what it supplies, which is the coordinates.
+- **Terms.** Ours, under the project's own licence. That a nineteenth-century dictionary heads a
+  place name is not anyone's property; the net, the classification, the readings and the decision
+  here are this project's.

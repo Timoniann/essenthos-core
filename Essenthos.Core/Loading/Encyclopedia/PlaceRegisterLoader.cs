@@ -1,0 +1,368 @@
+using System.Diagnostics;
+using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
+using Microsoft.EntityFrameworkCore;
+
+namespace Essenthos.Core.Loading.Encyclopedia;
+
+/// <param name="Claimed">
+/// Places the encyclopedia already held that our own derivation reaches. The row stays and its
+/// slug with it; what changes is who says it is here.
+/// </param>
+/// <param name="Added">Places the derivation reaches that no entity held.</param>
+/// <param name="Untouched">
+/// Places nothing of ours reaches, which keep exactly the provenance they had. This is the number
+/// that says what the design costs: they are still the gazetteer's, and saying so is the honest
+/// outcome.
+/// </param>
+/// <param name="Linked">
+/// Records of ours that reach a place OpenBible surveyed, which is the link established by name
+/// rather than inherited from where the row came from.
+/// </param>
+/// <param name="Named">Name rows written, each carrying the Strong number the record is made of.</param>
+internal sealed record PlaceRegisterOutcome(
+    bool AlreadyLoaded,
+    int Entries,
+    int Records,
+    int Claimed,
+    int Added,
+    int Untouched,
+    int Linked,
+    int Named,
+    TimeSpan Elapsed)
+{
+    public override string ToString() =>
+        AlreadyLoaded
+            ? "the place register is already there"
+            : $"{Records} place records of {Entries} lexicon entries read — {Claimed} of them a " +
+              $"place the encyclopedia already held, now here because Strong heads the name, and " +
+              $"{Added} added — with {Linked} reaching a place OpenBible surveyed and {Named} name " +
+              $"rows carrying the Strong number. {Untouched} held places nothing of ours reaches " +
+              $"keep the provenance they had, in {Elapsed}";
+}
+
+/// <summary>
+/// The places, as a record of ours rather than a list somebody lent us.
+///
+/// The encyclopedia held 1,351 places and 1,233 of them existed because OpenBible surveyed them:
+/// a label, a coordinate and no Strong number, so nothing joined them to a word and there was no
+/// index to disambiguate. This builds the index the way the peoples were built — out of Strong and
+/// the occurrences already loaded — and then meets the gazetteer with it.
+///
+/// <para>
+/// <strong>What the register is.</strong> Every entry of the lexicon that the pass in
+/// <c>scripts/places.py</c> considered, with the four witnesses that decided it: the part of speech
+/// Strong assigns, the gloss he writes, the name type BHSA marks on the word, and two readings of
+/// the entry where the first three left it open. The decision is made there, where it was measured,
+/// and carried here as a flag and a sentence — a rule stated in two places is a rule that disagrees
+/// with itself.
+/// </para>
+///
+/// <para>
+/// <strong>What it does to a row that already exists.</strong> Where our derivation reaches a place
+/// the encyclopedia holds, the row stays and its slug stays with it, because every verse, every
+/// relationship, every descriptor and the reader's own URLs key on exactly that. What changes is
+/// <see cref="Entity.Source"/>: the place is here because these Strong occurrences name it, and the
+/// gazetteer's testimony moves to a claim beside ours rather than standing as the reason the record
+/// exists. <see cref="Entity.OpenBibleId"/> is untouched — it is how coordinates are reached, and
+/// they stay OpenBible's and credited to them.
+/// </para>
+///
+/// <para>
+/// <strong>What it does to a row nothing of ours reaches.</strong> Nothing. It keeps exactly the
+/// provenance it has, and the count of those is what the design costs: a lexicon-built register
+/// does not reach a gazetteer descriptor like <em>Beautiful Gate</em> or a classical site like
+/// Carthage, and pretending otherwise by folding the spelling would put a wrong coordinate on a
+/// page. An unlinked record is an honest gap; a guessed link is not.
+/// </para>
+///
+/// <para>
+/// The match is strict: the name normalised for case, hyphen, accent and ligature, and the
+/// gazetteer's feature word — <em>Mount</em> Gilboa, <em>Valley of</em> Eshcol — read off the front
+/// as the naming convention it is. Nothing is folded to consonants. That fold reaches 90% instead
+/// of 75% and joins <em>Sion</em> to <em>Zoan</em> and <em>Gomorrha</em> to <em>Moreh</em> on the
+/// way, which is a wrong coordinate on a page rather than a missing one.
+/// </para>
+///
+/// <para>
+/// Idempotent on the claim this pass writes, which is the one thing that cannot be true before it
+/// has run.
+/// </para>
+/// </summary>
+internal sealed class PlaceRegisterLoader(
+    AppDbContext db,
+    IConfiguration configuration,
+    ILogger<PlaceRegisterLoader> logger)
+{
+    /// <summary>
+    /// What a record made from the lexicon says about itself. The record is ours — Strong wrote a
+    /// dictionary of words and not a gazetteer — and the entries it is made of are his.
+    /// </summary>
+    private const string FromTheLexicon =
+        "Essenthos, from the place names Strong's Dictionary heads";
+
+    /// <summary>
+    /// What establishes a record, and why it is an inference rather than testimony.
+    ///
+    /// Nobody states that H1035 is a place; it is concluded from the part of speech, the gloss, the
+    /// name type BHSA marks and, where those left it open, two readings of the entry. That is a
+    /// conclusion and it carries a number, because this corpus refuses to store an inference that
+    /// looks like a dictionary's statement.
+    /// </summary>
+    private const LinkMethod ByTheEntry = LinkMethod.Lexical;
+
+    /// <summary>
+    /// The room the free pass leaves. Two of Strong's own fields agreeing, with BHSA free to
+    /// contradict either, is as close to settled as a lexicon gets — and what is short of certainty
+    /// is that a dictionary of words is not a survey of places.
+    /// </summary>
+    private const double Settled = 0.95;
+
+    /// <summary>
+    /// The room a record admitted by a reading leaves. Lower on purpose: the free pass could not
+    /// settle it, and what carries it is two readings of one sentence.
+    /// </summary>
+    private const double Read = 0.85;
+
+    private const string SourceIdPrefix = "essenthos:";
+
+    /// <summary>The kind of label a name row made from a lexicon headword is.</summary>
+    private const string LexiconName = "name";
+
+    public async Task<PlaceRegisterOutcome> Load(
+        string resources,
+        CancellationToken cancellationToken = default)
+    {
+        var started = Stopwatch.StartNew();
+
+        var directory = configuration[PlaceRegisterFiles.ConfigurationKey] is { Length: > 0 } set
+            ? set
+            : Path.Combine(resources, PlaceRegisterFiles.DefaultFolder);
+
+        if (!Directory.Exists(directory))
+        {
+            logger.LogWarning(
+                "No place register at {Directory}, so the places stay the gazetteer's. Produce it "
+                + "with \"python scripts/places.py register\" and \"publish\", or point "
+                + "{Key} at a folder that holds it",
+                directory,
+                PlaceRegisterFiles.ConfigurationKey);
+            return new PlaceRegisterOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
+        }
+
+        if (await db.EntityClaims.AnyAsync(c => c.Source == FromTheLexicon, cancellationToken))
+        {
+            logger.LogInformation("The place register is already there; nothing to do");
+            return new PlaceRegisterOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
+        }
+
+        var entries = PlaceRegisterFiles.Read(directory);
+        var records = entries.Where(record => record.Kept).ToList();
+        if (records.Count == 0)
+        {
+            logger.LogWarning(
+                "The place register at {Directory} holds {Entries} entries and no records. Either "
+                + "the reading pass has not run or every entry was refused; check "
+                + "\"python scripts/places.py register\"",
+                directory,
+                entries.Count);
+            return new PlaceRegisterOutcome(false, entries.Count, 0, 0, 0, 0, 0, 0, started.Elapsed);
+        }
+
+        var held = await db.Entities
+            .Where(e => e.Kind == EntityKind.Place)
+            .Include(e => e.Names)
+            .ToListAsync(cancellationToken);
+
+        var byName = Index(held);
+        var slugs = (await db.Entities.Select(e => e.Slug).ToListAsync(cancellationToken))
+            .ToHashSet(StringComparer.Ordinal);
+
+        var made = new Dictionary<Entity, List<PlaceRegisterRecord>>();
+        var added = new List<Entity>();
+        var named = 0;
+
+        foreach (var record in records)
+        {
+            var hits = Reach(record, byName);
+            if (hits.Count == 0)
+            {
+                // Indexed as it is created, so that a second entry bearing the same name joins it
+                // rather than standing beside it. Judah is one place and two lexicon entries, his
+                // and the Greek's, and two pages for it would be this pass's own doing.
+                var entity = new Entity
+                {
+                    Kind = EntityKind.Place,
+                    Slug = Unique(Slugs.Of(record.Name), slugs),
+                    Name = record.Name,
+                    SourceId = SourceIdPrefix + record.Number.ToLowerInvariant(),
+                    Source = FromTheLexicon,
+                };
+
+                added.Add(entity);
+                Index(byName, entity, [record.Name]);
+                hits = [entity];
+            }
+
+            foreach (var hit in hits)
+            {
+                if (!made.TryGetValue(hit, out var already))
+                {
+                    made[hit] = already = [];
+                }
+
+                already.Add(record);
+
+                if (!hit.Names.Any(name => Carries(name, record.Number)))
+                {
+                    hit.Names.Add(Name(record));
+                    named++;
+                }
+            }
+        }
+
+        foreach (var (entity, from) in made)
+        {
+            if (entity.OpenBibleId is { Length: > 0 } surveyed
+                && !string.Equals(entity.Source, FromTheLexicon, StringComparison.Ordinal))
+            {
+                entity.Claims.Add(new EntityClaim
+                {
+                    Method = LinkMethod.StatedBySource,
+                    Confidence = null,
+                    Source = entity.Source,
+                    Note = $"surveyed as {surveyed}, which is where this record's coordinates come "
+                           + "from and whose they stay",
+                });
+            }
+
+            entity.Source = FromTheLexicon;
+            entity.Claims.Add(Claim(from));
+        }
+
+        db.Entities.AddRange(added);
+        await db.SaveChangesAsync(cancellationToken);
+
+        var claimed = made.Keys.Except(added).ToList();
+
+        var outcome = new PlaceRegisterOutcome(
+            false,
+            entries.Count,
+            records.Count,
+            claimed.Count,
+            added.Count,
+            held.Count - claimed.Count,
+            claimed.Count(e => e.OpenBibleId is { Length: > 0 }),
+            named,
+            started.Elapsed);
+
+        logger.LogInformation("Named the places: {Outcome}", outcome);
+        return outcome;
+    }
+
+    /// <summary>
+    /// Every held place under every spelling of it a lexicon entry could meet — its own name, the
+    /// labels its name rows carry, and each of those with the gazetteer's feature word off the
+    /// front.
+    /// </summary>
+    private static Dictionary<string, List<Entity>> Index(IEnumerable<Entity> held)
+    {
+        var index = new Dictionary<string, List<Entity>>(StringComparer.Ordinal);
+        foreach (var place in held)
+        {
+            Index(index, place, place.Names.Select(name => name.Label).Append(place.Name));
+        }
+
+        return index;
+    }
+
+    private static void Index(
+        Dictionary<string, List<Entity>> index,
+        Entity place,
+        IEnumerable<string> labels)
+    {
+        foreach (var key in labels
+                     .SelectMany(PlaceRegisterFiles.Forms)
+                     .Select(PlaceRegisterFiles.Normalise)
+                     .Where(key => key.Length > 0)
+                     .Distinct(StringComparer.Ordinal))
+        {
+            if (!index.TryGetValue(key, out var at))
+            {
+                index[key] = at = [];
+            }
+
+            if (!at.Contains(place))
+            {
+                at.Add(place);
+            }
+        }
+    }
+
+    /// <summary>
+    /// The held places one record reaches. Several is not a fault: Strong heads <em>Aroer</em> once
+    /// and the gazetteer surveys three of them, and which occurrence is which is the namesake pass.
+    /// What the record states here is about the name.
+    /// </summary>
+    private static List<Entity> Reach(
+        PlaceRegisterRecord record,
+        Dictionary<string, List<Entity>> byName)
+    {
+        var hits = new List<Entity>();
+        foreach (var name in (record.Names ?? []).Append(record.Name))
+        {
+            if (!byName.TryGetValue(PlaceRegisterFiles.Normalise(name), out var at))
+            {
+                continue;
+            }
+
+            foreach (var place in at.Where(place => !hits.Contains(place)))
+            {
+                hits.Add(place);
+            }
+        }
+
+        return hits;
+    }
+
+    /// <summary>
+    /// One claim per record, naming every entry it was reached by. One row rather than one per
+    /// entry because a claim is unique on the entity, the method and the source — and because what
+    /// a reader is owed is the whole reason, not one of its halves.
+    /// </summary>
+    private static EntityClaim Claim(IReadOnlyList<PlaceRegisterRecord> made) =>
+        new()
+        {
+            Method = ByTheEntry,
+            Confidence = made.All(record => record.Tier is "read" or "common") ? Read : Settled,
+            Source = FromTheLexicon,
+            Note = string.Join("; ", made.Select(record =>
+                $"{record.Number} \"{record.Definition}\" — {record.Why}")),
+        };
+
+    private static EntityName Name(PlaceRegisterRecord record) =>
+        new()
+        {
+            Label = record.Name,
+            Kind = LexiconName,
+            HebrewStrongNumber = record.Number.StartsWith('H') ? record.Number : null,
+            GreekStrongNumber = record.Number.StartsWith('G') ? record.Number : null,
+        };
+
+    private static bool Carries(EntityName name, string number) =>
+        string.Equals(name.HebrewStrongNumber, number, StringComparison.Ordinal)
+        || string.Equals(name.GreekStrongNumber, number, StringComparison.Ordinal);
+
+    private static string Unique(string slug, HashSet<string> taken)
+    {
+        var candidate = slug;
+        var suffix = 2;
+        while (!taken.Add(candidate))
+        {
+            candidate = $"{slug}-{suffix++}";
+        }
+
+        return candidate;
+    }
+}

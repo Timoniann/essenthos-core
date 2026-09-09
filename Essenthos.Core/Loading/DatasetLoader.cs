@@ -140,6 +140,7 @@ internal sealed class DatasetLoader(
             await LoadTheEncyclopedia(resources, stoppingToken);
             await ReadTheStatedKinship(stoppingToken);
             await NameThePeoples(resources, stoppingToken);
+            await MakeThePlacesOurs(resources, stoppingToken);
             await SayWhichWordNamesWhom(stoppingToken);
             await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
             await ReadTheNamesNothingSettles(resources, stoppingToken);
@@ -735,6 +736,21 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<PeopleLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The places, as a record of ours rather than a list the gazetteer lent us. After the peoples
+    /// because it is the same construction — a record per lexeme the dictionary heads — and before
+    /// the annotations, because what it writes is the Strong number on a place name, and until now
+    /// nine tenths of the places had none and no word could reach them.
+    /// </summary>
+    private async Task MakeThePlacesOurs(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the place register");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<PlaceRegisterLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
     }
 
