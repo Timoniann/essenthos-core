@@ -189,3 +189,7 @@ scripts/__pycache__/
 # A run of the place harness: the candidate index, the cross-tabulation, the pilot slice and the
 # OpenBible match. Seconds to reproduce from scripts/places.py against the database.
 .places/
+
+# A run of the person harness: prompt payloads, the reading a model returned and the score against
+# Strong and BibleData. Reproducible from scripts/persons.py.
+.persons/
