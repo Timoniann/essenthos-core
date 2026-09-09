@@ -185,3 +185,7 @@ scripts/__pycache__/
 # A run of the lexicon harness: prompts, translations, judgements and the score report. Cheap to
 # reproduce from scripts/lexicon.py, and not this repository's to carry.
 .lexicon/
+
+# A run of the person-split pilot: prompt payloads, the reading a model returned and the score
+# against Strong and BibleData. Reproducible from scripts/persons.py.
+.persons/
