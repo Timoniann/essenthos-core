@@ -95,6 +95,7 @@ builder.Services.AddScoped<PeopleLoader>();
 builder.Services.AddScoped<EntityAnnotationLoader>();
 builder.Services.AddScoped<OwnRecordLoader>();
 builder.Services.AddScoped<SenseReadingLoader>();
+builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
