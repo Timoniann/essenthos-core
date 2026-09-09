@@ -18,6 +18,13 @@ namespace Essenthos.Core.Endpoints;
 /// </summary>
 public static class Datasets
 {
+    /// <summary>
+    /// This project's own id in the list below. What the corpus concluded for itself is told apart
+    /// from what it merely carries in more than one place — the credit on a row, and which of two
+    /// witnesses survives when they agree — and both ask the same question of the same string.
+    /// </summary>
+    public const string Own = "essenthos";
+
     /// <param name="Prefix">
     /// What a row's source string starts with, where the dataset supplies rows. A dataset that
     /// supplies annotation rather than rows carries no prefix and is found by <paramref name="Lemmas"/>.
@@ -328,7 +335,7 @@ public static class Datasets
         // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly
         // all of it — correspondences nobody states, which read exactly like an undeclared third
         // party until they were claimed here. PRB-0180.
-        new("essenthos", "Essenthos", "this project", "CC BY 4.0",
+        new(Own, "Essenthos", "this project", "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://github.com/",
             "What this project works out for itself. Corrections and separations it makes to the "

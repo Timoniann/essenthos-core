@@ -80,6 +80,15 @@ internal static class BookReferences
         return Slugify(Name(ordinal));
     }
 
+    /// <summary>
+    /// A verse a row rests on, addressed the way every response addresses one — or null where the
+    /// row rests on none, which is a thing a witness is allowed to have given.
+    /// </summary>
+    public static VerseRefResponse? At(int? book, int? chapter, int? verse) =>
+        book is { } ordinal && chapter is { } inChapter && verse is { } atVerse
+            ? new VerseRefResponse(ordinal, Name(ordinal), Slug(ordinal), inChapter, atVerse)
+            : null;
+
     public static string Testament(int ordinal)
     {
         return ordinal <= OldTestamentBookCount ? OldTestament : NewTestament;

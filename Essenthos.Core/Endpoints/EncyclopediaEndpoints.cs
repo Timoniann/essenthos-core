@@ -396,31 +396,7 @@ internal static class EncyclopediaEndpoints
                 })
                 .ToListAsync(cancellationToken);
 
-            // Both directions at once: a father is not recorded twice, so reading only one side
-            // would give Isaac a father and no sons.
-            var outward = await db.EntityRelationships
-                .Where(r => r.FromEntityId == entity.Id)
-                .Select(r => new EntityRelationshipResponse(
-                    r.Type, r.Category, r.To!.Slug, r.To.Name, r.To.Distinguisher, false,
-                    Reference(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), r.Notes)
-                {
-                    Method = EnumSpelling.Of(r.Method),
-                    Confidence = r.Confidence,
-                    Source = r.Source,
-                })
-                .ToListAsync(cancellationToken);
-
-            var inward = await db.EntityRelationships
-                .Where(r => r.ToEntityId == entity.Id)
-                .Select(r => new EntityRelationshipResponse(
-                    r.Type, r.Category, r.From!.Slug, r.From.Name, r.From.Distinguisher, true,
-                    Reference(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), r.Notes)
-                {
-                    Method = EnumSpelling.Of(r.Method),
-                    Confidence = r.Confidence,
-                    Source = r.Source,
-                })
-                .ToListAsync(cancellationToken);
+            var related = await Relationships.Of(db, entity.Id, cancellationToken);
 
             var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
@@ -488,7 +464,7 @@ internal static class EncyclopediaEndpoints
                         n.Label, n.Hebrew, n.HebrewTransliterated, n.Greek, n.GreekTransliterated,
                         n.Meaning, Numbers(n.HebrewStrongNumber), Numbers(n.GreekStrongNumber), n.Kind)),
                 ],
-                [.. outward, .. inward],
+                related,
                 [.. events.Select(Event)],
                 [
                     .. stated.Select(row => new EntityReferenceSourceResponse(
@@ -842,12 +818,6 @@ internal static class EncyclopediaEndpoints
             ? [.. stored.Split(',').Select(entry => entry.Trim()).Where(entry => entry.Length > 0)]
             : [];
 
-    private static VerseRefResponse? Reference(int? book, int? chapter, int? verse) =>
-        book is { } ordinal && chapter is { } inChapter && verse is { } atVerse
-            ? new VerseRefResponse(
-                ordinal, BookReferences.Name(ordinal), BookReferences.Slug(ordinal), inChapter, atVerse)
-            : null;
-
     /// <summary>
     /// The event with the two fields that need a join, read in the query rather than off a
     /// navigation property. Projecting <c>e.Entity.Slug</c> through a method EF cannot translate
@@ -984,7 +954,7 @@ internal static class EncyclopediaEndpoints
             reckoning?.BceYear,
             e.AgeAtEvent,
             e.Calculation,
-            Reference(e.CanonicalBook, e.CanonicalChapter, e.CanonicalVerse),
+            BookReferences.At(e.CanonicalBook, e.CanonicalChapter, e.CanonicalVerse),
             e.Location,
             e.Realm,
             e.Region,
@@ -1238,6 +1208,52 @@ internal record EntityRelationshipResponse(
     /// than printing a sentence. Null where nothing claims the string, which is how an undeclared
     /// source is noticed instead of being silently credited to nobody.
     /// </summary>
+    public string? Dataset => Datasets.Of(Source);
+
+    /// <summary>
+    /// The other witnesses that state this same fact, each in its own words and on its own verse.
+    ///
+    /// Empty on nearly every row and the most valuable thing on the page where it is not: a
+    /// relation this corpus read out of a verse that a dataset compiled separately also states is
+    /// better evidenced than either alone, and a client renders <em>BibleData states this too</em>
+    /// from it without having to work out which two rows were one fact.
+    /// </summary>
+    public IList<EntityRelationshipWitnessResponse> Corroboration { get; init; } = [];
+}
+
+/// <summary>
+/// A second witness to the relationship it hangs on — what it calls the relation, where it rests
+/// it, and who it is.
+/// </summary>
+/// <param name="Type">
+/// The relation in the witness's own vocabulary, never translated into ours. BibleData writes
+/// <c>son</c> where this corpus writes <c>son-of</c>, and a page saying the dataset said our word
+/// would be putting words in its mouth.
+/// </param>
+/// <param name="Reference">
+/// The verse this witness rests it on, which is not always the one the row above rests it on and is
+/// null where the witness gave none. Both citations are real, so both are here rather than one
+/// standing for the fact.
+/// </param>
+/// <param name="Reversed">
+/// True where the witness states the pair the other way about: BibleData records Bani as the
+/// ancestor of Adaiah, which is the row above — <em>Adaiah, descendant of Bani</em> — read from the
+/// other end.
+/// </param>
+internal record EntityRelationshipWitnessResponse(
+    string Type,
+    string Category,
+    bool Reversed,
+    VerseRefResponse? Reference,
+    string? Notes)
+{
+    public string? Method { get; init; }
+
+    public double? Confidence { get; init; }
+
+    public string? Source { get; init; }
+
+    /// <summary>Which declared dataset <see cref="Source"/> belongs to, as on the row it corroborates.</summary>
     public string? Dataset => Datasets.Of(Source);
 }
 
