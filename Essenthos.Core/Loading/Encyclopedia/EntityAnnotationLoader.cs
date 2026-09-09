@@ -498,7 +498,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          """;
 
     /// <summary>
-    /// The same annotations on every word the links say stands for one of those witness words.
+    /// The same annotations on the word each link says stands for one of those witness words —
+    /// its head, by <see cref="Annotating.Head"/>, and not every word of the set the link names.
     ///
     /// A word reached from two witness words that name two different entities is left alone: the
     /// links disagree about who is named and picking between them is the thing this loader does not
@@ -547,7 +548,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             JOIN text witness ON witness.id = origin.text_id
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
-            JOIN link_word other ON other.link_id = mine.link_id AND other.side <> mine.side
+            CROSS JOIN LATERAL ({Annotating.Head}) other
             JOIN word w ON w.id = other.word_id
         ),
         rendered AS (

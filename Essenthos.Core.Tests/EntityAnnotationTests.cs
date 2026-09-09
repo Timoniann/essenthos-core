@@ -60,7 +60,9 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 2, ["Zechariah"]),
             (1, 8, ["Both"]),
             (1, 9, ["Moses", "went"]),
-            (1, 10, ["strode"]));
+            (1, 10, ["strode"]),
+            (1, 12, ["When", "of", "Moses"]),
+            (1, 13, ["Moses’s", "lifetime"]));
 
         _db.SaveChanges();
 
@@ -175,6 +177,31 @@ public sealed class EntityAnnotationTests : IDisposable
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = to, Side = LinkSide.To });
+        _db.SaveChanges();
+    }
+
+    /// <summary>
+    /// One link naming a phrase opposite a single original word, which is the shape a translation's
+    /// own table states and an aligner never produces.
+    /// </summary>
+    private void Phrase(Word from, params Word[] to)
+    {
+        var link = new Link
+        {
+            FromTextId = from.TextId,
+            ToTextId = to[0].TextId,
+            Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource,
+            Source = "a test",
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });
+
+        foreach (var word in to)
+        {
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = word, Side = LinkSide.To });
+        }
+
         _db.SaveChanges();
     }
 
@@ -560,6 +587,44 @@ public sealed class EntityAnnotationTests : IDisposable
 
         named.Should().ContainKey(first.Id).WhoseValue.Should().Be("moses");
         named.Should().ContainKey(second.Id).WhoseValue.Should().Be("moses");
+    }
+
+    /// <summary>
+    /// A translation's own table states that a phrase renders one original word, because that is
+    /// what translation does: תֶּרַח in construct is <em>of Terah</em>, and the table has nowhere
+    /// but the name to park the <em>When</em> that opens the clause. Giving the person to every
+    /// word of the phrase is what puts the definite article on the page as a man.
+    /// </summary>
+    [Fact]
+    public async Task OnlyTheHeadOfThePhraseALinkNamesIsAnnotated()
+    {
+        var opening = _db.WordAt(_english, 1, 12, 1);
+        var supplied = _db.WordAt(_english, 1, 12, 2);
+        var name = _db.WordAt(_english, 1, 12, 3);
+        Phrase(Hebrew(1), opening, supplied, name);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(opening.Id);
+        named.Should().NotContainKey(supplied.Id);
+    }
+
+    /// <summary>
+    /// A possessive closes the name from the other end: the last word of <em>Terah's lifetime</em>
+    /// is the thing possessed and the man is the word before it.
+    /// </summary>
+    [Fact]
+    public async Task APossessiveEndsTheNameBeforeTheLastWordOfThePhrase()
+    {
+        var name = _db.WordAt(_english, 1, 13, 1);
+        var possessed = _db.WordAt(_english, 1, 13, 2);
+        Phrase(Hebrew(1), name, possessed);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(possessed.Id);
     }
 
     /// <summary>
