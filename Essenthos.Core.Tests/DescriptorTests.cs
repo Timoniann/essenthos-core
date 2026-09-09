@@ -139,6 +139,56 @@ public sealed class DescriptorTests : IDisposable
     private Task<EntityDescriptorResponse?> Read(string slug, string? language) =>
         Descriptors.Of(_db, slug, language, default);
 
+    /// <summary>
+    /// The re-ask, which is what a widened vocabulary produces: the same entity answered again,
+    /// under a later date, in a file published after the first. The file set already settled this
+    /// by taking the file that sorts last; before PRB-0449 the database did not, so the later
+    /// answer loaded on a fresh corpus and never reached one that already held the first.
+    /// </summary>
+    [Fact]
+    public async Task ALaterPassAboutAnEntityAlreadyDescribedReplacesWhatIsLoaded()
+    {
+        var first = await Load("reasked-first");
+        first.Described.Should().Be(1);
+        first.Clauses.Should().Be(1);
+
+        var again = await Load("reasked-again");
+
+        again.Superseded.Should().Be(1, "Hobab was described by the earlier pass");
+        again.Forgotten.Should().Be(1, "and his one clause made room for the two");
+        again.Skipped.Should().Be(0);
+        again.Clauses.Should().Be(2);
+
+        var clauses = await _db.EntityDescriptors
+            .Include(d => d.Target)
+            .Where(d => d.Entity!.Slug == "hobab-1")
+            .OrderBy(d => d.Ordinal)
+            .ToListAsync();
+
+        clauses.Select(c => c.Relation).Should().Equal("son-of", "father-in-law-of");
+        clauses.Should().OnlyContain(c => c.Source.EndsWith("asked 2026-09-09"),
+            "nothing of the superseded pass is left beside the new answer");
+    }
+
+    /// <summary>
+    /// And the ordinary restart is still a no-op. The guard is on what the pass said and when, not
+    /// on the entity, so the same files loaded twice leave the corpus exactly as it was.
+    /// </summary>
+    [Fact]
+    public async Task TheSamePassLoadedTwiceChangesNothing()
+    {
+        await Load("reasked-first");
+        var again = await Load("reasked-first");
+
+        again.Skipped.Should().Be(1);
+        again.Superseded.Should().Be(0);
+        again.Forgotten.Should().Be(0);
+        again.Clauses.Should().Be(0);
+        again.AlreadyLoaded.Should().BeTrue();
+
+        (await _db.EntityDescriptors.CountAsync(d => d.Entity!.Slug == "hobab-1")).Should().Be(1);
+    }
+
     [Fact]
     public async Task ADescriptionIsTheClausesTheFileStatesInTheOrderItStatesThem()
     {

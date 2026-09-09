@@ -21,3 +21,20 @@ language needs. One newline-delimited JSON file per batch, in the shape DOC-0191
   into these files.
 - **Terms.** Ours, under the project's own licence. Facts about who a person's father was are not
   anyone's property; the wording, the structure and the readings here are this project's.
+
+## name-forms/
+
+The same names in the cases a rendered line puts them in — *Мойсея*, *Левитів*, *Moses*,
+*Moisés* — for the entities somebody else's clause names rather than for the entity a pass
+described. Newline-delimited JSON, one object per entity, read by `EntityNameFormLoader`.
+
+- **Made by** Essenthos, by `scripts/name-forms.py` against the `essenthos_core` database. Each
+  object carries the model that produced it and the date it was asked, so the whole pass is
+  identifiable and removable, and a deterministic check refuses a form that is not one before it is
+  written.
+- **Read from** the King James Version (public domain), the Ohienko Ukrainian, the Luther 1912
+  German and the Reina-Valera 1909 Spanish — each attributed where it is loaded — so the spelling
+  asked for is the spelling that language's own Bible uses rather than a transliteration. Only the
+  verses this corpus already attests the entity in were shown, and no verse text is reproduced here.
+- **Terms.** Ours, under the project's own licence. How a name declines in a language is not
+  anyone's property; the selection, the check and the readings here are this project's.

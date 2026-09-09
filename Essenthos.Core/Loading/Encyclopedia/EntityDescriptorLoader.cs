@@ -40,14 +40,26 @@ internal sealed record DescriptorOutcome(
     DescriptorRefusals Refused,
     TimeSpan Elapsed)
 {
+    /// <summary>
+    /// Entities whose loaded description was replaced because a later pass answered about them
+    /// again. Distinct from <c>Replaced</c>, which counts records one file beat on disk: this one
+    /// counts what a reader was already being shown and is not any more.
+    /// </summary>
+    public int Superseded { get; init; }
+
+    /// <summary>Rows removed to make room for them, clauses only — forms and relationships go too.</summary>
+    public int Forgotten { get; init; }
+
     public override string ToString() =>
         AlreadyLoaded ? "every descriptor on this disk is already loaded"
         : NoDescriptors ? "no descriptor files are on this disk, so nothing was loaded from them"
         : $"{Described} entities describe themselves in {Clauses} clauses with {Forms} name forms, " +
           $"read from {Records} records over {Files} files in {Elapsed}. " +
-          $"{Skipped} entities were already described and were left alone, {Replaced} records were " +
-          $"superseded by a later file, and the passes report {Unresolved} targets the encyclopedia " +
-          $"does not hold. Refused: {Refused}.";
+          $"{Skipped} entities were already described under the same pass and were left alone, " +
+          $"{Replaced} records were superseded by a later file, {Superseded} entities were " +
+          $"described again by a later pass and their {Forgotten} loaded clauses were dropped for " +
+          $"the new answer, and the passes report {Unresolved} targets the encyclopedia does not " +
+          $"hold. Refused: {Refused}.";
 }
 
 /// <summary>
@@ -115,6 +127,28 @@ internal sealed class EntityDescriptorLoader(
 
         var entities = await Slugs(records, cancellationToken);
         var described = await Described(entities.Values, cancellationToken);
+
+        // A record for an entity this loader already described, published under a different source,
+        // is a re-ask: the vocabulary widened or the prompt changed and the pass was asked again.
+        // The file set settles that by taking the file that sorts last, and the database has to
+        // settle it the same way or the two disagree — the later file wins on disk and the reader
+        // keeps the first answer for ever (PRB-0449). Same source, and there is nothing to do: that
+        // is an ordinary restart over files already loaded.
+        var superseded = records
+            .Where(record => entities.TryGetValue(record.Entity, out var id)
+                && described.TryGetValue(id, out var loaded)
+                && !loaded.Contains(Source(record)))
+            .Select(record => entities[record.Entity])
+            .ToHashSet();
+
+        var forgotten = superseded.Count == 0
+            ? 0
+            : await Forget(superseded, cancellationToken);
+        foreach (var id in superseded)
+        {
+            described.Remove(id);
+        }
+
         var occurrences = await Occurrences(entities.Values, cancellationToken);
 
         int unknownEntity = 0, unknownRelation = 0, unresolvedTarget = 0;
@@ -131,13 +165,13 @@ internal sealed class EntityDescriptorLoader(
                 continue;
             }
 
-            if (described.Contains(entityId))
+            var source = Source(record);
+            if (described.TryGetValue(entityId, out var loaded) && loaded.Contains(source))
             {
                 skipped++;
                 continue;
             }
 
-            var source = Source(record);
             var ordinal = 0;
             foreach (var claim in record.Claims ?? [])
             {
@@ -218,7 +252,11 @@ internal sealed class EntityDescriptorLoader(
             AlreadyLoaded: clauses == 0 && forms == 0 && skipped == records.Count,
             NoDescriptors: false,
             files, records.Count, replaced, skipped, wrote, clauses, forms, unresolved, refused,
-            started.Elapsed);
+            started.Elapsed)
+        {
+            Superseded = superseded.Count,
+            Forgotten = forgotten,
+        };
 
         if (refused.Total > 0)
         {
@@ -331,23 +369,57 @@ internal sealed class EntityDescriptorLoader(
     /// make those records look untouched and write their forms again on every boot.
     /// </para>
     /// </summary>
-    private async Task<HashSet<int>> Described(
+    private async Task<Dictionary<int, HashSet<string>>> Described(
         IReadOnlyCollection<int> entities,
         CancellationToken cancellationToken)
     {
         var clauses = await db.EntityDescriptors
             .Where(d => entities.Contains(d.EntityId) && d.Source.StartsWith(SourcePrefix))
-            .Select(d => d.EntityId)
+            .Select(d => new { d.EntityId, d.Source })
             .Distinct()
             .ToListAsync(cancellationToken);
 
         var forms = await db.EntityNameForms
             .Where(f => entities.Contains(f.EntityId) && f.Source.StartsWith(SourcePrefix))
-            .Select(f => f.EntityId)
+            .Select(f => new { f.EntityId, f.Source })
             .Distinct()
             .ToListAsync(cancellationToken);
 
-        return [.. clauses, .. forms];
+        var described = new Dictionary<int, HashSet<string>>();
+        foreach (var row in clauses.Concat(forms))
+        {
+            if (!described.TryGetValue(row.EntityId, out var sources))
+            {
+                described[row.EntityId] = sources = new HashSet<string>(StringComparer.Ordinal);
+            }
+
+            sources.Add(row.Source);
+        }
+
+        return described;
+    }
+
+    /// <summary>
+    /// Everything this loader wrote about these entities, removed so the newer answer can take its
+    /// place. The relationships go with the clauses because they are read off them and their own
+    /// loader writes only for an entity it has no rows for: leaving them would keep the old reading
+    /// on the page while the new one sat in the descriptor table underneath it.
+    /// </summary>
+    private async Task<int> Forget(
+        IReadOnlyCollection<int> entities,
+        CancellationToken cancellationToken)
+    {
+        await db.EntityRelationships
+            .Where(r => entities.Contains(r.FromEntityId) && r.Source.StartsWith(SourcePrefix))
+            .ExecuteDeleteAsync(cancellationToken);
+
+        await db.EntityNameForms
+            .Where(f => entities.Contains(f.EntityId) && f.Source.StartsWith(SourcePrefix))
+            .ExecuteDeleteAsync(cancellationToken);
+
+        return await db.EntityDescriptors
+            .Where(d => entities.Contains(d.EntityId) && d.Source.StartsWith(SourcePrefix))
+            .ExecuteDeleteAsync(cancellationToken);
     }
 
     /// <summary>
