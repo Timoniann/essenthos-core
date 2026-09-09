@@ -1602,6 +1602,7 @@ def register(args):
             'number': row['number'],
             'name': name or row['number'],
             'names': sorted(candidate_names(row, kjv)),
+            'lemma': row['lemma'],
             'transliteration': row['transliteration'],
             'definition': row['definition'],
             'morphology': row['morphology'],

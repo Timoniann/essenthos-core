@@ -132,6 +132,31 @@ public sealed class PlaceRegisterFileTests
         record.Why.Should().Contain("name", "a refusal says why, and this one is about the naming");
     }
 
+    /// <summary>
+    /// Every Greek record carries the lexicon's spelling of its name, because the annotation pass
+    /// will not take a Greek number the encyclopedia cannot spell — the gate that refuses Ἰωδά the
+    /// number of Ἰούδας. Eight records were refused by it for having nothing to compare.
+    /// </summary>
+    [Fact]
+    public void Every_Greek_record_carries_the_spelling_its_number_is_annotated_on()
+    {
+        Records
+            .Where(record => record.Number.StartsWith('G') && string.IsNullOrWhiteSpace(record.Lemma))
+            .Select(record => record.Number)
+            .Should().BeEmpty();
+
+        // The eight the gate refused for having nothing to compare. Judaea is 173 occurrences of
+        // the 199 they are worth between them.
+        foreach (var number in
+                 new[] { "G494", "G962", "G2802", "G5410", "G2449", "G3194", "G4010", "G4558" })
+        {
+            var record = Entry(number);
+            record.Kept.Should().BeTrue();
+            char.IsUpper(First(record.Lemma ?? string.Empty)).Should()
+                .BeTrue($"{number} is a name the lexicon writes with a capital");
+        }
+    }
+
     private static char First(string name)
     {
         foreach (var character in name)

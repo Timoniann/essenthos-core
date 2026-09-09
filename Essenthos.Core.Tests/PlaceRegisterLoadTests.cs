@@ -209,6 +209,28 @@ public sealed class PlaceRegisterLoadTests : IDisposable
     }
 
     /// <summary>
+    /// A Greek record carries the spelling the annotation pass will check its number against. With
+    /// the column null there is nothing to compare and the number is refused, which cost Judaea all
+    /// 173 of its occurrences.
+    /// </summary>
+    [Fact]
+    public async Task A_Greek_record_carries_the_spelling_its_number_is_annotated_on()
+    {
+        Register(
+            Record("G2449", "Judaea", ["Judaea"], lemma: "Ἰουδαία"),
+            Record("H1035", "Bethlehem", ["Bethlehem"], lemma: "בֵּית לֶחֶם"));
+
+        await Load();
+
+        var judaea = await Place("judaea");
+        judaea!.Names.Should().ContainSingle().Which.Greek.Should().Be("Ἰουδαία");
+
+        var bethlehem = await Place("beth-lehem");
+        bethlehem!.Names.Should().ContainSingle().Which.Greek.Should()
+            .BeNull("a Hebrew number is not checked against a Greek spelling");
+    }
+
+    /// <summary>
     /// The spellings Strong prints and no gazetteer does. They are the only name a great many
     /// entries offer that a held label can be met by, so a fold that leaves any of them standing
     /// loses the match and adds a second page for a place already on one.
@@ -297,12 +319,14 @@ public sealed class PlaceRegisterLoadTests : IDisposable
         string number,
         string name,
         string[] names,
-        bool kept = true) =>
+        bool kept = true,
+        string? lemma = null) =>
         new
         {
             number,
             name,
             names,
+            lemma,
             transliteration = name,
             definition = $"{name}, a place in Palestine",
             morphology = "n-pr-loc",

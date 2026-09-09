@@ -414,6 +414,27 @@ internal sealed class PlaceRegisterLoader(
                 $"{record.Number} \"{record.Definition}\" — {record.Why}")),
         };
 
+    /// <summary>
+    /// The name row a record writes, carrying the number it is made of and — for a Greek entry —
+    /// the lexicon's own spelling of that name.
+    ///
+    /// <para>
+    /// The spelling is not decoration. <see cref="EntityAnnotationLoader"/> takes a Greek number
+    /// only where the encyclopedia's own spelling of the name is one some Greek text writes under
+    /// it, which is the gate that refuses Ἰωδά the number of Ἰούδας; with the column null there is
+    /// nothing to compare and the number is refused. Eight records were refused for exactly that,
+    /// Judaea's 173 occurrences among them. Recording the lemma is a statement of what the entry
+    /// says rather than a way past the gate: the record exists because of that entry and no other,
+    /// and the gate still asks the texts.
+    /// </para>
+    ///
+    /// <para>
+    /// The transliteration is deliberately not recorded with it. Nothing reads it as a spelling of
+    /// the name — <see cref="Annotating"/> reads it as one of the forms a translated word may be
+    /// moved onto, and Strong's Latin transliteration of a Greek name is a spelling no text of this
+    /// corpus prints.
+    /// </para>
+    /// </summary>
     private static EntityName Name(PlaceRegisterRecord record) =>
         new()
         {
@@ -421,7 +442,11 @@ internal sealed class PlaceRegisterLoader(
             Kind = LexiconName,
             HebrewStrongNumber = record.Number.StartsWith('H') ? record.Number : null,
             GreekStrongNumber = record.Number.StartsWith('G') ? record.Number : null,
+            Greek = record.Number.StartsWith('G') ? Blank(record.Lemma) : null,
         };
+
+    private static string? Blank(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? null : value.Trim();
 
     private static bool Carries(EntityName name, string number) =>
         string.Equals(name.HebrewStrongNumber, number, StringComparison.Ordinal)
