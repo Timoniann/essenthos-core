@@ -143,6 +143,16 @@ internal sealed class EntityDescriptorLoader(
             .Select(record => entities[record.Entity])
             .ToHashSet();
 
+        // In one transaction with the writes below, and this is not a precaution. `Forget` deletes
+        // through the database rather than through the change tracker, so it lands the moment it
+        // runs: the first time this ran without one, every entity was superseded -- the run column
+        // was new and null on every row -- the removal committed, one insert hit a unique index and
+        // the whole corpus's own descriptions were gone until the next boot rebuilt them from the
+        // files. Nothing was lost that the files do not hold, and that is luck rather than design.
+        await using var replacing = superseded.Count == 0
+            ? null
+            : await db.Database.BeginTransactionAsync(cancellationToken);
+
         var forgotten = superseded.Count == 0
             ? 0
             : await Forget(superseded, cancellationToken);
@@ -150,6 +160,11 @@ internal sealed class EntityDescriptorLoader(
         {
             described.Remove(id);
         }
+
+        // Which name forms the corpus already holds for these entities, whoever wrote them, so a
+        // record cannot collide with the name-forms pass on the one row a language and a case may
+        // have. Read after the removal above, so a form this loader has just dropped is free again.
+        var taken = await Taken(entities.Values, cancellationToken);
 
         var occurrences = await Occurrences(entities.Values, cancellationToken);
 
@@ -236,7 +251,7 @@ internal sealed class EntityDescriptorLoader(
                 clauses++;
             }
 
-            forms += Forms(entityId, record, source);
+            forms += Forms(entityId, record, source, taken);
             if (ordinal > 0)
             {
                 wrote++;
@@ -249,6 +264,11 @@ internal sealed class EntityDescriptorLoader(
         if (clauses > 0 || forms > 0)
         {
             await db.SaveChangesAsync(cancellationToken);
+        }
+
+        if (replacing is not null)
+        {
+            await replacing.CommitAsync(cancellationToken);
         }
 
         var outcome = new DescriptorOutcome(
@@ -307,7 +327,11 @@ internal sealed class EntityDescriptorLoader(
     private static readonly IReadOnlyDictionary<string, Dictionary<string, string>> NoNames =
         new Dictionary<string, Dictionary<string, string>>(StringComparer.Ordinal);
 
-    private int Forms(int entityId, DescriptorRecord record, string source)
+    private int Forms(
+        int entityId,
+        DescriptorRecord record,
+        string source,
+        HashSet<(int Entity, string Language, string Case)> taken)
     {
         var written = 0;
         foreach (var (language, cases) in record.Names ?? NoNames)
@@ -321,6 +345,16 @@ internal sealed class EntityDescriptorLoader(
 
                 var bare = NameForms.Bare(language, form);
                 if (bare.Length == 0)
+                {
+                    continue;
+                }
+
+                // A name has one form per language and case, and two loaders write them: this one
+                // from the record's own `names`, and the name-forms pass from its own files. Where
+                // the other already holds this form, it stays -- it was asked for the name alone
+                // and this pass produced it in passing. Only reachable since a re-ask can arrive
+                // for an entity already declined; before that the whole entity was skipped.
+                if (!taken.Add((entityId, language, grammaticalCase)))
                 {
                     continue;
                 }
@@ -434,6 +468,19 @@ internal sealed class EntityDescriptorLoader(
             .Where(d => entities.Contains(d.EntityId) && d.Source.StartsWith(SourcePrefix))
             .ExecuteDeleteAsync(cancellationToken);
     }
+
+    /// <summary>
+    /// The language and case each of these entities already has a form in, from any source. The
+    /// column is unique on the three together, and the name-forms pass writes the same table.
+    /// </summary>
+    private async Task<HashSet<(int Entity, string Language, string Case)>> Taken(
+        IReadOnlyCollection<int> entities,
+        CancellationToken cancellationToken) =>
+        [.. (await db.EntityNameForms
+            .Where(f => entities.Contains(f.EntityId))
+            .Select(f => new { f.EntityId, f.Language, f.GrammaticalCase })
+            .ToListAsync(cancellationToken))
+            .Select(f => (f.EntityId, f.Language, f.GrammaticalCase))];
 
     /// <summary>
     /// Every verse each of these entities is named in, so a reference can be checked against the

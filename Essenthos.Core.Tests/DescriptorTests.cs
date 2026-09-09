@@ -178,6 +178,45 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
+    /// The other loader writes this table too, and a name has one row per language and case. Until
+    /// a re-ask existed the whole entity was skipped and the two could not meet; now they can, and
+    /// the form already standing is the one that stays — this pass produced its forms in passing
+    /// while the other was asked for the name alone.
+    /// </summary>
+    [Fact]
+    public async Task AReAskLeavesAFormAnotherPassAlreadyHolds()
+    {
+        await Load("reasked-first");
+
+        var hobab = await _db.Entities.SingleAsync(e => e.Slug == "hobab-1");
+        _db.EntityNameForms.RemoveRange(
+            _db.EntityNameForms.Where(f => f.EntityId == hobab.Id && f.Language == "ukr"));
+        await _db.SaveChangesAsync();
+        _db.EntityNameForms.Add(new EntityNameForm
+        {
+            EntityId = hobab.Id,
+            Language = "ukr",
+            GrammaticalCase = GrammaticalCases.Genitive,
+            Form = "Ховава з іншого проходу",
+            Method = LinkMethod.ModelReading,
+            Confidence = 1,
+            Source = "declined on this machine by a local model",
+        });
+        await _db.SaveChangesAsync();
+
+        var again = await Load("reasked-again");
+
+        again.Superseded.Should().Be(1);
+
+        var genitive = await _db.EntityNameForms.SingleAsync(f =>
+            f.EntityId == hobab.Id && f.Language == "ukr"
+            && f.GrammaticalCase == GrammaticalCases.Genitive);
+
+        genitive.Form.Should().Be("Ховава з іншого проходу");
+        genitive.Source.Should().StartWith("declined on this machine");
+    }
+
+    /// <summary>
     /// And the ordinary restart is still a no-op. The guard is on what the pass said and when, not
     /// on the entity, so the same files loaded twice leave the corpus exactly as it was.
     /// </summary>
