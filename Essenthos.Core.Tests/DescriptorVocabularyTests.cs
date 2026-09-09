@@ -54,8 +54,8 @@ public sealed class DescriptorVocabularyTests
             .Should().OnlyContain(c => GrammaticalCases.All.Contains(c));
 
     /// <summary>
-    /// The four clauses a place page is made of, in the two languages that inflect: each asks for
-    /// the locative, and none of them may quietly go back to asking for the genitive.
+    /// The four clauses a place page is made of, in the one language that inflects them: each asks
+    /// for the locative, and none of them may quietly go back to asking for the genitive.
     ///
     /// It is asserted rather than left to the table because the genitive is what DOC-0191 asks a
     /// generation pass for, so a phrasing that asks for it renders today and a phrasing that asks
@@ -64,7 +64,6 @@ public sealed class DescriptorVocabularyTests
     /// </summary>
     [Theory]
     [InlineData("ukr")]
-    [InlineData("rus")]
     public void EveryClauseThatPutsAPlaceSomewhereAsksForTheLocative(string language)
     {
         string[] somewhere =
@@ -89,16 +88,25 @@ public sealed class DescriptorVocabularyTests
     [Fact]
     public void ALanguageWithNoPhrasingsHasNoneAndIsSpokenAsEnglish()
     {
-        DescriptorPhrasings.For("deu").Should().BeNull();
-        DescriptorPhrasings.Spoken("deu").Should().Be(DescriptorPhrasings.English);
+        DescriptorPhrasings.For("rus").Should().BeNull();
+        DescriptorPhrasings.Spoken("rus").Should().Be(DescriptorPhrasings.English);
     }
+
+    /// <summary>
+    /// The four the client is written in (FTR-0280), and Russian which it is not. Asserted because
+    /// the two halves drifted apart once already: the renderer spoke Russian and not German while
+    /// 1,159 German forms sat in the table with nothing to render them (PRB-0436).
+    /// </summary>
+    [Fact]
+    public void TheEncyclopediaSpeaksTheLanguagesTheClientIsWrittenIn() =>
+        DescriptorPhrasings.Languages.Should().BeEquivalentTo(["eng", "ukr", "deu", "spa"]);
 
     /// <summary>Asking for no language is not asking for one, so it is answered in English.</summary>
     [Theory]
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    [InlineData("deu")]
+    [InlineData("rus")]
     [InlineData("not-a-language")]
     public void WhatIsNotSpokenIsAnsweredInEnglish(string? asked) =>
         DescriptorPhrasings.Spoken(asked).Should().Be(DescriptorPhrasings.English);

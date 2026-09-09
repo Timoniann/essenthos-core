@@ -1,4 +1,4 @@
-using System.Data.Common;
+﻿using System.Data.Common;
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -214,7 +214,7 @@ public sealed class DescriptorTests : IDisposable
 
     /// <summary>
     /// The one that produces a visibly wrong sentence if it is got wrong. A client that asked for
-    /// German, was handed English and was told <em>deu</em> would put another language's grammar
+    /// Russian, was handed English and was told <em>rus</em> would put another language's grammar
     /// around these names, which is what the fallback exists to prevent.
     /// </summary>
     [Fact]
@@ -222,7 +222,7 @@ public sealed class DescriptorTests : IDisposable
     {
         await Load("described");
 
-        var description = await Read("hobab-1", "deu");
+        var description = await Read("hobab-1", "rus");
 
         description!.Language.Should().Be(DescriptorPhrasings.English);
         Line(description).Should().Be("son of Reuel, father-in-law of Moses");

@@ -8,9 +8,13 @@ a Ukrainian form for the entity they point at. This harness asks for the forms a
 entities somebody else's claim already names, and does not re-ask the expensive half.
 
     python scripts/name-forms.py check                                  # the loaded forms, checked
-    python scripts/name-forms.py extract --out .forms/pilot --sample 300 --seed 11
-    python scripts/name-forms.py ask     --dir .forms/pilot --model haiku --workers 4
-    python scripts/name-forms.py compare --dir .forms/pilot
+    python scripts/name-forms.py extract --out .forms/run --targets --languages eng,ukr,deu,spa
+    python scripts/name-forms.py ask     --dir .forms/run --model sonnet --effort low --workers 3
+    python scripts/name-forms.py check   --dir .forms/run                # before anything is loaded
+    python scripts/name-forms.py publish --dir .forms/run --out ../Resources/Essenthos/name-forms                                          --name targets-2026-09-09 --asked-at 2026-09-09
+
+`compare --dir` scores a run against the forms already loaded, which is how a model is chosen
+(DOC-0196), and `republish` writes PRB-0435's rows back without the preposition they carry.
 
 Three things about the design are load-bearing:
 
@@ -28,6 +32,10 @@ same evidence, gives agreement per case against an answer key that was paid for 
 **Ordering is by how often an entity is the target of an existing claim.** Moses, Jerusalem, Judah
 and David are targets of a large share of everything; a few hundred of them repair more lines than a
 thousand in alphabetical order. `--targets` selects and orders that way; it is what a real run takes.
+
+**Nothing here writes to the database.** `publish` leaves files under `Resources/`, which the API
+loads on its next start like every other source, so a run can be read and argued with before
+anything believes it.
 
 A run leaves:
 
@@ -163,10 +171,14 @@ def bare_words(language, value):
     The parts of a form to compare one by one: what the sentence supplies for itself taken off the
     front, and a hyphenated name split, because *Авел-Бет-Мааха* inflects its first part and not the
     rest and comparing the whole string calls that a different name.
+
+    Never down to nothing, because a name can be spelt like a preposition: German *zur* is a
+    preposition and *Zur* is a Midianite prince, and stripping the only word he has called *Zurs* a
+    different name from *Zur*.
     """
     words = [word for word in value.split() if word.strip('.,')]
-    while words and (words[0].strip('.,').casefold() in PREPOSITIONS.get(language, ())
-                     or words[0].strip('.,').casefold() in ARTICLES.get(language, ())):
+    while len(words) > 1 and (words[0].strip('.,').casefold() in PREPOSITIONS.get(language, ())
+                              or words[0].strip('.,').casefold() in ARTICLES.get(language, ())):
         words = words[1:]
     return [part for word in words for part in word.split('-') if part]
 
@@ -254,11 +266,16 @@ def keyed(rows):
     return by_entity
 
 
-def check(args):
-    """The check, over the forms already loaded. Free, deterministic, and the reason to trust it."""
-    key = keyed(loaded_forms())
+def checked(entities, args, what):
+    """
+    Report `faults()` over {slug: {'name', 'names'}}, whatever produced them.
+
+    The same function over a run and over the database on purpose: a check that is one thing for
+    the answer key and another for the run being judged is two checks, and the second one is the
+    one nobody proved.
+    """
     tally, examples, clean = {}, {}, 0
-    for slug, entity in sorted(key.items()):
+    for slug, entity in sorted(entities.items()):
         english = (entity['names'].get('eng') or {}).get('nominative') or entity['name']
         faulty = False
         for language, forms in sorted(entity['names'].items()):
@@ -269,12 +286,32 @@ def check(args):
                 faulty = True
         clean += not faulty
 
-    print(f'{len(key)} entities carry forms, written by {next(iter(key.values()))["source"]}.')
-    print(f'{clean} of them have nothing the check can see, {len(key) - clean} have something.\n')
+    print(f'{len(entities)} entities carry forms, {what}.')
+    print(f'{clean} of them have nothing the check can see, '
+          f'{len(entities) - clean} have something.\n')
     for key_name in sorted(tally, key=lambda k: -tally[k]):
         print(f'{tally[key_name]:5}  {key_name[0]}  {key_name[1]}')
         for line in examples[key_name][:args.examples]:
             print(f'         {line}')
+    return tally
+
+
+def check(args):
+    """
+    The check: over a run's own output when given one, over the forms already loaded otherwise.
+
+    `--dir` is what a run is judged by before anything is written -- a refused form falls back to
+    the English name and a wrong one cannot be told from a right one by a reader, so the refusals
+    are the number that decides whether a pass is publishable.
+    """
+    if args.dir:
+        rows = produced(args.dir)
+        entities = {row['entity']: {'name': row['name'], 'names': row['names']} for row in rows}
+        checked(entities, args, f'produced by {rows[0]["model"]} under {args.dir}')
+        return 0
+
+    key = keyed(loaded_forms())
+    checked(key, args, f'written by {next(iter(key.values()))["source"]}')
     return 0
 
 
@@ -426,7 +463,19 @@ def extract(args):
     texts = {name: {(b, c, v): line for b, c, v, line in rows} for name, rows in texts.items()}
 
     key = keyed(loaded_forms())
-    if args.targets:
+    if args.repair:
+        # The entities the check refuses on rows that are already loaded: PRB-0435's 84 locatives
+        # carrying their own preposition, and the handful of forms that are a different name from
+        # the nominative beside them. Asked again rather than edited, so what lands is a form
+        # somebody produced and not one this script inferred.
+        refused = {slug for slug, entity in key.items()
+                   for language, forms in entity['names'].items()
+                   if language in languages
+                   and faults(language, forms,
+                              (entity['names'].get('eng') or {}).get('nominative') or entity['name'])}
+        chosen = sorted((e for e in all_entities if e['slug'] in refused),
+                        key=lambda e: e['slug'])
+    elif args.targets:
         # What a real run takes: the entities somebody else's claim names, most-named first, and
         # only the ones no pass has given forms to.
         chosen = [e for e in all_entities if e['targeted'] and e['slug'] not in key]
@@ -448,7 +497,8 @@ def extract(args):
 
     with open(os.path.join(directory, 'manifest.json'), 'w', encoding='utf-8') as handle:
         json.dump({'prompt_version': PROMPT_VERSION, 'languages': languages,
-                   'selection': 'targets' if args.targets else 'sample-with-forms',
+                   'selection': 'repair' if args.repair
+                                else 'targets' if args.targets else 'sample-with-forms',
                    'seed': args.seed, 'entities': len(chosen), 'batches': len(batches),
                    'batch_entities': args.batch_entities,
                    'slugs': [[e['slug'] for e in batch] for batch in batches]},
@@ -681,18 +731,166 @@ def compare(args):
     return 0
 
 
+# ---------------------------------------------------------------------------- publishing
+
+
+def bare(language, value):
+    """The form with what the phrase supplies for itself taken off the front (PRB-0435)."""
+    words = value.split()
+    while len(words) > 1 and (words[0].strip('.,').casefold() in PREPOSITIONS.get(language, ())
+                              or words[0].strip('.,').casefold() in ARTICLES.get(language, ())):
+        words = words[1:]
+    return ' '.join(words)
+
+
+SOURCE = re.compile(r'^.* by (?P<model>.+), asked (?P<asked>.+)$')
+
+
+def republish(args):
+    """
+    PRB-0435's 84 rows, as a file that supersedes them: the same forms, without the preposition.
+
+    Asking again does not close this. The run that was asked produced a Ukrainian locative for 11 of
+    the 49 entities and left the rest out, which is the prompt's rule working -- a form the model
+    will not vouch for is left out rather than invented. But nothing needs to be asked: *в Авані* is
+    already the right word with a preposition glued to the front, and taking the preposition off is
+    a token removed rather than an ending guessed at. So the form here is the one the original pass
+    wrote, and it carries that pass's model and date, because that is whose word it is.
+    """
+    key = keyed(loaded_forms())
+    lines, entities, forms = [], 0, 0
+    for slug, entity in sorted(key.items()):
+        english = (entity['names'].get('eng') or {}).get('nominative') or entity['name']
+        names = {}
+        for language, stored in entity['names'].items():
+            repaired = {case: bare(language, (value or '').strip())
+                        for case, value in stored.items()
+                        if bare(language, (value or '').strip()) != (value or '').strip()}
+            if repaired and not [f for case, value in repaired.items()
+                                 for f in faults(language, dict(stored, **{case: value}), english)
+                                 if 'carries' not in f[0]]:
+                names[language] = dict(stored, **repaired)
+
+        if not names:
+            continue
+
+        said = SOURCE.match(entity['source'])
+        entities += 1
+        forms += sum(len(cases) for cases in names.values())
+        lines.append(json.dumps({'entity': slug, 'names': names,
+                                 'model': said['model'], 'askedAt': said['asked']},
+                                ensure_ascii=False))
+
+    os.makedirs(args.out, exist_ok=True)
+    path = os.path.join(args.out, f'{args.name}.jsonl')
+    with open(path, 'w', encoding='utf-8') as handle:
+        handle.write('\n'.join(lines) + '\n')
+    print(f'{entities} entities and {forms} forms written to {path}, '
+          f'each one a form already loaded with what the phrase supplies taken off the front.')
+    return 0
+
+
+def publish(args):
+    """
+    A run, as the files `EntityNameFormLoader` reads on the next start.
+
+    Nothing here writes to the database. What a pass produces is a by-product of running a model
+    over the corpus, so it lands beside the corpus and is loaded like every other source -- which
+    also means a run can be read, argued with and re-published before anything believes it.
+
+    **What the check refuses does not go in the file.** A case it refuses is dropped and a language
+    whose nominative it refuses is dropped whole, because there is then nothing to check the rest
+    against. A dropped form falls back to the English name, which is DOC-0191's rule and the only
+    outcome a reader can see for what it is.
+    """
+    rows = produced(args.dir)
+    with open(os.path.join(args.dir, 'manifest.json'), encoding='utf-8') as handle:
+        languages = json.load(handle)['languages']
+
+    kept, dropped, stripped, entities = 0, {}, 0, 0
+    lines = []
+    for row in rows:
+        english = (row['names'].get('eng') or {}).get('nominative') or row['name']
+        names = {}
+        for language in languages:
+            forms = row['names'].get(language) or {}
+            forms = {case: bare(language, (value or '').strip())
+                     for case, value in forms.items() if case in CASES.get(language, [])}
+            stripped += sum(1 for case, value in forms.items()
+                            if value != (row['names'][language][case] or '').strip())
+            forms = {case: value for case, value in forms.items() if value}
+            if not forms:
+                continue
+
+            refused = {}
+            for kind, _ in faults(language, forms, english):
+                refused[kind] = refused.get(kind, 0) + 1
+            if 'no nominative' in refused:
+                dropped[language] = dropped.get(language, 0) + len(forms)
+                continue
+
+            # A fault names the case in its own sentence, so the case is refused rather than the
+            # language: a sound nominative is worth keeping when the genitive beside it is not.
+            sound = {}
+            for case, value in forms.items():
+                if faults(language, {'nominative': forms['nominative'], case: value}, english) \
+                        and case != 'nominative':
+                    dropped[language] = dropped.get(language, 0) + 1
+                    continue
+                sound[case] = value
+            names[language] = sound
+            kept += len(sound)
+
+        if not names:
+            continue
+
+        entities += 1
+        lines.append(json.dumps({'entity': row['entity'], 'names': names,
+                                 'model': row['model'], 'askedAt': args.asked_at},
+                                ensure_ascii=False))
+
+    os.makedirs(args.out, exist_ok=True)
+    path = os.path.join(args.out, f'{args.name}.jsonl')
+    with open(path, 'w', encoding='utf-8') as handle:
+        handle.write('\n'.join(lines) + '\n')
+
+    print(f'{entities} entities and {kept} forms written to {path}.')
+    print(f'{stripped} forms had a preposition or an article taken off the front.')
+    for language in sorted(dropped):
+        print(f'{dropped[language]:5} {language} forms the check refused, so they are not in it')
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[1])
     commands = parser.add_subparsers(dest='command', required=True)
 
-    checker = commands.add_parser('check', help='run the deterministic check over loaded forms')
+    checker = commands.add_parser('check', help='run the deterministic check')
+    checker.add_argument('--dir', default=None,
+                         help="a run's own output, checked before anything is published; the "
+                              'loaded forms when it is left off')
     checker.add_argument('--examples', type=int, default=3)
     checker.set_defaults(run=check)
+
+    publisher = commands.add_parser('publish', help='write a run as the files the loader reads')
+    publisher.add_argument('--dir', required=True)
+    publisher.add_argument('--out', required=True)
+    publisher.add_argument('--name', default='forms')
+    publisher.add_argument('--asked-at', required=True, help='the date of the run, as YYYY-MM-DD')
+    publisher.set_defaults(run=publish)
+
+    republisher = commands.add_parser(
+        'republish', help="PRB-0435's rows, as a file that supersedes them without the preposition")
+    republisher.add_argument('--out', required=True)
+    republisher.add_argument('--name', default='republished')
+    republisher.set_defaults(run=republish)
 
     extractor = commands.add_parser('extract', help='write the prompt payloads')
     extractor.add_argument('--out', required=True)
     extractor.add_argument('--sample', type=int, default=0)
     extractor.add_argument('--seed', type=int, default=11)
+    extractor.add_argument('--repair', action='store_true',
+                           help='the entities whose loaded forms the check refuses, asked again')
     extractor.add_argument('--targets', action='store_true',
                            help='select what a real run takes: entities named by a claim, most '
                                 'named first, that no pass has given forms to')
