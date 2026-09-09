@@ -9,15 +9,20 @@ using Npgsql;
 namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <param name="Written">
-/// Verse references derived from the words this corpus annotated, one per entity and canonical
-/// address however many words or texts name the entity there.
+/// Verse references this pass added, one per entity and canonical address however many words or
+/// texts name the entity there. It is every one of them on a cold corpus, and on a boot after that
+/// only the records nothing had cited yet.
 /// </param>
-internal sealed record OwnReferenceOutcome(bool AlreadyLoaded, int Written, TimeSpan Elapsed)
+/// <param name="Cited">
+/// How many the corpus reads off its own words in all, so that a pass writing nothing can be told
+/// from one that had nothing to read.
+/// </param>
+internal sealed record OwnReferenceOutcome(bool AlreadyLoaded, int Written, int Cited, TimeSpan Elapsed)
 {
     public override string ToString() =>
         AlreadyLoaded
-            ? "the references this corpus reads for itself are already there"
-            : $"{Written} verse references read off the annotations, in {Elapsed}";
+            ? $"the {Cited} references this corpus reads for itself are already there, checked in {Elapsed}"
+            : $"{Written} verse references read off the annotations, {Cited} in all, in {Elapsed}";
 }
 
 /// <summary>
@@ -57,6 +62,12 @@ internal sealed record OwnReferenceOutcome(bool AlreadyLoaded, int Written, Time
 /// Strong's gentilic, resolving to one people — and what establishes these is the resolution of a
 /// name, so the two are credited apart at the claim rather than blended under one line.
 /// </para>
+///
+/// <para>
+/// The derivation runs whole on every boot and writes only the references that are not there yet,
+/// because it reads rows this corpus already holds rather than fetching anything. On a corpus that
+/// is already complete that is about a second and no rows.
+/// </para>
 /// </summary>
 internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLoader> logger)
 {
@@ -69,12 +80,6 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
 
     public async Task<OwnReferenceOutcome> Load(CancellationToken cancellationToken = default)
     {
-        if (await db.EntityVerses.AnyAsync(v => v.Source == FromOurOwnWords, cancellationToken))
-        {
-            logger.LogInformation("The references read off the annotations are already there; nothing to do");
-            return new OwnReferenceOutcome(true, 0, TimeSpan.Zero);
-        }
-
         var started = Stopwatch.StartNew();
 
         await db.Database.OpenConnectionAsync(cancellationToken);
@@ -86,7 +91,9 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
 
         var written = await command.ExecuteNonQueryAsync(cancellationToken);
 
-        var outcome = new OwnReferenceOutcome(false, written, started.Elapsed);
+        var cited = await db.EntityVerses.CountAsync(v => v.Source == FromOurOwnWords, cancellationToken);
+
+        var outcome = new OwnReferenceOutcome(written == 0 && cited > 0, written, cited, started.Elapsed);
         logger.LogInformation("Read the references off the annotations: {Outcome}", outcome);
         return outcome;
     }
@@ -98,6 +105,15 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     /// entity is named by several words of one verse and by a word in each of the twenty-four texts,
     /// and every one of those is the same reference. Counting them apart is how a derivation over
     /// 23,644 references gets reported as 157,429.
+    ///
+    /// <para>
+    /// The closing <c>NOT EXISTS</c> is the whole of the idempotence, and it is a statement about
+    /// the row rather than about the pass: what is written is whatever this derivation reaches and
+    /// this corpus does not already cite. Asking instead whether the pass had ever run would be
+    /// right only if nothing could be added after it — and the peoples, the records this corpus
+    /// writes for itself and the place register all add entities, so a record arriving later would
+    /// have an empty page for ever.
+    /// </para>
     /// </summary>
     private static readonly string Derivation =
         $"""
@@ -138,6 +154,13 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
          JOIN entity e ON e.id = s.entity_id AND e.kind IN ({Named})
          JOIN word w ON w.id = s.word_id
          JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+         WHERE NOT EXISTS (
+             SELECT 1 FROM entity_verse cited
+             WHERE cited.entity_id = s.entity_id
+               AND cited.canonical_book = r.canonical_book
+               AND cited.canonical_chapter = r.canonical_chapter
+               AND cited.canonical_verse = r.canonical_verse
+               AND cited.source = @source)
          """;
 
     /// <summary>

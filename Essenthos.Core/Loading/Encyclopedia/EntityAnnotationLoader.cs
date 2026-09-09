@@ -36,12 +36,17 @@ internal sealed record NameAnswers(int Resolved, int Contested, int Unanswered)
 /// encyclopedia stated. They are the places the geocoding dataset supplied, which carry no Strong
 /// number of their own, and they are counted apart because they are worth less.
 /// </param>
+/// <param name="Written">
+/// What this pass added, which is every annotation on a cold corpus and only the records nothing
+/// had spoken for on any boot after it.
+/// </param>
 /// <param name="ByText">What each text ended up with, so the reach is a count rather than a hope.</param>
 internal sealed record AnnotationOutcome(
     bool AlreadyLoaded,
     NameAnswers Hebrew,
     NameAnswers Greek,
     int Refused,
+    int Written,
     int Annotated,
     int Corroborated,
     int Derived,
@@ -50,13 +55,13 @@ internal sealed record AnnotationOutcome(
 {
     public override string ToString() =>
         AlreadyLoaded
-            ? "the words are already annotated with the people and places they name"
-            : $"{Annotated} words name a person or a place in {Elapsed}: {Corroborated} of them in a " +
-              $"verse the encyclopedia independently says that entity is named in, and {Derived} on a " +
-              $"name the corpus worked out rather than read. Of the Hebrew numbers {Hebrew}; of the " +
-              $"Greek {Greek}, and {Refused} of the resolved ones are refused because no Greek text " +
-              "spells the name the way the encyclopedia does. Per text: " +
-              string.Join(", ", ByText.Select(t => $"{t.Text} {t.Words}"));
+            ? $"the words are already annotated with the people and places they name, checked in {Elapsed}"
+            : $"{Written} words newly name a person or a place in {Elapsed}, of {Annotated} the corpus " +
+              $"now holds: {Corroborated} of them in a verse the encyclopedia independently says that " +
+              $"entity is named in, and {Derived} on a name the corpus worked out rather than read. Of " +
+              $"the Hebrew numbers {Hebrew}; of the Greek {Greek}, and {Refused} of the resolved ones " +
+              "are refused because no Greek text spells the name the way the encyclopedia does. Per " +
+              "text: " + string.Join(", ", ByText.Select(t => $"{t.Text} {t.Words}"));
 }
 
 /// <summary>
@@ -154,8 +159,20 @@ internal sealed record AnnotationOutcome(
 /// </para>
 ///
 /// <para>
-/// Idempotent on its own rows the way the encyclopedia's loaders are, so it sits in the start-up
-/// pipeline and costs one indexed existence check on a corpus that already has it.
+/// **What it does on a boot is decided per record rather than per pass.** It sits in the start-up
+/// pipeline and asks, of every record, whether anything it wrote already names that record's words;
+/// the ones nothing has spoken for are the work, and on a corpus where the rest is already there
+/// nothing is written. Asking instead whether the pass had ever run is the same question only while
+/// no record can arrive after it — and the peoples, the records this corpus writes for itself and
+/// the place register all add entities, so on the corpus as it stands that question leaves every
+/// later record with no words at all.
+/// </para>
+///
+/// <para>
+/// The cost of that on a corpus that is already complete is the candidate list, the seeds and the
+/// counts, and it is seconds rather than the minutes the carrying step takes when there is
+/// something to carry: the carrying reads only what the seeds put in the workspace, and on such a
+/// corpus the seeds put nothing there.
 /// </para>
 /// </summary>
 internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnnotationLoader> logger)
@@ -389,6 +406,28 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         """;
 
     /// <summary>
+    /// Whether nothing this loader wrote names the record a number resolved to. It is the unit of
+    /// work, and asking it of the record rather than of the pass is what lets a record added after
+    /// this pass has run be reached on the next boot: the peoples, the records this corpus writes
+    /// for itself and the place register all add entities, and a pass that asked only whether it
+    /// had ever run would leave every one of them with no words and no verses.
+    ///
+    /// <para>
+    /// It is asked after the resolution and never before it. Whether a number names exactly one
+    /// record is a question about the whole encyclopedia, and a candidate list narrowed to the
+    /// records still waiting would answer it with one where the answer is two — annotating a new
+    /// place with a number an older record already bears, which is the very case the resolution
+    /// exists to refuse.
+    /// </para>
+    /// </summary>
+    private const string Unspoken =
+        """
+        NOT EXISTS (SELECT 1 FROM word_entity spoken
+                    WHERE spoken.entity_id = resolved.entity_id
+                      AND spoken.source = ANY(@written))
+        """;
+
+    /// <summary>
     /// Where the annotation is assembled before anything is written.
     ///
     /// <c>resolution</c> is what the name is worth before the verse list and the links are taken
@@ -452,8 +491,9 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                   AND ev.canonical_chapter = r.canonical_chapter
                   AND ev.canonical_verse = r.canonical_verse
              WHERE r.verse_id = w.verse_id AND r.is_primary) AS named) agreed
-         WHERE (w.morphology->>'nameType' = 'pers' AND e.kind = 'person')
-            OR (w.morphology->>'nameType' = 'topo' AND e.kind = 'place')
+         WHERE ((w.morphology->>'nameType' = 'pers' AND e.kind = 'person')
+             OR (w.morphology->>'nameType' = 'topo' AND e.kind = 'place'))
+           AND {Unspoken}
          """;
 
     /// <summary>
@@ -493,7 +533,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                   AND ev.canonical_chapter = r.canonical_chapter
                   AND ev.canonical_verse = r.canonical_verse
              WHERE r.verse_id = w.verse_id AND r.is_primary) AS named) agreed
-         WHERE {GreekNoun}
+         WHERE {GreekNoun} AND {Unspoken}
          ON CONFLICT (word_id) DO NOTHING
          """;
 
@@ -598,6 +638,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// the gate is what chose between them — the annotation is then as good as BHSA's analysis of
     /// that word, or as the encyclopedia's account of where the rivals are named, and no better. A
     /// reader is owed the difference, and the row's own source says which of the two it was.
+    ///
+    /// <para>
+    /// A word this loader has already named somebody else at is left as it is. Two links can reach
+    /// one word from two witness words naming two records, and the carrying step refuses both where
+    /// it can see both — but it can only see what this run seeded, so the one already written is
+    /// invisible to it. Writing the second would say at that word what the corpus refuses to say
+    /// within a single pass, and would say it about a word that was already answered.
+    /// </para>
     /// </summary>
     private const string Settle =
         """
@@ -608,6 +656,10 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                      ELSE a.resolution END) * a.carried,
                a.source, a.note
         FROM annotation a
+        WHERE NOT EXISTS (
+            SELECT 1 FROM word_entity spoken
+            WHERE spoken.word_id = a.word_id AND spoken.entity_id <> a.entity_id
+              AND spoken.source = ANY(@written))
         ON CONFLICT (word_id, entity_id) DO NOTHING
         """;
 
@@ -659,14 +711,19 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
 
     public async Task<AnnotationOutcome> Load(CancellationToken cancellationToken = default)
     {
-        if (await db.WordEntities.AnyAsync(a => Written.Contains(a.Source), cancellationToken))
+        var started = Stopwatch.StartNew();
+
+        var unspoken = await db.Entities.CountAsync(
+            e => !db.WordEntities.Any(a => a.EntityId == e.Id && Written.Contains(a.Source)),
+            cancellationToken);
+
+        if (unspoken == 0)
         {
-            logger.LogInformation("The words already say whom they name; nothing to do");
+            logger.LogInformation("Every record this pass could reach already names its words; nothing to do");
             return new AnnotationOutcome(
-                true, Nothing, Nothing, 0, 0, 0, 0, [], TimeSpan.Zero);
+                true, Nothing, Nothing, 0, 0, 0, 0, 0, [], started.Elapsed);
         }
 
-        var started = Stopwatch.StartNew();
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
@@ -682,27 +739,30 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                 "annotated. Either the encyclopedia has not been loaded yet or neither {Witness} nor " +
                 "the Greek witnesses are in the corpus; both are earlier steps of the same pipeline",
                 Witness);
-            return new AnnotationOutcome(false, hebrew, greek, 0, 0, 0, 0, [], started.Elapsed);
+            return new AnnotationOutcome(false, hebrew, greek, 0, 0, 0, 0, 0, [], started.Elapsed);
         }
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await Run(connection, transaction, Workspace, cancellationToken);
         await Run(connection, transaction, Seed, cancellationToken,
             ("witness", Witness), ("rendering", Rendering), ("source", Resolution),
-            ("derivation", Derivation), ("resolution", NameResolution), ("derived", DerivedName));
+            ("derivation", Derivation), ("resolution", NameResolution), ("derived", DerivedName),
+            ("written", Written));
 
         var refused = await Attest(connection, transaction, cancellationToken);
         await Run(connection, transaction, GreekSeed, cancellationToken,
             ("witnesses", EntityCandidates.GreekWitnesses), ("source", GreekResolution),
-            ("distinction", GreekDistinction), ("resolution", GreekNameResolution));
+            ("distinction", GreekDistinction), ("resolution", GreekNameResolution),
+            ("written", Written));
 
         await Run(connection, transaction, Carry, cancellationToken,
             ("faint", Faint), ("firm", Firm));
 
         var method = EnumSpelling.Of(LinkMethod.StrongNumber);
         var form = EnumSpelling.Of(ByTheForm);
-        await Run(connection, transaction, Settle, cancellationToken,
-            ("method", method), ("form", form), ("corroborated", Corroborated));
+        var settled = await Run(connection, transaction, Settle, cancellationToken,
+            ("method", method), ("form", form), ("corroborated", Corroborated),
+            ("written", Written));
         await Run(connection, transaction, Claim, cancellationToken,
             ("method", method), ("form", form));
         await Run(connection, transaction, Agreement, cancellationToken,
@@ -715,8 +775,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         await transaction.CommitAsync(cancellationToken);
 
         var outcome = new AnnotationOutcome(
-            false, hebrew, greek, refused, byText.Sum(t => t.Words), corroborated, derived,
-            byText, started.Elapsed);
+            settled == 0 && byText.Count > 0, hebrew, greek, refused, settled,
+            byText.Sum(t => t.Words), corroborated, derived, byText, started.Elapsed);
         logger.LogInformation("Annotated: {Outcome}", outcome);
         return outcome;
     }
@@ -901,7 +961,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         }
     }
 
-    private static async Task Run(
+    /// <summary>One statement, and how many rows it wrote.</summary>
+    private static async Task<int> Run(
         NpgsqlConnection connection,
         IDbContextTransaction transaction,
         string sql,
@@ -916,6 +977,6 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         }
 
         command.CommandTimeout = Patient;
-        await command.ExecuteNonQueryAsync(cancellationToken);
+        return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 }
