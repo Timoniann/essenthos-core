@@ -61,6 +61,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 
 builder.Services.AddScoped<CorpusLoader>();
 builder.Services.AddScoped<StatedNumberLoader>();
+builder.Services.AddScoped<MorphGntParsingLoader>();
 builder.Services.AddScoped<CanonicalFrameLoader>();
 builder.Services.AddScoped<SuperscriptionFrameLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();

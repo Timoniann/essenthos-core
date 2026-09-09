@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260906125238_ASecondOpinionOnTheGreek")]
+    partial class ASecondOpinionOnTheGreek
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,8 +180,7 @@ namespace Essenthos.Core.Migrations
 
                     b.Property<string>("Distinguisher")
                         .HasColumnType("text")
-                        .HasColumnName("distinguisher")
-                        .HasComment("The imported one-line description, in English, in the words of whichever dataset supplied it. It is no longer what a reader is shown — entity_descriptor is — and it is not dead: it is the record as imported, it is what the generated clauses are measured against, and it is the only description an entity nothing has been generated for has. Nothing writes it but the dataset loaders.");
+                        .HasColumnName("distinguisher");
 
                     b.Property<string>("Kind")
                         .IsRequired()
@@ -348,142 +350,6 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityDescriptor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CanonicalBook")
-                        .HasColumnType("integer")
-                        .HasColumnName("canonical_book");
-
-                    b.Property<int>("CanonicalChapter")
-                        .HasColumnType("integer")
-                        .HasColumnName("canonical_chapter");
-
-                    b.Property<int>("CanonicalVerse")
-                        .HasColumnType("integer")
-                        .HasColumnName("canonical_verse");
-
-                    b.Property<double?>("Confidence")
-                        .HasColumnType("double precision")
-                        .HasColumnName("confidence");
-
-                    b.Property<int>("EntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("entity_id");
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("method");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text")
-                        .HasColumnName("note");
-
-                    b.Property<int>("Ordinal")
-                        .HasColumnType("integer")
-                        .HasColumnName("ordinal");
-
-                    b.Property<string>("Relation")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("relation");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.Property<int>("TargetEntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("target_entity_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_entity_descriptor");
-
-                    b.HasIndex("EntityId")
-                        .HasDatabaseName("ix_entity_descriptor_entity_id");
-
-                    b.HasIndex("TargetEntityId")
-                        .HasDatabaseName("ix_entity_descriptor_target_entity_id");
-
-                    b.HasIndex("EntityId", "Ordinal")
-                        .IsUnique()
-                        .HasDatabaseName("ix_entity_descriptor_entity_id_ordinal");
-
-                    b.ToTable("entity_descriptor", null, t =>
-                        {
-                            t.HasComment("One clause of what this corpus says an entity is, in its own voice: a relation, an entity it holds, and the verse it was read from. The line a reader sees is rendered from these per language, so every name in it is a link. It replaces what entity.distinguisher was shown for; that column stays, unchanged and unread by this layer.");
-
-                            t.HasCheckConstraint("ck_entity_descriptor_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
-
-                            t.HasCheckConstraint("ck_entity_descriptor_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
-
-                            t.HasCheckConstraint("ck_entity_descriptor_source_not_empty", "length(btrim(\"source\")) > 0");
-
-                            t.HasCheckConstraint("ck_entity_descriptor_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
-                        });
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityDescriptorClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<double?>("Confidence")
-                        .HasColumnType("double precision")
-                        .HasColumnName("confidence");
-
-                    b.Property<int>("EntityDescriptorId")
-                        .HasColumnType("integer")
-                        .HasColumnName("entity_descriptor_id");
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("method");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text")
-                        .HasColumnName("note");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.HasKey("Id")
-                        .HasName("pk_entity_descriptor_claim");
-
-                    b.HasIndex("EntityDescriptorId")
-                        .HasDatabaseName("ix_entity_descriptor_claim_entity_descriptor_id");
-
-                    b.HasIndex("EntityDescriptorId", "Method", "Source")
-                        .IsUnique()
-                        .HasDatabaseName("ix_entity_descriptor_claim_entity_descriptor_id_method_source");
-
-                    b.ToTable("entity_descriptor_claim", null, t =>
-                        {
-                            t.HasCheckConstraint("ck_entity_descriptor_claim_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
-
-                            t.HasCheckConstraint("ck_entity_descriptor_claim_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
-
-                            t.HasCheckConstraint("ck_entity_descriptor_claim_source_not_empty", "length(btrim(\"source\")) > 0");
-
-                            t.HasCheckConstraint("ck_entity_descriptor_claim_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
-                        });
-                });
-
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityName", b =>
                 {
                     b.Property<int>("Id")
@@ -547,72 +413,6 @@ namespace Essenthos.Core.Migrations
                         .HasDatabaseName("ix_entity_name_hebrew_strong_number");
 
                     b.ToTable("entity_name", (string)null);
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityNameForm", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<double?>("Confidence")
-                        .HasColumnType("double precision")
-                        .HasColumnName("confidence");
-
-                    b.Property<int>("EntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("entity_id");
-
-                    b.Property<string>("Form")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("form");
-
-                    b.Property<string>("GrammaticalCase")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("grammatical_case");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("language");
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("method");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.HasKey("Id")
-                        .HasName("pk_entity_name_form");
-
-                    b.HasIndex("EntityId")
-                        .HasDatabaseName("ix_entity_name_form_entity_id");
-
-                    b.HasIndex("EntityId", "Language", "GrammaticalCase")
-                        .IsUnique()
-                        .HasDatabaseName("ix_entity_name_form_entity_id_language_grammatical_case");
-
-                    b.ToTable("entity_name_form", null, t =>
-                        {
-                            t.HasComment("An entity's name in a reader's language, in the grammatical case a phrase puts it in. Produced with the name and never computed from it: a stemmer guessing the genitive of a Hebrew proper name is wrong often and silently.");
-
-                            t.HasCheckConstraint("ck_entity_name_form_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
-
-                            t.HasCheckConstraint("ck_entity_name_form_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
-
-                            t.HasCheckConstraint("ck_entity_name_form_source_not_empty", "length(btrim(\"source\")) > 0");
-
-                            t.HasCheckConstraint("ck_entity_name_form_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
-                        });
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityRelationship", b =>
@@ -791,10 +591,6 @@ namespace Essenthos.Core.Migrations
                     b.Property<string>("Region")
                         .HasColumnType("text")
                         .HasColumnName("region");
-
-                    b.Property<int?>("SequenceInYear")
-                        .HasColumnType("integer")
-                        .HasColumnName("sequence_in_year");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -2130,39 +1926,6 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Entity");
                 });
 
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityDescriptor", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
-                        .WithMany()
-                        .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_entity_descriptor_entity_entity_id");
-
-                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Target")
-                        .WithMany()
-                        .HasForeignKey("TargetEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_entity_descriptor_entity_target_entity_id");
-
-                    b.Navigation("Entity");
-
-                    b.Navigation("Target");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityDescriptorClaim", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.EntityDescriptor", "EntityDescriptor")
-                        .WithMany("Claims")
-                        .HasForeignKey("EntityDescriptorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_entity_descriptor_claim_entity_descriptor_entity_descriptor");
-
-                    b.Navigation("EntityDescriptor");
-                });
-
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityName", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
@@ -2171,18 +1934,6 @@ namespace Essenthos.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_entity_name_entity_entity_id");
-
-                    b.Navigation("Entity");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityNameForm", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
-                        .WithMany()
-                        .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_entity_name_form_entity_entity_id");
 
                     b.Navigation("Entity");
                 });
@@ -2631,11 +2382,6 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Names");
 
                     b.Navigation("Verses");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityDescriptor", b =>
-                {
-                    b.Navigation("Claims");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Event", b =>

@@ -121,6 +121,7 @@ internal sealed class DatasetLoader(
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
             await LemmatiseTheSeptuagint(resources, stoppingToken);
+            await ParseTheGreekASecondTime(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
             await LinkTheBerean(resources, stoppingToken);
@@ -511,6 +512,20 @@ internal sealed class DatasetLoader(
         // our reasoning rather than anybody's testimony.
         var numbers = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Glaux.SeptuagintStrongLoader>();
         status.Record(await numbers.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// A second opinion on the Greek New Testament's morphology, from MorphGNT. It runs after the
+    /// corpus loader and needs nothing from the links, because it joins the two editions by what
+    /// they print rather than by anything either of them is linked to.
+    /// </summary>
+    private async Task ParseTheGreekASecondTime(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the second Greek morphology");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<MorphGntParsingLoader>();
+        status.Record(await loader.Load(Path.Combine(resources, "MorphGnt"), cancellationToken));
     }
 
     /// <summary>

@@ -64,6 +64,11 @@
     "files": 67,
     "sha256": "d8d763a6336f9fcb01aceb0b861a0bf99486356c70b2bf18d8e537613b33f22a"
   },
+  "MorphGnt": {
+    "bytes": 8938504,
+    "files": 28,
+    "sha256": "7ee2e1c552be2170e92812321e38a2f8e344cc26a57d8acd489e8ae32a59e6b5"
+  },
   "Nestle1904": {
     "bytes": 43631728,
     "files": 2,
@@ -114,20 +119,25 @@
     "files": 12,
     "sha256": "9f85cf44eac3240ab4546adc3d579f3056a44bafe7a2dd27e48aff9f495b8071"
   },
-  "Tyndale1534": {
-    "bytes": 1023063,
-    "files": 28,
-    "sha256": "1c4f93ad52cb63f8a3e8f6f2b30947fa78b036302ca8fb0a9799c2527b87f54c"
-  },
   "Tischendorf": {
     "bytes": 9935139,
     "files": 31,
     "sha256": "5399d995478f1d3c6d1a599cda2a5ba7fcf09a2c668470b31777dd965cfdefc6"
   },
+  "Tyndale1534": {
+    "bytes": 1023063,
+    "files": 28,
+    "sha256": "1c4f93ad52cb63f8a3e8f6f2b30947fa78b036302ca8fb0a9799c2527b87f54c"
+  },
   "Versification": {
     "bytes": 5790928,
     "files": 1,
     "sha256": "24704247b91c44728f58c4fdeba9072308ee5b714b4bbfea568ce8bb7fe55ca9"
+  },
+  "WestcottHort": {
+    "bytes": 3883476,
+    "files": 56,
+    "sha256": "ae94531aee7e51caf29f18da6b0cd4b0b33238a654bda142c24af0c3a79b82aa"
   },
   "WorldEnglish": {
     "bytes": 19025507,
@@ -138,11 +148,6 @@
     "bytes": 4435509,
     "files": 67,
     "sha256": "38ba1a20b4fc22f907ac438ef24a0de418ec40931cd529de1c0d1833ff47edcc"
-  },
-  "WestcottHort": {
-    "bytes": 3883476,
-    "files": 56,
-    "sha256": "ae94531aee7e51caf29f18da6b0cd4b0b33238a654bda142c24af0c3a79b82aa"
   },
   "Zefania": {
     "bytes": 17291524,
