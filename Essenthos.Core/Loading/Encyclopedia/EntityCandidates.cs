@@ -160,8 +160,15 @@ internal static class EntityCandidates
     /// The numbers the text establishes for a place the geocoding dataset supplied, by the three
     /// statements the class comment sets out. <c>names</c> counts the names on the witness's
     /// side of the link, and only a link carrying one of them is read.
+    ///
+    /// <para>
+    /// It is public because the place register asks it too, and has to: a record it writes for a
+    /// number this already reads onto a held place would make that number name two records, and a
+    /// number naming two records is the one thing the resolution refuses. Asked in both places it
+    /// is one rule; asked in one it is a rule and a contradiction of it.
+    /// </para>
     /// </summary>
-    private const string Read =
+    public const string Derived =
         """
         WITH placed AS (
             SELECT e.id AS entity_id,
@@ -215,7 +222,7 @@ internal static class EntityCandidates
         $"""
          WITH held AS ({Held}),
          stated AS ({Stated}),
-         read AS ({Read}),
+         read AS ({Derived}),
          named AS (
              SELECT number, entity_id, true AS stated FROM stated
              UNION

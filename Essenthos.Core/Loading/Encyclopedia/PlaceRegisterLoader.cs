@@ -3,6 +3,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
@@ -83,6 +84,17 @@ internal sealed record PlaceRegisterOutcome(
 /// as the naming convention it is. Nothing is folded to consonants. That fold reaches 90% instead
 /// of 75% and joins <em>Sion</em> to <em>Zoan</em> and <em>Gomorrha</em> to <em>Moreh</em> on the
 /// way, which is a wrong coordinate on a page rather than a missing one.
+/// </para>
+///
+/// <para>
+/// <strong>The spelling is not the only way to a held place.</strong> Seventeen records met none
+/// by it and were written as second pages for a place the corpus already had — <em>Beth-baal-meon</em>
+/// beside <em>Beth-meon</em>, <em>Tipsah</em> beside <em>Tiphsah</em>, a doubled vowel or a
+/// <em>ts</em> for a <em>z</em> apart. That is worse than an extra page: the number then names two
+/// records, which is exactly what <see cref="EntityAnnotationLoader"/> refuses to resolve, so the
+/// page that was working loses its annotations too. So where the spelling reaches nothing, the
+/// number is asked — <see cref="EntityCandidates.Derived"/>, the corpus's own reading of which
+/// place a Hebrew number names, which is the same rule that would afterwards refuse the pair.
 /// </para>
 ///
 /// <para>
@@ -176,6 +188,7 @@ internal sealed class PlaceRegisterLoader(
             .ToListAsync(cancellationToken);
 
         var byName = Index(held);
+        var byNumber = await Derived(held, cancellationToken);
         var slugs = (await db.Entities.Select(e => e.Slug).ToListAsync(cancellationToken))
             .ToHashSet(StringComparer.Ordinal);
 
@@ -185,7 +198,7 @@ internal sealed class PlaceRegisterLoader(
 
         foreach (var record in records)
         {
-            var hits = Reach(record, byName);
+            var hits = Reach(record, byName, byNumber);
             if (hits.Count == 0)
             {
                 // Indexed as it is created, so that a second entry bearing the same name joins it
@@ -304,10 +317,18 @@ internal sealed class PlaceRegisterLoader(
     /// The held places one record reaches. Several is not a fault: Strong heads <em>Aroer</em> once
     /// and the gazetteer surveys three of them, and which occurrence is which is the namesake pass.
     /// What the record states here is about the name.
+    ///
+    /// <para>
+    /// The spelling is asked first and the number only where it answers nothing. Where both answer,
+    /// the spelling is the finer statement — it is about this entry and this label, where the number
+    /// is about every place the corpus reads it onto — and taking the union would put a record on
+    /// each of the three Mizpahs merely because it met one of them by name.
+    /// </para>
     /// </summary>
     private static List<Entity> Reach(
         PlaceRegisterRecord record,
-        Dictionary<string, List<Entity>> byName)
+        Dictionary<string, List<Entity>> byName,
+        Dictionary<string, List<Entity>> byNumber)
     {
         var hits = new List<Entity>();
         foreach (var name in (record.Names ?? []).Append(record.Name))
@@ -323,7 +344,59 @@ internal sealed class PlaceRegisterLoader(
             }
         }
 
+        if (hits.Count == 0 && byNumber.TryGetValue(record.Number, out var read))
+        {
+            hits.AddRange(read);
+        }
+
         return hits;
+    }
+
+    /// <summary>
+    /// Which held place the corpus itself reads each Hebrew number onto, from
+    /// <see cref="EntityCandidates.Derived"/> — the geocoding dataset saying a place is named in a
+    /// verse, the King James printing that place's name at a word, and BHSA giving that word a
+    /// number. It is the same statement the annotation pass is about to be asked, and asking it
+    /// here is what stops this pass writing the record that makes it unanswerable.
+    ///
+    /// <para>
+    /// Hebrew only, because the join runs through BHSA's marking of a name and nothing marks a Greek
+    /// one. The Greek side has no such duplicate to find: the encyclopedia's Greek numbers reach the
+    /// same records the spelling does.
+    /// </para>
+    /// </summary>
+    private async Task<Dictionary<string, List<Entity>>> Derived(
+        IReadOnlyList<Entity> held,
+        CancellationToken cancellationToken)
+    {
+        var byId = held.ToDictionary(place => place.Id);
+
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        await using var command = new NpgsqlCommand(EntityCandidates.Derived, connection);
+        command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
+        command.Parameters.AddWithValue("rendering", EntityCandidates.Rendering);
+        command.CommandTimeout = Annotating.Patient;
+
+        var read = new Dictionary<string, List<Entity>>(StringComparer.Ordinal);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            if (!byId.TryGetValue(reader.GetInt32(1), out var place))
+            {
+                continue;
+            }
+
+            if (!read.TryGetValue(reader.GetString(0), out var places))
+            {
+                read[reader.GetString(0)] = places = [];
+            }
+
+            places.Add(place);
+        }
+
+        return read;
     }
 
     /// <summary>
