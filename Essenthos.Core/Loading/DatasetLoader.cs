@@ -141,6 +141,7 @@ internal sealed class DatasetLoader(
             await ReadTheStatedKinship(stoppingToken);
             await NameThePeoples(resources, stoppingToken);
             await MakeThePlacesOurs(resources, stoppingToken);
+            await TellTheNamesakesApart(resources, stoppingToken);
             await SayWhichWordNamesWhom(stoppingToken);
             await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
             await ReadTheNamesNothingSettles(resources, stoppingToken);
@@ -751,6 +752,21 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<PlaceRegisterLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The men who share a name, told apart at the grain the lexicon enumerates. After the places
+    /// because it is the same construction — a record per bearer the dictionary heads — and before
+    /// the annotations, because what it writes is a second page under a name a word already reaches
+    /// and the annotation has to see both to choose between them.
+    /// </summary>
+    private async Task TellTheNamesakesApart(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the person register");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<PersonRegisterLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
     }
 

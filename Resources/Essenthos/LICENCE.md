@@ -59,3 +59,25 @@ Newline-delimited JSON, read by `PlaceRegisterLoader`.
 - **Terms.** Ours, under the project's own licence. That a nineteenth-century dictionary heads a
   place name is not anyone's property; the net, the classification, the readings and the decision
   here are this project's.
+
+## persons/
+
+Which of the men who share a name this verse is about — one line per bearer the pass considered, the
+refusals with the records, because what a register is asked next is why somebody is not in it.
+Newline-delimited JSON, read by `PersonRegisterLoader`.
+
+- **Made by** Essenthos, by `scripts/persons.py` against the `essenthos_core` database. Each line
+  carries the bearer's standing — a verse of this corpus, or the lexicon's enumeration and nothing
+  else — with the reading that assigned it and, where a bearer no verse establishes, the second
+  reading that upheld or refused it, each with the model that produced it and the date it was asked.
+- **Read from** Strong's Dictionary, whose entries are public domain and whose numbered enumeration
+  of the bearers is quoted here in the `enumeration` field for exactly that reason: what established
+  a record has to be readable beside it. The verses are the King James Version, which is public
+  domain, and the clauses shown to the model were this project's own descriptors.
+- **Not read from** BibleData. Its count of how many people bear a name was deliberately kept out of
+  every prompt, so that agreement against it stays a measurement rather than an echo. Where the
+  register reaches a person BibleData already holds, that record keeps its identifier and its
+  credit, and the link is established by the verses the two have in common.
+- **Terms.** Ours, under the project's own licence. That a nineteenth-century lexicographer numbered
+  twenty-nine Zechariahs is not anyone's property; the assignment, the readings and the decision
+  here are this project's.
