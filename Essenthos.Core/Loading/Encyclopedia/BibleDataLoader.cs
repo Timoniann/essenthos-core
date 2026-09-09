@@ -726,6 +726,8 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 CanonicalBook = reference?.Book,
                 CanonicalChapter = reference?.Chapter,
                 CanonicalVerse = reference?.Verse,
+                Method = LinkMethod.StatedBySource,
+                Source = Source,
                 Notes = Blank(row["relationship_notes"]),
             };
 

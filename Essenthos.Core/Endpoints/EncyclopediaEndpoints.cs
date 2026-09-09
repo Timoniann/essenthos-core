@@ -402,14 +402,24 @@ internal static class EncyclopediaEndpoints
                 .Where(r => r.FromEntityId == entity.Id)
                 .Select(r => new EntityRelationshipResponse(
                     r.Type, r.Category, r.To!.Slug, r.To.Name, r.To.Distinguisher, false,
-                    Reference(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), r.Notes))
+                    Reference(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), r.Notes)
+                {
+                    Method = EnumSpelling.Of(r.Method),
+                    Confidence = r.Confidence,
+                    Source = r.Source,
+                })
                 .ToListAsync(cancellationToken);
 
             var inward = await db.EntityRelationships
                 .Where(r => r.ToEntityId == entity.Id)
                 .Select(r => new EntityRelationshipResponse(
                     r.Type, r.Category, r.From!.Slug, r.From.Name, r.From.Distinguisher, true,
-                    Reference(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), r.Notes))
+                    Reference(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), r.Notes)
+                {
+                    Method = EnumSpelling.Of(r.Method),
+                    Confidence = r.Confidence,
+                    Source = r.Source,
+                })
                 .ToListAsync(cancellationToken);
 
             var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
@@ -1210,7 +1220,26 @@ internal record EntityRelationshipResponse(
     string? Distinguisher,
     bool Inward,
     VerseRefResponse? Reference,
-    string? Notes);
+    string? Notes)
+{
+    /// <summary>
+    /// What established it. Two witnesses speak in this table and a reader who cannot tell a
+    /// dataset's edge from a model's reading of a verse is being asked to trust both equally.
+    /// </summary>
+    public string? Method { get; init; }
+
+    public double? Confidence { get; init; }
+
+    /// <summary>Which dataset, model or person says so.</summary>
+    public string? Source { get; init; }
+
+    /// <summary>
+    /// Which declared dataset <see cref="Source"/> belongs to, so a page renders a credit rather
+    /// than printing a sentence. Null where nothing claims the string, which is how an undeclared
+    /// source is noticed instead of being silently credited to nobody.
+    /// </summary>
+    public string? Dataset => Datasets.Of(Source);
+}
 
 /// <summary>What the text calls the entity at one verse, and whether that word settles who it is.</summary>
 /// <param name="Dataset">

@@ -97,6 +97,7 @@ builder.Services.AddScoped<OwnRecordLoader>();
 builder.Services.AddScoped<SenseReadingLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
+builder.Services.AddScoped<OwnRelationshipLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();

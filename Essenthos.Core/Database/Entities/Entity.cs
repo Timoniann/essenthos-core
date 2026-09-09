@@ -233,12 +233,53 @@ public class EntityName
 }
 
 /// <summary>
+/// What each row of <see cref="EntityRelationship.Category"/> may say, and no more.
+///
+/// The first three are BibleData's own honesty about its own edge list, and they are kept in its
+/// words. The fourth is this corpus's, and it exists because ours is a different kind of thing: a
+/// model read a verse the row names and said the relation holds. Calling that <c>explicit</c>
+/// would put a reading and a dataset's citation under one word, which is the failure
+/// <see cref="LinkClaim"/> was built to prevent everywhere else.
+/// </summary>
+public static class RelationshipCategories
+{
+    /// <summary>A verse says it, and the dataset points at the verse.</summary>
+    public const string Explicit = "explicit";
+
+    /// <summary>The dataset worked it out from what it holds.</summary>
+    public const string Inferred = "inferred";
+
+    /// <summary>The dataset takes it as understood without arguing it.</summary>
+    public const string Implicit = "implicit";
+
+    /// <summary>Read here, from the verse on the row, by whatever <c>source</c> names.</summary>
+    public const string Read = "read";
+}
+
+/// <summary>
 /// One entity standing in one relation to another — son, father, servant, killer.
 /// </summary>
 /// <remarks>
 /// <see cref="Category"/> is the source's own honesty: <c>explicit</c> where a verse says it and
 /// <c>inferred</c> where the dataset worked it out. Keeping that distinction is the same discipline
 /// the link table applies to words, and losing it would make a deduction look like a citation.
+///
+/// <para>
+/// <see cref="Method"/>, <see cref="Confidence"/> and <see cref="Source"/> are here for the reason
+/// they are on every other claim this corpus holds, and they arrived when the table stopped being
+/// one dataset's. An edge read out of a verse by a model and an edge a dataset states are not the
+/// same claim, and a table with no per-row provenance can only present them as though they were —
+/// which is what <see cref="EntityVerse.Source"/> was added to stop happening to the verse lists.
+/// </para>
+///
+/// <para>
+/// **A relationship with no verse may exist, and only for a witness that gave none.** BibleData
+/// states 40 of its 5,448 rows without a reference and there is nothing to be done about that but
+/// say so; inventing a citation for them would be RUL-0024 in the one table where a reader is most
+/// likely to follow one. What this corpus concludes for itself always names the verse it read, and
+/// that is a database constraint rather than a habit: every method but
+/// <see cref="LinkMethod.StatedBySource"/> carries an address.
+/// </para>
 /// </remarks>
 [Index(nameof(FromEntityId))]
 [Index(nameof(ToEntityId))]
@@ -254,8 +295,16 @@ public class EntityRelationship
     public int ToEntityId { get; set; }
     public Entity? To { get; set; }
 
+    /// <summary>
+    /// The relation, in the vocabulary of whoever states it: BibleData's <c>son</c>, or this
+    /// corpus's <c>son-of</c> from <see cref="DescriptorRelations"/>. Deliberately not translated
+    /// into one spelling — a row saying <c>son</c> under BibleData's name has to keep saying what
+    /// BibleData said, and <see cref="Loading.Encyclopedia.RelationshipVocabulary"/> is where the
+    /// two are compared.
+    /// </summary>
     public required string Type { get; set; }
 
+    /// <summary>One of <see cref="RelationshipCategories"/>.</summary>
     public required string Category { get; set; }
 
     /// <summary>The verse the source rests it on, where it rests it on one.</summary>
@@ -264,6 +313,17 @@ public class EntityRelationship
     public int? CanonicalChapter { get; set; }
 
     public int? CanonicalVerse { get; set; }
+
+    public LinkMethod Method { get; set; }
+
+    /// <summary>
+    /// Null exactly where a person or a source stated it, a number in 0..1 where a process
+    /// concluded it — as everywhere else here, and enforced by the database in both directions.
+    /// </summary>
+    public double? Confidence { get; set; }
+
+    /// <summary>Which dataset, model or person says so. Never empty.</summary>
+    public required string Source { get; set; }
 
     public string? Notes { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Encyclopedia;
 
 namespace Essenthos.Core.Endpoints;
 
@@ -357,6 +358,11 @@ public static class Datasets
                 // rendering into a reader's language is this project's, so the row names the model,
                 // the prompt version and the day, and the English stays beside it.
                 StrongTranslationLoader.SourcePrefix,
+
+                // The clauses the encyclopedia says an entity is, and the relationships read off
+                // them. The row names the model and the day it was asked, so the pass is
+                // identifiable and removable, and the string is what it begins with.
+                EntityDescriptorLoader.SourcePrefix,
             ]),
     ];
 

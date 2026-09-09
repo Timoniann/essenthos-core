@@ -148,10 +148,36 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<EntityRelationship>(entity =>
         {
+            entity.Property(r => r.Method).HasConversion(EnumStorage.LinkMethod);
+
             entity.HasOne(r => r.From).WithMany().HasForeignKey(r => r.FromEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
             entity.HasOne(r => r.To).WithMany().HasForeignKey(r => r.ToEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // A relationship this corpus concludes for itself names the verse it read; one carried
+            // in from a witness names whatever the witness gave, which for 40 of BibleData's rows
+            // is nothing. Writing an address for those would be a citation a reader cannot follow
+            // dressed as one they can, which is the failure RUL-0024 is about, so the asymmetry is
+            // kept and only our own half of it is enforced.
+            entity.ToTable(
+                "entity_relationship",
+                t =>
+                {
+                    AddProvenanceConstraints(t, "entity_relationship").HasCheckConstraint(
+                        "ck_entity_relationship_read_names_a_verse",
+                        $"\"method\" = '{EnumSpelling.Of(LinkMethod.StatedBySource)}' "
+                        + "OR (\"canonical_book\" IS NOT NULL AND \"canonical_chapter\" IS NOT NULL "
+                        + "AND \"canonical_verse\" IS NOT NULL)");
+
+                    t.HasComment(
+                        "One entity standing in one relation to another. Two witnesses speak here "
+                        + "and every row says which: BibleData's edge list under its own category "
+                        + "and its own relation names, and the clauses this corpus read from "
+                        + "Scripture under theirs. Nothing settles them into one row -- what a "
+                        + "reader is shown is settled the way an annotation is, by claim standing "
+                        + "and then confidence.");
+                });
         });
 
         modelBuilder.Entity<EntityClaim>(entity =>

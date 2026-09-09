@@ -145,6 +145,7 @@ internal sealed class DatasetLoader(
             await ReadTheNamesNothingSettles(resources, stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
+            await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -808,6 +809,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityDescriptorLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The relationships an entity page draws, read off the clauses the step above loaded rather
+    /// than left to a dataset's edge list. Immediately after it, because it reads nothing else, and
+    /// after the dataset loaders because what a witness already states is half of the pick.
+    /// </summary>
+    private async Task RelateTheEntitiesOurOwnClausesRelate(CancellationToken cancellationToken)
+    {
+        status.Starting("the relationships this corpus reads for itself");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<OwnRelationshipLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)
