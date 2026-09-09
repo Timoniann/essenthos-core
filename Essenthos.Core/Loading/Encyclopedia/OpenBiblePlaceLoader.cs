@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Essenthos.Core.Database;
@@ -67,6 +67,64 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
     /// </summary>
     [GeneratedRegex(@"\s+\d+$")]
     private static partial Regex TrailingIndex();
+
+    /// <summary>
+    /// How the source says one entry is only another's other name: <em>another name for Mizpah
+    /// 1</em>, <em>another name for the Arnon</em>. It names its target by the catalogue index this
+    /// corpus does not keep, so what the phrase can be read for is that the entry claims no site of
+    /// its own — not which entry it points at.
+    /// </summary>
+    private const string OtherName = "another name for";
+
+    /// <summary>
+    /// Where the source puts a place, in its own words — <em>Tell es Sultan</em>, <em>Khirbet
+    /// Rabud</em>, <em>between Dedan and Kedar</em> — or nothing where it says nothing.
+    ///
+    /// It is the one statement the gazetteer makes that tells two places of one name apart, and it
+    /// is what <see cref="PlaceRegisterLoader"/> reads to decide whether a Strong number borne by
+    /// several records is borne by several <em>places</em>. Two entries put at two sites are two
+    /// places: Jericho at Tell es Sultan and Jericho at Tell el Alayiq are four kilometres apart.
+    ///
+    /// <para>
+    /// Two things it looks like and is not. An entry the source only files under its own name and
+    /// index — <em>Samaria</em>, <em>Samaria 2</em>, <em>Judea 1</em> — has not been placed
+    /// anywhere; the identification is the catalogue entry echoed back. And an entry that says it
+    /// is another name for something claims no site of its own either. Reading either as a site
+    /// would make a city and the country called after it two places, which they are not.
+    /// </para>
+    ///
+    /// <para>
+    /// A record that is not a place has none at all, whatever its distinguisher holds. On a person
+    /// that column is a life and not a location — <em>son of Nahor (GEN 11:24)</em> — and reading it
+    /// as a site made the town named after Terah a second Terah and took 73 rows off his page.
+    /// </para>
+    /// </summary>
+    internal static string? Site(Entity place)
+    {
+        if (place.Kind != EntityKind.Place)
+        {
+            return null;
+        }
+
+        var identification = place.ModernEquivalent ?? place.Distinguisher;
+        if (string.IsNullOrWhiteSpace(identification))
+        {
+            return null;
+        }
+
+        if (identification.StartsWith(OtherName, StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var stated = TrailingIndex().Replace(identification, string.Empty);
+        return string.Equals(
+            PlaceRegisterFiles.Normalise(stated),
+            PlaceRegisterFiles.Normalise(place.Name),
+            StringComparison.Ordinal)
+            ? null
+            : identification;
+    }
 
     /// <summary>
     /// Descriptions carry inline markup naming other entries — <c>along the &lt;modern

@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -228,6 +228,33 @@ public class EntityName
 
     /// <summary>Name, title, epithet — what kind of label this is.</summary>
     public string? Kind { get; set; }
+
+    /// <summary>
+    /// The record this name is that of, where this record is not it.
+    ///
+    /// A Strong number is a name and not a place, and one name can be borne by several records that
+    /// are one place seen several ways: Zion the settlement and Mount Zion its hill, Samaria the
+    /// city and Samaria the country called after it, Egypt and the brook, the sea and the river
+    /// named after Egypt, Edom and Idumea, Jerusalem and Salem. Left null on all of them, the
+    /// number names several records and <see cref="Loading.Encyclopedia.EntityAnnotationLoader"/>
+    /// refuses to resolve it, so 146 words that name Zion today would name nobody.
+    ///
+    /// <para>
+    /// So the row says whose name it is. The number then answers with one record — the one the
+    /// corpus already reads it onto — while the record here keeps the name and the number as its
+    /// own, which is what a page for Mount Zion is owed.
+    /// </para>
+    ///
+    /// <para>
+    /// Null is the ordinary case and means what it says: this record is the one the name is of.
+    /// Two records both left null are two places under one name — Jericho at Tell es Sultan and
+    /// Jericho at Tell el Alayiq — and the number does not resolve, which is the right answer
+    /// rather than a gap.
+    /// </para>
+    /// </summary>
+    public int? AspectOfEntityId { get; set; }
+
+    public Entity? AspectOf { get; set; }
 
     public override string ToString() => $"EntityName({Label})";
 }

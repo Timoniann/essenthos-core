@@ -1,9 +1,10 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
@@ -17,12 +18,23 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// How many the corpus reads off its own words in all, so that a pass writing nothing can be told
 /// from one that had nothing to read.
 /// </param>
-internal sealed record OwnReferenceOutcome(bool AlreadyLoaded, int Written, int Cited, TimeSpan Elapsed)
+/// <param name="Withdrawn">
+/// References no annotation of ours stands behind any more, taken back. Zero unless something has
+/// withdrawn an annotation this pass had already read a verse off.
+/// </param>
+internal sealed record OwnReferenceOutcome(
+    bool AlreadyLoaded,
+    int Written,
+    int Withdrawn,
+    int Cited,
+    TimeSpan Elapsed)
 {
     public override string ToString() =>
         AlreadyLoaded
-            ? $"the {Cited} references this corpus reads for itself are already there, checked in {Elapsed}"
-            : $"{Written} verse references read off the annotations, {Cited} in all, in {Elapsed}";
+            ? $"the {Cited} references this corpus reads for itself are already there, checked in " +
+              $"{Elapsed}, with {Withdrawn} withdrawn"
+            : $"{Written} verse references read off the annotations and {Withdrawn} withdrawn, " +
+              $"{Cited} in all, in {Elapsed}";
 }
 
 /// <summary>
@@ -85,15 +97,15 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        await using var command = new NpgsqlCommand(Derivation, connection);
-        command.Parameters.AddWithValue("source", FromOurOwnWords);
-        command.CommandTimeout = Annotating.Patient;
-
-        var written = await command.ExecuteNonQueryAsync(cancellationToken);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var written = await Run(connection, transaction, Derivation, cancellationToken);
+        var withdrawn = await Run(connection, transaction, Retraction, cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
 
         var cited = await db.EntityVerses.CountAsync(v => v.Source == FromOurOwnWords, cancellationToken);
 
-        var outcome = new OwnReferenceOutcome(written == 0 && cited > 0, written, cited, started.Elapsed);
+        var outcome = new OwnReferenceOutcome(
+            written == 0 && withdrawn == 0 && cited > 0, written, withdrawn, cited, started.Elapsed);
         logger.LogInformation("Read the references off the annotations: {Outcome}", outcome);
         return outcome;
     }
@@ -162,6 +174,54 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
                AND cited.canonical_verse = r.canonical_verse
                AND cited.source = @source)
          """;
+
+    /// <summary>
+    /// A reference of ours that no annotation of ours stands behind any more.
+    ///
+    /// The derivation writes a verse because a word in it names the entity. An annotation can be
+    /// taken back — <see cref="EntityAnnotationLoader"/> withdraws a resolution once the
+    /// encyclopedia answers its number with more than one place — and the reference then goes on
+    /// asserting, in this corpus's own name, a reading this corpus no longer has. It reads as
+    /// scholarship and it is a leftover, which is the same fault as the annotation it came from and
+    /// one hop further from where a reader could see it.
+    ///
+    /// <para>
+    /// Only ours, and only where nothing at all is left: an entity still named at a word of that
+    /// verse keeps the reference whichever annotation settles the word, because the derivation only
+    /// ever claimed the verse. The gazetteer's rows and the datasets' say what they always said.
+    /// </para>
+    ///
+    /// <para>
+    /// In the same transaction as the derivation. The two are one statement about what this corpus
+    /// reads, and half of it committing on its own is the failure MST-0184 records.
+    /// </para>
+    /// </summary>
+    private static readonly string Retraction =
+        """
+        DELETE FROM entity_verse cited
+        WHERE cited.source = @source
+          AND NOT EXISTS (
+              SELECT 1 FROM word_entity a
+              JOIN word w ON w.id = a.word_id
+              JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+              WHERE a.entity_id = cited.entity_id
+                AND r.canonical_book = cited.canonical_book
+                AND r.canonical_chapter = cited.canonical_chapter
+                AND r.canonical_verse = cited.canonical_verse)
+        """;
+
+    private async Task<int> Run(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        string sql,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(
+            sql, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+        command.Parameters.AddWithValue("source", FromOurOwnWords);
+        command.CommandTimeout = Annotating.Patient;
+        return await command.ExecuteNonQueryAsync(cancellationToken);
+    }
 
     /// <summary>
     /// How much each method knew before it started, written out of <see cref="ClaimStanding"/> so

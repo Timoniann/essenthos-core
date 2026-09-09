@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -98,6 +98,18 @@ internal sealed record PlaceRegisterOutcome(
 /// </para>
 ///
 /// <para>
+/// <strong>One name, several records, and not always several places.</strong> A number the register
+/// writes onto more than one record is two situations and the corpus must not treat them as one.
+/// Zion the settlement and Mount Zion its hill are one place seen twice; Samaria the city and
+/// Samaria the country called after it likewise; so are Egypt and the brook, the sea and the river
+/// that carry its name, and Edom and Idumea, and Jerusalem and Salem. Jericho at Tell es Sultan and
+/// Jericho at Tell el Alayiq are two towns four kilometres apart. The first must resolve, to the
+/// place itself, and the second must not resolve at all — and only the gazetteer can tell them
+/// apart, so <see cref="Aspects"/> asks it. What that decides is written on the name row as
+/// <see cref="EntityName.AspectOfEntityId"/>, which is where every later pass reads it.
+/// </para>
+///
+/// <para>
 /// Idempotent on the claim this pass writes, which is the one thing that cannot be true before it
 /// has run.
 /// </para>
@@ -189,6 +201,7 @@ internal sealed class PlaceRegisterLoader(
 
         var byName = Index(held);
         var byNumber = await Derived(held, cancellationToken);
+        var bearers = await Bearers(cancellationToken);
         var slugs = (await db.Entities.Select(e => e.Slug).ToListAsync(cancellationToken))
             .ToHashSet(StringComparer.Ordinal);
 
@@ -215,10 +228,15 @@ internal sealed class PlaceRegisterLoader(
 
                 added.Add(entity);
                 Index(byName, entity, [record.Name]);
-                hits = [entity];
+
+                var met = new Spelling(entity);
+                met.Met(false);
+                hits = [met];
             }
 
-            foreach (var hit in hits)
+            var principal = Aspects(record, hits, bearers, byNumber);
+
+            foreach (var hit in hits.Select(spelling => spelling.Place))
             {
                 if (!made.TryGetValue(hit, out var already))
                 {
@@ -229,7 +247,7 @@ internal sealed class PlaceRegisterLoader(
 
                 if (!hit.Names.Any(name => Carries(name, record.Number)))
                 {
-                    hit.Names.Add(Name(record));
+                    hit.Names.Add(Name(record, principal == hit ? null : principal));
                     named++;
                 }
             }
@@ -275,13 +293,31 @@ internal sealed class PlaceRegisterLoader(
     }
 
     /// <summary>
+    /// One held place under one spelling, and whether the spelling is a label it carries or that
+    /// label with the gazetteer's feature word taken off the front.
+    ///
+    /// The difference is the whole of what tells a place from its own hill. <em>Mount Zion</em>
+    /// meets <em>Zion</em> only once <em>Mount</em> is off, and the Nile meets <em>Egypt</em> only
+    /// once <em>River of</em> is; Zion and Egypt meet it as they are spelled. That asymmetry is the
+    /// gazetteer stating a naming convention, and it is the same statement the index is built on.
+    /// </summary>
+    private sealed class Spelling(Entity place)
+    {
+        public Entity Place { get; } = place;
+
+        public bool ByFeature { get; private set; } = true;
+
+        public void Met(bool feature) => ByFeature &= feature;
+    }
+
+    /// <summary>
     /// Every held place under every spelling of it a lexicon entry could meet — its own name, the
     /// labels its name rows carry, and each of those with the gazetteer's feature word off the
     /// front.
     /// </summary>
-    private static Dictionary<string, List<Entity>> Index(IEnumerable<Entity> held)
+    private static Dictionary<string, List<Spelling>> Index(IEnumerable<Entity> held)
     {
-        var index = new Dictionary<string, List<Entity>>(StringComparer.Ordinal);
+        var index = new Dictionary<string, List<Spelling>>(StringComparer.Ordinal);
         foreach (var place in held)
         {
             Index(index, place, place.Names.Select(name => name.Label).Append(place.Name));
@@ -291,25 +327,29 @@ internal sealed class PlaceRegisterLoader(
     }
 
     private static void Index(
-        Dictionary<string, List<Entity>> index,
+        Dictionary<string, List<Spelling>> index,
         Entity place,
         IEnumerable<string> labels)
     {
-        foreach (var key in labels
-                     .SelectMany(PlaceRegisterFiles.Forms)
-                     .Select(PlaceRegisterFiles.Normalise)
-                     .Where(key => key.Length > 0)
-                     .Distinct(StringComparer.Ordinal))
+        foreach (var (key, feature) in labels
+                     .SelectMany(label => PlaceRegisterFiles.Forms(label)
+                         .Select((form, position) => (Form: form, Feature: position > 0)))
+                     .Select(form => (Key: PlaceRegisterFiles.Normalise(form.Form), form.Feature))
+                     .Where(form => form.Key.Length > 0))
         {
             if (!index.TryGetValue(key, out var at))
             {
                 index[key] = at = [];
             }
 
-            if (!at.Contains(place))
+            var already = at.FirstOrDefault(spelling => spelling.Place == place);
+            if (already is null)
             {
-                at.Add(place);
+                already = new Spelling(place);
+                at.Add(already);
             }
+
+            already.Met(feature);
         }
     }
 
@@ -325,12 +365,12 @@ internal sealed class PlaceRegisterLoader(
     /// each of the three Mizpahs merely because it met one of them by name.
     /// </para>
     /// </summary>
-    private static List<Entity> Reach(
+    private static List<Spelling> Reach(
         PlaceRegisterRecord record,
-        Dictionary<string, List<Entity>> byName,
+        Dictionary<string, List<Spelling>> byName,
         Dictionary<string, List<Entity>> byNumber)
     {
-        var hits = new List<Entity>();
+        var hits = new List<Spelling>();
         foreach (var name in (record.Names ?? []).Append(record.Name))
         {
             if (!byName.TryGetValue(PlaceRegisterFiles.Normalise(name), out var at))
@@ -338,18 +378,171 @@ internal sealed class PlaceRegisterLoader(
                 continue;
             }
 
-            foreach (var place in at.Where(place => !hits.Contains(place)))
+            foreach (var met in at)
             {
-                hits.Add(place);
+                var already = hits.FirstOrDefault(hit => hit.Place == met.Place);
+                if (already is null)
+                {
+                    already = new Spelling(met.Place);
+                    hits.Add(already);
+                }
+
+                already.Met(met.ByFeature);
             }
         }
 
         if (hits.Count == 0 && byNumber.TryGetValue(record.Number, out var read))
         {
-            hits.AddRange(read);
+            foreach (var place in read)
+            {
+                var met = new Spelling(place);
+                met.Met(false);
+                hits.Add(met);
+            }
         }
 
         return hits;
+    }
+
+    /// <summary>
+    /// The record a number's name is that of, where the records bearing it are one place; nothing,
+    /// where they are several.
+    ///
+    /// <para>
+    /// <strong>Are they one place?</strong> The gazetteer is asked, and it answers in two ways. It
+    /// files a place's hill, its valley, its waters and its river under the place's own name with a
+    /// feature word in front — <em>Mount Zion</em>, <em>Valley of Jericho</em>, <em>Brook of
+    /// Egypt</em>, <em>River of Egypt</em> — so a record met only once that word is off is that
+    /// place seen another way and not a rival to it. Of what is left it states, for each entry, the
+    /// site it puts it at: <em>Tell es Sultan</em> against <em>Tell el Alayiq</em>, <em>Jel'ad</em>
+    /// against <em>Tell en Nasbeh</em>. <strong>Two sites are two places</strong>, and the number
+    /// then resolves to neither.
+    /// </para>
+    ///
+    /// <para>
+    /// Silence is not a site — see <see cref="OpenBiblePlaceLoader.Site"/> — and neither is the
+    /// catalogue entry echoed back, which is why Samaria the city and Samaria the country are one
+    /// place, nor a note that the entry is another name for something, which is why the stone heap
+    /// called Mizpah does not make a third Mizpah beside the two the gazetteer does place.
+    /// </para>
+    ///
+    /// <para>
+    /// <strong>Which record, then?</strong> Not a choice this pass makes. It is the one the corpus
+    /// already reads the number onto — a name row the encyclopedia states, or the King James word
+    /// that renders it, which is <see cref="Derived"/>. Where those two name exactly one record,
+    /// that record is the name's; where they name several, or none, this pass has nothing better
+    /// than a spelling to go on and says nothing.
+    /// </para>
+    ///
+    /// <para>
+    /// <strong>A place, and never a person.</strong> Strong heads one entry for the man Jephthah
+    /// and the town named after him, and the encyclopedia holds the man. A place is not an aspect of
+    /// a person however it came by its name, and the two are told apart by BHSA's marking of the
+    /// word or, in the Greek, by which of them the witnesses reach at all — neither of which this
+    /// pass may pre-empt. It cost Cos thirteen words, Ephraim eleven and Judah eighty-four when it
+    /// did: the Greek resolves each of those by ruling out an Old Testament man the New Testament
+    /// never names, and a record deferred to him has nothing left to rule out.
+    /// </para>
+    ///
+    /// <para>
+    /// What the gazetteer cannot see, this cannot see either. It places one Bethlehem and not the
+    /// other, so it does not say that the Bethlehem of Judah and the Bethlehem of Zebulun are two;
+    /// where it places neither of two records, as with the two Selas, it says nothing at all. Those
+    /// resolve, and they resolve to the record the corpus was already reading the number onto,
+    /// which is the answer that stood before this register existed.
+    /// </para>
+    /// </summary>
+    private static Entity? Aspects(
+        PlaceRegisterRecord record,
+        IReadOnlyList<Spelling> hits,
+        IReadOnlyDictionary<string, List<Entity>> bearers,
+        IReadOnlyDictionary<string, List<Entity>> byNumber)
+    {
+        if (hits.Count == 1 && !bearers.ContainsKey(record.Number))
+        {
+            return hits[0].Place;
+        }
+
+        var held = bearers.TryGetValue(record.Number, out var stated) ? stated : [];
+        var named = hits
+            .Where(hit => !hit.ByFeature)
+            .Select(hit => hit.Place)
+            .Concat(held)
+            .Distinct()
+            .ToList();
+
+        var sites = named
+            .Select(OpenBiblePlaceLoader.Site)
+            .OfType<string>()
+            .Select(PlaceRegisterFiles.Normalise)
+            .Distinct(StringComparer.Ordinal)
+            .Take(2)
+            .Count();
+
+        if (sites > 1)
+        {
+            return null;
+        }
+
+        var read = byNumber.TryGetValue(record.Number, out var derived) ? derived : [];
+        var candidates = held.Concat(read)
+            .Distinct()
+            .Intersect(named)
+            .Where(candidate => candidate.Kind == EntityKind.Place)
+            .Take(2)
+            .ToList();
+
+        return candidates.Count == 1 ? candidates[0] : null;
+    }
+
+    /// <summary>
+    /// Every record the encyclopedia already names by a Strong number, before this pass writes one.
+    ///
+    /// Not only the places: the rival to a place the register writes is as often a person, because
+    /// Strong heads one entry for the man Jephthah and the town named after him, and the man is
+    /// already on a page with the number on it. A rule that looked only at places would make that
+    /// number name two records and take the man's twenty-nine words off his page.
+    /// </summary>
+    private async Task<Dictionary<string, List<Entity>>> Bearers(CancellationToken cancellationToken)
+    {
+        var rows = await db.EntityNames
+            .Where(n => n.HebrewStrongNumber != null || n.GreekStrongNumber != null)
+            .Select(n => new
+            {
+                n.HebrewStrongNumber,
+                n.GreekStrongNumber,
+                n.EntityId,
+            })
+            .ToListAsync(cancellationToken);
+
+        var ids = rows.Select(row => row.EntityId).ToHashSet();
+        var byId = await db.Entities
+            .Where(e => ids.Contains(e.Id))
+            .ToDictionaryAsync(e => e.Id, cancellationToken);
+
+        var bearers = new Dictionary<string, List<Entity>>(StringComparer.Ordinal);
+        foreach (var row in rows)
+        {
+            foreach (var number in new[] { row.HebrewStrongNumber, row.GreekStrongNumber })
+            {
+                if (number is not { Length: > 0 } || !byId.TryGetValue(row.EntityId, out var entity))
+                {
+                    continue;
+                }
+
+                if (!bearers.TryGetValue(number, out var at))
+                {
+                    bearers[number] = at = [];
+                }
+
+                if (!at.Contains(entity))
+                {
+                    at.Add(entity);
+                }
+            }
+        }
+
+        return bearers;
     }
 
     /// <summary>
@@ -435,7 +628,7 @@ internal sealed class PlaceRegisterLoader(
     /// corpus prints.
     /// </para>
     /// </summary>
-    private static EntityName Name(PlaceRegisterRecord record) =>
+    private static EntityName Name(PlaceRegisterRecord record, Entity? aspectOf) =>
         new()
         {
             Label = record.Name,
@@ -443,6 +636,7 @@ internal sealed class PlaceRegisterLoader(
             HebrewStrongNumber = record.Number.StartsWith('H') ? record.Number : null,
             GreekStrongNumber = record.Number.StartsWith('G') ? record.Number : null,
             Greek = record.Number.StartsWith('G') ? Blank(record.Lemma) : null,
+            AspectOf = aspectOf,
         };
 
     private static string? Blank(string? value) =>

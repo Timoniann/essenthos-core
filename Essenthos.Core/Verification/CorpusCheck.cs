@@ -3,6 +3,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Encyclopedia;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -498,16 +499,24 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         // carrying G#### can never equal an H#### however wrong the annotation on it is, and half
         // the corpus was outside a guard that reported itself as passing. The two columns never
         // hold each other's prefix, so one comparison against either is exact.
+        //
+        // It counts places, not rows. Zion the settlement and Mount Zion its hill bear one number
+        // and are one place; so are Samaria the city and the country called after it, and Egypt and
+        // the river named after Egypt. A name row that says whose name it bears is that answer
+        // written twice and not a rival, and counting the rows would take 146 words off Zion's page
+        // for the crime of the hill having a page of its own. Jericho at Tell es Sultan and Jericho
+        // at Tell el Alayiq say nothing of the kind, and this still fires for them -- which is why
+        // nothing is annotated from H3405 at all.
         ("words a name-resolution annotated although the name is several people's",
-            """
-            SELECT count(*) FROM word_entity a
-            JOIN word w ON w.id = a.word_id
-            WHERE a.method = 'strong-number'
-              AND w.strong_number IS NOT NULL
-              AND (SELECT count(DISTINCT n.entity_id) FROM entity_name n
-                   WHERE n.hebrew_strong_number = w.strong_number
-                      OR n.greek_strong_number = w.strong_number) > 1
-            """),
+            $"""
+             SELECT count(*) FROM word_entity a
+             JOIN word w ON w.id = a.word_id
+             WHERE a.method = 'strong-number'
+               AND w.strong_number IS NOT NULL
+               AND (SELECT count(DISTINCT {EntityCandidates.Resolves}) FROM entity_name n
+                    WHERE n.hebrew_strong_number = w.strong_number
+                       OR n.greek_strong_number = w.strong_number) > 1
+             """),
 
         // Two links naming exactly the same words in the same pair of texts are not two facts.
         // They are two methods agreeing, and agreeing is what link_claim is for -- one link with
