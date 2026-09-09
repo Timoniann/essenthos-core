@@ -146,6 +146,17 @@ public class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.SetNull);
         });
 
+        // A name deferring to another record must not take the name with it when that record goes:
+        // the row is still Mount Zion's name and still carries its number, and all that is lost is
+        // the statement of whose name it is.
+        modelBuilder.Entity<EntityName>(entity =>
+        {
+            entity.HasOne(n => n.AspectOf)
+                .WithMany()
+                .HasForeignKey(n => n.AspectOfEntityId)
+                .OnDelete(DeleteBehavior.SetNull);
+        });
+
         modelBuilder.Entity<EntityRelationship>(entity =>
         {
             entity.Property(r => r.Method).HasConversion(EnumStorage.LinkMethod);

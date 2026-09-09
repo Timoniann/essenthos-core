@@ -1,4 +1,4 @@
-using Essenthos.Core.TextusReceptus;
+﻿using Essenthos.Core.TextusReceptus;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
@@ -114,6 +114,18 @@ internal static class EntityCandidates
     public const string Rendering = Bible4uTextSource.KingJames;
 
     /// <summary>
+    /// The record a name row of <c>n</c> resolves to.
+    ///
+    /// Itself, all but always. Where the row says it bears another record's name — Mount Zion
+    /// bearing Zion's, Samaria the country bearing Samaria the city's, the Nile bearing Egypt's —
+    /// it is that record, so that a name several records carry still answers with one place. It is
+    /// written by <see cref="PlaceRegisterLoader"/>, which is where the gazetteer is asked whether
+    /// the records are one place or several, and read here, in the annotation loader and in the
+    /// corpus check, because those three have to be asking the same question.
+    /// </summary>
+    public const string Resolves = "coalesce(n.aspect_of_entity_id, n.entity_id)";
+
+    /// <summary>
     /// The books the text being read actually holds, which is the grain reachability is decided at.
     ///
     /// Not the verse: the encyclopedia's own list of verses is the second, independent answer that
@@ -148,20 +160,27 @@ internal static class EntityCandidates
     /// again.
     /// </para>
     /// </summary>
-    private const string Stated =
-        """
-        SELECT DISTINCT n.hebrew_strong_number AS number, n.entity_id
-        FROM entity_name n
-        JOIN entity e ON e.id = n.entity_id AND e.kind <> 'people'
-        WHERE n.hebrew_strong_number IS NOT NULL AND position(',' IN n.hebrew_strong_number) = 0
-        """;
+    private static readonly string Stated =
+        $"""
+         SELECT DISTINCT n.hebrew_strong_number AS number, {Resolves} AS entity_id
+         FROM entity_name n
+         JOIN entity e ON e.id = {Resolves} AND e.kind <> 'people'
+         WHERE n.hebrew_strong_number IS NOT NULL AND position(',' IN n.hebrew_strong_number) = 0
+         """;
 
     /// <summary>
     /// The numbers the text establishes for a place the geocoding dataset supplied, by the three
     /// statements the class comment sets out. <c>names</c> counts the names on the witness's
     /// side of the link, and only a link carrying one of them is read.
+    ///
+    /// <para>
+    /// It is public because the place register asks it too, and has to: a record it writes for a
+    /// number this already reads onto a held place would make that number name two records, and a
+    /// number naming two records is the one thing the resolution refuses. Asked in both places it
+    /// is one rule; asked in one it is a rule and a contradiction of it.
+    /// </para>
     /// </summary>
-    private const string Read =
+    public const string Derived =
         """
         WITH placed AS (
             SELECT e.id AS entity_id,
@@ -215,11 +234,19 @@ internal static class EntityCandidates
         $"""
          WITH held AS ({Held}),
          stated AS ({Stated}),
-         read AS ({Read}),
+         read AS ({Derived}),
+         resolved AS (
+             SELECT r.number,
+                    coalesce(
+                        (SELECT max(n.aspect_of_entity_id) FROM entity_name n
+                         WHERE n.entity_id = r.entity_id AND n.hebrew_strong_number = r.number),
+                        r.entity_id) AS entity_id
+             FROM read r
+         ),
          named AS (
              SELECT number, entity_id, true AS stated FROM stated
              UNION
-             SELECT number, entity_id, false FROM read r
+             SELECT number, entity_id, false FROM resolved r
              WHERE NOT EXISTS (
                  SELECT 1 FROM stated s WHERE s.number = r.number AND s.entity_id = r.entity_id)
          )
@@ -250,12 +277,12 @@ internal static class EntityCandidates
     /// not the entity's name, and <em>the lion of the tribe of Judah</em> would otherwise put the
     /// divine name on every article, preposition and noun of that sentence.
     /// </summary>
-    private const string GreekStated =
-        """
-        SELECT DISTINCT n.greek_strong_number AS number, n.entity_id
-        FROM entity_name n
-        WHERE n.greek_strong_number IS NOT NULL AND position(',' IN n.greek_strong_number) = 0
-        """;
+    private static readonly string GreekStated =
+        $"""
+         SELECT DISTINCT n.greek_strong_number AS number, {Resolves} AS entity_id
+         FROM entity_name n
+         WHERE n.greek_strong_number IS NOT NULL AND position(',' IN n.greek_strong_number) = 0
+         """;
 
     /// <summary>
     /// Every entity a Greek Strong number could be naming in the New Testament. Takes

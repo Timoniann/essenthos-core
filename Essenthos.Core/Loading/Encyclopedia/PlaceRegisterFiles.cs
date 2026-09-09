@@ -32,10 +32,16 @@ internal sealed record PlaceReadingRecord(
 /// acted on: splitting one entry into several records is the namesake pass, not this one.
 /// </param>
 /// <param name="Person">Whether the same entry also names a person, which many of them do.</param>
+/// <param name="Lemma">
+/// The headword as the lexicon writes it, in Hebrew or in Greek. It is the encyclopedia's own
+/// spelling of a name it holds only because of this entry, and on the Greek side the annotation
+/// pass will not take a number the encyclopedia cannot spell.
+/// </param>
 internal sealed record PlaceRegisterRecord(
     string Number,
     string Name,
     IReadOnlyList<string>? Names,
+    string? Lemma,
     string? Transliteration,
     string? Definition,
     string? Morphology,

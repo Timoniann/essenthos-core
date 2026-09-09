@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -35,6 +35,7 @@ public sealed class PlaceRegisterLoadTests : IDisposable
     {
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
 
         _folder = Path.Combine(Path.GetTempPath(), $"places-{Guid.NewGuid():N}");
         Directory.CreateDirectory(_folder);
@@ -51,6 +52,7 @@ public sealed class PlaceRegisterLoadTests : IDisposable
     public void Dispose()
     {
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _db.Dispose();
         Directory.Delete(_folder, recursive: true);
     }
@@ -157,6 +159,208 @@ public sealed class PlaceRegisterLoadTests : IDisposable
     }
 
     /// <summary>
+    /// The seventeen: a record whose spelling meets nothing held, for a number the corpus already
+    /// reads onto a held place. Written as a second record it makes the number name two of them,
+    /// and the annotation pass then refuses both — so the duplicate does not merely add a page, it
+    /// takes the annotations off the page that was working.
+    /// </summary>
+    [Fact]
+    public async Task A_variant_spelling_of_a_number_the_corpus_already_reads_joins_the_place_it_reads_it_onto()
+    {
+        var held = Held("beth-meon", "Beth-meon", "obi-5");
+        _db.SaveChanges();
+        Reads(held, "H1010", "Bethmeon");
+
+        Register(Record("H1010", "Beth-baal-meon", ["Beth-baal-meon", "Bêyth Baʻal Mᵉʻôwn"]));
+
+        var outcome = await Load();
+
+        outcome.Added.Should().Be(0, "the corpus already reads H1010 onto a place it holds");
+        outcome.Claimed.Should().Be(1);
+
+        var place = await Place("beth-meon");
+        place!.Name.Should().Be("Beth-meon", "the held page keeps its name and its address");
+        place.Names.Should().ContainSingle().Which.HebrewStrongNumber.Should().Be("H1010");
+        (await _db.Entities.CountAsync(e => e.Slug == "bethbaalmeon")).Should().Be(0);
+
+        var bearers = await _db.EntityNames.CountAsync(n => n.HebrewStrongNumber == "H1010");
+        bearers.Should().Be(1, "a number naming two records is what the resolution refuses");
+    }
+
+    /// <summary>
+    /// The number is asked only where the spelling answers nothing. Strong heads one Mizpah and the
+    /// gazetteer surveys three, so a record that has already met one of them by name must not be
+    /// spread over all three merely because the corpus reads the number onto each.
+    /// </summary>
+    [Fact]
+    public async Task The_spelling_decides_where_it_answers_at_all()
+    {
+        var other = Held("beth-meon", "Beth-meon", "obi-5");
+        _db.SaveChanges();
+        Reads(other, "H1035", "Bethmeon");
+
+        Register(Record("H1035", "Bethlehem", ["Bethlehem"]));
+
+        await Load();
+
+        (await Place("beth-lehem"))!.Names.Should().ContainSingle()
+            .Which.HebrewStrongNumber.Should().Be("H1035");
+        (await Place("beth-meon"))!.Names.Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// A Greek record carries the spelling the annotation pass will check its number against. With
+    /// the column null there is nothing to compare and the number is refused, which cost Judaea all
+    /// 173 of its occurrences.
+    /// </summary>
+    [Fact]
+    public async Task A_Greek_record_carries_the_spelling_its_number_is_annotated_on()
+    {
+        Register(
+            Record("G2449", "Judaea", ["Judaea"], lemma: "Ἰουδαία"),
+            Record("H1035", "Bethlehem", ["Bethlehem"], lemma: "בֵּית לֶחֶם"));
+
+        await Load();
+
+        var judaea = await Place("judaea");
+        judaea!.Names.Should().ContainSingle().Which.Greek.Should().Be("Ἰουδαία");
+
+        var bethlehem = await Place("beth-lehem");
+        bethlehem!.Names.Should().ContainSingle().Which.Greek.Should()
+            .BeNull("a Hebrew number is not checked against a Greek spelling");
+    }
+
+    /// <summary>
+    /// A record the gazetteer files under the place's name with a feature word in front is that
+    /// place seen another way, and the name it takes from the entry is the place's. Left standing
+    /// as a rival it makes the number name two records, which is what took Zion's 146 words off its
+    /// page the first time the register was loaded.
+    /// </summary>
+    [Fact]
+    public async Task A_record_named_with_the_gazetteer_s_feature_word_bears_the_place_s_name()
+    {
+        var zion = Held("zion", "Zion", "obi-6");
+        Held("mount-zion", "Mount Zion", "obi-7");
+        _db.SaveChanges();
+        Reads(zion, "H6726", "Zion");
+
+        Register(Record("H6726", "Zion", ["Zion"]));
+
+        await Load();
+
+        var hill = await Place("mount-zion");
+        hill!.Names.Should().ContainSingle().Which.AspectOfEntityId.Should().Be(
+            zion.Id, "Mount Zion carries the number as Zion's hill and not as a second Zion");
+        (await Place("zion"))!.Names.Should().ContainSingle()
+            .Which.AspectOfEntityId.Should().BeNull("Zion is the place the name is of");
+    }
+
+    /// <summary>
+    /// Two entries the gazetteer puts at two sites are two places, and the number resolves to
+    /// neither of them however clearly the corpus reads it onto one. Which Jericho a verse means is
+    /// the namesake pass's work, and a page saying nothing is the right answer until it runs.
+    /// </summary>
+    [Fact]
+    public async Task Two_records_the_gazetteer_places_at_two_sites_stay_two_places()
+    {
+        var jericho = Held("jericho", "Jericho", "obi-6", "Tell es Sultan");
+        Held("jericho-2", "Jericho", "obi-7", "Tell el Alayiq");
+        _db.SaveChanges();
+        Reads(jericho, "H3405", "Jericho");
+
+        Register(Record("H3405", "Jericho", ["Jericho"]));
+
+        await Load();
+
+        var bearers = await _db.EntityNames
+            .Where(name => name.HebrewStrongNumber == "H3405")
+            .ToListAsync();
+
+        bearers.Should().HaveCount(2);
+        bearers.Should().OnlyContain(name => name.AspectOfEntityId == null,
+            "two towns four kilometres apart are two places and the number names both");
+    }
+
+    /// <summary>
+    /// A city and the country called after it are one place. The gazetteer files both under the
+    /// name and its own catalogue index — <em>Samaria</em>, <em>Samaria 2</em> — which places
+    /// neither anywhere and so says nothing about their being two.
+    /// </summary>
+    [Fact]
+    public async Task A_city_and_the_country_called_after_it_are_one_place()
+    {
+        var city = Held("samaria", "Samaria", "obi-6", "Samaria");
+        Held("samaria-2", "Samaria", "obi-7", "Samaria 2");
+        _db.SaveChanges();
+        Reads(city, "H8111", "Samaria");
+
+        Register(Record("H8111", "Samaria", ["Samaria"]));
+
+        await Load();
+
+        (await Place("samaria-2"))!.Names.Should().ContainSingle()
+            .Which.AspectOfEntityId.Should().Be(city.Id);
+        (await Place("samaria"))!.Names.Should().ContainSingle()
+            .Which.AspectOfEntityId.Should().BeNull();
+    }
+
+    /// <summary>
+    /// A number can carry both situations at once, and the alias does not settle it. The stone heap
+    /// called Mizpah is another name for the first of them and no third place, but the two the
+    /// gazetteer does place are two, so the number resolves to none of the three.
+    /// </summary>
+    [Fact]
+    public async Task An_entry_that_is_another_name_for_one_of_two_places_does_not_make_them_one()
+    {
+        var first = Held("mizpah", "Mizpah", "obi-6", "Jel'ad");
+        Held("mizpah-3", "Mizpah", "obi-7", "Tell en Nasbeh");
+        Held("mizpah-4", "Mizpah", "obi-8", "another name for Mizpah 1");
+        _db.SaveChanges();
+        Reads(first, "H4709", "Mizpah");
+
+        Register(Record("H4709", "Mizpah", ["Mizpah"]));
+
+        await Load();
+
+        var bearers = await _db.EntityNames
+            .Where(name => name.HebrewStrongNumber == "H4709")
+            .ToListAsync();
+
+        bearers.Should().HaveCount(3);
+        bearers.Should().OnlyContain(name => name.AspectOfEntityId == null);
+    }
+
+    /// <summary>
+    /// A place is not an aspect of a person however it came by its name. Strong heads one entry for
+    /// the man Jephthah and the town named after him, and which of them a word means is BHSA's
+    /// marking to say — or, in the Greek, which of them the witnesses reach. Deferring the town to
+    /// the man pre-empts both, and it cost Cos, Ephraim and Judah their words when it did.
+    /// </summary>
+    [Fact]
+    public async Task A_place_named_after_a_man_does_not_bear_the_name_as_his()
+    {
+        var man = new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = "jephthah",
+            Name = "Jephthah",
+            SourceId = "bibledata:Jephthah_1",
+            Source = "a witness",
+            Names = [new EntityName { Label = "Jephthah", HebrewStrongNumber = "H3316" }],
+        };
+        _db.Entities.Add(man);
+        _db.SaveChanges();
+
+        Register(Record("H3316", "Jephthah", ["Jephthah"]));
+
+        await Load();
+
+        var town = await Place("jephthah-2");
+        town!.Names.Should().ContainSingle().Which.AspectOfEntityId.Should().BeNull(
+            "the man and the town are two things and the marking on the word tells them apart");
+    }
+
+    /// <summary>
     /// The spellings Strong prints and no gazetteer does. They are the only name a great many
     /// entries offer that a held label can be met by, so a fold that leaves any of them standing
     /// loses the match and adds a second page for a place already on one.
@@ -176,8 +380,9 @@ public sealed class PlaceRegisterLoadTests : IDisposable
     public void A_lexicon_spelling_normalises_to_the_gazetteer_s(string printed, string expected) =>
         PlaceRegisterFiles.Normalise(printed).Should().Be(expected);
 
-    private void Held(string slug, string name, string openBibleId) =>
-        _db.Entities.Add(new Entity
+    private Entity Held(string slug, string name, string openBibleId, string? identification = null)
+    {
+        var place = new Entity
         {
             Kind = EntityKind.Place,
             Slug = slug,
@@ -185,7 +390,54 @@ public sealed class PlaceRegisterLoadTests : IDisposable
             SourceId = $"openbible:{openBibleId}",
             Source = Gazetteer,
             OpenBibleId = openBibleId,
+            ModernEquivalent = identification,
+        };
+        _db.Entities.Add(place);
+        return place;
+    }
+
+    /// <summary>
+    /// The three statements that make the corpus read a Strong number onto a place the gazetteer
+    /// supplied: the gazetteer says the place is named in this verse, the King James prints its name
+    /// there at a word, and BHSA gives the word that word renders a number and marks it a name.
+    /// </summary>
+    private void Reads(Entity place, string number, string spelling)
+    {
+        var hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
+            (1, 1, ["בית"]));
+        var english = Corpus.Add(_db, EntityCandidates.Rendering, TextKind.Translation, "eng",
+            (1, 1, [spelling]));
+        _db.SaveChanges();
+
+        var word = _db.WordAt(hebrew, 1, 1, 1);
+        word.StrongNumber = number;
+        word.Morphology = JsonDocument.Parse("""{"pos": "subs", "nameType": "topo"}""");
+
+        var link = new Link
+        {
+            FromTextId = hebrew.Id,
+            ToTextId = english.Id,
+            Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource,
+            Source = "a test",
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = word, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord
+        {
+            Link = link, Word = _db.WordAt(english, 1, 1, 1), Side = LinkSide.To,
         });
+
+        _db.EntityVerses.Add(new EntityVerse
+        {
+            Entity = place,
+            CanonicalBook = 1,
+            CanonicalChapter = 1,
+            CanonicalVerse = 1,
+            Source = Gazetteer,
+        });
+        _db.SaveChanges();
+    }
 
     private async Task<Entity?> Place(string slug) =>
         await _db.Entities
@@ -198,12 +450,14 @@ public sealed class PlaceRegisterLoadTests : IDisposable
         string number,
         string name,
         string[] names,
-        bool kept = true) =>
+        bool kept = true,
+        string? lemma = null) =>
         new
         {
             number,
             name,
             names,
+            lemma,
             transliteration = name,
             definition = $"{name}, a place in Palestine",
             morphology = "n-pr-loc",

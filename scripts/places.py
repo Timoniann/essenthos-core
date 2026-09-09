@@ -1065,10 +1065,62 @@ HEAD_NAME = re.compile(r'^[{(\[]?\s*([^,;(]+)')
 
 # What a King James rendering column carries besides names: Strong writes *Gazer, Gezer.* for one
 # entry and *out of Egypt, Egyptian, Mizraim* for another, and the prepositional phrases are not
-# names of anything.
+# names of anything. *X* is his own mark for a rendering the English supplies idiomatically -- *X
+# plain* -- and it is not a letter of the word.
 RENDERING_NOISE = re.compile(
-    r'^(?:out of|in|into|from|of|the|toward|unto|at|with|and|compare|see also|also)\b',
+    r'^(?:X\b|out of|in|into|from|of|the|toward|unto|at|with|and|compare|see also|also)\b',
     re.IGNORECASE)
+
+# The conjunction the King James supplies and Strong copies into the column beside the name: he
+# lists H2051 as *Dan also*, which is how Ezekiel 27:19 reads and not what the place is called. A
+# rendering ending in one is his sentence rather than his spelling, and the gloss heads the name.
+RENDERING_TAIL = re.compile(r'\b(?:also|and|or|etc)$', re.IGNORECASE)
+
+# The innermost bracket of a rendering, which is two different things wearing one punctuation mark.
+# *Ataroth-adar(-addar)* and *(Bashan-) Havoth-jair* offer a second spelling of the same place;
+# *Laish (from the margin)*, *Ittahkazin (by including directive enclitic)* and *(This seems rather
+# to be only an orthographic variation of...)* are the lexicographer talking to the reader. Both
+# were being taken as part of the name.
+BRACKET = re.compile(r'\(([^()]*)\)')
+
+# The bracket that offers a spelling rather than an aside: one unbroken token hanging off a hyphen,
+# either the tail of the word in front of it or the head of the word behind. Anything with a space
+# in it is prose -- *(from the margin)*, *(- er)*, *(country, side, -ward)* -- and comes off.
+ALTERNATIVE = re.compile(r'^(?:-\S+|\S+-)$')
+
+
+def spellings(rendering):
+    """
+    One King James rendering as the spellings it offers: the form with the brackets taken out, and
+    the form each bracketed alternative writes.
+
+    Strong's convention is not quite consistent -- *mount(-ain)* means *mountain* and
+    *Ataroth-adar(-addar)* means *Ataroth-addar* -- so both readings are produced. They are keys to
+    match a gazetteer label by and never the title of a page, and `normalise` takes the hyphen out
+    of all of them, so an alternative that reads the convention the other way costs a spelling
+    nothing meets rather than a wrong name.
+    """
+    bare = BRACKET.sub('', rendering)
+    while BRACKET.search(bare):
+        bare = BRACKET.sub('', bare)
+    bare = re.sub(r'\s+', ' ', bare).strip(' .+-()[]{}')
+    found = {bare} if bare else set()
+
+    for inside in BRACKET.findall(rendering):
+        if not ALTERNATIVE.match(inside.strip()):
+            continue
+        part = inside.strip()
+        if part.startswith('-'):
+            stem = BRACKET.split(rendering)[0].strip(' .+')
+            tail = part.lstrip('-')
+            found.add(f'{stem}{tail}')
+            found.add(f'{stem.rsplit("-", 1)[0]}-{tail}' if '-' in stem else f'{stem}-{tail}')
+        else:
+            rest = rendering[rendering.index(f'({inside})') + len(inside) + 2:].strip(' .+')
+            if rest:
+                found.add(f'{part.rstrip("-")}-{rest}')
+
+    return {name for name in found if name}
 
 
 def renderings(numbers):
@@ -1078,11 +1130,11 @@ def renderings(numbers):
         names = set()
         # The column ends the list with a full stop and sometimes carries a cross-reference after
         # it -- *Memphis. Compare no.ph (H5297)* -- so the sentence break is a separator like the
-        # others, or the name comes back with the whole cross-reference attached to it.
-        for part in re.split(r'[,;.]', row['kjv_definition'] or ''):
-            part = part.strip(' .+')
-            if part and not RENDERING_NOISE.match(part):
-                names.add(part)
+        # others, or the name comes back with the whole cross-reference attached to it. A comma
+        # inside a bracket is not a separator, so the brackets are read before the split.
+        for part in re.split(r'[,;.](?![^()]*\))', row['kjv_definition'] or ''):
+            names |= {name for name in spellings(part.strip(' .+'))
+                      if not RENDERING_NOISE.match(name) and not RENDERING_TAIL.search(name)}
         if names:
             found[row['number']] = sorted(names)
     return found
@@ -1402,27 +1454,80 @@ def gap(args):
 # ---------------------------------------------------------------------------- the register itself
 
 
+# The letters a transliteration puts in front of the word without being one: Strong writes the
+# aleph and the ayin as modifier marks, so the first letter of *ʻAṭrôwth* is the A.
+MODIFIERS = "ʼʻʾʿ'’‘`([{ .-"
+
+
+def named(text):
+    """
+    Whether a string is a name rather than a word: the first letter of it is a capital.
+
+    It is the lexicographer's own typography and it is the only statement he makes about this in
+    either language. On the Greek side it is the same evidence the annotation loader's proper-noun
+    gate reads off the lemma; on the Hebrew, where nothing is cased, it is the King James spelling
+    he prints beside the gloss -- *Edrei* against *fire*, *Millo* against *palace*.
+    """
+    for character in text or '':
+        if character in MODIFIERS:
+            continue
+        return character.isupper()
+    return False
+
+
+def plainly(name):
+    """A transliteration with the accents folded away, for a title a reader can type."""
+    folded = unicodedata.normalize('NFKD', (name or '').strip())
+    return ''.join(ch for ch in folded
+                   if not unicodedata.combining(ch) and ch not in MODIFIERS[:6]).strip()
+
+
 # What a record is titled by, where the King James rendering nobody uses would be a worse title than
 # the one everybody does. Strong lists both -- *Gazer, Gezer* -- and the gazetteer's own spelling is
 # the tie-break, so the page is found under the name a reader types.
+#
+# Only a name is taken, at each of the three places it is looked for. Where the entry offers none it
+# returns nothing, and `decide` refuses the entry: a page titled *fire* or *market(-place)* is the
+# lexicon's translation of a common noun standing where a place name should be.
 def register_name(row, kjv, held_index):
-    offered = kjv.get(row['number']) or []
+    offered = [name for name in (kjv.get(row['number']) or []) if named(name)]
     for name in offered:
         if normalise(name) in held_index:
-            return name
+            return readable(name)
     if offered:
-        return offered[0]
+        return readable(offered[0])
     head = HEAD_NAME.match(row['definition'] or '')
-    if head and head.group(1).strip():
-        return head.group(1).strip()
-    return (row['transliteration'] or row['number']).strip()
+    if head and named(head.group(1)):
+        return readable(head.group(1).strip())
+    if named(row['transliteration']):
+        return readable(plainly(row['transliteration']))
+    return None
 
 
-def decide(row, standing, said, reading, checked):
+def readable(name):
+    """
+    A title without the typography only this lexicon uses. Strong prints *Judæa* and *Chaldæan*
+    where every other book writes the two letters, and the ligature reached the slug, so the page
+    was at a URL nobody would type. It is spelling and not identity -- `normalise` has folded it
+    away on both sides of the match since the pilot -- and the only thing new here is that the
+    title stops carrying it.
+    """
+    for ligature, into in LIGATURES.items():
+        name = name.replace(ligature, into).replace(ligature.upper(), into.capitalize())
+    return name
+
+
+def decide(row, standing, said, reading, checked, name):
     """
     Whether one entry becomes a record, from the four witnesses and in the order they are worth
     something. It is written as one function because every count in the report is this rule applied,
     and a rule stated in two places is a rule that disagrees with itself.
+
+    An entry that offers no name is refused before any of them is asked. A register of places is
+    built out of the names a dictionary heads, and where the King James spelling, the head of the
+    gloss and the transliteration are all lower case the dictionary is heading a word: *fire*,
+    *palace*, *market(-place)*, *together*. The tag is no help there -- Strong parts H2038, *a
+    castle*, as a location -- and neither is a reading, which called four of them places.
 
     The free pass carries an entry it keeps unless *both* the other witnesses refuse it — a reading
     on its own does not overturn Strong's tag and Strong's gloss agreeing. What the free pass leaves
@@ -1436,6 +1541,10 @@ def decide(row, standing, said, reading, checked):
 
     if not standing:
         return False, 'no word of any text stands at it'
+
+    if not name:
+        return False, ('nothing the entry offers is a name: the King James renders the headword as '
+                       'a common word and neither the gloss nor the transliteration heads one')
 
     if row['tier'] in KEPT:
         if place is False and said == 'never topo':
@@ -1486,12 +1595,14 @@ def register(args):
     for row in rows:
         reading = readings.get(row['number'])
         checked = checks.get(row['number'])
+        name = register_name(row, kjv, held_index)
         kept, why = decide(row, row['number'] in standing, witnessed.get(row['number']),
-                           reading, checked)
+                           reading, checked, name)
         records.append({
             'number': row['number'],
-            'name': register_name(row, kjv, held_index),
+            'name': name or row['number'],
             'names': sorted(candidate_names(row, kjv)),
+            'lemma': row['lemma'],
             'transliteration': row['transliteration'],
             'definition': row['definition'],
             'morphology': row['morphology'],

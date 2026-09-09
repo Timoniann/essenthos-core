@@ -165,6 +165,32 @@ public sealed class OwnReferenceTests : IDisposable
         (await _db.EntityVerses.CountAsync()).Should().Be(1);
     }
 
+    /// <summary>
+    /// A record annotated after this pass has already run gets its verses on the next boot, and
+    /// gets only its own.
+    ///
+    /// The peoples, the records this corpus writes for itself and the place register all add
+    /// entities after this pass, so a guard that asked whether the pass had ever run would leave
+    /// every one of them with an empty page for ever.
+    /// </summary>
+    [Fact]
+    public async Task ARecordAnnotatedAfterThePassHasRunIsCitedOnTheNextBoot()
+    {
+        var moses = Person("moses");
+        Annotate(Hebrew(1, 1), moses, LinkMethod.StrongNumber, 0.9);
+        (await Load()).Should().Be(1);
+
+        var jerusalem = Add("jerusalem", EntityKind.Place);
+        Annotate(Hebrew(3, 1), jerusalem, LinkMethod.StrongNumber, 0.9);
+
+        var again = await _loader.Load();
+
+        again.AlreadyLoaded.Should().BeFalse();
+        again.Written.Should().Be(1);
+        (await Referenced(jerusalem)).Should().Equal((1, 1, 3));
+        (await Referenced(moses)).Should().Equal((1, 1, 1));
+    }
+
     private async Task<int> Load()
     {
         var outcome = await _loader.Load();

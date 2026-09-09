@@ -701,4 +701,83 @@ public sealed class EntityAnnotationTests : IDisposable
         outcome.Hebrew.Unanswered.Should().Be(2);
         outcome.ByText.Should().ContainSingle().Which.Text.Should().Be(EntityCandidates.Witness);
     }
+
+    /// <summary>
+    /// A record added after this pass has already run gets its words on the next boot.
+    ///
+    /// It is the ordinary case rather than a corner: the peoples, the records this corpus writes
+    /// for itself and the place register all write entities, and every one of them runs after this.
+    /// A pass that asked only whether it had ever run would answer yes here and leave the new
+    /// record with no words at all.
+    /// </summary>
+    [Fact]
+    public async Task ARecordAddedAfterThePassHasRunIsAnnotatedOnTheNextBoot()
+    {
+        var before = await Load();
+        before.Should().NotContainKey(Hebrew(7).Id);
+
+        Person("palmoni", "Palmoni", "H8888");
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load();
+
+        outcome.AlreadyLoaded.Should().BeFalse();
+        outcome.Written.Should().Be(1);
+
+        var after = await _db.WordEntities.ToDictionaryAsync(a => a.WordId, a => a.Entity!.Slug);
+        after.Should().ContainKey(Hebrew(7).Id).WhoseValue.Should().Be("palmoni");
+        after.Where(a => a.Key != Hebrew(7).Id).Should().BeEquivalentTo(before);
+    }
+
+    /// <summary>
+    /// And its name still travels. The carrying step reads what this run seeded, so a record
+    /// reached on a later boot has to reach the words that render it on that boot too — otherwise
+    /// the new record is named in the Hebrew and nowhere a reader of a translation would see it.
+    /// </summary>
+    [Fact]
+    public async Task ARecordAnnotatedOnALaterBootStillReachesTheWordThatRendersIt()
+    {
+        var rendering = _db.WordAt(_english, 1, 10, 1);
+        Link(Hebrew(7), rendering, LinkMethod.StatedBySource, null);
+
+        await _loader.Load();
+
+        Person("palmoni", "Palmoni", "H8888");
+        await _db.SaveChangesAsync();
+
+        await _loader.Load();
+
+        var named = await _db.WordEntities.ToDictionaryAsync(a => a.WordId, a => a.Entity!.Slug);
+        named.Should().ContainKey(rendering.Id).WhoseValue.Should().Be("palmoni");
+    }
+
+    /// <summary>
+    /// A record this pass has already spoken for is not asked again, and nothing else moves with
+    /// it. What is under test is the second half of that: the run that annotates the newcomer
+    /// leaves every row it wrote before exactly as it was.
+    /// </summary>
+    [Fact]
+    public async Task AnnotatingANewcomerLeavesTheRowsAlreadyWrittenAlone()
+    {
+        Link(Hebrew(1), _db.WordAt(_english, 1, 1, 1), LinkMethod.StatedBySource, null);
+        await _loader.Load();
+
+        var before = await _db.WordEntities
+            .Select(a => new { a.Id, a.WordId, a.EntityId, a.Method, a.Confidence, a.Source })
+            .OrderBy(a => a.Id)
+            .ToListAsync();
+        var written = before.Select(a => a.Id).ToList();
+
+        Person("palmoni", "Palmoni", "H8888");
+        await _db.SaveChangesAsync();
+        await _loader.Load();
+
+        var after = await _db.WordEntities
+            .Where(a => written.Contains(a.Id))
+            .Select(a => new { a.Id, a.WordId, a.EntityId, a.Method, a.Confidence, a.Source })
+            .OrderBy(a => a.Id)
+            .ToListAsync();
+
+        after.Should().BeEquivalentTo(before);
+    }
 }
