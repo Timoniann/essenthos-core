@@ -1,4 +1,4 @@
-using System.Data.Common;
+﻿using System.Data.Common;
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -65,9 +65,11 @@ public sealed class DescriptorTests : IDisposable
 
         // The clauses the vocabulary could not hold before it was widened. Haran is the one no pass
         // produced a Ukrainian genitive for, so he is what the fallback is proved on here.
-        Add("lot-1", EntityKind.Person, "Lot", null, (1, 11, 27), (1, 12, 5));
+        Add("lot-1", EntityKind.Person, "Lot", null, (1, 11, 27), (1, 12, 5), (1, 13, 12));
         Add("abram-1", EntityKind.Person, "Abram", null, (1, 12, 5));
         Add("haran-1", EntityKind.Person, "Haran", null, (1, 11, 27));
+        Add("terah-1", EntityKind.Person, "Terah", null, (1, 11, 27));
+        Add("jordanvalley-1", EntityKind.Place, "Valley of the Jordan", null, (1, 13, 12));
         Add("azrikam-4", EntityKind.Person, "Azrikam", null, (14, 28, 7));
         Add("zichri-1", EntityKind.Person, "Zichri", null, (14, 28, 7));
         Add("jerusalem-1", EntityKind.Place, "Jerusalem", null, (16, 3, 29));
@@ -224,7 +226,7 @@ public sealed class DescriptorTests : IDisposable
 
     /// <summary>
     /// The one that produces a visibly wrong sentence if it is got wrong. A client that asked for
-    /// German, was handed English and was told <em>deu</em> would put another language's grammar
+    /// Russian, was handed English and was told <em>rus</em> would put another language's grammar
     /// around these names, which is what the fallback exists to prevent.
     /// </summary>
     [Fact]
@@ -232,7 +234,7 @@ public sealed class DescriptorTests : IDisposable
     {
         await Load("described");
 
-        var description = await Read("hobab-1", "deu");
+        var description = await Read("hobab-1", "rus");
 
         description!.Language.Should().Be(DescriptorPhrasings.English);
         Line(description).Should().Be("son of Reuel, father-in-law of Moses");
@@ -344,6 +346,57 @@ public sealed class DescriptorTests : IDisposable
         Line(await Read("azrikam-4", DescriptorPhrasings.Ukrainian))
             .Should().Be("намісник Єрусалима, загинув від руки Зіхрі");
         Line(await Read("zichri-1", DescriptorPhrasings.Ukrainian)).Should().Be("вбивця Азрікама");
+    }
+
+    /// <summary>
+    /// The same clauses in the two languages the encyclopedia gained when it stopped speaking
+    /// Russian. German declines the target and Spanish does not, which is the whole difference
+    /// between the two tables.
+    ///
+    /// <para>
+    /// The homicide pair is what both languages had to be argued about: <em>Mörder</em> and
+    /// <em>asesino</em> would convict, and the relation says only who killed whom, so both
+    /// languages say it with a verb and neither asks for a case its pass does not produce.
+    /// </para>
+    /// </summary>
+    [Fact]
+    public async Task TheWidenedVocabularyIsSaidInGermanAndInSpanish()
+    {
+        await Load("widened");
+
+        Line(await Read("lot-1", DescriptorPhrasings.German))
+            .Should().Be("Neffe Abrams, Sohn Harans");
+        Line(await Read("lot-1", DescriptorPhrasings.Spanish))
+            .Should().Be("sobrino de Abram, hijo de Harán");
+
+        Line(await Read("azrikam-4", DescriptorPhrasings.German))
+            .Should().Be("Statthalter Jerusalems, getötet von Sichri");
+        Line(await Read("zichri-1", DescriptorPhrasings.German)).Should().Be("tötete Asrikam");
+        Line(await Read("zichri-1", DescriptorPhrasings.Spanish))
+            .Should().Be("dio muerte a Azricam");
+
+        Line(await Read("eastgate-1", DescriptorPhrasings.German))
+            .Should().Be("ein Tor Jerusalems");
+        Line(await Read("eastgate-1", DescriptorPhrasings.Spanish))
+            .Should().Be("una puerta de Jerusalén");
+    }
+
+    /// <summary>
+    /// PRB-0435 on the page it was reported from. Lot's three clauses are what the corpus holds for
+    /// him today, and the third of them read <em>жив у в околиці Йорданській</em>, because the
+    /// phrasing supplies <em>у</em> and the form the pass wrote supplied <em>в</em> as well.
+    ///
+    /// The preposition comes off the form on the way in rather than off the line at render time:
+    /// nothing at render time knows which words of a form are the name, and <em>у Хеврона</em>
+    /// cannot be told from <em>у</em> plus <em>Хеврона</em> without knowing the answer already.
+    /// </summary>
+    [Fact]
+    public async Task APlaceWhoseFormCarriesItsOwnPrepositionIsStillSaidWithOne()
+    {
+        await Load("doubled");
+
+        Line(await Read("lot-1", DescriptorPhrasings.Ukrainian))
+            .Should().Be("син Гарана, нащадок Тераха, жив у околиці Йорданській");
     }
 
     /// <summary>

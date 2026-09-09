@@ -1,0 +1,1 @@
+{"entity":"aaron","kind":"person","claims":[{"relation":"brother-of","target":"moses","reference":"EXO 4:14","confidence":0.98},{"relation":"of-tribe","target":"levites","reference":"EXO 4:14","confidence":0.95}],"names":{"eng":{"nominative":"Aaron"},"ukr":{"nominative":"Аарон","genitive":"Аарона"}},"model":"claude-sonnet-5","askedAt":"2026-09-06"}

@@ -152,8 +152,9 @@ public class EntityDescriptorClaim
 /// <summary>
 /// The name of an entity in one language, in one grammatical case.
 ///
-/// Ukrainian and Russian put the target of these phrases in the genitive — <em>тесть Мойсея</em>,
-/// not <em>тесть Мойсей</em> — so a rendering needs the name in the form the phrase puts it in, and
+/// Ukrainian and German put the target of most of these phrases in the genitive —
+/// <em>тесть Мойсея</em>, not <em>тесть Мойсей</em>, and <em>Sohn Aarons</em>, not
+/// <em>Sohn Aaron</em> — so a rendering needs the name in the form the phrase puts it in, and
 /// there is nowhere else in the corpus to keep one. <see cref="EntityName"/> holds what a source
 /// calls an entity, in the source's language; this holds what we call it, in a reader's.
 ///

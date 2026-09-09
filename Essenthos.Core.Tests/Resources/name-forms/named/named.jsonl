@@ -1,0 +1,2 @@
+{"entity":"moses","names":{"eng":{"nominative":"Moses"},"ukr":{"nominative":"Мойсей","genitive":"Мойсея"},"deu":{"nominative":"Mose","genitive":"Moses"},"spa":{"nominative":"Moisés"}},"model":"claude-sonnet-5","askedAt":"2026-09-09"}
+{"entity":"levites","names":{"eng":{"nominative":"Levites"},"ukr":{"nominative":"Левити","genitive":"Левитів"},"deu":{"nominative":"Leviten","genitive":"Leviten"},"spa":{"nominative":"Levitas"}},"model":"claude-sonnet-5","askedAt":"2026-09-09"}

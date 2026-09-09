@@ -146,6 +146,7 @@ internal sealed class DatasetLoader(
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
+            await DeclineTheNamesThoseLinesName(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -823,6 +824,22 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OwnRelationshipLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The names those lines put in a case: <em>тесть Мойсея</em>, not <em>тесть Мойсей</em>. After
+    /// the descriptions, because what these forms are for is the entities those clauses name, and
+    /// because a form the descriptor pass already wrote is the one left standing.
+    /// </summary>
+    private async Task DeclineTheNamesThoseLinesName(
+        string resources,
+        CancellationToken cancellationToken)
+    {
+        status.Starting("the names those descriptions put into a case");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<EntityNameFormLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

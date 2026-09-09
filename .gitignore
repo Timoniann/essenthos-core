@@ -178,6 +178,10 @@ Resources/*/*
 .descriptors/
 scripts/__pycache__/
 
+# A run of the name-form harness: prompt payloads, the forms a model produced and the comparison
+# against the ones already loaded. Reproducible from scripts/name-forms.py.
+.forms/
+
 # A run of the lexicon harness: prompts, translations, judgements and the score report. Cheap to
 # reproduce from scripts/lexicon.py, and not this repository's to carry.
 .lexicon/
