@@ -81,8 +81,8 @@ internal sealed class PrintedEditionLinkLoader(AppDbContext db, ILogger<PrintedE
             var content = await File.ReadAllTextAsync(
                 Path.Combine(folder, "parsed", $"{book}.UTR"), cancellationToken);
 
-            var first = UtrReader.Read(content, Edition.Stephanus1550);
-            var second = UtrReader.Read(content, Edition.Scrivener1894);
+            var first = UtrReader.Read(content, Edition.Stephanus1550, Brackets.Subscription);
+            var second = UtrReader.Read(content, Edition.Scrivener1894, Brackets.Subscription);
             var canonical = TextusReceptusTextSource.Canonical(book);
 
             foreach (var verse in first)

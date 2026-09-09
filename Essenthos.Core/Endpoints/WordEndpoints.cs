@@ -148,6 +148,8 @@ internal static class WordEndpoints
                     entry.DetailedDefinition, entry.SeeAlso, entry.SourceLanguage,
                     entry.TwotReference, false, stated);
 
+            var supplied = await Supplied(db, id, cancellationToken);
+
             var syntax = await Syntax(db, id, cancellationToken);
 
             return Results.Ok(new WordDetailResponse(
@@ -169,12 +171,37 @@ internal static class WordEndpoints
                     word.CanonicalChapter,
                     word.CanonicalVerse),
                 Morphology(word.Morphology),
+                supplied,
                 await Annotations.Of(db, id, cancellationToken),
                 strong,
                 renderings,
                 syntax));
         });
     }
+
+    /// <summary>
+    /// Whether the edition prints this word as its own, rather than as a rendering of anything in
+    /// the text it translated.
+    ///
+    /// It is asked twice because the corpus records the same fact two ways: an edition that marks
+    /// a span of its own words -- the Synodal's brackets, the Berean's braces -- names it as a
+    /// <see cref="WordGroupKind.Supplied"/> group, while the King James' italics are an
+    /// <see cref="LinkRelation.Expands"/> link with nothing on the far side. A reader asking
+    /// whether a word was supplied is asking one question, so this answers it once whichever table
+    /// the word's own edition happened to use.
+    /// </summary>
+    internal static async Task<bool> Supplied(
+        AppDbContext db,
+        long id,
+        CancellationToken cancellationToken) =>
+        await db.WordGroupWords
+            .AnyAsync(m => m.WordId == id && m.WordGroup!.Kind == WordGroupKind.Supplied, cancellationToken)
+        || await db.LinkWords
+            .AnyAsync(
+                side => side.WordId == id
+                        && side.Link!.Relation == LinkRelation.Expands
+                        && side.Side == LinkSide.From,
+                cancellationToken);
 
     /// <summary>
     /// The groups this word sits in, smallest first. Each carries its own features, so the reader
@@ -241,6 +268,11 @@ internal static class WordEndpoints
 /// The witness words this word reaches — the set the reader intersects to light two texts up
 /// together. Named for the old contract; the model calls them witnesses.
 /// </param>
+/// <param name="Supplied">
+/// Whether the edition prints this word as its own, with nothing behind it in the text it was
+/// translating. The reader marks these, and until now nothing in this response distinguished a
+/// bracketed word from any other.
+/// </param>
 /// <param name="Syntax">
 /// The groups this word's own text places it in, innermost first. Empty for every text but BHSA,
 /// which is the only one that carries an analysis.
@@ -263,6 +295,7 @@ internal record WordDetailResponse(
     int Verse,
     VerseRefResponse Reference,
     MorphologyResponse? Morphology,
+    bool Supplied,
     EntityRefResponse? Entity,
     StrongEntryResponse? Strong,
     IList<WordRenderingResponse> Renderings,
