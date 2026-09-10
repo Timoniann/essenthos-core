@@ -146,6 +146,7 @@ internal sealed class DatasetLoader(
             await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
             await ReadTheNamesNothingSettles(resources, stoppingToken);
             await TellTheNamesakePlacesApart(resources, stoppingToken);
+            await ReachTheNamesNobodyElseCarries(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
@@ -825,6 +826,21 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<SiteSplitLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The records that rest on a dataset because nobody ever asked about them: a name one record
+    /// carries, an entry of Strong's that heads it, and occurrences already loaded. After every
+    /// pass that writes a record, because what it asks is whether anything else in this corpus
+    /// carries the name, and a record written afterwards would make that answer wrong.
+    /// </summary>
+    private async Task ReachTheNamesNobodyElseCarries(CancellationToken cancellationToken)
+    {
+        status.Starting("the names nobody else carries");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SoleBearerLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>
