@@ -125,6 +125,58 @@ public sealed class OwnRelationshipTests : IDisposable
     }
 
     /// <summary>
+    /// A closer tie is not a different answer. The witness says only that Lot descends from Haran and
+    /// the verse was read as <em>son of</em>: the reading says everything the witness says and more,
+    /// and withholding it would put the looser line on the page in place of the one the text gives.
+    /// </summary>
+    [Fact]
+    public async Task AReadingCloserThanTheWitnessIsWrittenRatherThanWithheld()
+    {
+        var lot = Person("lot");
+        var haran = Person("haran");
+        Stated(haran, lot, "ancestor");
+        Clause(lot, haran, DescriptorRelations.SonOf, 0.95);
+
+        var outcome = await Load();
+        outcome.Written.Should().Be(1);
+        outcome.Withheld.Should().Be(0);
+    }
+
+    /// <summary>
+    /// And only that way round. A reading of <em>descendant of</em> against a witness's <em>son</em>
+    /// says less than the witness, so it gives way exactly as any other disagreement does.
+    /// </summary>
+    [Fact]
+    public async Task AReadingLooserThanTheWitnessStillGivesWay()
+    {
+        var lot = Person("lot");
+        var haran = Person("haran");
+        Stated(lot, haran, "son");
+        Clause(lot, haran, DescriptorRelations.DescendantOf, 0.95);
+
+        var outcome = await Load();
+        outcome.Written.Should().Be(0);
+        outcome.Withheld.Should().Be(1);
+    }
+
+    /// <summary>
+    /// Son of Haran already says descendant of Haran, so a pair read both ways is one row and not two.
+    /// </summary>
+    [Fact]
+    public async Task TheWiderClauseBesideACloserOneIsNotWrittenAgain()
+    {
+        var lot = Person("lot");
+        var haran = Person("haran");
+        Stated(lot, haran, "descendant");
+        Clause(lot, haran, DescriptorRelations.SonOf, 0.9);
+        Clause(lot, haran, DescriptorRelations.DescendantOf, 0.9);
+
+        (await Load()).Written.Should().Be(1);
+
+        (await Relations(lot, haran)).Should().BeEquivalentTo(["descendant", DescriptorRelations.SonOf]);
+    }
+
+    /// <summary>
     /// Not everything that differs disagrees. The commander of Judah is also of the tribe of Judah,
     /// and treating a second kind of claim about one pair as a contradiction would withhold a true
     /// clause for saying something the witness simply did not say.

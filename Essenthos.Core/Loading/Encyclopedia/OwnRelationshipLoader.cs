@@ -142,12 +142,18 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
             }
 
             var settled = top.SelectMany(c => c.Relations).ToHashSet(StringComparer.Ordinal);
+            var standing = pair
+                .Where(clause => !RelationshipVocabulary.Contradicts(clause.Relation, settled))
+                .ToList();
+            withheld += pair.Count() - standing.Count;
 
-            foreach (var clause in pair.OrderByDescending(c => c.Confidence ?? 1))
+            foreach (var clause in standing.OrderByDescending(c => c.Confidence ?? 1))
             {
-                if (RelationshipVocabulary.Contradicts(clause.Relation, settled))
+                // Son of Haran already says descendant of Haran; a page saying both says it twice.
+                if (standing.Any(closer =>
+                        RelationshipVocabulary.Implies(closer.Relation, clause.Relation)
+                        && (closer.Confidence ?? 1) >= (clause.Confidence ?? 1)))
                 {
-                    withheld++;
                     continue;
                 }
 

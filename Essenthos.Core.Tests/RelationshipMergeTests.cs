@@ -115,6 +115,36 @@ public sealed class RelationshipMergeTests : IDisposable
     }
 
     /// <summary>
+    /// The witness states the wider tie and our reading the closer one. The loader wrote ours because
+    /// the two agree, so the page says <em>son of Haran</em> once, with BibleData's looser word beside
+    /// it — from either end the witness wrote it.
+    /// </summary>
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task AWitnessStatingTheWiderTieRidesOnTheCloserReading(bool fromTheOtherEnd)
+    {
+        var lot = Person("lot");
+        var haran = Person("haran");
+        Read(lot, haran, DescriptorRelations.SonOf, 1, 11, 27);
+        if (fromTheOtherEnd)
+        {
+            Stated(haran, lot, "ancestor", 1, 11, 27);
+        }
+        else
+        {
+            Stated(lot, haran, "descendant", 1, 11, 27);
+        }
+
+        var row = (await Page(lot)).Should().ContainSingle().Which;
+
+        row.Type.Should().Be(DescriptorRelations.SonOf);
+        var witness = row.Corroboration.Should().ContainSingle().Which;
+        witness.Type.Should().Be(fromTheOtherEnd ? "ancestor" : "descendant");
+        witness.Reversed.Should().Be(fromTheOtherEnd);
+    }
+
+    /// <summary>
     /// One fact, four rows, one line on the page — and nothing thrown away.
     ///
     /// <para>

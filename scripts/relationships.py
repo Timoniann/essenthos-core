@@ -221,6 +221,31 @@ because you know it to be true.
 
 
 @functools.cache
+def relation_words():
+    with open(RELATION_NAMES, encoding='utf-8-sig') as handle:
+        return dict(re.findall(r'public const string (\w+) = "([^"]+)"', handle.read()))
+
+
+@functools.cache
+def broader():
+    """
+    The wider tie a closer one already states -- son-of states descendant-of -- as
+    `RelationshipVocabulary.Broader` holds it, so a fact BibleData states loosely counts as read
+    wherever a row of ours states it closely, exactly as the page pairs the two.
+    """
+    with open(VOCABULARY, encoding='utf-8-sig') as handle:
+        text = handle.read()
+    start = text.find('Broader =')
+    if start < 0:
+        raise SystemExit(f'no Broader table was found in {VOCABULARY}; if it has been renamed or moved, '
+                         'point this function at where it is now.')
+    block = text[start:text.index('};', start)]
+    words = relation_words()
+    return {words[closer]: words[wider] for closer, wider in
+            re.findall(r'\[DescriptorRelations\.(\w+)\]\s*=\s*DescriptorRelations\.(\w+)', block)}
+
+
+@functools.cache
 def vocabulary():
     """
     BibleData's type names against this corpus's relation words, as the loader holds them.
@@ -229,8 +254,7 @@ def vocabulary():
     decide whether a clause and a row say the same thing on a page. A copy here would be a second
     answer to that question, and the two drift the first time a word is added.
     """
-    with open(RELATION_NAMES, encoding='utf-8-sig') as handle:
-        words = dict(re.findall(r'public const string (\w+) = "([^"]+)"', handle.read()))
+    words = relation_words()
     with open(VOCABULARY, encoding='utf-8-sig') as handle:
         entries = re.findall(r'\["([^"]+)"\]\s*=\s*DescriptorRelations\.(\w+)', handle.read())
     if not words or not entries:
@@ -274,9 +298,10 @@ def fold(rows, says):
     for row in rows:
         if not row['source'].startswith(OUR_SOURCE):
             continue
-        ours_said.add((row['from'], row['to'], row['type']))
-        for other in shared.INVERSE.get(row['type'], ()):
-            ours_said.add((row['to'], row['from'], other))
+        for relation in filter(None, (row['type'], broader().get(row['type']))):
+            ours_said.add((row['from'], row['to'], relation))
+            for other in shared.INVERSE.get(relation, ()):
+                ours_said.add((row['to'], row['from'], other))
 
     facts, index = [], {}
     for row in rows:

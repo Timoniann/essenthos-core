@@ -265,10 +265,12 @@ internal static class Relationships
         Ours(row) ? row.Type : Says(row);
 
     /// <summary>
-    /// The readings of a witness's row, strongest first: the pair it names, and then the pair read
-    /// backwards.
+    /// The readings of a witness's row, strongest first: the pair it names, then the pair read
+    /// backwards, and only after every row on the page has had those, the looser tie a closer
+    /// reading of ours already states.
     /// </summary>
-    private static readonly Func<Related, Related, bool>[] Pairings = [Restates, RestatesBackwards];
+    private static readonly Func<Related, Related, bool>[] Pairings =
+        [Restates, RestatesBackwards, StatesLoosely, StatesLooselyBackwards];
 
     private const int NoRow = -1;
 
@@ -288,6 +290,24 @@ internal static class Relationships
         && witness.To == mine.From
         && Says(witness) is { } relation
         && RelationshipVocabulary.Reversed(relation).Contains(mine.Type);
+
+    /// <summary>
+    /// The witness states the wider tie our reading states closely: BibleData's <em>descendant</em>
+    /// where the verse was read as <em>son of</em>. The loader wrote ours because the two agree, so
+    /// the page shows the closer one with the looser one beside it rather than both as facts.
+    /// </summary>
+    private static bool StatesLoosely(Related mine, Related witness) =>
+        witness.From == mine.From
+        && witness.To == mine.To
+        && Says(witness) is { } relation
+        && RelationshipVocabulary.Implies(mine.Type, relation);
+
+    /// <summary>The same looser tie, stated from the other end: <em>Haran ancestor of Lot</em>.</summary>
+    private static bool StatesLooselyBackwards(Related mine, Related witness) =>
+        witness.From == mine.To
+        && witness.To == mine.From
+        && Says(witness) is { } relation
+        && RelationshipVocabulary.Reversed(relation).Any(wider => RelationshipVocabulary.Implies(mine.Type, wider));
 
     /// <summary>
     /// What a witness's relation is called in this corpus's vocabulary, or null where the corpus

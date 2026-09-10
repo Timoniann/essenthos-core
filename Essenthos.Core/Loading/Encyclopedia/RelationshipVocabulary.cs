@@ -214,12 +214,43 @@ internal static class RelationshipVocabulary
         : relation;
 
     /// <summary>
+    /// The wider tie a closer one already states. A son is a descendant and a grandfather an
+    /// ancestor, so <em>son of</em> and <em>descendant of</em> over one pair are one answer said
+    /// closely and loosely, not two answers — and a witness saying the loose one has not
+    /// contradicted a reading that says the close one.
+    ///
+    /// <para>
+    /// One way only. A descendant is not thereby a son, so a reading of <em>descendant of</em>
+    /// against a witness's <em>son</em> still says less than the witness and still gives way to it.
+    /// Nothing else is here because nothing else is entailed: a half-brother is not a brother in
+    /// the sense the dataset means one.
+    /// </para>
+    /// </summary>
+    private static readonly IReadOnlyDictionary<string, string> Broader =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [DescriptorRelations.SonOf] = DescriptorRelations.DescendantOf,
+            [DescriptorRelations.DaughterOf] = DescriptorRelations.DescendantOf,
+            [DescriptorRelations.GrandsonOf] = DescriptorRelations.DescendantOf,
+            [DescriptorRelations.GranddaughterOf] = DescriptorRelations.DescendantOf,
+            [DescriptorRelations.FatherOf] = DescriptorRelations.AncestorOf,
+            [DescriptorRelations.MotherOf] = DescriptorRelations.AncestorOf,
+            [DescriptorRelations.GrandfatherOf] = DescriptorRelations.AncestorOf,
+            [DescriptorRelations.GrandmotherOf] = DescriptorRelations.AncestorOf,
+        };
+
+    /// <summary>Whether stating <paramref name="closer"/> already states the wider <paramref name="wider"/>.</summary>
+    public static bool Implies(string closer, string wider) =>
+        Broader.TryGetValue(closer, out var broader) && broader == wider;
+
+    /// <summary>
     /// Whether a claim says something the settled relations of a pair do not, about the same thing
-    /// they are about — which is the only disagreement there is here.
+    /// they are about — which is the only disagreement there is here. A settled relation the claim
+    /// already implies is not one it disagrees with.
     /// </summary>
     public static bool Contradicts(string relation, IReadOnlySet<string> settled) =>
         !settled.Contains(relation)
-        && settled.Any(other => Branch(other) == Branch(relation));
+        && settled.Any(other => Branch(other) == Branch(relation) && !Implies(relation, other));
 
     /// <summary>What a witness stating this relation about a pair says about the reverse pair.</summary>
     public static IReadOnlySet<string> Reversed(string relation) =>
