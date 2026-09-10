@@ -263,4 +263,20 @@ public sealed class DescriptorVocabularyTests
                 [GrammaticalCases.Genitive] = "Мойсея",
             },
         };
+
+    /// <summary>
+    /// §11 of the Ukrainian orthography, which is the one direction it decides: <em>у</em> before a
+    /// word beginning with <em>в</em> or <em>ф</em>. The rule cannot sit in the table because the
+    /// right word depends on the name that follows, which the phrase is written without.
+    /// </summary>
+    [Theory]
+    [InlineData("місто в ", "Вавилоні", "місто у ")]
+    [InlineData("гора в ", "Фаранській", "гора у ")]
+    [InlineData("місто в ", "Юдеї", "місто в ")]
+    [InlineData("місто в ", "Авані", "місто в ")]
+    [InlineData("жив у ", "Авані", "жив у ")]
+    [InlineData("жив у ", "Вавилоні", "жив у ")]
+    [InlineData("брама ", "Вавилона", "брама ")]
+    public void ThePrepositionAgreesWithTheWordAfterIt(string before, string next, string expected) =>
+        DescriptorPhrasings.AgreeWithWhatFollows(before, next).Should().Be(expected);
 }

@@ -154,8 +154,13 @@ internal static class Descriptors
                 parts.Add(new DescriptorPartResponse(DescriptorPhrasings.Separator));
             }
 
-            parts.Add(new DescriptorPartResponse(phrasing.Before) { Doubtful = doubtful });
-            parts.Add(new DescriptorPartResponse(Name(clause, phrasing.Case, cases))
+            var written = Name(clause, phrasing.Case, cases);
+            parts.Add(new DescriptorPartResponse(
+                DescriptorPhrasings.AgreeWithWhatFollows(phrasing.Before, written))
+            {
+                Doubtful = doubtful,
+            });
+            parts.Add(new DescriptorPartResponse(written)
             {
                 Entity = target,
                 Doubtful = doubtful,
