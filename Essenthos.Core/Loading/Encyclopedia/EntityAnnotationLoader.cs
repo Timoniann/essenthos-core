@@ -10,7 +10,8 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <param name="Resolved">
 /// Proper-noun Strong numbers the encyclopedia answers with exactly one person or place, so that
-/// the occurrence needs nobody to choose.
+/// the occurrence needs nobody to choose. On the Hebrew side the unit is the number under the kind
+/// its words are marked, which is the pair the resolution is asked of.
 /// </param>
 /// <param name="Contested">
 /// Numbers it answers with several. These are left unannotated on purpose and are the work the
@@ -97,12 +98,13 @@ internal sealed record AnnotationOutcome(
 /// </para>
 ///
 /// <para>
-/// **The one exclusion that belongs here** is the kind. BHSA's name type is a property of the lemma
-/// rather than of the occurrence: all 2,467 occurrences of Israel are marked <c>pers,gens,topo</c>,
-/// which says the name can be a person, a people or a place and never that it is one here. So an
-/// occurrence is taken only where BHSA commits to a single kind and the entity is that kind. Where
-/// it does not commit, nothing is written — which is the discipline that keeps the land of Canaan
-/// from being annotated as the person Canaan.
+/// **The one thing decided here** is the kind. BHSA's name type is a property of the lemma rather
+/// than of the occurrence: all 2,467 occurrences of Israel are marked <c>pers,gens,topo</c>, which
+/// says the name can be a person, a people or a place and never that it is one here. So an
+/// occurrence is taken only where BHSA commits to a single kind, and the resolution is asked of
+/// that kind — which is the discipline that keeps the land of Canaan from being annotated as the
+/// person Canaan, and the same question that lets the man Jephthah and the town named after him
+/// each answer for the words marked as them.
 /// </para>
 ///
 /// <para>
@@ -319,12 +321,50 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// <summary>What a language answers when nothing of it is loaded, or nothing was asked.</summary>
     private static readonly NameAnswers Nothing = new(0, 0, 0);
 
-    /// <summary>The numbers that name exactly one entity, which are the only ones annotated.</summary>
+    /// <summary>
+    /// The kind of record BHSA's marking commits a word to, and nothing where it commits to none.
+    ///
+    /// The marking belongs to the lemma rather than to the occurrence, so a lexeme that can be a
+    /// person, a people or a place carries all three at once and settles nothing: only a marking
+    /// naming one kind is read, and every occurrence of Israel is left out by it.
+    /// </summary>
+    private const string Marked =
+        "CASE w.morphology->>'nameType' WHEN 'pers' THEN 'person' WHEN 'topo' THEN 'place' END";
+
+    /// <summary>
+    /// The numbers that name exactly one entity of a kind, which are the only ones annotated.
+    ///
+    /// <para>
+    /// Grouped by the kind and not by the number alone, because Strong heads one entry for a man
+    /// and for the town named after him — Jephthah, Cain, Ephron, Terah — and a place is never an
+    /// aspect of a person, so nothing folds those into one record and nothing should. Asked of the
+    /// number alone such a name answers with two and is refused, and <see cref="Marked"/>, which
+    /// says outright which of the two this word is, never gets to speak: the kind was tested in
+    /// <see cref="Seed"/>'s <c>WHERE</c>, where it could only ever remove an occurrence the
+    /// resolution had already allowed. As the grouping it is the join, which is where it was doing
+    /// the work all along.
+    /// </para>
+    ///
+    /// <para>
+    /// It can only add, and that is a property of the grouping rather than a hope: a number naming
+    /// one record answers the same either way, and a number naming several of one kind is still
+    /// refused for that kind. What it reaches is the number whose rivals are all of the other kind
+    /// — 597 occurrences of Egypt, which the encyclopedia holds as the land and as Mizraim son of
+    /// Ham alike, and 1,400 words over 102 numbers.
+    /// </para>
+    ///
+    /// <para>
+    /// The Greek has no counterpart and must not be given one. Nothing in it marks a name at all,
+    /// and its rival is ruled out by reachability instead.
+    /// </para>
+    /// </summary>
     private static readonly string Resolvable =
         $"""
-         SELECT number, min(entity_id) AS entity_id, bool_and(stated) AS stated
+         SELECT named.number, e.kind, min(named.entity_id) AS entity_id,
+                bool_and(named.stated) AS stated
          FROM ({EntityCandidates.Naming}) named
-         GROUP BY 1 HAVING count(*) = 1
+         JOIN entity e ON e.id = named.entity_id
+         GROUP BY 1, 2 HAVING count(*) = 1
          """;
 
     /// <summary>
@@ -419,25 +459,38 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          """;
 
     /// <summary>
-    /// Whether nothing this loader wrote names the record a number resolved to. It is the unit of
-    /// work, and asking it of the record rather than of the pass is what lets a record added after
-    /// this pass has run be reached on the next boot: the peoples, the records this corpus writes
-    /// for itself and the place register all add entities, and a pass that asked only whether it
-    /// had ever run would leave every one of them with no words and no verses.
+    /// Whether this word does not already name this record. It is the unit of work, and it is the
+    /// pair because the pair is what gets written: a pass that asked only whether it had ever run
+    /// would leave every record added after it — the peoples, the records this corpus writes for
+    /// itself, the place register — with no words and no verses.
+    ///
+    /// <para>
+    /// The pair and not the record. Asked of the record it means <em>nothing this loader wrote
+    /// names it</em>, which is coarser than what is being decided and goes wrong the moment the
+    /// resolution itself changes: asking it per kind newly resolves 597 occurrences of Egypt onto a
+    /// record the loader had already spoken for by another number, so a warm corpus would take 587
+    /// of the 1,400 and a cold load all of them, and the two states would disagree about what the
+    /// corpus says. Per pair they agree, which is the property PRB-0468 was about.
+    /// </para>
+    ///
+    /// <para>
+    /// A word another source has already annotated with this record is left alone rather than
+    /// seeded and discarded at the insert: seeding it would carry it across the links a second time
+    /// and claim it a second time, both of which are work and one of which is visible.
+    /// </para>
     ///
     /// <para>
     /// It is asked after the resolution and never before it. Whether a number names exactly one
-    /// record is a question about the whole encyclopedia, and a candidate list narrowed to the
-    /// records still waiting would answer it with one where the answer is two — annotating a new
-    /// place with a number an older record already bears, which is the very case the resolution
-    /// exists to refuse.
+    /// record is a question about the whole encyclopedia, and a candidate list narrowed to what is
+    /// still waiting would answer it with one where the answer is two — annotating a new place with
+    /// a number an older record already bears, which is the very case the resolution exists to
+    /// refuse.
     /// </para>
     /// </summary>
     private const string Unspoken =
         """
         NOT EXISTS (SELECT 1 FROM word_entity spoken
-                    WHERE spoken.entity_id = resolved.entity_id
-                      AND spoken.source = ANY(@written))
+                    WHERE spoken.word_id = w.id AND spoken.entity_id = resolved.entity_id)
         """;
 
     /// <summary>
@@ -479,7 +532,13 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// worth.
     ///
     /// <para>
-    /// Where the number is several records' it is BHSA's marking that rules the rivals out, and
+    /// The marking is the join rather than a filter over it. A word BHSA does not commit on matches
+    /// no kind and is left alone, which it was before; a word it does commit on asks the resolution
+    /// of that kind, which is what lets the man Jephthah and the town of Joshua 15:43 both answer.
+    /// </para>
+    ///
+    /// <para>
+    /// Where the number is several records' it is that marking which rules the rivals out, and
     /// <see cref="Distinguished"/> is what records that something was ruled out at all.
     /// </para>
     /// </summary>
@@ -495,8 +554,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                 w.strong_number || ', which BHSA marks ' || (w.morphology->>'nameType')
          FROM word w
          JOIN text t ON t.id = w.text_id AND t.slug = @witness
-         JOIN ({Resolvable}) resolved ON resolved.number = w.strong_number
-         JOIN entity e ON e.id = resolved.entity_id
+         JOIN ({Resolvable}) resolved
+              ON resolved.number = w.strong_number AND resolved.kind = {Marked}
          CROSS JOIN LATERAL (SELECT EXISTS (
              SELECT 1 FROM verse_reference r
              JOIN entity_verse ev ON ev.entity_id = resolved.entity_id
@@ -504,9 +563,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                   AND ev.canonical_chapter = r.canonical_chapter
                   AND ev.canonical_verse = r.canonical_verse
              WHERE r.verse_id = w.verse_id AND r.is_primary) AS named) agreed
-         WHERE ((w.morphology->>'nameType' = 'pers' AND e.kind = 'person')
-             OR (w.morphology->>'nameType' = 'topo' AND e.kind = 'place'))
-           AND {Unspoken}
+         WHERE {Unspoken}
          """;
 
     /// <summary>
@@ -832,14 +889,12 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         await Run(connection, transaction, Workspace, cancellationToken);
         await Run(connection, transaction, Seed, cancellationToken,
             ("witness", Witness), ("rendering", Rendering), ("source", Resolution),
-            ("derivation", Derivation), ("resolution", NameResolution), ("derived", DerivedName),
-            ("written", Written));
+            ("derivation", Derivation), ("resolution", NameResolution), ("derived", DerivedName));
 
         var refused = await Attest(connection, transaction, cancellationToken);
         await Run(connection, transaction, GreekSeed, cancellationToken,
             ("witnesses", EntityCandidates.GreekWitnesses), ("source", GreekResolution),
-            ("distinction", GreekDistinction), ("resolution", GreekNameResolution),
-            ("written", Written));
+            ("distinction", GreekDistinction), ("resolution", GreekNameResolution));
 
         await Run(connection, transaction, Carry, cancellationToken,
             ("faint", Faint), ("firm", Firm));
@@ -867,18 +922,26 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         return outcome;
     }
 
-    /// <summary>The numbers BHSA marks as names, which is the population the Hebrew half answers.</summary>
-    private const string HebrewNumbers =
-        """
-        SELECT DISTINCT w.strong_number AS number
-        FROM word w JOIN text t ON t.id = w.text_id AND t.slug = @witness
-        WHERE w.morphology->>'nameType' IS NOT NULL AND w.strong_number IS NOT NULL
-        """;
+    /// <summary>
+    /// The numbers BHSA marks as names, which is the population the Hebrew half answers — one row
+    /// per number and per kind its words are marked, because that is the pair the resolution is
+    /// asked of. A number whose words are marked both ways is two questions, and a marking that
+    /// commits to no kind carries none.
+    /// </summary>
+    private static readonly string HebrewNumbers =
+        $"""
+         SELECT DISTINCT w.strong_number AS number, {Marked} AS kind
+         FROM word w JOIN text t ON t.id = w.text_id AND t.slug = @witness
+         WHERE w.morphology->>'nameType' IS NOT NULL AND w.strong_number IS NOT NULL
+         """;
 
-    /// <summary>The same for the Greek: a noun whose lexicon lemma is written with a capital.</summary>
+    /// <summary>
+    /// The same for the Greek: a noun whose lexicon lemma is written with a capital. It carries no
+    /// kind because nothing in the Greek marks one.
+    /// </summary>
     private static readonly string GreekNumbers =
         $"""
-         SELECT DISTINCT w.strong_number AS number
+         SELECT DISTINCT w.strong_number AS number, NULL::text AS kind
          FROM word w
          JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
          JOIN strong_entry lexicon ON lexicon.strong_number = w.strong_number
@@ -954,6 +1017,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// How many of one language's proper-noun numbers the encyclopedia answers with one entity,
     /// with several, and with nobody. The second and third are the size of the work this loader
     /// deliberately does not do, and they belong in the record beside what it did.
+    ///
+    /// <para>
+    /// The count is of what the loader would be allowed to write, so it is asked of the same pair
+    /// the resolution is: where the population states a kind, only records of that kind answer;
+    /// where it states none — the Greek throughout, and a Hebrew marking that commits to nothing —
+    /// every record does. Counting the Hebrew per number alone reported eighteen names a man and a
+    /// place share as work refused, when the marking settles every one of them.
+    /// </para>
     /// </summary>
     private static async Task<NameAnswers> Answers(
         NpgsqlConnection connection,
@@ -966,10 +1037,13 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             $"""
              WITH proper AS ({numbers}),
              answered AS (
-                 SELECT p.number, count(DISTINCT n.entity_id) AS entities
+                 SELECT p.number, p.kind,
+                        count(DISTINCT n.entity_id)
+                            FILTER (WHERE p.kind IS NULL OR e.kind = p.kind) AS entities
                  FROM proper p
                  LEFT JOIN ({naming}) n ON n.number = p.number
-                 GROUP BY 1
+                 LEFT JOIN entity e ON e.id = n.entity_id
+                 GROUP BY 1, 2
              )
              SELECT count(*) FILTER (WHERE entities = 1),
                     count(*) FILTER (WHERE entities > 1),

@@ -252,11 +252,62 @@ public sealed class OwnRecordTests : IDisposable
         await Load();
         var entities = await _db.Entities.CountAsync();
         var annotations = await _db.WordEntities.CountAsync();
+        var names = await _db.EntityNames.CountAsync();
 
         var again = await Load();
 
         again.AlreadyLoaded.Should().BeTrue();
+        again.Labelled.Should().Be(0);
         (await _db.Entities.CountAsync()).Should().Be(entities);
         (await _db.WordEntities.CountAsync()).Should().Be(annotations);
+        (await _db.EntityNames.CountAsync()).Should().Be(names);
+    }
+
+    /// <summary>
+    /// A record with no <c>entity_name</c> row is reachable by its slug and by nothing else: it
+    /// stands in no namesake group, the pass that declines a name into Ukrainian and Russian reads
+    /// that table and cannot see it, and no resolution by Strong number arrives at it however
+    /// plainly the word carries the number. So the record is named, with the number read off the
+    /// word the ruling rests on rather than off the ruling beside it.
+    /// </summary>
+    [Fact]
+    public async Task ARecordWeWroteCarriesTheNameItsNumberReachesItBy()
+    {
+        var outcome = await Load();
+
+        outcome.Labelled.Should().Be(_rulings.Count(r => r.Create is not null));
+
+        foreach (var ruling in _rulings.Where(r => r.Create is not null))
+        {
+            var written = await _db.Entities
+                .Include(e => e.Names)
+                .SingleAsync(e => e.Slug == ruling.Create!.Slug);
+
+            var name = written.Names.Should().ContainSingle().Which;
+            name.Label.Should().Be(ruling.Create!.Name);
+            name.Kind.Should().Be("proper name");
+            name.HebrewStrongNumber.Should().Be(ruling.StrongNumber);
+            name.GreekStrongNumber.Should().BeNull();
+        }
+    }
+
+    /// <summary>
+    /// And a record written before this pass named anything is named on the next boot. The guard
+    /// that skips the rulings is what would otherwise keep it unnamed for ever — the records this
+    /// is about are already there, so a step that named only what it created on this boot would
+    /// never reach one of them.
+    /// </summary>
+    [Fact]
+    public async Task ARecordWrittenBeforeThisPassNamedAnythingIsNamedOnTheNextBoot()
+    {
+        await Load();
+        _db.EntityNames.RemoveRange(await _db.EntityNames.ToListAsync());
+        await _db.SaveChangesAsync();
+
+        var again = await Load();
+
+        again.AlreadyLoaded.Should().BeTrue();
+        again.Labelled.Should().Be(_rulings.Count(r => r.Create is not null));
+        (await _db.EntityNames.CountAsync()).Should().Be(again.Labelled);
     }
 }

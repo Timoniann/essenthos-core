@@ -185,10 +185,10 @@ internal sealed class PersonRegisterLoader(
         var groups = records.Select(record => record.Group).Distinct(StringComparer.Ordinal).ToList();
 
         // Two ways a held person is a candidate for a name, and the second is not a nicety. A group
-        // is built out of `entity_name`, and the records this corpus writes for itself carry no name
-        // row at all — 180 of the 181 — so zechariah-the-trumpeting-priest is invisible to the group
-        // and a second page would be added for a man already on one. An entity whose own name is the
-        // label is a candidate too, and the verses still decide.
+        // is built out of `entity_name`, so a record carrying no row there — a record written after
+        // this pass ran, or before its writer named anything — is invisible to the group, and a
+        // second page would be added for a man already on one. An entity whose own name is the label
+        // is a candidate too, and the verses still decide.
         var held = await db.Entities
             .Where(e => e.Kind == EntityKind.Person
                         && (groups.Contains(e.Name)

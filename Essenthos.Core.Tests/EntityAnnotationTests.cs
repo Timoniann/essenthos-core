@@ -53,7 +53,10 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 5, ["כנען"]),
             (1, 6, ["ישראל"]),
             (1, 7, ["פלמוני"]),
-            (1, 11, ["כשׂדים"]));
+            (1, 11, ["כשׂדים"]),
+            (1, 16, ["יפתח"]),
+            (1, 17, ["יפתח"]),
+            (1, 18, ["יריחו"]));
 
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (1, 1, ["Moses"]),
@@ -76,6 +79,9 @@ public sealed class EntityAnnotationTests : IDisposable
         Annotate(6, "H3478", "pers,gens,topo");
         Annotate(7, "H8888", "pers");
         Annotate(11, "H3778", "topo");
+        Annotate(16, "H3316", "topo");
+        Annotate(17, "H3316", "pers");
+        Annotate(18, "H3405", "topo");
 
         var moses = Person("moses", "Moses", "H4872");
         Person("zechariah-1", "Zechariah", "H2148");
@@ -100,6 +106,17 @@ public sealed class EntityAnnotationTests : IDisposable
         // that is a claim of a different kind from a number that named one thing to begin with.
         Place("chaldea", "Chaldea", "H3778");
         People("chaldeans", "Chaldeans", "H3778");
+
+        // The judge and the town of Joshua 15:43, which Strong heads under one entry. A place is
+        // not an aspect of a person, so nothing folds these into one record and the number is
+        // borne by two — but BHSA says of each word which of the two it is.
+        Person("jephthah", "Jephthah", "H3316");
+        Place("jephthah-2", "Jephthah", "H3316");
+
+        // And the two towns four kilometres apart, which the marking cannot tell apart because it
+        // agrees with both.
+        Place("jericho", "Jericho", "H3405");
+        Place("jericho-2", "Jericho", "H3405");
 
         _db.SaveChanges();
 
@@ -689,17 +706,62 @@ public sealed class EntityAnnotationTests : IDisposable
 
     /// <summary>
     /// The counts the loader reports are the ones a reader is asked to trust, so they are counted
-    /// rather than estimated: one number resolves for each of Moses, Jerusalem and Canaan, one is
-    /// several men's, and one is nobody's.
+    /// rather than estimated, and counted at the grain the loader actually decides at: a number
+    /// under the kind its words are marked. Two names are several bearers' of the marked kind —
+    /// the Zechariahs and the two Jerichos — and three answer with nobody of it: the common noun
+    /// <em>king</em>, the name no record bears, and the land of Canaan, whose only record is the
+    /// man. Counted per number alone the last of those would read as an answer, and the loader
+    /// writes nothing for it.
     /// </summary>
     [Fact]
     public async Task TheOutcomeCountsWhatItRefusedAsWellAsWhatItWrote()
     {
         var outcome = await _loader.Load();
 
-        outcome.Hebrew.Contested.Should().Be(1);
-        outcome.Hebrew.Unanswered.Should().Be(2);
+        outcome.Hebrew.Contested.Should().Be(2);
+        outcome.Hebrew.Unanswered.Should().Be(3);
         outcome.ByText.Should().ContainSingle().Which.Text.Should().Be(EntityCandidates.Witness);
+    }
+
+    /// <summary>
+    /// The judge and the town named after him. Strong heads one entry for both, so the number is
+    /// borne by two records and answers neither on its own — and BHSA marks this occurrence a
+    /// place, of which there is exactly one. Asked of the number before the kind, both words name
+    /// nobody; asked of the number and the kind together, each names the record it is.
+    /// </summary>
+    [Fact]
+    public async Task ANameAManAndTheTownNamedAfterHimShareResolvesByTheMarking()
+    {
+        var named = await Load();
+
+        named.Should().ContainKey(Hebrew(16).Id).WhoseValue.Should().Be("jephthah-2");
+        named.Should().ContainKey(Hebrew(17).Id).WhoseValue.Should().Be("jephthah");
+    }
+
+    /// <summary>
+    /// And it says so. The number is several records' and the marking is what chose between them,
+    /// which is a claim of a different kind from a number that named one thing to begin with.
+    /// </summary>
+    [Fact]
+    public async Task SuchAnOccurrenceIsWrittenAsTheFormOfTheWord()
+    {
+        await _loader.Load();
+
+        var town = await _db.WordEntities.SingleAsync(a => a.WordId == Hebrew(16).Id);
+        town.Method.Should().Be(LinkMethod.Lexical);
+    }
+
+    /// <summary>
+    /// What the marking cannot do is choose between two records it agrees with. Jericho at Tell es
+    /// Sultan and Jericho at Tell el Alayiq are both places, so a word marked a place still has two
+    /// answers and the corpus goes on saying nothing — which is the whole point of asking the
+    /// resolution per kind rather than collapsing the kinds together.
+    /// </summary>
+    [Fact]
+    public async Task ANameTwoPlacesBearIsStillLeftUnannotated()
+    {
+        var named = await Load();
+        named.Should().NotContainKey(Hebrew(18).Id);
     }
 
     /// <summary>
