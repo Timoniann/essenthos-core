@@ -13,17 +13,20 @@ internal sealed record DescriptorRefusals(
     int UnknownRelation,
     int UnresolvedTarget,
     int UnmatchedReference,
-    int WithoutConfidence)
+    int WithoutConfidence,
+    int Unaccompanied)
 {
     public int Total =>
-        UnknownEntity + UnknownRelation + UnresolvedTarget + UnmatchedReference + WithoutConfidence;
+        UnknownEntity + UnknownRelation + UnresolvedTarget + UnmatchedReference + WithoutConfidence
+        + Unaccompanied;
 
     public override string ToString() =>
         $"{UnknownEntity} for an entity the encyclopedia does not hold, " +
         $"{UnknownRelation} stating a relation that is not in the vocabulary, " +
         $"{UnresolvedTarget} naming a target no entity answers to, " +
         $"{UnmatchedReference} whose reference names no verse that entity is named in, and " +
-        $"{WithoutConfidence} carrying no confidence";
+        $"{WithoutConfidence} carrying no confidence, and " +
+        $"{Unaccompanied} reading company out of a verse that speaks of none";
 }
 
 internal sealed record DescriptorOutcome(
@@ -167,9 +170,10 @@ internal sealed class EntityDescriptorLoader(
         var taken = await Taken(entities.Values, cancellationToken);
 
         var occurrences = await Occurrences(entities.Values, cancellationToken);
+        var accompanied = await Accompanied(records, cancellationToken);
 
         int unknownEntity = 0, unknownRelation = 0, unresolvedTarget = 0;
-        int unmatchedReference = 0, withoutConfidence = 0;
+        int unmatchedReference = 0, withoutConfidence = 0, unaccompanied = 0;
         int skipped = 0, unresolved = 0, clauses = 0, forms = 0, wrote = 0;
 
         foreach (var record in records)
@@ -222,6 +226,24 @@ internal sealed class EntityDescriptorLoader(
                     continue;
                 }
 
+                // A companionship the cited verse does not mention. This one relation is read out
+                // of adjacency in a list of names more than any other -- 109 of the 229 clauses the
+                // widened vocabulary produced -- and every wrong one sampled was a list: *Shallum,
+                // Amariah, and Joseph*, *Hodijah, Hashum, Bezai*, *Daniel, Hananiah, Mishael, and
+                // Azariah*. Standing beside somebody in a register is not keeping company with
+                // them, and a reader cannot check a claim the verse does not make (PRB-0453).
+                //
+                // A necessary condition and not a sufficient one: it removes the list-shaped
+                // reading, which is the whole of the measured failure, and leaves the judgement of
+                // a verse that does speak of company to the pass and to its confidence.
+                if (claim.Relation == DescriptorRelations.CompanionOf
+                    && accompanied is not null
+                    && !accompanied.Contains((verse.Book, verse.Chapter, verse.Verse)))
+                {
+                    unaccompanied++;
+                    continue;
+                }
+
                 db.EntityDescriptors.Add(new EntityDescriptor
                 {
                     EntityId = entityId,
@@ -259,7 +281,8 @@ internal sealed class EntityDescriptorLoader(
         }
 
         var refused = new DescriptorRefusals(
-            unknownEntity, unknownRelation, unresolvedTarget, unmatchedReference, withoutConfidence);
+            unknownEntity, unknownRelation, unresolvedTarget, unmatchedReference, withoutConfidence,
+            unaccompanied);
 
         if (clauses > 0 || forms > 0)
         {
@@ -297,7 +320,7 @@ internal sealed class EntityDescriptorLoader(
 
     private static DescriptorOutcome Nothing(bool alreadyLoaded) =>
         new(alreadyLoaded, !alreadyLoaded, 0, 0, 0, 0, 0, 0, 0, 0,
-            new DescriptorRefusals(0, 0, 0, 0, 0), TimeSpan.Zero);
+            new DescriptorRefusals(0, 0, 0, 0, 0, 0), TimeSpan.Zero);
 
     /// <summary>
     /// Where the files are. Under the corpus sources by default, in this project's own folder:
@@ -468,6 +491,74 @@ internal sealed class EntityDescriptorLoader(
             .Where(d => entities.Contains(d.EntityId) && d.Source.StartsWith(SourcePrefix))
             .ExecuteDeleteAsync(cancellationToken);
     }
+
+    /// <summary>
+    /// Which of the verses these records cite say anything about accompaniment, read in the English
+    /// the pass was shown.
+    ///
+    /// <para>
+    /// The words are the ones a translation of this period uses for it, and <em>with</em> is among
+    /// them although it is the commonest word in the language — the test is whether the verse
+    /// speaks of company at all, and a verse that is nothing but a list of names contains none of
+    /// them. That is the case this exists to refuse.
+    /// </para>
+    /// </summary>
+    private static readonly string[] Accompaniment =
+        ["with", "companion", "companions", "fellow", "fellows", "together",
+         "beside", "accompanied", "accompanying", "along"];
+
+    private async Task<HashSet<(int Book, int Chapter, int Verse)>?> Accompanied(
+        IReadOnlyList<DescriptorRecord> records,
+        CancellationToken cancellationToken)
+    {
+        var wanted = records
+            .SelectMany(record => record.Claims ?? [])
+            .Where(claim => claim.Relation == DescriptorRelations.CompanionOf)
+            .Select(claim => Reference(claim.Reference))
+            .OfType<(int Book, int Chapter, int Verse)>()
+            .Distinct()
+            .ToList();
+
+        if (wanted.Count == 0)
+        {
+            return [];
+        }
+
+        var books = wanted.Select(v => v.Book).Distinct().ToList();
+        var chapters = wanted.Select(v => v.Chapter).Distinct().ToList();
+
+        var words = await db.Words
+            .Where(w => w.Text!.Slug == Shown)
+            .SelectMany(w => w.Verse!.References.Where(r => r.IsPrimary), (w, r) => new
+            {
+                r.CanonicalBook,
+                r.CanonicalChapter,
+                r.CanonicalVerse,
+                w.NormalisedText,
+            })
+            .Where(row => books.Contains(row.CanonicalBook)
+                && chapters.Contains(row.CanonicalChapter))
+            .ToListAsync(cancellationToken);
+
+        // A check that cannot be made is not a check that failed. Where the text the pass was shown
+        // is not in this corpus at all -- a test fixture, a partial load -- the verses say nothing
+        // either way and refusing every clause on that silence would be the loader inventing a
+        // verdict.
+        if (words.Count == 0)
+        {
+            return null;
+        }
+
+        var asked = wanted.ToHashSet();
+        return [.. words
+            .Where(row => row.NormalisedText != null
+                && Accompaniment.Contains(row.NormalisedText.ToLowerInvariant()))
+            .Select(row => (row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse))
+            .Where(asked.Contains)];
+    }
+
+    /// <summary>The text the generation pass was shown, and so the one a clause was read from.</summary>
+    private const string Shown = "kjv";
 
     /// <summary>
     /// The language and case each of these entities already has a form in, from any source. The
