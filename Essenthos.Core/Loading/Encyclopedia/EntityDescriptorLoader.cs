@@ -14,11 +14,12 @@ internal sealed record DescriptorRefusals(
     int UnresolvedTarget,
     int UnmatchedReference,
     int WithoutConfidence,
-    int Unaccompanied)
+    int Unaccompanied,
+    int Misplaced)
 {
     public int Total =>
         UnknownEntity + UnknownRelation + UnresolvedTarget + UnmatchedReference + WithoutConfidence
-        + Unaccompanied;
+        + Unaccompanied + Misplaced;
 
     public override string ToString() =>
         $"{UnknownEntity} for an entity the encyclopedia does not hold, " +
@@ -26,7 +27,8 @@ internal sealed record DescriptorRefusals(
         $"{UnresolvedTarget} naming a target no entity answers to, " +
         $"{UnmatchedReference} whose reference names no verse that entity is named in, and " +
         $"{WithoutConfidence} carrying no confidence, and " +
-        $"{Unaccompanied} reading company out of a verse that speaks of none";
+        $"{Unaccompanied} reading company out of a verse that speaks of none, and " +
+        $"{Misplaced} placing something somewhere that is not a place";
 }
 
 internal sealed record DescriptorOutcome(
@@ -172,8 +174,16 @@ internal sealed class EntityDescriptorLoader(
         var occurrences = await Occurrences(entities.Values, cancellationToken);
         var accompanied = await Accompanied(records, cancellationToken);
 
+        // What kind each target is, so a clause that places something can be asked to point at a
+        // place. Every entity the records name, not only the described ones, because a target is
+        // as often somebody else's entity as it is one of these.
+        var kinds = await db.Entities
+            .Where(e => entities.Values.Contains(e.Id))
+            .Select(e => new { e.Id, e.Kind })
+            .ToDictionaryAsync(e => e.Id, e => e.Kind, cancellationToken);
+
         int unknownEntity = 0, unknownRelation = 0, unresolvedTarget = 0;
-        int unmatchedReference = 0, withoutConfidence = 0, unaccompanied = 0;
+        int unmatchedReference = 0, withoutConfidence = 0, unaccompanied = 0, misplaced = 0;
         int skipped = 0, unresolved = 0, clauses = 0, forms = 0, wrote = 0;
 
         foreach (var record in records)
@@ -205,6 +215,19 @@ internal sealed class EntityDescriptorLoader(
                 if (!entities.TryGetValue(claim.Target, out var targetId))
                 {
                     unresolvedTarget++;
+                    continue;
+                }
+
+                // Somewhere that is not a place. A tribe is a person, a people and a territory at
+                // once, and a pass reading *Bethlehem, a city in Judah* means the territory while
+                // the name it reaches for is most often the patriarch's. A reader who follows that
+                // link arrives at Jacob's son, which is a false statement made by a link rather
+                // than by a sentence (PRB-0480). The right record usually exists, and choosing it
+                // here would be this loader naming a target the pass did not.
+                if (PlacingRelations.All.Contains(claim.Relation)
+                    && kinds.GetValueOrDefault(targetId) != EntityKind.Place)
+                {
+                    misplaced++;
                     continue;
                 }
 
@@ -282,7 +305,7 @@ internal sealed class EntityDescriptorLoader(
 
         var refused = new DescriptorRefusals(
             unknownEntity, unknownRelation, unresolvedTarget, unmatchedReference, withoutConfidence,
-            unaccompanied);
+            unaccompanied, misplaced);
 
         if (clauses > 0 || forms > 0)
         {
@@ -320,7 +343,7 @@ internal sealed class EntityDescriptorLoader(
 
     private static DescriptorOutcome Nothing(bool alreadyLoaded) =>
         new(alreadyLoaded, !alreadyLoaded, 0, 0, 0, 0, 0, 0, 0, 0,
-            new DescriptorRefusals(0, 0, 0, 0, 0, 0), TimeSpan.Zero);
+            new DescriptorRefusals(0, 0, 0, 0, 0, 0, 0), TimeSpan.Zero);
 
     /// <summary>
     /// Where the files are. Under the corpus sources by default, in this project's own folder:

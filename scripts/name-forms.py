@@ -475,6 +475,28 @@ def extract(args):
                               (entity['names'].get('eng') or {}).get('nominative') or entity['name'])}
         chosen = sorted((e for e in all_entities if e['slug'] in refused),
                         key=lambda e: e['slug'])
+    elif args.gaps:
+        # The entities a clause already points at that are missing a case a phrase will ask for.
+        # `--targets` cannot see these: it takes entities with no forms at all, and the line that
+        # reads *місто в Judah* is Judah having a genitive and no locative rather than nothing.
+        #
+        # Which case a phrase wants is decided by the relation, and that table is C#'s
+        # (`DescriptorPhrasings`). Rather than keep a second copy of it here -- PRB-0447 is what
+        # that costs -- the rule is taken from the kind: a place can stand in a locative and a
+        # person cannot, so a targeted place wants all three cases and a targeted person two.
+        wanted = {'place': ('nominative', 'genitive', 'locative')}
+        chosen = []
+        for entity in all_entities:
+            if not entity['targeted']:
+                continue
+            cases = wanted.get(entity['kind'], ('nominative', 'genitive'))
+            held = key.get(entity['slug'], {}).get('names', {})
+            if any(case not in (held.get(language) or {})
+                   for language in languages if language != 'eng'
+                   for case in cases):
+                chosen.append(entity)
+        chosen.sort(key=lambda e: (-e['targeted'], e['slug']))
+        chosen = chosen[:args.sample] if args.sample else chosen
     elif args.targets:
         # What a real run takes: the entities somebody else's claim names, most-named first, and
         # only the ones no pass has given forms to.
@@ -497,7 +519,7 @@ def extract(args):
 
     with open(os.path.join(directory, 'manifest.json'), 'w', encoding='utf-8') as handle:
         json.dump({'prompt_version': PROMPT_VERSION, 'languages': languages,
-                   'selection': 'repair' if args.repair
+                   'selection': 'gaps' if args.gaps else 'repair' if args.repair
                                 else 'targets' if args.targets else 'sample-with-forms',
                    'seed': args.seed, 'entities': len(chosen), 'batches': len(batches),
                    'batch_entities': args.batch_entities,
@@ -897,6 +919,10 @@ def main():
     extractor.add_argument('--seed', type=int, default=11)
     extractor.add_argument('--repair', action='store_true',
                            help='the entities whose loaded forms the check refuses, asked again')
+    extractor.add_argument('--gaps', action='store_true',
+                           help='Entities a clause already names that lack a case its phrase will '
+                                'ask for, most-named first. Wider than --targets, which only takes '
+                                'entities no pass has given any form to.')
     extractor.add_argument('--targets', action='store_true',
                            help='select what a real run takes: entities named by a claim, most '
                                 'named first, that no pass has given forms to')

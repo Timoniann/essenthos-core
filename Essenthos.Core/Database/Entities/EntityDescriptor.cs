@@ -364,3 +364,30 @@ public static class DescriptorRelations
         CityIn, RegionOf, RiverOf, MountainIn, GateOf, Near,
     };
 }
+/// <summary>
+/// The relations that put something somewhere, and so can only point at a place.
+///
+/// <para>
+/// A tribe is a person, a people and a territory at once in this encyclopedia, and a pass reading
+/// <em>Bethlehem, a city in Judah</em> means the territory while the name it reaches for is most
+/// often the patriarch's. Measured on the corpus: 107 placing clauses point at a person or a
+/// people, and 60 of them are the twelve tribes (PRB-0480). A reader who follows <em>a city in
+/// Judah</em> and arrives at Jacob's son has been told something false by a link.
+/// </para>
+/// </summary>
+public static class PlacingRelations
+{
+    public static readonly IReadOnlySet<string> All = new HashSet<string>(StringComparer.Ordinal)
+    {
+        DescriptorRelations.LivedIn,
+        DescriptorRelations.BuriedIn,
+        DescriptorRelations.FromPlace,
+        DescriptorRelations.CityIn,
+        DescriptorRelations.RegionOf,
+        DescriptorRelations.RiverOf,
+        DescriptorRelations.MountainIn,
+        DescriptorRelations.GateOf,
+        DescriptorRelations.Near,
+    };
+}
+
