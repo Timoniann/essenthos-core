@@ -63,6 +63,30 @@ internal static class RelationshipVocabulary
             ["killer"] = DescriptorRelations.KillerOf,
             ["killed by"] = DescriptorRelations.KilledBy,
             ["army commander"] = DescriptorRelations.CommanderOf,
+
+            // The same relations under the dataset's other names for them, which a reading of the
+            // verse gives in this vocabulary's words: a captain commands, an officer or chamberlain
+            // serves, a lady is the mistress of her maid.
+            ["army captain"] = DescriptorRelations.CommanderOf,
+            ["officer"] = DescriptorRelations.ServantOf,
+            ["chamberlain"] = DescriptorRelations.ServantOf,
+            ["chief official"] = DescriptorRelations.ServantOf,
+            ["lieutenant"] = DescriptorRelations.ServantOf,
+            ["chief"] = DescriptorRelations.MasterOf,
+            ["lady"] = DescriptorRelations.MasterOf,
+            ["born by"] = DescriptorRelations.SonOf,
+            ["bearer"] = DescriptorRelations.MotherOf,
+            ["cousin"] = DescriptorRelations.CousinOf,
+            ["rabbi"] = DescriptorRelations.TeacherOf,
+            ["ally"] = DescriptorRelations.AllyOf,
+            ["raper"] = DescriptorRelations.RaperOf,
+
+            // Deliberately absent: "victim". The dataset files the dead and two raped women under
+            // that one word -- Dinah and Tamar beside Zimri and Jael's Sisera -- so no single
+            // relation is its meaning, and mapping it to killed-by would have a page read "Dinah,
+            // killed by Shechem". Which one each row is, is read from the verse (TSK-0489).
+            // "concubinator" is absent because its fact is already the dataset's concubine row read
+            // from the woman's side, and the vocabulary has no word for the man's.
         };
 
     /// <summary>
@@ -116,6 +140,12 @@ internal static class RelationshipVocabulary
             [DescriptorRelations.KilledBy] = Set(DescriptorRelations.KillerOf),
             [DescriptorRelations.MasterOf] = Set(DescriptorRelations.ServantOf),
             [DescriptorRelations.ServantOf] = Set(DescriptorRelations.MasterOf),
+            [DescriptorRelations.CousinOf] = Set(DescriptorRelations.CousinOf),
+            [DescriptorRelations.DiscipleOf] = Set(DescriptorRelations.TeacherOf),
+            [DescriptorRelations.TeacherOf] = Set(DescriptorRelations.DiscipleOf),
+            [DescriptorRelations.AllyOf] = Set(DescriptorRelations.AllyOf),
+            [DescriptorRelations.RaperOf] = Set(DescriptorRelations.RapedBy),
+            [DescriptorRelations.RapedBy] = Set(DescriptorRelations.RaperOf),
         };
 
     /// <summary>
@@ -158,6 +188,7 @@ internal static class RelationshipVocabulary
         DescriptorRelations.FatherInLawOf, DescriptorRelations.MotherInLawOf,
         DescriptorRelations.SonInLawOf, DescriptorRelations.DaughterInLawOf,
         DescriptorRelations.BrotherInLawOf, DescriptorRelations.SisterInLawOf,
+        DescriptorRelations.CousinOf,
     };
 
     /// <summary>Whom a person is married to, or kept as a concubine — one question, three answers.</summary>

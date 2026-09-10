@@ -307,6 +307,25 @@ public static class DescriptorRelations
     public const string CompanionOf = "companion-of";
 
     /// <summary>
+    /// The teacher a disciple follows, read from the teacher's side. <em>Rabbi</em> is what the
+    /// Gospels have the Twelve call Jesus, and <see cref="DiscipleOf"/> is the same tie from theirs.
+    /// </summary>
+    public const string TeacherOf = "teacher-of";
+
+    /// <summary>
+    /// A party bound to another by a covenant or a league: <em>these were confederate with
+    /// Abram</em> (GEN 14:13). Symmetric, as the text states it.
+    /// </summary>
+    public const string AllyOf = "ally-of";
+
+    /// <summary>
+    /// The children of two siblings, which the text states of Esther and Mordecai: <em>his uncle's
+    /// daughter</em> (EST 2:7). One relation for both sexes, because the claim does not say which it
+    /// is and a gendered word would have to guess.
+    /// </summary>
+    public const string CousinOf = "cousin-of";
+
+    /// <summary>
     /// What one entity is to another in a killing, both ways round: a minor figure named only as
     /// the person somebody struck down has this and nothing else to say, and the person who struck
     /// them is often remembered for exactly that.
@@ -314,6 +333,16 @@ public static class DescriptorRelations
     public const string KilledBy = "killed-by";
 
     public const string KillerOf = "killer-of";
+
+    /// <summary>
+    /// What one person is to another in a rape, both ways round, which the text states plainly of
+    /// Shechem and Dinah (GEN 34:2) and of Amnon and Tamar (2SA 13:14). A dataset filed both women
+    /// beside the dead under one word, <c>victim</c>; they are a different fact, and a page reading
+    /// <em>Dinah, killed by Shechem</em> would say something the text does not.
+    /// </summary>
+    public const string RapedBy = "raped-by";
+
+    public const string RaperOf = "raper-of";
 
     /// <summary>
     /// A being the text defines by whom or what it belongs to, rather than by descent —
@@ -354,11 +383,11 @@ public static class DescriptorRelations
         UncleOf, AuntOf, NephewOf, NieceOf,
         AncestorOf, DescendantOf,
         FatherInLawOf, MotherInLawOf, SonInLawOf, DaughterInLawOf,
-        BrotherInLawOf, SisterInLawOf, ConcubineOf,
+        BrotherInLawOf, SisterInLawOf, ConcubineOf, CousinOf,
         KingOf, QueenOf, ProphetTo, PriestOf, JudgeOf, HighPriestOf,
         CommanderOf, GovernorOf, TetrarchOf, ServantOf, MasterOf,
-        DiscipleOf, ApostleOf, ScribeOf, CompanionOf,
-        KilledBy, KillerOf, AngelOf,
+        DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, AllyOf,
+        KilledBy, KillerOf, RapedBy, RaperOf, AngelOf,
         OfTribe, OfPeople, FromPlace, LivedIn, BuriedIn,
         DescendantsOf,
         CityIn, RegionOf, RiverOf, MountainIn, GateOf, Near,

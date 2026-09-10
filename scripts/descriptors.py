@@ -113,11 +113,12 @@ RELATIONS = [
     'uncle-of', 'aunt-of', 'nephew-of', 'niece-of',
     'ancestor-of', 'descendant-of',
     'father-in-law-of', 'mother-in-law-of', 'son-in-law-of', 'daughter-in-law-of',
-    'brother-in-law-of', 'sister-in-law-of',
+    'brother-in-law-of', 'sister-in-law-of', 'cousin-of',
     'king-of', 'queen-of', 'prophet-to', 'priest-of', 'judge-of', 'high-priest-of',
     'commander-of', 'governor-of', 'tetrarch-of',
     'servant-of', 'master-of', 'disciple-of', 'apostle-of', 'scribe-of', 'companion-of',
-    'killed-by', 'killer-of', 'angel-of',
+    'teacher-of', 'ally-of',
+    'killed-by', 'killer-of', 'raped-by', 'raper-of', 'angel-of',
     'of-tribe', 'of-people', 'from-place', 'lived-in', 'buried-in',
     'descendants-of',
     'city-in', 'region-of', 'river-of', 'mountain-in', 'gate-of', 'near',
@@ -236,11 +237,12 @@ entity is the target's father-in-law:
             uncle-of aunt-of nephew-of niece-of
             ancestor-of descendant-of
             father-in-law-of mother-in-law-of son-in-law-of daughter-in-law-of
-            brother-in-law-of sister-in-law-of
+            brother-in-law-of sister-in-law-of cousin-of
   office    king-of queen-of prophet-to priest-of judge-of high-priest-of
             commander-of governor-of tetrarch-of
             servant-of master-of disciple-of apostle-of scribe-of companion-of
-  violence  killed-by killer-of
+            teacher-of ally-of
+  violence  killed-by killer-of raped-by raper-of
   belonging of-tribe of-people from-place lived-in buried-in angel-of
   peoples   descendants-of
   places    city-in region-of river-of mountain-in gate-of near
@@ -417,8 +419,9 @@ def answer_key():
 
 
 # BibleData's type names against DOC-0191's vocabulary, in the same direction. What is absent is
-# absent from the vocabulary, not from the mapping: cousin, ally, rabbi, patron, client and lady
-# have no relation to be scored against, and `score` counts them so the size of that gap is visible
+# absent from the vocabulary, not from the mapping: patron, client, concubinator, exiled, original heir
+# and Creator have no relation to be scored against (cousin, ally, rabbi and lady gained one on
+# 2026-09-10), and `score` counts them so the size of that gap is visible
 # rather than assumed. `victim` is scored as `killed-by` only because the homicides are what the
 # vocabulary took; its rape rows will read as disagreements, which is the honest outcome.
 KEY_RELATIONS = {
@@ -438,6 +441,11 @@ KEY_RELATIONS = {
     'disciple': 'disciple-of', 'apostle': 'apostle-of',
     'king': 'king-of',
     'killer': 'killer-of', 'killed by': 'killed-by', 'victim': 'killed-by',
+    'army captain': 'commander-of',
+    'officer': 'servant-of', 'chamberlain': 'servant-of', 'chief official': 'servant-of',
+    'lieutenant': 'servant-of', 'chief': 'master-of', 'lady': 'master-of',
+    'born by': 'son-of', 'bearer': 'mother-of',
+    'cousin': 'cousin-of', 'rabbi': 'teacher-of', 'ally': 'ally-of', 'raper': 'raper-of',
 }
 
 
@@ -1044,6 +1052,12 @@ INVERSE = {
     'master-of': {'servant-of'},
     'killed-by': {'killer-of'},
     'killer-of': {'killed-by'},
+    'cousin-of': {'cousin-of'},
+    'disciple-of': {'teacher-of'},
+    'teacher-of': {'disciple-of'},
+    'ally-of': {'ally-of'},
+    'raper-of': {'raped-by'},
+    'raped-by': {'raper-of'},
 }
 
 
