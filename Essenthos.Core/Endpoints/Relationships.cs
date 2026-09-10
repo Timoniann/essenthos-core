@@ -52,8 +52,61 @@ internal static class Relationships
     public static async Task<List<EntityRelationshipResponse>> Of(
         AppDbContext db,
         int entityId,
+        string? language,
+        CancellationToken cancellationToken)
+    {
+        var rows = await Rows(db, entityId, cancellationToken);
+        var merged = Merged(rows);
+
+        // The counterpart's name in the case the reader's language puts it in. Without it the
+        // section is English on a Ukrainian page, because the phrase and the case are one decision
+        // and a stemmer guessing the genitive of a Hebrew proper name is wrong often and silently
+        // (PRB-0451). A language with no form for a name is a gap the client fills with the English
+        // one, which is the same fallback the descriptor line already has.
+        var counterparts = rows
+            .Select(row => row.Inward ? row.From : row.To)
+            .Distinct()
+            .ToList();
+
+        var forms = await Forms(db, counterparts, language, cancellationToken);
+        return forms.Count == 0
+            ? merged
+            : [.. merged.Select(row => row with { Forms = forms.GetValueOrDefault(row.Slug) })];
+    }
+
+    /// <summary>
+    /// Every case these entities have a form in, in one language, keyed by slug. Empty where the
+    /// language is one no pass has declined a name into, which is every language but the two.
+    /// </summary>
+    public static async Task<Dictionary<string, Dictionary<string, string>>> Forms(
+        AppDbContext db,
+        IReadOnlyCollection<int> entities,
+        string? language,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(language) || entities.Count == 0)
+        {
+            return [];
+        }
+
+        var rows = await db.EntityNameForms
+            .Where(f => entities.Contains(f.EntityId) && f.Language == language)
+            .Select(f => new { f.Entity!.Slug, f.GrammaticalCase, f.Form })
+            .ToListAsync(cancellationToken);
+
+        return rows
+            .GroupBy(f => f.Slug, StringComparer.Ordinal)
+            .ToDictionary(
+                one => one.Key,
+                one => one.ToDictionary(f => f.GrammaticalCase, f => f.Form, StringComparer.Ordinal),
+                StringComparer.Ordinal);
+    }
+
+    private static async Task<List<Related>> Rows(
+        AppDbContext db,
+        int entityId,
         CancellationToken cancellationToken) =>
-        Merged(await db.EntityRelationships
+        await db.EntityRelationships
             .Where(r => r.FromEntityId == entityId || r.ToEntityId == entityId)
             .OrderBy(r => r.ToEntityId == entityId)
             .ThenBy(r => r.Id)
@@ -71,7 +124,7 @@ internal static class Relationships
                 r.Method,
                 r.Confidence,
                 r.Source))
-            .ToListAsync(cancellationToken));
+            .ToListAsync(cancellationToken);
 
     /// <summary>
     /// The rows of one page, agreement folded together, in the order they were read — outward
