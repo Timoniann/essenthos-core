@@ -115,12 +115,18 @@ public sealed class RelationshipMergeTests : IDisposable
     }
 
     /// <summary>
-    /// A witness stating the pair as it stands answers the row that states it, and the same
-    /// witness's reciprocal row answers the other. Taking the reversed reading first would hand
-    /// both of BibleData's rows to whichever of ours came first and leave the other bare.
+    /// One fact, four rows, one line on the page — and nothing thrown away.
+    ///
+    /// <para>
+    /// Both witnesses write both ends, so the table holds Lot son of Haran and Haran father of Lot
+    /// twice over. Lot's page says it once, from Lot's side, because that is the page it is; the
+    /// other three ride on it as what they are. Each is still readable, and each still carries the
+    /// grading its own witness gave that direction — the reason for carrying them rather than
+    /// dropping them is that the two directions are graded separately and often differently.
+    /// </para>
     /// </summary>
     [Fact]
-    public async Task EachDirectionKeepsTheWitnessThatStatedThatDirection()
+    public async Task OneFactIsOneRowAndTheOtherEndRidesOnIt()
     {
         var lot = Person("lot");
         var haran = Person("haran");
@@ -131,11 +137,32 @@ public sealed class RelationshipMergeTests : IDisposable
 
         var page = await Page(lot);
 
-        page.Should().HaveCount(2);
-        page.Single(r => r.Type == DescriptorRelations.SonOf).Corroboration
-            .Should().ContainSingle().Which.Type.Should().Be("son");
-        page.Single(r => r.Type == DescriptorRelations.FatherOf).Corroboration
-            .Should().ContainSingle().Which.Type.Should().Be("father");
+        var row = page.Should().ContainSingle().Which;
+        row.Type.Should().Be(DescriptorRelations.SonOf, "the page is Lot's and the fact is his side");
+        row.Inward.Should().BeFalse();
+
+        row.Corroboration.Select(w => w.Type).Should().BeEquivalentTo(
+            ["son", DescriptorRelations.FatherOf, "father"]);
+        row.Corroboration.Single(w => w.Type == "son").Reversed.Should().BeFalse();
+        row.Corroboration.Where(w => w.Type != "son").Should().OnlyContain(w => w.Reversed);
+    }
+
+    /// <summary>
+    /// What is folded is the repetition and never the fact: where only the other end exists, it is
+    /// the row, and Haran's page is where a reader meets it that way round.
+    /// </summary>
+    [Fact]
+    public async Task TheOtherEndStaysWhenItIsTheOnlyEnd()
+    {
+        var lot = Person("lot");
+        var haran = Person("haran");
+        Read(haran, lot, DescriptorRelations.FatherOf, 1, 11, 27);
+
+        var page = await Page(lot);
+
+        var row = page.Should().ContainSingle().Which;
+        row.Type.Should().Be(DescriptorRelations.FatherOf);
+        row.Inward.Should().BeTrue();
     }
 
     /// <summary>

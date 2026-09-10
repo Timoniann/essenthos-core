@@ -139,13 +139,23 @@ internal static class Relationships
             (Ours(rows[row]) ? ours : witnesses).Add(row);
         }
 
-        if (ours.Count == 0 || witnesses.Count == 0)
-        {
-            return [.. rows.Select(row => Show(row, []))];
-        }
-
         var corroboration = new List<Related>?[rows.Count];
         var absorbed = new bool[rows.Count];
+
+        // A page with only one witness on it still says every fact twice, because each witness
+        // writes both ends itself. So the fold below runs whether or not there is a second witness
+        // to absorb first.
+        if (ours.Count == 0 || witnesses.Count == 0)
+        {
+            FoldTheOtherEnd(rows, corroboration, absorbed);
+            return
+            [
+                .. rows
+                    .Index()
+                    .Where(row => !absorbed[row.Index])
+                    .Select(row => Show(row.Item, corroboration[row.Index] ?? [])),
+            ];
+        }
 
         foreach (var pairing in Pairings)
         {
@@ -164,6 +174,8 @@ internal static class Relationships
             }
         }
 
+        FoldTheOtherEnd(rows, corroboration, absorbed);
+
         return
         [
             .. rows
@@ -172,6 +184,85 @@ internal static class Relationships
                 .Select(row => Show(row.Item, corroboration[row.Index] ?? [])),
         ];
     }
+
+    /// <summary>
+    /// One fact said from both ends, folded into the side this page is about.
+    ///
+    /// <para>
+    /// Both witnesses write reciprocals — BibleData has <em>Lot husband of his wife</em> and
+    /// <em>his wife wife of Lot</em>, and the descriptor pass writes each side from its own
+    /// subject — so a page met every family tie twice: fourteen rows on Lot for seven facts. The
+    /// owner's answer is that once a page has said <em>Lot, son of Haran</em> it has said the
+    /// thing, and Haran's page is where it is read the other way.
+    /// </para>
+    ///
+    /// <para>
+    /// The side that survives is this page's own — <em>Lot, father of Moab</em> rather than
+    /// <em>Moab, son of Lot</em> — because the page is about Lot and that is how a reader reads a
+    /// genealogy. Where only the other end exists, it stays as it is: what is folded is the
+    /// repetition, never the fact.
+    /// </para>
+    ///
+    /// <para>
+    /// The folded row travels on the surviving one rather than being dropped, because the two
+    /// directions are graded separately and by different witnesses: <em>Moses son of Amram</em> is
+    /// inferred where <em>Amram father of Moses</em> is stated, and collapsing them without saying
+    /// so would promote one grading or demote the other silently. It renders where a second
+    /// witness renders, which is what it is.
+    /// </para>
+    /// </summary>
+    private static void FoldTheOtherEnd(
+        IReadOnlyList<Related> rows,
+        List<Related>?[] corroboration,
+        bool[] absorbed)
+    {
+        for (var inward = 0; inward < rows.Count; inward++)
+        {
+            if (absorbed[inward] || !rows[inward].Inward)
+            {
+                continue;
+            }
+
+            for (var outward = 0; outward < rows.Count; outward++)
+            {
+                if (absorbed[outward] || rows[outward].Inward
+                    || !Reciprocal(rows[outward], rows[inward]))
+                {
+                    continue;
+                }
+
+                var kept = corroboration[outward] ??= [];
+                kept.Add(rows[inward]);
+                if (corroboration[inward] is { } theirs)
+                {
+                    kept.AddRange(theirs);
+                }
+
+                absorbed[inward] = true;
+                break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Whether these two rows are one fact read from opposite ends. Each is put into this corpus's
+    /// vocabulary first, so BibleData's <c>father</c> and a reading's <c>son-of</c> are compared as
+    /// one question rather than as two words.
+    /// </summary>
+    private static bool Reciprocal(Related outward, Related inward) =>
+        outward.From == inward.To
+        && outward.To == inward.From
+        && InOurWords(outward) is { } said
+        && InOurWords(inward) is { } answered
+        && RelationshipVocabulary.Reversed(said).Contains(answered);
+
+    /// <summary>
+    /// The relation in this corpus's vocabulary: a reading already speaks it, and a witness's word
+    /// is looked up. Null where the vocabulary has no word for what the witness said, which is a
+    /// row nothing here can pair.
+    /// </summary>
+    private static string? InOurWords(Related row) =>
+        Ours(row) ? row.Type : Says(row);
 
     /// <summary>
     /// The readings of a witness's row, strongest first: the pair it names, and then the pair read
