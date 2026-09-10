@@ -32,6 +32,10 @@ same evidence, gives agreement per case against an answer key that was paid for 
 **Ordering is by how often an entity is the target of an existing claim.** Moses, Jerusalem, Judah
 and David are targets of a large share of everything; a few hundred of them repair more lines than a
 thousand in alphabetical order. `--targets` selects and orders that way; it is what a real run takes.
+`--without-forms` takes everything nobody has declined at all, in the same order, which is what the
+entity's own page needs rather than somebody else's clause: the descriptor pass declines what it
+describes, so what is left to this one is the entity it cannot be asked about -- the register bearer
+with no verse of its own.
 
 **Nothing here writes to the database.** `publish` leaves files under `Resources/`, which the API
 loads on its next start like every other source, so a run can be read and argued with before
@@ -63,7 +67,7 @@ CONTAINER = 'essenthos-api-db-1'
 DATABASE = 'essenthos_core'
 USER = 'essenthos'
 
-PROMPT_VERSION = 'forms-2'
+PROMPT_VERSION = 'forms-3'
 
 # The texts a form can be read out of rather than guessed at. English is the rendering the rest of
 # the corpus is keyed to; the other four are the Bible each language's own readers know, so the
@@ -325,6 +329,12 @@ def described_entities():
     `distinguisher` is absent for the same reason `scripts/descriptors.py` leaves it out -- it is
     BibleData's sentence and this pass exists to stop showing it -- but here it is simply irrelevant:
     a name's genitive is not in an English gloss.
+
+    `spelled_in` is where another bearer of the same name is written. A register entity can have no
+    verse of its own -- the lexicon enumerates a fifth Azariah that no word of the corpus is
+    annotated to -- and a name with no verse at all is a name declined from memory. Another
+    Azariah's verse is not this Azariah's, and is never offered as one; it is the spelling, which is
+    the only thing this pass is asking about.
     """
     return psql(f"""
         SELECT coalesce(json_agg(json_build_object(
@@ -340,6 +350,16 @@ def described_entities():
                                     ORDER BY v.canonical_book, v.canonical_chapter,
                                              v.canonical_verse
                                     LIMIT {VERSES_SHOWN}) ev),
+                   'spelled_in', (SELECT coalesce(json_agg(json_build_array(
+                                     nv.canonical_book, nv.canonical_chapter, nv.canonical_verse)
+                                     ORDER BY nv.canonical_book, nv.canonical_chapter,
+                                              nv.canonical_verse), '[]')
+                                  FROM (SELECT DISTINCT v.canonical_book, v.canonical_chapter,
+                                               v.canonical_verse
+                                        FROM entity_verse v JOIN entity o ON o.id = v.entity_id
+                                        WHERE o.name = e.name AND o.id <> e.id
+                                        ORDER BY 1, 2, 3
+                                        LIMIT {VERSES_SHOWN}) nv),
                    'targeted', (SELECT count(*) FROM entity_descriptor d
                                 WHERE d.target_entity_id = e.id))
                    ORDER BY e.slug), '[]')
@@ -375,9 +395,9 @@ def cache(directory, name, produce):
     return value
 
 
-def payload(entity, texts, languages):
+def verse_lines(keys, texts, languages):
     lines = []
-    for book, chapter, verse in entity['verses']:
+    for book, chapter, verse in keys:
         key = (book, chapter, verse)
         line = {'reference': reference(book, chapter, verse),
                 'english': texts[RENDERING].get(key)}
@@ -386,15 +406,22 @@ def payload(entity, texts, languages):
             if text and texts.get(text, {}).get(key):
                 line[language] = texts[text][key]
         lines.append(line)
-    return {
+    return lines
+
+
+def payload(entity, texts, languages):
+    built = {
         'entity': entity['slug'],
         'kind': entity['kind'],
         'name': entity['name'],
         'sex': entity.get('sex'),
         'place_kind': entity.get('place_kind'),
         'meaning': entity.get('meaning'),
-        'verses': lines,
+        'verses': verse_lines(entity['verses'], texts, languages),
     }
+    if not built['verses'] and entity.get('spelled_in'):
+        built['spelled_in'] = verse_lines(entity['spelled_in'], texts, languages)
+    return built
 
 
 def system_prompt(languages):
@@ -409,6 +436,10 @@ spelling is one you can read rather than one you have to guess.
 Give the name in {asked}, in the spelling that language's own Bible uses. The Ukrainian is Ohienko,
 the Russian is Synodal, the German is Luther and the Spanish is Reina-Valera, and the verses you were
 shown are from exactly those.
+
+An entity with no verse of its own carries `spelled_in` instead: verses in which **another bearer of
+the same name** is written. They are not this entity's verses and say nothing about it -- they are
+there for the spelling, which is the whole of what you are being asked for.
 
 Which forms each language owes:
 
@@ -481,6 +512,15 @@ def extract(args):
         chosen = [e for e in all_entities if e['targeted'] and e['slug'] not in key]
         chosen.sort(key=lambda e: (-e['targeted'], e['slug']))
         chosen = chosen[:args.sample] if args.sample else chosen
+    elif args.without_forms:
+        # Every entity nobody has declined and the descriptor pass cannot be asked about, because
+        # it has no verse of its own to be described from. That pass declines what it describes, so
+        # an entity with verses is its work and not this one's; what is left here is the register
+        # bearer the lexicon enumerates and no word is annotated to, whose page shows a Ukrainian
+        # reader an English name and always will.
+        chosen = [e for e in all_entities if e['slug'] not in key and not e['verses']]
+        chosen.sort(key=lambda e: (-e['targeted'], e['slug']))
+        chosen = chosen[:args.sample] if args.sample else chosen
     else:
         # What the measurement takes: entities whose forms already exist, so there is a key.
         having = [e for e in all_entities if e['slug'] in key and e['verses']]
@@ -498,7 +538,9 @@ def extract(args):
     with open(os.path.join(directory, 'manifest.json'), 'w', encoding='utf-8') as handle:
         json.dump({'prompt_version': PROMPT_VERSION, 'languages': languages,
                    'selection': 'repair' if args.repair
-                                else 'targets' if args.targets else 'sample-with-forms',
+                                else 'targets' if args.targets
+                                else 'without-forms' if args.without_forms
+                                else 'sample-with-forms',
                    'seed': args.seed, 'entities': len(chosen), 'batches': len(batches),
                    'batch_entities': args.batch_entities,
                    'slugs': [[e['slug'] for e in batch] for batch in batches]},
@@ -900,6 +942,9 @@ def main():
     extractor.add_argument('--targets', action='store_true',
                            help='select what a real run takes: entities named by a claim, most '
                                 'named first, that no pass has given forms to')
+    extractor.add_argument('--without-forms', action='store_true',
+                           help='every entity no pass has declined, claimed about or not: the '
+                                'ones the descriptor pass cannot reach because they have no verse')
     extractor.add_argument('--languages', default='eng,ukr,rus,deu')
     extractor.add_argument('--batch-entities', type=int, default=BATCH_ENTITIES)
     extractor.set_defaults(run=extract)

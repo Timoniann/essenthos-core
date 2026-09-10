@@ -20,7 +20,7 @@ prefix that sorts after the run being superseded:
     python scripts/descriptors.py ask     --dir .descriptors/reask --workers 3 --effort low
     python scripts/descriptors.py publish --dir .descriptors/reask --against .descriptors/full --prefix reask
 
-Six things about the design are load-bearing, and each is a way the output could have been made
+Seven things about the design are load-bearing, and each is a way the output could have been made
 worthless rather than merely wrong:
 
 **BibleData's sentence is never shown to the model.** Not the entity's `distinguisher` and not any
@@ -50,6 +50,11 @@ countable. A claim whose target does not resolve to a slug is never turned into 
 **The name forms are produced with the name, and the model is shown the Ohienko and Synodal verses
 to produce them from.** A stemmer guessing the genitive of a Hebrew proper name is wrong often and
 silently; a model that has seen *Мойсея* in the Ukrainian text of the same verse is not guessing.
+
+**A published record never says less than the one it replaces.** The loader takes the later file
+whole, so a second answer that leaves a language out is a form the reader loses; `publish` carries
+the standing record's forms into the new one and leaves a record that gains neither a clause nor a
+form unpublished rather than superseding for nothing.
 
 `extract` writes the prompt payloads, `ask` writes one contract-shaped JSON object per entity per
 batch, `score` measures those against BibleData and writes a report, `publish` copies the validated
@@ -1243,14 +1248,66 @@ def improves(now, before):
     return len(now['claims']) >= len(before['claims'])
 
 
+def standing(directory):
+    """
+    What the published files already say, by entity, settled the way the loader settles it.
+
+    `descriptors` reads a run, whose records sit under `out/`; these sit in the directory itself,
+    one file per published batch, and the file that sorts last wins because that is the rule
+    `DescriptorFiles.Read` applies.
+    """
+    rows = {}
+    if not os.path.isdir(directory):
+        return rows
+    for name in sorted(name for name in os.listdir(directory) if name.endswith('.jsonl')):
+        with open(os.path.join(directory, name), encoding='utf-8') as handle:
+            for line in handle:
+                if line.strip():
+                    row = json.loads(line)
+                    rows[row['entity']] = row
+    return rows
+
+
+def cases(row):
+    return {(language, case)
+            for language, forms in (row.get('names') or {}).items() for case in forms}
+
+
+def carried(now, before):
+    """
+    A record as it should be published: its own answer, and any name form the record it replaces
+    already had and it did not.
+
+    The loader takes the later file whole -- it forgets this pass's forms for the entity and writes
+    the new record's -- so a language the second answer happens to leave out is a form the reader
+    loses on the next boot. Being asked again is not evidence that the earlier form was wrong; the
+    second answer is to a different question, and 39 records of the first run to be measured this
+    way dropped a case the standing record held.
+    """
+    if before is None:
+        return now
+    names = {language: dict(forms) for language, forms in (now.get('names') or {}).items()}
+    for language, forms in (before.get('names') or {}).items():
+        kept = names.setdefault(language, {})
+        for case, value in forms.items():
+            kept.setdefault(case, value)
+    return dict(now, names=names)
+
+
+def says_more(now, before):
+    """Whether replacing what is published gains a reader anything: a clause, or a form."""
+    return before is None or bool(now['claims']) or bool(cases(now) - cases(before))
+
+
 def publish(args):
     rows = descriptors(args.dir)
     if not rows:
         raise SystemExit(f'{args.dir}/out is empty. Run "ask --dir {args.dir}" first.')
     earlier = {row['entity']: row for row in descriptors(args.against)} if args.against else {}
+    published = standing(args.to)
     os.makedirs(args.to, exist_ok=True)
     out_dir = os.path.join(args.dir, 'out')
-    written, entities, claims, withheld = 0, 0, 0, 0
+    written, entities, claims, withheld, silent, forms = 0, 0, 0, 0, 0, 0
     for name in sorted(name for name in os.listdir(out_dir) if name.endswith('.jsonl')):
         with open(os.path.join(out_dir, name), encoding='utf-8') as handle:
             keep = [json.loads(line) for line in handle if line.strip()]
@@ -1258,6 +1315,15 @@ def publish(args):
             asked_for = len(keep)
             keep = [row for row in keep if improves(row, earlier.get(row['entity']))]
             withheld += asked_for - len(keep)
+
+        # A record that adds neither a clause nor a form is a supersession that costs the reader
+        # nothing and can only lose them something. What the run answered is in the run.
+        asked_about = len(keep)
+        keep = [row for row in keep if says_more(row, published.get(row['entity']))]
+        silent += asked_about - len(keep)
+        keep = [carried(row, published.get(row['entity'])) for row in keep]
+        forms += sum(len(cases(row)) for row in keep)
+
         if not keep:
             continue
         target = os.path.join(args.to, f'{args.prefix}-{written:04d}.jsonl')
@@ -1267,9 +1333,10 @@ def publish(args):
         written += 1
         entities += len(keep)
         claims += sum(len(row['claims']) for row in keep)
-    print(f'{written} files, {entities} entities, {claims} claims -> {args.to}'
+    print(f'{written} files, {entities} entities, {claims} claims, {forms} name forms -> {args.to}'
           + (f'; {withheld} records withheld because they said less than {args.against} already had'
-             if args.against else ''))
+             if args.against else '')
+          + f'; {silent} records left unpublished because they add neither a clause nor a form')
 
 
 def main():
