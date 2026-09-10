@@ -145,6 +145,7 @@ internal sealed class DatasetLoader(
             await SayWhichWordNamesWhom(stoppingToken);
             await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
             await ReadTheNamesNothingSettles(resources, stoppingToken);
+            await TellTheNamesakePlacesApart(resources, stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
@@ -809,6 +810,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<SenseReadingLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// Which of the places that share a name each word means. After the readings because it is the
+    /// same kind of claim and must not displace one, and before the references because what it
+    /// writes is the whole of what Jericho's page has to cite.
+    /// </summary>
+    private async Task TellTheNamesakePlacesApart(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the places that share a name");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SiteSplitLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
     }
 

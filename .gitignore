@@ -193,3 +193,8 @@ scripts/__pycache__/
 # A run of the person harness: prompt payloads, the reading a model returned and the score against
 # Strong and BibleData. Reproducible from scripts/persons.py.
 .persons/
+
+# A run of the namesake-place harness: prompt payloads, the reading a model returned and the score
+# against the gazetteer. Reproducible from scripts/sites.py, and what it is kept for is published
+# under Resources/Essenthos/sites/ instead.
+.sites/
