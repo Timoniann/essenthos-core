@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using Essenthos.Core.Loading;
+using System.Data.Common;
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -42,6 +43,7 @@ public sealed class DescriptorTests : IDisposable
     {
         _output = output;
         _db = database.NewContext();
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
 
         Add("hobab-1", EntityKind.Person, "Hobab", ImportedSentence, (4, 10, 29), (7, 4, 11));
@@ -80,6 +82,7 @@ public sealed class DescriptorTests : IDisposable
 
     public void Dispose()
     {
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
         _db.Dispose();
     }
@@ -233,6 +236,32 @@ public sealed class DescriptorTests : IDisposable
         again.AlreadyLoaded.Should().BeTrue();
 
         (await _db.EntityDescriptors.CountAsync(d => d.Entity!.Slug == "hobab-1")).Should().Be(1);
+    }
+
+    /// <summary>
+    /// The companion rule against real verse text, which is what it never had. Every test before this
+    /// one ran with no text loaded, so the only branch ever exercised was "cannot check" — and a rule
+    /// looking for the King James under the wrong name passed all of them while refusing nothing on
+    /// the corpus (MST-0188). The words are seeded without a normalised form on purpose, so the test
+    /// also holds the rule to reading the printed word where there is nothing else.
+    /// </summary>
+    [Fact]
+    public async Task ACompanionTheVerseDoesNotSpeakOfIsRefusedAndOneItDoesIsKept()
+    {
+        Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",
+            (5, 1, ["my", "brother", "and", "companion", "in", "labour"]),
+            (5, 2, ["Shallum", "Amariah", "and", "Joseph"]));
+        Add("epaphroditus-1", EntityKind.Person, "Epaphroditus", null, (1, 5, 1));
+        Add("paul-1", EntityKind.Person, "Paul", null, (1, 5, 1));
+        Add("shallum-1", EntityKind.Person, "Shallum", null, (1, 5, 2));
+        Add("amariah-1", EntityKind.Person, "Amariah", null, (1, 5, 2));
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load("companions");
+
+        outcome.Refused.Unaccompanied.Should().Be(1, "Shallum, Amariah, and Joseph is a list");
+        (await _db.EntityDescriptors.CountAsync(d => d.Relation == DescriptorRelations.CompanionOf))
+            .Should().Be(1, "my brother and companion in labour speaks of company");
     }
 
     [Fact]
