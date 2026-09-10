@@ -166,12 +166,34 @@ public sealed class OwnRelationshipTests : IDisposable
     [Fact]
     public async Task ARelationTheVocabularyCannotExpressSettlesNothing()
     {
+        // The vocabulary still has no word for the man's side of a concubinage, so the dataset's
+        // "concubinator" can neither corroborate the marriage clause nor contradict it. This test
+        // used "cousin" until 2026-09-10, when cousin-of was added and the example stopped being one.
+        var abram = Person("abram");
+        var hagar = Person("hagar");
+        Stated(abram, hagar, "concubinator");
+        Clause(abram, hagar, DescriptorRelations.HusbandOf, 0.8);
+
+        (await Load()).Written.Should().Be(1);
+    }
+
+    /// <summary>
+    /// What a word the vocabulary gains is for. Until cousin-of existed, the dataset's "cousin" on
+    /// Mordecai and Esther settled nothing and a reading calling him her uncle was written. The text
+    /// says she was <em>his uncle's daughter</em> (EST 2:7): the dataset is right and the reading is
+    /// wrong, and now that the two are answers to one question the witness of higher standing wins.
+    /// </summary>
+    [Fact]
+    public async Task AWordTheVocabularyGainsLetsAWitnessCatchAWrongReading()
+    {
         var mordecai = Person("mordecai");
         var esther = Person("esther");
         Stated(mordecai, esther, "cousin");
         Clause(mordecai, esther, DescriptorRelations.UncleOf, 0.8);
 
-        (await Load()).Written.Should().Be(1);
+        var outcome = await Load();
+        outcome.Written.Should().Be(0);
+        outcome.Withheld.Should().Be(1);
     }
 
     /// <summary>

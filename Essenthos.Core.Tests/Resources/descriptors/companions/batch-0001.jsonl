@@ -1,0 +1,2 @@
+{"entity":"epaphroditus-1","kind":"person","claims":[{"relation":"companion-of","target":"paul-1","reference":"GEN 5:1","confidence":0.9,"reason":"my brother and companion in labour"}],"names":{"eng":{"nominative":"Epaphroditus"}},"model":"claude-sonnet-5","askedAt":"2026-09-10"}
+{"entity":"shallum-1","kind":"person","claims":[{"relation":"companion-of","target":"amariah-1","reference":"GEN 5:2","confidence":0.4,"reason":"named beside him"}],"names":{"eng":{"nominative":"Shallum"}},"model":"claude-sonnet-5","askedAt":"2026-09-10"}

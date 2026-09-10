@@ -557,7 +557,10 @@ internal sealed class EntityDescriptorLoader(
                 r.CanonicalBook,
                 r.CanonicalChapter,
                 r.CanonicalVerse,
-                w.NormalisedText,
+                // The normalised word where the text has one and the printed word where it does
+                // not: a text loaded without normalising would otherwise have every verse read as
+                // silent, and every companion clause on it refused.
+                Word = w.NormalisedText ?? w.Surface,
             })
             .Where(row => books.Contains(row.CanonicalBook)
                 && chapters.Contains(row.CanonicalChapter))
@@ -569,19 +572,32 @@ internal sealed class EntityDescriptorLoader(
         // verdict.
         if (words.Count == 0)
         {
+            // Said out loud, because this silence has two causes that look identical from outside:
+            // a corpus without the text, and a rule looking for it under the wrong name. The second
+            // one shipped once and refused nothing for a day before anyone noticed (MST-0188).
+            logger.LogWarning(
+                "{Count} companion-of clauses could not be checked against their verses: no words of "
+                + "the text {Text} were found for any of them. Either that text is not loaded, or the "
+                + "loader is asking for it under a name the corpus does not use; nothing was refused",
+                wanted.Count,
+                Shown);
             return null;
         }
 
         var asked = wanted.ToHashSet();
         return [.. words
-            .Where(row => row.NormalisedText != null
-                && Accompaniment.Contains(row.NormalisedText.ToLowerInvariant()))
+            .Where(row => row.Word != null
+                && Accompaniment.Contains(row.Word.ToLowerInvariant()))
             .Select(row => (row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse))
             .Where(asked.Contains)];
     }
 
-    /// <summary>The text the generation pass was shown, and so the one a clause was read from.</summary>
-    private const string Shown = "kjv";
+    /// <summary>
+    /// The text the generation pass was shown, and so the one a clause was read from. The loader's
+    /// own constant and not a spelling of it: this was the string "kjv" until 2026-09-10, the corpus
+    /// writes "KJV", and the rule it serves found no text and refused nothing for a day (MST-0188).
+    /// </summary>
+    private const string Shown = Bible4uTextSource.KingJames;
 
     /// <summary>
     /// The language and case each of these entities already has a form in, from any source. The
