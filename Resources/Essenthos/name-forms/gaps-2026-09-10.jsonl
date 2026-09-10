@@ -1,0 +1,12 @@
+{"entity": "danites", "names": {"eng": {"nominative": "Danites"}, "ukr": {"nominative": "дановці", "genitive": "дановців"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "kohathites", "names": {"eng": {"nominative": "Kohathites"}, "ukr": {"nominative": "Кегатові", "genitive": "Кегатових"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "amaw", "names": {"eng": {"nominative": "Amaw"}, "ukr": {"nominative": "Амав", "locative": "Амаві"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "ardites", "names": {"eng": {"nominative": "Ardites"}, "ukr": {"nominative": "Арди", "genitive": "Ардів"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "hepherites", "names": {"eng": {"nominative": "Hepherites"}, "ukr": {"nominative": "Хеферові", "genitive": "Хеферових"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "irnahash", "names": {"eng": {"nominative": "Ir-nahash"}, "ukr": {"nominative": "Ір-Нахаш", "locative": "Ір-Нахаші"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "jezerites", "names": {"eng": {"nominative": "Jezerites"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "manahethites", "names": {"eng": {"nominative": "Manahethites"}, "ukr": {"nominative": "хаці-гаммонахтяни", "genitive": "хаці-гаммонахтян"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "merom", "names": {"eng": {"nominative": "Merom"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "shemidaites", "names": {"eng": {"nominative": "Shemidaites"}, "ukr": {"nominative": "Шемідяни", "genitive": "Шемідян"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "shishak", "names": {"eng": {"nominative": "Shishak"}, "ukr": {"nominative": "Шішак", "genitive": "Шішака"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
+{"entity": "trogyllium", "names": {"eng": {"nominative": "Trogyllium"}, "ukr": {"nominative": "Трогілій", "locative": "Трогілії"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
