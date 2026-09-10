@@ -229,8 +229,50 @@ public sealed class RelationshipMergeTests : IDisposable
         witness.Dataset.Should().Be("bibledata");
     }
 
+    /// <summary>
+    /// The counterpart's name in the case the reader's language wants, without which the section is
+    /// English on a Ukrainian page. Nothing computes the form: a language the corpus has not
+    /// declined a name into gets nothing here and the client falls back to the English name, which
+    /// is the same fallback the descriptor line already has (PRB-0451).
+    /// </summary>
+    [Fact]
+    public async Task ARowCarriesTheCounterpartsNameInTheCaseTheLanguageAsksFor()
+    {
+        var lot = Person("lot");
+        var haran = Person("haran");
+        Read(lot, haran, "son-of", 1, 11, 27);
+        Declined(haran, "ukr", GrammaticalCases.Genitive, "Гарана");
+        await _db.SaveChangesAsync();
+
+        var ukrainian = await Relationships.Of(_db, lot.Id, "ukr", CancellationToken.None);
+        ukrainian.Should().ContainSingle().Which.Forms
+            .Should().ContainKey(GrammaticalCases.Genitive)
+            .WhoseValue.Should().Be("Гарана");
+
+        var english = await Relationships.Of(_db, lot.Id, "eng", CancellationToken.None);
+        english.Should().ContainSingle().Which.Forms.Should().BeNull(
+            "no pass has declined Haran into English, and an invented ending is worse than the name");
+
+        var unasked = await Page(lot);
+        unasked.Should().ContainSingle().Which.Forms.Should().BeNull();
+    }
+
+    private void Declined(Entity entity, string language, string grammaticalCase, string form)
+    {
+        _db.EntityNameForms.Add(new EntityNameForm
+        {
+            EntityId = entity.Id,
+            Language = language,
+            GrammaticalCase = grammaticalCase,
+            Form = form,
+            Method = LinkMethod.ModelReading,
+            Confidence = 1,
+            Source = Model,
+        });
+    }
+
     private async Task<List<EntityRelationshipResponse>> Page(Entity entity) =>
-        await Relationships.Of(_db, entity.Id, CancellationToken.None);
+        await Relationships.Of(_db, entity.Id, null, CancellationToken.None);
 
     private void Stated(Entity from, Entity to, string type, int book, int chapter, int verse)
     {

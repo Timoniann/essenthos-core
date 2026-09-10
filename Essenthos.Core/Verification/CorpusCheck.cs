@@ -506,7 +506,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         // written twice and not a rival, and counting the rows would take 146 words off Zion's page
         // for the crime of the hill having a page of its own. Jericho at Tell es Sultan and Jericho
         // at Tell el Alayiq say nothing of the kind, and this still fires for them -- which is why
-        // nothing is annotated from H3405 at all.
+        // no resolution annotates a word of H3405, and why which of the two a verse means is
+        // `SiteSplitLoader`'s work, under a method that says something did the choosing.
         ("words a name-resolution annotated although the name is several people's",
             $"""
              SELECT count(*) FROM word_entity a

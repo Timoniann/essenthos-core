@@ -17,6 +17,10 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// Records the bulk pass would have written and did not, because the switch is off. It is counted
 /// so the size of what is being withheld is visible rather than implied.
 /// </param>
+/// <param name="Labelled">
+/// Records given the name row they should have had. Counted apart from <see cref="Created"/>
+/// because it is what a corpus written before this pass named anything gains on its next boot.
+/// </param>
 internal sealed record OwnRecordOutcome(
     bool AlreadyLoaded,
     int Created,
@@ -24,14 +28,17 @@ internal sealed record OwnRecordOutcome(
     int Named,
     int Annotated,
     int Withheld,
+    int Labelled,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
         AlreadyLoaded
-            ? "the records this corpus writes for itself are already there"
+            ? $"the records this corpus writes for itself are already there; {Labelled} of them were " +
+              "given the name row they should have had"
             : $"{Created} records written for referents no dataset holds and {Named} words annotated " +
               $"to them or to a record the ruling named, {Annotated} words in all once the links " +
-              $"carried them, in {Elapsed}. {Unsettled} of the records name who else they might be. " +
+              $"carried them, in {Elapsed}. {Unsettled} of the records name who else they might be, " +
+              $"and {Labelled} carry a name row this pass wrote. " +
               $"{Withheld} further records the readings ask for are withheld: the bulk pass is off.";
 }
 
@@ -101,6 +108,9 @@ internal sealed class OwnRecordLoader(
 
     private const string SourceIdPrefix = "essenthos:";
 
+    /// <summary>The kind of label a record's own name is, and the kind a namesake group is built of.</summary>
+    private const string ProperName = "proper name";
+
     /// <summary>The longest a generated slug's descriptive part may be, so a page's address stays typeable.</summary>
     private const int SlugRoom = 60;
 
@@ -110,32 +120,116 @@ internal sealed class OwnRecordLoader(
     {
         var files = new[] { SenseReadingFiles.Rulings(), SenseReadingFiles.ReviewRulings() };
         var sources = files.Select(f => f.Source).ToList();
-        if (await db.EntityClaims.AnyAsync(c => sources.Contains(c.Source), cancellationToken))
-        {
-            logger.LogInformation("The rulings are already recorded; nothing to do");
-            return new OwnRecordOutcome(true, 0, 0, 0, 0, 0, TimeSpan.Zero);
-        }
+        var already = await db.EntityClaims.AnyAsync(c => sources.Contains(c.Source), cancellationToken);
 
         var started = Stopwatch.StartNew();
         int created = 0, unsettled = 0, named = 0, annotated = 0;
 
-        foreach (var file in files)
+        if (!already)
         {
-            var (wrote, open, settled) = await Apply(file, cancellationToken);
-            created += wrote;
-            unsettled += open;
-            named += settled.Count;
-            annotated += settled.Count == 0
-                ? 0
-                : await Annotate(
-                    settled, EnumSpelling.ToLinkMethod(file.Method), file.Source, cancellationToken);
+            foreach (var file in files)
+            {
+                var (wrote, open, settled) = await Apply(file, cancellationToken);
+                created += wrote;
+                unsettled += open;
+                named += settled.Count;
+                annotated += settled.Count == 0
+                    ? 0
+                    : await Annotate(
+                        settled, EnumSpelling.ToLinkMethod(file.Method), file.Source, cancellationToken);
+            }
+        }
+
+        var labelled = await Label(files, cancellationToken);
+
+        if (already)
+        {
+            logger.LogInformation(
+                "The rulings are already recorded; {Labelled} of their records were given the name "
+                + "row they should have had",
+                labelled);
+            return new OwnRecordOutcome(true, 0, 0, 0, 0, 0, labelled, started.Elapsed);
         }
 
         var withheld = await Bulk(resources, cancellationToken);
         var outcome = new OwnRecordOutcome(
-            false, created, unsettled, named, annotated, withheld, started.Elapsed);
+            false, created, unsettled, named, annotated, withheld, labelled, started.Elapsed);
         logger.LogInformation("Wrote: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The name row every record these rulings ask for should have had.
+    ///
+    /// <c>entity_name</c> is where the encyclopedia meets the rest of the corpus: a label carries a
+    /// Strong number and a Strong number reaches words. A record with no row there is reachable by
+    /// its slug and by nothing else — it stands in no namesake group, the pass that declines a name
+    /// into Ukrainian and Russian reads that table and cannot see it, and no resolution by number
+    /// arrives at it however plainly the word carries the number. Every record written here was in
+    /// that position.
+    ///
+    /// <para>
+    /// Asked per record and outside the guard that skips the rulings, because the records it is
+    /// about are already written: a step that named only what it created on this boot would never
+    /// reach one of them, and the guard is what would keep it away.
+    /// </para>
+    ///
+    /// <para>
+    /// The number is read off the word the ruling rests on rather than off the ruling's own
+    /// <c>strongNumber</c>, for the reason the address is read off it. Where the word carries none
+    /// the row is written without one: a label alone still puts the record in the namesake group,
+    /// which is most of what is missing.
+    /// </para>
+    /// </summary>
+    private async Task<int> Label(
+        IReadOnlyList<OwnRecordRulings> files,
+        CancellationToken cancellationToken)
+    {
+        var wanted = files
+            .SelectMany(file => file.Rulings)
+            .Where(ruling => ruling.Create is not null)
+            .ToList();
+
+        if (wanted.Count == 0)
+        {
+            return 0;
+        }
+
+        var slugs = wanted.Select(ruling => ruling.Create!.Slug).ToList();
+        var records = await db.Entities
+            .Where(e => slugs.Contains(e.Slug))
+            .Include(e => e.Names)
+            .ToDictionaryAsync(e => e.Slug, cancellationToken);
+
+        var occurrences = await Verses(
+            wanted.Select(ruling => ruling.WordId).ToList(), cancellationToken);
+
+        var labelled = 0;
+        foreach (var ruling in wanted)
+        {
+            if (!records.TryGetValue(ruling.Create!.Slug, out var record)
+                || record.Names.Any(name => name.Kind == ProperName))
+            {
+                continue;
+            }
+
+            var number = occurrences.TryGetValue(ruling.WordId, out var at) ? at.StrongNumber : null;
+            record.Names.Add(new EntityName
+            {
+                Label = ruling.Create.Name,
+                Kind = ProperName,
+                HebrewStrongNumber = number is not null && number.StartsWith('H') ? number : null,
+                GreekStrongNumber = number is not null && number.StartsWith('G') ? number : null,
+            });
+            labelled++;
+        }
+
+        if (labelled > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return labelled;
     }
 
     /// <summary>
@@ -203,7 +297,7 @@ internal sealed class OwnRecordLoader(
     /// </summary>
     private async Task<Entity> Write(
         OwnRecord record,
-        (int Book, int Chapter, int Verse)? at,
+        Occurrence? at,
         string why,
         string source,
         CancellationToken cancellationToken)
@@ -286,11 +380,12 @@ internal sealed class OwnRecordLoader(
     }
 
     /// <summary>
-    /// The canonical address of each ruling's word, which is the verse the record rests on. Read
-    /// from the word rather than transcribed into the file beside it: a reference typed twice is a
-    /// reference that can disagree with itself.
+    /// What each ruling's word is: the canonical address, which is the verse the record rests on, and
+    /// the Strong number, which is the name the record will be reached by. Both read from the word
+    /// rather than transcribed into the file beside it — a fact written down twice is a fact that
+    /// can disagree with itself.
     /// </summary>
-    private async Task<Dictionary<long, (int Book, int Chapter, int Verse)>> Verses(
+    private async Task<Dictionary<long, Occurrence>> Verses(
         List<long> words,
         CancellationToken cancellationToken)
     {
@@ -298,12 +393,24 @@ internal sealed class OwnRecordLoader(
             .Where(w => words.Contains(w.Id))
             .SelectMany(
                 w => db.VerseReferences.Where(r => r.VerseId == w.VerseId && r.IsPrimary),
-                (w, r) => new { w.Id, r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse })
+                (w, r) => new
+                {
+                    w.Id,
+                    w.StrongNumber,
+                    r.CanonicalBook,
+                    r.CanonicalChapter,
+                    r.CanonicalVerse,
+                })
             .ToListAsync(cancellationToken);
 
         return found.ToDictionary(
-            row => row.Id, row => (row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse));
+            row => row.Id,
+            row => new Occurrence(
+                row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse, row.StrongNumber));
     }
+
+    /// <summary>Where a ruling's word stands, and what name it carries there.</summary>
+    private sealed record Occurrence(int Book, int Chapter, int Verse, string? StrongNumber);
 
     /// <summary>
     /// The annotations the rulings settle, carried into every text the links reach exactly as every

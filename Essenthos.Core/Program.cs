@@ -97,6 +97,7 @@ builder.Services.AddScoped<PersonRegisterLoader>();
 builder.Services.AddScoped<EntityAnnotationLoader>();
 builder.Services.AddScoped<OwnRecordLoader>();
 builder.Services.AddScoped<SenseReadingLoader>();
+builder.Services.AddScoped<SiteSplitLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();

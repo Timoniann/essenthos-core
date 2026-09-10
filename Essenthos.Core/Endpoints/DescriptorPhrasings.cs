@@ -13,6 +13,45 @@ namespace Essenthos.Core.Endpoints;
 /// </remarks>
 internal sealed record Phrasing(string Before, string Case, string After = "");
 
+internal static partial class DescriptorPhrasings
+{
+    /// <summary>
+    /// The Ukrainian preposition that has to agree with the word after it.
+    ///
+    /// <para>
+    /// §11 of the orthography decides one direction and only one: <em>у</em> stands before a word
+    /// beginning with <em>в</em> or <em>ф</em>, whatever the word before it ended in. So
+    /// <em>місто в Вавилоні</em> is wrong and <em>місто у Вавилоні</em> is right, and 32 of the
+    /// corpus's locatives are that (PRB-0444).
+    /// </para>
+    ///
+    /// <para>
+    /// The other direction is deliberately left alone. A consonant before a vowel — <em>жив у
+    /// Авані</em> — is not one of the cases §11 settles, both are written, and changing it would be
+    /// taste rather than orthography.
+    /// </para>
+    ///
+    /// <para>
+    /// It cannot live in the table beside the phrase, because the right word depends on the name
+    /// that follows and a phrasing is written before the name is known.
+    /// </para>
+    /// </summary>
+    public static string AgreeWithWhatFollows(string before, string next)
+    {
+        var first = next.AsSpan().TrimStart();
+        if (first.IsEmpty || (first[0] != 'в' && first[0] != 'В'
+            && first[0] != 'ф' && first[0] != 'Ф'))
+        {
+            return before;
+        }
+
+        var lead = before.AsSpan().TrimEnd();
+        return lead.Length > 1 && lead[^1] == 'в' && char.IsWhiteSpace(lead[^2])
+            ? string.Concat(before.AsSpan(0, lead.Length - 1), "у", before.AsSpan(lead.Length))
+            : before;
+    }
+}
+
 /// <summary>
 /// What each relation says, in each language the encyclopedia speaks.
 ///
@@ -52,7 +91,7 @@ internal sealed record Phrasing(string Before, string Case, string After = "");
 /// and be wrong.
 /// </para>
 /// </summary>
-internal static class DescriptorPhrasings
+internal static partial class DescriptorPhrasings
 {
     public const string English = "eng";
 

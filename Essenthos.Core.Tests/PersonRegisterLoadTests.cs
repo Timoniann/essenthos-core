@@ -162,9 +162,10 @@ public sealed class PersonRegisterLoadTests : IDisposable
     [Fact]
     public async Task A_record_this_corpus_wrote_for_itself_is_reached_though_it_carries_no_name_row()
     {
-        // OwnRecordLoader writes the people a verse names and no dataset holds, and 180 of its 181
-        // records carry no `entity_name` row at all — so a group built out of that table cannot see
-        // them, and the register would add a second page for a man it already holds.
+        // OwnRecordLoader writes the people a verse names and no dataset holds. A record of that
+        // kind reaches this pass before its own name row does — it is written a step later on a cold
+        // load — so a group built out of `entity_name` cannot see it, and the register would add a
+        // second page for a man it already holds.
         _db.Entities.Add(new Entity
         {
             Kind = EntityKind.Person,

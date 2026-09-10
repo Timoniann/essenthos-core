@@ -396,7 +396,8 @@ internal static class EncyclopediaEndpoints
                 })
                 .ToListAsync(cancellationToken);
 
-            var related = await Relationships.Of(db, entity.Id, cancellationToken);
+            var related = await Relationships.Of(db, entity.Id, language, cancellationToken);
+            var own = await Relationships.Forms(db, [entity.Id], language, cancellationToken);
 
             var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
@@ -477,6 +478,7 @@ internal static class EncyclopediaEndpoints
                 alternatives,
                 alternatives.Count > 0)
             {
+                Forms = own.GetValueOrDefault(entity.Slug),
                 Descriptor = await Descriptors.Of(
                     db, entity.Slug, language, cancellationToken),
             });
@@ -1096,6 +1098,16 @@ internal record EntityResponse(
     bool Unsettled)
 {
     /// <summary>
+    /// This entity's own name in every case a pass produced for the language asked for.
+    ///
+    /// A relationship row is a sentence with two names in it and either end can be the one a case
+    /// falls on: <em>Лот, син Гарана</em> puts the counterpart in the genitive, and the same row
+    /// read from Haran's page puts Lot there. So the page needs its own forms as well as its
+    /// counterparts', and neither can stand in for the other.
+    /// </summary>
+    public Dictionary<string, string>? Forms { get; init; }
+
+    /// <summary>
     /// What this corpus says the entity is: the pieces of a line, each name among them carrying the
     /// entity it names complete enough to be linked, and the claims the line was made of with the
     /// verse each was read from. <see cref="EntityDescriptorResponse.Language"/> says which language
@@ -1192,6 +1204,18 @@ internal record EntityRelationshipResponse(
     VerseRefResponse? Reference,
     string? Notes)
 {
+    /// <summary>
+    /// The counterpart's name in every case a pass produced for the language asked for, keyed by
+    /// case. Null where no pass has declined this name into that language, which is where the
+    /// English name is the whole of what a renderer can say.
+    ///
+    /// A row is a sentence — <em>Лот, син Гарана</em> — and the case is not decoration: <em>син
+    /// Гарана</em> and <em>син Гаран</em> differ in whether the sentence is Ukrainian. Nothing
+    /// computes it, because a stemmer guessing the genitive of a Hebrew proper name is wrong often
+    /// and silently, which is why this is a form the corpus holds rather than a rule it applies.
+    /// </summary>
+    public Dictionary<string, string>? Forms { get; init; }
+
     /// <summary>
     /// What established it. Two witnesses speak in this table and a reader who cannot tell a
     /// dataset's edge from a model's reading of a verse is being asked to trust both equally.
