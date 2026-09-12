@@ -1,0 +1,209 @@
+[
+ {
+  "rows": [
+   70935,
+   70936
+  ],
+  "a": "elishah-2",
+  "relation": "son-of",
+  "b": "japheth",
+  "note": "",
+  "decidedAt": "2026-09-12T19:27:44.307Z"
+ },
+ {
+  "rows": [
+   71103,
+   71104
+  ],
+  "a": "abram",
+  "relation": "inherited-by",
+  "b": "eliezer",
+  "note": "",
+  "decidedAt": "2026-09-11T15:54:14.842Z"
+ },
+ {
+  "rows": [
+   71135
+  ],
+  "a": "abimelech",
+  "relation": "king-of",
+  "b": "phicol",
+  "note": "",
+  "decidedAt": "2026-09-12T20:13:38.568Z"
+ },
+ {
+  "rows": [
+   71193,
+   71194
+  ],
+  "a": "zohar",
+  "relation": "descendant-of",
+  "b": "heth",
+  "note": "",
+  "decidedAt": "2026-09-12T20:17:51.148Z"
+ },
+ {
+  "rows": [
+   71539,
+   71540
+  ],
+  "a": "eliphaz",
+  "relation": "son-of",
+  "b": "basemath",
+  "note": "The mapping is wrong here. It should be Adah, not Eliphaz",
+  "decidedAt": "2026-09-12T20:27:53.512Z"
+ },
+ {
+  "rows": [
+   71633,
+   71634
+  ],
+  "a": "jucam",
+  "relation": "son-of",
+  "b": "ezer",
+  "note": "",
+  "decidedAt": "2026-09-12T20:29:22.771Z"
+ },
+ {
+  "rows": [
+   71643,
+   71644
+  ],
+  "a": "husham",
+  "relation": "descendant-of",
+  "b": "esau",
+  "note": "",
+  "decidedAt": "2026-09-12T20:31:39.020Z"
+ },
+ {
+  "rows": [
+   71647,
+   71648
+  ],
+  "a": "samlah",
+  "relation": "descendant-of",
+  "b": "esau",
+  "note": "",
+  "decidedAt": "2026-09-12T20:31:57.248Z"
+ },
+ {
+  "rows": [
+   71649,
+   71650
+  ],
+  "a": "shaul",
+  "relation": "descendant-of",
+  "b": "esau",
+  "note": "",
+  "decidedAt": "2026-09-12T20:32:40.474Z"
+ },
+ {
+  "rows": [
+   71691,
+   71692
+  ],
+  "a": "tamar",
+  "relation": "concubine-of",
+  "b": "judah",
+  "note": "Тут це не зовсім concubinator Тут це не зовсім concubine-of",
+  "decidedAt": "2026-09-12T20:33:06.729Z"
+ },
+ {
+  "rows": [
+   72053,
+   72054
+  ],
+  "a": "sihon",
+  "relation": "descendant-of",
+  "b": "amor",
+  "note": "",
+  "decidedAt": "2026-09-12T20:48:17.574Z"
+ },
+ {
+  "rows": [
+   76137,
+   76138
+  ],
+  "a": "talitha",
+  "relation": "daughter-of",
+  "b": "jairus",
+  "note": "Тут проблема в тому шо Таліфа це може значити не ім'я, а просто \"дівчина\"",
+  "decidedAt": "2026-09-11T16:24:38.120Z"
+ },
+ {
+  "rows": [
+   76243,
+   76244
+  ],
+  "a": "thaddaeus",
+  "relation": "son-of",
+  "b": "james-4",
+  "note": "",
+  "decidedAt": "2026-09-11T16:30:12.408Z"
+ },
+ {
+  "rows": [
+   76257,
+   76258
+  ],
+  "a": "andrew",
+  "relation": "son-of",
+  "b": "john-3",
+  "note": "",
+  "decidedAt": "2026-09-11T16:26:44.177Z"
+ },
+ {
+  "rows": [
+   76267,
+   76268
+  ],
+  "a": "john-4",
+  "relation": "descendant-of",
+  "b": "aaron",
+  "note": "",
+  "decidedAt": "2026-09-11T16:26:56.375Z"
+ },
+ {
+  "rows": [
+   76269,
+   76270
+  ],
+  "a": "alexander-2",
+  "relation": "descendant-of",
+  "b": "aaron",
+  "note": "",
+  "decidedAt": "2026-09-11T16:27:09.531Z"
+ },
+ {
+  "rows": [
+   76277,
+   76278
+  ],
+  "a": "rhoda",
+  "relation": "servant-of",
+  "b": "mary-5",
+  "note": "",
+  "decidedAt": "2026-09-11T16:28:56.529Z"
+ },
+ {
+  "rows": [
+   76279
+  ],
+  "a": "herod-3",
+  "relation": "king-of",
+  "b": "blastus",
+  "note": "",
+  "decidedAt": "2026-09-11T16:29:11.892Z"
+ },
+ {
+  "rows": [
+   76285,
+   76286
+  ],
+  "a": "ananias-3",
+  "relation": "descendant-of",
+  "b": "elisheba",
+  "note": "",
+  "decidedAt": "2026-09-11T16:29:43.194Z"
+ }
+]

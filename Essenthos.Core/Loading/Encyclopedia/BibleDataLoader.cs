@@ -636,8 +636,42 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             }
         }
 
+        if (entities.TryGetValue(DivineName, out var god)
+            && !names.Any(n => n.EntityId == god.Id && n.HebrewStrongNumber == PointedAsElohim))
+        {
+            names.Add(NamePointedAsElohim(god));
+        }
+
         return names;
     }
+
+    /// <summary>
+    /// The Strong number of the divine name where the Masoretes pointed it with the vowels of
+    /// <em>Elohim</em> — יְהֹוִה, the King James's GOD in <em>Lord GOD</em>. Its letters are the name.
+    /// </summary>
+    internal const string PointedAsElohim = "H3069";
+
+    /// <summary>
+    /// The divine name as it is written in 583 words the dataset's labels never number.
+    ///
+    /// The dataset gives the name under H3068 and its short form under H3050 and stops there, so
+    /// the same four letters pointed as <em>Elohim</em> belonged to no record and not one of those
+    /// words named anyone. The rule this corpus reads names by is the letters, not the vowels: a
+    /// word is the divine name when it is written יהוה or יה, and <em>elohim</em>, <em>el</em> and
+    /// <em>eloah</em> are words for God rather than the name. That is this corpus's own statement,
+    /// which is why it is added here and not read from the label file.
+    /// </summary>
+    internal static EntityName NamePointedAsElohim(Entity god) =>
+        new()
+        {
+            EntityId = god.Id,
+            Label = "GOD",
+            Hebrew = "יְהֹוִה",
+            HebrewTransliterated = "y-h-v-h",
+            Meaning = "[the proper name of the one true G-d, pointed with the vowels of Elohim]",
+            HebrewStrongNumber = PointedAsElohim,
+            Kind = "proper name",
+        };
 
     private static readonly (string File, string Key, string Label, EntityKind Kind)[] LabelFiles =
     [

@@ -11,14 +11,21 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// </param>
 /// <param name="Confidence">
 /// The model's own, in 0..1. Required, because the method is an inference and this corpus refuses
-/// to store an inference that looks like testimony.
+/// to store an inference that looks like testimony — unless a person decided the clause.
+/// </param>
+/// <param name="DecidedBy">
+/// Who decided this clause against the verse, and when — <c>the project owner, decided 2026-09-11</c>.
+/// Present only where a person and not the pass settled it; the clause is then that person's
+/// judgement and says so in its credit, and carries a confidence only where that person said the
+/// verse does not settle it.
 /// </param>
 internal sealed record DescriptorClaimRecord(
     string Relation,
     string Target,
     string Reference,
     double? Confidence,
-    string? Reason);
+    string? Reason,
+    string? DecidedBy = null);
 
 /// <summary>
 /// Everything one pass says about one entity: the ordered clauses, the name forms a language needs

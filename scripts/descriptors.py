@@ -117,8 +117,9 @@ RELATIONS = [
     'king-of', 'queen-of', 'prophet-to', 'priest-of', 'judge-of', 'high-priest-of',
     'commander-of', 'governor-of', 'tetrarch-of',
     'servant-of', 'master-of', 'disciple-of', 'apostle-of', 'scribe-of', 'companion-of',
-    'teacher-of', 'ally-of',
-    'killed-by', 'killer-of', 'raped-by', 'raper-of', 'angel-of',
+    'teacher-of', 'ally-of', 'supporter-of', 'supported-by', 'heir-of', 'inherited-by',
+    'killed-by', 'killer-of', 'raped-by', 'raper-of', 'exiler-of', 'exiled-by', 'angel-of',
+    'creator-of', 'created-by',
     'of-tribe', 'of-people', 'from-place', 'lived-in', 'buried-in',
     'descendants-of',
     'city-in', 'region-of', 'river-of', 'mountain-in', 'gate-of', 'near',
@@ -241,8 +242,9 @@ entity is the target's father-in-law:
   office    king-of queen-of prophet-to priest-of judge-of high-priest-of
             commander-of governor-of tetrarch-of
             servant-of master-of disciple-of apostle-of scribe-of companion-of
-            teacher-of ally-of
-  violence  killed-by killer-of raped-by raper-of
+            teacher-of ally-of supporter-of supported-by heir-of inherited-by
+  violence  killed-by killer-of raped-by raper-of exiler-of exiled-by
+  making    creator-of created-by
   belonging of-tribe of-people from-place lived-in buried-in angel-of
   peoples   descendants-of
   places    city-in region-of river-of mountain-in gate-of near
@@ -1058,6 +1060,14 @@ INVERSE = {
     'ally-of': {'ally-of'},
     'raper-of': {'raped-by'},
     'raped-by': {'raper-of'},
+    'supporter-of': {'supported-by'},
+    'supported-by': {'supporter-of'},
+    'creator-of': {'created-by'},
+    'created-by': {'creator-of'},
+    'heir-of': {'inherited-by'},
+    'inherited-by': {'heir-of'},
+    'exiler-of': {'exiled-by'},
+    'exiled-by': {'exiler-of'},
 }
 
 

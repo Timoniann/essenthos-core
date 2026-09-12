@@ -105,6 +105,9 @@ public sealed class DescriptorVocabularyTests
             DescriptorRelations.AngelOf, DescriptorRelations.GateOf,
             DescriptorRelations.TeacherOf, DescriptorRelations.AllyOf, DescriptorRelations.CousinOf,
             DescriptorRelations.RapedBy, DescriptorRelations.RaperOf,
+            DescriptorRelations.SupporterOf, DescriptorRelations.SupportedBy,
+            DescriptorRelations.CreatorOf, DescriptorRelations.CreatedBy,
+            DescriptorRelations.HeirOf, DescriptorRelations.ExilerOf, DescriptorRelations.ExiledBy,
         ];
 
         var phrasings = DescriptorPhrasings.For(language)!;

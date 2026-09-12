@@ -238,6 +238,15 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
         return rows
             .SelectMany(row =>
             {
+                if (RelationshipVocabulary.SaysFromTheOtherEnd.TryGetValue(row.Type, out var otherEnd))
+                {
+                    return new[]
+                    {
+                        ((row.ToEntityId, row.FromEntityId),
+                            new Asserted(ClaimStanding.Of(row.Method), row.Confidence ?? 1, One(otherEnd))),
+                    };
+                }
+
                 if (!RelationshipVocabulary.Says.TryGetValue(row.Type, out var relation))
                 {
                     return Enumerable.Empty<(( int From, int To) Pair, Asserted Claim)>();

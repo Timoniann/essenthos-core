@@ -345,6 +345,39 @@ public static class DescriptorRelations
     public const string RaperOf = "raper-of";
 
     /// <summary>
+    /// Who kept whom out of their own means: Joanna and Susanna, <em>which ministered unto him of
+    /// their substance</em> (LUK 8:3). Both ways round.
+    /// </summary>
+    public const string SupporterOf = "supporter-of";
+
+    public const string SupportedBy = "supported-by";
+
+    /// <summary>
+    /// The maker and the made, which the text states of the LORD God and the man he formed of the
+    /// dust (GEN 2:7). Both ways round.
+    /// </summary>
+    public const string CreatorOf = "creator-of";
+
+    public const string CreatedBy = "created-by";
+
+    /// <summary>
+    /// Who stood to inherit from whom: <em>one born in mine house is mine heir</em> (GEN 15:3).
+    /// <see cref="InheritedBy"/> is the same tie read from the one who leaves the inheritance.
+    /// </summary>
+    public const string HeirOf = "heir-of";
+
+    public const string InheritedBy = "inherited-by";
+
+    /// <summary>
+    /// Who carried whom away into exile: <em>Jeconiah ... whom Nebuchadnezzar the king of Babylon had
+    /// carried away</em> (EST 2:6). Not an answer to the question a killing answers, for the reason a
+    /// rape is not: being exiled and being killed are two facts.
+    /// </summary>
+    public const string ExilerOf = "exiler-of";
+
+    public const string ExiledBy = "exiled-by";
+
+    /// <summary>
     /// A being the text defines by whom or what it belongs to, rather than by descent —
     /// <em>the angel of the bottomless pit</em>, <em>the angel of the LORD</em>.
     /// </summary>
@@ -388,6 +421,7 @@ public static class DescriptorRelations
         CommanderOf, GovernorOf, TetrarchOf, ServantOf, MasterOf,
         DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, AllyOf,
         KilledBy, KillerOf, RapedBy, RaperOf, AngelOf,
+        SupporterOf, SupportedBy, CreatorOf, CreatedBy, HeirOf, InheritedBy, ExilerOf, ExiledBy,
         OfTribe, OfPeople, FromPlace, LivedIn, BuriedIn,
         DescendantsOf,
         CityIn, RegionOf, RiverOf, MountainIn, GateOf, Near,

@@ -253,8 +253,9 @@ internal static class Relationships
         outward.From == inward.To
         && outward.To == inward.From
         && InOurWords(outward) is { } said
-        && InOurWords(inward) is { } answered
-        && RelationshipVocabulary.Reversed(said).Contains(answered);
+        && (InOurWords(inward) is { } answered && RelationshipVocabulary.Reversed(said).Contains(answered)
+            // A word for the other end states the outward row itself, not its reverse.
+            || RelationshipVocabulary.SaysFromTheOtherEnd.GetValueOrDefault(inward.Type) == said);
 
     /// <summary>
     /// The relation in this corpus's vocabulary: a reading already speaks it, and a witness's word
@@ -270,7 +271,27 @@ internal static class Relationships
     /// reading of ours already states.
     /// </summary>
     private static readonly Func<Related, Related, bool>[] Pairings =
-        [Restates, RestatesBackwards, StatesLoosely, StatesLooselyBackwards];
+        [Restates, RestatesBackwards, RestatesFromTheOtherEnd, NamesOneOf, StatesLoosely, StatesLooselyBackwards];
+
+    /// <summary>
+    /// The witness states this very fact in a word for the other end: BibleData's <em>Abram
+    /// concubinator Hagar</em> is <em>Hagar, concubine of Abram</em>.
+    /// </summary>
+    private static bool RestatesFromTheOtherEnd(Related mine, Related witness) =>
+        witness.From == mine.To
+        && witness.To == mine.From
+        && RelationshipVocabulary.SaysFromTheOtherEnd.GetValueOrDefault(witness.Type) == mine.Type;
+
+    /// <summary>
+    /// The witness's word is one of several relations and the reading says which: BibleData's
+    /// <em>Sisera victim Jael</em> is <em>Sisera, killed by Jael</em>, and from the other end
+    /// <em>Jael, killer of Sisera</em>.
+    /// </summary>
+    private static bool NamesOneOf(Related mine, Related witness) =>
+        RelationshipVocabulary.SaysOneOf.GetValueOrDefault(witness.Type) is { } either
+        && ((witness.From == mine.From && witness.To == mine.To && either.Contains(mine.Type))
+            || (witness.From == mine.To && witness.To == mine.From
+                && either.Any(relation => RelationshipVocabulary.Reversed(relation).Contains(mine.Type))));
 
     private const int NoRow = -1;
 

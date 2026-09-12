@@ -245,6 +245,33 @@ def broader():
             re.findall(r'\[DescriptorRelations\.(\w+)\]\s*=\s*DescriptorRelations\.(\w+)', block)}
 
 
+def csharp_table(name):
+    """One of `RelationshipVocabulary`'s tables, as its source text."""
+    with open(VOCABULARY, encoding='utf-8-sig') as handle:
+        text = handle.read()
+    start = text.find(name + ' =')
+    if start < 0:
+        raise SystemExit(f'no {name} table was found in {VOCABULARY}; if it has been renamed or moved, '
+                         'point this harness at where it is now.')
+    return text[start:text.index('};', start)]
+
+
+@functools.cache
+def from_the_other_end():
+    """A dataset word that states a relation read from the other end: concubinator is concubine-of."""
+    words = relation_words()
+    return {kind: words[constant] for kind, constant in
+            re.findall(r'\["([^"]+)"\]\s*=\s*DescriptorRelations\.(\w+)', csharp_table('SaysFromTheOtherEnd'))}
+
+
+@functools.cache
+def one_of():
+    """A dataset word that states one of several relations and does not say which: victim."""
+    words = relation_words()
+    return {kind: {words[constant] for constant in re.findall(r'DescriptorRelations\.(\w+)', members)}
+            for kind, members in re.findall(r'\["([^"]+)"\]\s*=\s*Set\(([^)]*)\)', csharp_table('SaysOneOf'))}
+
+
 @functools.cache
 def vocabulary():
     """
@@ -255,8 +282,7 @@ def vocabulary():
     answer to that question, and the two drift the first time a word is added.
     """
     words = relation_words()
-    with open(VOCABULARY, encoding='utf-8-sig') as handle:
-        entries = re.findall(r'\["([^"]+)"\]\s*=\s*DescriptorRelations\.(\w+)', handle.read())
+    entries = re.findall(r'\["([^"]+)"\]\s*=\s*DescriptorRelations\.(\w+)', csharp_table('Says'))
     if not words or not entries:
         raise SystemExit(
             f'no relation words were found in {RELATION_NAMES} or {VOCABULARY}. This harness reads '
@@ -272,7 +298,7 @@ def vocabulary():
 def relationships():
     return shared.psql("""
         SELECT coalesce(json_agg(json_build_object(
-                   'id', r.id, 'from', f.slug, 'to', t.slug, 'type', r.type,
+                   'id', r.id, 'from', f.slug, 'to', t.slug, 'type', r.type, 'from_sex', f.sex,
                    'category', r.category, 'method', r.method, 'source', r.source,
                    'book', r.canonical_book, 'chapter', r.canonical_chapter,
                    'verse', r.canonical_verse) ORDER BY r.id), '[]')
@@ -284,6 +310,20 @@ def relationships():
 
 def cited(row):
     return shared.reference(row['book'], row['chapter'], row['verse']) if row.get('book') else None
+
+
+KILLED_BY, RAPED_BY = 'killed-by', 'raped-by'
+
+
+def asked_of_either(row, choices):
+    """
+    Which of a word's several relations the text is asked about. This chooses only the question; the
+    reading decides whether the verse states it. The dataset's `victim` puts two raped women beside
+    the dead, so a woman is asked about raped-by and everybody else about killed-by.
+    """
+    if RAPED_BY in choices and row.get('from_sex') == FEMALE:
+        return RAPED_BY
+    return KILLED_BY if KILLED_BY in choices else sorted(choices)[0]
 
 
 def fold(rows, says):
@@ -303,11 +343,17 @@ def fold(rows, says):
             for other in shared.INVERSE.get(relation, ()):
                 ours_said.add((row['to'], row['from'], other))
 
+    other_end, either = from_the_other_end(), one_of()
     facts, index = [], {}
     for row in rows:
         if row['method'] != STATED_BY_SOURCE or not row['source'].startswith(WITNESS_SOURCE):
             continue
         relation = says.get(row['type'])
+        if row['type'] in other_end:
+            row = dict(row, **{'from': row['to'], 'to': row['from']})
+            relation = other_end[row['type']]
+        elif relation is None and row['type'] in either:
+            relation = asked_of_either(row, either[row['type']])
         key = (row['from'], row['to'], relation or '?' + row['type'])
         fact = index.get(key)
         if fact is None and relation:
@@ -323,7 +369,8 @@ def fold(rows, says):
 
     alone = []
     for fact in facts:
-        if any((row['from'], row['to'], row['relation']) in ours_said for row in fact['rows']):
+        if any((row['from'], row['to'], relation) in ours_said
+               for row in fact['rows'] for relation in either.get(row['type']) or {row['relation']}):
             continue
         mapped = [row for row in fact['rows'] if row['relation']]
         grades = {row['category'] for row in fact['rows']}
@@ -468,7 +515,8 @@ def extract(args):
 
     pool = [fact for fact in alone
             if fact['subset'] in args.subsets and fact['fact'] not in excluded
-            and fact['a'] in corpus.entities and fact['b'] in corpus.entities]
+            and fact['a'] in corpus.entities and fact['b'] in corpus.entities
+            and (not args.rows or any(row['id'] in args.rows for row in fact['rows']))]
     if args.sample:
         shuffle = random.Random(args.seed)
         chosen = []
@@ -1044,6 +1092,147 @@ def publish(args):
           f'{duplicates} clauses were already in the standing record')
 
 
+DECIDED_BY = 'the project owner, decided {date}'
+REVIEW = os.path.join('Resources', 'Essenthos', 'review')
+
+
+def decide(args):
+    """
+    The owner's decisions from the review page, applied to the facts only BibleData states.
+
+    A fact confirmed becomes a clause of this corpus that the owner decided: written on the end whose
+    verse names it, with no confidence and a `decidedBy`, so the loader stores it as a person's
+    judgement and not as a reading. A fact to re-ask is printed as BibleData row ids for
+    `extract --rows`. A fact removed stays BibleData's and is listed in a review file for the cut-over,
+    which is where BibleData's rows leave the page. Only the page's categories asked for are applied,
+    so a decision taken on the page is never applied before somebody asks for it.
+    """
+    corpus = Corpus(args.cache)
+    standing = standing_records(args.to, args.prefix)
+    # The rows an earlier run of this command put in the corpus are left out of the fold: their clauses
+    # live only in the files this command rewrites, so a fact they settled must come back to be written again.
+    rows = [row for row in relationships() if DECIDED_BY.split(',')[0] not in row['source']]
+    _, _, alone = fold(rows, vocabulary())
+    corrected = dict(item.split('=', 1) for item in args.reference or [])
+    relabelled = dict(item.split('=', 1) for item in args.relation or [])
+    held = {int(row) for row in args.hold or []}
+    unsure = {row: float(sure) for row, sure in (item.split('=', 1) for item in args.unsure or [])}
+
+    decisions = []
+    for name in sorted(os.listdir(args.decisions)):
+        if not name.endswith('.json'):
+            continue
+        with open(os.path.join(args.decisions, name), encoding='utf-8') as handle:
+            document = json.load(handle)
+        body = document.get('data', document)
+        if body.get('subset') in args.subsets and body.get('decision'):
+            decisions.append(({int(row) for row in str(body['rows']).split('|')}, body))
+
+    by_entity, report, reask, removed = {}, {}, [], []
+
+    def count(what):
+        report[what] = report.get(what, 0) + 1
+
+    reached = {row['id'] for fact in alone for row in fact['rows']}
+    for rows, body in decisions:
+        if not rows <= reached:
+            count(f'{body["decision"]}, but a row of ours already states it: nothing to write')
+
+    for fact in alone:
+        ids = {row['id'] for row in fact['rows']}
+        mine = [body for rows, body in decisions if rows <= ids]
+        if not mine:
+            continue
+        verdicts = {body['decision'] for body in mine}
+        if len(verdicts) > 1:
+            count('decisions disagree about one fact')
+            continue
+        verdict = verdicts.pop()
+        if ids & held:
+            count(f'{verdict}, held: the note questions who is meant')
+            continue
+        note = ' '.join(body['note'] for body in mine if body.get('note'))
+        # A removal whose note names the right word, and a re-ask whose note accepts it as unsure,
+        # are confirmations in the owner's own terms.
+        if verdict == 'remove' and any(str(i) in relabelled for i in ids):
+            verdict = 'confirm'
+        if verdict == 'reask' and any(str(i) in unsure for i in ids):
+            verdict = 'confirm'
+        if verdict == 'remove':
+            removed.append({'rows': sorted(ids), 'a': fact['a'], 'relation': fact['relation'] or fact['type'],
+                            'b': fact['b'], 'note': note, 'decidedAt': max(b['decidedAt'] for b in mine)})
+            count('removed: stays BibleData\'s until the cut-over')
+            continue
+        if verdict == 'reask':
+            reask.extend(sorted(ids))
+            count('to re-ask')
+            continue
+        if verdict != 'confirm':
+            count(f'left alone: {verdict}')
+            continue
+
+        reference = next((corrected[str(i)] for i in sorted(ids) if str(i) in corrected), None) \
+            or (fact['cited'][0] if fact['cited'] else None)
+        if not reference or not fact['relation']:
+            count('confirmed, but there is no verse or no relation word to write it with')
+            continue
+        relation_as = next((relabelled[str(i)] for i in sorted(ids) if str(i) in relabelled), None)
+        if relation_as:
+            fact = dict(fact, relation=relation_as)
+        clause, refused = carrier(fact, reference, corpus)
+        clause, refused, _ = settle_against_record(clause, refused, standing)
+        if not clause:
+            count(f'confirmed, not writable: {refused}')
+            continue
+
+        subject, relation, target = clause
+        before = standing.get(subject) or {}
+        record = by_entity.setdefault(subject, {
+            'entity': subject,
+            'kind': before.get('kind') or corpus.entities[subject]['kind'],
+            'claims': list(before.get('claims', [])),
+            'names': before.get('names') or {},
+            'unresolved': before.get('unresolved') or [],
+            'model': before.get('model') or 'the project owner',
+            'askedAt': before.get('askedAt') or max(b['decidedAt'] for b in mine)[:10],
+        })
+        if (relation, target) in {(c['relation'], c['target']) for c in record['claims']}:
+            count('confirmed, already in the record')
+            continue
+        sure = next((unsure[str(i)] for i in sorted(ids) if str(i) in unsure), None)
+        record['claims'].append({
+            'relation': relation, 'target': target, 'reference': reference, 'confidence': sure,
+            'reason': note or 'the verse states it, decided on the review page',
+            'decidedBy': DECIDED_BY.format(date=max(b['decidedAt'] for b in mine)[:10]),
+        })
+        count('confirmed and written')
+
+    for name in os.listdir(args.to):
+        if name.startswith(args.prefix + '-') and name.endswith('.jsonl'):
+            os.remove(os.path.join(args.to, name))
+    records = [by_entity[slug] for slug in sorted(by_entity)]
+    for number, start in enumerate(range(0, len(records), RECORDS_PER_FILE)):
+        with open(os.path.join(args.to, f'{args.prefix}-{number:04d}.jsonl'), 'w', encoding='utf-8') as handle:
+            for record in records[start:start + RECORDS_PER_FILE]:
+                handle.write(json.dumps(record, ensure_ascii=False) + '\n')
+
+    if removed:
+        os.makedirs(REVIEW, exist_ok=True)
+        path = os.path.join(REVIEW, 'bibledata-removed.json')
+        kept = []
+        if os.path.exists(path):
+            with open(path, encoding='utf-8') as handle:
+                kept = [r for r in json.load(handle) if r['rows'] not in [x['rows'] for x in removed]]
+        with open(path, 'w', encoding='utf-8') as handle:
+            json.dump(kept + removed, handle, ensure_ascii=False, indent=1)
+
+    print(f'{len(records)} records -> {args.to} under "{args.prefix}"')
+    for what, n in sorted(report.items()):
+        print(f'  {n:>4}  {what}')
+    if reask:
+        print('re-ask with: extract --rows ' + ' '.join(map(str, reask)))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[1])
     parser.add_argument('--cache', default='.relationships/cache',
@@ -1063,7 +1252,26 @@ def main():
     extractor.add_argument('--sample', type=int, help='draw about this many facts, evenly across the subsets')
     extractor.add_argument('--seed', type=int, default=7)
     extractor.add_argument('--exclude', nargs='+', help="earlier runs' directories whose facts are not asked again")
+    extractor.add_argument('--rows', nargs='+', type=int,
+                           help='only the facts holding one of these BibleData row ids, as `decide` prints them')
     extractor.set_defaults(run=extract)
+
+    decider = commands.add_parser('decide', help="apply the owner's decisions from the review page")
+    decider.add_argument('--decisions', required=True,
+                         help='a directory of the decision documents the review page stored, one JSON file each')
+    decider.add_argument('--subsets', nargs='+', default=[UNMAPPED],
+                         help="which of the page's categories to apply; a decision in another is left alone")
+    decider.add_argument('--reference', nargs='+',
+                         help='ROW_ID=BOOK C:V, where the decision corrects the verse BibleData cites')
+    decider.add_argument('--relation', nargs='+',
+                         help='ROW_ID=relation, where the decision reads the fact in another word of the vocabulary')
+    decider.add_argument('--hold', nargs='+',
+                         help='row ids whose decision waits, because its note says the person is not who the record names')
+    decider.add_argument('--unsure', nargs='+',
+                         help='ROW_ID=confidence, where the owner accepts the fact but says the verse does not settle it')
+    decider.add_argument('--to', default=os.path.join('Resources', 'Essenthos', 'descriptors'))
+    decider.add_argument('--prefix', default='words')
+    decider.set_defaults(run=decide)
 
     for name, run, what in (('ask', ask, 'the first reading'), ('check', check, 'the second reading')):
         sub = commands.add_parser(name, help=f'run {what} over every batch that has no answers yet')

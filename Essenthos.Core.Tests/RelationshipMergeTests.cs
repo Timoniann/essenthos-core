@@ -145,6 +145,61 @@ public sealed class RelationshipMergeTests : IDisposable
     }
 
     /// <summary>
+    /// A witness's word for the other end rides on the fact it states: BibleData's <em>Abram
+    /// concubinator Hagar</em> is <em>Hagar, concubine of Abram</em>, and Hagar's page says it once.
+    /// </summary>
+    [Fact]
+    public async Task AWordForTheOtherEndRidesOnTheFactItStates()
+    {
+        var hagar = Person("hagar");
+        var abram = Person("abram");
+        Read(hagar, abram, DescriptorRelations.ConcubineOf, 1, 16, 3);
+        Stated(abram, hagar, "concubinator", 1, 16, 3);
+
+        var row = (await Page(hagar)).Should().ContainSingle().Which;
+
+        row.Type.Should().Be(DescriptorRelations.ConcubineOf);
+        row.Corroboration.Should().ContainSingle().Which.Type.Should().Be("concubinator");
+    }
+
+    /// <summary>
+    /// A word for either of two relations rides on the one the reading names. <c>victim</c> is killed
+    /// by or raped by; Judges 4:21 is the first, so Sisera's page says <em>killed by Jael</em> once.
+    /// </summary>
+    [Fact]
+    public async Task AWordForEitherOfTwoRelationsRidesOnTheOneTheReadingNames()
+    {
+        var sisera = Person("sisera");
+        var jael = Person("jael");
+        Read(sisera, jael, DescriptorRelations.KilledBy, 7, 4, 21);
+        Stated(sisera, jael, "victim", 7, 4, 21);
+
+        var row = (await Page(sisera)).Should().ContainSingle().Which;
+
+        row.Type.Should().Be(DescriptorRelations.KilledBy);
+        row.Corroboration.Should().ContainSingle().Which.Type.Should().Be("victim");
+    }
+
+    /// <summary>
+    /// BibleData's <c>master</c> for Jesus and one of the Twelve is the tie a reading states as
+    /// teacher-of, so it rides on that row instead of standing beside it as a master's claim on a
+    /// servant.
+    /// </summary>
+    [Fact]
+    public async Task AMasterInTheGospelsRidesOnTheTeacherTheReadingNames()
+    {
+        var jesus = Person("jesus");
+        var simon = Person("simon");
+        Read(jesus, simon, DescriptorRelations.TeacherOf, 40, 10, 2);
+        Stated(jesus, simon, "master", 40, 10, 2);
+
+        var row = (await Page(jesus)).Should().ContainSingle().Which;
+
+        row.Type.Should().Be(DescriptorRelations.TeacherOf);
+        row.Corroboration.Should().ContainSingle().Which.Type.Should().Be("master");
+    }
+
+    /// <summary>
     /// One fact, four rows, one line on the page — and nothing thrown away.
     ///
     /// <para>

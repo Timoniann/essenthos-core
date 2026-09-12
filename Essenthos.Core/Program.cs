@@ -99,6 +99,7 @@ builder.Services.AddScoped<OwnRecordLoader>();
 builder.Services.AddScoped<SenseReadingLoader>();
 builder.Services.AddScoped<SiteSplitLoader>();
 builder.Services.AddScoped<SoleBearerLoader>();
+builder.Services.AddScoped<TermLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();

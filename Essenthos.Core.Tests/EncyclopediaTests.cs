@@ -56,10 +56,12 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _output.WriteLine($"  on Jesus               {_corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id)}");
         _output.WriteLine($"prose still holding a row identifier {Leaked().Count}");
 
-        _corpus.Names.Should().HaveCount(3_894);
-        _corpus.Names.Count(n => n.HebrewStrongNumber is not null).Should().Be(3_680);
+        // One name of the 3,895 is this corpus's own and not the label file's: the divine name
+        // pointed as Elohim, H3069.
+        _corpus.Names.Should().HaveCount(3_895);
+        _corpus.Names.Count(n => n.HebrewStrongNumber is not null).Should().Be(3_681);
         _corpus.Names.Count(n => n.GreekStrongNumber is not null).Should().Be(1_161);
-        strongNumbers.Should().Be(5_852);
+        strongNumbers.Should().Be(5_853);
         _corpus.PlaceNames.Should().HaveCount(141);
         _corpus.NamesOf("jesus").Should().HaveCount(73);
         _corpus.Relationships.Should().HaveCount(5_448);
@@ -351,6 +353,22 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
     public void AContestedTitleIsNotGivenToJesus() =>
         _corpus.NamesOf("jesus").Select(n => n.Label)
             .Should().NotContain(["Lord", "G-d", "Savior", "King of kings", "The Alpha and the Omega"]);
+
+    /// <summary>
+    /// The name is its letters. יהוה pointed with the vowels of Elohim is H3069, which the label
+    /// file never numbers, so without this row 583 words of the divine name named nobody — and it
+    /// is a name of the God of Israel only, never of the Father or of Jesus.
+    /// </summary>
+    [Fact]
+    public void TheDivineNamePointedAsElohimIsANameOfTheGodOfIsrael()
+    {
+        _corpus.NamesOf("YHVH_1")
+            .Should().ContainSingle(n => n.HebrewStrongNumber == BibleDataLoader.PointedAsElohim)
+            .Which.Kind.Should().Be("proper name");
+
+        _corpus.Names.Where(n => n.HebrewStrongNumber == BibleDataLoader.PointedAsElohim)
+            .Should().ContainSingle();
+    }
 
     [Fact]
     public void TheOldTestamentTitlesStayWithTheGodOfIsrael() =>

@@ -147,6 +147,7 @@ internal sealed class DatasetLoader(
             await ReadTheNamesNothingSettles(resources, stoppingToken);
             await TellTheNamesakePlacesApart(resources, stoppingToken);
             await ReachTheNamesNobodyElseCarries(stoppingToken);
+            await WriteTheWordsForGod(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
@@ -840,6 +841,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<SoleBearerLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The words the text uses of God and of gods, as entries of their own. After every pass that
+    /// writes a person's or a place's record, which are the records names are resolved among, and
+    /// before the references, so the page lists its verses on the boot that writes it.
+    /// </summary>
+    private async Task WriteTheWordsForGod(CancellationToken cancellationToken)
+    {
+        status.Starting("the words for God");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<TermLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

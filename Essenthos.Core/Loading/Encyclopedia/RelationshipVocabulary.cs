@@ -80,13 +80,55 @@ internal static class RelationshipVocabulary
             ["rabbi"] = DescriptorRelations.TeacherOf,
             ["ally"] = DescriptorRelations.AllyOf,
             ["raper"] = DescriptorRelations.RaperOf,
+            ["patron"] = DescriptorRelations.SupporterOf,
+            ["client"] = DescriptorRelations.SupportedBy,
+            ["Creator"] = DescriptorRelations.CreatorOf,
+            ["creation"] = DescriptorRelations.CreatedBy,
+            ["original inheritor"] = DescriptorRelations.HeirOf,
+            ["original heir"] = DescriptorRelations.InheritedBy,
+            ["exiled"] = DescriptorRelations.ExilerOf,
+            ["exiled by"] = DescriptorRelations.ExiledBy,
 
-            // Deliberately absent: "victim". The dataset files the dead and two raped women under
-            // that one word -- Dinah and Tamar beside Zimri and Jael's Sisera -- so no single
-            // relation is its meaning, and mapping it to killed-by would have a page read "Dinah,
-            // killed by Shechem". Which one each row is, is read from the verse (TSK-0489).
-            // "concubinator" is absent because its fact is already the dataset's concubine row read
-            // from the woman's side, and the vocabulary has no word for the man's.
+            // Not here: "victim", which is one of two relations (SaysOneOf), and "concubinator",
+            // which is a relation read from the other end (SaysFromTheOtherEnd).
+        };
+
+    /// <summary>
+    /// A witness's word that states a relation of the vocabulary read from the other end, where the
+    /// vocabulary has no word for this end.
+    ///
+    /// <c>abram concubinator hagar</c> is <em>Hagar, concubine of Abram</em> said from Abram's side,
+    /// and the vocabulary names a concubinage only from the woman's. Read as the pair reversed it is
+    /// the same fact the dataset's own <c>concubine</c> row states, which is what it is.
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, string> SaysFromTheOtherEnd =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["concubinator"] = DescriptorRelations.ConcubineOf,
+        };
+
+    /// <summary>
+    /// A witness's word that states one of several relations and does not say which.
+    ///
+    /// The dataset files the dead and two raped women under <c>victim</c> — Dinah and Tamar beside
+    /// Zimri and Jael's Sisera — so the word is either relation and neither alone: mapped to
+    /// killed-by, a page would read <em>Dinah, killed by Shechem</em>. It therefore settles nothing
+    /// and contradicts nothing; it only corroborates a reading that names one of the two, which the
+    /// verse decides.
+    ///
+    /// <para>
+    /// <c>master</c> is the other half of the same limit. It is a master's tie to a servant nine
+    /// times from Genesis to Jeremiah and Jesus's tie to the Twelve in the Gospels, where the word is
+    /// a disciple saying <em>Master</em> to his teacher, and the owner's review read those as
+    /// teacher-of. It stays in <see cref="Says"/> as master-of, which is what it settles as, and here
+    /// it also corroborates a reading that says teacher.
+    /// </para>
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, IReadOnlySet<string>> SaysOneOf =
+        new Dictionary<string, IReadOnlySet<string>>(StringComparer.Ordinal)
+        {
+            ["victim"] = Set(DescriptorRelations.KilledBy, DescriptorRelations.RapedBy),
+            ["master"] = Set(DescriptorRelations.MasterOf, DescriptorRelations.TeacherOf),
         };
 
     /// <summary>
@@ -146,6 +188,14 @@ internal static class RelationshipVocabulary
             [DescriptorRelations.AllyOf] = Set(DescriptorRelations.AllyOf),
             [DescriptorRelations.RaperOf] = Set(DescriptorRelations.RapedBy),
             [DescriptorRelations.RapedBy] = Set(DescriptorRelations.RaperOf),
+            [DescriptorRelations.SupporterOf] = Set(DescriptorRelations.SupportedBy),
+            [DescriptorRelations.SupportedBy] = Set(DescriptorRelations.SupporterOf),
+            [DescriptorRelations.CreatorOf] = Set(DescriptorRelations.CreatedBy),
+            [DescriptorRelations.CreatedBy] = Set(DescriptorRelations.CreatorOf),
+            [DescriptorRelations.HeirOf] = Set(DescriptorRelations.InheritedBy),
+            [DescriptorRelations.InheritedBy] = Set(DescriptorRelations.HeirOf),
+            [DescriptorRelations.ExilerOf] = Set(DescriptorRelations.ExiledBy),
+            [DescriptorRelations.ExiledBy] = Set(DescriptorRelations.ExilerOf),
         };
 
     /// <summary>

@@ -218,15 +218,33 @@ public sealed class OwnRelationshipTests : IDisposable
     [Fact]
     public async Task ARelationTheVocabularyCannotExpressSettlesNothing()
     {
-        // The vocabulary still has no word for the man's side of a concubinage, so the dataset's
-        // "concubinator" can neither corroborate the marriage clause nor contradict it. This test
-        // used "cousin" until 2026-09-10, when cousin-of was added and the example stopped being one.
+        // "victim" is killed-by or raped-by and does not say which, so it can neither settle a pair
+        // nor contradict a clause about it. This test used "cousin" until cousin-of was added, and
+        // "concubinator" until it was read as a concubine row from the other end.
+        var sisera = Person("sisera");
+        var jael = Person("jael");
+        Stated(sisera, jael, "victim");
+        Clause(sisera, jael, DescriptorRelations.KilledBy, 0.8);
+
+        (await Load()).Written.Should().Be(1);
+    }
+
+    /// <summary>
+    /// A witness's word for the other end of a fact is that fact. BibleData's <em>Abram concubinator
+    /// Hagar</em> says what a reading of <em>Hagar, wife of Abram</em> answers differently, so the
+    /// reading gives way as it would to the dataset's own <c>concubine</c> row.
+    /// </summary>
+    [Fact]
+    public async Task AWordForTheOtherEndSettlesThePairReadTheOtherWay()
+    {
         var abram = Person("abram");
         var hagar = Person("hagar");
         Stated(abram, hagar, "concubinator");
-        Clause(abram, hagar, DescriptorRelations.HusbandOf, 0.8);
+        Clause(hagar, abram, DescriptorRelations.WifeOf, 0.8);
 
-        (await Load()).Written.Should().Be(1);
+        var outcome = await Load();
+        outcome.Written.Should().Be(0);
+        outcome.Withheld.Should().Be(1);
     }
 
     /// <summary>

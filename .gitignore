@@ -202,3 +202,7 @@ scripts/__pycache__/
 # A relationship verification run: the facts asked, the verdicts, and the second reading of the
 # positives. What survives both is published under Resources/Essenthos/descriptors/ instead.
 .relationships/
+
+# A reference reading run: the verses BibleData lists for an entity that do not print its name, the
+# prompt payloads and the verdicts. Reproducible from scripts/references.py.
+.references/

@@ -181,6 +181,40 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
+    /// A clause a person decided against the verse is that person's judgement and not a reading:
+    /// stored as manual, with no confidence, credited to whoever decided it. The credit still begins
+    /// the way this loader's rows begin, so the guards that find its rows find this one too.
+    /// </summary>
+    [Fact]
+    public async Task AClauseAPersonDecidedIsStoredAsTheirJudgement()
+    {
+        var outcome = await Load("decided");
+
+        outcome.Clauses.Should().Be(1, "a decided clause needs no confidence to be kept");
+
+        var clause = await _db.EntityDescriptors.SingleAsync(d => d.Entity!.Slug == "hobab-1");
+        clause.Method.Should().Be(LinkMethod.Manual);
+        clause.Confidence.Should().BeNull();
+        clause.Source.Should().Be(EntityDescriptorLoader.SourcePrefix + " the project owner, decided 2026-09-11");
+    }
+
+    /// <summary>
+    /// The owner can accept a fact while saying the verse does not settle it. That is still their
+    /// judgement, so it stays manual, but the doubt is kept as the confidence they gave.
+    /// </summary>
+    [Fact]
+    public async Task AClauseAPersonAcceptedAsUnsureKeepsTheirDoubt()
+    {
+        var outcome = await Load("decided-unsure");
+
+        outcome.Clauses.Should().Be(1);
+
+        var clause = await _db.EntityDescriptors.SingleAsync(d => d.Entity!.Slug == "hobab-1");
+        clause.Method.Should().Be(LinkMethod.Manual);
+        clause.Confidence.Should().Be(0.5);
+    }
+
+    /// <summary>
     /// The other loader writes this table too, and a name has one row per language and case. Until
     /// a re-ask existed the whole entity was skipped and the two could not meet; now they can, and
     /// the form already standing is the one that stays — this pass produced its forms in passing

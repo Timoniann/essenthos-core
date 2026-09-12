@@ -243,10 +243,22 @@ internal sealed class EntityDescriptorLoader(
                     continue;
                 }
 
-                if (claim.Confidence is not { } confidence || confidence is < 0 or > 1)
+                // A person's decision is not a model's reading: it is stored as manual, credited to
+                // whoever decided it, and outranks a dataset's row. It carries a confidence only
+                // where the person said the verse does not settle it.
+                var decided = !string.IsNullOrWhiteSpace(claim.DecidedBy);
+                double? confidence = claim.Confidence;
+                if (!decided && (confidence is null or < 0 or > 1))
                 {
                     withoutConfidence++;
                     continue;
+                }
+
+                var method = decided ? LinkMethod.Manual : LinkMethod.ModelReading;
+                var credit = decided ? $"{SourcePrefix} {claim.DecidedBy}" : source;
+                if (decided && confidence is < 0 or > 1)
+                {
+                    confidence = null;
                 }
 
                 // A companionship the cited verse does not mention. This one relation is read out
@@ -276,18 +288,18 @@ internal sealed class EntityDescriptorLoader(
                     CanonicalBook = verse.Book,
                     CanonicalChapter = verse.Chapter,
                     CanonicalVerse = verse.Verse,
-                    Method = LinkMethod.ModelReading,
+                    Method = method,
                     Confidence = confidence,
-                    Source = source,
+                    Source = credit,
                     Run = record.File,
                     Note = claim.Reason,
                     Claims =
                     [
                         new EntityDescriptorClaim
                         {
-                            Method = LinkMethod.ModelReading,
+                            Method = method,
                             Confidence = confidence,
-                            Source = source,
+                            Source = credit,
                             Note = claim.Reason,
                         },
                     ],
