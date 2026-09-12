@@ -86,6 +86,7 @@ builder.Services.AddScoped<InterlinearLinkLoader>();
 builder.Services.AddScoped<BereanLinkLoader>();
 builder.Services.AddScoped<ClearBibleLinkLoader>();
 builder.Services.AddScoped<TaggedTextLinkLoader>();
+builder.Services.AddScoped<SynodalStrongLinkLoader>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<UssherAnnalsLoader>();
@@ -250,6 +251,23 @@ if (args is ["strong", var strongFrom, var strongTo, ..])
     // nothing backs, which is an integrity check the corpus keeps at zero.
     app.Logger.LogInformation(
         "{Outcome}", await strongScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    return 0;
+}
+
+// The Synodal by Bob Jones University's Strong numbering, read from the edition and never stored:
+// the links are written and the numbers are gone when the command returns. With no witness named it
+// runs all five the numbering reaches.
+if (args is ["synodal-strong", ..])
+{
+    using var synodalScope = app.Services.CreateScope();
+    var editionPath = ResourcePaths.File(
+        ResourcePaths.Read(app.Configuration, app.Environment.ContentRootPath),
+        SynodalStrongLinkLoader.EditionFile);
+    string[] witnesses = args.Length > 1 ? [.. args[1..].Select(Identifier)] : SynodalStrongLinkLoader.Witnesses;
+
+    await synodalScope.ServiceProvider.GetRequiredService<SynodalStrongLinkLoader>().Load(editionPath, witnesses);
+    app.Logger.LogInformation(
+        "{Outcome}", await synodalScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
     return 0;
 }
 

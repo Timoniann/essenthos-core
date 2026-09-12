@@ -114,6 +114,11 @@
     "files": 58,
     "sha256": "8632babb28b182af6ddf23b0b106b3ebc4979a541530d53c305bbd0c73ee542d"
   },
+  "SynodalStrong": {
+    "bytes": 25106788,
+    "files": 2,
+    "sha256": "e8efed60ac029763ea0152cff79556d2954afcb304c57659a7cd78f1117fde1b"
+  },
   "TextusReceptus": {
     "bytes": 4011481,
     "files": 55,

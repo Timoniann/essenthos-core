@@ -1,5 +1,6 @@
 ﻿using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Links;
 
 namespace Essenthos.Core.Endpoints;
 
@@ -288,6 +289,27 @@ public static class Datasets
             + "supplies: which tagged word pairs with which Greek word is matched within the verse "
             + "by this project, at a confidence, and no part of that pairing is stated by anyone.",
             "Zefania KJV+", Links: true),
+
+        // Used as an input to the mapping and nothing more, and the declaration says so: the only
+        // terms anyone states for this numbering permit use of the work unmodified, for a purpose
+        // this project does not claim. The owner decided on 2026-09-13 to take the correspondences
+        // it yields and nothing of the numbering itself; the notice in full, and that decision, are
+        // in Resources/SynodalStrong/LICENCE.md. The copy that was read credits no one for it.
+        new("bju-synodal-strong", "Strong numbering of the Russian Synodal",
+            "Bob Jones University, 1996; the copy read is swmail/RST, prepared by Wjatscheslaw Stoljarski",
+            "Non-profit use only, of the work unmodified — Bob Jones University's 1996 notice",
+            "http://www.clavmon.cz/ultranet/bw/bwpopisVerzi.htm",
+            "https://github.com/swmail/RST",
+            "Which word of the Synodal renders which Hebrew or Greek word, matched within the verse on "
+            + "the Pierce-Strong numbers Bob Jones University keyed to every word and phrase of the "
+            + "Synodal. The numbering is read for the length of one run and never stored or served: "
+            + "the corpus holds only the links drawn from it, each carrying a confidence, because a "
+            + "number is a lemma and which occurrence a word renders is this project's inference.",
+            SynodalStrongLinkLoader.Credit, Links: true,
+            Obliges: "NonCommercial: the notice forbids any use for profit, so these links, and anything "
+                + "published from them, may not be used commercially. The notice also permits use only "
+                + "of the work unmodified and for propagating the gospel; the corpus holds neither the "
+                + "tagged text nor its numbers, only correspondences derived from them."),
 
         new("glaux", "GLAUx", "Alek Keersmaekers and the GLAUx contributors", "CC BY-SA 3.0",
             "https://creativecommons.org/licenses/by-sa/3.0/",

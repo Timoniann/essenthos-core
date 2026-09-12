@@ -32,6 +32,13 @@ internal static class TestResources
 
     public static string Tvtms => Path("Versification", "TVTMS.txt");
 
+    /// <summary>
+    /// The Strong-tagged Synodal, which the mapping reads and the corpus never loads. A path whether
+    /// or not the file is there, because the tests over it check for it rather than failing.
+    /// </summary>
+    public static string SynodalStrong =>
+        System.IO.Path.Combine([ResolvedPath.Value, .. Essenthos.Core.Loading.Links.SynodalStrongLinkLoader.EditionFile]);
+
     /// <summary>Brenton's Septuagint, one USFM file per book.</summary>
     public static string SeptuagintFolder => System.IO.Path.Combine(ResolvedPath.Value, "Septuagint");
 
