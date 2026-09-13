@@ -407,8 +407,7 @@ internal sealed class SiteSplitLoader(
         await Annotating.Run(connection, transaction, Empty, cancellationToken);
         await Annotating.Seed(connection, rows, cancellationToken);
         await Annotating.Run(connection, transaction, Annotating.MarkCorroboration, cancellationToken);
-        await Annotating.Run(connection, transaction, Annotating.Carry, cancellationToken,
-            ("witness", witness));
+        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
         await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
             ("method", spelled), ("source", said));
         await Annotating.Run(connection, transaction, Annotating.Claim, cancellationToken,

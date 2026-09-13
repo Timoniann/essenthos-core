@@ -69,6 +69,7 @@ public sealed class PeopleLoadTests : IDisposable
         Mark(_rulings.Count + 5, Judah, "pers,gens,topo");
         Mark(_rulings.Count + 6, Judah, "pers,gens,topo");
         Mark(_rulings.Count + 7, Judah, "pers,gens,topo");
+        Mark(_rulings.Count + 8, Amorite, null);
 
         _db.StrongEntries.AddRange(
             new StrongEntry
@@ -131,8 +132,13 @@ public sealed class PeopleLoadTests : IDisposable
     /// <summary>The name that does duty for the man, the tribe, the kingdom and the land at once.</summary>
     private const string Judah = "H3063";
 
-    /// <summary>Words beyond the ruled ones: two gentilics, an unheld one, and four of Judah.</summary>
-    private const int Extra = 7;
+    /// <summary>A people the dictionary describes and derives from no word it numbers.</summary>
+    private const string Amorite = "H567";
+
+    /// <summary>
+    /// Words beyond the ruled ones: two gentilics, an unheld one, four of Judah and one Amorite.
+    /// </summary>
+    private const int Extra = 8;
 
     private void Mark(int verse, string number, string? nameType)
     {
@@ -151,6 +157,12 @@ public sealed class PeopleLoadTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM strong_gentilic");
         _db.Database.ExecuteSqlRaw("DELETE FROM strong_entry");
         _db.Dispose();
+    }
+
+    private void Describe(string number, string definition)
+    {
+        _db.StrongEntries.Add(new StrongEntry { StrongNumber = number, Definition = definition });
+        _db.SaveChanges();
     }
 
     private Task<PeopleOutcome> Load() =>
@@ -439,5 +451,60 @@ public sealed class PeopleLoadTests : IDisposable
         first.AlreadyLoaded.Should().BeFalse();
         second.AlreadyLoaded.Should().BeTrue();
         second.Annotated.Should().Be(0);
+    }
+
+    /// <summary>
+    /// A people the dictionary describes without deriving it from a word it numbers. The record is
+    /// ours and says so in a claim; what the people is stays Strong's sentence, read out of the
+    /// lexicon rather than copied into the file; and every word carrying the gentilic names them.
+    /// </summary>
+    [Fact]
+    public async Task ANationTheDictionaryDescribesIsWrittenWithItsSentenceAndNamesItsWords()
+    {
+        Describe(Amorite, "an Emorite, one of the Canaanitish tribes");
+        var nation = _file.Nations!.Single(n => n.Number == Amorite);
+
+        await Load();
+
+        var amorites = await _db.Entities
+            .Include(e => e.Claims)
+            .Include(e => e.Names)
+            .SingleAsync(e => e.Slug == "amorites");
+
+        amorites.Kind.Should().Be(EntityKind.People);
+        amorites.Name.Should().Be(nation.Name);
+        amorites.Distinguisher.Should().Contain("one of the Canaanitish tribes");
+        amorites.Claims.Should().ContainSingle(c => c.Method == LinkMethod.StatedBySource)
+            .Which.Note.Should().Contain("an Emorite, one of the Canaanitish tribes");
+        amorites.Claims.Should().ContainSingle(c => c.Method == LinkMethod.Manual)
+            .Which.Note.Should().Be(nation.Why);
+        amorites.Names.Should().ContainSingle(n => n.HebrewStrongNumber == Amorite);
+
+        var named = await _db.WordEntities.SingleAsync(a => a.EntityId == amorites.Id);
+        named.WordId.Should().Be(_db.WordAt(_hebrew, 1, _rulings.Count + 8, 1).Id);
+        named.Method.Should().Be(LinkMethod.Lexical);
+    }
+
+    /// <summary>
+    /// The file grows after the corpus is loaded. A people it gains is written on the next boot,
+    /// with its words and its verses, and nothing an earlier boot wrote is written a second time.
+    /// </summary>
+    [Fact]
+    public async Task APeopleTheCorpusDoesNotYetHoldIsWrittenOnTheNextBoot()
+    {
+        await Load();
+        var tribe = await _db.WordEntities.CountAsync(a => a.Entity!.Slug == "benjaminites");
+        var verses = await _db.EntityVerses.CountAsync();
+
+        Describe(Amorite, "an Emorite, one of the Canaanitish tribes");
+        var again = await Load();
+
+        again.AlreadyLoaded.Should().BeFalse();
+        again.FromStrong.Should().Be(1);
+        again.Tribes.Should().Be(0);
+        (await _db.Entities.CountAsync(e => e.Slug == "amorites")).Should().Be(1);
+        (await _db.WordEntities.CountAsync(a => a.Entity!.Slug == "amorites")).Should().Be(1);
+        (await _db.WordEntities.CountAsync(a => a.Entity!.Slug == "benjaminites")).Should().Be(tribe);
+        (await _db.EntityVerses.CountAsync()).Should().Be(verses + 1);
     }
 }

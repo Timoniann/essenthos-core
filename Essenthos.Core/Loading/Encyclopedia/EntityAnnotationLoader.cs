@@ -240,29 +240,6 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </summary>
     private const double DerivedName = 0.8;
 
-    /// <summary>
-    /// The confidence below which a link is not enough on its own to put a name on a word.
-    ///
-    /// It is not a floor, and nothing is dropped for being faint alone: a faint link is often the
-    /// only account the corpus has of a word, and a great many faint ones are true. Shebnah at
-    /// 0.69 and Esau at 0.66 sit here, and so do the 250 places the Ukrainian <em>Бог</em> stands
-    /// for <em>адонай</em>, none of which reaches 0.59. What this marks is a link weak enough to
-    /// lose to a better one, and losing is the only thing that happens to it.
-    /// </summary>
-    private const double Faint = 0.70;
-
-    /// <summary>
-    /// The confidence at which a link is taken to be the rendering, so that a faint link to the
-    /// same Hebrew word in the same verse has nothing left to explain.
-    ///
-    /// The gap between this and <see cref="Faint"/> is the point. Two words of one text can both
-    /// render one Hebrew name — <em>of Abinoam</em> is two words in the King James — and a rule
-    /// that dropped the weaker of any pair would take the second half of every such rendering. A
-    /// word that is part of the rendering scores near the one beside it; a word the aligner had
-    /// nowhere else to put does not.
-    /// </summary>
-    private const double Firm = 0.90;
-
     private const string Resolution =
         "BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name";
 
@@ -375,7 +352,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// occurrences of Ἰουδαῖος, <em>Jewish</em>, and thirty other adjectives and adverbs formed
     /// from a name. Being Roman is not being Rome.
     /// </summary>
-    private const string GreekNoun =
+    internal const string GreekNoun =
         "(w.morphology->>'pos' = 'noun' OR w.morphology->>'robinson' LIKE 'N-%')";
 
     /// <summary>
@@ -451,7 +428,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// the same answer written twice.
     /// </para>
     /// </summary>
-    private static readonly string Distinguished =
+    internal static readonly string Distinguished =
         $"""
          (SELECT count(DISTINCT {EntityCandidates.Resolves}) FROM entity_name n
           WHERE n.hebrew_strong_number = w.strong_number
@@ -645,7 +622,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                    w.text_id,
                    w.verse_id,
                    seed.entity_id,
-                   coalesce(l.confidence, 1.0) AS carried,
+                   crossed.worth AS carried,
                    seed.stated,
                    seed.distinguished,
                    seed.resolution,
@@ -658,6 +635,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             JOIN text witness ON witness.id = origin.text_id
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
+            CROSS JOIN LATERAL (SELECT {Annotating.LinkWorth} AS worth) crossed
             CROSS JOIN LATERAL ({Annotating.Head}) other
             JOIN word w ON w.id = other.word_id
         ),
@@ -838,7 +816,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// corpus would come up with no name resolutions in it and nothing saying so. Its own rows are
     /// the only question it can ask, and it is the question <c>SenseReadingLoader</c> already asks.
     /// </summary>
-    private static readonly string[] Written =
+    internal static readonly string[] Written =
         [Resolution, GreekResolution, GreekDistinction, Derivation];
 
     public async Task<AnnotationOutcome> Load(CancellationToken cancellationToken = default)
@@ -897,7 +875,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             ("distinction", GreekDistinction), ("resolution", GreekNameResolution));
 
         await Run(connection, transaction, Carry, cancellationToken,
-            ("faint", Faint), ("firm", Firm));
+            ("faint", Annotating.Faint), ("firm", Annotating.Firm));
 
         var method = EnumSpelling.Of(LinkMethod.StrongNumber);
         var form = EnumSpelling.Of(ByTheForm);

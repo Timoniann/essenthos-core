@@ -146,6 +146,7 @@ internal sealed class DatasetLoader(
             await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
             await ReadTheNamesNothingSettles(resources, stoppingToken);
             await TellTheNamesakePlacesApart(resources, stoppingToken);
+            await TellTheGreekNamesakesApart(stoppingToken);
             await ReachTheNamesNobodyElseCarries(stoppingToken);
             await WriteTheWordsForGod(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
@@ -827,6 +828,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<SiteSplitLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// Which of the people and places that share a Greek name each word means, where the verse
+    /// leaves one. After every pass that names a Greek word, because it answers only where none of
+    /// them did, and before the references, which read the words it names.
+    /// </summary>
+    private async Task TellTheGreekNamesakesApart(CancellationToken cancellationToken)
+    {
+        status.Starting("the Greek names several people share");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<GreekNamesakeLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>

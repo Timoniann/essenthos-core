@@ -93,8 +93,9 @@ internal sealed record PeopleOutcome(
 /// </para>
 ///
 /// <para>
-/// Idempotent on the kind existing at all, which is the one thing that cannot be true before this
-/// has run.
+/// Idempotent per record. A record the file names and the corpus lacks is written, with its words,
+/// its rulings and its verses, on whichever boot first finds it missing; everything already written
+/// is left as it is.
 /// </para>
 /// </summary>
 internal sealed class PeopleLoader(
@@ -171,18 +172,21 @@ internal sealed class PeopleLoader(
         string resources,
         CancellationToken cancellationToken = default)
     {
-        if (await db.Entities.AnyAsync(e => e.Kind == EntityKind.People, cancellationToken))
+        var started = Stopwatch.StartNew();
+        var file = PeopleFiles.Read();
+        var peoples = await Write(file, cancellationToken);
+
+        if (peoples.Count == 0)
         {
             logger.LogInformation("The peoples are already there; nothing to do");
             return new PeopleOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
-        var started = Stopwatch.StartNew();
-        var file = PeopleFiles.Read();
-        var peoples = await Write(file, cancellationToken);
+        var written = peoples.Values.Select(p => p.Id).ToArray();
+        var tribes = file.Tribes.Count(t => peoples.ContainsKey(t.Slug));
 
         var gentilics = await JoinTheGentilics(cancellationToken);
-        var annotated = await AnnotateTheGentilics(cancellationToken);
+        var annotated = await AnnotateTheGentilics(written, cancellationToken);
 
         var ruled = await Rulings(file, peoples, cancellationToken);
         annotated += ruled.Words;
@@ -190,12 +194,12 @@ internal sealed class PeopleLoader(
         var read = await Readings(file, resources, peoples, cancellationToken);
         annotated += read.Words;
 
-        var referenced = await Reference(cancellationToken);
+        var referenced = await Reference(written, cancellationToken);
 
         var outcome = new PeopleOutcome(
             false,
-            peoples.Count - file.Tribes.Count,
-            file.Tribes.Count,
+            peoples.Count - tribes,
+            tribes,
             peoples.Values.Count(p => p.OriginEntityId is not null),
             gentilics,
             ruled.Occurrences,
@@ -210,22 +214,32 @@ internal sealed class PeopleLoader(
     }
 
     /// <summary>
-    /// The records themselves: the tribes first, so that a tribe claims its own gentilic entry
-    /// rather than a second record being made from the same word.
+    /// The records not yet written: the tribes first, so that a tribe claims its own gentilic entry
+    /// rather than a second record being made from the same word, then the gentilics, then the
+    /// nations the dictionary describes without deriving.
+    ///
+    /// <para>
+    /// Asked per record, because the file grows and the corpus it grows on is already loaded: a pass
+    /// that asked only whether any people existed would never write a record added to the file after
+    /// the first boot. On a cold corpus every record is unwritten and this is the whole layer.
+    /// </para>
     /// </summary>
     private async Task<Dictionary<string, Entity>> Write(
         PeopleFile file,
         CancellationToken cancellationToken)
     {
-        var origins = await db.Entities
+        var slugs = await db.Entities
+            .Select(e => new { e.Slug, e.Id, e.Kind })
+            .ToListAsync(cancellationToken);
+        var origins = slugs
             .Where(e => e.Kind != EntityKind.People)
-            .Select(e => new { e.Slug, e.Id })
-            .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
+            .ToDictionary(e => e.Slug, e => e.Id, StringComparer.Ordinal);
+        var taken = slugs.Select(e => e.Slug).ToHashSet(StringComparer.Ordinal);
 
         var peoples = new Dictionary<string, Entity>(StringComparer.Ordinal);
         var claimed = new Dictionary<string, Entity>(StringComparer.Ordinal);
 
-        foreach (var tribe in file.Tribes)
+        foreach (var tribe in file.Tribes.Where(t => !taken.Contains(t.Slug)))
         {
             int? origin = origins.TryGetValue(tribe.Origin, out var held) ? held : null;
             if (origin is null)
@@ -270,13 +284,31 @@ internal sealed class PeopleLoader(
         }
 
         var namings = file.Namings.ToDictionary(n => n.Number, StringComparer.Ordinal);
+        var unjoined = await db.StrongGentilics
+            .Where(g => g.PeopleEntityId == null)
+            .OrderBy(g => g.StrongNumber)
+            .ToListAsync(cancellationToken);
+
+        var named = await db.EntityNames
+            .Where(n => n.Kind == GentilicName && n.Entity!.Kind == EntityKind.People && n.HebrewStrongNumber != null)
+            .Select(n => n.HebrewStrongNumber!)
+            .ToListAsync(cancellationToken);
+        var nations = (file.Nations ?? [])
+            .Where(n => !named.Contains(n.Number, StringComparer.Ordinal) && !claimed.ContainsKey(n.Number))
+            .ToList();
+
+        if (peoples.Count == 0 && unjoined.Count == 0 && nations.Count == 0)
+        {
+            return peoples;
+        }
+
+        var wanted = unjoined.Select(g => g.StrongNumber).Concat(nations.Select(n => n.Number)).ToList();
         var entries = await db.StrongEntries
+            .Where(e => wanted.Contains(e.StrongNumber))
             .Select(e => new { e.StrongNumber, e.Definition, e.KjvDefinition })
             .ToDictionaryAsync(e => e.StrongNumber, StringComparer.Ordinal, cancellationToken);
 
-        foreach (var gentilic in await db.StrongGentilics
-                     .OrderBy(g => g.StrongNumber)
-                     .ToListAsync(cancellationToken))
+        foreach (var gentilic in unjoined)
         {
             if (claimed.TryGetValue(gentilic.StrongNumber, out var already))
             {
@@ -304,7 +336,7 @@ internal sealed class PeopleLoader(
                 PeopleFiles.Slug(
                     name,
                     gentilic.StrongNumber,
-                    slug => peoples.ContainsKey(slug) || origins.ContainsKey(slug)),
+                    slug => peoples.ContainsKey(slug) || taken.Contains(slug)),
                 name,
                 Distinguisher(gentilic),
                 correction is null ? null : $"Named here as {name}. {correction.Why}",
@@ -329,6 +361,54 @@ internal sealed class PeopleLoader(
 
             peoples[entity.Slug] = entity;
             gentilic.People = entity;
+        }
+
+        foreach (var nation in nations)
+        {
+            if (entries.GetValueOrDefault(nation.Number)?.Definition is not { Length: > 0 } definition)
+            {
+                logger.LogWarning(
+                    "The people \"{Name}\" rests on Strong's entry {Number}, which the lexicon does not "
+                    + "hold or holds without a definition, so the record was not written. Load the "
+                    + "lexicon first, or correct the number in Peoples.json",
+                    nation.Name,
+                    nation.Number);
+                continue;
+            }
+
+            int? origin = nation.Origin is { } eponym && origins.TryGetValue(eponym, out var held) ? held : null;
+            var entity = Record(
+                PeopleFiles.Slug(nation.Name, nation.Number, slug => peoples.ContainsKey(slug) || taken.Contains(slug)),
+                nation.Name,
+                $"{definition}, as Strong's Dictionary describes them",
+                null,
+                origin,
+                file.NationSource ?? file.Source);
+
+            entity.Claims.Add(new EntityClaim
+            {
+                Method = LinkMethod.StatedBySource,
+                Confidence = null,
+                Source = StrongGentilicLoader.Source,
+                Note = $"{nation.Number}: \"{definition}\"",
+            });
+
+            entity.Claims.Add(new EntityClaim
+            {
+                Method = LinkMethod.Manual,
+                Confidence = null,
+                Source = file.NationSource ?? file.Source,
+                Note = nation.Why,
+            });
+
+            entity.Names.Add(new EntityName
+            {
+                Label = nation.Name,
+                HebrewStrongNumber = nation.Number,
+                Kind = GentilicName,
+            });
+
+            peoples[entity.Slug] = entity;
         }
 
         await db.SaveChangesAsync(cancellationToken);
@@ -401,13 +481,14 @@ internal sealed class PeopleLoader(
         FROM word w
         JOIN text t ON t.id = w.text_id AND t.slug = @witness
         JOIN entity_name n ON n.hebrew_strong_number = w.strong_number AND n.kind = @label
-        JOIN entity e ON e.id = n.entity_id AND e.kind = 'people'
+        JOIN entity e ON e.id = n.entity_id AND e.kind = 'people' AND e.id = ANY(@peoples)
         LEFT JOIN strong_gentilic g ON g.strong_number = w.strong_number
         WHERE coalesce(w.morphology->>'nameType', '') NOT IN ('pers', 'topo')
         ORDER BY w.id, n.entity_id
         """;
 
-    private async Task<int> AnnotateTheGentilics(CancellationToken cancellationToken)
+    /// <summary>The words of the peoples this run wrote, which on a later boot are the only new ones.</summary>
+    private async Task<int> AnnotateTheGentilics(int[] peoples, CancellationToken cancellationToken)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -416,9 +497,8 @@ internal sealed class PeopleLoader(
         await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
         await Annotating.Run(connection, transaction, TheGentilicWords, cancellationToken,
             ("confidence", GentilicResolution), ("witness", EntityCandidates.Witness),
-            ("label", GentilicName));
-        await Annotating.Run(connection, transaction, Annotating.Carry, cancellationToken,
-            ("witness", EntityCandidates.Witness));
+            ("label", GentilicName), ("peoples", peoples));
+        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
 
         var spelled = EnumSpelling.Of(ByTheForm);
         await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
@@ -437,10 +517,21 @@ internal sealed class PeopleLoader(
         CancellationToken cancellationToken)
     {
         var seed = new List<(long, int, double?, bool, string)>(file.Rulings.Count);
+        var before = await db.Entities
+            .Where(e => e.Kind == EntityKind.People)
+            .Select(e => e.Slug)
+            .ToListAsync(cancellationToken);
+
         foreach (var ruling in file.Rulings)
         {
             if (!peoples.TryGetValue(ruling.People, out var people))
             {
+                // A people an earlier boot wrote had its rulings applied on that boot.
+                if (before.Contains(ruling.People, StringComparer.Ordinal))
+                {
+                    continue;
+                }
+
                 logger.LogWarning(
                     "The ruling on {Reference} names the people \"{Slug}\", which was not written, so "
                     + "the word was left unannotated",
@@ -465,6 +556,15 @@ internal sealed class PeopleLoader(
         Dictionary<string, Entity> peoples,
         CancellationToken cancellationToken)
     {
+        var collectives = file.Tribes
+            .Where(t => peoples.ContainsKey(t.Slug))
+            .ToDictionary(t => t.CollectiveNumber, t => peoples[t.Slug].Id, StringComparer.Ordinal);
+
+        if (collectives.Count == 0)
+        {
+            return (0, 0, 0);
+        }
+
         var directory = configuration[SenseReadingFiles.ConfigurationKey] is { Length: > 0 } configured
             ? configured
             : Path.Combine(resources, SenseReadingFiles.DefaultFolder);
@@ -477,10 +577,6 @@ internal sealed class PeopleLoader(
                 directory);
             return (0, 0, 0);
         }
-
-        var collectives = file.Tribes
-            .Where(t => peoples.ContainsKey(t.Slug))
-            .ToDictionary(t => t.CollectiveNumber, t => peoples[t.Slug].Id, StringComparer.Ordinal);
 
         var (readings, _, _, _, _) = SenseReadingFiles.Read(directory);
         var seed = new List<(long, int, double?, bool, string)>();
@@ -534,7 +630,7 @@ internal sealed class PeopleLoader(
     /// than beside them so that nothing in this run can be corroborated by a list this run derived
     /// from it.
     /// </summary>
-    private async Task<int> Reference(CancellationToken cancellationToken)
+    private async Task<int> Reference(int[] peoples, CancellationToken cancellationToken)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -546,7 +642,7 @@ internal sealed class PeopleLoader(
             SELECT DISTINCT a.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
                    e.name, FALSE, @source
             FROM word_entity a
-            JOIN entity e ON e.id = a.entity_id AND e.kind = 'people'
+            JOIN entity e ON e.id = a.entity_id AND e.kind = 'people' AND e.id = ANY(@peoples)
             JOIN word w ON w.id = a.word_id
             JOIN text t ON t.id = w.text_id AND t.slug = @witness
             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
@@ -554,6 +650,7 @@ internal sealed class PeopleLoader(
             connection);
         command.Parameters.AddWithValue("source", FromOurOwnWords);
         command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
+        command.Parameters.AddWithValue("peoples", peoples);
         command.CommandTimeout = Annotating.Patient;
 
         return await command.ExecuteNonQueryAsync(cancellationToken);
@@ -571,8 +668,7 @@ internal sealed class PeopleLoader(
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
         await Annotating.Seed(connection, seed, cancellationToken);
-        await Annotating.Run(connection, transaction, Annotating.Carry, cancellationToken,
-            ("witness", EntityCandidates.Witness));
+        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
 
         var spelled = EnumSpelling.Of(method);
         await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,

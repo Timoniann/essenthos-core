@@ -248,8 +248,7 @@ internal sealed class SenseReadingLoader(
         await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
         await Annotating.Seed(connection, seed, cancellationToken);
         await Annotating.Run(connection, transaction, Annotating.MarkCorroboration, cancellationToken);
-        await Annotating.Run(connection, transaction, Annotating.Carry, cancellationToken,
-            ("witness", Witness));
+        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
 
         var spelled = EnumSpelling.Of(method);
         var source = Source(wanted);
@@ -297,10 +296,7 @@ internal sealed class SenseReadingLoader(
     /// referent somebody decided on and this with the one that was overturned.
     /// </summary>
     private static HashSet<long> Ruled() =>
-    [
-        .. SenseReadingFiles.Rulings().Rulings.Select(r => r.WordId),
-        .. SenseReadingFiles.ReviewRulings().Rulings.Select(r => r.WordId),
-    ];
+        [.. SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings).Select(r => r.WordId)];
 
     private static SenseReadingOutcome Nothing(bool alreadyLoaded) =>
         new(alreadyLoaded, !alreadyLoaded, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);

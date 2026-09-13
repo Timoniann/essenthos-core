@@ -293,10 +293,21 @@ internal static class EntityCandidates
     /// Hebrew Bible, and the ones the New Testament also names are reached by the Greek number the
     /// encyclopedia already records for them.
     /// </summary>
-    public static readonly string GreekNaming =
+    public static readonly string GreekNaming = GreekReachable(GreekStated);
+
+    /// <summary>
+    /// The same, counting only what somebody is called. A title the encyclopedia files under a
+    /// person — <em>Christ</em> under Jesus, <em>His Anointed</em> under David — says what he is,
+    /// and a verse list naming him in a verse does not make the title the word that names him
+    /// there. Takes <c>@witnesses</c>.
+    /// </summary>
+    public static readonly string GreekNamesakes =
+        GreekReachable(GreekStated + " AND coalesce(n.kind, '') NOT IN ('title', 'description')");
+
+    private static string GreekReachable(string stated) =>
         $"""
          WITH held AS ({GreekHeld}),
-         named AS ({GreekStated})
+         named AS ({stated})
          SELECT named.number, named.entity_id
          FROM named
          WHERE NOT EXISTS (SELECT 1 FROM entity_verse ev WHERE ev.entity_id = named.entity_id)

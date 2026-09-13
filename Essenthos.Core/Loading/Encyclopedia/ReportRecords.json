@@ -1,0 +1,176 @@
+{
+  "decidedBy": "Essenthos, 2026-09-13, on the project owner's reading report of Genesis 2-4 and 10, each occurrence decided from the Hebrew and not from how a translation prints it",
+  "policy": "An annotation says that a word is a name, and whose. Where the Hebrew is the common noun the word is not annotated however a translation prints it: הָאָדָם with the article is 'the man', and the King James printing Adam or the Synodal printing Адам does not make it the name. Where the Hebrew is the name and a lexeme-level marking or a missing reading left it unnamed or put it on the wrong record, the occurrence is ruled here, with the reason.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's reading report of 2026-09-13, each occurrence decided from the Hebrew",
+  "rulings": [
+    {
+      "wordId": 6467832,
+      "reference": "Genesis 2:20",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "The second אָדָם of the verse, וּלְאָדָם, is pointed without the article, where every mention from 2:19 to 2:23 is הָאָדָם, 'the man'. The Masoretic pointing reads the proper name here. Many modern translations emend to 'for the man', which is a reading against the text this corpus holds; the Synodal itself prints человека."
+    },
+    {
+      "wordId": 6468260,
+      "reference": "Genesis 3:17",
+      "strongNumber": "H121",
+      "existing": "adam",
+      "why": "וּלְאָדָם אָמַר is pointed without the article, against הָאָדָם in 3:8-12, and the lexicon numbers the word H121, the name. The pointing is disputed — 'to the man' supposes a lost article — but read as the Masoretes pointed it, God speaks to Adam, as the King James and the Synodal both print it."
+    },
+    {
+      "wordId": 6468340,
+      "reference": "Genesis 3:21",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "לְאָדָם וּלְאִשְׁתּוֹ is pointed without the article, beside הָאָדָם in 3:20 and 3:22. As in 2:20 and 3:17 the Masoretic pointing reads the name, and the King James prints it."
+    },
+    {
+      "wordId": 6471305,
+      "reference": "Genesis 10:1",
+      "strongNumber": "H2526",
+      "existing": "ham",
+      "why": "Shem, Ham and Japheth, the sons of Noah. BHSA marks the lexeme a person and a people at once, which settles neither; the verse names the man."
+    },
+    {
+      "wordId": 6471319,
+      "reference": "Genesis 10:2",
+      "strongNumber": "H4031",
+      "existing": "magog",
+      "why": "One of the sons of Japheth, between Gomer and Madai. BHSA marks the lexeme a place because Ezekiel's Magog is a land, and the marking belongs to the lexeme rather than to this verse."
+    },
+    {
+      "wordId": 6471321,
+      "reference": "Genesis 10:2",
+      "strongNumber": "H4074",
+      "existing": "madai",
+      "why": "One of the sons of Japheth. BHSA marks the lexeme a person, a people and a place at once, which settles none of them; the table names the son."
+    },
+    {
+      "wordId": 6471323,
+      "reference": "Genesis 10:2",
+      "strongNumber": "H3120",
+      "existing": "javan",
+      "why": "One of the sons of Japheth, and the father whose sons 10:4 lists. BHSA marks the lexeme a person, a people and a place at once."
+    },
+    {
+      "wordId": 6471325,
+      "reference": "Genesis 10:2",
+      "strongNumber": "H8422",
+      "existing": "tubal",
+      "why": "One of the sons of Japheth. BHSA marks the lexeme a people; in this table of sons it is the man the people is named after."
+    },
+    {
+      "wordId": 6471329,
+      "reference": "Genesis 10:2",
+      "strongNumber": "H8494",
+      "existing": "tiras",
+      "why": "The last of the sons of Japheth. BHSA marks the lexeme a person and a people at once."
+    },
+    {
+      "wordId": 6471333,
+      "reference": "Genesis 10:3",
+      "strongNumber": "H813",
+      "existing": "ashkenaz",
+      "why": "One of the sons of Gomer. BHSA marks the lexeme a people; in this table of sons it is the man."
+    },
+    {
+      "wordId": 6471335,
+      "reference": "Genesis 10:3",
+      "strongNumber": "H7384",
+      "existing": "riphath",
+      "why": "One of the sons of Gomer. BHSA marks the lexeme a people; in this table of sons it is the man."
+    },
+    {
+      "wordId": 6471337,
+      "reference": "Genesis 10:3",
+      "strongNumber": "H8425",
+      "existing": "togarmah",
+      "why": "One of the sons of Gomer. BHSA marks the lexeme a place because Ezekiel's Beth-togarmah is a country, and the marking belongs to the lexeme rather than to this verse."
+    },
+    {
+      "wordId": 6471340,
+      "reference": "Genesis 10:4",
+      "strongNumber": "H3120",
+      "existing": "javan",
+      "why": "The sons of Javan: the father of the four names that follow. BHSA marks the lexeme a person, a people and a place at once."
+    },
+    {
+      "wordId": 6471341,
+      "reference": "Genesis 10:4",
+      "strongNumber": "H473",
+      "existing": "elishah",
+      "why": "The first of the sons of Javan. BHSA marks the lexeme a place, so the resolution could only choose among places and reached the gazetteer's Elishah, the coastland of Ezekiel 27:7; in the table of sons it is the man Strong's Dictionary calls a son of Javan."
+    },
+    {
+      "wordId": 6471364,
+      "reference": "Genesis 10:6",
+      "strongNumber": "H2526",
+      "existing": "ham",
+      "why": "The sons of Ham: the father of Cush, Mizraim, Put and Canaan. BHSA marks the lexeme a person and a people at once."
+    },
+    {
+      "wordId": 6471369,
+      "reference": "Genesis 10:6",
+      "strongNumber": "H6316",
+      "existing": "put",
+      "why": "One of the sons of Ham. BHSA marks the lexeme a people; in this table of sons it is the man."
+    },
+    {
+      "wordId": 6471424,
+      "reference": "Genesis 10:10",
+      "strongNumber": "H894",
+      "existing": "babel",
+      "why": "The beginning of Nimrod's kingdom in the land of Shinar, the city of Genesis 11:9. The number is borne by Babylon and by two figurative Babylons as well, and no reading settled it."
+    },
+    {
+      "wordId": 6471566,
+      "reference": "Genesis 10:20",
+      "strongNumber": "H2526",
+      "existing": "ham",
+      "why": "These are the sons of Ham: the man whose line 10:6-20 closes. BHSA marks the lexeme a person and a people at once."
+    },
+    {
+      "wordId": 6471605,
+      "reference": "Genesis 10:23",
+      "strongNumber": "H2343",
+      "existing": "hul",
+      "why": "One of the sons of Aram. BHSA marks the lexeme a place, so the resolution could only reach the place of the same name; in the table of sons it is the man."
+    },
+    {
+      "wordId": 6471609,
+      "reference": "Genesis 10:23",
+      "strongNumber": "H4851",
+      "existing": "mash",
+      "why": "The last of the sons of Aram. BHSA marks the lexeme a person and a people at once."
+    },
+    {
+      "wordId": 6471647,
+      "reference": "Genesis 10:26",
+      "strongNumber": "H8026",
+      "existing": "sheleph",
+      "why": "One of the sons of Joktan. BHSA marks the lexeme a place, and the encyclopedia holds no place of the name, so the word was left unnamed; in the table of sons it is the man."
+    },
+    {
+      "wordId": 6471650,
+      "reference": "Genesis 10:26",
+      "strongNumber": "H2700",
+      "existing": "hazarmaveth",
+      "why": "One of the sons of Joktan. BHSA marks the lexeme a place, so the resolution could only reach the region of the same name; in the table of sons it is the man."
+    },
+    {
+      "wordId": 6471671,
+      "reference": "Genesis 10:28",
+      "strongNumber": "H7614",
+      "existing": "sheba-2",
+      "why": "One of the sons of Joktan. BHSA marks the lexeme a place, so the resolution could only reach the place of the same name; in the table of sons it is the man."
+    },
+    {
+      "wordId": 6471674,
+      "reference": "Genesis 10:29",
+      "strongNumber": "H211",
+      "existing": "ophir",
+      "why": "One of the sons of Joktan. BHSA marks the lexeme a place, so the resolution could only reach the place of the same name; in the table of sons it is the man."
+    }
+  ]
+}

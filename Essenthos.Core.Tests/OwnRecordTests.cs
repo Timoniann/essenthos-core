@@ -32,11 +32,7 @@ public sealed class OwnRecordTests : IDisposable
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
-        _rulings =
-        [
-            .. SenseReadingFiles.Rulings().Rulings,
-            .. SenseReadingFiles.ReviewRulings().Rulings,
-        ];
+        _rulings = [.. SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)];
 
         var verses = _rulings
             .Select((ruling, position) => (Chapter: 1, Verse: position + 1, Words: new[] { ruling.StrongNumber }))
@@ -309,5 +305,37 @@ public sealed class OwnRecordTests : IDisposable
         again.AlreadyLoaded.Should().BeTrue();
         again.Labelled.Should().Be(_rulings.Count(r => r.Create is not null));
         (await _db.EntityNames.CountAsync()).Should().Be(again.Labelled);
+    }
+
+    /// <summary>
+    /// A rulings file arriving on a corpus that already holds the others is applied on the next
+    /// boot, and only it: the files are decided at different times, so whether one is recorded says
+    /// nothing about another.
+    /// </summary>
+    [Fact]
+    public async Task ARulingsFileTheCorpusDoesNotYetHoldIsAppliedAloneOnTheNextBoot()
+    {
+        await Load();
+        var report = SenseReadingFiles.ReportRulings();
+        await _db.WordEntities.Where(a => a.Source == report.Source).ExecuteDeleteAsync();
+        var entities = await _db.Entities.CountAsync();
+
+        var again = await Load();
+
+        again.AlreadyLoaded.Should().BeFalse();
+        again.Created.Should().Be(0);
+        (await _db.Entities.CountAsync()).Should().Be(entities);
+        (await _db.WordEntities.Where(a => a.Source == report.Source).Select(a => a.WordId).ToListAsync())
+            .Should().BeEquivalentTo(report.Rulings.Select(r => r.WordId));
+    }
+
+    /// <summary>
+    /// A word is ruled on once. Two files ruling on one word would both annotate it, and a reader
+    /// would meet a word naming whichever of two decisions the loader happened to write first.
+    /// </summary>
+    [Fact]
+    public void NoWordIsRuledOnTwice()
+    {
+        _rulings.Select(r => r.WordId).Should().OnlyHaveUniqueItems();
     }
 }

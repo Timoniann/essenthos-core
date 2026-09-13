@@ -228,5 +228,71 @@
       "reference": "Numbers 13:9",
       "why": "The spy list by tribe: Palti represents the tribe of Benjamin, not the individual patriarch. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
     }
+  ],
+  "nationSource": "Essenthos, from the peoples Strong's Dictionary describes and derives from no word he numbers",
+  "nations": [
+    {
+      "name": "Amorites",
+      "number": "H567",
+      "why": "One of the peoples Canaan begat in Genesis 10:16, and the commonest of them: eighty-four words of the Hebrew Bible, every one of which BHSA analyses as the gentilic. Strong calls it one of the Canaanitish tribes and derives it from an unused name, so the gentilic parse refused it and no record was made."
+    },
+    {
+      "name": "Girgashites",
+      "number": "H1622",
+      "why": "One of the peoples Canaan begat in Genesis 10:16. Strong calls it one of the native tribes of Canaan and derives it from an unused name of uncertain derivation, which the gentilic parse refuses."
+    },
+    {
+      "name": "Hivites",
+      "number": "H2340",
+      "why": "One of the peoples Canaan begat in Genesis 10:17. Strong calls it one of the aboriginal tribes of Palestine and hedges its derivation, which the gentilic parse refuses."
+    },
+    {
+      "name": "Arkites",
+      "number": "H6208",
+      "why": "One of the peoples Canaan begat in Genesis 10:17. Strong derives it from an unused name, which the gentilic parse refuses."
+    },
+    {
+      "name": "Sinites",
+      "number": "H5513",
+      "why": "One of the peoples Canaan begat in Genesis 10:17. Strong calls it the descendants of one of the sons of Canaan and derives it from an otherwise unknown name, which the gentilic parse refuses."
+    },
+    {
+      "name": "Zemarites",
+      "number": "H6786",
+      "why": "One of the peoples Canaan begat in Genesis 10:18. Strong calls it a branch of the Canaanites and derives it from an unused place name, which the gentilic parse refuses."
+    },
+    {
+      "name": "Anamim",
+      "number": "H6047",
+      "origin": "anam",
+      "why": "One of the peoples Mizraim begat in Genesis 10:13, beside the Ludim this corpus already holds as a people. BHSA marks the name gens. Strong calls it a son of Mizraim and his descendants and derives it from no word he numbers."
+    },
+    {
+      "name": "Lehabim",
+      "number": "H3853",
+      "origin": "lehab",
+      "why": "One of the peoples Mizraim begat in Genesis 10:13. BHSA marks the name gens. Strong calls it a son of Mizraim and his descendants, and the plural of flames he derives it from is a word and not an origin."
+    },
+    {
+      "name": "Naphtuhim",
+      "number": "H5320",
+      "why": "One of the peoples Mizraim begat in Genesis 10:13. BHSA marks the name gens. Strong calls it an Egyptian tribe of foreign derivation."
+    },
+    {
+      "name": "Casluhim",
+      "number": "H3695",
+      "why": "One of the peoples Mizraim begat in Genesis 10:14, out of whom came the Philistines. BHSA marks the name gens. Strong calls it a people cognate to the Egyptians, probably of foreign derivation."
+    },
+    {
+      "name": "Kittim",
+      "number": "H3794",
+      "why": "One of the sons of Javan in Genesis 10:4, in the plural the text gives it, and the islanders of Numbers 24:24, Jeremiah 2:10 and Daniel 11:30. BHSA analyses every occurrence as the gentilic. Strong derives it from an unused name denoting Cyprus, which the gentilic parse refuses."
+    },
+    {
+      "name": "Dodanim",
+      "number": "H1721",
+      "origin": "dodanim",
+      "why": "One of the sons of Javan in Genesis 10:4, in the plural the text gives it, and Rodanim in 1 Chronicles 1:7. BHSA analyses both as the gentilic. Strong calls it the descendants of a son of Javan and a plural of uncertain derivation."
+    }
   ]
 }

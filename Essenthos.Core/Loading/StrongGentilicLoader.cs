@@ -55,7 +55,7 @@ internal sealed record NamedEntity(string Number, int EntityId, EntityKind Kind)
 /// </summary>
 internal sealed class StrongGentilicLoader(AppDbContext db, ILogger<StrongGentilicLoader> logger)
 {
-    private const string Source = "Strong's Hebrew dictionary by James Strong, 1890, public domain";
+    public const string Source = "Strong's Hebrew dictionary by James Strong, 1890, public domain";
 
     public async Task<GentilicOutcome> Load(CancellationToken cancellationToken = default)
     {

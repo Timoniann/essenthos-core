@@ -118,31 +118,35 @@ internal sealed class OwnRecordLoader(
         string resources,
         CancellationToken cancellationToken = default)
     {
-        var files = new[] { SenseReadingFiles.Rulings(), SenseReadingFiles.ReviewRulings() };
-        var sources = files.Select(f => f.Source).ToList();
-        var already = await db.EntityClaims.AnyAsync(c => sources.Contains(c.Source), cancellationToken);
+        var files = SenseReadingFiles.AllRulings();
 
         var started = Stopwatch.StartNew();
         int created = 0, unsettled = 0, named = 0, annotated = 0;
 
-        if (!already)
+        var pending = new List<OwnRecordRulings>(files.Count);
+        foreach (var file in files)
         {
-            foreach (var file in files)
+            if (!await Recorded(file, cancellationToken))
             {
-                var (wrote, open, settled) = await Apply(file, cancellationToken);
-                created += wrote;
-                unsettled += open;
-                named += settled.Count;
-                annotated += settled.Count == 0
-                    ? 0
-                    : await Annotate(
-                        settled, EnumSpelling.ToLinkMethod(file.Method), file.Source, cancellationToken);
+                pending.Add(file);
             }
+        }
+
+        foreach (var file in pending)
+        {
+            var (wrote, open, settled) = await Apply(file, cancellationToken);
+            created += wrote;
+            unsettled += open;
+            named += settled.Count;
+            annotated += settled.Count == 0
+                ? 0
+                : await Annotate(
+                    settled, EnumSpelling.ToLinkMethod(file.Method), file.Source, cancellationToken);
         }
 
         var labelled = await Label(files, cancellationToken);
 
-        if (already)
+        if (pending.Count == 0)
         {
             logger.LogInformation(
                 "The rulings are already recorded; {Labelled} of their records were given the name "
@@ -151,12 +155,23 @@ internal sealed class OwnRecordLoader(
             return new OwnRecordOutcome(true, 0, 0, 0, 0, 0, labelled, started.Elapsed);
         }
 
-        var withheld = await Bulk(resources, cancellationToken);
+        // The bulk pass belongs to the first boot and to no later one: a rulings file arriving on a
+        // corpus that already has the others is that file's work alone.
+        var withheld = pending.Count == files.Count ? await Bulk(resources, cancellationToken) : 0;
         var outcome = new OwnRecordOutcome(
             false, created, unsettled, named, annotated, withheld, labelled, started.Elapsed);
         logger.LogInformation("Wrote: {Outcome}", outcome);
         return outcome;
     }
+
+    /// <summary>
+    /// Whether one file's rulings are already in the corpus, asked per file because the files arrive
+    /// separately. A file that only names records the encyclopedia holds writes no claim on a record,
+    /// so its annotations are asked about as well.
+    /// </summary>
+    private async Task<bool> Recorded(OwnRecordRulings file, CancellationToken cancellationToken) =>
+        await db.EntityClaims.AnyAsync(c => c.Source == file.Source, cancellationToken)
+        || await db.WordEntities.AnyAsync(a => a.Source == file.Source, cancellationToken);
 
     /// <summary>
     /// The name row every record these rulings ask for should have had.
@@ -431,8 +446,7 @@ internal sealed class OwnRecordLoader(
         await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
         await Annotating.Seed(connection, seed, cancellationToken);
         await Annotating.Run(connection, transaction, Annotating.MarkCorroboration, cancellationToken);
-        await Annotating.Run(connection, transaction, Annotating.Carry, cancellationToken,
-            ("witness", SenseReadingLoader.Witness));
+        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
 
         var spelled = EnumSpelling.Of(method);
         await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,

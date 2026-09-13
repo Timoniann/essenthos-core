@@ -167,6 +167,8 @@ internal static class SenseReadingFiles
 
     private const string ReviewResource = "Essenthos.Core.Loading.Encyclopedia.ReviewRecords.json";
 
+    private const string ReportResource = "Essenthos.Core.Loading.Encyclopedia.ReportRecords.json";
+
     private static readonly JsonSerializerOptions Shape = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -279,6 +281,16 @@ internal static class SenseReadingFiles
     /// rulings, because it is the same kind of thing: a decision about one word, recorded where a
     /// person can read it and disagree.</summary>
     public static OwnRecordRulings ReviewRulings() => Embedded<OwnRecordRulings>(ReviewResource);
+
+    /// <summary>
+    /// What the owner's reading report was decided as, occurrence by occurrence, where the text
+    /// itself had to be read: whether a Hebrew word is a name or a noun, and which of a man and a
+    /// place the lexeme's marking settled wrongly.
+    /// </summary>
+    public static OwnRecordRulings ReportRulings() => Embedded<OwnRecordRulings>(ReportResource);
+
+    /// <summary>Every rulings file, in the order they were decided.</summary>
+    public static IReadOnlyList<OwnRecordRulings> AllRulings() => [Rulings(), ReviewRulings(), ReportRulings()];
 
     private static T Embedded<T>(string name)
     {

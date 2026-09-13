@@ -99,6 +99,8 @@ builder.Services.AddScoped<EntityAnnotationLoader>();
 builder.Services.AddScoped<OwnRecordLoader>();
 builder.Services.AddScoped<SenseReadingLoader>();
 builder.Services.AddScoped<SiteSplitLoader>();
+builder.Services.AddScoped<GreekNamesakeLoader>();
+builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
 builder.Services.AddScoped<TermLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
@@ -268,6 +270,19 @@ if (args is ["synodal-strong", ..])
     await synodalScope.ServiceProvider.GetRequiredService<SynodalStrongLinkLoader>().Load(editionPath, witnesses);
     app.Logger.LogInformation(
         "{Outcome}", await synodalScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+
+    // The links just written and the guesses just removed decide which Synodal words an annotation
+    // reaches, and nothing on a restart asks that again.
+    await synodalScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    return 0;
+}
+
+// Every annotation a pass carried into another text, carried again over the links as they stand.
+// For a corpus whose links were changed by something that did not carry them itself.
+if (args is ["carry", ..])
+{
+    using var carryScope = app.Services.CreateScope();
+    await carryScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
     return 0;
 }
 

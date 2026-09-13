@@ -53,6 +53,24 @@ internal sealed record PeopleNaming(string Number, string Name, string Why);
 /// <summary>One occurrence a person or a review has decided names a people.</summary>
 internal sealed record PeopleRuling(long WordId, string People, string Reference, string Why);
 
+/// <summary>
+/// A people Strong's Dictionary describes as a people and derives from no word he numbers.
+///
+/// <em>A Girgashite, one of the native tribes of Canaan</em>, <em>patrial from an unused
+/// name</em>: the dictionary says the collective exists and what it is, and the derivation the
+/// gentilics are read from names nothing, so the parse refuses it and no record was ever made. The
+/// Amorites, eighty-four words of the Hebrew Bible, were one of them. What is named here is only
+/// that the record exists and what to call it; what the people is stays Strong's sentence, read
+/// out of the lexicon at load time rather than copied into this file.
+/// </summary>
+/// <param name="Number">The gentilic's Strong number, which every word naming the people carries.</param>
+/// <param name="Origin">
+/// The man they are named after, where Strong's own sentence names one and the encyclopedia holds
+/// him — <em>Anamim, a son of Mizraim and his descendants</em>. Null where the sentence names
+/// nobody, which is most of them.
+/// </param>
+internal sealed record PeopleNation(string Name, string Number, string? Origin, string Why);
+
 internal sealed record PeopleFile(
     string DecidedBy,
     string Policy,
@@ -60,7 +78,9 @@ internal sealed record PeopleFile(
     string Witness,
     IReadOnlyList<PeopleRecord> Tribes,
     IReadOnlyList<PeopleNaming> Namings,
-    IReadOnlyList<PeopleRuling> Rulings);
+    IReadOnlyList<PeopleRuling> Rulings,
+    string? NationSource = null,
+    IReadOnlyList<PeopleNation>? Nations = null);
 
 /// <summary>
 /// What to call the people a gentilic entry names, from the two things the entry itself says.

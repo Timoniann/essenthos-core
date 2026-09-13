@@ -25,7 +25,9 @@ internal static class Annotating
     ///
     /// <c>confidence</c> is null exactly where a person or a source settled it, which is the same
     /// rule the tables themselves enforce. <c>corroborated</c> is whether the encyclopedia's own
-    /// list of verses independently names that entity in this word's verse.
+    /// list of verses independently names that entity in this word's verse. <c>through</c> and
+    /// <c>link</c> are null on a seed and filled on a word the links reached: the seed word it was
+    /// reached from, and what the link crossed to reach it was worth.
     ///
     /// <para>
     /// It drops itself at commit. A temporary table outlives its transaction and belongs to the
@@ -41,9 +43,40 @@ internal static class Annotating
             entity_id integer NOT NULL,
             confidence double precision,
             corroborated boolean NOT NULL,
-            note text NOT NULL)
+            note text NOT NULL,
+            through bigint,
+            link double precision)
         ON COMMIT DROP
         """;
+
+    /// <summary>
+    /// How every carried annotation's note begins, which is what tells a row the links reached from
+    /// the seed it was reached from.
+    /// </summary>
+    public const string CarriedNote = "through %";
+
+    /// <summary>
+    /// The confidence below which a link is not enough on its own to put a name on a word.
+    ///
+    /// It is not a floor, and nothing is dropped for being faint alone: a faint link is often the
+    /// only account the corpus has of a word, and a great many faint ones are true. Shebnah at
+    /// 0.69 and Esau at 0.66 sit here, and so do the 250 places the Ukrainian <em>Бог</em> stands
+    /// for <em>адонай</em>, none of which reaches 0.59. What this marks is a link weak enough to
+    /// lose to a better one, and losing is the only thing that happens to it.
+    /// </summary>
+    public const double Faint = 0.70;
+
+    /// <summary>
+    /// The confidence at which a link is taken to be the rendering, so that a faint link to the
+    /// same witness word in the same verse has nothing left to explain.
+    ///
+    /// The gap between this and <see cref="Faint"/> is the point. Two words of one text can both
+    /// render one Hebrew name — <em>of Abinoam</em> is two words in the King James — and a rule
+    /// that dropped the weaker of any pair would take the second half of every such rendering. A
+    /// word that is part of the rendering scores near the one beside it; a word the aligner had
+    /// nowhere else to put does not.
+    /// </summary>
+    public const double Firm = 0.90;
 
     /// <summary>
     /// An English possessive, which is where a name stops and the thing it possesses begins:
@@ -186,33 +219,69 @@ internal static class Annotating
     /// does not make that less true. Crossing a link that is not certain does add a number, because
     /// then the annotation is only as sure as the correspondence it travelled along.
     /// </para>
+    ///
+    /// <para>
+    /// A faint link is refused where the name is already rendered firmly in the same verse of the
+    /// same text. An aligner that cannot place a word attaches it to whatever it can score, and in a
+    /// verse that names somebody that is often the name: the Russian <em>От</em> opening Genesis
+    /// 10:13 was reached from Ludim at 0.69 while <em>Лудим</em> itself renders the word at 0.90
+    /// two places later. The comparison is per seed word and per verse, before unanimity, so a
+    /// leftover can neither stand beside the rendering nor veto it by disagreeing.
+    /// </para>
+    ///
+    /// <para>
+    /// The note names the text the seed word stands in rather than a text the caller declares, so
+    /// one pass can carry seeds from several witnesses and each row still says where it came from.
+    /// Takes <c>@faint</c> and <c>@firm</c>; <see cref="CarryAcrossLinks"/> supplies both.
+    /// </para>
     /// </summary>
     public const string Carry =
         $"""
         WITH reached AS (
             SELECT other.word_id,
+                   w.text_id,
+                   w.verse_id,
                    seed.entity_id,
+                   crossed.worth AS link,
                    CASE WHEN seed.confidence IS NULL
-                        THEN nullif(coalesce(l.confidence, 1.0), 1.0)
-                        ELSE seed.confidence * coalesce(l.confidence, 1.0) END AS confidence,
+                        THEN nullif(crossed.worth, 1.0)
+                        ELSE seed.confidence * crossed.worth END AS confidence,
                    l.method,
-                   seed.word_id AS through
+                   seed.word_id AS through,
+                   witness.slug AS spoken_by
             FROM pending_annotation seed
+            JOIN word origin ON origin.id = seed.word_id
+            JOIN text witness ON witness.id = origin.text_id
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
+            CROSS JOIN LATERAL (SELECT {LinkWorth} AS worth) crossed
             CROSS JOIN LATERAL ({Head}) other
+            JOIN word w ON w.id = other.word_id
+            WHERE seed.through IS NULL
+        ),
+        rendered AS (
+            SELECT through, text_id, verse_id, max(link) AS best
+            FROM reached GROUP BY 1, 2, 3
+        ),
+        supported AS (
+            SELECT r.*
+            FROM reached r
+            JOIN rendered d ON d.through = r.through
+                 AND d.text_id = r.text_id AND d.verse_id = r.verse_id
+            WHERE r.link >= @faint OR d.best < @firm
         ),
         unanimous AS (
-            SELECT word_id FROM reached GROUP BY 1 HAVING count(DISTINCT entity_id) = 1
+            SELECT word_id FROM supported GROUP BY 1 HAVING count(DISTINCT entity_id) = 1
         ),
         strongest AS (
             SELECT DISTINCT ON (r.word_id) r.*
-            FROM reached r JOIN unanimous u ON u.word_id = r.word_id
+            FROM supported r JOIN unanimous u ON u.word_id = r.word_id
             ORDER BY r.word_id, coalesce(r.confidence, 1.0) DESC, r.through
         )
-        INSERT INTO pending_annotation (word_id, entity_id, confidence, corroborated, note)
+        INSERT INTO pending_annotation (word_id, entity_id, confidence, corroborated, note, through, link)
         SELECT s.word_id, s.entity_id, s.confidence, agreed.named,
-               'through ' || @witness || ' word ' || s.through || ', linked by ' || s.method
+               'through ' || s.spoken_by || ' word ' || s.through || ', linked by ' || s.method,
+               s.through, s.link
         FROM strongest s
         JOIN word w ON w.id = s.word_id
         CROSS JOIN LATERAL (SELECT EXISTS (
@@ -335,6 +404,43 @@ internal static class Annotating
           AND ev.canonical_chapter = r.canonical_chapter
           AND ev.canonical_verse = r.canonical_verse
         """;
+
+    /// <summary>
+    /// What a link is worth to a name carried across it: its own confidence, or, where it pairs one
+    /// word with one word, the best of the claims standing on it.
+    ///
+    /// <para>
+    /// The row carries the confidence of the method with the highest standing, and that is not
+    /// always the surest number on it. The Synodal's numbering pairs a name written twice in a verse
+    /// in the order both texts write it, at 0.70, and where the aligner had already paired the same
+    /// two words its 0.97 is folded in as a claim on that link: 25,703 of the 33,678 such links in
+    /// Russian and Hebrew hold one. Two methods arriving at one pair are not less sure than the
+    /// better of them, and multiplying the name by the weaker would draw both of Lamech's names in
+    /// Genesis 4:23 below the line a reader is told to doubt.
+    /// </para>
+    ///
+    /// <para>
+    /// Only where the link is one word on each side. A link naming several words says they
+    /// correspond as a set, and a claim folded into it may be about any pair within the set, so it
+    /// cannot vouch for the one word a name lands on.
+    /// </para>
+    /// </summary>
+    public const string LinkWorth =
+        """
+        CASE WHEN l.confidence IS NULL THEN 1.0
+             WHEN (SELECT count(*) FROM link_word pair WHERE pair.link_id = l.id) = 2
+             THEN greatest(l.confidence, coalesce(
+                  (SELECT max(agreeing.confidence) FROM link_claim agreeing
+                   WHERE agreeing.link_id = l.id), 0))
+             ELSE l.confidence END
+        """;
+
+    /// <summary><see cref="Carry"/>, with the two thresholds it compares links against.</summary>
+    public static Task CarryAcrossLinks(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        CancellationToken cancellationToken) =>
+        Run(connection, transaction, Carry, cancellationToken, ("faint", Faint), ("firm", Firm));
 
     public static async Task Run(
         NpgsqlConnection connection,
