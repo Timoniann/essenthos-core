@@ -290,10 +290,10 @@ internal static class EncyclopediaEndpoints
 
             if (kind is { Length: > 0 })
             {
-                if (kind is not ("person" or "place" or "people" or "term"))
+                if (kind is not ("person" or "place" or "people" or "term" or "title"))
                 {
                     return Results.BadRequest(new ProblemResponse(
-                        $"\"{kind}\" is not a kind of entity. Try person, place, people or term."));
+                        $"\"{kind}\" is not a kind of entity. Try person, place, people, term or title."));
                 }
 
                 var wanted = EnumSpelling.ToEntityKind(kind);

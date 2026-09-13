@@ -1,0 +1,112 @@
+{
+  "decidedBy": "the project owner, 2026-09-13, on how the encyclopedia holds Abimelech of Gerar, Phicol and Ahuzzath — recorded as PRB-0497",
+  "policy": "Abimelech king of Gerar, who deals with Abraham (GEN 20-21) and again with Isaac after Abraham's death (GEN 26), and the Abimelech of the title of Psalm 34, whom 1 Samuel 21 calls Achish king of Gath, are not established as one man. The name is likely a title of the Philistine kings, as Pharaoh is of the kings of Egypt, and at the least it is not certainly one person; so the encyclopedia holds it as a title borne by possibly more than one king, and says so. Phicol, the commander of the army in both accounts, and Ahuzzath, whom the Septuagint names in both, may likewise be titles; that is a supposition, and it is stated as one. Abimelech son of Gideon (JDG 8:31-9:57) is a personal name and stays a person.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles",
+  "titles": [
+    {
+      "slug": "abimelech",
+      "name": "Abimelech",
+      "distinguisher": "the name or title of the king of Gerar in the days of Abraham (GEN 20-21) and of Isaac (GEN 26), and of the Philistine king of the title of PSA 34; not certainly one man",
+      "notes": "The text calls the king of Gerar Abimelech when Abraham sojourns there (GEN 20:1-18) and makes a covenant with him at Beersheba (GEN 21:22-32), and again when Isaac sojourns there after Abraham's death (GEN 26:1-31). The title of Psalm 34 gives the name to the king before whom David feigned madness, whom 1 Samuel 21:10-15 calls Achish king of Gath. Read as one man, he would reach from Abraham to David, which the text nowhere asks for. The likelier reading is that Abimelech, 'my father is king', was a title of the Philistine kings as Pharaoh was of Egypt's, and Jewish tradition reads it so (Rashi). The encyclopedia therefore holds it as a title borne by possibly more than one king, and does not decide whether the Abimelech of Abraham and the Abimelech of Isaac are one man or two. It is not the Abimelech son of Gideon (JDG 8:31-9:57), whose own name it was. In 1 Chronicles 18:16 the Masoretic text also reads Abimelech, for the priest the parallel 2 Samuel 8:17 calls Ahimelech son of Abiathar; that occurrence stays with him.",
+      "why": "The owner ruled that Abimelech of Gerar is not established as one man who dealt with Abraham, with Isaac and, in the title of Psalm 34, with David: it is likely a title of the Philistine kings, as Pharaoh is of Egypt's, and at the least not certainly one person.",
+      "replaces": [
+        {
+          "slug": "abimelech-4",
+          "why": "A second person record for the Abimelech of Genesis 26, written because a reading judged Isaac's king 'likely a successor bearing the same name'. Held as a title, the name needs no second man to be true of both accounts, and that reading is kept among the alternatives instead."
+        }
+      ],
+      "alternatives": [
+        {
+          "describes": "one king of Gerar whose own name was Abimelech, who dealt with Abraham (GEN 20-21) and again with Isaac (GEN 26)",
+          "reason": "Both accounts name him alike, Abimelech king of Gerar with Phicol the commander of his army, and neither says a new king has come. Against it, Isaac's dealings with him fall after Abraham's death (GEN 26:18), most of a lifetime after Abraham's, and the same two names recurring is as well explained by titles as by one very long reign."
+        },
+        {
+          "describes": "two kings of Gerar, Abraham's and Isaac's, who both bore Abimelech as a personal name",
+          "reason": "A king named after his father would give the text as it stands, and that is how a reading of the namesake verses first split Genesis 26 from Genesis 20-21. Nothing in the text tells a name repeated in a line of kings from a title."
+        },
+        {
+          "slug": "achish",
+          "reason": "The title of Psalm 34 says David changed his behaviour before Abimelech, and 1 Samuel 21:10-15 tells the same flight before Achish king of Gath. If Abimelech is a title of the Philistine kings, the king of the psalm is Achish bearing it; if it is a name, the psalm's title and the history name the king differently."
+        }
+      ]
+    },
+    {
+      "slug": "phicol",
+      "name": "Phicol",
+      "distinguisher": "named as the commander of the army of Abimelech of Gerar under Abraham (GEN 21:22, 32) and under Isaac (GEN 26:26); possibly a title rather than one man's name",
+      "notes": "Phicol comes with Abimelech to Abraham at Beersheba (GEN 21:22, 32) and again, after Abraham's death, with Abimelech to Isaac (GEN 26:26), both times as the commander of his army. One commander serving across both accounts is as hard to hold as one king, and the same pair of names recurring suggests that Phicol, like Abimelech, may be a title, that of the commander of the army of Gerar, rather than one man's name. That is a supposition the text does not state, and the entry is held as possibly a title so as not to set up one man the text cannot show.",
+      "why": "The owner ruled that Phicol, the commander of Abimelech's army in the accounts of both Abraham and Isaac, should not be set up as one separate person: he may be a title, as Abimelech may be. The ruling states it as a supposition.",
+      "alternatives": [
+        {
+          "describes": "one man named Phicol, who commanded the army of Gerar under Abraham's Abimelech and again under Isaac's (GEN 21:22; 26:26)",
+          "reason": "The text gives the same name and the same office in both accounts and does not say they are two men; if Abimelech was one long-reigning king, one commander serving him throughout is possible."
+        }
+      ]
+    },
+    {
+      "slug": "ahuzzath",
+      "name": "Ahuzzath",
+      "distinguisher": "named as the friend who came with Abimelech to Isaac (GEN 26:26), and in the Septuagint also beside Abimelech in Abraham's day (GEN 21:22, 32); possibly a title rather than one man's name",
+      "notes": "The Hebrew names Ahuzzath once, as one of Abimelech's friends, when he and Phicol come to Isaac (GEN 26:26). The Septuagint names him in the account of Abraham as well: Ochozath his friend, ὁ νυμφαγωγὸς αὐτοῦ, stands beside Abimelech and Phicol at GEN 21:22 and 21:32, where the Masoretic text has no Ahuzzath. Named in both generations as the king's companion, he may, like Abimelech and Phicol, be a title, that of the king's friend or counsellor, rather than one man's name. That is a supposition the text does not state, and the entry is held as possibly a title so as not to set up one man the text cannot show.",
+      "why": "The owner ruled that Ahuzzath should not be set up as one separate person: like Phicol he may be a title, and the Septuagint names him in Abraham's day as well as in Isaac's. The ruling states it as a supposition.",
+      "alternatives": [
+        {
+          "describes": "one man named Ahuzzath, a friend of the king of Gerar in Isaac's day (GEN 26:26)",
+          "reason": "The Hebrew names him only once, and as one man. His name in the Septuagint's account of Abraham may be that translation bringing the two covenants at Beersheba into line with each other rather than a witness that the name was an office."
+        }
+      ]
+    }
+  ],
+  "rulings": [
+    {
+      "wordId": 6782352,
+      "reference": "Psalm 34:1",
+      "strongNumber": "H40",
+      "existing": "abimelech",
+      "why": "The title of the psalm: David changed his behaviour before Abimelech, the Philistine king 1 Samuel 21:10-15 calls Achish king of Gath. It is the name or title the entry holds, and whether it is Achish's title or a second name for him is what the entry leaves open."
+    },
+    {
+      "wordId": 12104955,
+      "reference": "Genesis 21:22",
+      "strongNumber": "H276",
+      "existing": "ahuzzath",
+      "why": "The Septuagint reads Abimelech, and Ochozath his friend, and Phicol the commander of his army, where the Masoretic text has Abimelech and Phicol alone; Codex Vaticanus and Brenton's text both name him here. Ochozath is the Greek of Ahuzzath in GEN 26:26."
+    },
+    {
+      "wordId": 12104960,
+      "reference": "Genesis 21:22",
+      "strongNumber": "H6369",
+      "existing": "phicol",
+      "why": "Phicol the commander of Abimelech's army, as the Masoretic text names him in this verse."
+    },
+    {
+      "wordId": 12105137,
+      "reference": "Genesis 21:32",
+      "strongNumber": "H276",
+      "existing": "ahuzzath",
+      "why": "As in GEN 21:22, the Septuagint has Abimelech rise with Ochozath his friend and Phicol, where the Masoretic text has no Ahuzzath."
+    },
+    {
+      "wordId": 12105142,
+      "reference": "Genesis 21:32",
+      "strongNumber": "H6369",
+      "existing": "phicol",
+      "why": "Phicol the commander of Abimelech's army, as the Masoretic text names him in this verse."
+    },
+    {
+      "wordId": 12108836,
+      "reference": "Genesis 26:26",
+      "strongNumber": "H276",
+      "existing": "ahuzzath",
+      "why": "Ochozath his friend, the Ahuzzath of the Masoretic text in this verse."
+    },
+    {
+      "wordId": 12108841,
+      "reference": "Genesis 26:26",
+      "strongNumber": "H6369",
+      "existing": "phicol",
+      "why": "Phicol the commander of Abimelech's army, as the Masoretic text names him in this verse."
+    }
+  ]
+}

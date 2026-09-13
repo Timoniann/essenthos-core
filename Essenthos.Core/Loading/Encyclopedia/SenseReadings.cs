@@ -139,6 +139,34 @@ internal sealed record OwnRecordRulings(
     IReadOnlyList<OwnRecordRuling> Rulings);
 
 /// <summary>
+/// A record the owner ruled is a title rather than one person: what it is now said to be, the
+/// records it takes the place of, and who else it might be.
+/// </summary>
+/// <param name="Why">What established it, as the claim a reader is shown.</param>
+internal sealed record TitleRecord(
+    string Slug,
+    string Name,
+    string Distinguisher,
+    string Notes,
+    string Why,
+    IReadOnlyList<ReplacedRecord>? Replaces,
+    IReadOnlyList<OwnAlternative>? Alternatives);
+
+/// <summary>A record written for one bearer of a title, which the title now answers for.</summary>
+internal sealed record ReplacedRecord(string Slug, string Why);
+
+/// <summary>
+/// The owner's decision that some names are titles, in the file that also carries the words it
+/// settles, so the claim on the records and the annotations on the words credit one decision.
+/// </summary>
+internal sealed record TitleDecision(
+    string DecidedBy,
+    string Policy,
+    string Method,
+    string Source,
+    IReadOnlyList<TitleRecord> Titles);
+
+/// <summary>
 /// Where the readings and the two review files are read from.
 ///
 /// The answers are a gigabyte-scale by-product of running a model over the corpus and they stay out
@@ -168,6 +196,8 @@ internal static class SenseReadingFiles
     private const string ReviewResource = "Essenthos.Core.Loading.Encyclopedia.ReviewRecords.json";
 
     private const string ReportResource = "Essenthos.Core.Loading.Encyclopedia.ReportRecords.json";
+
+    private const string TitleResource = "Essenthos.Core.Loading.Encyclopedia.TitleRecords.json";
 
     private static readonly JsonSerializerOptions Shape = new()
     {
@@ -289,8 +319,18 @@ internal static class SenseReadingFiles
     /// </summary>
     public static OwnRecordRulings ReportRulings() => Embedded<OwnRecordRulings>(ReportResource);
 
+    /// <summary>
+    /// The words the owner's decision on the titles settles, which are the occurrences no pass
+    /// named: the title of Psalm 34, and the Septuagint's own Ochozath and Phicol.
+    /// </summary>
+    public static OwnRecordRulings TitleRulings() => Embedded<OwnRecordRulings>(TitleResource);
+
+    /// <summary>The same decision read as what it says about the records themselves.</summary>
+    public static TitleDecision Titles() => Embedded<TitleDecision>(TitleResource);
+
     /// <summary>Every rulings file, in the order they were decided.</summary>
-    public static IReadOnlyList<OwnRecordRulings> AllRulings() => [Rulings(), ReviewRulings(), ReportRulings()];
+    public static IReadOnlyList<OwnRecordRulings> AllRulings() =>
+        [Rulings(), ReviewRulings(), ReportRulings(), TitleRulings()];
 
     private static T Embedded<T>(string name)
     {

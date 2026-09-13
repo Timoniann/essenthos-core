@@ -103,6 +103,7 @@ builder.Services.AddScoped<GreekNamesakeLoader>();
 builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
 builder.Services.AddScoped<TermLoader>();
+builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();

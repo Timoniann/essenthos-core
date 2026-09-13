@@ -238,9 +238,11 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
 
     /// <summary>
     /// The kinds whose references this reads. The peoples are left out because
-    /// <see cref="PeopleLoader"/> already reads theirs on a different ground.
+    /// <see cref="PeopleLoader"/> already reads theirs on a different ground, and the words for God
+    /// because <see cref="TermLoader"/> reads theirs off the Strong number. A title is named at its
+    /// words exactly as the person it was held as.
     /// </summary>
     private static string Named =>
-        string.Join(", ", new[] { EntityKind.Person, EntityKind.Place }
+        string.Join(", ", new[] { EntityKind.Person, EntityKind.Place, EntityKind.Title }
             .Select(kind => $"'{EnumSpelling.Of(kind)}'"));
 }

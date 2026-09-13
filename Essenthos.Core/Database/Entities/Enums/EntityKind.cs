@@ -34,4 +34,19 @@ public enum EntityKind
     /// resolves.
     /// </summary>
     Term,
+
+    /// <summary>
+    /// A name the text gives to whoever holds an office, which may be more than one holder and is
+    /// not certainly anybody's own name — Abimelech of the kings of Gerar, as Pharaoh is of Egypt's.
+    ///
+    /// It is not a person, because a person is one man, and the reason for this kind is that the
+    /// text does not establish one: Abimelech king of Gerar deals with Abraham, again with Isaac
+    /// after Abraham's death, and in the title of Psalm 34 with David, whose own history calls that
+    /// king Achish. A person record has to answer whether those are one man, and either answer is a
+    /// guess. It is not a term either: a term is a word said of God and of gods, and a reader told
+    /// Abimelech is a word for God has been told something false. The occurrences are named and the
+    /// record says whose office the name belongs to; which men bore it is left open, and the record
+    /// says so.
+    /// </summary>
+    Title,
 }

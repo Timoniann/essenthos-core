@@ -33,6 +33,7 @@ internal static class EnumSpelling
         EntityKind.Place => "place",
         EntityKind.People => "people",
         EntityKind.Term => "term",
+        EntityKind.Title => "title",
         _ => throw Unmapped(value),
     };
 
@@ -42,6 +43,7 @@ internal static class EnumSpelling
         "place" => EntityKind.Place,
         "people" => EntityKind.People,
         "term" => EntityKind.Term,
+        "title" => EntityKind.Title,
         _ => throw Unreadable<EntityKind>(stored),
     };
 

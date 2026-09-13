@@ -149,6 +149,7 @@ internal sealed class DatasetLoader(
             await TellTheGreekNamesakesApart(stoppingToken);
             await ReachTheNamesNobodyElseCarries(stoppingToken);
             await WriteTheWordsForGod(stoppingToken);
+            await HoldTheTitlesAsTitles(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
@@ -870,6 +871,21 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<TermLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The names the owner ruled are titles borne by possibly more than one man, held as titles.
+    /// After every pass that writes or annotates a person, because those passes resolve names among
+    /// persons and these records were persons when their words were named, and before the references
+    /// and descriptions, so the page reads what the decision says on the boot that applies it.
+    /// </summary>
+    private async Task HoldTheTitlesAsTitles(CancellationToken cancellationToken)
+    {
+        status.Starting("the names that are titles");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<TitleLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

@@ -149,6 +149,22 @@ public sealed class OwnReferenceTests : IDisposable
     }
 
     /// <summary>
+    /// A title is named at its words as the person it was held as, so the verse of a word that names
+    /// it is on its page — the title of Psalm 34 and the Septuagint's Ochozath are occurrences no
+    /// dataset lists.
+    /// </summary>
+    [Fact]
+    public async Task ATitleIsCitedWhereItsWordsNameIt()
+    {
+        var abimelech = Add("abimelech", EntityKind.Title);
+        Annotate(Hebrew(2, 1), abimelech, LinkMethod.Manual, null);
+
+        await Load();
+
+        (await Referenced(abimelech)).Should().ContainSingle();
+    }
+
+    /// <summary>
     /// The startup pipeline runs on every boot, so a second pass must not write the corpus a second
     /// time (RUL-0005).
     /// </summary>
