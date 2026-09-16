@@ -160,7 +160,7 @@ public class EvidentiaPipelineTests
     public void AReaderLanguageStrongSenseOnlyMakesADictionaryCandidate()
     {
         var dictionary = new EvidentiaDictionarySenseEvidenceSource(
-            new Dictionary<string, HashSet<string>> { ["віра"] = ["G4102"] }, "ukr");
+            new Dictionary<RenderingKey, HashSet<string>> { [new(EvidentiaFormKind.Surface, "віра")] = ["G4102"] }, "ukr");
         var preview = Pipeline().Preview(new EvidentiaRequest(
             [Token(1, "віра", "ukr", verse: 20)],
             [Token(11, "πίστις", "grc", verse: 20, strong: "G4102")]), [dictionary]);

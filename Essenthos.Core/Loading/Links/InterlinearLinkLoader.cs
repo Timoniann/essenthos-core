@@ -47,9 +47,9 @@ internal sealed record InterlinearOutcome(
 /// It joins without alignment because the source marks its own morpheme boundaries. BHSA holds
 /// <c>וַ⁠יְהִי</c> as two words, the conjunction and the verb, and the interlinear writes it with
 /// U+2060 in exactly that place and tags it <c>c:H1961</c>. So the pieces are matched to BHSA's
-/// words by their folded form, in order, and a verse where that does not come out exact is
-/// refused rather than forced — <see cref="InterlinearOutcome.Refused"/> counts those, and they
-/// keep the links this does write worth the name.
+/// words by their form and by the occurrence the source states, and a span where that does not come
+/// out exact is refused rather than forced — <see cref="InterlinearJoin"/> says how, and
+/// <see cref="InterlinearJoinAccount"/> counts what was refused and why.
 /// </summary>
 internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<InterlinearLinkLoader> logger)
 {
@@ -85,6 +85,81 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         }
 
         var started = Stopwatch.StartNew();
+        var join = await Join(folder, translation, cancellationToken);
+        await Write(source, join.Drafts, cancellationToken);
+
+        var outcome = new InterlinearOutcome(
+            translationSlug,
+            join.Books.Count,
+            join.Total.VersesJoined,
+            join.Total.VersesRead - join.Total.VersesJoined,
+            join.Drafts.Count,
+            join.Total.TranslatedWordsJoined,
+            started.Elapsed);
+        logger.LogInformation("Linked from the interlinear: {Outcome}", outcome);
+        return outcome;
+    }
+
+    /// <summary>
+    /// The same join <see cref="Load"/> makes, without writing it, beside the links the corpus already
+    /// holds from the interlinear. It is how the answer key a benchmark reads is checked against the
+    /// file it came from: what joined, what did not and why, and whether the stored rows are still
+    /// this join.
+    /// </summary>
+    public async Task<InterlinearJoinReport> Measure(
+        string folder,
+        string translationSlug,
+        CancellationToken cancellationToken = default)
+    {
+        if (!Directory.Exists(folder))
+        {
+            throw new DirectoryNotFoundException(
+                $"No interlinear at {folder}. Point Dataset:ResourcesPath at the Resources folder that holds Door43/.");
+        }
+
+        var translation = await Text(translationSlug, cancellationToken);
+        var join = await Join(folder, translation, cancellationToken);
+        var stored = (await db.LinkWords.AsNoTracking()
+                .Where(word => word.Link!.FromTextId == translation && word.Link.Method == LinkMethod.StatedBySource)
+                .Select(word => new { word.LinkId, word.WordId, word.Side })
+                .ToListAsync(cancellationToken))
+            .GroupBy(word => word.LinkId)
+            .Select(link => (
+                From: Key(link.Where(word => word.Side == LinkSide.From).Select(word => word.WordId)),
+                To: Key(link.Where(word => word.Side == LinkSide.To).Select(word => word.WordId))))
+            .ToList();
+        var joined = join.Drafts.Select(draft => (From: Key(draft.From), To: Key(draft.To))).ToHashSet();
+        var joinedFrom = join.Drafts.Select(draft => Key(draft.From)).ToHashSet();
+        var same = stored.Count(joined.Contains);
+        var elsewhere = stored.Count(link => !joined.Contains(link) && joinedFrom.Contains(link.From));
+        return new InterlinearJoinReport(
+            translationSlug, folder, join.Books, join.Total, join.Drafts.Count,
+            new StoredInterlinear(stored.Count, same, elsewhere, stored.Count - same - elsewhere));
+    }
+
+    /// <summary>
+    /// The links this join makes, as word ids, without writing them: an answer key a measurement can
+    /// read when the rows the corpus holds were written by an older join.
+    /// </summary>
+    public async Task<IReadOnlyList<(IReadOnlyList<long> From, IReadOnlyList<long> To)>> Pairs(
+        string folder,
+        string translationSlug,
+        CancellationToken cancellationToken = default)
+    {
+        if (!Directory.Exists(folder))
+        {
+            throw new DirectoryNotFoundException(
+                $"No interlinear at {folder}. Point Dataset:ResourcesPath at the Resources folder that holds Door43/.");
+        }
+
+        var join = await Join(folder, await Text(translationSlug, cancellationToken), cancellationToken);
+        return [.. join.Drafts.Select(draft => ((IReadOnlyList<long>)draft.From, (IReadOnlyList<long>)draft.To))];
+    }
+
+    private static string Key(IEnumerable<long> words) => string.Join(',', words.Order());
+
+    private async Task<InterlinearJoinResult> Join(string folder, int translation, CancellationToken cancellationToken)
+    {
         var witnesses = new Dictionary<string, int>();
         foreach (var slug in (string[])[BhsaTextSource.Slug, NestleTextSource.Slug])
         {
@@ -92,13 +167,12 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         }
 
         var drafts = new List<InterlinearDraft>(40_000);
-        var books = 0;
-        var verses = 0;
-        var refused = 0;
-        var words = 0;
+        var books = new List<(string Book, InterlinearJoinAccount Account)>();
+        var total = new InterlinearJoinAccount();
 
         foreach (var file in Directory.GetFiles(folder, "*.usfm").OrderBy(path => path))
         {
+            var name = Path.GetFileNameWithoutExtension(file);
             var ordinal = Ordinal(Path.GetFileName(file));
             if (ordinal is null)
             {
@@ -114,117 +188,30 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             var witness = witnesses[ordinal <= BookReferences.OldTestamentBookCount
                 ? BhsaTextSource.Slug
                 : NestleTextSource.Slug];
-            var read = Usfm3AlignmentReader.Read(File.ReadAllText(file));
+            var read = Usfm3AlignmentReader.Read(await File.ReadAllTextAsync(file, cancellationToken));
             var here = await Words(translation, ordinal.Value, cancellationToken);
             var there = await Words(witness, ordinal.Value, cancellationToken);
-            books++;
+            var account = new InterlinearJoinAccount();
+            var pairs = new List<InterlinearPair>();
 
             foreach (var verse in read)
             {
                 var address = (verse.Chapter, verse.Number);
-                if (!here.TryGetValue(address, out var translated) || !there.TryGetValue(address, out var original))
-                {
-                    refused++;
-                    continue;
-                }
-
-                var made = Pair(verse, translated, original, translation, witness, drafts);
-                if (made == 0)
-                {
-                    refused++;
-                }
-                else
-                {
-                    verses++;
-                    words += made;
-                }
-            }
-        }
-
-        await Write(source, drafts, cancellationToken);
-
-        var outcome = new InterlinearOutcome(
-            translationSlug, books, verses, refused, drafts.Count, words, started.Elapsed);
-        logger.LogInformation("Linked from the interlinear: {Outcome}", outcome);
-        return outcome;
-    }
-
-    /// <summary>
-    /// One verse, span by span.
-    ///
-    /// Both sides are walked forward with a cursor, and a span whose pieces are not all found is
-    /// skipped without moving either cursor. That is what makes partial matching safe here: the
-    /// cursors only ever pass words that were confirmed, so a span that fails cannot push the
-    /// following ones onto the wrong words.
-    ///
-    /// Skipping matters because the sources are not the same editions. unfoldingWord aligns
-    /// against its own Hebrew and its own Greek, and ours are BHSA and Nestle 1904 — the Hebrew
-    /// divides some words differently and the Greek is a different text altogether. Refusing a
-    /// whole verse for one word that does not exist in our edition threw away 91% of what the
-    /// interlinear states.
-    /// </summary>
-    private static int Pair(
-        AlignedVerse verse,
-        List<FoldedWord> translated,
-        List<FoldedWord> original,
-        int fromTextId,
-        int toTextId,
-        List<InterlinearDraft> drafts)
-    {
-        if (translated.Count == 0 || original.Count == 0)
-        {
-            return 0;
-        }
-
-        var made = 0;
-        var here = 0;
-        var there = 0;
-
-        foreach (var span in verse.Spans)
-        {
-            var (ours, afterOurs) = Find(translated, span.Words, translated[0].Language, here);
-            var (theirs, afterTheirs) = Find(original, span.Morphemes, original[0].Language, there);
-            if (ours.Count == 0 || theirs.Count == 0)
-            {
-                continue;
+                InterlinearJoin.Verse(
+                    $"{name} {verse.Chapter}:{verse.Number}",
+                    verse,
+                    here.GetValueOrDefault(address) ?? [],
+                    there.GetValueOrDefault(address) ?? [],
+                    pairs,
+                    account);
             }
 
-            drafts.Add(new InterlinearDraft(fromTextId, toTextId, ours, theirs));
-            here = afterOurs;
-            there = afterTheirs;
-            made += ours.Count;
+            drafts.AddRange(pairs.Select(pair => new InterlinearDraft(translation, witness, pair.From, pair.To)));
+            books.Add((name, account));
+            total.Add(account);
         }
 
-        return made;
-    }
-
-    /// <summary>
-    /// The words of a span, found in order from the cursor. Answers an empty list when any one of
-    /// them is missing, so the caller can leave the cursor where it was.
-    /// </summary>
-    private static (List<long> Words, int After) Find(
-        List<FoldedWord> words,
-        IReadOnlyList<string> wanted,
-        string? language,
-        int from)
-    {
-        var found = new List<long>(wanted.Count);
-        var at = from;
-
-        foreach (var one in wanted)
-        {
-            var folded = WordFolding.Fold(one, language);
-            var next = words.FindIndex(at, candidate => candidate.Folded == folded);
-            if (next < 0)
-            {
-                return ([], from);
-            }
-
-            found.Add(words[next].Id);
-            at = next + 1;
-        }
-
-        return (found, at);
+        return new InterlinearJoinResult(drafts, books, total);
     }
 
     /// <summary>The book a file is for, from a name like <c>17-EST.usfm</c>.</summary>
@@ -236,7 +223,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             : BookReferences.ResolveOrdinal(Path.GetFileNameWithoutExtension(fileName)[(hyphen + 1)..]);
     }
 
-    private async Task<Dictionary<(int, int), List<FoldedWord>>> Words(
+    private async Task<Dictionary<(int, int), List<InterlinearWord>>> Words(
         int textId,
         int ordinal,
         CancellationToken cancellationToken)
@@ -250,6 +237,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
                 w.Id,
                 w.Position,
                 w.NormalisedText,
+                Written = w.Surface,
                 Language = w.Text!.Language,
             }))
             .ToListAsync(cancellationToken);
@@ -259,7 +247,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             .ToDictionary(
                 group => group.Key,
                 group => group.OrderBy(r => r.Position)
-                    .Select(r => new FoldedWord(r.Id, r.NormalisedText ?? string.Empty, r.Language))
+                    .Select(r => new InterlinearWord(r.Id, r.NormalisedText ?? string.Empty, r.Language, r.Written))
                     .ToList());
     }
 
@@ -352,7 +340,38 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             ? id
             : throw new InvalidOperationException($"The text \"{slug}\" must be loaded before it can be linked.");
 
-    private sealed record FoldedWord(long Id, string Folded, string Language);
-
     private sealed record InterlinearDraft(int FromTextId, int ToTextId, List<long> From, List<long> To);
+
+    private sealed record InterlinearJoinResult(
+        List<InterlinearDraft> Drafts,
+        List<(string Book, InterlinearJoinAccount Account)> Books,
+        InterlinearJoinAccount Total);
+}
+
+/// <summary>
+/// The stated links the corpus holds from a translation today, set against the join made now.
+/// </summary>
+/// <param name="Same">Links whose words on both sides are exactly a link of this join.</param>
+/// <param name="OnAnotherOriginal">
+/// Links whose translated words this join also links, to other original words: a stored row on a
+/// word the source did not state.
+/// </param>
+/// <param name="NotJoined">Links whose translated words this join does not link as a group at all.</param>
+internal sealed record StoredInterlinear(int Links, int Same, int OnAnotherOriginal, int NotJoined);
+
+internal sealed record InterlinearJoinReport(
+    string Text,
+    string Folder,
+    IReadOnlyList<(string Book, InterlinearJoinAccount Account)> Books,
+    InterlinearJoinAccount Total,
+    int Links,
+    StoredInterlinear Stored)
+{
+    public override string ToString() =>
+        $"Interlinear join {Folder} → {Text}: {Links:N0} links would be written. The corpus holds " +
+        $"{Stored.Links:N0} stated links from {Text}: {Stored.Same:N0} are links of this join, " +
+        $"{Stored.OnAnotherOriginal:N0} put the same translated words on other original words, " +
+        $"{Stored.NotJoined:N0} have translated words this join does not link as one group" +
+        "\n" + string.Concat(Books.Select(book => $"\n{book.Book}\n{book.Account.Report(withExamples: false)}\n")) +
+        $"\nall books\n{Total.Report(withExamples: true)}";
 }

@@ -248,6 +248,20 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
     return 0;
 }
 
+// The Door43 join a benchmark's Slavic answer key rests on, re-made from the files without writing
+// anything: which verses, spans and words arrived, why the rest did not, and whether the links the
+// corpus holds are still this join.
+if (args is ["interlinear-join", var interlinearText, ..])
+{
+    var interlinearSlug = Identifier(interlinearText);
+    using var interlinearScope = app.Services.CreateScope();
+    var interlinear = await interlinearScope.ServiceProvider.GetRequiredService<InterlinearLinkLoader>().Measure(
+        InterlinearFolder(app, interlinearSlug),
+        interlinearSlug);
+    app.Logger.LogInformation("\n{Report}", interlinear);
+    return 0;
+}
+
 // Read one real chapter through the deterministic evidence graph. Unlike `align`, this command
 // never writes links: its result tells us whether the current language packs have enough evidence
 // to justify a future mapping pass and exactly where IBM fallback would be required.
@@ -280,7 +294,7 @@ if (args is ["evidentia-measure", var measureFrom, var measureTo, var measureBoo
 
     using var measureScope = app.Services.CreateScope();
     var measurement = await measureScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureChapter(
-        Identifier(measureFrom), Identifier(measureTo), book, chapter, EvidentiaOptions(args));
+        Identifier(measureFrom), Identifier(measureTo), book, chapter, EvidentiaOptions(args, app));
     await WriteRows(args, "--disagreements", measurement.Disagreements);
     await WriteRows(args, "--words", measurement.Words);
     app.Logger.LogInformation("\n{Measurement}", measurement);
@@ -302,7 +316,7 @@ if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, v
         throw new ArgumentException("evidentia-measure-book needs --from-chapter less than or equal to --to-chapter.");
     }
     var measurement = await measureBookScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureBook(
-        Identifier(measureBookFrom), Identifier(measureBookTo), book, EvidentiaOptions(args),
+        Identifier(measureBookFrom), Identifier(measureBookTo), book, EvidentiaOptions(args, app),
         firstChapter: fromChapter,
         lastChapter: toChapter);
     await WriteRows(args, "--disagreements", measurement.Disagreements);
@@ -348,7 +362,20 @@ static string? OptionalText(string[] arguments, string option)
 
 // A measurement is only worth the isolation it can state, so every one of these is a way of saying
 // which evidence the run was allowed to see and which answer key it was scored against.
-static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments) => new(
+// A Door43 interlinear, by the text it aligns: the only two this corpus has.
+static string InterlinearFolder(WebApplication host, string slug) => Path.Combine(
+    ResourcePaths.Read(host.Configuration, host.Environment.ContentRootPath),
+    "Door43",
+    slug switch
+    {
+        Bible4uTextSource.Ohienko => "uk_ubio",
+        Bible4uTextSource.Synodal => "ru_rsb",
+        _ => throw new ArgumentException(
+            $"Door43 interlinears exist for {Bible4uTextSource.Ohienko} and {Bible4uTextSource.Synodal}; " +
+            $"{slug} has none. Name one of those two as the source, or score against stored links instead."),
+    });
+
+static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments, WebApplication host) => new(
     AllowSourceStrongEvidence: !arguments.Contains("--without-source-strong"),
     AllowKnownRenderingEvidence: !arguments.Contains("--without-known-renderings"),
     LearnRenderingsFrom: OptionalText(arguments, "--learn-from") is { } learnFrom ? Identifier(learnFrom) : null,
@@ -358,7 +385,11 @@ static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments) => new(
     GoldSource: OptionalText(arguments, "--gold-source"),
     SampleSize: OptionalInt(arguments, "--sample") ?? 0,
     RecordDisagreements: OptionalText(arguments, "--disagreements") is not null,
-    RecordWords: OptionalText(arguments, "--words") is not null);
+    RecordWords: OptionalText(arguments, "--words") is not null,
+    GoldInterlinear: arguments.Contains("--gold-interlinear")
+        ? InterlinearFolder(host, Identifier(arguments[1]))
+        : null,
+    LearnAcrossLanguages: arguments.Contains("--learn-across-languages"));
 
 // Unlike `score`, this is an out-of-sample test: only 80% of the stated and Strong one-to-one pairs
 // reach SIL.Machine as its partial-alignment corpus, and a deterministic fifth of verses stays out

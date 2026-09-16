@@ -13,14 +13,39 @@ namespace Essenthos.Core.Door43;
 /// U+2060 between morphemes. Splitting on that gives one piece per word BHSA holds.
 /// </param>
 /// <param name="Words">The translated words inside the span, in order.</param>
-internal sealed record AlignmentSpan(string Strong, string Content, IReadOnlyList<string> Words)
+/// <param name="Occurrence">
+/// Which occurrence of <paramref name="Content"/> in the verse the span stands over, as the source
+/// counts it; 0 where the file does not say.
+/// </param>
+/// <param name="Occurrences">How many times that spelling stands in the verse; 0 where the file does not say.</param>
+/// <param name="WordOccurrences">
+/// For each of <paramref name="Words"/>, which occurrence of that spelling in the verse it is and how
+/// many there are, as the source counts them; zeros where the file does not say.
+/// </param>
+internal sealed record AlignmentSpan(
+    string Strong,
+    string Content,
+    IReadOnlyList<string> Words,
+    int Occurrence = 0,
+    int Occurrences = 0,
+    IReadOnlyList<(int Occurrence, int Occurrences)>? WordOccurrences = null)
 {
     private const char MorphemeBoundary = '⁠';
 
     public string[] Morphemes => Content.Split(MorphemeBoundary, StringSplitOptions.RemoveEmptyEntries);
 }
 
-internal sealed record AlignedVerse(int Chapter, int Number, IReadOnlyList<AlignmentSpan> Spans);
+/// <param name="SharedOriginals">
+/// Original words standing in a nest over the translated words of an inner span. The source states
+/// them; <see cref="Spans"/> does not keep them, because only the innermost span names its words.
+/// </param>
+/// <param name="UnalignedWords">Translated words of the verse that stand outside every span.</param>
+internal sealed record AlignedVerse(
+    int Chapter,
+    int Number,
+    IReadOnlyList<AlignmentSpan> Spans,
+    int SharedOriginals = 0,
+    int UnalignedWords = 0);
 
 /// <summary>
 /// unfoldingWord's USFM 3 word alignment, which is a translation with each of its words tied to
@@ -42,18 +67,22 @@ internal static partial class Usfm3AlignmentReader
         var verses = new List<AlignedVerse>(64);
         var chapter = 0;
         var number = 0;
-        var open = new List<(string Strong, string Content, List<string> Words)>();
+        var open = new List<OpenSpan>();
         var spans = new List<AlignmentSpan>();
+        var shared = 0;
+        var unaligned = 0;
 
         void CloseVerse()
         {
             if (number > 0 && spans.Count > 0)
             {
-                verses.Add(new AlignedVerse(chapter, number, [.. spans]));
+                verses.Add(new AlignedVerse(chapter, number, [.. spans], shared, unaligned));
             }
 
             spans.Clear();
             open.Clear();
+            shared = 0;
+            unaligned = 0;
             number = 0;
         }
 
@@ -72,20 +101,26 @@ internal static partial class Usfm3AlignmentReader
             else if (token.Groups["start"].Success)
             {
                 var attributes = token.Groups["start"].Value;
-                open.Add((
+                open.Add(new OpenSpan(
                     Attribute(attributes, "x-strong") ?? string.Empty,
                     Attribute(attributes, "x-content") ?? string.Empty,
-                    []));
+                    Occurrence(attributes, "x-occurrence"),
+                    Occurrence(attributes, "x-occurrences")));
             }
             else if (token.Groups["end"].Success)
             {
                 if (open.Count > 0)
                 {
-                    var (strong, text, words) = open[^1];
+                    var span = open[^1];
                     open.RemoveAt(open.Count - 1);
-                    if (strong.Length > 0 && words.Count > 0)
+                    if (span.Strong.Length > 0 && span.Words.Count > 0)
                     {
-                        spans.Add(new AlignmentSpan(strong, text, words));
+                        spans.Add(new AlignmentSpan(
+                            span.Strong, span.Content, span.Words, span.Occurrence, span.Occurrences, span.WordOccurrences));
+                    }
+                    else if (span.Strong.Length > 0 && number > 0)
+                    {
+                        shared++;
                     }
                 }
             }
@@ -94,12 +129,22 @@ internal static partial class Usfm3AlignmentReader
                 // The innermost open span is the one that names this word. An outer span in a nest
                 // covers several original words at once and says nothing about which is which.
                 open[^1].Words.Add(token.Groups["word"].Value.Trim());
+                var attributes = token.Groups["attributes"].Value;
+                open[^1].WordOccurrences.Add(
+                    (Occurrence(attributes, "x-occurrence"), Occurrence(attributes, "x-occurrences")));
+            }
+            else if (token.Groups["word"].Success && number > 0)
+            {
+                unaligned++;
             }
         }
 
         CloseVerse();
         return verses;
     }
+
+    private static int Occurrence(string attributes, string name) =>
+        int.TryParse(Attribute(attributes, name), out var occurrence) ? occurrence : 0;
 
     private static string? Attribute(string attributes, string name)
     {
@@ -116,6 +161,13 @@ internal static partial class Usfm3AlignmentReader
         + @"|\\v[ ]+(?<verse>\d+)"
         + @"|\\zaln-s[ ]*\|(?<start>[^\\]*)\\\*"
         + @"|(?<end>\\zaln-e\\\*)"
-        + @"|\\w[ ]+(?<word>[^|\\]+)\|")]
+        + @"|\\w[ ]+(?<word>[^|\\]+)\|(?<attributes>[^\\]*)")]
     private static partial Regex Tokens();
+
+    private sealed record OpenSpan(string Strong, string Content, int Occurrence, int Occurrences)
+    {
+        public List<string> Words { get; } = [];
+
+        public List<(int Occurrence, int Occurrences)> WordOccurrences { get; } = [];
+    }
 }
