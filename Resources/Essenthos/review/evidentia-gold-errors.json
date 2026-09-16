@@ -1,7 +1,7 @@
 {
  "reviewed": "2026-09-16",
  "measurement": "evidentia-measure-book, BSB source with no Strong tag of its own, --without-source-strong --learn-from KJV (Mark adds --learn-from-strong-numbers), final tier = global review + syntax-gated target gloss, at essenthos-core wt/goldscore",
- "note": "Word and link ids are this database load's and do not survive a reload; reference, position and surface are the stable key. Nothing here is applied to the corpus or to the answer key: every published EVIDENTIA figure is still scored against the rows as loaded.",
+ "note": "Word and link ids are this database load's and do not survive a reload; reference, position and surface are the stable key. Nothing here is applied to the corpus or to the answer key: every published EVIDENTIA figure is still scored against the rows as loaded. Rows with `resolved` are load errors that a later load corrected; they are kept as the record of what the earlier load stored and of what the measurement published before the correction was scored against. The Berean tables' rows were redrawn by `redraw berean BHSA` (PRB-0550) in the same change, so the link ids of the two annotation rows belong to the earlier load too.",
  "$schema": "./evidentia-gold-errors.schema.json",
  "errors": [
   {
@@ -101,7 +101,12 @@
     "strongNumber": "G908"
    },
    "cause": "load",
-   "why": "Not the annotators. The stored Clear Bible row says 'a baptism' -> μετανοίας, and every link after 'appeared' in Mark 1:4 is one Greek word late ('preaching' -> βάπτισμα, 'repentance' -> εἰς). Clear Bible's own record aligns the BSB words to BGNT 9 κηρύσσων and 10 βάπτισμα; BGNT reads καὶ κηρύσσων where Nestle 1904 has no καί, and the corpus joins BGNT words to Nestle 1904 by position."
+   "why": "Not the annotators. The stored Clear Bible row says 'a baptism' -> μετανοίας, and every link after 'appeared' in Mark 1:4 is one Greek word late ('preaching' -> βάπτισμα, 'repentance' -> εἰς). Clear Bible's own record aligns the BSB words to BGNT 9 κηρύσσων and 10 βάπτισμα; BGNT reads καὶ κηρύσσων where Nestle 1904 has no καί, and the corpus joins BGNT words to Nestle 1904 by position.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   },
   {
    "reference": "Mark 1:27",
@@ -132,7 +137,12 @@
     "strongNumber": "G2537"
    },
    "cause": "load",
-   "why": "Not the annotators. From 'What' onward every stored Clear Bible row of Mark 1:27 is one Greek word late ('What' -> ἐστιν, 'new' -> κατ, 'authority' -> καὶ). 'new' -> καινή is right."
+   "why": "Not the annotators. From 'What' onward every stored Clear Bible row of Mark 1:27 is one Greek word late ('What' -> ἐστιν, 'new' -> κατ, 'authority' -> καὶ). 'new' -> καινή is right.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   },
   {
    "reference": "Mark 1:27",
@@ -163,7 +173,12 @@
     "strongNumber": "G2004"
    },
    "cause": "load",
-   "why": "Not the annotators. The same shift in Mark 1:27 stores 'He commands' -> καὶ 21. 'commands' -> ἐπιτάσσει is right."
+   "why": "Not the annotators. The same shift in Mark 1:27 stores 'He commands' -> καὶ 21. 'commands' -> ἐπιτάσσει is right.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   },
   {
    "reference": "Mark 2:17",
@@ -194,7 +209,12 @@
     "strongNumber": "G2564"
    },
    "cause": "load",
-   "why": "Not the annotators. Mark 2:17 is stored one Greek word late from 'It is not' onward ('to call' -> δικαίους, 'the righteous' -> ἀλλὰ). 'call' -> καλέσαι is right."
+   "why": "Not the annotators. Mark 2:17 is stored one Greek word late from 'It is not' onward ('to call' -> δικαίους, 'the righteous' -> ἀλλὰ). 'call' -> καλέσαι is right.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   },
   {
    "reference": "Mark 2:17",
@@ -225,7 +245,12 @@
     "strongNumber": "G1342"
    },
    "cause": "load",
-   "why": "Not the annotators. The same shift stores 'the righteous' -> ἀλλὰ. 'righteous' -> δικαίους is right."
+   "why": "Not the annotators. The same shift stores 'the righteous' -> ἀλλὰ. 'righteous' -> δικαίους is right.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   },
   {
    "reference": "Mark 3:1",
@@ -256,7 +281,12 @@
     "strongNumber": "G4864"
    },
    "cause": "load",
-   "why": "Not the annotators. Mark 3:1 is stored one Greek word late from 'the' onward ('synagogue' -> καὶ, 'was' -> ἐκεῖ, 'there' -> ἄνθρωπος). 'synagogue' -> συναγωγήν is right."
+   "why": "Not the annotators. Mark 3:1 is stored one Greek word late from 'the' onward ('synagogue' -> καὶ, 'was' -> ἐκεῖ, 'there' -> ἄνθρωπος). 'synagogue' -> συναγωγήν is right.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   },
   {
    "reference": "Mark 3:1",
@@ -287,7 +317,12 @@
     "strongNumber": "G444"
    },
    "cause": "load",
-   "why": "Not the annotators. The same shift stores 'a man' -> ἐξηραμμένην. 'man' -> ἄνθρωπος is right."
+   "why": "Not the annotators. The same shift stores 'a man' -> ἐξηραμμένην. 'man' -> ἄνθρωπος is right.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   },
   {
    "reference": "Mark 3:1",
@@ -318,7 +353,12 @@
     "strongNumber": "G1563"
    },
    "cause": "load",
-   "why": "Not the annotators. The same shift stores 'there' -> ἄνθρωπος. 'there' -> ἐκεῖ is right."
+   "why": "Not the annotators. The same shift stores 'there' -> ἄνθρωπος. 'there' -> ἐκεῖ is right.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   },
   {
    "reference": "Mark 3:35",
@@ -349,7 +389,12 @@
     "strongNumber": "G80"
    },
    "cause": "load",
-   "why": "Not the annotators. Mark 3:35 is stored one Greek word late ('brother' -> μου, 'sister' -> καὶ). 'brother' -> ἀδελφός is right."
+   "why": "Not the annotators. Mark 3:35 is stored one Greek word late ('brother' -> μου, 'sister' -> καὶ). 'brother' -> ἀδελφός is right.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   },
   {
    "reference": "Mark 3:35",
@@ -380,7 +425,12 @@
     "strongNumber": "G79"
    },
    "cause": "load",
-   "why": "Not the annotators. The same shift stores 'sister' -> καὶ. 'sister' -> ἀδελφὴ is right."
+   "why": "Not the annotators. The same shift stores 'sister' -> καὶ. 'sister' -> ἀδελφὴ is right.",
+   "resolved": {
+    "on": "2026-09-16",
+    "by": "essenthos-core wt/goldload (PRB-0548): Clear Bible's BGNT words joined to Nestle 1904 word for word, applied with `redraw clearbible BSB`",
+    "checked": "On a pg_dump copy of essenthos_core after the redraw, the stored Clear Bible row for this English word names the reading below and no longer the stated reading, which is kept here as what the earlier load stored; re-running the same benchmark there, EVIDENTIA's proposal for this word is no longer contradicted."
+   }
   }
  ]
 }

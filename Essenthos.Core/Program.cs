@@ -452,7 +452,9 @@ if (args is ["carry", ..])
 
 // A stated mapping drawn again from its file, after a change to how the file is read. The rows that
 // file wrote are withdrawn and loaded afresh, and the verse links and carried annotations are brought
-// up to the links as they then stand. `redraw berean BHSA` for the tables' Hebrew half.
+// up to the links as they then stand. `redraw berean BHSA` for the tables' Hebrew half,
+// `redraw clearbible BSB` for Clear Bible's sets on one translation. Redrawing the Berean against
+// NESTLE1904 withdraws Clear Bible's claims on those links too, so the Clear Bible set goes after it.
 if (args is ["redraw", var redrawSource, var redrawSlug])
 {
     using var redrawScope = app.Services.CreateScope();
@@ -471,10 +473,21 @@ if (args is ["redraw", var redrawSource, var redrawSlug])
                 await berean.Load(ResourcePaths.File(resources, "Berean", "bsb_tables.tsv"), slug));
             break;
 
+        case "clearbible":
+            var clearBible = redrawScope.ServiceProvider.GetRequiredService<ClearBibleLinkLoader>();
+            foreach (var set in ClearBibleSet.All().Where(set => set.From == slug))
+            {
+                await clearBible.Withdraw(set);
+                app.Logger.LogInformation(
+                    "{Outcome}", await clearBible.Load(Path.Combine(resources, "ClearBible"), set));
+            }
+
+            break;
+
         default:
             app.Logger.LogError(
                 "Nothing is known to redraw from \"{Source}\". Name berean with a witness, as in `redraw berean "
-                + "BHSA`", redrawSource);
+                + "BHSA`, or clearbible with a translation, as in `redraw clearbible BSB`", redrawSource);
             return 1;
     }
 
@@ -494,12 +507,7 @@ if (args is ["clearbible", ..])
     var folder = Path.Combine(
         ResourcePaths.Read(app.Configuration, app.Environment.ContentRootPath), "ClearBible");
 
-    foreach (var set in new[]
-             {
-                 ClearBibleSet.Berean(BereanTextSource.Slug, NestleTextSource.Slug),
-                 ClearBibleSet.ReinaValeraOldTestament(EbibleTextSource.ReinaValera, BhsaTextSource.Slug),
-                 ClearBibleSet.ReinaValeraNewTestament(EbibleTextSource.ReinaValera, NestleTextSource.Slug),
-             })
+    foreach (var set in ClearBibleSet.All())
     {
         app.Logger.LogInformation("{Outcome}", await clearBible.Load(folder, set));
     }
