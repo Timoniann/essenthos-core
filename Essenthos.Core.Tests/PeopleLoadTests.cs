@@ -70,6 +70,12 @@ public sealed class PeopleLoadTests : IDisposable
         Mark(_rulings.Count + 6, Judah, "pers,gens,topo");
         Mark(_rulings.Count + 7, Judah, "pers,gens,topo");
         Mark(_rulings.Count + 8, Amorite, null);
+        Analyse(_rulings.Count + 9, Analysed,
+            "Egyptian, of Egypt.", "a Mitsrite, or inhabitant of Mitsrajim");
+        Analyse(_rulings.Count + 10, Nameless,
+            "in the Jews' language.", "the Jewish (used adverbially) language");
+        Analyse(_rulings.Count + 11, Another,
+            "Philistine(-ss).", "a Pelishtite woman, or female inhabitant of Pelesheth");
 
         _db.StrongEntries.AddRange(
             new StrongEntry
@@ -136,9 +142,22 @@ public sealed class PeopleLoadTests : IDisposable
     private const string Amorite = "H567";
 
     /// <summary>
-    /// Words beyond the ruled ones: two gentilics, an unheld one, four of Judah and one Amorite.
+    /// The lexeme BHSA analyses as a gentilic and Strong derives from no word he numbers, which is
+    /// the Egyptians' case and the whole of PRB-0505.
     /// </summary>
-    private const int Extra = 8;
+    private const string Analysed = "H4713";
+
+    /// <summary>The same, where his King James renderings hold no gentilic word at all.</summary>
+    private const string Nameless = "H3066";
+
+    /// <summary>The same again, naming a people the encyclopedia already holds under another number.</summary>
+    private const string Another = "H6431";
+
+    /// <summary>
+    /// Words beyond the ruled ones: two gentilics, an unheld one, four of Judah, one Amorite and
+    /// three lexemes BHSA analyses as gentilics.
+    /// </summary>
+    private const int Extra = 11;
 
     private void Mark(int verse, string number, string? nameType)
     {
@@ -147,6 +166,19 @@ public sealed class PeopleLoadTests : IDisposable
         word.Morphology = nameType is null
             ? JsonDocument.Parse("""{"pos": "subs"}""")
             : JsonDocument.Parse($$"""{"pos": "subs", "nameType": "{{nameType}}"}""");
+        _db.SaveChanges();
+    }
+
+    /// <summary>A word whose lexeme BHSA analyses as a gentilic, with the entry the lexicon holds.</summary>
+    private void Analyse(int verse, string number, string? kjv, string definition)
+    {
+        var word = _db.WordAt(_hebrew, 1, verse, 1);
+        word.StrongNumber = number;
+        word.Morphology = JsonDocument.Parse("""{"pos": "adjv", "lexicalSet": "gntl"}""");
+        _db.StrongEntries.Add(new StrongEntry
+        {
+            StrongNumber = number, Definition = definition, KjvDefinition = kjv,
+        });
         _db.SaveChanges();
     }
 
@@ -483,6 +515,73 @@ public sealed class PeopleLoadTests : IDisposable
         var named = await _db.WordEntities.SingleAsync(a => a.EntityId == amorites.Id);
         named.WordId.Should().Be(_db.WordAt(_hebrew, 1, _rulings.Count + 8, 1).Id);
         named.Method.Should().Be(LinkMethod.Lexical);
+    }
+
+    /// <summary>
+    /// BHSA analysing the lexeme as a gentilic is the second witness that a people exists, and it
+    /// reaches the ones Strong's derivation refuses. H4713 is the Egyptians: he writes
+    /// <em>from מִצְרַיִם (H4714)</em> without either of the two words the derivation parse reads,
+    /// so nothing had ever been written for thirty words of the Hebrew Bible.
+    /// </summary>
+    [Fact]
+    public async Task ALexemeBhsaAnalysesAsAGentilicBecomesAPeople()
+    {
+        var outcome = await Load();
+
+        var egyptians = await _db.Entities
+            .Include(e => e.Claims)
+            .Include(e => e.Names)
+            .SingleAsync(e => e.Name == "Egyptians");
+
+        egyptians.Kind.Should().Be(EntityKind.People);
+        egyptians.Distinguisher.Should().Contain("inhabitant of Mitsrajim");
+        egyptians.Claims.Should().Contain(c => c.Note!.Contains("BHSA analyses as a gentilic"));
+        egyptians.Names.Should().ContainSingle(n => n.HebrewStrongNumber == Analysed);
+        outcome.Analysed.Should().Be(1);
+
+        var named = await _db.WordEntities.SingleAsync(a => a.EntityId == egyptians.Id);
+        named.WordId.Should().Be(_db.WordAt(_hebrew, 1, _rulings.Count + 9, 1).Id);
+        named.Method.Should().Be(LinkMethod.Lexical);
+    }
+
+    /// <summary>
+    /// The analysis alone is not enough to name one. Strong's King James renderings are read for
+    /// the name and they can answer nothing — H3066 is <em>in the Jews' language</em>, an adverb —
+    /// and where they do, the number is refused rather than titled from the definition's leading
+    /// noun, which would write the people <em>Jewishs</em>.
+    /// </summary>
+    [Fact]
+    public async Task AGentilicHisRenderingsDoNotNameIsRefused()
+    {
+        var outcome = await Load();
+
+        outcome.Unnamed.Should().Be(1);
+        (await _db.Entities.CountAsync(e => e.Kind == EntityKind.People && e.Name.StartsWith("Jewish")))
+            .Should().Be(0);
+        (await _db.WordEntities.CountAsync(a => a.WordId == _db.WordAt(_hebrew, 1, _rulings.Count + 10, 1).Id))
+            .Should().Be(0);
+    }
+
+    /// <summary>
+    /// One nation the dictionary writes twice. The feminine gentilic is a second number for a
+    /// people the encyclopedia already holds, and a second record would be two pages nobody could
+    /// tell apart — so the number is written onto the record that has the name, and its words reach
+    /// the page that was already there.
+    /// </summary>
+    [Fact]
+    public async Task ANumberNamingAPeopleAlreadyHeldJoinsItRatherThanDoublingIt()
+    {
+        var outcome = await Load();
+
+        (await _db.Entities.CountAsync(e => e.Kind == EntityKind.People && e.Name == "Philistines"))
+            .Should().Be(1);
+        var philistines = await _db.Entities.Include(e => e.Names).SingleAsync(e => e.Slug == "philistines");
+        philistines.Names.Should().Contain(n => n.HebrewStrongNumber == Another);
+        outcome.Joined.Should().Be(1);
+
+        var word = _db.WordAt(_hebrew, 1, _rulings.Count + 11, 1).Id;
+        var named = await _db.WordEntities.SingleAsync(a => a.WordId == word);
+        named.EntityId.Should().Be(philistines.Id);
     }
 
     /// <summary>

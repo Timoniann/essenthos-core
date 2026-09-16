@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -112,7 +112,20 @@ internal static partial class GentilicNaming
     private const string HebrewPlural = "im";
 
     public static string? Of(string? kjvDefinition, string? definition) =>
-        Plural(FromKingJames(kjvDefinition) ?? FromStrong(definition));
+        Renders(kjvDefinition) ?? Plural(FromStrong(definition));
+
+    /// <summary>
+    /// The name the King James renderings give this people, and nothing where they give no
+    /// gentilic word at all.
+    ///
+    /// It is the half of <see cref="Of"/> that can say no, and that is what makes it a gate as well
+    /// as a name. The other half takes whatever noun Strong's definition opens with, which is right
+    /// for an entry already established to be a gentilic and wrong for one that has not been: the
+    /// entries BHSA analyses as gentilics and Strong does not derive include <em>the Jewish (used
+    /// adverbially) language</em>, <em>right</em> and <em>the heart</em>, and their leading nouns
+    /// would become the peoples <em>Jewishs</em>, <em>Rights</em> and <em>Hearts</em>.
+    /// </summary>
+    public static string? Renders(string? kjvDefinition) => Plural(FromKingJames(kjvDefinition));
 
     /// <summary>
     /// The first single-word gentilic among the King James renderings Strong lists. Entries that

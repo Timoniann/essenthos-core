@@ -1,4 +1,4 @@
-using Essenthos.Core.Loading.Encyclopedia;
+﻿using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Xunit;
 
@@ -142,6 +142,45 @@ public sealed class PeopleFileTests
     /// gentilic claimed twice would make the resolution ambiguous where its whole warrant is that
     /// it is not.
     /// </summary>
+    /// <summary>
+    /// The King James half on its own, which is the gate a lexeme BHSA analyses as a gentilic has
+    /// to pass. Everything the renderings actually name still comes through.
+    /// </summary>
+    [Theory]
+    [InlineData("Egyptian, of Egypt.", "Egyptians")]
+    [InlineData("Perizzite.", "Perizzites")]
+    [InlineData("Chaldean.", "Chaldeans")]
+    [InlineData("Horims, Horites.", "Horites")]
+    [InlineData("Lubim(-s), Libyans.", "Lubim")]
+    public void TheRenderingsNameThePeopleWithoutTheDerivation(string kjv, string expected) =>
+        GentilicNaming.Renders(kjv).Should().Be(expected);
+
+    /// <summary>
+    /// And what it refuses, which is why it exists. Every one of these is a lexeme BHSA analyses as
+    /// a gentilic whose entry is not a nation — an adverb, a woman's designation, a place, one
+    /// man's name — and the definition's leading noun would have made each of them a people.
+    /// </summary>
+    [Theory]
+    [InlineData("in the Jews' language.")]
+    [InlineData("(on the) right (hand).")]
+    [InlineData("Jezreelitess.")]
+    [InlineData("Israelitish.")]
+    [InlineData("Rechah.")]
+    [InlineData("Matri.")]
+    [InlineData("Hori.")]
+    [InlineData(null)]
+    public void ARenderingThatIsNoGentilicNamesNobody(string? kjv) =>
+        GentilicNaming.Renders(kjv).Should().BeNull();
+
+    /// <summary>
+    /// The definition's leading noun is still read where a derivation has already established the
+    /// entry is a gentilic, because fourteen entries have no usable King James rendering.
+    /// </summary>
+    [Fact]
+    public void TheDefinitionStillNamesOneTheRenderingsDoNot() =>
+        GentilicNaming.Of("Hagarene, Hagarite, Haggeri.", "a Hagrite or member of an Arabian clan")
+            .Should().Be("Hagarites");
+
     [Fact]
     public void NoNumberNamesTwoPeoples()
     {

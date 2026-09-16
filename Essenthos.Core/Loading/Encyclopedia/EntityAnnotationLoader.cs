@@ -299,14 +299,114 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private static readonly NameAnswers Nothing = new(0, 0, 0);
 
     /// <summary>
+    /// Where a verse list is this corpus's own. Every one of them is written under a source that
+    /// begins with the project's name, and every dataset's list under the dataset's.
+    /// </summary>
+    private const string Ours = "Essenthos%";
+
+    /// <summary>
+    /// The word Chronicles names a town by: <em>Raham the father of Jorkeam</em>, <em>Maon the
+    /// father of Bethzur</em>. H1 standing immediately before a name is the founder formula, and
+    /// what follows it is the place founded and not a second man.
+    /// </summary>
+    private const string FatherOf = "H1";
+
+    /// <summary>
+    /// The places in a clause where a name is what the clause is about — its subject, its object,
+    /// or what its subject is said to be. Everything else is circumstance: <em>the field of
+    /// Aram</em> that Jacob fled to is where he went, not somebody the verse names.
+    /// </summary>
+    private const string Nominated = "'Subj', 'Objc', 'PreC'";
+
+    /// <summary>
+    /// Whether the verse itself says a word BHSA marks a place is a person.
+    ///
+    /// <para>
+    /// BHSA's marking belongs to the lexeme, so H4031 Magog is <c>topo</c> on every occurrence
+    /// because Ezekiel's Magog is a land — including in the table of the sons of Japheth, where it
+    /// is a man. Reading it as the place there is not a judgement the corpus made; it is a
+    /// judgement it was never given the chance to make, because the marking had settled the kind
+    /// before the resolution was asked.
+    /// </para>
+    ///
+    /// <para>
+    /// <strong>The verse is what tells them apart</strong>, and it is the same statement the Greek
+    /// namesakes are told apart by: the encyclopedia records the verses each record is named in, a
+    /// dataset's lists and never this corpus's, and where those name exactly one person bearing the
+    /// word's number and no place bearing it, they contradict the lexeme and the occurrence is the
+    /// person. A title filed under a person is not a bearer — Rezin is <em>king of Aram</em> and
+    /// the encyclopedia files the phrase's numbers under him, which would otherwise put Rezin on
+    /// every אֲרָם of Isaiah 7.
+    /// </para>
+    ///
+    /// <para>
+    /// <strong>Two shapes are refused because a genealogy names towns in them.</strong> A name after
+    /// <see cref="FatherOf"/> is the town its founder is called the father of, which is how
+    /// Chronicles writes Keilah, Mareshah, Lecah and Bethzur; and a name that is a circumstance of
+    /// its clause rather than <see cref="Nominated"/> is where the verse went or whom it went with,
+    /// which is Hosea's field of Aram and the Argob of 2 Kings 15:25.
+    /// </para>
+    /// </summary>
+    private static readonly string ReadAsAPerson =
+        $"""
+         EXISTS (
+             SELECT 1 FROM verse_reference r
+             WHERE r.verse_id = w.verse_id AND r.is_primary
+               AND (SELECT count(DISTINCT {EntityCandidates.Resolves})
+                    FROM entity_name n
+                    JOIN entity bearer ON bearer.id = {EntityCandidates.Resolves}
+                         AND bearer.kind = 'person'
+                    JOIN entity_verse ev ON ev.entity_id = bearer.id
+                         AND ev.canonical_book = r.canonical_book
+                         AND ev.canonical_chapter = r.canonical_chapter
+                         AND ev.canonical_verse = r.canonical_verse
+                         AND ev.source NOT LIKE '{Ours}'
+                    WHERE n.hebrew_strong_number = w.strong_number
+                      AND coalesce(n.kind, '') NOT IN ('title', 'description')) = 1
+               AND NOT EXISTS (
+                    SELECT 1
+                    FROM entity_name n
+                    JOIN entity bearer ON bearer.id = {EntityCandidates.Resolves}
+                         AND bearer.kind = 'place'
+                    JOIN entity_verse ev ON ev.entity_id = bearer.id
+                         AND ev.canonical_book = r.canonical_book
+                         AND ev.canonical_chapter = r.canonical_chapter
+                         AND ev.canonical_verse = r.canonical_verse
+                         AND ev.source NOT LIKE '{Ours}'
+                    WHERE n.hebrew_strong_number = w.strong_number
+                      AND coalesce(n.kind, '') NOT IN ('title', 'description')))
+         AND NOT EXISTS (
+             SELECT 1 FROM word before
+             WHERE before.verse_id = w.verse_id AND before.position = w.position - 1
+               AND before.strong_number = '{FatherOf}')
+         AND EXISTS (
+             SELECT 1 FROM word_group g
+             JOIN word_group_word gw ON gw.word_group_id = g.id AND gw.word_id = w.id
+             WHERE g.kind = 'phrase' AND g.features->>'function' IN ({Nominated}))
+         """;
+
+    /// <summary>
     /// The kind of record BHSA's marking commits a word to, and nothing where it commits to none.
     ///
     /// The marking belongs to the lemma rather than to the occurrence, so a lexeme that can be a
     /// person, a people or a place carries all three at once and settles nothing: only a marking
     /// naming one kind is read, and every occurrence of Israel is left out by it.
+    ///
+    /// <para>
+    /// A word it marks a place is asked of the verse before the kind is taken —
+    /// <see cref="ReadAsAPerson"/> — because that is the one case where the lexeme and the
+    /// occurrence are known to disagree and something else can say so. The test is written inside
+    /// the <c>topo</c> arm rather than beside it so that it is asked of six thousand words and not
+    /// of four hundred thousand.
+    /// </para>
     /// </summary>
-    private const string Marked =
-        "CASE w.morphology->>'nameType' WHEN 'pers' THEN 'person' WHEN 'topo' THEN 'place' END";
+    private static readonly string Marked =
+        $"""
+         CASE w.morphology->>'nameType'
+              WHEN 'pers' THEN 'person'
+              WHEN 'topo' THEN CASE WHEN {ReadAsAPerson} THEN 'person' ELSE 'place' END
+         END
+         """;
 
     /// <summary>
     /// The numbers that name exactly one entity of a kind, which are the only ones annotated.
@@ -586,7 +686,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
 
     /// <summary>
     /// The same annotations on the word each link says stands for one of those witness words —
-    /// its head, by <see cref="Annotating.Head"/>, and not every word of the set the link names.
+    /// by <see cref="Annotating.Reached"/>, which is the set's head and not every word of it,
+    /// except where the link pairs one name written several times with several words.
     ///
     /// A word reached from two witness words that name two different entities is left alone: the
     /// links disagree about who is named and picking between them is the thing this loader does not
@@ -636,7 +737,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
             CROSS JOIN LATERAL (SELECT {Annotating.LinkWorth} AS worth) crossed
-            CROSS JOIN LATERAL ({Annotating.Head}) other
+            CROSS JOIN LATERAL ({Annotating.Reached}) other
             JOIN word w ON w.id = other.word_id
         ),
         rendered AS (
@@ -678,8 +779,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         """;
 
     /// <summary>
-    /// What this loader wrote on a number the encyclopedia no longer answers with one place, taken
-    /// back.
+    /// What this loader wrote and would not write today, taken back: a number the encyclopedia no
+    /// longer answers with one place, and a place the word's own verse contradicts.
     ///
     /// An annotation is written when the resolution needs nobody, and what makes that true is the
     /// encyclopedia at the moment it is asked. The encyclopedia grows: the peoples made H3778 two
@@ -702,8 +803,16 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// The words carried into the translations go with them. They are the same claim moved one hop
     /// along a link and they carry the same source, so leaving them would keep the King James
     /// saying what the Hebrew beside it no longer says. They are found the way they were made, from
-    /// the seed through <see cref="Annotating.Head"/>, rather than by reading them back out of a
+    /// the seed through <see cref="Annotating.Reached"/>, rather than by reading them back out of a
     /// note.
+    /// </para>
+    ///
+    /// <para>
+    /// The second arm is <see cref="ReadAsAPerson"/>, and it is here rather than left to the next
+    /// cold load for the same reason as the first: the place was written because BHSA's marking
+    /// settled the kind before the verse was asked, and a warm corpus that only stopped writing it
+    /// would keep every one already there. It is not restricted by method — the marking is what
+    /// made the row whatever method it carries, and the marking is what the verse overrules.
     /// </para>
     ///
     /// <para>
@@ -721,12 +830,23 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                AND a.method = @method
                AND w.strong_number IS NOT NULL
                AND {Distinguished}
+             UNION
+             SELECT a.word_id, a.entity_id
+             FROM word_entity a
+             JOIN word w ON w.id = a.word_id
+             JOIN text t ON t.id = w.text_id AND t.slug = @witness
+             JOIN entity named ON named.id = a.entity_id AND named.kind = 'place'
+             WHERE a.source = ANY(@written)
+               AND w.morphology->>'nameType' = 'topo'
+               AND w.strong_number IS NOT NULL
+               AND {ReadAsAPerson}
          ),
          carried AS (
              SELECT other.word_id, seed.entity_id
              FROM seed
+             JOIN word origin ON origin.id = seed.word_id
              JOIN link_word mine ON mine.word_id = seed.word_id
-             CROSS JOIN LATERAL ({Annotating.Head}) other
+             CROSS JOIN LATERAL ({Annotating.Reached}) other
          ),
          gone AS (
              SELECT word_id, entity_id FROM seed
@@ -832,8 +952,9 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         if (withdrawn > 0)
         {
             logger.LogInformation(
-                "Withdrew {Rows} name resolutions whose number the encyclopedia now answers with " +
-                "more than one place", withdrawn);
+                "Withdrew {Rows} name resolutions the encyclopedia no longer bears out: the number " +
+                "now answers with more than one place, or the word's own verse names a person and " +
+                "no place bearing it", withdrawn);
         }
 
         var unspoken = await db.Entities.CountAsync(
@@ -1108,7 +1229,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     {
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var withdrawn = await Run(connection, transaction, Withdraw, cancellationToken,
-            ("written", Written), ("method", EnumSpelling.Of(LinkMethod.StrongNumber)));
+            ("written", Written), ("method", EnumSpelling.Of(LinkMethod.StrongNumber)),
+            ("witness", Witness));
         await transaction.CommitAsync(cancellationToken);
         return withdrawn;
     }

@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -28,10 +28,25 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// once, or a place alone. Counted rather than resolved: <em>the kingdom/tribe of Judah</em> is a
 /// question about the verse and not about the encyclopedia, and this pass does not read verses.
 /// </param>
+/// <param name="Analysed">
+/// Records written for a lexeme BHSA analyses as a gentilic and Strong derives from no word he
+/// numbers — the Egyptians, the Perizzites and the rest his derivation refuses.
+/// </param>
+/// <param name="Joined">
+/// Numbers of that kind that named a people the encyclopedia already holds, and were written onto
+/// it as a second gentilic rather than as a second record.
+/// </param>
+/// <param name="Unnamed">
+/// Numbers of that kind refused because his King James renderings yield no gentilic word — an
+/// adverb, a woman's designation or a man's name, none of which is a people.
+/// </param>
 internal sealed record PeopleOutcome(
     bool AlreadyLoaded,
     int FromStrong,
     int Tribes,
+    int Analysed,
+    int Joined,
+    int Unnamed,
     int WithOrigin,
     int Gentilics,
     int Ruled,
@@ -44,14 +59,28 @@ internal sealed record PeopleOutcome(
     public override string ToString() =>
         AlreadyLoaded
             ? "the peoples are already there"
-            : $"{FromStrong + Tribes} peoples — {FromStrong} from the gentilics Strong derives and " +
-              $"{Tribes} tribes of Israel no lexicon names — of which {WithOrigin} name an ancestor " +
-              $"or a homeland the encyclopedia holds, in {Elapsed}. {Gentilics} gentilic rows now " +
-              $"reach the people they were always about. {Annotated} words name a people: from " +
-              $"{Ruled} occurrences a review decided and {Read} a model described as a people, plus " +
-              $"every word carrying a gentilic. {Undecided} further readings name a people and a " +
-              $"territory in one breath and are left alone. {Referenced} verse references written.";
+            : $"{FromStrong + Tribes + Analysed} peoples — {FromStrong} from the gentilics Strong " +
+              $"derives, {Tribes} tribes of Israel no lexicon names and {Analysed} lexemes BHSA " +
+              $"analyses as gentilics that he derives from nothing — of which {WithOrigin} name an " +
+              $"ancestor or a homeland the encyclopedia holds, in {Elapsed}. {Joined} further " +
+              $"numbers joined a people already held and {Unnamed} were refused for want of a name " +
+              $"in his renderings. {Gentilics} gentilic rows now reach the people they were always " +
+              $"about. {Annotated} words name a people: from {Ruled} occurrences a review decided " +
+              $"and {Read} a model described as a people, plus every word carrying a gentilic. " +
+              $"{Undecided} further readings name a people and a territory in one breath and are " +
+              $"left alone. {Referenced} verse references written.";
 }
+
+/// <param name="Records">The records this run wrote, by slug.</param>
+/// <param name="Joined">
+/// Records the encyclopedia already held that gained a number this run, which have words to
+/// annotate even though nothing was written for them.
+/// </param>
+internal sealed record PeopleWriting(
+    Dictionary<string, Entity> Records,
+    List<Entity> Joined,
+    int Analysed,
+    int Unnamed);
 
 /// <summary>
 /// The peoples: a nation, a tribe or a clan the text speaks of as one.
@@ -72,6 +101,18 @@ internal sealed record PeopleOutcome(
 /// else said who they are: that marking is on 5,080 words and on 83 Strong numbers, several of
 /// which are ordinary personal names, and a record whose only evidence is a marking is a record
 /// with nothing on its page.
+/// </para>
+///
+/// <para>
+/// <strong>BHSA's analysis of the lexeme is a different statement, and it is read.</strong>
+/// <c>lexicalSet = gntl</c> says what class of word this is — <em>a person of somewhere</em> — and
+/// it stands on the derived word rather than on the name, so it never confuses the people with
+/// their eponym. Strong's derivation refuses 78 of the 316 lexemes it marks, for saying
+/// <em>from an unused name</em>, hedging, or naming no number at all, and those 78 include the
+/// Egyptians, the Perizzites, the Kerethites and the Horites. They are written from the analysis
+/// and named from his King James renderings, which is the one half of the naming rule that can
+/// answer nothing, so an entry that is an adverb or a man's name is refused rather than made a
+/// nation.
 /// </para>
 ///
 /// <para>
@@ -174,15 +215,19 @@ internal sealed class PeopleLoader(
     {
         var started = Stopwatch.StartNew();
         var file = PeopleFiles.Read();
-        var peoples = await Write(file, cancellationToken);
+        var writing = await Write(file, cancellationToken);
+        var peoples = writing.Records;
 
-        if (peoples.Count == 0)
+        if (peoples.Count == 0 && writing.Joined.Count == 0)
         {
             logger.LogInformation("The peoples are already there; nothing to do");
-            return new PeopleOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new PeopleOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
-        var written = peoples.Values.Select(p => p.Id).ToArray();
+        // A record that gained a number this run has words nothing has annotated either, so the
+        // two belong in one array: what follows asks which peoples are new work, not which are new
+        // rows.
+        var written = peoples.Values.Concat(writing.Joined).Select(p => p.Id).ToArray();
         var tribes = file.Tribes.Count(t => peoples.ContainsKey(t.Slug));
 
         var gentilics = await JoinTheGentilics(cancellationToken);
@@ -198,8 +243,11 @@ internal sealed class PeopleLoader(
 
         var outcome = new PeopleOutcome(
             false,
-            peoples.Count - tribes,
+            peoples.Count - tribes - writing.Analysed,
             tribes,
+            writing.Analysed,
+            writing.Joined.Count,
+            writing.Unnamed,
             peoples.Values.Count(p => p.OriginEntityId is not null),
             gentilics,
             ruled.Occurrences,
@@ -224,7 +272,7 @@ internal sealed class PeopleLoader(
     /// the first boot. On a cold corpus every record is unwritten and this is the whole layer.
     /// </para>
     /// </summary>
-    private async Task<Dictionary<string, Entity>> Write(
+    private async Task<PeopleWriting> Write(
         PeopleFile file,
         CancellationToken cancellationToken)
     {
@@ -297,15 +345,19 @@ internal sealed class PeopleLoader(
             .Where(n => !named.Contains(n.Number, StringComparer.Ordinal) && !claimed.ContainsKey(n.Number))
             .ToList();
 
-        if (peoples.Count == 0 && unjoined.Count == 0 && nations.Count == 0)
+        var analysed = await Analysed(named, claimed, cancellationToken);
+        if (peoples.Count == 0 && unjoined.Count == 0 && nations.Count == 0 && analysed.Count == 0)
         {
-            return peoples;
+            return new PeopleWriting(peoples, [], 0, 0);
         }
 
-        var wanted = unjoined.Select(g => g.StrongNumber).Concat(nations.Select(n => n.Number)).ToList();
+        var wanted = unjoined.Select(g => g.StrongNumber)
+            .Concat(nations.Select(n => n.Number))
+            .Concat(analysed)
+            .ToList();
         var entries = await db.StrongEntries
             .Where(e => wanted.Contains(e.StrongNumber))
-            .Select(e => new { e.StrongNumber, e.Definition, e.KjvDefinition })
+            .Select(e => new LexiconEntry(e.StrongNumber, e.Definition, e.KjvDefinition))
             .ToDictionaryAsync(e => e.StrongNumber, StringComparer.Ordinal, cancellationToken);
 
         foreach (var gentilic in unjoined)
@@ -411,8 +463,180 @@ internal sealed class PeopleLoader(
             peoples[entity.Slug] = entity;
         }
 
+        var (analysedRecords, joined, unnamed) = Analyse(analysed, entries, peoples, taken, file);
+
         await db.SaveChangesAsync(cancellationToken);
-        return peoples;
+        return new PeopleWriting(peoples, joined, analysedRecords, unnamed);
+    }
+
+    /// <summary>What the lexicon says about one number, as much of it as the naming rule reads.</summary>
+    private sealed record LexiconEntry(string StrongNumber, string? Definition, string? KjvDefinition);
+
+    /// <summary>
+    /// What a record made from BHSA's analysis says about itself. The record is ours; the two
+    /// claims on it are the witness's analysis of the lexeme and the dictionary's account of what
+    /// the people is.
+    /// </summary>
+    private const string Analysis =
+        "Essenthos, from the lexemes BHSA analyses as gentilics, named as the King James renders them";
+
+    /// <summary>
+    /// The lexemes BHSA analyses as gentilics: <c>lexicalSet</c> is what class of word it is, and
+    /// <c>gntl</c> is <em>a person of somewhere</em>.
+    ///
+    /// <para>
+    /// It is not the <c>gens</c> marking this loader has always refused. That one is on a name that
+    /// stands for the descent group as well as for the man — Moab, Ammon, Midian, Ham — so a record
+    /// resting on it alone would be a page for a personal name. <c>gntl</c> is on the derived word
+    /// and not on the name, and it is a statement of the same order as the proper-noun marking the
+    /// name resolution already reads: this lexeme means a member of a people.
+    /// </para>
+    /// </summary>
+    private const string Gentilics =
+        """
+        SELECT DISTINCT w.strong_number
+        FROM word w
+        JOIN text t ON t.id = w.text_id AND t.slug = @witness
+        WHERE w.strong_number IS NOT NULL AND w.morphology->>'lexicalSet' LIKE '%gntl%'
+        ORDER BY 1
+        """;
+
+    /// <summary>
+    /// Those of them no people bears and no tribe has claimed. 316 numbers carry the analysis and
+    /// 78 arrive here: Strong states their origin in words the derivation parse refuses — an unused
+    /// name, a hedge, a plain <em>from</em>, a comparison, or nothing — so the Egyptians, the
+    /// Perizzites, the Kerethites and the Horites had no record at all.
+    /// </summary>
+    private async Task<List<string>> Analysed(
+        List<string> named,
+        Dictionary<string, Entity> claimed,
+        CancellationToken cancellationToken)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        await using var command = new NpgsqlCommand(Gentilics, connection);
+        command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
+        command.CommandTimeout = Annotating.Patient;
+
+        var held = named.ToHashSet(StringComparer.Ordinal);
+        var numbers = new List<string>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            var number = reader.GetString(0);
+            if (!held.Contains(number) && !claimed.ContainsKey(number))
+            {
+                numbers.Add(number);
+            }
+        }
+
+        return numbers;
+    }
+
+    /// <summary>
+    /// A record for each of those, named from <see cref="GentilicNaming.Renders"/> — the King James
+    /// half of the naming rule, and the half that can answer nothing.
+    ///
+    /// <para>
+    /// The other half takes whatever noun Strong's definition opens with, and that is safe only
+    /// once a derivation has established the entry is a gentilic. Here nothing has: BHSA's analysis
+    /// says the lexeme is one and the entry may still be <em>the Jewish (used adverbially)
+    /// language</em>, <em>right</em>, <em>the heart</em> or <em>Matri, an Israelite</em>, whose
+    /// leading nouns would be written as peoples. What the renderings hold is what the King James
+    /// prints for the word, and an entry with no gentilic among them is refused and counted —
+    /// seventeen of the seventy-eight, every one of them an adverb, a woman's designation or a
+    /// man's name.
+    /// </para>
+    ///
+    /// <para>
+    /// A name the encyclopedia already holds a people under is that people. H3779 is the Aramaic
+    /// Chaldean beside H3778's Hebrew one, H5985 the Ammonitess beside H5984's Ammonite, H3879 the
+    /// Aramaic Levite beside the tribe: one nation the dictionary writes twice, and a second record
+    /// each would be two pages nobody could tell apart. The number is written onto the record as
+    /// another gentilic name instead, which is what puts its words on the page.
+    /// </para>
+    /// </summary>
+    private (int Written, List<Entity> Joined, int Unnamed) Analyse(
+        List<string> numbers,
+        IReadOnlyDictionary<string, LexiconEntry> entries,
+        Dictionary<string, Entity> peoples,
+        HashSet<string> taken,
+        PeopleFile file)
+    {
+        var namings = file.Namings.ToDictionary(n => n.Number, StringComparer.Ordinal);
+        // The records this run has already built are held too, and they are not in the database
+        // yet: the Moabitess arrives in the same pass as the Moabite.
+        var held = db.Entities
+            .Where(e => e.Kind == EntityKind.People)
+            .AsEnumerable()
+            .Concat(peoples.Values)
+            .GroupBy(e => e.Name, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
+        var joined = new List<Entity>();
+        int written = 0, unnamed = 0;
+
+        foreach (var number in numbers)
+        {
+            var entry = entries.GetValueOrDefault(number);
+            var name = namings.GetValueOrDefault(number)?.Name
+                       ?? GentilicNaming.Renders(entry?.KjvDefinition);
+            if (name is null)
+            {
+                unnamed++;
+                continue;
+            }
+
+            if (held.TryGetValue(name, out var already))
+            {
+                already.Names.Add(new EntityName
+                {
+                    Label = name, HebrewStrongNumber = number, Kind = GentilicName,
+                });
+                joined.Add(already);
+                continue;
+            }
+
+            var entity = Record(
+                PeopleFiles.Slug(name, number, slug => peoples.ContainsKey(slug) || taken.Contains(slug)),
+                name,
+                entry?.Definition is { Length: > 0 } said
+                    ? $"{said}, as Strong's Dictionary describes them"
+                    : null,
+                null,
+                null,
+                Analysis);
+
+            entity.Claims.Add(new EntityClaim
+            {
+                Method = LinkMethod.StatedBySource,
+                Confidence = null,
+                Source = BhsaTextSource.Definition.Name,
+                Note = $"{number}, a lexeme BHSA analyses as a gentilic",
+            });
+
+            if (entry?.Definition is { Length: > 0 } quoted)
+            {
+                entity.Claims.Add(new EntityClaim
+                {
+                    Method = LinkMethod.StatedBySource,
+                    Confidence = null,
+                    Source = StrongGentilicLoader.Source,
+                    Note = $"{number}: \"{quoted}\"",
+                });
+            }
+
+            entity.Names.Add(new EntityName
+            {
+                Label = name, HebrewStrongNumber = number, Kind = GentilicName,
+            });
+
+            peoples[entity.Slug] = entity;
+            held[name] = entity;
+            written++;
+        }
+
+        return (written, joined, unnamed);
     }
 
     /// <summary>What kind of label a name row is, in the vocabulary the encyclopedia already uses.</summary>
