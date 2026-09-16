@@ -253,25 +253,38 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// </summary>
     private const string ContentionSql =
         """
-        WITH claimed AS (
-            SELECT lw.word_id, l.from_text_id, l.to_text_id, c.source, count(DISTINCT lw.link_id) AS links
+        WITH counterpart AS (
+            SELECT link_id, array_agg(word_id ORDER BY word_id) AS words
+            FROM link_word
+            WHERE side = 'to'
+            GROUP BY link_id
+        ),
+        claimed AS (
+            SELECT lw.word_id, l.from_text_id, l.to_text_id, c.source,
+                   count(DISTINCT lw.link_id) AS links,
+                   -- The words this source names. Read only where the source names one link, where
+                   -- min is that link's own set; a stated absence answers with the empty set.
+                   min(coalesce(cp.words, '{}')) AS answer
             FROM link_word lw
             JOIN link l ON l.id = lw.link_id
             JOIN link_claim c ON c.link_id = l.id
+            LEFT JOIN counterpart cp ON cp.link_id = l.id
             WHERE lw.side = 'from'
             GROUP BY lw.word_id, l.from_text_id, l.to_text_id, c.source
         ),
         perWord AS (
             SELECT word_id, from_text_id, to_text_id,
                    max(links) AS most_by_one_source,
-                   count(*) AS sources
+                   count(*) AS sources,
+                   count(DISTINCT answer) AS answers
             FROM claimed
             GROUP BY word_id, from_text_id, to_text_id
         )
         SELECT t.slug, against.slug,
                count(*) FILTER (WHERE most_by_one_source > 1),
                coalesce(max(most_by_one_source), 0),
-               count(*) FILTER (WHERE sources > 1 AND most_by_one_source = 1)
+               count(*) FILTER (WHERE sources > 1 AND most_by_one_source = 1 AND answers > 1),
+               count(*) FILTER (WHERE sources > 1 AND most_by_one_source = 1 AND answers = 1)
         FROM perWord
         JOIN text t ON t.id = perWord.from_text_id
         JOIN text against ON against.id = perWord.to_text_id
@@ -625,7 +638,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
 
         var contention = await Read(connection, ContentionSql, cancellationToken, reader => new Contention(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
-            (int)reader.GetInt64(4)));
+            (int)reader.GetInt64(4), (int)reader.GetInt64(5)));
 
         var crowding = await Read(connection, CrowdingSql, cancellationToken, reader => new Crowding(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));

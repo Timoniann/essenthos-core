@@ -190,6 +190,112 @@ public sealed class OldTestamentLinkTests : IDisposable
         outcome.Links.Should().Be(2);
     }
 
+    /// <summary>
+    /// The numbers are a claim about the Hebrew words, and the Hebrew join is what makes them
+    /// trustworthy. A verse the King James words differently from the file loses its links and keeps
+    /// its numbers: 388 verses of BHSA, Genesis 5:3 among them, had none for this reason alone.
+    /// </summary>
+    [Fact]
+    public async Task AVerseWhoseEnglishDoesNotLineUpStillGivesTheHebrewItsNumbers()
+    {
+        var outcome = await Load(Record(
+            Segment(["In", "the", "start"], 2),
+            Segment(["created"], 3)));
+
+        outcome.Links.Should().Be(0);
+        outcome.Refused.Should().Be(1);
+        (await Numbers()).Should().Equal("H1", "H2", "H3", "H4");
+    }
+
+    /// <summary>
+    /// A psalm's superscription is verse 0 of the frame, and the file, numbering as the King James
+    /// does, counts its Hebrew into verse 1. Read against verse 1 alone the counts never agree, and
+    /// the superscription and the verse after it went unnumbered in 63 psalms.
+    /// </summary>
+    [Fact]
+    public async Task APsalmSuperscriptionIsReadTogetherWithTheVerseTheFileCountsItInto()
+    {
+        var superscription = Superscribe("מִזְמֹור", "לְ", "דָוִד");
+
+        var outcome = await Load(new MappingRecord(1, 1, 1,
+            [.. Enumerable.Range(1, 7).Select(Hebrew)],
+            [Segment(["A", "Psalm", "In", "the", "beginning", "created"], 5)]));
+
+        outcome.Refused.Should().Be(1);
+        var numbered = await _db.Words
+            .Where(w => w.TextId == _bhsa.Id)
+            .OrderBy(w => w.VerseId != superscription).ThenBy(w => w.Position)
+            .Select(w => w.StrongNumber)
+            .ToListAsync();
+        numbered.Should().Equal("H1", "H2", "H3", "H4", "H5", "H6", "H7");
+    }
+
+    /// <summary>
+    /// A corpus whose links were written before the numbers could be recovered gets them on the next
+    /// load, and a number already there is not touched.
+    /// </summary>
+    [Fact]
+    public async Task ALoadedCorpusIsGivenTheNumbersItLacksAndKeepsTheOnesItHas()
+    {
+        await Load(Record(
+            Segment(["In", "the", "beginning"], 2),
+            Segment(["created"], 3)));
+        await _db.Database.ExecuteSqlRawAsync(
+            "UPDATE word SET strong_number = CASE position WHEN 1 THEN 'H7225' ELSE NULL END WHERE text_id = {0}",
+            _bhsa.Id);
+
+        var outcome = await Load(Record(
+            Segment(["In", "the", "beginning"], 2),
+            Segment(["created"], 3)));
+
+        outcome.AlreadyLoaded.Should().BeTrue();
+        outcome.StrongNumbers.Should().Be(3);
+        (await Numbers()).Should().Equal("H7225", "H2", "H3", "H4");
+    }
+
+    private async Task<List<string?>> Numbers()
+    {
+        _db.ChangeTracker.Clear();
+        return await _db.Words
+            .Where(w => w.TextId == _bhsa.Id)
+            .OrderBy(w => w.Position)
+            .Select(w => w.StrongNumber)
+            .ToListAsync();
+    }
+
+    /// <summary>A verse 0 in BHSA's first chapter, the frame's place for a superscription.</summary>
+    private int Superscribe(params string[] words)
+    {
+        var first = _db.VerseAt(_bhsa, 1, 1);
+        var verse = new Verse
+        {
+            TextId = _bhsa.Id,
+            BookId = first.BookId,
+            ChapterId = first.ChapterId,
+            ChapterNumber = 1,
+            Number = 0,
+        };
+        _db.Verses.Add(verse);
+        _db.VerseReferences.Add(new VerseReference
+        {
+            Verse = verse, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 0, IsPrimary = true,
+        });
+        for (var position = 0; position < words.Length; position++)
+        {
+            _db.Words.Add(new Word
+            {
+                TextId = _bhsa.Id,
+                Verse = verse,
+                Position = position + 1,
+                Surface = words[position],
+                Trailer = " ",
+            });
+        }
+
+        _db.SaveChanges();
+        return verse.Id;
+    }
+
     private void Gloss(params string[] glosses)
     {
         for (var position = 0; position < glosses.Length; position++)
