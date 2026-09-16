@@ -13,6 +13,16 @@ internal static class EvidentiaDefaults
 
     /// <summary>What the whole of its share adds on top.</summary>
     public const double KnownRenderingShareScore = 0.45;
+
+    /// <summary>
+    /// The most an inferred rendering may be worth. It is one rung below a number printed on both
+    /// sides, by the deduction <see cref="StrongNumberMatch.ResolvedNumber"/> already names and for
+    /// the reason it names: one more inference between the link and the two texts that state it.
+    /// A rule this corpus concluded must never reach the confidence of a number somebody printed,
+    /// or the standing order that puts source before inference survives only in the method name.
+    /// </summary>
+    public const double InferredRenderingCeiling =
+        StrongNumberMatch.Unambiguous - StrongNumberMatch.ResolvedNumber;
 }
 
 [Flags]

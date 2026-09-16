@@ -9,7 +9,7 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// </summary>
 internal sealed class StrongNumberEvidenceSource : IEvidentiaEvidenceSource
 {
-    private const double AnchorScore = 0.90;
+    private const double AnchorScore = StrongNumberMatch.Unambiguous;
 
     public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {

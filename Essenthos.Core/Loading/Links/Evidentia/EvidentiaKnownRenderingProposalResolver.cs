@@ -7,8 +7,17 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// </summary>
 internal sealed class EvidentiaKnownRenderingProposalResolver
 {
-    private const double MaximumConfidence = 0.90;
-    private const double ConfidenceOffset = 0.25;
+    /// <summary>
+    /// A learned rendering used to reach exactly 0.90 - the confidence a number printed on both
+    /// sides earns - because the offset carried the highest possible lexical score past the
+    /// ceiling and the ceiling was that same number. The ceiling is now a rung below it, and the
+    /// offset lands the strongest rendering on the ceiling rather than clamping a whole band flat
+    /// against it.
+    /// </summary>
+    private const double MaximumConfidence = EvidentiaDefaults.InferredRenderingCeiling;
+
+    private const double ConfidenceOffset = MaximumConfidence
+        - EvidentiaDefaults.KnownRenderingBaseScore - EvidentiaDefaults.KnownRenderingShareScore;
     private const double KnownEvidenceWeight = 1_000;
     private const double InvalidAssignmentCost = 1_000_000;
 

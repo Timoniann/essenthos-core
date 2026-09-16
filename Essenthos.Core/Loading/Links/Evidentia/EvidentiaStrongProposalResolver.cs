@@ -13,6 +13,12 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// as one; grouping on the spelling would let each of two spellings see one occurrence, call itself
 /// unique, and point two source words at the same target word at the confidence that uniqueness is
 /// what earns.
+///
+/// The two confidences are StrongNumberMatch's own. They are the same two shapes it already
+/// reasons about, and a second copy of the numbers would be a second ladder to keep in step. Its
+/// Verse method is not called here because it reads a tagged edition's rows and writes links,
+/// where this reads candidate edges and writes proposals; what is shared is the ladder, which is
+/// the part that has to agree.
 /// </summary>
 internal sealed class EvidentiaStrongProposalResolver
 {
@@ -50,7 +56,9 @@ internal sealed class EvidentiaStrongProposalResolver
             var kind = sources.Count == 1
                 ? EvidentiaProposalKind.UniqueSharedStrong
                 : EvidentiaProposalKind.SharedStrongInOrder;
-            var confidence = kind == EvidentiaProposalKind.UniqueSharedStrong ? 0.90 : 0.70;
+            var confidence = kind == EvidentiaProposalKind.UniqueSharedStrong
+                ? StrongNumberMatch.Unambiguous
+                : StrongNumberMatch.PairedInOrder;
             for (var index = 0; index < sources.Count; index++)
             {
                 var candidate = group.First(candidate => candidate.Source.Token.Id == sources[index].Token.Id

@@ -89,6 +89,17 @@ public class EvidentiaStrongProposalResolverTests
     }
 
     [Fact]
+    public void ALearnedRenderingNeverReachesThePrintedNumbersConfidence()
+    {
+        var resolver = new EvidentiaKnownRenderingProposalResolver();
+        var strongest = resolver.Resolve([KnownCandidate(1, 11, "H1", 0.65)]).Proposals.Single();
+
+        strongest.Confidence.Should().BeLessThan(StrongNumberMatch.Unambiguous,
+            "a rule this corpus concluded must not be worth what a number somebody printed is worth");
+        strongest.Confidence.Should().Be(EvidentiaDefaults.InferredRenderingCeiling);
+    }
+
+    [Fact]
     public void RepeatedSharedStrongNumbersArePairedInWrittenOrderWhenCountsAgree()
     {
         var resolution = new EvidentiaStrongProposalResolver().Resolve(
@@ -97,7 +108,8 @@ public class EvidentiaStrongProposalResolverTests
         resolution.Proposals.Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
             .Should().Equal((1, 11), (2, 12));
         resolution.Proposals.Should().OnlyContain(proposal =>
-            proposal.Kind == EvidentiaProposalKind.SharedStrongInOrder && proposal.Confidence == 0.70);
+            proposal.Kind == EvidentiaProposalKind.SharedStrongInOrder
+            && proposal.Confidence == StrongNumberMatch.PairedInOrder);
         resolution.UnresolvedSourceWords.Should().Be(0);
     }
 
