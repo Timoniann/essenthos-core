@@ -223,10 +223,19 @@ internal static class Annotating
     /// <strong>What makes it safe is the number, on the seed's own side.</strong> A phrase a
     /// translation's table states is also several words opposite several — <em>the son of Terah</em>
     /// against <em>בֶּן תֶּרַח</em> — and there the naming must land on one word, because only one
-    /// of the words on the witness's side is the name. Here every word on that side is one
-    /// occurrence of the seed's own lexeme, so the set holds nothing but the name and every word
-    /// opposite it renders the name. There are 15,380 such links against 90,534 phrases, and the
-    /// test tells them apart without asking what wrote either.
+    /// of the words on the witness's side is the name. Here that side carries nothing but the
+    /// seed's own number, so each word opposite it that is the name again renders the name. There
+    /// are 15,394 such links against 90,534 phrases, and the test tells them apart without asking
+    /// what wrote either.
+    /// </para>
+    ///
+    /// <para>
+    /// A number is not a lexeme, which is why <see cref="LinkWorth"/> gives a name crossing such
+    /// a set no more than the link itself is worth. 601 of the corpus's 6,550 witness-side sets
+    /// hold two lexemes under the one number, and Joshua 19:47 writes דן four times under H1835 —
+    /// twice for the tribe, once for the town and once for the man their father. Choosing a pairing
+    /// inside a set like that is choosing who is named, which is exactly what the link's confidence
+    /// is low about.
     /// </para>
     ///
     /// <para>
@@ -528,7 +537,8 @@ internal static class Annotating
     /// <para>
     /// Only where the link is one word on each side. A link naming several words says they
     /// correspond as a set, and a claim folded into it may be about any pair within the set, so it
-    /// cannot vouch for the one word a name lands on.
+    /// cannot vouch for the one word a name lands on. A set of one number on both sides is not an
+    /// exception to that — <see cref="OneNameTwice"/> has what it is and is not evidence of.
     /// </para>
     /// </summary>
     public const string LinkWorth =
