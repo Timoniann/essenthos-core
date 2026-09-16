@@ -221,8 +221,20 @@ internal record TextWordResponse(
 /// 31:50a. Empty for every other text, which number their verses and nothing else.
 /// </param>
 /// <summary>A footnote or a cross-reference the edition prints beside a verse.</summary>
-/// <param name="Anchor">The word before the printed note marker, or null for a verse-level note.</param>
-internal record SourceNoteResponse(string Kind, string Content, string? Anchor = null);
+/// <param name="AnchorWordId">
+/// The word this edition printed the note marker after, as an id of <see cref="TextWordResponse"/>
+/// in the same verse — null for a verse-level note. It is the id and not the spelling because a
+/// verse routinely repeats a word: 228 of the corpus's 1,755 anchored notes sit on a spelling that
+/// occurs more than once in their own verse, and a renderer matching on letters would put those
+/// markers in the wrong place with no way to know it had.
+///
+/// It says where the marker was printed. It does not assert that the note explains only that word.
+/// </param>
+/// <param name="Anchor">
+/// That word's spelling, so a reader can be told which word the marker follows without the client
+/// having to look it up. Null exactly when <see cref="AnchorWordId"/> is.
+/// </param>
+internal record SourceNoteResponse(string Kind, string Content, long? AnchorWordId = null, string? Anchor = null);
 
 internal record TextVerseResponse(int Number, IList<TextWordResponse> Words, string Label = "")
 {

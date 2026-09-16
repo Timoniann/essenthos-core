@@ -97,7 +97,7 @@ internal static class Texts
                            && note.Verse.ChapterNumber == chapter)
             .OrderBy(note => note.Verse!.Number).ThenBy(note => note.Verse!.Label).ThenBy(note => note.Position)
             .Select(note => new NoteRow(
-                note.Verse!.Number, note.Verse.Label, note.Kind, note.Content,
+                note.Verse!.Number, note.Verse.Label, note.Kind, note.Content, note.AnchorWordId,
                 note.AnchorWord == null ? null : note.AnchorWord.Surface))
             .ToListAsync(cancellationToken);
 
@@ -267,7 +267,7 @@ internal static class Texts
     {
         var notesByVerse = (notes ?? [])
             .ToLookup(note => (note.VerseNumber, note.Label), note => new SourceNoteResponse(
-                EnumSpelling.Of(note.Kind), note.Content, note.Anchor));
+                EnumSpelling.Of(note.Kind), note.Content, note.AnchorWordId, note.Anchor));
         var wordsByVerse = rows.ToLookup(row => (row.VerseNumber, row.Label));
 
         return verses
@@ -361,6 +361,7 @@ internal static class Texts
         string Label,
         VerseNoteKind Kind,
         string Content,
+        long? AnchorWordId,
         string? Anchor);
 
     private sealed record CanonicalWordRow(
