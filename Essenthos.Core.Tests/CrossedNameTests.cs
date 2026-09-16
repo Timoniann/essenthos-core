@@ -278,4 +278,57 @@ public sealed class CrossedNameTests : IDisposable
         named[Word(4).Id].Entity!.Slug.Should().Be("tyre");
         outcome.Pairs.Should().Be(0);
     }
+    /// <summary>
+    /// 1 Chronicles 27:31 in the Ukrainian, <em>гаґрянин Язіз</em>: the man's name on the gentilic and
+    /// the Hagrites on the man. <em>Язіз</em> is exactly the man's recorded form, and the encyclopedia
+    /// holds no Ukrainian form of the Hagrites for the gentilic to be measured against.
+    /// </summary>
+    [Fact]
+    public async Task NeighboursCrossedWhereOnlyOneOfTheNamesHasAFormAreCrossedBack()
+    {
+        var jaziz = Record("jaziz", "Jaziz", ("nominative", "Язіз"));
+        var hagrites = new Entity
+        {
+            Kind = EntityKind.People, Slug = "hagarites", Name = "Hagrites", SourceId = "hagarites",
+            Source = "a test",
+        };
+        _db.Entities.Add(hagrites);
+        Word(1).Surface = "гаґрянин";
+        Word(1).NormalisedText = "гаґрянин";
+        Word(2).Surface = "Язіз";
+        Word(2).NormalisedText = "язіз";
+        await _db.SaveChangesAsync();
+        Names(1, jaziz, 0.97);
+        Names(2, hagrites, 0.88);
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load();
+
+        var named = await Named();
+        named[Word(1).Id].Entity!.Slug.Should().Be("hagarites");
+        named[Word(2).Id].Entity!.Slug.Should().Be("jaziz");
+        outcome.Pairs.Should().Be(1);
+    }
+
+    /// <summary>
+    /// The same shape where the name given back has forms and none of them is the word: a form that
+    /// does not match is evidence, and it says no.
+    /// </summary>
+    [Fact]
+    public async Task NeighboursWhoseOtherNameHasFormsThatDoNotMatchAreLeftAlone()
+    {
+        Word(1).Surface = "Тирянин";
+        Word(1).NormalisedText = "тирянин";
+        Word(2).Surface = "Хирам";
+        Word(2).NormalisedText = "хирам";
+        await _db.SaveChangesAsync();
+        Names(1, _hiram, 0.9);
+        Names(2, _tyre, 0.8);
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load();
+
+        (await Named())[Word(1).Id].Entity!.Slug.Should().Be("hiram-2");
+        outcome.Pairs.Should().Be(0);
+    }
 }

@@ -96,12 +96,13 @@ internal sealed class CrossedNameLoader(AppDbContext db, ILogger<CrossedNameLoad
             source text NOT NULL,
             verse_id integer NOT NULL,
             text_id integer NOT NULL,
+            position integer NOT NULL,
             language text NOT NULL,
             form text NOT NULL)
         ON COMMIT DROP;
         INSERT INTO named
         SELECT a.id, a.word_id, a.entity_id, a.confidence, a.source,
-               w.verse_id, w.text_id, t.language, w.normalised_text
+               w.verse_id, w.text_id, w.position, t.language, w.normalised_text
         FROM word_entity a
         JOIN word w ON w.id = a.word_id
         JOIN text t ON t.id = w.text_id
@@ -115,6 +116,17 @@ internal sealed class CrossedNameLoader(AppDbContext db, ILogger<CrossedNameLoad
     /// The crossed pairs. Both directions are found, because both rows are wrong and both are
     /// rewritten; and a pair either of whose words stands in a second such pair is dropped whole,
     /// since which of them it belongs to is exactly what the rule has no answer for.
+    ///
+    /// <para>
+    /// The second statement is the same crossing where only one of the two words can be spelled
+    /// exactly. <em>гаґрянин Язіз</em> of 1 Chronicles 27:31 in the Ukrainian: the aligner gave the
+    /// man's name to the gentilic and the Hagrites to the man, and <em>Язіз</em> is exactly Jaziz's
+    /// recorded form, while the encyclopedia records no Ukrainian form of the Hagrites at all. So the
+    /// pair is taken where the two words stand side by side, one of them is exactly the other's name,
+    /// neither is its own, and the name the other word gets back has no form in the language that
+    /// could have said otherwise. A name that has forms and does not match is still nothing: that
+    /// is evidence against, where a missing form is only the absence of evidence.
+    /// </para>
     /// </summary>
     private const string Crossed =
         """
@@ -143,6 +155,30 @@ internal sealed class CrossedNameLoader(AppDbContext db, ILogger<CrossedNameLoad
                           WHERE s.entity_id = mine.entity_id AND s.language = mine.language AND s.form = mine.form)
           AND NOT EXISTS (SELECT 1 FROM spelling s
                           WHERE s.entity_id = theirs.entity_id AND s.language = mine.language AND s.form = theirs.form);
+        INSERT INTO crossed
+        SELECT side.row_id, side.word_id, side.entity_id, side.confidence, side.other_word,
+               'crossed with word ' || side.other_word || ': ' || side.source || ' named this word '
+               || side.was || ', and the encyclopedia writes ' || side.instead || ' as the word beside it'
+        FROM named mine
+        JOIN named theirs ON theirs.verse_id = mine.verse_id AND theirs.text_id = mine.text_id
+             AND abs(theirs.position - mine.position) = 1 AND theirs.entity_id <> mine.entity_id
+        JOIN entity was ON was.id = mine.entity_id
+        JOIN entity instead ON instead.id = theirs.entity_id
+        CROSS JOIN LATERAL (VALUES
+            (mine.row_id, mine.word_id, theirs.entity_id, theirs.confidence, theirs.word_id,
+             mine.source, was.name, instead.name),
+            (theirs.row_id, theirs.word_id, mine.entity_id, mine.confidence, mine.word_id,
+             theirs.source, instead.name, was.name))
+            AS side (row_id, word_id, entity_id, confidence, other_word, source, was, instead)
+        WHERE EXISTS (SELECT 1 FROM spelling s
+                      WHERE s.entity_id = mine.entity_id AND s.language = mine.language AND s.form = theirs.form)
+          AND NOT EXISTS (SELECT 1 FROM spelling s
+                          WHERE s.entity_id = mine.entity_id AND s.language = mine.language AND s.form = mine.form)
+          AND NOT EXISTS (SELECT 1 FROM spelling s
+                          WHERE s.entity_id = theirs.entity_id AND s.language = mine.language AND s.form = theirs.form)
+          AND NOT EXISTS (SELECT 1 FROM spelling s
+                          WHERE s.entity_id = theirs.entity_id AND s.language = mine.language)
+          AND NOT EXISTS (SELECT 1 FROM crossed c WHERE c.row_id IN (mine.row_id, theirs.row_id));
         CREATE TEMP TABLE ambiguous ON COMMIT DROP AS
         SELECT word_id FROM crossed GROUP BY word_id HAVING count(*) > 1;
         DELETE FROM crossed c
