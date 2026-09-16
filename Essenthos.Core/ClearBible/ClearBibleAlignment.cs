@@ -12,7 +12,11 @@ internal readonly record struct ClearBibleRecord(IReadOnlyList<string> Source, I
 /// why PRB-0185's Russian set could not be salvaged, and why this reads the flag rather than
 /// guessing.
 /// </param>
-internal readonly record struct ClearBibleToken(string Id, string Text, bool Excluded);
+/// <param name="Strong">
+/// The Strong number a source edition's row states for the word, as the file writes it, or null in a
+/// target file, which carries none.
+/// </param>
+internal readonly record struct ClearBibleToken(string Id, string Text, bool Excluded, string? Strong);
 
 /// <summary>
 /// Clear Bible's hand-made alignments, in Scripture Burrito form.
@@ -77,6 +81,7 @@ internal static class ClearBibleAlignment
         using var reader = new StreamReader(path);
         var header = reader.ReadLine()?.Split('\t') ?? [];
         var excludes = Array.IndexOf(header, "exclude");
+        var strongs = Array.IndexOf(header, "strongs");
 
         while (reader.ReadLine() is { } line)
         {
@@ -89,7 +94,8 @@ internal static class ClearBibleAlignment
             yield return new ClearBibleToken(
                 cells[0],
                 cells[2],
-                excludes >= 0 && cells.Length > excludes && cells[excludes].Trim() is "y");
+                excludes >= 0 && cells.Length > excludes && cells[excludes].Trim() is "y",
+                strongs >= 0 && cells.Length > strongs ? cells[strongs] : null);
         }
     }
 
@@ -119,8 +125,4 @@ internal static class ClearBibleAlignment
                && int.TryParse(word.AsSpan(2, 3), out chapter)
                && int.TryParse(word.AsSpan(5, 3), out verse);
     }
-
-    /// <summary>Where the word stands in its verse, counting from one.</summary>
-    public static int Position(string id) =>
-        Word(id) is { Length: WordIdLength } word && int.TryParse(word.AsSpan(8, 3), out var at) ? at : 0;
 }

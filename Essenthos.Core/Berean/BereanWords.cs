@@ -38,6 +38,13 @@ internal static partial class BereanWords
     private static partial Regex Word { get; }
 
     /// <summary>
+    /// An HTML tag the tables leave inside a phrase where the published poetry breaks a line —
+    /// <c>&lt;p class=|indent2|&gt;</c> — whose attribute would otherwise read as English words.
+    /// </summary>
+    [GeneratedRegex("<[^>]*>")]
+    private static partial Regex Markup { get; }
+
+    /// <summary>
     /// Every verse of the published edition, by its reference as the file writes it — *Genesis 1:1*.
     /// </summary>
     public static IEnumerable<(string Reference, string Text)> Verses(string path)
@@ -96,10 +103,12 @@ internal static partial class BereanWords
     /// <summary>
     /// The words of a Berean phrase, with the file's own notation removed: brackets and braces around
     /// a supplied word, and the <c>vvv</c> that marks a rendering standing away from its own word.
-    /// A phrase that says only <c>-</c> or <c>. . .</c> is not a rendering and yields nothing.
+    /// A phrase that says only <c>-</c> or <c>. . .</c> is not a rendering and yields nothing, and a
+    /// line break the file marks up inside a phrase is not a word either.
     /// </summary>
     public static List<string> Rendering(string phrase)
     {
+        phrase = Markup.Replace(phrase, " ");
         var words = new List<string>(8);
         foreach (var match in Word.EnumerateMatches(phrase))
         {

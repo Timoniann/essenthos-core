@@ -83,6 +83,28 @@
      },
      "why": {
       "type": "string"
+     },
+     "resolved": {
+      "type": "object",
+      "required": [
+       "on",
+       "by"
+      ],
+      "properties": {
+       "on": {
+        "type": "string",
+        "format": "date"
+       },
+       "by": {
+        "type": "string",
+        "description": "The change and the command that corrected the stored rows."
+       },
+       "checked": {
+        "type": "string",
+        "description": "How the correction was verified."
+       }
+      },
+      "description": "Present where a later load corrected a `load` error. The row stays as the record of what was stored."
      }
     }
    }

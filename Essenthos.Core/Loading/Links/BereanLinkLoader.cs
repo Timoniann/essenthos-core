@@ -92,6 +92,16 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     private const string Source =
         "Berean Standard Bible translation tables, bereanbible.com, public domain";
 
+    /// <summary>
+    /// A withdrawal cascades through a few hundred thousand link words and their claims, which does
+    /// not finish inside the default thirty seconds.
+    /// </summary>
+    private static readonly TimeSpan WithdrawTimeout = TimeSpan.FromMinutes(30);
+
+    private const char OpenParagraph = 'פ';
+
+    private const char ClosedParagraph = 'ס';
+
     private const string LinkImport =
         """
         COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
@@ -182,9 +192,11 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
 
                 run = [.. witness.Select(word => new List<long> { word.Id })];
             }
-            else if (Consonants(rows, witness) is { } matched)
+            else if (Letters(
+                         [.. rows.Select(row => HebrewLetters.Of(row.Original))],
+                         [.. witness.Select(word => HebrewLetters.Of(word.Surface))]) is { } matched)
             {
-                run = matched;
+                run = [.. matched.Select(words => words.Select(at => witness[at].Id).ToList())];
             }
             else
             {
@@ -214,6 +226,25 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             "Linked the Berean to {Witness}: {Outcome}; {Replaced} aligner links superseded",
             witnessSlug, outcome, replaced);
         return outcome;
+    }
+
+    /// <summary>
+    /// Every link these tables wrote between the Berean and one witness, removed so that the next
+    /// <see cref="Load"/> draws them again under the reading as it now stands.
+    ///
+    /// Only this source's links: the aligner's are left where the tables were silent, and the load
+    /// that follows supersedes them wherever it now speaks. Against Nestle it also removes the claims
+    /// Clear Bible added to these links, so that pair is redrawn after this one and not before.
+    /// </summary>
+    public async Task<int> Withdraw(string witnessSlug, CancellationToken cancellationToken = default)
+    {
+        var from = await Text(BereanTextSource.Slug, cancellationToken);
+        var to = await Text(witnessSlug, cancellationToken);
+
+        db.Database.SetCommandTimeout(WithdrawTimeout);
+        return await db.Database.ExecuteSqlRawAsync(
+            "DELETE FROM link WHERE from_text_id = {0} AND to_text_id = {1} AND source = {2}",
+            [from, to, Source], cancellationToken);
     }
 
     /// <summary>
@@ -274,14 +305,6 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     }
 
     /// <summary>
-    /// The English phrases against the verse's own words, in the file's English order.
-    ///
-    /// The phrases account for every word of a verse and nothing else — measured on 3,000 random
-    /// verses, all 3,000 — so this walks the two in step and stops the whole verse the moment they
-    /// part. Returning false rather than writing what it has is the point: a partial alignment
-    /// produces links about the wrong words for the rest of the verse and looks exactly right.
-    /// </summary>
-    /// <summary>
     /// The Hebrew, which does not join by order and cannot join by number.
     ///
     /// BHSA writes the preposition, the article and the noun of לָאוֹר as three words and the
@@ -289,51 +312,111 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     /// verses, measured. Their Strong numbers do not agree either, because the numbering is
     /// OpenScriptures' against ETCBC's: 43.8%. What both editions preserve exactly is the letters.
     ///
-    /// So each Berean word takes BHSA words until their consonants concatenate to its own, and the
-    /// run it took is what it renders. 92.6% of Old Testament verses come out whole; the rest are
-    /// refused, which is where the two editions genuinely differ — a qere against a ketiv, a word
-    /// one prints and the other does not.
+    /// <para>
+    /// So the verse is joined on its letters and each Berean word renders the BHSA words its letters
+    /// fall in. The division runs both ways: BHSA also writes a name as one word where the Westminster
+    /// edition writes two — בֵּית לֶחֶם, בֵּית־אֵל — and then both Berean words render the one BHSA
+    /// word, which is what the two editions' letters say and all they say. A word that prints no
+    /// letters, an article assimilated into its preposition, goes with the Berean word whose letters
+    /// follow it; trailing ones go with nothing.
+    /// </para>
     ///
-    /// Returns null the moment a word cannot be accounted for. A partial run would pair every
-    /// remaining word of the verse with the wrong Hebrew and look exactly like a correct verse.
+    /// <para>
+    /// Returns null unless the whole verse writes the same letters. A verse that differs anywhere — a
+    /// qere against a ketiv, a word one edition prints and the other does not — has no place where
+    /// the letters can be trusted to line the rest up, and a partial run would pair every remaining
+    /// word with the wrong Hebrew and look exactly like a correct verse.
+    /// </para>
     /// </summary>
-    private static List<List<long>>? Consonants(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness)
+    /// <returns>For each Berean word, the indices of the BHSA words it renders.</returns>
+    internal static List<List<int>>? Letters(IReadOnlyList<string> berean, IReadOnlyList<string> bhsa)
     {
-        var runs = new List<List<long>>(rows.Count);
-        var at = 0;
-
-        foreach (var row in rows)
+        var whole = string.Concat(bhsa);
+        if (!string.Equals(string.Concat(berean), whole, StringComparison.Ordinal))
         {
-            var wanted = HebrewLetters.Of(row.Original);
-            var taken = new List<long>();
-            var got = string.Empty;
-
-            while (at < witness.Count && !string.Equals(got, wanted, StringComparison.Ordinal))
+            berean = WithoutSectionMarks(berean, whole) ?? berean;
+            if (!string.Equals(string.Concat(berean), whole, StringComparison.Ordinal))
             {
-                got += HebrewLetters.Of(witness[at].Surface);
-                taken.Add(witness[at].Id);
-                at++;
+                return null;
+            }
+        }
+
+        var starts = new int[bhsa.Count + 1];
+        for (var at = 0; at < bhsa.Count; at++)
+        {
+            starts[at + 1] = starts[at] + bhsa[at].Length;
+        }
+
+        var runs = new List<List<int>>(berean.Count);
+        var start = 0;
+
+        foreach (var letters in berean)
+        {
+            var end = start + letters.Length;
+            var run = new List<int>();
+
+            for (var at = 0; at < bhsa.Count && starts[at] <= end; at++)
+            {
+                var (from, to) = (starts[at], starts[at + 1]);
+                if ((from < end && start < to) || (from == to && start <= from && from < end))
+                {
+                    run.Add(at);
+                }
             }
 
-            if (!string.Equals(got, wanted, StringComparison.Ordinal))
+            runs.Add(run);
+            start = end;
+        }
+
+        return runs;
+    }
+
+    /// <summary>
+    /// The Westminster edition's paragraph marks, taken off the word they are printed against.
+    ///
+    /// It prints <c>פ</c> for an open paragraph and <c>ס</c> for a closed one, and where a section
+    /// ends inside a verse the mark is glued to the last word of the section — יִשְׂרָאֵל פ, הוּאס —
+    /// with nothing but its place to tell it from a letter. So a final פ or ס is dropped only where
+    /// the word does not match BHSA with it and does without it, and the caller still demands the
+    /// whole verse agree.
+    /// </summary>
+    private static List<string>? WithoutSectionMarks(IReadOnlyList<string> berean, string bhsa)
+    {
+        var unmarked = new List<string>(berean.Count);
+        var at = 0;
+
+        foreach (var letters in berean)
+        {
+            if (bhsa.AsSpan(at).StartsWith(letters, StringComparison.Ordinal))
+            {
+                unmarked.Add(letters);
+            }
+            else if (letters.Length > 1
+                     && letters[^1] is OpenParagraph or ClosedParagraph
+                     && bhsa.AsSpan(at).StartsWith(letters.AsSpan(0, letters.Length - 1), StringComparison.Ordinal))
+            {
+                unmarked.Add(letters[..^1]);
+            }
+            else
             {
                 return null;
             }
 
-            runs.Add(taken);
+            at += unmarked[^1].Length;
         }
 
-        // BHSA's wordless morphemes may trail the last word the Berean accounted for; they write no
-        // letters, so nothing claimed them, and leaving them unclaimed is right.
-        while (at < witness.Count && HebrewLetters.Of(witness[at].Surface).Length == 0)
-        {
-            at++;
-        }
-
-        return at == witness.Count ? runs : null;
+        return unmarked;
     }
 
-    private static bool Pair(
+    /// <summary>
+    /// The English phrases against the verse's own words, in the file's English order.
+    ///
+    /// The phrases account for every word of a verse and nothing else — measured on 3,000 random
+    /// verses, all 3,000 — so this walks the two in step and stops the whole verse the moment they
+    /// part. Returning false rather than writing what it has is the point: a partial alignment
+    /// produces links about the wrong words for the rest of the verse and looks exactly right.
+    /// </summary>
+    internal static bool Pair(
         IReadOnlyList<BereanRow> rows,
         IReadOnlyList<Word> ours,
         IReadOnlyList<List<long>> witness,
@@ -374,6 +457,19 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             return false;
         }
 
+        // Two Berean words can share one witness word where the editions divide a name differently,
+        // so a word some row renders is not also unrendered, and a word two silent rows share is
+        // unrendered once.
+        var rendered = new HashSet<long>();
+        for (var i = 0; i < rows.Count; i++)
+        {
+            if (claimed[i] is { Count: > 0 })
+            {
+                rendered.UnionWith(witness[i]);
+            }
+        }
+
+        var omitted = new HashSet<long>();
         for (var i = 0; i < rows.Count; i++)
         {
             var mine = claimed[i] ?? [];
@@ -389,11 +485,14 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             if (rows[i].English.Contains('.', StringComparison.Ordinal))
             {
                 moved++;
+                continue;
             }
-            else
+
+            var unrendered = witness[i].Where(word => !rendered.Contains(word) && omitted.Add(word)).ToList();
+            if (unrendered.Count > 0)
             {
                 absent++;
-                drafts.Add(new Draft(LinkRelation.Omits, [], witness[i]));
+                drafts.Add(new Draft(LinkRelation.Omits, [], unrendered));
             }
         }
 
@@ -408,6 +507,9 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         // verses differently from the English scheme the Berean follows, and pairing by the printed
         // number puts those links on the wrong verse -- which the verification caught as twelve word
         // links crossing a verse pair nothing joins.
+        // Where two of a text's verses stand at one address -- BHSA's 1 Kings 22:43 and 22:44 are the
+        // English 22:43 -- their words are read one verse after the other, not interleaved by
+        // position.
         var rows = await db.VerseReferences
             .Where(reference => reference.IsPrimary && reference.Verse!.TextId == textId)
             .SelectMany(reference => reference.Verse!.Words.Select(word => new
@@ -417,6 +519,8 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
                 Verse = reference.CanonicalVerse,
                 word.Id,
                 word.VerseId,
+                PrintedChapter = word.Verse!.ChapterNumber,
+                PrintedVerse = word.Verse!.Number,
                 word.Position,
                 word.Surface,
                 word.StrongNumber,
@@ -427,7 +531,10 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             .GroupBy(row => (row.Book, row.ChapterNumber, row.Verse))
             .ToDictionary(
                 group => group.Key,
-                group => group.OrderBy(row => row.Position)
+                group => group
+                    .OrderBy(row => row.PrintedChapter)
+                    .ThenBy(row => row.PrintedVerse)
+                    .ThenBy(row => row.Position)
                     .Select(row => new Word(row.Id, row.VerseId, row.Surface, row.StrongNumber))
                     .ToList());
     }
@@ -523,7 +630,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     private async Task<int> Text(string slug, CancellationToken cancellationToken) =>
         await db.Texts.Where(t => t.Slug == slug).Select(t => t.Id).FirstOrDefaultAsync(cancellationToken);
 
-    private sealed record Word(long Id, int VerseId, string Surface, string? Strong);
+    internal sealed record Word(long Id, int VerseId, string Surface, string? Strong);
 
-    private sealed record Draft(LinkRelation Relation, List<long> From, List<long> To);
+    internal sealed record Draft(LinkRelation Relation, List<long> From, List<long> To);
 }

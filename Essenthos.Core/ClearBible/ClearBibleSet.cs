@@ -1,26 +1,37 @@
+using Essenthos.Core.Loading;
+
 namespace Essenthos.Core.ClearBible;
 
 /// <summary>How a record's word identifiers become the corpus's own word ids.</summary>
 internal enum ClearBibleJoin
 {
     /// <summary>
-    /// The nth word of the verse, counting the tokens the file does not exclude. It holds where the
-    /// file's text and the corpus's are the same edition tokenised the same way — the Berean's own
-    /// Greek against Nestle 1904, and the Berean's English against itself.
-    /// </summary>
-    Position,
-
-    /// <summary>
     /// The letters, aligned inside the verse each text numbers for itself.
     ///
-    /// Position cannot be used where the two sides are different editions or different
-    /// tokenisations, and both are true of the Reina-Valera set: its Hebrew is the Westminster
+    /// Counting positions cannot be used where the two sides are different editions or different
+    /// tokenisations. The second is true of every target file, whose tokeniser numbers punctuation
+    /// like a word, and both are true of the Reina-Valera set: its Hebrew is the Westminster
     /// morphology, which divides the Leningrad Codex into 469,476 morphemes where BHSA divides it
     /// into 426,590 words, and its Greek is the SBLGNT, which this corpus does not hold at all. Its
     /// Hebrew is also numbered the Hebrew way, so the verse to look in is the one each text calls
     /// by that number rather than the one the canonical frame places it at.
     /// </summary>
     Letters,
+
+    /// <summary>
+    /// The words, laid against each other edition against edition inside the verse.
+    ///
+    /// For a source edition in the same language as the corpus's and close to it, where the letters
+    /// agree almost everywhere and the words that differ are the textual variants: the Berean Greek
+    /// New Testament against Nestle 1904. Counting positions cannot be used there, because a word
+    /// one edition has and the other has not puts every word after it one place out — BGNT's
+    /// <em>καὶ κηρύσσων</em> in Mark 1:4 against Nestle's bare <em>κηρύσσων</em> — and the letters
+    /// join cannot either, because it takes a single different word in the same place for a
+    /// spelling. So each verse is aligned with <see cref="Loading.Links.WitnessAlignment"/>, the
+    /// alignment the corpus joins its own witnesses with, and a word is placed only on the word it
+    /// is.
+    /// </summary>
+    Edition,
 }
 
 /// <param name="From">The translation the alignment is about, as the corpus slugs it.</param>
@@ -30,9 +41,9 @@ internal enum ClearBibleJoin
 /// One row per token of the translation, in the tokenisation the alignment's target ids number.
 /// </param>
 /// <param name="Source">
-/// One row per word of the source edition, needed wherever that edition is not one the corpus
-/// holds. Null where the ids resolve by position and nothing has to be read to place them.
+/// One row per word of the source edition, in the tokenisation the alignment's source ids number.
 /// </param>
+/// <param name="Join">How the source edition's words become the witness's. The target's always join on the letters.</param>
 /// <param name="Statement">
 /// What this file is, in the words <c>link.source</c> answers a reader with. It names the team and
 /// the licence rather than the path: a reader asking where a claim came from is not asking where
@@ -52,11 +63,19 @@ internal sealed record ClearBibleSet(
     string To,
     string Alignment,
     string Target,
-    string? Source,
+    string Source,
     ClearBibleJoin Join,
     string Statement)
 {
     private const string Repository = "github.com/Clear-Bible/Alignments";
+
+    /// <summary>Every set the corpus loads, in the order it loads them.</summary>
+    public static IReadOnlyList<ClearBibleSet> All() =>
+    [
+        Berean(BereanTextSource.Slug, NestleTextSource.Slug),
+        ReinaValeraOldTestament(EbibleTextSource.ReinaValera, BhsaTextSource.Slug),
+        ReinaValeraNewTestament(EbibleTextSource.ReinaValera, NestleTextSource.Slug),
+    ];
 
     /// <summary>
     /// Clear Bible's hand-made alignment of the Berean Standard Bible, whose own publisher already
@@ -67,8 +86,8 @@ internal sealed record ClearBibleSet(
         greekSlug,
         Path.Combine("data", "eng", "alignments", "BSB", "BGNT-BSB-manual.json"),
         Path.Combine("data", "eng", "targets", "BSB", "nt_BSB.tsv"),
-        null,
-        ClearBibleJoin.Position,
+        Path.Combine("data", "sources", "BGNT.tsv"),
+        ClearBibleJoin.Edition,
         $"Clear Bible Alignments, BiblioNexus, {Repository}, CC BY 4.0");
 
     /// <summary>
