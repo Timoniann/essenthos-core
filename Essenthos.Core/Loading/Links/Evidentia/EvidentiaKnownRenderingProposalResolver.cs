@@ -12,13 +12,43 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
     private const double KnownEvidenceWeight = 1_000;
     private const double InvalidAssignmentCost = 1_000_000;
 
+    /// <summary>
+    /// What the safe tier promises: the corpus has rendered this source form at least
+    /// <see cref="EvidentiaProposalPolicy.MinimumObservations"/> times outside the passage being
+    /// read; it landed on this lexeme in more than <see cref="MinimumSafeShare"/> of them; that
+    /// lexeme is at least <see cref="EvidentiaProposalPolicy.MinimumSenseRatio"/> times as frequent
+    /// as the strongest competing one across the whole index; and nothing in this verse comes
+    /// within <see cref="EvidentiaProposalPolicy.MinimumLeadOverAlternative"/> of it.
+    ///
+    /// The last of those four is the only one that used to be checked. Measured against the senses
+    /// present in one verse, a competitor is usually simply absent and scores zero, so a form the
+    /// corpus splits evenly between two lexemes was refused when both happened to stand in the
+    /// verse and accepted with a lead of 0.45 when only one did - which is the ordinary case, since
+    /// two lexemes rarely co-occur. The index-wide ratio is the test that reads the way the tier
+    /// is described.
+    ///
+    /// The ratio is a ratio rather than another threshold because it does not need calibrating:
+    /// twice as often as anything else is the same claim whether a form was seen four times or
+    /// four hundred.
+    /// </summary>
     public static readonly EvidentiaProposalPolicy Safe = new(
-        "safe", MinimumKnownRenderingEvidence: 0.40, MinimumLeadOverAlternative: 0.10,
-        EvidentiaProposalKind.StableKnownRendering);
+        "safe", MinimumKnownRenderingEvidence: MinimumSafeScore, MinimumLeadOverAlternative: 0.10,
+        EvidentiaProposalKind.StableKnownRendering, MinimumObservations: 4, MinimumSenseRatio: 2);
 
+    /// <summary>
+    /// The review tier keeps the index's own floor and makes no index-wide claim at all: its output
+    /// is a question put to an editor, and a sense that is right here but rarer than another
+    /// elsewhere is exactly the kind of question worth asking.
+    /// </summary>
     public static readonly EvidentiaProposalPolicy Review = new(
         "review", MinimumKnownRenderingEvidence: 0.30, MinimumLeadOverAlternative: 0.05,
-        EvidentiaProposalKind.ReviewKnownRendering);
+        EvidentiaProposalKind.ReviewKnownRendering, MinimumObservations: 2, MinimumSenseRatio: 0);
+
+    private const double MinimumSafeScore = 0.40;
+
+    /// <summary>The share <see cref="MinimumSafeScore"/> works out to, said in the unit it is about.</summary>
+    private const double MinimumSafeShare =
+        (MinimumSafeScore - EvidentiaDefaults.KnownRenderingBaseScore) / EvidentiaDefaults.KnownRenderingShareScore;
 
     public EvidentiaResolution Resolve(
         IEnumerable<EvidentiaCandidate> candidates,
@@ -152,6 +182,15 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
 
         var runnerUp = byStrong.Count > 1 ? byStrong[1].KnownScore : 0;
         if (byStrong[0].KnownScore - runnerUp < policy.MinimumLeadOverAlternative)
+        {
+            return null;
+        }
+
+        // The in-verse lead above says only that nothing else in this verse is close. What the
+        // corpus knows about the form is a separate question, and the one the tier is named for.
+        if (KnownSupport(byStrong[0].Candidates) is not { } support
+            || support.Observations < policy.MinimumObservations
+            || support.Share < support.NextShare * policy.MinimumSenseRatio)
         {
             return null;
         }
@@ -298,6 +337,13 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
         .Where(evidence => evidence.Kind == EvidentiaEvidenceKind.KnownRendering)
         .Max(evidence => evidence.Score);
 
+    private static EvidentiaEvidenceSupport? KnownSupport(IEnumerable<EvidentiaCandidate> candidates) => candidates
+        .SelectMany(candidate => candidate.Evidence)
+        .Where(evidence => evidence.Kind == EvidentiaEvidenceKind.KnownRendering)
+        .OrderByDescending(evidence => evidence.Score)
+        .Select(evidence => evidence.Support)
+        .FirstOrDefault();
+
     private static double PositionScore(EvidentiaCandidate candidate, int sourceCount, int targetCount)
     {
         var sourceFraction = sourceCount <= 1 ? 0.5 : (double)(candidate.Source.Token.Position - 1) / (sourceCount - 1);
@@ -310,8 +356,21 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
     private sealed record RankedChoiceGroup(IReadOnlyList<EvidentiaCandidate> Candidates, double KnownScore);
 }
 
+/// <param name="MinimumLeadOverAlternative">
+/// How far the chosen sense must be ahead of the next sense present in the same verse.
+/// </param>
+/// <param name="MinimumObservations">
+/// How many times the corpus must have rendered the source form at all, outside the passage being
+/// read, before a tier may speak about it.
+/// </param>
+/// <param name="MinimumSenseRatio">
+/// How many times as frequent as the strongest competing sense, across the whole index, the chosen
+/// one must be.
+/// </param>
 internal sealed record EvidentiaProposalPolicy(
     string Name,
     double MinimumKnownRenderingEvidence,
     double MinimumLeadOverAlternative,
-    EvidentiaProposalKind Kind);
+    EvidentiaProposalKind Kind,
+    int MinimumObservations = 2,
+    double MinimumSenseRatio = 1);

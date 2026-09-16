@@ -81,10 +81,12 @@ internal sealed class EvidentiaKnownRenderingIndex(
             .Where(item => item.Total >= MinimumObservations)
             .ToDictionary(
                 item => item.Key,
-                item => (IReadOnlyDictionary<string, RenderingFrequency>)item.Counts.ToDictionary(
-                    pair => pair.Key,
-                    pair => new RenderingFrequency(pair.Value, (double)pair.Value / item.Total),
-                    StringComparer.Ordinal),
+                item => new RenderingDistribution(
+                    item.Total,
+                    item.Counts.ToDictionary(
+                        pair => pair.Key,
+                        pair => new RenderingFrequency(pair.Value, (double)pair.Value / item.Total),
+                        StringComparer.Ordinal)),
                 StringComparer.Ordinal);
 
         return distributions.Count == 0
@@ -160,30 +162,59 @@ internal sealed class EvidentiaKnownRenderingIndex(
 internal sealed record RenderingFrequency(int Count, double Share);
 
 /// <summary>
+/// Everything the corpus has seen one source form rendered as, kept together so a policy can ask
+/// what the strongest competing sense is across the whole index rather than across one verse.
+/// </summary>
+internal sealed class RenderingDistribution
+{
+    private readonly double bestShare;
+    private readonly double secondShare;
+
+    public RenderingDistribution(int observations, IReadOnlyDictionary<string, RenderingFrequency> senses)
+    {
+        Observations = observations;
+        Senses = senses;
+        var shares = senses.Values.Select(frequency => frequency.Share).OrderByDescending(share => share).ToList();
+        bestShare = shares[0];
+        secondShare = shares.Count > 1 ? shares[1] : 0;
+    }
+
+    public int Observations { get; }
+
+    public IReadOnlyDictionary<string, RenderingFrequency> Senses { get; }
+
+    /// <summary>The strongest share held by a sense other than this one.</summary>
+    public double NextShare(double share) => share >= bestShare ? secondShare : bestShare;
+}
+
+/// <summary>
 /// A rendering seen outside the held-out chapter. It is derived evidence, not a statement made by
 /// the new translation, so it remains a candidate until the matcher and review policy decide it.
 /// </summary>
 internal sealed class EvidentiaKnownRenderingEvidenceSource(
-    IReadOnlyDictionary<string, IReadOnlyDictionary<string, RenderingFrequency>> bySourceKey,
+    IReadOnlyDictionary<string, RenderingDistribution> bySourceKey,
     string sourceName) : IEvidentiaEvidenceSource
 {
-    private const double MinimumScore = 0.20;
-    private const double MaximumAdditionalScore = 0.45;
+    private const double MinimumScore = EvidentiaDefaults.KnownRenderingBaseScore;
+    private const double MaximumAdditionalScore = EvidentiaDefaults.KnownRenderingShareScore;
 
     public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
         var key = source.Normalised;
         if (!source.IsContentWord
             || target.Token.StrongNumber is not { } strongNumber
-            || !bySourceKey.TryGetValue(key, out var frequencies)
-            || !frequencies.TryGetValue(strongNumber, out var frequency))
+            || !bySourceKey.TryGetValue(key, out var distribution)
+            || !distribution.Senses.TryGetValue(strongNumber, out var frequency))
         {
             yield break;
         }
 
+        var nextShare = distribution.NextShare(frequency.Share);
         yield return new EvidentiaEvidence(
             EvidentiaEvidenceKind.KnownRendering,
             MinimumScore + MaximumAdditionalScore * frequency.Share,
-            $"{sourceName}; observations={frequency.Count}; share={frequency.Share:P0}");
+            $"{sourceName}; observations={frequency.Count}/{distribution.Observations}; " +
+            $"share={frequency.Share:P0}; next sense={nextShare:P0}",
+            new EvidentiaEvidenceSupport(distribution.Observations, frequency.Share, nextShare));
     }
 }

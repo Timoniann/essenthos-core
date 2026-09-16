@@ -34,6 +34,26 @@ public class EvidentiaStrongProposalResolverTests
     }
 
     [Fact]
+    public void ASenseTheCorpusIsSplitOnIsRefusedAlthoughItsRivalIsNotInThisVerse()
+    {
+        var evenlySplit = new[] { KnownCandidate(1, 11, "H1", 0.4025, observations: 20, nextShare: 0.45) };
+
+        new EvidentiaKnownRenderingProposalResolver().Resolve(evenlySplit).Proposals.Should().BeEmpty(
+            "the form lands on this lexeme 45% of the time and on another 45%, and that it is the "
+            + "only one standing in this verse says nothing about which is meant");
+    }
+
+    [Fact]
+    public void TwoObservationsAreNotEnoughForTheSafeTierAndAreEnoughForReview()
+    {
+        var resolver = new EvidentiaKnownRenderingProposalResolver();
+        var thin = new[] { KnownCandidate(1, 11, "H1", 0.425, observations: 2) };
+
+        resolver.Resolve(thin).Proposals.Should().BeEmpty("one of two observations is not a habit");
+        resolver.Resolve(thin, EvidentiaKnownRenderingProposalResolver.Review).Proposals.Should().ContainSingle();
+    }
+
+    [Fact]
     public void ReviewPolicyExposesAWeakerCandidateWithoutCallingItSafe()
     {
         var resolver = new EvidentiaKnownRenderingProposalResolver();
@@ -197,7 +217,13 @@ public class EvidentiaStrongProposalResolverTests
             ]);
     }
 
-    private static EvidentiaCandidate KnownCandidate(long sourceId, long targetId, string strong, double score)
+    private static EvidentiaCandidate KnownCandidate(
+        long sourceId,
+        long targetId,
+        string strong,
+        double score,
+        int observations = 10,
+        double nextShare = 0)
     {
         var source = new EvidentiaAnalysis(
             new EvidentiaToken(sourceId, new EvidentiaAddress(1, 1, 1), (int)sourceId, "word", "eng"),
@@ -208,7 +234,11 @@ public class EvidentiaStrongProposalResolverTests
         return new EvidentiaCandidate(source, target,
         [
             new EvidentiaEvidence(EvidentiaEvidenceKind.ExactCanonicalAddress, 0.30, "test"),
-            new EvidentiaEvidence(EvidentiaEvidenceKind.KnownRendering, score, "test"),
+            new EvidentiaEvidence(EvidentiaEvidenceKind.KnownRendering, score, "test",
+                new EvidentiaEvidenceSupport(observations, Share(score), nextShare)),
         ]);
     }
+
+    private static double Share(double score) =>
+        (score - 0.20) / 0.45;
 }

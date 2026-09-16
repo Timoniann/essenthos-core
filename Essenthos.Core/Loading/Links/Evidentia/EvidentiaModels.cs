@@ -7,6 +7,12 @@ internal static class EvidentiaDefaults
     public const double ExactAddressScore = 0.30;
     public const double NeighbourAddressScore = 0.08;
     public const double MatchingNormalisedFormScore = 0.55;
+
+    /// <summary>What a learned rendering is worth before its share is counted.</summary>
+    public const double KnownRenderingBaseScore = 0.20;
+
+    /// <summary>What the whole of its share adds on top.</summary>
+    public const double KnownRenderingShareScore = 0.45;
 }
 
 [Flags]
@@ -83,10 +89,24 @@ internal enum EvidentiaEvidenceKind
     StatisticalAligner,
 }
 
+/// <summary>
+/// How much the corpus actually knows about the reading this evidence proposes, as opposed to how
+/// much that reading scored. A score compresses both into one number and a policy needs them
+/// apart: a form seen twice and a form seen two hundred times can carry the same share.
+/// </summary>
+/// <param name="Observations">Every observation of the source form, whichever sense it landed on.</param>
+/// <param name="Share">The fraction of those that landed on this one.</param>
+/// <param name="NextShare">
+/// The fraction the strongest competing sense holds across the whole index - not across the verse
+/// being read, where a competitor is usually simply absent and so reads as no competition at all.
+/// </param>
+internal sealed record EvidentiaEvidenceSupport(int Observations, double Share, double NextShare);
+
 internal sealed record EvidentiaEvidence(
     EvidentiaEvidenceKind Kind,
     double Score,
-    string Source);
+    string Source,
+    EvidentiaEvidenceSupport? Support = null);
 
 internal sealed record EvidentiaCandidate(
     EvidentiaAnalysis Source,
