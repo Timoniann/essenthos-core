@@ -5,9 +5,66 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Loading.Links.Evidentia;
 
 /// <summary>
+/// One entry of the learned index: a form, and which of a word's forms it is. The kind is part of
+/// the key rather than beside it, so the exact surface <em>said</em> and the normalisation
+/// <em>said</em> are two entries counting two different things - every observation written that
+/// way, and every observation of anything that reduces to it.
+/// </summary>
+internal readonly record struct RenderingKey(EvidentiaFormKind Kind, string Form)
+{
+    public override string ToString() => $"{Kind.ToString().ToLowerInvariant()} '{Form}'";
+}
+
+/// <summary>
+/// Every key one word can be filed or looked up under, most specific first.
+///
+/// Filing and looking up are the same function on purpose. An index keyed by one derivation of a
+/// word and consulted by another answers nothing, and says nothing about why: both sides read as
+/// correct on their own, and only the two together are wrong.
+///
+/// The word a pack calls a function word has no keys at all, in either direction. Everything
+/// narrower than that - which words may be looked up - belongs where the question is asked, not
+/// here: an observation from a witness that states no part of speech is class Unknown, and a
+/// filing rule written as "content words only" would leave such a witness unable to teach the
+/// index anything.
+/// </summary>
+internal static class RenderingKeys
+{
+    public static IReadOnlyList<RenderingKey> Of(EvidentiaAnalysis analysis)
+    {
+        if (analysis.IsFunctionWord)
+        {
+            return [];
+        }
+
+        var keys = new List<RenderingKey>(3)
+        {
+            new(EvidentiaFormKind.Surface, analysis.Token.Surface.ToLowerInvariant()),
+        };
+
+        // Only where the pack said the word has one. English and Slavic fall their Lemma back to
+        // the normalisation when the token carries none, and filing that as a lemma would make a
+        // second copy of the normalisation entry and a back-off step that never backs off.
+        if (analysis.Capabilities.HasFlag(LanguagePackCapability.Lemma)
+            && analysis.Lemma is { Length: > 0 } lemma)
+        {
+            keys.Add(new(EvidentiaFormKind.Lemma, lemma));
+        }
+
+        keys.Add(new(EvidentiaFormKind.Normalised, analysis.Normalised));
+        return keys;
+    }
+}
+
+/// <summary>
 /// Reads previously source-stated renderings as a translation-specific lexical prior. The chapter
 /// being measured is excluded from the index, so its stored links remain evaluation data rather
 /// than becoming evidence for their own prediction.
+///
+/// An observation is filed under every key <see cref="RenderingKeys"/> derives from the form the
+/// corpus wrote, and a lookup asks the same keys of the word it is reading. A language whose pack
+/// has no lemmatiser simply has no lemma entries, and an original-language witness, whose surface
+/// is its own normalisation, is filed under its stated lemma as well.
 /// </summary>
 internal sealed class EvidentiaKnownRenderingIndex(
     AppDbContext db,
@@ -24,7 +81,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
     private readonly Dictionary<RenderingCorpusKey, IReadOnlyList<RenderingObservation>> observationsByTextPair = new();
     private readonly Dictionary<string, Dictionary<(int Book, int Chapter), IReadOnlySet<int>>> heldOutVersesByText =
         new(StringComparer.Ordinal);
-    private readonly Dictionary<(string Surface, string Language), string?> keyBySurface = [];
+    private readonly Dictionary<(string Surface, string? Lemma, string Language), IReadOnlyList<RenderingKey>> keysByForm = [];
 
     public async Task<EvidentiaKnownRenderingEvidenceSource?> For(
         string fromSlug,
@@ -42,55 +99,64 @@ internal sealed class EvidentiaKnownRenderingIndex(
             return null;
         }
 
-        var wanted = source
-            .Select(Key)
-            .Where(key => key is not null)
-            .Cast<string>()
-            .ToHashSet(StringComparer.Ordinal);
+        // Only the content words: they are the only ones a lookup asks about, so an entry for
+        // anything else would be built and never read.
+        var keysByToken = source
+            .Select(token => (Surface: token.Surface.ToLowerInvariant(), Keys: LookupKeys(token)))
+            .Where(item => item.Keys.Count > 0)
+            .ToList();
+        var wanted = keysByToken.SelectMany(item => item.Keys).ToHashSet();
         if (wanted.Count == 0)
         {
             return null;
         }
-        var wantedSurfaceForms = source
-            .Where(token => Key(token) is not null)
-            .Select(token => token.Surface.ToLowerInvariant())
-            .ToHashSet(StringComparer.Ordinal);
+
         var observations = await Observations(fromSlug, toSlug, methods, cancellationToken);
         var heldOut = await HeldOutVerses(fromSlug, excludedBook, excludedChapter, cancellationToken);
         var distributions = RenderingDistributions.Build(
-            observations, heldOut, wanted, wantedSurfaceForms,
-            surface => Key(surface, language[0]), MinimumObservations);
-
-        return distributions.Count == 0
-            ? null
-            : new EvidentiaKnownRenderingEvidenceSource(distributions, $"known-rendering:{fromSlug}→{toSlug}");
-    }
-
-    private string? Key(EvidentiaToken token)
-    {
-        if (!languagePacks.TryAnalyse(token, out var analysis) || !analysis.IsContentWord)
+            observations, heldOut, wanted,
+            observation => Keys(observation, language[0]), MinimumObservations);
+        if (distributions.Count == 0)
         {
             return null;
         }
 
-        // Historical source-stated renderings were loaded before UDPipe annotations existed.
-        // Keep this index keyed by the language pack's stable normalisation, so a newly analysed
-        // source token can still consult the same evidence rather than silently changing keys.
-        return analysis.Normalised;
+        // By form rather than by token, and answered if any occurrence of it is: the lemma of a
+        // form is decided in context, so two occurrences of one spelling can ask different keys.
+        var asked = keysByToken
+            .GroupBy(item => item.Surface, StringComparer.Ordinal)
+            .ToList();
+        return new EvidentiaKnownRenderingEvidenceSource(
+            distributions,
+            $"known-rendering:{fromSlug}→{toSlug}",
+            asked.Select(group => group.Key).ToHashSet(StringComparer.Ordinal),
+            asked.Where(group => group.SelectMany(item => item.Keys).Any(distributions.ContainsKey))
+                .Select(group => group.Key)
+                .ToHashSet(StringComparer.Ordinal));
     }
 
-    // One observation list is read for every chapter of a book run, and stemming a surface is the
+    private IReadOnlyList<RenderingKey> LookupKeys(EvidentiaToken token) =>
+        languagePacks.TryAnalyse(token, out var analysis) && analysis.IsContentWord
+            ? RenderingKeys.Of(analysis)
+            : [];
+
+    private IReadOnlyList<RenderingKey> Keys(EvidentiaToken token) =>
+        languagePacks.TryAnalyse(token, out var analysis) ? RenderingKeys.Of(analysis) : [];
+
+    // One observation list is read for every chapter of a book run, and analysing a form is the
     // same answer every time.
-    private string? Key(string surface, string language)
+    private IReadOnlyList<RenderingKey> Keys(RenderingObservation observation, string language)
     {
-        if (keyBySurface.TryGetValue((surface, language), out var cached))
+        var form = (observation.SourceSurface, observation.SourceLemma, language);
+        if (keysByForm.TryGetValue(form, out var cached))
         {
             return cached;
         }
 
-        var key = Key(new EvidentiaToken(0, default, 0, surface, language));
-        keyBySurface.Add((surface, language), key);
-        return key;
+        var keys = Keys(new EvidentiaToken(
+            0, default, 0, observation.SourceSurface, language, Lemma: observation.SourceLemma));
+        keysByForm.Add(form, keys);
+        return keys;
     }
 
     private async Task<IReadOnlyList<RenderingObservation>> Observations(
@@ -126,7 +192,8 @@ internal sealed class EvidentiaKnownRenderingIndex(
                         && sourceMembership.Side == LinkSide.From && targetMembership.Side == LinkSide.To)
                     || (link.FromTextId == targetText.Id && link.ToTextId == sourceText.Id
                         && sourceMembership.Side == LinkSide.To && targetMembership.Side == LinkSide.From))
-            select new RenderingObservation(sourceWord.VerseId, sourceWord.Surface, targetWord.StrongNumber!))
+            select new RenderingObservation(
+                sourceWord.VerseId, sourceWord.Surface, sourceWord.Lemma, targetWord.StrongNumber!))
             .ToListAsync(cancellationToken))
             .OrderBy(observation => observation.VerseId)
             .ThenBy(observation => observation.SourceSurface, StringComparer.Ordinal)
@@ -169,42 +236,53 @@ internal sealed class EvidentiaKnownRenderingIndex(
     private sealed record RenderingCorpusKey(string FromSlug, string ToSlug, string Methods);
 }
 
-internal sealed record RenderingObservation(int VerseId, string SourceSurface, string TargetStrongNumber);
+internal sealed record RenderingObservation(
+    int VerseId,
+    string SourceSurface,
+    string? SourceLemma,
+    string TargetStrongNumber);
 
 /// <summary>
-/// Turns rendering observations into a distribution per source form. It is a pure function of what
-/// was read, so the held-out exclusion - the guarantee every published number rests on - can be
+/// Turns rendering observations into a distribution per key. It is a pure function of what was
+/// read, so the held-out exclusion - the guarantee every published number rests on - can be
 /// asserted rather than read off a where clause.
 /// </summary>
 internal static class RenderingDistributions
 {
-    public static IReadOnlyDictionary<string, RenderingDistribution> Build(
+    public static IReadOnlyDictionary<RenderingKey, RenderingDistribution> Build(
         IEnumerable<RenderingObservation> observations,
         IReadOnlySet<int> heldOutVerses,
-        IReadOnlySet<string> wantedKeys,
-        IReadOnlySet<string> wantedSurfaceForms,
-        Func<string, string?> key,
+        IReadOnlySet<RenderingKey> wantedKeys,
+        Func<RenderingObservation, IReadOnlyList<RenderingKey>> keys,
         int minimumObservations)
     {
-        var counts = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);
+        var counts = new Dictionary<RenderingKey, Dictionary<string, int>>();
         foreach (var observation in observations)
         {
-            var form = key(observation.SourceSurface);
-            if (form is null
-                || heldOutVerses.Contains(observation.VerseId)
-                || !wantedKeys.Contains(form)
-                || !wantedSurfaceForms.Contains(observation.SourceSurface.ToLowerInvariant()))
+            if (heldOutVerses.Contains(observation.VerseId))
             {
                 continue;
             }
 
-            if (!counts.TryGetValue(form, out var byNumber))
+            foreach (var key in keys(observation))
             {
-                byNumber = new Dictionary<string, int>(StringComparer.Ordinal);
-                counts.Add(form, byNumber);
-            }
+                // Narrowing to the passage's own keys keeps the dictionary small; it is not a
+                // condition on what may match, because every key the passage can ask about is in
+                // the set. An observation counts towards each of its keys separately, so a form
+                // spelt differently from anything in the passage still feeds the normalisation.
+                if (!wantedKeys.Contains(key))
+                {
+                    continue;
+                }
 
-            byNumber[observation.TargetStrongNumber] = byNumber.GetValueOrDefault(observation.TargetStrongNumber) + 1;
+                if (!counts.TryGetValue(key, out var byNumber))
+                {
+                    byNumber = new Dictionary<string, int>(StringComparer.Ordinal);
+                    counts.Add(key, byNumber);
+                }
+
+                byNumber[observation.TargetStrongNumber] = byNumber.GetValueOrDefault(observation.TargetStrongNumber) + 1;
+            }
         }
 
         return counts
@@ -217,8 +295,7 @@ internal static class RenderingDistributions
                     item.Counts.ToDictionary(
                         pair => pair.Key,
                         pair => new RenderingFrequency(pair.Value, (double)pair.Value / item.Total),
-                        StringComparer.Ordinal)),
-                StringComparer.Ordinal);
+                        StringComparer.Ordinal)));
     }
 }
 
@@ -254,19 +331,30 @@ internal sealed class RenderingDistribution
 /// A rendering seen outside the held-out chapter. It is derived evidence, not a statement made by
 /// the new translation, so it remains a candidate until the matcher and review policy decide it.
 /// </summary>
+/// <param name="askedForms">
+/// The distinct lower-cased surfaces of the passage's content words - what this index was asked
+/// about - and <paramref name="answeredForms"/> the ones it holds an entry for under any key.
+/// The two are reported because a recall figure is not readable without them: a tier that cannot
+/// see a word and a tier that saw it and declined are different failures.
+/// </param>
 internal sealed class EvidentiaKnownRenderingEvidenceSource(
-    IReadOnlyDictionary<string, RenderingDistribution> bySourceKey,
-    string sourceName) : IEvidentiaEvidenceSource
+    IReadOnlyDictionary<RenderingKey, RenderingDistribution> bySourceKey,
+    string sourceName,
+    IReadOnlySet<string> askedForms,
+    IReadOnlySet<string> answeredForms) : IEvidentiaEvidenceSource
 {
     private const double MinimumScore = EvidentiaDefaults.KnownRenderingBaseScore;
     private const double MaximumAdditionalScore = EvidentiaDefaults.KnownRenderingShareScore;
 
+    public IReadOnlySet<string> AskedForms => askedForms;
+
+    public IReadOnlySet<string> AnsweredForms => answeredForms;
+
     public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
-        var key = source.Normalised;
-        if (!source.IsContentWord
+        var (key, distribution) = source.IsContentWord ? Entry(source) : default;
+        if (distribution is null
             || target.Token.StrongNumber is not { } strongNumber
-            || !bySourceKey.TryGetValue(key, out var distribution)
             || !distribution.Senses.TryGetValue(strongNumber, out var frequency))
         {
             yield break;
@@ -276,8 +364,30 @@ internal sealed class EvidentiaKnownRenderingEvidenceSource(
         yield return new EvidentiaEvidence(
             EvidentiaEvidenceKind.KnownRendering,
             MinimumScore + MaximumAdditionalScore * frequency.Share,
-            $"{sourceName}; observations={frequency.Count}/{distribution.Observations}; " +
+            $"{sourceName}; key={key}; observations={frequency.Count}/{distribution.Observations}; " +
             $"share={frequency.Share:P0}; next sense={nextShare:P0}",
-            new EvidentiaEvidenceSupport(distribution.Observations, frequency.Share, nextShare));
+            new EvidentiaEvidenceSupport(distribution.Observations, frequency.Share, nextShare, key.Kind));
+    }
+
+    /// <summary>
+    /// The most specific key the index can speak about - not the most specific one that agrees
+    /// with the target. Choosing the entry after seeing the answer would let a two-observation
+    /// surface be picked over a two-hundred-observation normalisation because it happened to say
+    /// yes, and the share and the next share are exactly what that would falsify.
+    ///
+    /// An entry exists only once it has met <see cref="EvidentiaDefaults.MinimumRenderingObservations"/>,
+    /// so "the index can speak about it" and "there is enough of it to speak about" are the same test.
+    /// </summary>
+    private (RenderingKey Key, RenderingDistribution? Distribution) Entry(EvidentiaAnalysis source)
+    {
+        foreach (var key in RenderingKeys.Of(source))
+        {
+            if (bySourceKey.TryGetValue(key, out var distribution))
+            {
+                return (key, distribution);
+            }
+        }
+
+        return (default, null);
     }
 }

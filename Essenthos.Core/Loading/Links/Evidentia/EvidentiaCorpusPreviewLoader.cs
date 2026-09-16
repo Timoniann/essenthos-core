@@ -166,6 +166,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             unambiguous.Count,
             unambiguous.Intersect(gold).Count(),
             finalProposals.Select(proposal => proposal.Source.Token.Id).Distinct().Count(),
+            knownRenderingEvidence?.AskedForms ?? new HashSet<string>(StringComparer.Ordinal),
+            knownRenderingEvidence?.AnsweredForms ?? new HashSet<string>(StringComparer.Ordinal),
             Samples(finalProposals, candidates, source, target, gold, options.SampleSize));
     }
 
@@ -503,6 +505,18 @@ internal sealed record EvidentiaBookMeasurement(
     public int FallbackVerses => Chapters.Sum(chapter => chapter.FallbackVerses);
     public int ContentSourceWords => Chapters.Sum(chapter => chapter.ContentSourceWords);
     public int FinalProposedSourceWords => Chapters.Sum(chapter => chapter.FinalProposedSourceWords);
+
+    /// <summary>
+    /// The book's distinct content source forms, and how many of them the learned index holds an
+    /// entry for. Unioned rather than summed: a form standing in four chapters is one word the
+    /// index either knows or does not.
+    /// </summary>
+    public IReadOnlySet<string> IndexAskedForms =>
+        Chapters.SelectMany(chapter => chapter.IndexAskedForms).ToHashSet(StringComparer.Ordinal);
+
+    public IReadOnlySet<string> IndexAnsweredForms =>
+        Chapters.SelectMany(chapter => chapter.IndexAnsweredForms).ToHashSet(StringComparer.Ordinal);
+
     public double Abstention => ContentSourceWords == 0
         ? 0
         : 1 - (double)FinalProposedSourceWords / ContentSourceWords;
@@ -540,6 +554,8 @@ internal sealed record EvidentiaBookMeasurement(
                $"({GlobalReviewKnownRenderingPrecision:P2}); gold recall: {GlobalReviewKnownRenderingRecall:P2}\n" +
                $"global review + syntax-gated target gloss: {CorrectGlobalReviewAndSyntaxTargetGlossProposals:N0}/{GlobalReviewAndSyntaxTargetGlossProposals:N0} " +
                $"({GlobalReviewAndSyntaxTargetGlossPrecision:P2}); gold recall: {GlobalReviewAndSyntaxTargetGlossRecall:P2}\n" +
+               $"learned index reach: {IndexAnsweredForms.Count:N0}/{IndexAskedForms.Count:N0} " +
+               "distinct content source forms have an entry\n" +
                $"final abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
                $"content source words unplaced ({Abstention:P2})" +
                string.Concat(Chapters
@@ -625,6 +641,8 @@ internal sealed record EvidentiaChapterMeasurement(
     int UnambiguousProposals,
     int CorrectUnambiguousProposals,
     int FinalProposedSourceWords,
+    IReadOnlySet<string> IndexAskedForms,
+    IReadOnlySet<string> IndexAnsweredForms,
     IReadOnlyList<string> Samples)
 {
     public double SourceCoverage => SourceWords == 0 ? 0 : (double)CoveredSourceWords / SourceWords;
@@ -723,6 +741,8 @@ internal sealed record EvidentiaChapterMeasurement(
                $"content coverage: {CoveredContentSourceWords:N0}/{ContentSourceWords:N0} ({ContentCoverage:P1}); " +
                $"ambiguous source words: {AmbiguousSourceWords:N0}; fallback verses: {FallbackVerses:N0}\n" +
                evaluation +
+               $"\nlearned index reach: {IndexAnsweredForms.Count:N0}/{IndexAskedForms.Count:N0} " +
+               "distinct content source forms have an entry" +
                $"\nfinal abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
                $"content source words unplaced ({Abstention:P1})" +
                (Samples.Count == 0 ? string.Empty : "\nsample:\n" + string.Join("\n", Samples));
