@@ -386,6 +386,50 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          """;
 
     /// <summary>
+    /// Whether the verse itself says a word BHSA marks a person is a place — the same question as
+    /// <see cref="ReadAsAPerson"/>, asked the other way round.
+    ///
+    /// <para>
+    /// A lexeme BHSA marks <c>pers</c> is a person on every occurrence, and Chronicles and the
+    /// prophets use a man's name for a place often enough to make that wrong: <em>the land of
+    /// Zuph</em> that Saul came to, <em>the hill Gareb</em> Jeremiah's measuring line crosses, and
+    /// the Gedor that Jered is called the father of. Where the verse lists name exactly one place
+    /// bearing the word's number and no person bearing it, the lists contradict the lexeme and the
+    /// occurrence is the place. The founder formula needs no conjunct here: a name after אֲבִי in
+    /// Chronicles is the town, which is the answer this already gives.
+    /// </para>
+    /// </summary>
+    private static readonly string ReadAsAPlace =
+        $"""
+         EXISTS (
+             SELECT 1 FROM verse_reference r
+             WHERE r.verse_id = w.verse_id AND r.is_primary
+               AND (SELECT count(DISTINCT {EntityCandidates.Resolves})
+                    FROM entity_name n
+                    JOIN entity bearer ON bearer.id = {EntityCandidates.Resolves}
+                         AND bearer.kind = 'place'
+                    JOIN entity_verse ev ON ev.entity_id = bearer.id
+                         AND ev.canonical_book = r.canonical_book
+                         AND ev.canonical_chapter = r.canonical_chapter
+                         AND ev.canonical_verse = r.canonical_verse
+                         AND ev.source NOT LIKE '{Ours}'
+                    WHERE n.hebrew_strong_number = w.strong_number
+                      AND coalesce(n.kind, '') NOT IN ('title', 'description')) = 1
+               AND NOT EXISTS (
+                    SELECT 1
+                    FROM entity_name n
+                    JOIN entity bearer ON bearer.id = {EntityCandidates.Resolves}
+                         AND bearer.kind = 'person'
+                    JOIN entity_verse ev ON ev.entity_id = bearer.id
+                         AND ev.canonical_book = r.canonical_book
+                         AND ev.canonical_chapter = r.canonical_chapter
+                         AND ev.canonical_verse = r.canonical_verse
+                         AND ev.source NOT LIKE '{Ours}'
+                    WHERE n.hebrew_strong_number = w.strong_number
+                      AND coalesce(n.kind, '') NOT IN ('title', 'description')))
+         """;
+
+    /// <summary>
     /// The kind of record BHSA's marking commits a word to, and nothing where it commits to none.
     ///
     /// The marking belongs to the lemma rather than to the occurrence, so a lexeme that can be a
@@ -393,17 +437,17 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// naming one kind is read, and every occurrence of Israel is left out by it.
     ///
     /// <para>
-    /// A word it marks a place is asked of the verse before the kind is taken —
-    /// <see cref="ReadAsAPerson"/> — because that is the one case where the lexeme and the
-    /// occurrence are known to disagree and something else can say so. The test is written inside
-    /// the <c>topo</c> arm rather than beside it so that it is asked of six thousand words and not
-    /// of four hundred thousand.
+    /// A word it marks a place or a person is asked of the verse before the kind is taken —
+    /// <see cref="ReadAsAPerson"/> and <see cref="ReadAsAPlace"/> — because those are the cases
+    /// where the lexeme and the occurrence are known to disagree and something else can say so. The
+    /// tests are written inside the arms rather than beside them so that they are asked of the words
+    /// that carry one kind and not of four hundred thousand.
     /// </para>
     /// </summary>
     private static readonly string Marked =
         $"""
          CASE w.morphology->>'nameType'
-              WHEN 'pers' THEN 'person'
+              WHEN 'pers' THEN CASE WHEN {ReadAsAPlace} THEN 'place' ELSE 'person' END
               WHEN 'topo' THEN CASE WHEN {ReadAsAPerson} THEN 'person' ELSE 'place' END
          END
          """;
@@ -744,12 +788,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             SELECT through, text_id, verse_id, max(carried) AS best
             FROM reached GROUP BY 1, 2, 3
         ),
+        leftover AS ({Annotating.Leftover}),
         supported AS (
             SELECT r.*
             FROM reached r
             JOIN rendered d ON d.through = r.through
                  AND d.text_id = r.text_id AND d.verse_id = r.verse_id
-            WHERE r.carried >= @faint OR d.best < @firm
+            WHERE (r.carried >= @faint OR d.best < @firm)
+              AND NOT EXISTS (SELECT 1 FROM leftover x WHERE x.word_id = r.word_id AND x.through = r.through)
         ),
         unanimous AS (
             SELECT word_id FROM supported GROUP BY 1 HAVING count(DISTINCT entity_id) = 1
@@ -812,7 +858,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// cold load for the same reason as the first: the place was written because BHSA's marking
     /// settled the kind before the verse was asked, and a warm corpus that only stopped writing it
     /// would keep every one already there. It is not restricted by method — the marking is what
-    /// made the row whatever method it carries, and the marking is what the verse overrules.
+    /// made the row whatever method it carries, and the marking is what the verse overrules. The
+    /// third arm is the same with the kinds the other way round, <see cref="ReadAsAPlace"/>.
     /// </para>
     ///
     /// <para>
@@ -840,6 +887,16 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                AND w.morphology->>'nameType' = 'topo'
                AND w.strong_number IS NOT NULL
                AND {ReadAsAPerson}
+             UNION
+             SELECT a.word_id, a.entity_id
+             FROM word_entity a
+             JOIN word w ON w.id = a.word_id
+             JOIN text t ON t.id = w.text_id AND t.slug = @witness
+             JOIN entity named ON named.id = a.entity_id AND named.kind = 'person'
+             WHERE a.source = ANY(@written)
+               AND w.morphology->>'nameType' = 'pers'
+               AND w.strong_number IS NOT NULL
+               AND {ReadAsAPlace}
          ),
          carried AS (
              SELECT other.word_id, seed.entity_id
@@ -954,7 +1011,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             logger.LogInformation(
                 "Withdrew {Rows} name resolutions the encyclopedia no longer bears out: the number " +
                 "now answers with more than one place, or the word's own verse names a person and " +
-                "no place bearing it", withdrawn);
+                "no place bearing it, or the reverse", withdrawn);
         }
 
         var unspoken = await db.Entities.CountAsync(

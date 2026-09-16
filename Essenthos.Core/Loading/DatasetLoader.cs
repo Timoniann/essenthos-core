@@ -147,6 +147,9 @@ internal sealed class DatasetLoader(
             await ReadTheNamesNothingSettles(resources, stoppingToken);
             await TellTheNamesakePlacesApart(resources, stoppingToken);
             await TellTheGreekNamesakesApart(stoppingToken);
+            await NameTheGreekNamesOfHebrewOrigin(stoppingToken);
+            await NameWhatTheVerseListLeavesOneBearerFor(resources, stoppingToken);
+            await NameWhatTheEncyclopediaHoldsUnderAnotherNumber(stoppingToken);
             await NameTheTribesTheConstructNames(stoppingToken);
             await ReachTheNamesNobodyElseCarries(stoppingToken);
             await WriteTheWordsForGod(stoppingToken);
@@ -845,6 +848,47 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<GreekNamesakeLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The Old Testament names the Greek writes, which the encyclopedia records under the Hebrew
+    /// number. After the Greek namesakes, because it answers only where they did not.
+    /// </summary>
+    private async Task NameTheGreekNamesOfHebrewOrigin(CancellationToken cancellationToken)
+    {
+        status.Starting("the Greek names of Hebrew origin");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<HebrewOriginNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The names whose number no record bears, where the verse list and the King James's spelling
+    /// name one record. After every pass that joins by number, because it answers only where no
+    /// number could.
+    /// </summary>
+    private async Task NameWhatTheEncyclopediaHoldsUnderAnotherNumber(CancellationToken cancellationToken)
+    {
+        status.Starting("the names the encyclopedia holds under another number");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<RenderedNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The Hebrew names whose marking or whose namesakes left them blank, where the verse list names
+    /// one bearer. After the readings and every pass that names a Hebrew word, because it answers
+    /// only where none of them did and a reading of the verse stands above a list.
+    /// </summary>
+    private async Task NameWhatTheVerseListLeavesOneBearerFor(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Hebrew names a verse list leaves one bearer for");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<ListedBearerLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     /// <summary>

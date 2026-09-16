@@ -461,6 +461,28 @@ internal sealed class OwnRecordLoader(
     private sealed record Occurrence(int Book, int Chapter, int Verse, string? StrongNumber);
 
     /// <summary>
+    /// What a ruling overrules: every other answer a pass wrote at the word it rules, and the copies
+    /// those answers were carried to. A person decided who the word names, so a reading or a
+    /// resolution that named somebody else there is not a second opinion to show beside it — it is
+    /// the answer the ruling was written against, and left standing it puts two records on one word.
+    /// Another person's ruling is not overruled, and the answer the ruling gives is not touched.
+    /// </summary>
+    private const string Overruled =
+        """
+        WITH overruled AS (
+            SELECT a.id, a.word_id, a.entity_id, a.source
+            FROM word_entity a
+            JOIN pending_annotation ruled ON ruled.word_id = a.word_id AND ruled.through IS NULL
+            WHERE a.entity_id <> ruled.entity_id AND a.method <> @manual
+        )
+        DELETE FROM word_entity a
+        USING overruled o
+        WHERE a.id = o.id
+           OR (a.entity_id = o.entity_id AND a.source = o.source
+               AND a.note LIKE 'through % word ' || o.word_id || ',%')
+        """;
+
+    /// <summary>
     /// The annotations the rulings settle, carried into every text the links reach exactly as every
     /// other annotation is. A person decided who is named, so the seed carries no confidence; a
     /// word reached across a link that is itself a guess does carry one, because the reach is what
@@ -478,6 +500,8 @@ internal sealed class OwnRecordLoader(
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
         await Annotating.Seed(connection, seed, cancellationToken);
+        await Annotating.Run(connection, transaction, Overruled, cancellationToken,
+            ("manual", EnumSpelling.Of(LinkMethod.Manual)));
         await Annotating.Run(connection, transaction, Annotating.MarkCorroboration, cancellationToken);
         await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
 

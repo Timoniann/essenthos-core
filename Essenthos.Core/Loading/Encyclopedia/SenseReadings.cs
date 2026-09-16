@@ -213,6 +213,8 @@ internal static class SenseReadingFiles
 
     private const string UnsettledResource = "Essenthos.Core.Loading.Encyclopedia.UnsettledRecords.json";
 
+    private const string GenealogyResource = "Essenthos.Core.Loading.Encyclopedia.GenealogyRecords.json";
+
     private static readonly JsonSerializerOptions Shape = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -348,9 +350,14 @@ internal static class SenseReadingFiles
     /// </summary>
     public static OwnRecordRulings UnsettledRulings() => Embedded<OwnRecordRulings>(UnsettledResource);
 
+    /// <summary>
+    /// The occurrences in the genealogies a reading answered against the verse the genealogy repeats.
+    /// </summary>
+    public static OwnRecordRulings GenealogyRulings() => Embedded<OwnRecordRulings>(GenealogyResource);
+
     /// <summary>Every rulings file, in the order they were decided.</summary>
     public static IReadOnlyList<OwnRecordRulings> AllRulings() =>
-        [Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings()];
+        [Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings()];
 
     private static T Embedded<T>(string name)
     {
