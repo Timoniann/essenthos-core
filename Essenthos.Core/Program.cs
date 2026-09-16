@@ -125,6 +125,7 @@ builder.Services.AddScoped<SenseReadingLoader>();
 builder.Services.AddScoped<SiteSplitLoader>();
 builder.Services.AddScoped<GreekNamesakeLoader>();
 builder.Services.AddScoped<ListedBearerLoader>();
+builder.Services.AddScoped<HebrewOriginNameLoader>();
 builder.Services.AddScoped<TribeNameLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
 builder.Services.AddScoped<AnnotationCarrier>();

@@ -147,6 +147,7 @@ internal sealed class DatasetLoader(
             await ReadTheNamesNothingSettles(resources, stoppingToken);
             await TellTheNamesakePlacesApart(resources, stoppingToken);
             await TellTheGreekNamesakesApart(stoppingToken);
+            await NameTheGreekNamesOfHebrewOrigin(stoppingToken);
             await NameWhatTheVerseListLeavesOneBearerFor(resources, stoppingToken);
             await NameTheTribesTheConstructNames(stoppingToken);
             await ReachTheNamesNobodyElseCarries(stoppingToken);
@@ -845,6 +846,19 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<GreekNamesakeLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The Old Testament names the Greek writes, which the encyclopedia records under the Hebrew
+    /// number. After the Greek namesakes, because it answers only where they did not.
+    /// </summary>
+    private async Task NameTheGreekNamesOfHebrewOrigin(CancellationToken cancellationToken)
+    {
+        status.Starting("the Greek names of Hebrew origin");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<HebrewOriginNameLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 
