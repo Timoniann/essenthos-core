@@ -149,6 +149,7 @@ internal sealed class DatasetLoader(
             await TellTheGreekNamesakesApart(stoppingToken);
             await NameTheGreekNamesOfHebrewOrigin(stoppingToken);
             await NameWhatTheVerseListLeavesOneBearerFor(resources, stoppingToken);
+            await NameWhatTheEncyclopediaHoldsUnderAnotherNumber(stoppingToken);
             await NameTheTribesTheConstructNames(stoppingToken);
             await ReachTheNamesNobodyElseCarries(stoppingToken);
             await WriteTheWordsForGod(stoppingToken);
@@ -859,6 +860,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<HebrewOriginNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The names whose number no record bears, where the verse list and the King James's spelling
+    /// name one record. After every pass that joins by number, because it answers only where no
+    /// number could.
+    /// </summary>
+    private async Task NameWhatTheEncyclopediaHoldsUnderAnotherNumber(CancellationToken cancellationToken)
+    {
+        status.Starting("the names the encyclopedia holds under another number");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<RenderedNameLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 
