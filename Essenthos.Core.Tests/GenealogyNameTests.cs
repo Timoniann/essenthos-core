@@ -28,6 +28,9 @@ public sealed class GenealogyNameTests : IDisposable
     /// <summary>The town somebody is called the father of, which is a place and stays one.</summary>
     private const string Town = "H1049";
 
+    /// <summary>A man's name BHSA marks a person, which the dictionary heads for a land as well.</summary>
+    private const string Ancestor = "H6689";
+
     /// <summary>The word Chronicles names a town by, standing before the name it founded.</summary>
     private const string Father = "H1";
 
@@ -41,6 +44,7 @@ public sealed class GenealogyNameTests : IDisposable
     private readonly Text _hebrew;
     private readonly Entity _man;
     private readonly Entity _land;
+    private readonly Entity _ancestor;
 
     /// <summary>
     /// Genesis 1, one verse per case, every word marked a place by BHSA and standing in a phrase
@@ -59,7 +63,9 @@ public sealed class GenealogyNameTests : IDisposable
             (1, 3, ["מגוג"]),
             (1, 4, ["אבי", "מגוג"]),
             (1, 5, ["מגוג"]),
-            (1, 6, ["בית־צור"]));
+            (1, 6, ["בית־צור"]),
+            (1, 7, ["צוף"]),
+            (1, 8, ["צוף"]));
         _db.SaveChanges();
 
         Place(1, Eponym, "PreC");
@@ -69,11 +75,15 @@ public sealed class GenealogyNameTests : IDisposable
         Place(4, Eponym, "PreC", position: 2);
         Place(5, Eponym, "Adju");
         Place(6, Town, "PreC");
+        Marked(Hebrew(7), Ancestor, "pers", "Cmpl");
+        Marked(Hebrew(8), Ancestor, "pers", "Cmpl");
 
         _man = Add("magog", "Magog", EntityKind.Person, Eponym);
         _land = Add("magog-2", "Magog", EntityKind.Place, Eponym);
         var bethzur = Add("bethzur", "Bethzur", EntityKind.Person, Town);
         var town = Add("bethzur-2", "Bethzur", EntityKind.Place, Town);
+        _ancestor = Add("zuph", "Zuph", EntityKind.Person, Ancestor);
+        var district = Add("zuph-2", "Zuph", EntityKind.Place, Ancestor);
 
         // 1: the table of sons — the man is named here and the land is not.
         // 2: both are named, so the list says nothing about the word.
@@ -81,6 +91,8 @@ public sealed class GenealogyNameTests : IDisposable
         // 4: the man is named, and the word stands after "father of", which is how a town is named.
         // 5: the man is named, and the word is a circumstance of its clause rather than its subject.
         // 6: the man is named and so is the town, which the founder formula names together.
+        // 7: a word marked a person, and only the land of that name is named in the verse.
+        // 8: the same word, in a verse naming the man as well.
         Attest(_man, 1, BibleData);
         Attest(_man, 2, BibleData);
         Attest(_land, 2, BibleData);
@@ -89,6 +101,9 @@ public sealed class GenealogyNameTests : IDisposable
         Attest(_man, 5, BibleData);
         Attest(bethzur, 6, BibleData);
         Attest(town, 6, BibleData);
+        Attest(district, 7, BibleData);
+        Attest(district, 8, BibleData);
+        Attest(_ancestor, 8, BibleData);
         _db.SaveChanges();
     }
 
@@ -245,6 +260,45 @@ public sealed class GenealogyNameTests : IDisposable
         (await _db.WordEntities.CountAsync(a => a.WordId == son)).Should().Be(1);
         (await _db.WordEntities.CountAsync(a => a.EntityId == _land.Id && a.WordId == son))
             .Should().Be(0);
+    }
+
+    /// <summary>
+    /// <em>The land of Zuph</em> that Saul came to. BHSA marks the lexeme a person, the lists name
+    /// the land in the verse and no man bearing the number, and the occurrence is the land.
+    /// </summary>
+    [Fact]
+    public async Task AWordMarkedAPersonThatTheVerseNamesAPlaceAtIsThePlace()
+    {
+        var named = await Load();
+        named.Should().ContainKey(Hebrew(7).Id).WhoseValue.Should().Be("zuph-2");
+    }
+
+    [Fact]
+    public async Task AVerseNamingTheManTooLeavesThePersonMarkingAlone()
+    {
+        var named = await Load();
+        named.Should().ContainKey(Hebrew(8).Id).WhoseValue.Should().Be("zuph");
+    }
+
+    [Fact]
+    public async Task ThePersonAlreadyWrittenAtAPlaceIsWithdrawn()
+    {
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = Hebrew(7).Id,
+            EntityId = _ancestor.Id,
+            Method = LinkMethod.Lexical,
+            Confidence = 0.9,
+            Source = EntityAnnotationLoader.Written[0],
+            Note = "written before the verse was asked",
+        });
+        await _db.SaveChangesAsync();
+
+        var named = await Load();
+
+        var land = Hebrew(7).Id;
+        named.Should().ContainKey(land).WhoseValue.Should().Be("zuph-2");
+        (await _db.WordEntities.CountAsync(a => a.WordId == land)).Should().Be(1);
     }
 
     [Fact]
