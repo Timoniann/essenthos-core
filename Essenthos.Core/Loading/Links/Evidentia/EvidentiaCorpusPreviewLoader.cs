@@ -22,9 +22,13 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     UdpipeAnnotator udpipe,
     EvidentiaDictionarySenseIndex dictionarySenseIndex,
     EvidentiaKnownRenderingIndex knownRenderingIndex,
-    LanguagePackRegistry languagePacks)
+    LanguagePackRegistry languagePacks,
+    InterlinearLinkLoader interlinear)
 {
+    private const string InterlinearGoldSource = "Door43 interlinear, joined in memory";
+
     private readonly Dictionary<string, SyntaxPrior> syntaxByTargetText = new(StringComparer.Ordinal);
+    private IReadOnlyList<(IReadOnlyList<long> From, IReadOnlyList<long> To)>? interlinearPairs;
 
     public async Task<EvidentiaCorpusPreview> Preview(
         string fromSlug,
@@ -42,7 +46,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
         var targetGlossEvidence = TargetGlossEvidenceSource.For(target);
         var knownRenderingEvidence = allowKnownRenderingEvidence
-            ? await knownRenderingIndex.For(fromSlug, toSlug, source, canonicalBook, canonicalChapter, null, cancellationToken)
+            ? await knownRenderingIndex.For(
+                fromSlug, toSlug, source, canonicalBook, canonicalChapter, null, cancellationToken: cancellationToken)
             : null;
         var preview = pipeline.Preview(
             new EvidentiaRequest(source, target, AllowSourceStrongEvidence: allowSourceStrongEvidence),
@@ -76,7 +81,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var knownRenderingEvidence = options.AllowKnownRenderingEvidence
             ? await knownRenderingIndex.For(
                 options.LearnRenderingsFrom ?? fromSlug, toSlug, source,
-                canonicalBook, canonicalChapter, options.LearnedRenderingMethods, cancellationToken)
+                canonicalBook, canonicalChapter, options.LearnedRenderingMethods,
+                fromSlug, options.LearnAcrossLanguages, cancellationToken)
             : null;
         var previews = source.GroupBy(token => token.Address)
             .OrderBy(group => group.Key.Verse)
@@ -107,7 +113,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             dictionaryReviewResolution.Proposals.Concat(syntaxTargetGlossOnlyResolution.Proposals).ToList(), 0);
         var sourceIds = source.Select(token => token.Id).ToHashSet();
         var targetIds = target.Select(token => token.Id).ToHashSet();
-        var goldAnnotation = await Gold(fromSlug, toSlug, sourceIds, targetIds, options.GoldSource, cancellationToken);
+        var goldAnnotation = options.GoldInterlinear is { } interlinearFolder
+            ? await InterlinearGold(fromSlug, interlinearFolder, sourceIds, targetIds, cancellationToken)
+            : await Gold(fromSlug, toSlug, sourceIds, targetIds, options.GoldSource, cancellationToken);
         var gold = goldAnnotation.Pairs;
         var covered = goldAnnotation.CoveredSourceWords;
         var contentSourceWordIds = previews.SelectMany(preview => preview.ContentSourceWordIds).ToHashSet();
@@ -526,6 +534,37 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                     right);
             })
             .ToList();
+        return Annotated(goldLinks, sourceIds, targetIds);
+    }
+
+    /// <summary>
+    /// The answer key made from a Door43 interlinear by the join as it stands, read into memory and
+    /// written nowhere. The rows the corpus holds came from an earlier join that dropped every span
+    /// whose original word stood before an earlier span's, so scoring against them scores mostly the
+    /// stretches that do not reorder.
+    /// </summary>
+    private async Task<EvidentiaGold> InterlinearGold(
+        string fromSlug,
+        string folder,
+        IReadOnlySet<long> sourceIds,
+        IReadOnlySet<long> targetIds,
+        CancellationToken cancellationToken)
+    {
+        interlinearPairs ??= await interlinear.Pairs(folder, fromSlug, cancellationToken);
+        var links = interlinearPairs
+            .Select((pair, index) => (Pair: pair, Index: index))
+            .Where(item => item.Pair.From.Any(sourceIds.Contains))
+            .Select(item => new EvidentiaGoldLink(
+                -1 - item.Index, LinkMethod.StatedBySource, InterlinearGoldSource, item.Pair.From, item.Pair.To))
+            .ToList();
+        return Annotated(links, sourceIds, targetIds);
+    }
+
+    private static EvidentiaGold Annotated(
+        IReadOnlyList<EvidentiaGoldLink> goldLinks,
+        IReadOnlySet<long> sourceIds,
+        IReadOnlySet<long> targetIds)
+    {
         var pairs = goldLinks
             .SelectMany(link => link.SourceWords.SelectMany(one => link.TargetWords.Select(two => (one, two))))
             .Where(pair => sourceIds.Contains(pair.one) && targetIds.Contains(pair.two))
@@ -872,6 +911,13 @@ internal sealed record EvidentiaChapterMeasurement(
 /// <param name="GoldSource">
 /// A substring of <c>Link.Source</c>, so one dataset's rows can be scored on their own.
 /// </param>
+/// <param name="LearnAcrossLanguages">
+/// Let <paramref name="LearnRenderingsFrom"/> be a text in another language than the measured one.
+/// </param>
+/// <param name="GoldInterlinear">
+/// A Door43 interlinear folder whose join, made in memory, is the answer key instead of the stored
+/// links.
+/// </param>
 /// <param name="RecordDisagreements">
 /// Keep every contradicted proposal, so a classification pass reads the same rows the aggregate
 /// counted rather than a second run's.
@@ -892,7 +938,9 @@ internal sealed record EvidentiaMeasurementOptions(
     int SampleSize = 0,
     bool RecordDisagreements = false,
     bool RecordWords = false,
-    IEvidentiaDecisionSink? Decisions = null);
+    IEvidentiaDecisionSink? Decisions = null,
+    string? GoldInterlinear = null,
+    bool LearnAcrossLanguages = false);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.

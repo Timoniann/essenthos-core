@@ -1,6 +1,7 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Loading.Links.Evidentia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -86,7 +87,8 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
             new UdpipeAnnotator(Configuration(), new Environment(_resources)),
             new EvidentiaDictionarySenseIndex(_db, packs),
             new EvidentiaKnownRenderingIndex(_db, packs),
-            packs);
+            packs,
+            new InterlinearLinkLoader(_db, Microsoft.Extensions.Logging.Abstractions.NullLogger<InterlinearLinkLoader>.Instance));
     }
 
     /// <summary>

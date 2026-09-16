@@ -9,6 +9,11 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// passage. A sense mentioning a translated word is lexical evidence, not a source assertion:
 /// words can occur in a gloss incidentally and the translation file itself may be model-made.
 /// The index therefore creates candidates only and never participates in automatic acceptance.
+///
+/// A definition's word is filed under every key <see cref="RenderingKeys"/> gives it, and a source
+/// word is looked up by the same keys. A definition writes a word in its citation form, so that form
+/// is filed as a lemma too: a source word whose analysis has a lemma reaches it that way, and only a
+/// word that reaches nothing by its own spelling or its lemma falls back to the pack's normalisation.
 /// </summary>
 internal sealed partial class EvidentiaDictionarySenseIndex(
     AppDbContext db,
@@ -31,44 +36,23 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
             return null;
         }
 
-        // The starter Slavic stemmer is intentionally light-weight. Using its stem as a reverse
-        // dictionary key made unrelated forms collide (for example "рече" and "речі"). Until
-        // UDPipe lemmas are supplied, an exact lower-case form is the conservative lexical key.
-        var evidenceKeysByLexicalForm = source
-            .Where(token => Analyse(token) is { IsContentWord: true })
-            .SelectMany(token => LexicalForms(token).Select(form => (Form: Key(form), EvidenceKey: EvidenceKey(token))))
-            .GroupBy(pair => pair.Form)
-            .ToDictionary(group => group.Key, group => group.Select(pair => pair.EvidenceKey).ToHashSet(StringComparer.Ordinal), StringComparer.Ordinal);
-        if (evidenceKeysByLexicalForm.Count == 0)
+        var wanted = source
+            .Select(Analyse)
+            .Where(analysis => analysis is { IsContentWord: true })
+            .SelectMany(analysis => RenderingKeys.Of(analysis!))
+            .ToHashSet();
+        if (wanted.Count == 0)
         {
             return null;
         }
 
         var reverse = await Reverse(language[0], cancellationToken);
-        var numbersByForm = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
-        foreach (var (form, evidenceKeys) in evidenceKeysByLexicalForm)
-        {
-            if (!reverse.NumbersByForm.TryGetValue(form, out var numbers))
-            {
-                continue;
-            }
-
-            foreach (var evidenceKey in evidenceKeys)
-            {
-                if (!numbersByForm.TryGetValue(evidenceKey, out var found))
-                {
-                    found = new HashSet<string>(StringComparer.Ordinal);
-                    numbersByForm.Add(evidenceKey, found);
-                }
-
-                found.UnionWith(numbers);
-            }
-        }
-
-        var provenance = reverse.Source;
-        return numbersByForm.Count == 0
+        var numbersByKey = wanted
+            .Where(reverse.NumbersByKey.ContainsKey)
+            .ToDictionary(key => key, key => reverse.NumbersByKey[key]);
+        return numbersByKey.Count == 0
             ? null
-            : new EvidentiaDictionarySenseEvidenceSource(numbersByForm, provenance);
+            : new EvidentiaDictionarySenseEvidenceSource(numbersByKey, reverse.Source);
     }
 
     private async Task<ReverseSenseIndex> Reverse(string language, CancellationToken cancellationToken)
@@ -79,28 +63,33 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
         }
 
         var (entries, provenance) = await Entries(language, cancellationToken);
-        var numbersByForm = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+        var numbersByKey = new Dictionary<RenderingKey, HashSet<string>>();
+        var keysByForm = new Dictionary<string, IReadOnlyList<RenderingKey>>(StringComparer.Ordinal);
         foreach (var entry in entries)
         {
             foreach (var form in Words(entry.Definition, entry.KjvDefinition, entry.DetailedDefinition).Distinct())
             {
-                var analysis = Analyse(new EvidentiaToken(0, default, 0, form, language));
-                if (analysis is null || !analysis.IsContentWord)
+                if (!keysByForm.TryGetValue(form, out var keys))
                 {
-                    continue;
+                    var analysis = Analyse(new EvidentiaToken(0, default, 0, form, language, Lemma: form.ToLowerInvariant()));
+                    keys = analysis is { IsContentWord: true } ? RenderingKeys.Of(analysis) : [];
+                    keysByForm.Add(form, keys);
                 }
 
-                if (!numbersByForm.TryGetValue(Key(form), out var numbers))
+                foreach (var key in keys)
                 {
-                    numbers = new HashSet<string>(StringComparer.Ordinal);
-                    numbersByForm.Add(Key(form), numbers);
-                }
+                    if (!numbersByKey.TryGetValue(key, out var numbers))
+                    {
+                        numbers = new HashSet<string>(StringComparer.Ordinal);
+                        numbersByKey.Add(key, numbers);
+                    }
 
-                numbers.Add(entry.StrongNumber);
+                    numbers.Add(entry.StrongNumber);
+                }
             }
         }
 
-        var index = new ReverseSenseIndex(numbersByForm, provenance);
+        var index = new ReverseSenseIndex(numbersByKey, provenance);
         byLanguage.Add(language, index);
         return index;
     }
@@ -135,28 +124,15 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
     private EvidentiaAnalysis? Analyse(EvidentiaToken token) =>
         languagePacks.TryAnalyse(token, out var analysis) ? analysis : null;
 
-    private static IEnumerable<string> LexicalForms(EvidentiaToken token)
-    {
-        yield return token.Surface;
-        if (!string.IsNullOrWhiteSpace(token.Lemma))
-        {
-            yield return token.Lemma;
-        }
-    }
-
-    private static string EvidenceKey(EvidentiaToken token) => Key(token.Lemma ?? token.Surface);
-
     private static IEnumerable<string> Words(params string?[] fields) => fields
         .Where(field => !string.IsNullOrWhiteSpace(field))
         .SelectMany(field => Word().Matches(field!).Select(match => match.Value));
-
-    private static string Key(string value) => value.ToLowerInvariant();
 
     [GeneratedRegex(@"\p{L}+")]
     private static partial Regex Word();
 
     private sealed record ReverseSenseIndex(
-        IReadOnlyDictionary<string, HashSet<string>> NumbersByForm,
+        IReadOnlyDictionary<RenderingKey, HashSet<string>> NumbersByKey,
         string Source);
 
     private sealed record SenseEntry(
@@ -168,7 +144,7 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
 
 /// <summary>One source passage's reverse Strong-sense index. It is deliberately not a singleton.</summary>
 internal sealed class EvidentiaDictionarySenseEvidenceSource(
-    IReadOnlyDictionary<string, HashSet<string>> strongNumbersBySourceForm,
+    IReadOnlyDictionary<RenderingKey, HashSet<string>> strongNumbersByKey,
     string sourceName) : IEvidentiaEvidenceSource
 {
     /// <summary>
@@ -178,12 +154,14 @@ internal sealed class EvidentiaDictionarySenseEvidenceSource(
     /// </summary>
     private const double SenseScore = EvidentiaDefaults.DictionarySenseScore;
 
+    private readonly Dictionary<long, (string Key, HashSet<string> Numbers)?> entries = [];
+
     public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
         if (!source.IsContentWord
-            || !strongNumbersBySourceForm.TryGetValue((source.Token.Lemma ?? source.Token.Surface).ToLowerInvariant(), out var numbers)
             || target.Token.StrongNumber is not { } targetNumber
-            || !numbers.Contains(targetNumber))
+            || EntryOf(source) is not { } entry
+            || !entry.Numbers.Contains(targetNumber))
         {
             yield break;
         }
@@ -191,6 +169,43 @@ internal sealed class EvidentiaDictionarySenseEvidenceSource(
         yield return new EvidentiaEvidence(
             EvidentiaEvidenceKind.DictionarySense,
             SenseScore,
-            sourceName);
+            $"{sourceName}; key={entry.Key}");
+    }
+
+    /// <summary>
+    /// What the word's own spelling and its lemma reach in the lexicon, together; and only where
+    /// neither reaches anything, what its normalisation does. Chosen before the target is looked at,
+    /// for the reason <see cref="EvidentiaKnownRenderingEvidenceSource"/> gives.
+    ///
+    /// The spelling and the lemma are not a ladder here. A definition names a sense in a citation
+    /// form, so a spelling that happens to stand in some other definition would, taken first, hide
+    /// the lemma's sense: measured on the Ukrainian benchmark that cost both precision and recall.
+    /// </summary>
+    private (string Key, HashSet<string> Numbers)? EntryOf(EvidentiaAnalysis source)
+    {
+        if (!entries.TryGetValue(source.Token.Id, out var entry))
+        {
+            entry = Entry(source);
+            entries.Add(source.Token.Id, entry);
+        }
+
+        return entry;
+    }
+
+    private (string Key, HashSet<string> Numbers)? Entry(EvidentiaAnalysis source)
+    {
+        var keys = RenderingKeys.Of(source);
+        var exact = keys
+            .Where(key => key.Kind != EvidentiaFormKind.Normalised && strongNumbersByKey.ContainsKey(key))
+            .ToList();
+        if (exact.Count > 0)
+        {
+            return (string.Join(" + ", exact), exact.SelectMany(key => strongNumbersByKey[key]).ToHashSet(StringComparer.Ordinal));
+        }
+
+        var normalised = keys.FirstOrDefault(key => key.Kind == EvidentiaFormKind.Normalised);
+        return normalised != default && strongNumbersByKey.TryGetValue(normalised, out var numbers)
+            ? (normalised.ToString(), numbers)
+            : null;
     }
 }

@@ -78,11 +78,19 @@ internal sealed class EvidentiaKnownRenderingIndex(
     /// </summary>
     private static readonly IReadOnlyList<LinkMethod> DefaultMethods = [LinkMethod.StatedBySource];
 
-    private readonly Dictionary<RenderingCorpusKey, IReadOnlyList<RenderingObservation>> observationsByTextPair = new();
+    private readonly Dictionary<RenderingCorpusKey, RenderingCorpus> observationsByTextPair = new();
     private readonly Dictionary<string, Dictionary<(int Book, int Chapter), IReadOnlySet<int>>> heldOutVersesByText =
         new(StringComparer.Ordinal);
     private readonly Dictionary<(string Surface, string? Lemma, string Language), IReadOnlyList<RenderingKey>> keysByForm = [];
 
+    /// <param name="fromSlug">The text whose links teach the index.</param>
+    /// <param name="sourceSlug">
+    /// The text being measured, when it is not <paramref name="fromSlug"/>; named in the refusal.
+    /// </param>
+    /// <param name="acrossLanguages">
+    /// Let a text in another language teach the index. Each observation is still analysed by its own
+    /// language's pack, and what the keys of two languages share is then the whole of the transfer.
+    /// </param>
     public async Task<EvidentiaKnownRenderingEvidenceSource?> For(
         string fromSlug,
         string toSlug,
@@ -90,6 +98,8 @@ internal sealed class EvidentiaKnownRenderingIndex(
         int excludedBook,
         int excludedChapter,
         IReadOnlyList<LinkMethod>? methods = null,
+        string? sourceSlug = null,
+        bool acrossLanguages = false,
         CancellationToken cancellationToken = default)
     {
         methods ??= DefaultMethods;
@@ -97,6 +107,16 @@ internal sealed class EvidentiaKnownRenderingIndex(
         if (language.Count != 1)
         {
             return null;
+        }
+
+        var corpus = await Observations(fromSlug, toSlug, methods, cancellationToken);
+        if (!acrossLanguages && !corpus.Language.Equals(language[0], StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(
+                $"The rendering index for {sourceSlug ?? "the measured text"} ({language[0]}) was asked to learn " +
+                $"from {fromSlug} ({corpus.Language}). A rendering index is a statement about one language, so " +
+                "every form of the other would be keyed as if it were this one. Learn from a text in " +
+                $"{language[0]}, or say the transfer is meant with --learn-across-languages.");
         }
 
         // Only the content words: they are the only ones a lookup asks about, so an entry for
@@ -111,11 +131,10 @@ internal sealed class EvidentiaKnownRenderingIndex(
             return null;
         }
 
-        var observations = await Observations(fromSlug, toSlug, methods, cancellationToken);
         var heldOut = await HeldOutVerses(fromSlug, excludedBook, excludedChapter, cancellationToken);
         var distributions = RenderingDistributions.Build(
-            observations, heldOut, wanted,
-            observation => Keys(observation, language[0]), MinimumObservations);
+            corpus.Observations, heldOut, wanted,
+            observation => Keys(observation, corpus.Language), MinimumObservations);
         if (distributions.Count == 0)
         {
             return null;
@@ -159,7 +178,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
         return keys;
     }
 
-    private async Task<IReadOnlyList<RenderingObservation>> Observations(
+    private async Task<RenderingCorpus> Observations(
         string fromSlug, string toSlug, IReadOnlyList<LinkMethod> methods, CancellationToken cancellationToken)
     {
         var key = new RenderingCorpusKey(fromSlug, toSlug, string.Join(',', methods.Order()));
@@ -170,7 +189,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
 
         var texts = await db.Texts.AsNoTracking()
             .Where(text => text.Slug == fromSlug || text.Slug == toSlug)
-            .Select(text => new { text.Id, text.Slug })
+            .Select(text => new { text.Id, text.Slug, text.Language })
             .ToListAsync(cancellationToken);
         var sourceText = texts.SingleOrDefault(text => text.Slug == fromSlug)
             ?? throw new InvalidOperationException($"Known rendering evidence needs source text {fromSlug}.");
@@ -199,8 +218,9 @@ internal sealed class EvidentiaKnownRenderingIndex(
             .ThenBy(observation => observation.SourceSurface, StringComparer.Ordinal)
             .ThenBy(observation => observation.TargetStrongNumber, StringComparer.Ordinal)
             .ToList();
-        observationsByTextPair.Add(key, observations);
-        return observations;
+        var corpus = new RenderingCorpus(sourceText.Language, observations);
+        observationsByTextPair.Add(key, corpus);
+        return corpus;
     }
 
     /// <summary>
@@ -234,6 +254,8 @@ internal sealed class EvidentiaKnownRenderingIndex(
     }
 
     private sealed record RenderingCorpusKey(string FromSlug, string ToSlug, string Methods);
+
+    private sealed record RenderingCorpus(string Language, IReadOnlyList<RenderingObservation> Observations);
 }
 
 internal sealed record RenderingObservation(
