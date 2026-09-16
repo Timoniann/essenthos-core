@@ -147,6 +147,7 @@ internal sealed class DatasetLoader(
             await ReadTheNamesNothingSettles(resources, stoppingToken);
             await TellTheNamesakePlacesApart(resources, stoppingToken);
             await TellTheGreekNamesakesApart(stoppingToken);
+            await NameTheTribesTheConstructNames(stoppingToken);
             await ReachTheNamesNobodyElseCarries(stoppingToken);
             await WriteTheWordsForGod(stoppingToken);
             await HoldTheTitlesAsTitles(stoppingToken);
@@ -154,6 +155,7 @@ internal sealed class DatasetLoader(
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
+            await CrossBackTheNamesGivenToEachOther(stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -949,6 +951,34 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityNameFormLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// <em>The tribe of Naphtali</em>: the name after the Hebrew word for a tribe, read as the
+    /// tribe. After every pass that names a Hebrew word, because it answers only where none of them
+    /// did.
+    /// </summary>
+    private async Task NameTheTribesTheConstructNames(CancellationToken cancellationToken)
+    {
+        status.Starting("the tribes the Hebrew construct names");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<TribeNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// Two words of one verse given each other's names, put back where they belong. Last, because
+    /// the spellings it reads are written by the step before it and the annotations it corrects are
+    /// written by every naming step above.
+    /// </summary>
+    private async Task CrossBackTheNamesGivenToEachOther(CancellationToken cancellationToken)
+    {
+        status.Starting("the names two words of one verse were given of each other");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<CrossedNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -111,8 +111,20 @@ internal sealed record OwnRecordRuling(
     string StrongNumber,
     OwnRecord? Create,
     string? Existing,
+    RecordSays? Says,
     IReadOnlyList<OwnAlternative>? Alternatives,
     string Why);
+
+/// <summary>
+/// What a ruling makes a record say about itself, where the record is one the encyclopedia already
+/// holds and what it says is what the ruling is about.
+///
+/// A ruling could already write a description onto a record it created and could not touch one it
+/// merely named, so a decision that a compiled record claims too much had nowhere to land: Jerioth
+/// arrived distinguished as the wife of Caleb, which is one of six readings of a verse that settles
+/// none of them. Both fields are set where they are given and left alone where they are not.
+/// </summary>
+internal sealed record RecordSays(string? Distinguisher, string? Notes);
 
 internal sealed record OwnRecord(
     string Slug,
@@ -198,6 +210,8 @@ internal static class SenseReadingFiles
     private const string ReportResource = "Essenthos.Core.Loading.Encyclopedia.ReportRecords.json";
 
     private const string TitleResource = "Essenthos.Core.Loading.Encyclopedia.TitleRecords.json";
+
+    private const string UnsettledResource = "Essenthos.Core.Loading.Encyclopedia.UnsettledRecords.json";
 
     private static readonly JsonSerializerOptions Shape = new()
     {
@@ -328,9 +342,15 @@ internal static class SenseReadingFiles
     /// <summary>The same decision read as what it says about the records themselves.</summary>
     public static TitleDecision Titles() => Embedded<TitleDecision>(TitleResource);
 
+    /// <summary>
+    /// The records the owner has ruled the text does not identify: what each of them says about
+    /// itself now, and every reading of the verse that could be right instead.
+    /// </summary>
+    public static OwnRecordRulings UnsettledRulings() => Embedded<OwnRecordRulings>(UnsettledResource);
+
     /// <summary>Every rulings file, in the order they were decided.</summary>
     public static IReadOnlyList<OwnRecordRulings> AllRulings() =>
-        [Rulings(), ReviewRulings(), ReportRulings(), TitleRulings()];
+        [Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings()];
 
     private static T Embedded<T>(string name)
     {

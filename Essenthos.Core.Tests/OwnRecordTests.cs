@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -160,6 +160,10 @@ public sealed class OwnRecordTests : IDisposable
     /// <summary>
     /// The shape the owner asked for on Judges 4:11: the word names Hobab, and the record says out
     /// loud that he may be Reuel. A silence and a guess are both worse answers than a named doubt.
+    ///
+    /// An alternative names a record where the encyclopedia holds one and describes it where it does
+    /// not — Jerioth may be Azubah, who has a page, and may equally be no name at all, which has
+    /// none. What has to be true of every one of them is that a reader is told what it is.
     /// </summary>
     [Fact]
     public async Task AnUnsettledRecordNamesWhoElseItMightBe()
@@ -175,7 +179,7 @@ public sealed class OwnRecordTests : IDisposable
                 .ToListAsync();
 
             alternatives.Should().HaveCount(ruling.Alternatives!.Count);
-            alternatives.Should().OnlyContain(a => a.Alternative != null);
+            alternatives.Should().OnlyContain(a => a.Alternative != null || a.Describes != null);
             alternatives.Should().OnlyContain(a => a.Reason.Length > 0);
             alternatives.Should().OnlyContain(a => a.Source.StartsWith("Essenthos"));
         }

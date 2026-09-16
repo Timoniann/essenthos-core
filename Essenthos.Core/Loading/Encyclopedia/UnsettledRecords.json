@@ -1,0 +1,45 @@
+{
+  "decidedBy": "the project owner, 2026-09-16, on how the encyclopedia holds Jerioth of 1 Chronicles 2:18 — recorded as PRB-0538",
+  "policy": "A name the verse does not settle is held as one record that says what is open about it, and names every reading the verse allows. Jerioth stands in a clause that has been read six ways for as long as it has been read at all, and the encyclopedia arrived holding one of them — the wife of Caleb — as a fact. The record keeps the reading the translations print, because a page has to be about somebody, and it says outright that the identification is open and what else it could be. Azubah is Caleb's wife and the three sons are hers, which is what the Hebrew's 'her sons' says under every reading of Jerioth.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown",
+  "rulings": [
+    {
+      "wordId": 6858809,
+      "reference": "1 Chronicles 2:18",
+      "strongNumber": "H3408",
+      "existing": "jerioth",
+      "says": {
+        "distinguisher": "named at 1 Chronicles 2:18 beside Azubah, Caleb's wife; who she is the verse does not settle",
+        "notes": "1 Chronicles 2:18 reads, word for word, \"And Caleb son of Hezron begat Azubah a woman and Jerioth, and these are her sons: Jesher and Shobab and Ardon.\" Two things in it are what make the name hard, and both can be read off the Hebrew this corpus holds.\n\nThe first is that the sons are hers, not theirs: בָנֶיהָ carries the feminine singular suffix, and the King James prints \"her sons are these\" for that reason. One woman is meant, and the verse has just named two.\n\nThe second is the particle. Azubah is introduced by אֵת as the object of the verb (H853), and Jerioth by אֵת the preposition, \"with\" (H854) — two lexemes written with the same consonants, which BHSA and Strong's Dictionary distinguish and the pointing does not. So the clause can be read as begetting Azubah and Jerioth alike, or as begetting Azubah's sons with Jerioth, and nothing in the sentence decides between them.\n\nWhat the encyclopedia holds is therefore this: Azubah is Caleb's wife and Jesher, Shobab and Ardon are her sons; Jerioth is a person named in the same breath whom the verse does not identify. Who else she might be, and why, is listed beside this record rather than chosen between. The record keeps her as a woman, as every reading that takes the word to name or describe somebody does but one: read as the name of Azubah's father, it is a man's. The name itself is the plural of יְרִיעָה, a curtain of the kind the tabernacle was hung with (H3407), which is what the reading that takes it for a description rather than a name rests on."
+      },
+      "alternatives": [
+        {
+          "slug": "azubah-2",
+          "reason": "A second name of Azubah, the two joined by the same verb: Caleb begat children of Azubah his wife, who was also called Jerioth. It accounts for 'her sons' without needing a second woman, which is the difficulty every other reading has to answer."
+        },
+        {
+          "describes": "a second wife of Caleb, by whom Jesher, Shobab and Ardon were born",
+          "reason": "The plainest reading of two names under one verb, and the one the translations print. Against it, the sons are then hers and not Azubah's, and the verse has named Azubah first and called her the wife."
+        },
+        {
+          "describes": "the daughter of Caleb and Azubah, by whom the three sons came",
+          "reason": "The Vulgate reads the clause this way, and an Arabic tradition with it: Caleb begat Jerioth of Azubah his wife, and 'her sons' are Jerioth's. It takes the feminine suffix in its nearest sense, at the cost of making the three Caleb's grandsons rather than his sons."
+        },
+        {
+          "describes": "the name of Azubah's father, naming whose daughter she was",
+          "reason": "Read as 'Azubah a woman, and (the daughter) of Jerioth', the second name says where the first came from rather than adding a person. Nothing in the clause supplies the missing word, which is what the reading has to assume."
+        },
+        {
+          "describes": "not a name at all, but a description of the woman — from the curtains she wore, kept or made",
+          "reason": "יְרִיעוֹת is the plural of the word for a curtain (H3407), and a midrashic reading takes the clause to be describing Azubah rather than naming a second person. Strong's Dictionary heads the form as a name, which is a lexicographer's decision about this verse and not an independent witness to it."
+        },
+        {
+          "describes": "a copyist's error, which the text has to be emended to repair",
+          "reason": "Wellhausen proposed reading the clause otherwise, and BDB records the proposal under the name. An emendation is an answer about the text rather than about the person, and it is listed here because it is one of the ways the difficulty has been met."
+        }
+      ],
+      "why": "The owner ruled on 2026-09-16 that Jerioth is a person the verse does not identify, and that the encyclopedia is to show every reading the clause allows rather than choose one. The record arrived distinguished as the wife of Caleb, which is one of the six."
+    }
+  ]
+}
