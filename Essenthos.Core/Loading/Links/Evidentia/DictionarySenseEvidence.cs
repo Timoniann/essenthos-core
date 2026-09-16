@@ -28,7 +28,7 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
         // dictionary key made unrelated forms collide (for example "рече" and "речі"). Until
         // UDPipe lemmas are supplied, an exact lower-case form is the conservative lexical key.
         var evidenceKeysByLexicalForm = source
-            .Where(token => Analyse(token) is { IsFunctionWord: false })
+            .Where(token => Analyse(token) is { IsContentWord: true })
             .SelectMany(token => LexicalForms(token).Select(form => (Form: Key(form), EvidenceKey: EvidenceKey(token))))
             .GroupBy(pair => pair.Form)
             .ToDictionary(group => group.Key, group => group.Select(pair => pair.EvidenceKey).ToHashSet(StringComparer.Ordinal), StringComparer.Ordinal);
@@ -44,7 +44,7 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
             foreach (var form in Words(entry.Definition, entry.KjvDefinition, entry.DetailedDefinition))
             {
                 var analysis = Analyse(new EvidentiaToken(0, default, 0, form, language[0]));
-                if (analysis is null || analysis.IsFunctionWord
+                if (analysis is null || !analysis.IsContentWord
                     || !evidenceKeysByLexicalForm.TryGetValue(Key(form), out var evidenceKeys))
                 {
                     continue;
@@ -137,7 +137,7 @@ internal sealed class EvidentiaDictionarySenseEvidenceSource(
 
     public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
-        if (source.IsFunctionWord
+        if (!source.IsContentWord
             || !strongNumbersBySourceForm.TryGetValue((source.Token.Lemma ?? source.Token.Surface).ToLowerInvariant(), out var numbers)
             || target.Token.StrongNumber is not { } targetNumber
             || !numbers.Contains(targetNumber))

@@ -45,6 +45,23 @@ internal static class EvidentiaMorphologyLabels
                 _ => UniversalFeatures.GetValueOrDefault(normalised),
             };
 
+    /// <summary>
+    /// Whether a witness's own label marks a word whose correspondence is structural rather than
+    /// lexical: the article, the preposition, the conjunction and the auxiliary, which a
+    /// translation routinely writes as a case ending, a word order or nothing at all.
+    ///
+    /// Negation, interjections, pronouns and numerals are deliberately not here. A translation
+    /// renders those with a word of its own, and the guard this answers exists to stop two
+    /// grammatical words being paired for want of anything else to pair - not to exclude every
+    /// word somebody once called a particle.
+    ///
+    /// Null where the witness states no class, which is not the same as stating a content word.
+    /// </summary>
+    public static bool? IsFunctionWord(string? label, string language) =>
+        PartOfSpeech(label, language) is not { } universal
+            ? null
+            : universal is "det" or "adp" or "conj" or "aux";
+
     private static string? Normalise(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToLowerInvariant();
 

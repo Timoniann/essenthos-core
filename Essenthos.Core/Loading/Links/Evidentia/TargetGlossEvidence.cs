@@ -35,7 +35,7 @@ internal sealed partial class TargetGlossEvidenceSource : IEvidentiaEvidenceSour
     public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
         if (!source.Token.Language.Equals("eng", StringComparison.OrdinalIgnoreCase)
-            || source.IsFunctionWord
+            || !source.IsContentWord
             || !formsByTargetId.TryGetValue(target.Token.Id, out var forms)
             || !forms.Contains(source.Normalised))
         {

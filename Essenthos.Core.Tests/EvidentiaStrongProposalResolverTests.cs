@@ -108,10 +108,10 @@ public class EvidentiaStrongProposalResolverTests
     {
         var source = new EvidentiaAnalysis(
             new EvidentiaToken(1, new EvidentiaAddress(1, 1, 1), 1, "light", "eng"),
-            "light", "light", null, false, LanguagePackCapability.Normalisation);
+            "light", "light", null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var target = new EvidentiaAnalysis(
             new EvidentiaToken(11, new EvidentiaAddress(1, 1, 1), 1, "אוֹר", "hbo"),
-            "אוֹר", null, null, false, LanguagePackCapability.Normalisation);
+            "אוֹר", null, null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var candidate = new EvidentiaCandidate(source, target,
         [
             new EvidentiaEvidence(EvidentiaEvidenceKind.ExactCanonicalAddress, 0.30, "test"),
@@ -129,7 +129,7 @@ public class EvidentiaStrongProposalResolverTests
     {
         var sourceOne = new EvidentiaAnalysis(
             new EvidentiaToken(1, new EvidentiaAddress(1, 1, 1), 1, "serve", "eng"),
-            "serve", "serve", null, false, LanguagePackCapability.Normalisation);
+            "serve", "serve", null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var sourceTwo = sourceOne with
         {
             Token = sourceOne.Token with { Id = 2, Position = 2, Surface = "minister" },
@@ -138,7 +138,7 @@ public class EvidentiaStrongProposalResolverTests
         };
         var target = new EvidentiaAnalysis(
             new EvidentiaToken(11, new EvidentiaAddress(1, 1, 1), 1, "עבד", "hbo"),
-            "עבד", null, null, false, LanguagePackCapability.Normalisation);
+            "עבד", null, null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var evidence = new[]
         {
             new EvidentiaEvidence(EvidentiaEvidenceKind.ExactCanonicalAddress, 0.30, "test"),
@@ -156,16 +156,16 @@ public class EvidentiaStrongProposalResolverTests
     {
         var anchorSource = new EvidentiaAnalysis(
             new EvidentiaToken(1, new EvidentiaAddress(1, 1, 1), 1, "God", "eng"),
-            "god", "god", null, false, LanguagePackCapability.Normalisation);
+            "god", "god", null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var anchorTarget = new EvidentiaAnalysis(
             new EvidentiaToken(11, new EvidentiaAddress(1, 1, 1), 1, "אלהים", "hbo"),
-            "אלהים", null, null, false, LanguagePackCapability.Normalisation);
+            "אלהים", null, null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var glossSource = new EvidentiaAnalysis(
             new EvidentiaToken(2, new EvidentiaAddress(1, 1, 1), 2, "light", "eng"),
-            "light", "light", null, false, LanguagePackCapability.Normalisation);
+            "light", "light", null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var glossTarget = new EvidentiaAnalysis(
             new EvidentiaToken(12, new EvidentiaAddress(1, 1, 1), 2, "אור", "hbo"),
-            "אור", null, null, false, LanguagePackCapability.Normalisation);
+            "אור", null, null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var glossCandidate = new EvidentiaCandidate(glossSource, glossTarget,
         [
             new EvidentiaEvidence(EvidentiaEvidenceKind.ExactCanonicalAddress, 0.30, "test"),
@@ -184,10 +184,10 @@ public class EvidentiaStrongProposalResolverTests
     {
         var source = new EvidentiaAnalysis(
             new EvidentiaToken(sourceId, new EvidentiaAddress(40, 17, 20), (int)sourceId, "faith", "eng", StrongNumber: sourceStrong ?? "G4102"),
-            "faith", null, null, false, LanguagePackCapability.Normalisation);
+            "faith", null, null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var target = new EvidentiaAnalysis(
             new EvidentiaToken(targetId, new EvidentiaAddress(40, 17, 20), (int)(targetId - 10), "πίστις", "grc", StrongNumber: "G4102"),
-            "πίστις", null, null, false, LanguagePackCapability.Normalisation);
+            "πίστις", null, null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         return new EvidentiaCandidate(
             source,
             target,
@@ -201,10 +201,10 @@ public class EvidentiaStrongProposalResolverTests
     {
         var source = new EvidentiaAnalysis(
             new EvidentiaToken(sourceId, new EvidentiaAddress(1, 1, 1), (int)sourceId, "word", "eng"),
-            "word", "word", null, false, LanguagePackCapability.Normalisation);
+            "word", "word", null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var target = new EvidentiaAnalysis(
             new EvidentiaToken(targetId, new EvidentiaAddress(1, 1, 1), (int)(targetId - 10), "דבר", "hbo", StrongNumber: strong),
-            "דבר", null, null, false, LanguagePackCapability.None);
+            "דבר", null, null, EvidentiaWordClass.Content, LanguagePackCapability.None);
         return new EvidentiaCandidate(source, target,
         [
             new EvidentiaEvidence(EvidentiaEvidenceKind.ExactCanonicalAddress, 0.30, "test"),

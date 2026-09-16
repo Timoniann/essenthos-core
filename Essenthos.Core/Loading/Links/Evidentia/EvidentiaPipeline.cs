@@ -34,10 +34,10 @@ internal sealed class EvidentiaPipeline(
         var source = Analyse(request.Source, unsupported);
         var target = Analyse(request.Target, unsupported);
         var candidates = Candidates(source, target, request.NeighbourVerseDistance, allEvidence);
-        var content = source.Where(analysis => !analysis.IsFunctionWord).ToList();
+        var content = source.Where(analysis => analysis.IsContentWord).ToList();
         var measurable = content.Count > 0 ? content : source;
         var covered = candidates
-            .Where(candidate => !candidate.Source.IsFunctionWord)
+            .Where(candidate => candidate.Source.IsContentWord)
             .Select(candidate => candidate.Source.Token.Id)
             .Distinct()
             .Count();
@@ -76,14 +76,15 @@ internal sealed class EvidentiaPipeline(
             {
                 unsupported.Add(token.Language);
                 // Keep the token in the graph so a source-provided anchor (for example a shared
-                // Strong number) can still be reported. Its absent language analysis keeps the
-                // preview in fallback state; no normalisation evidence is manufactured.
+                // Strong number) can still be reported. Its class is Unknown rather than content,
+                // which is what stops two identical particles in a language nobody has written a
+                // pack for scoring as a lexical match; no normalisation evidence is manufactured.
                 analysed.Add(new EvidentiaAnalysis(
                     token,
                     token.Surface.ToLowerInvariant(),
                     token.Lemma,
                     token.PartOfSpeech,
-                    false,
+                    EvidentiaWordClass.Unknown,
                     LanguagePackCapability.None));
             }
         }
@@ -103,7 +104,7 @@ internal sealed class EvidentiaPipeline(
             foreach (var to in target)
             {
                 var evidence = StructuralEvidence(from, to, maximumDistance);
-                if (!from.IsFunctionWord && from.Normalised == to.Normalised)
+                if (from.IsContentWord && !to.IsFunctionWord && from.Normalised == to.Normalised)
                 {
                     evidence.Add(new EvidentiaEvidence(
                         EvidentiaEvidenceKind.MatchingNormalisedForm,

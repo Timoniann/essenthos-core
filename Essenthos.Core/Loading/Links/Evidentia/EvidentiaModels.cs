@@ -40,13 +40,34 @@ internal sealed record EvidentiaToken(
     string? PartOfSpeech = null,
     IReadOnlyDictionary<string, string>? Morphology = null);
 
+/// <summary>
+/// What a language pack concluded a word is. <see cref="Unknown"/> is the reason this is not a
+/// bool: a token no pack claimed is not a content word and not a function word, and a guard
+/// written as "not a function word" would otherwise admit it.
+/// </summary>
+internal enum EvidentiaWordClass
+{
+    Unknown,
+    Content,
+    Function,
+}
+
 internal sealed record EvidentiaAnalysis(
     EvidentiaToken Token,
     string Normalised,
     string? Lemma,
     string? PartOfSpeech,
-    bool IsFunctionWord,
-    LanguagePackCapability Capabilities);
+    EvidentiaWordClass WordClass,
+    LanguagePackCapability Capabilities)
+{
+    public bool IsFunctionWord => WordClass == EvidentiaWordClass.Function;
+
+    /// <summary>
+    /// Deliberately narrower than "not a function word": only a pack that claimed the word said
+    /// so. Every guard that admits a word into lexical evidence asks this one.
+    /// </summary>
+    public bool IsContentWord => WordClass == EvidentiaWordClass.Content;
+}
 
 internal enum EvidentiaEvidenceKind
 {
@@ -73,6 +94,17 @@ internal sealed record EvidentiaCandidate(
     IReadOnlyList<EvidentiaEvidence> Evidence)
 {
     public double Score => Math.Clamp(Evidence.Sum(evidence => evidence.Score), 0, 1);
+
+    /// <summary>
+    /// A word the witness marks as an article, a preposition or a conjunction, matched by a source
+    /// word that neither its pack nor its own analysis calls one. English writes a real word for a
+    /// preposition, so <em>upon</em> against a Hebrew preposition is an ordinary correspondence;
+    /// a content word against a Hebrew article is a gloss read as a claim.
+    /// </summary>
+    public bool PairsAContentWordWithAFunctionWord =>
+        Target.IsFunctionWord
+        && !Source.IsFunctionWord
+        && EvidentiaMorphologyLabels.IsFunctionWord(Source.PartOfSpeech, Source.Token.Language) != true;
 }
 
 internal sealed record EvidentiaPhraseCandidate(

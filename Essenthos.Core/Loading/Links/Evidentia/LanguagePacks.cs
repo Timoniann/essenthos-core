@@ -46,7 +46,7 @@ internal sealed class EnglishLanguagePack : ILanguagePack
             normalised,
             Normalise(token.Lemma) ?? normalised,
             token.PartOfSpeech,
-            FunctionWords.Contains(token.Surface),
+            FunctionWords.Contains(token.Surface) ? EvidentiaWordClass.Function : EvidentiaWordClass.Content,
             Capabilities(token));
     }
 
@@ -86,7 +86,7 @@ internal sealed class SlavicLanguagePack : ILanguagePack
             normalised,
             Normalise(token.Lemma) ?? normalised,
             token.PartOfSpeech,
-            FunctionWords.Contains(token.Surface),
+            FunctionWords.Contains(token.Surface) ? EvidentiaWordClass.Function : EvidentiaWordClass.Content,
             Capabilities(token));
     }
 
@@ -102,6 +102,11 @@ internal sealed class SlavicLanguagePack : ILanguagePack
 /// <summary>
 /// Original-language tokens need an analysis object even when no cross-language form comparison
 /// is possible. Their source-provided lemma and morphology remain available to evidence layers.
+///
+/// A witness that states a part of speech states its own function words with it: BHSA marks the
+/// article, the preposition and the conjunction, and Nestle 1904 carries MACULA's classes. Calling
+/// every original-language word a content word, as this did, let a Hebrew article be reserved as
+/// somebody's rendering.
 /// </summary>
 internal sealed class OriginalLanguagePack : ILanguagePack
 {
@@ -127,12 +132,23 @@ internal sealed class OriginalLanguagePack : ILanguagePack
             capabilities |= LanguagePackCapability.Morphology;
         }
 
+        var function = EvidentiaMorphologyLabels.IsFunctionWord(token.PartOfSpeech, token.Language);
+        if (function.HasValue)
+        {
+            capabilities |= LanguagePackCapability.FunctionWords;
+        }
+
         return new EvidentiaAnalysis(
             token,
             normalised,
             token.Lemma?.ToLowerInvariant(),
             token.PartOfSpeech,
-            false,
+            function switch
+            {
+                true => EvidentiaWordClass.Function,
+                false => EvidentiaWordClass.Content,
+                null => EvidentiaWordClass.Unknown,
+            },
             capabilities);
     }
 }

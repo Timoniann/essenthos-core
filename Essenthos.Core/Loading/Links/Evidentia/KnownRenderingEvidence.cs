@@ -94,7 +94,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
 
     private string? Key(EvidentiaToken token)
     {
-        if (!languagePacks.TryAnalyse(token, out var analysis) || analysis.IsFunctionWord)
+        if (!languagePacks.TryAnalyse(token, out var analysis) || !analysis.IsContentWord)
         {
             return null;
         }
@@ -173,7 +173,7 @@ internal sealed class EvidentiaKnownRenderingEvidenceSource(
     public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
         var key = source.Normalised;
-        if (source.IsFunctionWord
+        if (!source.IsContentWord
             || target.Token.StrongNumber is not { } strongNumber
             || !bySourceKey.TryGetValue(key, out var frequencies)
             || !frequencies.TryGetValue(strongNumber, out var frequency))
