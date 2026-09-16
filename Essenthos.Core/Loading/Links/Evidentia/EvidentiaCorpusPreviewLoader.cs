@@ -120,12 +120,17 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var unambiguous = bySource.Where(pair => pair.Value.Count == 1)
             .Select(pair => (From: pair.Key, To: pair.Value.Single()))
             .ToHashSet();
-        var finalProposals = syntaxTargetGlossReviewResolution.Proposals
+        var lexicalProposals = syntaxTargetGlossReviewResolution.Proposals
             .Concat(globalReviewKnownRenderingResolution.Proposals)
             .ToList();
+        var attachedWords = EvidentiaAttachedWords.Resolve(
+            EvidentiaAuxiliaryWords.Mark([.. source.Select(Analyse).OfType<EvidentiaAnalysis>()]),
+            [.. target.Select(Analyse).OfType<EvidentiaAnalysis>()],
+            lexicalProposals);
+        List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
         var words = EvidentiaSourceWordAccount.Classify(
             source,
-            token => languagePacks.TryAnalyse(token, out var analysis) ? analysis : null,
+            Analyse,
             candidates,
             finalProposals,
             knownRenderingProposalResolver.Admitted(candidates, EvidentiaKnownRenderingProposalResolver.Review),
@@ -172,11 +177,12 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             EvidentiaTierScore.Of(globalReviewKnownRenderingResolution.Proposals, gold, covered),
             EvidentiaTierScore.Of(targetGlossReviewResolution.Proposals, gold, covered),
             EvidentiaTierScore.Of(syntaxTargetGlossReviewResolution.Proposals, gold, covered),
+            EvidentiaTierScore.Of(attachedWords, gold, covered),
             new EvidentiaTierScore(
                 unambiguous.Count,
                 unambiguous.Intersect(gold).Count(),
                 unambiguous.Count(pair => covered.Contains(pair.From))),
-            finalProposals.Select(proposal => proposal.Source.Token.Id).Distinct().Count(),
+            lexicalProposals.Select(proposal => proposal.Source.Token.Id).Distinct().Count(),
             knownRenderingEvidence?.AskedForms ?? new HashSet<string>(StringComparer.Ordinal),
             knownRenderingEvidence?.AnsweredForms ?? new HashSet<string>(StringComparer.Ordinal),
             Samples(finalProposals, candidates, source, target, gold, options.SampleSize),
@@ -221,6 +227,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             canonicalBook,
             measurements);
     }
+
+    private EvidentiaAnalysis? Analyse(EvidentiaToken token) =>
+        languagePacks.TryAnalyse(token, out var analysis) ? analysis : null;
 
     private async Task<List<EvidentiaToken>> Tokens(
         string slug,
@@ -620,6 +629,8 @@ internal sealed record EvidentiaBookMeasurement(
     public EvidentiaTierScore GlobalKnownRendering => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.GlobalKnownRendering));
     public EvidentiaTierScore GlobalReviewKnownRendering => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.GlobalReviewKnownRendering));
     public EvidentiaTierScore GlobalReviewAndSyntaxTargetGloss => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.GlobalReviewAndSyntaxTargetGloss));
+    public EvidentiaTierScore AttachedWords => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.AttachedWords));
+    public EvidentiaTierScore WithAttachedWords => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.WithAttachedWords));
     public int FallbackVerses => Chapters.Sum(chapter => chapter.FallbackVerses);
     public int ContentSourceWords => Chapters.Sum(chapter => chapter.ContentSourceWords);
     public int FinalProposedSourceWords => Chapters.Sum(chapter => chapter.FinalProposedSourceWords);
@@ -672,6 +683,8 @@ internal sealed record EvidentiaBookMeasurement(
                GlobalKnownRendering.Report("global stable", GoldPairs) + "\n" +
                GlobalReviewKnownRendering.Report("global review", GoldPairs) + "\n" +
                GlobalReviewAndSyntaxTargetGloss.Report("global review + syntax-gated target gloss", GoldPairs) + "\n" +
+               AttachedWords.Report("attached grammatical words", GoldPairs) + "\n" +
+               WithAttachedWords.Report("global review + syntax-gated target gloss + attached grammatical words", GoldPairs) + "\n" +
                $"learned index reach: {IndexAnsweredForms.Count:N0}/{IndexAskedForms.Count:N0} " +
                "distinct content source forms have an entry\n" +
                $"final abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
@@ -752,6 +765,7 @@ internal sealed record EvidentiaChapterMeasurement(
     EvidentiaTierScore GlobalReviewKnownRendering,
     EvidentiaTierScore TargetGlossReview,
     EvidentiaTierScore SyntaxTargetGlossReview,
+    EvidentiaTierScore AttachedWords,
     EvidentiaTierScore Unambiguous,
     int FinalProposedSourceWords,
     IReadOnlySet<string> IndexAskedForms,
@@ -768,6 +782,7 @@ internal sealed record EvidentiaChapterMeasurement(
     public double CandidateRecall => GoldPairs == 0 ? 0 : (double)GoldPairsInCandidates / GoldPairs;
     public EvidentiaTierScore GlobalReviewAndTargetGloss => GlobalReviewKnownRendering + TargetGlossReview;
     public EvidentiaTierScore GlobalReviewAndSyntaxTargetGloss => GlobalReviewKnownRendering + SyntaxTargetGlossReview;
+    public EvidentiaTierScore WithAttachedWords => GlobalReviewAndSyntaxTargetGloss + AttachedWords;
 
     /// <summary>
     /// How much of the chapter the answer key reaches at all. Every precision figure is a statement
@@ -807,6 +822,8 @@ internal sealed record EvidentiaChapterMeasurement(
               GlobalReviewKnownRendering.Report("global review learned-rendering", GoldPairs) + "\n" +
               GlobalReviewAndTargetGloss.Report("global review + target gloss", GoldPairs) + "\n" +
               GlobalReviewAndSyntaxTargetGloss.Report("global review + syntax-gated target gloss", GoldPairs) + "\n" +
+              AttachedWords.Report("attached grammatical words", GoldPairs) + "\n" +
+              WithAttachedWords.Report("global review + syntax-gated target gloss + attached grammatical words", GoldPairs) + "\n" +
               Unambiguous.Report("single-candidate graph", GoldPairs);
 
         return $"EVIDENTIA measurement {From} → {To}; mode: " +

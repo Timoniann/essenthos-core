@@ -83,6 +83,9 @@ internal enum EvidentiaProposalKind
     UniqueTargetGlossReview,
     UniqueDictionarySenseReview,
     GlobalAssignmentReview,
+
+    /// <summary>A grammatical word placed by the proposal of the word it belongs to.</summary>
+    AttachedWord,
 }
 
 internal sealed record EvidentiaProposal(
