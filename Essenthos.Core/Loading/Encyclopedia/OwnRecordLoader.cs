@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -286,6 +286,8 @@ internal sealed class OwnRecordLoader(
                 created++;
             }
 
+            Amend(referent, ruling, file.Source);
+
             if (await Alternatives(referent, ruling, file.Source, cancellationToken))
             {
                 unsettled++;
@@ -358,8 +360,39 @@ internal sealed class OwnRecordLoader(
         return entity;
     }
 
+    /// <summary>
+    /// The record a ruling names, with the claims already standing on it, so a second ruling on the
+    /// same record adds the file's claim once rather than twice.
+    /// </summary>
     private async Task<Entity?> Existing(string slug, CancellationToken cancellationToken) =>
-        await db.Entities.FirstOrDefaultAsync(e => e.Slug == slug, cancellationToken);
+        await db.Entities.Include(e => e.Claims).FirstOrDefaultAsync(e => e.Slug == slug, cancellationToken);
+
+    /// <summary>
+    /// What the ruling makes the record say about itself, and the claim that it was a person who
+    /// said so. A record the encyclopedia compiled says what its compiler concluded, and a ruling
+    /// that the conclusion is one reading of several has to reach the sentence a reader is shown.
+    /// </summary>
+    private static void Amend(Entity referent, OwnRecordRuling ruling, string source)
+    {
+        if (ruling.Says is not { } says)
+        {
+            return;
+        }
+
+        referent.Distinguisher = says.Distinguisher ?? referent.Distinguisher;
+        referent.Notes = says.Notes ?? referent.Notes;
+
+        if (referent.Claims.All(claim => claim.Source != source))
+        {
+            referent.Claims.Add(new EntityClaim
+            {
+                Method = LinkMethod.Manual,
+                Confidence = null,
+                Source = source,
+                Note = ruling.Why,
+            });
+        }
+    }
 
     /// <summary>
     /// Who else the record might be. Written on the record rather than on the occurrence, because
