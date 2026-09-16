@@ -450,6 +450,40 @@ if (args is ["carry", ..])
     return 0;
 }
 
+// A stated mapping drawn again from its file, after a change to how the file is read. The rows that
+// file wrote are withdrawn and loaded afresh, and the verse links and carried annotations are brought
+// up to the links as they then stand. `redraw berean BHSA` for the tables' Hebrew half.
+if (args is ["redraw", var redrawSource, var redrawSlug])
+{
+    using var redrawScope = app.Services.CreateScope();
+    var resources = ResourcePaths.Read(app.Configuration, app.Environment.ContentRootPath);
+    var slug = Identifier(redrawSlug);
+
+    switch (redrawSource)
+    {
+        case "berean":
+            var berean = redrawScope.ServiceProvider.GetRequiredService<BereanLinkLoader>();
+            app.Logger.LogInformation(
+                "Withdrew {Links} links the Berean tables wrote against {Witness}",
+                await berean.Withdraw(slug), slug);
+            app.Logger.LogInformation(
+                "{Outcome}",
+                await berean.Load(ResourcePaths.File(resources, "Berean", "bsb_tables.tsv"), slug));
+            break;
+
+        default:
+            app.Logger.LogError(
+                "Nothing is known to redraw from \"{Source}\". Name berean with a witness, as in `redraw berean "
+                + "BHSA`", redrawSource);
+            return 1;
+    }
+
+    app.Logger.LogInformation(
+        "{Outcome}", await redrawScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    await redrawScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    return 0;
+}
+
 // Clear Bible's hand-made alignments, as a batch run for the same reason the startup pipeline is
 // not always available: a corpus already loaded gets them without a restart. Idempotent per set,
 // like the pipeline step it shares a loader with.

@@ -63,12 +63,14 @@ public class BereanWordTests
 
     /// <summary>
     /// The file's own notation. Brackets and braces mark English the Greek only implies, and
-    /// <c>vvv</c> marks a rendering that stands elsewhere in the verse — none of the three is a word.
+    /// <c>vvv</c> marks a rendering that stands elsewhere in the verse — none of the three is a word,
+    /// and neither is the markup a line of poetry breaks with.
     /// </summary>
     [Theory]
     [InlineData(" [This is the] record ", new[] { "This", "is", "the", "record" })]
     [InlineData(" {at once} ", new[] { "at", "once" })]
     [InlineData(" the bull vvv ", new[] { "the", "bull" })]
+    [InlineData(" in all His words <p class=|indent2|>and kind ", new[] { "in", "all", "His", "words", "and", "kind" })]
     [InlineData(" - ", new string[0])]
     [InlineData(" . . . ", new string[0])]
     [InlineData("", new string[0])]
