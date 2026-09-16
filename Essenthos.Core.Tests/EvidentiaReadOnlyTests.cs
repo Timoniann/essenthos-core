@@ -85,7 +85,8 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
             new EvidentiaSyntaxReviewGate(),
             new UdpipeAnnotator(Configuration(), new Environment(_resources)),
             new EvidentiaDictionarySenseIndex(_db, packs),
-            new EvidentiaKnownRenderingIndex(_db, packs));
+            new EvidentiaKnownRenderingIndex(_db, packs),
+            packs);
     }
 
     /// <summary>

@@ -21,7 +21,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     EvidentiaSyntaxReviewGate syntaxReviewGate,
     UdpipeAnnotator udpipe,
     EvidentiaDictionarySenseIndex dictionarySenseIndex,
-    EvidentiaKnownRenderingIndex knownRenderingIndex)
+    EvidentiaKnownRenderingIndex knownRenderingIndex,
+    LanguagePackRegistry languagePacks)
 {
     private readonly Dictionary<string, SyntaxPrior> syntaxByTargetText = new(StringComparer.Ordinal);
 
@@ -122,6 +123,16 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var finalProposals = syntaxTargetGlossReviewResolution.Proposals
             .Concat(globalReviewKnownRenderingResolution.Proposals)
             .ToList();
+        var words = EvidentiaSourceWordAccount.Classify(
+            source,
+            token => languagePacks.TryAnalyse(token, out var analysis) ? analysis : null,
+            candidates,
+            finalProposals,
+            knownRenderingProposalResolver.Admitted(candidates, EvidentiaKnownRenderingProposalResolver.Review),
+            gold,
+            covered,
+            canonicalBook,
+            canonicalChapter);
         return new EvidentiaChapterMeasurement(
             fromSlug,
             toSlug,
@@ -171,7 +182,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             Samples(finalProposals, candidates, source, target, gold, options.SampleSize),
             options.RecordDisagreements
                 ? Disagreements(finalProposals, source, target, goldAnnotation, canonicalBook, canonicalChapter)
-                : []);
+                : [],
+            EvidentiaSourceWordAccount.Of(words),
+            options.RecordWords ? words : []);
     }
 
     public async Task<EvidentiaBookMeasurement> MeasureBook(
@@ -613,6 +626,12 @@ internal sealed record EvidentiaBookMeasurement(
     public IReadOnlyList<EvidentiaDisagreement> Disagreements =>
         [.. Chapters.SelectMany(chapter => chapter.Disagreements)];
 
+    public EvidentiaSourceWordAccount WordAccount => Chapters
+        .Select(chapter => chapter.WordAccount)
+        .Aggregate(default(EvidentiaSourceWordAccount), (running, next) => running + next);
+
+    public IReadOnlyList<EvidentiaWordRecord> Words => [.. Chapters.SelectMany(chapter => chapter.Words)];
+
     /// <summary>
     /// The book's distinct content source forms, and how many of them the learned index holds an
     /// entry for. Unioned rather than summed: a form standing in four chapters is one word the
@@ -656,7 +675,8 @@ internal sealed record EvidentiaBookMeasurement(
                $"learned index reach: {IndexAnsweredForms.Count:N0}/{IndexAskedForms.Count:N0} " +
                "distinct content source forms have an entry\n" +
                $"final abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
-               $"content source words unplaced ({Abstention:P2})" +
+               $"content source words unplaced ({Abstention:P2})\n" +
+               WordAccount.Report() +
                string.Concat(Chapters
                    .Where(chapter => chapter.Samples.Count > 0)
                    .Select(chapter => $"\nsample, chapter {chapter.CanonicalChapter}:\n"
@@ -737,7 +757,9 @@ internal sealed record EvidentiaChapterMeasurement(
     IReadOnlySet<string> IndexAskedForms,
     IReadOnlySet<string> IndexAnsweredForms,
     IReadOnlyList<string> Samples,
-    IReadOnlyList<EvidentiaDisagreement> Disagreements)
+    IReadOnlyList<EvidentiaDisagreement> Disagreements,
+    EvidentiaSourceWordAccount WordAccount,
+    IReadOnlyList<EvidentiaWordRecord> Words)
 {
     public double SourceCoverage => SourceWords == 0 ? 0 : (double)CoveredSourceWords / SourceWords;
     public double ContentCoverage => ContentSourceWords == 0
@@ -807,7 +829,8 @@ internal sealed record EvidentiaChapterMeasurement(
                $"\nlearned index reach: {IndexAnsweredForms.Count:N0}/{IndexAskedForms.Count:N0} " +
                "distinct content source forms have an entry" +
                $"\nfinal abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
-               $"content source words unplaced ({Abstention:P1})" +
+               $"content source words unplaced ({Abstention:P1})\n" +
+               WordAccount.Report() +
                (Samples.Count == 0 ? string.Empty : "\nsample:\n" + string.Join("\n", Samples));
     }
 }
@@ -833,6 +856,9 @@ internal sealed record EvidentiaChapterMeasurement(
 /// Keep every contradicted proposal, so a classification pass reads the same rows the aggregate
 /// counted rather than a second run's.
 /// </param>
+/// <param name="RecordWords">
+/// Keep every source word with its outcome, so two runs can be compared word by word.
+/// </param>
 internal sealed record EvidentiaMeasurementOptions(
     bool AllowSourceStrongEvidence = true,
     bool AllowKnownRenderingEvidence = true,
@@ -840,7 +866,8 @@ internal sealed record EvidentiaMeasurementOptions(
     IReadOnlyList<LinkMethod>? LearnedRenderingMethods = null,
     string? GoldSource = null,
     int SampleSize = 0,
-    bool RecordDisagreements = false);
+    bool RecordDisagreements = false,
+    bool RecordWords = false);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.

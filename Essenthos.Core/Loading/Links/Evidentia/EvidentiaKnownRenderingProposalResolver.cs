@@ -152,6 +152,20 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
         return new EvidentiaResolution(proposals, 0);
     }
 
+    /// <summary>
+    /// The source words whose learned rendering the policy accepts before any target is assigned,
+    /// so a word left unplaced can be told apart as refused or as having lost its target.
+    /// </summary>
+    public IReadOnlySet<long> Admitted(
+        IEnumerable<EvidentiaCandidate> candidates,
+        EvidentiaProposalPolicy policy) =>
+        candidates
+            .Where(IsExactKnownRendering)
+            .GroupBy(candidate => candidate.Source.Token.Id)
+            .Where(group => BestChoiceGroup(group, policy) is not null)
+            .Select(group => group.Key)
+            .ToHashSet();
+
     private static bool IsExactKnownRendering(EvidentiaCandidate candidate) =>
         candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)
         && candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.KnownRendering);
