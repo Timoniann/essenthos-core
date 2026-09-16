@@ -788,12 +788,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             SELECT through, text_id, verse_id, max(carried) AS best
             FROM reached GROUP BY 1, 2, 3
         ),
+        leftover AS ({Annotating.Leftover}),
         supported AS (
             SELECT r.*
             FROM reached r
             JOIN rendered d ON d.through = r.through
                  AND d.text_id = r.text_id AND d.verse_id = r.verse_id
-            WHERE r.carried >= @faint OR d.best < @firm
+            WHERE (r.carried >= @faint OR d.best < @firm)
+              AND NOT EXISTS (SELECT 1 FROM leftover x WHERE x.word_id = r.word_id AND x.through = r.through)
         ),
         unanimous AS (
             SELECT word_id FROM supported GROUP BY 1 HAVING count(DISTINCT entity_id) = 1

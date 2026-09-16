@@ -43,7 +43,8 @@ public sealed class AnnotationCarrierTests : IDisposable
         _hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
             (10, 13, ["מצרים", "לודים"]));
         _russian = Corpus.Add(_db, "RUSV", TextKind.Translation, "rus",
-            (10, 13, ["От", "Мицраима", "Лудим"]));
+            (10, 13, ["От", "Мицраима", "Лудим"]),
+            (10, 14, ["от", "Лудима"]));
 
         _ludim = new Entity
         {
@@ -158,6 +159,74 @@ public sealed class AnnotationCarrierTests : IDisposable
 
         (await Named()).Should().NotContainKey(Russian(1).Id);
         outcome.Withdrawn.Should().Be(1);
+    }
+
+    /// <summary>
+    /// The searchable forms the page is read by: the text writes <em>от</em> without a capital at
+    /// 10:14, so the <em>От</em> opening 10:13 is that preposition, and it writes the name only ever
+    /// with one.
+    /// </summary>
+    private void Spelled()
+    {
+        Russian(1).NormalisedText = "от";
+        Russian(2).NormalisedText = "мицраима";
+        Russian(3).NormalisedText = "лудим";
+        _db.WordAt(_russian, 10, 14, 1).NormalisedText = "от";
+        _db.WordAt(_russian, 10, 14, 2).NormalisedText = "лудима";
+        _db.SaveChanges();
+    }
+
+    /// <summary>
+    /// Numbers 26:20 in Ukrainian: <em>від</em> reached from the Shelanites at 0.93, beside
+    /// <em>Шелин</em> at 0.98. Both links are above anything a confidence line could draw, and the
+    /// page is what tells the preposition from the name.
+    /// </summary>
+    [Fact]
+    public async Task AWordTheTextWritesWithoutACapitalLosesTheNameBesideOneWrittenAsAName()
+    {
+        Spelled();
+        Link(Hebrew(2), Russian(1), LinkMethod.Aligner, 0.93);
+        Link(Hebrew(2), Russian(3), LinkMethod.Aligner, 0.98);
+
+        await _carrier.Carry();
+
+        var named = await Named();
+        named.Should().NotContainKey(Russian(1).Id);
+        named.Should().ContainKey(Russian(3).Id);
+    }
+
+    /// <summary>
+    /// Where the seed reached nothing else in the verse, the word is the only account there is, and
+    /// a text that writes its gentilics in lower case is still naming the people.
+    /// </summary>
+    [Fact]
+    public async Task AWordWrittenWithoutACapitalKeepsTheNameWhereNothingBesideItIsWrittenAsAName()
+    {
+        Spelled();
+        Link(Hebrew(2), Russian(1), LinkMethod.Aligner, 0.93);
+
+        await _carrier.Carry();
+
+        (await Named()).Should().ContainKey(Russian(1).Id);
+    }
+
+    /// <summary>
+    /// A word the text capitalises in the middle of a sentence is written as a name here, whatever
+    /// the text does with it elsewhere: <em>Господа Бога</em> renders the divine name in two words.
+    /// </summary>
+    [Fact]
+    public async Task AWordCapitalisedMidSentenceKeepsTheNameBesideOneWrittenAsAName()
+    {
+        Spelled();
+        Russian(2).Surface = "Бога";
+        Russian(2).NormalisedText = "от";
+        await _db.SaveChangesAsync();
+        Link(Hebrew(2), Russian(2), LinkMethod.Aligner, 0.93);
+        Link(Hebrew(2), Russian(3), LinkMethod.Aligner, 0.98);
+
+        await _carrier.Carry();
+
+        (await Named()).Should().ContainKey(Russian(2).Id);
     }
 
     /// <summary>A link removed as a guess the numbers contradicted takes its annotation with it.</summary>

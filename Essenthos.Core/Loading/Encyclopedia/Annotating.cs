@@ -320,6 +320,72 @@ internal static class Annotating
          """;
 
     /// <summary>
+    /// The words a seed reached in a verse beside its rendering that are not the name at all: a word
+    /// the text writes without a capital, reached from a seed that also reached, in the same verse of
+    /// the same text, a word the text only ever writes with one, and not the same word as it.
+    ///
+    /// <para>
+    /// An aligner that cannot place a word attaches it to what it can score, and a name is what it
+    /// scores best. Confidence does not tell those words apart: the Ukrainian <em>від</em> of Numbers
+    /// 26:20 was reached from the Shelanites at 0.93, one word after <em>Шелин</em> at 0.98, and the
+    /// Russian <em>из</em> of 1 Kings 7:14 from the Tyrian at 0.86, ten words after the rendering.
+    /// What does tell them apart is the page: the rendering is written as a name and the leftover is
+    /// written as the preposition it is, everywhere else in the book.
+    /// </para>
+    ///
+    /// <para>
+    /// A word written without a capital keeps the name where it is the only thing the seed reached in
+    /// its verse, or where nothing reached beside it is written as a name — so the Ukrainian gentilics,
+    /// which that text writes in lower case, keep theirs. So does a word the text capitalises here,
+    /// in the middle of a sentence, whatever it does elsewhere: <em>Господа Бога</em> renders the
+    /// divine name in two words, and the <em>Хору</em> of <em>Хору Ґідґаду</em> is half a place. A word that is the same word as a capitalised
+    /// word beside it (<see cref="SameWord"/>) is a second rendering of it and keeps it too. A text that
+    /// writes no capitals at all has no word written as a name, and nothing in it is taken back.
+    /// </para>
+    /// </summary>
+    public static readonly string Leftover =
+        $"""
+         WITH crowd AS MATERIALIZED (
+             SELECT DISTINCT r.through, r.text_id, r.verse_id, r.word_id, w.text, w.normalised_text,
+                    before.id IS NULL OR before.trailer ~ '[.!?]' AS opens
+             FROM reached r
+             JOIN word w ON w.id = r.word_id
+             LEFT JOIN word before ON before.verse_id = w.verse_id AND before.position = w.position - 1
+             WHERE (r.through, r.text_id, r.verse_id) IN (
+                 SELECT through, text_id, verse_id FROM reached
+                 GROUP BY 1, 2, 3 HAVING count(DISTINCT word_id) > 1)
+         ),
+         written AS MATERIALIZED (
+             SELECT spelled.text_id, spelled.normalised_text,
+                    EXISTS (SELECT 1 FROM word lower_case
+                            WHERE lower_case.text_id = spelled.text_id
+                              AND lower_case.normalised_text = spelled.normalised_text
+                              AND lower_case.text !~ '^[[:upper:]]') AS lower
+             FROM (SELECT DISTINCT text_id, normalised_text FROM crowd) spelled
+         ),
+         word_in_crowd AS MATERIALIZED (
+             SELECT c.through, c.text_id, c.verse_id, c.word_id,
+                    lower(regexp_replace(c.text, '{Ornament}', '', 'g')) AS bare,
+                    c.text ~ '^[[:upper:]]' AS capital,
+                    c.text ~ '^[[:upper:]]' AND NOT c.opens AS capitalised_here,
+                    coalesce(written.lower, FALSE) AS lower
+             FROM crowd c
+             LEFT JOIN written ON written.text_id = c.text_id
+                  AND written.normalised_text = c.normalised_text
+         )
+         SELECT DISTINCT stray.word_id, stray.through
+         FROM word_in_crowd stray
+         JOIN word_in_crowd name ON name.through = stray.through AND name.text_id = stray.text_id
+              AND name.verse_id = stray.verse_id AND name.word_id <> stray.word_id
+         WHERE stray.lower AND NOT stray.capitalised_here AND name.capital AND NOT name.lower
+           AND NOT EXISTS (
+               SELECT 1 FROM word_in_crowd twin
+               WHERE twin.through = stray.through AND twin.text_id = stray.text_id
+                 AND twin.verse_id = stray.verse_id AND twin.word_id <> stray.word_id
+                 AND twin.capital AND similarity(twin.bare, stray.bare) >= {SameWord})
+         """;
+
+    /// <summary>
     /// The same annotations on the words each link says stand for one of the seeded words — by
     /// <see cref="Reached"/>, so the head of a phrase and every word of a repeated name alike.
     ///
@@ -350,7 +416,7 @@ internal static class Annotating
     /// Takes <c>@faint</c> and <c>@firm</c>; <see cref="CarryAcrossLinks"/> supplies both.
     /// </para>
     /// </summary>
-    public const string Carry =
+    public static readonly string Carry =
         $"""
         WITH reached AS (
             SELECT other.word_id,
@@ -378,12 +444,14 @@ internal static class Annotating
             SELECT through, text_id, verse_id, max(link) AS best
             FROM reached GROUP BY 1, 2, 3
         ),
+        leftover AS ({Leftover}),
         supported AS (
             SELECT r.*
             FROM reached r
             JOIN rendered d ON d.through = r.through
                  AND d.text_id = r.text_id AND d.verse_id = r.verse_id
-            WHERE r.link >= @faint OR d.best < @firm
+            WHERE (r.link >= @faint OR d.best < @firm)
+              AND NOT EXISTS (SELECT 1 FROM leftover x WHERE x.word_id = r.word_id AND x.through = r.through)
         ),
         unanimous AS (
             SELECT word_id FROM supported GROUP BY 1 HAVING count(DISTINCT entity_id) = 1
