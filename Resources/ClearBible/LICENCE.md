@@ -6,9 +6,35 @@ Downloaded from [Clear-Bible/Alignments](https://github.com/Clear-Bible/Alignmen
 
 `arb`, `asm`, `ben`, `eng`, `fra`, `hau`, `hin`, `legacy`, `por`, `rus`, `spa`.
 
-The repository's current README says the alignment data is CC BY 4.0. That is helpful context but
-is not used as a blanket licence: the TOML file adjacent to every alignment is the controlling
-record for the individual bytes and is retained with the archive's extracted data.
+## What the repository states about itself, measured on 2026-09-16
+
+Three different kinds of claim, checked separately because RUL-0105 says they routinely disagree.
+Each was requested again on **2026-09-16** rather than taken from the previous version of this file:
+
+| checked | result |
+|---|---|
+| `LICENSE` at the repository root | **404** |
+| `COPYING` at the repository root | **404** |
+| `LICENSE.md` at the repository root | **200** — present on `main` continuously since 2023-05-12 |
+| GitHub API `license` field | `{"key": "other", "name": "Other", "spdx_id": "NOASSERTION"}` |
+| `README.md` | "All alignment data is licensed under a Creative Commons Attribution 4.0 International License"; code MIT, © 2024 Biblica, Inc. |
+| `LICENSE.md` | code MIT, © 2023 Clear Bible, Inc.; data — "Bible Word Alignments © 2022 by Clear Bible, Inc is licensed under CC BY 4.0" |
+
+**An earlier version of this file recorded that `LICENSE`, `LICENSE.md` and `COPYING` all 404 and
+that the GitHub API reported `license: null`. Two thirds of that does not reproduce and should not
+be repeated.** `LICENSE.md` exists and has since 2023-05-12 — the most recent upstream commit
+touching that path is 2023-05-30 and the file is still there — and the API reports `NOASSERTION`,
+which is GitHub saying it found a licence file it could not identify, not that none exists. What
+survives of the old measurement, and it is the part that matters, is that **GitHub recognises no
+licence at the repository level**: `NOASSERTION` is not a grant.
+
+So the repository does make a blanket statement, in two places, and it says CC BY 4.0 over the data.
+It is still not used as a blanket licence here, for the reason RUL-0105 gives rather than for want
+of a statement: **the TOML file adjacent to every alignment is the record closest to the individual
+bytes, it is the more restrictive where they differ, and they do differ.** `SBLGNT-ONAV-manual.toml`
+declares `license = "CC-BY-SA-4.0"` on its alignment, its target and its target metadata, against a
+repository README and a `LICENSE.md` that both say CC BY 4.0 over everything. Every TOML is retained
+with the archive's extracted data.
 
 ## Inventory read from the TOML records
 
@@ -33,12 +59,13 @@ alignment and target declare CC BY-SA 4.0; RUL-0183 excludes it from corpus use.
 licences are recorded separately in each TOML and may impose attribution or text-use conditions
 even where the alignment itself is CC BY.
 
-## Russian warning
+## Russian warning — before using the Russian set, read PRB-0185
 
 Do not load `RUSSYN` from this release yet. Measured against its own target token file on
 2026-09-03: 12,550 of 89,248 records name punctuation as the Russian word. The English BSB control
 had zero such records in 171,172. The archive is evidence for an upstream repair, not mapping input
-until its target tokenization matches the release's alignment records.
+until its target tokenization matches the release's alignment records. What was decided about it is
+on **PRB-0185**.
 
 ## What these data mean
 

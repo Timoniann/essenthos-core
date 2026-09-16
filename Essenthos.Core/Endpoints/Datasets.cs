@@ -235,8 +235,10 @@ public static class Datasets
 
         // The second answer to a question the corpus already had an answer to, which is why it is
         // here at all: 98,989 of its records corroborate a link the Berean's own tables state, and
-        // 8,345 disagree with one. Its repository carries no licence file — every statement of terms
-        // is in the per-set TOML, which is the one closest to the bytes (RUL-0105).
+        // 8,345 disagree with one. Its repository does say CC BY 4.0 over the whole of the data,
+        // in its README and its LICENSE.md, but the per-set TOML is the statement closest to the
+        // bytes and the more restrictive where they differ — the Arabic ONAV set says CC BY-SA 4.0
+        // and is excluded on that (RUL-0105).
         new("clearbible", "Clear Bible Alignments", "BiblioNexus", "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://github.com/Clear-Bible/Alignments",
