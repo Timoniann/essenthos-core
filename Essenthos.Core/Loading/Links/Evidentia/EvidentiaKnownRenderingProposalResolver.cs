@@ -79,12 +79,16 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
             var targetCount = verse.Select(candidate => candidate.Target.Token.Id).Distinct().Count();
             // Counted before the auxiliary words are set aside, so refusing one word does not move
             // the relative position of every other word in the verse.
-            var choices = verse
+            var groups = verse
                 .Where(candidate => !candidate.PlacesAnAuxiliaryWordOffItsKind)
                 .GroupBy(candidate => candidate.Source.Token.Id)
-                .Select(group => BestChoice(group, sourceCount, targetCount, policy))
-                .Where(choice => choice is not null)
-                .Cast<RankedChoice>()
+                .Select(group => BestChoiceGroup(group, policy))
+                .Where(group => group is not null)
+                .Cast<RankedChoiceGroup>()
+                .ToList();
+            var frame = OccurrenceFrame.Of(groups, sourceCount, targetCount);
+            var choices = groups
+                .Select(group => BestChoice(group, frame))
                 .OrderByDescending(choice => choice.KnownScore)
                 .ThenByDescending(choice => choice.PositionScore)
                 .ThenBy(choice => choice.Candidate.Source.Token.Position)
@@ -140,7 +144,7 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
                 .Cast<RankedChoiceGroup>()
                 .ToList();
 
-            foreach (var choice in GloballyAssign(choices, sourceCount, targetCount))
+            foreach (var choice in GloballyAssign(choices, OccurrenceFrame.Of(choices, sourceCount, targetCount)))
             {
                 var kind = policy.Kind == EvidentiaProposalKind.StableKnownRendering
                     ? EvidentiaProposalKind.GlobalStableKnownRendering
@@ -176,25 +180,12 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
         candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)
         && candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.KnownRendering);
 
-    private static RankedChoice? BestChoice(
-        IGrouping<long, EvidentiaCandidate> sourceCandidates,
-        int sourceCount,
-        int targetCount,
-        EvidentiaProposalPolicy policy)
-    {
-        var choiceGroup = BestChoiceGroup(sourceCandidates, policy);
-        if (choiceGroup is null)
-        {
-            return null;
-        }
-
-        return choiceGroup.Candidates
-            .Select(candidate => new RankedChoice(candidate, choiceGroup.KnownScore,
-                PositionScore(candidate, sourceCount, targetCount)))
+    private static RankedChoice BestChoice(RankedChoiceGroup choiceGroup, OccurrenceFrame frame) =>
+        choiceGroup.Candidates
+            .Select(candidate => new RankedChoice(candidate, choiceGroup.KnownScore, frame.Score(candidate)))
             .OrderByDescending(candidate => candidate.PositionScore)
             .ThenBy(candidate => candidate.Candidate.Target.Token.Position)
             .First();
-    }
 
     private static RankedChoiceGroup? BestChoiceGroup(
         IGrouping<long, EvidentiaCandidate> sourceCandidates,
@@ -235,8 +226,7 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
 
     private static IReadOnlyList<RankedChoice> GloballyAssign(
         IReadOnlyList<RankedChoiceGroup> choices,
-        int sourceCount,
-        int targetCount)
+        OccurrenceFrame frame)
     {
         if (choices.Count == 0)
         {
@@ -263,7 +253,7 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
             {
                 var column = targetIndex[candidate.Target.Token.Id] + 1;
                 var weight = choices[row - 1].KnownScore * KnownEvidenceWeight
-                    + PositionScore(candidate, sourceCount, targetCount);
+                    + frame.Score(candidate);
                 costs[row, column] = -weight;
             }
         }
@@ -282,8 +272,7 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
                 .SingleOrDefault(candidate => candidate.Target.Token.Id == targets[column]);
             if (candidate is not null)
             {
-                proposals.Add(new RankedChoice(candidate, choices[row].KnownScore,
-                    PositionScore(candidate, sourceCount, targetCount)));
+                proposals.Add(new RankedChoice(candidate, choices[row].KnownScore, frame.Score(candidate)));
             }
         }
 
@@ -379,11 +368,68 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
         .Select(evidence => evidence.Support)
         .FirstOrDefault();
 
-    private static double PositionScore(EvidentiaCandidate candidate, int sourceCount, int targetCount)
+    /// <summary>
+    /// Chooses between occurrences of one lexeme in a verse, which the learned index cannot: every
+    /// occurrence carries the same evidence. Two readings of where a rendering should stand are
+    /// averaged - its relative position in the verse, and its position between the nearest words
+    /// on either side whose rendering occurs in the verse once only - since the first alone ignores
+    /// a clause the original orders differently and the second alone follows a single misplaced
+    /// neighbour.
+    ///
+    /// Both distances are squared, so that two occurrences of a lexeme are not crossed when they
+    /// can be kept in order (<em>the waters from the waters</em>). Measured linearly, two words on
+    /// the same side of both occurrences score the same whichever occurrence each takes, and the
+    /// assignment chose the crossing or the parallel reading by the order it met them.
+    /// </summary>
+    private sealed class OccurrenceFrame
     {
-        var sourceFraction = sourceCount <= 1 ? 0.5 : (double)(candidate.Source.Token.Position - 1) / (sourceCount - 1);
-        var targetFraction = targetCount <= 1 ? 0.5 : (double)(candidate.Target.Token.Position - 1) / (targetCount - 1);
-        return 1 - Math.Abs(sourceFraction - targetFraction);
+        private readonly List<(int Source, int Target)> anchors;
+        private readonly int targetCount;
+        private readonly double slope;
+
+        private OccurrenceFrame(List<(int Source, int Target)> anchors, int sourceCount, int targetCount)
+        {
+            this.anchors = anchors;
+            this.targetCount = targetCount;
+            slope = sourceCount <= 1 ? 1 : (double)(targetCount - 1) / (sourceCount - 1);
+        }
+
+        public static OccurrenceFrame Of(IEnumerable<RankedChoiceGroup> groups, int sourceCount, int targetCount) =>
+            new([
+                .. groups
+                    .Where(group => group.Candidates.Select(candidate => candidate.Target.Token.Id).Distinct().Count() == 1)
+                    .Select(group => (Source: group.Candidates[0].Source.Token.Position, Target: group.Candidates[0].Target.Token.Position))
+                    .OrderBy(anchor => anchor.Source),
+            ], sourceCount, targetCount);
+
+        public double Score(EvidentiaCandidate candidate)
+        {
+            var source = candidate.Source.Token.Position;
+            var target = candidate.Target.Token.Position;
+            var span = Math.Max(1, targetCount - 1);
+            var relative = (target - (1 + (source - 1) * slope)) / span;
+            var between = (target - BetweenAnchors(source)) / span;
+            return 1 - (relative * relative + between * between) / 2;
+        }
+
+        private double BetweenAnchors(int source)
+        {
+            var after = anchors.FindIndex(anchor => anchor.Source > source);
+            var before = (after < 0 ? anchors.Count : after) - 1;
+            while (before >= 0 && anchors[before].Source >= source)
+            {
+                before--;
+            }
+
+            return (before >= 0, after >= 0) switch
+            {
+                (true, true) => anchors[before].Target + (source - anchors[before].Source)
+                    * (double)(anchors[after].Target - anchors[before].Target) / (anchors[after].Source - anchors[before].Source),
+                (true, false) => anchors[before].Target + (source - anchors[before].Source) * slope,
+                (false, true) => anchors[after].Target - (anchors[after].Source - source) * slope,
+                _ => 1 + (source - 1) * slope,
+            };
+        }
     }
 
     private sealed record RankedChoice(EvidentiaCandidate Candidate, double KnownScore, double PositionScore);
