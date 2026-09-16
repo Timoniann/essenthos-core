@@ -63,6 +63,7 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
             new EvidentiaMeasurementOptions(SampleSize: 4));
 
         measurement.GoldPairs.Should().Be(1);
+        measurement.GoldCoveredSourceWords.Should().Be(1, "the answer key reaches only 'God' of the seven words");
         _db.ChangeTracker.HasChanges().Should().BeFalse("a preview is a diagnostic, not a write path");
         _db.ChangeTracker.Entries().Should().BeEmpty("every query on this path is AsNoTracking");
         (await _db.Links.CountAsync()).Should().Be(links);

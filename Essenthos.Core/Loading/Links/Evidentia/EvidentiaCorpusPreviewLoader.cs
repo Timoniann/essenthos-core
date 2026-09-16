@@ -106,7 +106,10 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             dictionaryReviewResolution.Proposals.Concat(syntaxTargetGlossOnlyResolution.Proposals).ToList(), 0);
         var sourceIds = source.Select(token => token.Id).ToHashSet();
         var targetIds = target.Select(token => token.Id).ToHashSet();
-        var gold = await GoldPairs(fromSlug, toSlug, sourceIds, targetIds, options.GoldSource, cancellationToken);
+        var goldAnnotation = await Gold(fromSlug, toSlug, sourceIds, targetIds, options.GoldSource, cancellationToken);
+        var gold = goldAnnotation.Pairs;
+        var covered = goldAnnotation.CoveredSourceWords;
+        var contentSourceWordIds = previews.SelectMany(preview => preview.ContentSourceWordIds).ToHashSet();
         var proposed = candidates.Select(candidate => (candidate.Source.Token.Id, candidate.Target.Token.Id)).ToHashSet();
         var candidateGold = proposed.Intersect(gold).Count();
         var bySource = candidates.GroupBy(candidate => candidate.Source.Token.Id)
@@ -148,27 +151,27 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             previews.Count(preview => preview.NeedsStatisticalFallback),
             gold.Count,
             candidateGold,
-            resolution.Proposals.Count,
-            resolution.Proposals.Count(proposal => gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))),
+            covered.Count,
+            covered.Count(id => contentSourceWordIds.Contains(id)),
+            EvidentiaTierScore.Of(resolution.Proposals, gold, covered),
             resolution.UnresolvedSourceWords,
-            knownRenderingResolution.Proposals.Count,
-            knownRenderingResolution.Proposals.Count(proposal => gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))),
-            globalKnownRenderingResolution.Proposals.Count,
-            globalKnownRenderingResolution.Proposals.Count(proposal => gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))),
-            reviewKnownRenderingResolution.Proposals.Count,
-            reviewKnownRenderingResolution.Proposals.Count(proposal => gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))),
-            globalReviewKnownRenderingResolution.Proposals.Count,
-            globalReviewKnownRenderingResolution.Proposals.Count(proposal => gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))),
-            targetGlossReviewResolution.Proposals.Count,
-            targetGlossReviewResolution.Proposals.Count(proposal => gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))),
-            syntaxTargetGlossReviewResolution.Proposals.Count,
-            syntaxTargetGlossReviewResolution.Proposals.Count(proposal => gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))),
-            unambiguous.Count,
-            unambiguous.Intersect(gold).Count(),
+            EvidentiaTierScore.Of(knownRenderingResolution.Proposals, gold, covered),
+            EvidentiaTierScore.Of(globalKnownRenderingResolution.Proposals, gold, covered),
+            EvidentiaTierScore.Of(reviewKnownRenderingResolution.Proposals, gold, covered),
+            EvidentiaTierScore.Of(globalReviewKnownRenderingResolution.Proposals, gold, covered),
+            EvidentiaTierScore.Of(targetGlossReviewResolution.Proposals, gold, covered),
+            EvidentiaTierScore.Of(syntaxTargetGlossReviewResolution.Proposals, gold, covered),
+            new EvidentiaTierScore(
+                unambiguous.Count,
+                unambiguous.Intersect(gold).Count(),
+                unambiguous.Count(pair => covered.Contains(pair.From))),
             finalProposals.Select(proposal => proposal.Source.Token.Id).Distinct().Count(),
             knownRenderingEvidence?.AskedForms ?? new HashSet<string>(StringComparer.Ordinal),
             knownRenderingEvidence?.AnsweredForms ?? new HashSet<string>(StringComparer.Ordinal),
-            Samples(finalProposals, candidates, source, target, gold, options.SampleSize));
+            Samples(finalProposals, candidates, source, target, gold, options.SampleSize),
+            options.RecordDisagreements
+                ? Disagreements(finalProposals, source, target, goldAnnotation, canonicalBook, canonicalChapter)
+                : []);
     }
 
     public async Task<EvidentiaBookMeasurement> MeasureBook(
@@ -433,7 +436,13 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         return $"abstain  v{token.Address.Verse} '{token.Surface}' gold {expected}; {reached}";
     }
 
-    private async Task<HashSet<(long From, long To)>> GoldPairs(
+    /// <summary>
+    /// The answer key in scope, as pairs and as the annotation those pairs came from. The links are
+    /// kept beside the pairs because a disagreement cannot be read without them: how many words
+    /// stood on each side of the link decides whether a one-to-one selector could have satisfied it
+    /// at all, and which dataset stated it decides whose convention is being compared with ours.
+    /// </summary>
+    private async Task<EvidentiaGold> Gold(
         string fromSlug,
         string toSlug,
         IReadOnlySet<long> sourceIds,
@@ -449,34 +458,130 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             ?? throw new InvalidOperationException($"Unknown text {fromSlug}.");
         var to = texts.SingleOrDefault(text => text.Slug == toSlug)
             ?? throw new InvalidOperationException($"Unknown text {toSlug}.");
-        var links = await db.Links.AsNoTracking()
+        // Only the links touching a word of the passage can yield a pair in it. Reading every link
+        // between the two texts for each chapter carried a whole Bible's worth of rows per chapter,
+        // and with the source string on each row it exhausted the server's shared memory.
+        var scopeWords = sourceIds.ToList();
+        var inScope = db.LinkWords.Where(word => scopeWords.Contains(word.WordId)).Select(word => word.LinkId);
+        var scopedLinks = db.Links.AsNoTracking()
+            .Where(link => inScope.Contains(link.Id))
             .Where(link => (link.FromTextId == from.Id && link.ToTextId == to.Id)
                 || (link.FromTextId == to.Id && link.ToTextId == from.Id))
             .Where(link => link.Method == LinkMethod.StatedBySource
                 || link.Method == LinkMethod.StrongNumber)
-            .Where(link => goldSource == null || link.Source.Contains(goldSource))
+            .Where(link => goldSource == null || link.Source.Contains(goldSource));
+        var described = await scopedLinks
+            .Select(link => new { link.Id, link.FromTextId, link.Method, link.Source })
+            .ToDictionaryAsync(link => link.Id, cancellationToken);
+        var links = await scopedLinks
             .SelectMany(link => link.Words.Select(word => new
             {
                 link.Id,
-                link.FromTextId,
-                link.ToTextId,
                 word.WordId,
                 word.Side,
             }))
             .ToListAsync(cancellationToken);
 
-        return links.GroupBy(row => row.Id)
-            .SelectMany(group =>
+        var goldLinks = links.GroupBy(row => row.Id)
+            .Select(group =>
             {
-                var forward = group.First().FromTextId == from.Id;
+                var link = described[group.Key];
+                var forward = link.FromTextId == from.Id;
                 var left = group.Where(row => row.Side == (forward ? LinkSide.From : LinkSide.To))
-                    .Select(row => row.WordId);
+                    .Select(row => row.WordId)
+                    .ToList();
                 var right = group.Where(row => row.Side == (forward ? LinkSide.To : LinkSide.From))
-                    .Select(row => row.WordId);
-                return left.SelectMany(one => right.Select(two => (one, two)));
+                    .Select(row => row.WordId)
+                    .ToList();
+                return new EvidentiaGoldLink(
+                    group.Key,
+                    link.Method,
+                    link.Source,
+                    left,
+                    right);
             })
+            .ToList();
+        var pairs = goldLinks
+            .SelectMany(link => link.SourceWords.SelectMany(one => link.TargetWords.Select(two => (one, two))))
             .Where(pair => sourceIds.Contains(pair.one) && targetIds.Contains(pair.two))
             .ToHashSet();
+        var bySourceWord = new Dictionary<long, List<EvidentiaGoldLink>>();
+        foreach (var link in goldLinks.Where(link =>
+                     link.SourceWords.Any(sourceIds.Contains) && link.TargetWords.Any(targetIds.Contains)))
+        {
+            foreach (var word in link.SourceWords.Where(sourceIds.Contains))
+            {
+                if (!bySourceWord.TryGetValue(word, out var found))
+                {
+                    bySourceWord[word] = found = [];
+                }
+
+                found.Add(link);
+            }
+        }
+
+        return new EvidentiaGold(pairs, pairs.Select(pair => pair.one).ToHashSet(), bySourceWord);
+    }
+
+    /// <summary>
+    /// Every proposal the answer key contradicts, written out with enough of both annotations to be
+    /// read: the verse, the word we placed, the words the gold placed it on, and how many words its
+    /// link joined. A proposal on a word the gold never reaches is written out too, marked, because
+    /// the count of those is the part of the old precision figure that was never a mistake.
+    /// </summary>
+    private static IReadOnlyList<EvidentiaDisagreement> Disagreements(
+        IReadOnlyList<EvidentiaProposal> proposals,
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        EvidentiaGold gold,
+        int canonicalBook,
+        int canonicalChapter)
+    {
+        var byTargetId = target.DistinctBy(token => token.Id).ToDictionary(token => token.Id);
+        var sourceByVerse = source.DistinctBy(token => token.Id)
+            .GroupBy(token => token.Address.Verse)
+            .ToDictionary(group => group.Key, group => group.OrderBy(token => token.Position).ToList());
+        return
+        [
+            .. proposals
+                .Where(proposal => !gold.Pairs.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))
+                .OrderBy(proposal => proposal.Source.Token.Address.Verse)
+                .ThenBy(proposal => proposal.Source.Token.Position)
+                .Select(proposal =>
+                {
+                    var word = proposal.Source.Token;
+                    var links = gold.LinksBySourceWord.GetValueOrDefault(word.Id) ?? [];
+                    return new EvidentiaDisagreement(
+                        canonicalBook,
+                        canonicalChapter,
+                        word.Address.Verse,
+                        word.Id,
+                        word.Position,
+                        word.Surface,
+                        proposal.Target.Token.Id,
+                        proposal.Target.Token.Position,
+                        proposal.Target.Token.Surface,
+                        proposal.Target.Token.StrongNumber,
+                        proposal.Target.Token.Lemma,
+                        proposal.Target.Token.Gloss,
+                        gold.CoveredSourceWords.Contains(word.Id),
+                        [.. links.Select(link => $"{link.SourceWords.Count}x{link.TargetWords.Count}")],
+                        [.. links.Select(link => link.Source).Distinct()],
+                        [.. links
+                            .SelectMany(link => link.TargetWords)
+                            .Distinct()
+                            .Where(byTargetId.ContainsKey)
+                            .Select(id => byTargetId[id])
+                            .OrderBy(token => token.Position)
+                            .Select(token => new EvidentiaGoldTarget(
+                                token.Position, token.Surface, token.StrongNumber, token.Lemma, token.Gloss))],
+                        proposal.Trace?.Tier ?? string.Empty,
+                        proposal.Trace?.Rationale ?? string.Empty,
+                        proposal.Confidence,
+                        string.Join(" ", sourceByVerse.GetValueOrDefault(word.Address.Verse, [])
+                            .Select(token => token.Position == word.Position ? $"[{token.Surface}]" : token.Surface)));
+                }),
+        ];
     }
 }
 
@@ -496,15 +601,17 @@ internal sealed record EvidentiaBookMeasurement(
     public int MorphologyScoredEdges => Chapters.Sum(chapter => chapter.MorphologyScoredEdges);
     public int GoldPairs => Chapters.Sum(chapter => chapter.GoldPairs);
     public int GoldPairsInCandidates => Chapters.Sum(chapter => chapter.GoldPairsInCandidates);
-    public int GlobalKnownRenderingProposals => Chapters.Sum(chapter => chapter.GlobalKnownRenderingProposals);
-    public int CorrectGlobalKnownRenderingProposals => Chapters.Sum(chapter => chapter.CorrectGlobalKnownRenderingProposals);
-    public int GlobalReviewKnownRenderingProposals => Chapters.Sum(chapter => chapter.GlobalReviewKnownRenderingProposals);
-    public int CorrectGlobalReviewKnownRenderingProposals => Chapters.Sum(chapter => chapter.CorrectGlobalReviewKnownRenderingProposals);
-    public int GlobalReviewAndSyntaxTargetGlossProposals => Chapters.Sum(chapter => chapter.GlobalReviewAndSyntaxTargetGlossProposals);
-    public int CorrectGlobalReviewAndSyntaxTargetGlossProposals => Chapters.Sum(chapter => chapter.CorrectGlobalReviewAndSyntaxTargetGlossProposals);
+    public int GoldCoveredSourceWords => Chapters.Sum(chapter => chapter.GoldCoveredSourceWords);
+    public int GoldCoveredContentSourceWords => Chapters.Sum(chapter => chapter.GoldCoveredContentSourceWords);
+    public EvidentiaTierScore StrongResolved => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.StrongResolved));
+    public EvidentiaTierScore GlobalKnownRendering => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.GlobalKnownRendering));
+    public EvidentiaTierScore GlobalReviewKnownRendering => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.GlobalReviewKnownRendering));
+    public EvidentiaTierScore GlobalReviewAndSyntaxTargetGloss => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.GlobalReviewAndSyntaxTargetGloss));
     public int FallbackVerses => Chapters.Sum(chapter => chapter.FallbackVerses);
     public int ContentSourceWords => Chapters.Sum(chapter => chapter.ContentSourceWords);
     public int FinalProposedSourceWords => Chapters.Sum(chapter => chapter.FinalProposedSourceWords);
+    public IReadOnlyList<EvidentiaDisagreement> Disagreements =>
+        [.. Chapters.SelectMany(chapter => chapter.Disagreements)];
 
     /// <summary>
     /// The book's distinct content source forms, and how many of them the learned index holds an
@@ -521,18 +628,10 @@ internal sealed record EvidentiaBookMeasurement(
         ? 0
         : 1 - (double)FinalProposedSourceWords / ContentSourceWords;
     public double CandidateRecall => GoldPairs == 0 ? 0 : (double)GoldPairsInCandidates / GoldPairs;
-    public double GlobalKnownRenderingPrecision => GlobalKnownRenderingProposals == 0 ? 0
-        : (double)CorrectGlobalKnownRenderingProposals / GlobalKnownRenderingProposals;
-    public double GlobalKnownRenderingRecall => GoldPairs == 0 ? 0
-        : (double)CorrectGlobalKnownRenderingProposals / GoldPairs;
-    public double GlobalReviewKnownRenderingPrecision => GlobalReviewKnownRenderingProposals == 0 ? 0
-        : (double)CorrectGlobalReviewKnownRenderingProposals / GlobalReviewKnownRenderingProposals;
-    public double GlobalReviewKnownRenderingRecall => GoldPairs == 0 ? 0
-        : (double)CorrectGlobalReviewKnownRenderingProposals / GoldPairs;
-    public double GlobalReviewAndSyntaxTargetGlossPrecision => GlobalReviewAndSyntaxTargetGlossProposals == 0 ? 0
-        : (double)CorrectGlobalReviewAndSyntaxTargetGlossProposals / GlobalReviewAndSyntaxTargetGlossProposals;
-    public double GlobalReviewAndSyntaxTargetGlossRecall => GoldPairs == 0 ? 0
-        : (double)CorrectGlobalReviewAndSyntaxTargetGlossProposals / GoldPairs;
+    public double GoldSourceCoverage => SourceWords == 0 ? 0 : (double)GoldCoveredSourceWords / SourceWords;
+    public double GoldContentCoverage => ContentSourceWords == 0
+        ? 0
+        : (double)GoldCoveredContentSourceWords / ContentSourceWords;
 
     public override string ToString()
     {
@@ -548,12 +647,12 @@ internal sealed record EvidentiaBookMeasurement(
                $"source local UDPipe: {annotationStatuses}; POS values: {SourcePartOfSpeechWords:N0}/{SourceWords:N0}\n" +
                $"candidate edges: {CandidateEdges:N0} ({MorphologyScoredEdges:N0} with grammatical agreement); " +
                $"gold candidate hits: {GoldPairsInCandidates:N0}/{GoldPairs:N0} ({CandidateRecall:P2}); fallback verses: {FallbackVerses:N0}\n" +
-               $"global stable: {CorrectGlobalKnownRenderingProposals:N0}/{GlobalKnownRenderingProposals:N0} " +
-               $"({GlobalKnownRenderingPrecision:P2}); gold recall: {GlobalKnownRenderingRecall:P2}\n" +
-               $"global review: {CorrectGlobalReviewKnownRenderingProposals:N0}/{GlobalReviewKnownRenderingProposals:N0} " +
-               $"({GlobalReviewKnownRenderingPrecision:P2}); gold recall: {GlobalReviewKnownRenderingRecall:P2}\n" +
-               $"global review + syntax-gated target gloss: {CorrectGlobalReviewAndSyntaxTargetGlossProposals:N0}/{GlobalReviewAndSyntaxTargetGlossProposals:N0} " +
-               $"({GlobalReviewAndSyntaxTargetGlossPrecision:P2}); gold recall: {GlobalReviewAndSyntaxTargetGlossRecall:P2}\n" +
+               $"gold coverage: {GoldCoveredSourceWords:N0}/{SourceWords:N0} source words ({GoldSourceCoverage:P2}), " +
+               $"{GoldCoveredContentSourceWords:N0}/{ContentSourceWords:N0} content words ({GoldContentCoverage:P2})\n" +
+               StrongResolved.Report("resolved source Strong", GoldPairs) + "\n" +
+               GlobalKnownRendering.Report("global stable", GoldPairs) + "\n" +
+               GlobalReviewKnownRendering.Report("global review", GoldPairs) + "\n" +
+               GlobalReviewAndSyntaxTargetGloss.Report("global review + syntax-gated target gloss", GoldPairs) + "\n" +
                $"learned index reach: {IndexAnsweredForms.Count:N0}/{IndexAskedForms.Count:N0} " +
                "distinct content source forms have an entry\n" +
                $"final abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
@@ -623,70 +722,42 @@ internal sealed record EvidentiaChapterMeasurement(
     int FallbackVerses,
     int GoldPairs,
     int GoldPairsInCandidates,
-    int StrongResolvedProposals,
-    int CorrectStrongResolvedProposals,
+    int GoldCoveredSourceWords,
+    int GoldCoveredContentSourceWords,
+    EvidentiaTierScore StrongResolved,
     int StrongUnresolvedSourceWords,
-    int KnownRenderingProposals,
-    int CorrectKnownRenderingProposals,
-    int GlobalKnownRenderingProposals,
-    int CorrectGlobalKnownRenderingProposals,
-    int ReviewKnownRenderingProposals,
-    int CorrectReviewKnownRenderingProposals,
-    int GlobalReviewKnownRenderingProposals,
-    int CorrectGlobalReviewKnownRenderingProposals,
-    int TargetGlossReviewProposals,
-    int CorrectTargetGlossReviewProposals,
-    int SyntaxTargetGlossReviewProposals,
-    int CorrectSyntaxTargetGlossReviewProposals,
-    int UnambiguousProposals,
-    int CorrectUnambiguousProposals,
+    EvidentiaTierScore KnownRendering,
+    EvidentiaTierScore GlobalKnownRendering,
+    EvidentiaTierScore ReviewKnownRendering,
+    EvidentiaTierScore GlobalReviewKnownRendering,
+    EvidentiaTierScore TargetGlossReview,
+    EvidentiaTierScore SyntaxTargetGlossReview,
+    EvidentiaTierScore Unambiguous,
     int FinalProposedSourceWords,
     IReadOnlySet<string> IndexAskedForms,
     IReadOnlySet<string> IndexAnsweredForms,
-    IReadOnlyList<string> Samples)
+    IReadOnlyList<string> Samples,
+    IReadOnlyList<EvidentiaDisagreement> Disagreements)
 {
     public double SourceCoverage => SourceWords == 0 ? 0 : (double)CoveredSourceWords / SourceWords;
     public double ContentCoverage => ContentSourceWords == 0
         ? 0
         : (double)CoveredContentSourceWords / ContentSourceWords;
     public double CandidateRecall => GoldPairs == 0 ? 0 : (double)GoldPairsInCandidates / GoldPairs;
-    public double StrongResolutionRecall => GoldPairs == 0 ? 0
-        : (double)CorrectStrongResolvedProposals / GoldPairs;
-    public double StrongResolutionPrecision => StrongResolvedProposals == 0 ? 0
-        : (double)CorrectStrongResolvedProposals / StrongResolvedProposals;
-    public double KnownRenderingRecall => GoldPairs == 0 ? 0
-        : (double)CorrectKnownRenderingProposals / GoldPairs;
-    public double KnownRenderingPrecision => KnownRenderingProposals == 0 ? 0
-        : (double)CorrectKnownRenderingProposals / KnownRenderingProposals;
-    public double GlobalKnownRenderingRecall => GoldPairs == 0 ? 0
-        : (double)CorrectGlobalKnownRenderingProposals / GoldPairs;
-    public double GlobalKnownRenderingPrecision => GlobalKnownRenderingProposals == 0 ? 0
-        : (double)CorrectGlobalKnownRenderingProposals / GlobalKnownRenderingProposals;
-    public double ReviewKnownRenderingRecall => GoldPairs == 0 ? 0
-        : (double)CorrectReviewKnownRenderingProposals / GoldPairs;
-    public double ReviewKnownRenderingPrecision => ReviewKnownRenderingProposals == 0 ? 0
-        : (double)CorrectReviewKnownRenderingProposals / ReviewKnownRenderingProposals;
-    public double GlobalReviewKnownRenderingRecall => GoldPairs == 0 ? 0
-        : (double)CorrectGlobalReviewKnownRenderingProposals / GoldPairs;
-    public double GlobalReviewKnownRenderingPrecision => GlobalReviewKnownRenderingProposals == 0 ? 0
-        : (double)CorrectGlobalReviewKnownRenderingProposals / GlobalReviewKnownRenderingProposals;
-    public int GlobalReviewAndTargetGlossProposals => GlobalReviewKnownRenderingProposals + TargetGlossReviewProposals;
-    public int CorrectGlobalReviewAndTargetGlossProposals => CorrectGlobalReviewKnownRenderingProposals
-        + CorrectTargetGlossReviewProposals;
-    public double GlobalReviewAndTargetGlossRecall => GoldPairs == 0 ? 0
-        : (double)CorrectGlobalReviewAndTargetGlossProposals / GoldPairs;
-    public double GlobalReviewAndTargetGlossPrecision => GlobalReviewAndTargetGlossProposals == 0 ? 0
-        : (double)CorrectGlobalReviewAndTargetGlossProposals / GlobalReviewAndTargetGlossProposals;
-    public int GlobalReviewAndSyntaxTargetGlossProposals => GlobalReviewKnownRenderingProposals + SyntaxTargetGlossReviewProposals;
-    public int CorrectGlobalReviewAndSyntaxTargetGlossProposals => CorrectGlobalReviewKnownRenderingProposals
-        + CorrectSyntaxTargetGlossReviewProposals;
-    public double GlobalReviewAndSyntaxTargetGlossRecall => GoldPairs == 0 ? 0
-        : (double)CorrectGlobalReviewAndSyntaxTargetGlossProposals / GoldPairs;
-    public double GlobalReviewAndSyntaxTargetGlossPrecision => GlobalReviewAndSyntaxTargetGlossProposals == 0 ? 0
-        : (double)CorrectGlobalReviewAndSyntaxTargetGlossProposals / GlobalReviewAndSyntaxTargetGlossProposals;
-    public double UnambiguousPrecision => UnambiguousProposals == 0
+    public EvidentiaTierScore GlobalReviewAndTargetGloss => GlobalReviewKnownRendering + TargetGlossReview;
+    public EvidentiaTierScore GlobalReviewAndSyntaxTargetGloss => GlobalReviewKnownRendering + SyntaxTargetGlossReview;
+
+    /// <summary>
+    /// How much of the chapter the answer key reaches at all. Every precision figure is a statement
+    /// about these words and about no others, so it is reported beside them rather than inferred
+    /// from the pair count: two golds with the same number of pairs can cover very different
+    /// shares of the text.
+    /// </summary>
+    public double GoldSourceCoverage => SourceWords == 0 ? 0 : (double)GoldCoveredSourceWords / SourceWords;
+
+    public double GoldContentCoverage => ContentSourceWords == 0
         ? 0
-        : (double)CorrectUnambiguousProposals / UnambiguousProposals;
+        : (double)GoldCoveredContentSourceWords / ContentSourceWords;
 
     /// <summary>
     /// The share of content source words the final review tier declines to place at all. It is
@@ -701,28 +772,20 @@ internal sealed record EvidentiaChapterMeasurement(
     {
         var evaluation = GoldPairs == 0
             ? "stored Strong/source pairs in scope: 0; comparison: unavailable (no existing sourced gold pairs)\n" +
-              $"resolved Strong proposals: {StrongResolvedProposals:N0}; not accepted automatically\n" +
-              $"single-candidate graph proposals: {UnambiguousProposals:N0}; not evaluated without gold"
+              $"resolved Strong proposals: {StrongResolved.Proposals:N0}; not accepted automatically\n" +
+              $"single-candidate graph proposals: {Unambiguous.Proposals:N0}; not evaluated without gold"
             : $"stored Strong/source pairs in scope: {GoldPairs:N0}; candidate hits: {GoldPairsInCandidates:N0}/{GoldPairs:N0} ({CandidateRecall:P1})\n" +
-              $"resolved Strong proposals: {StrongResolvedProposals:N0}; correct: {CorrectStrongResolvedProposals:N0}/{StrongResolvedProposals:N0} " +
-              $"({StrongResolutionPrecision:P1}); gold recall: {CorrectStrongResolvedProposals:N0}/{GoldPairs:N0} ({StrongResolutionRecall:P1}); " +
-              $"unresolved repeated/mismatched Strong words: {StrongUnresolvedSourceWords:N0}\n" +
-              $"stable learned-rendering proposals: {CorrectKnownRenderingProposals:N0}/{KnownRenderingProposals:N0} " +
-              $"({KnownRenderingPrecision:P1}); gold recall: {CorrectKnownRenderingProposals:N0}/{GoldPairs:N0} ({KnownRenderingRecall:P1})\n" +
-              $"global stable learned-rendering proposals: {CorrectGlobalKnownRenderingProposals:N0}/{GlobalKnownRenderingProposals:N0} " +
-              $"({GlobalKnownRenderingPrecision:P1}); gold recall: {CorrectGlobalKnownRenderingProposals:N0}/{GoldPairs:N0} ({GlobalKnownRenderingRecall:P1})\n" +
-              $"review learned-rendering proposals: {CorrectReviewKnownRenderingProposals:N0}/{ReviewKnownRenderingProposals:N0} " +
-              $"({ReviewKnownRenderingPrecision:P1}); gold recall: {CorrectReviewKnownRenderingProposals:N0}/{GoldPairs:N0} ({ReviewKnownRenderingRecall:P1})\n" +
-              $"global review learned-rendering proposals: {CorrectGlobalReviewKnownRenderingProposals:N0}/{GlobalReviewKnownRenderingProposals:N0} " +
-              $"({GlobalReviewKnownRenderingPrecision:P1}); gold recall: {CorrectGlobalReviewKnownRenderingProposals:N0}/{GoldPairs:N0} ({GlobalReviewKnownRenderingRecall:P1})\n" +
-              $"unique target-gloss review additions: {CorrectTargetGlossReviewProposals:N0}/{TargetGlossReviewProposals:N0}; " +
-              $"global review + target gloss: {CorrectGlobalReviewAndTargetGlossProposals:N0}/{GlobalReviewAndTargetGlossProposals:N0} " +
-              $"({GlobalReviewAndTargetGlossPrecision:P1}); gold recall: {CorrectGlobalReviewAndTargetGlossProposals:N0}/{GoldPairs:N0} ({GlobalReviewAndTargetGlossRecall:P1})\n" +
-              $"syntax-gated target-gloss review additions: {CorrectSyntaxTargetGlossReviewProposals:N0}/{SyntaxTargetGlossReviewProposals:N0}; " +
-              $"global review + syntax-gated target gloss: {CorrectGlobalReviewAndSyntaxTargetGlossProposals:N0}/{GlobalReviewAndSyntaxTargetGlossProposals:N0} " +
-              $"({GlobalReviewAndSyntaxTargetGlossPrecision:P1}); gold recall: {CorrectGlobalReviewAndSyntaxTargetGlossProposals:N0}/{GoldPairs:N0} ({GlobalReviewAndSyntaxTargetGlossRecall:P1})\n" +
-              $"single-candidate graph proposals: {UnambiguousProposals:N0}; correct: {CorrectUnambiguousProposals:N0}/{UnambiguousProposals:N0} " +
-              $"({UnambiguousPrecision:P1})";
+              $"gold coverage: {GoldCoveredSourceWords:N0}/{SourceWords:N0} source words ({GoldSourceCoverage:P1}), " +
+              $"{GoldCoveredContentSourceWords:N0}/{ContentSourceWords:N0} content words ({GoldContentCoverage:P1})\n" +
+              StrongResolved.Report("resolved Strong", GoldPairs) +
+              $"; unresolved repeated/mismatched Strong words: {StrongUnresolvedSourceWords:N0}\n" +
+              KnownRendering.Report("stable learned-rendering", GoldPairs) + "\n" +
+              GlobalKnownRendering.Report("global stable learned-rendering", GoldPairs) + "\n" +
+              ReviewKnownRendering.Report("review learned-rendering", GoldPairs) + "\n" +
+              GlobalReviewKnownRendering.Report("global review learned-rendering", GoldPairs) + "\n" +
+              GlobalReviewAndTargetGloss.Report("global review + target gloss", GoldPairs) + "\n" +
+              GlobalReviewAndSyntaxTargetGloss.Report("global review + syntax-gated target gloss", GoldPairs) + "\n" +
+              Unambiguous.Report("single-candidate graph", GoldPairs);
 
         return $"EVIDENTIA measurement {From} → {To}; mode: " +
                 (SourceStrongEvidenceEnabled ? "direct-source-Strong allowed" : "no-source-Strong") +
@@ -766,10 +829,95 @@ internal sealed record EvidentiaChapterMeasurement(
 /// <param name="GoldSource">
 /// A substring of <c>Link.Source</c>, so one dataset's rows can be scored on their own.
 /// </param>
+/// <param name="RecordDisagreements">
+/// Keep every contradicted proposal, so a classification pass reads the same rows the aggregate
+/// counted rather than a second run's.
+/// </param>
 internal sealed record EvidentiaMeasurementOptions(
     bool AllowSourceStrongEvidence = true,
     bool AllowKnownRenderingEvidence = true,
     string? LearnRenderingsFrom = null,
     IReadOnlyList<LinkMethod>? LearnedRenderingMethods = null,
     string? GoldSource = null,
-    int SampleSize = 0);
+    int SampleSize = 0,
+    bool RecordDisagreements = false);
+
+/// <summary>
+/// One tier's proposals scored two ways, because the answer key does not reach every word.
+/// <see cref="Precision"/> counts every proposal, which is the rule every figure published before
+/// 2026-09-16 was measured under: a proposal on a word no annotator ever looked at counted as a
+/// mistake. <see cref="CoveredPrecision"/> counts only the proposals standing on a word the gold
+/// does reach, which is the only question the gold can answer. Both are reported, labelled, so
+/// neither replaces the other silently.
+/// </summary>
+internal readonly record struct EvidentiaTierScore(int Proposals, int Correct, int OnCoveredWords)
+{
+    public int Unscored => Proposals - OnCoveredWords;
+    public double Precision => Proposals == 0 ? 0 : (double)Correct / Proposals;
+    public double CoveredPrecision => OnCoveredWords == 0 ? 0 : (double)Correct / OnCoveredWords;
+    public double Recall(int goldPairs) => goldPairs == 0 ? 0 : (double)Correct / goldPairs;
+
+    public static EvidentiaTierScore Of(
+        IEnumerable<EvidentiaProposal> proposals,
+        IReadOnlySet<(long From, long To)> gold,
+        IReadOnlySet<long> covered)
+    {
+        var all = proposals as IReadOnlyCollection<EvidentiaProposal> ?? [.. proposals];
+        return new EvidentiaTierScore(
+            all.Count,
+            all.Count(proposal => gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))),
+            all.Count(proposal => covered.Contains(proposal.Source.Token.Id)));
+    }
+
+    public static EvidentiaTierScore operator +(EvidentiaTierScore one, EvidentiaTierScore two) =>
+        new(one.Proposals + two.Proposals, one.Correct + two.Correct, one.OnCoveredWords + two.OnCoveredWords);
+
+    public static EvidentiaTierScore Total(IEnumerable<EvidentiaTierScore> scores) =>
+        scores.Aggregate(new EvidentiaTierScore(0, 0, 0), (running, next) => running + next);
+
+    public string Report(string name, int goldPairs) =>
+        $"{name}: {Correct:N0}/{Proposals:N0} ({Precision:P2}) counting every proposal; " +
+        $"{Correct:N0}/{OnCoveredWords:N0} ({CoveredPrecision:P2}) over gold-covered words " +
+        $"({Unscored:N0} unscored); gold recall: {Correct:N0}/{goldPairs:N0} ({Recall(goldPairs):P2})";
+}
+
+internal sealed record EvidentiaGoldLink(
+    long Id,
+    LinkMethod Method,
+    string Source,
+    IReadOnlyList<long> SourceWords,
+    IReadOnlyList<long> TargetWords);
+
+internal sealed record EvidentiaGold(
+    IReadOnlySet<(long From, long To)> Pairs,
+    IReadOnlySet<long> CoveredSourceWords,
+    IReadOnlyDictionary<long, List<EvidentiaGoldLink>> LinksBySourceWord);
+
+internal sealed record EvidentiaGoldTarget(
+    int Position,
+    string Surface,
+    string? StrongNumber,
+    string? Lemma,
+    string? Gloss);
+
+internal sealed record EvidentiaDisagreement(
+    int CanonicalBook,
+    int CanonicalChapter,
+    int CanonicalVerse,
+    long SourceWordId,
+    int SourcePosition,
+    string SourceSurface,
+    long TargetWordId,
+    int TargetPosition,
+    string TargetSurface,
+    string? TargetStrongNumber,
+    string? TargetLemma,
+    string? TargetGloss,
+    bool GoldCoversSourceWord,
+    IReadOnlyList<string> GoldLinkShapes,
+    IReadOnlyList<string> GoldSources,
+    IReadOnlyList<EvidentiaGoldTarget> GoldTargets,
+    string Tier,
+    string Rationale,
+    double Confidence,
+    string SourceVerse);

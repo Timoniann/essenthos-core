@@ -11,6 +11,12 @@ using Essenthos.Core.Verification;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Essenthos.Core.Loading.Encyclopedia;
+using System.Text;
+using System.Text.Json;
+
+// A report carrying Hebrew, Greek and an arrow is unreadable in the console's ANSI code page, and
+// redirecting it to a file only moves the question marks.
+Console.OutputEncoding = Encoding.UTF8;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
@@ -130,7 +136,10 @@ builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddHostedService<DatasetLoader>();
 
-var app = builder.Build();
+// Disposed on every return path, not only the one that serves. Draining the console logger's
+// background queue is what disposal does, and a command that returns without it loses whatever is
+// still queued — silently, and more of it the longer the report.
+await using var app = builder.Build();
 
 app.UseExceptionHandler(handler => handler.Run(async context =>
 {
@@ -270,6 +279,7 @@ if (args is ["evidentia-measure", var measureFrom, var measureTo, var measureBoo
     using var measureScope = app.Services.CreateScope();
     var measurement = await measureScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureChapter(
         Identifier(measureFrom), Identifier(measureTo), book, chapter, EvidentiaOptions(args));
+    await WriteDisagreements(args, measurement.Disagreements);
     app.Logger.LogInformation("\n{Measurement}", measurement);
     return 0;
 }
@@ -292,8 +302,31 @@ if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, v
         Identifier(measureBookFrom), Identifier(measureBookTo), book, EvidentiaOptions(args),
         firstChapter: fromChapter,
         lastChapter: toChapter);
+    await WriteDisagreements(args, measurement.Disagreements);
     app.Logger.LogInformation("\n{Measurement}", measurement);
     return 0;
+}
+
+// Contradicted proposals go to a file rather than to the report, because they are read one at a
+// time and there are thousands of them: a classification pass needs the rows the aggregate counted,
+// and a console report is neither a stable record of them nor wide enough to hold a whole verse.
+static async Task WriteDisagreements(string[] arguments, IReadOnlyList<EvidentiaDisagreement> rows)
+{
+    if (OptionalText(arguments, "--disagreements") is not { } path)
+    {
+        return;
+    }
+
+    var directory = Path.GetDirectoryName(Path.GetFullPath(path));
+    if (!string.IsNullOrEmpty(directory))
+    {
+        Directory.CreateDirectory(directory);
+    }
+
+    await File.WriteAllTextAsync(
+        path,
+        JsonSerializer.Serialize(rows, new JsonSerializerOptions { WriteIndented = false }),
+        new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 }
 
 static int? OptionalInt(string[] arguments, string option)
@@ -318,7 +351,8 @@ static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments) => new(
         ? [LinkMethod.StatedBySource, LinkMethod.StrongNumber]
         : null,
     GoldSource: OptionalText(arguments, "--gold-source"),
-    SampleSize: OptionalInt(arguments, "--sample") ?? 0);
+    SampleSize: OptionalInt(arguments, "--sample") ?? 0,
+    RecordDisagreements: OptionalText(arguments, "--disagreements") is not null);
 
 // Unlike `score`, this is an out-of-sample test: only 80% of the stated and Strong one-to-one pairs
 // reach SIL.Machine as its partial-alignment corpus, and a deterministic fifth of verses stays out

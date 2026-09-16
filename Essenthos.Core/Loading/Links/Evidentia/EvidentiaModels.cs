@@ -230,5 +230,6 @@ internal sealed record EvidentiaPreview(
     int CoveredContentSourceWords,
     double ContentCoverage,
     bool NeedsStatisticalFallback,
+    IReadOnlySet<long> ContentSourceWordIds,
     IReadOnlyList<EvidentiaTodo> Todos,
     IReadOnlyList<EvidentiaPhraseCandidate> Phrases);
