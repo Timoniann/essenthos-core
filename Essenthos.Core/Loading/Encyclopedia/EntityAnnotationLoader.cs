@@ -686,7 +686,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
 
     /// <summary>
     /// The same annotations on the word each link says stands for one of those witness words —
-    /// its head, by <see cref="Annotating.Head"/>, and not every word of the set the link names.
+    /// by <see cref="Annotating.Reached"/>, which is the set's head and not every word of it,
+    /// except where the link pairs one name written several times with several words.
     ///
     /// A word reached from two witness words that name two different entities is left alone: the
     /// links disagree about who is named and picking between them is the thing this loader does not
@@ -736,7 +737,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
             CROSS JOIN LATERAL (SELECT {Annotating.LinkWorth} AS worth) crossed
-            CROSS JOIN LATERAL ({Annotating.Head}) other
+            CROSS JOIN LATERAL ({Annotating.Reached}) other
             JOIN word w ON w.id = other.word_id
         ),
         rendered AS (
@@ -802,7 +803,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// The words carried into the translations go with them. They are the same claim moved one hop
     /// along a link and they carry the same source, so leaving them would keep the King James
     /// saying what the Hebrew beside it no longer says. They are found the way they were made, from
-    /// the seed through <see cref="Annotating.Head"/>, rather than by reading them back out of a
+    /// the seed through <see cref="Annotating.Reached"/>, rather than by reading them back out of a
     /// note.
     /// </para>
     ///
@@ -843,8 +844,9 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          carried AS (
              SELECT other.word_id, seed.entity_id
              FROM seed
+             JOIN word origin ON origin.id = seed.word_id
              JOIN link_word mine ON mine.word_id = seed.word_id
-             CROSS JOIN LATERAL ({Annotating.Head}) other
+             CROSS JOIN LATERAL ({Annotating.Reached}) other
          ),
          gone AS (
              SELECT word_id, entity_id FROM seed

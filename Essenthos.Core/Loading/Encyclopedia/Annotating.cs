@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
@@ -14,9 +14,10 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// Written once because the three things that produce annotations — a Strong number that resolves,
 /// a model that read the verse, and a person who ruled — differ only in what they put in the seed.
 /// The carrying rule is the same for all of them and has to stay the same: one hop, always from the
-/// Hebrew, never onto a word two Hebrew words disagree about, and the link's own confidence
-/// multiplied into the annotation's so that a word reached by a guess is never stored as firmly as
-/// one reached by a source's own mapping.
+/// Hebrew, never onto a word two Hebrew words disagree about, onto the head of what the link names
+/// unless the link names one name written several times, and the link's own confidence multiplied
+/// into the annotation's so that a word reached by a guess is never stored as firmly as one reached
+/// by a source's own mapping.
 /// </summary>
 internal static class Annotating
 {
@@ -151,7 +152,8 @@ internal static class Annotating
     private const string Convincing = "0.5";
 
     /// <summary>
-    /// The word of a link's other side that the naming lands on.
+    /// The word of a link's other side that the naming lands on, where the link names several and
+    /// only one of them can be the name. <see cref="Reached"/> is what decides which case this is.
     ///
     /// A link names a set of words on each side, and a source's own translation table routinely
     /// puts a phrase opposite a single original word, because that is what translation does: תֶּרַח
@@ -206,7 +208,111 @@ internal static class Annotating
          """;
 
     /// <summary>
-    /// The same annotations on the word each link says stands for one of the seeded words.
+    /// A link that pairs several occurrences of one name with several words, which is the shape the
+    /// numbering writes where it cannot say which of them answers which.
+    ///
+    /// <para>
+    /// 1 Samuel 30:7 writes דָּוִד twice and <em>Давид</em> three times, and every one of the five
+    /// carries H1732. The Synodal's printed numbering can only say that those three render those
+    /// two, so <see cref="Loading.Links.StrongNumberMatch"/> writes one link naming all five and the
+    /// settlement removes the aligner's one-to-one links it replaced. A head picked out of that set
+    /// names one <em>Давид</em> and leaves the other two blank, which is not what the set says.
+    /// </para>
+    ///
+    /// <para>
+    /// <strong>What makes it safe is the number, on the seed's own side.</strong> A phrase a
+    /// translation's table states is also several words opposite several — <em>the son of Terah</em>
+    /// against <em>בֶּן תֶּרַח</em> — and there the naming must land on one word, because only one
+    /// of the words on the witness's side is the name. Here every word on that side is one
+    /// occurrence of the seed's own lexeme, so the set holds nothing but the name and every word
+    /// opposite it renders the name. There are 15,380 such links against 90,534 phrases, and the
+    /// test tells them apart without asking what wrote either.
+    /// </para>
+    ///
+    /// <para>
+    /// A seed word carrying no number is excluded rather than compared: two nulls are not the same
+    /// lexeme, and BHSA leaves 9,949 words unnumbered.
+    /// </para>
+    /// </summary>
+    private const string OneNameTwice =
+        """
+        origin.strong_number IS NOT NULL
+        AND (SELECT count(*) FROM link_word ours
+             WHERE ours.link_id = mine.link_id AND ours.side = mine.side) > 1
+        AND (SELECT count(*) FROM link_word theirs
+             WHERE theirs.link_id = mine.link_id AND theirs.side <> mine.side) > 1
+        AND NOT EXISTS (
+            SELECT 1 FROM link_word ours
+            JOIN word said ON said.id = ours.word_id
+            WHERE ours.link_id = mine.link_id AND ours.side = mine.side
+              AND said.strong_number IS DISTINCT FROM origin.strong_number)
+        """;
+
+    /// <summary>
+    /// How alike two words of one text must be before they are taken to be the same word in two
+    /// inflections, which is what the several words opposite a repeated name are.
+    ///
+    /// <para>
+    /// It is not <see cref="Convincing"/> and must not be: that compares a word against a citation
+    /// form the encyclopedia records in another language, and this compares two spellings of one
+    /// word in one language, where the stem is most of the string and only the ending differs.
+    /// Measured over the sets the corpus actually holds, the two distributions do not overlap and
+    /// do not come close to it — <em>Давид</em> against <em>Давиду</em> is 0.63, <em>Египет</em>
+    /// against <em>Египте</em> 0.40, <em>Дана</em> against <em>Даном</em> 0.38, while every word
+    /// that is not the name scores zero: the <em>к</em> of Joshua 19:13 against <em>Риммону</em>,
+    /// the <em>sister's</em> of Acts 23:16 against <em>Paul's</em>, and Luther's <em>mir</em>,
+    /// <em>warst</em>, <em>alles</em>, <em>uns</em>, <em>nicht</em> and <em>hatte</em> against the
+    /// name beside them. The line is put where the gap is and not at either edge of it.
+    /// </para>
+    ///
+    /// <para>
+    /// Written as text rather than as a number because it is spliced into SQL, and a double
+    /// formatted under a comma locale is not a number Postgres can read.
+    /// </para>
+    /// </summary>
+    private const string SameWord = "0.3";
+
+    /// <summary>
+    /// The words of the other side a naming lands on: <see cref="Head"/>, and beside it every other
+    /// word of the set that is the same word as the head, where the link pairs one name written
+    /// several times with several words.
+    ///
+    /// <para>
+    /// Both halves are needed. Without the first, a set names one <em>Давид</em> of three. Without
+    /// the second, it names whatever else the numbering swept into the set — the Synodal tags the
+    /// preposition <em>к</em> with Rimmon's number at Joshua 19:13, the King James tags
+    /// <em>sister's</em> with Paul's at Acts 23:16, and Luther's tagging is looser still. A word of
+    /// the set that is the name again is the thing the head rule was picking between; a word that
+    /// is not is the thing the head rule was protecting the page from.
+    /// </para>
+    ///
+    /// <para>
+    /// Written as one expression because the carrying step and the step that takes a carried row
+    /// back both have to ask it, and a withdrawal that found fewer words than the carry wrote would
+    /// leave the King James saying what the Hebrew beside it no longer says.
+    /// </para>
+    /// </summary>
+    public const string Reached =
+        $"""
+         SELECT alone.word_id
+         FROM ({Head}) alone
+         WHERE NOT ({OneNameTwice})
+         UNION ALL
+         SELECT together.id
+         FROM ({Head}) alone
+         JOIN word foremost ON foremost.id = alone.word_id
+         JOIN link_word beside
+              ON beside.link_id = mine.link_id AND beside.side <> mine.side
+         JOIN word together ON together.id = beside.word_id
+         WHERE {OneNameTwice}
+           AND similarity(
+                   lower(regexp_replace(together.text, '{Ornament}', '', 'g')),
+                   lower(regexp_replace(foremost.text, '{Ornament}', '', 'g'))) >= {SameWord}
+         """;
+
+    /// <summary>
+    /// The same annotations on the words each link says stand for one of the seeded words — by
+    /// <see cref="Reached"/>, so the head of a phrase and every word of a repeated name alike.
     ///
     /// A word reached from two seeded words that name two different entities is left alone: the
     /// links disagree about who is named, and picking between them is the judgement none of these
@@ -255,7 +361,7 @@ internal static class Annotating
             JOIN link_word mine ON mine.word_id = seed.word_id
             JOIN link l ON l.id = mine.link_id
             CROSS JOIN LATERAL (SELECT {LinkWorth} AS worth) crossed
-            CROSS JOIN LATERAL ({Head}) other
+            CROSS JOIN LATERAL ({Reached}) other
             JOIN word w ON w.id = other.word_id
             WHERE seed.through IS NULL
         ),

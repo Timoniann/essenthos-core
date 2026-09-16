@@ -56,7 +56,8 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 11, ["כשׂדים"]),
             (1, 16, ["יפתח"]),
             (1, 17, ["יפתח"]),
-            (1, 18, ["יריחו"]));
+            (1, 18, ["יריחו"]),
+            (1, 19, ["משה", "משה"]));
 
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (1, 1, ["Moses"]),
@@ -67,7 +68,8 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 12, ["When", "of", "Moses"]),
             (1, 13, ["Moses’s", "lifetime"]),
             (1, 14, ["Moses", "and", "Aaron"]),
-            (1, 15, ["set", "out"]));
+            (1, 15, ["set", "out"]),
+            (1, 19, ["Moses", "and", "Moses"]));
 
         _db.SaveChanges();
 
@@ -82,6 +84,8 @@ public sealed class EntityAnnotationTests : IDisposable
         Annotate(16, "H3316", "topo");
         Annotate(17, "H3316", "pers");
         Annotate(18, "H3405", "topo");
+        Annotate(19, "H4872", "pers");
+        Annotate(19, "H4872", "pers", 2);
 
         var moses = Person("moses", "Moses", "H4872");
         Person("zechariah-1", "Zechariah", "H2148");
@@ -139,9 +143,9 @@ public sealed class EntityAnnotationTests : IDisposable
         _db.Dispose();
     }
 
-    private void Annotate(int verse, string number, string nameType)
+    private void Annotate(int verse, string number, string nameType, int position = 1)
     {
-        var word = _db.WordAt(_hebrew, 1, verse, 1);
+        var word = _db.WordAt(_hebrew, 1, verse, position);
         word.StrongNumber = number;
         word.Morphology = JsonDocument.Parse($$"""{"pos": "subs", "nameType": "{{nameType}}"}""");
         _db.SaveChanges();
@@ -196,6 +200,36 @@ public sealed class EntityAnnotationTests : IDisposable
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = to, Side = LinkSide.To });
+        _db.SaveChanges();
+    }
+
+    /// <summary>
+    /// One link naming several words on each side, which is what a printed numbering writes where
+    /// a verse uses one name more than once and the two texts write it a different number of times.
+    /// </summary>
+    private void Set(Word[] from, Word[] to)
+    {
+        var link = new Link
+        {
+            FromTextId = from[0].TextId,
+            ToTextId = to[0].TextId,
+            Relation = LinkRelation.Renders,
+            Method = LinkMethod.StrongNumber,
+            Confidence = 0.3,
+            Source = "a test",
+        };
+        _db.Links.Add(link);
+
+        foreach (var word in from)
+        {
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = word, Side = LinkSide.From });
+        }
+
+        foreach (var word in to)
+        {
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = word, Side = LinkSide.To });
+        }
+
         _db.SaveChanges();
     }
 
@@ -627,6 +661,78 @@ public sealed class EntityAnnotationTests : IDisposable
         named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
         named.Should().NotContainKey(opening.Id);
         named.Should().NotContainKey(supplied.Id);
+    }
+
+    /// <summary>
+    /// The other shape of a set, and the one a head cannot serve. The Synodal's printed numbering
+    /// pairs the three <em>Давид</em> of 1 Samuel 30:7 with the two דָּוִד beside them and cannot
+    /// say which answers which, so it writes one link naming all five — and a head names one of the
+    /// three and leaves the other two blank. Every word on the witness's side is one occurrence of
+    /// the same lexeme, so the set holds nothing but the name, and each word of the set that is the
+    /// name again renders it.
+    ///
+    /// <para>
+    /// The <em>and</em> between them is the other half of the rule. The numbering sweeps a word
+    /// into the set that is not the name at all — the <em>к</em> of Joshua 19:13, the
+    /// <em>sister's</em> of Acts 23:16 — and naming every word of the set would put those on the
+    /// page as people.
+    /// </para>
+    /// </summary>
+    [Fact]
+    public async Task EveryWordOfASetThatIsTheNameAgainIsAnnotated()
+    {
+        var first = _db.WordAt(_english, 1, 19, 1);
+        var joining = _db.WordAt(_english, 1, 19, 2);
+        var second = _db.WordAt(_english, 1, 19, 3);
+        Set(
+            [_db.WordAt(_hebrew, 1, 19, 1), _db.WordAt(_hebrew, 1, 19, 2)],
+            [first, joining, second]);
+
+        var named = await Load();
+
+        named.Should().ContainKey(first.Id).WhoseValue.Should().Be("moses");
+        named.Should().ContainKey(second.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(joining.Id, "the word between them is not the name");
+    }
+
+    /// <summary>
+    /// And what it is worth is the link, which is what the set is worth. A numbering that cannot
+    /// pair a repeated name is a weak claim about each of the words, and the row has to say so.
+    /// </summary>
+    [Fact]
+    public async Task SuchAWordCarriesWhatTheContendedLinkIsWorth()
+    {
+        var first = _db.WordAt(_english, 1, 19, 1);
+        Set(
+            [_db.WordAt(_hebrew, 1, 19, 1), _db.WordAt(_hebrew, 1, 19, 2)],
+            [first, _db.WordAt(_english, 1, 19, 2), _db.WordAt(_english, 1, 19, 3)]);
+
+        await _loader.Load();
+
+        var carried = await _db.WordEntities.SingleAsync(a => a.WordId == first.Id);
+        var seed = await _db.WordEntities.SingleAsync(a => a.WordId == _db.WordAt(_hebrew, 1, 19, 1).Id);
+        carried.Confidence.Should().BeApproximately(seed.Confidence!.Value * 0.3, 1e-9);
+    }
+
+    /// <summary>
+    /// A set the witness's side does not fill with one name is a phrase, however many words stand
+    /// opposite it — <em>the son of Terah</em> against <em>בֶּן תֶּרַח</em> — and the naming goes
+    /// to the head as before. Here the second Hebrew word is another lexeme, so what the set says
+    /// about the three words opposite is not that each of them is Moses.
+    /// </summary>
+    [Fact]
+    public async Task ASetWhoseWitnessSideHoldsMoreThanOneLexemeKeepsTheHeadRule()
+    {
+        var first = _db.WordAt(_english, 1, 19, 1);
+        var joining = _db.WordAt(_english, 1, 19, 2);
+        var last = _db.WordAt(_english, 1, 19, 3);
+        Set([Hebrew(1), Hebrew(7)], [first, joining, last]);
+
+        var named = await Load();
+
+        named.Should().ContainKey(last.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(first.Id);
+        named.Should().NotContainKey(joining.Id);
     }
 
     /// <summary>
