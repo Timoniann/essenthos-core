@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using System.Globalization;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Door43;
 using Essenthos.Core.Endpoints;
@@ -13,6 +15,7 @@ namespace Essenthos.Core.Loading.Links;
 /// Verses where the two sides did not line up word for word. Nothing is written for these: a
 /// stated link that had to be guessed into place is not a stated link.
 /// </param>
+/// <param name="Links">The links the source stands on once the join is written.</param>
 internal sealed record InterlinearOutcome(
     string Text,
     int Books,
@@ -20,13 +23,46 @@ internal sealed record InterlinearOutcome(
     int Refused,
     int Links,
     int Words,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    InterlinearReconciliation? Written = null)
 {
     public override string ToString() =>
-        Links == 0
+        Written is null
             ? $"{Text} is already linked from the interlinear"
             : $"{Links} links over {Verses} verses of {Books} books in {Elapsed}, covering {Words} words " +
-              $"— {Refused} verses refused because the two sides did not line up";
+              $"— {Refused} verses refused because the two sides did not line up. {Written}";
+}
+
+/// <summary>
+/// What writing a join did to the links already there. A statement is added to what the corpus
+/// holds rather than laid over it: a link another method drew over exactly the stated words takes
+/// the statement as a second claim, and a link the source no longer states keeps whatever else
+/// claims it.
+/// </summary>
+/// <param name="Kept">Links that already carried the statement and still do.</param>
+/// <param name="Adopted">Links another method drew over exactly the stated words, which now carry the statement too.</param>
+/// <param name="Written">Links nothing had drawn over the stated words.</param>
+/// <param name="Retracted">Statements withdrawn from links whose words the source does not put together.</param>
+/// <param name="Yielded">
+/// Strong-number claims withdrawn from links that put a stated translated word on other original
+/// words. The Strong matcher never writes a match over a word a source states; these were written
+/// while the stored statement did not reach that word.
+/// </param>
+/// <param name="Demoted">Links withdrawn from that another claim still stands on, now headed by it.</param>
+/// <param name="Removed">Links withdrawn from that no claim stands on any more, and removed.</param>
+internal sealed record InterlinearReconciliation(
+    int Kept,
+    int Adopted,
+    int Written,
+    int Retracted,
+    int Yielded,
+    int Demoted,
+    int Removed)
+{
+    public override string ToString() =>
+        $"{Kept} stated links kept, {Adopted} drawn by another method over the same words now carry the " +
+        $"statement, {Written} written; {Retracted} statements withdrawn and {Yielded} Strong-number claims " +
+        $"yielded to the statement, leaving {Demoted} links headed by another claim and {Removed} removed";
 }
 
 /// <summary>
@@ -53,6 +89,23 @@ internal sealed record InterlinearOutcome(
 /// </summary>
 internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<InterlinearLinkLoader> logger)
 {
+    /// <summary>
+    /// The folder under <c>Resources/Door43</c> and the source recorded on the links, for each text
+    /// an interlinear aligns. The source is what a reload finds the stored statements by, so the
+    /// startup load and a reload have to spell it identically.
+    /// </summary>
+    public static (string Folder, string Source) Interlinear(string slug) => slug switch
+    {
+        Bible4uTextSource.Ohienko => ("uk_ubio",
+            "unfoldingWord's Ukrainian Bible Interlinear Ogienko, git.door43.org/uk_ts/uk_ubio, CC BY-SA 4.0"),
+        Bible4uTextSource.Synodal => ("ru_rsb",
+            "Door43 Russian Synodal alignment of Titus, Philemon and 2 John, made in "
+            + "translationCore and published at git.door43.org under CC0 1.0"),
+        _ => throw new ArgumentException(
+            $"Door43 interlinears exist for {Bible4uTextSource.Ohienko} and {Bible4uTextSource.Synodal}; " +
+            $"{slug} has none. Name one of those two as the source, or score against stored links instead."),
+    };
+
     private const string LinkImport =
         """
         COPY link (id, from_text_id, to_text_id, relation, method, source)
@@ -84,18 +137,51 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             return new InterlinearOutcome(translationSlug, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
+        return await Write(folder, translationSlug, translation, source, cancellationToken);
+    }
+
+    /// <summary>
+    /// The join written over the links the corpus already holds from the interlinear, where
+    /// <see cref="Load"/> leaves a text that has any alone. It is how rows an older join wrote are
+    /// brought to this one: what the join states is kept or added, a statement it no longer makes is
+    /// withdrawn, and a link another method also claims keeps that claim.
+    /// </summary>
+    public async Task<InterlinearOutcome> Replace(
+        string folder,
+        string translationSlug,
+        string source,
+        CancellationToken cancellationToken = default)
+    {
+        if (!Directory.Exists(folder))
+        {
+            throw new DirectoryNotFoundException(
+                $"No interlinear at {folder}. Point Dataset:ResourcesPath at the Resources folder that holds Door43/.");
+        }
+
+        return await Write(
+            folder, translationSlug, await Text(translationSlug, cancellationToken), source, cancellationToken);
+    }
+
+    private async Task<InterlinearOutcome> Write(
+        string folder,
+        string translationSlug,
+        int translation,
+        string source,
+        CancellationToken cancellationToken)
+    {
         var started = Stopwatch.StartNew();
         var join = await Join(folder, translation, cancellationToken);
-        await Write(source, join.Drafts, cancellationToken);
+        var written = await Reconcile(translation, source, join.Drafts, cancellationToken);
 
         var outcome = new InterlinearOutcome(
             translationSlug,
             join.Books.Count,
             join.Total.VersesJoined,
             join.Total.VersesRead - join.Total.VersesJoined,
-            join.Drafts.Count,
+            written.Kept + written.Adopted + written.Written,
             join.Total.TranslatedWordsJoined,
-            started.Elapsed);
+            started.Elapsed,
+            written);
         logger.LogInformation("Linked from the interlinear: {Outcome}", outcome);
         return outcome;
     }
@@ -251,17 +337,300 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
                     .ToList());
     }
 
-    private async Task Write(string source, List<InterlinearDraft> drafts, CancellationToken cancellationToken)
+    /// <summary>
+    /// Writes a join's links against what the corpus already holds between the translation and the
+    /// originals, in one transaction. The tests call it with drafts made by hand, because what is
+    /// under test is the rows around them rather than the files.
+    /// </summary>
+    internal async Task<InterlinearReconciliation> Reconcile(
+        int translation,
+        string source,
+        IReadOnlyList<InterlinearDraft> drafts,
+        CancellationToken cancellationToken)
     {
-        if (drafts.Count == 0)
-        {
-            return;
-        }
+        var distinct = drafts
+            .DistinctBy(draft => (draft.ToTextId, Key(draft.From), Key(draft.To)))
+            .ToList();
 
+        await db.Database.OpenConnectionAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        (string, object)[] parameters =
+        [
+            ("translation", translation),
+            ("source", source),
+            ("stated", EnumSpelling.Of(LinkMethod.StatedBySource)),
+            ("manual", EnumSpelling.Of(LinkMethod.Manual)),
+            ("numbered", EnumSpelling.Of(LinkMethod.StrongNumber)),
+            ("renders", EnumSpelling.Of(LinkRelation.Renders)),
+        ];
 
-        var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
+        await Execute(connection, StageDrafts, cancellationToken);
+        await using (var writer = await connection.BeginBinaryImportAsync(DraftImport, cancellationToken))
+        {
+            var fromSide = EnumSpelling.Of(LinkSide.From);
+            var toSide = EnumSpelling.Of(LinkSide.To);
+            for (var i = 0; i < distinct.Count; i++)
+            {
+                foreach (var (words, side) in (IEnumerable<(List<long>, string)>)
+                         [(distinct[i].From, fromSide), (distinct[i].To, toSide)])
+                {
+                    foreach (var word in words)
+                    {
+                        await writer.StartRowAsync(cancellationToken);
+                        await writer.WriteAsync(i, NpgsqlDbType.Integer, cancellationToken);
+                        await writer.WriteAsync(distinct[i].ToTextId, NpgsqlDbType.Integer, cancellationToken);
+                        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
+                        await writer.WriteAsync(word, NpgsqlDbType.Bigint, cancellationToken);
+                    }
+                }
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await Execute(connection, Classify, cancellationToken, parameters);
+        var kept = await Count(connection, "SELECT count(*) FROM interlinear_match WHERE testified", cancellationToken);
+        var adopted = await Count(
+            connection, "SELECT count(*) FROM interlinear_match WHERE NOT testified", cancellationToken);
+
+        await Execute(connection, Adopt, cancellationToken, parameters);
+        await Execute(connection, Withdraw, cancellationToken, parameters);
+        var retracted = await Count(
+            connection, "SELECT count(*) FROM interlinear_withdrawn WHERE NOT yielded", cancellationToken);
+        var yielded = await Count(
+            connection, "SELECT count(*) FROM interlinear_withdrawn WHERE yielded", cancellationToken);
+        var removed = await Execute(connection, RemoveUnclaimed, cancellationToken);
+        var demoted = await Count(connection, Rehead, cancellationToken, parameters);
+
+        var unmatched = new List<int>();
+        await using (var command = new NpgsqlCommand(Unmatched, connection))
+        await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+        {
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                unmatched.Add(reader.GetInt32(0));
+            }
+        }
+
+        if (unmatched.Count > 0)
+        {
+            var fresh = unmatched.Select(index => distinct[index]).ToList();
+            var firstId = await ReserveLinkIds(connection, fresh.Count, cancellationToken);
+            await WriteLinks(connection, source, fresh, firstId, cancellationToken);
+
+            // The claim that says this loader is the one asserting these links, in the same
+            // transaction: a link with no claim is invisible to the agreement measure.
+            await LinkClaims.Record(connection, transaction, firstId, fresh.Count, cancellationToken);
+        }
+
+        await transaction.CommitAsync(cancellationToken);
+        return new InterlinearReconciliation(kept, adopted, unmatched.Count, retracted, yielded, demoted, removed);
+    }
+
+    private const string StageDrafts =
+        """
+        CREATE TEMP TABLE interlinear_draft (
+            draft integer NOT NULL,
+            to_text_id integer NOT NULL,
+            side text NOT NULL,
+            word_id bigint NOT NULL
+        ) ON COMMIT DROP
+        """;
+
+    private const string DraftImport =
+        "COPY interlinear_draft (draft, to_text_id, side, word_id) FROM STDIN (FORMAT BINARY)";
+
+    /// <summary>
+    /// Every link a draft could be the same as or could contradict: the ones touching a stated
+    /// translated word, and the ones carrying this source's statement wherever they stand. A link is
+    /// the same as a draft when it names exactly its words on both sides.
+    ///
+    /// <para>
+    /// A link carrying a statement is headed by a statement or by a person, so the claims are only
+    /// consulted for links of those two methods and not for the million guesses beside them.
+    /// </para>
+    /// </summary>
+    private const string Classify =
+        """
+        CREATE TEMP TABLE interlinear_shape ON COMMIT DROP AS
+        SELECT draft, min(to_text_id) AS to_text_id,
+               string_agg(side || ':' || word_id, ',' ORDER BY side, word_id) AS shape
+        FROM interlinear_draft
+        GROUP BY draft;
+
+        ANALYZE interlinear_draft;
+        ANALYZE interlinear_shape;
+
+        CREATE TEMP TABLE interlinear_nearby ON COMMIT DROP AS
+        WITH touched AS (
+            SELECT lw.link_id
+            FROM interlinear_draft d
+            JOIN link_word lw ON lw.word_id = d.word_id AND lw.side = 'from'
+            WHERE d.side = 'from'
+            UNION
+            SELECT l.id
+            FROM link l
+            WHERE l.from_text_id = @translation AND l.method IN (@stated, @manual)
+              AND EXISTS (SELECT 1 FROM link_claim c
+                          WHERE c.link_id = l.id AND c.method = @stated AND c.source = @source)
+        )
+        SELECT l.id, l.to_text_id, l.relation,
+               (SELECT string_agg(lw.side || ':' || lw.word_id, ',' ORDER BY lw.side, lw.word_id)
+                FROM link_word lw WHERE lw.link_id = l.id) AS shape,
+               EXISTS (SELECT 1 FROM link_claim c
+                       WHERE c.link_id = l.id AND c.method = @stated AND c.source = @source) AS testified
+        FROM touched t
+        JOIN link l ON l.id = t.link_id
+        WHERE l.from_text_id = @translation;
+
+        ANALYZE interlinear_nearby;
+
+        CREATE TEMP TABLE interlinear_match ON COMMIT DROP AS
+        SELECT DISTINCT ON (s.draft) s.draft, n.id AS link_id, n.testified
+        FROM interlinear_shape s
+        JOIN interlinear_nearby n
+          ON n.to_text_id = s.to_text_id AND n.shape = s.shape AND n.relation = @renders
+        ORDER BY s.draft, n.testified DESC, n.id;
+
+        ANALYZE interlinear_match;
+        """;
+
+    /// <summary>
+    /// The statement, on every link that names exactly a draft's words. Where another method drew
+    /// the link, its own columns are made a claim first, so heading it with the statement loses
+    /// nothing it said before.
+    /// </summary>
+    private const string Adopt =
+        """
+        INSERT INTO link_claim (link_id, method, confidence, source, note)
+        SELECT l.id, l.method, l.confidence, l.source, l.note
+        FROM link l
+        JOIN interlinear_match m ON m.link_id = l.id AND NOT m.testified
+        ON CONFLICT DO NOTHING;
+
+        INSERT INTO link_claim (link_id, method, confidence, source, note)
+        SELECT link_id, @stated, NULL, @source, NULL FROM interlinear_match
+        ON CONFLICT DO NOTHING;
+        """;
+
+    /// <summary>
+    /// The statements the join no longer makes, and the Strong-number claims that put a stated
+    /// translated word on other words of the same witness.
+    /// </summary>
+    private const string Withdraw =
+        """
+        CREATE TEMP TABLE interlinear_withdrawn ON COMMIT DROP AS
+        WITH retracted AS (
+            DELETE FROM link_claim c
+            USING interlinear_nearby n
+            WHERE c.link_id = n.id AND n.testified AND c.method = @stated AND c.source = @source
+              AND NOT EXISTS (SELECT 1 FROM interlinear_match m WHERE m.link_id = n.id)
+            RETURNING c.link_id
+        ),
+        yielded AS (
+            DELETE FROM link_claim c
+            USING interlinear_nearby n
+            WHERE c.link_id = n.id AND c.method = @numbered
+              AND NOT EXISTS (SELECT 1 FROM interlinear_match m WHERE m.link_id = n.id)
+              AND EXISTS (
+                  SELECT 1
+                  FROM link_word lw
+                  JOIN interlinear_draft d
+                    ON d.word_id = lw.word_id AND d.side = 'from' AND d.to_text_id = n.to_text_id
+                  WHERE lw.link_id = n.id AND lw.side = 'from')
+            RETURNING c.link_id
+        )
+        SELECT link_id, false AS yielded FROM retracted
+        UNION ALL
+        SELECT link_id, true FROM yielded;
+        """;
+
+    private const string RemoveUnclaimed =
+        """
+        DELETE FROM link l
+        WHERE l.id IN (SELECT link_id FROM interlinear_withdrawn)
+          AND NOT EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = l.id)
+        """;
+
+    /// <summary>
+    /// Heads every link whose claims changed with its strongest remaining claim, and counts the
+    /// withdrawn-from links that end up headed by something other than a statement.
+    /// </summary>
+    private static string Rehead =>
+        $"""
+         WITH best AS (
+             SELECT DISTINCT ON (c.link_id) c.link_id, c.method, c.confidence, c.source, c.note
+             FROM link_claim c
+             WHERE c.link_id IN (SELECT link_id FROM interlinear_withdrawn
+                                 UNION SELECT link_id FROM interlinear_match)
+             ORDER BY c.link_id, {Standing} DESC, c.confidence DESC NULLS FIRST, c.id
+         ),
+         headed AS (
+             UPDATE link l
+             SET method = best.method, confidence = best.confidence, source = best.source, note = best.note
+             FROM best
+             WHERE l.id = best.link_id
+               AND (l.method, l.confidence, l.source, l.note)
+                   IS DISTINCT FROM (best.method, best.confidence, best.source, best.note)
+             RETURNING l.id, l.method
+         )
+         SELECT count(*) FROM headed
+         WHERE method <> @stated AND id IN (SELECT link_id FROM interlinear_withdrawn)
+         """;
+
+    private const string Unmatched =
+        """
+        SELECT s.draft FROM interlinear_shape s
+        WHERE NOT EXISTS (SELECT 1 FROM interlinear_match m WHERE m.draft = s.draft)
+        ORDER BY s.draft
+        """;
+
+    /// <summary>How much each method knew before it started, written out of <see cref="ClaimStanding"/>.</summary>
+    private static string Standing =>
+        "CASE c.method "
+        + string.Concat(Enum.GetValues<LinkMethod>().Select(method =>
+            $"WHEN '{EnumSpelling.Of(method)}' THEN "
+            + ClaimStanding.Of(method).ToString(CultureInfo.InvariantCulture) + " "))
+        + "ELSE 0 END";
+
+    private static async Task<int> Execute(
+        NpgsqlConnection connection,
+        string sql,
+        CancellationToken cancellationToken,
+        params (string Name, object Value)[] parameters)
+    {
+        await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = 600 };
+        foreach (var (name, value) in parameters)
+        {
+            command.Parameters.AddWithValue(name, value);
+        }
+
+        return await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    private static async Task<int> Count(
+        NpgsqlConnection connection,
+        string sql,
+        CancellationToken cancellationToken,
+        params (string Name, object Value)[] parameters)
+    {
+        await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = 600 };
+        foreach (var (name, value) in parameters)
+        {
+            command.Parameters.AddWithValue(name, value);
+        }
+
+        return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
+    }
+
+    private static async Task WriteLinks(
+        NpgsqlConnection connection,
+        string source,
+        List<InterlinearDraft> drafts,
+        long firstId,
+        CancellationToken cancellationToken)
+    {
         var relation = EnumSpelling.Of(LinkRelation.Renders);
         var method = EnumSpelling.Of(LinkMethod.StatedBySource);
         var fromSide = EnumSpelling.Of(LinkSide.From);
@@ -300,13 +669,6 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
 
             await writer.CompleteAsync(cancellationToken);
         }
-
-        // The claim that says this loader is the one asserting these links. Written here rather
-        // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus. PRB-0198.
-        await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
-
-        await transaction.CommitAsync(cancellationToken);
     }
 
     private static async Task Row(
@@ -340,8 +702,6 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             ? id
             : throw new InvalidOperationException($"The text \"{slug}\" must be loaded before it can be linked.");
 
-    private sealed record InterlinearDraft(int FromTextId, int ToTextId, List<long> From, List<long> To);
-
     private sealed record InterlinearJoinResult(
         List<InterlinearDraft> Drafts,
         List<(string Book, InterlinearJoinAccount Account)> Books,
@@ -357,6 +717,8 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
 /// word the source did not state.
 /// </param>
 /// <param name="NotJoined">Links whose translated words this join does not link as a group at all.</param>
+internal sealed record InterlinearDraft(int FromTextId, int ToTextId, List<long> From, List<long> To);
+
 internal sealed record StoredInterlinear(int Links, int Same, int OnAnotherOriginal, int NotJoined);
 
 internal sealed record InterlinearJoinReport(
