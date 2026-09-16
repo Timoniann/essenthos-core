@@ -1117,6 +1117,7 @@ def decide(args):
     relabelled = dict(item.split('=', 1) for item in args.relation or [])
     held = {int(row) for row in args.hold or []}
     unsure = {row: float(sure) for row, sure in (item.split('=', 1) for item in args.unsure or [])}
+    flipped = {int(row) for row in args.flip or []}
 
     decisions = []
     for name in sorted(os.listdir(args.decisions)):
@@ -1143,18 +1144,24 @@ def decide(args):
         mine = [body for rows, body in decisions if rows <= ids]
         if not mine:
             continue
+        # The page keys a decision by the rows the fold held when it was taken, so a fold that has
+        # since joined two rows leaves an older decision beside a newer one about the same fact. The
+        # owner's latest word is the one that stands.
         verdicts = {body['decision'] for body in mine}
         if len(verdicts) > 1:
-            count('decisions disagree about one fact')
-            continue
-        verdict = verdicts.pop()
+            latest = max(body['decidedAt'] for body in mine)
+            mine = [body for body in mine if body['decidedAt'] == latest]
+            count('decisions disagree about one fact: the latest stands')
+            verdicts = {body['decision'] for body in mine}
+        verdict = sorted(verdicts)[0]
         if ids & held:
             count(f'{verdict}, held: the note questions who is meant')
             continue
         note = ' '.join(body['note'] for body in mine if body.get('note'))
         # A removal whose note names the right word, and a re-ask whose note accepts it as unsure,
         # are confirmations in the owner's own terms.
-        if verdict == 'remove' and any(str(i) in relabelled for i in ids):
+        # A removal or a re-ask whose note names the right word is a correction, not a refusal.
+        if verdict in ('remove', 'reask') and any(str(i) in relabelled for i in ids):
             verdict = 'confirm'
         if verdict == 'reask' and any(str(i) in unsure for i in ids):
             verdict = 'confirm'
@@ -1176,6 +1183,11 @@ def decide(args):
         if not reference or not fact['relation']:
             count('confirmed, but there is no verse or no relation word to write it with')
             continue
+        # The dataset states the tie from the end the owner does not want it read from -- a king is
+        # not defined by whose king he is, but a commander is by whose commander he is. Reading it
+        # the other way round is a decision about the fact, not about the words, so it is said here.
+        if ids & flipped:
+            fact = dict(fact, a=fact['b'], b=fact['a'])
         relation_as = next((relabelled[str(i)] for i in sorted(ids) if str(i) in relabelled), None)
         if relation_as:
             fact = dict(fact, relation=relation_as)
@@ -1267,6 +1279,8 @@ def main():
                          help='ROW_ID=relation, where the decision reads the fact in another word of the vocabulary')
     decider.add_argument('--hold', nargs='+',
                          help='row ids whose decision waits, because its note says the person is not who the record names')
+    decider.add_argument('--flip', nargs='+',
+                         help='row ids the owner reads from the other end, so A and B swap before the relation is read')
     decider.add_argument('--unsure', nargs='+',
                          help='ROW_ID=confidence, where the owner accepts the fact but says the verse does not settle it')
     decider.add_argument('--to', default=os.path.join('Resources', 'Essenthos', 'descriptors'))
