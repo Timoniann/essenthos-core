@@ -147,6 +147,7 @@ internal sealed class DatasetLoader(
             await ReadTheNamesNothingSettles(resources, stoppingToken);
             await TellTheNamesakePlacesApart(resources, stoppingToken);
             await TellTheGreekNamesakesApart(stoppingToken);
+            await NameWhatTheVerseListLeavesOneBearerFor(resources, stoppingToken);
             await NameTheTribesTheConstructNames(stoppingToken);
             await ReachTheNamesNobodyElseCarries(stoppingToken);
             await WriteTheWordsForGod(stoppingToken);
@@ -845,6 +846,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<GreekNamesakeLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The Hebrew names whose marking or whose namesakes left them blank, where the verse list names
+    /// one bearer. After the readings and every pass that names a Hebrew word, because it answers
+    /// only where none of them did and a reading of the verse stands above a list.
+    /// </summary>
+    private async Task NameWhatTheVerseListLeavesOneBearerFor(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Hebrew names a verse list leaves one bearer for");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<ListedBearerLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     /// <summary>
