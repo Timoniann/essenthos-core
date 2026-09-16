@@ -247,15 +247,28 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
 
 // The Door43 join a benchmark's Slavic answer key rests on, re-made from the files without writing
 // anything: which verses, spans and words arrived, why the rest did not, and whether the links the
-// corpus holds are still this join.
+// corpus holds are still this join. With --replace the join is then written over the stored rows,
+// which the startup load never does for a text it has already linked.
 if (args is ["interlinear-join", var interlinearText, ..])
 {
     var interlinearSlug = Identifier(interlinearText);
     using var interlinearScope = app.Services.CreateScope();
-    var interlinear = await interlinearScope.ServiceProvider.GetRequiredService<InterlinearLinkLoader>().Measure(
-        InterlinearFolder(app, interlinearSlug),
-        interlinearSlug);
-    app.Logger.LogInformation("\n{Report}", interlinear);
+    var interlinearLoader = interlinearScope.ServiceProvider.GetRequiredService<InterlinearLinkLoader>();
+    var interlinearFolder = InterlinearFolder(app, interlinearSlug);
+    app.Logger.LogInformation("\n{Report}", await interlinearLoader.Measure(interlinearFolder, interlinearSlug));
+
+    if (args.Contains("--replace"))
+    {
+        app.Logger.LogInformation("{Outcome}", await interlinearLoader.Replace(
+            interlinearFolder, interlinearSlug, InterlinearLinkLoader.Interlinear(interlinearSlug).Source));
+
+        // A stated link across a verse boundary the frame does not join is a verse pair the source
+        // states, and a command that cannot be followed by a restart has to write it itself.
+        app.Logger.LogInformation(
+            "{Outcome}", await interlinearScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+        app.Logger.LogInformation("\n{Report}", await interlinearLoader.Measure(interlinearFolder, interlinearSlug));
+    }
+
     return 0;
 }
 
@@ -488,14 +501,7 @@ static string? OptionalText(string[] arguments, string option)
 static string InterlinearFolder(WebApplication host, string slug) => Path.Combine(
     ResourcePaths.Read(host.Configuration, host.Environment.ContentRootPath),
     "Door43",
-    slug switch
-    {
-        Bible4uTextSource.Ohienko => "uk_ubio",
-        Bible4uTextSource.Synodal => "ru_rsb",
-        _ => throw new ArgumentException(
-            $"Door43 interlinears exist for {Bible4uTextSource.Ohienko} and {Bible4uTextSource.Synodal}; " +
-            $"{slug} has none. Name one of those two as the source, or score against stored links instead."),
-    });
+    InterlinearLinkLoader.Interlinear(slug).Folder);
 
 static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments, WebApplication host) => new(
     AllowSourceStrongEvidence: !arguments.Contains("--without-source-strong"),

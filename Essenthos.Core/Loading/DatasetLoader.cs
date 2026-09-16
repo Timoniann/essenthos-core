@@ -507,19 +507,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<InterlinearLinkLoader>();
+        var ukrainian = InterlinearLinkLoader.Interlinear(Bible4uTextSource.Ohienko);
         status.Record(await loader.Load(
-            Path.Combine(resources, "Door43", "uk_ubio"),
+            Path.Combine(resources, "Door43", ukrainian.Folder),
             Bible4uTextSource.Ohienko,
-            "unfoldingWord's Ukrainian Bible Interlinear Ogienko, git.door43.org/uk_ts/uk_ubio, CC BY-SA 4.0",
+            ukrainian.Source,
             cancellationToken));
 
         status.Starting("the Russian Synodal alignment");
 
+        var russian = InterlinearLinkLoader.Interlinear(Bible4uTextSource.Synodal);
         status.Record(await loader.Load(
-            Path.Combine(resources, "Door43", "ru_rsb"),
+            Path.Combine(resources, "Door43", russian.Folder),
             Bible4uTextSource.Synodal,
-            "Door43 Russian Synodal alignment of Titus, Philemon and 2 John, made in "
-            + "translationCore and published at git.door43.org under CC0 1.0",
+            russian.Source,
             cancellationToken));
     }
 
