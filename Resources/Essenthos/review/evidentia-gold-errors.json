@@ -1,0 +1,386 @@
+{
+ "reviewed": "2026-09-16",
+ "measurement": "evidentia-measure-book, BSB source with no Strong tag of its own, --without-source-strong --learn-from KJV (Mark adds --learn-from-strong-numbers), final tier = global review + syntax-gated target gloss, at essenthos-core wt/goldscore",
+ "note": "Word and link ids are this database load's and do not survive a reload; reference, position and surface are the stable key. Nothing here is applied to the corpus or to the answer key: every published EVIDENTIA figure is still scored against the rows as loaded.",
+ "$schema": "./evidentia-gold-errors.schema.json",
+ "errors": [
+  {
+   "reference": "Genesis 7:17",
+   "text": "BSB",
+   "witness": "BHSA",
+   "links": [
+    7764801
+   ],
+   "dataset": [
+    "Berean Standard Bible translation tables, bereanbible.com, public domain"
+   ],
+   "english": {
+    "wordId": 10531232,
+    "position": 19,
+    "surface": "high"
+   },
+   "statedReading": [
+    {
+     "position": 21,
+     "surface": "מֵ",
+     "strongNumber": "H4480"
+    },
+    {
+     "position": 22,
+     "surface": "עַ֥ל",
+     "strongNumber": "H5921"
+    }
+   ],
+   "reading": {
+    "wordId": 6470151,
+    "position": 20,
+    "surface": "תָּ֖רָם",
+    "strongNumber": "H7311"
+   },
+   "cause": "annotation",
+   "why": "BSB 'lifted the ark high above the earth': 'high' is the only rendering of וַתָּרָם 'and it rose', which the Berean table leaves unlinked while putting 'high above' on מֵעַל. מֵעַל means 'from upon', not 'high'; the chunk joins a word from one Hebrew clause to the preposition of another."
+  },
+  {
+   "reference": "Jonah 1:6",
+   "text": "BSB",
+   "witness": "BHSA",
+   "links": [
+    8032115,
+    8032116
+   ],
+   "dataset": [
+    "Berean Standard Bible translation tables, bereanbible.com, public domain"
+   ],
+   "english": {
+    "wordId": 11065881,
+    "position": 28,
+    "surface": "not"
+   },
+   "statedReading": [
+    {
+     "position": 24,
+     "surface": "נֹאבֵֽד",
+     "strongNumber": "H6"
+    }
+   ],
+   "reading": {
+    "wordId": 6765455,
+    "position": 23,
+    "surface": "לֹ֥א",
+    "strongNumber": "H3808"
+   },
+   "cause": "annotation",
+   "why": "'so that we may not perish' = וְלֹא נֹאבֵד. The Berean table links 'so that' to וְ+לֹא and 'we may not perish' to נֹאבֵד alone, so the negative is stated as the rendering of 'so that'. No reading makes לֹא 'so that'; 'not' -> לֹא is right."
+  },
+  {
+   "reference": "Mark 1:4",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042269
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11104631,
+    "position": 10,
+    "surface": "baptism"
+   },
+   "statedReading": [
+    {
+     "position": 10,
+     "surface": "μετανοίας",
+     "strongNumber": "G3341"
+    }
+   ],
+   "reading": {
+    "wordId": 6911699,
+    "position": 9,
+    "surface": "βάπτισμα",
+    "strongNumber": "G908"
+   },
+   "cause": "load",
+   "why": "Not the annotators. The stored Clear Bible row says 'a baptism' -> μετανοίας, and every link after 'appeared' in Mark 1:4 is one Greek word late ('preaching' -> βάπτισμα, 'repentance' -> εἰς). Clear Bible's own record aligns the BSB words to BGNT 9 κηρύσσων and 10 βάπτισμα; BGNT reads καὶ κηρύσσων where Nestle 1904 has no καί, and the corpus joins BGNT words to Nestle 1904 by position."
+  },
+  {
+   "reference": "Mark 1:27",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042338
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11105068,
+    "position": 16,
+    "surface": "new"
+   },
+   "statedReading": [
+    {
+     "position": 13,
+     "surface": "κατ",
+     "strongNumber": "G2596"
+    }
+   ],
+   "reading": {
+    "wordId": 6912075,
+    "position": 12,
+    "surface": "καινή",
+    "strongNumber": "G2537"
+   },
+   "cause": "load",
+   "why": "Not the annotators. From 'What' onward every stored Clear Bible row of Mark 1:27 is one Greek word late ('What' -> ἐστιν, 'new' -> κατ, 'authority' -> καὶ). 'new' -> καινή is right."
+  },
+  {
+   "reference": "Mark 1:27",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042345
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11105073,
+    "position": 21,
+    "surface": "commands"
+   },
+   "statedReading": [
+    {
+     "position": 21,
+     "surface": "καὶ",
+     "strongNumber": "G2532"
+    }
+   ],
+   "reading": {
+    "wordId": 6912083,
+    "position": 20,
+    "surface": "ἐπιτάσσει",
+    "strongNumber": "G2004"
+   },
+   "cause": "load",
+   "why": "Not the annotators. The same shift in Mark 1:27 stores 'He commands' -> καὶ 21. 'commands' -> ἐπιτάσσει is right."
+  },
+  {
+   "reference": "Mark 2:17",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042409
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11105781,
+    "position": 24,
+    "surface": "call"
+   },
+   "statedReading": [
+    {
+     "position": 20,
+     "surface": "δικαίους",
+     "strongNumber": "G1342"
+    }
+   ],
+   "reading": {
+    "wordId": 6912651,
+    "position": 19,
+    "surface": "καλέσαι",
+    "strongNumber": "G2564"
+   },
+   "cause": "load",
+   "why": "Not the annotators. Mark 2:17 is stored one Greek word late from 'It is not' onward ('to call' -> δικαίους, 'the righteous' -> ἀλλὰ). 'call' -> καλέσαι is right."
+  },
+  {
+   "reference": "Mark 2:17",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042410
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11105783,
+    "position": 26,
+    "surface": "righteous"
+   },
+   "statedReading": [
+    {
+     "position": 21,
+     "surface": "ἀλλὰ",
+     "strongNumber": "G235"
+    }
+   ],
+   "reading": {
+    "wordId": 6912652,
+    "position": 20,
+    "surface": "δικαίους",
+    "strongNumber": "G1342"
+   },
+   "cause": "load",
+   "why": "Not the annotators. The same shift stores 'the righteous' -> ἀλλὰ. 'righteous' -> δικαίους is right."
+  },
+  {
+   "reference": "Mark 3:1",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042443
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11106044,
+    "position": 6,
+    "surface": "synagogue"
+   },
+   "statedReading": [
+    {
+     "position": 6,
+     "surface": "καὶ",
+     "strongNumber": "G2532"
+    }
+   ],
+   "reading": {
+    "wordId": 6912896,
+    "position": 5,
+    "surface": "συναγωγήν",
+    "strongNumber": "G4864"
+   },
+   "cause": "load",
+   "why": "Not the annotators. Mark 3:1 is stored one Greek word late from 'the' onward ('synagogue' -> καὶ, 'was' -> ἐκεῖ, 'there' -> ἄνθρωπος). 'synagogue' -> συναγωγήν is right."
+  },
+  {
+   "reference": "Mark 3:1",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042447
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11106047,
+    "position": 9,
+    "surface": "man"
+   },
+   "statedReading": [
+    {
+     "position": 10,
+     "surface": "ἐξηραμμένην",
+     "strongNumber": "G3583"
+    }
+   ],
+   "reading": {
+    "wordId": 6912900,
+    "position": 9,
+    "surface": "ἄνθρωπος",
+    "strongNumber": "G444"
+   },
+   "cause": "load",
+   "why": "Not the annotators. The same shift stores 'a man' -> ἐξηραμμένην. 'man' -> ἄνθρωπος is right."
+  },
+  {
+   "reference": "Mark 3:1",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042446
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11106053,
+    "position": 15,
+    "surface": "there"
+   },
+   "statedReading": [
+    {
+     "position": 9,
+     "surface": "ἄνθρωπος",
+     "strongNumber": "G444"
+    }
+   ],
+   "reading": {
+    "wordId": 6912899,
+    "position": 8,
+    "surface": "ἐκεῖ",
+    "strongNumber": "G1563"
+   },
+   "cause": "load",
+   "why": "Not the annotators. The same shift stores 'there' -> ἄνθρωπος. 'there' -> ἐκεῖ is right."
+  },
+  {
+   "reference": "Mark 3:35",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042556
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11106640,
+    "position": 10,
+    "surface": "brother"
+   },
+   "statedReading": [
+    {
+     "position": 10,
+     "surface": "μου",
+     "strongNumber": "G1473"
+    }
+   ],
+   "reading": {
+    "wordId": 6913424,
+    "position": 9,
+    "surface": "ἀδελφός",
+    "strongNumber": "G80"
+   },
+   "cause": "load",
+   "why": "Not the annotators. Mark 3:35 is stored one Greek word late ('brother' -> μου, 'sister' -> καὶ). 'brother' -> ἀδελφός is right."
+  },
+  {
+   "reference": "Mark 3:35",
+   "text": "BSB",
+   "witness": "NESTLE1904",
+   "links": [
+    8042559
+   ],
+   "dataset": [
+    "Clear Bible Alignments, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0"
+   ],
+   "english": {
+    "wordId": 11106642,
+    "position": 12,
+    "surface": "sister"
+   },
+   "statedReading": [
+    {
+     "position": 13,
+     "surface": "καὶ",
+     "strongNumber": "G2532"
+    }
+   ],
+   "reading": {
+    "wordId": 6913427,
+    "position": 12,
+    "surface": "ἀδελφὴ",
+    "strongNumber": "G79"
+   },
+   "cause": "load",
+   "why": "Not the annotators. The same shift stores 'sister' -> καὶ. 'sister' -> ἀδελφὴ is right."
+  }
+ ]
+}

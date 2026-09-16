@@ -81,3 +81,24 @@ Newline-delimited JSON, read by `PersonRegisterLoader`.
 - **Terms.** Ours, under the project's own licence. That a nineteenth-century lexicographer numbered
   twenty-nine Zechariahs is not anyone's property; the assignment, the readings and the decision
   here are this project's.
+
+## review/evidentia-*
+
+What a person found reading the proposals EVIDENTIA's measurement scored wrong, and what they
+found wrong in the answer key while doing it. Nothing here is loaded, and nothing here changes the
+answer key: every figure is still scored against the stored rows, and these files say which of those
+rows the reading could not defend.
+
+- `evidentia-disagreements-2026-09-16.json` — a sample of 130 contradicted proposals, drawn by
+  `scripts/evidentia-disagreement-sample.py` with the seed recorded in the file, each with the class
+  it was put in and the reason. A row left the class *ours wrong* only after its verse was read.
+- `evidentia-gold-errors.json`, shaped by `evidentia-gold-errors.schema.json` — the rows of that
+  sample where the stored gold is wrong by any reading, with the verse, both readings and the
+  argument. `cause` separates a dataset's own statement from a row this corpus stored wrongly while
+  loading it, so a loading fault is never credited to the people whose data it misread.
+- **Made by** Essenthos, by reading. No model produced a classification.
+- **Read from** the Berean Standard Bible and its translation tables (public domain), Clear Bible's
+  alignments (CC BY 4.0, BiblioNexus) as this corpus loaded them, BHSA (CC BY-NC 4.0, ETCBC) and
+  Nestle 1904 (public domain). Single words are quoted with their positions so a record can be
+  checked against its verse; no annotation is reproduced beyond the rows each record is about.
+- **Terms.** Ours, under the project's own licence; the quoted words keep their own.

@@ -57,6 +57,7 @@ internal sealed class EvidentiaPipeline(
             covered,
             coverage,
             fallback,
+            measurable.Select(analysis => analysis.Token.Id).ToHashSet(),
             Todos(unsupported, allEvidence),
             EvidentiaPhraseBuilder.Build(candidates));
     }

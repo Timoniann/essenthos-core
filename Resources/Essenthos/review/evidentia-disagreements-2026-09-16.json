@@ -1,0 +1,3609 @@
+{
+ "reviewed": "2026-09-16",
+ "measurement": "evidentia-measure-book, BSB source with no Strong tag of its own, --without-source-strong --learn-from KJV (Mark adds --learn-from-strong-numbers), final tier = global review + syntax-gated target gloss, at essenthos-core wt/goldscore",
+ "note": "Word and link ids are this database load's and do not survive a reload; reference, position and surface are the stable key. Nothing here is applied to the corpus or to the answer key: every published EVIDENTIA figure is still scored against the rows as loaded.",
+ "seed": 20260916,
+ "drawn": "sample.py: strata are passage x which gold covers the word; at least 12 per stratum, the rest proportional; random.Random(seed).sample over rows sorted by book, chapter, verse, source position, target word id",
+ "rule": "A row is reclassified away from ours-wrong only after the verse was read and the reason written; where undecidable it stays ours-wrong. Two occurrences of a lexeme each rendered by its own English word are ours-wrong when we take the other one; repeated-token convention is only where one English word renders several.",
+ "strata": {
+  "Genesis 1-10 / berean": {
+   "disagreements": 173,
+   "sampled": 26
+  },
+  "Jonah / berean": {
+   "disagreements": 52,
+   "sampled": 15
+  },
+  "Mark 1-4 / berean": {
+   "disagreements": 148,
+   "sampled": 24
+  },
+  "Mark 1-4 / berean+clear": {
+   "disagreements": 23,
+   "sampled": 13
+  },
+  "Mark 1-4 / clear": {
+   "disagreements": 53,
+   "sampled": 16
+  },
+  "Mark 1-4 / uncovered": {
+   "disagreements": 12,
+   "sampled": 12
+  },
+  "Ruth / berean": {
+   "disagreements": 153,
+   "sampled": 24
+  }
+ },
+ "rows": [
+  {
+   "n": 1,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 1:20",
+   "sourceWordId": 10527641,
+   "sourcePosition": 15,
+   "english": "above",
+   "proposed": {
+    "wordId": 6467135,
+    "position": 16,
+    "surface": "עַל",
+    "strongNumber": "H5921"
+   },
+   "gold": [
+    {
+     "position": 13,
+     "surface": "עַל",
+     "strongNumber": "H5921"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.32",
+   "class": "ours-wrong",
+   "why": "Two עַל in the verse. BSB 'above the earth' renders the first (13, עַל הָאָרֶץ); the second (16, עַל פְּנֵי רְקִיעַ) is 'in the open expanse'. The gold takes the right one."
+  },
+  {
+   "n": 2,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 3:5",
+   "sourceWordId": 10528713,
+   "sourcePosition": 21,
+   "english": "like",
+   "proposed": {
+    "wordId": 6468014,
+    "position": 13,
+    "surface": "הְיִיתֶם֙",
+    "strongNumber": "H1961"
+   },
+   "gold": [
+    {
+     "position": 14,
+     "surface": "כֵּֽ",
+     "strongNumber": "H9004"
+    },
+    {
+     "position": 15,
+     "surface": "אלֹהִ֔ים",
+     "strongNumber": "H430"
+    }
+   ],
+   "goldLinkShapes": [
+    "6x2"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'like' renders כְּ (14); הְיִיתֶם is 'you will be'."
+  },
+  {
+   "n": 3,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 4:16",
+   "sourceWordId": 10529639,
+   "sourcePosition": 4,
+   "english": "out",
+   "proposed": {
+    "wordId": 6468692,
+    "position": 4,
+    "surface": "מִ",
+    "strongNumber": "H4480"
+   },
+   "gold": [
+    {
+     "position": 1,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 2,
+     "surface": "יֵּ֥צֵא",
+     "strongNumber": "H3318"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.34",
+   "class": "ours-wrong",
+   "why": "'went out' is יֵּצֵא; מִן is 'from', which BSB writes separately."
+  },
+  {
+   "n": 4,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 4:22",
+   "sourceWordId": 10529761,
+   "sourcePosition": 4,
+   "english": "birth",
+   "proposed": {
+    "wordId": 6468791,
+    "position": 5,
+    "surface": "יָֽלְדָה֙",
+    "strongNumber": "H3205"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "gold-uncovered",
+   "why": "The Berean table links no word of 'gave birth'; 'birth' -> יָלְדָה is right."
+  },
+  {
+   "n": 5,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 5:18",
+   "sourceWordId": 10530156,
+   "sourcePosition": 5,
+   "english": "years",
+   "proposed": {
+    "wordId": 6469134,
+    "position": 7,
+    "surface": "שָׁנָ֖ה",
+    "strongNumber": "H8141"
+   },
+   "gold": [
+    {
+     "position": 10,
+     "surface": "שָׁנָ֑ה",
+     "strongNumber": "H8141"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.61",
+   "class": "convention",
+   "subclass": "repeated-token",
+   "why": "'162 years' collapses שְׁתַּיִם וְשִׁשִּׁים שָׁנָה וּמְאַת שָׁנָה: one English 'years' renders both שָׁנָה. The gold takes the second, we take the first."
+  },
+  {
+   "n": 6,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 5:19",
+   "sourceWordId": 10530179,
+   "sourcePosition": 16,
+   "english": "other",
+   "proposed": {
+    "wordId": 6469149,
+    "position": 8,
+    "surface": "שְׁמֹנֶ֥ה",
+    "strongNumber": "H8083"
+   },
+   "gold": [
+    {
+     "position": 11,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 12,
+     "surface": "יֹּ֥ולֶד",
+     "strongNumber": "H3205"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'other sons' has no counterpart in שְׁמֹנֶה 'eight'."
+  },
+  {
+   "n": 7,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 5:25",
+   "sourceWordId": 10530256,
+   "sourcePosition": 5,
+   "english": "years",
+   "proposed": {
+    "wordId": 6469232,
+    "position": 7,
+    "surface": "שָׁנָ֖ה",
+    "strongNumber": "H8141"
+   },
+   "gold": [
+    {
+     "position": 10,
+     "surface": "שָׁנָ֑ה",
+     "strongNumber": "H8141"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.61",
+   "class": "convention",
+   "subclass": "repeated-token",
+   "why": "'187 years' renders both שָׁנָה of שֶׁבַע וּשְׁמֹנִים שָׁנָה וּמְאַת שָׁנָה; the gold takes the second, we take the first."
+  },
+  {
+   "n": 8,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 5:32",
+   "sourceWordId": 10530371,
+   "sourcePosition": 8,
+   "english": "became",
+   "proposed": {
+    "wordId": 6469345,
+    "position": 2,
+    "surface": "יְהִי",
+    "strongNumber": "H1961"
+   },
+   "gold": [
+    {
+     "position": 8,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 9,
+     "surface": "יֹּ֣ולֶד",
+     "strongNumber": "H3205"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.57",
+   "class": "ours-wrong",
+   "why": "'became the father' is וַיּוֹלֶד; וַיְהִי is BSB's 'was' ('Noah was 500 years old')."
+  },
+  {
+   "n": 9,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 7:7",
+   "sourceWordId": 10531031,
+   "sourcePosition": 8,
+   "english": "sons",
+   "proposed": {
+    "wordId": 6469924,
+    "position": 10,
+    "surface": "בָנָ֛יו",
+    "strongNumber": "H1121"
+   },
+   "gold": [
+    {
+     "position": 4,
+     "surface": "וּ֠",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 5,
+     "surface": "בָנָיו",
+     "strongNumber": "H1121"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.62",
+   "class": "ours-wrong",
+   "why": "Two בָנָיו, each rendered: 'his sons' (5) and 'their wives' = נְשֵׁי בָנָיו (10). The gold's 5 is right."
+  },
+  {
+   "n": 10,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 7:9",
+   "sourceWordId": 10531068,
+   "sourcePosition": 10,
+   "english": "two",
+   "proposed": {
+    "wordId": 6469957,
+    "position": 1,
+    "surface": "שְׁנַ֨יִם",
+    "strongNumber": "H8147"
+   },
+   "gold": [
+    {
+     "position": 2,
+     "surface": "שְׁנַ֜יִם",
+     "strongNumber": "H8147"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.54",
+   "class": "ours-wrong",
+   "why": "'two by two' renders שְׁנַיִם שְׁנַיִם with an English 'two' for each; the in-order reading puts the second on the second, and nothing favours crossing them."
+  },
+  {
+   "n": 11,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 7:17",
+   "sourceWordId": 10531232,
+   "sourcePosition": 19,
+   "english": "high",
+   "proposed": {
+    "wordId": 6470151,
+    "position": 20,
+    "surface": "תָּ֖רָם",
+    "strongNumber": "H7311"
+   },
+   "gold": [
+    {
+     "position": 21,
+     "surface": "מֵ",
+     "strongNumber": "H4480"
+    },
+    {
+     "position": 22,
+     "surface": "עַ֥ל",
+     "strongNumber": "H5921"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x2"
+   ],
+   "tier": "unique exact-verse target gloss after stronger reservations",
+   "class": "gold-wrong",
+   "why": "BSB 'lifted the ark high above the earth': 'high' is the only rendering of וַתָּרָם 'and it rose', which the Berean table leaves unlinked while putting 'high above' on מֵעַל. מֵעַל means 'from upon', not 'high'; the chunk joins a word from one Hebrew clause to the preposition of another."
+  },
+  {
+   "n": 12,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 7:21",
+   "sourceWordId": 10531293,
+   "sourcePosition": 3,
+   "english": "living",
+   "proposed": {
+    "wordId": 6470227,
+    "position": 20,
+    "surface": "חַיָּ֔ה",
+    "strongNumber": "H2416"
+   },
+   "gold": [
+    {
+     "position": 4,
+     "surface": "בָּשָׂ֣ר",
+     "strongNumber": "H1320"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.62",
+   "class": "ours-wrong",
+   "why": "'every living thing that moved' is כָּל בָּשָׂר הָרֹמֵשׂ; חַיָּה (20) is 'animals' in the list that follows."
+  },
+  {
+   "n": 13,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 7:23",
+   "sourceWordId": 10531335,
+   "sourcePosition": 4,
+   "english": "thing",
+   "proposed": {
+    "wordId": 6470272,
+    "position": 17,
+    "surface": "רֶ֨מֶשׂ֙",
+    "strongNumber": "H7431"
+   },
+   "gold": [
+    {
+     "position": 5,
+     "surface": "הַ",
+     "strongNumber": "H9009"
+    },
+    {
+     "position": 6,
+     "surface": "יְק֣וּם",
+     "strongNumber": "H3351"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x2"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'living thing' is הַיְקוּם; רֶמֶשׂ is 'crawling creatures'."
+  },
+  {
+   "n": 14,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 7:23",
+   "sourceWordId": 10531357,
+   "sourcePosition": 26,
+   "english": "out",
+   "proposed": {
+    "wordId": 6470280,
+    "position": 25,
+    "surface": "מִן",
+    "strongNumber": "H4480"
+   },
+   "gold": [
+    {
+     "position": 23,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 24,
+     "surface": "יִּמָּח֖וּ",
+     "strongNumber": "H4229"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.34",
+   "class": "ours-wrong",
+   "why": "'blotted out' is וַיִּמָּחוּ; מִן is 'from'."
+  },
+  {
+   "n": 15,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 8:5",
+   "sourceWordId": 10531492,
+   "sourcePosition": 25,
+   "english": "became",
+   "proposed": {
+    "wordId": 6470393,
+    "position": 4,
+    "surface": "הָיוּ֙",
+    "strongNumber": "H1961"
+   },
+   "gold": [
+    {
+     "position": 21,
+     "surface": "נִרְא֖וּ",
+     "strongNumber": "H7200"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.57",
+   "class": "ours-wrong",
+   "why": "'became visible' is נִרְאוּ; הָיוּ is the auxiliary of 'continued to recede'."
+  },
+  {
+   "n": 16,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 8:12",
+   "sourceWordId": 10531637,
+   "sourcePosition": 5,
+   "english": "more",
+   "proposed": {
+    "wordId": 6470542,
+    "position": 3,
+    "surface": "עֹ֔וד",
+    "strongNumber": "H5750"
+   },
+   "gold": [
+    {
+     "position": 6,
+     "surface": "אֲחֵרִ֑ים",
+     "strongNumber": "H312"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.38",
+   "class": "convention",
+   "subclass": "phrase-head",
+   "why": "'seven more days' = עוֹד שִׁבְעַת יָמִים אֲחֵרִים: both עוֹד 'yet' and אֲחֵרִים 'other' carry 'more'. The Berean links אֲחֵרִים and leaves עוֹד unlinked; we take עוֹד."
+  },
+  {
+   "n": 17,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 8:12",
+   "sourceWordId": 10531650,
+   "sourcePosition": 18,
+   "english": "not",
+   "proposed": {
+    "wordId": 6470552,
+    "position": 13,
+    "surface": "לֹֽא",
+    "strongNumber": "H3808"
+   },
+   "gold": [
+    {
+     "position": 15,
+     "surface": "שׁוּב",
+     "strongNumber": "H7725"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.53",
+   "class": "convention",
+   "subclass": "phrase-head",
+   "why": "'she did not return' is linked whole to שׁוּב and לֹא is left unlinked; 'not' -> לֹא is the word-level reading of the same verbal complex לֹא יָסְפָה שׁוּב."
+  },
+  {
+   "n": 18,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 8:16",
+   "sourceWordId": 10531714,
+   "sourcePosition": 2,
+   "english": "out",
+   "proposed": {
+    "wordId": 6470620,
+    "position": 2,
+    "surface": "מִן",
+    "strongNumber": "H4480"
+   },
+   "gold": [
+    {
+     "position": 1,
+     "surface": "צֵ֖א",
+     "strongNumber": "H3318"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.34",
+   "class": "ours-wrong",
+   "why": "'Come out' is צֵא; מִן is 'of'."
+  },
+  {
+   "n": 19,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 8:17",
+   "sourceWordId": 10531730,
+   "sourcePosition": 2,
+   "english": "out",
+   "proposed": {
+    "wordId": 6470637,
+    "position": 6,
+    "surface": "מִ",
+    "strongNumber": "H4480"
+   },
+   "gold": [
+    {
+     "position": 26,
+     "surface": "הוצא",
+     "strongNumber": "H3318"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.34",
+   "class": "ours-wrong",
+   "why": "'Bring out' is הוֹצֵא; מִ is 'of' ('all ... of all flesh')."
+  },
+  {
+   "n": 20,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 9:4",
+   "sourceWordId": 10531986,
+   "sourcePosition": 8,
+   "english": "its",
+   "proposed": {
+    "wordId": 6470863,
+    "position": 2,
+    "surface": "בָּשָׂ֕ר",
+    "strongNumber": "H1320"
+   },
+   "gold": [
+    {
+     "position": 3,
+     "surface": "בְּ",
+     "strongNumber": "H9003"
+    },
+    {
+     "position": 4,
+     "surface": "נַפְשֹׁ֥ו",
+     "strongNumber": "H5315"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'its lifeblood' is בְּנַפְשׁוֹ דָמוֹ; בָּשָׂר is 'meat'."
+  },
+  {
+   "n": 21,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 9:5",
+   "sourceWordId": 10532005,
+   "sourcePosition": 15,
+   "english": "hand",
+   "proposed": {
+    "wordId": 6470883,
+    "position": 15,
+    "surface": "יַּ֣ד",
+    "strongNumber": "H3027"
+   },
+   "gold": [
+    {
+     "position": 18,
+     "surface": "מִ",
+     "strongNumber": "H4480"
+    },
+    {
+     "position": 19,
+     "surface": "יַּד֙",
+     "strongNumber": "H3027"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.52",
+   "class": "convention",
+   "subclass": "repeated-token",
+   "why": "BSB collapses three מִיַּד 'from the hand of' (beast, man, brother) into one 'by whose hand'. The gold takes the third, we the second; the English word renders all of them."
+  },
+  {
+   "n": 22,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 9:12",
+   "sourceWordId": 10532160,
+   "sourcePosition": 14,
+   "english": "between",
+   "proposed": {
+    "wordId": 6471015,
+    "position": 15,
+    "surface": "בֵ֛ין",
+    "strongNumber": "H996"
+   },
+   "gold": [
+    {
+     "position": 11,
+     "surface": "בֵּינִי֙",
+     "strongNumber": "H996"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.59",
+   "class": "convention",
+   "subclass": "repeated-token",
+   "why": "One 'between' for בֵּינִי וּבֵינֵיכֶם וּבֵין: the gold takes the first, we the third."
+  },
+  {
+   "n": 23,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 9:16",
+   "sourceWordId": 10532258,
+   "sourcePosition": 18,
+   "english": "between",
+   "proposed": {
+    "wordId": 6471099,
+    "position": 17,
+    "surface": "בֵין֙",
+    "strongNumber": "H996"
+   },
+   "gold": [
+    {
+     "position": 14,
+     "surface": "בֵּ֣ין",
+     "strongNumber": "H996"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.59",
+   "class": "convention",
+   "subclass": "repeated-token",
+   "why": "One 'between' for בֵּין אֱלֹהִים וּבֵין כָּל: the gold takes the first, we the second."
+  },
+  {
+   "n": 24,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 9:18",
+   "sourceWordId": 10532300,
+   "sourcePosition": 5,
+   "english": "who",
+   "proposed": {
+    "wordId": 6471146,
+    "position": 17,
+    "surface": "ה֖וּא",
+    "strongNumber": "H1931"
+   },
+   "gold": [
+    {
+     "position": 5,
+     "surface": "הַ",
+     "strongNumber": "H9009"
+    },
+    {
+     "position": 6,
+     "surface": "יֹּֽצְאִים֙",
+     "strongNumber": "H3318"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'who came out' is הַיֹּצְאִים; הוּא is 'Ham was'."
+  },
+  {
+   "n": 25,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 9:29",
+   "sourceWordId": 10532497,
+   "sourcePosition": 8,
+   "english": "years",
+   "proposed": {
+    "wordId": 6471296,
+    "position": 11,
+    "surface": "שָׁנָ֑ה",
+    "strongNumber": "H8141"
+   },
+   "gold": [
+    {
+     "position": 8,
+     "surface": "שָׁנָ֔ה",
+     "strongNumber": "H8141"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.62",
+   "class": "convention",
+   "subclass": "repeated-token",
+   "why": "'950 years' renders both שָׁנָה of תְּשַׁע מֵאוֹת שָׁנָה וַחֲמִשִּׁים שָׁנָה; the gold takes the first, we the second."
+  },
+  {
+   "n": 26,
+   "stratum": "Genesis 1-10 / berean",
+   "reference": "Genesis 10:12",
+   "sourceWordId": 10532665,
+   "sourcePosition": 5,
+   "english": "between",
+   "proposed": {
+    "wordId": 6471457,
+    "position": 7,
+    "surface": "בֵ֣ין",
+    "strongNumber": "H996"
+   },
+   "gold": [
+    {
+     "position": 4,
+     "surface": "בֵּ֥ין",
+     "strongNumber": "H996"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.59",
+   "class": "convention",
+   "subclass": "repeated-token",
+   "why": "One 'between' for בֵּין נִינְוֵה וּבֵין כָּלַח; the gold takes the first, we the second."
+  },
+  {
+   "n": 27,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 1:1",
+   "sourceWordId": 10700613,
+   "sourcePosition": 3,
+   "english": "days",
+   "proposed": {
+    "wordId": 6822559,
+    "position": 4,
+    "surface": "ימֵי֙",
+    "strongNumber": "H3117"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.63",
+   "class": "gold-uncovered",
+   "why": "Ruth 1:1 has no Berean link at all. 'days' -> יְמֵי is right."
+  },
+  {
+   "n": 28,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 1:1",
+   "sourceWordId": 10700646,
+   "sourcePosition": 36,
+   "english": "Moab",
+   "proposed": {
+    "wordId": 6822579,
+    "position": 24,
+    "surface": "מֹואָ֔ב",
+    "strongNumber": "H4124"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "gold-uncovered",
+   "why": "Ruth 1:1 has no Berean link at all. 'Moab' -> מוֹאָב is right."
+  },
+  {
+   "n": 29,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 1:2",
+   "sourceWordId": 10700651,
+   "sourcePosition": 5,
+   "english": "Elimelech",
+   "proposed": {
+    "wordId": 6822590,
+    "position": 5,
+    "surface": "אֱֽלִימֶ֡לֶךְ",
+    "strongNumber": "H458"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.65",
+   "class": "gold-uncovered",
+   "why": "Ruth 1:2 has no Berean link at all. 'Elimelech' -> אֱלִימֶלֶךְ is right."
+  },
+  {
+   "n": 30,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 1:2",
+   "sourceWordId": 10700670,
+   "sourcePosition": 24,
+   "english": "Ephrathites",
+   "proposed": {
+    "wordId": 6822602,
+    "position": 17,
+    "surface": "אֶפְרָתִ֔ים",
+    "strongNumber": "H673"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.54",
+   "class": "gold-uncovered",
+   "why": "Ruth 1:2 has no Berean link at all. 'Ephrathites' -> אֶפְרָתִים is right."
+  },
+  {
+   "n": 31,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 1:2",
+   "sourceWordId": 10700672,
+   "sourcePosition": 26,
+   "english": "Bethlehem",
+   "proposed": {
+    "wordId": 6822604,
+    "position": 19,
+    "surface": "בֵּ֥ית לֶ֖חֶם",
+    "strongNumber": "H1035"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.61",
+   "class": "gold-uncovered",
+   "why": "Ruth 1:2 has no Berean link at all. 'Bethlehem' -> בֵּית לֶחֶם is right."
+  },
+  {
+   "n": 32,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 1:14",
+   "sourceWordId": 10700964,
+   "sourcePosition": 4,
+   "english": "aloud",
+   "proposed": {
+    "wordId": 6822827,
+    "position": 3,
+    "surface": "קֹולָ֔ן",
+    "strongNumber": "H6963"
+   },
+   "gold": [
+    {
+     "position": 1,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 2,
+     "surface": "תִּשֶּׂ֣נָה",
+     "strongNumber": "H5375"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x2"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "convention",
+   "subclass": "phrase-head",
+   "why": "'wept aloud' renders וַתִּשֶּׂנָה קוֹלָן 'lifted their voice'. The Berean puts 'aloud' on the verb and leaves קוֹלָן unlinked; we take the noun. Both name the idiom."
+  },
+  {
+   "n": 33,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 1:16",
+   "sourceWordId": 10701029,
+   "sourcePosition": 36,
+   "english": "people",
+   "proposed": {
+    "wordId": 6822875,
+    "position": 23,
+    "surface": "עַמֵּ֣ךְ",
+    "strongNumber": "H5971"
+   },
+   "gold": [
+    {
+     "position": 24,
+     "surface": "עַמִּ֔י",
+     "strongNumber": "H5971"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.62",
+   "class": "ours-wrong",
+   "why": "'your people will be my people' = עַמֵּךְ עַמִּי, each rendered; the marked second 'people' is עַמִּי (24)."
+  },
+  {
+   "n": 34,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 1:19",
+   "sourceWordId": 10701095,
+   "sourcePosition": 13,
+   "english": "entered",
+   "proposed": {
+    "wordId": 6822923,
+    "position": 10,
+    "surface": "בֹאָ֨נָה֙",
+    "strongNumber": "H935"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "gold-uncovered",
+   "why": "Ruth 1:19 has no Berean link at all. 'entered' -> בֹאָנָה (10) is right."
+  },
+  {
+   "n": 35,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 2:1",
+   "sourceWordId": 10701199,
+   "sourcePosition": 9,
+   "english": "side",
+   "proposed": {
+    "wordId": 6823001,
+    "position": 10,
+    "surface": "מִ",
+    "strongNumber": "H4480"
+   },
+   "gold": [
+    {
+     "position": 5,
+     "surface": "לְ",
+     "strongNumber": "H9005"
+    },
+    {
+     "position": 6,
+     "surface": "אִישָׁ֗הּ",
+     "strongNumber": "H376"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.34",
+   "class": "ours-wrong",
+   "why": "'on her husband's side' is לְאִישָׁהּ; מִ is 'from the clan'."
+  },
+  {
+   "n": 36,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 2:4",
+   "sourceWordId": 10701302,
+   "sourcePosition": 19,
+   "english": "bless",
+   "proposed": {
+    "wordId": 6823074,
+    "position": 17,
+    "surface": "יְבָרֶכְךָ֥",
+    "strongNumber": "H1288"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.57",
+   "class": "gold-uncovered",
+   "why": "Ruth 2:4 has no Berean link at all. 'bless' -> יְבָרֶכְךָ is right."
+  },
+  {
+   "n": 37,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 2:9",
+   "sourceWordId": 10701426,
+   "sourcePosition": 24,
+   "english": "not",
+   "proposed": {
+    "wordId": 6823178,
+    "position": 11,
+    "surface": "לֹ֥וא",
+    "strongNumber": "H3808"
+   },
+   "gold": [
+    {
+     "position": 16,
+     "surface": "לְ",
+     "strongNumber": "H9005"
+    },
+    {
+     "position": 17,
+     "surface": "בִלְתִּ֣י",
+     "strongNumber": "H1115"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.53",
+   "class": "ours-wrong",
+   "why": "'not to touch you' is לְבִלְתִּי; לוֹא (11) belongs to הֲלוֹא, BSB's 'Indeed'."
+  },
+  {
+   "n": 38,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 2:18",
+   "sourceWordId": 10701722,
+   "sourcePosition": 21,
+   "english": "brought",
+   "proposed": {
+    "wordId": 6823387,
+    "position": 4,
+    "surface": "תָּבֹ֣וא",
+    "strongNumber": "H935"
+   },
+   "gold": [
+    {
+     "position": 13,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 14,
+     "surface": "תֹּוצֵא֙",
+     "strongNumber": "H3318"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.34",
+   "class": "ours-wrong",
+   "why": "'brought out' is וַתּוֹצֵא; תָּבוֹא is 'went into'."
+  },
+  {
+   "n": 39,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 3:6",
+   "sourceWordId": 10702040,
+   "sourcePosition": 18,
+   "english": "do",
+   "proposed": {
+    "wordId": 6823629,
+    "position": 6,
+    "surface": "תַּ֕עַשׂ",
+    "strongNumber": "H6213"
+   },
+   "gold": [
+    {
+     "position": 10,
+     "surface": "צִוַּ֖תָּה",
+     "strongNumber": "H6680"
+    }
+   ],
+   "goldLinkShapes": [
+    "5x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.48",
+   "class": "ours-wrong",
+   "why": "'did' already renders וַתַּעַשׂ; the final 'do' is supplied English inside 'had instructed her to do', which the gold puts on צִוַּתָּה."
+  },
+  {
+   "n": 40,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 3:7",
+   "sourceWordId": 10702070,
+   "sourcePosition": 30,
+   "english": "secretly",
+   "proposed": {
+    "wordId": 6823655,
+    "position": 21,
+    "surface": "לָּ֔ט",
+    "strongNumber": "H3909"
+   },
+   "gold": [
+    {
+     "position": 17,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 18,
+     "surface": "תָּבֹ֣א",
+     "strongNumber": "H935"
+    }
+   ],
+   "goldLinkShapes": [
+    "5x2"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "convention",
+   "subclass": "phrase-head",
+   "why": "'went in secretly' is linked whole to וַתָּבֹא and בַּלָּט is left unlinked; 'secretly' -> לָּט is the word-level reading of the same clause."
+  },
+  {
+   "n": 41,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:1",
+   "sourceWordId": 10702401,
+   "sourcePosition": 22,
+   "english": "Boaz",
+   "proposed": {
+    "wordId": 6823900,
+    "position": 16,
+    "surface": "בֹּ֔עַז",
+    "strongNumber": "H1162"
+   },
+   "gold": [
+    {
+     "position": 17,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 18,
+     "surface": "יֹּ֛אמֶר",
+     "strongNumber": "H559"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.65",
+   "class": "convention",
+   "subclass": "phrase-head",
+   "why": "BSB swaps the name: 'of whom he had spoken' renders דִּבֶּר בֹּעַז, and 'Boaz said' names the implicit subject of וַיֹּאמֶר. The gold follows the clause (he <-> בֹּעַז, 'Boaz said' <-> וַיֹּאמֶר); we follow the name."
+  },
+  {
+   "n": 42,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:4",
+   "sourceWordId": 10702492,
+   "sourcePosition": 30,
+   "english": "If",
+   "proposed": {
+    "wordId": 6823965,
+    "position": 20,
+    "surface": "אִם",
+    "strongNumber": "H518"
+   },
+   "gold": [
+    {
+     "position": 16,
+     "surface": "אִם",
+     "strongNumber": "H518"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.49",
+   "class": "ours-wrong",
+   "why": "Two אִם, each rendered; the marked first 'If' is אִם 16."
+  },
+  {
+   "n": 43,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:4",
+   "sourceWordId": 10702517,
+   "sourcePosition": 55,
+   "english": "one",
+   "proposed": {
+    "wordId": 6823956,
+    "position": 11,
+    "surface": "יֹּשְׁבִים֮",
+    "strongNumber": "H3427"
+   },
+   "gold": [
+    {
+     "position": 28,
+     "surface": "אֵ֤ין",
+     "strongNumber": "H369"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'no one' is אֵין; יֹּשְׁבִים is 'those seated'."
+  },
+  {
+   "n": 44,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:9",
+   "sourceWordId": 10702669,
+   "sourcePosition": 17,
+   "english": "I",
+   "proposed": {
+    "wordId": 6824106,
+    "position": 31,
+    "surface": "יַּ֖ד",
+    "strongNumber": "H3027"
+   },
+   "gold": [
+    {
+     "position": 16,
+     "surface": "קָנִ֨יתִי֙",
+     "strongNumber": "H7069"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'I am buying' is קָנִיתִי; יַד is part of 'from Naomi' (מִיַּד נָעֳמִי)."
+  },
+  {
+   "n": 45,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:11",
+   "sourceWordId": 10702736,
+   "sourcePosition": 10,
+   "english": "people",
+   "proposed": {
+    "wordId": 6824148,
+    "position": 5,
+    "surface": "עָ֧ם",
+    "strongNumber": "H5971"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.62",
+   "class": "gold-uncovered",
+   "why": "Ruth 4:11 has no Berean link at all. 'people' -> עָם is right."
+  },
+  {
+   "n": 46,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:11",
+   "sourceWordId": 10702739,
+   "sourcePosition": 13,
+   "english": "gate",
+   "proposed": {
+    "wordId": 6824152,
+    "position": 9,
+    "surface": "שַּׁ֛עַר",
+    "strongNumber": "H8179"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.63",
+   "class": "gold-uncovered",
+   "why": "Ruth 4:11 has no Berean link at all. 'gate' -> שַּׁעַר is right."
+  },
+  {
+   "n": 47,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:11",
+   "sourceWordId": 10702742,
+   "sourcePosition": 16,
+   "english": "LORD",
+   "proposed": {
+    "wordId": 6824158,
+    "position": 15,
+    "surface": "יְהוָ֨ה",
+    "strongNumber": "H3068"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.58",
+   "class": "gold-uncovered",
+   "why": "Ruth 4:11 has no Berean link at all. 'LORD' -> יְהוָה is right."
+  },
+  {
+   "n": 48,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:13",
+   "sourceWordId": 10702823,
+   "sourcePosition": 25,
+   "english": "gave",
+   "proposed": {
+    "wordId": 6824224,
+    "position": 15,
+    "surface": "יִּתֵּ֨ן",
+    "strongNumber": "H5414"
+   },
+   "gold": [
+    {
+     "position": 19,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 20,
+     "surface": "תֵּ֥לֶד",
+     "strongNumber": "H3205"
+    }
+   ],
+   "goldLinkShapes": [
+    "5x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.54",
+   "class": "ours-wrong",
+   "why": "'gave birth' is וַתֵּלֶד; וַיִּתֵּן is 'the LORD enabled her'."
+  },
+  {
+   "n": 49,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:15",
+   "sourceWordId": 10702882,
+   "sourcePosition": 28,
+   "english": "given",
+   "proposed": {
+    "wordId": 6824255,
+    "position": 5,
+    "surface": "מֵשִׁ֣יב",
+    "strongNumber": "H7725"
+   },
+   "gold": [
+    {
+     "position": 16,
+     "surface": "יְלָדַ֔תּוּ",
+     "strongNumber": "H3205"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'has given him birth' is יְלָדַתּוּ; מֵשִׁיב is 'renew'."
+  },
+  {
+   "n": 50,
+   "stratum": "Ruth / berean",
+   "reference": "Ruth 4:17",
+   "sourceWordId": 10702924,
+   "sourcePosition": 24,
+   "english": "father",
+   "proposed": {
+    "wordId": 6824306,
+    "position": 18,
+    "surface": "אֲבִי",
+    "strongNumber": "H1"
+   },
+   "gold": [
+    {
+     "position": 20,
+     "surface": "אֲבִ֥י",
+     "strongNumber": "H1"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.61",
+   "class": "ours-wrong",
+   "why": "'the father of Jesse, the father of David' renders both אֲבִי separately; the marked second is 20."
+  },
+  {
+   "n": 51,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 1:3",
+   "sourceWordId": 11065753,
+   "sourcePosition": 18,
+   "english": "down",
+   "proposed": {
+    "wordId": 6765366,
+    "position": 23,
+    "surface": "יֵּ֤רֶד",
+    "strongNumber": "H3381"
+   },
+   "gold": [
+    {
+     "position": 11,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 12,
+     "surface": "יֵּ֨רֶד",
+     "strongNumber": "H3381"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.36",
+   "class": "ours-wrong",
+   "why": "Two וַיֵּרֶד: 'He went down to Joppa' is 12; 23 is 'went aboard'."
+  },
+  {
+   "n": 52,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 1:3",
+   "sourceWordId": 11065762,
+   "sourcePosition": 27,
+   "english": "Tarshish",
+   "proposed": {
+    "wordId": 6765371,
+    "position": 28,
+    "surface": "תַּרְשִׁ֔ישָׁה",
+    "strongNumber": "H8659"
+   },
+   "gold": [
+    {
+     "position": 18,
+     "surface": "תַרְשִׁ֗ישׁ",
+     "strongNumber": "H8659"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.63",
+   "class": "ours-wrong",
+   "why": "'a ship bound for Tarshish' is תַרְשִׁישׁ 18; 28 is 'to sail for Tarshish'."
+  },
+  {
+   "n": 53,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 1:4",
+   "sourceWordId": 11065787,
+   "sourcePosition": 6,
+   "english": "great",
+   "proposed": {
+    "wordId": 6765387,
+    "position": 12,
+    "surface": "גָּדֹ֖ול",
+    "strongNumber": "H1419"
+   },
+   "gold": [
+    {
+     "position": 5,
+     "surface": "גְּדֹולָה֙",
+     "strongNumber": "H1419"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.45",
+   "class": "ours-wrong",
+   "why": "'a great wind' is גְּדוֹלָה 5; גָּדוֹל 12 is 'violent' in 'a violent storm'."
+  },
+  {
+   "n": 54,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 1:5",
+   "sourceWordId": 11065843,
+   "sourcePosition": 37,
+   "english": "vessel",
+   "proposed": {
+    "wordId": 6765410,
+    "position": 14,
+    "surface": "כֵּלִ֜ים",
+    "strongNumber": "H3627"
+   },
+   "gold": [
+    {
+     "position": 31,
+     "surface": "הַ",
+     "strongNumber": "H9009"
+    },
+    {
+     "position": 32,
+     "surface": "סְּפִינָ֔ה",
+     "strongNumber": "H5600"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.62",
+   "class": "ours-wrong",
+   "why": "'the vessel' is הַסְּפִינָה; כֵּלִים is 'the cargo'."
+  },
+  {
+   "n": 55,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 1:5",
+   "sourceWordId": 11065850,
+   "sourcePosition": 44,
+   "english": "into",
+   "proposed": {
+    "wordId": 6765425,
+    "position": 29,
+    "surface": "אֶל",
+    "strongNumber": "H413"
+   },
+   "gold": [
+    {
+     "position": 35,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 36,
+     "surface": "יֵּרָדַֽם",
+     "strongNumber": "H7290"
+    }
+   ],
+   "goldLinkShapes": [
+    "6x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.30",
+   "class": "ours-wrong",
+   "why": "'fell into a deep sleep' is וַיֵּרָדַם; אֶל is 'to the lowest part'."
+  },
+  {
+   "n": 56,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 1:6",
+   "sourceWordId": 11065881,
+   "sourcePosition": 28,
+   "english": "not",
+   "proposed": {
+    "wordId": 6765455,
+    "position": 23,
+    "surface": "לֹ֥א",
+    "strongNumber": "H3808"
+   },
+   "gold": [
+    {
+     "position": 24,
+     "surface": "נֹאבֵֽד",
+     "strongNumber": "H6"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.53",
+   "class": "gold-wrong",
+   "why": "'so that we may not perish' = וְלֹא נֹאבֵד. The Berean table links 'so that' to וְ+לֹא and 'we may not perish' to נֹאבֵד alone, so the negative is stated as the rendering of 'so that'. No reading makes לֹא 'so that'; 'not' -> לֹא is right."
+  },
+  {
+   "n": 57,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 1:10",
+   "sourceWordId": 11065993,
+   "sourcePosition": 19,
+   "english": "that",
+   "proposed": {
+    "wordId": 6765549,
+    "position": 13,
+    "surface": "כִּֽי",
+    "strongNumber": "H3588"
+   },
+   "gold": [
+    {
+     "position": 17,
+     "surface": "כִּֽי",
+     "strongNumber": "H3588"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "unique exact-verse target gloss after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'knew that he was fleeing' is כִּי 17; כִּי 13 introduces what BSB leaves as 'What have you done'."
+  },
+  {
+   "n": 58,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 1:14",
+   "sourceWordId": 11066096,
+   "sourcePosition": 4,
+   "english": "out",
+   "proposed": {
+    "wordId": 6765631,
+    "position": 3,
+    "surface": "אֶל",
+    "strongNumber": "H413"
+   },
+   "gold": [
+    {
+     "position": 1,
+     "surface": "וַ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 2,
+     "surface": "יִּקְרְא֨וּ",
+     "strongNumber": "H7121"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x2"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'cried out' is וַיִּקְרְאוּ; אֶל is 'to the LORD'."
+  },
+  {
+   "n": 59,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 2:6",
+   "sourceWordId": 11066308,
+   "sourcePosition": 11,
+   "english": "beneath",
+   "proposed": {
+    "wordId": 6765788,
+    "position": 13,
+    "surface": "מִ",
+    "strongNumber": "H4480"
+   },
+   "gold": [
+    {
+     "position": 8,
+     "surface": "בַעֲדִ֖י",
+     "strongNumber": "H1157"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.42",
+   "class": "ours-wrong",
+   "why": "'the earth beneath me barred me in' takes 'beneath' from בַעֲדִי; מִ is 'from the pit'."
+  },
+  {
+   "n": 60,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 3:7",
+   "sourceWordId": 11066551,
+   "sourcePosition": 31,
+   "english": "not",
+   "proposed": {
+    "wordId": 6765978,
+    "position": 32,
+    "surface": "אַל",
+    "strongNumber": "H408"
+   },
+   "gold": [
+    {
+     "position": 28,
+     "surface": "אַ֨ל",
+     "strongNumber": "H408"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1"
+   ],
+   "tier": "unique exact-verse target gloss after stronger reservations",
+   "class": "convention",
+   "subclass": "repeated-token",
+   "why": "'They must not eat or drink' is one 'not' for אַל יִרְעוּ ... אַל יִשְׁתּוּ; the gold takes the first, we the second."
+  },
+  {
+   "n": 61,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 3:8",
+   "sourceWordId": 11066569,
+   "sourcePosition": 15,
+   "english": "out",
+   "proposed": {
+    "wordId": 6765997,
+    "position": 18,
+    "surface": "מִ",
+    "strongNumber": "H4480"
+   },
+   "gold": [
+    {
+     "position": 9,
+     "surface": "וְ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 10,
+     "surface": "יִקְרְא֥וּ",
+     "strongNumber": "H7121"
+    }
+   ],
+   "goldLinkShapes": [
+    "5x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.34",
+   "class": "ours-wrong",
+   "why": "'call out' is וְיִקְרְאוּ; מִ is 'from his evil ways'."
+  },
+  {
+   "n": 62,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 4:3",
+   "sourceWordId": 11066706,
+   "sourcePosition": 8,
+   "english": "life",
+   "proposed": {
+    "wordId": 6766111,
+    "position": 13,
+    "surface": "חַיָּֽי",
+    "strongNumber": "H2416"
+   },
+   "gold": [
+    {
+     "position": 7,
+     "surface": "נַפְשִׁ֖י",
+     "strongNumber": "H5315"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.44",
+   "class": "ours-wrong",
+   "why": "'take my life' is נַפְשִׁי; חַיָּי is 'to live'."
+  },
+  {
+   "n": 63,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 4:9",
+   "sourceWordId": 11066858,
+   "sourcePosition": 12,
+   "english": "about",
+   "proposed": {
+    "wordId": 6766235,
+    "position": 4,
+    "surface": "אֶל",
+    "strongNumber": "H413"
+   },
+   "gold": [
+    {
+     "position": 10,
+     "surface": "עַל",
+     "strongNumber": "H5921"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'angry about the plant' is עַל; אֶל is 'asked Jonah'."
+  },
+  {
+   "n": 64,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 4:10",
+   "sourceWordId": 11066884,
+   "sourcePosition": 14,
+   "english": "nor",
+   "proposed": {
+    "wordId": 6766260,
+    "position": 10,
+    "surface": "לֹא",
+    "strongNumber": "H3808"
+   },
+   "gold": [
+    {
+     "position": 13,
+     "surface": "וְ",
+     "strongNumber": "H9000"
+    },
+    {
+     "position": 14,
+     "surface": "לֹ֣א",
+     "strongNumber": "H3808"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.38",
+   "class": "ours-wrong",
+   "why": "'neither tended nor made grow' renders both לֹא; the marked 'nor' is וְלֹא 14."
+  },
+  {
+   "n": 65,
+   "stratum": "Jonah / berean",
+   "reference": "Jonah 4:11",
+   "sourceWordId": 11066912,
+   "sourcePosition": 15,
+   "english": "than",
+   "proposed": {
+    "wordId": 6766288,
+    "position": 15,
+    "surface": "מִֽ",
+    "strongNumber": "H4480"
+   },
+   "gold": [
+    {
+     "position": 14,
+     "surface": "הַרְבֵּה֩",
+     "strongNumber": "H7235"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.44",
+   "class": "convention",
+   "subclass": "phrase-head",
+   "why": "'more than 120 000' = הַרְבֵּה מִשְׁתֵּים־עֶשְׂרֵה רִבּוֹ. The comparative is מִ, prefixed to the number; the Berean links 'more than' to הַרְבֵּה and מִ with the number it is written on. We take the comparative for 'than'."
+  },
+  {
+   "n": 66,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 1:1",
+   "sourceWordId": 11104580,
+   "sourcePosition": 14,
+   "english": "God",
+   "proposed": {
+    "wordId": 6911656,
+    "position": 7,
+    "surface": "Θεοῦ",
+    "strongNumber": "G2316"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "gold-uncovered",
+   "why": "Neither gold links 'God' in Mark 1:1; Θεοῦ is right."
+  },
+  {
+   "n": 67,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 1:4",
+   "sourceWordId": 11104631,
+   "sourcePosition": 10,
+   "english": "baptism",
+   "proposed": {
+    "wordId": 6911699,
+    "position": 9,
+    "surface": "βάπτισμα",
+    "strongNumber": "G908"
+   },
+   "gold": [
+    {
+     "position": 10,
+     "surface": "μετανοίας",
+     "strongNumber": "G3341"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.65",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. The stored Clear Bible row says 'a baptism' -> μετανοίας, and every link after 'appeared' in Mark 1:4 is one Greek word late ('preaching' -> βάπτισμα, 'repentance' -> εἰς). Clear Bible's own record aligns the BSB words to BGNT 9 κηρύσσων and 10 βάπτισμα; BGNT reads καὶ κηρύσσων where Nestle 1904 has no καί, and the corpus joins BGNT words to Nestle 1904 by position."
+  },
+  {
+   "n": 68,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 1:4",
+   "sourceWordId": 11104638,
+   "sourcePosition": 17,
+   "english": "sins",
+   "proposed": {
+    "wordId": 6911703,
+    "position": 13,
+    "surface": "ἁμαρτιῶν",
+    "strongNumber": "G266"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.62",
+   "class": "gold-uncovered",
+   "why": "Neither gold links 'sins' in Mark 1:4 (the shifted Clear Bible row ran off the end of the verse); ἁμαρτιῶν is right."
+  },
+  {
+   "n": 69,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 1:7",
+   "sourceWordId": 11104696,
+   "sourcePosition": 12,
+   "english": "I",
+   "proposed": {
+    "wordId": 6911756,
+    "position": 9,
+    "surface": "μου",
+    "strongNumber": "G1473"
+   },
+   "gold": [
+    {
+     "position": 6,
+     "surface": "ἰσχυρότερός",
+     "strongNumber": "G2478"
+    },
+    {
+     "position": 7,
+     "surface": "μου",
+     "strongNumber": "G1473"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1",
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.60",
+   "class": "ours-wrong",
+   "why": "'more powerful than I' is ἰσχυρότερός μου 7; μου 9 is 'After me'."
+  },
+  {
+   "n": 70,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 1:8",
+   "sourceWordId": 11104723,
+   "sourcePosition": 13,
+   "english": "Holy",
+   "proposed": {
+    "wordId": 6911777,
+    "position": 10,
+    "surface": "Ἁγίῳ",
+    "strongNumber": "G40"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.63",
+   "class": "gold-uncovered",
+   "why": "Neither gold links 'Holy' in Mark 1:8; Ἁγίῳ is right."
+  },
+  {
+   "n": 71,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 1:16",
+   "sourceWordId": 11104861,
+   "sourcePosition": 12,
+   "english": "Simon",
+   "proposed": {
+    "wordId": 6911909,
+    "position": 14,
+    "surface": "Σίμωνος",
+    "strongNumber": "G4613"
+   },
+   "gold": [
+    {
+     "position": 9,
+     "surface": "Σίμωνα",
+     "strongNumber": "G4613"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "ours-wrong",
+   "why": "'He saw Simon' is Σίμωνα 9; Σίμωνος 14 is 'his brother' (τὸν ἀδελφὸν Σίμωνος)."
+  },
+  {
+   "n": 72,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 1:16",
+   "sourceWordId": 11104875,
+   "sourcePosition": 26,
+   "english": "they",
+   "proposed": {
+    "wordId": 6911907,
+    "position": 12,
+    "surface": "τὸν",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 19,
+     "surface": "ἦσαν",
+     "strongNumber": "G1510"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they were fishermen' is ἦσαν; τὸν is the article of 'brother'."
+  },
+  {
+   "n": 73,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 1:20",
+   "sourceWordId": 11104929,
+   "sourcePosition": 6,
+   "english": "they",
+   "proposed": {
+    "wordId": 6911965,
+    "position": 7,
+    "surface": "τὸν",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 6,
+     "surface": "ἀφέντες",
+     "strongNumber": "G863"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they left' is ἀφέντες; τὸν is the article of 'father'."
+  },
+  {
+   "n": 74,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 1:22",
+   "sourceWordId": 11104972,
+   "sourcePosition": 7,
+   "english": "teaching",
+   "proposed": {
+    "wordId": 6911999,
+    "position": 9,
+    "surface": "διδάσκων",
+    "strongNumber": "G1321"
+   },
+   "gold": [
+    {
+     "position": 5,
+     "surface": "διδαχῇ",
+     "strongNumber": "G1322"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.61",
+   "class": "ours-wrong",
+   "why": "'His teaching' is διδαχῇ; διδάσκων is 'He taught'."
+  },
+  {
+   "n": 75,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 1:25",
+   "sourceWordId": 11105035,
+   "sourcePosition": 13,
+   "english": "him",
+   "proposed": {
+    "wordId": 6912049,
+    "position": 10,
+    "surface": "αὐτοῦ",
+    "strongNumber": "G846"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.63",
+   "class": "gold-uncovered",
+   "why": "Neither gold links 'him' in Mark 1:25; αὐτοῦ 10 is right."
+  },
+  {
+   "n": 76,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 1:27",
+   "sourceWordId": 11105061,
+   "sourcePosition": 9,
+   "english": "ask",
+   "proposed": {
+    "wordId": 6912070,
+    "position": 7,
+    "surface": "λέγοντας",
+    "strongNumber": "G3004"
+   },
+   "gold": [
+    {
+     "position": 5,
+     "surface": "συνζητεῖν",
+     "strongNumber": "G4802"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'began to ask one another' is συνζητεῖν, stated before the Clear Bible rows of this verse go out of step; λέγοντας is 'saying', which BSB leaves implicit."
+  },
+  {
+   "n": 77,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 1:27",
+   "sourceWordId": 11105068,
+   "sourcePosition": 16,
+   "english": "new",
+   "proposed": {
+    "wordId": 6912075,
+    "position": 12,
+    "surface": "καινή",
+    "strongNumber": "G2537"
+   },
+   "gold": [
+    {
+     "position": 13,
+     "surface": "κατ",
+     "strongNumber": "G2596"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.51",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. From 'What' onward every stored Clear Bible row of Mark 1:27 is one Greek word late ('What' -> ἐστιν, 'new' -> κατ, 'authority' -> καὶ). 'new' -> καινή is right."
+  },
+  {
+   "n": 78,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 1:27",
+   "sourceWordId": 11105073,
+   "sourcePosition": 21,
+   "english": "commands",
+   "proposed": {
+    "wordId": 6912083,
+    "position": 20,
+    "surface": "ἐπιτάσσει",
+    "strongNumber": "G2004"
+   },
+   "gold": [
+    {
+     "position": 21,
+     "surface": "καὶ",
+     "strongNumber": "G2532"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. The same shift in Mark 1:27 stores 'He commands' -> καὶ 21. 'commands' -> ἐπιτάσσει is right."
+  },
+  {
+   "n": 79,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 1:27",
+   "sourceWordId": 11105074,
+   "sourcePosition": 22,
+   "english": "even",
+   "proposed": {
+    "wordId": 6912084,
+    "position": 21,
+    "surface": "καὶ",
+    "strongNumber": "G2532"
+   },
+   "gold": [
+    {
+     "position": 16,
+     "surface": "τοῖς",
+     "strongNumber": "G3588"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.57",
+   "class": "ours-wrong",
+   "why": "The stored gold is shifted ('even' -> τοῖς), but our καὶ 21 is 'and they obey'; 'even' is καὶ 15. Both are wrong, so it is ours."
+  },
+  {
+   "n": 80,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 1:27",
+   "sourceWordId": 11105081,
+   "sourcePosition": 29,
+   "english": "Him",
+   "proposed": {
+    "wordId": 6912086,
+    "position": 23,
+    "surface": "αὐτῷ",
+    "strongNumber": "G846"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.63",
+   "class": "gold-uncovered",
+   "why": "No gold row reaches 'Him' in Mark 1:27 (the shifted Clear rows end one word early and the Berean table does not link it); αὐτῷ is right."
+  },
+  {
+   "n": 81,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 1:30",
+   "sourceWordId": 11105129,
+   "sourcePosition": 11,
+   "english": "they",
+   "proposed": {
+    "wordId": 6912117,
+    "position": 1,
+    "surface": "ἡ",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 8,
+     "surface": "εὐθὺς",
+     "strongNumber": "G2112"
+    },
+    {
+     "position": 9,
+     "surface": "λέγουσιν",
+     "strongNumber": "G3004"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2",
+    "3x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they promptly told' is εὐθὺς λέγουσιν; ἡ is the article of 'mother-in-law'."
+  },
+  {
+   "n": 82,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 1:34",
+   "sourceWordId": 11105205,
+   "sourcePosition": 26,
+   "english": "they",
+   "proposed": {
+    "wordId": 6912185,
+    "position": 16,
+    "surface": "τὰ",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 19,
+     "surface": "ᾔδεισαν",
+     "strongNumber": "G1492"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they knew' is ᾔδεισαν; τὰ is the article of 'demons'."
+  },
+  {
+   "n": 83,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 1:36",
+   "sourceWordId": 11105233,
+   "sourcePosition": 3,
+   "english": "his",
+   "proposed": {
+    "wordId": 6912205,
+    "position": 3,
+    "surface": "αὐτὸν",
+    "strongNumber": "G846"
+   },
+   "gold": [
+    {
+     "position": 6,
+     "surface": "οἱ",
+     "strongNumber": "G3588"
+    },
+    {
+     "position": 7,
+     "surface": "μετ",
+     "strongNumber": "G3326"
+    },
+    {
+     "position": 8,
+     "surface": "αὐτοῦ",
+     "strongNumber": "G846"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x3",
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "ours-wrong",
+   "why": "'his companions' is οἱ μετ' αὐτοῦ; αὐτὸν 3 is 'look for Him'."
+  },
+  {
+   "n": 84,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 1:40",
+   "sourceWordId": 11105298,
+   "sourcePosition": 9,
+   "english": "his",
+   "proposed": {
+    "wordId": 6912263,
+    "position": 11,
+    "surface": "αὐτῷ",
+    "strongNumber": "G846"
+   },
+   "gold": [
+    {
+     "position": 8,
+     "surface": "καὶ",
+     "strongNumber": "G2532"
+    },
+    {
+     "position": 9,
+     "surface": "γονυπετῶν",
+     "strongNumber": "G1120"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "ours-wrong",
+   "why": "'begging on his knees' is γονυπετῶν; αὐτῷ 11 is 'saying to Him', unrendered."
+  },
+  {
+   "n": 85,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 1:40",
+   "sourceWordId": 11105307,
+   "sourcePosition": 18,
+   "english": "me",
+   "proposed": {
+    "wordId": 6912268,
+    "position": 16,
+    "surface": "με",
+    "strongNumber": "G1473"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "gold-uncovered",
+   "why": "No gold row reaches 'me' in Mark 1:40; με is right."
+  },
+  {
+   "n": 86,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 1:40",
+   "sourceWordId": 11105308,
+   "sourcePosition": 19,
+   "english": "clean",
+   "proposed": {
+    "wordId": 6912269,
+    "position": 17,
+    "surface": "καθαρίσαι",
+    "strongNumber": "G2511"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.33",
+   "class": "gold-uncovered",
+   "why": "No gold row reaches 'clean' in Mark 1:40; καθαρίσαι is right."
+  },
+  {
+   "n": 87,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 1:43",
+   "sourceWordId": 11105342,
+   "sourcePosition": 4,
+   "english": "him",
+   "proposed": {
+    "wordId": 6912293,
+    "position": 3,
+    "surface": "αὐτῷ",
+    "strongNumber": "G846"
+   },
+   "gold": [
+    {
+     "position": 4,
+     "surface": "εὐθὺς",
+     "strongNumber": "G2112"
+    },
+    {
+     "position": 5,
+     "surface": "ἐξέβαλεν",
+     "strongNumber": "G1544"
+    },
+    {
+     "position": 6,
+     "surface": "αὐτόν",
+     "strongNumber": "G846"
+    }
+   ],
+   "goldLinkShapes": [
+    "5x1",
+    "5x3"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.63",
+   "class": "ours-wrong",
+   "why": "'sent him away' is ἐξέβαλεν αὐτόν 6; αὐτῷ 3 belongs to 'with a stern warning'."
+  },
+  {
+   "n": 88,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 1:45",
+   "sourceWordId": 11105381,
+   "sourcePosition": 7,
+   "english": "openly",
+   "proposed": {
+    "wordId": 6912336,
+    "position": 15,
+    "surface": "φανερῶς",
+    "strongNumber": "G5320"
+   },
+   "gold": [
+    {
+     "position": 6,
+     "surface": "πολλὰ",
+     "strongNumber": "G4183"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'openly began to proclaim' renders κηρύσσειν πολλὰ; φανερῶς is 'in plain view' later in the verse."
+  },
+  {
+   "n": 89,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 2:2",
+   "sourceWordId": 11105442,
+   "sourcePosition": 10,
+   "english": "no",
+   "proposed": {
+    "wordId": 6912369,
+    "position": 7,
+    "surface": "μηδὲ",
+    "strongNumber": "G3366"
+   },
+   "gold": [
+    {
+     "position": 5,
+     "surface": "μηκέτι",
+     "strongNumber": "G3371"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'no more room' is μηκέτι χωρεῖν; μηδὲ is 'not even'."
+  },
+  {
+   "n": 90,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 2:2",
+   "sourceWordId": 11105446,
+   "sourcePosition": 14,
+   "english": "even",
+   "proposed": {
+    "wordId": 6912374,
+    "position": 12,
+    "surface": "καὶ",
+    "strongNumber": "G2532"
+   },
+   "gold": [
+    {
+     "position": 7,
+     "surface": "μηδὲ",
+     "strongNumber": "G3366"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.57",
+   "class": "ours-wrong",
+   "why": "'not even' is μηδὲ; καὶ 12 is 'as Jesus spoke'."
+  },
+  {
+   "n": 91,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 2:4",
+   "sourceWordId": 11105469,
+   "sourcePosition": 2,
+   "english": "they",
+   "proposed": {
+    "wordId": 6912394,
+    "position": 7,
+    "surface": "τὸν",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 2,
+     "surface": "μὴ",
+     "strongNumber": "G3361"
+    },
+    {
+     "position": 3,
+     "surface": "δυνάμενοι",
+     "strongNumber": "G1410"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1",
+    "3x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they were unable' is μὴ δυνάμενοι; τὸν is the article of 'crowd'."
+  },
+  {
+   "n": 92,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 2:4",
+   "sourceWordId": 11105493,
+   "sourcePosition": 26,
+   "english": "his",
+   "proposed": {
+    "wordId": 6912392,
+    "position": 5,
+    "surface": "αὐτῷ",
+    "strongNumber": "G846"
+   },
+   "gold": [
+    {
+     "position": 17,
+     "surface": "τὸν",
+     "strongNumber": "G3588"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "ours-wrong",
+   "why": "'his mat' is τὸν κράβαττον; αὐτῷ 5 is 'to Jesus'."
+  },
+  {
+   "n": 93,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 2:8",
+   "sourceWordId": 11105548,
+   "sourcePosition": 9,
+   "english": "they",
+   "proposed": {
+    "wordId": 6912457,
+    "position": 6,
+    "surface": "τῷ",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 11,
+     "surface": "διαλογίζονται",
+     "strongNumber": "G1260"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they were thinking' is διαλογίζονται; τῷ is 'in His spirit'."
+  },
+  {
+   "n": 94,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 2:14",
+   "sourceWordId": 11105695,
+   "sourcePosition": 17,
+   "english": "Follow",
+   "proposed": {
+    "wordId": 6912581,
+    "position": 19,
+    "surface": "ἠκολούθησεν",
+    "strongNumber": "G190"
+   },
+   "gold": [
+    {
+     "position": 15,
+     "surface": "Ἀκολούθει",
+     "strongNumber": "G190"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.48",
+   "class": "ours-wrong",
+   "why": "'Follow Me' is Ἀκολούθει 15; ἠκολούθησεν 19 is 'followed Him'."
+  },
+  {
+   "n": 95,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 2:17",
+   "sourceWordId": 11105777,
+   "sourcePosition": 20,
+   "english": "have",
+   "proposed": {
+    "wordId": 6912648,
+    "position": 16,
+    "surface": "ἔχοντες",
+    "strongNumber": "G2192"
+   },
+   "gold": [
+    {
+     "position": 18,
+     "surface": "ἦλθον",
+     "strongNumber": "G2064"
+    },
+    {
+     "position": 19,
+     "surface": "καλέσαι",
+     "strongNumber": "G2564"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.58",
+   "class": "ours-wrong",
+   "why": "The stored Clear rows of Mark 2:17 are shifted, but ἔχοντες is 'the sick' (οἱ κακῶς ἔχοντες), not 'have'; 'I have not come' is οὐκ ἦλθον."
+  },
+  {
+   "n": 96,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 2:17",
+   "sourceWordId": 11105781,
+   "sourcePosition": 24,
+   "english": "call",
+   "proposed": {
+    "wordId": 6912651,
+    "position": 19,
+    "surface": "καλέσαι",
+    "strongNumber": "G2564"
+   },
+   "gold": [
+    {
+     "position": 20,
+     "surface": "δικαίους",
+     "strongNumber": "G1342"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.46",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. Mark 2:17 is stored one Greek word late from 'It is not' onward ('to call' -> δικαίους, 'the righteous' -> ἀλλὰ). 'call' -> καλέσαι is right."
+  },
+  {
+   "n": 97,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 2:17",
+   "sourceWordId": 11105783,
+   "sourcePosition": 26,
+   "english": "righteous",
+   "proposed": {
+    "wordId": 6912652,
+    "position": 20,
+    "surface": "δικαίους",
+    "strongNumber": "G1342"
+   },
+   "gold": [
+    {
+     "position": 21,
+     "surface": "ἀλλὰ",
+     "strongNumber": "G235"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.65",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. The same shift stores 'the righteous' -> ἀλλὰ. 'righteous' -> δικαίους is right."
+  },
+  {
+   "n": 98,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 2:17",
+   "sourceWordId": 11105785,
+   "sourcePosition": 28,
+   "english": "sinners",
+   "proposed": {
+    "wordId": 6912654,
+    "position": 22,
+    "surface": "ἁμαρτωλούς",
+    "strongNumber": "G268"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.63",
+   "class": "gold-uncovered",
+   "why": "No gold row reaches 'sinners' in Mark 2:17; ἁμαρτωλούς is right."
+  },
+  {
+   "n": 99,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 2:18",
+   "sourceWordId": 11105811,
+   "sourcePosition": 26,
+   "english": "those",
+   "proposed": {
+    "wordId": 6912680,
+    "position": 26,
+    "surface": "οἱ",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 21,
+     "surface": "οἱ",
+     "strongNumber": "G3588"
+    },
+    {
+     "position": 22,
+     "surface": "μαθηταὶ",
+     "strongNumber": "G3101"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x2",
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.31",
+   "class": "ours-wrong",
+   "why": "'those of the Pharisees' is οἱ μαθηταὶ τῶν Φαρισαίων (21-24); οἱ 26 belongs to 'Your disciples'."
+  },
+  {
+   "n": 100,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 2:19",
+   "sourceWordId": 11105836,
+   "sourcePosition": 22,
+   "english": "them",
+   "proposed": {
+    "wordId": 6912702,
+    "position": 17,
+    "surface": "αὐτῶν",
+    "strongNumber": "G846"
+   },
+   "gold": [
+    {
+     "position": 26,
+     "surface": "αὐτῶν",
+     "strongNumber": "G846"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.59",
+   "class": "ours-wrong",
+   "why": "Two μετ' αὐτῶν, each rendered; the marked 'As long as He is with them' is 26."
+  },
+  {
+   "n": 101,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 2:19",
+   "sourceWordId": 11105837,
+   "sourcePosition": 23,
+   "english": "they",
+   "proposed": {
+    "wordId": 6912708,
+    "position": 23,
+    "surface": "τὸν",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 27,
+     "surface": "οὐ",
+     "strongNumber": "G3756"
+    },
+    {
+     "position": 28,
+     "surface": "δύνανται",
+     "strongNumber": "G1410"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1",
+    "2x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they cannot fast' is οὐ δύνανται; τὸν is the article of 'bridegroom'."
+  },
+  {
+   "n": 102,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 2:22",
+   "sourceWordId": 11105917,
+   "sourcePosition": 31,
+   "english": "wine",
+   "proposed": {
+    "wordId": 6912768,
+    "position": 14,
+    "surface": "οἶνος",
+    "strongNumber": "G3631"
+   },
+   "gold": [
+    {
+     "position": 25,
+     "surface": "οἶνον",
+     "strongNumber": "G3631"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.59",
+   "class": "ours-wrong",
+   "why": "'new wine is poured' is οἶνον 25; οἶνος 14 is 'the wine will burst'."
+  },
+  {
+   "n": 103,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 2:26",
+   "sourceWordId": 11106001,
+   "sourcePosition": 21,
+   "english": "only",
+   "proposed": {
+    "wordId": 6912865,
+    "position": 31,
+    "surface": "οὖσιν",
+    "strongNumber": "G1510"
+   },
+   "gold": [
+    {
+     "position": 21,
+     "surface": "εἰ",
+     "strongNumber": "G1487"
+    },
+    {
+     "position": 22,
+     "surface": "μὴ",
+     "strongNumber": "G3361"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x2",
+    "1x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'lawful only for the priests' takes 'only' from εἰ μὴ; οὖσιν is 'those with him'."
+  },
+  {
+   "n": 104,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 2:26",
+   "sourceWordId": 11106008,
+   "sourcePosition": 28,
+   "english": "some",
+   "proposed": {
+    "wordId": 6912862,
+    "position": 28,
+    "surface": "τοῖς",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 26,
+     "surface": "ἔδωκεν",
+     "strongNumber": "G1325"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.31",
+   "class": "ours-wrong",
+   "why": "'he gave some' is ἔδωκεν; τοῖς is 'to his companions'."
+  },
+  {
+   "n": 105,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 3:1",
+   "sourceWordId": 11106044,
+   "sourcePosition": 6,
+   "english": "synagogue",
+   "proposed": {
+    "wordId": 6912896,
+    "position": 5,
+    "surface": "συναγωγήν",
+    "strongNumber": "G4864"
+   },
+   "gold": [
+    {
+     "position": 6,
+     "surface": "καὶ",
+     "strongNumber": "G2532"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.54",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. Mark 3:1 is stored one Greek word late from 'the' onward ('synagogue' -> καὶ, 'was' -> ἐκεῖ, 'there' -> ἄνθρωπος). 'synagogue' -> συναγωγήν is right."
+  },
+  {
+   "n": 106,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 3:1",
+   "sourceWordId": 11106047,
+   "sourcePosition": 9,
+   "english": "man",
+   "proposed": {
+    "wordId": 6912900,
+    "position": 9,
+    "surface": "ἄνθρωπος",
+    "strongNumber": "G444"
+   },
+   "gold": [
+    {
+     "position": 10,
+     "surface": "ἐξηραμμένην",
+     "strongNumber": "G3583"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.37",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. The same shift stores 'a man' -> ἐξηραμμένην. 'man' -> ἄνθρωπος is right."
+  },
+  {
+   "n": 107,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 3:1",
+   "sourceWordId": 11106051,
+   "sourcePosition": 13,
+   "english": "hand",
+   "proposed": {
+    "wordId": 6912904,
+    "position": 13,
+    "surface": "χεῖρα",
+    "strongNumber": "G5495"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.44",
+   "class": "gold-uncovered",
+   "why": "No gold row reaches 'hand' in Mark 3:1 (the shifted Clear row put 'a' on χεῖρα); χεῖρα is right."
+  },
+  {
+   "n": 108,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 3:1",
+   "sourceWordId": 11106053,
+   "sourcePosition": 15,
+   "english": "there",
+   "proposed": {
+    "wordId": 6912899,
+    "position": 8,
+    "surface": "ἐκεῖ",
+    "strongNumber": "G1563"
+   },
+   "gold": [
+    {
+     "position": 9,
+     "surface": "ἄνθρωπος",
+     "strongNumber": "G444"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.55",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. The same shift stores 'there' -> ἄνθρωπος. 'there' -> ἐκεῖ is right."
+  },
+  {
+   "n": 109,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 3:8",
+   "sourceWordId": 11106183,
+   "sourcePosition": 4,
+   "english": "region",
+   "proposed": {
+    "wordId": 6913014,
+    "position": 7,
+    "surface": "Ἰδουμαίας",
+    "strongNumber": "G2401"
+   },
+   "gold": [
+    {
+     "position": 9,
+     "surface": "πέραν",
+     "strongNumber": "G4008"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1"
+   ],
+   "tier": "reciprocal exact-verse dictionary sense after stronger reservations",
+   "class": "ours-wrong",
+   "why": "'the region beyond the Jordan' takes 'region' from πέραν; Ἰδουμαίας is 'Idumea'."
+  },
+  {
+   "n": 110,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 3:10",
+   "sourceWordId": 11106234,
+   "sourcePosition": 7,
+   "english": "that",
+   "proposed": {
+    "wordId": 6913054,
+    "position": 7,
+    "surface": "ἵνα",
+    "strongNumber": "G2443"
+   },
+   "gold": [
+    {
+     "position": 4,
+     "surface": "ὥστε",
+     "strongNumber": "G5620"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.33",
+   "class": "ours-wrong",
+   "why": "'so many that all ... were pressing' is result ὥστε; ἵνα is 'to touch Him'."
+  },
+  {
+   "n": 111,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 3:14",
+   "sourceWordId": 11106309,
+   "sourcePosition": 16,
+   "english": "sent",
+   "proposed": {
+    "wordId": 6913112,
+    "position": 10,
+    "surface": "ἀποστέλλῃ",
+    "strongNumber": "G649"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "gold-uncovered",
+   "why": "No gold row reaches 'sent' in Mark 3:14; ἀποστέλλῃ is right."
+  },
+  {
+   "n": 112,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 3:14",
+   "sourceWordId": 11106312,
+   "sourcePosition": 19,
+   "english": "preach",
+   "proposed": {
+    "wordId": 6913114,
+    "position": 12,
+    "surface": "κηρύσσειν",
+    "strongNumber": "G2784"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.49",
+   "class": "gold-uncovered",
+   "why": "No gold row reaches 'preach' in Mark 3:14; κηρύσσειν is right."
+  },
+  {
+   "n": 113,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 3:20",
+   "sourceWordId": 11106381,
+   "sourcePosition": 15,
+   "english": "His",
+   "proposed": {
+    "wordId": 6913191,
+    "position": 13,
+    "surface": "αὐτοὺς",
+    "strongNumber": "G846"
+   },
+   "gold": [
+    {
+     "position": 12,
+     "surface": "δύνασθαι",
+     "strongNumber": "G1410"
+    }
+   ],
+   "goldLinkShapes": [
+    "5x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "convention",
+   "subclass": "phrase-head",
+   "why": "'He and His disciples could not eat' paraphrases αὐτοὺς, the subject of δύνασθαι. The Berean links the whole subject chunk to δύνασθαι and leaves αὐτοὺς unlinked; we put 'His' on αὐτοὺς."
+  },
+  {
+   "n": 114,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 3:22",
+   "sourceWordId": 11106412,
+   "sourcePosition": 5,
+   "english": "had",
+   "proposed": {
+    "wordId": 6913217,
+    "position": 11,
+    "surface": "ἔχει",
+    "strongNumber": "G2192"
+   },
+   "gold": [
+    {
+     "position": 7,
+     "surface": "καταβάντες",
+     "strongNumber": "G2597"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.55",
+   "class": "ours-wrong",
+   "why": "'who had come down' is καταβάντες; ἔχει is 'He is possessed by' (Βεελζεβοὺλ ἔχει)."
+  },
+  {
+   "n": 115,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 3:28",
+   "sourceWordId": 11106535,
+   "sourcePosition": 19,
+   "english": "they",
+   "proposed": {
+    "wordId": 6913318,
+    "position": 14,
+    "surface": "αἱ",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 17,
+     "surface": "ἐὰν",
+     "strongNumber": "G1437"
+    },
+    {
+     "position": 18,
+     "surface": "βλασφημήσωσιν",
+     "strongNumber": "G987"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1",
+    "2x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'as many as they utter' is ὅσα ἐὰν βλασφημήσωσιν; αἱ is the article of 'blasphemies'."
+  },
+  {
+   "n": 116,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 3:32",
+   "sourceWordId": 11106589,
+   "sourcePosition": 7,
+   "english": "Him",
+   "proposed": {
+    "wordId": 6913372,
+    "position": 8,
+    "surface": "αὐτῷ",
+    "strongNumber": "G846"
+   },
+   "gold": [
+    {
+     "position": 4,
+     "surface": "αὐτὸν",
+     "strongNumber": "G846"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.63",
+   "class": "ours-wrong",
+   "why": "'sitting around Him' is περὶ αὐτὸν 4; αὐτῷ 8 is 'He was told'."
+  },
+  {
+   "n": 117,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 3:32",
+   "sourceWordId": 11106594,
+   "sourcePosition": 12,
+   "english": "Your",
+   "proposed": {
+    "wordId": 6913384,
+    "position": 20,
+    "surface": "σου",
+    "strongNumber": "G4771"
+   },
+   "gold": [
+    {
+     "position": 12,
+     "surface": "σου",
+     "strongNumber": "G4771"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.64",
+   "class": "ours-wrong",
+   "why": "Three σου, each rendered; 'Your mother' is 12, and 20 is the 'sisters' BSB does not print."
+  },
+  {
+   "n": 118,
+   "stratum": "Mark 1-4 / uncovered",
+   "reference": "Mark 3:33",
+   "sourceWordId": 11106611,
+   "sourcePosition": 9,
+   "english": "My",
+   "proposed": {
+    "wordId": 6913396,
+    "position": 9,
+    "surface": "μου",
+    "strongNumber": "G1473"
+   },
+   "gold": [],
+   "goldLinkShapes": [],
+   "tier": "global known-rendering assignment; lexical score 0.62",
+   "class": "gold-uncovered",
+   "why": "No gold row reaches the second 'My' in Mark 3:33; μου is the only one Nestle 1904 writes there."
+  },
+  {
+   "n": 119,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 3:34",
+   "sourceWordId": 11106626,
+   "sourcePosition": 14,
+   "english": "My",
+   "proposed": {
+    "wordId": 6913415,
+    "position": 16,
+    "surface": "μου",
+    "strongNumber": "G1473"
+   },
+   "gold": [
+    {
+     "position": 12,
+     "surface": "μου",
+     "strongNumber": "G1473"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.62",
+   "class": "ours-wrong",
+   "why": "'My mother and My brothers': the marked first 'My' is μου 12."
+  },
+  {
+   "n": 120,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 3:35",
+   "sourceWordId": 11106640,
+   "sourcePosition": 10,
+   "english": "brother",
+   "proposed": {
+    "wordId": 6913424,
+    "position": 9,
+    "surface": "ἀδελφός",
+    "strongNumber": "G80"
+   },
+   "gold": [
+    {
+     "position": 10,
+     "surface": "μου",
+     "strongNumber": "G1473"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.65",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. Mark 3:35 is stored one Greek word late ('brother' -> μου, 'sister' -> καὶ). 'brother' -> ἀδελφός is right."
+  },
+  {
+   "n": 121,
+   "stratum": "Mark 1-4 / clear",
+   "reference": "Mark 3:35",
+   "sourceWordId": 11106642,
+   "sourcePosition": 12,
+   "english": "sister",
+   "proposed": {
+    "wordId": 6913427,
+    "position": 12,
+    "surface": "ἀδελφὴ",
+    "strongNumber": "G79"
+   },
+   "gold": [
+    {
+     "position": 13,
+     "surface": "καὶ",
+     "strongNumber": "G2532"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.65",
+   "class": "gold-wrong",
+   "subclass": "load-shift",
+   "why": "Not the annotators. The same shift stores 'sister' -> καὶ. 'sister' -> ἀδελφὴ is right."
+  },
+  {
+   "n": 122,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 4:5",
+   "sourceWordId": 11106721,
+   "sourcePosition": 1,
+   "english": "Some",
+   "proposed": {
+    "wordId": 6913505,
+    "position": 5,
+    "surface": "τὸ",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 2,
+     "surface": "ἄλλο",
+     "strongNumber": "G243"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.32",
+   "class": "ours-wrong",
+   "why": "'Some fell' is ἄλλο; τὸ is the article of 'rocky ground'."
+  },
+  {
+   "n": 123,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 4:5",
+   "sourceWordId": 11106730,
+   "sourcePosition": 10,
+   "english": "have",
+   "proposed": {
+    "wordId": 6913518,
+    "position": 18,
+    "surface": "ἔχειν",
+    "strongNumber": "G2192"
+   },
+   "gold": [
+    {
+     "position": 8,
+     "surface": "οὐκ",
+     "strongNumber": "G3756"
+    },
+    {
+     "position": 9,
+     "surface": "εἶχεν",
+     "strongNumber": "G2192"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x2",
+    "4x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.58",
+   "class": "ours-wrong",
+   "why": "'did not have much soil' is οὐκ εἶχεν; ἔχειν 18 is 'the soil was shallow'."
+  },
+  {
+   "n": 124,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 4:10",
+   "sourceWordId": 11106826,
+   "sourcePosition": 14,
+   "english": "they",
+   "proposed": {
+    "wordId": 6913595,
+    "position": 14,
+    "surface": "τὰς",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 6,
+     "surface": "ἠρώτων",
+     "strongNumber": "G2065"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they asked Him' is ἠρώτων; τὰς is the article of 'parable'."
+  },
+  {
+   "n": 125,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 4:15",
+   "sourceWordId": 11106905,
+   "sourcePosition": 1,
+   "english": "Some",
+   "proposed": {
+    "wordId": 6913657,
+    "position": 4,
+    "surface": "οἱ",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 1,
+     "surface": "οὗτοι",
+     "strongNumber": "G3778"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.32",
+   "class": "ours-wrong",
+   "why": "'Some are like' renders οὗτοι; οἱ is 'the seeds along the path'."
+  },
+  {
+   "n": 126,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 4:17",
+   "sourceWordId": 11106978,
+   "sourcePosition": 23,
+   "english": "they",
+   "proposed": {
+    "wordId": 6913714,
+    "position": 16,
+    "surface": "τὸν",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 18,
+     "surface": "εὐθὺς",
+     "strongNumber": "G2112"
+    },
+    {
+     "position": 19,
+     "surface": "σκανδαλίζονται",
+     "strongNumber": "G4624"
+    }
+   ],
+   "goldLinkShapes": [
+    "4x1",
+    "4x2"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they quickly fall away' is σκανδαλίζονται; τὸν is the article of 'word'."
+  },
+  {
+   "n": 127,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 4:25",
+   "sourceWordId": 11107144,
+   "sourcePosition": 12,
+   "english": "have",
+   "proposed": {
+    "wordId": 6913853,
+    "position": 12,
+    "surface": "ἔχει",
+    "strongNumber": "G2192"
+   },
+   "gold": [
+    {
+     "position": 8,
+     "surface": "οὐκ",
+     "strongNumber": "G3756"
+    },
+    {
+     "position": 9,
+     "surface": "ἔχει",
+     "strongNumber": "G2192"
+    }
+   ],
+   "goldLinkShapes": [
+    "3x2",
+    "3x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.58",
+   "class": "ours-wrong",
+   "why": "'whoever does not have' is οὐκ ἔχει 9; 12 is 'what he has'."
+  },
+  {
+   "n": 128,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 4:27",
+   "sourceWordId": 11107185,
+   "sourcePosition": 14,
+   "english": "though",
+   "proposed": {
+    "wordId": 6913884,
+    "position": 12,
+    "surface": "καὶ",
+    "strongNumber": "G2532"
+   },
+   "gold": [
+    {
+     "position": 17,
+     "surface": "αὐτός",
+     "strongNumber": "G846"
+    }
+   ],
+   "goldLinkShapes": [
+    "2x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.34",
+   "class": "ours-wrong",
+   "why": "καὶ 12 is 'and grows'; it cannot also be 'though'."
+  },
+  {
+   "n": 129,
+   "stratum": "Mark 1-4 / berean+clear",
+   "reference": "Mark 4:36",
+   "sourceWordId": 11107351,
+   "sourcePosition": 7,
+   "english": "they",
+   "proposed": {
+    "wordId": 6914021,
+    "position": 10,
+    "surface": "τῷ",
+    "strongNumber": "G3588"
+   },
+   "gold": [
+    {
+     "position": 5,
+     "surface": "παραλαμβάνουσιν",
+     "strongNumber": "G3880"
+    },
+    {
+     "position": 6,
+     "surface": "αὐτὸν",
+     "strongNumber": "G846"
+    }
+   ],
+   "goldLinkShapes": [
+    "5x2",
+    "5x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.47",
+   "class": "ours-wrong",
+   "why": "'they took Jesus' is παραλαμβάνουσιν; τῷ is the article of 'boat'."
+  },
+  {
+   "n": 130,
+   "stratum": "Mark 1-4 / berean",
+   "reference": "Mark 4:41",
+   "sourceWordId": 11107464,
+   "sourcePosition": 12,
+   "english": "even",
+   "proposed": {
+    "wordId": 6914114,
+    "position": 17,
+    "surface": "καὶ",
+    "strongNumber": "G2532"
+   },
+   "gold": [
+    {
+     "position": 14,
+     "surface": "καὶ",
+     "strongNumber": "G2532"
+    }
+   ],
+   "goldLinkShapes": [
+    "1x1"
+   ],
+   "tier": "global known-rendering assignment; lexical score 0.57",
+   "class": "ours-wrong",
+   "why": "'that even the wind' is καὶ 14; καὶ 17 is 'and the sea'."
+  }
+ ]
+}

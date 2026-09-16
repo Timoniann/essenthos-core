@@ -1,0 +1,117 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Errors found in a word-alignment answer key while reading EVIDENTIA's disagreements",
+ "type": "object",
+ "required": [
+  "reviewed",
+  "errors"
+ ],
+ "properties": {
+  "reviewed": {
+   "type": "string",
+   "format": "date"
+  },
+  "measurement": {
+   "type": "string"
+  },
+  "note": {
+   "type": "string"
+  },
+  "errors": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "reference",
+     "text",
+     "witness",
+     "links",
+     "dataset",
+     "english",
+     "statedReading",
+     "reading",
+     "cause",
+     "why"
+    ],
+    "properties": {
+     "reference": {
+      "type": "string",
+      "description": "Book chapter:verse, canonical."
+     },
+     "text": {
+      "type": "string",
+      "description": "Slug of the translation side."
+     },
+     "witness": {
+      "type": "string",
+      "description": "Slug of the original-language side."
+     },
+     "links": {
+      "type": "array",
+      "items": {
+       "type": "integer"
+      },
+      "description": "link.id of the stored rows the error is in, in the load it was read from."
+     },
+     "dataset": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "link.source of those rows."
+     },
+     "english": {
+      "$ref": "#/$defs/word"
+     },
+     "statedReading": {
+      "type": "array",
+      "items": {
+       "$ref": "#/$defs/word"
+      },
+      "description": "What the stored rows put the English word on."
+     },
+     "reading": {
+      "$ref": "#/$defs/word",
+      "description": "What the verse supports, which is also what EVIDENTIA proposed."
+     },
+     "cause": {
+      "enum": [
+       "annotation",
+       "load"
+      ],
+      "description": "annotation: the dataset states it. load: the dataset states something else and this corpus stored it wrongly."
+     },
+     "why": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ },
+ "$defs": {
+  "word": {
+   "type": "object",
+   "required": [
+    "position",
+    "surface"
+   ],
+   "properties": {
+    "wordId": {
+     "type": "integer"
+    },
+    "position": {
+     "type": "integer"
+    },
+    "surface": {
+     "type": "string"
+    },
+    "strongNumber": {
+     "type": [
+      "string",
+      "null"
+     ]
+    }
+   }
+  }
+ }
+}
