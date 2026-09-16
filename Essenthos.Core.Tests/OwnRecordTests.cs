@@ -334,6 +334,44 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
+    /// 1 Chronicles 1:9, where a reading had put the trading place on the son of Cush. The ruling is
+    /// the answer, so the reading at the word and the copy the links carried from it are taken back
+    /// rather than left beside it.
+    /// </summary>
+    [Fact]
+    public async Task ARulingTakesBackTheReadingItOverrulesAndItsCarriedCopy()
+    {
+        var ruling = SenseReadingFiles.GenealogyRulings().Rulings[0];
+        var place = new Entity
+        {
+            Kind = EntityKind.Place, Slug = "raamah-2", Name = "Raamah", SourceId = "raamah-2", Source = "a test",
+        };
+        _db.Entities.Add(place);
+        await _db.SaveChangesAsync();
+
+        const string reading = "a reading of the verse by a-model, prompt sense-1, run to 2026-09-06";
+        var rendering = _db.WordAt(_english, 1, 1, 1);
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = ruling.WordId, EntityId = place.Id, Method = LinkMethod.ModelReading,
+            Confidence = 0.99, Source = reading, Note = "read as the place",
+        });
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = rendering.Id, EntityId = place.Id, Method = LinkMethod.ModelReading,
+            Confidence = 0.97, Source = reading,
+            Note = $"through BHSA word {ruling.WordId}, linked by aligner",
+        });
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+        (await _db.WordEntities.AnyAsync(a => a.EntityId == place.Id)).Should().BeFalse();
+        (await _db.WordEntities.Include(a => a.Entity).SingleAsync(a => a.WordId == ruling.WordId))
+            .Entity!.Slug.Should().Be(ruling.Existing);
+    }
+
+    /// <summary>
     /// A word is ruled on once. Two files ruling on one word would both annotate it, and a reader
     /// would meet a word naming whichever of two decisions the loader happened to write first.
     /// </summary>
