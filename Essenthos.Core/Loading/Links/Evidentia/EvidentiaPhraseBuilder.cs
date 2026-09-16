@@ -12,6 +12,7 @@ internal static class EvidentiaPhraseBuilder
     {
         var eligible = candidates.Where(candidate => candidate.Score >= MinimumWordScore
                 && candidate.Source.IsContentWord && !candidate.PairsAContentWordWithAFunctionWord
+                && !candidate.PlacesAnAuxiliaryWordOffItsKind
                 && candidate.Source.Token.Address == candidate.Target.Token.Address)
             .ToList();
         var uniqueSource = eligible.GroupBy(candidate => candidate.Source.Token.Id)

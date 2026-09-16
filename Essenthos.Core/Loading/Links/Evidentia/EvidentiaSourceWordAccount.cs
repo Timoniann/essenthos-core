@@ -20,6 +20,12 @@ internal enum EvidentiaWordOutcome
     /// <summary>Every candidate stands in a neighbouring verse, and every tier reads its own verse only.</summary>
     NeighbouringVerseOnly,
 
+    /// <summary>
+    /// Every learned rendering in the verse would put an auxiliary word on a kind of word it cannot
+    /// correspond to, such as a subject pronoun on the article of a noun.
+    /// </summary>
+    AuxiliaryWordOffItsKind,
+
     /// <summary>A learned rendering exists and the review policy's score, lead or observation floor refused it.</summary>
     RenderingRefusedByPolicy,
 
@@ -63,6 +69,7 @@ internal readonly record struct EvidentiaSourceWordAccount(
     int NoLanguageAnalysis,
     int NoCandidate,
     int NeighbouringVerseOnly,
+    int AuxiliaryWordOffItsKind,
     int RenderingRefusedByPolicy,
     int RenderingTargetAssignedElsewhere,
     int DictionaryOrGlossDeclined,
@@ -86,6 +93,7 @@ internal readonly record struct EvidentiaSourceWordAccount(
             Count(EvidentiaWordOutcome.NoLanguageAnalysis),
             Count(EvidentiaWordOutcome.NoCandidate),
             Count(EvidentiaWordOutcome.NeighbouringVerseOnly),
+            Count(EvidentiaWordOutcome.AuxiliaryWordOffItsKind),
             Count(EvidentiaWordOutcome.RenderingRefusedByPolicy),
             Count(EvidentiaWordOutcome.RenderingTargetAssignedElsewhere),
             Count(EvidentiaWordOutcome.DictionaryOrGlossDeclined),
@@ -102,6 +110,7 @@ internal readonly record struct EvidentiaSourceWordAccount(
             one.NoLanguageAnalysis + two.NoLanguageAnalysis,
             one.NoCandidate + two.NoCandidate,
             one.NeighbouringVerseOnly + two.NeighbouringVerseOnly,
+            one.AuxiliaryWordOffItsKind + two.AuxiliaryWordOffItsKind,
             one.RenderingRefusedByPolicy + two.RenderingRefusedByPolicy,
             one.RenderingTargetAssignedElsewhere + two.RenderingTargetAssignedElsewhere,
             one.DictionaryOrGlossDeclined + two.DictionaryOrGlossDeclined,
@@ -119,6 +128,7 @@ internal readonly record struct EvidentiaSourceWordAccount(
                $"no language analysis {NoLanguageAnalysis:N0} ({Share(NoLanguageAnalysis)}); " +
                $"attempted {AttemptedAndNotProposed:N0} ({Share(AttemptedAndNotProposed)}) = " +
                $"no candidate {NoCandidate:N0}, neighbouring verse only {NeighbouringVerseOnly:N0}, " +
+               $"auxiliary word off its kind {AuxiliaryWordOffItsKind:N0}, " +
                $"rendering refused by policy {RenderingRefusedByPolicy:N0}, " +
                $"rendering target assigned elsewhere {RenderingTargetAssignedElsewhere:N0}, " +
                $"dictionary or gloss declined {DictionaryOrGlossDeclined:N0}, other evidence only {OtherEvidenceOnly:N0}";
@@ -174,6 +184,14 @@ internal readonly record struct EvidentiaSourceWordAccount(
         ];
     }
 
+    /// <summary>The evidence some tier proposes from; anything else only ranks a candidate.</summary>
+    private static readonly IReadOnlySet<EvidentiaEvidenceKind> ProposingEvidence = new HashSet<EvidentiaEvidenceKind>
+    {
+        EvidentiaEvidenceKind.KnownRendering,
+        EvidentiaEvidenceKind.DictionarySense,
+        EvidentiaEvidenceKind.TargetGloss,
+    };
+
     private static EvidentiaWordOutcome Reason(
         EvidentiaAnalysis? analysis,
         IReadOnlyList<EvidentiaCandidate> candidates,
@@ -194,14 +212,24 @@ internal readonly record struct EvidentiaSourceWordAccount(
             return EvidentiaWordOutcome.NoCandidate;
         }
 
-        var exact = candidates
+        var exactCandidates = candidates
             .Where(candidate => candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress))
+            .ToList();
+        var exact = exactCandidates
+            .Where(candidate => !candidate.PlacesAnAuxiliaryWordOffItsKind)
             .SelectMany(candidate => candidate.Evidence)
             .Select(evidence => evidence.Kind)
             .ToHashSet();
-        if (exact.Count == 0)
+        if (exactCandidates.Count == 0)
         {
             return EvidentiaWordOutcome.NeighbouringVerseOnly;
+        }
+
+        if (!exact.Overlaps(ProposingEvidence)
+            && exactCandidates.Any(candidate => candidate.PlacesAnAuxiliaryWordOffItsKind
+                && candidate.Evidence.Any(evidence => ProposingEvidence.Contains(evidence.Kind))))
+        {
+            return EvidentiaWordOutcome.AuxiliaryWordOffItsKind;
         }
 
         if (exact.Contains(EvidentiaEvidenceKind.KnownRendering))
