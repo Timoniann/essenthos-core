@@ -145,6 +145,7 @@ internal static class EvidentiaMorphologyLabels
         ["sing"] = "sg", ["plur"] = "pl", ["dual"] = "du",
         ["masc"] = "m", ["fem"] = "f", ["neut"] = "n",
         ["1"] = "1", ["2"] = "2", ["3"] = "3",
+        ["nom"] = "nom", ["acc"] = "acc", ["dat"] = "dat", ["gen"] = "gen", ["voc"] = "voc",
     };
 
     private static readonly Dictionary<string, string> HebrewFeatures = new(StringComparer.Ordinal)
@@ -159,5 +160,6 @@ internal static class EvidentiaMorphologyLabels
         ["singular"] = "sg", ["plural"] = "pl",
         ["masculine"] = "m", ["feminine"] = "f", ["neuter"] = "n",
         ["first"] = "1", ["second"] = "2", ["third"] = "3",
+        ["nominative"] = "nom", ["accusative"] = "acc", ["dative"] = "dat", ["genitive"] = "gen", ["vocative"] = "voc",
     };
 }

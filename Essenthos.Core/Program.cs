@@ -281,7 +281,8 @@ if (args is ["evidentia-measure", var measureFrom, var measureTo, var measureBoo
     using var measureScope = app.Services.CreateScope();
     var measurement = await measureScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureChapter(
         Identifier(measureFrom), Identifier(measureTo), book, chapter, EvidentiaOptions(args));
-    await WriteDisagreements(args, measurement.Disagreements);
+    await WriteRows(args, "--disagreements", measurement.Disagreements);
+    await WriteRows(args, "--words", measurement.Words);
     app.Logger.LogInformation("\n{Measurement}", measurement);
     return 0;
 }
@@ -304,17 +305,19 @@ if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, v
         Identifier(measureBookFrom), Identifier(measureBookTo), book, EvidentiaOptions(args),
         firstChapter: fromChapter,
         lastChapter: toChapter);
-    await WriteDisagreements(args, measurement.Disagreements);
+    await WriteRows(args, "--disagreements", measurement.Disagreements);
+    await WriteRows(args, "--words", measurement.Words);
     app.Logger.LogInformation("\n{Measurement}", measurement);
     return 0;
 }
 
-// Contradicted proposals go to a file rather than to the report, because they are read one at a
-// time and there are thousands of them: a classification pass needs the rows the aggregate counted,
-// and a console report is neither a stable record of them nor wide enough to hold a whole verse.
-static async Task WriteDisagreements(string[] arguments, IReadOnlyList<EvidentiaDisagreement> rows)
+// Contradicted proposals and per-word outcomes go to files rather than to the report, because they
+// are read one at a time and there are thousands of them: a classification pass or a comparison of
+// two runs needs the rows the aggregate counted, and a console report is neither a stable record of
+// them nor wide enough to hold a whole verse.
+static async Task WriteRows<T>(string[] arguments, string option, IReadOnlyList<T> rows)
 {
-    if (OptionalText(arguments, "--disagreements") is not { } path)
+    if (OptionalText(arguments, option) is not { } path)
     {
         return;
     }
@@ -354,7 +357,8 @@ static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments) => new(
         : null,
     GoldSource: OptionalText(arguments, "--gold-source"),
     SampleSize: OptionalInt(arguments, "--sample") ?? 0,
-    RecordDisagreements: OptionalText(arguments, "--disagreements") is not null);
+    RecordDisagreements: OptionalText(arguments, "--disagreements") is not null,
+    RecordWords: OptionalText(arguments, "--words") is not null);
 
 // Unlike `score`, this is an out-of-sample test: only 80% of the stated and Strong one-to-one pairs
 // reach SIL.Machine as its partial-alignment corpus, and a deterministic fifth of verses stays out

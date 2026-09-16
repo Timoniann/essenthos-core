@@ -68,6 +68,7 @@ internal sealed class EvidentiaTargetGlossProposalResolver
     // word renders that occurrence, so the witness's own class keeps it out of the queue.
     private static bool IsExactTargetGloss(EvidentiaCandidate candidate) =>
         !candidate.PairsAContentWordWithAFunctionWord
+        && !candidate.PlacesAnAuxiliaryWordOffItsKind
         && candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)
         && candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.TargetGloss);
 

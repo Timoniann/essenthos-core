@@ -90,7 +90,7 @@ internal sealed class EvidentiaPipeline(
             }
         }
 
-        return analysed;
+        return [.. EvidentiaAuxiliaryWords.Mark(analysed)];
     }
 
     private List<EvidentiaCandidate> Candidates(

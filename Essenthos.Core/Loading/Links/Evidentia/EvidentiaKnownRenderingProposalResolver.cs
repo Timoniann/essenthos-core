@@ -77,7 +77,10 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
         {
             var sourceCount = verse.Select(candidate => candidate.Source.Token.Id).Distinct().Count();
             var targetCount = verse.Select(candidate => candidate.Target.Token.Id).Distinct().Count();
+            // Counted before the auxiliary words are set aside, so refusing one word does not move
+            // the relative position of every other word in the verse.
             var choices = verse
+                .Where(candidate => !candidate.PlacesAnAuxiliaryWordOffItsKind)
                 .GroupBy(candidate => candidate.Source.Token.Id)
                 .Select(group => BestChoice(group, sourceCount, targetCount, policy))
                 .Where(choice => choice is not null)
@@ -127,7 +130,10 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
         {
             var sourceCount = verse.Select(candidate => candidate.Source.Token.Id).Distinct().Count();
             var targetCount = verse.Select(candidate => candidate.Target.Token.Id).Distinct().Count();
+            // Counted before the auxiliary words are set aside, so refusing one word does not move
+            // the relative position of every other word in the verse.
             var choices = verse
+                .Where(candidate => !candidate.PlacesAnAuxiliaryWordOffItsKind)
                 .GroupBy(candidate => candidate.Source.Token.Id)
                 .Select(group => BestChoiceGroup(group, policy))
                 .Where(choice => choice is not null)
@@ -151,6 +157,20 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
 
         return new EvidentiaResolution(proposals, 0);
     }
+
+    /// <summary>
+    /// The source words whose learned rendering the policy accepts before any target is assigned,
+    /// so a word left unplaced can be told apart as refused or as having lost its target.
+    /// </summary>
+    public IReadOnlySet<long> Admitted(
+        IEnumerable<EvidentiaCandidate> candidates,
+        EvidentiaProposalPolicy policy) =>
+        candidates
+            .Where(candidate => IsExactKnownRendering(candidate) && !candidate.PlacesAnAuxiliaryWordOffItsKind)
+            .GroupBy(candidate => candidate.Source.Token.Id)
+            .Where(group => BestChoiceGroup(group, policy) is not null)
+            .Select(group => group.Key)
+            .ToHashSet();
 
     private static bool IsExactKnownRendering(EvidentiaCandidate candidate) =>
         candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)

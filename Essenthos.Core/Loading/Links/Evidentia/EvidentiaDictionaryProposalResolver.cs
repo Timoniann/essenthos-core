@@ -30,6 +30,7 @@ internal sealed class EvidentiaDictionaryProposalResolver
 
     private static bool IsExactDictionary(EvidentiaCandidate candidate) =>
         !candidate.PairsAContentWordWithAFunctionWord
+        && !candidate.PlacesAnAuxiliaryWordOffItsKind
         && candidate.Evidence.Any(e => e.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)
         && candidate.Evidence.Any(e => e.Kind == EvidentiaEvidenceKind.DictionarySense);
 }

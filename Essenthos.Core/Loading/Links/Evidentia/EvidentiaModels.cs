@@ -109,7 +109,8 @@ internal sealed record EvidentiaAnalysis(
     string? Lemma,
     string? PartOfSpeech,
     EvidentiaWordClass WordClass,
-    LanguagePackCapability Capabilities)
+    LanguagePackCapability Capabilities,
+    EvidentiaAuxiliaryRole Role = EvidentiaAuxiliaryRole.None)
 {
     public bool IsFunctionWord => WordClass == EvidentiaWordClass.Function;
 
@@ -191,6 +192,12 @@ internal sealed record EvidentiaCandidate(
         Target.IsFunctionWord
         && !Source.IsFunctionWord
         && EvidentiaMorphologyLabels.IsFunctionWord(Source.PartOfSpeech, Source.Token.Language) != true;
+
+    /// <summary>
+    /// An auxiliary source word on a kind of word it cannot correspond to: <em>they</em> on the
+    /// article of a noun, <em>out</em> of <em>went out</em> on a preposition.
+    /// </summary>
+    public bool PlacesAnAuxiliaryWordOffItsKind => EvidentiaAuxiliaryWords.PlacesOffItsKind(Source, Target);
 }
 
 internal sealed record EvidentiaPhraseCandidate(
