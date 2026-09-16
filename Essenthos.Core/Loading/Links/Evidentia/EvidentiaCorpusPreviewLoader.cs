@@ -211,28 +211,53 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         int? canonicalVerse,
         CancellationToken cancellationToken)
     {
-        var rows = await db.VerseReferences
+        // A verse spanning two canonical verses carries a reference row for each, and reading the
+        // words through the references gave every one of its words back once per row - with the
+        // same id and two different addresses. Every count downstream doubled for it, and every
+        // resolver could propose the same source word twice. One placement per verse, the primary
+        // one where the scope holds it.
+        var placements = await db.VerseReferences
             .AsNoTracking()
             .Where(reference => reference.Verse!.Text!.Slug == slug
                 && reference.CanonicalBook == canonicalBook
                 && reference.CanonicalChapter == canonicalChapter
                 && (!canonicalVerse.HasValue || reference.CanonicalVerse == canonicalVerse.Value))
-            .SelectMany(reference => reference.Verse!.Words.Select(word => new
+            .Select(reference => new
             {
-                word.Id,
+                reference.VerseId,
                 reference.CanonicalBook,
                 reference.CanonicalChapter,
                 reference.CanonicalVerse,
+                reference.IsPrimary,
+            })
+            .ToListAsync(cancellationToken);
+        var addressByVerse = placements
+            .GroupBy(placement => placement.VerseId)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderByDescending(placement => placement.IsPrimary)
+                    .ThenBy(placement => placement.CanonicalVerse)
+                    .Select(placement => new EvidentiaAddress(
+                        placement.CanonicalBook, placement.CanonicalChapter, placement.CanonicalVerse))
+                    .First());
+        var verseIds = addressByVerse.Keys.ToList();
+        var rows = await db.Words
+            .AsNoTracking()
+            .Where(word => verseIds.Contains(word.VerseId))
+            .Select(word => new
+            {
+                word.Id,
+                word.VerseId,
                 word.Position,
                 word.Surface,
+                word.Trailer,
                 word.Lemma,
                 word.StrongNumber,
                 word.Gloss,
                 word.Morphology,
                 Language = word.Text!.Language,
-            }))
-            .OrderBy(row => row.CanonicalVerse)
-            .ThenBy(row => row.Position)
+            })
             .ToListAsync(cancellationToken);
 
         if (rows.Count == 0)
@@ -247,16 +272,19 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 var morphology = Morphology(row.Morphology);
                 return new EvidentiaToken(
                     Id: row.Id,
-                    Address: new EvidentiaAddress(row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse),
+                    Address: addressByVerse[row.VerseId],
                     Position: row.Position,
                     Surface: row.Surface,
                     Language: row.Language,
+                    Trailer: row.Trailer,
                     Lemma: row.Lemma,
                     StrongNumber: row.StrongNumber,
                     Gloss: row.Gloss,
                     PartOfSpeech: morphology?.GetValueOrDefault("pos"),
                     Morphology: morphology);
             })
+            .OrderBy(token => token.Address.Verse)
+            .ThenBy(token => token.Position)
             .ToList();
     }
 

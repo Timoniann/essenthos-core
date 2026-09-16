@@ -40,6 +40,7 @@ internal sealed record EvidentiaToken(
     int Position,
     string Surface,
     string Language,
+    string Trailer = "",
     string? Lemma = null,
     string? StrongNumber = null,
     string? Gloss = null,
