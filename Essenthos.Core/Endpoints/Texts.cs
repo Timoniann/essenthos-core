@@ -60,9 +60,10 @@ internal static class Texts
     };
 
     /// <summary>
-    /// Reads one chapter as this text numbers it. The words come back in one query projected into
-    /// the shape returned, because a chapter is a thousand words and a query per word is a thousand
-    /// round trips.
+    /// Reads one chapter as this text numbers it. The words and the edition's notes each come back
+    /// in one query: a chapter is a thousand words, and a query per word is a thousand round trips.
+    /// A note-only verse stays in the response too — it is how an edition says a verse is absent
+    /// from its text, and the note is the only thing the reader has to show at that address.
     /// </summary>
     public static async Task<IList<TextVerseResponse>> ReadChapter(
         AppDbContext db,
@@ -71,17 +72,36 @@ internal static class Texts
         int chapter,
         CancellationToken cancellationToken)
     {
+        var verses = await db.Verses
+            .Where(verse => verse.TextId == textId
+                            && verse.Book!.CanonicalOrdinal == bookOrdinal
+                            && verse.ChapterNumber == chapter)
+            .OrderBy(verse => verse.Number).ThenBy(verse => verse.Label)
+            .Select(verse => new VerseRow(verse.Number, verse.Label))
+            .ToListAsync(cancellationToken);
+
         var rows = await db.Words
-            .Where(w => w.TextId == textId
-                        && w.Verse!.Book!.CanonicalOrdinal == bookOrdinal
-                        && w.Verse.ChapterNumber == chapter)
+            .Where(word => word.TextId == textId
+                           && word.Verse!.Book!.CanonicalOrdinal == bookOrdinal
+                           && word.Verse.ChapterNumber == chapter)
             .OrderBy(w => w.Verse!.Number).ThenBy(w => w.Verse!.Label).ThenBy(w => w.Position)
             .Select(w => new WordRow(
                 w.Verse!.Number, w.Verse!.Label, w.Id, w.Surface, w.Trailer, w.Gloss, w.Lemma, w.StrongNumber,
                 w.Morphology, w.Elided))
             .ToListAsync(cancellationToken);
 
-        return Group(rows, await Counterparts(db, rows.Select(r => r.Id), cancellationToken));
+        var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
+        var notes = await db.VerseNotes
+            .Where(note => note.Verse!.TextId == textId
+                           && note.Verse.Book!.CanonicalOrdinal == bookOrdinal
+                           && note.Verse.ChapterNumber == chapter)
+            .OrderBy(note => note.Verse!.Number).ThenBy(note => note.Verse!.Label).ThenBy(note => note.Position)
+            .Select(note => new NoteRow(
+                note.Verse!.Number, note.Verse.Label, note.Kind, note.Content,
+                note.AnchorWord == null ? null : note.AnchorWord.Surface))
+            .ToListAsync(cancellationToken);
+
+        return Group(verses, rows, counterparts, notes);
     }
 
     /// <summary>
@@ -236,19 +256,33 @@ internal static class Texts
 
     /// <summary>
     /// Grouped by the number **and** the letter, because the Septuagint prints Genesis 31 as 49,
-    /// 50, 50a, 52 and two verses numbered 50 are two verses. Grouping by the number alone put
-    /// both their words in one list ordered by position, which interleaved them word by word.
+    /// 50, 50a, 52 and two verses numbered 50 are two verses. The separate verse list is what
+    /// lets a note-only verse remain visible rather than being lost from a query rooted at words.
     /// </summary>
-    private static IList<TextVerseResponse> Group(List<WordRow> rows, Reached counterparts) =>
-        rows.GroupBy(r => (r.VerseNumber, r.Label))
-            .OrderBy(group => group.Key.VerseNumber).ThenBy(group => group.Key.Label)
-            .Select(group => new TextVerseResponse(
-                group.Key.VerseNumber,
-                group.Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
-                        r.Elided, counterparts))
+    private static IList<TextVerseResponse> Group(
+        List<VerseRow> verses,
+        List<WordRow> rows,
+        Reached counterparts,
+        List<NoteRow>? notes = null)
+    {
+        var notesByVerse = (notes ?? [])
+            .ToLookup(note => (note.VerseNumber, note.Label), note => new SourceNoteResponse(
+                EnumSpelling.Of(note.Kind), note.Content, note.Anchor));
+        var wordsByVerse = rows.ToLookup(row => (row.VerseNumber, row.Label));
+
+        return verses
+            .Select(verse => new TextVerseResponse(
+                verse.Number,
+                wordsByVerse[(verse.Number, verse.Label)].Select(row => Word(
+                        row.Id, row.Text, row.Trailer, row.Gloss, row.Lemma, row.StrongNumber, row.Morphology,
+                        row.Elided, counterparts))
                     .ToList(),
-                group.Key.Label))
+                verse.Label)
+            {
+                Notes = [.. notesByVerse[(verse.Number, verse.Label)]],
+            })
             .ToList();
+    }
 
     private static TextWordResponse Word(
         long id,
@@ -319,6 +353,15 @@ internal static class Texts
     private sealed record WordRow(
         int VerseNumber, string Label, long Id, string Text, string Trailer, string? Gloss, string? Lemma,
         string? StrongNumber, JsonDocument? Morphology, bool Elided);
+
+    private sealed record VerseRow(int Number, string Label);
+
+    private sealed record NoteRow(
+        int VerseNumber,
+        string Label,
+        VerseNoteKind Kind,
+        string Content,
+        string? Anchor);
 
     private sealed record CanonicalWordRow(
         int CanonicalVerse, int VerseNumber, string Label, int Position, long Id, string Text, string Trailer,

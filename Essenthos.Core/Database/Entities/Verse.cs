@@ -43,6 +43,9 @@ public class Verse
 
     public ICollection<Word> Words { get; set; } = [];
 
+    /// <summary>The edition's own footnotes and cross-references, never words of this verse.</summary>
+    public ICollection<VerseNote> Notes { get; set; } = [];
+
     public ICollection<VerseReference> References { get; set; } = [];
 
     /// <summary>

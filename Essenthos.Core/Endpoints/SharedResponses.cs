@@ -220,6 +220,17 @@ internal record TextWordResponse(
 /// The letter this edition prints after the number, where it prints one — the Septuagint's Genesis
 /// 31:50a. Empty for every other text, which number their verses and nothing else.
 /// </param>
-internal record TextVerseResponse(int Number, IList<TextWordResponse> Words, string Label = "");
+/// <summary>A footnote or a cross-reference the edition prints beside a verse.</summary>
+/// <param name="Anchor">The word before the printed note marker, or null for a verse-level note.</param>
+internal record SourceNoteResponse(string Kind, string Content, string? Anchor = null);
+
+internal record TextVerseResponse(int Number, IList<TextWordResponse> Words, string Label = "")
+{
+    /// <summary>
+    /// Notes are the source edition speaking about this verse, not an application commentary and
+    /// never a part of <see cref="Words"/>.
+    /// </summary>
+    public IList<SourceNoteResponse> Notes { get; init; } = [];
+}
 
 internal record VerseRefResponse(int BookOrdinal, string Book, string Slug, int Chapter, int Verse);

@@ -38,12 +38,6 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         VersificationRules rules,
         CancellationToken cancellationToken = default)
     {
-        if (await db.VerseReferences.AnyAsync(r => r.Verse!.TextId == text.Id, cancellationToken))
-        {
-            logger.LogInformation("Text {Slug} is already placed in the frame; nothing to do", text.Slug);
-            return new FrameOutcome(text.Slug, AlreadyPlaced: true, 0, 0, 0);
-        }
-
         if (!rules.Covers(text.Versification))
         {
             throw new InvalidOperationException(
@@ -53,6 +47,10 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         }
 
         var started = Stopwatch.StartNew();
+        // A corpus imported before a new layer can gain a verse afterwards: a source note can sit
+        // on a printed \v marker with no words (ASV Matthew 17:21). Do not make an existing frame
+        // an all-or-nothing gate, or that new anchor can never reach the parallel reader. The
+        // edition's shape still comes from every verse, because that is what decides its scheme.
         var verses = await db.Verses
             .Where(v => v.TextId == text.Id)
             .Select(v => new
@@ -65,6 +63,17 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
                 Length = v.Words.Sum(w => w.Surface.Length),
             })
             .ToListAsync(cancellationToken);
+
+        var placed = await db.VerseReferences
+            .Where(reference => reference.Verse!.TextId == text.Id)
+            .Select(reference => reference.VerseId)
+            .ToHashSetAsync(cancellationToken);
+        var unplaced = verses.Where(verse => !placed.Contains(verse.Id)).ToList();
+        if (unplaced.Count == 0)
+        {
+            logger.LogInformation("Text {Slug} is already placed in the frame; nothing to do", text.Slug);
+            return new FrameOutcome(text.Slug, AlreadyPlaced: true, 0, 0, 0);
+        }
 
         // Which scheme of its tradition this edition follows is a question only the edition can
         // answer, and the versification data states the tests that ask it.
@@ -84,7 +93,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         var moved = 0;
         await using (var writer = await connection.BeginBinaryImportAsync(ReferenceImport, cancellationToken))
         {
-            foreach (var verse in verses)
+            foreach (var verse in unplaced)
             {
                 var placements = frame.Resolve(
                     verse.Book,
@@ -115,7 +124,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
 
         await transaction.CommitAsync(cancellationToken);
 
-        var outcome = new FrameOutcome(text.Slug, AlreadyPlaced: false, verses.Count, references, moved);
+        var outcome = new FrameOutcome(text.Slug, AlreadyPlaced: false, unplaced.Count, references, moved);
         logger.LogInformation("Placed {Outcome} in {Elapsed}", outcome, started.Elapsed);
         return outcome;
     }

@@ -46,12 +46,14 @@ namespace Essenthos.Core.Endpoints;
 /// How strongly this verse is linked to the same row of the reference pane, or null on the
 /// reference pane itself and on a text nothing links to it.
 /// </param>
+/// <param name="Notes">The source notes printed beside this row's verses, in source order.</param>
 internal record ParallelCellResponse(
     IList<TextWordResponse> Words,
     string Alignment,
     VerseRefResponse? Reference,
     IList<string> Verses,
     IList<string> StatedVerses,
+    IList<SourceNoteResponse> Notes,
     LinkStrengthResponse? Strength);
 
 /// <param name="Links">
@@ -135,6 +137,7 @@ internal static class ParallelEndpoints
             var references = new Dictionary<string, Dictionary<int, VerseRefResponse>>();
             var own = new Dictionary<string, Dictionary<int, List<string>>>();
             var stated = new Dictionary<string, Dictionary<int, List<string>>>();
+            var notes = new Dictionary<string, Dictionary<int, List<SourceNoteResponse>>>();
             var strength = new Dictionary<string, Dictionary<int, LinkStrengthResponse>>();
             var reference = requested[0];
             foreach (var entry in requested)
@@ -144,6 +147,7 @@ internal static class ParallelEndpoints
                 references[entry.Slug] = await OwnReferences(db, entry.Id, ordinal.Value, chapter, cancellationToken);
                 own[entry.Slug] = await OwnVerses(db, entry.Id, ordinal.Value, chapter, cancellationToken);
                 stated[entry.Slug] = await StatedVerses(db, entry.Id, ordinal.Value, chapter, cancellationToken);
+                notes[entry.Slug] = await SourceNotes(db, entry.Id, ordinal.Value, chapter, cancellationToken);
                 strength[entry.Slug] = entry.Id == reference.Id
                     ? []
                     : await Strengths(db, entry.Id, reference.Id, ordinal.Value, chapter, cancellationToken);
@@ -151,6 +155,7 @@ internal static class ParallelEndpoints
 
             var numbers = byText.Values
                 .SelectMany(verses => verses.Keys)
+                .Concat(notes.Values.SelectMany(notesByVerse => notesByVerse.Keys))
                 .Distinct()
                 .OrderBy(number => number)
                 .ToList();
@@ -162,7 +167,7 @@ internal static class ParallelEndpoints
                         entry => entry.Slug,
                         entry => Cell(
                             byText[entry.Slug], references[entry.Slug], own[entry.Slug],
-                            stated[entry.Slug], strength[entry.Slug], number))))
+                            stated[entry.Slug], notes[entry.Slug], strength[entry.Slug], number))))
                 .ToList();
 
             var corpusRows = await CorpusRows(db, canon, requested, cancellationToken);
@@ -187,17 +192,26 @@ internal static class ParallelEndpoints
         Dictionary<int, VerseRefResponse> references,
         Dictionary<int, List<string>> own,
         Dictionary<int, List<string>> stated,
+        Dictionary<int, List<SourceNoteResponse>> notes,
         Dictionary<int, LinkStrengthResponse> strength,
-        int number) =>
-        verses.TryGetValue(number, out var words)
-            ? new ParallelCellResponse(
-                words,
-                PairedThroughTheFrame,
-                references.GetValueOrDefault(number),
-                own.GetValueOrDefault(number) ?? [],
-                stated.GetValueOrDefault(number) ?? [],
-                strength.GetValueOrDefault(number))
-            : null;
+        int number)
+    {
+        var hasWords = verses.TryGetValue(number, out var words);
+        var hasNotes = notes.TryGetValue(number, out var sourceNotes);
+        if (!hasWords && !hasNotes)
+        {
+            return null;
+        }
+
+        return new ParallelCellResponse(
+            words ?? [],
+            PairedThroughTheFrame,
+            references.GetValueOrDefault(number),
+            own.GetValueOrDefault(number) ?? [],
+            stated.GetValueOrDefault(number) ?? [],
+            sourceNotes ?? [],
+            strength.GetValueOrDefault(number));
+    }
 
     /// <summary>
     /// How strongly each of this text's verses answers the reference pane's verse at the same
@@ -345,6 +359,46 @@ internal static class ParallelEndpoints
                 group => group
                     .OrderBy(row => row.Holder).ThenBy(row => row.Position)
                     .Select(row => $"{row.Chapter}:{row.Verse}")
+            .ToList());
+    }
+
+    /// <summary>
+    /// The edition's notes, grouped by the canonical row rather than by their printed number. A
+    /// row can hold more than one of a translation's own verses, so the order keeps the verse they
+    /// belong to before their position inside it.
+    /// </summary>
+    private static async Task<Dictionary<int, List<SourceNoteResponse>>> SourceNotes(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.VerseNotes
+            .Where(note => note.Verse!.TextId == textId
+                           && note.Verse.References.Any(reference => reference.IsPrimary
+                                                                    && reference.CanonicalBook == canonicalBook
+                                                                    && reference.CanonicalChapter == canonicalChapter))
+            .Select(note => new
+            {
+                Canonical = note.Verse!.References.First(reference => reference.IsPrimary).CanonicalVerse,
+                Holder = note.Verse.Number,
+                note.Verse.Label,
+                note.Position,
+                note.Kind,
+                note.Content,
+                Anchor = note.AnchorWord == null ? null : note.AnchorWord.Surface,
+            })
+            .ToListAsync(cancellationToken);
+
+        return rows
+            .GroupBy(row => row.Canonical)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderBy(row => row.Holder).ThenBy(row => row.Label, StringComparer.Ordinal)
+                    .ThenBy(row => row.Position)
+                    .Select(row => new SourceNoteResponse(EnumSpelling.Of(row.Kind), row.Content, row.Anchor))
                     .ToList());
     }
 

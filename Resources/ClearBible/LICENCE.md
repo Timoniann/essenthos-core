@@ -1,43 +1,54 @@
-# Clear-Bible/Alignments
+# Clear Bible Alignments — complete `data-latest` snapshot
 
-Word alignments between Hebrew and Greek source texts and translations, made by hand.
+Downloaded from [Clear-Bible/Alignments](https://github.com/Clear-Bible/Alignments), release
+[`data-latest`](https://github.com/Clear-Bible/Alignments/releases/tag/data-latest), on
+2026-09-14. The eleven archives held here are:
 
-**The repository carries no licence file.** `LICENSE`, `LICENSE.md` and `COPYING` all return 404
-and the GitHub API reports `license: null`. Every statement about terms is per alignment set, in its
-TOML, which is the statement closest to the bytes and therefore the one to believe (RUL-0105).
+`arb`, `asm`, `ben`, `eng`, `fra`, `hau`, `hin`, `legacy`, `por`, `rus`, `spa`.
 
-From `data/rus/alignments/RUSSYN/WLCM-RUSSYN-manual.toml`, verbatim:
+The repository's current README says the alignment data is CC BY 4.0. That is helpful context but
+is not used as a blanket licence: the TOML file adjacent to every alignment is the controlling
+record for the individual bytes and is retained with the archive's extracted data.
 
-    [alignment]
-    identifier = "WLCM-RUSSYN-manual"
-    format = "Scripture Burrito v0.3"
-    copyright = "Copyright © 2024 by BiblioNexus"
-    license = "CC-BY-4.0"
-    process = "manual"
+## Inventory read from the TOML records
 
-    [target]
-    identifier = "RUSSYN"
-    license = "Public domain"
-    name.eng = "Russian Synodal Bible"
+| language / target | source text | records | alignment terms | process | acquisition status |
+|---|---|---:|---|---|---|
+| Arabic AVD | SBLGNT, WLC | 2 | CC BY 4.0 | manual | candidate |
+| Arabic ONAV | SBLGNT | 1 | **CC BY-SA 4.0** | manual | retained, excluded from loading |
+| Assamese IRVAsm | SBLGNT | 1 | CC BY 4.0 | manual | candidate |
+| Bengali IRVBen | SBLGNT | 1 | CC BY 4.0 | manual | candidate |
+| English BSB | BGNT, SBLGNT, WLCM | 3 | CC BY 4.0 | manual | current calibration source |
+| English YLT | SBLGNT, WLC | 2 | CC BY 4.0 | manual | candidate |
+| French LSG | SBLGNT, WLCM | 2 | CC BY 4.0 | one `manual`, one process unstated | candidate; inspect before load |
+| Hausa OHCB | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | candidate |
+| Hindi IRVHin | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | candidate |
+| Portuguese JFA11 | SBLGNT | 1 | CC BY 4.0 | **transfer from Spanish RVR09** | retained; never call it manual |
+| Russian RUSSYN | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | blocked by token mismatch; see below |
+| Spanish RV09 | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | candidate |
+| `legacy` | sample config only | 1 | CC BY 4.0 | manual | format reference, not an alignment set |
 
-    [source]
-    identifier = "WLC"
-    copyright = "© 2023 The J. Alan Groves Center for Advanced Biblical Research"
-    license = "Custom"
-    licensenotes = "From http://tanach.us/License.html: 'All biblical Hebrew text, in any format,
-    may be viewed or copied without restriction.'"
+`ONAV` is retained because the owner asked for the available sources to be acquired, but its
+alignment and target declare CC BY-SA 4.0; RUL-0183 excludes it from corpus use. Source and target
+licences are recorded separately in each TOML and may impose attribution or text-use conditions
+even where the alignment itself is CC BY.
 
-So: **CC BY 4.0 on the alignment**, attribution to BiblioNexus; the sources carry their own terms and
-the Hebrew's is the Groves Center's custom permission. Read every set's TOML before using it — they
-are not all the same, and one of them (`por`) records `process = "transfer from Spanish RVR09"`
-rather than manual.
+## Russian warning
 
-Downloaded 2026-09-03 from the `data-latest` release:
-`alignments-rus.zip` (34,811,372 bytes), `alignments-eng.zip` (50,686,384 bytes).
+Do not load `RUSSYN` from this release yet. Measured against its own target token file on
+2026-09-03: 12,550 of 89,248 records name punctuation as the Russian word. The English BSB control
+had zero such records in 171,172. The archive is evidence for an upstream repair, not mapping input
+until its target tokenization matches the release's alignment records.
 
-## Before using the Russian set, read PRB-0185
+## What these data mean
 
-Its alignment records do not correspond to the target token file shipped beside them in this
-release. Measured: 12,550 of its 89,248 records name a punctuation mark as the Russian word. The
-English set, checked the same way, lands on punctuation 0 times in 171,172. The data is not the
-problem; that release's Russian pairing is.
+An alignment is a publisher's claim relating word **occurrences** in one named translation to a
+particular original-language source text. It may be imported only after its target text is matched
+to a loaded corpus text at token level. It is not a general bilingual dictionary, and none of these
+records authorizes an inferred link into a differently tokenized translation.
+
+## Attribution
+
+Retain the individual TOML copyright holder and attribution. The repository says all alignment
+data is CC BY 4.0; each link imported from a set must identify the specific set and its stated
+copyright holder rather than crediting “Clear Bible” generically.

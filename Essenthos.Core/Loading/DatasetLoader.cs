@@ -971,5 +971,15 @@ internal sealed class DatasetLoader(
         {
             status.Record(outcome.ToString());
         }
+
+        // Like stated verse numbers, notes must be a pass of their own: existing databases skip
+        // the corpus load, while source notes are a new layer that belongs beside their verses.
+        using var sourceNotes = services.CreateScope();
+        var notes = sourceNotes.ServiceProvider.GetRequiredService<SourceNoteLoader>();
+        var noteOutcome = await notes.Load(source, cancellationToken);
+        if (noteOutcome.Notes > 0 || noteOutcome.AlreadyLoaded)
+        {
+            status.Record(noteOutcome.ToString());
+        }
     }
 }

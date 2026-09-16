@@ -25,6 +25,8 @@ public class AppDbContext : DbContext
 
     public DbSet<Verse> Verses { get; set; } = null!;
 
+    public DbSet<VerseNote> VerseNotes { get; set; } = null!;
+
     public DbSet<Word> Words { get; set; } = null!;
 
     public DbSet<VerseReference> VerseReferences { get; set; } = null!;
@@ -329,6 +331,24 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(v => v.TextId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<VerseNote>(entity =>
+        {
+            entity.Property(note => note.Kind).HasConversion(EnumStorage.VerseNoteKind);
+
+            entity.HasOne(note => note.Verse)
+                .WithMany(verse => verse.Notes)
+                .HasForeignKey(note => note.VerseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(note => note.AnchorWord)
+                .WithMany()
+                .HasForeignKey(note => note.AnchorWordId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.ToTable("verse_note", table => table.HasCheckConstraint(
+                "ck_verse_note_content_not_empty", "length(btrim(\"content\")) > 0"));
         });
 
         modelBuilder.Entity<Word>(entity =>

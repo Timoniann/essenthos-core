@@ -1,0 +1,157 @@
+using Essenthos.Core.Loading.Links.Evidentia;
+using FluentAssertions;
+using Xunit;
+
+namespace Essenthos.Core.Tests;
+
+public class EvidentiaPipelineTests
+{
+    [Fact]
+    public void Reciprocal_dictionary_sense_is_review_only_with_a_trace()
+    {
+        var source = new EvidentiaAnalysis(Token(1, "faith", "eng", verse: 1), "faith", "faith", null, false, LanguagePackCapability.Lemma);
+        var target = new EvidentiaAnalysis(new EvidentiaToken(11, new EvidentiaAddress(40, 11, 1), 1, "אֱמוּנָה", "hbo", StrongNumber: "H530"), "אֱמוּנָה", null, null, false, LanguagePackCapability.Normalisation);
+        var candidate = new EvidentiaCandidate(source, target,
+        [
+            new EvidentiaEvidence(EvidentiaEvidenceKind.ExactCanonicalAddress, 0.30, "canonical-frame"),
+            new EvidentiaEvidence(EvidentiaEvidenceKind.DictionarySense, 0.34, "strong-entry:eng"),
+        ]);
+
+        var proposal = Assert.Single(new EvidentiaDictionaryProposalResolver().ResolveAdditional([candidate], []).Proposals);
+        proposal.Kind.Should().Be(EvidentiaProposalKind.UniqueDictionarySenseReview);
+        proposal.Trace!.Tier.Should().Be("review");
+    }
+    [Fact]
+    public void Consecutive_unambiguous_word_edges_form_a_diagnostic_phrase()
+    {
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [new EvidentiaToken(1, new EvidentiaAddress(40, 11, 1), 1, "living", "eng"), new EvidentiaToken(2, new EvidentiaAddress(40, 11, 1), 2, "water", "eng")],
+            [new EvidentiaToken(11, new EvidentiaAddress(40, 11, 1), 1, "living", "eng"), new EvidentiaToken(12, new EvidentiaAddress(40, 11, 1), 2, "water", "eng")]));
+
+        var phrase = Assert.Single(preview.Phrases);
+        phrase.Source.Select(token => token.Id).Should().Equal(1, 2);
+        phrase.Target.Select(token => token.Id).Should().Equal(11, 12);
+    }
+
+    [Fact]
+    public void One_word_to_contiguous_words_is_a_review_phrase()
+    {
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [new EvidentiaToken(1, new EvidentiaAddress(40, 11, 1), 1, "name", "eng")],
+            [new EvidentiaToken(11, new EvidentiaAddress(40, 11, 1), 1, "name", "eng"), new EvidentiaToken(12, new EvidentiaAddress(40, 11, 1), 2, "name", "eng")]));
+
+        preview.Phrases.Should().Contain(phrase => phrase.Reason == "one-to-many-review-edges");
+    }
+    [Fact]
+    public void Morphology_ranks_an_existing_lexical_candidate_but_never_creates_one()
+    {
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [new EvidentiaToken(1, new EvidentiaAddress(40, 11, 1), 1, "faith", "eng", PartOfSpeech: "NOUN", Morphology: new Dictionary<string, string> { ["Number"] = "Sing" })],
+            [new EvidentiaToken(2, new EvidentiaAddress(40, 11, 1), 1, "faith", "eng", PartOfSpeech: "noun", Morphology: new Dictionary<string, string> { ["number"] = "Sing" })]));
+
+        var candidate = Assert.Single(preview.Candidates);
+        Assert.Contains(candidate.Evidence, evidence => evidence.Kind == EvidentiaEvidenceKind.Morphology && evidence.Score > 0.06);
+    }
+    [Fact]
+    public void TheCurrentVerseOutranksAnIdenticalWordInANeighbour()
+    {
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [Token(1, "faith", "eng", verse: 2)],
+            [Token(11, "faith", "eng", verse: 1), Token(12, "faith", "eng", verse: 2)]));
+
+        preview.Status.Should().Be(EvidentiaPreviewStatus.ReadyForRules);
+        preview.Candidates.Where(candidate => candidate.Source.Token.Id == 1)
+            .Select(candidate => candidate.Target.Token.Id)
+            .Should().StartWith(12, "the exact canonical address is stronger than a neighbour");
+        preview.NeedsStatisticalFallback.Should().BeFalse();
+    }
+
+    [Fact]
+    public void AnUnsupportedLanguageRequestsAFallbackWithoutInventingCandidates()
+    {
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [Token(1, "Glaube", "deu", verse: 2)],
+            [Token(11, "faith", "eng", verse: 2)]));
+
+        preview.Status.Should().Be(EvidentiaPreviewStatus.UnsupportedLanguage);
+        preview.Candidates.Should().BeEmpty();
+        preview.NeedsStatisticalFallback.Should().BeTrue();
+        preview.Todos.Should().Contain(EvidentiaTodo.LanguagePack);
+    }
+
+    [Fact]
+    public void AFunctionWordDoesNotBecomeALexicalMatchOnlyBecauseItLooksTheSame()
+    {
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [Token(1, "the", "eng", verse: 2)],
+            [Token(11, "the", "eng", verse: 2)]));
+
+        preview.Candidates.Should().BeEmpty("the common address is a search boundary, not word evidence");
+        preview.ContentCoverage.Should().Be(0);
+        preview.NeedsStatisticalFallback.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ASharedStrongNumberIsAnAnchorEvenWhenTheScriptsDiffer()
+    {
+        var preview = Pipeline(new StrongNumberEvidenceSource()).Preview(new EvidentiaRequest(
+            [Token(1, "неверию", "rus", verse: 21, strong: "g0570")],
+            [Token(11, "ἀπιστίαν", "grc", verse: 21, strong: "G570")]));
+
+        preview.Status.Should().Be(EvidentiaPreviewStatus.ReadyForRules,
+            "the original-language pack carries source-provided lemma and morphology without pretending to translate Greek");
+        preview.Candidates.Should().ContainSingle();
+        preview.Candidates.Single().Evidence.Should().Contain(evidence =>
+            evidence.Kind == EvidentiaEvidenceKind.SharedStrongNumber);
+    }
+
+    [Fact]
+    public void AReaderLanguageStrongSenseOnlyMakesADictionaryCandidate()
+    {
+        var dictionary = new EvidentiaDictionarySenseEvidenceSource(
+            new Dictionary<string, HashSet<string>> { ["віра"] = ["G4102"] }, "ukr");
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [Token(1, "віра", "ukr", verse: 20)],
+            [Token(11, "πίστις", "grc", verse: 20, strong: "G4102")]), [dictionary]);
+
+        preview.Candidates.Should().ContainSingle();
+        preview.Candidates.Single().Evidence.Should().Contain(evidence =>
+            evidence.Kind == EvidentiaEvidenceKind.DictionarySense);
+        preview.NeedsStatisticalFallback.Should().BeFalse("the exact dictionary candidate covers the only content source word");
+    }
+
+    [Fact]
+    public void NoSourceStrongModeDoesNotUseAWordTagAsEvidence()
+    {
+        var preview = Pipeline(new StrongNumberEvidenceSource()).Preview(new EvidentiaRequest(
+            [Token(1, "faith", "eng", verse: 20, strong: "G4102")],
+            [Token(11, "πίστις", "grc", verse: 20, strong: "G4102")],
+            AllowSourceStrongEvidence: false));
+
+        preview.Candidates.Should().BeEmpty();
+        preview.NeedsStatisticalFallback.Should().BeTrue();
+    }
+
+    [Fact]
+    public void TargetGlossCreatesAReviewableCandidateWithoutClaimingASourceLink()
+    {
+        var target = new EvidentiaToken(
+            11, new EvidentiaAddress(1, 1, 1), 1, "אֱמוּנָה", "hbo", Gloss: "faith");
+        var gloss = TargetGlossEvidenceSource.For([target]);
+
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [new EvidentiaToken(1, new EvidentiaAddress(1, 1, 1), 1, "faith", "eng")],
+            [target]), [gloss!]);
+
+        preview.Candidates.Should().ContainSingle();
+        preview.Candidates.Single().Evidence.Should().Contain(evidence =>
+            evidence.Kind == EvidentiaEvidenceKind.TargetGloss);
+    }
+
+    private static EvidentiaPipeline Pipeline(params IEvidentiaEvidenceSource[] sources) => new(
+        new LanguagePackRegistry([new EnglishLanguagePack(), new SlavicLanguagePack(), new OriginalLanguagePack()]),
+        sources);
+
+    private static EvidentiaToken Token(long id, string text, string language, int verse, string? strong = null) =>
+        new(id, new EvidentiaAddress(40, 11, verse), 1, text, language, StrongNumber: strong);
+}

@@ -25,6 +25,13 @@ internal sealed record UsfmChapter(int Number, IReadOnlyList<UsfmVerse> Verses);
 internal sealed record UsfmVerse(int Number, IReadOnlyList<UsfmWord> Words, string Label = "")
 {
     /// <summary>
+    /// The edition's note beside this verse, kept apart from scripture. A footnote is the edition
+    /// explaining a word or reading; a cross-reference is the edition pointing elsewhere. Neither
+    /// is a word the verse contains.
+    /// </summary>
+    public IReadOnlyList<UsfmNote> Notes { get; init; } = [];
+
+    /// <summary>
     /// The addresses the edition prints for this verse in its own numbering, in the order it
     /// prints them, and empty for a text that numbers its verses the way it is stored.
     ///
@@ -46,6 +53,19 @@ internal sealed record UsfmVerse(int Number, IReadOnlyList<UsfmWord> Words, stri
 /// <param name="Chapter">The chapter of the edition's own numbering, which need not be the row's.</param>
 /// <param name="Number">The verse of it.</param>
 internal readonly record struct UsfmAddress(int Chapter, int Number);
+
+internal enum UsfmNoteKind
+{
+    Footnote,
+    CrossReference,
+}
+
+/// <param name="AnchorWordPosition">
+/// The one-based position of the last Scripture word before the source placed the marker, or
+/// null when the marker comes before any word. This describes typography, not an interpretation
+/// that the note explains only that word.
+/// </param>
+internal sealed record UsfmNote(UsfmNoteKind Kind, string Content, int? AnchorWordPosition = null);
 
 internal sealed record UsfmWord(string Surface, string Trailer)
 {
@@ -114,6 +134,7 @@ internal static partial class UsfmReader
         var chapters = new List<UsfmChapter>();
         var verses = new List<UsfmVerse>();
         var words = new List<UsfmWord>();
+        var notes = new List<UsfmNote>();
         var chapter = 0;
         var verse = 0;
         var label = string.Empty;
@@ -132,16 +153,18 @@ internal static partial class UsfmReader
                 return;
             }
 
-            if (words.Count > 0)
+            if (words.Count > 0 || notes.Count > 0)
             {
                 verses.Add(new UsfmVerse(verse, [.. words], label)
                 {
+                    Notes = [.. notes],
                     Stated = [.. running.Stated],
                     OpensBeforeItsStatedAddress = running.OpensBefore,
                 });
             }
 
             words.Clear();
+            notes.Clear();
             verse = 0;
             label = string.Empty;
             running.Close();
@@ -157,6 +180,7 @@ internal static partial class UsfmReader
 
             // A heading with no verse after it in the whole chapter has nowhere to belong.
             words.Clear();
+            notes.Clear();
             verses.Clear();
         }
 
@@ -171,7 +195,7 @@ internal static partial class UsfmReader
             if (trimmed[0] != '\\')
             {
                 // A continuation line: the verse it belongs to is still open.
-                Words(trimmed, words, running);
+                Words(trimmed, words, notes, running);
                 continue;
             }
 
@@ -201,7 +225,7 @@ internal static partial class UsfmReader
                     (verse, label) = Number(space < 0 ? rest : rest[..space]);
                     if (space >= 0)
                     {
-                        Words(rest[(space + 1)..], words, running);
+                        Words(rest[(space + 1)..], words, notes, running);
                     }
 
                     break;
@@ -220,7 +244,7 @@ internal static partial class UsfmReader
                 default:
                     if (Passage.Contains(name))
                     {
-                        Words(rest, words, running);
+                        Words(rest, words, notes, running);
                     }
                     else if (!Matter.Contains(name))
                     {
@@ -314,9 +338,31 @@ internal static partial class UsfmReader
     /// <c>EN el principio</c> as one thing — which is the only way a per-word column can carry a
     /// claim made about a span, and is a reading of the edition rather than its own words.
     /// </summary>
-    private static void Words(string text, List<UsfmWord> into, Running running)
+    private static void Words(string text, List<UsfmWord> into, List<UsfmNote> notes, Running running)
     {
-        var scripture = Marked().Replace(Note().Replace(text, string.Empty), string.Empty);
+        foreach (Match note in Note().Matches(text))
+        {
+            var position = into.Count + WordsBefore(text[..note.Index]);
+            notes.Add(ReadNote(note, position == 0 ? null : position));
+        }
+
+        AppendWords(Marked().Replace(Note().Replace(text, string.Empty), string.Empty), into, running);
+    }
+
+    /// <summary>
+    /// Counts the printed words before a note with the same reader that writes words to the corpus.
+    /// A whitespace split would count marker attributes and would drift from the position actually
+    /// stored for tagged editions.
+    /// </summary>
+    private static int WordsBefore(string text)
+    {
+        var words = new List<UsfmWord>();
+        AppendWords(Marked().Replace(Note().Replace(text, string.Empty), string.Empty), words, new Running());
+        return words.Count;
+    }
+
+    private static void AppendWords(string scripture, List<UsfmWord> into, Running running)
+    {
         var plain = new System.Text.StringBuilder(scripture.Length);
         var numbers = new List<string?>(scripture.Length);
         var spans = new List<int?>(scripture.Length);
@@ -359,6 +405,40 @@ internal static partial class UsfmReader
 
         Keep(scripture.AsSpan(read), null);
         Split(plain.ToString(), numbers, spans, into);
+    }
+
+    /// <summary>
+    /// Turns the structural notation inside a USFM note into its readable text without interpreting
+    /// it. Markers such as <c>\\fr</c>, <c>\\ft</c> and <c>\\xt</c> say whether a run is a reference,
+    /// note text or a quoted word; preserving their punctuation while presenting their labels would
+    /// expose file format rather than the edition's note.
+    /// </summary>
+    private static UsfmNote ReadNote(Match note, int? anchorWordPosition)
+    {
+        var marker = note.Groups["note"].Value;
+        var content = note.Value;
+        var opening = content.IndexOfAny([' ', '\t']);
+        var closing = content.LastIndexOf($"\\{marker}*", StringComparison.Ordinal);
+        content = opening < 0 || closing <= opening ? string.Empty : content[(opening + 1)..closing];
+        content = NoteMarker().Replace(content, " ");
+        // A leading plus is USFM's caller, not the first character of the note. Kulish uses the
+        // anonymous caller, which is exactly one plus and a space before every \ft run.
+        content = content.TrimStart();
+        if (content.StartsWith('+'))
+        {
+            content = content[1..].TrimStart();
+        }
+        content = string.Join(' ', content.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
+
+        if (content.Length == 0)
+        {
+            throw new InvalidOperationException($"The USFM {marker} note has no readable content: \"{note.Value}\".");
+        }
+
+        return new UsfmNote(
+            marker == "f" ? UsfmNoteKind.Footnote : UsfmNoteKind.CrossReference,
+            content,
+            anchorWordPosition);
     }
 
     private static void Split(string text, List<string?> numbers, List<int?> spans, List<UsfmWord> into)
@@ -486,15 +566,19 @@ internal static partial class UsfmReader
     /// <summary>
     /// A footnote or a cross reference, from its opening marker to its closing one.
     ///
-    /// The whole span leaves the text rather than being kept somewhere: it is the editor writing
+    /// The whole span leaves the text rather than becoming scripture: it is the editor writing
     /// about the verse, in a language and a register that are not the verse's — Kulish glosses
     /// Едом as *Червоний* and Егова-Нїссі as *Господь-прапор* — and a corpus that tokenised it
     /// would have those standing in Genesis as words nobody wrote there. Nothing here models a
     /// note, and inventing a place for one on the way past would be worse than dropping it: it
-    /// would be a claim about the text made by a regex.
+    /// would be a claim about the text made by a regex. Its readable text is retained as a
+    /// source-attributed verse note by <see cref="ReadNote"/>.
     /// </summary>
     [GeneratedRegex(@"\\(?<note>f|x)\s.*?\\\k<note>\*")]
     private static partial Regex Note();
+
+    [GeneratedRegex(@"\\\+?[a-z][a-z0-9]*\*?")]
+    private static partial Regex NoteMarker();
 
     /// <summary>
     /// A character marker wrapping words of the text rather than words about it. Only the marker

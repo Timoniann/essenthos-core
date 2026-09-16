@@ -1,0 +1,115 @@
+namespace Essenthos.Core.Loading.Links.Evidentia;
+
+internal static class EvidentiaDefaults
+{
+    public const int NeighbourVerseDistance = 2;
+    public const double MinimumContentCoverage = 0.30;
+    public const double ExactAddressScore = 0.30;
+    public const double NeighbourAddressScore = 0.08;
+    public const double MatchingNormalisedFormScore = 0.55;
+}
+
+[Flags]
+internal enum LanguagePackCapability
+{
+    None = 0,
+    Normalisation = 1,
+    Lemma = 2,
+    PartOfSpeech = 4,
+    Morphology = 8,
+    Syntax = 16,
+    FunctionWords = 32,
+    NamedEntities = 64,
+}
+
+internal readonly record struct EvidentiaAddress(int Book, int Chapter, int Verse)
+{
+    public int DistanceTo(EvidentiaAddress other) =>
+        Book == other.Book && Chapter == other.Chapter ? Math.Abs(Verse - other.Verse) : int.MaxValue;
+}
+
+internal sealed record EvidentiaToken(
+    long Id,
+    EvidentiaAddress Address,
+    int Position,
+    string Surface,
+    string Language,
+    string? Lemma = null,
+    string? StrongNumber = null,
+    string? Gloss = null,
+    string? PartOfSpeech = null,
+    IReadOnlyDictionary<string, string>? Morphology = null);
+
+internal sealed record EvidentiaAnalysis(
+    EvidentiaToken Token,
+    string Normalised,
+    string? Lemma,
+    string? PartOfSpeech,
+    bool IsFunctionWord,
+    LanguagePackCapability Capabilities);
+
+internal enum EvidentiaEvidenceKind
+{
+    ExactCanonicalAddress,
+    NeighbouringCanonicalAddress,
+    MatchingNormalisedForm,
+    SharedStrongNumber,
+    DictionarySense,
+    TargetGloss,
+    KnownRendering,
+    Morphology,
+    Syntax,
+    StatisticalAligner,
+}
+
+internal sealed record EvidentiaEvidence(
+    EvidentiaEvidenceKind Kind,
+    double Score,
+    string Source);
+
+internal sealed record EvidentiaCandidate(
+    EvidentiaAnalysis Source,
+    EvidentiaAnalysis Target,
+    IReadOnlyList<EvidentiaEvidence> Evidence)
+{
+    public double Score => Math.Clamp(Evidence.Sum(evidence => evidence.Score), 0, 1);
+}
+
+internal sealed record EvidentiaPhraseCandidate(
+    IReadOnlyList<EvidentiaToken> Source,
+    IReadOnlyList<EvidentiaToken> Target,
+    double Score,
+    string Reason);
+
+internal enum EvidentiaPreviewStatus
+{
+    ReadyForRules,
+    InsufficientEvidence,
+    UnsupportedLanguage,
+}
+
+internal enum EvidentiaTodo
+{
+    LanguagePack,
+    DictionaryEvidence,
+    GlobalMatcher,
+    StructuredExplanationStorage,
+    StatisticalFallback,
+}
+
+internal sealed record EvidentiaRequest(
+    IReadOnlyList<EvidentiaToken> Source,
+    IReadOnlyList<EvidentiaToken> Target,
+    int NeighbourVerseDistance = EvidentiaDefaults.NeighbourVerseDistance,
+    double MinimumContentCoverage = EvidentiaDefaults.MinimumContentCoverage,
+    bool AllowSourceStrongEvidence = true);
+
+internal sealed record EvidentiaPreview(
+    EvidentiaPreviewStatus Status,
+    IReadOnlyList<EvidentiaCandidate> Candidates,
+    int ContentSourceWords,
+    int CoveredContentSourceWords,
+    double ContentCoverage,
+    bool NeedsStatisticalFallback,
+    IReadOnlyList<EvidentiaTodo> Todos,
+    IReadOnlyList<EvidentiaPhraseCandidate> Phrases);

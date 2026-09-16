@@ -369,6 +369,9 @@ public static class Datasets
             "Essenthos", Links: true, Methods:
             [
                 "the Strong numbers both editions carry",
+                // Luther 1912 arrived tagged and the witnesses it reaches carry numbers too, so the
+                // pairing is drawn rather than stated -- and the row says which text printed them.
+                "the Strong numbers luth1912 carries",
                 "the words left over once the Strong numbers were paired",
                 "the untagged English function words",
                 "the consonants both Hebrew witnesses write",

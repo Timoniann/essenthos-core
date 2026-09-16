@@ -423,6 +423,10 @@ internal static class EnglishTextSource
                 SuppliedSpan: word.SuppliedSpan))],
             verse.Label)
         {
+            Notes = [.. verse.Notes.Select(note => new VerseNoteDraft(
+                note.Kind == UsfmNoteKind.Footnote ? VerseNoteKind.Footnote : VerseNoteKind.CrossReference,
+                note.Content,
+                note.AnchorWordPosition))],
             Stated = [.. verse.Stated.Select(address => new StatedNumberDraft(address.Chapter, address.Number))],
             OpensBeforeItsStatedAddress = verse.OpensBeforeItsStatedAddress,
         })]);

@@ -171,7 +171,13 @@ internal static class SeptuagintTextSource
         [.. chapter.Verses.Select(verse => new VerseDraft(
             verse.Number,
             [.. verse.Words.Select(word => new WordDraft(word.Surface, word.Trailer))],
-            verse.Label))]);
+            verse.Label)
+        {
+            Notes = [.. verse.Notes.Select(note => new VerseNoteDraft(
+                note.Kind == UsfmNoteKind.Footnote ? VerseNoteKind.Footnote : VerseNoteKind.CrossReference,
+                note.Content,
+                note.AnchorWordPosition))],
+        })]);
 
     /// <summary>
     /// Where a file of this edition starts in the shared canon. <c>EZR</c> is Esdras B and covers

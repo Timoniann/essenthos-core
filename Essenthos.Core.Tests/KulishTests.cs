@@ -36,6 +36,23 @@ public class UsfmNoteTests
         words.Should().NotContain(word => word.Surface == "Червоний");
     }
 
+    [Fact]
+    public void AFootnoteIsKeptAsTheEditionsNote()
+    {
+        var notes = UsfmReader.Read(WithANote).Chapters[0]!.Verses[0]!.Notes;
+
+        notes.Should().ContainSingle().Which.Should().Be(new UsfmNote(UsfmNoteKind.Footnote, "Червоний.", 3));
+    }
+
+    [Fact]
+    public void AFootnotesMarkerStaysAfterTheWordTheSourcePutItAfter()
+    {
+        var verse = UsfmReader.Read(WithANote).Chapters[0]!.Verses[0]!;
+
+        verse.Notes.Single().AnchorWordPosition.Should().Be(3);
+        verse.Words[verse.Notes.Single().AnchorWordPosition!.Value - 1].Surface.Should().Be("Єдом");
+    }
+
     /// <summary>
     /// The note leaves, and the sentence closes as it was printed: the full stop after the closing
     /// marker belongs to the last word of the verse, not to the note.
@@ -93,7 +110,7 @@ public sealed class Kulish
 }
 
 /// <summary>
-/// The first complete Ukrainian Bible, as it came off eBible: 66 books, no annotation, and nothing
+/// The first complete Ukrainian Bible, as it came off eBible: 66 books, no linguistic annotation, and nothing
 /// to reconcile with anybody's numbering. It is the plainest text in the corpus, which is worth
 /// checking rather than assuming — a load that quietly dropped a book would look exactly like this.
 /// </summary>
@@ -129,6 +146,17 @@ public class KulishCorpusTests(Kulish kulish) : IClassFixture<Kulish>
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
             .Should().Be(584659);
+
+    [Fact]
+    public void ItsVerseFootnotesStayBesideTheirVerses() =>
+        kulish.Source.Books
+            .SelectMany(book => book.Chapters)
+            .SelectMany(chapter => chapter.Verses)
+            .SelectMany(verse => verse.Notes)
+            // Ten more source footnotes sit in \mt1 book-title metadata. The reader currently
+            // serves verse notes, so they have no verse to attach to and are deliberately not
+            // passed off as one.
+            .Should().HaveCount(194);
 
     /// <summary>
     /// Its order is the canonical one, which is what lets the ordinal be the position. Checked

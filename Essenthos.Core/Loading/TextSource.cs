@@ -118,6 +118,9 @@ internal readonly record struct StatedNumberDraft(int Chapter, int Number);
 /// </param>
 internal sealed record VerseDraft(int Number, IReadOnlyList<WordDraft> Words, string Label = "")
 {
+    /// <summary>The edition's notes on this verse, in their source language and source order.</summary>
+    public IReadOnlyList<VerseNoteDraft> Notes { get; init; } = [];
+
     /// <summary>
     /// The addresses the edition prints for this verse in its own numbering, in the order it prints
     /// them. Empty for a text that numbers its verses the way it is stored and says nothing further
@@ -139,6 +142,13 @@ internal sealed record VerseDraft(int Number, IReadOnlyList<WordDraft> Words, st
     /// </summary>
     public bool OpensBeforeItsStatedAddress { get; init; }
 }
+
+/// <summary>A note an edition prints beside a verse, never text the verse itself contains.</summary>
+/// <param name="AnchorWordPosition">
+/// The last one-based source-word position before its marker, when its format supplies one. It
+/// records placement, not a conclusion that the note defines that word.
+/// </param>
+internal sealed record VerseNoteDraft(VerseNoteKind Kind, string Content, int? AnchorWordPosition = null);
 
 internal sealed record ChapterDraft(int Number, IReadOnlyList<VerseDraft> Verses);
 

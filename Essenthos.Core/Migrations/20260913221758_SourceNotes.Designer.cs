@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260913221758_SourceNotes")]
+    partial class SourceNotes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1748,10 +1751,6 @@ namespace Essenthos.Core.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<long?>("AnchorWordId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("anchor_word_id");
-
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("text")
@@ -1772,9 +1771,6 @@ namespace Essenthos.Core.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_verse_note");
-
-                    b.HasIndex("AnchorWordId")
-                        .HasDatabaseName("ix_verse_note_anchor_word_id");
 
                     b.HasIndex("VerseId", "Position")
                         .IsUnique()
@@ -2637,20 +2633,12 @@ namespace Essenthos.Core.Migrations
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.VerseNote", b =>
                 {
-                    b.HasOne("Essenthos.Core.Database.Entities.Word", "AnchorWord")
-                        .WithMany()
-                        .HasForeignKey("AnchorWordId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .HasConstraintName("fk_verse_note_words_anchor_word_id");
-
                     b.HasOne("Essenthos.Core.Database.Entities.Verse", "Verse")
                         .WithMany("Notes")
                         .HasForeignKey("VerseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_verse_note_verse_verse_id");
-
-                    b.Navigation("AnchorWord");
 
                     b.Navigation("Verse");
                 });

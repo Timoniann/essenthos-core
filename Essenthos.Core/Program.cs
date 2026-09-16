@@ -5,6 +5,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Loading.Links.Evidentia;
 using Essenthos.Core.Verification;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
@@ -61,6 +62,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 
 builder.Services.AddScoped<CorpusLoader>();
 builder.Services.AddScoped<StatedNumberLoader>();
+builder.Services.AddScoped<SourceNoteLoader>();
 builder.Services.AddScoped<MorphGntParsingLoader>();
 builder.Services.AddScoped<MaculaAnnotationLoader>();
 builder.Services.AddScoped<CanonicalFrameLoader>();
@@ -68,6 +70,21 @@ builder.Services.AddScoped<SuperscriptionFrameLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.NewTestamentLinkLoader>();
 builder.Services.AddScoped<AlignmentPipeline>();
+builder.Services.AddSingleton<ILanguagePack, EnglishLanguagePack>();
+builder.Services.AddSingleton<ILanguagePack, SlavicLanguagePack>();
+builder.Services.AddSingleton<ILanguagePack, OriginalLanguagePack>();
+builder.Services.AddSingleton<LanguagePackRegistry>();
+builder.Services.AddScoped<EvidentiaPipeline>();
+builder.Services.AddScoped<EvidentiaCorpusPreviewLoader>();
+builder.Services.AddSingleton<EvidentiaStrongProposalResolver>();
+builder.Services.AddSingleton<EvidentiaKnownRenderingProposalResolver>();
+builder.Services.AddSingleton<EvidentiaTargetGlossProposalResolver>();
+builder.Services.AddSingleton<EvidentiaDictionaryProposalResolver>();
+builder.Services.AddSingleton<EvidentiaSyntaxReviewGate>();
+builder.Services.AddSingleton<UdpipeAnnotator>();
+builder.Services.AddScoped<EvidentiaDictionarySenseIndex>();
+builder.Services.AddScoped<EvidentiaKnownRenderingIndex>();
+builder.Services.AddSingleton<IEvidentiaEvidenceSource, StrongNumberEvidenceSource>();
 builder.Services.AddScoped<CompositionPipeline>();
 builder.Services.AddScoped<CorpusCheck>();
 builder.Services.AddScoped<StrongLexiconLoader>();
@@ -216,6 +233,101 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
         args.Contains("--surface"),
         args.Contains("--stated"),
         args.Contains("--suppletion")));
+    return 0;
+}
+
+// Read one real chapter through the deterministic evidence graph. Unlike `align`, this command
+// never writes links: its result tells us whether the current language packs have enough evidence
+// to justify a future mapping pass and exactly where IBM fallback would be required.
+if (args is ["evidentia-preview", var previewFrom, var previewTo, var previewBook, var previewChapter, ..])
+{
+    if (!int.TryParse(previewBook, out var book) || !int.TryParse(previewChapter, out var chapter))
+    {
+        throw new ArgumentException("evidentia-preview needs numeric canonical book and chapter.");
+    }
+
+    var verseIndex = Array.IndexOf(args, "--verse");
+    int? verse = verseIndex >= 0 && verseIndex + 1 < args.Length
+        ? int.Parse(args[verseIndex + 1])
+        : null;
+    using var previewScope = app.Services.CreateScope();
+    var preview = await previewScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().Preview(
+        Identifier(previewFrom), Identifier(previewTo), book, chapter, verse,
+        allowSourceStrongEvidence: !args.Contains("--without-source-strong"),
+        allowKnownRenderingEvidence: !args.Contains("--without-known-renderings"));
+    app.Logger.LogInformation("\n{Preview}", preview);
+    return 0;
+}
+
+if (args is ["evidentia-measure", var measureFrom, var measureTo, var measureBook, var measureChapter, ..])
+{
+    if (!int.TryParse(measureBook, out var book) || !int.TryParse(measureChapter, out var chapter))
+    {
+        throw new ArgumentException("evidentia-measure needs numeric canonical book and chapter.");
+    }
+
+    using var measureScope = app.Services.CreateScope();
+    var measurement = await measureScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureChapter(
+        Identifier(measureFrom), Identifier(measureTo), book, chapter,
+        allowSourceStrongEvidence: !args.Contains("--without-source-strong"),
+        allowKnownRenderingEvidence: !args.Contains("--without-known-renderings"));
+    app.Logger.LogInformation("\n{Measurement}", measurement);
+    return 0;
+}
+
+if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, var measureBookOrdinal, ..])
+{
+    if (!int.TryParse(measureBookOrdinal, out var book))
+    {
+        throw new ArgumentException("evidentia-measure-book needs a numeric canonical book.");
+    }
+
+    using var measureBookScope = app.Services.CreateScope();
+    var fromChapter = OptionalInt(args, "--from-chapter");
+    var toChapter = OptionalInt(args, "--to-chapter");
+    if (fromChapter.HasValue && toChapter.HasValue && fromChapter > toChapter)
+    {
+        throw new ArgumentException("evidentia-measure-book needs --from-chapter less than or equal to --to-chapter.");
+    }
+    var measurement = await measureBookScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureBook(
+        Identifier(measureBookFrom), Identifier(measureBookTo), book,
+        allowSourceStrongEvidence: !args.Contains("--without-source-strong"),
+        allowKnownRenderingEvidence: !args.Contains("--without-known-renderings"),
+        firstChapter: fromChapter,
+        lastChapter: toChapter);
+    app.Logger.LogInformation("\n{Measurement}", measurement);
+    return 0;
+}
+
+static int? OptionalInt(string[] arguments, string option)
+{
+    var index = Array.IndexOf(arguments, option);
+    return index >= 0 && index + 1 < arguments.Length ? int.Parse(arguments[index + 1]) : null;
+}
+
+// Unlike `score`, this is an out-of-sample test: only 80% of the stated and Strong one-to-one pairs
+// reach SIL.Machine as its partial-alignment corpus, and a deterministic fifth of verses stays out
+// of both that file and the source-stated score. The result is therefore an improvement measure,
+// not the model repeating the key it was handed.
+if (args is ["score-anchors", var anchorFrom, var anchorTo, ..])
+{
+    using var anchorScope = app.Services.CreateScope();
+    var scorer = anchorScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
+    var anchorOne = Identifier(anchorFrom);
+    var anchorTwo = Identifier(anchorTo);
+    var anchorModel = args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4";
+    var anchorFold = args.Contains("--fold") ? int.Parse(args[Array.IndexOf(args, "--fold") + 1]) : 0;
+    app.Logger.LogInformation("\n{Report}", await scorer.MeasureAnchors(
+        anchorOne,
+        anchorTwo,
+        Path.Combine(Path.GetTempPath(), "essenthos-align",
+            $"{anchorOne}-{anchorTwo}-held-out-strong-anchors-{anchorModel}-fold-{anchorFold}"),
+        args.Contains("--min")
+            ? [.. args[Array.IndexOf(args, "--min") + 1].Split(',')
+                .Select(t => double.Parse(t, System.Globalization.CultureInfo.InvariantCulture))]
+            : [0.25, 0.40],
+        anchorModel,
+        anchorFold));
     return 0;
 }
 

@@ -25,9 +25,9 @@
     "sha256": "0ef51da34ca072d262ee55772465eab25506765a5e4b3deda318b537a52749ac"
   },
   "ClearBible": {
-    "bytes": 467283150,
-    "files": 28,
-    "sha256": "1b4c41644c0f0180441aa6b4f29d0853286a7d80634f9725d97ce376d0e68aac"
+    "bytes": 1326683562,
+    "files": 102,
+    "sha256": "6276b639803981e002b249c941943045061edf15a6b1e721a612a5bf161120a6"
   },
   "Door43": {
     "bytes": 3717627,
@@ -84,6 +84,11 @@
     "files": 3,
     "sha256": "3812bea6b4d41e3bc56959d4623be35ce3a38579c3af15b030994a157a24ae04"
   },
+  "PanLexSwadesh": {
+    "bytes": 7280742,
+    "files": 2892,
+    "sha256": "3345ee605944847acae2911944e2919a5ce104871ae806136a5723ab48fe95f4"
+  },
   "ReinaValera1909": {
     "bytes": 12465900,
     "files": 67,
@@ -93,6 +98,11 @@
     "bytes": 70208423,
     "files": 4,
     "sha256": "178f51e2ea43373a2ed68401557bbad08154e3f74d6c99d81d6e4546f3c32b06"
+  },
+  "STEPBibleLexicons": {
+    "bytes": 40250046,
+    "files": 6,
+    "sha256": "d2a07e6d76a234044b8288485f72e9460641b744f6ef382661855a3bc1b11206"
   },
   "SamaritanPentateuch": {
     "bytes": 17127528,
@@ -139,6 +149,11 @@
     "files": 28,
     "sha256": "1c4f93ad52cb63f8a3e8f6f2b30947fa78b036302ca8fb0a9799c2527b87f54c"
   },
+  "UDPipe": {
+    "bytes": 64355801,
+    "files": 6,
+    "sha256": "b1fce3391090a6fa70e016777d37aaa30ae7393dd19516818a45fa83f2cc95e3"
+  },
   "Versification": {
     "bytes": 5790928,
     "files": 1,
@@ -148,6 +163,11 @@
     "bytes": 3883476,
     "files": 56,
     "sha256": "ae94531aee7e51caf29f18da6b0cd4b0b33238a654bda142c24af0c3a79b82aa"
+  },
+  "WikidataLexemes": {
+    "bytes": 468365375,
+    "files": 2,
+    "sha256": "57658ed5b223b5bb7c6a7256459f050c87dbdd00cc0d4406444b21f4f7615e7b"
   },
   "WorldEnglish": {
     "bytes": 19025507,

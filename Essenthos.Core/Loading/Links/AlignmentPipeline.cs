@@ -151,10 +151,13 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         List<(int, int, int)> addresses,
         Dictionary<(int, int, int), List<Word>> source,
         Dictionary<(int, int, int), List<Word>> target,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        IReadOnlyDictionary<(int Book, int Chapter, int Verse), List<(int Source, int Target)>>? anchors = null,
+        bool shareAnchorTokens = false)
     {
         var sourceFile = Path.Combine(workspace, "source.txt");
         var targetFile = Path.Combine(workspace, "target.txt");
+        var anchorFile = Path.Combine(workspace, "anchors.txt");
         var alignmentFile = Path.Combine(workspace, "alignment", "pharaoh.txt");
         var modelPrefix = Path.Combine(workspace, "model", $"{fromSlug}-{toSlug}");
 
@@ -164,14 +167,31 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             return alignmentFile;
         }
 
-        Write(sourceFile, addresses, source);
-        Write(targetFile, addresses, target);
+        Directory.CreateDirectory(workspace);
+        var shared = shareAnchorTokens && anchors is not null
+            ? SharedAnchorTokens(source, target, anchors)
+            : null;
+        Write(sourceFile, addresses, source, shared?.Source);
+        Write(targetFile, addresses, target, shared?.Target);
+        if (anchors is not null)
+        {
+            WriteAnchors(anchorFile, addresses, anchors);
+        }
         Directory.CreateDirectory(Path.GetDirectoryName(alignmentFile)!);
         Directory.CreateDirectory(Path.GetDirectoryName(modelPrefix)!);
 
         logger.LogInformation("Training {Model} over {Verses} verse pairs", modelType, addresses.Count);
-        await Machine(["train", "alignment-model", "-mt", modelType, modelPrefix, sourceFile, targetFile],
-            cancellationToken);
+        var train = new List<string> { "train", "alignment-model", "-mt", modelType };
+        if (anchors is not null)
+        {
+            train.Add("-a");
+            train.Add(anchorFile);
+        }
+
+        train.Add(modelPrefix);
+        train.Add(sourceFile);
+        train.Add(targetFile);
+        await Machine([.. train], cancellationToken);
         await Machine(
             ["align", "-mt", modelType, "-sh", "och", "-s", modelPrefix, sourceFile, targetFile, alignmentFile],
             cancellationToken);
@@ -301,6 +321,182 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         }
 
         return report.ToString();
+    }
+
+    /// <summary>
+    /// Measures partial-alignment training without giving the score its answers. Four fifths of
+    /// the usable stated and Strong-number correspondences are supplied to the trainer; a
+    /// deterministic fifth of the verses is held out and source-stated pairs there are the only
+    /// gold used in the report. The model still sees the two texts of every verse, which is ordinary
+    /// semi-supervised alignment, but it receives no fixed pair from a held-out verse.
+    /// </summary>
+    public async Task<string> MeasureAnchors(
+        string fromSlug,
+        string toSlug,
+        string workspace,
+        IReadOnlyList<double> thresholds,
+        string modelType,
+        int heldOutFold = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var from = await Text(fromSlug, cancellationToken);
+        var to = await Text(toSlug, cancellationToken);
+        var source = await Words(fromSlug, word => Reduce(word), cancellationToken);
+        var target = await Words(toSlug, word => Comparable(word), cancellationToken);
+        var addresses = source.Keys.Intersect(target.Keys).OrderBy(address => address).ToList();
+        var (gold, _) = await Stated(from.Id, to.Id, statedOnly: true, cancellationToken);
+        var stated = await StatedAnchors(from.Id, to.Id, cancellationToken);
+        var (anchors, heldOut, candidates) = SplitAnchors(source, target, stated, gold, heldOutFold);
+
+        if (anchors.Sum(entry => entry.Value.Count) == 0 || heldOut.Count == 0)
+        {
+            throw new InvalidOperationException(
+                $"{fromSlug} and {toSlug} have no usable held-out stated anchors. The measurement needs " +
+                "one-to-one source mappings spanning both the training and test verses.");
+        }
+
+        Directory.CreateDirectory(workspace);
+        var baseline = await Align(
+            fromSlug, toSlug, Path.Combine(workspace, "baseline"), modelType, addresses, source, target,
+            cancellationToken);
+        var constrained = await Align(
+            fromSlug, toSlug, Path.Combine(workspace, "anchored"), modelType, addresses, source, target,
+            cancellationToken, anchors);
+        var shared = await Align(
+            fromSlug, toSlug, Path.Combine(workspace, "shared-anchor-tokens"), modelType, addresses, source, target,
+            cancellationToken, anchors, shareAnchorTokens: true);
+
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var prior = await SyntaxPrior.Read((NpgsqlConnection)db.Database.GetDbConnection(), to.Id, cancellationToken);
+        var report = new StringBuilder()
+            .AppendLine($"{fromSlug} into {toSlug}, held-out fold {heldOutFold} of partial-alignment training")
+            .AppendLine(
+                $"  {candidates} unambiguous stated-or-Strong pairs; {anchors.Sum(entry => entry.Value.Count)} in training, " +
+                $"{heldOut.Count} stated pairs in the held-out fifth of verses")
+            .AppendLine("  model          min   all kept  tested      hit  precision   recall     AER");
+
+        var answered = heldOut.Select(pair => pair.From).ToHashSet();
+
+        foreach (var threshold in thresholds)
+        {
+            foreach (var (label, path) in new[]
+                     {
+                         ("baseline", baseline),
+                         ("partial", constrained),
+                         ("shared-token", shared),
+                     })
+            {
+                var (drafts, _, _, _) = Read(
+                    path, addresses, source, target, threshold, Selection.BestPerSource, prior);
+                var tested = drafts.Where(draft => answered.Contains(draft.SourceWordId)).ToList();
+                var score = Alignment.Score(
+                    tested.Select(draft => (draft.SourceWordId, draft.TargetWordId)), heldOut);
+                report.AppendLine(
+                    $"  {label,-12}{threshold,6:F2}{drafts.Count,11}{tested.Count,8}{score.Hit,9}{score.Precision,11:P3}  " +
+                    $"{score.Recall,7:P3}  {score.AlignmentErrorRate,6:F3}");
+            }
+        }
+
+        return report.ToString();
+    }
+
+    private static (
+        Dictionary<(int Book, int Chapter, int Verse), List<(int Source, int Target)>> Training,
+        HashSet<(long From, long To)> HeldOut,
+        int Candidates)
+        SplitAnchors(
+            Dictionary<(int Book, int Chapter, int Verse), List<Word>> source,
+        Dictionary<(int Book, int Chapter, int Verse), List<Word>> target,
+        HashSet<(long From, long To)> stated,
+        HashSet<(long From, long To)> gold,
+        int heldOutFold)
+    {
+        var sourceAt = Positions(source);
+        var targetAt = Positions(target);
+        var candidates = new List<AnchorCandidate>(stated.Count);
+
+        foreach (var (from, to) in stated)
+        {
+            if (sourceAt.TryGetValue(from, out var lefts)
+                && targetAt.TryGetValue(to, out var rights)
+                && lefts.SelectMany(left => rights.Where(right => right.Address == left.Address)
+                    .Select(right => new AnchorCandidate(left.Address, left.Position, right.Position)))
+                    .FirstOrDefault() is { } candidate)
+            {
+                candidates.Add(candidate);
+            }
+        }
+
+        // A fixed source token with two fixed targets is not an anchor but a contradiction. The
+        // source can state a phrase as a correspondence, yet partial EM needs a single position
+        // on each side; hold those true-but-nonatomic claims out of its input rather than making a
+        // choice the source did not make.
+        var unambiguous = candidates
+            .GroupBy(candidate => candidate.Address)
+            .SelectMany(group => group
+                .Where(candidate => group.Count(other => other.Source == candidate.Source) == 1
+                                    && group.Count(other => other.Target == candidate.Target) == 1))
+            .ToList();
+        var training = unambiguous
+            .Where(candidate => !HeldOut(candidate.Address, heldOutFold))
+            .GroupBy(candidate => candidate.Address)
+            .ToDictionary(
+                group => group.Key,
+                group => group.Select(candidate => (candidate.Source, candidate.Target)).ToList());
+        var heldOut = gold
+            .Where(pair => sourceAt.TryGetValue(pair.From, out var lefts)
+                           && targetAt.TryGetValue(pair.To, out var rights)
+                && lefts.Any(left => HeldOut(left.Address, heldOutFold)
+                                                && rights.Any(right => right.Address == left.Address)))
+            .ToHashSet();
+
+        return (training, heldOut, unambiguous.Count);
+    }
+
+    private static Dictionary<long, List<WordPosition>> Positions(
+        Dictionary<(int Book, int Chapter, int Verse), List<Word>> words) => words
+        .SelectMany(entry => entry.Value.Select((word, position) => new
+        {
+            word.Id,
+            Address = entry.Key,
+            Position = position,
+        }))
+        .GroupBy(entry => entry.Id)
+        .ToDictionary(
+            group => group.Key,
+            group => group.Select(entry => new WordPosition(entry.Address, entry.Position)).ToList());
+
+    /// <summary>A stable one-in-five verse split, not <see cref="HashCode"/>, which is salted per process.</summary>
+    private static bool HeldOut((int Book, int Chapter, int Verse) address, int fold) =>
+        (address.Book * 17 + address.Chapter * 13 + address.Verse) % 5 == fold;
+
+    private async Task<HashSet<(long From, long To)>> StatedAnchors(
+        int fromTextId,
+        int toTextId,
+        CancellationToken cancellationToken)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        var anchors = new HashSet<(long, long)>();
+        await using var command = new NpgsqlCommand(
+            """
+            SELECT f.word_id, t.word_id
+            FROM link l
+            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
+            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
+            WHERE l.from_text_id = @from AND l.to_text_id = @to
+              AND l.method IN ('stated-by-source', 'strong-number')
+            """,
+            connection);
+        command.Parameters.AddWithValue("from", fromTextId);
+        command.Parameters.AddWithValue("to", toTextId);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            anchors.Add((reader.GetInt64(0), reader.GetInt64(1)));
+        }
+
+        return anchors;
     }
 
     /// <summary>
@@ -772,7 +968,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     private static void Write(
         string path,
         List<(int, int, int)> addresses,
-        Dictionary<(int, int, int), List<Word>> words)
+        Dictionary<(int, int, int), List<Word>> words,
+        IReadOnlyDictionary<((int Book, int Chapter, int Verse) Address, int Position), string>? shared = null)
     {
         var lines = new List<string>(addresses.Count);
 
@@ -780,11 +977,64 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         {
             var verse = words[address];
             var (book, chapter, number) = address;
-            lines.Add(AlignmentTokens.Line(verse.Select(w => w.Text), $"{book} {chapter}:{number}"));
+            lines.Add(AlignmentTokens.Line(
+                verse.Select((word, position) => shared is not null
+                    && shared.TryGetValue((address, position), out var token)
+                        ? token
+                        : word.Text),
+                $"{book} {chapter}:{number}"));
         }
 
         File.WriteAllLines(path, lines);
     }
+
+    /// <summary>
+    /// Gives both ends of a known correspondence the target's Strong number as a temporary shared
+    /// vocabulary item. It is written only into a training workspace: the corpus still keeps the
+    /// texts' actual words and only source-backed links retain their original provenance.
+    /// </summary>
+    private static SharedTokens SharedAnchorTokens(
+        Dictionary<(int Book, int Chapter, int Verse), List<Word>> source,
+        Dictionary<(int Book, int Chapter, int Verse), List<Word>> target,
+        IReadOnlyDictionary<(int Book, int Chapter, int Verse), List<(int Source, int Target)>> anchors)
+    {
+        var left = new Dictionary<((int, int, int), int), string>();
+        var right = new Dictionary<((int, int, int), int), string>();
+
+        foreach (var (address, pairs) in anchors)
+        {
+            if (!source.TryGetValue(address, out var sourceVerse)
+                || !target.TryGetValue(address, out var targetVerse))
+            {
+                continue;
+            }
+
+            foreach (var (from, to) in pairs)
+            {
+                if (from >= sourceVerse.Count || to >= targetVerse.Count
+                    || string.IsNullOrWhiteSpace(targetVerse[to].StrongNumber))
+                {
+                    continue;
+                }
+
+                var token = $"strong-{targetVerse[to].StrongNumber}";
+                left[(address, from)] = token;
+                right[(address, to)] = token;
+            }
+        }
+
+        return new SharedTokens(left, right);
+    }
+
+    private static void WriteAnchors(
+        string path,
+        List<(int Book, int Chapter, int Verse)> addresses,
+        IReadOnlyDictionary<(int Book, int Chapter, int Verse), List<(int Source, int Target)>> anchors) =>
+        File.WriteAllLines(
+            path,
+            addresses.Select(address => anchors.TryGetValue(address, out var pairs)
+                ? string.Join(' ', pairs.Select(pair => $"{pair.Source}-{pair.Target}"))
+                : string.Empty));
 
     private async Task<Database.Entities.Text> Text(string slug, CancellationToken cancellationToken) =>
         await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken)
@@ -844,7 +1094,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                         r.Id,
                         AlignmentTokens.One(form(
                             new WordForms(
-                                r.Surface, r.Lemma, r.Consonantal, r.StrongNumber, r.Language, r.Position)))))
+                                r.Surface, r.Lemma, r.Consonantal, r.StrongNumber, r.Language, r.Position))),
+                        r.StrongNumber))
                     .ToList());
     }
 
@@ -914,7 +1165,15 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         string? Language,
         int Position);
 
-    private sealed record Word(long Id, string Text);
+    private sealed record Word(long Id, string Text, string? StrongNumber);
+
+    private sealed record WordPosition((int Book, int Chapter, int Verse) Address, int Position);
+
+    private sealed record AnchorCandidate((int Book, int Chapter, int Verse) Address, int Source, int Target);
+
+    private sealed record SharedTokens(
+        IReadOnlyDictionary<((int Book, int Chapter, int Verse) Address, int Position), string> Source,
+        IReadOnlyDictionary<((int Book, int Chapter, int Verse) Address, int Position), string> Target);
 
     private sealed record AlignedDraft(long SourceWordId, long TargetWordId, double Translation, double Position);
 }

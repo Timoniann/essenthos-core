@@ -13,14 +13,27 @@ sorted list of every file's path, size and hash. It does not make the corpus rep
 script does that — but it makes a copy checkable, which is the cheaper half and the one that was
 missing.
 
-  python scripts/corpus-manifest.py           write the manifest
-  python scripts/corpus-manifest.py --check    compare the corpus against it, exit 1 on a difference
+  python scripts/corpus-manifest.py                    write the manifest
+  python scripts/corpus-manifest.py --folders A,B      update only named folders, preserving others
+  python scripts/corpus-manifest.py --check            compare the corpus against it, exit 1 on a difference
 """
 
 import hashlib, os, json, subprocess, sys, time
 sys.stdout.reconfigure(encoding='utf-8')
 root = 'Resources'
 started = time.time()
+
+selected = None
+if '--folders' in sys.argv:
+    try:
+        value = sys.argv[sys.argv.index('--folders') + 1]
+    except IndexError:
+        raise SystemExit('--folders requires a comma-separated folder list')
+    selected = {name.strip() for name in value.split(',') if name.strip()}
+    if not selected:
+        raise SystemExit('--folders requires at least one folder name')
+    if '--check' in sys.argv:
+        raise SystemExit('--folders cannot be combined with --check')
 
 # Files git already carries are excluded. They are versioned, so the manifest adds nothing about
 # them -- and they are text, so git rewrites their line endings on checkout: a LICENCE.md alone made
@@ -34,7 +47,13 @@ except Exception:
     pass
 
 folders = {}
-for name in sorted(os.listdir(root)):
+available = set(os.listdir(root))
+if selected:
+    missing = selected - available
+    if missing:
+        raise SystemExit('Unknown corpus folder(s): ' + ', '.join(sorted(missing)))
+
+for name in sorted(selected if selected is not None else available):
     d = os.path.join(root, name)
     if not os.path.isdir(d):
         continue
@@ -90,5 +109,10 @@ if '--check' in sys.argv:
     print(f'{len(folders)} folders match the manifest.')
     raise SystemExit(0)
 
-json.dump(folders, open(path, 'w', encoding='utf-8'), indent=2, sort_keys=True)
+if selected:
+    recorded = json.load(open(path, encoding='utf-8')) if os.path.exists(path) else {}
+    recorded.update(folders)
+    folders = recorded
+
+json.dump(folders, open(path, 'w', encoding='utf-8', newline='\n'), indent=2, sort_keys=True)
 print(f'Wrote {path}.')

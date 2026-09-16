@@ -20,8 +20,9 @@ namespace Essenthos.Core.Loading;
 /// everywhere except where it is wrong is not a witness. <c>Resources/Kulish/LICENCE.md</c> has the
 /// comparison.
 ///
-/// It arrives with no annotation of any kind — no lemmas, no morphology, no Strong numbers and no
-/// alignment to anything. Nothing links it yet; that is a separate pass and a much larger one.
+/// It arrives with no linguistic annotation — no lemmas, no morphology, no Strong numbers and no
+/// alignment to anything. Its 204 editorial footnotes do arrive with it and stay attached to their
+/// verses; nothing links its words yet, which is a separate pass and a much larger one.
 /// </summary>
 internal static class KulishTextSource
 {
@@ -147,5 +148,11 @@ internal static class KulishTextSource
         [.. chapter.Verses.Select(verse => new VerseDraft(
             verse.Number,
             [.. verse.Words.Select(word => new WordDraft(word.Surface, word.Trailer))],
-            verse.Label))]);
+            verse.Label)
+        {
+            Notes = [.. verse.Notes.Select(note => new VerseNoteDraft(
+                note.Kind == UsfmNoteKind.Footnote ? VerseNoteKind.Footnote : VerseNoteKind.CrossReference,
+                note.Content,
+                note.AnchorWordPosition))],
+        })]);
 }

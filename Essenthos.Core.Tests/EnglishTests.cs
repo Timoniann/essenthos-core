@@ -1,4 +1,5 @@
 using Essenthos.Core.Loading;
+using Essenthos.Core.Database.Entities.Enums;
 using FluentAssertions;
 using Xunit;
 
@@ -27,6 +28,11 @@ public sealed class English
         .SelectMany(chapter => chapter.Verses)
         .SelectMany(verse => verse.Words);
 
+    internal IEnumerable<VerseNoteDraft> Notes(TextSource source) => source.Books
+        .SelectMany(book => book.Chapters)
+        .SelectMany(chapter => chapter.Verses)
+        .SelectMany(verse => verse.Notes);
+
     internal VerseDraft Verse(TextSource source, int ordinal, int chapter, int verse) => source.Books
         .Single(book => book.CanonicalOrdinal == ordinal)
         .Chapters.Single(one => one.Number == chapter)
@@ -35,7 +41,7 @@ public sealed class English
     internal bool Holds(TextSource source, int ordinal, int chapter, int verse) => source.Books
         .Single(book => book.CanonicalOrdinal == ordinal)
         .Chapters.Single(one => one.Number == chapter)
-        .Verses.Any(one => one.Number == verse);
+        .Verses.Any(one => one.Number == verse && one.Words.Count > 0);
 }
 
 /// <summary>
@@ -47,12 +53,24 @@ public sealed class English
 /// </summary>
 public class EnglishCorpusTests(English english) : IClassFixture<English>
 {
+    [Theory]
+    [InlineData(EnglishTextSource.AmericanStandard, 16, 0)]
+    [InlineData(EnglishTextSource.WorldEnglish, 1231, 340)]
+    public void EditorialNotesAndCrossReferencesStayWithTheirEdition(string slug, int footnotes, int crossReferences)
+    {
+        var notes = english.Notes(Source(slug)).ToList();
+
+        notes.Count(note => note.Kind == VerseNoteKind.Footnote).Should().Be(footnotes);
+        notes.Count(note => note.Kind == VerseNoteKind.CrossReference).Should().Be(crossReferences);
+    }
+
     /// <summary>
     /// The shape of each, checked rather than trusted: a partial download is the failure this load
     /// can actually have, and eBible resets long connections.
     /// </summary>
     /// <param name="verses">
-    /// Verses holding words. A verse slot the edition prints empty is not stored, and each of the
+    /// Verses holding words. An empty source-note marker does have a verse row now so its note can
+    /// be shown, but it is not scripture and therefore does not change these counts. Each of the
     /// three shortfalls here is the edition speaking. The American Standard leaves sixteen slots
     /// empty where the Textus Receptus prints a verse and its critical Greek does not; the World
     /// English Bible leaves five, four of them the same kind and the fifth Romans 16:25, whose
@@ -72,7 +90,8 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
 
         source.Books.Should().HaveCount(books);
         source.Books.Sum(book => book.Chapters.Count).Should().Be(chapters);
-        source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count)).Should().Be(verses);
+        source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count(verse => verse.Words.Count > 0)))
+            .Should().Be(verses);
     }
 
     /// <summary>

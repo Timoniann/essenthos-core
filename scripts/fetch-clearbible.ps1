@@ -21,8 +21,10 @@
 [CmdletBinding()]
 param(
     [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources'),
-    # eng holds the Berean and Young's Literal; rus is kept for the day PRB-0185 is fixed upstream.
-    [string[]] $Languages = @('eng', 'rus')
+    # Every language archive published in the `data-latest` release on 2026-09-14.  We retain
+    # problematic and transferred sets as source material, but a loader must read each set's TOML
+    # and its quality report before treating a record as a mapping.
+    [string[]] $Languages = @('arb', 'asm', 'ben', 'eng', 'fra', 'hau', 'hin', 'legacy', 'por', 'rus', 'spa')
 )
 
 $ErrorActionPreference = 'Stop'

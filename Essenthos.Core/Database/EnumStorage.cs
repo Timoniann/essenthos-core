@@ -204,6 +204,20 @@ internal static class EnumSpelling
         _ => throw Unmapped(value),
     };
 
+    public static string Of(VerseNoteKind value) => value switch
+    {
+        VerseNoteKind.Footnote => "footnote",
+        VerseNoteKind.CrossReference => "cross-reference",
+        _ => throw Unmapped(value),
+    };
+
+    public static VerseNoteKind ToVerseNoteKind(string stored) => stored switch
+    {
+        "footnote" => VerseNoteKind.Footnote,
+        "cross-reference" => VerseNoteKind.CrossReference,
+        _ => throw Unreadable<VerseNoteKind>(stored),
+    };
+
     public static LinkSide ToLinkSide(string stored) => stored switch
     {
         "from" => LinkSide.From,
@@ -258,4 +272,7 @@ internal static class EnumStorage
 
     public static readonly ValueConverter<LinkSide, string> LinkSide =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToLinkSide(stored));
+
+    public static readonly ValueConverter<VerseNoteKind, string> VerseNoteKind =
+        new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToVerseNoteKind(stored));
 }

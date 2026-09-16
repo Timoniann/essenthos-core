@@ -1,5 +1,6 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -119,6 +120,38 @@ public sealed class CorpusLoaderTests : IDisposable
         second.AlreadyLoaded.Should().BeTrue();
         (await _db.Words.CountAsync()).Should().Be(6);
         (await _db.Texts.CountAsync()).Should().Be(1);
+    }
+
+    [Fact]
+    public async Task SourceNotesCanBeAddedToAnAlreadyLoadedTextAndReachTheChapterResponse()
+    {
+        var source = Sample() with
+        {
+            Books = [
+                new BookDraft(8, 1, "Ruth", "ruth", [
+                    new ChapterDraft(1, [
+                        new VerseDraft(1, [new WordDraft("In", " ")])
+                        {
+                            Notes = [
+                                new VerseNoteDraft(VerseNoteKind.Footnote, "A source explanation.", 1),
+                                new VerseNoteDraft(VerseNoteKind.CrossReference, "Genesis 1:1"),
+                            ],
+                        },
+                    ]),
+                ]),
+            ],
+        };
+        await Loader().Load(source);
+
+        var outcome = await new SourceNoteLoader(_db, NullLogger<SourceNoteLoader>.Instance).Load(source);
+        var text = await _db.Texts.SingleAsync();
+        var chapter = await Texts.ReadChapter(_db, text.Id, 8, 1, default);
+
+        outcome.Notes.Should().Be(2);
+        chapter.Should().ContainSingle().Which.Notes.Should().BeEquivalentTo([
+            new SourceNoteResponse("footnote", "A source explanation.", "In"),
+            new SourceNoteResponse("cross-reference", "Genesis 1:1"),
+        ]);
     }
 
     [Theory]
