@@ -6,12 +6,12 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// </summary>
 internal static class EvidentiaPhraseBuilder
 {
-    private const double MinimumWordScore = 0.65;
+    private const double MinimumWordScore = EvidentiaDefaults.PhraseWordScore;
 
     public static IReadOnlyList<EvidentiaPhraseCandidate> Build(IReadOnlyList<EvidentiaCandidate> candidates)
     {
         var eligible = candidates.Where(candidate => candidate.Score >= MinimumWordScore
-                && !candidate.Source.IsFunctionWord && !candidate.Target.IsFunctionWord
+                && candidate.Source.IsContentWord && !candidate.PairsAContentWordWithAFunctionWord
                 && candidate.Source.Token.Address == candidate.Target.Token.Address)
             .ToList();
         var uniqueSource = eligible.GroupBy(candidate => candidate.Source.Token.Id)

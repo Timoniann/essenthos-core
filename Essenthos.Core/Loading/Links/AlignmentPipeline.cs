@@ -123,9 +123,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var alignmentFile = await Align(
             fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
 
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        var prior = await SyntaxPrior.Read(
-            (NpgsqlConnection)db.Database.GetDbConnection(), to.Id, cancellationToken);
+        var prior = await Syntax(to.Id, cancellationToken);
 
         var (drafts, proposed, collapsed, below) = Read(
             alignmentFile, addresses, source, target, minimumConfidence, Selection.BestPerSource, prior);
@@ -136,6 +134,25 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             fromSlug, toSlug, addresses.Count, proposed, collapsed, below, drafts.Count, started.Elapsed);
         logger.LogInformation("Aligned {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The target text's clause and phrase structure. The connection is opened because SyntaxPrior
+    /// reads it with Npgsql directly, and closed here because three callers opened one and none of
+    /// them closed it.
+    /// </summary>
+    private async Task<SyntaxPrior> Syntax(int textId, CancellationToken cancellationToken)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        try
+        {
+            return await SyntaxPrior.Read(
+                (NpgsqlConnection)db.Database.GetDbConnection(), textId, cancellationToken);
+        }
+        finally
+        {
+            await db.Database.CloseConnectionAsync();
+        }
     }
 
     /// <summary>
@@ -231,11 +248,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var alignmentFile = await Align(
             fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
 
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        var prior = await SyntaxPrior.Read(
-            (NpgsqlConnection)db.Database.GetDbConnection(),
-            (await Text(toSlug, cancellationToken)).Id,
-            cancellationToken);
+        var prior = await Syntax((await Text(toSlug, cancellationToken)).Id, cancellationToken);
 
         var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, floor, selection, prior);
         return [.. drafts.Select(d => (d.SourceWordId, d.TargetWordId, d.Translation))];
@@ -366,8 +379,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             fromSlug, toSlug, Path.Combine(workspace, "shared-anchor-tokens"), modelType, addresses, source, target,
             cancellationToken, anchors, shareAnchorTokens: true);
 
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        var prior = await SyntaxPrior.Read((NpgsqlConnection)db.Database.GetDbConnection(), to.Id, cancellationToken);
+        var prior = await Syntax(to.Id, cancellationToken);
         var report = new StringBuilder()
             .AppendLine($"{fromSlug} into {toSlug}, held-out fold {heldOutFold} of partial-alignment training")
             .AppendLine(

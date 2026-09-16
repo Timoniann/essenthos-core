@@ -46,7 +46,7 @@ internal sealed class EvidentiaSyntaxReviewGate
                 .Concat(review.Select(candidate =>
                     (Source: candidate.Source.Token.Position,
                         Target: targetIndex[candidate.Target.Token.Id],
-                        Confidence: 0.45d,
+                        Confidence: EvidentiaDefaults.TargetGlossReviewConfidence,
                         Position: 0d)))
                 .ToList();
             var cohesion = syntax.Judge(scored, targetIds);

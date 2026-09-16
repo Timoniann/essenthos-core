@@ -9,8 +9,8 @@ public class EvidentiaPipelineTests
     [Fact]
     public void Reciprocal_dictionary_sense_is_review_only_with_a_trace()
     {
-        var source = new EvidentiaAnalysis(Token(1, "faith", "eng", verse: 1), "faith", "faith", null, false, LanguagePackCapability.Lemma);
-        var target = new EvidentiaAnalysis(new EvidentiaToken(11, new EvidentiaAddress(40, 11, 1), 1, "אֱמוּנָה", "hbo", StrongNumber: "H530"), "אֱמוּנָה", null, null, false, LanguagePackCapability.Normalisation);
+        var source = new EvidentiaAnalysis(Token(1, "faith", "eng", verse: 1), "faith", "faith", null, EvidentiaWordClass.Content, LanguagePackCapability.Lemma);
+        var target = new EvidentiaAnalysis(new EvidentiaToken(11, new EvidentiaAddress(40, 11, 1), 1, "אֱמוּנָה", "hbo", StrongNumber: "H530"), "אֱמוּנָה", null, null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var candidate = new EvidentiaCandidate(source, target,
         [
             new EvidentiaEvidence(EvidentiaEvidenceKind.ExactCanonicalAddress, 0.30, "canonical-frame"),
@@ -53,6 +53,28 @@ public class EvidentiaPipelineTests
         Assert.Contains(candidate.Evidence, evidence => evidence.Kind == EvidentiaEvidenceKind.Morphology && evidence.Score > 0.06);
     }
     [Fact]
+    public void AHebrewNounAgreesWithAnEnglishOneAlthoughTheTwoWitnessesSpellTheLabelDifferently()
+    {
+        var gloss = TargetGlossEvidenceSource.For(
+        [
+            new EvidentiaToken(2, new EvidentiaAddress(1, 1, 1), 1, "אֶרֶץ", "hbo", Gloss: "earth",
+                PartOfSpeech: "subs", Morphology: new Dictionary<string, string> { ["pos"] = "subs", ["number"] = "sg" }),
+        ]);
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [new EvidentiaToken(1, new EvidentiaAddress(1, 1, 1), 1, "earth", "eng", PartOfSpeech: "NOUN",
+                Morphology: new Dictionary<string, string> { ["Number"] = "Sing" })],
+            [new EvidentiaToken(2, new EvidentiaAddress(1, 1, 1), 1, "אֶרֶץ", "hbo", Gloss: "earth",
+                PartOfSpeech: "subs", Morphology: new Dictionary<string, string> { ["pos"] = "subs", ["number"] = "sg" })]),
+            [gloss!]);
+
+        var candidate = Assert.Single(preview.Candidates);
+        Assert.Contains(candidate.Evidence, evidence =>
+            evidence.Kind == EvidentiaEvidenceKind.Morphology
+            && evidence.Source.Contains("universal-pos:noun")
+            && evidence.Source.EndsWith("matching-features:1"));
+    }
+
+    [Fact]
     public void TheCurrentVerseOutranksAnIdenticalWordInANeighbour()
     {
         var preview = Pipeline().Preview(new EvidentiaRequest(
@@ -77,6 +99,35 @@ public class EvidentiaPipelineTests
         preview.Candidates.Should().BeEmpty();
         preview.NeedsStatisticalFallback.Should().BeTrue();
         preview.Todos.Should().Contain(EvidentiaTodo.LanguagePack);
+    }
+
+    [Fact]
+    public void AnUnsupportedLanguageDoesNotMatchItselfBySpelling()
+    {
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [Token(1, "und", "deu", verse: 2)],
+            [Token(11, "und", "deu", verse: 2)]));
+
+        preview.Candidates.Should().BeEmpty(
+            "nobody has written a German pack, so nothing knows whether this is a particle");
+        preview.Status.Should().Be(EvidentiaPreviewStatus.UnsupportedLanguage);
+        preview.NeedsStatisticalFallback.Should().BeTrue();
+    }
+
+    [Fact]
+    public void AHebrewArticleIsAFunctionWordOnTheTargetSideToo()
+    {
+        var registry = new LanguagePackRegistry([new OriginalLanguagePack()]);
+        var article = new EvidentiaToken(1, new EvidentiaAddress(1, 1, 1), 1, "הָ", "hbo",
+            Morphology: new Dictionary<string, string> { ["pos"] = "art" });
+        var noun = article with { Id = 2, Surface = "אָרֶץ", PartOfSpeech = "subs" };
+
+        registry.TryAnalyse(article with { PartOfSpeech = "art" }, out var analysed).Should().BeTrue();
+        analysed.IsFunctionWord.Should().BeTrue();
+        analysed.Capabilities.Should().HaveFlag(LanguagePackCapability.FunctionWords);
+
+        registry.TryAnalyse(noun, out var content).Should().BeTrue();
+        content.IsContentWord.Should().BeTrue();
     }
 
     [Fact]

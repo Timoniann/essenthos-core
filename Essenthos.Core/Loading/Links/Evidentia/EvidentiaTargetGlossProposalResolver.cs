@@ -7,7 +7,7 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// </summary>
 internal sealed class EvidentiaTargetGlossProposalResolver
 {
-    private const double ReviewConfidence = 0.45;
+    private const double ReviewConfidence = EvidentiaDefaults.TargetGlossReviewConfidence;
 
     public EvidentiaResolution ResolveAdditional(
         IEnumerable<EvidentiaCandidate> candidates,
@@ -64,8 +64,11 @@ internal sealed class EvidentiaTargetGlossProposalResolver
         return new EvidentiaResolution(proposals, 0);
     }
 
+    // A gloss on a Hebrew article is a grammatical note, not a claim that some translated content
+    // word renders that occurrence, so the witness's own class keeps it out of the queue.
     private static bool IsExactTargetGloss(EvidentiaCandidate candidate) =>
-        candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)
+        !candidate.PairsAContentWordWithAFunctionWord
+        && candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)
         && candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.TargetGloss);
 
 }

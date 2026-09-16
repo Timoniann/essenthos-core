@@ -3,7 +3,7 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// <summary>Promotes only reciprocal, exact-verse dictionary-sense candidates to the review queue.</summary>
 internal sealed class EvidentiaDictionaryProposalResolver
 {
-    private const double ReviewConfidence = 0.40;
+    private const double ReviewConfidence = EvidentiaDefaults.DictionaryReviewConfidence;
 
     public EvidentiaResolution ResolveAdditional(IEnumerable<EvidentiaCandidate> candidates, IEnumerable<EvidentiaProposal> reserved)
     {
@@ -29,6 +29,7 @@ internal sealed class EvidentiaDictionaryProposalResolver
     }
 
     private static bool IsExactDictionary(EvidentiaCandidate candidate) =>
-        candidate.Evidence.Any(e => e.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)
+        !candidate.PairsAContentWordWithAFunctionWord
+        && candidate.Evidence.Any(e => e.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)
         && candidate.Evidence.Any(e => e.Kind == EvidentiaEvidenceKind.DictionarySense);
 }

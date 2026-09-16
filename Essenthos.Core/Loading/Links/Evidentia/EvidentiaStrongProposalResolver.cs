@@ -1,3 +1,5 @@
+using Essenthos.Core.Strong;
+
 namespace Essenthos.Core.Loading.Links.Evidentia;
 
 /// <summary>
@@ -5,6 +7,18 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// A Strong number identifies a lexeme, not an occurrence; therefore repeated occurrences are
 /// proposed only when the two exact canonical verses contain the same count, in their written
 /// order. Unequal counts remain unresolved for later dictionary, syntax or statistical evidence.
+///
+/// The count is per lexeme, so the grouping is on the normalised number rather than on the tag as
+/// written. g0570, G0570 and G570 are one number, and the evidence source has already treated them
+/// as one; grouping on the spelling would let each of two spellings see one occurrence, call itself
+/// unique, and point two source words at the same target word at the confidence that uniqueness is
+/// what earns.
+///
+/// The two confidences are StrongNumberMatch's own. They are the same two shapes it already
+/// reasons about, and a second copy of the numbers would be a second ladder to keep in step. Its
+/// Verse method is not called here because it reads a tagged edition's rows and writes links,
+/// where this reads candidate edges and writes proposals; what is shared is the ladder, which is
+/// the part that has to agree.
 /// </summary>
 internal sealed class EvidentiaStrongProposalResolver
 {
@@ -15,7 +29,9 @@ internal sealed class EvidentiaStrongProposalResolver
                 evidence.Kind == EvidentiaEvidenceKind.SharedStrongNumber))
             .Where(candidate => candidate.Evidence.Any(evidence =>
                 evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress))
-            .GroupBy(candidate => (candidate.Source.Token.Address, candidate.Source.Token.StrongNumber))
+            .GroupBy(candidate => (
+                candidate.Source.Token.Address,
+                Number: StrongNumbers.Normalize(candidate.Source.Token.StrongNumber)))
             .ToList();
 
         var proposals = new List<EvidentiaProposal>();
@@ -40,7 +56,9 @@ internal sealed class EvidentiaStrongProposalResolver
             var kind = sources.Count == 1
                 ? EvidentiaProposalKind.UniqueSharedStrong
                 : EvidentiaProposalKind.SharedStrongInOrder;
-            var confidence = kind == EvidentiaProposalKind.UniqueSharedStrong ? 0.90 : 0.70;
+            var confidence = kind == EvidentiaProposalKind.UniqueSharedStrong
+                ? StrongNumberMatch.Unambiguous
+                : StrongNumberMatch.PairedInOrder;
             for (var index = 0; index < sources.Count; index++)
             {
                 var candidate = group.First(candidate => candidate.Source.Token.Id == sources[index].Token.Id

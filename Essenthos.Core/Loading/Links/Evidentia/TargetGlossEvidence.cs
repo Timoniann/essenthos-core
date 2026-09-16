@@ -9,7 +9,7 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// </summary>
 internal sealed partial class TargetGlossEvidenceSource : IEvidentiaEvidenceSource
 {
-    private const double GlossScore = 0.20;
+    private const double GlossScore = EvidentiaDefaults.TargetGlossScore;
     private readonly IReadOnlyDictionary<long, HashSet<string>> formsByTargetId;
 
     private TargetGlossEvidenceSource(IReadOnlyDictionary<long, HashSet<string>> formsByTargetId) =>
@@ -35,7 +35,7 @@ internal sealed partial class TargetGlossEvidenceSource : IEvidentiaEvidenceSour
     public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
         if (!source.Token.Language.Equals("eng", StringComparison.OrdinalIgnoreCase)
-            || source.IsFunctionWord
+            || !source.IsContentWord
             || !formsByTargetId.TryGetValue(target.Token.Id, out var forms)
             || !forms.Contains(source.Normalised))
         {

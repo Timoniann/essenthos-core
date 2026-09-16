@@ -14,6 +14,13 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
     AppDbContext db,
     LanguagePackRegistry languagePacks)
 {
+    /// <summary>
+    /// The whole lexicon, reversed from Strong number to the words its definitions use, built once
+    /// for the life of this scope. It used to be read from the database and regex-tokenised again
+    /// for every chapter - fifty times over a book run - to answer a question about one passage.
+    /// </summary>
+    private readonly Dictionary<string, ReverseSenseIndex> byLanguage = new(StringComparer.OrdinalIgnoreCase);
+
     public async Task<EvidentiaDictionarySenseEvidenceSource?> For(
         IReadOnlyList<EvidentiaToken> source,
         CancellationToken cancellationToken = default)
@@ -28,7 +35,7 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
         // dictionary key made unrelated forms collide (for example "рече" and "речі"). Until
         // UDPipe lemmas are supplied, an exact lower-case form is the conservative lexical key.
         var evidenceKeysByLexicalForm = source
-            .Where(token => Analyse(token) is { IsFunctionWord: false })
+            .Where(token => Analyse(token) is { IsContentWord: true })
             .SelectMany(token => LexicalForms(token).Select(form => (Form: Key(form), EvidenceKey: EvidenceKey(token))))
             .GroupBy(pair => pair.Form)
             .ToDictionary(group => group.Key, group => group.Select(pair => pair.EvidenceKey).ToHashSet(StringComparer.Ordinal), StringComparer.Ordinal);
@@ -37,33 +44,65 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
             return null;
         }
 
-        var (entries, provenance) = await Entries(language[0], cancellationToken);
+        var reverse = await Reverse(language[0], cancellationToken);
         var numbersByForm = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
-        foreach (var entry in entries)
+        foreach (var (form, evidenceKeys) in evidenceKeysByLexicalForm)
         {
-            foreach (var form in Words(entry.Definition, entry.KjvDefinition, entry.DetailedDefinition))
+            if (!reverse.NumbersByForm.TryGetValue(form, out var numbers))
             {
-                var analysis = Analyse(new EvidentiaToken(0, default, 0, form, language[0]));
-                if (analysis is null || analysis.IsFunctionWord
-                    || !evidenceKeysByLexicalForm.TryGetValue(Key(form), out var evidenceKeys))
+                continue;
+            }
+
+            foreach (var evidenceKey in evidenceKeys)
+            {
+                if (!numbersByForm.TryGetValue(evidenceKey, out var found))
                 {
-                    continue;
+                    found = new HashSet<string>(StringComparer.Ordinal);
+                    numbersByForm.Add(evidenceKey, found);
                 }
-                foreach (var evidenceKey in evidenceKeys)
-                {
-                    if (!numbersByForm.TryGetValue(evidenceKey, out var numbers))
-                    {
-                        numbers = new HashSet<string>(StringComparer.Ordinal);
-                        numbersByForm.Add(evidenceKey, numbers);
-                    }
-                    numbers.Add(entry.StrongNumber);
-                }
+
+                found.UnionWith(numbers);
             }
         }
 
+        var provenance = reverse.Source;
         return numbersByForm.Count == 0
             ? null
             : new EvidentiaDictionarySenseEvidenceSource(numbersByForm, provenance);
+    }
+
+    private async Task<ReverseSenseIndex> Reverse(string language, CancellationToken cancellationToken)
+    {
+        if (byLanguage.TryGetValue(language, out var cached))
+        {
+            return cached;
+        }
+
+        var (entries, provenance) = await Entries(language, cancellationToken);
+        var numbersByForm = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+        foreach (var entry in entries)
+        {
+            foreach (var form in Words(entry.Definition, entry.KjvDefinition, entry.DetailedDefinition).Distinct())
+            {
+                var analysis = Analyse(new EvidentiaToken(0, default, 0, form, language));
+                if (analysis is null || !analysis.IsContentWord)
+                {
+                    continue;
+                }
+
+                if (!numbersByForm.TryGetValue(Key(form), out var numbers))
+                {
+                    numbers = new HashSet<string>(StringComparer.Ordinal);
+                    numbersByForm.Add(Key(form), numbers);
+                }
+
+                numbers.Add(entry.StrongNumber);
+            }
+        }
+
+        var index = new ReverseSenseIndex(numbersByForm, provenance);
+        byLanguage.Add(language, index);
+        return index;
     }
 
     private async Task<(List<SenseEntry> Entries, string Source)> Entries(
@@ -116,6 +155,10 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
     [GeneratedRegex(@"\p{L}+")]
     private static partial Regex Word();
 
+    private sealed record ReverseSenseIndex(
+        IReadOnlyDictionary<string, HashSet<string>> NumbersByForm,
+        string Source);
+
     private sealed record SenseEntry(
         string StrongNumber,
         string? Definition,
@@ -133,11 +176,11 @@ internal sealed class EvidentiaDictionarySenseEvidenceSource(
     /// reading. The score is deliberately below direct Strong and needs canonical framing plus a
     /// future global matcher before it may become an accepted link.
     /// </summary>
-    private const double SenseScore = 0.34;
+    private const double SenseScore = EvidentiaDefaults.DictionarySenseScore;
 
     public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
-        if (source.IsFunctionWord
+        if (!source.IsContentWord
             || !strongNumbersBySourceForm.TryGetValue((source.Token.Lemma ?? source.Token.Surface).ToLowerInvariant(), out var numbers)
             || target.Token.StrongNumber is not { } targetNumber
             || !numbers.Contains(targetNumber))
