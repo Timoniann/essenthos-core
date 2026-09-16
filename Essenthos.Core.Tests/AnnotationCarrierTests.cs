@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
@@ -35,7 +35,10 @@ public sealed class AnnotationCarrierTests : IDisposable
     {
         _db = database.NewContext();
         Clear();
-        _carrier = new AnnotationCarrier(_db, NullLogger<AnnotationCarrier>.Instance);
+        _carrier = new AnnotationCarrier(
+            _db,
+            new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance),
+            NullLogger<AnnotationCarrier>.Instance);
 
         _hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
             (10, 13, ["מצרים", "לודים"]));

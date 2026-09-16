@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -76,7 +76,10 @@ internal sealed record CarryOutcome(
 /// that changes nothing, and the commands that move links are the ones that call it.
 /// </para>
 /// </summary>
-internal sealed class AnnotationCarrier(AppDbContext db, ILogger<AnnotationCarrier> logger)
+internal sealed class AnnotationCarrier(
+    AppDbContext db,
+    CrossedNameLoader crossed,
+    ILogger<AnnotationCarrier> logger)
 {
     /// <summary>
     /// How far two confidences may differ and still be the same number. They are products of
@@ -279,6 +282,10 @@ internal sealed class AnnotationCarrier(AppDbContext db, ILogger<AnnotationCarri
         var outcome = new CarryOutcome(
             groups.Count, seeds, kept, withdrawn, written, byText, started.Elapsed);
         logger.LogInformation("Carried: {Outcome}", outcome);
+
+        // The links that give two words of one verse each other's names are still crossed, so the
+        // carry has just written the crossed answer again.
+        logger.LogInformation("{Outcome}", await crossed.Load(cancellationToken));
         return outcome;
     }
 
@@ -304,8 +311,11 @@ internal sealed class AnnotationCarrier(AppDbContext db, ILogger<AnnotationCarri
             groups.Add((resolution, true));
         }
 
+        // The crossed-back rows stand on translated words and are derived from the links rather
+        // than from a seed, so carrying them would spread a Russian word's name along Russian links.
+        // They are written again from scratch once the carry is done.
         groups.AddRange(present
-            .Except(EntityAnnotationLoader.Written, StringComparer.Ordinal)
+            .Except([.. EntityAnnotationLoader.Written, CrossedNameLoader.Source], StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .Select(source => (new[] { source }, false)));
 
