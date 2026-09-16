@@ -147,6 +147,7 @@ internal sealed class DatasetLoader(
             await ReadTheNamesNothingSettles(resources, stoppingToken);
             await TellTheNamesakePlacesApart(resources, stoppingToken);
             await TellTheGreekNamesakesApart(stoppingToken);
+            await NameTheTribesTheConstructNames(stoppingToken);
             await ReachTheNamesNobodyElseCarries(stoppingToken);
             await WriteTheWordsForGod(stoppingToken);
             await HoldTheTitlesAsTitles(stoppingToken);
@@ -950,6 +951,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityNameFormLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// <em>The tribe of Naphtali</em>: the name after the Hebrew word for a tribe, read as the
+    /// tribe. After every pass that names a Hebrew word, because it answers only where none of them
+    /// did.
+    /// </summary>
+    private async Task NameTheTribesTheConstructNames(CancellationToken cancellationToken)
+    {
+        status.Starting("the tribes the Hebrew construct names");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<TribeNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>

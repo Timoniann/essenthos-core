@@ -118,6 +118,7 @@ builder.Services.AddScoped<OwnRecordLoader>();
 builder.Services.AddScoped<SenseReadingLoader>();
 builder.Services.AddScoped<SiteSplitLoader>();
 builder.Services.AddScoped<GreekNamesakeLoader>();
+builder.Services.AddScoped<TribeNameLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
 builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
