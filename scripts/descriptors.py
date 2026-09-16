@@ -3,9 +3,10 @@ What is true of this person, and which verse says so? Ask a model, and measure i
 
 `entity.distinguisher` is one English sentence per entity, imported whole from BibleData: not ours,
 not structured, not translatable (NOT-0171, FTR-0359). This harness replaces it with the claims that
-would make one -- `hobab -> son-of -> reuel-2 (NUM 10:29)` -- read out of the King James text of the
-verses the encyclopedia already attests the entity in, with the name forms every language needs
-produced beside them. DOC-0191 is the contract for what comes out; this writes it and nothing else.
+would make one -- `hobab -> son-of -> reuel-2 (NUM 10:29)` -- read out of the verses the encyclopedia
+already attests the entity in, each in the King James and in its witnesses, with the name forms every
+language needs produced beside them. DOC-0191 is the contract for what comes out; this writes it and
+nothing else.
 
     python scripts/descriptors.py extract --out .descriptors/pilot --sample 300 --seed 11
     python scripts/descriptors.py ask     --dir .descriptors/pilot --workers 4 --effort low
@@ -20,7 +21,7 @@ prefix that sorts after the run being superseded:
     python scripts/descriptors.py ask     --dir .descriptors/reask --workers 3 --effort low
     python scripts/descriptors.py publish --dir .descriptors/reask --against .descriptors/full --prefix reask
 
-Seven things about the design are load-bearing, and each is a way the output could have been made
+Ten things about the design are load-bearing, and each is a way the output could have been made
 worthless rather than merely wrong:
 
 **BibleData's sentence is never shown to the model.** Not the entity's `distinguisher` and not any
@@ -44,11 +45,35 @@ only be silent about a name the encyclopedia does hold something about. They go 
 are offered only for a verse that is a bare list of names, and `validate` does not add them to the
 references a claim may cite.
 
+**Every verse is read in its witnesses, not in the King James alone.** Each of the entity's own verses
+carries the original word by word -- BHSA with its article, number, gender and construct state for the
+Old Testament, Nestle 1904 for the New with the Textus Receptus where it reads otherwise -- with the
+King James, Berean, Synodal and Brenton words that render each original word laid under it over the
+corpus's links, the Berean and Synodal whole, Swete's Septuagint, and the footnotes that say where the
+witnesses part. The context verses stay in the King James: they are read for whose register this is,
+not weighed. The owner reads a verse this way, and the English alone flattened the decisions that
+turned on an article, a construct chain or a name the Septuagint carries and the Hebrew does not.
+
+**A claim names what it rests on, and a disagreement between witnesses is not a claim.** `witness` and
+`original` say which text's words establish a clause and which Hebrew or Greek word it turns on. What
+some witnesses state and others do not goes in `differs`, with how they differ: it is kept in the run
+for the owner and never published, because a reader sent to the verse would find it in one text and
+not in another.
+
+**What the loader refuses is not asked for.** Each verse says whether it is a register line and each
+candidate what kind of record it is, and the prompt says which kinds a placing relation may point at
+and that company is never read out of a register. An entity named only in register lines -- the tail
+the first two runs could say nothing true about -- is asked for its names and at most one claim: its
+descent from the register's head, or for a place the territory the list puts it in. `validate` applies
+the loader's own guards, read out of the C#, and the narrower question, so a refusal is counted in
+`rejected.jsonl` rather than discovered on load.
+
 **A target we do not hold is not a claim.** It goes in `unresolved` as a plain string, so the gap is
 countable. A claim whose target does not resolve to a slug is never turned into prose.
 
 **The name forms are produced with the name, and the model is shown the Ohienko and Synodal verses
-to produce them from.** A stemmer guessing the genitive of a Hebrew proper name is wrong often and
+to produce them from.** The Synodal comes with every verse's witnesses, the Ohienko with the first
+few. A stemmer guessing the genitive of a Hebrew proper name is wrong often and
 silently; a model that has seen *Мойсея* in the Ukrainian text of the same verse is not guessing.
 
 **A published record never says less than the one it replaces.** The loader takes the later file
@@ -62,14 +87,16 @@ batches under `Resources/Essenthos/descriptors/`. A run leaves:
 
     manifest.json              the selection, its seed, and which entities went into which batch
     batches/batch-NNNN.json    the prompt payload, exactly as the model saw it
-    out/batch-NNNN.jsonl       the descriptors, in DOC-0191's shape, one object per line
+    out/batch-NNNN.jsonl       the descriptors, in DOC-0191's shape, one object per line, with `differs`
     rejected.jsonl             every claim dropped in validation, with the reason
+    usage.jsonl                what each batch cost, in dollars and in tokens read and written
     score.md, disagreements.json
 """
 
 import argparse
 import concurrent.futures
 import datetime
+import functools
 import json
 import os
 import random
@@ -79,6 +106,7 @@ import subprocess
 import sys
 import threading
 import time
+import unicodedata
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -90,7 +118,7 @@ RENDERING = 'KJV'
 UKRAINIAN = 'UBIO'
 RUSSIAN = 'RUSV'
 
-PROMPT_VERSION = 'descriptor-2'
+PROMPT_VERSION = 'descriptor-3'
 
 # The book codes the corpus's own book file publishes (BibleData-Book.csv, usx_code), which is the
 # spelling DOC-0191's examples are written in.
@@ -187,26 +215,90 @@ LIST_SEGMENTS_LEAST = 3
 BATCH_ENTITIES = 8
 BATCH_VERSES = 90
 
+# Every verse an entity is named in is shown with its witnesses, a line per original word, so the
+# third bound on a batch is those words: 700 is about twenty thousand tokens of Hebrew and renderings.
+BATCH_ORIGINAL_WORDS = 700
+
+# What an entity named only in registers is asked for. Its record holds nothing a sentence could be
+# made of, and an open question about it was answered with the relations a list superficially
+# supports: company out of adjacency, and a town placed in the patriarch rather than the territory.
+OPEN, REGISTER = 'open', 'register'
+REGISTER_CLAIMS = {
+    'person': {'son-of', 'daughter-of', 'descendant-of', 'of-tribe'},
+    'people': {'descendants-of', 'descendant-of', 'of-tribe'},
+    'place': {'city-in', 'region-of'},
+}
+REGISTER_CLAIMS_KEPT = 1
+COMPANION = 'companion-of'
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOADER = os.path.join(ROOT, 'Essenthos.Core', 'Loading', 'Encyclopedia', 'EntityDescriptorLoader.cs')
+RELATION_CONSTANTS = os.path.join(ROOT, 'Essenthos.Core', 'Database', 'Entities', 'EntityDescriptor.cs')
+
 SYSTEM_PROMPT = """\
 You are a Biblical scholar writing the encyclopedia's own description of a person, a place or a
 people -- not as a sentence, but as the claims a sentence would be made of, each read out of a
 named verse.
 
-For each entity you are given: its slug, its kind, its name and what that name means, the King James
-text of verses the encyclopedia attests it in (for a few of them, the Ukrainian and Russian text of
-the same verse as well), and the candidate entities the encyclopedia holds that could be meant in
+For each entity you are given: its slug, its kind, its name and what that name means, the verses the
+encyclopedia attests it in -- each in the King James, with its witnesses, and for a few of them in
+the Ukrainian as well -- and the candidate entities the encyclopedia holds that could be meant in
 those verses. Read the verses. Say what they establish about the entity, and nothing they do not.
+
+## The witnesses
+
+The King James is one translation, and it flattens what the original distinguishes. Every verse
+carries `witnesses`, read the way a scholar reads them:
+
+- `words`: the original, one line per word -- BHSA Hebrew for the Old Testament, Nestle 1904 Greek for
+  the New -- as `number surface lexeme strong morphology "gloss"`, followed by the words of each
+  rendering linked to it: `| KJV ... | BSB ... | RUSV ... | LXX-BRENTON ...`. A rendering word marked
+  `~` was linked by a statistical aligner and may be wrong. The Hebrew article, the conjunction and the
+  prepositions are words of their own, so you can see whether "the man" is `article + noun`, whether
+  "sons of" is a construct plural, whether a name is a person (`pers`), a people (`gens`) or a place
+  (`topo`), and whether "his son" carries a suffix.
+- `BSB` and `RUSV`: the Berean Standard Bible and the Russian Synodal, whole.
+- `LXX-SWETE` (and `LXX-BRENTON` where it reads otherwise): the Septuagint, a Greek witness to a Hebrew
+  text older than the one BHSA prints. `SCRIVENER1894`: the Textus Receptus the King James translated,
+  shown only where it reads otherwise than Nestle.
+- `no_original_word`: words a rendering prints that no original word is linked to -- often a supplied
+  word, sometimes an addition from another witness.
+- `footnotes`: what the WEB and ASV note about the verse, often exactly where the witnesses part.
+
+Read the original first. A claim is made where the original states it. Where the witnesses disagree
+about it -- a name one text carries and another lacks, a relation the Septuagint reads and the Hebrew
+does not -- do not make the claim: put it under `differs` and say how they differ. That is a legitimate
+and useful answer, not a failure -- but only for a disagreement between witnesses: a claim you decided
+against for any other reason is simply not made, and a claim is never both made and under `differs`.
+Do not bring in a witness you were not shown: the Vulgate, a
+manuscript or a commentary you remember is not evidence here; a footnote you were shown is.
+
+## Candidates, and what each relation may point at
 
 A candidate marked `annotated` is one this corpus has already tied to a word of that verse. One
 marked `named in the text` was found by matching the King James spelling, so it may be the wrong one
 of several who bear the name, or no one at all -- its `attested_in` references are there for you to
 tell which. Both are offers, never answers.
 
-Some entities also carry `context`: verses standing around their own, given because a name in a
-register says nothing on its own and the line that governs it is a verse or two away. *And his
-firstborn son Abdon, and Zur, and Kish* names no father; the verse before it does. *And Elioenai,
-and Jaakobah* belongs to whichever *the sons of X* heading it falls under, and that heading is in
-the context.
+Every candidate has a `kind`: person, place, people, title or term. **One name is often several
+records** -- Zebulun the son of Jacob is a person and the territory of Zebulun is a place, and both are
+offered. The kind decides which one a relation can point at:
+
+  a place    city-in region-of river-of mountain-in gate-of near lived-in buried-in from-place
+  a people   of-people
+  a person   every kinship, office and violence relation, and descendants-of
+  of-tribe   the tribe's person or people record
+
+*A city in the inheritance of Zebulun* is `city-in` the **place** Zebulun. If the only candidate of that
+name is a person, the place is not held: put the name in `unresolved` and make no placing claim.
+
+## Register lines and context
+
+A verse marked `register: true` is a list of names rather than a sentence. Some entities also carry
+`context`: verses standing around their own, given because a name in a register says nothing on its
+own and the line that governs it is a verse or two away. *And his firstborn son Abdon, and Zur, and
+Kish* names no father; the verse before it does. *And Elioenai, and Jaakobah* belongs to whichever
+*the sons of X* heading it falls under, and that heading is in the context.
 
 **Read the context, cite your own verses.** A `context` verse is there to tell you who *his* is and
 whose register this is; it is not a reference you may use. Every claim's `reference` must still be
@@ -217,6 +309,14 @@ him a firstborn son, not the one that names his father.
 The context is for finding the head of the register -- *the sons of Shashak*, *of the sons of Bani*,
 *they that came to David to Ziklag* -- and the claim to make from it is about that head. It is not a
 licence to relate the entity to the names printed beside it.
+
+**An entity marked `question: "register"`** is named only in register lines. Its record holds nothing a
+sentence could be made of, so the question is narrower: give its names, and at most **one** claim --
+for a person or a people, its descent from the register's head (`son-of`, `daughter-of`,
+`descendant-of`, `descendants-of` or `of-tribe`); for a place, the territory the list puts it in
+(`city-in` or `region-of`, pointing at a place). If the register names no head, no claim.
+
+## The rules
 
 Two rules decide almost every case:
 
@@ -251,12 +351,13 @@ entity is the target's father-in-law:
 
 A relation outside that list is thrown away, so a claim that needs one is a claim not to make.
 
-Three readings go wrong often enough to be worth naming:
+The readings that go wrong often enough to be worth naming:
 
 - **"of the sons of X" in a register is a line, not a father.** Ezra 10, Nehemiah 7 and the
   Chronicles lists group men under the head of a family many generations back. Use `descendant-of`
   there, and keep `son-of` for a verse that states the parentage itself -- *A begat B*, *B the son
-  of A*, *his son*.
+  of A*, *his son*. Where the English punctuation and the Hebrew construct chain read differently,
+  the Hebrew decides.
 - **A list of towns does not make them neighbours.** Joshua 15 and 19 enumerate an inheritance;
   standing next to another name in that enumeration is not `near`, and the towns of one list are
   often far apart. Claim `city-in` or `region-of` for the territory the list belongs to, and leave
@@ -265,6 +366,12 @@ Three readings go wrong often enough to be worth naming:
   and Hanan* relates each of them to the head the register names -- `son-of` or `descendant-of`
   **Shashak** -- and to no one printed beside them. Never make `brother-of` or `companion-of` out of
   adjacency. If the register names no head even in the context, the honest answer is no claim.
+- **`companion-of` is company the verse itself speaks of.** It needs words that say the two were
+  together -- *with him*, *together*, *his companions*, *my fellowprisoner*, *beside him*, *along with*.
+  Two names in one list, one sentence, one commission or one work party are not company, even where
+  they acted in the same event, and a verse marked `register: true` never is.
+- **A town is `city-in`, not `region-of`.** `region-of` is for a district, a land or a territory that is
+  part of a larger one; a town, a village or a site in a territory's border is `city-in` that territory.
 - **A gentilic is a people, not a place.** *Ahimelech the Hittite* is `of-people` the Hittites;
   *a man of Bethlehem* is `from-place`.
 - **A half-sibling needs the verse to say the parents differ.** *Sons of David by his wives* beside
@@ -274,9 +381,6 @@ Three readings go wrong often enough to be worth naming:
   `maaseiah killed-by zichri` and `zichri killer-of maaseiah`. Both are worth stating; a battle in
   which somebody merely took part is neither.
 
-`companion-of` is for a verse that says two people went, worked, were sent or stood together --
-*Barnabas and Saul*, *his fellowprisoner*, *repaired next unto him* -- and never for two names that
-merely occur in one list.
 `angel-of` is a being the text defines by whose it is, as in *the angel of the LORD*.
 
 Order the claims the way the sentence would run: the one that identifies the entity first. Two or
@@ -290,14 +394,15 @@ be read from one of the verses you were shown.
 ## The names
 
 Give the entity's name in each of eng, ukr, rus and deu, in the spelling that language's Bible
-actually uses -- the Ukrainian (Ohienko) and Russian (Synodal) verses you were shown are there so
-you do not have to guess, and the German follows the Luther Bible. Watch the case the verse happens
-to put the name in: a verse that says *Мегуманові* is a dative, and the nominative is what you owe.
-For ukr, rus and deu give the genitive as well as the nominative, because the rendering puts the
-name into it: *тесть Мойсея*, not *тесть Мойсей*. English needs only the nominative. A people's name
-is plural in every form (*моавітяни*, *моавітян*). If you genuinely do not know a language's form,
-leave that language out entirely rather than inventing one -- but all four are normally knowable
-for a Biblical name, and a missing German is usually laziness rather than a gap.
+actually uses -- the Ukrainian (Ohienko) verses and the Russian (Synodal, `RUSV`) witnesses you were
+shown are there so you do not have to guess, and the German follows the Luther Bible. Watch the case
+the verse happens to put the name in: a verse that says *Мегуманові* is a dative, and the nominative
+is what you owe. For ukr, rus and deu give the genitive as well as the nominative, because the
+rendering puts the name into it: *тесть Мойсея*, not *тесть Мойсей*. English needs only the
+nominative. A people's name is plural in every form (*моавітяни*, *моавітян*). If you genuinely do
+not know a language's form, leave that language out entirely rather than inventing one -- but all
+four are normally knowable for a Biblical name, and a missing German is usually laziness rather than
+a gap.
 
 **For a place, ukr and rus also need the locative**, because *buried in X* and *a city in X* put the
 name into it and no genitive stands in: *похований у Хевроні*, not *у Хеврона*; *місто в Юдеї*. Give
@@ -310,7 +415,12 @@ A single JSON array and nothing else -- no prose before or after, no code fence 
 per entity, in the order given, with exactly these fields:
 
   entity      the slug you were given, unchanged
-  claims      an array of {relation, target, reference, confidence}, ordered; may be empty
+  claims      an array of {relation, target, reference, witness, original, confidence}, ordered; may
+              be empty. `witness` is the text whose words establish the claim -- "BHSA" or
+              "NESTLE1904" wherever the original settles it -- and `original` the Hebrew or Greek
+              word or words it turns on, or null
+  differs     an array of {relation, target, reference, how}: claims some witnesses make and others do
+              not, with `how` saying which witness reads what; may be empty
   names       an object of language code -> {nominative, genitive, locative}
   unresolved  an array of plain English names the verses gave that the candidates did not hold
 
@@ -402,6 +512,214 @@ def rendering(slug):
             GROUP BY 1, 2, 3
         ) x
     """)
+
+
+HEBREW = 'BHSA'
+GREEK = 'NESTLE1904'
+RECEIVED = 'SCRIVENER1894'
+BEREAN = 'BSB'
+SWETE = 'LXX-SWETE'
+BRENTON = 'LXX-BRENTON'
+NOTES_FROM = ('WEB', 'ASV')
+LAST_OLD_TESTAMENT_BOOK = 39
+
+# Which renderings are laid under each original word. The King James is the one the passes have
+# always read; the Berean and the Synodal are the two the owner reads beside it; Brenton's Greek is
+# the Septuagint's reading of the Hebrew, word for word, where Swete's diplomatic text has no links.
+ALIGNED = (RENDERING, BEREAN, RUSSIAN)
+ALIGNED_OLD_TESTAMENT = ALIGNED + (BRENTON,)
+
+# A rendering word can reach the original by several links. The one shown is the best-attested, and a
+# word reached only by the statistical aligner is marked, because that is a guess and not a source.
+LINK_STANDING = {'stated-by-source': 0, 'manual': 0, 'strong-number': 1, 'lexical': 2, 'aligner': 3}
+GUESSED = 'aligner'
+GUESS_MARK = '~'
+RENDERS = 'renders'
+WITNESS_ADDRESSES_PER_QUERY = 400
+
+# Cantillation and the verse-end marks. The vowels stay: they are where the article and the construct
+# state are visible. The accents cost tokens and decide nothing these passes ask.
+CANTILLATION = re.compile('[֑-ֽ֯׀׃-ׅ]')
+GREEK_WORD = re.compile(r'\w+')
+
+HEBREW_PARTS = {
+    'subs': 'noun', 'nmpr': 'proper-name', 'art': 'article', 'verb': 'verb', 'prep': 'prep',
+    'conj': 'conj', 'adjv': 'adj', 'advb': 'adv', 'prps': 'pron', 'prde': 'pron-dem',
+    'prin': 'pron-interr', 'intj': 'interj', 'nega': 'neg', 'inrg': 'interr',
+}
+HEBREW_STATES = {'c': 'construct', 'a': 'absolute', 'e': 'emphatic'}
+HEBREW_GENDERS = {'m': 'masc', 'f': 'fem', 'c': 'common'}
+
+
+def witnesses(addresses):
+    """
+    What the owner reads beside the King James, for each of these verses: the original word by word
+    with the renderings that stand for each word, the other renderings whole, the Septuagint, and the
+    footnotes that say where the witnesses part.
+
+    One query per few hundred verses, over the links rather than any text's own tagging, so the words
+    a rendering supplies with no original behind them -- the Berean's *and Meonothai* in 1 Chronicles
+    4:13 -- show up as exactly that.
+    """
+    wanted = sorted(set(addresses))
+    shown = {}
+    for start in range(0, len(wanted), WITNESS_ADDRESSES_PER_QUERY):
+        chunk = wanted[start:start + WITNESS_ADDRESSES_PER_QUERY]
+        rows = psql(witness_query(chunk))
+        shown.update(assemble(chunk, rows))
+    return shown
+
+
+def witness_query(addresses):
+    values = ', '.join(f'({b}, {c}, {v})' for b, c, v in addresses)
+    worded = (HEBREW, GREEK, RECEIVED, SWETE) + ALIGNED_OLD_TESTAMENT
+    listed = lambda slugs: ', '.join(f"'{slug}'" for slug in slugs)
+    return f"""
+        WITH wanted(b, c, v) AS (VALUES {values}),
+        verses AS (
+            SELECT w.b, w.c, w.v, ve.id, t.slug
+            FROM wanted w
+            JOIN verse_reference r ON r.canonical_book = w.b AND r.canonical_chapter = w.c
+                                  AND r.canonical_verse = w.v AND r.is_primary
+            JOIN verse ve ON ve.id = r.verse_id
+            JOIN text t ON t.id = ve.text_id
+            WHERE t.slug IN ({listed(worded + NOTES_FROM)})
+        ),
+        words AS (
+            SELECT v.b, v.c, v.v, v.slug, v.id AS verse, w.id, w.position, w.text, w.trailer,
+                   w.lemma, w.strong_number, w.gloss, w.morphology, w.normalised_text
+            FROM verses v JOIN word w ON w.verse_id = v.id
+            WHERE v.slug IN ({listed(worded)})
+        )
+        SELECT json_build_object(
+            'words', (SELECT coalesce(json_agg(json_build_object(
+                          'at', json_build_array(b, c, v), 'text_slug', slug, 'verse', verse, 'id', id,
+                          'position', position, 'text', text, 'trailer', trailer, 'lemma', lemma,
+                          'strong', strong_number, 'gloss', gloss, 'morphology', morphology,
+                          'normalised', normalised_text) ORDER BY slug, verse, position), '[]')
+                      FROM words),
+            'links', (SELECT coalesce(json_agg(json_build_array(lf.word_id, l.relation, l.method, lt.word_id)), '[]')
+                      FROM words x
+                      JOIN link_word lf ON lf.word_id = x.id AND lf.side = 'from'
+                      JOIN link l ON l.id = lf.link_id
+                                 AND l.to_text_id IN (SELECT id FROM text WHERE slug IN ({listed((HEBREW, GREEK))}))
+                      LEFT JOIN link_word lt ON lt.link_id = l.id AND lt.side = 'to'
+                      WHERE x.slug IN ({listed(ALIGNED_OLD_TESTAMENT)})),
+            'notes', (SELECT coalesce(json_agg(json_build_array(v.b, v.c, v.v, v.slug, n.content)
+                                               ORDER BY v.slug, n.position), '[]')
+                      FROM verses v JOIN verse_note n ON n.verse_id = v.id AND n.kind = 'footnote'
+                      WHERE v.slug IN ({listed(NOTES_FROM)}))
+        )
+    """
+
+
+def hebrew_morphology(morphology):
+    m = morphology or {}
+    parts = [HEBREW_PARTS.get(m.get('pos'), m.get('pos'))]
+    if m.get('nameType'):
+        parts.append(m['nameType'])
+    parts += [m.get('stem'), m.get('tense'), m.get('person'),
+              HEBREW_GENDERS.get(m.get('gender'), m.get('gender')), m.get('number'),
+              HEBREW_STATES.get(m.get('state'))]
+    if m.get('suffixPerson') or m.get('suffixNumber'):
+        parts.append('+suffix ' + ' '.join(filter(None, (
+            m.get('suffixPerson'), HEBREW_GENDERS.get(m.get('suffixGender'), m.get('suffixGender')),
+            m.get('suffixNumber')))))
+    return ' '.join(str(part) for part in parts if part and part not in ('NA', 'unknown'))
+
+
+def verse_line(words):
+    return ''.join(w['text'] + w['trailer'] for w in words).strip()
+
+
+def assemble(addresses, rows):
+    by_text = {}
+    for word in rows['words']:
+        by_text.setdefault((tuple(word['at']), word['text_slug']), []).append(word)
+    best = {}
+    for source, relation, method, target in rows['links']:
+        standing = LINK_STANDING.get(method, len(LINK_STANDING))
+        held = best.get(source)
+        if held is None or standing < held[0]:
+            best[source] = (standing, method, set())
+        if best[source][0] == standing and relation == RENDERS and target:
+            best[source][2].add(target)
+    notes = {}
+    for b, c, v, slug, content in rows['notes']:
+        notes.setdefault((b, c, v), []).append(f'{slug}: {content.strip()}')
+
+    shown = {}
+    for address in addresses:
+        old = address[0] <= LAST_OLD_TESTAMENT_BOOK
+        original_slug = HEBREW if old else GREEK
+        original = by_text.get((address, original_slug), [])
+        if not original:
+            continue
+        numbered = {word['id']: number for number, word in enumerate(original, start=1)}
+        under = {word['id']: [] for word in original}
+        unlinked = {}
+        for slug in (ALIGNED_OLD_TESTAMENT if old else ALIGNED):
+            for word in by_text.get((address, slug), []):
+                if not any(ch.isalnum() for ch in word['text']):
+                    continue
+                link = best.get(word['id'])
+                targets = [t for t in (link[2] if link else ()) if t in under]
+                if not targets:
+                    if slug in ALIGNED:
+                        unlinked.setdefault(slug, []).append(word['text'])
+                    continue
+                mark = GUESS_MARK if link[1] == GUESSED else ''
+                for target in targets:
+                    under[target].append((slug, word['text'] + mark))
+
+        lines = []
+        for word in original:
+            if old:
+                surface = CANTILLATION.sub('', word['text'])
+                lexeme = CANTILLATION.sub('', (word['morphology'] or {}).get('vocalizedLexeme') or word['lemma'] or '')
+                morph = hebrew_morphology(word['morphology'])
+            else:
+                surface, lexeme = word['text'], word['lemma'] or ''
+                morph = (word['morphology'] or {}).get('form') or ''
+            head = ' '.join(filter(None, (str(numbered[word['id']]), surface, lexeme, word['strong'], morph,
+                                          f'"{word["gloss"]}"' if word['gloss'] else None)))
+            renderings = {}
+            for slug, text in under[word['id']]:
+                renderings.setdefault(slug, []).append(text)
+            lines.append(head + ''.join(f' | {slug} {" ".join(texts)}' for slug, texts in renderings.items()))
+
+        block = {'original': original_slug, 'words': lines,
+                 BEREAN: verse_line(by_text.get((address, BEREAN), [])) or None,
+                 RUSSIAN: verse_line(by_text.get((address, RUSSIAN), [])) or None}
+        if old:
+            swete = by_text.get((address, SWETE), [])
+            brenton = by_text.get((address, BRENTON), [])
+            block[SWETE] = verse_line(swete) or None
+            if brenton and greek_words(brenton) != greek_words(swete):
+                block[BRENTON] = verse_line(brenton)
+        else:
+            received = by_text.get((address, RECEIVED), [])
+            if received and greek_words(received) != greek_words(original):
+                block[RECEIVED] = verse_line(received)
+        if unlinked:
+            block['no_original_word'] = {slug: ' '.join(texts) for slug, texts in unlinked.items()}
+        if address in notes:
+            block['footnotes'] = notes[address]
+        shown[address] = {key: value for key, value in block.items() if value is not None}
+    return shown
+
+
+def witness_names(block):
+    """The texts a verse was shown in, which are the ones a verdict about it may say it rests on."""
+    names = {RENDERING, block['original']} | {name for name in (BEREAN, RUSSIAN, SWETE, RECEIVED) if name in block}
+    return names | ({BRENTON} if SWETE in block else set())
+
+
+def greek_words(words):
+    """A Greek verse as a sequence of bare words, so two editions differ only where their words do."""
+    return [''.join(ch for ch in unicodedata.normalize('NFD', (w['normalised'] or w['text']).lower())
+                    if unicodedata.category(ch) != 'Mn').replace('ς', 'σ')
+            for w in words if GREEK_WORD.search(w['text'])]
 
 
 def answer_key():
@@ -592,8 +910,8 @@ def named_in(line, index):
     return found
 
 
-def build(entity, verses, by_verse, texts, by_slug, index, with_context=False):
-    """One entity as the model sees it: its name, its verses, and who else stands in them."""
+def build(entity, verses, by_verse, texts, by_slug, index, read, with_context=False):
+    """One entity as the model sees it: its name, its verses in their witnesses, and who else stands in them."""
     name_row = proper_name(entity)
     shown = shown_verses(verses)
 
@@ -607,6 +925,15 @@ def build(entity, verses, by_verse, texts, by_slug, index, with_context=False):
                 spelled[slug] = spelled.get(slug, 0) + 1
     if entity.get('origin') and entity['origin'] not in annotated:
         spelled.setdefault(entity['origin'], 1)
+
+    # The heading a register line stands under names what the claim is about -- *the inheritance of
+    # the tribe of the children of Issachar* -- and a candidate list drawn from the line alone offers a
+    # town no territory to be in. They rank after every name the entity's own verses spell.
+    around = context_verses(shown, texts[RENDERING]) if with_context else []
+    for key in around:
+        for slug in named_in(texts[RENDERING].get(key), index):
+            if slug != entity['slug'] and slug not in annotated:
+                spelled.setdefault(slug, 0)
 
     ranked = [(slug, 'annotated') for slug in
               sorted(annotated, key=lambda s: (-annotated[s], s))[:CANDIDATES_SHOWN]]
@@ -633,10 +960,14 @@ def build(entity, verses, by_verse, texts, by_slug, index, with_context=False):
     lines = []
     for index, key in enumerate(shown):
         line = {'reference': reference(*key), 'king_james': texts[RENDERING].get(key)}
+        if list_shaped(line['king_james']):
+            line['register'] = True
         if index < TRANSLATED_VERSES_SHOWN:
             line['ukrainian'] = texts[UKRAINIAN].get(key)
-            line['russian'] = texts[RUSSIAN].get(key)
+        if key in read:
+            line['witnesses'] = read[key]
         lines.append(line)
+    registered = all(list_shaped(texts[RENDERING].get(key)) for key in verses)
 
     payload = {
         'entity': entity['slug'],
@@ -650,11 +981,11 @@ def build(entity, verses, by_verse, texts, by_slug, index, with_context=False):
         'greek_transliterated': name_row.get('greek_transliterated'),
         'name_means': name_row.get('meaning'),
         'attested_in_total': len(verses),
+        'question': REGISTER if registered and entity['kind'] in REGISTER_CLAIMS else OPEN,
         'verses': lines,
         'candidates': candidates,
     }
 
-    around = context_verses(shown, texts[RENDERING]) if with_context else []
     if around:
         payload['context'] = [{'reference': reference(*key), 'king_james': texts[RENDERING][key]}
                               for key in around]
@@ -736,16 +1067,20 @@ def extract(args):
     }
 
     index = name_index(held['entities'])
-    batch, verses_in_batch, plan = [], 0, []
+    read = witnesses({key for entity in pool for key in shown_verses(entity['verses'])})
+    batch, verses_in_batch, words_in_batch, plan = [], 0, 0, []
     for entity in pool:
-        payload = build(entity, entity['verses'], by_verse, texts, by_slug, index, args.context)
+        payload = build(entity, entity['verses'], by_verse, texts, by_slug, index, read, args.context)
         cost = len(payload['verses']) + len(payload.get('context', ()))
+        words = sum(len(line.get('witnesses', {}).get('words', ())) for line in payload['verses'])
         if batch and (len(batch) >= args.batch_entities
-                      or verses_in_batch + cost > args.batch_verses):
+                      or verses_in_batch + cost > args.batch_verses
+                      or words_in_batch + words > args.batch_words):
             plan.append(batch)
-            batch, verses_in_batch = [], 0
+            batch, verses_in_batch, words_in_batch = [], 0, 0
         batch.append(payload)
         verses_in_batch += cost
+        words_in_batch += words
     if batch:
         plan.append(batch)
 
@@ -764,8 +1099,10 @@ def extract(args):
         json.dump(manifest, handle, ensure_ascii=False, indent=1)
 
     with_context = sum(1 for group in plan for e in group if e.get('context'))
+    registers = sum(1 for group in plan for e in group if e['question'] == REGISTER)
     print(f'{len(pool)} entities, {len(plan)} batches, '
-          f'{with_context} shown the verses around a register line -> {args.dir}')
+          f'{with_context} shown the verses around a register line, '
+          f'{registers} named only in registers and asked the narrower question -> {args.dir}')
 
 
 def executable():
@@ -828,6 +1165,14 @@ def call(prompt, model, effort):
     return None, 'unreachable'
 
 
+def tokens(outcome):
+    """What one call read and wrote, the cached prefix included: that is what the bill is made of."""
+    usage = (outcome or {}).get('usage') or {}
+    read = sum(usage.get(key) or 0 for key in
+               ('input_tokens', 'cache_creation_input_tokens', 'cache_read_input_tokens'))
+    return read, usage.get('output_tokens') or 0
+
+
 ARRAY = re.compile(r'\[.*\]', re.S)
 
 
@@ -848,7 +1193,46 @@ def parse(result):
     return answers if isinstance(answers, list) else None
 
 
-def validate(answer, asked, slugs, today, model):
+@functools.cache
+def placing_relations():
+    """The relations the loader refuses to point at anything but a place, read out of the C#."""
+    with open(RELATION_CONSTANTS, encoding='utf-8-sig') as handle:
+        text = handle.read()
+    words = dict(re.findall(r'public const string (\w+) = "([^"]+)"', text))
+    start = text.find('class PlacingRelations')
+    if start < 0:
+        raise SystemExit(f'no PlacingRelations class was found in {RELATION_CONSTANTS}; if it has moved, '
+                         'point RELATION_CONSTANTS at where it is now.')
+    block = text[start:text.index('};', start)]
+    return {words[name] for name in re.findall(r'DescriptorRelations\.(\w+)', block)}
+
+
+@functools.cache
+def accompaniment():
+    """The words the loader requires a companion-of verse to contain, read out of the C#."""
+    with open(LOADER, encoding='utf-8-sig') as handle:
+        text = handle.read()
+    start = text.find('Accompaniment =')
+    if start < 0:
+        raise SystemExit(f'no Accompaniment list was found in {LOADER}; if it has moved, point LOADER at '
+                         'where it is now.')
+    return set(re.findall(r'"([^"]+)"', text[start:text.index('];', start)]))
+
+
+def refusal(relation, target_kind, line, question, kind):
+    """Why the loader, or the narrower question a register entity was asked, would refuse a claim."""
+    if relation in placing_relations() and target_kind != 'place':
+        return 'placing something somewhere that is not a place'
+    if relation == COMPANION and line.get('register'):
+        return 'company read out of a register line'
+    if relation == COMPANION and not accompaniment() & set(WORD.findall((line.get('king_james') or '').lower())):
+        return 'company read out of a verse that speaks of none'
+    if question == REGISTER and relation not in REGISTER_CLAIMS.get(kind, ()):
+        return 'a register entity was asked only for its descent or its territory'
+    return None
+
+
+def validate(answer, asked, slugs, today, model, kinds):
     """
     One answered entity turned into a DOC-0191 object, and everything the loader would refuse
     turned into a counted rejection instead.
@@ -857,6 +1241,7 @@ def validate(answer, asked, slugs, today, model):
     claims = []
     unresolved = [u for u in (answer.get('unresolved') or []) if isinstance(u, str) and u.strip()]
     allowed = {r['reference'] for r in asked['verses']}
+    lines = {r['reference']: r for r in asked['verses']}
 
     for claim in answer.get('claims') or []:
         if not isinstance(claim, dict):
@@ -881,14 +1266,25 @@ def validate(answer, asked, slugs, today, model):
             if text not in allowed:
                 rejected.append(dict(note, why='reference is not among the verses the entity occurs in'))
                 continue
+        why = refusal(relation, kinds.get(target), lines[text], asked.get('question'), asked['kind'])
+        if why is None and asked.get('question') == REGISTER and len(claims) >= REGISTER_CLAIMS_KEPT:
+            why = 'a register entity was asked for one claim at most'
+        if why:
+            rejected.append(dict(note, why=why))
+            continue
         try:
             confidence = float(claim.get('confidence'))
         except (TypeError, ValueError):
             rejected.append(dict(note, why='no usable confidence'))
             continue
         confidence = min(1.0, max(0.0, confidence))
-        claims.append({'relation': relation, 'target': target,
-                       'reference': text, 'confidence': round(confidence, 3)})
+        kept = {'relation': relation, 'target': target, 'reference': text, 'confidence': round(confidence, 3)}
+        shown_in = lines[text].get('witnesses')
+        if claim.get('witness') in (witness_names(shown_in) if shown_in else {RENDERING}):
+            kept['witness'] = claim['witness']
+        if isinstance(claim.get('original'), str) and claim['original'].strip():
+            kept['original'] = claim['original'].strip()
+        claims.append(kept)
 
     names = {}
     for language, forms in (answer.get('names') or {}).items():
@@ -907,12 +1303,21 @@ def validate(answer, asked, slugs, today, model):
         seen.add(key)
         ordered.append(claim)
 
+    differs = [{key: item.get(key) for key in ('relation', 'target', 'reference', 'how')}
+               for item in answer.get('differs') or [] if isinstance(item, dict) and item.get('how')]
+    disputed = {(item['relation'], item['target'], item['reference']) for item in differs}
+    rejected += [dict(claim, entity=asked['entity'], why='the witnesses differ on it')
+                 for claim in ordered if (claim['relation'], claim['target'], claim['reference']) in disputed]
+    ordered = [claim for claim in ordered
+               if (claim['relation'], claim['target'], claim['reference']) not in disputed]
+
     return {
         'entity': asked['entity'],
         'kind': asked['kind'],
         'claims': ordered,
         'names': names,
         'unresolved': sorted(set(unresolved)),
+        'differs': differs,
         'model': model,
         'askedAt': today,
     }, rejected
@@ -924,10 +1329,12 @@ def ask(args):
 
     out_dir = os.path.join(args.dir, 'out')
     os.makedirs(out_dir, exist_ok=True)
-    slugs = {e['slug'] for e in corpus(args.cache)['entities']}
+    kinds = {e['slug']: e['kind'] for e in corpus(args.cache)['entities']}
+    slugs = set(kinds)
     today = datetime.date.today().isoformat()
     lock = threading.Lock()
-    totals = {'calls': 0, 'cost': 0.0, 'entities': 0, 'claims': 0, 'rejected': 0, 'failed': 0}
+    totals = {'calls': 0, 'cost': 0.0, 'entities': 0, 'claims': 0, 'rejected': 0, 'failed': 0,
+              'input': 0, 'output': 0}
     rejected_path = os.path.join(args.dir, 'rejected.jsonl')
 
     with open(os.path.join(args.dir, 'asked.json'), 'w', encoding='utf-8') as handle:
@@ -972,18 +1379,26 @@ def ask(args):
             if slug not in asked or slug in seen:
                 continue
             seen.add(slug)
-            row, bad = validate(answer, asked[slug], slugs, today, model)
+            row, bad = validate(answer, asked[slug], slugs, today, model, kinds)
             rows.append(row)
             rejects.extend(dict(r, batch=name) for r in bad)
 
         with open(os.path.join(out_dir, name + '.jsonl'), 'w', encoding='utf-8') as handle:
             for row in rows:
                 handle.write(json.dumps(row, ensure_ascii=False) + '\n')
+        read, wrote = tokens(outcome)
         with lock:
             if rejects:
                 with open(rejected_path, 'a', encoding='utf-8') as handle:
                     for reject in rejects:
                         handle.write(json.dumps(reject, ensure_ascii=False) + '\n')
+            with open(os.path.join(args.dir, 'usage.jsonl'), 'a', encoding='utf-8') as handle:
+                handle.write(json.dumps({'batch': name, 'entities': len(asked), 'answered': len(rows),
+                                         'prompt_version': PROMPT_VERSION,
+                                         'cost': outcome.get('total_cost_usd') or 0.0,
+                                         'input_tokens': read, 'output_tokens': wrote}) + '\n')
+            totals['input'] += read
+            totals['output'] += wrote
             totals['calls'] += 1
             totals['cost'] += outcome.get('total_cost_usd') or 0.0
             totals['entities'] += len(rows)
@@ -993,13 +1408,15 @@ def ask(args):
             print(f'{name}: {len(rows)}/{len(asked)} entities, '
                   f'{sum(len(r["claims"]) for r in rows)} claims, {len(rejects)} rejected'
                   + (f', {missing} unanswered' if missing else '')
-                  + f', {time.time() - started:.0f}s, ${outcome.get("total_cost_usd") or 0:.4f}')
+                  + f', {time.time() - started:.0f}s, {read} tokens in, {wrote} out'
+                  + f', ${outcome.get("total_cost_usd") or 0:.4f}')
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
         list(pool.map(run, pending))
 
     print(f'{totals["calls"]} calls, {totals["entities"]} entities, {totals["claims"]} claims, '
           f'{totals["rejected"]} claims rejected, {totals["failed"]} batches failed, '
+          f'{totals["input"]} tokens read, {totals["output"]} written, '
           f'${totals["cost"]:.4f} reported by the harness')
 
 
@@ -1238,6 +1655,28 @@ def score(args):
     if not why:
         write('- none')
     write('')
+    write('## Where the witnesses differ')
+    write('')
+    differing = [(row['entity'], item) for row in rows for item in row.get('differs') or []]
+    for entity, item in differing[:args.disagreements]:
+        write(f'- **{entity}** {item.get("relation")} {item.get("target")} ({item.get("reference")}): {item.get("how")}')
+    if not differing:
+        write('- none')
+    write('')
+    write('## Cost')
+    write('')
+    usage_path = os.path.join(args.dir, 'usage.jsonl')
+    if os.path.exists(usage_path):
+        with open(usage_path, encoding='utf-8') as handle:
+            usage = [json.loads(line) for line in handle if line.strip()]
+        answered = max(1, sum(u['answered'] for u in usage))
+        spent = sum(u['cost'] for u in usage)
+        write(f'{len(usage)} calls, ${spent:.4f}, ${spent / answered:.5f} an entity, '
+              f'{sum(u["input_tokens"] for u in usage) / answered:.0f} tokens read and '
+              f'{sum(u["output_tokens"] for u in usage) / answered:.0f} written an entity.')
+    else:
+        write('- no usage recorded')
+    write('')
     write('## Disagreements')
     write('')
     for item in disagreements[:args.disagreements]:
@@ -1346,6 +1785,7 @@ def publish(args):
         keep = [row for row in keep if says_more(row, published.get(row['entity']))]
         silent += asked_about - len(keep)
         keep = [carried(row, published.get(row['entity'])) for row in keep]
+        keep = [{key: value for key, value in row.items() if key != 'differs'} for row in keep]
         forms += sum(len(cases(row)) for row in keep)
 
         if not keep:
@@ -1383,6 +1823,8 @@ def main():
                                 'own verses are a bare list of names')
     extractor.add_argument('--batch-entities', type=int, default=BATCH_ENTITIES)
     extractor.add_argument('--batch-verses', type=int, default=BATCH_VERSES)
+    extractor.add_argument('--batch-words', type=int, default=BATCH_ORIGINAL_WORDS,
+                           help='the original words, each shown with its renderings, one batch may hold')
     extractor.set_defaults(run=extract)
 
     asker = commands.add_parser('ask', help='run every batch that has no answers yet')

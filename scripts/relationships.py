@@ -3,9 +3,9 @@ Which of the relationships only BibleData states does the text itself state? Ask
 
 2,225 of BibleData's relationship rows reach no row this corpus read for itself. They are the
 dataset's claims, and a claim is not evidence: this harness turns each one into a question for a
-model reading the King James text -- the verse the dataset cites, the chapter around it, and every
-verse where both people are named -- and keeps what the text states as a clause of this corpus's
-own, with the verse it was read from.
+model reading the text -- the verse the dataset cites, the chapter around it, and every verse where
+both people are named -- and keeps what the text states as a clause of this corpus's own, with the
+verse it was read from and the witness it rests on.
 
     python scripts/relationships.py measure
     python scripts/relationships.py extract --out .relationships/pilot --sample 120 --seed 7
@@ -14,7 +14,7 @@ own, with the verse it was read from.
     python scripts/relationships.py score   --dir .relationships/pilot
     python scripts/relationships.py publish --dir .relationships/pilot .relationships/full
 
-Five things about the design are load-bearing:
+Seven things about the design are load-bearing:
 
 **The unit is the fact, not the row.** BibleData writes nearly every relationship from both ends --
 *Lot son Haran* and *Haran father Lot* -- so asking row by row pays twice for one question and can
@@ -29,9 +29,23 @@ the strata a run is sampled and reported by.
 `RelationshipVocabulary.Says`, read out of the C# here rather than restated, so this harness and the
 page it feeds cannot disagree about what counts as already read.
 
+**The verse is read in its witnesses, not in the King James alone.** Every cited verse, and the first
+verses naming both people, carry the original word by word -- BHSA with its article, number, gender
+and construct state for the Old Testament, Nestle 1904 for the New with the Textus Receptus where it
+reads otherwise -- with the King James, Berean and Synodal words that render each original word laid
+under it over the corpus's links, the Berean and Synodal whole, Swete's and Brenton's Septuagint for
+the Old Testament, and the footnotes that say where the witnesses part. The chapter around a verse
+stays in the King James: it is read for the heading a register line belongs to, not weighed. The
+owner reads a verse this way, and three rounds of decisions turned on what the King James flattened.
+
+**A verdict names what it rests on.** `reference` stays the verse; `witness` says which text's words
+decide it and `original` which Hebrew or Greek word, and *the witnesses differ* is an answer of its
+own. A fact only some witnesses state is not written as a clause: it is counted and left for the
+owner, because a reader sent to the verse would find it stated in one text and not in another.
+
 **A chain of fathers is not a statement.** The prompt says so, and a positive is read a second time
-by a prompt asking the opposite question before anything is published; on the place register that
-second reading refused 41% of the decisive positives.
+by a prompt asking the opposite question, shown the same witnesses, before anything is published; on
+the place register that second reading refused 41% of the decisive positives.
 
 **A clause goes on the side whose verse it is.** The loader accepts a reference only among the verses
 its subject is named in, so a fact stated in a verse that names only the father is written on the
@@ -42,7 +56,7 @@ A run leaves:
     facts.json                 every fact only BibleData states, with its stratum
     manifest.json              the selection, its seed, and which facts went into which batch
     batches/batch-NNNN.json    the prompt payload, exactly as the model saw it
-    out/batch-NNNN.jsonl       one verdict per fact
+    out/batch-NNNN.jsonl       one verdict per fact, with the tokens and cost its batch spent
     check/batch-NNNN.jsonl     the second reading of each positive
     report.md, sample-stated.md, sample-not-stated.md
 """
@@ -65,15 +79,16 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VOCABULARY = os.path.join(ROOT, 'Essenthos.Core', 'Loading', 'Encyclopedia', 'RelationshipVocabulary.cs')
 RELATION_NAMES = os.path.join(ROOT, 'Essenthos.Core', 'Database', 'Entities', 'EntityDescriptor.cs')
 
-PROMPT_VERSION = 'relationships-1'
-CHECK_VERSION = 'relationships-check-1'
+PROMPT_VERSION = 'relationships-2'
+CHECK_VERSION = 'relationships-check-2'
 
 WITNESS_SOURCE = 'BibleData'
 OUR_SOURCE = 'read from Scripture by'
 STATED_BY_SOURCE = 'stated-by-source'
 
-STATED, MOVED, NOT_STATED = 'stated', 'moved', 'not-stated'
-VERDICTS = (STATED, MOVED, NOT_STATED)
+STATED, MOVED, NOT_STATED, DIFFER = 'stated', 'moved', 'not-stated', 'witnesses-differ'
+VERDICTS = (STATED, MOVED, NOT_STATED, DIFFER)
+POSITIVE = (STATED, MOVED)
 
 EXPLICIT, INFERRED, IMPLICIT = 'explicit', 'inferred', 'implicit'
 DESCENT = 'descent'
@@ -125,8 +140,14 @@ WINDOW_AFTER = 10
 BOTH_NAMED_SHOWN = 8
 BOTH_NAMED_FROM_THE_HEAD = 5
 
+# Which verses carry their witnesses: every cited verse, and the first few naming both people, which is
+# where a statement moved from the cited verse is found. A witnessed verse costs ten lines of King
+# James, so a batch is bounded by them as well as by lines.
+BOTH_NAMED_WITNESSED = 3
+
 PAIRS_PER_BATCH = 20
 BATCH_VERSES = 200
+BATCH_WITNESSED_VERSES = 30
 
 CHECK_ITEMS_PER_BATCH = 20
 
@@ -152,16 +173,44 @@ already identified in that verse. Use it to tell namesakes apart -- a verse abou
 same name is not about this one -- but not as proof of absence, because the identification is not
 complete.
 
+## The witnesses
+
+The King James is one translation, and it flattens what the original distinguishes. Every cited verse,
+and the first verses naming both people, are also under `witnesses`, read the way a scholar reads them:
+
+- `words`: the original, one line per word -- BHSA Hebrew for the Old Testament, Nestle 1904 Greek for
+  the New -- as `number surface lexeme strong morphology "gloss"`, followed by the words of each
+  rendering linked to it: `| KJV ... | BSB ... | RUSV ... | LXX-BRENTON ...`. A rendering word marked
+  `~` was linked by a statistical aligner and may be wrong. The Hebrew article, the conjunction and the
+  prepositions are words of their own, so you can see whether "the man" is `article + noun` or a bare
+  noun, whether "sons of" is a construct plural, and whether "his son" carries a suffix.
+- `BSB` and `RUSV`: the Berean Standard Bible and the Russian Synodal, whole.
+- `LXX-SWETE` (and `LXX-BRENTON` where it reads otherwise): the Septuagint, a Greek witness to a Hebrew
+  text older than the one BHSA prints. `SCRIVENER1894`: the Textus Receptus the King James translated,
+  shown only where it reads otherwise than Nestle.
+- `no_original_word`: words a rendering prints that no original word is linked to -- often a supplied
+  word, sometimes an addition from another witness.
+- `footnotes`: what the WEB and ASV note about the verse, which is often exactly where the witnesses part.
+
+Read the original first. Where the English says something the Hebrew or Greek does not, or the witnesses
+disagree about the names or the relation, that matters more than the English.
+
 The claim came from a dataset that sometimes reads a relationship and sometimes deduces one. Your job
 is to read the text, not to trust the claim.
 
 Answer for each pair with one of:
 
-  "stated"     a cited verse states this relation between these two, read together with the lines
-               immediately around it where a list continues a heading above it
-  "moved"      the text states it, but in a verse other than the one cited; give that verse, which must
-               be one of the verses in `passages`
-  "not-stated" nothing you were shown states it, even if it may well be true
+  "stated"            a cited verse states this relation between these two in the original, and the
+                      witnesses agree -- read together with the lines immediately around it where a
+                      list continues a heading above it
+  "moved"             the text states it, but in a verse other than the one cited; give that verse,
+                      which must be one of the verses in `passages`
+  "witnesses-differ"  some witnesses state it and others do not -- a name one text carries and another
+                      lacks, a relation the Septuagint reads and the Hebrew does not, a Textus Receptus
+                      reading. This is a legitimate and useful answer, not a failure to decide: say in
+                      `how` exactly which witness reads what. Where no witness states it, however the
+                      witnesses word the verse, the answer is "not-stated"
+  "not-stated"        nothing you were shown states it in any witness, even if it may well be true
 
 The rules that decide most cases:
 
@@ -172,47 +221,67 @@ The rules that decide most cases:
 - **The relation must be the one claimed, and in the direction claimed.** A verse making B the son of A
   does not state that A is the son of B. A register's "of the sons of X" grouping men under the head of
   a family states descent, not parentage; "his son", "A begat B" and "B the son of A" state parentage.
+  Where the English punctuation and the Hebrew construct chain read differently, the Hebrew decides.
 - **Standing beside somebody in a list is not a relationship.** Names printed one after another are
   not thereby brothers, companions, husband and wife, or father and son.
 - **Descent is stated** where a genealogy runs the line between them in one list, or where a passage
   calls one the father, forefather or forebear of the other or of the people the other belongs to.
 - **Serving, discipleship, killing and marriage are stated** where a verse says it of these two: "his
   servant", "his disciples", "slew him", "took her to wife". Taking part in the same event is not.
+- **Do not bring in a witness you were not shown.** The Vulgate, a manuscript or a commentary you
+  remember is not evidence here; a footnote you were shown is.
 
 Give a confidence between 0 and 1: how sure you are that the verse you give states this claim about
 these two people, not how likely the claim is to be true.
 
 Return a single JSON array and nothing else, one object per pair, in the order given:
 
-  { "pair": "<id>", "verdict": "stated" | "moved" | "not-stated",
-    "reference": "BOOK C:V" | null, "confidence": 0.0-1.0,
-    "reason": "one sentence quoting the words that state it, or saying what is missing" }
+  { "pair": "<id>", "verdict": "stated" | "moved" | "witnesses-differ" | "not-stated",
+    "reference": "BOOK C:V" | null,
+    "witness": "BHSA" | "NESTLE1904" | "SCRIVENER1894" | "KJV" | "BSB" | "RUSV" | "LXX-SWETE" | "LXX-BRENTON" | null,
+    "original": "the Hebrew or Greek word or words the reading turns on" | null,
+    "confidence": 0.0-1.0,
+    "reason": "one sentence quoting the words that state it, or saying what is missing",
+    "how": "for witnesses-differ only: which witness reads what" | null }
+
+`witness` is the text whose words decide the verdict: the original, wherever the verse was shown with
+its witnesses and the original settles it; the King James only for a verse shown without them. For
+"witnesses-differ" it is the witness that states the relation.
 """
 
 CHECK = """\
 You are a second reader. Somebody has read each verse below as stating a relationship between two
 people, and your job is to say whether the words bear that out -- and to refuse wherever they do not.
 
-For each item you are given the claim, the verse proposed as stating it, the lines before and after
-it, and the heading of the list it stands in where one was found. Every line carries `named_here`:
-which of the two people this corpus has identified in it, whatever spelling the line uses. A line
-naming one of them under another spelling -- Shimhi for Shema, Heli for Eli, Meshelemiah for Shallum
--- names that person, and a pronoun or a list refers to whoever the lines shown make it refer to. The
-relation itself must still be in the words; an identification never supplies it.
+For each item you are given the claim, the verse proposed as stating it, the witness the first reader
+said it rests on, the lines before and after it, and the heading of the list it stands in where one was
+found. Every line carries `named_here`: which of the two people this corpus has identified in it,
+whatever spelling the line uses. A line naming one of them under another spelling -- Shimhi for Shema,
+Heli for Eli, Meshelemiah for Shallum -- names that person, and a pronoun or a list refers to whoever
+the lines shown make it refer to. The relation itself must still be in the words; an identification
+never supplies it.
+
+The proposed verse also carries `witnesses`: the original word by word (BHSA Hebrew or Nestle 1904
+Greek, as `number surface lexeme strong morphology "gloss"`), with the King James, Berean, Synodal and
+Septuagint words linked to each original word after `|` -- a word marked `~` was linked by a
+statistical aligner -- the Berean, Synodal and Septuagint whole, the Textus Receptus where it differs
+from Nestle, the rendered words no original word stands behind, and the footnotes. Judge the relation
+in the original.
 
 Answer with a JSON array, one object per item, in the order given, and nothing else:
 
   {"item": "<id>", "holds": true, "why": "..."}
 
   holds -- true only if the proposed verse, read with the lines shown, states this exact relation
-           between these two people, in this direction. False where the relation is reached by
-           joining two statements rather than read in one; where the verse states a closer or a
-           different tie than the one claimed (a clan's "of the sons of" where a son is claimed, a
+           between these two people, in this direction, in the original. False where the relation is
+           reached by joining two statements rather than read in one; where the verse states a closer
+           or a different tie than the one claimed (a clan's "of the sons of" where a son is claimed, a
            grandson where a son is claimed, a brother where a half-brother is claimed) -- though a son
            or a register's "the sons of X" does state that he is X's descendant; where the direction
-           is reversed; where the two names
-           merely stand next to each other in a list; where the verse is about another person of the
-           same name; and where the words that state it are not in this verse or the lines shown.
+           is reversed; where the two names merely stand next to each other in a list; where the verse
+           is about another person of the same name; where a translation says it and the original
+           does not, or one witness says it and another does not; and where the words that state it
+           are not in this verse or the lines shown.
   why   -- one short clause, quoting the words that decide it.
 
 Judge the lines as written. Do not bring knowledge from outside them, and do not uphold a claim
@@ -489,6 +558,7 @@ def pair_payload(fact, corpus):
         shown += corpus.window(address)
     both = corpus.both_named(fact['a'], fact['b'])
     shown = sorted(set(shown) | set(both))
+    witnessed = list(dict.fromkeys(addresses + both[:BOTH_NAMED_WITNESSED]))
     return {
         'pair': fact['fact'],
         'claim': f'{fact["a"]} {fact["relation"]} {fact["b"]}',
@@ -498,7 +568,7 @@ def pair_payload(fact, corpus):
         'b': corpus.person(fact['b']),
         'cited': fact['cited'],
         'both_named_in': [shared.reference(*v) for v in both],
-    }, shown
+    }, shown, witnessed
 
 
 def extract(args):
@@ -532,16 +602,19 @@ def extract(args):
 
     pool.sort(key=where)
 
-    plan, batch, verses = [], [], set()
+    plan, batch, verses, witnessed = [], [], set(), set()
     for fact in pool:
-        payload, shown = pair_payload(fact, corpus)
-        if batch and (len(batch) >= PAIRS_PER_BATCH or len(verses | set(shown)) > BATCH_VERSES):
-            plan.append((batch, verses))
-            batch, verses = [], set()
+        payload, shown, weighed = pair_payload(fact, corpus)
+        if batch and (len(batch) >= PAIRS_PER_BATCH or len(verses | set(shown)) > BATCH_VERSES
+                      or len(witnessed | set(weighed)) > BATCH_WITNESSED_VERSES):
+            plan.append((batch, verses, witnessed))
+            batch, verses, witnessed = [], set(), set()
         batch.append(payload)
         verses |= set(shown)
+        witnessed |= set(weighed)
     if batch:
-        plan.append((batch, verses))
+        plan.append((batch, verses, witnessed))
+    read = shared.witnesses({address for _, _, weighed in plan for address in weighed})
 
     manifest = {
         'prompt_version': PROMPT_VERSION,
@@ -550,24 +623,27 @@ def extract(args):
                       'excluded': args.exclude or [], 'drawn': len(pool)},
         'batches': [],
     }
-    for number, (pairs, verses) in enumerate(plan):
+    for number, (pairs, verses, weighed) in enumerate(plan):
         name = f'batch-{number:04d}'
         people = {slug for pair in pairs for slug in (pair['a']['slug'], pair['b']['slug'])}
         passages = [{'reference': shared.reference(*address),
                      'text': corpus.lines.get(address),
                      'named_here': sorted(corpus.named.get(address, set()) & people)}
                     for address in sorted(verses)]
+        witnesses = [dict(reference=shared.reference(*address), **read[address])
+                     for address in sorted(weighed) if address in read]
         with open(os.path.join(args.dir, 'batches', name + '.json'), 'w', encoding='utf-8') as handle:
             json.dump({'batch': name, 'prompt_version': PROMPT_VERSION, 'pairs': pairs,
-                       'passages': passages}, handle, ensure_ascii=False, indent=1)
+                       'passages': passages, 'witnesses': witnesses}, handle, ensure_ascii=False, indent=1)
         manifest['batches'].append({'batch': name, 'facts': [pair['pair'] for pair in pairs],
-                                    'verses': len(passages)})
+                                    'verses': len(passages), 'witnessed': len(witnesses)})
     with open(os.path.join(args.dir, 'manifest.json'), 'w', encoding='utf-8') as handle:
         json.dump(manifest, handle, ensure_ascii=False, indent=1)
 
     drawn = {subset: sum(1 for fact in pool if fact['subset'] == subset) for subset in args.subsets}
     print(f'{len(pool)} facts ({", ".join(f"{n} {s}" for s, n in drawn.items())}) in {len(plan)} '
-          f'batches, {sum(len(v) for _, v in plan)} verse lines -> {args.dir}')
+          f'batches, {sum(len(v) for _, v, _ in plan)} verse lines, '
+          f'{sum(len(w) for _, _, w in plan)} of them read in their witnesses -> {args.dir}')
 
 
 def call(prompt, model, effort, system):
@@ -602,7 +678,7 @@ def call(prompt, model, effort, system):
     return None, last
 
 
-def run_batches(directory, folder, jobs, system, args, shape):
+def run_batches(directory, folder, jobs, system, version, args, shape):
     """
     Each batch asked once, its answers written the moment they arrive, so a run that dies half way
     has paid for half and keeps it. `jobs` is (name, prompt, items); `shape` turns one item and the
@@ -618,7 +694,7 @@ def run_batches(directory, folder, jobs, system, args, shape):
     today = datetime.date.today().isoformat()
     lock = threading.Lock()
     began = time.time()
-    totals = {'cost': 0.0, 'done': 0, 'failed': 0}
+    totals = {'cost': 0.0, 'done': 0, 'failed': 0, 'input': 0, 'output': 0}
 
     def one(job):
         name, prompt, items = job
@@ -639,8 +715,10 @@ def run_batches(directory, folder, jobs, system, args, shape):
                 totals['failed'] += 1
                 print(f'{name}: the reply held no JSON array (${cost:.4f} paid)', flush=True)
             return
-        share = {'model': model, 'askedAt': today, 'effort': args.effort,
-                 'cost': round(cost / len(items), 6), 'seconds': round(seconds / len(items), 2)}
+        read, wrote = shared.tokens(outcome)
+        share = {'model': model, 'askedAt': today, 'effort': args.effort, 'promptVersion': version,
+                 'cost': round(cost / len(items), 6), 'seconds': round(seconds / len(items), 2),
+                 'inputTokens': round(read / len(items)), 'outputTokens': round(wrote / len(items))}
         rows = [dict(shape(item, answers), **share) for item in items]
         with lock:
             with open(os.path.join(out, name + '.jsonl'), 'w', encoding='utf-8') as handle:
@@ -648,8 +726,10 @@ def run_batches(directory, folder, jobs, system, args, shape):
                     handle.write(json.dumps(row, ensure_ascii=False) + '\n')
             totals['cost'] += cost
             totals['done'] += 1
+            totals['input'] += read
+            totals['output'] += wrote
             print(f'[{totals["done"]}/{len(pending)}] {name}: {len(items)} items, {seconds:.0f}s, '
-                  f'${cost:.4f}', flush=True)
+                  f'{read} tokens in, {wrote} out, ${cost:.4f}', flush=True)
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
         list(pool.map(one, pending))
@@ -661,7 +741,8 @@ def run_batches(directory, folder, jobs, system, args, shape):
                                  'batches': len(pending), 'failed': totals['failed'],
                                  'cost': round(totals['cost'], 4), 'wall_seconds': round(wall, 1),
                                  'workers': args.workers, 'model': args.model,
-                                 'effort': args.effort}) + '\n')
+                                 'effort': args.effort, 'prompt_version': version,
+                                 'input_tokens': totals['input'], 'output_tokens': totals['output']}) + '\n')
     print(f'{folder}: {totals["done"]} batches answered, {totals["failed"]} failed, '
           f'${totals["cost"]:.4f} in {wall:.0f}s wall clock')
 
@@ -671,21 +752,24 @@ def normalised(text):
     return shared.reference(*address) if address else None
 
 
-def verdict_row(pair, shown, answers):
+def verdict_row(pair, shown, witnessed, answers):
     """
     One fact's answer, with the verse it names settled against what the model was actually shown.
 
     A `stated` naming a verse other than the cited one is a `moved`, and a `moved` naming a verse it
     was not shown is kept as said but marked, because a verse nobody showed it is a verse it did
-    not read.
+    not read. The witness it names is kept only where that text was shown for that verse -- the King
+    James for any passage, the others only where the verse carried its witnesses -- so a verdict
+    resting on a text it never saw says so by resting on none.
     """
     answer = next((a for a in answers if isinstance(a, dict) and a.get('pair') == pair['pair']), None)
     row = {'fact': pair['pair'], 'claim': pair['claim'], 'cited': pair['cited']}
     if not answer or answer.get('verdict') not in VERDICTS:
-        return dict(row, verdict=None, reference=None, confidence=None, reason=None, shown=False)
+        return dict(row, verdict=None, reference=None, witness=None, original=None, confidence=None,
+                    reason=None, how=None, shown=False)
     verdict = answer['verdict']
     reference = normalised(answer.get('reference'))
-    if verdict == STATED and reference is None and pair['cited']:
+    if verdict in (STATED, DIFFER) and reference is None and pair['cited']:
         reference = pair['cited'][0]
     if verdict == STATED and reference not in pair['cited']:
         verdict = MOVED
@@ -695,8 +779,14 @@ def verdict_row(pair, shown, answers):
         confidence = round(min(1.0, max(0.0, float(answer.get('confidence')))), 3)
     except (TypeError, ValueError):
         confidence = None
+    witness = answer.get('witness') if verdict != NOT_STATED else None
+    if witness not in witnessed.get(reference, {shared.RENDERING}):
+        witness = None
+    original = answer.get('original') if isinstance(answer.get('original'), str) else None
     return dict(row, verdict=verdict, reference=reference if verdict != NOT_STATED else None,
+                witness=witness, original=original if verdict != NOT_STATED else None,
                 confidence=confidence, reason=answer.get('reason'),
+                how=answer.get('how') if verdict == DIFFER else None,
                 shown=verdict == NOT_STATED or reference in shown)
 
 
@@ -708,10 +798,11 @@ def ask(args):
         with open(os.path.join(args.dir, 'batches', entry['batch'] + '.json'), encoding='utf-8') as handle:
             payload = json.load(handle)
         shown = {passage['reference'] for passage in payload['passages']}
-        items = [(pair, shown) for pair in payload['pairs']]
+        witnessed = {block['reference']: shared.witness_names(block) for block in payload.get('witnesses', ())}
+        items = [(pair, shown, witnessed) for pair in payload['pairs']]
         jobs.append((entry['batch'], json.dumps(payload, ensure_ascii=False, indent=1), items))
-    run_batches(args.dir, 'out', jobs, SYSTEM, args,
-                lambda item, answers: verdict_row(item[0], item[1], answers))
+    run_batches(args.dir, 'out', jobs, SYSTEM, PROMPT_VERSION, args,
+                lambda item, answers: verdict_row(*item, answers))
 
 
 def collect(directory, folder):
@@ -765,8 +856,9 @@ def check(args):
     corpus = Corpus(args.cache)
     facts = {fact['fact']: fact for fact in load_facts([args.dir])}
     wanted = [row for row in positives([args.dir]).values()
-              if row['verdict'] in (STATED, MOVED) and row['shown'] and row['reference']]
+              if row['verdict'] in POSITIVE and row['shown'] and row['reference']]
     print(f'{len(wanted)} positives name a verse they were shown and are read a second time.')
+    read = shared.witnesses({shared.parse_reference(row['reference']) for row in wanted})
     items = []
     for row in wanted:
         fact = facts[row['fact']]
@@ -779,6 +871,8 @@ def check(args):
             'a': corpus.person(fact['a']),
             'b': corpus.person(fact['b']),
             'verse': line(address, corpus, people),
+            'rests_on': {'witness': row.get('witness'), 'original': row.get('original')},
+            'witnesses': read.get(address),
             'around': around(address, corpus, people),
         })
     jobs = []
@@ -792,7 +886,7 @@ def check(args):
         return {'fact': item['item'], 'holds': holds if isinstance(holds, bool) else None,
                 'why': answer.get('why') if answer else None}
 
-    run_batches(args.dir, 'check', jobs, CHECK, args, shape)
+    run_batches(args.dir, 'check', jobs, CHECK, CHECK_VERSION, args, shape)
 
 
 def load_facts(directories):
@@ -894,6 +988,8 @@ def outcomes(directories, cache_dir, descriptors_dir, prefix):
             outcome['why'] = 'no usable answer'
         elif row['verdict'] == NOT_STATED:
             outcome['why'] = 'the text shown does not state it'
+        elif row['verdict'] == DIFFER:
+            outcome['why'] = 'the witnesses differ, which is for the owner to read'
         elif not row['shown']:
             outcome['why'] = 'moved to a verse the reader was not shown'
         elif outcome['check'] is None or outcome['check']['holds'] is None:
@@ -919,14 +1015,15 @@ def score(args):
     write = lines.append
     write('# BibleData-only relationships, read against the text\n')
     write('## Verdicts, first reading\n')
-    write('| subset | asked | stated | moved | not-stated | no answer |')
-    write('|---|---|---|---|---|---|')
+    write('| subset | asked | stated | moved | witnesses differ | not-stated | no answer |')
+    write('|---|---|---|---|---|---|---|')
     for subset in SUBSETS:
         of = [o for o in asked if o['fact']['subset'] == subset]
         if not of:
             continue
         count = {v: sum(1 for o in of if o['reading']['verdict'] == v) for v in (*VERDICTS, None)}
-        write(f'| {subset} | {len(of)} | {count[STATED]} | {count[MOVED]} | {count[NOT_STATED]} | {count[None]} |')
+        write(f'| {subset} | {len(of)} | {count[STATED]} | {count[MOVED]} | {count[DIFFER]} | '
+              f'{count[NOT_STATED]} | {count[None]} |')
 
     write('\n## Second reading, over the positives\n')
     write('| subset | read again | upheld | refused | refused share |')
@@ -969,8 +1066,11 @@ def score(args):
                     runs += [json.loads(line) for line in handle if line.strip()]
         spent = sum(r['cost'] for r in runs)
         wall = sum(r['wall_seconds'] for r in runs)
+        read = sum(r.get('inputTokens') or 0 for r in rows)
+        wrote = sum(r.get('outputTokens') or 0 for r in rows)
         write(f'- {folder}: {len(rows)} items, ${spent:.4f} paid over {len(runs)} runs, '
-              f'{wall:.0f}s wall clock, ${spent / max(1, len(rows)):.5f} an item')
+              f'{wall:.0f}s wall clock, ${spent / max(1, len(rows)):.5f} an item, '
+              f'{read / max(1, len(rows)):.0f} tokens read and {wrote / max(1, len(rows)):.0f} written an item')
     first_cost = sum(r['cost'] for d in args.dir for r in collect(d, 'out'))
     second_cost = sum(r['cost'] for d in args.dir for r in collect(d, 'check'))
     if asked:
@@ -990,6 +1090,11 @@ def score(args):
     for o in [o for o in asked if o['reading']['verdict'] == MOVED][:args.examples]:
         write(f'- `{o["fact"]["fact"]}` {o["reading"]["claim"]}: cited {", ".join(o["fact"]["cited"]) or "nothing"}, '
               f'read in **{o["reading"]["reference"]}** ({o["reading"]["confidence"]}) -- {o["reading"]["reason"]}')
+
+    write('\n## Witnesses differ\n')
+    for o in [o for o in asked if o['reading']['verdict'] == DIFFER][:args.examples]:
+        write(f'- `{o["fact"]["fact"]}` {o["reading"]["claim"]} in {o["reading"]["reference"]}, stated by '
+              f'{o["reading"].get("witness") or "?"} ({o["reading"].get("original") or "-"}): {o["reading"].get("how")}')
 
     write('\n## Refused by the second reading\n')
     for o in [o for o in asked if o['check'] and o['check']['holds'] is False][:args.examples]:
@@ -1067,6 +1172,7 @@ def publish(args):
             continue
         claim = {'relation': relation, 'target': target, 'reference': o['reading']['reference'],
                  'confidence': o['reading']['confidence'], 'reason': o['reading']['reason']}
+        claim.update({key: o['reading'][key] for key in ('witness', 'original') if o['reading'].get(key)})
         vaguer = [at for at, c in enumerate(record['claims'])
                   if c['target'] == target and c['relation'] in o['replaces']]
         if vaguer:
