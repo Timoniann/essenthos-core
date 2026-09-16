@@ -83,6 +83,10 @@ builder.Services.AddSingleton<ILanguagePack, OriginalLanguagePack>();
 builder.Services.AddSingleton<LanguagePackRegistry>();
 builder.Services.AddScoped<EvidentiaPipeline>();
 builder.Services.AddScoped<EvidentiaCorpusPreviewLoader>();
+builder.Services.AddScoped<EvidentiaRunner>();
+builder.Services.AddScoped<EvidentiaReviewQueue>();
+builder.Services.AddScoped<EvidentiaLinkWriter>();
+builder.Services.AddScoped<EvidentiaProblemVerses>();
 builder.Services.AddSingleton<EvidentiaStrongProposalResolver>();
 builder.Services.AddSingleton<EvidentiaKnownRenderingProposalResolver>();
 builder.Services.AddSingleton<EvidentiaTargetGlossProposalResolver>();
@@ -308,6 +312,131 @@ if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, v
     app.Logger.LogInformation("\n{Measurement}", measurement);
     return 0;
 }
+
+// A stored run: the same measurement, with every decision kept under a run id so it can be ranked,
+// reviewed and compared. It writes the run's own tables and nothing of the corpus.
+if (args is ["evidentia-run", var runFrom, var runTo, ..])
+{
+    var scopes = Positional(args, 3).Select(EvidentiaBookScope.Parse).ToList();
+    if (scopes.Count == 0)
+    {
+        throw new ArgumentException(
+            "evidentia-run needs at least one canonical book, optionally with chapters: evidentia-run BSB BHSA 1:1-10 8 32.");
+    }
+
+    using var runScope = app.Services.CreateScope();
+    app.Logger.LogInformation("\n{Outcome}", await runScope.ServiceProvider.GetRequiredService<EvidentiaRunner>()
+        .Run(Identifier(runFrom), Identifier(runTo), scopes, EvidentiaOptions(args)));
+    return 0;
+}
+
+if (args is ["evidentia-runs", ..])
+{
+    using var runsScope = app.Services.CreateScope();
+    app.Logger.LogInformation("\n{Runs}", await runsScope.ServiceProvider.GetRequiredService<EvidentiaRunner>().List());
+    return 0;
+}
+
+if (args is ["evidentia-queue", var queueRun, ..])
+{
+    using var queueScope = app.Services.CreateScope();
+    app.Logger.LogInformation("\n{Queue}", await queueScope.ServiceProvider.GetRequiredService<EvidentiaReviewQueue>()
+        .Pending(int.Parse(queueRun), QueueFilter(args)));
+    return 0;
+}
+
+// A verdict is recorded and goes no further; evidentia-apply is the only thing that writes a link.
+if (args is ["evidentia-approve" or "evidentia-reject", ..])
+{
+    using var verdictScope = app.Services.CreateScope();
+    var queue = verdictScope.ServiceProvider.GetRequiredService<EvidentiaReviewQueue>();
+    var ids = Positional(args, 1).Select(long.Parse).ToList();
+    var reviewer = OptionalText(args, "--reviewer") ?? string.Empty;
+    var approving = args[0] == "evidentia-approve";
+    var settled = approving
+        ? await queue.Approve(ids, reviewer, OptionalText(args, "--note"))
+        : await queue.Reject(ids, reviewer, OptionalText(args, "--note"));
+    app.Logger.LogInformation(
+        "{Settled} decisions {Verdict}; nothing reaches the corpus until evidentia-apply --write",
+        settled, approving ? "approved" : "rejected");
+    return 0;
+}
+
+if (args is ["evidentia-correct", var correctDecision, var correctTarget, ..])
+{
+    using var correctScope = app.Services.CreateScope();
+    await correctScope.ServiceProvider.GetRequiredService<EvidentiaReviewQueue>().Correct(
+        long.Parse(correctDecision), long.Parse(correctTarget),
+        OptionalText(args, "--reviewer") ?? string.Empty, OptionalText(args, "--note"));
+    app.Logger.LogInformation(
+        "Decision {Decision} corrected to word {Target}; nothing reaches the corpus until evidentia-apply --write",
+        correctDecision, correctTarget);
+    return 0;
+}
+
+if (args is ["evidentia-accept-tier", var acceptRun, ..])
+{
+    using var acceptScope = app.Services.CreateScope();
+    var accepted = await acceptScope.ServiceProvider.GetRequiredService<EvidentiaReviewQueue>().AcceptTier(
+        int.Parse(acceptRun), QueueFilter(args), OptionalText(args, "--reviewer") ?? string.Empty,
+        OptionalText(args, "--note"));
+    app.Logger.LogInformation(
+        "{Accepted} proposals accepted with their tier, unread. They will be written as rule-based claims, never as a " +
+        "person's, and only by evidentia-apply --write", accepted);
+    return 0;
+}
+
+// The one command that writes EVIDENTIA's output into the corpus, and only what a reviewer approved
+// or corrected. Without --write it reports what it would write and writes nothing.
+if (args is ["evidentia-apply", var applyRun, ..])
+{
+    using var applyScope = app.Services.CreateScope();
+    app.Logger.LogInformation("\n{Outcome}", await applyScope.ServiceProvider.GetRequiredService<EvidentiaLinkWriter>()
+        .Apply(int.Parse(applyRun), args.Contains("--write")));
+    return 0;
+}
+
+if (args is ["evidentia-problems", var problemRuns, ..])
+{
+    using var problemScope = app.Services.CreateScope();
+    app.Logger.LogInformation("\n{Problems}", await problemScope.ServiceProvider.GetRequiredService<EvidentiaProblemVerses>()
+        .Worst(
+            [.. problemRuns.Split(',').Select(int.Parse)],
+            OptionalInt(args, "--take") ?? EvidentiaProblemVerses.DefaultTake,
+            OptionalInt(args, "--min-words") ?? EvidentiaProblemVerses.DefaultMinimumContentWords,
+            args.Contains("--flagged")));
+    return 0;
+}
+
+if (args is ["evidentia-rerun", var rerunRun, ..])
+{
+    using var rerunScope = app.Services.CreateScope();
+    app.Logger.LogInformation("\n{Rerun}", await rerunScope.ServiceProvider.GetRequiredService<EvidentiaProblemVerses>()
+        .Rerun(
+            int.Parse(rerunRun),
+            OptionalInt(args, "--take") ?? EvidentiaProblemVerses.DefaultTake,
+            OptionalInt(args, "--min-words") ?? EvidentiaProblemVerses.DefaultMinimumContentWords));
+    return 0;
+}
+
+if (args is ["evidentia-compare", var compareBefore, var compareAfter, ..])
+{
+    using var compareScope = app.Services.CreateScope();
+    app.Logger.LogInformation("\n{Comparison}", await compareScope.ServiceProvider.GetRequiredService<EvidentiaProblemVerses>()
+        .Compare(int.Parse(compareBefore), int.Parse(compareAfter)));
+    return 0;
+}
+
+// The arguments from a position up to the first option.
+static IEnumerable<string> Positional(string[] arguments, int from) =>
+    arguments.Skip(from).TakeWhile(argument => !argument.StartsWith("--", StringComparison.Ordinal));
+
+static EvidentiaQueueFilter QueueFilter(string[] arguments) => new(
+    Tier: OptionalText(arguments, "--tier"),
+    Book: OptionalInt(arguments, "--book"),
+    Chapter: OptionalInt(arguments, "--chapter"),
+    Verse: OptionalInt(arguments, "--verse"),
+    Take: OptionalInt(arguments, "--take") ?? EvidentiaReviewQueue.DefaultTake);
 
 // Contradicted proposals go to a file rather than to the report, because they are read one at a
 // time and there are thousands of them: a classification pass needs the rows the aggregate counted,

@@ -55,6 +55,7 @@ public sealed class LinkProvenanceTests : IDisposable
     [InlineData(LinkMethod.StrongNumber)]
     [InlineData(LinkMethod.Lexical)]
     [InlineData(LinkMethod.Aligner)]
+    [InlineData(LinkMethod.RuleBased)]
     public void ACorrespondenceAProcessInferredMustCarryOne(LinkMethod method)
     {
         Saving(method, confidence: null, source: "an aligner, v1").Should().Throw<DbUpdateException>();

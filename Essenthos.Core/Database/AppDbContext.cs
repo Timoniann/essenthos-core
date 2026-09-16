@@ -43,6 +43,16 @@ public class AppDbContext : DbContext
     /// </summary>
     public DbSet<LinkClaim> LinkClaims { get; set; } = null!;
 
+    /// <summary>
+    /// EVIDENTIA's passes, what each decided about each word, and what a person said about it. None
+    /// of it is corpus: a decision reaches <see cref="Links"/> only through an approved review.
+    /// </summary>
+    public DbSet<EvidentiaRun> EvidentiaRuns { get; set; } = null!;
+
+    public DbSet<EvidentiaDecision> EvidentiaDecisions { get; set; } = null!;
+
+    public DbSet<EvidentiaReview> EvidentiaReviews { get; set; } = null!;
+
     public DbSet<VerseLink> VerseLinks { get; set; } = null!;
 
     public DbSet<VerseLinkVerse> VerseLinkVerses { get; set; } = null!;
@@ -419,6 +429,105 @@ public class AppDbContext : DbContext
         ConfigureWordParsing(modelBuilder);
         ConfigureWordEntity(modelBuilder);
         ConfigureEntityDescriptor(modelBuilder);
+        ConfigureEvidentia(modelBuilder);
+    }
+
+    private static void ConfigureEvidentia(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<EvidentiaRun>(entity =>
+        {
+            entity.HasOne(r => r.FromText)
+                .WithMany()
+                .HasForeignKey(r => r.FromTextId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.ToText)
+                .WithMany()
+                .HasForeignKey(r => r.ToTextId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.ParentRun)
+                .WithMany()
+                .HasForeignKey(r => r.ParentRunId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.Property(r => r.Configuration).HasColumnType("jsonb");
+            entity.Property(r => r.Scope).HasColumnType("jsonb");
+        });
+
+        modelBuilder.Entity<EvidentiaDecision>(entity =>
+        {
+            entity.Property(d => d.Abstention).HasConversion(EnumStorage.EvidentiaAbstention);
+
+            entity.HasOne(d => d.Run)
+                .WithMany(r => r.Decisions)
+                .HasForeignKey(d => d.RunId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(d => d.SourceWord)
+                .WithMany()
+                .HasForeignKey(d => d.SourceWordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(d => d.TargetWord)
+                .WithMany()
+                .HasForeignKey(d => d.TargetWordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // A proposal says what it is and how sure; an abstention says why. Neither may be stored
+            // as the other, because the problem-verse ranking counts them apart.
+            entity.ToTable("evidentia_decision", table =>
+            {
+                table.HasCheckConstraint(
+                    "ck_evidentia_decision_proposal_is_described",
+                    "\"target_word_id\" IS NULL OR (\"kind\" IS NOT NULL AND \"confidence\" IS NOT NULL AND \"abstention\" IS NULL)");
+                table.HasCheckConstraint(
+                    "ck_evidentia_decision_abstention_has_reason",
+                    "\"target_word_id\" IS NOT NULL OR (\"abstention\" IS NOT NULL AND \"kind\" IS NULL)");
+                table.HasCheckConstraint(
+                    "ck_evidentia_decision_confidence_range",
+                    "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
+            });
+        });
+
+        modelBuilder.Entity<EvidentiaReview>(entity =>
+        {
+            entity.Property(r => r.Verdict).HasConversion(EnumStorage.EvidentiaVerdict);
+
+            entity.HasOne(r => r.Decision)
+                .WithOne(d => d.Review)
+                .HasForeignKey<EvidentiaReview>(r => r.DecisionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.CorrectedTargetWord)
+                .WithMany()
+                .HasForeignKey(r => r.CorrectedTargetWordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.Link)
+                .WithMany()
+                .HasForeignKey(r => r.LinkId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            var corrected = EnumSpelling.Of(EvidentiaVerdict.Corrected);
+            var approved = EnumSpelling.Of(EvidentiaVerdict.Approved);
+            var rejected = EnumSpelling.Of(EvidentiaVerdict.Rejected);
+            entity.ToTable("evidentia_review", table =>
+            {
+                table.HasCheckConstraint(
+                    "ck_evidentia_review_correction_names_its_word",
+                    $"(\"verdict\" = '{corrected}') = (\"corrected_target_word_id\" IS NOT NULL)");
+                table.HasCheckConstraint(
+                    "ck_evidentia_review_only_an_approval_may_be_unexamined",
+                    $"\"examined\" OR \"verdict\" = '{approved}'");
+                table.HasCheckConstraint(
+                    "ck_evidentia_review_a_rejection_is_never_applied",
+                    $"\"verdict\" <> '{rejected}' OR (\"applied_at\" IS NULL AND \"link_id\" IS NULL)");
+                table.HasCheckConstraint(
+                    "ck_evidentia_review_reviewer_not_empty",
+                    "length(btrim(\"reviewer\")) > 0");
+            });
+        });
     }
 
     /// <summary>
