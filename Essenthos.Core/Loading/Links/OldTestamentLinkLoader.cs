@@ -144,6 +144,15 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// </summary>
     private const double SameVerse = 0.6;
 
+    /// <summary>
+    /// Where the frame puts a psalm's superscription, which BHSA numbers as its first verse and the
+    /// King James does not number at all. The file follows the King James and counts the
+    /// superscription's Hebrew into verse 1.
+    /// </summary>
+    private const int Superscription = 0;
+
+    private const int FirstVerse = 1;
+
     private const string LinkImport =
         """
         COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
@@ -185,8 +194,11 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
         if (await db.Links.AnyAsync(l => l.FromTextId == english.Id && l.ToTextId == hebrew.Id, cancellationToken))
         {
-            logger.LogInformation("The Old Testament links are already loaded; nothing to do");
-            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            var numbered = await NumberTheUnnumbered(records, hebrew.Id, cancellationToken);
+            logger.LogInformation(
+                "The Old Testament links are already loaded; {Numbered} Hebrew words that had no Strong number were " +
+                "given the one the file states", numbered);
+            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, numbered, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -204,9 +216,25 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
         foreach (var record in records)
         {
-            var address = (record.Book, record.Chapter, record.Verse);
-            if (!englishVerses.TryGetValue(address, out var kjvWords) ||
-                !hebrewVerses.TryGetValue(address, out var bhsaWords))
+            var bhsaWords = JoinHebrew(record, hebrewVerses, out var glosses);
+            glossesCompared += glosses.Compared;
+            if (bhsaWords is null)
+            {
+                refused++;
+                if (glosses.Share < SameVerse)
+                {
+                    glossRefused++;
+                }
+
+                continue;
+            }
+
+            // The numbers belong to the Hebrew words, so they need only the Hebrew join. A verse the
+            // King James words differently from the file is refused its links, and its Hebrew is
+            // still the Hebrew the file numbers.
+            StateNumbers(record, bhsaWords, statedStrong);
+
+            if (!englishVerses.TryGetValue((record.Book, record.Chapter, record.Verse), out var kjvWords))
             {
                 refused++;
                 continue;
@@ -218,16 +246,10 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 statedVerses++;
             }
 
-            var drafts = Build(record, kjvWords, bhsaWords, stated, out var glosses);
-            glossesCompared += glosses.Compared;
+            var drafts = Build(record, kjvWords, bhsaWords, stated);
             if (drafts is null)
             {
                 refused++;
-                if (glosses.Share < SameVerse)
-                {
-                    glossRefused++;
-                }
-
                 continue;
             }
 
@@ -238,15 +260,6 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
             pairs.AddRange(drafts);
             unreached += bhsaWords.Count - drafts.SelectMany(d => d.Hebrew).Distinct().Count();
-
-            for (var i = 0; i < record.Hebrew.Count; i++)
-            {
-                var strong = StrongNumbers.Normalize(record.Hebrew[i].Strong);
-                if (strong is not null)
-                {
-                    statedStrong.Add((bhsaWords[i].Id, strong));
-                }
-            }
         }
 
         await Write(english.Id, hebrew.Id, pairs, statedStrong, cancellationToken);
@@ -274,24 +287,27 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     }
 
     /// <summary>
-    /// Lines the file's verse up with the corpus, and refuses rather than guessing when it cannot.
+    /// The BHSA words the file's Hebrew for this verse lines up with, or null where it does not.
     ///
-    /// The Hebrew join is positional within the verse and checked against the glosses BHSA carries;
-    /// the English join is positional and checked against the words themselves, folded for case
-    /// because the file writes the divine name in capitals and bible4u does not.
-    ///
-    /// The gloss check runs before the English one so that a verse the two sides divide differently
-    /// is always refused here, and the count of refusals for that reason means what it says.
+    /// The join is positional within the verse and checked against the glosses BHSA carries, so a
+    /// verse the two sides divide differently is refused even when the counts agree. It runs before
+    /// the English join, so the count of refusals for glosses means what it says.
     /// </summary>
-    private static List<LinkDraft>? Build(
+    private static List<Word>? JoinHebrew(
         MappingRecord record,
-        List<Word> kjv,
-        List<Word> bhsa,
-        IReadOnlyDictionary<int, TahotMorpheme>? stated,
+        Dictionary<(int, int, int), List<Word>> hebrewVerses,
         out GlossAgreement glosses)
     {
         glosses = default;
-        if (record.Hebrew.Count != bhsa.Count)
+        hebrewVerses.TryGetValue((record.Book, record.Chapter, record.Verse), out var bhsa);
+        if (bhsa?.Count != record.Hebrew.Count &&
+            record.Verse == FirstVerse &&
+            hebrewVerses.TryGetValue((record.Book, record.Chapter, Superscription), out var superscription))
+        {
+            bhsa = [.. superscription, .. bhsa ?? []];
+        }
+
+        if (bhsa is null || bhsa.Count != record.Hebrew.Count)
         {
             return null;
         }
@@ -299,11 +315,76 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         glosses = Glosses.Agreement(
             [.. record.Hebrew.Select(entry => (string?)entry.Gloss)],
             [.. bhsa.Select(word => word.Gloss)]);
-        if (glosses.Share < SameVerse)
+        return glosses.Share < SameVerse ? null : bhsa;
+    }
+
+    private static void StateNumbers(
+        MappingRecord record,
+        List<Word> bhsa,
+        List<(long WordId, string Strong)> statedStrong)
+    {
+        for (var i = 0; i < record.Hebrew.Count; i++)
         {
-            return null;
+            var strong = StrongNumbers.Normalize(record.Hebrew[i].Strong);
+            if (strong is not null)
+            {
+                statedStrong.Add((bhsa[i].Id, strong));
+            }
+        }
+    }
+
+    /// <summary>
+    /// The numbers alone, for a corpus whose links are already written: every Hebrew word whose verse
+    /// the file joins and which carries no number yet. A number already there is never replaced, so
+    /// a second run writes nothing.
+    /// </summary>
+    private async Task<int> NumberTheUnnumbered(
+        IReadOnlyList<MappingRecord> records,
+        int hebrewTextId,
+        CancellationToken cancellationToken)
+    {
+        if (!await db.Words.AnyAsync(w => w.TextId == hebrewTextId && w.StrongNumber == null, cancellationToken))
+        {
+            return 0;
         }
 
+        var hebrewVerses = await VerseWords(hebrewTextId, cancellationToken);
+        var statedStrong = new List<(long WordId, string Strong)>(430_000);
+        foreach (var record in records)
+        {
+            if (JoinHebrew(record, hebrewVerses, out _) is { } bhsaWords)
+            {
+                StateNumbers(record, bhsaWords, statedStrong);
+            }
+        }
+
+        return await WriteStrongNumbers(statedStrong, cancellationToken);
+    }
+
+    /// <summary>The numbers without links, in a transaction of their own, which the temporary table needs.</summary>
+    private async Task<int> WriteStrongNumbers(
+        List<(long WordId, string Strong)> stated,
+        CancellationToken cancellationToken)
+    {
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var numbered = await WriteStrongNumbers(
+            (NpgsqlConnection)db.Database.GetDbConnection(), stated, cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        return numbered;
+    }
+
+    /// <summary>
+    /// Lines the file's English up with the King James as loaded, over a verse whose Hebrew has
+    /// already joined, and refuses rather than guessing when it cannot. The join is positional and
+    /// checked against the words themselves, folded for case because the file writes the divine name
+    /// in capitals and bible4u does not.
+    /// </summary>
+    private static List<LinkDraft>? Build(
+        MappingRecord record,
+        List<Word> kjv,
+        List<Word> bhsa,
+        IReadOnlyDictionary<int, TahotMorpheme>? stated)
+    {
         var fileWords = record.English.SelectMany(segment => segment.Words).ToList();
         if (fileWords.Count != kjv.Count)
         {
@@ -435,6 +516,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     {
         if (drafts.Count == 0)
         {
+            await WriteStrongNumbers(stated, cancellationToken);
             return;
         }
 
@@ -536,14 +618,14 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// up in a printed concordance will not find it. They are kept because they are what the source
     /// says and because a prefix with no number is a prefix nothing can join on.
     /// </summary>
-    private static async Task WriteStrongNumbers(
+    private static async Task<int> WriteStrongNumbers(
         NpgsqlConnection connection,
         List<(long WordId, string Strong)> stated,
         CancellationToken cancellationToken)
     {
         if (stated.Count == 0)
         {
-            return;
+            return 0;
         }
 
         await using (var create = new NpgsqlCommand(StrongNumberUpdate, connection))
@@ -565,9 +647,10 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         }
 
         await using var update = new NpgsqlCommand(
-            "UPDATE word SET strong_number = s.strong_number FROM stated_strong s WHERE word.id = s.word_id",
+            "UPDATE word SET strong_number = s.strong_number FROM stated_strong s " +
+            "WHERE word.id = s.word_id AND word.strong_number IS NULL",
             connection);
-        await update.ExecuteNonQueryAsync(cancellationToken);
+        return await update.ExecuteNonQueryAsync(cancellationToken);
     }
 
     private static async Task Row(
