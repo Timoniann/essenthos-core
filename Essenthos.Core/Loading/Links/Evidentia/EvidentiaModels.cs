@@ -135,6 +135,18 @@ internal enum EvidentiaEvidenceKind
 }
 
 /// <summary>
+/// Which form of a word an index is filed under, from the most specific to the most general. The
+/// order is the order a lookup asks them in, so an exact form is a preference among the keys that
+/// could answer rather than a condition on the ones that may.
+/// </summary>
+internal enum EvidentiaFormKind
+{
+    Surface,
+    Lemma,
+    Normalised,
+}
+
+/// <summary>
 /// How much the corpus actually knows about the reading this evidence proposes, as opposed to how
 /// much that reading scored. A score compresses both into one number and a policy needs them
 /// apart: a form seen twice and a form seen two hundred times can carry the same share.
@@ -145,7 +157,16 @@ internal enum EvidentiaEvidenceKind
 /// The fraction the strongest competing sense holds across the whole index - not across the verse
 /// being read, where a competitor is usually simply absent and so reads as no competition at all.
 /// </param>
-internal sealed record EvidentiaEvidenceSupport(int Observations, double Share, double NextShare);
+/// <param name="MatchedForm">
+/// Which key of a multi-key index answered. A reader cannot otherwise tell a reading the corpus
+/// has seen written exactly this way from one it has only seen a related form of, and those are
+/// two different claims.
+/// </param>
+internal sealed record EvidentiaEvidenceSupport(
+    int Observations,
+    double Share,
+    double NextShare,
+    EvidentiaFormKind? MatchedForm = null);
 
 internal sealed record EvidentiaEvidence(
     EvidentiaEvidenceKind Kind,
