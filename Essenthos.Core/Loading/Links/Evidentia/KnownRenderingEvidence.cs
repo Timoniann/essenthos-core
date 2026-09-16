@@ -14,6 +14,13 @@ internal sealed class EvidentiaKnownRenderingIndex(
     LanguagePackRegistry languagePacks)
 {
     private const int MinimumObservations = 2;
+
+    /// <summary>
+    /// What a translation's own edition states. It is the only evidence that is not itself an
+    /// inference, so it is what a learned index reads unless a caller deliberately widens it.
+    /// </summary>
+    private static readonly IReadOnlyList<LinkMethod> DefaultMethods = [LinkMethod.StatedBySource];
+
     private readonly Dictionary<RenderingCorpusKey, IReadOnlyList<RenderingObservation>> observationsByTextPair = new();
 
     public async Task<EvidentiaKnownRenderingEvidenceSource?> For(
@@ -22,8 +29,10 @@ internal sealed class EvidentiaKnownRenderingIndex(
         IReadOnlyList<EvidentiaToken> source,
         int excludedBook,
         int excludedChapter,
+        IReadOnlyList<LinkMethod>? methods = null,
         CancellationToken cancellationToken = default)
     {
+        methods ??= DefaultMethods;
         var language = source.Select(token => token.Language).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         if (language.Count != 1)
         {
@@ -43,7 +52,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
             .Where(token => Key(token) is not null)
             .Select(token => token.Surface.ToLowerInvariant())
             .ToHashSet(StringComparer.Ordinal);
-        var observations = await Observations(fromSlug, toSlug, cancellationToken);
+        var observations = await Observations(fromSlug, toSlug, methods, cancellationToken);
         var counts = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);
         foreach (var observation in observations)
         {
@@ -100,9 +109,9 @@ internal sealed class EvidentiaKnownRenderingIndex(
         Key(new EvidentiaToken(0, default, 0, surface, language));
 
     private async Task<IReadOnlyList<RenderingObservation>> Observations(
-        string fromSlug, string toSlug, CancellationToken cancellationToken)
+        string fromSlug, string toSlug, IReadOnlyList<LinkMethod> methods, CancellationToken cancellationToken)
     {
-        var key = new RenderingCorpusKey(fromSlug, toSlug);
+        var key = new RenderingCorpusKey(fromSlug, toSlug, string.Join(',', methods.Order()));
         if (observationsByTextPair.TryGetValue(key, out var cached))
         {
             return cached;
@@ -123,7 +132,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
             join reference in db.VerseReferences.AsNoTracking() on sourceWord.VerseId equals reference.VerseId
             join targetMembership in db.LinkWords.AsNoTracking() on link.Id equals targetMembership.LinkId
             join targetWord in db.Words.AsNoTracking() on targetMembership.WordId equals targetWord.Id
-            where link.Method == LinkMethod.StatedBySource
+            where methods.Contains(link.Method)
                 && sourceWord.TextId == sourceText.Id
                 && targetWord.TextId == targetText.Id
                 && targetWord.StrongNumber != null
@@ -142,7 +151,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
         return observations;
     }
 
-    private sealed record RenderingCorpusKey(string FromSlug, string ToSlug);
+    private sealed record RenderingCorpusKey(string FromSlug, string ToSlug, string Methods);
 
     private sealed record RenderingObservation(int CanonicalBook, int CanonicalChapter, string SourceSurface, string TargetStrongNumber);
 

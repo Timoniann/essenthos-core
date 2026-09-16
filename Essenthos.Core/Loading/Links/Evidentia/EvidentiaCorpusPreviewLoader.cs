@@ -41,7 +41,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
         var targetGlossEvidence = TargetGlossEvidenceSource.For(target);
         var knownRenderingEvidence = allowKnownRenderingEvidence
-            ? await knownRenderingIndex.For(fromSlug, toSlug, source, canonicalBook, canonicalChapter, cancellationToken)
+            ? await knownRenderingIndex.For(fromSlug, toSlug, source, canonicalBook, canonicalChapter, null, cancellationToken)
             : null;
         var preview = pipeline.Preview(
             new EvidentiaRequest(source, target, AllowSourceStrongEvidence: allowSourceStrongEvidence),
@@ -63,22 +63,24 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         string toSlug,
         int canonicalBook,
         int canonicalChapter,
-        bool allowSourceStrongEvidence = true,
-        bool allowKnownRenderingEvidence = true,
+        EvidentiaMeasurementOptions? options = null,
         CancellationToken cancellationToken = default)
     {
+        options ??= new EvidentiaMeasurementOptions();
         var sourceAnalysis = await SourceTokens(fromSlug, canonicalBook, canonicalChapter, null, cancellationToken);
         var source = sourceAnalysis.Tokens;
         var target = await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken);
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
         var targetGlossEvidence = TargetGlossEvidenceSource.For(target);
-        var knownRenderingEvidence = allowKnownRenderingEvidence
-            ? await knownRenderingIndex.For(fromSlug, toSlug, source, canonicalBook, canonicalChapter, cancellationToken)
+        var knownRenderingEvidence = options.AllowKnownRenderingEvidence
+            ? await knownRenderingIndex.For(
+                options.LearnRenderingsFrom ?? fromSlug, toSlug, source,
+                canonicalBook, canonicalChapter, options.LearnedRenderingMethods, cancellationToken)
             : null;
         var previews = source.GroupBy(token => token.Address)
             .OrderBy(group => group.Key.Verse)
             .Select(group => pipeline.Preview(
-                new EvidentiaRequest(group.ToList(), target, AllowSourceStrongEvidence: allowSourceStrongEvidence),
+                new EvidentiaRequest(group.ToList(), target, AllowSourceStrongEvidence: options.AllowSourceStrongEvidence),
                 Evidence(dictionaryEvidence, knownRenderingEvidence, targetGlossEvidence)))
             .ToList();
 
@@ -104,7 +106,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             dictionaryReviewResolution.Proposals.Concat(syntaxTargetGlossOnlyResolution.Proposals).ToList(), 0);
         var sourceIds = source.Select(token => token.Id).ToHashSet();
         var targetIds = target.Select(token => token.Id).ToHashSet();
-        var gold = await GoldPairs(fromSlug, toSlug, sourceIds, targetIds, cancellationToken);
+        var gold = await GoldPairs(fromSlug, toSlug, sourceIds, targetIds, options.GoldSource, cancellationToken);
         var proposed = candidates.Select(candidate => (candidate.Source.Token.Id, candidate.Target.Token.Id)).ToHashSet();
         var candidateGold = proposed.Intersect(gold).Count();
         var bySource = candidates.GroupBy(candidate => candidate.Source.Token.Id)
@@ -114,11 +116,14 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var unambiguous = bySource.Where(pair => pair.Value.Count == 1)
             .Select(pair => (From: pair.Key, To: pair.Value.Single()))
             .ToHashSet();
+        var finalProposals = syntaxTargetGlossReviewResolution.Proposals
+            .Concat(globalReviewKnownRenderingResolution.Proposals)
+            .ToList();
         return new EvidentiaChapterMeasurement(
             fromSlug,
             toSlug,
-            allowSourceStrongEvidence,
-            allowKnownRenderingEvidence,
+            options.AllowSourceStrongEvidence,
+            options.AllowKnownRenderingEvidence,
             canonicalBook,
             canonicalChapter,
             previews.Count,
@@ -157,19 +162,21 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             syntaxTargetGlossReviewResolution.Proposals.Count,
             syntaxTargetGlossReviewResolution.Proposals.Count(proposal => gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))),
             unambiguous.Count,
-            unambiguous.Intersect(gold).Count());
+            unambiguous.Intersect(gold).Count(),
+            finalProposals.Select(proposal => proposal.Source.Token.Id).Distinct().Count(),
+            Samples(finalProposals, candidates, source, target, gold, options.SampleSize));
     }
 
     public async Task<EvidentiaBookMeasurement> MeasureBook(
         string fromSlug,
         string toSlug,
         int canonicalBook,
-        bool allowSourceStrongEvidence = true,
-        bool allowKnownRenderingEvidence = true,
+        EvidentiaMeasurementOptions? options = null,
         int? firstChapter = null,
         int? lastChapter = null,
         CancellationToken cancellationToken = default)
     {
+        options ??= new EvidentiaMeasurementOptions();
         var chapters = await db.VerseReferences.AsNoTracking()
             .Where(reference => reference.Verse!.Text!.Slug == fromSlug
                 && reference.CanonicalBook == canonicalBook)
@@ -183,15 +190,14 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         foreach (var chapter in chapters)
         {
             measurements.Add(await MeasureChapter(
-                fromSlug, toSlug, canonicalBook, chapter,
-                allowSourceStrongEvidence, allowKnownRenderingEvidence, cancellationToken));
+                fromSlug, toSlug, canonicalBook, chapter, options, cancellationToken));
         }
 
         return new EvidentiaBookMeasurement(
             fromSlug,
             toSlug,
-            allowSourceStrongEvidence,
-            allowKnownRenderingEvidence,
+            options.AllowSourceStrongEvidence,
+            options.AllowKnownRenderingEvidence,
             canonicalBook,
             measurements);
     }
@@ -302,11 +308,105 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             .ToDictionary(property => property.Name, property => property.Value.GetString()!);
     }
 
+    /// <summary>
+    /// A deterministic, evenly spread reading sample of what the final review tier actually did:
+    /// proposals the stored gold agrees with, proposals it contradicts, and content words carrying
+    /// a gold pair that no tier would propose. Reading proposals is how a policy's failure modes
+    /// are found; an aggregate percentage hides which kind of word each tier gets wrong.
+    /// </summary>
+    private static IReadOnlyList<string> Samples(
+        IReadOnlyList<EvidentiaProposal> proposals,
+        IReadOnlyList<EvidentiaCandidate> candidates,
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        IReadOnlySet<(long From, long To)> gold,
+        int wanted)
+    {
+        if (wanted <= 0)
+        {
+            return [];
+        }
+
+        var byTargetId = target.DistinctBy(token => token.Id).ToDictionary(token => token.Id);
+        var goldTargetsBySource = gold.GroupBy(pair => pair.From)
+            .ToDictionary(group => group.Key, group => group.Select(pair => pair.To).ToList());
+        var ordered = proposals
+            .OrderBy(proposal => proposal.Source.Token.Address.Verse)
+            .ThenBy(proposal => proposal.Source.Token.Position)
+            .ToList();
+        var accepted = ordered.Where(proposal =>
+            gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))).ToList();
+        var refused = ordered.Where(proposal =>
+            !gold.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))).ToList();
+        var proposed = proposals.Select(proposal => proposal.Source.Token.Id).ToHashSet();
+        var candidatesBySource = candidates.GroupBy(candidate => candidate.Source.Token.Id)
+            .ToDictionary(group => group.Key, group => group.ToList());
+        var abstained = source
+            .Where(token => !proposed.Contains(token.Id) && goldTargetsBySource.ContainsKey(token.Id))
+            .DistinctBy(token => token.Id)
+            .ToList();
+
+        var share = Math.Max(1, wanted / 3);
+        return
+        [
+            .. Spread(accepted, share).Select(proposal => Line("accepted", proposal, gold)),
+            .. Spread(refused, share).Select(proposal => Line("refused ", proposal, gold)),
+            .. Spread(abstained, wanted - 2 * share).Select(token => Abstention(token, goldTargetsBySource, byTargetId, candidatesBySource)),
+        ];
+    }
+
+    private static IEnumerable<T> Spread<T>(IReadOnlyList<T> items, int wanted)
+    {
+        if (items.Count == 0 || wanted <= 0)
+        {
+            yield break;
+        }
+
+        var stride = Math.Max(1, items.Count / wanted);
+        for (var index = 0; index < items.Count && wanted > 0; index += stride, wanted--)
+        {
+            yield return items[index];
+        }
+    }
+
+    private static string Line(
+        string verdict,
+        EvidentiaProposal proposal,
+        IReadOnlySet<(long From, long To)> gold)
+    {
+        var goldTargets = gold.Where(pair => pair.From == proposal.Source.Token.Id).Select(pair => pair.To).ToList();
+        var expected = verdict.Trim() == "refused"
+            ? goldTargets.Count == 0 ? "; gold: none" : $"; gold target ids: {string.Join("/", goldTargets)}"
+            : string.Empty;
+        return $"{verdict} v{proposal.Source.Token.Address.Verse} " +
+               $"'{proposal.Source.Token.Surface}' → '{proposal.Target.Token.Surface}' " +
+               $"[{proposal.Target.Token.StrongNumber ?? "no-strong"}] {proposal.Kind} {proposal.Confidence:F2} " +
+               $"({proposal.Trace?.Tier}: {proposal.Trace?.Rationale}){expected}";
+    }
+
+    private static string Abstention(
+        EvidentiaToken token,
+        IReadOnlyDictionary<long, List<long>> goldTargetsBySource,
+        IReadOnlyDictionary<long, EvidentiaToken> byTargetId,
+        IReadOnlyDictionary<long, List<EvidentiaCandidate>> candidatesBySource)
+    {
+        var expected = string.Join(" ", goldTargetsBySource[token.Id]
+            .Select(id => byTargetId.TryGetValue(id, out var word) ? $"'{word.Surface}'" : $"#{id}"));
+        var candidates = candidatesBySource.GetValueOrDefault(token.Id) ?? [];
+        var best = candidates.OrderByDescending(candidate => candidate.Score).FirstOrDefault();
+        var reached = best is null
+            ? "no candidate edge"
+            : $"{candidates.Count} candidates, best '{best.Target.Token.Surface}' {best.Score:F2} " +
+              $"[{string.Join(", ", best.Evidence.Select(evidence => evidence.Kind))}]";
+        return $"abstain  v{token.Address.Verse} '{token.Surface}' gold {expected}; {reached}";
+    }
+
     private async Task<HashSet<(long From, long To)>> GoldPairs(
         string fromSlug,
         string toSlug,
         IReadOnlySet<long> sourceIds,
         IReadOnlySet<long> targetIds,
+        string? goldSource,
         CancellationToken cancellationToken)
     {
         var texts = await db.Texts.AsNoTracking()
@@ -322,6 +422,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 || (link.FromTextId == to.Id && link.ToTextId == from.Id))
             .Where(link => link.Method == LinkMethod.StatedBySource
                 || link.Method == LinkMethod.StrongNumber)
+            .Where(link => goldSource == null || link.Source.Contains(goldSource))
             .SelectMany(link => link.Words.Select(word => new
             {
                 link.Id,
@@ -369,6 +470,11 @@ internal sealed record EvidentiaBookMeasurement(
     public int GlobalReviewAndSyntaxTargetGlossProposals => Chapters.Sum(chapter => chapter.GlobalReviewAndSyntaxTargetGlossProposals);
     public int CorrectGlobalReviewAndSyntaxTargetGlossProposals => Chapters.Sum(chapter => chapter.CorrectGlobalReviewAndSyntaxTargetGlossProposals);
     public int FallbackVerses => Chapters.Sum(chapter => chapter.FallbackVerses);
+    public int ContentSourceWords => Chapters.Sum(chapter => chapter.ContentSourceWords);
+    public int FinalProposedSourceWords => Chapters.Sum(chapter => chapter.FinalProposedSourceWords);
+    public double Abstention => ContentSourceWords == 0
+        ? 0
+        : 1 - (double)FinalProposedSourceWords / ContentSourceWords;
     public double CandidateRecall => GoldPairs == 0 ? 0 : (double)GoldPairsInCandidates / GoldPairs;
     public double GlobalKnownRenderingPrecision => GlobalKnownRenderingProposals == 0 ? 0
         : (double)CorrectGlobalKnownRenderingProposals / GlobalKnownRenderingProposals;
@@ -401,7 +507,13 @@ internal sealed record EvidentiaBookMeasurement(
                $"global review: {CorrectGlobalReviewKnownRenderingProposals:N0}/{GlobalReviewKnownRenderingProposals:N0} " +
                $"({GlobalReviewKnownRenderingPrecision:P2}); gold recall: {GlobalReviewKnownRenderingRecall:P2}\n" +
                $"global review + syntax-gated target gloss: {CorrectGlobalReviewAndSyntaxTargetGlossProposals:N0}/{GlobalReviewAndSyntaxTargetGlossProposals:N0} " +
-               $"({GlobalReviewAndSyntaxTargetGlossPrecision:P2}); gold recall: {GlobalReviewAndSyntaxTargetGlossRecall:P2}";
+               $"({GlobalReviewAndSyntaxTargetGlossPrecision:P2}); gold recall: {GlobalReviewAndSyntaxTargetGlossRecall:P2}\n" +
+               $"final abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
+               $"content source words unplaced ({Abstention:P2})" +
+               string.Concat(Chapters
+                   .Where(chapter => chapter.Samples.Count > 0)
+                   .Select(chapter => $"\nsample, chapter {chapter.CanonicalChapter}:\n"
+                       + string.Join("\n", chapter.Samples)));
     }
 }
 
@@ -476,7 +588,9 @@ internal sealed record EvidentiaChapterMeasurement(
     int SyntaxTargetGlossReviewProposals,
     int CorrectSyntaxTargetGlossReviewProposals,
     int UnambiguousProposals,
-    int CorrectUnambiguousProposals)
+    int CorrectUnambiguousProposals,
+    int FinalProposedSourceWords,
+    IReadOnlyList<string> Samples)
 {
     public double SourceCoverage => SourceWords == 0 ? 0 : (double)CoveredSourceWords / SourceWords;
     public double ContentCoverage => ContentSourceWords == 0
@@ -521,6 +635,15 @@ internal sealed record EvidentiaChapterMeasurement(
         ? 0
         : (double)CorrectUnambiguousProposals / UnambiguousProposals;
 
+    /// <summary>
+    /// The share of content source words the final review tier declines to place at all. It is
+    /// reported beside precision and recall because a policy can buy either of them with it, and
+    /// an aggregate that leaves it out cannot be compared with another run.
+    /// </summary>
+    public double Abstention => ContentSourceWords == 0
+        ? 0
+        : 1 - (double)FinalProposedSourceWords / ContentSourceWords;
+
     public override string ToString()
     {
         var evaluation = GoldPairs == 0
@@ -563,6 +686,34 @@ internal sealed record EvidentiaChapterMeasurement(
                $"candidate edges: {CandidateEdges:N0}; source coverage: {CoveredSourceWords:N0}/{SourceWords:N0} ({SourceCoverage:P1}); " +
                $"content coverage: {CoveredContentSourceWords:N0}/{ContentSourceWords:N0} ({ContentCoverage:P1}); " +
                $"ambiguous source words: {AmbiguousSourceWords:N0}; fallback verses: {FallbackVerses:N0}\n" +
-               evaluation;
+               evaluation +
+               $"\nfinal abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
+               $"content source words unplaced ({Abstention:P1})" +
+               (Samples.Count == 0 ? string.Empty : "\nsample:\n" + string.Join("\n", Samples));
     }
 }
+
+/// <summary>
+/// What one read-only EVIDENTIA measurement is allowed to read. The learned-rendering source is
+/// separate from the measured text on purpose: a benchmark whose index and whose gold come from
+/// the same stated table measures self-consistency, so an independent number needs the renderings
+/// learned from one pair and the answer key taken from another.
+/// </summary>
+/// <param name="LearnRenderingsFrom">
+/// The text whose stated renderings feed the learned index, when it is not the measured source.
+/// </param>
+/// <param name="LearnedRenderingMethods">
+/// Which link methods the learned index may read. The default is source-stated only; naming
+/// <see cref="LinkMethod.StrongNumber"/> admits printed-number inferences, which is the only
+/// English rendering evidence the New Testament pairs have that is not the Berean gold itself.
+/// </param>
+/// <param name="GoldSource">
+/// A substring of <c>Link.Source</c>, so one dataset's rows can be scored on their own.
+/// </param>
+internal sealed record EvidentiaMeasurementOptions(
+    bool AllowSourceStrongEvidence = true,
+    bool AllowKnownRenderingEvidence = true,
+    string? LearnRenderingsFrom = null,
+    IReadOnlyList<LinkMethod>? LearnedRenderingMethods = null,
+    string? GoldSource = null,
+    int SampleSize = 0);

@@ -2,6 +2,7 @@
 using Essenthos.Core.ClearBible;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
@@ -268,9 +269,7 @@ if (args is ["evidentia-measure", var measureFrom, var measureTo, var measureBoo
 
     using var measureScope = app.Services.CreateScope();
     var measurement = await measureScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureChapter(
-        Identifier(measureFrom), Identifier(measureTo), book, chapter,
-        allowSourceStrongEvidence: !args.Contains("--without-source-strong"),
-        allowKnownRenderingEvidence: !args.Contains("--without-known-renderings"));
+        Identifier(measureFrom), Identifier(measureTo), book, chapter, EvidentiaOptions(args));
     app.Logger.LogInformation("\n{Measurement}", measurement);
     return 0;
 }
@@ -290,9 +289,7 @@ if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, v
         throw new ArgumentException("evidentia-measure-book needs --from-chapter less than or equal to --to-chapter.");
     }
     var measurement = await measureBookScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureBook(
-        Identifier(measureBookFrom), Identifier(measureBookTo), book,
-        allowSourceStrongEvidence: !args.Contains("--without-source-strong"),
-        allowKnownRenderingEvidence: !args.Contains("--without-known-renderings"),
+        Identifier(measureBookFrom), Identifier(measureBookTo), book, EvidentiaOptions(args),
         firstChapter: fromChapter,
         lastChapter: toChapter);
     app.Logger.LogInformation("\n{Measurement}", measurement);
@@ -304,6 +301,24 @@ static int? OptionalInt(string[] arguments, string option)
     var index = Array.IndexOf(arguments, option);
     return index >= 0 && index + 1 < arguments.Length ? int.Parse(arguments[index + 1]) : null;
 }
+
+static string? OptionalText(string[] arguments, string option)
+{
+    var index = Array.IndexOf(arguments, option);
+    return index >= 0 && index + 1 < arguments.Length ? arguments[index + 1] : null;
+}
+
+// A measurement is only worth the isolation it can state, so every one of these is a way of saying
+// which evidence the run was allowed to see and which answer key it was scored against.
+static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments) => new(
+    AllowSourceStrongEvidence: !arguments.Contains("--without-source-strong"),
+    AllowKnownRenderingEvidence: !arguments.Contains("--without-known-renderings"),
+    LearnRenderingsFrom: OptionalText(arguments, "--learn-from") is { } learnFrom ? Identifier(learnFrom) : null,
+    LearnedRenderingMethods: arguments.Contains("--learn-from-strong-numbers")
+        ? [LinkMethod.StatedBySource, LinkMethod.StrongNumber]
+        : null,
+    GoldSource: OptionalText(arguments, "--gold-source"),
+    SampleSize: OptionalInt(arguments, "--sample") ?? 0);
 
 // Unlike `score`, this is an out-of-sample test: only 80% of the stated and Strong one-to-one pairs
 // reach SIL.Machine as its partial-alignment corpus, and a deterministic fifth of verses stays out
