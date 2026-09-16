@@ -183,6 +183,7 @@ internal static class EnumSpelling
         LinkMethod.Aligner => "aligner",
         LinkMethod.Manual => "manual",
         LinkMethod.ModelReading => "model-reading",
+        LinkMethod.RuleBased => "rule-based",
         _ => throw Unmapped(value),
     };
 
@@ -194,6 +195,7 @@ internal static class EnumSpelling
         "aligner" => LinkMethod.Aligner,
         "manual" => LinkMethod.Manual,
         "model-reading" => LinkMethod.ModelReading,
+        "rule-based" => LinkMethod.RuleBased,
         _ => throw Unreadable<LinkMethod>(stored),
     };
 
@@ -223,6 +225,38 @@ internal static class EnumSpelling
         "from" => LinkSide.From,
         "to" => LinkSide.To,
         _ => throw Unreadable<LinkSide>(stored),
+    };
+
+    public static string Of(EvidentiaVerdict value) => value switch
+    {
+        EvidentiaVerdict.Approved => "approved",
+        EvidentiaVerdict.Rejected => "rejected",
+        EvidentiaVerdict.Corrected => "corrected",
+        _ => throw Unmapped(value),
+    };
+
+    public static EvidentiaVerdict ToEvidentiaVerdict(string stored) => stored switch
+    {
+        "approved" => EvidentiaVerdict.Approved,
+        "rejected" => EvidentiaVerdict.Rejected,
+        "corrected" => EvidentiaVerdict.Corrected,
+        _ => throw Unreadable<EvidentiaVerdict>(stored),
+    };
+
+    public static string Of(EvidentiaAbstention value) => value switch
+    {
+        EvidentiaAbstention.NoCandidate => "no-candidate",
+        EvidentiaAbstention.TargetTaken => "target-taken",
+        EvidentiaAbstention.Declined => "declined",
+        _ => throw Unmapped(value),
+    };
+
+    public static EvidentiaAbstention ToEvidentiaAbstention(string stored) => stored switch
+    {
+        "no-candidate" => EvidentiaAbstention.NoCandidate,
+        "target-taken" => EvidentiaAbstention.TargetTaken,
+        "declined" => EvidentiaAbstention.Declined,
+        _ => throw Unreadable<EvidentiaAbstention>(stored),
     };
 
     private static ArgumentOutOfRangeException Unmapped<TEnum>(TEnum value) where TEnum : struct =>
@@ -275,4 +309,10 @@ internal static class EnumStorage
 
     public static readonly ValueConverter<VerseNoteKind, string> VerseNoteKind =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToVerseNoteKind(stored));
+
+    public static readonly ValueConverter<EvidentiaVerdict, string> EvidentiaVerdict =
+        new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToEvidentiaVerdict(stored));
+
+    public static readonly ValueConverter<EvidentiaAbstention, string> EvidentiaAbstention =
+        new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToEvidentiaAbstention(stored));
 }

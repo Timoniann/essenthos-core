@@ -63,4 +63,22 @@
         <EmbeddedResource Include="Loading\Encyclopedia\Peoples.json" />
     </ItemGroup>
 
+    <!-- An EVIDENTIA run records the build that made it, and a version number that never changes
+         names no build. The commit goes into the informational version, marked dirty when the tree
+         had uncommitted changes; a build with no git, such as the container's, keeps the plain
+         version rather than failing. -->
+    <Target Name="StampSourceRevision" BeforeTargets="PrepareForBuild" Condition="'$(SourceRevisionId)' == ''">
+        <Exec Command="git rev-parse --short=12 HEAD" ConsoleToMSBuild="true" IgnoreExitCode="true" StandardOutputImportance="low" StandardErrorImportance="low" ContinueOnError="true">
+            <Output TaskParameter="ConsoleOutput" PropertyName="StampedRevision" />
+            <Output TaskParameter="ExitCode" PropertyName="StampedRevisionExit" />
+        </Exec>
+        <Exec Command="git status --porcelain --untracked-files=no" ConsoleToMSBuild="true" IgnoreExitCode="true" StandardOutputImportance="low" StandardErrorImportance="low" ContinueOnError="true" Condition="'$(StampedRevisionExit)' == '0'">
+            <Output TaskParameter="ConsoleOutput" PropertyName="StampedChanges" />
+        </Exec>
+        <PropertyGroup Condition="'$(StampedRevisionExit)' == '0'">
+            <SourceRevisionId>$(StampedRevision)</SourceRevisionId>
+            <SourceRevisionId Condition="'$(StampedChanges)' != ''">$(StampedRevision)-dirty</SourceRevisionId>
+        </PropertyGroup>
+    </Target>
+
 </Project>

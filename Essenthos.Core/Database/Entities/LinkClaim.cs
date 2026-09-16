@@ -72,15 +72,25 @@ public class LinkClaim
 /// The numbers are ordinal and are compared only with each other, so they can be renumbered to make
 /// room without anything stored changing.
 /// </para>
+///
+/// <para>
+/// A rule-based claim sits below a model's reading and above form matching. It knows more than
+/// <see cref="LinkMethod.Lexical"/> — a learned rendering, a dictionary sense, the verse's
+/// structure and one assignment across the verse, each kept as a signal — and more than the
+/// aligner, which it was built to be consulted before. It knows less than a reading of the
+/// passage: its largest measured error is the right lexeme on the wrong occurrence, which is
+/// exactly what reading the verse settles, and nothing it concludes may unseat a printed number.
+/// </para>
 /// </summary>
 public static class ClaimStanding
 {
     public static int Of(LinkMethod method) => method switch
     {
-        LinkMethod.Manual => 6,
-        LinkMethod.StatedBySource => 5,
-        LinkMethod.StrongNumber => 4,
-        LinkMethod.ModelReading => 3,
+        LinkMethod.Manual => 7,
+        LinkMethod.StatedBySource => 6,
+        LinkMethod.StrongNumber => 5,
+        LinkMethod.ModelReading => 4,
+        LinkMethod.RuleBased => 3,
         LinkMethod.Lexical => 2,
         LinkMethod.Aligner => 1,
         _ => 0,

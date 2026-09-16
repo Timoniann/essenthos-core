@@ -218,7 +218,7 @@ internal enum EvidentiaTodo
     LanguagePack,
     DictionaryEvidence,
 
-    /// <summary>The decision trace is built and is in memory only; nothing stores it.</summary>
+    /// <summary>A preview's decision trace is in memory only; a stored run (<see cref="EvidentiaRunner"/>) keeps a measurement's.</summary>
     StructuredExplanationStorage,
     StatisticalFallback,
 }

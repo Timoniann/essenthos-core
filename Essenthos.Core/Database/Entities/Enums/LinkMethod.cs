@@ -23,4 +23,13 @@ public enum LinkMethod
     /// this list's.
     /// </summary>
     ModelReading,
+
+    /// <summary>
+    /// EVIDENTIA's deterministic rules proposed the pair and a person approved it into the corpus
+    /// without reading it — a tier accepted as a whole. Every such claim names the run and the rule
+    /// version in its source, and the run keeps the signals that produced its score, so the claim
+    /// can be read back as the reasoning it was rather than as a number. A proposal a person read
+    /// and approved becomes <see cref="Manual"/> as well; this claim stays beside it.
+    /// </summary>
+    RuleBased,
 }

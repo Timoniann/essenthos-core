@@ -133,6 +133,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             covered,
             canonicalBook,
             canonicalChapter);
+        options.Decisions?.Record(new EvidentiaChapterDecisions(
+            canonicalBook, canonicalChapter, source, contentSourceWordIds, candidates,
+            globalKnownRenderingResolution.Proposals, finalProposals));
         return new EvidentiaChapterMeasurement(
             fromSlug,
             toSlug,
@@ -859,6 +862,10 @@ internal sealed record EvidentiaChapterMeasurement(
 /// <param name="RecordWords">
 /// Keep every source word with its outcome, so two runs can be compared word by word.
 /// </param>
+/// <param name="Decisions">
+/// Handed each chapter's candidates and proposals as the measurement made them, so a stored run
+/// keeps exactly what was scored rather than a second selection that could drift from it.
+/// </param>
 internal sealed record EvidentiaMeasurementOptions(
     bool AllowSourceStrongEvidence = true,
     bool AllowKnownRenderingEvidence = true,
@@ -867,7 +874,8 @@ internal sealed record EvidentiaMeasurementOptions(
     string? GoldSource = null,
     int SampleSize = 0,
     bool RecordDisagreements = false,
-    bool RecordWords = false);
+    bool RecordWords = false,
+    IEvidentiaDecisionSink? Decisions = null);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.
