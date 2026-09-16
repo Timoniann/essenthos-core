@@ -23,6 +23,40 @@ internal static class EvidentiaDefaults
     /// </summary>
     public const double InferredRenderingCeiling =
         StrongNumberMatch.Unambiguous - StrongNumberMatch.ResolvedNumber;
+
+    /// <summary>How often a source form must have been seen before the index speaks about it.</summary>
+    public const int MinimumRenderingObservations = 2;
+
+    public const double SafeRenderingScore = 0.40;
+    public const double SafeRenderingLead = 0.10;
+    public const int SafeRenderingObservations = 4;
+    public const double SafeRenderingSenseRatio = 2;
+
+    public const double ReviewRenderingScore = 0.30;
+    public const double ReviewRenderingLead = 0.05;
+
+    /// <summary>A word named in a reader-language Strong definition, which is a secondary reading.</summary>
+    public const double DictionarySenseScore = 0.34;
+
+    /// <summary>A witness's own English gloss, which is a dictionary hint and not a rendering.</summary>
+    public const double TargetGlossScore = 0.20;
+
+    public const double DictionaryReviewConfidence = 0.40;
+    public const double TargetGlossReviewConfidence = 0.45;
+
+    /// <summary>What a word edge must score before a phrase may be built out of it.</summary>
+    public const double PhraseWordScore = 0.65;
+
+    /// <summary>What a preview calls a supported candidate when it counts them for a reader.</summary>
+    public const double SupportedCandidateScore = 0.55;
+
+    /// <summary>
+    /// Mechanical rather than calibrated: how much a lexical score outweighs a position score in
+    /// the assignment, and what an inadmissible pairing costs so the solver never chooses one.
+    /// </summary>
+    public const double AssignmentEvidenceWeight = 1_000;
+
+    public const double InvalidAssignmentCost = 1_000_000;
 }
 
 [Flags]
@@ -155,7 +189,8 @@ internal enum EvidentiaTodo
 {
     LanguagePack,
     DictionaryEvidence,
-    GlobalMatcher,
+
+    /// <summary>The decision trace is built and is in memory only; nothing stores it.</summary>
     StructuredExplanationStorage,
     StatisticalFallback,
 }

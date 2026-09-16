@@ -7,7 +7,7 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// </summary>
 internal sealed class EvidentiaTargetGlossProposalResolver
 {
-    private const double ReviewConfidence = 0.45;
+    private const double ReviewConfidence = EvidentiaDefaults.TargetGlossReviewConfidence;
 
     public EvidentiaResolution ResolveAdditional(
         IEnumerable<EvidentiaCandidate> candidates,

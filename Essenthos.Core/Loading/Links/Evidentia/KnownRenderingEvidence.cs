@@ -13,7 +13,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
     AppDbContext db,
     LanguagePackRegistry languagePacks)
 {
-    private const int MinimumObservations = 2;
+    private const int MinimumObservations = EvidentiaDefaults.MinimumRenderingObservations;
 
     /// <summary>
     /// What a translation's own edition states. It is the only evidence that is not itself an
@@ -24,6 +24,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
     private readonly Dictionary<RenderingCorpusKey, IReadOnlyList<RenderingObservation>> observationsByTextPair = new();
     private readonly Dictionary<string, Dictionary<(int Book, int Chapter), IReadOnlySet<int>>> heldOutVersesByText =
         new(StringComparer.Ordinal);
+    private readonly Dictionary<(string Surface, string Language), string?> keyBySurface = [];
 
     public async Task<EvidentiaKnownRenderingEvidenceSource?> For(
         string fromSlug,
@@ -78,8 +79,19 @@ internal sealed class EvidentiaKnownRenderingIndex(
         return analysis.Normalised;
     }
 
-    private string? Key(string surface, string language) =>
-        Key(new EvidentiaToken(0, default, 0, surface, language));
+    // One observation list is read for every chapter of a book run, and stemming a surface is the
+    // same answer every time.
+    private string? Key(string surface, string language)
+    {
+        if (keyBySurface.TryGetValue((surface, language), out var cached))
+        {
+            return cached;
+        }
+
+        var key = Key(new EvidentiaToken(0, default, 0, surface, language));
+        keyBySurface.Add((surface, language), key);
+        return key;
+    }
 
     private async Task<IReadOnlyList<RenderingObservation>> Observations(
         string fromSlug, string toSlug, IReadOnlyList<LinkMethod> methods, CancellationToken cancellationToken)

@@ -6,7 +6,7 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// </summary>
 internal static class EvidentiaPhraseBuilder
 {
-    private const double MinimumWordScore = 0.65;
+    private const double MinimumWordScore = EvidentiaDefaults.PhraseWordScore;
 
     public static IReadOnlyList<EvidentiaPhraseCandidate> Build(IReadOnlyList<EvidentiaCandidate> candidates)
     {

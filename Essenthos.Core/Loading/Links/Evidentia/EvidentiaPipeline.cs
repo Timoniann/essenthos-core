@@ -182,7 +182,6 @@ internal sealed class EvidentiaPipeline(
     {
         var todos = new List<EvidentiaTodo>
         {
-            EvidentiaTodo.GlobalMatcher,
             EvidentiaTodo.StructuredExplanationStorage,
             EvidentiaTodo.StatisticalFallback,
         };

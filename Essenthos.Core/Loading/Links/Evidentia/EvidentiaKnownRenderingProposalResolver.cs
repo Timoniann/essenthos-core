@@ -18,8 +18,8 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
 
     private const double ConfidenceOffset = MaximumConfidence
         - EvidentiaDefaults.KnownRenderingBaseScore - EvidentiaDefaults.KnownRenderingShareScore;
-    private const double KnownEvidenceWeight = 1_000;
-    private const double InvalidAssignmentCost = 1_000_000;
+    private const double KnownEvidenceWeight = EvidentiaDefaults.AssignmentEvidenceWeight;
+    private const double InvalidAssignmentCost = EvidentiaDefaults.InvalidAssignmentCost;
 
     /// <summary>
     /// What the safe tier promises: the corpus has rendered this source form at least
@@ -41,8 +41,11 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
     /// four hundred.
     /// </summary>
     public static readonly EvidentiaProposalPolicy Safe = new(
-        "safe", MinimumKnownRenderingEvidence: MinimumSafeScore, MinimumLeadOverAlternative: 0.10,
-        EvidentiaProposalKind.StableKnownRendering, MinimumObservations: 4, MinimumSenseRatio: 2);
+        "safe", MinimumKnownRenderingEvidence: MinimumSafeScore,
+        MinimumLeadOverAlternative: EvidentiaDefaults.SafeRenderingLead,
+        EvidentiaProposalKind.StableKnownRendering,
+        MinimumObservations: EvidentiaDefaults.SafeRenderingObservations,
+        MinimumSenseRatio: EvidentiaDefaults.SafeRenderingSenseRatio);
 
     /// <summary>
     /// The review tier keeps the index's own floor and makes no index-wide claim at all: its output
@@ -50,10 +53,13 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
     /// elsewhere is exactly the kind of question worth asking.
     /// </summary>
     public static readonly EvidentiaProposalPolicy Review = new(
-        "review", MinimumKnownRenderingEvidence: 0.30, MinimumLeadOverAlternative: 0.05,
-        EvidentiaProposalKind.ReviewKnownRendering, MinimumObservations: 2, MinimumSenseRatio: 0);
+        "review", MinimumKnownRenderingEvidence: EvidentiaDefaults.ReviewRenderingScore,
+        MinimumLeadOverAlternative: EvidentiaDefaults.ReviewRenderingLead,
+        EvidentiaProposalKind.ReviewKnownRendering,
+        MinimumObservations: EvidentiaDefaults.MinimumRenderingObservations,
+        MinimumSenseRatio: 0);
 
-    private const double MinimumSafeScore = 0.40;
+    private const double MinimumSafeScore = EvidentiaDefaults.SafeRenderingScore;
 
     /// <summary>The share <see cref="MinimumSafeScore"/> works out to, said in the unit it is about.</summary>
     private const double MinimumSafeShare =
@@ -381,5 +387,5 @@ internal sealed record EvidentiaProposalPolicy(
     double MinimumKnownRenderingEvidence,
     double MinimumLeadOverAlternative,
     EvidentiaProposalKind Kind,
-    int MinimumObservations = 2,
+    int MinimumObservations = EvidentiaDefaults.MinimumRenderingObservations,
     double MinimumSenseRatio = 1);

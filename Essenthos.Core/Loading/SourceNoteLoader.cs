@@ -115,6 +115,12 @@ internal sealed class SourceNoteLoader(AppDbContext db, ILogger<SourceNoteLoader
             .ThenInclude(verse => verse!.Book)
             .Where(note => note.Verse!.TextId == text.Id && note.AnchorWordId == null)
             .ToListAsync(cancellationToken);
+        if (existing.Count == 0)
+        {
+            return 0;
+        }
+
+        // Every word of the text, so it is loaded only once something needs an anchor.
         var words = await AnchorWordIds(text.Id, cancellationToken);
         var changed = 0;
 

@@ -561,7 +561,8 @@ internal sealed record EvidentiaCorpusPreview(
 {
     public override string ToString()
     {
-        var proven = Result.Candidates.Count(candidate => candidate.Score >= 0.55);
+        var proven = Result.Candidates.Count(candidate =>
+            candidate.Score >= EvidentiaDefaults.SupportedCandidateScore);
         var sample = Result.Candidates
             .Take(8)
             .Select(candidate =>
@@ -572,7 +573,8 @@ internal sealed record EvidentiaCorpusPreview(
         return $"EVIDENTIA preview {From} → {To}; canonical {CanonicalBook}:{CanonicalChapter}" +
                (CanonicalVerse.HasValue ? $":{CanonicalVerse.Value}" : string.Empty) + "\n" +
                $"words: source {SourceWordCount:N0}, target chapter {TargetWordCount:N0}; " +
-               $"candidates: {Result.Candidates.Count:N0}; supported candidates (≥55%): {proven:N0}\n" +
+               $"candidates: {Result.Candidates.Count:N0}; " +
+               $"supported candidates (≥{EvidentiaDefaults.SupportedCandidateScore:P0}): {proven:N0}\n" +
                $"content coverage: {Result.ContentCoverage:P1}; status: {Result.Status}; " +
                $"statistical fallback: {(Result.NeedsStatisticalFallback ? "needed" : "not needed")}\n" +
                $"still missing: {string.Join(", ", Result.Todos)}" +

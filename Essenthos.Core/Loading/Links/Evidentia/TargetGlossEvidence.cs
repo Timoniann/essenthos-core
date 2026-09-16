@@ -9,7 +9,7 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// </summary>
 internal sealed partial class TargetGlossEvidenceSource : IEvidentiaEvidenceSource
 {
-    private const double GlossScore = 0.20;
+    private const double GlossScore = EvidentiaDefaults.TargetGlossScore;
     private readonly IReadOnlyDictionary<long, HashSet<string>> formsByTargetId;
 
     private TargetGlossEvidenceSource(IReadOnlyDictionary<long, HashSet<string>> formsByTargetId) =>
