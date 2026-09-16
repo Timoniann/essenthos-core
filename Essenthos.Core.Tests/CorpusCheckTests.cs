@@ -125,6 +125,53 @@ public sealed class CorpusCheckTests : IDisposable
     }
 
     /// <summary>
+    /// A second method arriving at a link already written is recorded as a second claim on it, which
+    /// is two sources agreeing. Counting it as a dispute moved one pair from 209 to 200,807 on the
+    /// day a strong-number load confirmed the aligner's links.
+    /// </summary>
+    [Fact]
+    public async Task TwoSourcesClaimingOneLinkCorroborateRatherThanDispute()
+    {
+        var link = Link(LinkRelation.Renders, english: 1, hebrew: 1);
+        Claim(link, "a second source");
+
+        var contention = (await _check.Measure()).Contention.Single();
+
+        contention.Disputed.Should().Be(0);
+        contention.Corroborated.Should().Be(1);
+        contention.Contended.Should().Be(0);
+    }
+
+    /// <summary>
+    /// Agreement is about the words named, not the rows naming them: two loaders that each wrote
+    /// their own link to the same Hebrew word agree.
+    /// </summary>
+    [Fact]
+    public async Task TwoSourcesNamingTheSameWordsInSeparateLinksCorroborate()
+    {
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+        Link(LinkRelation.Renders, english: 1, hebrew: 1, source: "a second source");
+
+        var contention = (await _check.Measure()).Contention.Single();
+
+        contention.Disputed.Should().Be(0);
+        contention.Corroborated.Should().Be(1);
+    }
+
+    [Fact]
+    public async Task TwoSourcesNamingDifferentWordsDispute()
+    {
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+        Link(LinkRelation.Renders, english: 1, hebrew: 2, source: "a second source");
+
+        var contention = (await _check.Measure()).Contention.Single();
+
+        contention.Disputed.Should().Be(1);
+        contention.Corroborated.Should().Be(0);
+        contention.Contended.Should().Be(0);
+    }
+
+    /// <summary>
     /// The measure a reader feels, and the one the forward count cannot see. Contention asks how
     /// many words a word claims; this asks how many claim it, which is how many light together
     /// when one is touched.
@@ -304,7 +351,8 @@ public sealed class CorpusCheckTests : IDisposable
         (await _check.Measure()).Integrity.Single(check => check.Breaks == breaks).Found;
 
     private Link Link(
-        LinkRelation relation, int? english, int? hebrew, LinkMethod method = LinkMethod.Manual)
+        LinkRelation relation, int? english, int? hebrew, LinkMethod method = LinkMethod.Manual,
+        string source = "a test")
     {
         var link = new Link
         {
@@ -312,7 +360,7 @@ public sealed class CorpusCheckTests : IDisposable
             ToTextId = _hebrew.Id,
             Relation = relation,
             Method = method,
-            Source = "a test",
+            Source = source,
 
             // Confidence is null exactly when a source stated it, and set exactly when something
             // inferred it. The schema holds that as a check constraint, so a fixture that ignores
@@ -358,6 +406,19 @@ public sealed class CorpusCheckTests : IDisposable
         _db.SaveChanges();
         return link;
     }
+
+    private void Claim(Link link, string source)
+    {
+        _db.LinkClaims.Add(new LinkClaim
+        {
+            LinkId = link.Id,
+            Method = link.Method,
+            Confidence = link.Confidence,
+            Source = source,
+        });
+        _db.SaveChanges();
+    }
+
     /// <summary>
     /// The share is published with the two numbers it is the ratio of, because a ratio alone cannot
     /// be checked. Two measurements of this corpus a day apart differed by four points and neither

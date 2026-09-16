@@ -143,7 +143,13 @@ internal sealed record Reach(
 /// both looked, differing about which word renders which, which is a fact about translation. Kept
 /// apart from <paramref name="Contended"/> because counted together the second hides the first.
 /// </param>
-internal sealed record Contention(string Text, string Against, int Contended, int Worst, int Disputed);
+/// <param name="Corroborated">
+/// Words two sources answer the same way, each with one counterpart. The opposite of a dispute, and
+/// counted apart from it: a load that folds one method's agreeing links into claims on another's
+/// adds hundreds of thousands of these at once.
+/// </param>
+internal sealed record Contention(
+    string Text, string Against, int Contended, int Worst, int Disputed, int Corroborated);
 
 /// <param name="Crowded">
 /// Witness words claimed by more than two words of one text in the same verse. Some sharing is
@@ -405,10 +411,10 @@ internal sealed record CorpusMeasures(
             report.AppendLine($"  {r.Witness} from {r.From,-6} {r.Lexical,7} {r.Reached,10}   {r.Share,7:P1}   {by}");
         }
 
-        report.AppendLine("contention    words one source claims twice, the worst one, and words two sources dispute");
+        report.AppendLine("contention    words one source claims twice, the worst one, words two sources dispute, and words two sources agree on");
         foreach (var c in Contention)
         {
-            report.AppendLine($"  {c.Text} to {c.Against,-12} {c.Contended,7} {c.Worst,10} {c.Disputed,10}");
+            report.AppendLine($"  {c.Text} to {c.Against,-12} {c.Contended,7} {c.Worst,10} {c.Disputed,10} {c.Corroborated,10}");
         }
 
         report.AppendLine("crowding      witness words claimed by more than two, and the worst one");
