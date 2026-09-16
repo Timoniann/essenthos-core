@@ -1,3 +1,5 @@
+using Essenthos.Core.Strong;
+
 namespace Essenthos.Core.Loading.Links.Evidentia;
 
 /// <summary>
@@ -5,6 +7,12 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// A Strong number identifies a lexeme, not an occurrence; therefore repeated occurrences are
 /// proposed only when the two exact canonical verses contain the same count, in their written
 /// order. Unequal counts remain unresolved for later dictionary, syntax or statistical evidence.
+///
+/// The count is per lexeme, so the grouping is on the normalised number rather than on the tag as
+/// written. g0570, G0570 and G570 are one number, and the evidence source has already treated them
+/// as one; grouping on the spelling would let each of two spellings see one occurrence, call itself
+/// unique, and point two source words at the same target word at the confidence that uniqueness is
+/// what earns.
 /// </summary>
 internal sealed class EvidentiaStrongProposalResolver
 {
@@ -15,7 +23,9 @@ internal sealed class EvidentiaStrongProposalResolver
                 evidence.Kind == EvidentiaEvidenceKind.SharedStrongNumber))
             .Where(candidate => candidate.Evidence.Any(evidence =>
                 evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress))
-            .GroupBy(candidate => (candidate.Source.Token.Address, candidate.Source.Token.StrongNumber))
+            .GroupBy(candidate => (
+                candidate.Source.Token.Address,
+                Number: StrongNumbers.Normalize(candidate.Source.Token.StrongNumber)))
             .ToList();
 
         var proposals = new List<EvidentiaProposal>();

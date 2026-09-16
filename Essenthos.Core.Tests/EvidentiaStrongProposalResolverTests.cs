@@ -92,6 +92,18 @@ public class EvidentiaStrongProposalResolverTests
     }
 
     [Fact]
+    public void TwoSpellingsOfOneStrongNumberAreOneLexemeAndNeitherIsUnique()
+    {
+        var resolution = new EvidentiaStrongProposalResolver().Resolve(
+            [Candidate(1, 11, "G4102"), Candidate(2, 11, "g4102")]);
+
+        resolution.Proposals.Should().BeEmpty(
+            "one number written two ways is still one number, and two source words claiming one "
+            + "target word is the ambiguity the unique tier exists to refuse");
+        resolution.UnresolvedSourceWords.Should().Be(2);
+    }
+
+    [Fact]
     public void UniqueTargetGlossAddsOnlyAnUnreservedExactCandidate()
     {
         var source = new EvidentiaAnalysis(
@@ -168,10 +180,10 @@ public class EvidentiaStrongProposalResolverTests
         accepted.Should().Contain((2L, 12L));
     }
 
-    private static EvidentiaCandidate Candidate(long sourceId, long targetId)
+    private static EvidentiaCandidate Candidate(long sourceId, long targetId, string? sourceStrong = null)
     {
         var source = new EvidentiaAnalysis(
-            new EvidentiaToken(sourceId, new EvidentiaAddress(40, 17, 20), (int)sourceId, "faith", "eng", StrongNumber: "G4102"),
+            new EvidentiaToken(sourceId, new EvidentiaAddress(40, 17, 20), (int)sourceId, "faith", "eng", StrongNumber: sourceStrong ?? "G4102"),
             "faith", null, null, false, LanguagePackCapability.Normalisation);
         var target = new EvidentiaAnalysis(
             new EvidentiaToken(targetId, new EvidentiaAddress(40, 17, 20), (int)(targetId - 10), "πίστις", "grc", StrongNumber: "G4102"),
