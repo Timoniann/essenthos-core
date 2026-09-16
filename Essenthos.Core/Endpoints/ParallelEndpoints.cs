@@ -387,6 +387,7 @@ internal static class ParallelEndpoints
                 note.Position,
                 note.Kind,
                 note.Content,
+                note.AnchorWordId,
                 Anchor = note.AnchorWord == null ? null : note.AnchorWord.Surface,
             })
             .ToListAsync(cancellationToken);
@@ -398,7 +399,8 @@ internal static class ParallelEndpoints
                 group => group
                     .OrderBy(row => row.Holder).ThenBy(row => row.Label, StringComparer.Ordinal)
                     .ThenBy(row => row.Position)
-                    .Select(row => new SourceNoteResponse(EnumSpelling.Of(row.Kind), row.Content, row.Anchor))
+                    .Select(row => new SourceNoteResponse(
+                        EnumSpelling.Of(row.Kind), row.Content, row.AnchorWordId, row.Anchor))
                     .ToList());
     }
 

@@ -147,11 +147,43 @@ public sealed class CorpusLoaderTests : IDisposable
         var text = await _db.Texts.SingleAsync();
         var chapter = await Texts.ReadChapter(_db, text.Id, 8, 1, default);
 
+        var anchor = await _db.Words.SingleAsync(word => word.Surface == "In");
+
         outcome.Notes.Should().Be(2);
         chapter.Should().ContainSingle().Which.Notes.Should().BeEquivalentTo([
-            new SourceNoteResponse("footnote", "A source explanation.", "In"),
+            new SourceNoteResponse("footnote", "A source explanation.", anchor.Id, "In"),
             new SourceNoteResponse("cross-reference", "Genesis 1:1"),
         ]);
+    }
+
+    [Fact]
+    public async Task ANoteOnARepeatedSpellingNamesTheWordItWasPrintedAfter()
+    {
+        var source = Sample() with
+        {
+            Books = [
+                new BookDraft(8, 1, "Ruth", "ruth", [
+                    new ChapterDraft(1, [
+                        new VerseDraft(1, [
+                            new WordDraft("Rachel", " "),
+                            new WordDraft("and", " "),
+                            new WordDraft("Rachel", ""),
+                        ])
+                        {
+                            Notes = [new VerseNoteDraft(VerseNoteKind.Footnote, "The second one.", 3)],
+                        },
+                    ]),
+                ]),
+            ],
+        };
+        await Loader().Load(source);
+        await new SourceNoteLoader(_db, NullLogger<SourceNoteLoader>.Instance).Load(source);
+
+        var second = await _db.Words.SingleAsync(word => word.Surface == "Rachel" && word.Position == 3);
+        var chapter = await Texts.ReadChapter(_db, (await _db.Texts.SingleAsync()).Id, 8, 1, default);
+
+        chapter.Should().ContainSingle().Which.Notes.Should().ContainSingle()
+            .Which.AnchorWordId.Should().Be(second.Id);
     }
 
     [Theory]
