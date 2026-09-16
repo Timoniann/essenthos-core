@@ -53,6 +53,28 @@ public class EvidentiaPipelineTests
         Assert.Contains(candidate.Evidence, evidence => evidence.Kind == EvidentiaEvidenceKind.Morphology && evidence.Score > 0.06);
     }
     [Fact]
+    public void AHebrewNounAgreesWithAnEnglishOneAlthoughTheTwoWitnessesSpellTheLabelDifferently()
+    {
+        var gloss = TargetGlossEvidenceSource.For(
+        [
+            new EvidentiaToken(2, new EvidentiaAddress(1, 1, 1), 1, "אֶרֶץ", "hbo", Gloss: "earth",
+                PartOfSpeech: "subs", Morphology: new Dictionary<string, string> { ["pos"] = "subs", ["number"] = "sg" }),
+        ]);
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [new EvidentiaToken(1, new EvidentiaAddress(1, 1, 1), 1, "earth", "eng", PartOfSpeech: "NOUN",
+                Morphology: new Dictionary<string, string> { ["Number"] = "Sing" })],
+            [new EvidentiaToken(2, new EvidentiaAddress(1, 1, 1), 1, "אֶרֶץ", "hbo", Gloss: "earth",
+                PartOfSpeech: "subs", Morphology: new Dictionary<string, string> { ["pos"] = "subs", ["number"] = "sg" })]),
+            [gloss!]);
+
+        var candidate = Assert.Single(preview.Candidates);
+        Assert.Contains(candidate.Evidence, evidence =>
+            evidence.Kind == EvidentiaEvidenceKind.Morphology
+            && evidence.Source.Contains("universal-pos:noun")
+            && evidence.Source.EndsWith("matching-features:1"));
+    }
+
+    [Fact]
     public void TheCurrentVerseOutranksAnIdenticalWordInANeighbour()
     {
         var preview = Pipeline().Preview(new EvidentiaRequest(

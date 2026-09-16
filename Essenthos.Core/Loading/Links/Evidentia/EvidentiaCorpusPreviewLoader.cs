@@ -141,6 +141,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             previews.Sum(preview => preview.ContentSourceWords),
             previews.Sum(preview => preview.CoveredContentSourceWords),
             previews.Sum(preview => preview.Candidates.Count),
+            candidates.Count(candidate => candidate.Evidence.Any(evidence =>
+                evidence.Kind == EvidentiaEvidenceKind.Morphology)),
             sourceIds.Count(id => bySource.ContainsKey(id)),
             bySource.Values.Count(targets => targets.Count > 1),
             previews.Count(preview => preview.NeedsStatisticalFallback),
@@ -461,6 +463,7 @@ internal sealed record EvidentiaBookMeasurement(
     public int TargetWords => Chapters.Sum(chapter => chapter.TargetWords);
     public int SourcePartOfSpeechWords => Chapters.Sum(chapter => chapter.SourcePartOfSpeechWords);
     public int CandidateEdges => Chapters.Sum(chapter => chapter.CandidateEdges);
+    public int MorphologyScoredEdges => Chapters.Sum(chapter => chapter.MorphologyScoredEdges);
     public int GoldPairs => Chapters.Sum(chapter => chapter.GoldPairs);
     public int GoldPairsInCandidates => Chapters.Sum(chapter => chapter.GoldPairsInCandidates);
     public int GlobalKnownRenderingProposals => Chapters.Sum(chapter => chapter.GlobalKnownRenderingProposals);
@@ -501,7 +504,8 @@ internal sealed record EvidentiaBookMeasurement(
                $"; canonical book {CanonicalBook}\n" +
                $"chapters: {Chapters.Count:N0}; verses: {Verses:N0}; words: source {SourceWords:N0}, target {TargetWords:N0}\n" +
                $"source local UDPipe: {annotationStatuses}; POS values: {SourcePartOfSpeechWords:N0}/{SourceWords:N0}\n" +
-               $"candidate edges: {CandidateEdges:N0}; gold candidate hits: {GoldPairsInCandidates:N0}/{GoldPairs:N0} ({CandidateRecall:P2}); fallback verses: {FallbackVerses:N0}\n" +
+               $"candidate edges: {CandidateEdges:N0} ({MorphologyScoredEdges:N0} with grammatical agreement); " +
+               $"gold candidate hits: {GoldPairsInCandidates:N0}/{GoldPairs:N0} ({CandidateRecall:P2}); fallback verses: {FallbackVerses:N0}\n" +
                $"global stable: {CorrectGlobalKnownRenderingProposals:N0}/{GlobalKnownRenderingProposals:N0} " +
                $"({GlobalKnownRenderingPrecision:P2}); gold recall: {GlobalKnownRenderingRecall:P2}\n" +
                $"global review: {CorrectGlobalReviewKnownRenderingProposals:N0}/{GlobalReviewKnownRenderingProposals:N0} " +
@@ -567,6 +571,7 @@ internal sealed record EvidentiaChapterMeasurement(
     int ContentSourceWords,
     int CoveredContentSourceWords,
     int CandidateEdges,
+    int MorphologyScoredEdges,
     int CoveredSourceWords,
     int AmbiguousSourceWords,
     int FallbackVerses,
@@ -683,7 +688,8 @@ internal sealed record EvidentiaChapterMeasurement(
                (SourceStrongEvidenceEnabled ? "(enabled)" : "(ignored by this mode)") + "; " +
                $"target Strong tags: {TargetStrongWords:N0}; " +
                $"shared Strong values: {SharedStrongNumbers:N0}\n" +
-               $"candidate edges: {CandidateEdges:N0}; source coverage: {CoveredSourceWords:N0}/{SourceWords:N0} ({SourceCoverage:P1}); " +
+               $"candidate edges: {CandidateEdges:N0} ({MorphologyScoredEdges:N0} with grammatical agreement); " +
+               $"source coverage: {CoveredSourceWords:N0}/{SourceWords:N0} ({SourceCoverage:P1}); " +
                $"content coverage: {CoveredContentSourceWords:N0}/{ContentSourceWords:N0} ({ContentCoverage:P1}); " +
                $"ambiguous source words: {AmbiguousSourceWords:N0}; fallback verses: {FallbackVerses:N0}\n" +
                evaluation +
