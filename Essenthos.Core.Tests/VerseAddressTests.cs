@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using System.Text.Json;
 using Essenthos.Core.Endpoints;
 using FluentAssertions;

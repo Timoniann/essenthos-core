@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <RootNamespace>Essenthos.Core</RootNamespace>
+        <AssemblyName>Essenthos.Api</AssemblyName>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <PublishAot>false</PublishAot>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>essenthos-core</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- The schema, and the accounts this one owns. There is deliberately no reference to
+             Essenthos.Forge: a server that serves the corpus has no business holding a parser, and
+             a boundary the compiler checks is the only kind that holds. -->
+        <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
+        <ProjectReference Include="..\Essenthos.Accounts\Essenthos.Accounts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Essenthos.Core.Tests" />
+    </ItemGroup>
+
+</Project>

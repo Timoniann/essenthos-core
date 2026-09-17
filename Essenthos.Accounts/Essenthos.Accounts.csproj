@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <RootNamespace>Essenthos.Core</RootNamespace>
+        <AssemblyName>Essenthos.Accounts</AssemblyName>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <UserSecretsId>essenthos-core</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- The connection string is assembled the same way for both databases, and that code is
+             the corpus project's. Nothing else is shared: a note addresses the text canonically
+             rather than by a row id, so there is no foreign key across the two and no entity of
+             the corpus appears here. -->
+        <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Essenthos.Api" />
+        <InternalsVisibleTo Include="Essenthos.Core.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- The web SDK supplies these as implicit global usings and the plain one does not, so
+             they are declared rather than added to several hundred files. -->
+        <Using Include="Microsoft.Extensions.Configuration" />
+        <Using Include="Microsoft.Extensions.DependencyInjection" />
+        <Using Include="Microsoft.Extensions.Hosting" />
+        <Using Include="Microsoft.Extensions.Logging" />
+    </ItemGroup>
+
+</Project>

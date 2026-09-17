@@ -83,7 +83,7 @@ try {
         Measure-Object -Property Length -Sum).Sum / 1MB
     Write-Host ("{0:N1} MB in {1}, from swmail/RST {2}" -f $size, $root, $Commit)
     Write-Host "Then run: python scripts/corpus-manifest.py --check"
-    Write-Host ('Nothing is loaded by this. The links are drawn by "dotnet run --project Essenthos.Core -- ' +
+    Write-Host ('Nothing is loaded by this. The links are drawn by "dotnet run --project Essenthos.Forge -- ' +
                 'synodal-strong", and the edition itself is never a text of the corpus.')
 }
 finally {

@@ -20,6 +20,13 @@ public sealed class UserSecretsTests
 
     private readonly string _key = $"UserSecretsTests{Guid.NewGuid():N}";
 
+    /// <summary>
+    /// The API, named by a type of its own rather than by Program: two assemblies here have a
+    /// Program, because each is an entry point, and the name alone no longer says which.
+    /// </summary>
+    private static readonly System.Reflection.Assembly ApiAssembly =
+        typeof(Essenthos.Core.Endpoints.HealthEndpoints).Assembly;
+
     [Fact]
     public void An_environment_variable_overrides_a_user_secret()
     {
@@ -65,11 +72,11 @@ public sealed class UserSecretsTests
         var builder = WebApplication.CreateSlimBuilder(new WebApplicationOptions
         {
             EnvironmentName = "Development",
-            ApplicationName = typeof(Program).Assembly.GetName().Name,
+            ApplicationName = ApiAssembly.GetName().Name,
         });
         var before = ((IConfigurationBuilder)builder.Configuration).Sources.Count;
 
-        UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly);
+        UserSecrets.AddBelowEnvironment(builder.Configuration, ApiAssembly);
 
         ((IConfigurationBuilder)builder.Configuration).Sources.Should().HaveCount(before);
     }

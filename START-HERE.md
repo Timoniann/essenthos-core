@@ -54,7 +54,20 @@ Also worth reading before you touch a loader: **DOC-0004** (what LLM alignment c
 
 **Nothing in `Resources/` is committed except the licences and `WorldHistory`,** so a fresh clone has the folder and not the corpus. GLAUx, the Berean and ClearBible have fetch scripts under `scripts/`; the rest were fetched by hand years ago and live only on this machine and in `essenthos-api/Resources`, which is where a new checkout should copy them from until each one has a script of its own.
 
-**Resources are this project's own.** They live in `essenthos-core/Resources` and are read through configuration — `Dataset:ResourcesPath`, defaulting to `../Resources`, resolved from the content root, which is the project folder `essenthos-core/Essenthos.Core`. Nothing here reads `essenthos-api` any more; a bare `dotnet test` needs no environment variable.
+**Resources are this project's own.** They live in `essenthos-core/Resources` and are read through configuration — `Dataset:ResourcesPath`. With nothing set, `../Resources` is tried against the content root and then every directory above it is searched for a `Resources` folder, so the same default holds whether the process was started from the project, from the repository root or from an output folder. Only `Essenthos.Forge` reads them; the API never opens a file. Nothing here reads `essenthos-api` any more, and a bare `dotnet test` needs no environment variable.
+
+## The four projects
+
+Split out of the single `Essenthos.Core` project on 2026-09-18, because a server that serves the corpus was shipping fifty thousand lines of loaders, both SIL.Machine packages and a hosted service whose job was to open files that are not there. DOC-0203 is the argument; the short version is below.
+
+| | |
+|---|---|
+| `Essenthos.Corpus` | The schema, the migrations, the connection string, and the vocabulary both sides have to agree on — canonical references, text aliases, folding, the relationship words, the response shapes. |
+| `Essenthos.Api` | The `/v1` read surface. **It does not reference `Essenthos.Forge`, and the compiler is what enforces that.** Three packages, no parser, no `Resources/`. |
+| `Essenthos.Accounts` | The database the API owns and writes. Empty until accounts arrive; it exists so the boundary is drawn before there is anything to put behind it. |
+| `Essenthos.Forge` | Every loader, parser, aligner, EVIDENTIA pass and the verification. A console application, run here and never deployed. |
+
+The loaders are no longer a background service. What used to happen while the API served is now `avioniq services run core-load`, and the measures are `avioniq services run core-verify`.
 
 `essenthos-api/Resources` still holds its own copy and the frozen API still runs on it. The two are now separate trees: a correction or a licence note made here does not reach it, which is the point.
 

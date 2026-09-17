@@ -1,3 +1,4 @@
+using Essenthos.Core.Utils;
 using Essenthos.Core.Loading.Links;
 using FluentAssertions;
 using Xunit;
@@ -59,7 +60,7 @@ public class GreekStemmerTests
         // off ὁ or ἐν leaves nothing at all.
         foreach (var word in new[] { "ὁ", "ἡ", "τό", "ἐν", "καὶ", "δὲ", "τοῦ", "εἰς", "γάρ", "οὐκ" })
         {
-            GreekStemmer.Stem(word).Should().Be(Essenthos.Core.TextusReceptus.GreekLetters.Bare(word));
+            GreekStemmer.Stem(word).Should().Be(Essenthos.Core.Utils.GreekLetters.Bare(word));
         }
     }
 

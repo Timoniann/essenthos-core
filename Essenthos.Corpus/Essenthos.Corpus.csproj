@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <!-- The assemblies are deployment units and the namespace is the product, so every project
+             here keeps the Essenthos.Core root and a file's namespace still follows its folder. -->
+        <RootNamespace>Essenthos.Core</RootNamespace>
+        <AssemblyName>Essenthos.Corpus</AssemblyName>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <UserSecretsId>essenthos-core</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
+        <!-- Npgsql asks for 9.0.1 and EntityFrameworkCore.Design brings 9.0.3, which is
+             PrivateAssets=all and so does not flow. Declared here without PrivateAssets, both the
+             compile reference and the runtime copy are 9.0.3 in every project that references this
+             one. Without it the API compiled against 9.0.3 and started with 9.0.1 beside it, and
+             every database request threw FileNotFoundException for Relational at run time. -->
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- The schema and the shared vocabulary are internal, and both of the assemblies built on
+             them are ours. Making them public to give two siblings access would publish them to
+             everybody. -->
+        <InternalsVisibleTo Include="Essenthos.Api" />
+        <InternalsVisibleTo Include="Essenthos.Forge" />
+        <InternalsVisibleTo Include="Essenthos.Accounts" />
+        <InternalsVisibleTo Include="Essenthos.Core.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- The web SDK supplies these as implicit global usings and the plain one does not, so
+             they are declared rather than added to several hundred files. -->
+        <Using Include="Microsoft.Extensions.Configuration" />
+        <Using Include="Microsoft.Extensions.DependencyInjection" />
+        <Using Include="Microsoft.Extensions.Hosting" />
+        <Using Include="Microsoft.Extensions.Logging" />
+    </ItemGroup>
+
+</Project>

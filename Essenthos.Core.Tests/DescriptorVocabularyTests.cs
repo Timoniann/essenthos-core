@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 ﻿using System.Text.Json;
 using Essenthos.Core;
 using Essenthos.Core.Database.Entities;

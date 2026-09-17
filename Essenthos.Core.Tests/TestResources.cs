@@ -11,7 +11,6 @@ namespace Essenthos.Core.Tests;
 internal static class TestResources
 {
     private const string SolutionFile = "Essenthos.Core.sln";
-    private const string ProjectFolder = "Essenthos.Core";
 
     private static readonly Lazy<string> ResolvedPath = new(() =>
     {
@@ -131,9 +130,10 @@ internal static class TestResources
     public static string OpenBibleFolder => System.IO.Path.GetDirectoryName(Path("OpenBible", "ancient.jsonl"))!;
 
     /// <summary>
-    /// The project folder, which is what the host uses as its content root. Walking up from the
-    /// test assembly rather than counting <c>..</c> segments, because the depth of the output
-    /// folder is the build configuration's business and changes without warning.
+    /// The checkout root, which <see cref="ResourcePaths.Read"/> resolves <c>Resources</c> against.
+    /// Found by walking up for the solution file rather than counting <c>..</c> segments, because
+    /// the depth of the output folder is the build configuration's business and changes without
+    /// warning.
     /// </summary>
     private static string ContentRoot()
     {
@@ -150,6 +150,6 @@ internal static class TestResources
                 "Run the tests from inside the essenthos-core checkout.");
         }
 
-        return System.IO.Path.Combine(directory.FullName, ProjectFolder);
+        return directory.FullName;
     }
 }

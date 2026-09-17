@@ -16,6 +16,21 @@
 # the manifest would have silenced it and given up on the one folder a clone actually carries.
 Resources/** -text
 
+# Anything a Linux container executes or reads is pinned to LF, whatever the checkout.
+#
+# Git for Windows ships core.autocrlf=true as a system default, so a text file tracked here is stored
+# with LF and checked out with CRLF. A shell script baked into an image then has "#!/bin/sh\r" as its
+# first line, the kernel takes the carriage return as part of the interpreter path, and the error is
+# "no such file or directory" naming a file that is plainly there, with the right mode, in the right
+# place. Setting core.autocrlf=false locally is not the fix: it is machine-local and never travels
+# with the repository. These attributes do.
+*.sh text eol=lf
+*.bash text eol=lf
+Dockerfile text eol=lf
+Dockerfile.* text eol=lf
+docker-entrypoint.d/** text eol=lf
+*.conf text eol=lf
+
 # Everything else keeps git's normal handling. The corpus manifest already skips files git tracks,
 # for the same reason in the other direction: a licence file beside the data is versioned, and git
 # is entitled to change its bytes.

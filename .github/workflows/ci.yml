@@ -132,4 +132,4 @@ jobs:
       # `docker build`, not `docker compose build`: compose.yaml interpolates
       # ESSENTHOS_DB_PASSWORD on every command, so compose cannot even parse the file on a runner.
       # Nothing runs this image here — it is only a check that it still assembles.
-      - run: docker build -f Essenthos.Core/Dockerfile -t essenthos-core:${{ github.sha }} .
+      - run: docker build -f Essenthos.Api/Dockerfile -t essenthos-api:${{ github.sha }} .

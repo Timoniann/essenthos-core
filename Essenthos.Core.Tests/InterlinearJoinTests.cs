@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Door43;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.Links;

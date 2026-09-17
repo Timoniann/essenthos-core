@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 ﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Endpoints;

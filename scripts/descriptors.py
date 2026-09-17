@@ -232,8 +232,8 @@ REGISTER_CLAIMS_KEPT = 1
 COMPANION = 'companion-of'
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOADER = os.path.join(ROOT, 'Essenthos.Core', 'Loading', 'Encyclopedia', 'EntityDescriptorLoader.cs')
-RELATION_CONSTANTS = os.path.join(ROOT, 'Essenthos.Core', 'Database', 'Entities', 'EntityDescriptor.cs')
+LOADER = os.path.join(ROOT, 'Essenthos.Forge', 'Loading', 'Encyclopedia', 'EntityDescriptorLoader.cs')
+RELATION_CONSTANTS = os.path.join(ROOT, 'Essenthos.Corpus', 'Database', 'Entities', 'EntityDescriptor.cs')
 
 SYSTEM_PROMPT = """\
 You are a Biblical scholar writing the encyclopedia's own description of a person, a place or a

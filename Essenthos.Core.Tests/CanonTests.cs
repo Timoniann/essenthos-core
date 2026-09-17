@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Utils;
 using FluentAssertions;

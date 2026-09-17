@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 ﻿using Essenthos.Core.Loading;
 using System.Data.Common;
 using System.Diagnostics;

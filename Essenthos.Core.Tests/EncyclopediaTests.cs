@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 ﻿using System.Text.RegularExpressions;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;

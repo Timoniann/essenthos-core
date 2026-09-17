@@ -76,8 +76,8 @@ import time
 import descriptors as shared
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VOCABULARY = os.path.join(ROOT, 'Essenthos.Core', 'Loading', 'Encyclopedia', 'RelationshipVocabulary.cs')
-RELATION_NAMES = os.path.join(ROOT, 'Essenthos.Core', 'Database', 'Entities', 'EntityDescriptor.cs')
+VOCABULARY = os.path.join(ROOT, 'Essenthos.Corpus', 'Corpus', 'RelationshipVocabulary.cs')
+RELATION_NAMES = os.path.join(ROOT, 'Essenthos.Corpus', 'Database', 'Entities', 'EntityDescriptor.cs')
 
 PROMPT_VERSION = 'relationships-2'
 CHECK_VERSION = 'relationships-check-2'
