@@ -529,4 +529,32 @@ public sealed class CorpusCheckTests : IDisposable
         reach.Share.Should().BeLessThanOrEqualTo(1);
     }
 
+    /// <summary>
+    /// A text linked for the first time below the corpus mean pulls the mean down and loses
+    /// nothing. Only a section that reaches less of itself than it did last time has lost something.
+    /// </summary>
+    [Fact]
+    public void ANewTextBelowTheMeanIsNotALoss()
+    {
+        var kingJames = new Coverage("KJV", "old testament", 100, 92, 0, 8, 0);
+        var kulish = new Coverage("UKR1871", "old testament", 100, 82, 0, 18, 0);
+
+        CorpusCheck.Fallen([kingJames], [kingJames, kulish]).Should().BeEmpty();
+
+        var fewer = kingJames with { Rendered = 90, Silent = 10 };
+        CorpusCheck.Fallen([kingJames], [fewer, kulish]).Should().ContainSingle()
+            .Which.Now.Should().Be(fewer);
+    }
+
+    /// <summary>The coverage a run stored is the coverage the next run compares against.</summary>
+    [Fact]
+    public async Task TheStoredCoverageReadsBackAsItWasMeasured()
+    {
+        Link(LinkRelation.Renders, english: 1, hebrew: 2);
+        var measures = await _check.Measure();
+
+        var run = await _check.Record(measures);
+
+        CorpusCheck.CoverageOf(run).Should().BeEquivalentTo(measures.Coverage);
+    }
 }

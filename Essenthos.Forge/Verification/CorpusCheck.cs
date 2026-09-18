@@ -777,13 +777,15 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             return;
         }
 
-        var moved = current.Rendered - previous.Rendered;
-        if (moved < -Tolerance)
+        var fallen = Fallen(CoverageOf(previous), CoverageOf(current));
+        if (fallen.Count > 0)
         {
             logger.LogWarning(
-                "Verified: {Rendered:P1} of the words in a linked text reach a witness, down from {Before:P1}. " +
-                "A load that reaches fewer words than the one before it has lost something",
-                current.Rendered, previous.Rendered);
+                "Verified: {Rendered:P1} of the words in a linked text reach a witness, {Before:P1} last time. " +
+                "A text that reaches fewer of its words than it did before has lost something: {Fallen}",
+                current.Rendered, previous.Rendered,
+                string.Join("; ", fallen.Select(pair =>
+                    $"{pair.Now.Text} {pair.Now.Section} {pair.Now.Share:P1}, down from {pair.Before.Share:P1}")));
             return;
         }
 
@@ -797,6 +799,31 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// without anything being wrong; a tenth of a point is not that.
     /// </summary>
     private const double Tolerance = 0.001;
+
+    /// <summary>
+    /// The sections of a text that reach a smaller share of their words than they did last time.
+    ///
+    /// Compared text by text rather than across the corpus, because the corpus-wide share falls
+    /// whenever a text below its mean is linked for the first time — Kulish joining at 82% took it
+    /// from 92.0% to 90.8% with nothing anywhere lost. A section that is new has nothing to fall from.
+    /// </summary>
+    public static IReadOnlyList<(Coverage Before, Coverage Now)> Fallen(
+        IReadOnlyList<Coverage> previous,
+        IReadOnlyList<Coverage> current)
+    {
+        var before = previous.ToDictionary(c => (c.Text, c.Section));
+        return current
+            .Where(now => now.Promised > 0)
+            .Select(now => (Found: before.TryGetValue((now.Text, now.Section), out var was), Before: was, Now: now))
+            .Where(pair => pair.Found && pair.Before!.Promised > 0 && pair.Now.Share < pair.Before.Share - Tolerance)
+            .Select(pair => (pair.Before!, pair.Now))
+            .ToList();
+    }
+
+    public static IReadOnlyList<Coverage> CoverageOf(VerificationRun run) =>
+        run.Measures.RootElement.TryGetProperty(nameof(CorpusMeasures.Coverage).ToLowerInvariant(), out var coverage)
+            ? coverage.Deserialize<List<Coverage>>(MeasureJson) ?? []
+            : [];
 
     /// <summary>
     /// How long any one measure may run. They sweep the whole link table -- three and a half million
