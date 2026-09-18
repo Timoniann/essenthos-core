@@ -671,10 +671,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var integrity = new List<IntegrityCheck>(Integrity.Length);
         foreach (var (breaks, sql) in Integrity)
         {
-            // These sweep the whole link table -- three and a half million rows joined to their
-            // words and addresses -- so they are minutes, not seconds, and the default thirty
-            // seconds silently turned a correct corpus into a failed verification.
-            await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = 900 };
+            await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = SweepSeconds };
             integrity.Add(new IntegrityCheck(breaks, (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!));
         }
 
@@ -712,7 +709,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             return [];
         }
 
-        await using var command = new NpgsqlCommand(VoteSql, connection) { CommandTimeout = 900 };
+        await using var command = new NpgsqlCommand(VoteSql, connection) { CommandTimeout = SweepSeconds };
         command.Parameters.AddWithValue("text", Voted);
         command.Parameters.AddWithValue("first", FirstVoter);
         command.Parameters.AddWithValue("second", SecondVoter);
@@ -801,6 +798,13 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// </summary>
     private const double Tolerance = 0.001;
 
+    /// <summary>
+    /// How long any one measure may run. They sweep the whole link table -- three and a half million
+    /// rows joined to their words and addresses -- so they are minutes, not seconds, and Npgsql's
+    /// default thirty seconds silently turns a correct corpus into a failed verification.
+    /// </summary>
+    private const int SweepSeconds = 900;
+
     private static readonly JsonSerializerOptions MeasureJson =
         new(JsonSerializerDefaults.Web) { WriteIndented = false };
 
@@ -810,7 +814,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         CancellationToken cancellationToken,
         Func<NpgsqlDataReader, T> row)
     {
-        await using var command = new NpgsqlCommand(sql, connection);
+        await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = SweepSeconds };
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
 
         var rows = new List<T>();
