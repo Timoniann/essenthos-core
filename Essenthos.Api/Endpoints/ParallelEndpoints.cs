@@ -126,12 +126,21 @@ internal static class ParallelEndpoints
                     $"At most {MostCorporaAtOnce} texts can be read side by side; {requested.Count} were asked for.");
             }
 
-            var chapterCount = await canon.ChapterCount(ordinal.Value, cancellationToken);
+            // When none of the texts holds the book, every pane says so, and the shared frame's count
+            // is still the one that lets the reader step through it.
+            var chapterCount = await canon.ChapterCountAcross(
+                requested.Select(entry => entry.Id), ordinal.Value, cancellationToken);
+            if (chapterCount == 0)
+            {
+                chapterCount = await canon.ChapterCount(ordinal.Value, cancellationToken);
+            }
+
             if (chapter < 1 || chapter > chapterCount)
             {
                 return ApiResults.NotFound(
-                    $"{BookReferences.Name(ordinal.Value)} has {chapterCount} chapters, so there is no chapter " +
-                    $"{chapter}. That is the shared numbering; a text of its own may divide the book differently.");
+                    $"{BookReferences.Name(ordinal.Value)} has {chapterCount} chapters in the texts asked for, so " +
+                    $"there is no chapter {chapter}. That is the shared numbering; a text of its own may divide " +
+                    "the book differently, and another text may reach further.");
             }
 
             var byText = new Dictionary<string, Dictionary<int, List<TextWordResponse>>>();

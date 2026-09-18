@@ -45,6 +45,13 @@ internal interface ICanonIndex
     /// </summary>
     Task<int> ChapterCount(int canonicalBook, CancellationToken cancellationToken);
 
+    /// <summary>
+    /// How far into the shared frame the widest of these texts reaches in a book: the chapters a
+    /// reader with exactly these texts open can step through. The Septuagint's Psalm 151 is there
+    /// when the Septuagint is open and not when only the King James is.
+    /// </summary>
+    Task<int> ChapterCountAcross(IEnumerable<int> textIds, int canonicalBook, CancellationToken cancellationToken);
+
     Task<int> ChapterCountIn(int textId, int canonicalBook, CancellationToken cancellationToken);
 
     void Forget();
@@ -54,7 +61,7 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
 {
     private readonly SemaphoreSlim _gate = new(1, 1);
     private IReadOnlyList<TextEntry>? _texts;
-    private IReadOnlyDictionary<int, int>? _chapterCounts;
+    private IReadOnlyDictionary<(int Text, int Book), int>? _frameChapterCounts;
     private IReadOnlyDictionary<(int Text, int Book), int>? _chapterCountsByText;
 
     public async Task<TextEntry?> Text(string slug, CancellationToken cancellationToken) =>
@@ -84,8 +91,37 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
     public async Task<int> ChapterCount(int canonicalBook, CancellationToken cancellationToken)
     {
         await Ensure(cancellationToken);
-        return _chapterCounts!.GetValueOrDefault(canonicalBook);
+        return _frameChapterCounts!
+            .Where(pair => pair.Key.Book == canonicalBook)
+            .Select(pair => pair.Value)
+            .DefaultIfEmpty()
+            .Max();
     }
+
+    public async Task<int> ChapterCountAcross(
+        IEnumerable<int> textIds, int canonicalBook, CancellationToken cancellationToken)
+    {
+        await Ensure(cancellationToken);
+        return WidestReach(_frameChapterCounts!, textIds, canonicalBook);
+    }
+
+    public static int WidestReach(
+        IReadOnlyDictionary<(int Text, int Book), int> frameChapterCounts,
+        IEnumerable<int> textIds,
+        int canonicalBook) =>
+        textIds
+            .Select(id => frameChapterCounts.GetValueOrDefault((id, canonicalBook)))
+            .DefaultIfEmpty()
+            .Max();
+
+    /// <summary>The last canonical chapter each text reaches in each book, in the shared frame.</summary>
+    public static async Task<Dictionary<(int Text, int Book), int>> FrameChapterCounts(
+        AppDbContext db, CancellationToken cancellationToken) =>
+        (await db.VerseReferences
+            .GroupBy(r => new { r.Verse!.TextId, r.CanonicalBook })
+            .Select(g => new { g.Key.TextId, g.Key.CanonicalBook, Chapters = g.Max(r => r.CanonicalChapter) })
+            .ToListAsync(cancellationToken))
+        .ToDictionary(row => (row.TextId, row.CanonicalBook), row => row.Chapters);
 
     public async Task<int> ChapterCountIn(int textId, int canonicalBook, CancellationToken cancellationToken)
     {
@@ -97,7 +133,7 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
     public void Forget()
     {
         _texts = null;
-        _chapterCounts = null;
+        _frameChapterCounts = null;
         _chapterCountsByText = null;
     }
 
@@ -148,11 +184,7 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
                 .Select(t => new { t.Id, t.Slug, t.Books, Linked = linked.Contains(t.Id) })
                 .ToList();
 
-            _chapterCounts = (await db.VerseReferences
-                    .GroupBy(r => r.CanonicalBook)
-                    .Select(g => new { Book = g.Key, Chapters = g.Max(r => r.CanonicalChapter) })
-                    .ToListAsync(cancellationToken))
-                .ToDictionary(row => row.Book, row => row.Chapters);
+            _frameChapterCounts = await FrameChapterCounts(db, cancellationToken);
 
             _chapterCountsByText = (await db.Chapters
                     .GroupBy(c => new { c.TextId, c.Book!.CanonicalOrdinal })

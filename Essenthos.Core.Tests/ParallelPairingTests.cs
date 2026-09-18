@@ -100,6 +100,31 @@ public sealed class ParallelPairingTests : IDisposable
     }
 
     /// <summary>
+    /// The Septuagint's Psalter reaches a chapter the King James does not. A reader with only the
+    /// King James open is not offered it; open the Septuagint beside it and it is there.
+    /// </summary>
+    [Fact]
+    public async Task AChapterOnlyOneTextReachesIsOfferedOnlyWhenThatTextIsOpen()
+    {
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (150, 1, ["Praise"]));
+        var greek = Corpus.Add(_db, "LXX-SWETE", TextKind.ManuscriptTradition, "grc",
+            (150, 1, ["Αἰνεῖτε"]),
+            (151, 1, ["Μικρὸς"]));
+        _db.SaveChanges();
+
+        Place(english, 150, 1, canonicalChapter: 150, canonicalVerse: 1);
+        Place(greek, 150, 1, canonicalChapter: 150, canonicalVerse: 1);
+        Place(greek, 151, 1, canonicalChapter: 151, canonicalVerse: 1);
+        _db.SaveChanges();
+
+        var counts = await CanonIndex.FrameChapterCounts(_db, default);
+
+        CanonIndex.WidestReach(counts, [english.Id], 1).Should().Be(150);
+        CanonIndex.WidestReach(counts, [english.Id, greek.Id], 1).Should().Be(151);
+        CanonIndex.WidestReach(counts, [], 1).Should().Be(0);
+    }
+
+    /// <summary>
     /// The number the verification pass reads to decide a verse pair is too faint to trust, said to
     /// the reader instead of to a log. A faint pair means one of two things — the verses were laid
     /// against each other wrongly, or the two traditions genuinely differ here — and only somebody
