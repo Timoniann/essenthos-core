@@ -45,7 +45,8 @@ jobs:
     # mid-fixture, which is what happens when two runs share the one on the developer's machine.
     services:
       postgres:
-        image: postgres:16
+        # The same Postgres the corpus is built, dumped and served with (compose.yaml, deploy/).
+        image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
         env:
           POSTGRES_USER: essenthos
           # Not a credential. This Postgres is created for the job and destroyed with it, is
@@ -126,10 +127,35 @@ jobs:
   image:
     name: image
     runs-on: ubuntu-latest
+
+    # The server pulls this image rather than building one: nothing on the droplet has an SDK, and a
+    # rollback is running the previous tag. Pushed only from main, and only after the tests pass, so
+    # every tag in the registry is a commit that was green. A pull request builds it and pushes nothing.
+    needs: [build, test]
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - uses: actions/checkout@v4
 
+      - uses: docker/login-action@v3
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       # `docker build`, not `docker compose build`: compose.yaml interpolates
       # ESSENTHOS_DB_PASSWORD on every command, so compose cannot even parse the file on a runner.
-      # Nothing runs this image here — it is only a check that it still assembles.
-      - run: docker build -f Essenthos.Api/Dockerfile -t essenthos-api:${{ github.sha }} .
+      # Tagged by the full commit, which is what deploy/.env names, and by `main` for convenience —
+      # never deployed by `main`, because a tag that moves is not something a rollback can name.
+      - name: Build, and push from main
+        run: |
+          set -euo pipefail
+          image=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/essenthos-api
+          docker build -f Essenthos.Api/Dockerfile -t "$image:${{ github.sha }}" -t "$image:main" .
+          if [ "${{ github.event_name }}" = push ] && [ "${{ github.ref }}" = refs/heads/main ]; then
+            docker push "$image:${{ github.sha }}"
+            docker push "$image:main"
+          fi

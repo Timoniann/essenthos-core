@@ -30,8 +30,9 @@ Dockerfile text eol=lf
 Dockerfile.* text eol=lf
 docker-entrypoint.d/** text eol=lf
 *.conf text eol=lf
+# The server's files are read by Linux containers and by a shell on the droplet, every one of them.
+deploy/** text eol=lf
 
 # Everything else keeps git's normal handling. The corpus manifest already skips files git tracks,
 # for the same reason in the other direction: a licence file beside the data is versioned, and git
 # is entitled to change its bytes.
-deploy/** text eol=lf

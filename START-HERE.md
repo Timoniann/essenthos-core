@@ -46,7 +46,7 @@ Also worth reading before you touch a loader: **DOC-0004** (what LLM alignment c
 
 **The folder** is a copy of essenthos-api with build output and git history stripped and its own git repository initialised. `Resources/` is its own again — see below — and `.gitignore` keeps the gigabyte of corpus out of every commit while admitting the licence beside each folder and `Resources/WorldHistory`.
 
-**The database** `essenthos_core` lives in this repository's own Postgres — the `db` service in `compose.yaml`, PostgreSQL 18.1 pinned by digest, on **127.0.0.1:5437**, with a 1 GB `/dev/shm` and settings sized for building the corpus. It is not the frozen API's container any more, and nothing here should connect to 5435.
+**The database** `essenthos_core` lives in this repository's own Postgres — the `db` service in `compose.yaml`, PostgreSQL 18.1 pinned by digest, on **127.0.0.1:5437**, with a 4 GB `/dev/shm` and settings sized for building the corpus. It is not the frozen API's container any more, and nothing here should connect to 5435.
 
     docker compose up -d db
     docker exec essenthos-core-db-1 psql -U essenthos -d essenthos_core -c "..."
@@ -57,7 +57,7 @@ The password is in two untracked places that must agree: `.env` beside `compose.
 
 **Nothing in `Resources/` is committed except the licences and `WorldHistory`,** so a fresh clone has the folder and not the corpus. GLAUx, the Berean and ClearBible have fetch scripts under `scripts/`; the rest were fetched by hand years ago and live only on this machine and in `essenthos-api/Resources`, which is where a new checkout should copy them from until each one has a script of its own.
 
-**Resources are this project's own.** They live in `essenthos-core/Resources` and are read through configuration — `Dataset:ResourcesPath`. With nothing set, `../Resources` is tried against the content root and then every directory above it is searched for a `Resources` folder, so the same default holds whether the process was started from the project, from the repository root or from an output folder. Only `Essenthos.Forge` reads them; the API never opens a file. Nothing here reads `essenthos-api` any more, and a bare `dotnet test` needs no environment variable.
+**Resources are this project's own.** They live in `essenthos-core/Resources` and are read through configuration — `Dataset:ResourcesPath`. With nothing set, `../Resources` is tried against the content root and then every directory above it is searched for a `Resources` folder holding `MANIFEST.json` — the build copies `Resources/WorldHistory` beside the assembly, and a search that took the first folder of that name loaded from it — so the same default holds whether the process was started from the project, from the repository root or from an output folder. Only `Essenthos.Forge` reads them; the API never opens a file. Nothing here reads `essenthos-api` any more, and a bare `dotnet test` needs no environment variable.
 
 ## The four projects
 
@@ -81,6 +81,21 @@ robocopy ..\..\essenthos-core\Resources Resources /E /MT:16
 ```
 
 A gigabyte, four seconds, and it merges rather than mirrors, so the committed files already there are left alone. Junctioning the folders instead does not work: git tracks a `LICENCE.md` inside most of them, so a checkout has already created the directory and `New-Item -ItemType Junction` refuses a path that exists.
+
+## Releasing the corpus, and the server
+
+The corpus is an artefact. It is built here, and a server only ever receives a finished, verified copy:
+
+    forge release                 verify, label and dump this machine's corpus into .releases/
+    forge publish --to dev        restore it on the server beside the live one, verify it there, swap it in
+    forge publish --to prod       only a release dev has already accepted
+    forge rollback --to prod      the previous release back, by a rename
+    forge releases [--on <target>]
+
+Each is also an avioniq action: `core-release`, `core-publish`, `core-rollback`, `core-releases`. The
+design is DOC-0203; the server, its compose file, the deploy script and the one-time setup of the droplet
+are in `deploy/README.md`. The whole thing runs on this machine as a rehearsal, with targets
+`rehearsal-dev` and `rehearsal`, and should be run there before anything changes on the server.
 
 ## What carries over, and what does not
 

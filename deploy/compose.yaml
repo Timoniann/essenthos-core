@@ -135,7 +135,9 @@ services:
     logging: *logging
     environment:
       SITE_DOMAIN: ${SITE_DOMAIN}
+      API_DOMAIN: ${API_DOMAIN:?set API_DOMAIN}
       DEV_DOMAIN: ${DEV_DOMAIN}
+      DEV_API_DOMAIN: ${DEV_API_DOMAIN:?set DEV_API_DOMAIN}
       ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL, the address Let's Encrypt writes to about expiring certificates}
       DEV_USER: ${DEV_USER:?set DEV_USER}
       DEV_PASSWORD_HASH: ${DEV_PASSWORD_HASH:?set DEV_PASSWORD_HASH with `docker run --rm caddy:2.10-alpine caddy hash-password`}
