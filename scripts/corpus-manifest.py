@@ -16,23 +16,37 @@ missing.
   python scripts/corpus-manifest.py                    write the manifest
   python scripts/corpus-manifest.py --folders A,B      update only named folders, preserving others
   python scripts/corpus-manifest.py --check            compare the corpus against it, exit 1 on a difference
+
+The corpus is read from this repository's Resources/ wherever the script is run from. A worktree
+has no corpus of its own and reads the main checkout's, while the manifest it commits is its own,
+so the two can be named apart:
+
+  python scripts/corpus-manifest.py --resources ../main/Resources --manifest Resources/MANIFEST.json
 """
 
-import hashlib, os, json, subprocess, sys, time
+import argparse, hashlib, os, json, subprocess, sys, time
 sys.stdout.reconfigure(encoding='utf-8')
-root = 'Resources'
+
+repository = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+parser = argparse.ArgumentParser(description='Fingerprint every corpus folder.')
+parser.add_argument('--resources', default=os.path.join(repository, 'Resources'),
+                    help="the corpus to read; this repository's Resources/ by default")
+parser.add_argument('--manifest', default=None,
+                    help='the manifest to write or check; MANIFEST.json inside --resources by default')
+parser.add_argument('--folders', default=None, help='a comma-separated list; update only these')
+parser.add_argument('--check', action='store_true', help='compare, and exit 1 on a difference')
+args = parser.parse_args()
+
+root = args.resources
+path = args.manifest or os.path.join(root, 'MANIFEST.json')
 started = time.time()
 
 selected = None
-if '--folders' in sys.argv:
-    try:
-        value = sys.argv[sys.argv.index('--folders') + 1]
-    except IndexError:
-        raise SystemExit('--folders requires a comma-separated folder list')
-    selected = {name.strip() for name in value.split(',') if name.strip()}
+if args.folders is not None:
+    selected = {name.strip() for name in args.folders.split(',') if name.strip()}
     if not selected:
         raise SystemExit('--folders requires at least one folder name')
-    if '--check' in sys.argv:
+    if args.check:
         raise SystemExit('--folders cannot be combined with --check')
 
 # Files git already carries are excluded. They are versioned, so the manifest adds nothing about
@@ -41,8 +55,12 @@ if '--folders' in sys.argv:
 # is for the data git does not carry, which is all of it that matters.
 tracked = set()
 try:
-    listed = subprocess.run(['git', 'ls-files', root], capture_output=True, text=True, check=True)
-    tracked = {os.path.normpath(line) for line in listed.stdout.splitlines() if line}
+    listed = subprocess.run(['git', '-C', root, 'ls-files', '--full-name', '-z', '.'],
+                            capture_output=True, text=True, encoding='utf-8', check=True)
+    top = subprocess.run(['git', '-C', root, 'rev-parse', '--show-toplevel'],
+                         capture_output=True, text=True, encoding='utf-8', check=True).stdout.strip()
+    tracked = {os.path.normcase(os.path.normpath(os.path.join(top, line)))
+               for line in listed.stdout.split('\0') if line}
 except Exception:
     pass
 
@@ -61,7 +79,7 @@ for name in sorted(selected if selected is not None else available):
     for dirpath, _, filenames in os.walk(d):
         for f in sorted(filenames):
             p = os.path.join(dirpath, f)
-            if os.path.normpath(p) in tracked:
+            if os.path.normcase(os.path.normpath(os.path.abspath(p))) in tracked:
                 continue
             rel = os.path.relpath(p, d).replace(os.sep, '/')
             h = hashlib.sha256()
@@ -83,9 +101,8 @@ for name in sorted(selected if selected is not None else available):
     folders[name] = {"files": len(files), "bytes": total, "sha256": digest.hexdigest()}
     print(f"{name:22} {len(files):>5} files {total/1e6:>9.1f} MB  {digest.hexdigest()[:16]}")
 print(f"-- {time.time()-started:.0f}s")
-path = os.path.join(root, 'MANIFEST.json')
 
-if '--check' in sys.argv:
+if args.check:
     if not os.path.exists(path):
         print('No manifest to check against. Run without --check to write one.')
         raise SystemExit(1)
