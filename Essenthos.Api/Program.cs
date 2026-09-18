@@ -112,6 +112,7 @@ v1.MapDatasets();
 v1.MapAuth(providers);
 v1.MapMe();
 v1.MapDevices();
+v1.MapNotes();
 
 app.UseCors();
 

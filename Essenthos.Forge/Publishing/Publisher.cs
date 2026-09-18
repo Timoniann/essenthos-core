@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.Json;
 using Essenthos.Core.Configuration;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -230,6 +231,26 @@ internal sealed class Publisher(
                     target.Incoming, measures.Rendered, record.Rendered);
                 return 1;
             }
+        }
+
+        // Readers' notes are addressed canonically and cannot move, but a release can lose the verse
+        // under one. That is somebody's writing losing its place, so it stops the publication.
+        if (await NoteAnchors.Unresolved(host, target, cancellationToken) is { } lost)
+        {
+            if (lost.Count > 0)
+            {
+                foreach (var point in lost.Take(20))
+                {
+                    logger.LogError("No verse at {Book} {Chapter}:{Verse}{Text} in {Name}, and a reader's note is anchored there",
+                        BookReferences.Name(point.Book), point.Chapter, point.Verse,
+                        point.Text.Length == 0 ? "" : $" in {point.Text}", record.Name);
+                }
+
+                logger.LogError("{Count} note addresses do not resolve in {Name}; the live corpus is untouched", lost.Count, record.Name);
+                return 1;
+            }
+
+            logger.LogInformation("Every note in {App} finds its verse in {Name}", target.AppDatabase, record.Name);
         }
 
         await Grant(host, cancellationToken);

@@ -28,6 +28,8 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
 
     public DbSet<Reading> Readings => Set<Reading>();
 
+    public DbSet<Note> Notes => Set<Note>();
+
     /// <summary>
     /// The keys that protect the sign-in flow's short-lived cookies. Here rather than on a disk so that
     /// every API process of one environment shares them, they survive a container being replaced, and
@@ -114,6 +116,18 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             reading.HasOne<Device>().WithMany().HasForeignKey(r => r.DeviceId).OnDelete(DeleteBehavior.Cascade);
         });
 
+        model.Entity<Note>(note =>
+        {
+            note.ToTable("note");
+            note.Property(n => n.Id).ValueGeneratedNever();
+            note.Property(n => n.Text).HasMaxLength(32);
+            note.Property(n => n.Body).HasMaxLength(Limits.NoteBody);
+            // What the reader opens a chapter by: every note of theirs that starts in this book.
+            note.HasIndex(n => new { n.AccountId, n.Book, n.Chapter });
+            note.HasIndex(n => n.Revision);
+            note.HasOne<Account>().WithMany().HasForeignKey(n => n.AccountId).OnDelete(DeleteBehavior.Cascade);
+        });
+
         model.Entity<AccountPhoto>(photo =>
         {
             photo.ToTable("account_photo");
@@ -174,4 +188,10 @@ public static class Limits
 
     /// <summary>An uploaded photo. Enough for a sharp square picture; not enough to be a file store.</summary>
     public const int PhotoBytes = 1024 * 1024;
+
+    /// <summary>A note: several pages of writing, which is a margin and not a book.</summary>
+    public const int NoteBody = 20_000;
+
+    /// <summary>How many notes one account keeps; far past any reader, short of a bulk store.</summary>
+    public const int NotesPerAccount = 50_000;
 }

@@ -39,6 +39,10 @@ namespace Essenthos.Core.Publishing;
 /// A target this one only accepts releases from once they have been published there. Production names
 /// dev, so production receives the identical file dev accepted, or dev proved nothing.
 /// </param>
+/// <param name="AppDatabase">
+/// The environment's accounts database, whose notes must all still find their verse in a release
+/// before it is swapped in. Unset for a target that has none.
+/// </param>
 internal sealed record ReleaseTarget(
     string Name,
     bool Local,
@@ -51,7 +55,8 @@ internal sealed record ReleaseTarget(
     int DatabasePort,
     string ApiContainer,
     string? After,
-    string? Password)
+    string? Password,
+    string? AppDatabase = null)
 {
     public bool IsRemote => !Local;
 
@@ -123,6 +128,7 @@ internal sealed record ReleaseTarget(
             int.Parse(Required("DatabasePort"), System.Globalization.CultureInfo.InvariantCulture),
             Required("ApiContainer"),
             section["After"] is { Length: > 0 } after ? after : null,
-            section["Password"] is { Length: > 0 } password ? password : FromEnvFile(section["EnvFile"], repository));
+            section["Password"] is { Length: > 0 } password ? password : FromEnvFile(section["EnvFile"], repository),
+            section["AppDatabase"] is { Length: > 0 } app ? app : null);
     }
 }
