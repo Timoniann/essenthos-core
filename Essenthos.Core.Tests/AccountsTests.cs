@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Essenthos.Core.Accounts;
 using Essenthos.Core.Endpoints;
 using FluentAssertions;
@@ -61,4 +62,42 @@ public sealed class AccountsTests
     [InlineData("a-cookie-somebody-typed-by-hand")]
     public void SomethingThatIsNotATokenIsNotLookedUp(string value) =>
         SessionTokens.Hash(value).Should().BeNull();
+
+    [Theory]
+    [InlineData("Reader@Example.org", "true", "reader@example.org")]
+    [InlineData("reader@example.org", "True", "reader@example.org")]
+    // Unverified, or verification not stated: an address nobody proved must never join accounts.
+    [InlineData("reader@example.org", "false", null)]
+    [InlineData("reader@example.org", null, null)]
+    [InlineData(null, "true", null)]
+    public void OnlyAVerifiedAddressCountsAndItsCaseDoesNot(string? email, string? verified, string? expected)
+    {
+        var claims = new List<Claim>();
+        if (email is not null)
+        {
+            claims.Add(new Claim(ClaimTypes.Email, email));
+        }
+
+        if (verified is not null)
+        {
+            claims.Add(new Claim(AccountsSetup.EmailVerifiedClaim, verified));
+        }
+
+        AuthEndpoints.VerifiedEmail(new ClaimsPrincipal(new ClaimsIdentity(claims, "test"))).Should().Be(expected);
+    }
+
+    [Fact]
+    public void ADeviceIsDescribedLooselyAndNamedTheWayAReaderWould()
+    {
+        DeviceEndpoints.Clean(new DeviceProfile(" Mobile ", "Android", "Chrome", "Pixel 8"))
+            .Should().Be(new DescribedDevice("mobile", "Android", "Chrome", "Pixel 8"));
+        DeviceEndpoints.Clean(new DeviceProfile("desktop", "Windows", "Chrome", "  "))!.Model.Should().BeNull();
+        DeviceEndpoints.Clean(new DeviceProfile("toaster", "Linux", "Firefox", null)).Should().BeNull();
+        DeviceEndpoints.Clean(new DeviceProfile("desktop", "", "Firefox", null)).Should().BeNull();
+
+        DeviceEndpoints.Label(new Device { Kind = "mobile", Os = "Android", Browser = "Chrome", Model = "Pixel 8" })
+            .Should().Be("Pixel 8 · Chrome");
+        DeviceEndpoints.Label(new Device { Kind = "desktop", Os = "Windows", Browser = "Chrome" })
+            .Should().Be("Chrome on Windows");
+    }
 }

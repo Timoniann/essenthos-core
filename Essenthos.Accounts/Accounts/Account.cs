@@ -99,6 +99,9 @@ public class Session
     public DateTimeOffset LastSeenAt { get; set; }
 
     public DateTimeOffset ExpiresAt { get; set; }
+
+    /// <summary>The device this session was opened on, once the client has described it.</summary>
+    public Guid? DeviceId { get; set; }
 }
 
 /// <summary>
@@ -137,4 +140,94 @@ public class DataProtectionKey
     public string? FriendlyName { get; set; }
 
     public required string Xml { get; set; }
+}
+
+/// <summary>
+/// A verified email address and the one account it belongs to. The key is the address, so the
+/// database itself refuses a second account with it — "one address, one account" holds even for two
+/// sign-ins racing each other, which a check in code alone would not.
+///
+/// Only addresses the provider says it verified are recorded. An unverified one proves nothing about
+/// who holds it, and joining accounts on it would let anybody who typed somebody else's address into
+/// a provider sign in as them.
+/// </summary>
+public class AccountEmail
+{
+    /// <summary>Lower-cased, since providers do not agree about case and people do not care.</summary>
+    public required string Email { get; set; }
+
+    public Guid AccountId { get; set; }
+
+    public DateTimeOffset CreatedAt { get; set; }
+}
+
+/// <summary>
+/// A phone, a laptop, a browser a reader uses. Each keeps its own settings and its own reading, as the
+/// owner asked: a phone at night and a desk by day want different things, and "continue where I
+/// stopped" means continuing what another device was reading.
+///
+/// Recognised loosely, by what kind of device it is and what it runs — never by an identifier planted
+/// on it. A session is bound to a device when it starts; a new session on a device whose storage was
+/// cleared is matched to the account's device with the same description, which is how its settings
+/// come back. The price is honest: browsers withhold the model on iPhones and computers, so two
+/// iPhones of one reader share a device here.
+/// </summary>
+public class Device : IRevised
+{
+    public Guid Id { get; set; }
+
+    public Guid AccountId { get; set; }
+
+    /// <summary><c>mobile</c>, <c>tablet</c> or <c>desktop</c>.</summary>
+    public required string Kind { get; set; }
+
+    public required string Os { get; set; }
+
+    public required string Browser { get; set; }
+
+    /// <summary>What Android reports as the model, where the browser will say; null everywhere else.</summary>
+    public string? Model { get; set; }
+
+    /// <summary>
+    /// The device's settings as the client keeps them — a JSON object the server stores and returns
+    /// without reading, so a new setting in the client is not a migration here.
+    /// </summary>
+    public string? Settings { get; set; }
+
+    /// <summary>When the settings last changed on the device, which decides whose copy is newer.</summary>
+    public DateTimeOffset? SettingsChangedAt { get; set; }
+
+    public DateTimeOffset CreatedAt { get; set; }
+
+    public DateTimeOffset LastSeenAt { get; set; }
+
+    public DateTimeOffset UpdatedAt { get; set; }
+
+    public long Revision { get; set; }
+}
+
+/// <summary>
+/// A chapter a device showed, and when. Kept per device so each has its own history, so another device
+/// can offer to continue it, and deleted with the device or the account.
+///
+/// A chapter, not a verse: what somebody reads, in what order, is the most sensitive thing this product
+/// holds (DOC-0204), and a chapter is enough to continue from.
+/// </summary>
+public class Reading
+{
+    public long Id { get; set; }
+
+    public Guid AccountId { get; set; }
+
+    public Guid DeviceId { get; set; }
+
+    /// <summary>The book as the reader's address spells it — the canonical slug, never a corpus row id.</summary>
+    public required string Book { get; set; }
+
+    public int Chapter { get; set; }
+
+    /// <summary>The texts that were open, comma-separated, so continuing opens the same split view.</summary>
+    public required string Corpora { get; set; }
+
+    public DateTimeOffset At { get; set; }
 }

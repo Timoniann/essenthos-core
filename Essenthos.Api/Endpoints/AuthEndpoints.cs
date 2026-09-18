@@ -44,13 +44,17 @@ internal static class AuthEndpoints
             var principal = external.Principal;
             var now = DateTimeOffset.UtcNow;
             var email = principal.FindFirstValue(ClaimTypes.Email);
+            var verified = VerifiedEmail(principal);
 
             var credential = await db.Credentials
                 .FirstOrDefaultAsync(c => c.Provider == provider && c.Subject == subject, context.RequestAborted);
 
-            // A reader who is already signed in and signs in with a second provider is adding it to the
-            // account they are in. That is the only way two providers come to share an account: nothing
-            // joins them by email address on its own.
+            // One verified address, one account. The address's owner, if it has one, decides where a
+            // new provider goes: into that account, whether the reader is signed in to it or not.
+            var owner = verified is null
+                ? null
+                : await db.AccountEmails.FirstOrDefaultAsync(e => e.Email == verified, context.RequestAborted);
+
             var signedIn = await context.AuthenticateAsync(SessionAuthenticationHandler.SchemeName);
             Guid accountId;
             if (credential is not null)
@@ -69,6 +73,16 @@ internal static class AuthEndpoints
                 if (signedIn.Succeeded)
                 {
                     accountId = signedIn.Principal!.AccountId();
+                    if (owner is not null && owner.AccountId != accountId)
+                    {
+                        return Results.Redirect(WithOutcome(back, "email"));
+                    }
+                }
+                else if (owner is not null)
+                {
+                    // Signing in with GitHub for the first time, with the address an account already
+                    // proved through Google: that is the same person, and this is their account.
+                    accountId = owner.AccountId;
                 }
                 else
                 {
@@ -94,6 +108,11 @@ internal static class AuthEndpoints
                 });
             }
 
+            if (verified is not null && owner is null)
+            {
+                db.AccountEmails.Add(new AccountEmail { Email = verified, AccountId = accountId, CreatedAt = now });
+            }
+
             if (!signedIn.Succeeded)
             {
                 var token = SessionTokens.New();
@@ -111,7 +130,19 @@ internal static class AuthEndpoints
                 context.Response.Cookies.Append(SessionTokens.CookieName, token, SessionTokens.Cookie(context.Request, expires));
             }
 
-            await db.SaveChangesAsync(context.RequestAborted);
+            try
+            {
+                await db.SaveChangesAsync(context.RequestAborted);
+            }
+            catch (DbUpdateException)
+            {
+                // Two first sign-ins with one address at the same moment: the address's key let one
+                // of them through, and this is the other. Nothing was written; signing in again finds
+                // the account the first one made.
+                context.Response.Cookies.Delete(SessionTokens.CookieName);
+                return Results.Redirect(WithOutcome(back, "failed"));
+            }
+
             loggers.CreateLogger("accounts").LogInformation("Signed in with {Provider}", provider);
             return Results.Redirect(back);
         });
@@ -138,6 +169,17 @@ internal static class AuthEndpoints
         returnUrl is { Length: > 0 } url && url[0] == '/' && (url.Length == 1 || (url[1] != '/' && url[1] != '\\'))
             ? url
             : "/";
+
+    /// <summary>
+    /// The address, lower-cased, if the provider says it verified it; otherwise null. Google says so in
+    /// <c>email_verified</c>; for GitHub the handler's ticket event puts it there only for the primary
+    /// verified address.
+    /// </summary>
+    internal static string? VerifiedEmail(ClaimsPrincipal principal) =>
+        string.Equals(principal.FindFirstValue(AccountsSetup.EmailVerifiedClaim), "true", StringComparison.OrdinalIgnoreCase) &&
+        principal.FindFirstValue(ClaimTypes.Email) is { Length: > 0 and <= 320 } email
+            ? email.Trim().ToLowerInvariant()
+            : null;
 
     private static string WithOutcome(string url, string outcome) =>
         $"{url}{(url.Contains('?') ? '&' : '?')}signin={outcome}";

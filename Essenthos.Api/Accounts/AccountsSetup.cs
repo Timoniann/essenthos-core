@@ -58,6 +58,7 @@ internal static class AccountsSetup
                 options.ClientSecret = googleSecret;
                 Common(options, "google");
                 options.ClaimActions.MapJsonKey(PictureClaim, "picture");
+                options.ClaimActions.MapJsonKey(EmailVerifiedClaim, "email_verified");
             });
             providers.Add("google");
         }
@@ -69,10 +70,9 @@ internal static class AccountsSetup
                 options.ClientId = gitHubId;
                 options.ClientSecret = gitHubSecret;
                 Common(options, "github");
-                // The handler asks for the primary address when this scope is granted; it is kept only
-                // to show the reader which account they used.
                 options.Scope.Add("user:email");
                 options.ClaimActions.MapJsonKey(PictureClaim, "avatar_url");
+                options.Events.OnCreatingTicket = GitHubVerifiedEmail;
             });
             providers.Add("github");
         }
@@ -82,6 +82,49 @@ internal static class AccountsSetup
     }
 
     public const string PictureClaim = "picture";
+
+    /// <summary>"true" when the provider says it verified the address in the email claim.</summary>
+    public const string EmailVerifiedClaim = "email_verified";
+
+    /// <summary>
+    /// GitHub's profile carries whatever address a user chose to make public, verified or not. The
+    /// address list says which one is primary and whether it is verified, so the email claim is
+    /// replaced with the primary verified one, or removed when there is none — an address joins
+    /// accounts here, and an unverified one must never be able to.
+    /// </summary>
+    private static async Task GitHubVerifiedEmail(Microsoft.AspNetCore.Authentication.OAuth.OAuthCreatingTicketContext context)
+    {
+        var identity = context.Identity!;
+        foreach (var claim in identity.FindAll(System.Security.Claims.ClaimTypes.Email).ToList())
+        {
+            identity.RemoveClaim(claim);
+        }
+
+        using var request = new HttpRequestMessage(HttpMethod.Get, "https://api.github.com/user/emails");
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.AccessToken);
+        request.Headers.Accept.ParseAdd("application/vnd.github+json");
+        request.Headers.UserAgent.ParseAdd("essenthos");
+        using var response = await context.Backchannel.SendAsync(request, context.HttpContext.RequestAborted);
+        if (!response.IsSuccessStatusCode)
+        {
+            return;
+        }
+
+        using var emails = await System.Text.Json.JsonDocument.ParseAsync(
+            await response.Content.ReadAsStreamAsync(context.HttpContext.RequestAborted),
+            cancellationToken: context.HttpContext.RequestAborted);
+        foreach (var entry in emails.RootElement.EnumerateArray())
+        {
+            if (entry.TryGetProperty("primary", out var primary) && primary.GetBoolean() &&
+                entry.TryGetProperty("verified", out var verified) && verified.GetBoolean() &&
+                entry.TryGetProperty("email", out var email) && email.GetString() is { Length: > 0 } address)
+            {
+                identity.AddClaim(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Email, address));
+                identity.AddClaim(new System.Security.Claims.Claim(EmailVerifiedClaim, "true"));
+                return;
+            }
+        }
+    }
 
     private static void Common(Microsoft.AspNetCore.Authentication.OAuth.OAuthOptions options, string provider)
     {

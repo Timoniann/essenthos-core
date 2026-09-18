@@ -22,6 +22,12 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
 
     public DbSet<AccountPhoto> AccountPhotos => Set<AccountPhoto>();
 
+    public DbSet<AccountEmail> AccountEmails => Set<AccountEmail>();
+
+    public DbSet<Device> Devices => Set<Device>();
+
+    public DbSet<Reading> Readings => Set<Reading>();
+
     /// <summary>
     /// The keys that protect the sign-in flow's short-lived cookies. Here rather than on a disk so that
     /// every API process of one environment shares them, they survive a container being replaced, and
@@ -70,9 +76,43 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             session.HasIndex(s => s.TokenHash).IsUnique();
             session.HasIndex(s => s.AccountId);
             session.HasOne(s => s.Account).WithMany().HasForeignKey(s => s.AccountId).OnDelete(DeleteBehavior.Cascade);
+            session.HasOne<Device>().WithMany().HasForeignKey(s => s.DeviceId).OnDelete(DeleteBehavior.SetNull);
         });
 
         model.Entity<DataProtectionKey>(key => key.ToTable("data_protection_key"));
+
+        model.Entity<AccountEmail>(email =>
+        {
+            email.ToTable("account_email");
+            email.HasKey(e => e.Email);
+            email.Property(e => e.Email).HasMaxLength(320);
+            email.HasIndex(e => e.AccountId);
+            email.HasOne<Account>().WithMany().HasForeignKey(e => e.AccountId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        model.Entity<Device>(device =>
+        {
+            device.ToTable("device");
+            device.Property(d => d.Id).ValueGeneratedNever();
+            device.Property(d => d.Kind).HasMaxLength(16);
+            device.Property(d => d.Os).HasMaxLength(32);
+            device.Property(d => d.Browser).HasMaxLength(32);
+            device.Property(d => d.Model).HasMaxLength(64);
+            device.Property(d => d.Settings).HasColumnType("jsonb");
+            device.HasIndex(d => d.AccountId);
+            device.HasIndex(d => d.Revision);
+            device.HasOne<Account>().WithMany().HasForeignKey(d => d.AccountId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        model.Entity<Reading>(reading =>
+        {
+            reading.ToTable("reading");
+            reading.Property(r => r.Book).HasMaxLength(32);
+            reading.Property(r => r.Corpora).HasMaxLength(200);
+            reading.HasIndex(r => new { r.AccountId, r.At });
+            reading.HasIndex(r => new { r.DeviceId, r.At });
+            reading.HasOne<Device>().WithMany().HasForeignKey(r => r.DeviceId).OnDelete(DeleteBehavior.Cascade);
+        });
 
         model.Entity<AccountPhoto>(photo =>
         {

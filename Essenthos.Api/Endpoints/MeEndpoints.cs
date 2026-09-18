@@ -107,6 +107,36 @@ internal static class MeEndpoints
             return Results.Ok(await Describe(db, id, context.RequestAborted));
         });
 
+        // Disconnecting a provider, which is refused for the last one: an account with no way in is an
+        // account nobody can ever reach again, including to delete it.
+        me.MapDelete("/providers/{provider}", async (HttpContext context, AccountsDbContext db, string provider) =>
+        {
+            var id = context.User.AccountId();
+            var credentials = await db.Credentials.Where(c => c.AccountId == id).ToListAsync(context.RequestAborted);
+            var leaving = credentials.FirstOrDefault(c => c.Provider == provider);
+            if (leaving is null)
+            {
+                return Results.NotFound(new ProblemResponse($"This account does not sign in with \"{provider}\"."));
+            }
+
+            if (credentials.Count == 1)
+            {
+                return Results.BadRequest(new ProblemResponse("That is the only way this account signs in; connect another first."));
+            }
+
+            db.Credentials.Remove(leaving);
+
+            // Its address goes with it unless another of the account's providers vouches for it too.
+            if (leaving.Email?.Trim().ToLowerInvariant() is { } address &&
+                !credentials.Any(c => c != leaving && string.Equals(c.Email?.Trim(), address, StringComparison.OrdinalIgnoreCase)))
+            {
+                await db.AccountEmails.Where(e => e.Email == address && e.AccountId == id).ExecuteDeleteAsync(context.RequestAborted);
+            }
+
+            await db.SaveChangesAsync(context.RequestAborted);
+            return Results.Ok(await Describe(db, id, context.RequestAborted));
+        });
+
         me.MapGet("/sessions", async (HttpContext context, AccountsDbContext db) =>
         {
             var current = context.User.SessionId();

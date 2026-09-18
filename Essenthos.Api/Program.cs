@@ -111,6 +111,7 @@ v1.MapEncyclopedia();
 v1.MapDatasets();
 v1.MapAuth(providers);
 v1.MapMe();
+v1.MapDevices();
 
 app.UseCors();
 
