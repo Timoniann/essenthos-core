@@ -184,6 +184,7 @@ public sealed class OpenBibleLocationTests : IDisposable
     public async Task TheMapCarriesEveryLocatedPlaceWithItsReferences()
     {
         var tekoa = Place("a1", "Tekoa");
+        tekoa.PlaceKind = "settlement";
         Place("a2", "Anab");
         _db.SaveChanges();
         Naming(tekoa, 10, 14, 2);
@@ -199,6 +200,7 @@ public sealed class OpenBibleLocationTests : IDisposable
         (only.Slug, only.Name, only.Lon, only.Lat, only.Kind, only.Confidence, only.References)
             .Should().Be(("tekoa", "Tekoa", 35.2, 31.7, "point", 0.6, 2));
         only.Chapters.Should().Equal(10014, 30001);
+        only.PlaceKind.Should().Be("settlement");
         map.Datasets.Should().Equal("openbible");
     }
 

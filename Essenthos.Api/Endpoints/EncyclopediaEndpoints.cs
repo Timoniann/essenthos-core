@@ -88,6 +88,7 @@ internal static class EncyclopediaEndpoints
             {
                 l.Entity!.Slug,
                 l.Entity.Name,
+                l.Entity.PlaceKind,
                 l.Longitude,
                 l.Latitude,
                 l.Kind,
@@ -116,7 +117,10 @@ internal static class EncyclopediaEndpoints
             [
                 .. places.Select(p => new PlacePointResponse(
                     p.Slug, p.Name, p.Longitude, p.Latitude, p.Kind, p.Score / ScoreScale, p.References,
-                    chapters.GetValueOrDefault(p.Slug) ?? [])),
+                    chapters.GetValueOrDefault(p.Slug) ?? [])
+                {
+                    PlaceKind = p.PlaceKind,
+                }),
             ]);
     }
 
@@ -1362,7 +1366,15 @@ internal record PlacePointResponse(
     string Kind,
     double Confidence,
     int References,
-    IList<int> Chapters);
+    IList<int> Chapters)
+{
+    /// <summary>
+    /// What kind of place it is, as the entry states it: <c>settlement</c>, <c>mountain</c>,
+    /// <c>river</c>, several comma-separated where the text calls it more than one. Null where
+    /// the entry does not say.
+    /// </summary>
+    public string? PlaceKind { get; init; }
+}
 
 /// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>
 internal record PlaceMapResponse(int Total, IList<string> Datasets, IList<PlacePointResponse> Items);
