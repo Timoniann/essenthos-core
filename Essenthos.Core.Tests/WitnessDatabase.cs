@@ -39,7 +39,7 @@ public sealed class WitnessDatabase : IAsyncLifetime
     private static readonly string DatabaseName = $"essenthos_core_test_{Environment.ProcessId}";
 
     private const string DefaultConnectionString =
-        "Host=localhost;Port=5435;Database=essenthos_core_test;Username=essenthos";
+        "Host=localhost;Port=5437;Database=essenthos_core_test;Username=essenthos";
 
     private string _connectionString = string.Empty;
 

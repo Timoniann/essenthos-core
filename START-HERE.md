@@ -46,11 +46,14 @@ Also worth reading before you touch a loader: **DOC-0004** (what LLM alignment c
 
 **The folder** is a copy of essenthos-api with build output and git history stripped and its own git repository initialised. `Resources/` is its own again — see below — and `.gitignore` keeps the gigabyte of corpus out of every commit while admitting the licence beside each folder and `Resources/WorldHistory`.
 
-**The database** `essenthos_core` exists on the same Postgres container as the old one, owned by `essenthos`, with `pg_trgm` enabled. It is empty. The old database is untouched and still serving the old API.
+**The database** `essenthos_core` lives in this repository's own Postgres — the `db` service in `compose.yaml`, PostgreSQL 18.1 pinned by digest, on **127.0.0.1:5437**, with a 1 GB `/dev/shm` and settings sized for building the corpus. It is not the frozen API's container any more, and nothing here should connect to 5435.
 
-    docker exec essenthos-api-db-1 psql -U essenthos -d essenthos_core -c "..."
+    docker compose up -d db
+    docker exec essenthos-core-db-1 psql -U essenthos -d essenthos_core -c "..."
 
-**Ports:** the old API holds 5277 and the web client 5278. Take **5279**.
+The password is in two untracked places that must agree: `.env` beside `compose.yaml` (`ESSENTHOS_DB_PASSWORD`, which the container is created with) and the `essenthos-core` user secrets (`Database:Password`, which every project reads). The container only takes it on its first start; changing it later is `ALTER ROLE`, not an edit to `.env`.
+
+**Ports:** the old API holds 5277, the web client 5278, this API **5279** and its database **5437**.
 
 **Nothing in `Resources/` is committed except the licences and `WorldHistory`,** so a fresh clone has the folder and not the corpus. GLAUx, the Berean and ClearBible have fetch scripts under `scripts/`; the rest were fetched by hand years ago and live only on this machine and in `essenthos-api/Resources`, which is where a new checkout should copy them from until each one has a script of its own.
 
