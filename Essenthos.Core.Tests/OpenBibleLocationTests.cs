@@ -195,7 +195,10 @@ public sealed class OpenBibleLocationTests : IDisposable
         var map = await EncyclopediaEndpoints.Map(_db);
 
         map.Total.Should().Be(1);
-        map.Items.Should().Equal(new PlacePointResponse("tekoa", "Tekoa", 35.2, 31.7, "point", 0.6, 2));
+        var only = map.Items.Should().ContainSingle().Subject;
+        (only.Slug, only.Name, only.Lon, only.Lat, only.Kind, only.Confidence, only.References)
+            .Should().Be(("tekoa", "Tekoa", 35.2, 31.7, "point", 0.6, 2));
+        only.Chapters.Should().Equal(10014, 30001);
         map.Datasets.Should().Equal("openbible");
     }
 

@@ -100,12 +100,23 @@ internal static class EncyclopediaEndpoints
             })
             .ToListAsync(cancellationToken);
 
+        // The chapters in a second query: EF cannot put a distinct list inside the projection above,
+        // and one row per place and chapter is a few thousand small rows.
+        var chapters = (await db.EntityVerses
+                .Where(v => db.PlaceLocations.Any(l => l.EntityId == v.EntityId))
+                .Select(v => new { v.Entity!.Slug, Chapter = (v.CanonicalBook * ChapterStride) + v.CanonicalChapter })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .GroupBy(row => row.Slug)
+            .ToDictionary(group => group.Key, group => group.Select(row => row.Chapter).Order().ToList());
+
         return new PlaceMapResponse(
             places.Count,
             [.. places.Select(p => p.Source).Distinct().Select(Datasets.Of).OfType<string>()],
             [
                 .. places.Select(p => new PlacePointResponse(
-                    p.Slug, p.Name, p.Longitude, p.Latitude, p.Kind, p.Score / ScoreScale, p.References)),
+                    p.Slug, p.Name, p.Longitude, p.Latitude, p.Kind, p.Score / ScoreScale, p.References,
+                    chapters.GetValueOrDefault(p.Slug) ?? [])),
             ]);
     }
 
@@ -1338,6 +1349,11 @@ internal record EntityResponse(
 internal record EntityLocationResponse(double Lon, double Lat, string Kind, double Confidence);
 
 /// <param name="References">How many verses name the place, as on its page.</param>
+/// <param name="Chapters">
+/// Every chapter that names it, each as its book's canonical ordinal times a thousand plus the
+/// chapter — 44013 is Acts 13 — in order, so a map can show the places of a book, a chapter or a
+/// stretch of the story without asking again.
+/// </param>
 internal record PlacePointResponse(
     string Slug,
     string Name,
@@ -1345,7 +1361,8 @@ internal record PlacePointResponse(
     double Lat,
     string Kind,
     double Confidence,
-    int References);
+    int References,
+    IList<int> Chapters);
 
 /// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>
 internal record PlaceMapResponse(int Total, IList<string> Datasets, IList<PlacePointResponse> Items);
