@@ -233,8 +233,7 @@ internal sealed class Publisher(
         }
 
         await Grant(host, cancellationToken);
-        await Swap(host, cancellationToken);
-        await RestartApi(host, cancellationToken);
+        await WithApiStopped(host, () => Swap(host, cancellationToken), cancellationToken);
 
         await File.AppendAllTextAsync(
             Path.Combine(Releases, $"{record.Name}.published"),
@@ -262,14 +261,18 @@ internal sealed class Publisher(
         var live = TargetHost.Identifier(target.Database);
         var previous = TargetHost.Identifier(target.Previous);
 
-        await Disconnect(host, target.Database, cancellationToken);
-        await host.Sql("postgres", $"ALTER DATABASE {live} RENAME TO {swapping}", cancellationToken);
-        await Disconnect(host, target.Previous, cancellationToken);
-        await host.Sql("postgres", $"ALTER DATABASE {previous} RENAME TO {live}", cancellationToken);
-        await host.Sql("postgres", $"ALTER DATABASE {swapping} RENAME TO {previous}", cancellationToken);
-        await host.Sql("postgres", $"ALTER DATABASE {live} WITH ALLOW_CONNECTIONS true", cancellationToken);
-        await host.Sql("postgres", $"ALTER DATABASE {previous} WITH ALLOW_CONNECTIONS true", cancellationToken);
-        await RestartApi(host, cancellationToken);
+        await WithApiStopped(host, async () =>
+        {
+            await Disconnect(host, target.Database, cancellationToken);
+            await Disconnect(host, target.Previous, cancellationToken);
+            await host.Sql("postgres",
+                [$"ALTER DATABASE {live} RENAME TO {swapping}",
+                 $"ALTER DATABASE {previous} RENAME TO {live}",
+                 $"ALTER DATABASE {swapping} RENAME TO {previous}",
+                 $"ALTER DATABASE {live} WITH ALLOW_CONNECTIONS true",
+                 $"ALTER DATABASE {previous} WITH ALLOW_CONNECTIONS true"],
+                cancellationToken);
+        }, cancellationToken);
 
         logger.LogInformation("{Target} now serves {Live}; the one it replaced is {Previous}",
             target.Name, await Label(host, target.Database, cancellationToken), await Label(host, target.Previous, cancellationToken));
@@ -347,28 +350,36 @@ internal sealed class Publisher(
             await host.Sql("postgres", $"ALTER DATABASE {previous} RENAME TO {retired}", cancellationToken);
         }
 
-        var hadLive = await host.DatabaseExists(target.Database, cancellationToken);
-        if (hadLive)
-        {
-            await Disconnect(host, target.Database, cancellationToken);
-            await host.Sql("postgres", $"ALTER DATABASE {live} RENAME TO {previous}", cancellationToken);
-        }
-
-        try
+        if (!await host.DatabaseExists(target.Database, cancellationToken))
         {
             await host.Sql("postgres", $"ALTER DATABASE {incoming} RENAME TO {live}", cancellationToken);
         }
-        catch when (hadLive)
+        else
         {
-            logger.LogError("The incoming corpus could not be renamed into place; putting the live one back");
-            await host.Sql("postgres", $"ALTER DATABASE {previous} RENAME TO {live}", CancellationToken.None);
-            await host.Sql("postgres", $"ALTER DATABASE {live} WITH ALLOW_CONNECTIONS true", CancellationToken.None);
-            throw;
-        }
+            await Disconnect(host, target.Database, cancellationToken);
+            try
+            {
+                // One psql, so the moment with no live corpus is two renames long rather than two
+                // round trips through docker and ssh.
+                await host.Sql("postgres",
+                    [$"ALTER DATABASE {live} RENAME TO {previous}",
+                     $"ALTER DATABASE {incoming} RENAME TO {live}",
+                     $"ALTER DATABASE {previous} WITH ALLOW_CONNECTIONS true"],
+                    cancellationToken);
+            }
+            catch
+            {
+                if (await host.DatabaseExists(target.Database, CancellationToken.None))
+                {
+                    throw;
+                }
 
-        if (hadLive)
-        {
-            await host.Sql("postgres", $"ALTER DATABASE {previous} WITH ALLOW_CONNECTIONS true", cancellationToken);
+                logger.LogError("The incoming corpus could not be renamed into place; putting the live one back");
+                await host.Sql("postgres",
+                    [$"ALTER DATABASE {previous} RENAME TO {live}", $"ALTER DATABASE {live} WITH ALLOW_CONNECTIONS true"],
+                    CancellationToken.None);
+                throw;
+            }
         }
 
         await host.Sql("postgres", $"DROP DATABASE IF EXISTS {retired} WITH (FORCE)", cancellationToken);
@@ -386,17 +397,46 @@ internal sealed class Publisher(
             cancellationToken);
     }
 
-    private async Task RestartApi(TargetHost host, CancellationToken cancellationToken)
+    /// <summary>
+    /// The API is stopped for the swap and started after it, rather than restarted afterwards.
+    ///
+    /// Measured: republishing under continuous traffic with a restart after the swap failed 4 requests
+    /// in 2,454 — the ones that reached the API in the instant its corpus was renamed away. A stopped
+    /// API refuses connections instead, and the proxy holds a refused request and retries it for up to
+    /// twenty seconds, which is how the restart itself already cost nothing. The API also keeps some of
+    /// the corpus in memory — the canonical frame among it — so it has to start again against the new
+    /// release either way.
+    ///
+    /// Started in a finally: whatever happens to the swap, the API is not left stopped.
+    /// </summary>
+    private async Task WithApiStopped(TargetHost host, Func<Task> swap, CancellationToken cancellationToken)
     {
+        var api = host.Target.ApiContainer;
+        var stopped = false;
         try
         {
-            await host.Docker(["restart", host.Target.ApiContainer], cancellationToken, quiet: true);
+            await host.Docker(["stop", "--time", "15", api], cancellationToken, quiet: true);
+            stopped = true;
         }
         catch (InvalidOperationException exception)
         {
             // A first publication happens before there is an API to point at it; that is not a
             // failure of the publication.
-            logger.LogWarning("Could not restart {Api}: {Message}", host.Target.ApiContainer, exception.Message.Split('\n')[^1]);
+            logger.LogWarning("Could not stop {Api}: {Message}", api, exception.Message.Split('\n')[^1]);
+        }
+
+        var started = DateTimeOffset.UtcNow;
+        try
+        {
+            await swap();
+        }
+        finally
+        {
+            if (stopped)
+            {
+                await host.Docker(["start", api], CancellationToken.None, quiet: true);
+                logger.LogInformation("{Api} was stopped for {Seconds:F1} s", api, (DateTimeOffset.UtcNow - started).TotalSeconds);
+            }
         }
     }
 

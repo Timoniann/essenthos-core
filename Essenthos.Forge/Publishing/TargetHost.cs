@@ -20,15 +20,21 @@ internal sealed class TargetHost(ReleaseTarget target)
             : Shell.Run("docker", arguments, cancellationToken, quiet);
 
     /// <summary>
-    /// One statement per call, as the superuser over the container's own socket, which the image
-    /// trusts. One per call because <c>psql -c</c> runs its argument as a single transaction, and
-    /// <c>CREATE DATABASE</c>, <c>DROP DATABASE</c> and a rename of a database that must not be in use
-    /// are exactly the statements that refuse to be in one.
+    /// A statement as the superuser over the container's own socket, which the image trusts.
     /// </summary>
     public Task<string> Sql(string database, string statement, CancellationToken cancellationToken) =>
+        Sql(database, [statement], cancellationToken);
+
+    /// <summary>
+    /// Several statements in one psql, stopping at the first that fails. Each is its own <c>-c</c>
+    /// and so its own transaction, because <c>CREATE DATABASE</c>, <c>DROP DATABASE</c> and a rename
+    /// of a database refuse to run inside one — and one psql rather than several so that the steps of
+    /// a swap follow each other in milliseconds rather than in round trips through docker and ssh.
+    /// </summary>
+    public Task<string> Sql(string database, IReadOnlyList<string> statements, CancellationToken cancellationToken) =>
         Docker(
             ["exec", target.Container, "psql", "-U", target.Superuser, "-d", database,
-             "-v", "ON_ERROR_STOP=1", "-X", "-q", "-A", "-t", "-c", statement],
+             "-v", "ON_ERROR_STOP=1", "-X", "-q", "-A", "-t", .. statements.SelectMany(s => new[] { "-c", s })],
             cancellationToken);
 
     public async Task<bool> DatabaseExists(string database, CancellationToken cancellationToken) =>

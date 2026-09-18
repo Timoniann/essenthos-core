@@ -9,11 +9,11 @@
 }
 
 (api) {
-	# The API restarts onto every new corpus release. Caddy resolves "api" afresh on each connection,
-	# and for up to ten seconds keeps retrying a request whose upstream refuses it, so a restart is a
-	# pause rather than an error page.
+	# The API is stopped while a corpus release is swapped in and started again after it. Caddy
+	# resolves "api" afresh on each connection, and for up to twenty seconds keeps retrying a request
+	# whose upstream refuses it, so a publication is a pause rather than an error page.
 	reverse_proxy {args[0]}:8080 {
-		lb_try_duration 10s
+		lb_try_duration 20s
 		lb_try_interval 250ms
 	}
 }
