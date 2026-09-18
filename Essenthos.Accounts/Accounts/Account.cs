@@ -166,11 +166,12 @@ public class AccountEmail
 /// owner asked: a phone at night and a desk by day want different things, and "continue where I
 /// stopped" means continuing what another device was reading.
 ///
-/// Recognised loosely, by what kind of device it is and what it runs — never by an identifier planted
-/// on it. A session is bound to a device when it starts; a new session on a device whose storage was
-/// cleared is matched to the account's device with the same description, which is how its settings
-/// come back. The price is honest: browsers withhold the model on iPhones and computers, so two
-/// iPhones of one reader share a device here.
+/// A device is only ever recognised by the trace this site left on it: the id it was given the first
+/// time, which the browser keeps. Nothing is guessed from what kind of device it looks like — two
+/// laptops in the same browser look identical, and guessing would hand one the other's history. So a
+/// sign-in in a browser that kept the id is the same device, and a sign-in anywhere else — including a
+/// browser whose storage was cleared — is a new one. Kind, system, browser and model are kept only to
+/// name the device to its reader.
 /// </summary>
 public class Device : IRevised
 {
@@ -200,6 +201,12 @@ public class Device : IRevised
     public DateTimeOffset CreatedAt { get; set; }
 
     public DateTimeOffset LastSeenAt { get; set; }
+
+    /// <summary>
+    /// When the device was signed out of — by signing out on it, or by its last session being ended from
+    /// another — and null while it is signed in. Signing in again in the same browser clears it.
+    /// </summary>
+    public DateTimeOffset? SignedOutAt { get; set; }
 
     public DateTimeOffset UpdatedAt { get; set; }
 

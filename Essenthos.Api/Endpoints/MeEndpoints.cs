@@ -153,9 +153,12 @@ internal static class MeEndpoints
         me.MapDelete("/sessions/{id:guid}", async (HttpContext context, AccountsDbContext db, Guid id) =>
         {
             var account = context.User.AccountId();
+            var device = await db.Sessions.Where(s => s.Id == id && s.AccountId == account)
+                .Select(s => s.DeviceId).FirstOrDefaultAsync(context.RequestAborted);
             var removed = await db.Sessions
                 .Where(s => s.Id == id && s.AccountId == account)
                 .ExecuteDeleteAsync(context.RequestAborted);
+            await DeviceEndpoints.SignedOut(db, device, context.RequestAborted);
             return removed == 0 ? Results.NotFound(new ProblemResponse("No such session.")) : Results.NoContent();
         });
 

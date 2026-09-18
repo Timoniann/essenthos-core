@@ -8,13 +8,14 @@ namespace Essenthos.Core.Endpoints;
 /// Each of a reader's devices, with its own settings and its own reading, and the one thing that
 /// crosses between them: "you were reading John 3 on your phone — continue here?".
 ///
-///     POST   /v1/me/device                     this session's device, described; found or made
+///     POST   /v1/me/device                     this session's device: the one whose id the browser kept, or new
 ///     PUT    /v1/me/device/settings            its settings, if newer than the server's copy
 ///     POST   /v1/me/device/reading             the chapter it is showing
 ///     GET    /v1/me/devices                    every device, with what it last read
 ///     GET    /v1/me/devices/{id}/readings      one device's history
 ///     DELETE /v1/me/devices/{id}/readings      forget it
 ///     DELETE /v1/me/devices/{id}               forget the device, and sign it out
+///     POST   /v1/me/devices/{id}/sign-out      sign the device out, keeping its history
 ///     GET    /v1/me/continue                   what another device read more recently than this one
 /// </summary>
 internal static class DeviceEndpoints
@@ -54,14 +55,13 @@ internal static class DeviceEndpoints
                 ? await db.Devices.FirstOrDefaultAsync(d => d.Id == bound && d.AccountId == account, context.RequestAborted)
                 : null;
 
-            // A session that has no device yet takes the account's device of the same description, most
-            // recently used first — which is how a browser whose storage was cleared gets its settings
-            // back. Nothing is planted on the device to recognise it.
-            device ??= await db.Devices
-                .Where(d => d.AccountId == account && d.Kind == described.Kind && d.Os == described.Os &&
-                            d.Browser == described.Browser && d.Model == described.Model)
-                .OrderByDescending(d => d.LastSeenAt)
-                .FirstOrDefaultAsync(context.RequestAborted);
+            // A session that has no device yet is the device whose id this browser kept, if it kept one
+            // and it is this account's. Otherwise it is a new device: nothing is matched by what a
+            // device looks like, because two laptops in one browser look the same.
+            if (device is null && profile.Id is { } kept)
+            {
+                device = await db.Devices.FirstOrDefaultAsync(d => d.Id == kept && d.AccountId == account, context.RequestAborted);
+            }
 
             if (device is null)
             {
@@ -79,6 +79,7 @@ internal static class DeviceEndpoints
             }
 
             device.LastSeenAt = now;
+            device.SignedOutAt = null;
             session.DeviceId = device.Id;
             await db.SaveChangesAsync(context.RequestAborted);
             return Results.Ok(Describe(device, current: true));
@@ -176,7 +177,7 @@ internal static class DeviceEndpoints
 
             return Results.Ok(new DevicesResponse(devices
                 .Select(d => new DeviceSummaryResponse(
-                    d.Id, Label(d), d.Kind, d.Id == current, d.LastSeenAt,
+                    d.Id, Label(d), d.Kind, d.Id == current, d.SignedOutAt is null, d.LastSeenAt,
                     byDevice.TryGetValue(d.Id, out var reading) ? Describe(reading) : null))
                 .ToList()));
         });
@@ -209,6 +210,19 @@ internal static class DeviceEndpoints
             return removed == 0 ? Results.NotFound(new ProblemResponse("No such device.")) : Results.NoContent();
         });
 
+        me.MapPost("/devices/{id:guid}/sign-out", async (HttpContext context, AccountsDbContext db, Guid id) =>
+        {
+            var account = context.User.AccountId();
+            if (!await db.Devices.AnyAsync(d => d.Id == id && d.AccountId == account, context.RequestAborted))
+            {
+                return Results.NotFound(new ProblemResponse("No such device."));
+            }
+
+            await db.Sessions.Where(s => s.DeviceId == id && s.AccountId == account).ExecuteDeleteAsync(context.RequestAborted);
+            await SignedOut(db, id, context.RequestAborted);
+            return Results.NoContent();
+        });
+
         me.MapGet("/continue", async (HttpContext context, AccountsDbContext db) =>
         {
             var account = context.User.AccountId();
@@ -235,6 +249,26 @@ internal static class DeviceEndpoints
             var device = await db.Devices.AsNoTracking().FirstAsync(d => d.Id == elsewhere.DeviceId, context.RequestAborted);
             return Results.Ok(new ContinueResponse(device.Id, Label(device), device.Kind, Describe(elsewhere)));
         });
+    }
+
+    /// <summary>
+    /// Marks a device signed out when no session is left on it. Called wherever a session ends — signing
+    /// out on the device, ending its session from another, signing the device out — so the list of
+    /// devices says truthfully which are still signed in.
+    /// </summary>
+    public static async Task SignedOut(AccountsDbContext db, Guid? device, CancellationToken cancellationToken)
+    {
+        if (device is not { } id || await db.Sessions.AnyAsync(s => s.DeviceId == id, cancellationToken))
+        {
+            return;
+        }
+
+        var record = await db.Devices.FirstOrDefaultAsync(d => d.Id == id, cancellationToken);
+        if (record is not null && record.SignedOutAt is null)
+        {
+            record.SignedOutAt = DateTimeOffset.UtcNow;
+            await db.SaveChangesAsync(cancellationToken);
+        }
     }
 
     private static async Task<Device?> Current(HttpContext context, AccountsDbContext db) =>
@@ -282,9 +316,10 @@ internal static class DeviceEndpoints
         new(reading.Book, reading.Chapter, reading.Corpora.Length == 0 ? [] : reading.Corpora.Split(','), reading.At);
 }
 
-/// <param name="Kind"><c>mobile</c>, <c>tablet</c> or <c>desktop</c>.</param>
+/// <param name="Kind"><c>mobile</c>, <c>tablet</c> or <c>desktop</c> — to name the device, not to find it.</param>
 /// <param name="Model">Only where the browser reports it — Android, through client hints.</param>
-internal record DeviceProfile(string? Kind, string? Os, string? Browser, string? Model);
+/// <param name="Id">The id this browser was given the last time it was signed in here, if it kept it.</param>
+internal record DeviceProfile(string? Kind, string? Os, string? Browser, string? Model, Guid? Id = null);
 
 /// <summary>A <see cref="DeviceProfile"/> that has been checked and trimmed.</summary>
 internal sealed record DescribedDevice(string Kind, string Os, string Browser, string? Model);
@@ -301,8 +336,9 @@ internal record ReadingResponse(string Book, int Chapter, IReadOnlyList<string> 
 
 internal record ReadingsResponse(IReadOnlyList<ReadingResponse> Items);
 
+/// <param name="SignedIn">False once the device was signed out; its history is kept until it is forgotten.</param>
 internal record DeviceSummaryResponse(
-    Guid Id, string Label, string Kind, bool Current, DateTimeOffset LastSeenAt, ReadingResponse? LastReading);
+    Guid Id, string Label, string Kind, bool Current, bool SignedIn, DateTimeOffset LastSeenAt, ReadingResponse? LastReading);
 
 internal record DevicesResponse(IReadOnlyList<DeviceSummaryResponse> Items);
 

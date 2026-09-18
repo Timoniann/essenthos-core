@@ -152,7 +152,9 @@ internal static class AuthEndpoints
             if ((await context.AuthenticateAsync(SessionAuthenticationHandler.SchemeName)).Principal is { Identity.IsAuthenticated: true } user)
             {
                 var session = user.SessionId();
+                var device = await db.Sessions.Where(s => s.Id == session).Select(s => s.DeviceId).FirstOrDefaultAsync(context.RequestAborted);
                 await db.Sessions.Where(s => s.Id == session).ExecuteDeleteAsync(context.RequestAborted);
+                await DeviceEndpoints.SignedOut(db, device, context.RequestAborted);
             }
 
             context.Response.Cookies.Delete(SessionTokens.CookieName, SessionTokens.Cookie(context.Request, DateTimeOffset.UnixEpoch));
