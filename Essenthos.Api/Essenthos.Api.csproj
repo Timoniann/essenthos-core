@@ -24,4 +24,9 @@
         <InternalsVisibleTo Include="Essenthos.Core.Tests" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="9.4.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.12" />
+    </ItemGroup>
+
 </Project>

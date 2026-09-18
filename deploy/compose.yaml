@@ -95,6 +95,22 @@ services:
       timeout: 5s
       retries: 10
 
+  # The accounts schema, migrated by a one-shot run of the API's own image before the API starts —
+  # never by the API as it boots, where two containers starting together would race each other.
+  api-migrate:
+    image: ${API_IMAGE}
+    command: ["migrate"]
+    restart: "no"
+    logging: *logging
+    environment:
+      Database__ConnectionString: Host=db;Port=5432;Database=corpus;Username=essenthos_reader
+      Database__Password: ${READER_PASSWORD}
+      Accounts__ConnectionString: Host=db;Port=5432;Database=essenthos_app;Username=essenthos_app
+      Accounts__Password: ${APP_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+
   api:
     <<: *api
     environment:
@@ -103,13 +119,39 @@ services:
       # renaming databases, so this name never changes.
       Database__ConnectionString: Host=db;Port=5432;Database=corpus;Username=essenthos_reader
       Database__Password: ${READER_PASSWORD}
+      # Accounts, which the API owns and writes, through a role that owns that database and no other.
+      Accounts__ConnectionString: Host=db;Port=5432;Database=essenthos_app;Username=essenthos_app
+      Accounts__Password: ${APP_PASSWORD}
+      Authentication__Google__ClientId: ${GOOGLE_CLIENT_ID:-}
+      Authentication__Google__ClientSecret: ${GOOGLE_CLIENT_SECRET:-}
+      Authentication__GitHub__ClientId: ${GITHUB_CLIENT_ID:-}
+      Authentication__GitHub__ClientSecret: ${GITHUB_CLIENT_SECRET:-}
       Cors__AllowedOrigins__0: https://${SITE_DOMAIN:?set SITE_DOMAIN}
       # The proxy terminates TLS; without this the API believes every request arrived over plain http
-      # and builds its links, and later its sign-in callbacks, accordingly.
+      # and builds its links and its sign-in callbacks accordingly.
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+      api-migrate:
+        condition: service_completed_successfully
 
   web:
     <<: *web
+
+  api-dev-migrate:
+    image: ${API_DEV_IMAGE:-${API_IMAGE}}
+    command: ["migrate"]
+    restart: "no"
+    logging: *logging
+    environment:
+      Database__ConnectionString: Host=db;Port=5432;Database=corpus_dev;Username=essenthos_reader_dev
+      Database__Password: ${READER_DEV_PASSWORD}
+      Accounts__ConnectionString: Host=db;Port=5432;Database=essenthos_app_dev;Username=essenthos_app_dev
+      Accounts__Password: ${APP_DEV_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
 
   api-dev:
     <<: *api
@@ -118,8 +160,21 @@ services:
       Urls: http://+:8080
       Database__ConnectionString: Host=db;Port=5432;Database=corpus_dev;Username=essenthos_reader_dev
       Database__Password: ${READER_DEV_PASSWORD}
+      Accounts__ConnectionString: Host=db;Port=5432;Database=essenthos_app_dev;Username=essenthos_app_dev
+      Accounts__Password: ${APP_DEV_PASSWORD}
+      # Google takes several callback addresses on one client, so dev can share production's; GitHub
+      # takes one per app, so dev has an app of its own.
+      Authentication__Google__ClientId: ${GOOGLE_CLIENT_ID:-}
+      Authentication__Google__ClientSecret: ${GOOGLE_CLIENT_SECRET:-}
+      Authentication__GitHub__ClientId: ${GITHUB_DEV_CLIENT_ID:-}
+      Authentication__GitHub__ClientSecret: ${GITHUB_DEV_CLIENT_SECRET:-}
       Cors__AllowedOrigins__0: https://${DEV_DOMAIN:?set DEV_DOMAIN}
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+      api-dev-migrate:
+        condition: service_completed_successfully
 
   web-dev:
     <<: *web
@@ -156,9 +211,9 @@ services:
       - web-dev
 
   backup:
-    # The app database is the only thing on this box that cannot be rebuilt. The corpus is an artefact
-    # and needs no backup; the droplet's own daily backup covers the disk this writes to, and a copy
-    # off the droplet is still to be arranged (FTR-0578).
+    # The accounts databases are the only thing on this box that cannot be rebuilt. The corpus is an
+    # artefact and needs no backup; the droplet's own daily backup covers the disk this writes to, and
+    # a copy off the droplet is still to be arranged (FTR-0578).
     image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
     restart: unless-stopped
     logging: *logging
@@ -167,7 +222,7 @@ services:
       PGHOST: db
       PGUSER: postgres
       PGPASSWORD: ${POSTGRES_PASSWORD}
-      BACKUP_DATABASES: essenthos_app
+      BACKUP_DATABASES: essenthos_app essenthos_app_dev
       BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
       BACKUP_HOUR_UTC: ${BACKUP_HOUR_UTC:-3}
     volumes:

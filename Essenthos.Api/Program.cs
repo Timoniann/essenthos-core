@@ -1,4 +1,5 @@
 ﻿using Essenthos.Core;
+using Essenthos.Core.Accounts;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -58,10 +59,30 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 
+// Accounts: the database the API owns and writes, and sign-in with whichever providers are
+// configured. Reading needs none of it.
+var providers = builder.Services.AddAccounts(builder.Configuration);
+
 // Disposed on every return path, not only the one that serves. Draining the console logger's
 // background queue is what disposal does, and a command that returns without it loses whatever is
 // still queued — silently, and more of it the longer the report.
 await using var app = builder.Build();
+
+// The accounts schema is migrated by a one-shot run of this same image, before the API starts —
+// never by the API as it boots, where two containers starting together would race each other. On a
+// development machine there is only ever one, so it migrates itself.
+if (args is ["migrate", ..] || app.Environment.IsDevelopment())
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var accounts = scope.ServiceProvider.GetRequiredService<AccountsDbContext>();
+    await accounts.Database.MigrateAsync();
+    if (args is ["migrate", ..])
+    {
+        app.Logger.LogInformation("The accounts database is at {Migration}",
+            (await accounts.Database.GetAppliedMigrationsAsync()).LastOrDefault());
+        return;
+    }
+}
 
 app.UseExceptionHandler(handler => handler.Run(async context =>
 {
@@ -74,6 +95,9 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
         "the API's own log.");
 }));
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 var v1 = app.MapGroup("/v1");
 v1.MapHealth();
 v1.MapRead();
@@ -85,6 +109,8 @@ v1.MapWords();
 v1.MapSearch();
 v1.MapEncyclopedia();
 v1.MapDatasets();
+v1.MapAuth(providers);
+v1.MapMe();
 
 app.UseCors();
 
