@@ -86,7 +86,9 @@ internal static class StrongEndpoints
 
             var total = await entries.CountAsync(cancellationToken);
             var page = await entries
-                .OrderBy(e => e.StrongNumber.Substring(0, 1))
+                // Hebrew before Greek, as the Old Testament comes before the New — not G before H
+                // because that is where the letters fall.
+                .OrderBy(e => e.StrongNumber.StartsWith("H") ? 0 : 1)
                 .ThenBy(e => e.StrongNumber.Length)
                 .ThenBy(e => e.StrongNumber)
                 .Skip(Math.Max(0, skip ?? 0))
