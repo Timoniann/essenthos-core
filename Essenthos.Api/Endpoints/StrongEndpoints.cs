@@ -61,11 +61,20 @@ internal static class StrongEndpoints
         routes.MapGet("/strong", async (
             [FromQuery] string? query,
             [FromQuery] string? language,
+            [FromQuery] string? corpus,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
+            ICanonIndex canon,
             CancellationToken cancellationToken) =>
         {
+            var rendering = corpus is { Length: > 0 } ? corpus : CardTranslation;
+            if (await canon.Text(rendering, cancellationToken) is not { } text)
+            {
+                return Results.NotFound(new ProblemResponse(
+                    $"There is no text \"{rendering}\". Ask /v1/corpora for the ones this corpus holds."));
+            }
+
             var entries = db.StrongEntries.AsQueryable();
 
             if (language is { Length: > 0 })
@@ -96,7 +105,22 @@ internal static class StrongEndpoints
                 .Select(e => Response(e, null))
                 .ToListAsync(cancellationToken);
 
-            return Results.Ok(new StrongListResponse(total, page));
+            var numbers = page.Select(e => e.StrongNumber).ToList();
+            var occurrences = await Occurrences(db, numbers, cancellationToken);
+            var renderings = await Renderings(db, numbers, text.Id, CardRenderings, cancellationToken);
+
+            return Results.Ok(new StrongListResponse(
+                total,
+                [
+                    .. page.Select(e => e with
+                    {
+                        Occurrences = occurrences.GetValueOrDefault(e.StrongNumber),
+                        Renderings = renderings.GetValueOrDefault(e.StrongNumber, []),
+                    }),
+                ])
+            {
+                Corpus = text.Slug,
+            });
         });
 
         routes.MapGet("/strong/{number}/occurrences", async (
@@ -215,11 +239,7 @@ internal static class StrongEndpoints
             // across the three Greek witnesses, but the King James is linked to two of them, so
             // counting all three would report a third of the lexeme as unrendered when the truth is
             // that those words belong to an edition this pair does not join.
-            var neighbours = await db.Links
-                .Where(l => l.FromTextId == text.Id || l.ToTextId == text.Id)
-                .Select(l => l.FromTextId == text.Id ? l.ToTextId : l.FromTextId)
-                .Distinct()
-                .ToListAsync(cancellationToken);
+            var neighbours = await Neighbours(db, text.Id, cancellationToken);
 
             var occurrences = await db.Words.CountAsync(
                 w => w.StrongNumber == canonical && neighbours.Contains(w.TextId), cancellationToken);
@@ -233,8 +253,8 @@ internal static class StrongEndpoints
                 .Distinct()
                 .CountAsync(cancellationToken);
 
-            var counted = await Phrases(db, canonical, text.Id, Math.Clamp(take ?? 40, 1, MostPerPage),
-                cancellationToken);
+            var counted = await Renderings(
+                db, [canonical], text.Id, Math.Clamp(take ?? 40, 1, MostPerPage), cancellationToken);
 
             return Results.Ok(new StrongRenderingsResponse(
                 canonical,
@@ -242,11 +262,50 @@ internal static class StrongEndpoints
                 occurrences,
                 reached,
                 occurrences - reached,
-                [.. counted.Select(row => new StrongRenderingResponse(row.Text, row.Count))]));
+                counted.GetValueOrDefault(canonical, [])));
         });
 
     /// <summary>
-    /// The whole phrase each link renders, not each word of it separately.
+    /// The translation a lexicon card quotes when nobody names one: the English the Strong numbers
+    /// were written against.
+    /// </summary>
+    private const string CardTranslation = "KJV";
+
+    /// <summary>How many renderings a lexicon card quotes — the commonest few, not the list.</summary>
+    private const int CardRenderings = 3;
+
+    /// <summary>
+    /// The texts this one is linked to by anything at all, asked as one existence probe per text
+    /// on the index that leads with both ends of a link. The distinct over the link table it
+    /// replaces read every one of the King James's 2.3 million links to learn eight numbers.
+    /// </summary>
+    internal static Task<List<int>> Neighbours(AppDbContext db, int textId, CancellationToken cancellationToken) =>
+        db.Texts
+            .Where(t => t.Id != textId
+                        && (db.Links.Any(l => l.FromTextId == textId && l.ToTextId == t.Id)
+                            || db.Links.Any(l => l.FromTextId == t.Id && l.ToTextId == textId)))
+            .Select(t => t.Id)
+            .ToListAsync(cancellationToken);
+
+    /// <summary>
+    /// How many words of the corpus carry each of these numbers, in every witness that tags it —
+    /// the count the entry page's own list of occurrences totals to. A number no word carries is
+    /// absent, and reads as zero.
+    /// </summary>
+    internal static Task<Dictionary<string, int>> Occurrences(
+        AppDbContext db,
+        IReadOnlyCollection<string> numbers,
+        CancellationToken cancellationToken) =>
+        db.Words
+            .Where(w => w.StrongNumber != null && numbers.Contains(w.StrongNumber))
+            .GroupBy(w => w.StrongNumber!)
+            .Select(g => new { Number = g.Key, Count = g.Count() })
+            .ToDictionaryAsync(row => row.Number, row => row.Count, cancellationToken);
+
+    /// <summary>
+    /// The whole phrase each link renders, not each word of it separately, and the commonest
+    /// <paramref name="take"/> of them for each number — for one number on the entry page and for a
+    /// page of them on the lexicon's cards, in one query either way.
     ///
     /// Counting words alone reports אֱלֹהֶיךָ as <em>god</em> 2,284 times and <em>thy</em> 342, which
     /// reads as noise and is not: a Hebrew word carries its pronoun and its construct relation
@@ -254,39 +313,64 @@ internal static class StrongEndpoints
     /// destroys the very thing the link recorded. Grouped by link it reads as what it is —
     /// <em>god</em> 684, <em>thy god</em> 319, <em>of god</em> 317.
     ///
+    /// <para>
+    /// A link counts for a number when a word carrying it stands on the side facing this text's
+    /// words. Only the words of texts linked to this one are looked up, which changes no answer —
+    /// the far side of such a link is always one of them — and spares the probe every word of every
+    /// witness this text is not joined to.
+    /// </para>
+    ///
+    /// <para>
     /// Written as SQL because the aggregation is one <c>string_agg</c> over an ordered group inside
-    /// a grouped outer query, which EF will not translate; doing it in memory would pull every word
-    /// of every link for a number like the conjunction.
+    /// a grouped, ranked outer query, which EF will not translate; doing it in memory would pull
+    /// every word of every link for a number like the conjunction.
+    /// </para>
     /// </summary>
-    private static async Task<List<StrongRenderingResponse>> Phrases(
+    internal static async Task<Dictionary<string, IList<StrongRenderingResponse>>> Renderings(
         AppDbContext db,
-        string canonical,
+        IReadOnlyCollection<string> numbers,
         int textId,
         int take,
         CancellationToken cancellationToken)
     {
+        if (numbers.Count == 0)
+        {
+            return [];
+        }
+
         const string sql =
             """
-            SELECT phrase, count(*) AS uses
-            FROM (
-                SELECT string_agg(lower(w.text), ' ' ORDER BY v.number, w.position) AS phrase
-                FROM link l
-                JOIN link_word o ON o.link_id = l.id
+            WITH pairs AS (
+                SELECT DISTINCT s.link_id, sw.strong_number AS number, s.side
+                FROM word sw
+                JOIN link_word s ON s.word_id = sw.id
+                JOIN link l ON l.id = s.link_id
+                WHERE sw.strong_number = ANY(@numbers)
+                  AND sw.text_id = ANY(@neighbours)
+                  AND (l.from_text_id = @text OR l.to_text_id = @text)
+                  AND l.relation IN ('renders', 'equals')
+            ),
+            rendered AS (
+                SELECT p.number, string_agg(lower(w.text), ' ' ORDER BY v.number, w.position) AS phrase
+                FROM pairs p
+                JOIN link_word o ON o.link_id = p.link_id AND o.side <> p.side
                 JOIN word w ON w.id = o.word_id AND w.text_id = @text
                 JOIN verse v ON v.id = w.verse_id
-                WHERE (l.from_text_id = @text OR l.to_text_id = @text)
-                  AND l.relation IN ('renders', 'equals')
-                  AND EXISTS (
-                      SELECT 1 FROM link_word s
-                      JOIN word sw ON sw.id = s.word_id
-                      WHERE s.link_id = l.id AND s.side <> o.side AND sw.strong_number = @number)
-                GROUP BY l.id
-            ) rendered
-            WHERE phrase IS NOT NULL
-            GROUP BY phrase
-            ORDER BY count(*) DESC, phrase
-            LIMIT @take
+                GROUP BY p.number, p.link_id
+            )
+            SELECT number, phrase, uses
+            FROM (
+                SELECT number, phrase, count(*) AS uses,
+                       row_number() OVER (PARTITION BY number ORDER BY count(*) DESC, phrase) AS rank
+                FROM rendered
+                WHERE phrase IS NOT NULL
+                GROUP BY number, phrase
+            ) ranked
+            WHERE rank <= @take
+            ORDER BY number, rank
             """;
+
+        var neighbours = await Neighbours(db, textId, cancellationToken);
 
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         if (connection.State != ConnectionState.Open)
@@ -296,14 +380,22 @@ internal static class StrongEndpoints
 
         await using var command = new NpgsqlCommand(sql, connection);
         command.Parameters.AddWithValue("text", textId);
-        command.Parameters.AddWithValue("number", canonical);
+        command.Parameters.AddWithValue("numbers", numbers.ToArray());
+        command.Parameters.AddWithValue("neighbours", neighbours.ToArray());
         command.Parameters.AddWithValue("take", take);
 
-        var rows = new List<StrongRenderingResponse>(take);
+        var rows = new Dictionary<string, IList<StrongRenderingResponse>>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {
-            rows.Add(new StrongRenderingResponse(reader.GetString(0), (int)reader.GetInt64(1)));
+            var number = reader.GetString(0);
+            if (!rows.TryGetValue(number, out var phrases))
+            {
+                phrases = [];
+                rows[number] = phrases;
+            }
+
+            phrases.Add(new StrongRenderingResponse(reader.GetString(1), (int)reader.GetInt64(2)));
         }
 
         return rows;
@@ -430,9 +522,28 @@ internal record StrongEntryResponse(
     string? SourceLanguage,
     string? TwotReference,
     bool Morpheme,
-    StrongGentilicResponse? Gentilic);
+    StrongGentilicResponse? Gentilic)
+{
+    /// <summary>
+    /// How many words of the corpus carry this number, in every witness that tags it — what the
+    /// entry page's list of occurrences totals to. Stated on the lexicon's list, for its cards;
+    /// null on a single entry, whose page counts its occurrences itself.
+    /// </summary>
+    public int? Occurrences { get; init; }
 
-internal record StrongListResponse(int Total, IList<StrongEntryResponse> Items);
+    /// <summary>
+    /// The commonest few phrases <see cref="StrongListResponse.Corpus"/> puts where this number
+    /// stands, commonest first, counted as the entry page's renderings are. Empty where that text
+    /// renders it nowhere; null on a single entry.
+    /// </summary>
+    public IList<StrongRenderingResponse>? Renderings { get; init; }
+}
+
+internal record StrongListResponse(int Total, IList<StrongEntryResponse> Items)
+{
+    /// <summary>The text whose renderings the cards quote, as its canonical slug.</summary>
+    public string? Corpus { get; init; }
+}
 
 internal record StrongOccurrenceResponse(
     string Corpus,
