@@ -1,3 +1,4 @@
+using System.Globalization;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,20 @@ internal record VerseTextResponse(BookRefResponse Book, int Chapter, int Verse, 
 {
     /// <summary>The verse's own label where the text gives one, as the chapter reading does.</summary>
     public string? Label { get; init; }
+
+    /// <summary>
+    /// Where the verse names the entity the request asked about, in order and never overlapping.
+    /// Null when no entity was asked about; empty where this text names it nowhere in the verse, or
+    /// carries no word-level annotation to say so.
+    /// </summary>
+    public IList<VerseMarkResponse>? Marks { get; init; }
 }
+
+/// <summary>
+/// A stretch of <see cref="VerseTextResponse.Text"/>, as UTF-16 offsets — what a JavaScript string
+/// indexes by — from <paramref name="Start"/> up to but not including <paramref name="End"/>.
+/// </summary>
+internal record VerseMarkResponse(int Start, int End);
 
 /// <param name="Missing">
 /// The addresses this text has nothing at, in the spelling they were asked for. A reference that
@@ -50,6 +64,7 @@ internal static class VerseEndpoints
         routes.MapGet("/verses", async (
             [FromQuery] string? corpus,
             [FromQuery] string? refs,
+            [FromQuery] string? entity,
             AppDbContext db,
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
@@ -103,6 +118,18 @@ internal static class VerseEndpoints
                     + "genesis:11:27."));
             }
 
+            string? named = null;
+            if (entity is { Length: > 0 })
+            {
+                named = await db.Entities.Where(e => e.Slug == entity).Select(e => e.Slug)
+                    .FirstOrDefaultAsync(cancellationToken);
+                if (named is null)
+                {
+                    return ApiResults.NotFound(
+                        $"There is no person, place or people \"{entity}\". Ask /v1/entities for their slugs.");
+                }
+            }
+
             var keys = wanted.Select(address => address.Key).Distinct().ToList();
 
             // One query for every address asked for, keyed on the same arithmetic the encyclopedia
@@ -121,10 +148,15 @@ internal static class VerseEndpoints
                     Chapter = w.Verse.ChapterNumber,
                     Verse = w.Verse.Number,
                     w.Verse.Label,
+                    w.Id,
                     w.Surface,
                     w.Trailer,
                 })
                 .ToListAsync(cancellationToken);
+
+            var naming = named is null
+                ? []
+                : await Naming(db, rows.Select(row => row.Id), named, cancellationToken);
 
             var found = rows
                 .GroupBy(row => new { row.Ordinal, row.Chapter, row.Verse, row.Label })
@@ -138,6 +170,9 @@ internal static class VerseEndpoints
                     string.Concat(group.Select(row => row.Surface + row.Trailer)).Trim())
                 {
                     Label = string.IsNullOrWhiteSpace(group.Key.Label) ? null : group.Key.Label,
+                    Marks = named is null
+                        ? null
+                        : Marks([.. group.Select(row => new MarkedWord(row.Surface, row.Trailer, naming.Contains(row.Id)))]),
                 })
                 .ToList();
 
@@ -152,6 +187,77 @@ internal static class VerseEndpoints
                 [.. wanted.Where(address => !answered.Contains(address.Key)).Select(address => address.Asked)]));
         });
     }
+
+    /// <summary>
+    /// The words that name the entity, by the same pick the word card makes, so that a word marked
+    /// in a list and the same word opened in the chapter never name two different people. A text the
+    /// annotations never reached has none, and gets none: nothing here guesses a name from the links.
+    /// </summary>
+    internal static async Task<HashSet<long>> Naming(
+        AppDbContext db,
+        IEnumerable<long> wordIds,
+        string slug,
+        CancellationToken cancellationToken) =>
+        (await Annotations.Of(db, wordIds, cancellationToken))
+            .Where(annotation => annotation.Value.Slug == slug)
+            .Select(annotation => annotation.Key)
+            .ToHashSet();
+
+    /// <summary>
+    /// Where the marked words sit in the verse as <see cref="VerseTextResponse.Text"/> spells it,
+    /// which is the words and their trailers joined and trimmed — so the offsets are counted over the
+    /// same join and shifted by what the trim took off the front. A word printed with no letters has
+    /// nothing to mark. Two marked words with only a space or a dash between them are one name, as
+    /// in <em>Beth-el</em> or <em>Kirjath-arba</em>, and are marked as one.
+    /// </summary>
+    internal static List<VerseMarkResponse> Marks(IReadOnlyList<MarkedWord> words)
+    {
+        var joined = string.Concat(words.Select(word => word.Surface + word.Trailer));
+        var text = joined.Trim();
+        var trimmed = joined.Length - joined.TrimStart().Length;
+
+        var marks = new List<VerseMarkResponse>();
+        var at = -trimmed;
+        foreach (var word in words)
+        {
+            var start = Math.Max(at, 0);
+            var end = Math.Min(at + word.Surface.Length, text.Length);
+            at += word.Surface.Length + word.Trailer.Length;
+
+            if (!word.Named || end <= start)
+            {
+                continue;
+            }
+
+            if (marks.Count > 0 && Joins(text.AsSpan(marks[^1].End, start - marks[^1].End)))
+            {
+                marks[^1] = marks[^1] with { End = end };
+            }
+            else
+            {
+                marks.Add(new VerseMarkResponse(start, end));
+            }
+        }
+
+        return marks;
+    }
+
+    private static bool Joins(ReadOnlySpan<char> between)
+    {
+        foreach (var character in between)
+        {
+            if (!char.IsWhiteSpace(character)
+                && CharUnicodeInfo.GetUnicodeCategory(character) != UnicodeCategory.DashPunctuation)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>One word of a verse, and whether it names the entity asked about.</summary>
+    internal readonly record struct MarkedWord(string Surface, string Trailer, bool Named);
 
     /// <summary>One address as it was asked for, and as one number the database can match on.</summary>
     internal readonly record struct Address(string Asked, int Key)
