@@ -4,18 +4,18 @@ using System.Text;
 namespace Essenthos.Core.Publishing;
 
 /// <summary>
-/// Whether every reader's note still lands on a verse in the release about to be served.
+/// Whether every reader's bookmark still lands on a verse in the release about to be served.
 ///
-/// Notes are addressed canonically (RUL-0185), so a release cannot move one — but it can lose the
+/// Bookmarks are addressed canonically (RUL-0185), so a release cannot move one — but it can lose the
 /// verse under it: a text withdrawn, a versification corrected so that a verse number stops existing.
-/// A note left pointing at nothing is somebody's writing that has quietly lost its place, and that is
-/// found here, before the swap, rather than by the reader.
+/// A bookmark left pointing at nothing — with somebody's comment on it — has quietly lost its place,
+/// and that is found here, before the swap, rather than by the reader.
 ///
-/// The notes live in the environment's own accounts database and the release in its incoming corpus
+/// The bookmarks live in the environment's own accounts database and the release in its incoming corpus
 /// database, on the same server; Postgres does not join across databases, so the addresses are read
 /// out of one and checked against the other in batches.
 /// </summary>
-internal static class NoteAnchors
+internal static class BookmarkAnchors
 {
     /// <summary>Addresses per query, so the statement stays far below any command-line limit.</summary>
     private const int Batch = 400;
@@ -23,18 +23,18 @@ internal static class NoteAnchors
     /// <summary>What an anchor is checked by: the text it is about, or empty for any text, and a verse.</summary>
     internal sealed record Point(string Text, int Book, int Chapter, int Verse);
 
-    /// <summary>The addresses no verse of the incoming release answers to, or null when there are no notes to check.</summary>
+    /// <summary>The addresses no verse of the incoming release answers to, or null when there are no bookmarks to check.</summary>
     public static async Task<IReadOnlyList<Point>?> Unresolved(TargetHost host, ReleaseTarget target, CancellationToken cancellationToken)
     {
         if (target.AppDatabase is not { } app || !await host.DatabaseExists(app, cancellationToken) ||
-            await host.Sql(app, "SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'note'", cancellationToken) != "1")
+            await host.Sql(app, "SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'bookmark'", cancellationToken) != "1")
         {
             return null;
         }
 
         var points = Parse(await host.Sql(app,
-            "SELECT DISTINCT coalesce(text, ''), book, chapter, verse FROM note " +
-            "UNION SELECT DISTINCT coalesce(text, ''), book, end_chapter, end_verse FROM note",
+            "SELECT DISTINCT coalesce(text, ''), book, chapter, verse FROM bookmark " +
+            "UNION SELECT DISTINCT coalesce(text, ''), book, end_chapter, end_verse FROM bookmark",
             cancellationToken));
 
         var missing = new List<Point>();

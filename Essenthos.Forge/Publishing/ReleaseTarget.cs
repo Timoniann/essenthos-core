@@ -40,7 +40,7 @@ namespace Essenthos.Core.Publishing;
 /// dev, so production receives the identical file dev accepted, or dev proved nothing.
 /// </param>
 /// <param name="AppDatabase">
-/// The environment's accounts database, whose notes must all still find their verse in a release
+/// The environment's accounts database, whose bookmarks must all still find their verse in a release
 /// before it is swapped in. Unset for a target that has none.
 /// </param>
 internal sealed record ReleaseTarget(
