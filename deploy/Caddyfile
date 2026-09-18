@@ -1,0 +1,56 @@
+# The edge: TLS for both environments, the reader at /, the API at /v1, on one origin per environment.
+#
+# One origin is the point. The browser never makes a cross-origin request, CORS has nothing to decide,
+# and a session cookie is first-party — which a cookie on api.example.org read from example.org is not,
+# under every browser's third-party policy.
+
+{
+	email {$ACME_EMAIL}
+}
+
+(api) {
+	# The API restarts onto every new corpus release. Caddy resolves "api" afresh on each connection,
+	# and for up to ten seconds keeps retrying a request whose upstream refuses it, so a restart is a
+	# pause rather than an error page.
+	reverse_proxy {args[0]}:8080 {
+		lb_try_duration 10s
+		lb_try_interval 250ms
+	}
+}
+
+(site) {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+}
+
+{$SITE_DOMAIN} {
+	import site
+	handle /v1/* {
+		import api api
+	}
+	handle {
+		reverse_proxy web:8080
+	}
+}
+
+# Dev is the rehearsal of a publication, not a second public site, so it asks for a password — and
+# tells search engines to stay away in case the password is ever shared.
+{$DEV_DOMAIN} {
+	import site
+	header X-Robots-Tag "noindex, nofollow"
+	basic_auth {
+		{$DEV_USER} {$DEV_PASSWORD_HASH}
+	}
+	handle /v1/* {
+		import api api-dev
+	}
+	handle {
+		reverse_proxy web-dev:8080
+	}
+}

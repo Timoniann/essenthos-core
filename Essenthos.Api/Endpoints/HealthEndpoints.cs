@@ -67,7 +67,7 @@ internal static class HealthEndpoints
                 if (!await db.Database.CanConnectAsync(cancellationToken))
                 {
                     return Results.Json(
-                        new HealthResponse("degraded", null, ["the database is not reachable"], false, [], null),
+                        new HealthResponse("degraded", null, ["the database is not reachable"], false, [], null, null),
                         statusCode: StatusCodes.Status503ServiceUnavailable);
                 }
 
@@ -106,13 +106,23 @@ internal static class HealthEndpoints
             .Select(t => new { t.Slug, t.Kind })
             .ToListAsync(cancellationToken);
 
-        var counts = new DatasetCountsResponse(
-            await db.Words.CountAsync(w => w.Text!.Kind != TextKind.Translation, cancellationToken),
-            texts.Count(t => t.Kind == TextKind.Translation),
-            await db.StrongEntries.CountAsync(cancellationToken),
-            await db.Entities.CountAsync(e => e.Kind == EntityKind.Person, cancellationToken),
-            await db.Entities.CountAsync(e => e.Kind == EntityKind.Place, cancellationToken),
-            await db.Entities.CountAsync(e => e.Kind == EntityKind.People, cancellationToken));
+        // A restored release carries its own label and its counts, taken when it was built; only a
+        // working copy, which no label describes, is counted here.
+        var release = await db.CorpusReleases
+            .OrderByDescending(r => r.BuiltAt)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        var counts = release is not null
+            ? new DatasetCountsResponse(
+                release.OriginalWords, release.Translations, release.StrongEntries,
+                release.People, release.Places, release.Peoples)
+            : new DatasetCountsResponse(
+                await db.Words.CountAsync(w => w.Text!.Kind != TextKind.Translation, cancellationToken),
+                texts.Count(t => t.Kind == TextKind.Translation),
+                await db.StrongEntries.CountAsync(cancellationToken),
+                await db.Entities.CountAsync(e => e.Kind == EntityKind.Person, cancellationToken),
+                await db.Entities.CountAsync(e => e.Kind == EntityKind.Place, cancellationToken),
+                await db.Entities.CountAsync(e => e.Kind == EntityKind.People, cancellationToken));
 
         var verified = await db.VerificationRuns
             .OrderByDescending(v => v.RanAt)
@@ -126,7 +136,11 @@ internal static class HealthEndpoints
             Missing(texts.Count, verified),
             texts.Count > 0,
             texts.Select(t => t.Slug).ToList(),
-            verified);
+            verified,
+            release is null
+                ? null
+                : new CorpusReleaseResponse(
+                    release.Name, release.BuiltAt, release.ManifestSha, release.MigrationHead, release.ForgeVersion));
     }
 
     /// <summary>
@@ -169,7 +183,23 @@ internal record HealthResponse(
     IList<string> Missing,
     bool Loaded,
     IList<string> Texts,
-    VerificationResponse? Verified);
+    VerificationResponse? Verified,
+    CorpusReleaseResponse? Release);
+
+/// <summary>
+/// Which corpus this is, for a bug report or a reader who disagrees with a row. Null on a working copy
+/// that was loaded rather than restored from a release, which no label describes.
+/// </summary>
+/// <param name="Name">The build date and a letter, <c>20260918a</c>.</param>
+/// <param name="ManifestSha">The fingerprint of the source files it was built from.</param>
+/// <param name="MigrationHead">The last corpus migration its schema has.</param>
+/// <param name="ForgeVersion">The code that released it: a commit, and <c>-dirty</c> if the tree was not clean.</param>
+internal record CorpusReleaseResponse(
+    string Name,
+    DateTimeOffset BuiltAt,
+    string ManifestSha,
+    string MigrationHead,
+    string ForgeVersion);
 
 /// <param name="Broken">Integrity checks the corpus fails. Anything but zero is a defect.</param>
 /// <param name="Rendered">

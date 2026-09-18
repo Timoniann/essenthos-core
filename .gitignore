@@ -206,3 +206,9 @@ scripts/__pycache__/
 # A reference reading run: the verses BibleData lists for an entity that do not print its name, the
 # prompt payloads and the verdicts. Reproducible from scripts/references.py.
 .references/
+
+# Corpus releases (a 376 MB dump each) and the local rehearsal of the server. Artefacts, never source.
+/.releases/
+/.rehearsal/
+deploy/.env
+deploy/.env.*

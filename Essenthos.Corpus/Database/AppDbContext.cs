@@ -93,6 +93,9 @@ public class AppDbContext : DbContext
     /// <summary>What each load measured about the corpus it wrote, one row per load.</summary>
     public DbSet<VerificationRun> VerificationRuns { get; set; } = null!;
 
+    /// <summary>The label a released corpus carries inside its dump. Empty in a working copy.</summary>
+    public DbSet<CorpusRelease> CorpusReleases { get; set; } = null!;
+
     /// <summary>The people, places and peoples the text names, and where it names them.</summary>
     public DbSet<Entity> Entities { get; set; } = null!;
 

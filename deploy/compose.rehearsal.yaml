@@ -1,0 +1,17 @@
+# The server, on a workstation: every service of compose.yaml, with the differences a Windows or macOS
+# Docker needs and nothing else.
+#
+#   docker compose --env-file .env.rehearsal -f compose.yaml -f compose.rehearsal.yaml up -d
+#
+# It exists so that a publication, a rollback and a deploy are run end to end before a server exists,
+# and again before anything changes on one.
+services:
+  db:
+    volumes:
+      # Postgres will not initialise its data directory on a Windows bind mount — it cannot set the
+      # permissions it insists on — so the rehearsal keeps it in a named volume. The server keeps it on
+      # the droplet's disk, under HOST_DATA_ROOT.
+      - rehearsal-postgres:/var/lib/postgresql
+
+volumes:
+  rehearsal-postgres:

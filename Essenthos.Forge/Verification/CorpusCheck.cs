@@ -738,9 +738,12 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// comparison is the reason the row exists: a number nobody remembers is a number that can fall
     /// without anybody noticing.
     /// </summary>
-    public async Task<VerificationRun> Record(CancellationToken cancellationToken = default)
+    public async Task<VerificationRun> Record(CancellationToken cancellationToken = default) =>
+        await Record(await Measure(cancellationToken), cancellationToken);
+
+    /// <summary>Stores measures already taken, for a caller that had to judge them first.</summary>
+    public async Task<VerificationRun> Record(CorpusMeasures measures, CancellationToken cancellationToken = default)
     {
-        var measures = await Measure(cancellationToken);
         var previous = await db.VerificationRuns.OrderByDescending(v => v.RanAt).FirstOrDefaultAsync(cancellationToken);
 
         var verification = new VerificationRun

@@ -34,3 +34,4 @@ docker-entrypoint.d/** text eol=lf
 # Everything else keeps git's normal handling. The corpus manifest already skips files git tracks,
 # for the same reason in the other direction: a licence file beside the data is versioned, and git
 # is entitled to change its bytes.
+deploy/** text eol=lf

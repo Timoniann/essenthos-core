@@ -7,6 +7,7 @@ using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Loading.Links.Evidentia;
+using Essenthos.Core.Publishing;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -129,6 +130,7 @@ builder.Services.AddScoped<OwnRelationshipLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddScoped<DatasetLoader>();
+builder.Services.AddScoped<Publisher>();
 
 // Disposed on every return path, not only the one that serves. Draining the console logger's
 // background queue is what disposal does, and a command that returns without it loses whatever is
@@ -193,31 +195,46 @@ if (args is ["verify", ..])
         : CorpusCheck.RenderedFloor;
 
     logger.LogInformation("\n{Report}", measures.Describe());
-
-    var rendered = measures.Rendered;
-    if (measures.Broken > 0)
-    {
-        logger.LogError(
-            "{Broken} integrity checks found something, and every one of them should find nothing",
-            measures.Broken);
-        return 1;
-    }
-
-    if (rendered < floor)
-    {
-        logger.LogError(
-            "{Rendered:P1} of the words in a linked text reach a witness, below the floor of {Floor:P1}. Either " +
-            "the load lost something, or the floor is stale and should be raised deliberately",
-            rendered, floor);
-        return 1;
-    }
-
-    logger.LogInformation(
-        "{Rendered:P1} of the words in a linked text reach a witness, floor {Floor:P1}; the weakest section of " +
-        "any one text reaches {Weakest:P1}",
-        rendered, floor, measures.Weakest);
-    return 0;
+    return CorpusGate.Pass(measures, floor, logger) ? 0 : 1;
 }
+
+// A corpus release, and moving one to a server. See Publishing/Publisher.cs for the whole design;
+// in short: `release` verifies and dumps this machine's corpus into .releases/, `publish` restores
+// that file into a new database on a target, verifies it there, and only then swaps it in.
+if (args is ["release", ..])
+{
+    using var releaseScope = app.Services.CreateScope();
+    return await releaseScope.ServiceProvider.GetRequiredService<Publisher>()
+        .Release(args.Contains("--allow-dirty"), CancellationToken.None);
+}
+
+if (args is ["publish", ..])
+{
+    using var publishScope = app.Services.CreateScope();
+    return await publishScope.ServiceProvider.GetRequiredService<Publisher>().Publish(
+        Option(args, "--to") ?? throw new InvalidOperationException("forge publish --to <target> [--release <name>]"),
+        Option(args, "--release"),
+        args.Contains("--without-rehearsal"),
+        CancellationToken.None);
+}
+
+if (args is ["rollback", ..])
+{
+    using var rollbackScope = app.Services.CreateScope();
+    return await rollbackScope.ServiceProvider.GetRequiredService<Publisher>().Rollback(
+        Option(args, "--to") ?? throw new InvalidOperationException("forge rollback --to <target>"),
+        CancellationToken.None);
+}
+
+if (args is ["releases", ..])
+{
+    using var releasesScope = app.Services.CreateScope();
+    return await releasesScope.ServiceProvider.GetRequiredService<Publisher>().List(
+        Option(args, "--on"), CancellationToken.None);
+}
+
+static string? Option(string[] args, string name) =>
+    Array.IndexOf(args, name) is var at and >= 0 && at + 1 < args.Length ? args[at + 1] : null;
 
 // `--suppletion` scores the Slavic texts with the closed-class table switched on, which is how
 // what that table is worth stays a measurement rather than an opinion. It gets its own workspace
@@ -700,7 +717,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 
 logger.LogError(
-    "Nothing is known to do with \"{Verb}\". The verbs are load, verify, align, score, score-anchors, syntax, "
+    "Nothing is known to do with \"{Verb}\". The verbs are load, verify, release, publish, rollback, releases, align, score, score-anchors, syntax, "
     + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join and the evidentia family",
     args[0]);
 return 1;
