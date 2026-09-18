@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Configuration;
+﻿namespace Essenthos.Core.Configuration;
 
 /// <summary>
 /// Where the corpus sources live: this project's own <c>Resources</c> folder. They are about a
@@ -19,6 +19,14 @@ internal static class ResourcePaths
     private const string FolderName = "Resources";
 
     /// <summary>
+    /// What makes a <c>Resources</c> folder the corpus rather than a namesake. The build copies
+    /// <c>Resources/WorldHistory</c> beside the assembly, so an output folder has a <c>Resources</c> of
+    /// its own holding one source out of twenty, and a search that took the first folder of that name
+    /// stopped there and loaded from it. The manifest is committed with the real one and nowhere else.
+    /// </summary>
+    private const string Marker = "MANIFEST.json";
+
+    /// <summary>
     /// A configured path is resolved against the content root and has to be there. With nothing
     /// configured the default is tried first, and then each directory above the content root in
     /// turn, because the content root is a different place in each way this is run: the project
@@ -26,7 +34,7 @@ internal static class ResourcePaths
     /// directory for a console host. Walking up finds the checkout's own folder from all three and
     /// asks nobody to know which one they are in.
     ///
-    /// It stops at the first <c>Resources</c> directory, so a run started inside another checkout
+    /// It stops at the first <c>Resources</c> directory holding the manifest, so a run started inside another checkout
     /// finds that checkout's sources. That is the right answer for a worktree, which has the
     /// repository and not the gigabyte, and the wrong one nowhere this project is run from.
     /// </summary>
@@ -45,7 +53,7 @@ internal static class ResourcePaths
         }
 
         var beside = Path.GetFullPath(Path.Combine(contentRootPath, DevelopmentDefault));
-        if (Directory.Exists(beside))
+        if (IsCorpus(beside))
         {
             return beside;
         }
@@ -53,7 +61,7 @@ internal static class ResourcePaths
         for (var above = new DirectoryInfo(contentRootPath); above is not null; above = above.Parent)
         {
             var candidate = Path.Combine(above.FullName, FolderName);
-            if (Directory.Exists(candidate))
+            if (IsCorpus(candidate))
             {
                 return candidate;
             }
@@ -62,10 +70,12 @@ internal static class ResourcePaths
         throw new DirectoryNotFoundException(
             $"The corpus sources were not found. Nothing set \"{ConfigurationKey}\", so " +
             $"\"{DevelopmentDefault}\" was tried against the content root {contentRootPath}, and " +
-            $"then every directory above it was searched for a \"{FolderName}\" folder. Set " +
+            $"then every directory above it was searched for a \"{FolderName}\" folder holding {Marker}. Set " +
             $"\"{ConfigurationKey}\" to this checkout's {FolderName} directory, as an absolute path " +
             "if this is not a development run.");
     }
+
+    private static bool IsCorpus(string folder) => System.IO.File.Exists(Path.Combine(folder, Marker));
 
     /// <summary>
     /// One source file, with an error that says where it was looked for rather than only that it
