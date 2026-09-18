@@ -80,9 +80,9 @@
     "sha256": "02dd96165e56ce5d77cc3cea1a469aa6b88f5b865442034269dba901a9dc1343"
   },
   "OpenBible": {
-    "bytes": 11622625,
-    "files": 3,
-    "sha256": "3812bea6b4d41e3bc56959d4623be35ce3a38579c3af15b030994a157a24ae04"
+    "bytes": 14847145,
+    "files": 4,
+    "sha256": "dd3e31041750708cf4a70ded443fb3fc254118f2f80882dd86c9b67d701e19af"
   },
   "PanLexSwadesh": {
     "bytes": 7279818,

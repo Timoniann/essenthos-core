@@ -105,6 +105,7 @@ builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<UssherAnnalsLoader>();
 builder.Services.AddScoped<OpenBiblePlaceLoader>();
+builder.Services.AddScoped<OpenBibleLocationLoader>();
 builder.Services.AddScoped<WorldHistoryLoader>();
 builder.Services.AddScoped<PeopleLoader>();
 builder.Services.AddScoped<PlaceRegisterLoader>();
@@ -619,6 +620,18 @@ if (args is ["synodal-strong", ..])
     // The links just written and the guesses just removed decide which Synodal words an annotation
     // reaches, and nothing on a restart asks that again.
     await synodalScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    return 0;
+}
+
+// Where the places are, for a corpus loaded before the gazetteer's points were. The load does the
+// same as its last encyclopedia step; this is that step alone, so a full corpus is not read again
+// to add thirteen hundred rows.
+if (args is ["locate", ..])
+{
+    using var locateScope = app.Services.CreateScope();
+    var located = await locateScope.ServiceProvider.GetRequiredService<OpenBibleLocationLoader>()
+        .Load(Path.Combine(resources, "OpenBible"));
+    Console.WriteLine(located);
     return 0;
 }
 

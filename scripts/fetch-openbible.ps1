@@ -10,10 +10,12 @@
     spelling each of ten English translations uses, and says per verse which of them carry the name
     at all.
 
-    Only ancient.jsonl is taken. The repository also holds modern locations, thousands of GeoJSON
-    and KML geometry files, and images: the geometry is partly derived from OpenStreetMap and
-    carries ODbL 1.0, which is share-alike, so none of it is downloaded here. What is fetched is
-    covered by the repository's own Attribution 4.0 and by nothing else.
+    ancient.jsonl and modern.jsonl are taken: the places, and the modern locations whose credits
+    say whose coordinates each point is. The repository also holds thousands of GeoJSON and KML
+    geometry files and images: the geometry is partly derived from OpenStreetMap and carries ODbL
+    1.0, which is share-alike, so none of it is downloaded here. modern.jsonl carries some
+    OpenStreetMap coordinates too, each credited as such, and the loader holds none of those; see
+    the LICENCE.md kept beside the data.
 
     The licence is checked, not assumed — both statements attached to the bytes must still say
     Attribution 4.0, and if either stops this stops and says so. The commit is recorded in the
@@ -38,9 +40,11 @@ $Repository = 'openbibleinfo/Bible-Geocoding-Data'
 $ExpectedLicence = 'Attribution 4.0 International'
 $ExpectedReadmeLicence = 'Creative Commons Attribution 4.0'
 
-# The only place file the corpus reads. Everything else in the release is either a different
-# question (modern locations, images) or under different terms (the OpenStreetMap geometry).
+# The place files the corpus reads: the places, and the modern locations whose per-location credit
+# is what tells an OpenStreetMap point from any other. Everything else in the release is either a
+# different question (images) or under different terms (the OpenStreetMap geometry).
 $Data = 'ancient.jsonl'
+$Modern = 'modern.jsonl'
 
 $commit = (Invoke-RestMethod -Uri "https://api.github.com/repos/$Repository/commits/$Ref" `
     -Headers @{ 'User-Agent' = 'essenthos' }).sha
@@ -52,7 +56,7 @@ New-Item -ItemType Directory -Force -Path $staging | Out-Null
 try {
     Write-Host "Fetching $Repository at $($commit.Substring(0, 7))"
 
-    foreach ($file in @("data/$Data", 'license.txt', 'readme.md')) {
+    foreach ($file in @("data/$Data", "data/$Modern", 'license.txt', 'readme.md')) {
         Invoke-WebRequest -Uri "$raw/$file" -OutFile (Join-Path $staging (Split-Path $file -Leaf))
     }
 
@@ -79,7 +83,7 @@ try {
 
     $root = Join-Path (Resolve-Path $ResourcesPath) 'OpenBible'
     New-Item -ItemType Directory -Force -Path $root | Out-Null
-    foreach ($name in @($Data, 'license.txt', 'readme.md')) {
+    foreach ($name in @($Data, $Modern, 'license.txt', 'readme.md')) {
         Copy-Item -Path (Join-Path $staging $name) -Destination (Join-Path $root $name) -Force
     }
 

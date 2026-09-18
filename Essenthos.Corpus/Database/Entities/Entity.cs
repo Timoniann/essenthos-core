@@ -92,7 +92,62 @@ public class Entity
     /// <summary>Who else this might be, where nobody can tell. Usually empty, and that is the point.</summary>
     public ICollection<EntityAlternative> Alternatives { get; set; } = [];
 
+    /// <summary>Where a place is, as one point, when a source says so under terms that allow it.</summary>
+    public PlaceLocation? Location { get; set; }
+
     public override string ToString() => $"Entity({Kind} {Slug})";
+}
+
+/// <summary>
+/// One point for a place: where the identification its gazetteer scores highest puts it.
+///
+/// <para>
+/// A point and nothing more. The gazetteer also draws rivers, regions and archaeological sites as
+/// geometry, partly from OpenStreetMap under ODbL, which is share-alike; none of that is held, and
+/// no point is held whose own coordinates it credits to OpenStreetMap. What
+/// <see cref="CoordinatesSource"/> names is whom the gazetteer says the coordinates came from, so
+/// every row can be traced back to the credit that let it in.
+/// </para>
+///
+/// <para>
+/// Only the best identification, and none where that one is not allowed: falling back to the
+/// second-best would put a place where its own source thinks it probably is not.
+/// </para>
+/// </summary>
+public class PlaceLocation
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    public int EntityId { get; set; }
+
+    public Entity? Entity { get; set; }
+
+    public double Longitude { get; set; }
+
+    public double Latitude { get; set; }
+
+    /// <summary>
+    /// What the point stands for: <c>point</c> the place itself, <c>representative-point</c> a spot
+    /// inside a region or along a path, <c>center</c> the middle of the circle the place is somewhere
+    /// in, <c>settlement</c> the town somewhere inside which it stood.
+    /// </summary>
+    public required string Kind { get; set; }
+
+    /// <summary>
+    /// The gazetteer's own score for the identification, as it states it: best read as thousandths,
+    /// 500 and above high confidence, and able to run past 1000 or below zero.
+    /// </summary>
+    public int Score { get; set; }
+
+    /// <summary>The gazetteer's identifier for the modern location the point is read from.</summary>
+    public required string ModernId { get; set; }
+
+    /// <summary>Whom the gazetteer credits for these coordinates — <c>wikidata</c>, <c>daahl</c>.</summary>
+    public required string CoordinatesSource { get; set; }
+
+    public required string Source { get; set; }
+
+    public override string ToString() => $"PlaceLocation({EntityId} at {Longitude},{Latitude})";
 }
 
 /// <summary>

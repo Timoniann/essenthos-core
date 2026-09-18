@@ -49,8 +49,9 @@ internal sealed record PlacesOutcome(
 /// read one by one and every one is a name too short for the check, a spelling the source records
 /// under a different heading, or a psalm superscription the corpus's own King James text drops.
 ///
-/// Only <c>ancient.jsonl</c> is read. The coordinates and geometry beside it are partly
-/// OpenStreetMap's and carry ODbL, so they are neither fetched nor loaded — see the LICENCE.md
+/// Only <c>ancient.jsonl</c> is read here. Where the places are is a separate step,
+/// <see cref="OpenBibleLocationLoader"/>, because the coordinates are partly OpenStreetMap's and
+/// carry ODbL, and only the points credited to someone else are held — see the LICENCE.md
 /// kept beside the data.
 /// </summary>
 internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<OpenBiblePlaceLoader> logger)

@@ -164,6 +164,7 @@ internal sealed class DatasetLoader(
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
+            await PutThePlacesOnTheMap(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -1029,6 +1030,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<CrossedNameLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// One point for each place the gazetteer can locate under terms that allow it. After every step
+    /// that creates, splits or joins a place, because it locates whatever records carry the
+    /// gazetteer's identifier once they are settled.
+    /// </summary>
+    private async Task PutThePlacesOnTheMap(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("where the places are");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<OpenBibleLocationLoader>();
+        status.Record(await loader.Load(Path.Combine(resources, "OpenBible"), cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

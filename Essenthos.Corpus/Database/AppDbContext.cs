@@ -114,6 +114,9 @@ public class AppDbContext : DbContext
     /// <summary>Who else a record might be, where the evidence does not decide.</summary>
     public DbSet<EntityAlternative> EntityAlternatives { get; set; } = null!;
 
+    /// <summary>Where a place is, as one point, and whose coordinates they are.</summary>
+    public DbSet<PlaceLocation> PlaceLocations { get; set; } = null!;
+
     /// <summary>
     /// The ordered clauses this corpus says an entity is, out of which its description is rendered
     /// in whatever language a reader asks for.
@@ -221,6 +224,23 @@ public class AppDbContext : DbContext
         // An alternative going away must not take the record with it: the doubt is the record's,
         // and a reader is better served by "may be somebody this corpus no longer holds" than by
         // the whole person disappearing because a duplicate was merged away.
+        modelBuilder.Entity<PlaceLocation>(entity =>
+        {
+            entity.HasOne(l => l.Entity)
+                .WithOne(e => e.Location)
+                .HasForeignKey<PlaceLocation>(l => l.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("place_location", t =>
+            {
+                t.HasCheckConstraint("ck_place_location_longitude", "longitude BETWEEN -180 AND 180");
+                t.HasCheckConstraint("ck_place_location_latitude", "latitude BETWEEN -90 AND 90");
+                t.HasCheckConstraint(
+                    "ck_place_location_kind",
+                    "kind IN ('point', 'representative-point', 'center', 'settlement')");
+            });
+        });
+
         modelBuilder.Entity<EntityAlternative>(entity =>
         {
             entity.HasOne(a => a.Entity)

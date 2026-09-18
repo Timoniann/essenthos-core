@@ -68,6 +68,47 @@ internal static class EncyclopediaEndpoints
                 .Distinct().Count(),
             e.Verses.Count);
 
+    /// <summary>
+    /// The gazetteer scores an identification in thousandths — 500 high confidence, 1000 very high —
+    /// and the API states confidence as a fraction, as it does everywhere else. The scale is not
+    /// clamped, because the score is not: it runs past 1000 and below zero, and a clamp would state
+    /// something the source did not.
+    /// </summary>
+    private const double ScoreScale = 1000.0;
+
+    /// <summary>
+    /// Every located place, alphabetical, with the number of verses that name it so a map can size
+    /// or filter its marks.
+    /// </summary>
+    internal static async Task<PlaceMapResponse> Map(AppDbContext db, CancellationToken cancellationToken = default)
+    {
+        var places = await db.PlaceLocations
+            .OrderBy(l => l.Entity!.Name).ThenBy(l => l.Entity!.Slug)
+            .Select(l => new
+            {
+                l.Entity!.Slug,
+                l.Entity.Name,
+                l.Longitude,
+                l.Latitude,
+                l.Kind,
+                l.Score,
+                l.Source,
+                References = l.Entity.Verses
+                    .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
+                                 + v.CanonicalVerse)
+                    .Distinct().Count(),
+            })
+            .ToListAsync(cancellationToken);
+
+        return new PlaceMapResponse(
+            places.Count,
+            [.. places.Select(p => p.Source).Distinct().Select(Datasets.Of).OfType<string>()],
+            [
+                .. places.Select(p => new PlacePointResponse(
+                    p.Slug, p.Name, p.Longitude, p.Latitude, p.Kind, p.Score / ScoreScale, p.References)),
+            ]);
+    }
+
     /// <summary>The addresses of a set of namings, each address once.</summary>
     internal static IQueryable<int> Addresses(IQueryable<EntityVerse> namings) =>
         namings
@@ -508,6 +549,13 @@ internal static class EncyclopediaEndpoints
                             e.Origin.Name,
                             e.Origin.Distinguisher),
                     e.Source,
+                    Location = e.Location == null
+                        ? null
+                        : new EntityLocationResponse(
+                            e.Location.Longitude,
+                            e.Location.Latitude,
+                            e.Location.Kind,
+                            e.Location.Score / ScoreScale),
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -615,8 +663,15 @@ internal static class EncyclopediaEndpoints
                 Forms = own.GetValueOrDefault(entity.Slug),
                 Descriptor = await Descriptors.Of(
                     db, entity.Slug, language, cancellationToken),
+                Location = entity.Location,
             });
         });
+
+        // Every place that has a point, in one payload small enough to draw them all on one map:
+        // about 1,300 rows of a slug, a name, two numbers and two words. The paged index cannot do
+        // this without fourteen round trips, and a map is useless until it has all of them.
+        routes.MapGet("/places/map", async (AppDbContext db, CancellationToken cancellationToken) =>
+            Results.Ok(await Map(db, cancellationToken)));
 
         routes.MapGet("/entities/{slug}/references", async (
             string slug,
@@ -1263,7 +1318,37 @@ internal record EntityResponse(
     /// </para>
     /// </summary>
     public EntityDescriptorResponse? Descriptor { get; init; }
+
+    /// <summary>
+    /// Where the place is, as one point. Null on every person and people, and on a place its
+    /// gazetteer cannot locate or locates only with coordinates this corpus does not hold.
+    /// </summary>
+    public EntityLocationResponse? Location { get; init; }
 }
+
+/// <param name="Kind">
+/// What the point stands for: <c>point</c> the place itself, <c>representative-point</c> a spot
+/// inside a region or along a path, <c>center</c> the middle of the circle the place is somewhere
+/// in, <c>settlement</c> the town somewhere inside which it stood.
+/// </param>
+/// <param name="Confidence">
+/// The gazetteer's score for the identification, over a thousand: 0.5 and above is high confidence
+/// and 1 very high. Not clamped, because the source's score is not — it runs past 1 and below 0.
+/// </param>
+internal record EntityLocationResponse(double Lon, double Lat, string Kind, double Confidence);
+
+/// <param name="References">How many verses name the place, as on its page.</param>
+internal record PlacePointResponse(
+    string Slug,
+    string Name,
+    double Lon,
+    double Lat,
+    string Kind,
+    double Confidence,
+    int References);
+
+/// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>
+internal record PlaceMapResponse(int Total, IList<string> Datasets, IList<PlacePointResponse> Items);
 
 /// <param name="Confidence">
 /// How sure, and null exactly where a person or a source stated it rather than a process concluding
