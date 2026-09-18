@@ -43,7 +43,8 @@ internal static class AuthEndpoints
 
             var principal = external.Principal;
             var now = DateTimeOffset.UtcNow;
-            var email = principal.FindFirstValue(ClaimTypes.Email);
+            // Only an address the provider verified is kept at all — for joining accounts and for showing
+            // the reader which account they used. An unverified one is not recorded, as the privacy page says.
             var verified = VerifiedEmail(principal);
 
             var credential = await db.Credentials
@@ -65,7 +66,7 @@ internal static class AuthEndpoints
                 }
 
                 credential.LastUsedAt = now;
-                credential.Email = email ?? credential.Email;
+                credential.Email = verified ?? credential.Email;
                 accountId = credential.AccountId;
             }
             else
@@ -102,7 +103,7 @@ internal static class AuthEndpoints
                     AccountId = accountId,
                     Provider = provider,
                     Subject = subject,
-                    Email = email,
+                    Email = verified,
                     CreatedAt = now,
                     LastUsedAt = now,
                 });

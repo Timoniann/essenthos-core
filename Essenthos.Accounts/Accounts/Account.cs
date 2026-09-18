@@ -62,8 +62,9 @@ public class Credential
     public required string Subject { get; set; }
 
     /// <summary>
-    /// The address the provider reported, kept so a reader can be told which of their accounts they
-    /// signed in with. Not used to join accounts.
+    /// The address the provider verified, kept so a reader can be told which of their accounts they
+    /// signed in with; null when the provider verified none. Joining accounts goes through
+    /// <see cref="AccountEmail"/>, never through this.
     /// </summary>
     public string? Email { get; set; }
 
