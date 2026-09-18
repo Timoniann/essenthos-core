@@ -1,5 +1,6 @@
 using Essenthos.Core.Corpus;
 ﻿using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -269,6 +270,121 @@ internal static class EncyclopediaEndpoints
     /// <summary>The orders <c>sort</c> accepts. Anything else is refused rather than ignored.</summary>
     private static readonly string[] Sorts = ["name", "verses", "mentions"];
 
+    /// <summary>
+    /// Whatever opens a name before its first letter — a quotation mark, an apostrophe, a digit.
+    /// None of the loaded names has any today; the day one does, it is filed under its first
+    /// letter rather than under a punctuation mark no index button offers.
+    /// </summary>
+    private const string BeforeTheFirstLetter = "^[^[:alpha:]]*";
+
+    /// <summary>
+    /// The letters an index of English names always offers, so a client can draw all of them — the
+    /// empty ones greyed — without holding an alphabet of its own.
+    /// </summary>
+    private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    /// <summary>
+    /// The letter a name is filed under in the A to Z index: its first letter, in capitals, and the
+    /// empty string for a name with no letter in it at all. The printed name as it stands — <em>the
+    /// angel of the LORD</em> files under T, where a reader scanning a list of printed names will
+    /// look for it. The names are English, so in practice this is the Latin alphabet.
+    ///
+    /// <para>
+    /// The counts are read with this and the filter with <see cref="UnderLetter"/>, which says the
+    /// same thing to Postgres as a regular expression; the provider translates no regex that
+    /// returns a string, so the two are written twice and a test holds them to each other.
+    /// </para>
+    /// </summary>
+    internal static string FiledUnder(string name)
+    {
+        foreach (var c in name)
+        {
+            if (char.IsLetter(c))
+            {
+                return char.ToUpperInvariant(c).ToString();
+            }
+        }
+
+        return string.Empty;
+    }
+
+    /// <summary>The entities filed under one letter, whatever case it was asked in.</summary>
+    internal static IQueryable<Entity> UnderLetter(IQueryable<Entity> entities, char letter)
+    {
+        var pattern = $"{BeforeTheFirstLetter}[{char.ToUpperInvariant(letter)}{char.ToLowerInvariant(letter)}]";
+        return entities.Where(e => Regex.IsMatch(e.Name, pattern));
+    }
+
+    /// <summary>
+    /// How many entities each letter holds: every letter of <see cref="Alphabet"/>, empty ones at
+    /// zero, and any other letter a name happens to open with after them.
+    ///
+    /// Counted here rather than grouped in the database, because the grouping key is a string the
+    /// provider cannot compute. It reads one column of five thousand short rows.
+    /// </summary>
+    internal static async Task<EntityLettersResponse> Letters(
+        IQueryable<Entity> entities,
+        CancellationToken cancellationToken = default)
+    {
+        var counted = (await entities.Select(e => e.Name).ToListAsync(cancellationToken))
+            .GroupBy(FiledUnder)
+            .ToDictionary(g => g.Key, g => g.Count());
+
+        var letters = Alphabet.Select(c => c.ToString())
+            .Concat(counted.Keys
+                .Where(letter => letter.Length > 0 && !Alphabet.Contains(letter, StringComparison.Ordinal))
+                .Order(StringComparer.Ordinal))
+            .Select(letter => new EntityLetterResponse(letter, counted.GetValueOrDefault(letter)))
+            .ToList();
+
+        return new EntityLettersResponse(letters.Sum(l => l.Count), letters);
+    }
+
+    /// <summary>
+    /// The entities of one kind, or a refusal naming the kinds there are. Shared by the index and
+    /// its letter counts, so the two accept exactly the same words.
+    /// </summary>
+    private static bool OfKind(ref IQueryable<Entity> entities, string? kind, out IResult? refusal)
+    {
+        refusal = null;
+        if (kind is not { Length: > 0 })
+        {
+            return true;
+        }
+
+        if (kind is not ("person" or "place" or "people" or "term" or "title"))
+        {
+            refusal = Results.BadRequest(new ProblemResponse(
+                $"\"{kind}\" is not a kind of entity. Try person, place, people, term or title."));
+            return false;
+        }
+
+        var wanted = EnumSpelling.ToEntityKind(kind);
+        entities = entities.Where(e => e.Kind == wanted);
+        return true;
+    }
+
+    /// <summary>
+    /// The one letter <c>letter</c> names, or a refusal saying what it takes. A word or a digit is
+    /// refused rather than read as its first character, because an index that quietly answers a
+    /// different question from the one asked is harder to notice than one that says no.
+    /// </summary>
+    private static bool OneLetter(string letter, out char wanted, out IResult? refusal)
+    {
+        wanted = default;
+        refusal = null;
+
+        if (letter.Length != 1 || !char.IsLetter(letter[0]))
+        {
+            refusal = Results.BadRequest(new ProblemResponse(
+                $"\"{letter}\" is not one letter. Ask for a single letter, such as letter=A."));
+            return false;
+        }
+
+        wanted = letter[0];
+        return true;
+    }
+
     public static void MapEncyclopedia(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/entities", async (
@@ -276,6 +392,7 @@ internal static class EncyclopediaEndpoints
             [FromQuery] string? kind,
             [FromQuery] string? language,
             [FromQuery] string? sort,
+            [FromQuery] string? letter,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
@@ -289,16 +406,19 @@ internal static class EncyclopediaEndpoints
 
             var entities = db.Entities.AsQueryable();
 
-            if (kind is { Length: > 0 })
+            if (!OfKind(ref entities, kind, out var refusal))
             {
-                if (kind is not ("person" or "place" or "people" or "term" or "title"))
+                return refusal!;
+            }
+
+            if (letter is { Length: > 0 })
+            {
+                if (!OneLetter(letter, out var initial, out refusal))
                 {
-                    return Results.BadRequest(new ProblemResponse(
-                        $"\"{kind}\" is not a kind of entity. Try person, place, people, term or title."));
+                    return refusal!;
                 }
 
-                var wanted = EnumSpelling.ToEntityKind(kind);
-                entities = entities.Where(e => e.Kind == wanted);
+                entities = UnderLetter(entities, initial);
             }
 
             if (q is { Length: > 0 })
@@ -345,6 +465,19 @@ internal static class EncyclopediaEndpoints
         // is nothing once a session and a great deal on each of a hundred pages.
         routes.MapGet("/entities/coverage", async (AppDbContext db, CancellationToken cancellationToken) =>
             Results.Ok(await Coverage(db, cancellationToken)));
+
+        // Which letters of the A to Z index hold anything, and how much, so a client can grey out
+        // the empty ones before a reader presses them. Takes the index's own kind filter.
+        routes.MapGet("/entities/letters", async (
+            [FromQuery] string? kind,
+            AppDbContext db,
+            CancellationToken cancellationToken) =>
+        {
+            var entities = db.Entities.AsQueryable();
+            return OfKind(ref entities, kind, out var refusal)
+                ? Results.Ok(await Letters(entities, cancellationToken))
+                : refusal!;
+        });
 
         routes.MapGet("/entities/{slug}", async (
             string slug,
@@ -1000,6 +1133,14 @@ internal record EntitySummaryResponse(
 }
 
 internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items);
+
+/// <param name="Count">How many entities are filed under this letter; zero for an empty one.</param>
+internal record EntityLetterResponse(string Letter, int Count);
+
+/// <param name="Letters">
+/// A to Z in order, every one of them present, followed by any other letter a name opens with.
+/// </param>
+internal record EntityLettersResponse(int Total, IList<EntityLetterResponse> Letters);
 
 /// <summary>
 /// How far one kind of entity's references actually reach, so that a count on a page can be read

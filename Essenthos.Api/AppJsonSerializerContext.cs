@@ -1,4 +1,4 @@
-﻿using Essenthos.Core.Corpus;
+using Essenthos.Core.Corpus;
 ﻿using System.Text.Json.Serialization;
 using Essenthos.Core.Endpoints;
 
@@ -54,6 +54,10 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(IList<CanonResponse>))]
 [JsonSerializable(typeof(IList<CanonSectionResponse>))]
 [JsonSerializable(typeof(EntityListResponse))]
+[JsonSerializable(typeof(EntityLettersResponse))]
+[JsonSerializable(typeof(EntityLetterResponse))]
+[JsonSerializable(typeof(IList<EntityLetterResponse>))]
+[JsonSerializable(typeof(List<EntityLetterResponse>))]
 [JsonSerializable(typeof(EntitySummaryResponse))]
 [JsonSerializable(typeof(EntityResponse))]
 [JsonSerializable(typeof(EntityNameResponse))]
