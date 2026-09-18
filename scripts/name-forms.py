@@ -980,9 +980,9 @@ def main():
     asker.add_argument('--dir', required=True)
     asker.add_argument('--model', default='haiku')
     asker.add_argument('--workers', type=int, default=4)
-    asker.add_argument('--effort', default=None,
-                       help='low, medium, high, xhigh or max. Declining a name needs no reasoning '
-                            'and the default spends thousands of thinking tokens on it.')
+    asker.add_argument('--effort', default='low', choices=['low', 'medium', 'high', 'xhigh', 'max'],
+                       help='low by default. Declining a name needs no reasoning, and the CLI default '
+                            'spends thousands of thinking tokens on it and declines worse.')
     asker.add_argument('--again', action='store_true')
     asker.set_defaults(run=ask)
 

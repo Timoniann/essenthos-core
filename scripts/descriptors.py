@@ -1831,10 +1831,10 @@ def main():
     asker.add_argument('--dir', required=True)
     asker.add_argument('--model', default='sonnet')
     asker.add_argument('--workers', type=int, default=4)
-    asker.add_argument('--effort', default=None,
-                       help='low, medium, high, xhigh or max. The CLI thinks by default and the '
-                            'bill is mostly thinking tokens; PRB-0437 measured low as cheaper and '
-                            'no worse.')
+    asker.add_argument('--effort', default='low', choices=['low', 'medium', 'high', 'xhigh', 'max'],
+                       help='low by default. The CLI thinks unless told otherwise and the bill is '
+                            'mostly thinking tokens; low measured at half the cost, though two runs '
+                            'at it agree less with each other than two at the CLI default.')
     asker.add_argument('--again', action='store_true', help='re-run batches that already answered')
     asker.set_defaults(run=ask)
 
