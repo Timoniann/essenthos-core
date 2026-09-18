@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -164,7 +165,7 @@ internal sealed class SiteSplitLoader(
     /// The reading's own source, in the shape the sense pass writes it, because a reader meeting
     /// either should be told the same three things: which model, under which prompt, and when.
     /// </summary>
-    private const string ReadingPrefix = "a reading of the verse by";
+    private const string ReadingPrefix = Sources.VerseReadingPrefix;
 
     /// <summary>The date out of a run's timestamp, which is the part a reader can use.</summary>
     private const int DayLength = 10;

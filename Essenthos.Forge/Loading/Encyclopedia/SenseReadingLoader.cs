@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -344,7 +345,7 @@ internal sealed class SenseReadingLoader(
     /// every other row that carries the same method — the encyclopedia can also hold records
     /// written from a reading, and those are the reading's work rather than this pass's.
     /// </summary>
-    private const string SourcePrefix = "a reading of the verse by";
+    private const string SourcePrefix = Sources.VerseReadingPrefix;
 
     private static string Source(IReadOnlyCollection<SenseReading> readings)
     {

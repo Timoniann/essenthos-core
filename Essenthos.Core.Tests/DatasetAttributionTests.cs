@@ -92,4 +92,13 @@ public sealed class DatasetAttributionTests
                 && !string.IsNullOrWhiteSpace(work.Author)
                 && !string.IsNullOrWhiteSpace(work.Licence)
                 && work.LicenceUrl.StartsWith("https://"));
+
+    /// <summary>
+    /// A model's reading of a verse is this project's, and the rows say so the way they begin — not
+    /// the way a description of the method would.
+    /// </summary>
+    [Fact]
+    public void AModelsReadingOfAVerseIsClaimedAsOurOwn() =>
+        Datasets.Of("a reading of the verse by claude-sonnet-5, prompt sense-3, run to 2026-09-05")
+            .Should().Be(Datasets.Own);
 }

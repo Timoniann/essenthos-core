@@ -40,6 +40,12 @@ internal static class Sources
     /// </summary>
     public const string DescriptorReadingPrefix = "read from Scripture by";
 
+    /// <summary>
+    /// How a model's reading of a verse begins, for the names no number settles. The row goes on to
+    /// name the model, the prompt version and the date of the run.
+    /// </summary>
+    public const string VerseReadingPrefix = "a reading of the verse by";
+
     /// <summary>The King James, the Russian Synodal and the Ohienko Ukrainian, as bible4u spells them.</summary>
     public const string KingJamesSlug = "KJV";
 
