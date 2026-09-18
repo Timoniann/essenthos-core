@@ -10,9 +10,9 @@
     "sha256": "17855b13b48a2a3a4b9bf238d29d14b6fe3bce227b94a95a60818e81475f3287"
   },
   "BibleData": {
-    "bytes": 13190500,
-    "files": 7,
-    "sha256": "eaa2c611a3e21e6b79a8e23157cd66fd6fc79c6746849e5bdbec1fcf6282e066"
+    "bytes": 13188940,
+    "files": 6,
+    "sha256": "b5f77c60fcc1dd8460ee734bf3173ab60a9964c7cebbf9097d8b446160aa752a"
   },
   "BibleData2026": {
     "bytes": 46386738,
@@ -85,9 +85,9 @@
     "sha256": "3812bea6b4d41e3bc56959d4623be35ce3a38579c3af15b030994a157a24ae04"
   },
   "PanLexSwadesh": {
-    "bytes": 7280742,
-    "files": 2892,
-    "sha256": "3345ee605944847acae2911944e2919a5ce104871ae806136a5723ab48fe95f4"
+    "bytes": 7279818,
+    "files": 2891,
+    "sha256": "427aeed977f8ec9d6e32c87b19b7681ac813508ecfacc4a6b4f3371ed5a0f2e0"
   },
   "ReinaValera1909": {
     "bytes": 12465900,
@@ -100,14 +100,19 @@
     "sha256": "178f51e2ea43373a2ed68401557bbad08154e3f74d6c99d81d6e4546f3c32b06"
   },
   "STEPBibleLexicons": {
-    "bytes": 40250046,
-    "files": 6,
-    "sha256": "d2a07e6d76a234044b8288485f72e9460641b744f6ef382661855a3bc1b11206"
+    "bytes": 40248359,
+    "files": 5,
+    "sha256": "3786b3f28f7ff26929b8c20fbdd968929970ef28ec49596f0c014a48d2d3762e"
   },
   "SamaritanPentateuch": {
     "bytes": 17127528,
     "files": 41,
     "sha256": "b1dbf43a2217910bf8eb582baabafd542b812f5cf4effb77dc3e3fe80695c223"
+  },
+  "SenseReadings": {
+    "bytes": 3342878,
+    "files": 26,
+    "sha256": "3b6c9bc2b19064e8ac5f69f9ea8364f7ca5e4472817ac8125eddd617c669466d"
   },
   "Septuagint": {
     "bytes": 7207010,
@@ -165,9 +170,9 @@
     "sha256": "ae94531aee7e51caf29f18da6b0cd4b0b33238a654bda142c24af0c3a79b82aa"
   },
   "WikidataLexemes": {
-    "bytes": 468365375,
-    "files": 2,
-    "sha256": "57658ed5b223b5bb7c6a7256459f050c87dbdd00cc0d4406444b21f4f7615e7b"
+    "bytes": 468364265,
+    "files": 1,
+    "sha256": "3d1bd6c8bbff33229a7206400c85a62f2b6c3b13dfc10ccfabd0fc054a17459a"
   },
   "WorldEnglish": {
     "bytes": 19025507,
