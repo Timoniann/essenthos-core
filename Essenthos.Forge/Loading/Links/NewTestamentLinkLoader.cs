@@ -148,6 +148,13 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         CREATE TEMP TABLE tagged_strong (word_id bigint, strong_number text, position int) ON COMMIT DROP;
         """;
 
+    /// <summary>
+    /// How long each statement of the Strong-number write may take. It updates the King James words
+    /// of a whole Testament against a table of every tag, and on a server busy with something else
+    /// Npgsql's default thirty seconds runs out partway through the load.
+    /// </summary>
+    private const int WholeTestamentSeconds = 600;
+
     private const string StrongNumberUpdate =
         """
         UPDATE word SET strong_number = s.strong_number
@@ -675,6 +682,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
         await using (var create = new NpgsqlCommand(StrongNumberTable, connection))
         {
+            create.CommandTimeout = WholeTestamentSeconds;
             await create.ExecuteNonQueryAsync(cancellationToken);
         }
 
@@ -706,10 +714,12 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
         await using (var update = new NpgsqlCommand(StrongNumberUpdate, connection))
         {
+            update.CommandTimeout = WholeTestamentSeconds;
             await update.ExecuteNonQueryAsync(cancellationToken);
         }
 
         await using var phrases = new NpgsqlCommand(PhraseNumbers, connection);
+        phrases.CommandTimeout = WholeTestamentSeconds;
         phrases.Parameters.AddWithValue("method", EnumSpelling.Of(LinkMethod.StatedBySource));
         phrases.Parameters.AddWithValue("source", PhraseSource);
         await phrases.ExecuteNonQueryAsync(cancellationToken);
