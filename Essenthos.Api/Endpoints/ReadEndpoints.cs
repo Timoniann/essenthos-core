@@ -36,7 +36,18 @@ internal record BookResponse(
     /// that drifts from the corpus the moment a text is loaded or corrected (PRB-0381, PRB-0396).
     /// </summary>
     public string? NameNative { get; init; }
+
+    /// <summary>
+    /// Every name any text in the corpus prints for this book, each once per language, on the
+    /// canon listing only. A client matching what a reader typed needs all of them at once, and
+    /// asking text by text would be a request per witness for the one box.
+    /// </summary>
+    public IList<BookNameFormResponse>? Forms { get; init; }
 }
+
+/// <param name="Language">The printing text's language, as an ISO 639-3 code.</param>
+/// <param name="Name">The name exactly as that text prints it.</param>
+internal record BookNameFormResponse(string Language, string Name);
 
 /// <param name="Canon">Which canon these books are, in which order.</param>
 internal record BookListResponse(IList<BookResponse> Items)
@@ -222,6 +233,8 @@ internal static class ReadEndpoints
                     .ToDictionaryAsync(b => b.CanonicalOrdinal, b => b.NameNative!, cancellationToken);
             }
 
+            var forms = await NameForms(db, cancellationToken);
+
             var items = new List<BookResponse>(wanted.BookCount);
             foreach (var ordinal in wanted.Ordinals)
             {
@@ -229,6 +242,7 @@ internal static class ReadEndpoints
                 {
                     Section = Canons.SectionOf(wanted, ordinal),
                     NameNative = native.GetValueOrDefault(ordinal),
+                    Forms = forms.GetValueOrDefault(ordinal) ?? [],
                 });
             }
 
@@ -291,6 +305,29 @@ internal static class ReadEndpoints
                 verses));
         });
     }
+
+    /// <summary>
+    /// What every text of the corpus calls each book, once per language, excluding the name the
+    /// frame itself uses. A reader typing <em>Йов</em> is matched against these, so the matching
+    /// forms come from the corpus rather than from a copy inside a client.
+    /// </summary>
+    internal static async Task<Dictionary<int, List<BookNameFormResponse>>> NameForms(
+        AppDbContext db,
+        CancellationToken cancellationToken) =>
+        (await db.Books
+            .Where(b => b.NameNative != null)
+            .Select(b => new { b.CanonicalOrdinal, b.Text!.Language, Name = b.NameNative! })
+            .Distinct()
+            .ToListAsync(cancellationToken))
+        .GroupBy(b => b.CanonicalOrdinal)
+        .ToDictionary(
+            group => group.Key,
+            group => group
+                .Where(b => b.Name != BookReferences.Name(group.Key))
+                .OrderBy(b => b.Language, StringComparer.Ordinal)
+                .ThenBy(b => b.Name, StringComparer.Ordinal)
+                .Select(b => new BookNameFormResponse(b.Language, b.Name))
+                .ToList());
 
     private static async Task<BookResponse> Book(ICanonIndex canon, int ordinal, CancellationToken cancellationToken)
     {

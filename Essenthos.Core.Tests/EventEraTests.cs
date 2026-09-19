@@ -180,9 +180,12 @@ public sealed class EventEraTests : IDisposable
         drawn.Should().Equal("ordering-999", "ordering-1000", "ordering-none");
     }
 
-    private async Task<EventResponse> Response(string slug) =>
-        EncyclopediaEndpoints.Event(
-            await _db.Events.Where(e => e.Slug == slug).Select(EncyclopediaEndpoints.Rows).SingleAsync());
+    private async Task<EventResponse> Response(string slug)
+    {
+        var row = await _db.Events.Where(e => e.Slug == slug).Select(EncyclopediaEndpoints.Rows).SingleAsync();
+        var places = await EncyclopediaEndpoints.PlacesNamed(_db, [row.Event.Location], default);
+        return EncyclopediaEndpoints.Event(row, places);
+    }
 
     private void Dated(
         string slug,
