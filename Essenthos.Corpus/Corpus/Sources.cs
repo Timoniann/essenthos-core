@@ -68,6 +68,16 @@ internal static class Sources
     /// </summary>
     public const string VerseReadingPrefix = "a reading of the verse by";
 
+    /// <summary>
+    /// What every gloss taken from STEPBible's brief Greek lexicon carries, and what its dataset
+    /// declaration claims them by: whose lexicon, which commit of it, and on what terms.
+    /// </summary>
+    public const string BriefGreekLexicon =
+        BriefGreekLexiconPrefix + ", the Translators Brief lexicon of Extended Strongs for Greek, by Tyndale House, "
+        + "Cambridge, CC BY 4.0, read from STEPBible/STEPBible-Data at ae39711";
+
+    public const string BriefGreekLexiconPrefix = "STEPBible TBESG";
+
     /// <summary>The King James, the Russian Synodal and the Ohienko Ukrainian, as bible4u spells them.</summary>
     public const string KingJamesSlug = "KJV";
 

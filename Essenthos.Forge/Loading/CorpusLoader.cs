@@ -42,7 +42,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     private const string WordImport =
         """
         COPY word (text_id, verse_id, "position", "text", trailer, lemma, strong_number, gloss, morphology,
-                   elided)
+                   elided, "break")
         FROM STDIN (FORMAT BINARY)
         """;
 
@@ -245,6 +245,9 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
                 await WriteNullable(writer, word.Gloss, NpgsqlDbType.Text, cancellationToken);
                 await WriteNullable(writer, word.Morphology, NpgsqlDbType.Jsonb, cancellationToken);
                 await writer.WriteAsync(word.Elided, NpgsqlDbType.Boolean, cancellationToken);
+                await WriteNullable(
+                    writer, word.Break is { } opening ? EnumSpelling.Of(opening) : null, NpgsqlDbType.Text,
+                    cancellationToken);
                 written++;
             }
         }

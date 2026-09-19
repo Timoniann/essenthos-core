@@ -71,6 +71,11 @@ public class AppDbContext : DbContext
     public DbSet<StrongEntryTranslation> StrongEntryTranslations { get; set; } = null!;
 
     /// <summary>
+    /// A lexicon's short glosses, keyed by the dictionary form and the number it files each under.
+    /// </summary>
+    public DbSet<LexiconGloss> LexiconGlosses { get; set; } = null!;
+
+    /// <summary>
     /// Strong numbers proposed for a word, with what proposed them. Separate from
     /// <c>word.strong_number</c>, which means a source stated it.
     /// </summary>
@@ -325,6 +330,21 @@ public class AppDbContext : DbContext
             });
         });
 
+        modelBuilder.Entity<LexiconGloss>(entity =>
+        {
+            entity.ToTable("lexicon_gloss", table =>
+            {
+                table.HasCheckConstraint(
+                    "ck_lexicon_gloss_source_not_empty",
+                    "length(btrim(\"source\")) > 0");
+
+                table.HasComment(
+                    "A lexicon's short gloss for each dictionary form of each entry, filed under the "
+                    + "number the lexicon gives it. Which word a gloss belongs to is not stored: a "
+                    + "reading reaches it by the word's lemma or number and says which way.");
+            });
+        });
+
         modelBuilder.Entity<Text>(entity =>
         {
             entity.Property(t => t.Kind).HasConversion(EnumStorage.TextKind);
@@ -415,6 +435,8 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(w => w.TextId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            entity.Property(w => w.Break).HasConversion(EnumStorage.TextBreak);
         });
 
         modelBuilder.Entity<VerseReference>(entity =>

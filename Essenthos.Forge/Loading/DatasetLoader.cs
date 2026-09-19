@@ -86,7 +86,8 @@ internal sealed class DatasetLoader(
             // in ten and a text that is right nine times in ten is not a text. The tables then say
             // which of its words renders which Greek word. FTR-0182.
             await Load("the Berean Standard Bible", () => BereanTextSource.Read(
-                ResourcePaths.File(resources, "Berean", "bsb.txt")), stoppingToken);
+                ResourcePaths.File(resources, "Berean", "bsb.txt"),
+                ResourcePaths.File(resources, "Berean", "bsb_tables.tsv")), stoppingToken);
 
             foreach (var translation in Bible4uTranslations)
             {
@@ -127,6 +128,7 @@ internal sealed class DatasetLoader(
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
             await LemmatiseTheSeptuagint(resources, stoppingToken);
+            await GlossTheGreek(resources, stoppingToken);
             await ParseTheGreekASecondTime(resources, stoppingToken);
             await AnnotateTheGreek(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
@@ -551,6 +553,20 @@ internal sealed class DatasetLoader(
         // our reasoning rather than anybody's testimony.
         var numbers = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Glaux.SeptuagintStrongLoader>();
         status.Record(await numbers.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// STEPBible's short Greek glosses. After the lemmas, because the Septuagint reaches them by
+    /// its lemma and the load measures how much of it does.
+    /// </summary>
+    private async Task GlossTheGreek(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Greek glosses");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<GreekGlossLoader>();
+        status.Record(await loader.Load(
+            ResourcePaths.File(resources, "STEPBibleLexicons", "TBESG.txt"), cancellationToken));
     }
 
     /// <summary>
@@ -1090,6 +1106,16 @@ internal sealed class DatasetLoader(
         if (noteOutcome.Notes > 0 || noteOutcome.AlreadyLoaded)
         {
             status.Record(noteOutcome.ToString());
+        }
+
+        // The same again for where the edition starts a paragraph or a line, which a text loaded
+        // before the marks were read does not carry.
+        using var paragraphing = services.CreateScope();
+        var paragraphs = paragraphing.ServiceProvider.GetRequiredService<ParagraphMarkLoader>();
+        var paragraphOutcome = await paragraphs.Mark(source, cancellationToken);
+        if (paragraphOutcome.Marks > 0 || paragraphOutcome.AlreadyMarked)
+        {
+            status.Record(paragraphOutcome.ToString());
         }
     }
 }

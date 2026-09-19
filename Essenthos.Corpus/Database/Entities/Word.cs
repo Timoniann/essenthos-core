@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
+using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Database.Entities;
@@ -59,6 +60,13 @@ public class Word
     public string? StrongNumber { get; set; }
 
     public string? Gloss { get; set; }
+
+    /// <summary>
+    /// The edition starts a new paragraph or a new line before this word, where it marks one. Null
+    /// is silence rather than a claim that the text runs on: most sources mark nothing, and a word
+    /// in the middle of a paragraph and a word of a text that prints no paragraphs look the same.
+    /// </summary>
+    public TextBreak? Break { get; set; }
 
     /// <summary>
     /// The annotation this text happens to carry. BHSA has features Nestle does not and the

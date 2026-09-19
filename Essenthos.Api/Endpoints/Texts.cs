@@ -30,6 +30,15 @@ internal static class Texts
     private const string Phono = "phono";
     private const string PhonoTrailer = "phonoTrailer";
 
+    /// <summary>The language whose words the Greek lexicon glosses.</summary>
+    private const string Greek = "grc";
+
+    /// <summary>How a gloss was reached, as <see cref="LexiconGlossResponse.Via"/> spells it.</summary>
+    private const string ByStatedNumber = "strong";
+    private const string ByLemma = "lemma";
+    private const string ByEqualWord = "equals";
+    private const string ByProposedNumber = "strong-candidate";
+
     public static string KindOf(TextKind kind) =>
         kind == TextKind.Translation ? TranslationKind : OriginalKind;
 
@@ -89,10 +98,16 @@ internal static class Texts
             .OrderBy(w => w.Verse!.Number).ThenBy(w => w.Verse!.Label).ThenBy(w => w.Position)
             .Select(w => new WordRow(
                 w.Verse!.Number, w.Verse!.Label, w.Id, w.Surface, w.Trailer, w.Gloss, w.Lemma, w.StrongNumber,
-                w.Morphology, w.Elided))
+                w.Morphology, w.Elided, w.Break))
             .ToListAsync(cancellationToken);
 
         var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
+        counterparts = counterparts with
+        {
+            Glossed = await Glossed(
+                db, textId, [.. rows.Select(r => new GlossWanted(r.Id, r.Gloss, r.Lemma, r.StrongNumber))],
+                counterparts.Proposed, cancellationToken),
+        };
         var notes = await db.VerseNotes
             .Where(note => note.Verse!.TextId == textId
                            && note.Verse.Book!.CanonicalOrdinal == bookOrdinal
@@ -258,7 +273,103 @@ internal static class Texts
         Dictionary<long, string> Absent,
         HashSet<long> Supplied,
         Dictionary<long, EntityRefResponse> Named,
-        Dictionary<long, StrongCandidateResponse> Proposed);
+        Dictionary<long, StrongCandidateResponse> Proposed)
+    {
+        /// <summary>The lexicon's gloss for each Greek word its edition does not gloss, and how it was reached.</summary>
+        public Dictionary<long, LexiconGlossResponse> Glossed { get; init; } = [];
+    }
+
+    private sealed record GlossWanted(long Id, string? Gloss, string? Lemma, string? StrongNumber);
+
+    /// <summary>
+    /// A short gloss for every Greek word whose edition prints none, from the lexicon, and the way
+    /// each was reached — because the ways are not equally strong and a reader is owed the difference.
+    ///
+    /// Tried in order of how little stands between the word and the entry: the number the edition
+    /// itself prints; then the word's own dictionary form; then, for a word that has neither, the
+    /// dictionary form of the word it is linked to as the same word in another edition — Swete's
+    /// Septuagint reaches Brenton's lemmas that way; and last the one number the corpus proposed from
+    /// the word's form. A form or a number the lexicon files under several entries gets every one of
+    /// their glosses, in the lexicon's order, rather than one of them chosen here.
+    ///
+    /// Three queries for a chapter at most, and none at all for a text that is not Greek.
+    /// </summary>
+    private static async Task<Dictionary<long, LexiconGlossResponse>> Glossed(
+        AppDbContext db,
+        int textId,
+        IReadOnlyList<GlossWanted> words,
+        Dictionary<long, StrongCandidateResponse> proposed,
+        CancellationToken cancellationToken)
+    {
+        var wanting = words.Where(word => word.Gloss is null).ToList();
+        if (wanting.Count == 0
+            || await db.Texts.Where(text => text.Id == textId).Select(text => text.Language)
+                .SingleAsync(cancellationToken) != Greek)
+        {
+            return [];
+        }
+
+        var bare = wanting.Where(word => word.Lemma is null && word.StrongNumber is null).Select(word => word.Id).ToList();
+        var borrowed = bare.Count == 0
+            ? []
+            : (await db.LinkWords
+                    .Where(side => bare.Contains(side.WordId) && side.Link!.Relation == LinkRelation.Equals)
+                    .SelectMany(side => db.LinkWords
+                        .Where(other => other.LinkId == side.LinkId
+                                        && other.Side != side.Side
+                                        && other.Word!.Lemma != null)
+                        .Select(other => new { side.WordId, other.Word!.Lemma }))
+                    .ToListAsync(cancellationToken))
+                .GroupBy(row => row.WordId)
+                .Where(group => group.Select(row => row.Lemma).Distinct().Count() == 1)
+                .ToDictionary(group => group.Key, group => group.First().Lemma!);
+
+        var lemmas = wanting.Select(word => word.Lemma).Concat(borrowed.Values).OfType<string>().Distinct().ToList();
+        var numbers = wanting
+            .Select(word => word.StrongNumber ?? proposed.GetValueOrDefault(word.Id)?.Number)
+            .OfType<string>()
+            .Distinct()
+            .ToList();
+
+        var entries = await db.LexiconGlosses
+            .Where(gloss => lemmas.Contains(gloss.Lemma) || numbers.Contains(gloss.StrongNumber))
+            .OrderBy(gloss => gloss.Id)
+            .Select(gloss => new { gloss.Lemma, gloss.StrongNumber, gloss.Gloss })
+            .ToListAsync(cancellationToken);
+        var byLemma = entries.ToLookup(entry => entry.Lemma, StringComparer.Ordinal);
+        var byNumber = entries.ToLookup(entry => entry.StrongNumber, StringComparer.Ordinal);
+
+        static LexiconGlossResponse? Answer(IEnumerable<string> glosses, string via) =>
+            glosses.Distinct(StringComparer.Ordinal).ToArray() is { Length: > 0 } found
+                ? new LexiconGlossResponse(found, via)
+                : null;
+
+        var glossed = new Dictionary<long, LexiconGlossResponse>();
+        foreach (var word in wanting)
+        {
+            // A number filed under several entries is narrowed by the word's own form where the
+            // edition prints one and it names one of them; otherwise every entry under the number stands.
+            var stated = word.StrongNumber is { } number ? byNumber[number].ToList() : [];
+            var own = stated.Where(entry => entry.Lemma == word.Lemma).ToList();
+
+            var answer =
+                Answer((own.Count > 0 ? own : stated).Select(entry => entry.Gloss), ByStatedNumber)
+                ?? (word.Lemma is { } lemma ? Answer(byLemma[lemma].Select(entry => entry.Gloss), ByLemma) : null)
+                ?? (borrowed.TryGetValue(word.Id, out var equal)
+                    ? Answer(byLemma[equal].Select(entry => entry.Gloss), ByEqualWord)
+                    : null)
+                ?? (word.StrongNumber is null && proposed.GetValueOrDefault(word.Id) is { } candidate
+                    ? Answer(byNumber[candidate.Number].Select(entry => entry.Gloss), ByProposedNumber)
+                    : null);
+
+            if (answer is not null)
+            {
+                glossed[word.Id] = answer;
+            }
+        }
+
+        return glossed;
+    }
 
     /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>
     public static async Task<Dictionary<int, List<TextWordResponse>>> ReadByCanonicalVerse(
@@ -275,10 +386,16 @@ internal static class Texts
                         && r.CanonicalChapter == canonicalChapter)
             .SelectMany(r => r.Verse!.Words.Select(w => new CanonicalWordRow(
                 r.CanonicalVerse, r.Verse.Number, r.Verse.Label, w.Position, w.Id, w.Surface, w.Trailer, w.Gloss,
-                w.Lemma, w.StrongNumber, w.Morphology, w.Elided)))
+                w.Lemma, w.StrongNumber, w.Morphology, w.Elided, w.Break)))
             .ToListAsync(cancellationToken);
 
         var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
+        counterparts = counterparts with
+        {
+            Glossed = await Glossed(
+                db, textId, [.. rows.Select(r => new GlossWanted(r.Id, r.Gloss, r.Lemma, r.StrongNumber))],
+                counterparts.Proposed, cancellationToken),
+        };
 
         return rows
             .GroupBy(r => r.CanonicalVerse)
@@ -290,7 +407,7 @@ internal static class Texts
                 group => group
                     .OrderBy(r => r.VerseNumber).ThenBy(r => r.Label).ThenBy(r => r.Position)
                     .Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
-                        r.Elided, counterparts))
+                        r.Elided, r.Break, counterparts))
                     .ToList());
     }
 
@@ -315,7 +432,7 @@ internal static class Texts
                 verse.Number,
                 wordsByVerse[(verse.Number, verse.Label)].Select(row => Word(
                         row.Id, row.Text, row.Trailer, row.Gloss, row.Lemma, row.StrongNumber, row.Morphology,
-                        row.Elided, counterparts))
+                        row.Elided, row.Break, counterparts))
                     .ToList(),
                 verse.Label)
             {
@@ -333,6 +450,7 @@ internal static class Texts
         string? strongNumber,
         JsonDocument? morphology,
         bool elided,
+        TextBreak? opening,
         Reached counterparts)
     {
         var features = Features(morphology);
@@ -355,6 +473,8 @@ internal static class Texts
             Elided = elided,
             Supplied = counterparts.Supplied.Contains(id),
             StrongCandidate = strongNumber is null ? counterparts.Proposed.GetValueOrDefault(id) : null,
+            LexiconGloss = counterparts.Glossed.GetValueOrDefault(id),
+            Break = opening is { } kind ? EnumSpelling.Of(kind) : null,
         };
     }
 
@@ -393,7 +513,7 @@ internal static class Texts
 
     private sealed record WordRow(
         int VerseNumber, string Label, long Id, string Text, string Trailer, string? Gloss, string? Lemma,
-        string? StrongNumber, JsonDocument? Morphology, bool Elided);
+        string? StrongNumber, JsonDocument? Morphology, bool Elided, TextBreak? Break);
 
     private sealed record VerseRow(int Number, string Label);
 
@@ -407,5 +527,5 @@ internal static class Texts
 
     private sealed record CanonicalWordRow(
         int CanonicalVerse, int VerseNumber, string Label, int Position, long Id, string Text, string Trailer,
-        string? Gloss, string? Lemma, string? StrongNumber, JsonDocument? Morphology, bool Elided);
+        string? Gloss, string? Lemma, string? StrongNumber, JsonDocument? Morphology, bool Elided, TextBreak? Break);
 }

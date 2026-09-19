@@ -98,6 +98,10 @@ internal sealed record TextDefinition(
 /// marks the words it supplies and its base text does not have. Null everywhere else, which is
 /// silence rather than a claim: a text that marks nothing says nothing about any of its words.
 /// </param>
+/// <param name="Break">
+/// The edition starts a paragraph or a line before this word. Null where it marks nothing, which
+/// is again silence.
+/// </param>
 internal sealed record WordDraft(
     string Surface,
     string Trailer,
@@ -106,7 +110,8 @@ internal sealed record WordDraft(
     string? Gloss = null,
     string? Morphology = null,
     bool Elided = false,
-    int? SuppliedSpan = null);
+    int? SuppliedSpan = null,
+    TextBreak? Break = null);
 
 /// <param name="Chapter">The chapter of the edition's own numbering, which need not be the row's.</param>
 /// <param name="Number">The verse of it.</param>

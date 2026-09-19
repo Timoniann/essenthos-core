@@ -420,7 +420,8 @@ internal static class EnglishTextSource
                 word.Surface,
                 word.Trailer,
                 StrongNumber: tagged ? word.StrongNumber : null,
-                SuppliedSpan: word.SuppliedSpan))],
+                SuppliedSpan: word.SuppliedSpan,
+                Break: word.Break))],
             verse.Label)
         {
             Notes = [.. verse.Notes.Select(note => new VerseNoteDraft(

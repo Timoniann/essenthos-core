@@ -56,6 +56,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 builder.Services.AddScoped<CorpusLoader>();
 builder.Services.AddScoped<StatedNumberLoader>();
 builder.Services.AddScoped<SourceNoteLoader>();
+builder.Services.AddScoped<ParagraphMarkLoader>();
 builder.Services.AddScoped<MorphGntParsingLoader>();
 builder.Services.AddScoped<MaculaAnnotationLoader>();
 builder.Services.AddScoped<CanonicalFrameLoader>();
@@ -87,6 +88,7 @@ builder.Services.AddScoped<CorpusCheck>();
 builder.Services.AddScoped<StrongLexiconLoader>();
 builder.Services.AddScoped<StrongGentilicLoader>();
 builder.Services.AddScoped<StrongTranslationLoader>();
+builder.Services.AddScoped<GreekGlossLoader>();
 builder.Services.AddScoped<SyntaxLoader>();
 builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddScoped<GreekWitnessLinkLoader>();

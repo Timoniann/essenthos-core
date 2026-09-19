@@ -33,6 +33,11 @@ public static class Datasets
     /// source string nor links — 14,298 entries the whole corpus resolves its numbers through, and
     /// the one dataset the undeclared report could not see. PRB-0059.
     /// </param>
+    /// <param name="Glossary">
+    /// Whether this dataset is a lexicon of short glosses, counted by the entries it glosses. Its
+    /// rows belong to no text and to no word, so like <paramref name="Lexicon"/> nothing else would
+    /// count it, and a dataset nothing counts drops off the sources page.
+    /// </param>
     /// <param name="Links">
     /// Whether this dataset supplies word links, whose source strings carry <c>Prefix</c> too.
     ///
@@ -117,6 +122,7 @@ public static class Datasets
         string? Lemmas = null,
         bool Links = false,
         bool Lexicon = false,
+        bool Glossary = false,
         string[]? Methods = null,
         Work[]? Contains = null,
         string? Citation = null,
@@ -351,6 +357,22 @@ public static class Datasets
                     + "header assigns the entry to Strong and the gloss to TWOT, so nothing else in the "
                     + "lexicon is theirs."),
             ]),
+
+        // The short Greek glosses. Read for the one-word gloss column only; the Abbott-Smith entry
+        // beside it in the same file is not loaded.
+        new("stepbible-tbesg", "STEPBible Brief Greek Lexicon (TBESG)", "STEP Bible, Tyndale House, Cambridge",
+            "CC BY 4.0",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://github.com/STEPBible/STEPBible-Data",
+            "What a Greek word means, in a word or two, as Tyndale House scholars glossed each lexeme. "
+            + "It numbers the Septuagint's vocabulary as well as the New Testament's, so a Greek Old "
+            + "Testament word Strong never catalogued still has a meaning. A word reaches a gloss by its "
+            + "dictionary form or by the Strong number its edition prints, and the reader is told which. "
+            + "Only the gloss is taken; the full lexicon entry beside it in the same file is not.",
+            Sources.BriefGreekLexiconPrefix, Glossary: true,
+            Obliges: "Attribution only, under CC BY 4.0. The file also asks that its data not be passed "
+                + "on as a copy but that others be referred to github.com/STEPBible, so a download of "
+                + "the corpus should point there rather than carry the glosses."),
 
         // What this project asserts itself, and it belongs in the list precisely because it is
         // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly

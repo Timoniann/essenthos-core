@@ -68,15 +68,26 @@ internal static class BereanTextSource
     /// A verse with no words is kept as an empty verse rather than dropped. The Berean prints the
     /// verses a critical text leaves out as numbers with nothing after them, and a reader who asks
     /// for Matthew 17:21 should be told it is empty here rather than that it does not exist.
+    ///
+    /// The paragraphs come from the translation tables, where the edition prints them, and are
+    /// left out when no tables are given.
     /// </summary>
-    public static TextSource Read(string path)
+    public static TextSource Read(string path, string? tablesPath = null)
     {
         var books = new Dictionary<int, Dictionary<int, List<VerseDraft>>>();
         var names = new Dictionary<int, string>();
 
         var unresolved = new List<string>();
 
-        foreach (var (reference, text) in BereanWords.Verses(path))
+        var published = BereanWords.Verses(path)
+            .Select(verse => (verse.Reference, Words: BereanWords.Split(verse.Text)))
+            .ToList();
+        var paragraphs = tablesPath is null
+            ? []
+            : BereanParagraphs.Read(tablesPath, published.ToDictionary(
+                verse => verse.Reference, verse => verse.Words, StringComparer.Ordinal));
+
+        foreach (var (reference, verseWords) in published)
         {
             if (!Address(reference, out var book, out var chapter, out var verse))
             {
@@ -86,8 +97,12 @@ internal static class BereanTextSource
 
             names.TryAdd(book, BibleBookAbbreviation.GetByOrdinal(book)?.FullName.Full ?? reference);
 
-            var words = BereanWords.Split(text)
-                .Select(word => new WordDraft(word.Surface, word.Trailer))
+            var breaks = paragraphs.GetValueOrDefault(reference);
+            var words = verseWords
+                .Select((word, at) => new WordDraft(
+                    word.Surface,
+                    word.Trailer,
+                    Break: breaks is not null && breaks.TryGetValue(at + 1, out var opening) ? opening : null))
                 .ToList();
 
             if (!books.TryGetValue(book, out var chapters))

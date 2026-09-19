@@ -56,7 +56,13 @@ public static class DatasetEndpoints
 
                 var lexicon = dataset.Lexicon
                     ? await db.StrongEntries.CountAsync(cancellationToken)
-                    : 0;
+                    : dataset.Glossary
+                        ? await db.LexiconGlosses
+                            .Where(gloss => gloss.Source.StartsWith(dataset.Prefix))
+                            .Select(gloss => gloss.Entry)
+                            .Distinct()
+                            .CountAsync(cancellationToken)
+                        : 0;
 
                 var counts = new DatasetCounts(
                     Of(entities, dataset),

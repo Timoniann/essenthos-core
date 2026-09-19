@@ -147,7 +147,7 @@ internal static class KulishTextSource
         chapter.Number,
         [.. chapter.Verses.Select(verse => new VerseDraft(
             verse.Number,
-            [.. verse.Words.Select(word => new WordDraft(word.Surface, word.Trailer))],
+            [.. verse.Words.Select(word => new WordDraft(word.Surface, word.Trailer, Break: word.Break))],
             verse.Label)
         {
             Notes = [.. verse.Notes.Select(note => new VerseNoteDraft(

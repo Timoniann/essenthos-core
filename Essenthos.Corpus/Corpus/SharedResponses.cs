@@ -241,7 +241,34 @@ internal record TextWordResponse(
     /// edition.
     /// </summary>
     public StrongCandidateResponse? StrongCandidate { get; init; }
+
+    /// <summary>
+    /// A lexicon's short gloss for a Greek word its edition does not gloss, and how the word reached
+    /// it. Null where the edition glosses the word itself — that is <see cref="Gloss"/> — and where
+    /// no way reached an entry.
+    /// </summary>
+    public LexiconGlossResponse? LexiconGloss { get; init; }
+
+    /// <summary>
+    /// The edition starts a new paragraph (<c>paragraph</c>) or a new line (<c>line</c>) before this
+    /// word. Null where it marks nothing, which for most texts is everywhere: silence, not a claim
+    /// that the text runs on.
+    /// </summary>
+    public string? Break { get; init; }
 }
+
+/// <param name="Glosses">
+/// Every gloss the lexicon gives the entries the word reached, in the lexicon's order. More than one
+/// where a form or a number is filed under several entries; which of them this word is was not
+/// decided here.
+/// </param>
+/// <param name="Via">
+/// How the word reached the entry: <c>strong</c> through the number its edition prints, <c>lemma</c>
+/// through its own dictionary form, <c>equals</c> through the dictionary form of the word it is
+/// linked to as the same word in another edition, <c>strong-candidate</c> through the number the
+/// corpus proposed from its form. In that order the claim grows weaker, and a reader is told which.
+/// </param>
+internal record LexiconGlossResponse(string[] Glosses, string Via);
 
 /// <param name="Method">What produced the number, spelled as a link's method is: <c>lexical</c>.</param>
 /// <param name="Confidence">How sure, between 0 and 1; null only where a source stated it.</param>

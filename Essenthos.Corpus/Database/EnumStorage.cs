@@ -220,6 +220,20 @@ internal static class EnumSpelling
         _ => throw Unreadable<VerseNoteKind>(stored),
     };
 
+    public static string Of(TextBreak value) => value switch
+    {
+        TextBreak.Paragraph => "paragraph",
+        TextBreak.Line => "line",
+        _ => throw Unmapped(value),
+    };
+
+    public static TextBreak ToTextBreak(string stored) => stored switch
+    {
+        "paragraph" => TextBreak.Paragraph,
+        "line" => TextBreak.Line,
+        _ => throw Unreadable<TextBreak>(stored),
+    };
+
     public static LinkSide ToLinkSide(string stored) => stored switch
     {
         "from" => LinkSide.From,
@@ -309,6 +323,9 @@ internal static class EnumStorage
 
     public static readonly ValueConverter<VerseNoteKind, string> VerseNoteKind =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToVerseNoteKind(stored));
+
+    public static readonly ValueConverter<TextBreak, string> TextBreak =
+        new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToTextBreak(stored));
 
     public static readonly ValueConverter<EvidentiaVerdict, string> EvidentiaVerdict =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToEvidentiaVerdict(stored));

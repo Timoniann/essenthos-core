@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Usfm;
@@ -83,6 +84,13 @@ internal sealed record UsfmWord(string Surface, string Trailer)
     /// where the edition marks nothing. The same field the Synodal's square brackets fill.
     /// </summary>
     public int? SuppliedSpan { get; init; }
+
+    /// <summary>
+    /// The edition starts a paragraph or a line before this word, and null where it marks nothing
+    /// here. A paragraph mark stands on its own line before the text it opens, so it is carried to
+    /// the first word that follows it, whichever verse that is in.
+    /// </summary>
+    public TextBreak? Break { get; init; }
 }
 
 /// <summary>
@@ -128,6 +136,29 @@ internal static partial class UsfmReader
     private static readonly HashSet<string> Matter =
         ["toc2", "toc3", "mt", "mt1", "mt2", "mt3", "is", "is1", "ip", "imt", "rem", "cl", "ide"];
 
+    /// <summary>
+    /// The passage markers that start the text afresh, and how. A blank line between stanzas is a
+    /// paragraph break as a reader sees one; a line of poetry and an item of a list start a new line
+    /// inside it. <c>\nb</c> says the paragraph does not break and is absent for that reason, and a
+    /// heading or a superscription opens nothing of its own.
+    /// </summary>
+    private static readonly Dictionary<string, TextBreak> Breaks = new(StringComparer.Ordinal)
+    {
+        ["p"] = TextBreak.Paragraph,
+        ["m"] = TextBreak.Paragraph,
+        ["pi"] = TextBreak.Paragraph,
+        ["pi1"] = TextBreak.Paragraph,
+        ["mi"] = TextBreak.Paragraph,
+        ["b"] = TextBreak.Paragraph,
+        ["q"] = TextBreak.Line,
+        ["q1"] = TextBreak.Line,
+        ["q2"] = TextBreak.Line,
+        ["q3"] = TextBreak.Line,
+        ["qc"] = TextBreak.Line,
+        ["li"] = TextBreak.Line,
+        ["li1"] = TextBreak.Line,
+    };
+
     public static UsfmBook Read(string content)
     {
         string? book = null;
@@ -140,6 +171,20 @@ internal static partial class UsfmReader
         var label = string.Empty;
         var title = string.Empty;
         var running = new Running();
+        TextBreak? pending = null;
+
+        // A break waits for the first word after it, and two marks before one word are one break:
+        // a blank line then a line of poetry opens a stanza, which is a paragraph.
+        void Append(string text)
+        {
+            var before = words.Count;
+            Words(text, words, notes, running);
+            if (pending is { } opening && words.Count > before)
+            {
+                words[before] = words[before] with { Break = opening };
+                pending = null;
+            }
+        }
 
         void CloseVerse()
         {
@@ -195,7 +240,7 @@ internal static partial class UsfmReader
             if (trimmed[0] != '\\')
             {
                 // A continuation line: the verse it belongs to is still open.
-                Words(trimmed, words, notes, running);
+                Append(trimmed);
                 continue;
             }
 
@@ -225,7 +270,7 @@ internal static partial class UsfmReader
                     (verse, label) = Number(space < 0 ? rest : rest[..space]);
                     if (space >= 0)
                     {
-                        Words(rest[(space + 1)..], words, notes, running);
+                        Append(rest[(space + 1)..]);
                     }
 
                     break;
@@ -244,7 +289,12 @@ internal static partial class UsfmReader
                 default:
                     if (Passage.Contains(name))
                     {
-                        Words(rest, words, notes, running);
+                        if (Breaks.TryGetValue(name, out var opening))
+                        {
+                            pending = pending == TextBreak.Paragraph ? pending : opening;
+                        }
+
+                        Append(rest);
                     }
                     else if (!Matter.Contains(name))
                     {
