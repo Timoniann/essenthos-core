@@ -58,6 +58,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 });
 
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
+builder.Services.AddSingleton<TextFacts>();
 
 // Accounts: the database the API owns and writes, and sign-in with whichever providers are
 // configured. Reading needs none of it.

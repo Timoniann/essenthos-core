@@ -1,0 +1,163 @@
+using Essenthos.Core.Corpus;
+
+namespace Essenthos.Core.Endpoints;
+
+/// <summary>
+/// What each text is, in a sentence or two, in every language the interface speaks.
+///
+/// Each one restates the text's own About paragraph and rights note, which are the corpus's record
+/// and stay in English; nothing here says what those do not. They are the lead of a text's page,
+/// written for somebody who has never heard of the edition, and the About is quoted in full beneath.
+///
+/// Keyed by the identifier the text had when this was written. A text renamed since keeps its old
+/// identifier as an alias, and <see cref="For"/> looks there too, so a rename does not silence it.
+/// </summary>
+internal static class TextSummaries
+{
+    private static readonly Dictionary<string, IReadOnlyDictionary<string, string>> Written =
+        new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["BHSA"] = Say(
+                "The Hebrew Bible as the Leningrad Codex preserves it — the Masoretic text of the Biblia Hebraica Stuttgartensia — with the linguistic annotation the ETCBC in Amsterdam has built since the 1970s: parts of speech, verb stems, and the clause and phrase structure of every verse.",
+                "Єврейська Біблія в тому вигляді, в якому її зберіг Ленінградський кодекс, — масоретський текст Biblia Hebraica Stuttgartensia — з лінгвістичною розміткою, яку амстердамський ETCBC будує з 1970-х років: частини мови, породи дієслів, будова речень і словосполучень кожного вірша.",
+                "Die Hebräische Bibel, wie der Codex Leningradensis sie bewahrt – der masoretische Text der Biblia Hebraica Stuttgartensia – mit der sprachlichen Annotation, die das ETCBC in Amsterdam seit den 1970er-Jahren aufbaut: Wortarten, Verbalstämme und die Satz- und Phrasenstruktur jedes Verses.",
+                "La Biblia hebrea tal como la conserva el Códice de Leningrado —el texto masorético de la Biblia Hebraica Stuttgartensia— con la anotación lingüística que el ETCBC de Ámsterdam construye desde los años setenta: categorías gramaticales, temas verbales y la estructura de cláusulas y sintagmas de cada versículo."),
+            ["SP"] = Say(
+                "The Torah as the Samaritan community has transmitted it — a third Hebrew textual family beside the Masoretic text and the Qumran scrolls. Stefan Schorch's critical edition from Halle, transcribed from two manuscripts and written without vowel points, as the Samaritan tradition writes it.",
+                "Тора в тому вигляді, в якому її передала самарянська громада, — третя гілка єврейського тексту поряд із масоретським текстом і кумранськими сувоями. Критичне видання Штефана Шорха (Галле), переписане з двох рукописів без огласовок, як і пише самарянська традиція.",
+                "Die Tora, wie die samaritanische Gemeinde sie überliefert hat – eine dritte hebräische Textfamilie neben dem masoretischen Text und den Qumranrollen. Stefan Schorchs kritische Ausgabe aus Halle, nach zwei Handschriften transkribiert und ohne Vokalzeichen, wie die samaritanische Tradition schreibt.",
+                "La Torá tal como la ha transmitido la comunidad samaritana: una tercera familia textual hebrea junto al texto masorético y los rollos de Qumrán. Edición crítica de Stefan Schorch (Halle), transcrita de dos manuscritos y sin puntos vocálicos, como escribe la tradición samaritana."),
+            ["NESTLE1904"] = Say(
+                "The Greek New Testament Eberhard Nestle built by combining the printed editions of Tischendorf, Westcott and Hort, and Weymouth, in the British and Foreign Bible Society's printing of 1904 — close to the modern critical text without being one. The digital edition carries full morphology.",
+                "Грецький Новий Заповіт, який Еберхард Нестле склав, поєднавши друковані видання Тішендорфа, Весткотта й Горта та Веймута, у виданні Британського і закордонного біблійного товариства 1904 року — близький до сучасного критичного тексту, але не тотожний йому. Цифрове видання має повну морфологічну розмітку.",
+                "Das griechische Neue Testament, das Eberhard Nestle aus den gedruckten Ausgaben von Tischendorf, Westcott und Hort sowie Weymouth zusammensetzte, im Druck der Britischen und Ausländischen Bibelgesellschaft von 1904 – nahe am modernen kritischen Text, ohne einer zu sein. Die digitale Ausgabe ist vollständig morphologisch annotiert.",
+                "El Nuevo Testamento griego que Eberhard Nestle compuso combinando las ediciones impresas de Tischendorf, Westcott y Hort, y Weymouth, en la impresión de la Sociedad Bíblica Británica y Extranjera de 1904: cercano al texto crítico moderno sin serlo. La edición digital lleva morfología completa."),
+            ["TISCHENDORF1872"] = Say(
+                "Tischendorf's eighth critical edition of the Greek New Testament (1869–1872), where he weighed the Codex Sinaiticus he had found at Saint Catherine's. One of the three editions Nestle 1904 takes its majority from; the text is served without its apparatus.",
+                "Восьме критичне видання грецького Нового Заповіту Тішендорфа (1869–1872), у якому він зважив знайдений ним у монастирі Святої Катерини Синайський кодекс. Одне з трьох видань, за більшістю яких укладено текст Нестле 1904; подано без критичного апарату.",
+                "Tischendorfs achte kritische Ausgabe des griechischen Neuen Testaments (1869–1872), in der er den von ihm im Katharinenkloster gefundenen Codex Sinaiticus gewichtete. Eine der drei Ausgaben, aus deren Mehrheit Nestle 1904 gebildet ist; der Text steht hier ohne Apparat.",
+                "La octava edición crítica del Nuevo Testamento griego de Tischendorf (1869–1872), en la que sopesó el Códice Sinaítico que él mismo había hallado en Santa Catalina. Una de las tres ediciones cuya mayoría sigue Nestle 1904; el texto se ofrece sin su aparato."),
+            ["WESTCOTTHORT1881"] = Say(
+                "The Greek New Testament of Westcott and Hort (1881), who weighed manuscripts by family and trusted Codex Vaticanus and Codex Sinaiticus above the rest — the edition that ended the Received Text's reign in scholarship, and another of Nestle's three sources. This transcription has no accents or breathings.",
+                "Грецький Новий Заповіт Весткотта й Горта (1881). Вони зважували рукописи за родинами й найбільше довіряли Ватиканському та Синайському кодексам; це видання поклало край пануванню Textus Receptus у науці й стало ще одним із трьох джерел Нестле. Ця транскрипція не має наголосів і придихів.",
+                "Das griechische Neue Testament von Westcott und Hort (1881), die Handschriften nach Familien gewichteten und dem Codex Vaticanus und dem Codex Sinaiticus am meisten vertrauten – die Ausgabe, die die Herrschaft des Textus receptus in der Wissenschaft beendete, und eine weitere von Nestles drei Quellen. Diese Transkription hat keine Akzente und Spiritus.",
+                "El Nuevo Testamento griego de Westcott y Hort (1881), que valoraron los manuscritos por familias y confiaron sobre todo en los códices Vaticano y Sinaítico: la edición que acabó con el reinado del Texto Recibido en la erudición, y otra de las tres fuentes de Nestle. Esta transcripción no lleva acentos ni espíritus."),
+            ["SCRIVENER1894"] = Say(
+                "A reconstruction of the Greek the King James translators followed: Scrivener worked back from the English, choosing at each place the reading of Erasmus, Stephanus or Beza that the Authorised Version had taken. First published in 1881; this is the 1894 printing.",
+                "Реконструкція грецького тексту, за яким працювали перекладачі Біблії короля Якова: Скрівенер ішов від англійського тексту назад, обираючи в кожному місці те читання Еразма, Стефана чи Бези, яке прийняла Авторизована версія. Уперше видано 1881 року; тут — друк 1894 року.",
+                "Eine Rekonstruktion des griechischen Textes, dem die Übersetzer der King James folgten: Scrivener ging vom Englischen zurück und wählte an jeder Stelle die Lesart von Erasmus, Stephanus oder Beza, der die Authorised Version gefolgt war. Erstmals 1881 erschienen; dies ist der Druck von 1894.",
+                "Una reconstrucción del griego que siguieron los traductores de la King James: Scrivener partió del inglés y eligió en cada lugar la lectura de Erasmo, Estéfano o Beza que había adoptado la Versión Autorizada. Publicada por primera vez en 1881; esta es la impresión de 1894."),
+            ["STEPHANUS1550"] = Say(
+                "Robert Estienne's Greek New Testament of 1550, the editio regia printed in Paris, resting on Erasmus and the Complutensian Polyglot. In England it became the Received Text, which is why it stands here beside Scrivener: two states of one tradition.",
+                "Грецький Новий Заповіт Робера Етьєна 1550 року — «королівське видання», надруковане в Парижі на основі Еразма й Комплютенської поліглоти. В Англії саме воно стало Textus Receptus, тому тут воно стоїть поруч зі Скрівенером: два стани однієї традиції.",
+                "Robert Estiennes griechisches Neues Testament von 1550, die in Paris gedruckte Editio regia, gestützt auf Erasmus und die Complutensische Polyglotte. In England wurde es zum Textus receptus – darum steht es hier neben Scrivener: zwei Zustände einer Überlieferung.",
+                "El Nuevo Testamento griego de Robert Estienne de 1550, la editio regia impresa en París, basada en Erasmo y en la Políglota Complutense. En Inglaterra se convirtió en el Texto Recibido, por eso está aquí junto a Scrivener: dos estados de una misma tradición."),
+            ["ROBINSONPIERPONT2018"] = Say(
+                "The reading of the majority of surviving Greek manuscripts, as Maurice Robinson and William Pierpont reconstructed it; where the manuscripts divide, the division is printed rather than resolved. First published in 1991; this is the 2018 edition.",
+                "Читання більшості збережених грецьких рукописів у реконструкції Моріса Робінсона й Вільяма Пірпонта; де рукописи розходяться, розбіжність надруковано, а не розв'язано. Уперше видано 1991 року; тут — видання 2018 року.",
+                "Die Lesart der Mehrheit der erhaltenen griechischen Handschriften, wie Maurice Robinson und William Pierpont sie rekonstruierten; wo die Handschriften auseinandergehen, wird die Spaltung abgedruckt statt entschieden. Erstmals 1991 erschienen; dies ist die Ausgabe von 2018.",
+                "La lectura de la mayoría de los manuscritos griegos conservados, tal como la reconstruyeron Maurice Robinson y William Pierpont; donde los manuscritos se dividen, se imprime la división en lugar de resolverla. Publicada por primera vez en 1991; esta es la edición de 2018."),
+            ["LXX-BRENTON"] = Say(
+                "The Septuagint — the Greek translation of the Hebrew Scriptures made in Alexandria between roughly the third and the first century BC, by different hands book by book — in the text Sir Lancelot Brenton printed facing his English, following Codex Vaticanus (1844, with the Apocrypha 1851). Its lemmas come from GLAUx.",
+                "Септуагінта — грецький переклад єврейського Письма, зроблений в Александрії приблизно між III і I століттями до н. е. різними перекладачами, книга за книгою, — у тексті, який сер Ланселот Брентон надрукував поруч зі своїм англійським перекладом за Ватиканським кодексом (1844, з апокрифами — 1851). Леми взято з GLAUx.",
+                "Die Septuaginta – die griechische Übersetzung der hebräischen Schriften, in Alexandria etwa zwischen dem 3. und dem 1. Jahrhundert v. Chr. von verschiedenen Händen Buch für Buch angefertigt – in dem Text, den Sir Lancelot Brenton seiner englischen Übersetzung gegenüberstellte, nach dem Codex Vaticanus (1844, mit den Apokryphen 1851). Die Lemmata stammen aus GLAUx.",
+                "La Septuaginta —la traducción griega de las Escrituras hebreas hecha en Alejandría aproximadamente entre los siglos III y I a. C., por distintas manos libro a libro— en el texto que Sir Lancelot Brenton imprimió frente a su traducción inglesa, siguiendo el Códice Vaticano (1844; con los apócrifos, 1851). Sus lemas proceden de GLAUx."),
+            ["LXX-SWETE"] = Say(
+                "The Septuagint as Henry Barclay Swete printed it at Cambridge (1887–1894): Codex Vaticanus as it stands, its gaps filled from Sinaiticus and Alexandrinus and the other manuscripts' readings left to the apparatus. The apparatus is not included here, only the text.",
+                "Септуагінта у виданні Генрі Барклі Світа (Кембридж, 1887–1894): Ватиканський кодекс як він є, прогалини заповнено за Синайським і Александрійським кодексами, а читання інших рукописів винесено до апарату. Апарату тут немає — лише текст.",
+                "Die Septuaginta, wie Henry Barclay Swete sie in Cambridge druckte (1887–1894): der Codex Vaticanus, wie er dasteht, Lücken aus dem Sinaiticus und dem Alexandrinus ergänzt, die Lesarten der übrigen Handschriften im Apparat. Der Apparat ist hier nicht enthalten, nur der Text.",
+                "La Septuaginta tal como la imprimió Henry Barclay Swete en Cambridge (1887–1894): el Códice Vaticano tal cual, con sus lagunas completadas con el Sinaítico y el Alejandrino y las lecturas de los demás manuscritos relegadas al aparato. Aquí no está el aparato, solo el texto."),
+            ["KJV"] = Say(
+                "The English translation made in 1604–1611 by six companies at Westminster, Oxford and Cambridge from the Hebrew and Greek editions of the day. What is served is the modern standard text with modernised spelling, not the 1611 printing.",
+                "Англійський переклад, зроблений у 1604–1611 роках шістьма групами перекладачів у Вестмінстері, Оксфорді й Кембриджі з тогочасних друкованих видань єврейського та грецького текстів. Тут подано сучасний стандартний текст з осучасненим правописом, а не друк 1611 року.",
+                "Die englische Übersetzung, die sechs Arbeitsgruppen in Westminster, Oxford und Cambridge 1604–1611 aus den hebräischen und griechischen Ausgaben ihrer Zeit anfertigten. Hier steht der moderne Standardtext mit modernisierter Schreibung, nicht der Druck von 1611.",
+                "La traducción inglesa hecha entre 1604 y 1611 por seis equipos en Westminster, Oxford y Cambridge a partir de las ediciones hebreas y griegas de la época. Lo que se ofrece es el texto estándar moderno, con ortografía modernizada, no la impresión de 1611."),
+            ["TYN1534"] = Say(
+                "William Tyndale's New Testament, the first translated into English from the Greek and the first printed in English, in his own revision of 1534. The King James kept his wording wherever it could; his spelling is kept as he wrote it.",
+                "Новий Заповіт Вільяма Тиндейла — перший, перекладений англійською з грецької, і перший, надрукований англійською, у його власній редакції 1534 року. Біблія короля Якова зберегла його формулювання скрізь, де могла; правопис залишено авторський.",
+                "William Tyndales Neues Testament, das erste aus dem Griechischen ins Englische übersetzte und das erste auf Englisch gedruckte, in seiner eigenen Überarbeitung von 1534. Die King James behielt seinen Wortlaut, wo immer sie konnte; seine Schreibung ist beibehalten.",
+                "El Nuevo Testamento de William Tyndale, el primero traducido al inglés desde el griego y el primero impreso en inglés, en su propia revisión de 1534. La King James conservó su redacción siempre que pudo; se mantiene su ortografía original."),
+            ["GNV1599"] = Say(
+                "The Bible England read for two generations before the King James, made from the Hebrew and Greek by Protestant exiles at Geneva. First published in 1560; served here in the 1599 edition, in its original spelling and without the marginal notes.",
+                "Біблія, яку Англія читала два покоління до Біблії короля Якова; її переклали з єврейської та грецької протестантські вигнанці в Женеві. Уперше видана 1560 року; тут — видання 1599 року в оригінальному правописі, без коментарів на берегах.",
+                "Die Bibel, die England zwei Generationen lang vor der King James las, von protestantischen Exilanten in Genf aus dem Hebräischen und Griechischen übersetzt. Erstmals 1560 erschienen; hier in der Ausgabe von 1599, in originaler Schreibung und ohne die Randanmerkungen.",
+                "La Biblia que Inglaterra leyó durante dos generaciones antes de la King James, traducida del hebreo y del griego por exiliados protestantes en Ginebra. Publicada por primera vez en 1560; aquí en la edición de 1599, con su ortografía original y sin las notas marginales."),
+            ["ASV"] = Say(
+                "The American recension of the Revised Version of 1881–1885: the King James line brought onto the Greek critical text of the nineteenth century. It renders the divine name as Jehovah throughout.",
+                "Американська редакція Переглянутої версії 1881–1885 років: традиція Біблії короля Якова, перенесена на грецький критичний текст XIX століття. Боже ім'я скрізь передано як «Єгова».",
+                "Die amerikanische Rezension der Revised Version von 1881–1885: die King-James-Tradition, übertragen auf den griechischen kritischen Text des 19. Jahrhunderts. Den Gottesnamen gibt sie durchgehend als Jehovah wieder.",
+                "La recensión estadounidense de la Revised Version de 1881–1885: la tradición de la King James llevada al texto crítico griego del siglo XIX. Traduce el nombre divino como Jehovah en todo el texto."),
+            ["YLT"] = Say(
+                "Robert Young's translation, which reproduces the grammar of the Hebrew and Greek rather than replacing it and renders one original word by one English word wherever it can — hard to read, and for that reason the most useful English text here for comparing with the original. The revised edition of 1898; its Greek is the Textus Receptus.",
+                "Переклад Роберта Янга, який відтворює граматику єврейського й грецького тексту замість того, щоб її замінювати, і передає одне слово оригіналу одним англійським словом скрізь, де може, — важкий для читання і саме тому найкорисніший тут англійський текст для порівняння з оригіналом. Переглянуте видання 1898 року; грецький текст — Textus Receptus.",
+                "Robert Youngs Übersetzung, die die Grammatik des Hebräischen und Griechischen nachbildet, statt sie zu ersetzen, und ein Wort des Originals, wo immer möglich, durch ein und dasselbe englische Wort wiedergibt – schwer zu lesen und gerade darum der nützlichste englische Text hier für den Vergleich mit dem Original. Die überarbeitete Ausgabe von 1898; ihr griechischer Text ist der Textus receptus.",
+                "La traducción de Robert Young, que reproduce la gramática del hebreo y del griego en vez de sustituirla y traduce cada palabra del original por una misma palabra inglesa siempre que puede: difícil de leer y, por eso mismo, el texto inglés más útil de aquí para compararlo con el original. Edición revisada de 1898; su griego es el Texto Recibido."),
+            ["JPS1917"] = Say(
+                "The first English Bible made by Jews for Jews: a board under Max Margolis translated the Masoretic text over a decade and published it in 1917. It has no New Testament; names are transliterated where Christian versions translate them.",
+                "Перша англійська Біблія, зроблена юдеями для юдеїв: рада редакторів під керівництвом Макса Марголіса десять років перекладала масоретський текст і видала його 1917 року. Нового Заповіту в ній немає; імена транслітеровано там, де християнські переклади їх перекладають.",
+                "Die erste englische Bibel, von Juden für Juden gemacht: Ein Gremium unter Max Margolis übersetzte ein Jahrzehnt lang den masoretischen Text und veröffentlichte ihn 1917. Ein Neues Testament hat sie nicht; Namen werden transkribiert, wo christliche Übersetzungen sie übersetzen.",
+                "La primera Biblia inglesa hecha por judíos para judíos: un comité dirigido por Max Margolis tradujo el texto masorético durante una década y la publicó en 1917. No tiene Nuevo Testamento; los nombres se transliteran donde las versiones cristianas los traducen."),
+            ["BSB"] = Say(
+                "A new English translation, made so that every English word can be traced to the Hebrew or Greek behind it; its translators publish their own word-level tables, and those are what link it to the originals here. Placed in the public domain on 30 April 2023.",
+                "Новий англійський переклад, зроблений так, щоб кожне англійське слово можна було простежити до єврейського чи грецького слова, яке воно передає; перекладачі публікують власні пословні таблиці, і саме вони пов'язують його тут з оригіналами. Переданий у суспільне надбання 30 квітня 2023 року.",
+                "Eine neue englische Übersetzung, so angelegt, dass sich jedes englische Wort auf das hebräische oder griechische dahinter zurückführen lässt; die Übersetzer veröffentlichen eigene Wort-für-Wort-Tabellen, und diese verbinden sie hier mit den Grundtexten. Am 30. April 2023 gemeinfrei gestellt.",
+                "Una traducción inglesa nueva, hecha para que cada palabra inglesa pueda rastrearse hasta la palabra hebrea o griega que traduce; sus traductores publican sus propias tablas palabra por palabra, y son ellas las que aquí la enlazan con los originales. Pasó al dominio público el 30 de abril de 2023."),
+            ["WEB"] = Say(
+                "A modern English update of the American Standard Version, revised continuously by volunteers and dedicated to the public domain on purpose; its New Testament is conformed in places to the Byzantine Majority Text.",
+                "Сучасне англійське оновлення Американської стандартної версії, яке волонтери постійно переглядають і яке свідомо передано в суспільне надбання; його Новий Заповіт місцями узгоджено з візантійським текстом більшості.",
+                "Eine moderne englische Überarbeitung der American Standard Version, von Freiwilligen fortlaufend revidiert und bewusst gemeinfrei gestellt; ihr Neues Testament ist stellenweise an den byzantinischen Mehrheitstext angeglichen.",
+                "Una actualización moderna al inglés de la American Standard Version, revisada continuamente por voluntarios y dedicada a propósito al dominio público; su Nuevo Testamento se ajusta en algunos lugares al texto bizantino mayoritario."),
+            ["LUTH1912"] = Say(
+                "Martin Luther's German Bible (New Testament 1522, whole Bible 1534), translated from the Hebrew and from Erasmus's Greek, in the churches' revision of 1912 — the last one out of copyright. It arrives tagged: about half its words carry a Strong number.",
+                "Німецька Біблія Мартіна Лютера (Новий Заповіт — 1522, уся Біблія — 1534), перекладена з єврейської та з грецького тексту Еразма, у церковній редакції 1912 року — останній, на яку вже не поширюється авторське право. Вона має розмітку: близько половини слів мають номер Стронга.",
+                "Martin Luthers deutsche Bibel (Neues Testament 1522, ganze Bibel 1534), aus dem Hebräischen und aus dem Griechisch des Erasmus übersetzt, in der kirchlichen Revision von 1912 – der letzten, die gemeinfrei ist. Sie ist annotiert: etwa die Hälfte ihrer Wörter trägt eine Strong-Nummer.",
+                "La Biblia alemana de Martín Lutero (Nuevo Testamento 1522, Biblia completa 1534), traducida del hebreo y del griego de Erasmo, en la revisión eclesiástica de 1912, la última libre de derechos de autor. Viene etiquetada: cerca de la mitad de sus palabras llevan un número Strong."),
+            ["ELB1905"] = Say(
+                "The literal German Bible of the Brethren: John Nelson Darby, Carl Brockhaus and Julius Anton von Poseck published it at Elberfeld (New Testament 1855, whole Bible 1871), keeping the Hebrew and Greek word order wherever German allows. The unrevised edition of 1905.",
+                "Дослівна німецька Біблія «братів»: Джон Нельсон Дарбі, Карл Брокгаус і Юліус Антон фон Позек видали її в Ельберфельді (Новий Заповіт — 1855, уся Біблія — 1871), зберігаючи порядок слів єврейського й грецького тексту скрізь, де це дозволяє німецька мова. Неперероблене видання 1905 року.",
+                "Die wörtliche deutsche Bibel der Brüderbewegung: John Nelson Darby, Carl Brockhaus und Julius Anton von Poseck gaben sie in Elberfeld heraus (Neues Testament 1855, ganze Bibel 1871) und bewahrten die hebräische und griechische Wortstellung, wo das Deutsche es zulässt. Die unrevidierte Ausgabe von 1905.",
+                "La Biblia alemana literal de los Hermanos: John Nelson Darby, Carl Brockhaus y Julius Anton von Poseck la publicaron en Elberfeld (Nuevo Testamento 1855, Biblia completa 1871), conservando el orden de palabras hebreo y griego siempre que el alemán lo permite. La edición sin revisar de 1905."),
+            ["RV1909"] = Say(
+                "Casiodoro de Reina's Spanish Bible, printed at Basel in 1569 and revised by Cipriano de Valera in 1602, in the revision of 1909 — the last Reina-Valera out of copyright. Its New Testament follows the Textus Receptus.",
+                "Іспанська Біблія Касіодоро де Рейни, надрукована в Базелі 1569 року й переглянута Сиприано де Валерою 1602 року, у редакції 1909 року — останній Рейна-Валера, на яку не поширюється авторське право. Її Новий Заповіт іде за Textus Receptus.",
+                "Casiodoro de Reinas spanische Bibel, 1569 in Basel gedruckt und 1602 von Cipriano de Valera überarbeitet, in der Revision von 1909 – der letzten gemeinfreien Reina-Valera. Ihr Neues Testament folgt dem Textus receptus.",
+                "La Biblia española de Casiodoro de Reina, impresa en Basilea en 1569 y revisada por Cipriano de Valera en 1602, en la revisión de 1909, la última Reina-Valera libre de derechos de autor. Su Nuevo Testamento sigue el Texto Recibido."),
+            ["RUSV"] = Say(
+                "The Russian Synodal translation, begun in 1813, resumed under Alexander II and completed in 1876, with the Old Testament translated from the Masoretic text. Words the Septuagint has and the Hebrew lacks are printed in square brackets.",
+                "Російський синодальний переклад: розпочатий 1813 року, відновлений за Олександра II й завершений 1876 року; Старий Заповіт перекладено з масоретського тексту. Слова, які є в Септуагінті, але яких немає в єврейському тексті, надруковано у квадратних дужках.",
+                "Die russische Synodalübersetzung, 1813 begonnen, unter Alexander II. wieder aufgenommen und 1876 vollendet; das Alte Testament ist aus dem masoretischen Text übersetzt. Wörter, die die Septuaginta hat und der hebräische Text nicht, stehen in eckigen Klammern.",
+                "La traducción sinodal rusa, iniciada en 1813, retomada bajo Alejandro II y terminada en 1876, con el Antiguo Testamento traducido del texto masorético. Las palabras que tiene la Septuaginta y le faltan al hebreo se imprimen entre corchetes."),
+            ["UBIO"] = Say(
+                "Ivan Ohienko's Ukrainian translation from the Hebrew and Greek, begun in 1917, finished in 1940 and first printed complete in London in 1962. Whether the rights in the 1962 edition have been released is not settled.",
+                "Український переклад Івана Огієнка з єврейської та грецької, розпочатий 1917 року, завершений 1940-го й уперше повністю надрукований у Лондоні 1962 року. Чи звільнено права на видання 1962 року, не з'ясовано.",
+                "Iwan Ohijenkos ukrainische Übersetzung aus dem Hebräischen und Griechischen, 1917 begonnen, 1940 vollendet und 1962 in London erstmals vollständig gedruckt. Ob die Rechte an der Ausgabe von 1962 freigegeben sind, ist nicht geklärt.",
+                "La traducción ucraniana de Iván Ohienko desde el hebreo y el griego, comenzada en 1917, terminada en 1940 e impresa completa por primera vez en Londres en 1962. No está aclarado si se han liberado los derechos de la edición de 1962."),
+            ["UKR1871"] = Say(
+                "The first complete Bible in modern literary Ukrainian. Panteleimon Kulish began it in the 1860s and with Ivan Puliui published the New Testament in Vienna in 1871; after his death Puliui and Ivan Nechui-Levytsky finished it, and the whole Bible was printed in 1903. Kulish's own spelling is kept.",
+                "Перша повна Біблія сучасною українською літературною мовою. Пантелеймон Куліш почав її в 1860-х роках і разом з Іваном Пулюєм видав Новий Заповіт у Відні 1871 року; після його смерті переклад завершили Пулюй та Іван Нечуй-Левицький, і всю Біблію надруковано 1903 року. Правопис Куліша збережено.",
+                "Die erste vollständige Bibel im modernen literarischen Ukrainisch. Pantelejmon Kulisch begann sie in den 1860er-Jahren und gab 1871 mit Iwan Puljuj in Wien das Neue Testament heraus; nach seinem Tod vollendeten Puljuj und Iwan Netschuj-Lewyzkyj sie, und die ganze Bibel erschien 1903. Kulischs eigene Schreibung ist beibehalten.",
+                "La primera Biblia completa en ucraniano literario moderno. Panteleimón Kulish la empezó en la década de 1860 y con Iván Puliui publicó el Nuevo Testamento en Viena en 1871; tras su muerte, Puliui e Iván Nechui-Levytski la terminaron, y la Biblia completa se imprimió en 1903. Se conserva la ortografía del propio Kulish."),
+        };
+
+    /// <summary>The interface languages every summary is written in.</summary>
+    public static readonly IReadOnlyList<string> Languages = ["en", "uk", "de", "es"];
+
+    /// <summary>
+    /// The summary of the text with this identifier, looked up under the identifier and under every
+    /// spelling it answers to. Null for a text nobody has described yet.
+    /// </summary>
+    public static IReadOnlyDictionary<string, string>? For(string slug)
+    {
+        if (Written.TryGetValue(slug, out var summary))
+        {
+            return summary;
+        }
+
+        return TextAliases.Of(slug)
+            .Select(alias => Written.GetValueOrDefault(alias))
+            .FirstOrDefault(found => found is not null);
+    }
+
+    private static IReadOnlyDictionary<string, string> Say(string en, string uk, string de, string es) =>
+        new Dictionary<string, string> { ["en"] = en, ["uk"] = uk, ["de"] = de, ["es"] = es };
+}

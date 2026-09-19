@@ -59,6 +59,58 @@ internal record CanonSectionResponse(string Slug, string Name, int BookCount);
 
 internal record CanonListResponse(IList<CanonResponse> Items);
 
+/// <param name="Books">
+/// The books it holds, in canonical order, each with this text's own chapter count and its own
+/// name for the book where it has one.
+/// </param>
+/// <param name="LemmasFrom">
+/// Whoever supplied this text's lemmas, where that is somebody other than the edition itself.
+/// </param>
+internal record TextDetailResponse(
+    CorpusResponse Text,
+    TextCountsResponse Counts,
+    TextFeaturesResponse Features,
+    IList<TextLinkResponse> Links,
+    IList<TextCreditResponse> LemmasFrom,
+    IList<BookResponse> Books);
+
+/// <param name="Words">The words the edition prints; a word it prints no letters for is not one.</param>
+internal record TextCountsResponse(int Chapters, int Verses, int Words)
+{
+    public int Books { get; init; }
+}
+
+/// <summary>How many of the text's words carry each kind of annotation. Zero is an answer: it does not.</summary>
+/// <param name="Transliteration">Words carrying the edition's own pronunciation, which only BHSA has.</param>
+/// <param name="Named">Words that say which person or place they name.</param>
+/// <param name="SyntaxGroups">Clauses, phrases and sentences the edition's own analysis marks.</param>
+/// <param name="Supplied">Spans the edition marks as the translators' own, the italics of a printed Bible.</param>
+/// <param name="Notes">Notes the edition prints at a verse.</param>
+internal record TextFeaturesResponse(
+    int Lemmas,
+    int StrongNumbers,
+    int Glosses,
+    int Morphology,
+    int Transliteration,
+    int Named,
+    int SyntaxGroups,
+    int Supplied,
+    int Notes);
+
+/// <param name="Text">The other text, by its identifier.</param>
+/// <param name="Links">How many word links join the two, in either direction.</param>
+/// <param name="Methods">What established them, by method, most first.</param>
+/// <param name="StatedBy">The datasets that stated any of them. Empty where every link is this project's own.</param>
+internal record TextLinkResponse(
+    string Text,
+    int Links,
+    IList<TextLinkMethodResponse> Methods,
+    IList<TextCreditResponse> StatedBy);
+
+internal record TextLinkMethodResponse(string Method, int Links);
+
+internal record TextCreditResponse(string Name, string Author);
+
 internal record ChapterTextResponse(
     string Corpus,
     BookRefResponse Book,
@@ -80,10 +132,60 @@ internal static class ReadEndpoints
                 .Join(entries, t => t.Id, e => e.Id, (text, entry) => Texts.Corpus(
                     text,
                     new CoverageResponse(entry.FirstBook, entry.LastBook, entry.Books),
-                    entry.HasWordMapping))
+                    entry.HasWordMapping) with { Summary = TextSummaries.For(text.Slug) })
                 .ToList();
 
             return Results.Ok(new CorpusListResponse(items));
+        });
+
+        // One text and everything the corpus can say about it. The counts are the expensive part
+        // and are asked of TextFacts, which counts every text once and remembers.
+        routes.MapGet("/corpora/{corpus}", async (
+            string corpus,
+            AppDbContext db,
+            ICanonIndex canon,
+            TextFacts facts,
+            CancellationToken cancellationToken) =>
+        {
+            if (await canon.Text(corpus, cancellationToken) is not { } entry)
+            {
+                return ApiResults.NotFound(
+                    $"There is no text \"{corpus}\". Ask /v1/corpora for the ones this corpus holds.");
+            }
+
+            var text = await db.Texts.SingleAsync(t => t.Id == entry.Id, cancellationToken);
+            var tally = await facts.Of(entry.Id, cancellationToken);
+
+            // The books as this text has them: its own chapter count and what it calls each one,
+            // under the canonical name and slug every other address uses.
+            var native = await db.Books
+                .Where(b => b.TextId == entry.Id)
+                .ToDictionaryAsync(b => b.CanonicalOrdinal, b => b.NameNative, cancellationToken);
+            var books = new List<BookResponse>(entry.Books.Count);
+            foreach (var ordinal in entry.Books)
+            {
+                books.Add(await Book(canon, ordinal, cancellationToken) with
+                {
+                    ChapterCount = await canon.ChapterCountIn(entry.Id, ordinal, cancellationToken),
+                    NameNative = native.GetValueOrDefault(ordinal),
+                });
+            }
+
+            var lemmasFrom = Datasets.All
+                .Where(dataset => string.Equals(dataset.Lemmas, text.Slug, StringComparison.OrdinalIgnoreCase))
+                .Select(dataset => new TextCreditResponse(dataset.Name, dataset.Author))
+                .ToList();
+
+            return Results.Ok(new TextDetailResponse(
+                Texts.Corpus(
+                    text,
+                    new CoverageResponse(entry.FirstBook, entry.LastBook, entry.Books),
+                    entry.HasWordMapping) with { Summary = TextSummaries.For(text.Slug) },
+                tally.Counts with { Books = entry.Books.Count },
+                tally.Features,
+                tally.Links,
+                lemmasFrom,
+                books));
         });
 
         // Which canon, in which order, under what headings — and what the collection is called.

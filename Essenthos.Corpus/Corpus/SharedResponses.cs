@@ -98,6 +98,21 @@ internal record CorpusResponse(
     /// knowing which texts have any.
     /// </summary>
     public IReadOnlyList<string>? Aliases { get; init; }
+
+    /// <summary>
+    /// What kind of text this is, finer than <c>Kind</c>: <c>manuscript-tradition</c>,
+    /// <c>critical-edition</c>, <c>printed-edition</c> or <c>translation</c>. <c>Kind</c> keeps the
+    /// old contract's two answers; this one says whether a Greek text was weighed from manuscripts
+    /// or reprinted from somebody's edition.
+    /// </summary>
+    public string? Form { get; init; }
+
+    /// <summary>
+    /// What the text is, in a sentence or two, keyed by interface language — <c>en</c>, <c>uk</c>,
+    /// <c>de</c>, <c>es</c>. It restates <see cref="About"/>, which stays the record. Sent by the
+    /// text listings and nowhere else; null for a text nobody has described.
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Summary { get; init; }
 }
 
 /// <summary>
