@@ -41,6 +41,8 @@ public static class DatasetEndpoints
                 db.Links.Where(link => link.Method != LinkMethod.Aligner).Select(link => link.Source),
                 cancellationToken);
 
+            var parsings = await Counted(db.WordParsings.Select(parsing => parsing.Source), cancellationToken);
+
             var answers = new List<DatasetResponse>();
             foreach (var dataset in Datasets.All)
             {
@@ -52,6 +54,14 @@ public static class DatasetEndpoints
                     ? 0
                     : await db.Words.CountAsync(
                         word => word.Text!.Slug == dataset.Lemmas && word.Lemma != null,
+                        cancellationToken);
+
+                // The same shape as the lemmas above: a gloss on a word carries no source of its
+                // own, so the text it sits on is what makes the credit countable.
+                var wordGlosses = dataset.WordGlosses is null
+                    ? 0
+                    : await db.Words.CountAsync(
+                        word => word.Text!.Slug == dataset.WordGlosses && word.Gloss != null,
                         cancellationToken);
 
                 var lexicon = dataset.Lexicon
@@ -69,10 +79,13 @@ public static class DatasetEndpoints
                     Of(events, dataset),
                     Of(periods, dataset),
                     lemmas,
+                    wordGlosses,
                     lexicon,
-                    dataset.Links ? Of(links, dataset) : 0);
+                    dataset.Links ? Of(links, dataset) : 0,
+                    dataset.Parsings ? Of(parsings, dataset) : 0);
 
-                if (counts is { Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Lexicon: 0, Links: 0 })
+                if (counts is
+                    { Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Glosses: 0, Lexicon: 0, Links: 0, Parsings: 0 })
                 {
                     continue;
                 }
@@ -99,6 +112,7 @@ public static class DatasetEndpoints
             // catch, and a silent zero would let it be published unattributed.
             var undeclared = Undeclared(entities).Concat(Undeclared(events)).Concat(Undeclared(periods))
                 .Concat(Undeclared(links))
+                .Concat(Undeclared(parsings))
                 .GroupBy(row => row.Source, StringComparer.Ordinal)
                 .Select(group => new UndeclaredResponse(group.Key, group.Sum(row => row.Rows)))
                 .OrderByDescending(row => row.Rows)
@@ -168,7 +182,17 @@ public record WorkResponse(
     string LicenceUrl,
     string Covers);
 
-public record DatasetCounts(int Entities, int Events, int Periods, int Lemmas, int Lexicon, int Links);
+/// <param name="Glosses">Words this dataset glosses, where the gloss on a word is what it supplies.</param>
+/// <param name="Parsings">Words given a second analysis by this dataset, beside the edition's own.</param>
+public record DatasetCounts(
+    int Entities,
+    int Events,
+    int Periods,
+    int Lemmas,
+    int Glosses,
+    int Lexicon,
+    int Links,
+    int Parsings);
 
 /// <param name="Source">
 /// The source string as the rows carry it. A dataset that reaches the database without being

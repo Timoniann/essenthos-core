@@ -75,7 +75,7 @@ internal sealed record SeptuagintLinkOutcome(
 /// </summary>
 internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLinkLoader> logger)
 {
-    private const string Source =
+    internal const string Source =
         "the letters both Greek editions print, aligned within each verse of the canonical frame";
 
     private const string LinkImport =

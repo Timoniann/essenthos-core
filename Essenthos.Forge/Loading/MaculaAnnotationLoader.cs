@@ -78,7 +78,7 @@ internal sealed class MaculaAnnotationLoader(AppDbContext db, ILogger<MaculaAnno
     /// think to read. Which commit it was taken at is in <c>Resources/Macula/LICENCE.md</c>, once,
     /// rather than 137,779 times here.
     /// </summary>
-    private const string Source =
+    internal const string Source =
         "MACULA Greek Linguistic Datasets, available at https://github.com/Clear-Bible/macula-greek/";
 
     /// <summary>The value the nominal type takes on a name, which is the whole point of the fetch.</summary>
