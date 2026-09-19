@@ -624,6 +624,7 @@ internal static class EncyclopediaEndpoints
             var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
                 .ToListAsync(cancellationToken);
+            var placesNamed = await PlacesNamed(db, events.Select(row => row.Event.Location), cancellationToken);
 
             // Who says the text names this entity where it does — which is not always whoever
             // supplied the entity. A place can come from one dataset and be referenced by another,
@@ -708,7 +709,7 @@ internal static class EncyclopediaEndpoints
                         n.Meaning, Numbers(n.HebrewStrongNumber), Numbers(n.GreekStrongNumber), n.Kind)),
                 ],
                 related,
-                [.. events.Select(Event)],
+                [.. events.Select(one => Event(one, placesNamed))],
                 [
                     .. stated.Select(row => new EntityReferenceSourceResponse(
                         Datasets.Of(row.Source), row.Source, row.References, row.Mentions)),
@@ -852,7 +853,9 @@ internal static class EncyclopediaEndpoints
                 .Select(Rows)
                 .ToListAsync(cancellationToken);
 
-            return Results.Ok(new EventListResponse(total, [.. page.Select(Event)]));
+            var places = await PlacesNamed(db, page.Select(row => row.Event.Location), cancellationToken);
+
+            return Results.Ok(new EventListResponse(total, [.. page.Select(row => Event(row, places))]));
         });
 
         // Every event at once, trimmed to what a timeline draws with.
@@ -875,7 +878,13 @@ internal static class EncyclopediaEndpoints
             CancellationToken cancellationToken) =>
         {
             var row = await db.Events.Where(e => e.Slug == slug).Select(Rows).FirstOrDefaultAsync(cancellationToken);
-            return row is null ? Results.NotFound() : Results.Ok(Event(row));
+            if (row is null)
+            {
+                return Results.NotFound();
+            }
+
+            var places = await PlacesNamed(db, [row.Event.Location], cancellationToken);
+            return Results.Ok(Event(row, places));
         });
 
         // One period: what it is, what opens and closes it, and what each reckoning makes of those.
@@ -901,6 +910,10 @@ internal static class EncyclopediaEndpoints
                     Entity = p.Entity == null ? null : new { p.Entity.Slug, p.Entity.Name, p.Entity.Distinguisher },
                     Opens = p.StartEvent == null ? null : new { p.StartEvent.Slug, p.StartEvent.Name },
                     Closes = p.EndEvent == null ? null : new { p.EndEvent.Slug, p.EndEvent.Name },
+                    p.StartEventId,
+                    p.EndEventId,
+                    p.StartYear,
+                    p.EndYear,
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -908,6 +921,11 @@ internal static class EncyclopediaEndpoints
             {
                 return Results.NotFound();
             }
+
+            var years = await EventYears(
+                db,
+                db.EventDates.Where(d => d.EventId == period.StartEventId || d.EventId == period.EndEventId),
+                cancellationToken);
 
             var children = await db.Periods
                 .Where(p => p.Parent!.Slug == slug)
@@ -933,15 +951,33 @@ internal static class EncyclopediaEndpoints
                     period.Entity.Slug, period.Entity.Name, period.Entity.Distinguisher),
                 period.Opens is null ? null : new EventRefResponse(period.Opens.Slug, period.Opens.Name),
                 period.Closes is null ? null : new EventRefResponse(period.Closes.Slug, period.Closes.Name),
-                children));
+                children)
+            {
+                Years = Span(years, period.StartEventId, period.EndEventId, period.StartYear, period.EndYear),
+            });
+        });
+
+        // The reckonings on their own, for a page that has to name or format one and has no
+        // reason to hold a chronology's worth of dates to do it.
+        routes.MapGet("/chronologies", async (AppDbContext db, CancellationToken cancellationToken) =>
+            Results.Ok(new ChronologyListResponse(
+                LastYearBeforeChrist, await Chronologies(db, cancellationToken))));
+
+        // Every period with its span in each reckoning: the timeline without its fifteen hundred
+        // events, which is all a page placing one year or naming one era needs.
+        routes.MapGet("/periods", async (AppDbContext db, CancellationToken cancellationToken) =>
+        {
+            var anchoring = db.EventDates.Where(d => db.Periods.Any(
+                p => p.StartEventId == d.EventId || p.EndEventId == d.EventId));
+            var years = await EventYears(db, anchoring, cancellationToken);
+
+            return Results.Ok(new PeriodListResponse(
+                LastYearBeforeChrist,
+                await Periods(db, years, cancellationToken)));
         });
 
         routes.MapGet("/timeline", async (AppDbContext db, CancellationToken cancellationToken) =>
         {
-            var chronologies = await db.Chronologies
-                .OrderBy(c => c.Position)
-                .ToListAsync(cancellationToken);
-
             var events = await InOrder(db.Events)
                 .Select(e => new
                 {
@@ -957,51 +993,11 @@ internal static class EncyclopediaEndpoints
                 })
                 .ToListAsync(cancellationToken);
 
-            var dates = await db.EventDates
-                .Select(d => new { d.EventId, d.ChronologyId, d.Year })
-                .ToListAsync(cancellationToken);
-
-            var reckoning = chronologies.ToDictionary(c => c.Id, c => c.Slug);
-            var years = new Dictionary<int, Dictionary<string, int>>(events.Count);
-            foreach (var date in dates.Where(d => d.Year is not null))
-            {
-                if (!years.TryGetValue(date.EventId, out var byChronology))
-                {
-                    byChronology = [];
-                    years[date.EventId] = byChronology;
-                }
-
-                byChronology[reckoning[date.ChronologyId]] = date.Year!.Value;
-            }
-
-            var periods = await db.Periods
-                .OrderBy(p => p.Level).ThenBy(p => p.StartYear)
-                .Select(p => new
-                {
-                    p.Slug,
-                    p.Name,
-                    p.Kind,
-                    p.Level,
-                    p.Realm,
-                    p.Region,
-                    p.Uri,
-                    ParentSlug = p.Parent == null ? null : p.Parent.Slug,
-                    EntitySlug = p.Entity == null ? null : p.Entity.Slug,
-                    p.Notes,
-                    p.StartEventId,
-                    p.EndEventId,
-                    p.StartYear,
-                    p.EndYear,
-                })
-                .ToListAsync(cancellationToken);
+            var years = await EventYears(db, db.EventDates, cancellationToken);
 
             return Results.Ok(new TimelineResponse(
                 LastYearBeforeChrist,
-                [
-                    .. chronologies.Select(c => new ChronologyResponse(
-                        c.Slug, c.Name, c.Authority, c.Basis, c.Source,
-                        c.LastYearBeforeTheCommonEra, c.IsDefault)),
-                ],
+                await Chronologies(db, cancellationToken),
                 [
                     .. events.Select(e => new TimelineEventResponse(
                         e.Slug,
@@ -1014,21 +1010,87 @@ internal static class EncyclopediaEndpoints
                         e.SequenceInYear != null,
                         years.GetValueOrDefault(e.Id) ?? [])),
                 ],
-                [
-                    .. periods.Select(p => new TimelinePeriodResponse(
-                        p.Slug,
-                        p.Name,
-                        p.Kind,
-                        p.Level,
-                        p.Realm,
-                        p.Region,
-                        p.Uri,
-                        p.ParentSlug,
-                        p.EntitySlug,
-                        p.Notes,
-                        Span(years, p.StartEventId, p.EndEventId, p.StartYear, p.EndYear))),
-                ]));
+                await Periods(db, years, cancellationToken)));
         });
+    }
+
+    private static async Task<IList<ChronologyResponse>> Chronologies(
+        AppDbContext db,
+        CancellationToken cancellationToken) =>
+    [
+        .. (await db.Chronologies.OrderBy(c => c.Position).ToListAsync(cancellationToken))
+            .Select(c => new ChronologyResponse(
+                c.Slug, c.Name, c.Authority, c.Basis, c.Source, c.LastYearBeforeTheCommonEra, c.IsDefault)),
+    ];
+
+    /// <summary>The year each chronology gives each of these dates' events, keyed by chronology slug.</summary>
+    internal static async Task<Dictionary<int, Dictionary<string, int>>> EventYears(
+        AppDbContext db,
+        IQueryable<EventDate> dates,
+        CancellationToken cancellationToken)
+    {
+        var reckoning = await db.Chronologies.ToDictionaryAsync(c => c.Id, c => c.Slug, cancellationToken);
+        var rows = await dates
+            .Where(d => d.Year != null)
+            .Select(d => new { d.EventId, d.ChronologyId, Year = d.Year!.Value })
+            .ToListAsync(cancellationToken);
+
+        var years = new Dictionary<int, Dictionary<string, int>>();
+        foreach (var date in rows)
+        {
+            if (!years.TryGetValue(date.EventId, out var byChronology))
+            {
+                byChronology = [];
+                years[date.EventId] = byChronology;
+            }
+
+            byChronology[reckoning[date.ChronologyId]] = date.Year;
+        }
+
+        return years;
+    }
+
+    internal static async Task<IList<TimelinePeriodResponse>> Periods(
+        AppDbContext db,
+        Dictionary<int, Dictionary<string, int>> years,
+        CancellationToken cancellationToken)
+    {
+        var periods = await db.Periods
+            .OrderBy(p => p.Level).ThenBy(p => p.StartYear)
+            .Select(p => new
+            {
+                p.Slug,
+                p.Name,
+                p.Kind,
+                p.Level,
+                p.Realm,
+                p.Region,
+                p.Uri,
+                ParentSlug = p.Parent == null ? null : p.Parent.Slug,
+                EntitySlug = p.Entity == null ? null : p.Entity.Slug,
+                p.Notes,
+                p.StartEventId,
+                p.EndEventId,
+                p.StartYear,
+                p.EndYear,
+            })
+            .ToListAsync(cancellationToken);
+
+        return
+        [
+            .. periods.Select(p => new TimelinePeriodResponse(
+                p.Slug,
+                p.Name,
+                p.Kind,
+                p.Level,
+                p.Realm,
+                p.Region,
+                p.Uri,
+                p.ParentSlug,
+                p.EntitySlug,
+                p.Notes,
+                Span(years, p.StartEventId, p.EndEventId, p.StartYear, p.EndYear))),
+        ];
     }
 
     /// <summary>
@@ -1188,8 +1250,46 @@ internal static class EncyclopediaEndpoints
                     d.Notes))
                 .ToList());
 
-    internal static EventResponse Event(EventRow row) =>
-        Event(row.Event, row.EntitySlug, row.EntityName, row.DefaultChronology, row.Dates);
+    internal static EventResponse Event(EventRow row, IReadOnlyDictionary<string, string> places) =>
+        Event(row.Event, row.EntitySlug, row.EntityName, row.DefaultChronology, row.Dates, places);
+
+    /// <summary>
+    /// The place each of these locations names, where the corpus holds exactly one place under
+    /// that name.
+    ///
+    /// An event's location is free text — <em>Gerar</em>, <em>West of Eden</em> — and the
+    /// encyclopedia holds places as records with pages of their own, so the one screen that names
+    /// a place was the one screen that could not open it. Resolved here rather than by a client
+    /// matching on the words, and only where the name is unambiguous: 27 of the 159 locations name
+    /// a word two places answer to, and a link that picks one of two Samarias is worse than none.
+    /// The words stay as the source wrote them either way.
+    /// </summary>
+    internal static async Task<Dictionary<string, string>> PlacesNamed(
+        AppDbContext db,
+        IEnumerable<string?> locations,
+        CancellationToken cancellationToken)
+    {
+        var named = locations
+            .Where(location => !string.IsNullOrWhiteSpace(location))
+            .Select(location => location!.ToLowerInvariant())
+            .Distinct()
+            .ToList();
+
+        if (named.Count == 0)
+        {
+            return [];
+        }
+
+        var places = await db.Entities
+            .Where(e => e.Kind == EntityKind.Place && named.Contains(e.Name.ToLower()))
+            .Select(e => new { e.Slug, e.Name })
+            .ToListAsync(cancellationToken);
+
+        return places
+            .GroupBy(place => place.Name.ToLowerInvariant())
+            .Where(group => group.Count() == 1)
+            .ToDictionary(group => group.Key, group => group.First().Slug);
+    }
 
     /// <summary>
     /// One event, with the top-level year read off the default reckoning's own row rather than
@@ -1207,7 +1307,8 @@ internal static class EncyclopediaEndpoints
         string? entitySlug,
         string? entityName,
         string? defaultChronology,
-        IList<EventDateResponse> dates)
+        IList<EventDateResponse> dates,
+        IReadOnlyDictionary<string, string> places)
     {
         var reckoning = dates.FirstOrDefault(d => d.Chronology == defaultChronology);
 
@@ -1234,6 +1335,9 @@ internal static class EncyclopediaEndpoints
             dates)
         {
             Sequenced = e.SequenceInYear is not null,
+            LocationSlug = e.Location is { Length: > 0 } location
+                ? places.GetValueOrDefault(location.ToLowerInvariant())
+                : null,
             // Only where no reckoning states this event at all does the base zero point stand in;
             // it is the same number the default chronology holds.
             Era = reckoning?.Era
@@ -1602,6 +1706,10 @@ internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResp
 /// and not BibleData's <c>bce_year</c> column, which disagrees with the arithmetic on one event
 /// and is empty on 266 the arithmetic dates without trouble.
 /// </param>
+/// <param name="Location">
+/// Where it happened, as the source wrote it. <see cref="EventResponse.LocationSlug"/> is the
+/// place of that name where the corpus holds exactly one.
+/// </param>
 /// <param name="NameSource">
 /// Whose words <paramref name="Name"/> is — <c>source</c> where the dataset titled its own row,
 /// <c>quoted</c> where it wrote no title and the opening of what it did write stands in, and
@@ -1632,6 +1740,13 @@ internal record EventResponse(
     string? SourceId,
     IList<EventDateResponse> Dates)
 {
+    /// <summary>
+    /// The place <see cref="Location"/> names, where the corpus holds exactly one place under that
+    /// name; null where it holds none or more than one. The words are the source's and stand
+    /// whatever this says.
+    /// </summary>
+    public string? LocationSlug { get; init; }
+
     /// <summary>
     /// Whether a source states where this falls inside its year, or whether the year is the whole
     /// of what anybody said.
@@ -1696,7 +1811,25 @@ internal record PeriodResponse(
     NamedEntityResponse? Entity,
     EventRefResponse? Opens,
     EventRefResponse? Closes,
-    IList<PeriodRefResponse> Inside);
+    IList<PeriodRefResponse> Inside)
+{
+    /// <summary>
+    /// Start and end in every chronology that can state both, exactly as the timeline sends them:
+    /// a chronology that cannot is absent, and a period anchored to no events is keyed by the empty
+    /// string, because its years are its own and belong to no reckoning.
+    /// </summary>
+    public IDictionary<string, int[]> Years { get; init; } = new Dictionary<string, int[]>();
+}
+
+/// <param name="LastAnnoMundiBeforeTheCommonEra">The default reckoning's, as the timeline sends it.</param>
+internal record PeriodListResponse(
+    int LastAnnoMundiBeforeTheCommonEra,
+    IList<TimelinePeriodResponse> Items);
+
+/// <param name="LastAnnoMundiBeforeTheCommonEra">The default reckoning's, as the timeline sends it.</param>
+internal record ChronologyListResponse(
+    int LastAnnoMundiBeforeTheCommonEra,
+    IList<ChronologyResponse> Chronologies);
 
 /// <param name="LastAnnoMundiBeforeTheCommonEra">
 /// The year from creation that is 1 BCE, so a client can turn every year on this axis into an
