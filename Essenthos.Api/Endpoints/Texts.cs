@@ -186,7 +186,41 @@ internal static class Texts
             strongest,
             absent,
             supplied.ToHashSet(),
-            await Annotations.Of(db, ids, cancellationToken));
+            await Annotations.Of(db, ids, cancellationToken),
+            await Proposed(db, ids, cancellationToken));
+    }
+
+    /// <summary>
+    /// The Strong number the corpus proposed for each word, where it proposed one and only one.
+    ///
+    /// A word whose lemma two dictionary entries claim has two proposals, and choosing between them
+    /// here would be a guess sent out as an answer; it gets none. Two methods proposing the same
+    /// number are one answer, and the surer of them describes it.
+    /// </summary>
+    private static async Task<Dictionary<long, StrongCandidateResponse>> Proposed(
+        AppDbContext db,
+        List<long> ids,
+        CancellationToken cancellationToken)
+    {
+        var proposals = await db.WordStrongs
+            .Where(proposal => ids.Contains(proposal.WordId))
+            .Select(proposal => new
+            {
+                proposal.WordId, proposal.Number, proposal.Method, proposal.Confidence,
+            })
+            .ToListAsync(cancellationToken);
+
+        return proposals
+            .GroupBy(proposal => proposal.WordId)
+            .Where(group => group.Select(proposal => proposal.Number).Distinct().Count() == 1)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderByDescending(proposal => proposal.Confidence is null)
+                    .ThenByDescending(proposal => proposal.Confidence)
+                    .Select(proposal => new StrongCandidateResponse(
+                        proposal.Number, EnumSpelling.Of(proposal.Method), proposal.Confidence))
+                    .First());
     }
 
     /// <summary>
@@ -215,12 +249,16 @@ internal static class Texts
     /// The person or place each word names, where the corpus can say and can say it without
     /// choosing. Empty for most words, because most words are not names.
     /// </param>
+    /// <param name="Proposed">
+    /// The one Strong number the corpus proposed for each word, where it proposed exactly one.
+    /// </param>
     private sealed record Reached(
         ILookup<long, long> Witnesses,
         Dictionary<long, string> Provenance,
         Dictionary<long, string> Absent,
         HashSet<long> Supplied,
-        Dictionary<long, EntityRefResponse> Named);
+        Dictionary<long, EntityRefResponse> Named,
+        Dictionary<long, StrongCandidateResponse> Proposed);
 
     /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>
     public static async Task<Dictionary<int, List<TextWordResponse>>> ReadByCanonicalVerse(
@@ -316,6 +354,7 @@ internal static class Texts
         {
             Elided = elided,
             Supplied = counterparts.Supplied.Contains(id),
+            StrongCandidate = strongNumber is null ? counterparts.Proposed.GetValueOrDefault(id) : null,
         };
     }
 

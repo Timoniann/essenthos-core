@@ -229,7 +229,27 @@ internal record TextWordResponse(
     /// or neither.
     /// </summary>
     public bool Supplied { get; init; }
+
+    /// <summary>
+    /// A Strong number the corpus worked out for this word, where the source states none and the
+    /// working out arrived at one number only. Null where the source states a number — that is
+    /// <see cref="StrongNo"/> — and where the corpus proposed several or none.
+    ///
+    /// It is a separate field because it is a separate claim. <see cref="StrongNo"/> is always a
+    /// source's; this is ours, and it says how it was reached and how sure, so a client can offer
+    /// the dictionary entry and still say it came by the dictionary form rather than from the
+    /// edition.
+    /// </summary>
+    public StrongCandidateResponse? StrongCandidate { get; init; }
 }
+
+/// <param name="Method">What produced the number, spelled as a link's method is: <c>lexical</c>.</param>
+/// <param name="Confidence">How sure, between 0 and 1; null only where a source stated it.</param>
+/// <remarks>
+/// Whose working it is stays in the database: it is one long sentence, the same on every word of a
+/// chapter, and sent per word it would be a fifth of the parallel response.
+/// </remarks>
+internal record StrongCandidateResponse(string Number, string Method, double? Confidence);
 
 /// <param name="Label">
 /// The letter this edition prints after the number, where it prints one — the Septuagint's Genesis
