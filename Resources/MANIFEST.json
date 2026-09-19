@@ -54,6 +54,11 @@
     "files": 40,
     "sha256": "845999a6f62a79df764ca9a4bcda80e37745545d2a8258d92525fec34f1c3009"
   },
+  "KingJames2006": {
+    "bytes": 12514444,
+    "files": 67,
+    "sha256": "6c02edfb49aa435821f987055767067957c02174f5fd59b9d3a7510abbb27643"
+  },
   "Kulish": {
     "bytes": 6326684,
     "files": 67,
@@ -78,6 +83,11 @@
     "bytes": 43631728,
     "files": 2,
     "sha256": "02dd96165e56ce5d77cc3cea1a469aa6b88f5b865442034269dba901a9dc1343"
+  },
+  "OhienkoWikisource": {
+    "bytes": 6720271,
+    "files": 66,
+    "sha256": "e6b39b02e268a1b540cff8d8e0ac954721653fad16d901c2c58f21c7fbd19bad"
   },
   "OpenBible": {
     "bytes": 14847145,
@@ -155,9 +165,9 @@
     "sha256": "1c4f93ad52cb63f8a3e8f6f2b30947fa78b036302ca8fb0a9799c2527b87f54c"
   },
   "UDPipe": {
-    "bytes": 64355801,
-    "files": 6,
-    "sha256": "b1fce3391090a6fa70e016777d37aaa30ae7393dd19516818a45fa83f2cc95e3"
+    "bytes": 80744638,
+    "files": 8,
+    "sha256": "93b2a167aced03f91bfbaf6039899f29965fbc8042c00881792ff6538e97f013"
   },
   "Versification": {
     "bytes": 5790928,
