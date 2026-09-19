@@ -260,6 +260,71 @@ public sealed class PersonRegisterLoadTests : IDisposable
     }
 
     [Fact]
+    public async Task A_verse_the_dataset_files_under_the_wrong_philip_moves_to_the_tetrarch()
+    {
+        // BibleData holds Herodias's first husband and Philip the tetrarch as one man, with Luke 3:1,
+        // the tetrarch's title and a note calling him the tetrarch. The register tells them apart and
+        // adds the tetrarch; what the dataset says at Luke 3:1 is about him and goes with him.
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = "philip-2",
+            Name = "Philip",
+            Distinguisher = "brother of Herod (MAT 14:3)",
+            Notes = "Philip the Tetrarch of Iturea and Trachonitis",
+            SourceId = "person:Philip_2",
+            Source = Dataset,
+            Names =
+            [
+                new EntityName { Label = "Philip", Kind = "proper name" },
+                new EntityName { Label = "Tetrarch of Ituraea and Trachonitis", Kind = "title" },
+            ],
+            Verses =
+            [
+                new EntityVerse { CanonicalBook = 40, CanonicalChapter = 14, CanonicalVerse = 3, Label = "Philip", Source = Dataset },
+                new EntityVerse { CanonicalBook = 41, CanonicalChapter = 6, CanonicalVerse = 17, Label = "Philip", Source = Dataset },
+                new EntityVerse { CanonicalBook = 42, CanonicalChapter = 3, CanonicalVerse = 1, Label = "Philip", Source = Dataset },
+                new EntityVerse
+                {
+                    CanonicalBook = 42, CanonicalChapter = 3, CanonicalVerse = 1,
+                    Label = "Tetrarch of Ituraea and Trachonitis", Source = Dataset,
+                },
+            ],
+        });
+        await _db.SaveChangesAsync();
+
+        Register(
+            Bearer(3, "Son of Herod the Great, tetrarch of Ituraea and Trachonitis", ["LUK 3:1"],
+                group: "Philip", name: "Philip"),
+            Bearer(4, "Son of Herod the Great, first husband of Herodias", ["MAT 14:3", "MRK 6:17"],
+                group: "Philip", name: "Philip"));
+
+        var outcome = await Load();
+
+        outcome.Claimed.Should().Be(1);
+        outcome.Added.Should().Be(1);
+
+        var husband = await Person("philip-2");
+        husband!.Verses.Should().NotContain(verse => verse.CanonicalBook == 42,
+            "Luke 3:1 names the tetrarch, not Herodias's husband");
+        husband.Names.Select(name => name.Label).Should().BeEquivalentTo(["Philip"]);
+        husband.Notes.Should().BeNull();
+
+        var tetrarch = await _db.Entities
+            .Include(e => e.Claims).Include(e => e.Names).Include(e => e.Verses)
+            .AsSplitQuery()
+            .SingleAsync(e => e.SourceId == "essenthos:philip3");
+        tetrarch.Verses.Where(verse => verse.Source == Dataset)
+            .Select(verse => verse.Label)
+            .Should().BeEquivalentTo(["Philip", "Tetrarch of Ituraea and Trachonitis"]);
+        tetrarch.Names.Should().Contain(name => name.Label == "Tetrarch of Ituraea and Trachonitis");
+        tetrarch.Notes.Should().Be("Philip the Tetrarch of Iturea and Trachonitis");
+        tetrarch.Claims.Should().Contain(claim =>
+            claim.Source == Dataset && claim.Method == LinkMethod.StatedBySource
+            && claim.Note!.Contains("person:Philip_2"));
+    }
+
+    [Fact]
     public async Task Running_it_twice_writes_the_register_once()
     {
         Register(Bearer(4, "Son of Jehoadah", ["1CH 8:36"]));

@@ -3,6 +3,10 @@ using Essenthos.Core.Corpus;
 namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <summary>One named word, as the query reads it: which entity, where, and how it is printed.</summary>
+/// <param name="Renders">
+/// The lemma of the original word a translation's word is linked to and that names the same entity,
+/// where there is one: which of the entity's names in the original this word translates.
+/// </param>
 internal readonly record struct NamedWord(
     int EntityId,
     int TextId,
@@ -11,7 +15,8 @@ internal readonly record struct NamedWord(
     string Surface,
     string Trailer,
     string? Lemma,
-    string Language);
+    string Language,
+    string? Renders = null);
 
 /// <summary>One spelling of one entity in one text, counted, and whether a list heads with it.</summary>
 internal sealed record Rendering(int EntityId, int TextId, string Form, string Folded, int Occurrences, bool Heading);
@@ -38,6 +43,17 @@ internal sealed record Rendering(int EntityId, int TextId, string Form, string F
 /// </para>
 ///
 /// <para>
+/// Except where the original says it is another name. Peter is <em>Κηφᾶς</em> nine times in the
+/// Greek, and the Ohienko Bible prints that <em>Кифа</em>, which opens nothing like <em>Петро</em>.
+/// So a translation's words are also read in groups by the name in the original they are linked to,
+/// and a group whose commonest spelling is printed more than once keeps the spellings that open the
+/// way that one does. Only a lemma the lexicon writes with a capital makes a group: a word linked to
+/// a pronoun or a common noun stays under the first rule, and Hebrew, which has no capitals, makes
+/// none. The heading is chosen from the first rule's spellings alone, and a spelling another entity
+/// heads with in the same text stays that entity's.
+/// </para>
+///
+/// <para>
 /// The heading is the spelling a list shows. Where the language has a nominative this corpus holds
 /// and the text prints it, that is the heading. Otherwise it is the shortest of the spellings printed
 /// at least a third as often as the commonest, which in a declining language is the nominative more
@@ -56,8 +72,14 @@ internal static class Renderings
     /// </summary>
     private const double HeadingShare = 1.0 / 3.0;
 
+    /// <summary>
+    /// How often a group read by the name in the original must print its commonest spelling for the
+    /// group to count. Once is as likely an annotation carried onto the next word as a name.
+    /// </summary>
+    private const int AnotherNameAtLeast = 2;
+
     /// <summary>The languages whose witnesses carry a lemma, which is the name without its case.</summary>
-    private static readonly HashSet<string> Original = new(StringComparer.Ordinal) { "hbo", "arc", "grc" };
+    internal static readonly HashSet<string> Original = new(StringComparer.Ordinal) { "hbo", "arc", "grc" };
 
     /// <summary>
     /// A lemma with a morpheme boundary in it is a segmentation and not a name: the Samaritan
@@ -80,6 +102,7 @@ internal static class Renderings
         IReadOnlyDictionary<(int Entity, string Language), string> nominatives)
     {
         var names = new Dictionary<(int Entity, int Text), Dictionary<string, int>>();
+        var byOriginal = new Dictionary<(int Entity, int Text), Dictionary<string, Dictionary<string, int>>>();
         var languages = new Dictionary<int, string>();
 
         foreach (var run in Runs(words))
@@ -94,23 +117,72 @@ internal static class Renderings
             }
 
             var key = (first.EntityId, first.TextId);
-            if (!names.TryGetValue(key, out var counted))
-            {
-                names[key] = counted = new Dictionary<string, int>(StringComparer.Ordinal);
-            }
+            Count(names, key, name);
 
-            counted[name] = counted.GetValueOrDefault(name) + 1;
+            if (OriginalName(run) is { } original)
+            {
+                if (!byOriginal.TryGetValue(key, out var groups))
+                {
+                    byOriginal[key] = groups = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);
+                }
+
+                Count(groups, original, name);
+            }
         }
 
+        var another = new List<Rendering>();
+        var headed = new HashSet<(int Text, string Folded)>();
         foreach (var ((entity, text), counted) in names)
         {
             var nominative = nominatives.GetValueOrDefault((entity, languages[text]));
-            foreach (var rendering in Kept(entity, text, counted, nominative))
+            var groups = byOriginal.TryGetValue((entity, text), out var found)
+                ? found.Values
+                : (IEnumerable<Dictionary<string, int>>)[];
+            foreach (var (rendering, isAnother) in Kept(entity, text, counted, groups, nominative))
             {
+                if (isAnother)
+                {
+                    another.Add(rendering);
+                    continue;
+                }
+
+                if (rendering.Heading)
+                {
+                    headed.Add((text, rendering.Folded));
+                }
+
                 yield return rendering;
             }
         }
+
+        // A spelling another entity heads with is that entity's name: the King James's "Jesus of
+        // Nazareth" translates Ναζωραῖος, which names Jesus, and a search for Nazareth is for the town.
+        foreach (var rendering in another.Where(r => !headed.Contains((r.TextId, r.Folded))))
+        {
+            yield return rendering;
+        }
     }
+
+    private static void Count<TKey>(Dictionary<TKey, Dictionary<string, int>> into, TKey key, string name)
+        where TKey : notnull
+    {
+        if (!into.TryGetValue(key, out var counted))
+        {
+            into[key] = counted = new Dictionary<string, int>(StringComparer.Ordinal);
+        }
+
+        counted[name] = counted.GetValueOrDefault(name) + 1;
+    }
+
+    /// <summary>
+    /// The name in the original a translation's run renders, when the lexicon writes it with a
+    /// capital. An original is spelled by its own lemma and is read by the first rule alone.
+    /// </summary>
+    private static string? OriginalName(IReadOnlyList<NamedWord> run) =>
+        Original.Contains(run[0].Language)
+            ? null
+            : run.Select(word => word.Renders)
+                .FirstOrDefault(lemma => lemma is { Length: > 0 } && char.IsUpper(lemma[0]));
 
     /// <summary>
     /// The named words cut into names: consecutive words of one verse named as one entity in one
@@ -220,35 +292,30 @@ internal static class Renderings
     internal static string WithoutPossessive(string word) =>
         word.Length > 2 && word[^1] == 's' && word[^2] is '\'' or '’' ? word[..^2] : word;
 
-    private static IEnumerable<Rendering> Kept(
+    private static IEnumerable<(Rendering Rendering, bool Another)> Kept(
         int entity,
         int text,
         Dictionary<string, int> counted,
+        IEnumerable<Dictionary<string, int>> byOriginal,
         string? nominative)
     {
-        // Spellings a search cannot tell apart are one spelling, printed as its commonest member:
-        // BHSA points Jerusalem four ways, and the Berean hyphenates what the King James runs together.
-        var spellings = counted
-            .GroupBy(c => NameFolding.Fold(c.Key))
-            .Where(g => g.Key.Length > 0)
-            .Select(g => (
-                Form: g.OrderByDescending(c => c.Value).ThenBy(c => c.Key, StringComparer.Ordinal).First().Key,
-                Folded: g.Key,
-                Occurrences: g.Sum(c => c.Value)))
-            .ToList();
+        var spellings = Spellings(counted);
         if (spellings.Count == 0)
         {
             return [];
         }
 
-        // A tie goes to the longer spelling, which is the name more often than the short word an
-        // annotation spilled onto: RV1909 prints "De los Isharitas" and both ends are named once.
-        var commonest = spellings
-            .OrderByDescending(c => c.Occurrences).ThenByDescending(c => c.Form.Length)
-            .ThenBy(c => c.Form, StringComparer.Ordinal)
-            .First();
-
+        var commonest = Commonest(spellings);
         var kept = spellings.Where(c => OpensLike(c.Folded, commonest.Folded)).ToList();
+
+        var taken = kept.Select(c => c.Folded).ToHashSet(StringComparer.Ordinal);
+        var others = byOriginal
+            .Select(Spellings)
+            .Where(group => group.Count > 0 && Commonest(group).Occurrences >= AnotherNameAtLeast)
+            .SelectMany(Opening)
+            .Where(c => taken.Add(c.Folded))
+            .Select(c => c.Folded)
+            .ToHashSet(StringComparer.Ordinal);
 
         var foldedNominative = nominative is null ? null : NameFolding.Fold(nominative);
         var heading = kept
@@ -262,7 +329,42 @@ internal static class Renderings
                           .ThenBy(c => c.Form, StringComparer.Ordinal)
                           .First().Form;
 
-        return kept.Select(c => new Rendering(entity, text, c.Form, c.Folded, c.Occurrences, c.Form == heading));
+        return kept
+            .Select(c => (new Rendering(entity, text, c.Form, c.Folded, c.Occurrences, c.Form == heading), false))
+            .Concat(spellings
+                .Where(c => others.Contains(c.Folded))
+                .Select(c => (new Rendering(entity, text, c.Form, c.Folded, c.Occurrences, false), true)));
+    }
+
+    /// <summary>
+    /// Spellings a search cannot tell apart are one spelling, printed as its commonest member: BHSA
+    /// points Jerusalem four ways, and the Berean hyphenates what the King James runs together.
+    /// </summary>
+    private static List<(string Form, string Folded, int Occurrences)> Spellings(Dictionary<string, int> counted) =>
+        [.. counted
+            .GroupBy(c => NameFolding.Fold(c.Key))
+            .Where(g => g.Key.Length > 0)
+            .Select(g => (
+                Form: g.OrderByDescending(c => c.Value).ThenBy(c => c.Key, StringComparer.Ordinal).First().Key,
+                Folded: g.Key,
+                Occurrences: g.Sum(c => c.Value)))];
+
+    /// <summary>
+    /// A tie goes to the longer spelling, which is the name more often than the short word an
+    /// annotation spilled onto: RV1909 prints "De los Isharitas" and both ends are named once.
+    /// </summary>
+    private static (string Form, string Folded, int Occurrences) Commonest(
+        List<(string Form, string Folded, int Occurrences)> spellings) =>
+        spellings
+            .OrderByDescending(c => c.Occurrences).ThenByDescending(c => c.Form.Length)
+            .ThenBy(c => c.Form, StringComparer.Ordinal)
+            .First();
+
+    private static IEnumerable<(string Form, string Folded, int Occurrences)> Opening(
+        List<(string Form, string Folded, int Occurrences)> spellings)
+    {
+        var commonest = Commonest(spellings);
+        return spellings.Where(c => OpensLike(c.Folded, commonest.Folded));
     }
 
     private static bool OpensLike(string folded, string opening)

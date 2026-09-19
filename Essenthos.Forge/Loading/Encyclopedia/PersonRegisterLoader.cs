@@ -139,6 +139,31 @@ internal sealed class PersonRegisterLoader(
 
     private const string SourceIdPrefix = "essenthos:";
 
+    /// <summary>
+    /// Verses a dataset files under a held man that belong to a namesake the register adds, by the
+    /// dataset's id for the man, the verse, and the register's key for the namesake, with the reason.
+    ///
+    /// <para>
+    /// Moved and not merely stood beside, which is what this pass otherwise does when two witnesses
+    /// disagree about whom a verse names. Here the dataset does not disagree: it gives the verse to a
+    /// record in which it has put two men together, and its own labels and notes at that verse describe
+    /// the other one. The rows keep the dataset's source, because it is the dataset's testimony about
+    /// the man the verse names, and the record they land on says where they came from.
+    /// </para>
+    /// </summary>
+    internal static readonly IReadOnlyList<Misfiled> MisfiledVerses =
+    [
+        new("person:Philip_2", "LUK 3:1", "Philip#3", NotesToo: true,
+            "Two sons of Herod the Great are called Philip. Luke 3:1 names the tetrarch of Ituraea and "
+            + "Trachonitis; Matthew 14:3 and Mark 6:17 name Herodias's first husband, whom Josephus "
+            + "calls Herod and who ruled nothing. The dataset holds both as one man, filed under the "
+            + "husband's verses, with the tetrarch's verse, his title and a note calling him the "
+            + "tetrarch."),
+    ];
+
+    /// <summary>The source id a record added for a register's bearer is written under.</summary>
+    internal static string SourceIdOf(string key) => SourceIdPrefix + Slugs.Of(key);
+
     /// <summary>The kind of label a namesake group is made of, and the kind an added bearer gets.</summary>
     private const string ProperName = "proper name";
 
@@ -242,7 +267,7 @@ internal sealed class PersonRegisterLoader(
                         Slug = Unique(Slugs.Of(record.Name), slugs),
                         Name = record.Name,
                         Distinguisher = record.Description,
-                        SourceId = SourceIdPrefix + Slugs.Of(record.Key),
+                        SourceId = SourceIdOf(record.Key),
                         Source = FromTheEnumeration,
                         Names = { Name(record) },
                     };
@@ -260,6 +285,8 @@ internal sealed class PersonRegisterLoader(
                 already.Add(record);
             }
         }
+
+        var refiled = Refile(held, made);
 
         foreach (var (person, from) in made)
         {
@@ -297,7 +324,91 @@ internal sealed class PersonRegisterLoader(
             started.Elapsed);
 
         logger.LogInformation("Told the namesakes apart: {Outcome}", outcome);
+        if (refiled > 0)
+        {
+            logger.LogInformation(
+                "Moved {Verses} verse rows a dataset filed under the wrong man of a name to the namesake "
+                + "they belong to",
+                refiled);
+        }
+
         return outcome;
+    }
+
+    /// <summary>
+    /// Moves each of <see cref="MisfiledVerses"/> to its namesake: the dataset's rows at the verse,
+    /// the labels it uses only there, and its notes where they describe the namesake. Run before the
+    /// held records' provenance is rewritten, so the claim it leaves names the dataset.
+    /// </summary>
+    private static int Refile(
+        IReadOnlyList<Entity> held,
+        Dictionary<Entity, List<PersonRegisterRecord>> made)
+    {
+        var moved = 0;
+        foreach (var misfiled in MisfiledVerses)
+        {
+            var from = held.FirstOrDefault(e => string.Equals(e.SourceId, misfiled.Held, StringComparison.Ordinal));
+            var to = made
+                .Where(pair => pair.Value.Any(record => string.Equals(record.Key, misfiled.Bearer, StringComparison.Ordinal)))
+                .Select(pair => pair.Key)
+                .FirstOrDefault();
+            var at = Addresses([misfiled.Reference]).ToList();
+            if (from is null || to is null || ReferenceEquals(from, to) || at.Count != 1)
+            {
+                continue;
+            }
+
+            var verses = from.Verses
+                .Where(verse => (verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse) == at[0])
+                .ToList();
+            if (verses.Count == 0)
+            {
+                continue;
+            }
+
+            foreach (var verse in verses)
+            {
+                from.Verses.Remove(verse);
+                to.Verses.Add(verse);
+            }
+
+            var stillUsed = from.Verses.Select(verse => verse.Label).OfType<string>().ToHashSet(StringComparer.Ordinal);
+            var labels = verses.Select(verse => verse.Label).OfType<string>()
+                .Where(label => !stillUsed.Contains(label))
+                .ToHashSet(StringComparer.Ordinal);
+            foreach (var name in from.Names.Where(name => labels.Contains(name.Label)).ToList())
+            {
+                from.Names.Remove(name);
+                if (!to.Names.Any(mine => mine.Label == name.Label && mine.Kind == name.Kind))
+                {
+                    to.Names.Add(name);
+                }
+            }
+
+            if (misfiled.NotesToo && from.Notes is { Length: > 0 } notes)
+            {
+                to.Notes ??= notes;
+                from.Notes = null;
+            }
+
+            if (!string.Equals(to.Source, from.Source, StringComparison.Ordinal))
+            {
+                to.Claims.Add(new EntityClaim
+                {
+                    Method = LinkMethod.StatedBySource,
+                    Confidence = null,
+                    Source = from.Source,
+                    Note = $"files {misfiled.Reference} under {from.SourceId}, a record it also gives "
+                           + "another man of this name; the verse, the labels it uses only there"
+                           + (misfiled.NotesToo ? " and its note" : "")
+                           + $" are this man's. {misfiled.Why}",
+                });
+            }
+
+            moved += verses.Count;
+        }
+
+        return moved;
     }
 
     private static PersonRegisterOutcome Nothing(Stopwatch started) =>
@@ -493,3 +604,10 @@ internal sealed class PersonRegisterLoader(
         return candidate;
     }
 }
+
+/// <param name="Held">The dataset's id for the man the verse is filed under.</param>
+/// <param name="Reference">The verse, as the register writes it.</param>
+/// <param name="Bearer">The register's key for the namesake the verse belongs to.</param>
+/// <param name="NotesToo">Whether the dataset's note on the record describes the namesake too.</param>
+/// <param name="Why">Why the verse is the namesake's, which the claim on his record repeats.</param>
+internal sealed record Misfiled(string Held, string Reference, string Bearer, bool NotesToo, string Why);

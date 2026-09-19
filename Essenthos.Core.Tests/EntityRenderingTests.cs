@@ -21,8 +21,8 @@ public sealed class RenderingRuleTests
         new Dictionary<(int, string), string>();
 
     private static NamedWord Word(int verse, int position, string surface, string language = "ukr", string? lemma = null,
-        int entity = 1, int text = 1, string trailer = " ") =>
-        new(entity, text, verse, position, surface, trailer, lemma, language);
+        int entity = 1, int text = 1, string trailer = " ", string? renders = null) =>
+        new(entity, text, verse, position, surface, trailer, lemma, language, renders);
 
     private static List<Rendering> Of(IReadOnlyDictionary<(int, string), string>? nominatives, params NamedWord[] words) =>
         [.. Renderings.Of(words, nominatives ?? NoNominatives)];
@@ -135,6 +135,58 @@ public sealed class RenderingRuleTests
         renderings.Single(r => r.TextId == 1).Should().Be(new Rendering(1, 1, "אַהֲרֹן", "אהרן", 2, true));
         renderings.Single(r => r.TextId == 2).Form.Should().Be("אהרן", "a segmented lemma is not a name");
         renderings.Single(r => r.TextId == 3).Should().Be(new Rendering(1, 3, "Ἀαρών", "ααρων", 1, true));
+    }
+
+    /// <summary>
+    /// Peter is Κηφᾶς in the Greek and Кифа in the Ohienko Bible, which opens nothing like Петро.
+    /// The words linked to that other Greek name keep their own spellings, and the heading stays.
+    /// </summary>
+    [Fact]
+    public void AnotherNameInTheOriginalKeepsItsOwnSpellings()
+    {
+        var renderings = Of(null,
+            Word(1, 1, "Петро", renders: "Πέτρος"), Word(2, 1, "Петро", renders: "Πέτρος"),
+            Word(3, 1, "Петра", renders: "Πέτρος"), Word(8, 1, "Петро", renders: "Πέτρος"),
+            Word(4, 1, "Кифа", renders: "Κηφᾶς"), Word(5, 1, "Кифа", renders: "Κηφᾶς"),
+            Word(6, 1, "Кифі", renders: "Κηφᾶς"),
+            Word(7, 1, "Скеля", renders: "Πέτρος"));
+
+        renderings.Select(r => (r.Form, r.Occurrences, r.Heading)).Should().BeEquivalentTo(
+            [("Петро", 3, true), ("Петра", 1, false), ("Кифа", 2, false), ("Кифі", 1, false)]);
+    }
+
+    /// <summary>
+    /// A word linked to another name only once is as likely an annotation carried onto the next word,
+    /// and a lower-case lemma or a Hebrew one is not a name the words can be grouped by.
+    /// </summary>
+    [Fact]
+    public void AnotherNameNeedsMoreThanOneWordAndACapital()
+    {
+        var renderings = Of(null,
+            Word(1, 1, "Aaron", "deu", renders: "Ἀαρών"), Word(2, 1, "Aaron", "deu", renders: "Ἀαρών"),
+            Word(8, 1, "Aaron", "deu", renders: "Ἀαρών"),
+            Word(3, 1, "Gebirge", "deu", renders: "Ἀριμαθαία"),
+            Word(4, 1, "Priester", "deu", renders: "ἱερεύς"), Word(5, 1, "Priester", "deu", renders: "ἱερεύς"),
+            Word(6, 1, "Sohn", "deu", renders: "בֵּן"), Word(7, 1, "Sohn", "deu", renders: "בֵּן"));
+
+        renderings.Select(r => r.Form).Should().BeEquivalentTo(["Aaron"]);
+    }
+
+    /// <summary>
+    /// The King James translates Ναζωραῖος, which names Jesus, as "of Nazareth"; the spelling the town
+    /// heads with in the same text stays the town's.
+    /// </summary>
+    [Fact]
+    public void AnotherEntitysHeadingStaysItsOwn()
+    {
+        var renderings = Of(null,
+            Word(1, 1, "Jesus", "eng", renders: "Ἰησοῦς"), Word(2, 1, "Jesus", "eng", renders: "Ἰησοῦς"),
+            Word(4, 1, "Jesus", "eng", renders: "Ἰησοῦς"),
+            Word(1, 3, "Nazareth", "eng", renders: "Ναζωραῖος"), Word(2, 3, "Nazareth", "eng", renders: "Ναζωραῖος"),
+            Word(3, 1, "Nazareth", "eng", entity: 2, renders: "Ναζαρέτ"));
+
+        renderings.Where(r => r.EntityId == 1).Select(r => r.Form).Should().BeEquivalentTo(["Jesus"]);
+        renderings.Should().Contain(r => r.EntityId == 2 && r.Form == "Nazareth" && r.Heading);
     }
 
     [Theory]

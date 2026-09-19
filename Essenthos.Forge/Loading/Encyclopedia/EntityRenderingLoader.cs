@@ -40,9 +40,22 @@ internal sealed record EntityRenderingOutcome(
 /// </summary>
 internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRenderingLoader> logger)
 {
+    /// <summary>
+    /// Every named word, and for a translation's word the lemma of an original word it is linked to
+    /// that names the same entity — which of the entity's names in the original it translates.
+    /// </summary>
     private const string Named =
         """
-        SELECT a.entity_id, w.text_id, w.verse_id, w.position, w.text, w.trailer, w.lemma, t.language
+        SELECT a.entity_id, w.text_id, w.verse_id, w.position, w.text, w.trailer, w.lemma, t.language,
+               CASE WHEN t.language = ANY(@originals) THEN NULL ELSE (
+                   SELECT min(theirs_word.lemma)
+                   FROM link_word mine
+                   JOIN link_word theirs ON theirs.link_id = mine.link_id AND theirs.side <> mine.side
+                   JOIN word theirs_word ON theirs_word.id = theirs.word_id
+                   JOIN text theirs_text ON theirs_text.id = theirs_word.text_id
+                        AND theirs_text.language = ANY(@originals)
+                   JOIN word_entity same ON same.word_id = theirs_word.id AND same.entity_id = a.entity_id
+                   WHERE mine.word_id = w.id) END AS renders
         FROM word_entity a
         JOIN word w ON w.id = a.word_id
         JOIN text t ON t.id = w.text_id
@@ -108,6 +121,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
     {
         var words = new List<NamedWord>();
         await using var command = new NpgsqlCommand(Named, connection);
+        command.Parameters.AddWithValue("originals", Renderings.Original.ToArray());
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {
@@ -119,7 +133,8 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
                 reader.GetString(4),
                 reader.GetString(5),
                 reader.IsDBNull(6) ? null : reader.GetString(6),
-                reader.GetString(7)));
+                reader.GetString(7),
+                reader.IsDBNull(8) ? null : reader.GetString(8)));
         }
 
         return words;

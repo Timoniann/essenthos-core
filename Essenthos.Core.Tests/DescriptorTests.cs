@@ -280,6 +280,37 @@ public sealed class DescriptorTests : IDisposable
     /// the corpus (MST-0188). The words are seeded without a normalised form on purpose, so the test
     /// also holds the rule to reading the printed word where there is nothing else.
     /// </summary>
+    /// <summary>
+    /// The pass read Luke 3:1 while the dataset still filed it under Herodias's husband, so its clauses
+    /// there name him. The verse is the tetrarch's now: a clause about the husband at it cites a verse
+    /// he is not named in, and a clause pointing at him from it points at the tetrarch.
+    /// </summary>
+    [Fact]
+    public async Task AClauseAtAVerseMovedToANamesakeFollowsTheVerse()
+    {
+        Add("herod-2", EntityKind.Person, "Herod", null, (40, 14, 3), (42, 3, 1));
+        Add("ituraea", EntityKind.Place, "Ituraea", null, (42, 3, 1));
+        Add("philip-2", EntityKind.Person, "Philip", null, (40, 14, 3));
+        Add("philip-4", EntityKind.Person, "Philip", null, (42, 3, 1));
+        await _db.SaveChangesAsync();
+        await _db.Entities.Where(e => e.Slug == "philip-2")
+            .ExecuteUpdateAsync(set => set.SetProperty(e => e.SourceId, "person:Philip_2"));
+        await _db.Entities.Where(e => e.Slug == "philip-4")
+            .ExecuteUpdateAsync(set => set.SetProperty(e => e.SourceId, "essenthos:philip3"));
+
+        var outcome = await Load("refiled");
+
+        outcome.Refused.UnmatchedReference.Should().Be(1, "the husband is not named at Luke 3:1");
+        var brothers = await _db.EntityDescriptors
+            .Where(d => d.Entity!.Slug == "herod-2")
+            .Select(d => new { d.CanonicalBook, Target = d.Target!.Slug })
+            .ToListAsync();
+        brothers.Should().BeEquivalentTo([
+            new { CanonicalBook = 40, Target = "philip-2" },
+            new { CanonicalBook = 42, Target = "philip-4" },
+        ]);
+    }
+
     [Fact]
     public async Task ACompanionTheVerseDoesNotSpeakOfIsRefusedAndOneItDoesIsKept()
     {

@@ -172,6 +172,7 @@ internal sealed class EntityDescriptorLoader(
         var taken = await Taken(entities.Values, cancellationToken);
 
         var occurrences = await Occurrences(entities.Values, cancellationToken);
+        var refiled = await Refiled(cancellationToken);
         var accompanied = await Accompanied(records, cancellationToken);
 
         // What kind each target is, so a clause that places something can be asked to point at a
@@ -241,6 +242,13 @@ internal sealed class EntityDescriptorLoader(
                 {
                     unmatchedReference++;
                     continue;
+                }
+
+                // A clause read while the dataset still filed this verse under the wrong man of the
+                // name points at him; the verse is his namesake's, and so is the clause's target.
+                if (refiled.TryGetValue((targetId, verse.Book, verse.Chapter, verse.Verse), out var namesake))
+                {
+                    targetId = namesake;
                 }
 
                 // A person's decision is not a model's reading: it is stored as manual, credited to
@@ -639,6 +647,38 @@ internal sealed class EntityDescriptorLoader(
             .ToListAsync(cancellationToken);
 
         return [.. rows.Select(r => (r.EntityId, r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse))];
+    }
+
+    /// <summary>
+    /// Where each of <see cref="PersonRegisterLoader.MisfiledVerses"/> took a verse from and whom it
+    /// gave it to, by the record's id and the verse.
+    /// </summary>
+    private async Task<Dictionary<(int Entity, int Book, int Chapter, int Verse), int>> Refiled(
+        CancellationToken cancellationToken)
+    {
+        var misfiled = PersonRegisterLoader.MisfiledVerses;
+        var ids = misfiled
+            .SelectMany(m => new[] { m.Held, PersonRegisterLoader.SourceIdOf(m.Bearer) })
+            .ToList();
+        var bySource = (await db.Entities
+                .Where(e => ids.Contains(e.SourceId))
+                .Select(e => new { e.Id, e.SourceId })
+                .ToListAsync(cancellationToken))
+            .GroupBy(e => e.SourceId, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.First().Id, StringComparer.Ordinal);
+
+        var refiled = new Dictionary<(int Entity, int Book, int Chapter, int Verse), int>();
+        foreach (var m in misfiled)
+        {
+            if (bySource.TryGetValue(m.Held, out var from)
+                && bySource.TryGetValue(PersonRegisterLoader.SourceIdOf(m.Bearer), out var to)
+                && Reference(m.Reference) is { } verse)
+            {
+                refiled[(from, verse.Book, verse.Chapter, verse.Verse)] = to;
+            }
+        }
+
+        return refiled;
     }
 
     /// <summary>
