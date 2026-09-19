@@ -124,8 +124,12 @@ if ($Database) {
     $dump = Join-Path $Destination ('essenthos_core-{0}.dump' -f $startedAt.ToString('yyyyMMdd'))
     Write-Host '  database         dumping...'
     # Custom format: compressed, and pg_restore can take one table out of it without the rest.
-    docker exec essenthos-api-db-1 pg_dump -U essenthos -d essenthos_core -Fc | Set-Content -Path $dump -AsByteStream
-    if ($LASTEXITCODE -ne 0) { throw 'pg_dump failed. The dump on the drive is incomplete; delete it.' }
+    # Written inside the container and copied out whole: a pipe through PowerShell carries text, not bytes.
+    docker exec essenthos-core-db-1 pg_dump -U essenthos -d essenthos_core -Fc -f /tmp/essenthos_core.dump
+    if ($LASTEXITCODE -ne 0) { throw 'pg_dump failed inside essenthos-core-db-1. Is core-db running?' }
+    docker cp essenthos-core-db-1:/tmp/essenthos_core.dump $dump
+    if ($LASTEXITCODE -ne 0) { throw 'Copying the dump out of the container failed. The dump on the drive is incomplete; delete it.' }
+    docker exec essenthos-core-db-1 rm -f /tmp/essenthos_core.dump | Out-Null
     $size = (Get-Item $dump).Length
     Write-Host ("  {0,-16} {1,8:N1} MB" -f 'database', ($size / 1MB))
     $receipt.parts += [ordered]@{ kind = 'dump'; name = 'essenthos_core'; bytes = $size }
