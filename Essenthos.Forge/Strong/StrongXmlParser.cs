@@ -194,6 +194,8 @@ public partial class StrongXmlParser
                 : $"{definition}; {strayed}";
         }
 
+        (derivation, definition) = CloseTheEtymology(derivation, definition);
+
         if (derivation is not null && derivation.StartsWith(UnknownOrigin, StringComparison.Ordinal))
         {
             var sense = CleanText(derivation[UnknownOrigin.Length..]);
@@ -210,6 +212,58 @@ public partial class StrongXmlParser
         }
 
         return (definition, derivation, renderings);
+    }
+
+    /// <summary>
+    /// Where the cut between the two elements fell inside a parenthesis, the rest of the etymology
+    /// stands at the head of the definition: G109 ἀήρ answers <em>by analogy, to blow); "air"</em>,
+    /// the tail of <em>from ἄημι (to breathe unconsciously, i.e. respire; by analogy, to blow)</em>.
+    /// The brackets say where the clause ends, so this is counting rather than judging: the text up
+    /// to the bracket that balances the derivation, and the semicolon after it, goes back.
+    ///
+    /// <para>
+    /// A derivation that is not short of a bracket is left alone, and so is one whose definition
+    /// never closes it — the source itself does not balance there, and nothing says where to cut. So
+    /// is one where the balancing bracket ends the definition, which would leave no sense behind.
+    /// </para>
+    /// </summary>
+    private static (string? Derivation, string? Definition) CloseTheEtymology(
+        string? derivation,
+        string? definition)
+    {
+        if (derivation is null || definition is null)
+        {
+            return (derivation, definition);
+        }
+
+        var open = derivation.Count(c => c == '(') - derivation.Count(c => c == ')');
+        if (open <= 0)
+        {
+            return (derivation, definition);
+        }
+
+        for (var i = 0; i < definition.Length; i++)
+        {
+            open += definition[i] switch { '(' => 1, ')' => -1, _ => 0 };
+            if (open > 0)
+            {
+                continue;
+            }
+
+            var end = i + 1;
+            var next = definition.AsSpan(end).TrimStart();
+            if (next.Length > 0 && next[0] == ';')
+            {
+                end = definition.Length - next.Length + 1;
+            }
+
+            var sense = CleanText(definition[end..]);
+            return sense is null
+                ? (derivation, definition)
+                : ($"{derivation} {definition[..end].Trim()}", sense);
+        }
+
+        return (derivation, definition);
     }
 
     /// <summary>

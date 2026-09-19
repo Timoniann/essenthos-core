@@ -1,4 +1,4 @@
-using Essenthos.Core.Strong;
+﻿using Essenthos.Core.Strong;
 using FluentAssertions;
 using Xunit;
 
@@ -688,6 +688,71 @@ public class StrongXmlParserTests
     }
 
     /// <summary>
+    /// The cut fell inside a parenthesis, so the tail of the etymology stands at the head of the
+    /// definition and the entry says ἀήρ means <em>by analogy, to blow)</em>. The bracket says where
+    /// the clause ends.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_EtymologyCutThroughAParenthesis_IsClosedBeforeTheSense()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="00109">
+             <strongs>109</strongs>   <greek BETA="A)H/R" unicode="ἀήρ" translit="aḗr"/>
+             <strongs_derivation>from ἄημι (to breathe unconsciously, i.e. respire;</strongs_derivation><strongs_def> by analogy, to blow); "air" (as naturally circumambient)</strongs_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be(
+            "from ἄημι (to breathe unconsciously, i.e. respire; by analogy, to blow);");
+        entries[0].Definition.Should().Be("\"air\" (as naturally circumambient)");
+    }
+
+    /// <summary>
+    /// Two refusals, and they are the point of counting rather than judging: a definition that never
+    /// closes the bracket leaves the source unbalanced wherever the cut is made, and one whose
+    /// closing bracket is its last character has no sense left to stand behind it.
+    /// </summary>
+    [Theory]
+    [InlineData(
+        "a primary verb (for which other ones are used in certain tenses only;",
+        "to \"bear\" or carry (in a very wide application, as follows)")]
+    [InlineData(
+        "a primary preposition denoting origin (the point whence action proceeds, from, out;",
+        "literal or figurative; direct or remote)")]
+    public void ParseGreek_AnEtymologyTheDefinitionNeverCloses_IsLeftWhereItIs(
+        string derivation,
+        string definition)
+    {
+        var entries = _parser.ParseGreek(Greek(
+            $"""
+            <entry strongs="05342">
+             <strongs>5342</strongs>   <greek BETA="FE/RW" unicode="φέρω" translit="phérō"/>
+             <strongs_derivation>{derivation}</strongs_derivation><strongs_def> {definition}</strongs_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be(derivation);
+        entries[0].Definition.Should().Be(definition);
+    }
+
+    /// <summary>A derivation that balances is not touched, whatever its definition opens with.</summary>
+    [Fact]
+    public void ParseGreek_ABalancedEtymology_KeepsTheDefinitionsOwnParenthesis()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="00668">
+             <strongs>668</strongs>   <greek BETA="A)POFEU/GW" unicode="ἀποφεύγω" translit="apopheúgō"/>
+             <strongs_derivation>from G575 and G5343;</strongs_derivation><strongs_def> (figuratively) to escape</strongs_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be("from G575 and G5343;");
+        entries[0].Definition.Should().Be("(figuratively) to escape");
+    }
+
+    /// <summary>
     /// Where the entry has no definition element the sense still comes out of the derivation on its
     /// own, rather than the whole block moving across with the etymology attached to the front.
     /// </summary>
@@ -780,12 +845,24 @@ public class StrongXmlParserTests
 
         // An unknown origin is not a meaning, and it is never what a definition opens with. θεός is
         // the entry a reader is likeliest to open, and the one the misplaced cut cost the most.
-        // G2442 is excluded because a different fault reaches it: its etymology was cut in the
-        // middle of a parenthesis, so its definition opens with the rest of the derivation and the
-        // bracket that closes it — "of uncertain affinity); to long for".
-        entries.Where(e => e.StrongNumber != "G2442").Should().OnlyContain(
+        entries.Should().OnlyContain(
             e => !e.Definition!.StartsWith("of uncertain affinity"),
             "an etymology at the head of a definition is the cut landing in the wrong place");
+
+        // The etymology and the definition are one printed paragraph cut in two, and the brackets
+        // say where the cut should have fallen. 115 derivations are short of a bracket as the file
+        // stands; the seven left are the ones the definition never closes either, where the source
+        // itself does not balance and nothing says where the clause ends.
+        entries
+            .Where(e => e.Derivation is { } d && d.Count(c => c == '(') != d.Count(c => c == ')'))
+            .Select(e => e.StrongNumber)
+            .Should().Equal("G123", "G1537", "G2819", "G2983", "G4092", "G5177", "G5342");
+        Entry(entries, "G109").Derivation.Should().Be(
+            "from ἄημι (to breathe unconsciously, i.e. respire; by analogy, to blow);");
+        Entry(entries, "G109").Definition.Should().Be("\"air\" (as naturally circumambient)");
+        Entry(entries, "G2246").Definition.Should().StartWith("the sun");
+        Entry(entries, "G4506").Definition.Should().StartWith("to rush or draw");
+        Entry(entries, "G2442").Definition.Should().Be("to long for");
         Entry(entries, "G2316").Derivation.Should().Be("of uncertain affinity;");
         Entry(entries, "G2316").Definition.Should().Be(
             "a deity, especially (with G3588) the supreme Divinity; "

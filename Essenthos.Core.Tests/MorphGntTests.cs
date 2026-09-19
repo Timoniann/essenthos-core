@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Loading;
 using Essenthos.Core.MorphGnt;
 using FluentAssertions;
@@ -120,8 +120,8 @@ public class MorphGntTests(ITestOutputHelper output)
     /// <summary>
     /// The README documents four cases and the files write five. What makes the undocumented letter
     /// a gap in the documentation rather than a defect in the data is that Nestle agrees about the
-    /// words it stands on: of the 593 words Nestle calls vocative, 588 are reached by this join and
-    /// MorphGNT calls 585 of them vocative too, disagreeing on three. A reader that dropped the
+    /// words it stands on: of the 597 words Nestle calls vocative, 592 are reached by this join and
+    /// MorphGNT calls 589 of them vocative too, disagreeing on three. A reader that dropped the
     /// letter it had not been told about would lose the whole vocative from the second morphology
     /// and would read those 668 words as having no case at all.
     /// </summary>
@@ -144,7 +144,7 @@ public class MorphGntTests(ITestOutputHelper output)
             nestle[row.Witness].Morphology.GetValueOrDefault("case") == "vocative"
             && MorphGntParsing.Case(parsing[row.Parsing].Parse) == "vocative");
 
-        agreed.Should().Be(585);
+        agreed.Should().Be(589);
     }
 
     [Theory]
@@ -247,7 +247,7 @@ public class MorphGntTests(ITestOutputHelper output)
     /// <summary>
     /// What the second morphology adds and where it contradicts the first, counted rather than
     /// resolved. Nothing here is a defect to fix — the disagreements are two editors reading the
-    /// same syntax differently, except for one class that is not, which the next test names.
+    /// same syntax differently.
     /// </summary>
     [Fact]
     public void SaysWhatNestleCannotAndDisagreesWithItRarely()
@@ -263,7 +263,7 @@ public class MorphGntTests(ITestOutputHelper output)
         var join = MorphGntJoin.Of(nestle, parsing);
 
         Agreement(nestle, parsing, join, "case", MorphGntParsing.Case)
-            .Should().Be((Agree: 76_844, Disagree: 440, Added: 1_999));
+            .Should().Be((Agree: 77_653, Disagree: 92, Added: 1_538));
         Agreement(nestle, parsing, join, "number", MorphGntParsing.Number)
             .Should().Be((Agree: 88_599, Disagree: 7, Added: 9_537));
         Agreement(nestle, parsing, join, "gender", MorphGntParsing.Gender)
@@ -287,15 +287,11 @@ public class MorphGntTests(ITestOutputHelper output)
     }
 
     /// <summary>
-    /// The one disagreement class that is not two editors reading differently: 342 of the 440 case
-    /// disagreements stand on <c>A-NUI</c>, an indeclinable numeral, which Nestle's form-code reader
-    /// calls nominative because the code's case group begins with the N of NUI.
-    ///
-    /// Pinned here rather than fixed, because fixing it is a repair to the first morphology with a
-    /// data migration of its own. When it is fixed this number goes to nothing and this test says so.
+    /// An indeclinable numeral, <c>A-NUI</c>, has no case group, and the reader must not find one in
+    /// the N of NUI. MorphGNT parses 342 of them into a case from the syntax; this corpus states none.
     /// </summary>
     [Fact]
-    public void FindsTheIndeclinableNumeralsNestleCallsNominative()
+    public void GivesTheIndeclinableNumeralsNoCase()
     {
         if (!Fetched)
         {
@@ -303,17 +299,12 @@ public class MorphGntTests(ITestOutputHelper output)
             return;
         }
 
-        var nestle = Nestle();
-        var parsing = Parsing();
-        var join = MorphGntJoin.Of(nestle, parsing);
+        var numerals = Nestle()
+            .Where(word => word.Morphology.GetValueOrDefault("form") == "A-NUI")
+            .ToList();
 
-        var numerals = join.Rows.Count(row =>
-            nestle[row.Witness].Morphology.GetValueOrDefault("form") == "A-NUI"
-            && nestle[row.Witness].Morphology.GetValueOrDefault("case") == "nominative"
-            && MorphGntParsing.Case(parsing[row.Parsing].Parse) is { } other
-            && other != "nominative");
-
-        numerals.Should().Be(342);
+        numerals.Should().HaveCount(476);
+        numerals.Should().OnlyContain(word => !word.Morphology.ContainsKey("case"));
     }
 
     private static (int Agree, int Disagree, int Added) Agreement(

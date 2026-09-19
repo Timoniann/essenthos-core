@@ -12,9 +12,10 @@
 ///
 /// <para>
 /// The form code is the standard morphology string — <c>N-NSF</c>, <c>V-PAP-NSM</c>, <c>P-1AS</c> —
-/// whose last group, where it is three characters, is case, number and gender. A pronoun writes the
-/// person first, so the case is the second character there. A finite verb's last group is person
-/// and number, two characters, and has no case, which is correct: <c>V-PAI-3S</c> is not in any case.
+/// whose second group, or third for a verb, is case, number and gender. A pronoun writes the person
+/// first, so the case is the second character there. A finite verb's group is person and number and
+/// an infinitive has none, which is correct: <c>V-PAI-3S</c> and <c>V-AAN</c> are not in any case.
+/// Any group after that one is a note about the form, <c>-ATT</c> or <c>-S</c>, and not a case.
 /// </para>
 ///
 /// <para>
@@ -80,22 +81,43 @@ internal static class NestleCase
             return null;
         }
 
-        // A code with no hyphen is a part of speech and nothing else -- CONJ, PREP, ADV, PRT -- and
-        // has no groups to read. Without this check ADV was three characters beginning with A and
-        // came back accusative, which a test caught and the file would not have.
-        var hyphen = form.LastIndexOf('-');
-        if (hyphen < 0)
-        {
-            return null;
-        }
+        // Where the file offers two readings, V-PEM-2P@@V-PNM-2P, the first is the one printed.
+        var alternative = form.IndexOf("@@", StringComparison.Ordinal);
+        var groups = (alternative < 0 ? form : form[..alternative]).Split('-');
 
-        var last = form.AsSpan()[(hyphen + 1)..];
-        if (last.Length != 3)
-        {
-            return null;
-        }
-
-        // A pronoun writes its person first: P-1AS is first person, accusative, singular.
-        return char.IsAsciiDigit(last[0]) ? Named(last[1]) : Named(last[0]);
+        // The case lives in one group at a fixed position: straight after the part of speech, or
+        // after the tense, voice and mood for a verb. Whatever follows it is a note about the form
+        // -- ATT, ABB, N, S, K, C -- and never a case, and a verb's own tense group can look like one:
+        // the aorist passive infinitive V-APN would otherwise read as accusative plural neuter.
+        var position = groups[0] == "V" ? 2 : 1;
+        return groups.Length > position ? FromGroup(groups[position]) : null;
     }
+
+    /// <summary>
+    /// The case letter of a case group, found by its shape rather than by its place, so that a group
+    /// which only happens to begin with N, G, D, A or V is not read as one: NUI is an indeclinable
+    /// numeral, PRI an indeclinable proper noun, 3S a person and number, and none of them has a case.
+    /// </summary>
+    private static string? FromGroup(string group) => group.Length switch
+    {
+        // NSF: case, number, gender.
+        3 when IsCase(group[0]) && IsNumber(group[1]) && IsGender(group[2]) => Named(group[0]),
+        // 1AS: a pronoun writes its person first.
+        3 when IsPerson(group[0]) && IsCase(group[1]) && IsNumber(group[2]) => Named(group[1]),
+        // 3ASM: a reflexive pronoun, the person and then the case, number and gender.
+        4 when IsPerson(group[0]) && IsCase(group[1]) && IsNumber(group[2]) && IsGender(group[3])
+            => Named(group[1]),
+        // 1SASF: a possessive, the owner's person and number and then the word's own case group.
+        5 when IsPerson(group[0]) && IsNumber(group[1]) && IsCase(group[2]) && IsNumber(group[3])
+            && IsGender(group[4]) => Named(group[2]),
+        _ => null,
+    };
+
+    private static bool IsCase(char letter) => Named(letter) is not null;
+
+    private static bool IsNumber(char letter) => letter is 'S' or 'P';
+
+    private static bool IsGender(char letter) => letter is 'M' or 'F' or 'N';
+
+    private static bool IsPerson(char letter) => letter is '1' or '2' or '3';
 }
