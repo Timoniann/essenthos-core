@@ -47,7 +47,7 @@ internal sealed record OwnRelationshipOutcome(
 /// **BibleData's rows stay**, for the reason they stayed in <see cref="OwnReferenceLoader"/>: they
 /// are the second witness ours are measured against, they reach entities and relations ours does
 /// not, and the corpus has already lost 14,515 rows once to a pass that thought it could rebuild
-/// them (PRB-0343). Nothing here deletes or rewrites a row it did not write.
+/// them. Nothing here deletes or rewrites a row it did not write.
 /// </para>
 ///
 /// <para>
@@ -75,8 +75,8 @@ internal sealed record OwnRelationshipOutcome(
 /// <para>
 /// **A witness of ours always names the verse it read.** BibleData states 40 rows with no reference
 /// and 14 of those it calls <c>explicit</c>, which is a fact about that dataset and not a licence to
-/// write a citation nobody can follow (RUL-0024). The asymmetry is kept rather than flattened: the
-/// column stays nullable because a witness may honestly have given none, and the database refuses a
+/// write a citation nobody can follow. The asymmetry is kept rather than flattened: the column
+/// stays nullable because a witness may honestly have given none, and the database refuses a
 /// verseless row from any method but <see cref="LinkMethod.StatedBySource"/>.
 /// </para>
 /// </summary>
@@ -202,7 +202,7 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
     /// The entities this loader has already written for. On its own rows and per entity, because
     /// the descriptor passes arrive in batches over days and a second batch has to load beside the
     /// first — and because a guard on the table would find BibleData's 5,448 rows and conclude the
-    /// work was done (PRB-0343).
+    /// work was done.
     /// </summary>
     private async Task<HashSet<int>> Described(CancellationToken cancellationToken) =>
         [.. await db.EntityRelationships

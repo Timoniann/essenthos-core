@@ -11,8 +11,8 @@ namespace Essenthos.Core.Tests;
 /// from the two files rather than from the metadata that says so.
 ///
 /// The metadata does say so — <c>identifier = "RV09"</c>, <c>url =
-/// ebible.org/find/details.php?id=spaRV1909</c> — and that is exactly the kind of claim PRB-0185 was
-/// taught not to trust: the same repository's Russian set names a token file its records do not
+/// ebible.org/find/details.php?id=spaRV1909</c> — and that is exactly the kind of claim this corpus
+/// was taught not to trust: the same repository's Russian set names a token file its records do not
 /// correspond to, and nothing about the label showed it. A hand-made alignment keyed to a different
 /// edition would put real names on the wrong words, which is the worst thing this corpus can do, and
 /// it would look like data.

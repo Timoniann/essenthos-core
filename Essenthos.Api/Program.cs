@@ -19,17 +19,11 @@ var builder = WebApplication.CreateSlimBuilder(args);
 // still override it. See UserSecrets.
 UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly);
 
-// Both of these are read here, once, and never inside a lambda that runs later.
-//
-// `builder.Configuration` is a ConfigurationManager and it is disposed when the application is
-// built. A lambda that closes over it and runs afterwards — which is what every options callback
-// does — reads a dead object, and a dead ConfigurationManager does not throw: it answers null to
-// everything. So the password was found at startup and absent an hour later, and the API served
-// every database endpoint with "No database password" while its user secrets sat there correctly
-// set (PRB-0414). The CORS policy had the same shape and silently fell back to the defaults.
-//
-// Reading eagerly also moves the failure to where it can be seen. A missing password now stops the
-// process at startup, with the message, instead of answering 500 to a request nobody is watching.
+// Both of these are read here, once, rather than inside an options callback that runs later, so
+// that a missing password or an unset origin stops the process at startup with the message that
+// says what to set. Read lazily, the same mistake becomes a 500 on the first request that needs
+// the database and a CORS policy that has quietly fallen back to the defaults — a failure nobody
+// is watching, discovered by a reader instead of by the person starting it.
 var allowedOrigins = CorsOrigins.Read(builder.Configuration);
 var databaseConnection = DatabaseConnection.Read(builder.Configuration);
 

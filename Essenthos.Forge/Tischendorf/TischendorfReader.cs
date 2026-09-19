@@ -169,8 +169,9 @@ internal static class TischendorfReader
     /// <summary>
     /// Composed, because a lemma is an identifier and a decomposed one joins to nothing. This
     /// release is composed already — every one of its 137,711 words and both of their lemmas — so
-    /// this costs a comparison and buys the guarantee for whatever release comes next. PRB-0384 is
-    /// the day the corpus spent finding that out from the other side.
+    /// this costs a comparison and buys the guarantee for whatever release comes next. The other
+    /// side of it cost a day: GLAUx's Greek lemmas arrived decomposed and Nestle's were composed, so
+    /// every join between the two by lemma returned nothing at all.
     /// </summary>
     private static string Normalised(string value) => value.Normalize(NormalizationForm.FormC);
 

@@ -33,7 +33,7 @@ internal record BookResponse(
     ///
     /// It is served because a client that has to match what a reader typed — *Йов* for Job — cannot
     /// do it from the English name, and the alternative is a copy of the names inside the client
-    /// that drifts from the corpus the moment a text is loaded or corrected (PRB-0381, PRB-0396).
+    /// that drifts from the corpus the moment a text is loaded or corrected.
     /// </summary>
     public string? NameNative { get; init; }
 }

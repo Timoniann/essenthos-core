@@ -36,7 +36,7 @@ if ($listeners.Count -eq 0) {
 # variables are case-insensitive, so `foreach ($pid in ...)` throws "Cannot overwrite variable PID
 # because it is read-only or constant" the moment there is a listener to kill. This script therefore
 # only ever succeeded when there was nothing to do, and threw in exactly the case it exists for --
-# which is why orphans survived every stop and the next start found the port held (PRB-0417).
+# which is why orphans survived every stop and the next start found the port held.
 foreach ($listenerId in ($listeners.OwningProcess | Sort-Object -Unique)) {
     $process = Get-Process -Id $listenerId -ErrorAction SilentlyContinue
     if (-not $process) { continue }

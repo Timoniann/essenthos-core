@@ -6,8 +6,8 @@ namespace Essenthos.Core.Publishing;
 /// <summary>
 /// Whether every reader's bookmark still lands on a verse in the release about to be served.
 ///
-/// Bookmarks are addressed canonically (RUL-0185), so a release cannot move one — but it can lose the
-/// verse under it: a text withdrawn, a versification corrected so that a verse number stops existing.
+/// Bookmarks are addressed canonically, so a release cannot move one — but it can lose the verse
+/// under it: a text withdrawn, a versification corrected so that a verse number stops existing.
 /// A bookmark left pointing at nothing — with somebody's comment on it — has quietly lost its place,
 /// and that is found here, before the swap, rather than by the reader.
 ///

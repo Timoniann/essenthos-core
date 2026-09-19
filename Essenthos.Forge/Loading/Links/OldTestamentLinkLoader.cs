@@ -87,10 +87,10 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// where a claim came from, and answering with a path names nobody — while the Ukrainian
     /// interlinear beside it in the same column has always named its project and its licence. The
     /// file is CC BY-NC 4.0 and requires attribution, and for the corpus's most cited source there
-    /// was none anywhere: not here, not in the resource folder, not in the store. PRB-0179.
+    /// was none anywhere: not here, not in the resource folder, not in the store.
     ///
-    /// NonCommercial is not a new constraint — BHSA, which this maps onto, is non-commercial itself
-    /// (NOT-0014). Attribution was the term being broken.
+    /// NonCommercial is not a new constraint — BHSA, which this maps onto, is non-commercial
+    /// itself. Attribution was the term being broken.
     /// </summary>
     private const string Source =
         "Open Hebrew Bible Project by Eliran Wong, github.com/eliranwong/OpenHebrewBible, CC BY-NC 4.0";
@@ -580,7 +580,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         await WriteStrongNumbers(connection, stated, cancellationToken);
         // The claim that says this loader is the one asserting these links. Written here rather
         // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus. PRB-0198.
+        // the measure spent a day reporting the migration instead of the corpus.
         await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
 
         // And the second claim, where a second source reached the same place. TAHOT says nothing

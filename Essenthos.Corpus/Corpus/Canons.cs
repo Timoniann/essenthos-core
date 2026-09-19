@@ -8,11 +8,11 @@ namespace Essenthos.Core.Corpus;
 /// Christian; Daniel is Ketuvim and a Major Prophet; both are true at once, and a
 /// <c>testament</c> column on a book can only ever record one of them. So a book keeps what is
 /// its own — ordinal, name, abbreviation, slug — and order, heading and inclusion are asked of a
-/// canon. DOC-0090 has the reasoning.
+/// canon.
 ///
 /// The Tanakh's order is not invented here. It is BHSA's, exactly, and it is already in the
-/// database on <c>book.position</c> — the column PRB-0030 forced into existence when the old
-/// schema shipped Tanakh and canonical order under one name. It was written to stop a defect and
+/// database on <c>book.position</c> — the column forced into existence when the old schema
+/// shipped Tanakh and canonical order under one name. It was written to stop a defect and
 /// it turned out to be the whole Jewish reading order, sitting there loaded.
 /// </summary>
 internal static class Canons

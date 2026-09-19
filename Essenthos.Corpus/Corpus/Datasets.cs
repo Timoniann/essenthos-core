@@ -31,7 +31,7 @@ public static class Datasets
     ///
     /// A third shape, because the lexicon belongs to no text and contributes neither rows carrying a
     /// source string nor links — 14,298 entries the whole corpus resolves its numbers through, and
-    /// the one dataset the undeclared report could not see. PRB-0059.
+    /// the one dataset the undeclared report could not see.
     /// </param>
     /// <param name="Glossary">
     /// Whether this dataset is a lexicon of short glosses, counted by the entries it glosses. Its
@@ -84,8 +84,8 @@ public static class Datasets
     /// were used, which is the question a reader who disagrees with a row actually has.
     ///
     /// Null where the source publishes no citation form. That is silence, not an assertion that
-    /// none is owed — the author, the licence and the URL are recorded either way (RUL-0181), and
-    /// this is the extra thing an author asked for on top of them.
+    /// none is owed — the author, the licence and the URL are recorded either way, and this is the
+    /// extra thing an author asked for on top of them.
     /// </param>
     /// <param name="Obliges">
     /// What this source's terms require of anything the corpus publishes from it, in a sentence.
@@ -97,8 +97,8 @@ public static class Datasets
     /// be published commercially. None of that is inferable from four letters and a URL, and an
     /// obligation nobody wrote down is one nobody meets.
     ///
-    /// Null where the terms ask for nothing beyond the attribution every source here gets anyway
-    /// (RUL-0181) — which is most of them, and is why this being set is worth noticing.
+    /// Null where the terms ask for nothing beyond the attribution every source here gets anyway —
+    /// which is most of them, and is why this being set is worth noticing.
     /// </param>
     /// <param name="Contains">
     /// Further works bound into the same file, each with its own author and its own terms.
@@ -193,7 +193,7 @@ public static class Datasets
             "Wikidata"),
 
         // The corpus's single most load-bearing source, and the one that went longest unnamed: every
-        // stated word-level correspondence the Old Testament has comes from it. PRB-0179.
+        // stated word-level correspondence the Old Testament has comes from it.
         new("openhebrewbible", "Open Hebrew Bible Project", "Eliran Wong", "CC BY-NC 4.0",
             "https://creativecommons.org/licenses/by-nc/4.0/",
             "https://github.com/eliranwong/OpenHebrewBible",
@@ -241,7 +241,7 @@ public static class Datasets
         // 8,345 disagree with one. Its repository does say CC BY 4.0 over the whole of the data,
         // in its README and its LICENSE.md, but the per-set TOML is the statement closest to the
         // bytes and the more restrictive where they differ — the Arabic ONAV set says CC BY-SA 4.0
-        // and is excluded on that (RUL-0105).
+        // and is excluded on that.
         new("clearbible", "Clear Bible Alignments", "BiblioNexus", "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://github.com/Clear-Bible/Alignments",
@@ -269,7 +269,7 @@ public static class Datasets
         // "License? Public Domain. Copy freely." and there is no LICENSE file and no licence on the
         // GitHub repository record. Robinson asks, without requiring it, that his name and the
         // title stay with the text; both are here. The re-wrappings disagree with the original and
-        // are more restrictive, so they are not the ones believed. RUL-0105.
+        // are more restrictive, so they are not the ones believed.
         new("byztxt", "Robinson's Textus Receptus", "Maurice A. Robinson", "Public Domain",
             "https://github.com/byztxt/greektext-textus-receptus#license",
             "https://github.com/byztxt/greektext-textus-receptus",
@@ -332,7 +332,7 @@ public static class Datasets
 
         // The lexicon every Strong number in the corpus resolves through, and the one dataset with
         // no declaration at all — it contributes neither rows carrying a source nor links, so the
-        // undeclared report was blind to it. PRB-0059.
+        // undeclared report was blind to it.
         //
         // The licence recorded is Strong's own, long out of copyright. The Hebrew file embeds a
         // second work under its own terms, and it is declared in Contains rather than folded in
@@ -377,7 +377,7 @@ public static class Datasets
         // What this project asserts itself, and it belongs in the list precisely because it is
         // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly
         // all of it — correspondences nobody states, which read exactly like an undeclared third
-        // party until they were claimed here. PRB-0180.
+        // party until they were claimed here.
         new(Own, "Essenthos", "this project", "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://essenthos.org",

@@ -54,8 +54,8 @@ public class BookReferencesTests
     public void ResolvesTheDeuterocanonToo(string book, int ordinal)
     {
         // This used to be the rejection list. The frame stopped at 66 and the deuterocanon was
-        // "outside the canon" — but whose canon was never asked, and the answer differs by reader
-        // (DOC-0090). A reference resolving is not a claim that any loaded text has the book.
+        // "outside the canon" — but whose canon was never asked, and the answer differs by
+        // reader. A reference resolving is not a claim that any loaded text has the book.
         BookReferences.ResolveOrdinal(book).Should().Be(ordinal);
     }
 

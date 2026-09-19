@@ -243,13 +243,13 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// differently. They were one number until a second source could disagree, and then it read
     /// 18,086 for a pair that had read 0 the morning before — not because anything broke, but
     /// because Clear Bible differs from the Berean's own tables about 8,310 Greek words and the
-    /// corpus deliberately keeps both answers (FTR-0186).
+    /// corpus deliberately keeps both answers.
     ///
     /// The two are not the same fact. One source claiming a word twice is a defect in that source's
     /// load and should be zero. Two sources claiming it differently is a disagreement between people
     /// who both looked, and is the most interesting row in the corpus. Counted together, the second
     /// hides the first: a pair with real duplication and a pair with rich disagreement report the
-    /// same number. PRB-0198.
+    /// same number.
     /// </summary>
     private const string ContentionSql =
         """
@@ -434,11 +434,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         // separate combining marks while every other Greek text carries them composed, and the
         // result was that `=` between a Brenton lemma and a Nestle lemma was false 100% of the
         // time — 0 matches out of 95,861, which nothing reported because finding nothing is what
-        // having no data also looks like (PRB-0384).
+        // having no data also looks like.
         //
         // Greek only. The Hebrew texts order their points and accents differently from canonical
         // order too, and that is not the same question: `word.text` there is the witness's own
-        // text and rewriting it is a decision the owner has not made (PRB-0386). Counting it here
+        // text and rewriting it is a decision the owner has not made. Counting it here
         // would report an open question as a broken corpus.
         ("Greek lemmas not in canonical form, which nothing can join",
             """
@@ -479,8 +479,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                   WHERE lw.link_id = l.id
                     AND lw.side = CASE l.relation WHEN 'omits' THEN 'from' ELSE 'to' END)
             """),
-        // A link nothing claims. Every loader writes its claim in the same transaction as the link
-        // (PRB-0198), so this is zero — and it is here because for one day it was not: the migration
+        // A link nothing claims. Every loader writes its claim in the same transaction as the link,
+        // so this is zero — and it is here because for one day it was not: the migration
         // backfilled the links that existed and nothing kept it up, so 403,343 links written
         // afterwards had none and the agreement measure reported the migration instead of the
         // corpus. A number that looks like an answer is worse than a missing one.
@@ -662,7 +662,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         // container gives 64 MB of by default. The duplicate-link check exhausted it and the whole
         // verification died with "No space left on device", which is a true sentence about a
         // segment nobody sized and a false one about the disk. Raising it belongs in the frozen
-        // repository's compose file (PRB-0187); not needing it belongs here.
+        // repository's compose file; not needing it belongs here.
         await using (var single = new NpgsqlCommand("SET max_parallel_workers_per_gather = 0", connection))
         {
             await single.ExecuteNonQueryAsync(cancellationToken);

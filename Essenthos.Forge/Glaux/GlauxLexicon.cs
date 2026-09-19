@@ -23,7 +23,8 @@ internal readonly record struct LemmaChoice(string Lemma, double Share, int Occu
 /// over a different edition of the same book, and 99.38% of Brenton's tokens are written the same
 /// way somewhere in it. So GLAUx is read as a **form-to-lemma table** and its own Greek is never
 /// loaded — which keeps a text whose transcription provenance Wikisource does not document out of
-/// the corpus, and confines what we take from GLAUx to lexical facts. DOC-0161 has the licence.
+/// the corpus, and confines what we take from GLAUx to lexical facts. The lemmas are CC BY-SA 4.0
+/// over a CC BY-SA 3.0 text, accepted and attributed.
 ///
 /// A form is ambiguous when the corpus lemmatises it more than one way — <em>αὐτοῦ</em> the
 /// pronoun against <em>αὐτοῦ</em> the adverb — so the table records the leading lemma and the share

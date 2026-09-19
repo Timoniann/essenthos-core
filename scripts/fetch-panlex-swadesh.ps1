@@ -27,7 +27,7 @@ if (-not (Test-Path -LiteralPath $Data)) {
 # Every code span below doubles its backticks. Inside a double-quoted here-string a single backtick
 # is PowerShell's escape character, so `$ExpectedSha256 writes the variable's name and `n writes a
 # newline -- which is how this file once recorded the literal text "SHA-256 $ExpectedSha256" as the
-# only proof of what had been downloaded. PRB-0519.
+# only proof of what had been downloaded.
 $Fetched = (Get-Item -LiteralPath $Archive).LastWriteTime.ToString('yyyy-MM-dd')
 $Licence = @"
 # PanLex Swadesh Corpora — NLTK package snapshot

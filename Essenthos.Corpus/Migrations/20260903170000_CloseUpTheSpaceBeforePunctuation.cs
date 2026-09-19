@@ -15,8 +15,8 @@ namespace Essenthos.Core.Migrations
             // "Thus saith the Lord , Behold" -- 2,879 words in 2,633 verses of the King James, and
             // one Ukrainian full stop. It is in the source file, not in the reader: whoever
             // flattened the small-caps LORD markup left the space that had separated the styled
-            // name from what followed. The reader now closes it up as a named normalisation
-            // (PRB-0151); this brings the loaded corpus with it.
+            // name from what followed. The reader now closes it up as a named normalisation;
+            // this brings the loaded corpus with it.
             //
             // A migration rather than a reload, because reloading the King James would cascade away
             // every link into it -- its stated mapping to the Hebrew, the Berean's links to it,

@@ -193,7 +193,9 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     ///
     /// <para>
     /// In the same transaction as the derivation. The two are one statement about what this corpus
-    /// reads, and half of it committing on its own is the failure MST-0184 records.
+    /// reads, and half of it committing on its own is how the live corpus once lost every
+    /// descriptor, name form and relationship of its own: the delete went straight to the database
+    /// and stayed, and the writes that were to replace it failed.
     /// </para>
     /// </summary>
     private static readonly string Retraction =

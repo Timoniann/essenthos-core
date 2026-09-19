@@ -48,8 +48,8 @@ internal static class BhsaTextSource
                 + "what is edited here is the encoding and the annotation, not the words.",
 
         // Not a courtesy. The ETCBC asks that anything published from BHSA cite the dataset by
-        // its DOI, and a licence name and a URL cannot carry that — PRB-0067 is the field that
-        // was missing.
+        // its DOI, and a licence name and a URL cannot carry that, which is why this field
+        // exists.
         Citation = "Eep Talstra Centre for Bible and Computer, Biblia Hebraica Stuttgartensia " +
                    "Amstelodamensis (BHSA), DANS, https://doi.org/10.17026/dans-z6y-skyh",
     };

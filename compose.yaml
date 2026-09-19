@@ -4,7 +4,7 @@ services:
   # nothing may change.
   db:
     # Pinned by digest: "latest" moved from 16 to 18 under a running database once already, and a
-    # data directory only opens under the major version that wrote it (PRB-0586). The tag is for the
+    # data directory only opens under the major version that wrote it. The tag is for the
     # reader; the digest is what is pulled.
     image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
     environment:
@@ -18,13 +18,13 @@ services:
       - "127.0.0.1:5437:5432"
       - "[::1]:5437:5432"
     # Docker's default /dev/shm is 64 MB, and a parallel query's workers exchange rows through it;
-    # past that they fail with "could not resize shared memory segment" (PRB-0187). With work_mem at
+    # past that they fail with "could not resize shared memory segment". With work_mem at
     # 64MB a parallel hash asks for 256 MB segments, and `forge verify` alone peaks at 1,085 MB, so 1 GB
     # fails and 4 GB does not. It is a ceiling, not an allocation: tmpfs takes memory only as used.
     shm_size: 4gb
     # Sized for a development machine building an 11 GB corpus: the load is bulk inserts and index
     # builds, which are what maintenance_work_mem and max_wal_size govern. A deployment reads and
-    # never loads, and gets settings of its own with the droplet (FTR-0578).
+    # never loads, and gets settings of its own with the droplet.
     command:
       - postgres
       - -c

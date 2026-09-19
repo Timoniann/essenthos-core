@@ -28,7 +28,9 @@ namespace Essenthos.Core.Loading;
 /// in this set to the Vulgate and to a full deuterocanon, and both are what stop it: it follows the
 /// Latin numbering, its Psalms are the Vulgate's, and its Esther runs to sixteen chapters and its
 /// Daniel to fourteen, where the additions the Greek and Latin carry inside a protocanonical book
-/// have to be given somewhere to stand. That is TSK-0234's decision and not a reader's.
+/// have to be given somewhere to stand. Where a deuterocanonical book goes in a frame that runs 1
+/// to 66 is a decision to be settled deliberately, with the Latin, and not one a reader's first
+/// English pane should make for the corpus.
 /// </summary>
 internal static class EnglishTextSource
 {
@@ -326,8 +328,8 @@ internal static class EnglishTextSource
     ///
     /// The verse-level pool is broadly right — 80% of the American Standard's tags name a number
     /// Luther also uses somewhere in that verse — and proper nouns land correctly, which is what
-    /// makes the layer look usable until it is measured. That is exactly the failure RUL-0024 names:
-    /// an inference persisted where a reader would take it for something the edition stated.
+    /// makes the layer look usable until it is measured. That is exactly the failure to avoid: an
+    /// inference persisted where a reader would take it for something the edition stated.
     ///
     /// The same layer is under both texts. Where the two tag an identical sequence of words, 83% of
     /// the time the sequence of numbers is identical too, and their per-verse number sets agree

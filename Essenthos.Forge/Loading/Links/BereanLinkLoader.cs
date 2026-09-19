@@ -137,7 +137,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         {
             logger.LogWarning(
                 "The Berean tables are not at {Path}, so the Berean is linked to nothing. They are 85 MB "
-                + "and are fetched rather than committed; FTR-0182 says from where", tables);
+                + "and are fetched rather than committed; run scripts/fetch-berean.ps1", tables);
             return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
@@ -596,7 +596,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
 
         // The claim that says this loader is the one asserting these links. Written here rather
         // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus. PRB-0198.
+        // the measure spent a day reporting the migration instead of the corpus.
         await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);

@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <summary>
-/// One clause a generation pass claims about one entity, exactly as DOC-0191 writes it.
+/// One clause a generation pass claims about one entity, exactly as the file writes it.
 /// </summary>
 /// <param name="Reference">
 /// A canonical address in the corpus's own spelling — <c>NUM 10:29</c>. It must be a verse the
@@ -58,8 +58,8 @@ internal sealed record DescriptorRecord(
     /// It is how one pass is told from another, and nothing else in a record is. A re-ask carries
     /// the same model and the same date as the batch it corrects — both passes ran on 2026-09-09 —
     /// so a loader asking whether it has already stored this answer would compare two identical
-    /// strings and keep the old one (PRB-0449). The file name is what the file set already settles
-    /// supersession by, and this carries that answer down to the database.
+    /// strings and keep the old one. The file name is what the file set already settles supersession
+    /// by, and this carries that answer down to the database.
     /// </summary>
     public string File { get; init; } = string.Empty;
 }
@@ -115,7 +115,7 @@ internal static class DescriptorFiles
                 var record = JsonSerializer.Deserialize<DescriptorRecord>(line, Shape)
                              ?? throw new InvalidDataException(
                                  $"A line of {file} is not a descriptor. Each line must be one JSON " +
-                                 "object with entity, claims, model and askedAt, as DOC-0191 spells it.");
+                                 "object with entity, claims, model and askedAt.");
 
                 if (string.IsNullOrWhiteSpace(record.Entity))
                 {

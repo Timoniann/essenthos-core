@@ -24,7 +24,8 @@ namespace Essenthos.Core.Tests;
 /// The fixtures are written here rather than taken from the corpus, and deliberately: the real
 /// files are the output of a model run and are not on most disks, and a loader that cannot be
 /// exercised without a gigabyte of sources is a loader nobody exercises. What they stand in for is
-/// the shape of DOC-0191, which is the thing three agents are building against.
+/// the shape of the descriptor file — one newline-delimited JSON object per entity, carrying its
+/// claims and its name forms — which is the thing three agents are building against.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class DescriptorTests : IDisposable
@@ -146,8 +147,9 @@ public sealed class DescriptorTests : IDisposable
     /// <summary>
     /// The re-ask, which is what a widened vocabulary produces: the same entity answered again, in
     /// a file published after the first. The file set already settled this by taking the file that
-    /// sorts last; before PRB-0449 the database did not, so the later answer loaded on a fresh
-    /// corpus and never reached one that already held the first.
+    /// sorts last; the loader used to leave an entity it had already described exactly as it was,
+    /// so the later answer loaded on a fresh corpus and never reached one that already held the
+    /// first.
     ///
     /// <para>
     /// The two records carry the same model and the same date on purpose, because the re-ask that
@@ -277,8 +279,8 @@ public sealed class DescriptorTests : IDisposable
     /// The companion rule against real verse text, which is what it never had. Every test before this
     /// one ran with no text loaded, so the only branch ever exercised was "cannot check" — and a rule
     /// looking for the King James under the wrong name passed all of them while refusing nothing on
-    /// the corpus (MST-0188). The words are seeded without a normalised form on purpose, so the test
-    /// also holds the rule to reading the printed word where there is nothing else.
+    /// the corpus. The words are seeded without a normalised form on purpose, so the test also
+    /// holds the rule to reading the printed word where there is nothing else.
     /// </summary>
     /// <summary>
     /// The pass read Luke 3:1 while the dataset still filed it under Herodias's husband, so its clauses
@@ -460,7 +462,7 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
-    /// PRB-0361's case, end to end: <em>місто в Юдеї</em> and not <em>місто в Юдея</em>. It is here
+    /// The locative gap, end to end: <em>місто в Юдеї</em> and not <em>місто в Юдея</em>. It is here
     /// because the locative is what proves the forms are keyed by case rather than a nominative and
     /// a genitive under other names — a third case cost a phrasing and a generation pass, and
     /// nothing on the wire.
@@ -478,7 +480,8 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
-    /// PRB-0361's four clauses, which are what a place page is made of: each puts its target in the
+    /// The four place clauses — <c>lived-in</c>, <c>buried-in</c>, <c>city-in</c> and
+    /// <c>mountain-in</c> — which are what a place page is made of: each puts its target in the
     /// locative and none of them can be said with the genitive. <em>жив у Хевроні</em>, not
     /// <em>жив у Хеврона</em>, and not the <em>мешканець Хеврона</em> the phrasing said while
     /// nothing produced a locative — that is an inhabitant rather than someone who lived there.
@@ -496,7 +499,7 @@ public sealed class DescriptorTests : IDisposable
     /// <summary>
     /// The other path, and the one that matters today: 727 entities' worth of claims have been
     /// generated and none of them carries a locative yet, so this is what almost every place clause
-    /// renders as until TSK-0364's pass lands.
+    /// renders as until a second pass over the name forms fills the locative in.
     ///
     /// The assertion that makes it worth writing is the second one. Nod has a genitive, and the
     /// clause does not reach for it — <em>жив у Нода</em> reads as Ukrainian and is not Ukrainian,
@@ -573,9 +576,10 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
-    /// PRB-0435 on the page it was reported from. Lot's three clauses are what the corpus holds for
-    /// him today, and the third of them read <em>жив у в околиці Йорданській</em>, because the
-    /// phrasing supplies <em>у</em> and the form the pass wrote supplied <em>в</em> as well.
+    /// The doubled preposition, on the page it was reported from. Lot's three clauses are what the
+    /// corpus holds for him today, and the third of them read <em>жив у в околиці Йорданській</em>,
+    /// because the phrasing supplies <em>у</em> and the form the pass wrote supplied <em>в</em> as
+    /// well.
     ///
     /// The preposition comes off the form on the way in rather than off the line at render time:
     /// nothing at render time knows which words of a form are the name, and <em>у Хеврона</em>
@@ -663,9 +667,9 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
-    /// The three refusals DOC-0191 asks for, and the fourth the provenance rules force: a claim
-    /// with no confidence cannot be stored as an inference, and storing it as testimony would be
-    /// a model's guess wearing a source's name.
+    /// The three refusals the descriptor contract asks for, and the fourth the provenance rules
+    /// force: a claim with no confidence cannot be stored as an inference, and storing it as
+    /// testimony would be a model's guess wearing a source's name.
     /// </summary>
     [Fact]
     public async Task WhatCannotBeRenderedOrCheckedIsRefusedAndCounted()
@@ -704,7 +708,7 @@ public sealed class DescriptorTests : IDisposable
     /// <summary>
     /// A second batch, generated later, loads beside the first rather than being turned away by a
     /// guard that asks whether the table holds anything at all. That guard is what left a cold
-    /// database with no name resolutions in it (PRB-0343).
+    /// database with no name resolutions in it.
     /// </summary>
     [Fact]
     public async Task ALaterBatchLoadsBesideTheOneBeforeIt()
@@ -747,8 +751,8 @@ public sealed class DescriptorTests : IDisposable
     ///
     /// <para>
     /// It is asserted rather than assumed because the shape that reads a target's own forms inside
-    /// the clause projection is exactly the shape of PRB-0357, where a subquery in a projection was
-    /// evaluated once per joined row and took <c>/v1/corpora</c> from a millisecond to 46 seconds.
+    /// the clause projection is exactly the shape that once took <c>/v1/corpora</c> from a
+    /// millisecond to 46 seconds: a subquery in a projection, evaluated once per joined row.
     /// A count of commands is what tells the two apart, and it is invisible in an assertion about
     /// the answer.
     /// </para>

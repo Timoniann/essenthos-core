@@ -18,7 +18,7 @@ namespace Essenthos.Core.Endpoints;
 /// **The licences differ, and that is the whole reason this exists.** CC BY 4.0 for the chronology,
 /// CC0 for the world layer, CC BY-NC 4.0 and CC BY-SA 4.0 for the two sources that say which word
 /// renders which. A page that printed one licence over all of them would be asserting what none of
-/// them says. PRB-0109.
+/// them says.
 ///
 /// And a licence name is only half of it: what a reader needs before they publish anything is what
 /// each source asks of them in return, which <c>Obliges</c> carries in words. Share-alike is not a

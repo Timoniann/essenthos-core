@@ -95,7 +95,7 @@ internal sealed record EditionNumbers(IReadOnlyDictionary<long, WordTag> Tags, s
 ///
 /// This is the route Luther 1912 reaches Hebrew and Greek by, and the only one it has that is not
 /// this project's own inference: 365,350 of its words arrive from eBible already tagged, and no
-/// German text under any licence carries a word alignment (DOC-0192). The King James reaches the
+/// German text under any licence carries a word alignment. The King James reaches the
 /// Greek the same way, through <see cref="NewTestamentLinkLoader"/>, and the matching both use is
 /// <see cref="StrongNumberMatch"/>. The difference is only where the tags are: the King James's
 /// arrive in a separate edition that has to be laid onto the loaded words first, and Luther's are
@@ -120,7 +120,7 @@ internal sealed record EditionNumbers(IReadOnlyDictionary<long, WordTag> Tags, s
 /// **The tagging is known imperfect by its own lineage's account.** It descends from the Zefania
 /// Strong module of 12/2005; toledot.info, which corrected the same layer, calls the family
 /// <em>unvollständig und mit Fehlern behaftet</em>, and eBible holds the version before those
-/// corrections (PRB-0375). So a link built from it is a good prior and not a reading, which is what
+/// corrections. So a link built from it is a good prior and not a reading, which is what
 /// the confidence column is for.
 /// </para>
 ///

@@ -2,11 +2,10 @@
 What is true of this person, and which verse says so? Ask a model, and measure it against BibleData.
 
 `entity.distinguisher` is one English sentence per entity, imported whole from BibleData: not ours,
-not structured, not translatable (NOT-0171, FTR-0359). This harness replaces it with the claims that
-would make one -- `hobab -> son-of -> reuel-2 (NUM 10:29)` -- read out of the verses the encyclopedia
-already attests the entity in, each in the King James and in its witnesses, with the name forms every
-language needs produced beside them. DOC-0191 is the contract for what comes out; this writes it and
-nothing else.
+not structured, not translatable. This harness replaces it with the claims that would make one --
+`hobab -> son-of -> reuel-2 (NUM 10:29)` -- read out of the verses the encyclopedia already attests
+the entity in, each in the King James and in its witnesses, with the name forms every language needs
+produced beside them. The shape the loader reads is the contract; this writes it and nothing else.
 
     python scripts/descriptors.py extract --out .descriptors/pilot --sample 300 --seed 11
     python scripts/descriptors.py ask     --dir .descriptors/pilot --workers 4 --effort low
@@ -87,7 +86,7 @@ batches under `Resources/Essenthos/descriptors/`. A run leaves:
 
     manifest.json              the selection, its seed, and which entities went into which batch
     batches/batch-NNNN.json    the prompt payload, exactly as the model saw it
-    out/batch-NNNN.jsonl       the descriptors, in DOC-0191's shape, one object per line, with `differs`
+    out/batch-NNNN.jsonl       the descriptors, contract-shaped, one object per line, with `differs`
     rejected.jsonl             every claim dropped in validation, with the reason
     usage.jsonl                what each batch cost, in dollars and in tokens read and written
     score.md, disagreements.json
@@ -121,7 +120,7 @@ RUSSIAN = 'RUSV'
 PROMPT_VERSION = 'descriptor-3'
 
 # The book codes the corpus's own book file publishes (BibleData-Book.csv, usx_code), which is the
-# spelling DOC-0191's examples are written in.
+# spelling the contract's examples are written in.
 BOOKS = [
     'GEN', 'EXO', 'LEV', 'NUM', 'DEU', 'JOS', 'JDG', 'RUT', '1SA', '2SA', '1KI', '2KI', '1CH',
     '2CH', 'EZR', 'NEH', 'EST', 'JOB', 'PSA', 'PRO', 'ECC', 'SNG', 'ISA', 'JER', 'LAM', 'EZK',
@@ -131,8 +130,8 @@ BOOKS = [
     'REV',
 ]
 
-# DOC-0191's vocabulary, closed. The loader refuses anything else, so anything else is dropped here
-# and counted, rather than written out for the loader to refuse one file at a time.
+# The contract's vocabulary, closed. The loader refuses anything else, so anything else is dropped
+# here and counted, rather than written out for the loader to refuse one file at a time.
 RELATIONS = [
     'son-of', 'daughter-of', 'father-of', 'mother-of', 'brother-of', 'sister-of',
     'husband-of', 'wife-of', 'concubine-of',
@@ -153,8 +152,9 @@ RELATIONS = [
     'city-in', 'region-of', 'river-of', 'mountain-in', 'gate-of', 'near',
 ]
 
-# The nineteen TSK-0424 added. A re-ask of an entity the first pass already described earns its
-# place by using one of these; anything else it says, the pass before it could have said too.
+# The nineteen the vocabulary gained when it was widened. A re-ask of an entity the first pass
+# already described earns its place by using one of these; anything else it says, the pass before it
+# could have said too.
 WIDENED = {
     'concubine-of', 'half-brother-of', 'half-sister-of', 'grandson-of', 'granddaughter-of',
     'uncle-of', 'aunt-of', 'nephew-of', 'niece-of', 'brother-in-law-of', 'sister-in-law-of',
@@ -166,8 +166,8 @@ assert WIDENED <= set(RELATIONS)
 
 LANGUAGES = ['eng', 'ukr', 'rus', 'deu']
 
-# The nominative and the genitive are what DOC-0191 asks for; the locative is what PRB-0361 found
-# missing, because *похований у Хевроні* has no genitive that stands in for it and four of the
+# The nominative and the genitive are what the contract asks for; the locative was found missing
+# from it, because *похований у Хевроні* has no genitive that stands in for it and four of the
 # relations are exactly the ones a place page is made of. The loader already stores one where a
 # pass supplies it.
 FORMS = ['nominative', 'genitive', 'locative']
@@ -738,7 +738,7 @@ def answer_key():
     """)
 
 
-# BibleData's type names against DOC-0191's vocabulary, in the same direction. What is absent is
+# BibleData's type names against the contract's vocabulary, in the same direction. What is absent is
 # absent from the vocabulary, not from the mapping: patron, client, concubinator, exiled, original heir
 # and Creator have no relation to be scored against (cousin, ally, rabbi and lady gained one on
 # 2026-09-10), and `score` counts them so the size of that gap is visible
@@ -1234,7 +1234,7 @@ def refusal(relation, target_kind, line, question, kind):
 
 def validate(answer, asked, slugs, today, model, kinds):
     """
-    One answered entity turned into a DOC-0191 object, and everything the loader would refuse
+    One answered entity turned into a contract-shaped object, and everything the loader would refuse
     turned into a counted rejection instead.
     """
     rejected = []

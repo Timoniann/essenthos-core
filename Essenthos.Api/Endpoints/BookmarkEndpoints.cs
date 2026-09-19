@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Endpoints;
 
 /// <summary>
-/// A reader's bookmarks on passages, each in a colour and with a comment to themselves if they want one
-/// (FTR-0581).
+/// A reader's bookmarks on passages, each in a colour and with a comment to themselves if they
+/// want one.
 ///
 ///     GET    /v1/me/bookmarks                          every bookmark, newest first
 ///     GET    /v1/me/bookmarks?book=john&amp;chapter=3      the bookmarks that touch one chapter — asked on every page
@@ -16,8 +16,9 @@ namespace Essenthos.Core.Endpoints;
 ///     DELETE /v1/me/bookmarks/{id}
 ///
 /// A bookmark is addressed canonically — book, chapter, verse in the shared frame — and never by a
-/// corpus row id (RUL-0185), so a corpus release cannot move it. The address is checked against the
-/// corpus when the bookmark is made, so one can only be put on a verse that exists.
+/// corpus row id, which every rebuild renumbers, so a corpus release cannot move it. The address is
+/// checked against the corpus when the bookmark is made, so one can only be put on a verse that
+/// exists.
 /// </summary>
 internal static class BookmarkEndpoints
 {

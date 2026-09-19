@@ -363,8 +363,8 @@ public class EbibleCorpusTests(Ebible ebible) : IClassFixture<Ebible>
 
     /// <summary>
     /// And the third carries nothing at all, which is worth checking rather than assuming: a later
-    /// pass writing derived annotation onto a text as though the edition had supplied it is the
-    /// failure RUL-0024 exists for, and this is what would catch it.
+    /// pass writing derived annotation onto a text as though the edition had supplied it is a guess
+    /// stored as testimony, and this is what would catch it.
     /// </summary>
     [Fact]
     public void TheElberfelderCarriesNoAnnotationAtAll() =>

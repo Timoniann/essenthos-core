@@ -79,7 +79,7 @@ internal static class GreekLetters
     /// Brenton writes it as U+02BC MODIFIER LETTER APOSTROPHE and uses the same character for a
     /// word-initial breathing. It sits outside every Greek block, so a fold that works by block
     /// structure passed it straight through and 4,832 Septuagint words came out as forms no other
-    /// witness contains and no reader types. PRB-0158.
+    /// witness contains and no reader types.
     /// </summary>
     private const string Elision = "ʼʻ’‘'";
 
@@ -139,7 +139,7 @@ internal static class GreekLetters
             // it stands between a word and every other witness of it: ἐπʼ folded to επʼ, which no reader
             // types and no other Greek text contains. Dropping it is what the Greek blocks' own
             // free-standing diacritics already do a few lines above; this one only lives outside
-            // them. PRB-0158.
+            // them.
             _ when Elision.Contains(c) => ' ',
             _ => c,
         };

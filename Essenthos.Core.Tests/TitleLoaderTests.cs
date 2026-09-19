@@ -215,7 +215,7 @@ public sealed class TitleLoaderTests : IDisposable
         (await _db.Entities.SingleAsync(e => e.Slug == "achish")).Kind.Should().Be(EntityKind.Person);
     }
 
-    /// <summary>The startup pipeline runs on every boot, and a second boot writes nothing (RUL-0005).</summary>
+    /// <summary>The startup pipeline runs on every boot, and a second boot writes nothing.</summary>
     [Fact]
     public async Task ASecondBootWritesNothing()
     {

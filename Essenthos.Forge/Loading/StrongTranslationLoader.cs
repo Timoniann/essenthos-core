@@ -53,9 +53,9 @@ internal sealed record TranslationOutcome(
 ///
 /// The reader of the Ukrainian text meets an English gloss the moment he asks what a word means,
 /// and there is no Ukrainian Strong to load: every dictionary that circulates under his name is
-/// either somebody else's lexicon keyed to his numbers or a real translation somebody owns
-/// (NOT-0174). Strong's own English is public domain, so this corpus translates it and says on
-/// every row that it did.
+/// either somebody else's lexicon keyed to his numbers or a real translation somebody owns.
+/// Strong's own English is public domain, so this corpus translates it and says on every row that
+/// it did.
 ///
 /// <para>
 /// **It never touches <see cref="StrongEntry"/>.** The English stays exactly where it was, and a
@@ -75,8 +75,7 @@ internal sealed record TranslationOutcome(
 /// <para>
 /// **The guard is per number and per language.** Guarding on "does the table hold anything" would
 /// mean the German run could never be loaded beside the Ukrainian one, and a corrected batch could
-/// never be loaded beside an uncorrected one (PRB-0343). A row already present is left exactly as
-/// it is.
+/// never be loaded beside an uncorrected one. A row already present is left exactly as it is.
 /// </para>
 /// </summary>
 internal sealed partial class StrongTranslationLoader(

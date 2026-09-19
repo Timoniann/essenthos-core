@@ -7,9 +7,9 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <para>
 /// <c>DescriptorPhrasings</c> renders a place clause as <em>похований у </em> and then the target's
 /// locative, so a locative stored as <em>в Авані</em> reaches a reader as
-/// <em>похований у в Авані</em>. Hundreds of the forms the generation pass has produced carry one
-/// (PRB-0435), and the count grows with every batch it loads, because the prompt that produced them
-/// never said the sentence supplies its own.
+/// <em>похований у в Авані</em>. Hundreds of the forms the generation pass has produced carry
+/// one, and the count grows with every batch it loads, because the prompt that produced them never
+/// said the sentence supplies its own.
 /// </para>
 ///
 /// <para>

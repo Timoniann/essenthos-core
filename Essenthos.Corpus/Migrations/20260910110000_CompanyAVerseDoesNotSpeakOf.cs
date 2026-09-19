@@ -21,7 +21,7 @@ namespace Essenthos.Core.Migrations
             // for the King James words under the slug "kjv" where the corpus writes "KJV", found no
             // text, took that for a corpus without the text, and refused nothing. 115 of the 200
             // loaded companion-of clauses cite a verse with no word of accompaniment in it: list
-            // readings, "Shallum, Amariah, and Joseph", which is the failure PRB-0453 was about.
+            // readings, "Shallum, Amariah, and Joseph", which is what the loader's check is for.
             //
             // The words and the slug are written out here rather than read from the loader, because
             // what happened to this database is a fact about it, and retuning the list later must not

@@ -424,10 +424,10 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     }
 
     /// <summary>
-    /// The property from DOC-0007, checked here rather than in a test: what the database now holds
-    /// must rebuild the verse the parser handed over. It runs before the commit, so a corrupt load
-    /// leaves nothing behind — a corpus that is silently wrong is worse than one that is missing,
-    /// because only the second is noticed.
+    /// The property the schema states, checked here rather than in a test: what the database now
+    /// holds must rebuild the verse the parser handed over. It runs before the commit, so a corrupt
+    /// load leaves nothing behind — a corpus that is silently wrong is worse than one that is
+    /// missing, because only the second is noticed.
     /// </summary>
     private async Task VerifyRoundTrip(
         Text text,

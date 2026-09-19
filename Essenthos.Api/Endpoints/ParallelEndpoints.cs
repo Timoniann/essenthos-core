@@ -22,7 +22,7 @@ namespace Essenthos.Core.Endpoints;
 /// shared frame does it is more than one, and saying so is the difference between a row a reader can
 /// trust and a silent merge: Brenton's Genesis 31:50 and 31:50a both belong at canonical 31:50, so
 /// the row carried 39 Greek words against 19 Hebrew with nothing to say why. 91 addresses across the
-/// Septuagint are like that. PRB-0118.
+/// Septuagint are like that.
 /// </param>
 /// <param name="StatedVerses">
 /// What the edition itself prints as this verse's address, where its own file says so and that is
@@ -91,7 +91,7 @@ internal static class ParallelEndpoints
 {
     private const string PairedThroughTheFrame = "original-verse";
 
-    /// <summary>The contract's separator for the corpus list, and the cap DOC-0002 sets.</summary>
+    /// <summary>The contract's separator for the corpus list, and the cap it sets.</summary>
     private const char CorpusSeparator = ',';
 
     private const int MostCorporaAtOnce = 6;

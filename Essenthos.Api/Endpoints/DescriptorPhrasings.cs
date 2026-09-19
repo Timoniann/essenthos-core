@@ -23,7 +23,7 @@ internal static partial class DescriptorPhrasings
     /// §11 of the orthography decides one direction and only one: <em>у</em> stands before a word
     /// beginning with <em>в</em> or <em>ф</em>, whatever the word before it ended in. So
     /// <em>місто в Вавилоні</em> is wrong and <em>місто у Вавилоні</em> is right, and 32 of the
-    /// corpus's locatives are that (PRB-0444).
+    /// corpus's locatives are that.
     /// </para>
     ///
     /// <para>
@@ -62,12 +62,12 @@ internal static partial class DescriptorPhrasings
 /// say. The alternative is a reader meeting <c>father-in-law-of</c> on a page.
 ///
 /// <para>
-/// **The tables are the languages the interface is written in**, which FTR-0280 settled as English,
-/// Ukrainian, German and Spanish. Russian had a table before that and no longer does: the client
-/// carries no Russian catalogue, so a Russian line had nothing around it to be read in, and a
-/// phrasing table for a language the product does not offer is a sentence nobody can reach. The
-/// Russian forms in <see cref="Database.Entities.EntityNameForm"/> are left where they are — they
-/// cost nothing to keep and a table is cheap to write again — but nothing renders them.
+/// **The tables are the languages the interface is written in**, which the owner settled as
+/// English, Ukrainian, German and Spanish. Russian had a table before that and no longer does: the
+/// client carries no Russian catalogue, so a Russian line had nothing around it to be read in,
+/// and a phrasing table for a language the product does not offer is a sentence nobody can reach.
+/// The Russian forms in <see cref="Database.Entities.EntityNameForm"/> are left where they are —
+/// they cost nothing to keep and a table is cheap to write again — but nothing renders them.
 /// </para>
 ///
 /// <para>

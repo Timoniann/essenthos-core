@@ -47,7 +47,7 @@ public readonly record struct StrongBearer(int Item, StrongNameKind? Kind, strin
 /// it calls Gaddiel a tribe because he is <em>the spy from the tribe of Zebulun</em>, and Medad a
 /// place because he prophesied <em>in the camp</em>. What the clause says is carried out whole for
 /// the reader and never parsed: the tag is the evidence, and where he wrote no tag the answer is
-/// null rather than a guess (RUL-0024).
+/// null rather than a guess.
 /// </para>
 ///
 /// <para>

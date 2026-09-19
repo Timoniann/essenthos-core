@@ -75,7 +75,7 @@ public sealed class TermLoaderTests : IDisposable
         (await _db.EntityVerses.CountAsync(v => v.EntityId == elohim.Id)).Should().Be(1);
     }
 
-    /// <summary>The startup pipeline runs on every boot, and a second boot writes nothing (RUL-0005).</summary>
+    /// <summary>The startup pipeline runs on every boot, and a second boot writes nothing.</summary>
     [Fact]
     public async Task ASecondBootWritesNothing()
     {

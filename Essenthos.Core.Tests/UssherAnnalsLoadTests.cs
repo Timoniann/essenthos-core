@@ -143,11 +143,11 @@ public sealed class UssherAnnalsLoadTests : IDisposable
     }
 
     /// <summary>
-    /// PRB-0156. A year is a tie here rather than an ordering: ninety-five paragraphs land on AD 33
-    /// and Ussher writes <em>the next day</em> and <em>on the third day</em> between them, so the
-    /// order he stated is the paragraph order and the year says nothing about it. He dates a
-    /// hundred and twenty-four paragraphs to that year; ninety-five of them cite a verse the corpus
-    /// holds, and the rest are not loaded.
+    /// A year is a tie here rather than an ordering: ninety-five paragraphs land on AD 33 and
+    /// Ussher writes <em>the next day</em> and <em>on the third day</em> between them, so the order
+    /// he stated is the paragraph order and the year says nothing about it. He dates a hundred and
+    /// twenty-four paragraphs to that year; ninety-five of them cite a verse the corpus holds, and
+    /// the rest are not loaded.
     ///
     /// Two things this deliberately does not claim, both measured rather than supposed. Sorting the
     /// slug does not disagree with him <em>today</em>: only the AD paragraphs are loaded, they run
@@ -184,7 +184,7 @@ public sealed class UssherAnnalsLoadTests : IDisposable
     /// <summary>
     /// Everything else keeps its silence. A year holding ninety-five events is the honest report of
     /// a source that dated them and ordered none of them, and filling a position in would be
-    /// asserting an order nobody stated — the failure PRB-0156 asks not to trade the tie for.
+    /// asserting an order nobody stated — which is the failure the tie was never to be traded for.
     /// </summary>
     [Fact]
     public async Task NothingASourceLeftUnorderedIsGivenAPosition() =>

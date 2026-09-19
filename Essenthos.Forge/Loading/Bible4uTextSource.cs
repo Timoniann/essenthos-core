@@ -92,7 +92,7 @@ internal static class Bible4uTextSource
             RightsHolder = "British and Foreign Bible Society, which published the 1962 edition",
             // bible4u distributes all three of its files under one notice and calls them public
             // domain. That is right for the King James and for the Synodal and wrong for this one,
-            // and the row said so for as long as nobody had asked. It was asked (PRB-0325): the
+            // and the row said so for as long as nobody had asked. It was asked: the
             // translation is in copyright, the Ukrainian Bible Society behaves as its owner, and the
             // only free grant anyone has produced for it is CC BY-SA, for pre-1991 printings, through
             // Wikimedia VRT ticket 2013112610015211. Our copy was shown to be a pre-1991 printing by

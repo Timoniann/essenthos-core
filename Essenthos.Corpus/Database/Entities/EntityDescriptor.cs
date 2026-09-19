@@ -112,7 +112,7 @@ public class EntityDescriptor
     /// from another when the loader asks whether it has already stored an answer, and nothing else
     /// on the row can do it — a re-ask carries the same model and the same date as the batch it
     /// corrects. Null on rows loaded before it was recorded, which is why the first load after this
-    /// re-reads them from the files rather than trusting a blank (PRB-0449).
+    /// re-reads them from the files rather than trusting a blank.
     /// </summary>
     public string? Run { get; set; }
 
@@ -172,16 +172,17 @@ public class EntityDescriptorClaim
 /// <para>
 /// **The forms are produced with the name and never computed from it.** A stemmer guessing the
 /// genitive of a Hebrew proper name is wrong often and silently, and a reader cannot tell — which
-/// is the same failure as an alignment that looks sourced (RUL-0024). Where a form is missing the
-/// rendering falls back to the English name and says nothing about it: a gap, not an error, and
-/// never an invented inflection.
+/// is the same failure as an alignment that looks sourced. Where a form is missing the rendering
+/// falls back to the English name and says nothing about it: a gap, not an error, and never an
+/// invented inflection.
 /// </para>
 ///
 /// <para>
-/// It carries <see cref="Source"/> for the reason FTR-0284 gives and the reason nothing else in
-/// this corpus is exempt: a name form is a claim about a person's name in a language, it will
-/// usually have been produced by a model, and a machine's rendering of a Biblical name is a claim
-/// nobody has checked unless the row says who made it and when.
+/// It carries <see cref="Source"/> for the reason every string this encyclopedia renders into
+/// another language will, and the reason nothing else in this corpus is exempt: a name form is a
+/// claim about a person's name in a language, it will usually have been produced by a model, and a
+/// machine's rendering of a Biblical name is a claim nobody has checked unless the row says who
+/// made it and when.
 /// </para>
 /// </summary>
 [Index(nameof(EntityId))]
@@ -221,7 +222,7 @@ public class EntityNameForm
     /// from another when the loader asks whether it has already stored an answer, and nothing else
     /// on the row can do it — a re-ask carries the same model and the same date as the batch it
     /// corrects. Null on rows loaded before it was recorded, which is why the first load after this
-    /// re-reads them from the files rather than trusting a blank (PRB-0449).
+    /// re-reads them from the files rather than trusting a blank.
     /// </summary>
     public string? Run { get; set; }
 
@@ -231,10 +232,11 @@ public class EntityNameForm
 /// <summary>
 /// The cases a name form can be held in.
 ///
-/// <see cref="Nominative"/> and <see cref="Genitive"/> are what DOC-0191 asks a generation pass for.
-/// <see cref="Locative"/> is here because the Slavic phrasings need it and neither of the other two
-/// can stand in for it — <em>жив у Вифлеємі</em> is not the genitive <em>Вифлеєма</em> — so a
-/// clause that puts a place in it renders with the English name until a pass supplies one.
+/// <see cref="Nominative"/> and <see cref="Genitive"/> are the two a generation pass is asked for
+/// with every name. <see cref="Locative"/> is here because the Slavic phrasings need it and neither
+/// of the other two can stand in for it — <em>жив у Вифлеємі</em> is not the genitive
+/// <em>Вифлеєма</em> — so a clause that puts a place in it renders with the English name until a
+/// pass supplies one.
 /// </summary>
 public static class GrammaticalCases
 {
@@ -257,7 +259,8 @@ public static class GrammaticalCases
 ///
 /// <para>
 /// Adding one is three changes and not one: this list, a phrasing in every language, and a test.
-/// DOC-0191 is the contract these names are agreed in, and it is changed before they are.
+/// The generation pass writes these names and the reader renders them, so the written contract
+/// between the two is changed before they are.
 /// </para>
 /// </summary>
 public static class DescriptorRelations
@@ -434,8 +437,8 @@ public static class DescriptorRelations
 /// A tribe is a person, a people and a territory at once in this encyclopedia, and a pass reading
 /// <em>Bethlehem, a city in Judah</em> means the territory while the name it reaches for is most
 /// often the patriarch's. Measured on the corpus: 107 placing clauses point at a person or a
-/// people, and 60 of them are the twelve tribes (PRB-0480). A reader who follows <em>a city in
-/// Judah</em> and arrives at Jacob's son has been told something false by a link.
+/// people, and 60 of them are the twelve tribes. A reader who follows <em>a city in Judah</em> and
+/// arrives at Jacob's son has been told something false by a link.
 /// </para>
 /// </summary>
 public static class PlacingRelations

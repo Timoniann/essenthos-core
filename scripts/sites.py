@@ -4,8 +4,8 @@ of the sites, and publish the result as a register.
 
 The place register gave every place of the lexicon its Strong number, and where that number is borne
 by two records the gazetteer puts at two sites -- Jericho at Tell es Sultan and Jericho at Tell el
-Alayiq, four kilometres apart -- PRB-0468 settled that it resolves to neither. That is right, and it
-leaves those pages with nothing: 87 numbers, 1,188 occurrences and, for Jericho, sixty-three
+Alayiq, four kilometres apart -- it was settled that the number resolves to neither. That is right,
+and it leaves those pages with nothing: 87 numbers, 1,188 occurrences and, for Jericho, sixty-three
 references and not one annotated word.
 
     python scripts/sites.py census                            # the population, no model in it

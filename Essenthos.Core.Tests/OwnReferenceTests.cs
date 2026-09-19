@@ -167,7 +167,7 @@ public sealed class OwnReferenceTests : IDisposable
 
     /// <summary>
     /// The startup pipeline runs on every boot, so a second pass must not write the corpus a second
-    /// time (RUL-0005).
+    /// time.
     /// </summary>
     [Fact]
     public async Task ASecondPassWritesNothing()

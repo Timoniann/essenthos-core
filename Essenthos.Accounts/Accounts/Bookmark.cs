@@ -2,12 +2,12 @@ namespace Essenthos.Core.Accounts;
 
 /// <summary>
 /// A reader's bookmark on a passage: one verse or a run of them, in a colour they picked, with a comment
-/// to themselves if they wrote one. Private — it is one person's margin, not a commentary (FTR-0026 is
-/// commentaries).
+/// to themselves if they wrote one. Private — it is one person's margin, not a commentary; published
+/// commentaries are their own thing and are not this.
 ///
-/// **The anchor is a canonical address, never a corpus row id** (RUL-0185). Every corpus release
-/// renumbers <c>verse.id</c>, so a bookmark stored against one would mark a different verse after the
-/// next publication, silently and with no way back. Book, chapter and verse in the shared frame name the
+/// **The anchor is a canonical address, never a corpus row id.** Every corpus release renumbers
+/// <c>verse.id</c>, so a bookmark stored against one would mark a different verse after the next
+/// publication, silently and with no way back. Book, chapter and verse in the shared frame name the
 /// same place in every release by construction, and <c>forge publish</c> refuses a release in which an
 /// anchor no longer resolves.
 ///

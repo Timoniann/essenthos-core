@@ -236,12 +236,14 @@ internal sealed class CompositionPipeline(
     /// size measured they are mostly right. What 1/n cost was Genesis 1:3, where the King James
     /// states that *Let there be* renders יְהִי and the Russian **будет** aligns to *be* at 0.55.
     /// A third of that is 0.18, under the floor, so the word reached nothing at all while **да**
-    /// beside it reached the Hebrew by the direct route. PRB-0076.
+    /// beside it reached the Hebrew by the direct route.
     ///
     /// The sample is the only stated word-level correspondence a Slavic text has, so it is small
     /// and it leans towards the words an interlinear chooses to annotate, which are content words.
     /// Beyond five the counts are in the tens and the buckets are pooled rather than believed
-    /// separately. Re-measure it when another stated mapping arrives; the query is on PRB-0076.
+    /// separately. Re-measure it when another stated mapping arrives, by scoring the composed
+    /// proposals against the stated pairs, bucketed by the number of English words on the middle
+    /// link.
     /// </summary>
     private static readonly double[] Confirmed = [0.891, 0.804, 0.710, 0.698, 0.563];
 
@@ -325,7 +327,7 @@ internal sealed class CompositionPipeline(
 
         // The claim that says this loader is the one asserting these links. Written here rather
         // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus. PRB-0198.
+        // the measure spent a day reporting the migration instead of the corpus.
         await LinkClaims.Record(connection, transaction, firstId, fresh.Count, cancellationToken);
 
         await LinkClaims.Corroborate(

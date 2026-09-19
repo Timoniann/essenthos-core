@@ -29,10 +29,10 @@ namespace Essenthos.Core.Migrations
                 """);
 
             // The Ohienko was recorded as public domain, which is not a missing value but a wrong
-            // one. PRB-0325: three sources call it public domain by copying one another, the
-            // translator died in 1972, and the only grant anybody has produced is CC BY-SA for
-            // pre-1991 printings through Wikimedia VRT ticket 2013112610015211. The owner decided to
-            // keep the text and accept the clause.
+            // one. Three sources call it public domain by copying one another, the translator died
+            // in 1972, and the only grant anybody has produced is CC BY-SA for pre-1991 printings
+            // through Wikimedia VRT ticket 2013112610015211. The owner decided to keep the text and
+            // accept the clause.
             migrationBuilder.Sql(
                 """
                 UPDATE text

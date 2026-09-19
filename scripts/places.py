@@ -213,7 +213,7 @@ COUNTS = {
 }
 
 # *the name of two places in Palestine* -- the one construction Strong uses to say how many distinct
-# places share a name, which is the place half of what TSK-0426 measured for persons.
+# places share a name, which is the place half of the namesake problem already measured for persons.
 STATED_COUNT = re.compile(
     r'\bname of\s+(?:[\w-]+\s+){0,2}?(' + '|'.join(COUNTS) + r'|\d+)\s+'
     r'(?:[\w-]+\s+){0,2}?(places|cities|towns|regions|mountains|rivers)\b',

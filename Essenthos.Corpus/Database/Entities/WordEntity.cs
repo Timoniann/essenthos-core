@@ -20,8 +20,7 @@ namespace Essenthos.Core.Database.Entities;
 /// a lexicon and eventually a model's reading of the context, with nothing to tell them apart. The
 /// old schema did exactly that — <c>EntityType</c>, <c>EntityId</c> and <c>EntitySlug</c> on the
 /// word, no provenance — and the land of Canaan came out annotated as the person Canaan with
-/// nothing on the row to say the annotation was ever an inference (PRB-0034 in the frozen API's
-/// numbering).
+/// nothing on the row to say the annotation was ever an inference.
 /// </para>
 ///
 /// <para>

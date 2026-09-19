@@ -43,11 +43,12 @@ internal sealed record PlacesOutcome(
 ///
 /// **CC BY 4.0**, which is why it and not the alternative. Theographic states 7,310 place-verse
 /// references and is CC BY-SA 4.0; share-alike at that scale reaches everything built on top of
-/// it, and RUL-0183 puts that clause, not the non-commercial one, at the line. Measured against
-/// the King James text the corpus already serves, of the 7,600 references OpenBible says the King
-/// James itself carries a name for, 99.1% have that name in the verse; the 64 that do not were
-/// read one by one and every one is a name too short for the check, a spelling the source records
-/// under a different heading, or a psalm superscription the corpus's own King James text drops.
+/// it, and it is that clause, not the non-commercial one, that bars a dataset here — this project
+/// is not commercial, so NonCommercial does not. Measured against the King James text the corpus
+/// already serves, of the 7,600 references OpenBible says the King James itself carries a name
+/// for, 99.1% have that name in the verse; the 64 that do not were read one by one and every one
+/// is a name too short for the check, a spelling the source records under a different heading, or
+/// a psalm superscription the corpus's own King James text drops.
 ///
 /// Only <c>ancient.jsonl</c> is read here. Where the places are is a separate step,
 /// <see cref="OpenBibleLocationLoader"/>, because the coordinates are partly OpenStreetMap's and

@@ -55,7 +55,7 @@ internal sealed record VerseLinkOutcome(
 /// Which verse of one text is which verse of another — the statement one level above a word link,
 /// and the one that has to exist first.
 ///
-/// DOC-0007 declares <c>verse_link</c> and nothing was writing it. That is not a cosmetic hole. A
+/// The schema declares <c>verse_link</c> and nothing was writing it. That is not a cosmetic hole. A
 /// word link may name words in two verses on purpose, because that is how *the word ended up
 /// elsewhere* is said, and the verification check that separates a legitimate crossing from a wrong
 /// one asks whether a verse link joins the two verses. With the table empty the check could only
@@ -72,7 +72,8 @@ internal sealed record VerseLinkOutcome(
 /// </para>
 ///
 /// <para>
-/// It is derived from the canonical frame and then stored, which is what DOC-0007 asks for. Two
+/// It is derived from the canonical frame and then stored rather than queried each time, because
+/// verse correspondence is what constrains word alignment and so has to exist first. Two
 /// verses correspond when they stand at the same canonical address, and the correspondence is
 /// transitive through the addresses they share: where one text divides a passage into two verses
 /// and another into three, all five belong to one link rather than to some arbitrary pairing of
@@ -152,8 +153,8 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// breath, that the verse holding the one answers the verse holding the other. Usually the frame
     /// says it too and there is nothing to add. Where it does not, the source is the better witness:
     /// Clear Bible's Reina-Valera alignment crosses verse boundaries the frame refuses in the ten
-    /// chapters PRB-0376 names, where eBible left the Spanish at its own numbering and mapped the
-    /// German. Without this the corpus holds a hand-made claim and reports it as a fault.
+    /// chapters where eBible left the Spanish at its own numbering and mapped the German. Without
+    /// this the corpus holds a hand-made claim and reports it as a fault.
     ///
     /// <para>
     /// **Only <c>stated-by-source</c> links.** A model proposing a link across a verse boundary is

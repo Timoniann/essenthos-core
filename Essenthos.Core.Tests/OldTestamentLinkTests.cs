@@ -120,8 +120,9 @@ public sealed class OldTestamentLinkTests : IDisposable
         var links = await _db.Links.ToListAsync();
         links.Should().OnlyContain(l => l.Method == LinkMethod.StatedBySource && l.Confidence == null);
 
-        // Who stated it, not which file it arrived in. This asserted the filename until PRB-0179:
-        // the source is CC BY-NC and requires attribution, and a path attributes nobody.
+        // Who stated it, not which file it arrived in. This asserted the filename until the
+        // mapping's terms were read: the source is CC BY-NC and requires attribution, and a path
+        // attributes nobody.
         links.Should().OnlyContain(l => l.Source.Contains("Eliran Wong") && l.Source.Contains("CC BY-NC"));
     }
 

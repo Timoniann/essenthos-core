@@ -10,7 +10,7 @@ namespace Essenthos.Core.Tests;
 /// The number is measured rather than reasoned about, so what a test can hold is the shape of it:
 /// a stated one-to-one pair costs nothing, a phrase costs something, more words cost more, and no
 /// phrase is written off entirely. It was 1/n, which is what a pure n-way choice would cost and is
-/// two to three times what the measurement says. PRB-0076.
+/// two to three times what the measurement says.
 /// </summary>
 public class CompositionSpecificityTests
 {

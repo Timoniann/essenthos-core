@@ -33,7 +33,7 @@ internal sealed record EncyclopediaOutcome(
 /// <summary>
 /// Brady Stephenson's BibleData: the people, places, relationships and chronology.
 ///
-/// Chosen over Theographic after DOC-0099 read both. Its dates are the reason: every one is
+/// Chosen over Theographic after both were read. Its dates are the reason: every one is
 /// computed from a verse and carries the arithmetic in a sentence, with Ussher's and Shulman's
 /// figures beside it rather than instead of it. Theographic asserts its dates, only 75 of its
 /// 3,069 people have one, and the ones it has contradict its own event table — it gives Joshua a
@@ -64,8 +64,8 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// The two id spaces are separate in the source and must be separate here. Twenty ids name
     /// both a person and a place — Canaan, Cush, Eden, Midian, Moab, Shechem — because a nation is
     /// called after its ancestor, and keying them together let the place quietly overwrite the
-    /// person. That is the same fault PRB-0034 records in the other dataset, arrived at from the
-    /// other direction.
+    /// person. That is the same fault the other dataset has — Theographic's inline links put the
+    /// land of Canaan on the person of that name — arrived at from the other direction.
     /// </summary>
     private static string Key(EntityKind kind, string id) =>
         kind == EntityKind.Place ? $"place:{id}" : $"person:{id}";
@@ -395,7 +395,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             Sex = "male",
             Tribe = "Judah",
             SourceId = "essenthos:jesus",
-            Source = "Essenthos, separated from BibleData's YHVH_1 — see DOC-0099",
+            Source = "Essenthos, separated from BibleData's YHVH_1",
             Notes =
                 "BibleData holds the God of Israel and Jesus as one entity and the Father as another. This " +
                 "corpus separates them. New Testament references that name Jesus plainly were moved here; " +
@@ -1033,7 +1033,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// A citation that does not exist is dropped rather than repaired. The verse meant is plainly
     /// Genesis 41:52, one digit away and one verse after Manasseh's, but reading a transposition
     /// out of a wrong number is a guess, and a guess written into a citation column is
-    /// indistinguishable afterwards from what the source said (RUL-0024).
+    /// indistinguishable afterwards from what the source said.
     /// </summary>
     internal sealed class ReferenceTable
     {

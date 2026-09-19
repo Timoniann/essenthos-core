@@ -13,9 +13,10 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// TSK-0510's headline claim is that EVIDENTIA writes nothing. That was established by reading the
-/// code and grepping it, which says what is true today and nothing about what the next change may
-/// do. This runs a whole chapter measurement against a real database and asks the change tracker.
+/// The headline claim about EVIDENTIA is that it writes nothing. That was established by reading
+/// the code and grepping it, which says what is true today and nothing about what the next change
+/// may do. This runs a whole chapter measurement against a real database and asks the change
+/// tracker.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class EvidentiaReadOnlyTests : IDisposable

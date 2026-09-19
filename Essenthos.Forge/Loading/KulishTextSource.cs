@@ -7,9 +7,9 @@ namespace Essenthos.Core.Loading;
 /// <summary>
 /// The Kulish–Puliui–Nechui-Levytsky Bible of 1903, the first complete Bible in Ukrainian.
 ///
-/// It is here because of what it costs, which is nothing. DOC-0189 catalogues about twenty
-/// Ukrainian translations and every one made after 1918 is owned by a Bible society, a religious
-/// order or a mission, or is offered only under a share-alike licence this project cannot take.
+/// It is here because of what it costs, which is nothing. About twenty Ukrainian translations
+/// exist, and every one made after 1918 is owned by a Bible society, a religious order or a
+/// mission, or is offered only under a share-alike licence this project cannot take.
 /// This one needs nobody's permission: its three translators were all dead by 1918 and it was
 /// printed a generation before any of the copyright lines that would otherwise apply.
 ///

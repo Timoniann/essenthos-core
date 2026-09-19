@@ -12,7 +12,8 @@ namespace Essenthos.Core.Corpus;
 /// **One implementation, used by both sides.** The stored form and the typed term go through this
 /// same function — a fold written twice, once in C# for the load and once in SQL for the query,
 /// is a fold that will one day disagree with itself and answer nothing for a word that is there.
-/// PRB-0093 is what that costs when it happens.
+/// It has happened here once already: <c>string.Normalize</c> is a silent no-op where globalisation
+/// is invariant, so accent stripping passed its test and did nothing in the running loader.
 /// </summary>
 internal static class WordFolding
 {

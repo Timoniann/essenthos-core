@@ -1399,7 +1399,7 @@ def main():
         sub.add_argument('--model', default='sonnet')
         sub.add_argument('--workers', type=int, default=4)
         sub.add_argument('--effort', default='medium',
-                         help='low was measured noisy on reading work (PRB-0437); medium is the default here')
+                         help='low was measured noisy on reading work; medium is the default here')
         sub.add_argument('--again', action='store_true')
         sub.set_defaults(run=run)
 

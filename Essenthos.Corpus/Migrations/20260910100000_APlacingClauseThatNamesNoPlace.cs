@@ -21,7 +21,7 @@ namespace Essenthos.Core.Migrations
             // and a pass reading "Bethlehem, a city in Judah" means the territory while the name it
             // reaches for is most often the patriarch's. The sentence reads correctly and the link
             // under it is false: follow "a city in Judah" and you arrive at Jacob's son. 107 of
-            // them, 60 the twelve tribes (PRB-0480).
+            // them, 60 the twelve tribes.
             //
             // The loader refuses these now, but a refusal only governs what it is asked to load,
             // and these were loaded before it existed. What happened to this database is a fact

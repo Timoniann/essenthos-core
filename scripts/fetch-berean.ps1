@@ -6,10 +6,12 @@
 .DESCRIPTION
     The corpus had one whole-Bible stated word mapping — the King James against the Hebrew — and
     nothing of the kind for the New Testament. This is a second, independent one, and the only
-    calibration set the New Testament has. FTR-0182 has the measurements.
+    calibration set the New Testament has. Measured against Nestle 1904: 7,488 of the 7,939 New
+    Testament verses join by word order, and 98.87% of their Strong numbers agree.
 
     Public domain since 30 April 2023 by the project's own licensing page, which is quoted in the
-    LICENCE.md this writes beside the data. Attributed anyway, per RUL-0181.
+    LICENCE.md this writes beside the data. Attributed anyway: every source this project did not
+    produce is attributed, whatever its licence asks for.
 
     85 MB for the tables, so they are fetched rather than committed. Without them the corpus loads
     and the Berean simply reaches no Greek word, which the log says.

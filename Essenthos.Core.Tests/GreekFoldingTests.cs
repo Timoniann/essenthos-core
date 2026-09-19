@@ -109,7 +109,7 @@ public class GreekFoldingTests
     /// so a fold that works by block structure passed it through and 4,832 Septuagint words folded
     /// to a form no other witness contains and no reader types. The bug got in because the test
     /// that proved the fold walked the Greek letters; the character that broke it is not a Greek
-    /// letter. PRB-0158.
+    /// letter.
     /// </summary>
     [Theory]
     [InlineData("ἐπʼ", "επ")]           // U+02BC, as the Septuagint writes it

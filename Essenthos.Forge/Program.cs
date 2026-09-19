@@ -31,7 +31,7 @@ Console.OutputEncoding = Encoding.UTF8;
 
 // The content root is the folder the assembly sits in, not the directory somebody happened to run
 // this from. A console host would otherwise take the working directory, and then appsettings.json is
-// found or not depending on where the shell was — which is the failure RUL-0004 is about.
+// found or not depending on where the shell was, and a container finds neither it nor Resources/.
 var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
 {
     Args = args,
@@ -43,9 +43,8 @@ var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
 // still override it. See UserSecrets.
 UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly);
 
-// Read here, once, and never inside a lambda that runs later: a ConfigurationManager is disposed
-// when the application is built, and a dead one answers null to everything rather than throwing
-// (PRB-0414). Reading eagerly also moves a missing password to startup, where it can be seen.
+// Read here, once, rather than inside an options callback that runs later, so that a missing
+// password stops the process at startup with the message that says what to set.
 var databaseConnection = DatabaseConnection.Read(builder.Configuration);
 
 builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
@@ -165,8 +164,8 @@ if (args is [] or ["load", ..])
 static string Identifier(string typed) => typed.ToUpperInvariant();
 
 // Alignment is computed once per pair of texts, not per request, so it is a batch run rather than
-// part of the startup pipeline: an API that trains a model before it answers is the shape PRB-0005
-// warned about.
+// part of the startup pipeline: an API that trains a model before it answers is the shape that
+// leaves a cold start answering 404 to everything, with nothing saying it is still working.
 // What a threshold costs, on the one pair where a source says what the right answer is. It reuses
 // the alignment in the workspace, so a sweep is seconds once the model has been run.
 // The second route to the same word, through a text whose own links to the target are stated.

@@ -16,10 +16,10 @@ namespace Essenthos.Core.Tests;
 /// The names a rendered line puts into a case, from the file a generation pass produces to the
 /// sentence a reader is shown.
 ///
-/// The line under test is the one PRB-0392 was filed about and TSK-0420 exists to repair: Aaron's,
-/// which read <em>брат Moses, з племені Levites</em> against the live corpus on 2026-09-09 because
-/// nothing had declined the names his clauses point at. Everything else here is about what must not
-/// happen on the way to fixing it.
+/// The line under test is the broken one this work exists to repair: Aaron's, which read
+/// <em>брат Moses, з племені Levites</em> against the live corpus on 2026-09-09 because nothing had
+/// declined the names his clauses point at. Everything else here is about what must not happen on
+/// the way to fixing it.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class NameFormTests : IDisposable
@@ -126,7 +126,7 @@ public sealed class NameFormTests : IDisposable
 
     /// <summary>
     /// The guard is on this loader's own rows, and per entity. Guarding on whether the table holds
-    /// anything is what left a cold database with no name resolutions at all (PRB-0343), and this
+    /// anything is what left a cold database with no name resolutions at all, and this
     /// loader writes into a table the descriptor pass is already filling, so the table is never
     /// empty by the time it runs.
     /// </summary>
@@ -162,8 +162,8 @@ public sealed class NameFormTests : IDisposable
     }
 
     /// <summary>
-    /// PRB-0435: <c>DescriptorPhrasings</c> renders <em>похований у </em> and then the locative, so
-    /// a locative that carries its own preposition reaches a reader as <em>похований у в Авані</em>.
+    /// <c>DescriptorPhrasings</c> renders <em>похований у </em> and then the locative, so a
+    /// locative that carries its own preposition reaches a reader as <em>похований у в Авані</em>.
     /// The preposition comes off on the way in, and a stored form carrying one is superseded rather
     /// than left standing — which is what makes the rows already in the corpus repairable by a
     /// later file.
@@ -185,11 +185,12 @@ public sealed class NameFormTests : IDisposable
     /// <summary>
     /// Two files naming one entity settle it form by form, not record by record.
     ///
-    /// It is the ordinary case rather than a re-run: a repair pass puts back the locatives PRB-0435
-    /// broke and a target pass asks for the four languages the client speaks, and neither is the
-    /// other's second attempt. Taking the later record whole dropped whatever it happened not to
-    /// carry — the locative here, and a Spanish nominative in the other direction — and the row it
-    /// dropped was one nothing would ask for again, because the entity counts as declined.
+    /// It is the ordinary case rather than a re-run: a repair pass puts back the locatives the
+    /// doubled preposition broke and a target pass asks for the four languages the client speaks,
+    /// and neither is the other's second attempt. Taking the later record whole dropped whatever it
+    /// happened not to carry — the locative here, and a Spanish nominative in the other direction —
+    /// and the row it dropped was one nothing would ask for again, because the entity counts as
+    /// declined.
     /// </summary>
     [Fact]
     public async Task ALaterFileFillsWhatAnEarlierOneLeftOutAndOverwritesOnlyWhatItAlsoSays()
@@ -213,7 +214,7 @@ public sealed class NameFormTests : IDisposable
     /// <summary>
     /// What a file may say that the corpus will not store. None of it is guessed at instead: a
     /// language with no form falls back to the English name, and an invented ending is the one
-    /// outcome a reader cannot tell from a correct one (DOC-0191).
+    /// outcome a reader cannot tell from a correct one.
     /// </summary>
     [Fact]
     public async Task AFormNothingCanPlaceIsRefusedAndCounted()

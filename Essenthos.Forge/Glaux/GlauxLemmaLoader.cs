@@ -43,8 +43,8 @@ internal sealed record GlauxOutcome(
 /// GLAUx annotates a *different* edition of the same book, and 99.4% of Brenton's tokens are
 /// written the same way somewhere in it — so GLAUx is read as a **form-to-lemma dictionary** and
 /// its own Greek is never loaded. That keeps a text whose transcription provenance Wikisource does
-/// not document out of the corpus and confines what we take to lexical facts. DOC-0161 has the
-/// licence reading; the owner accepted CC BY-SA on 2026-09-03.
+/// not document out of the corpus and confines what we take to lexical facts. GLAUx is CC BY-SA —
+/// 3.0 on the source text, 4.0 on the annotation — which the owner accepted on 2026-09-03.
 ///
 /// <para>
 /// **A form is only lemmatised where the evidence agrees.** GLAUx lemmatises αὐτοῦ as a pronoun in
@@ -94,7 +94,8 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
         {
             logger.LogWarning(
                 "GLAUx is not at {Directory}, so the Septuagint keeps no lemmas. It is 111 MB of "
-                + "third-party data and is fetched rather than committed; DOC-0161 says from where",
+                + "third-party data and is fetched rather than committed; run "
+                + "scripts/fetch-glaux.ps1 to download it",
                 directory);
             return new GlauxOutcome(true, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
@@ -234,7 +235,7 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
         // carries them composed. The three visible letters of καί are four characters here and
         // three in Nestle, so `=` between them is false for every lemma GLAUx supplies — measured
         // at 0 matches out of 95,861 before this line existed, which is not a plausible answer for
-        // two Greek texts and is what exposed it (PRB-0384). A lemma is an identifier, and two
+        // two Greek texts and is what exposed it. A lemma is an identifier, and two
         // spellings of one identifier is the fault the corpus already refuses for a text's slug.
         //
         // Normalised here, at the one point every lemma passes through, rather than at each of the

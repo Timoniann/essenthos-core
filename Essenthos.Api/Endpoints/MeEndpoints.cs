@@ -5,7 +5,7 @@ namespace Essenthos.Core.Endpoints;
 
 /// <summary>
 /// The signed-in reader's own account: who they are to the site, their picture, their devices, and
-/// leaving. Reading never needs any of it (NOT-0007).
+/// leaving. Reading never needs any of it.
 /// </summary>
 internal static class MeEndpoints
 {

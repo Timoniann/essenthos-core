@@ -90,14 +90,14 @@ internal readonly record struct ClearBiblePlacement(
 ///
 /// <para>
 /// **The Berean.** Its own publisher states which English word renders which Greek word, and that is
-/// loaded (FTR-0182). Clear Bible's team answered the same question about the same translation,
-/// without consulting them. Measured before this was written, over the 7,925 verses where the two
+/// loaded. Clear Bible's team answered the same question about the same translation, without
+/// consulting them. Measured before this was written, over the 7,925 verses where the two
 /// tokenise the text identically: of 115,016 Greek words both name, **96.6% get exactly the same
 /// English words**, 1.1% overlap, 2.3% share none. So this mostly writes nothing: where the two
 /// agree it adds a claim to the link that is already there, and the link's own method and source do
 /// not change — the Berean stated it first and still states it. What changes is that the link can
 /// now say two people arrived at it, which is the cheapest evidence this corpus has and the thing
-/// DOC-0170 says it was throwing away.
+/// it threw away for as long as a method that spoke second was simply not recorded.
 /// </para>
 ///
 /// <para>
@@ -106,7 +106,8 @@ internal readonly record struct ClearBiblePlacement(
 /// is <c>stated-by-source</c> and carries no confidence, which is the strongest thing this corpus
 /// can say about a pair of words and is said here because a person made the claim, not because the
 /// claim is beyond question — <see cref="ClearBibleSet"/> records how the identity was checked, and
-/// PRB-0185 records what happened when the same repository's Russian set was believed on its label.
+/// the same repository's Russian set, believed on its label, turned out to name a punctuation mark
+/// as the Russian word in 12,550 of its 89,248 records and to drift further with every one after.
 /// </para>
 ///
 /// <para>
@@ -118,7 +119,7 @@ internal readonly record struct ClearBiblePlacement(
 ///
 /// <para>
 /// Their Russian set is in the same download and is not loaded by anything: its records do not
-/// correspond to the token file shipped beside them. PRB-0185.
+/// correspond to the token file shipped beside them.
 /// </para>
 /// </summary>
 internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLinkLoader> logger)

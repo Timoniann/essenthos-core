@@ -16,7 +16,7 @@ namespace Essenthos.Core.Migrations
             // never writes "nominative" at all. Measured over the file: the attribute stands against
             // a nominative form code 20,629 times, the code carries a case for 12,401 words the
             // attribute leaves blank, and where both speak sensibly they agree 49,043 times. The
-            // parser now reads the code (PRB-0066); this brings the loaded corpus with it.
+            // parser now reads the code; this brings the loaded corpus with it.
             //
             // A migration rather than a reload, because reloading the text would cascade away every
             // link into it -- the stated King James and Berean mappings, Clear Bible's claims, the

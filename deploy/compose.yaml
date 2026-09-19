@@ -58,7 +58,7 @@ services:
       READER_DEV_PASSWORD: ${READER_DEV_PASSWORD:?set READER_DEV_PASSWORD}
       APP_PASSWORD: ${APP_PASSWORD:?set APP_PASSWORD}
       APP_DEV_PASSWORD: ${APP_DEV_PASSWORD:?set APP_DEV_PASSWORD}
-    # Sized for the 8 GB droplet in DOC-0205, holding production's corpus and its rollback, dev's pair
+    # Sized for the deployment droplet's 8 GB, holding production's corpus and its rollback, dev's pair
     # and the app databases in one shared_buffers pool.
     command:
       - postgres
@@ -213,7 +213,7 @@ services:
   backup:
     # The accounts databases are the only thing on this box that cannot be rebuilt. The corpus is an
     # artefact and needs no backup; the droplet's own daily backup covers the disk this writes to, and
-    # a copy off the droplet is still to be arranged (FTR-0578).
+    # a copy off the droplet is still to be arranged.
     image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
     restart: unless-stopped
     logging: *logging

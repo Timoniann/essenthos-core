@@ -219,7 +219,8 @@ internal static class RelationshipVocabulary
     /// <para>
     /// The branch is still coarser than the fact: <em>daughter-in-law of Terah</em> and
     /// <em>daughter of Terah</em> are both true of Sarai and both kinship, so the weaker of the two
-    /// is withheld. Two such pairs exist in the corpus as loaded and both are named in PRB-0445.
+    /// is withheld. Two such pairs exist in the corpus as loaded: Sarai and Terah, and Tamar and
+    /// Judah.
     /// The alternative is a table of which relations exclude which, which is a rule nobody has
     /// written and this task was told not to invent.
     /// </para>

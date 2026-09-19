@@ -7,7 +7,7 @@ namespace Essenthos.Core.Accounts;
 /// <c>essenthos_app</c> on a server, beside the corpus and never inside it — a corpus release replaces
 /// its database whole, and this one must survive every release untouched.
 ///
-/// Nothing here may reference a corpus row id (RUL-0185): the corpus renumbers every key when it is
+/// Nothing here may reference a corpus row id: the corpus renumbers every key when it is
 /// rebuilt, so anything that points into it does so by canonical address.
 /// </summary>
 public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : DbContext(options)
