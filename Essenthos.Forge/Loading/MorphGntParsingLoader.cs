@@ -69,7 +69,7 @@ internal sealed class MorphGntParsingLoader(AppDbContext db, ILogger<MorphGntPar
     /// row has to say which dataset spoke, and which commit of it was read is recorded once, in the
     /// licence file kept beside the data, rather than 136,404 times here.
     /// </summary>
-    private const string Source =
+    internal const string Source =
         "morphgnt/sblgnt 6.12, the parsing MorphGNT gives the SBLGNT word standing in the same place";
 
     /// <summary>

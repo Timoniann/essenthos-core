@@ -21,6 +21,9 @@ internal static class Sources
     /// </summary>
     public const string BrentonSeptuagintSlug = "GRCBRENT";
 
+    /// <summary>Nestle 1904, whose words carry the Berean interlinear's English gloss.</summary>
+    public const string NestleSlug = "NESTLE1904";
+
     /// <summary>Swete's Septuagint, Codex Vaticanus as it stands.</summary>
     public const string SweteSlug = "SWETE";
 

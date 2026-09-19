@@ -196,6 +196,14 @@ internal static class EbibleTextSource
     /// statement attached to these bytes is Gómez's. The text loses nothing that matters: the one
     /// hand-made Spanish word alignment that exists is published separately under CC BY 4.0 and is
     /// keyed to this very file.
+    ///
+    /// <para>
+    /// The owner decided on 2026-09-20 that the numbers may be read as an input to the mapping and
+    /// never shown — the position the Synodal's numbering is already loaded under
+    /// (<see cref="Links.SynodalStrongLinkLoader"/>). This set is what keeps them off the word:
+    /// nothing here stores a Spanish Strong number, so nothing serves one. A pass that reads them
+    /// in memory to draw links has not been written yet.
+    /// </para>
     /// </summary>
     private static readonly HashSet<string> TaggingIsNotOursToTake =
         new(["ReinaValera1909"], StringComparer.OrdinalIgnoreCase);

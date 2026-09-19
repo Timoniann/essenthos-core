@@ -133,7 +133,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
 {
     private const string Greek = "grc";
 
-    private static string Source(string fromSlug, string toSlug) =>
+    internal static string Source(string fromSlug, string toSlug) =>
         $"the Strong numbers {fromSlug} carries, matched within the verse against {toSlug}";
 
     private static string Source(EditionNumbers edition, string toSlug) =>

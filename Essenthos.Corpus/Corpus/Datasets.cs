@@ -45,6 +45,19 @@ public static class Datasets
     /// own. It is a separate flag rather than another prefix because the link table is millions of
     /// rows and only worth sweeping for the two or three datasets that speak there.
     /// </param>
+    /// <param name="WordGlosses">
+    /// The text whose words this dataset glosses, where it supplies the gloss on a word rather than
+    /// rows of its own. The same shape as <paramref name="Lemmas"/> and for the same reason: a
+    /// gloss is a fact about a word and <c>word</c> carries no source column, so naming the text is
+    /// what makes the credit countable. Unlike <paramref name="Glossary"/>, which is a lexicon
+    /// keyed to a lemma, this sits on the word of one edition.
+    /// </param>
+    /// <param name="Parsings">
+    /// Whether this dataset supplies a second analysis of words already in the corpus, counted by
+    /// its <c>word_parsing</c> rows, whose source strings carry <c>Prefix</c> too. A parsing is
+    /// neither an entity nor a link, so without this a dataset contributing only parsings would
+    /// count nothing and fall off the page.
+    /// </param>
     /// <param name="Lemmas">
     /// The text whose lemmas this dataset supplies, where it supplies lemmas rather than rows.
     ///
@@ -120,9 +133,11 @@ public static class Datasets
         string Covers,
         string Prefix,
         string? Lemmas = null,
+        string? WordGlosses = null,
         bool Links = false,
         bool Lexicon = false,
         bool Glossary = false,
+        bool Parsings = false,
         string[]? Methods = null,
         Work[]? Contains = null,
         string? Citation = null,
@@ -265,6 +280,21 @@ public static class Datasets
             + "for the New Testament it is the only word-level testimony there is.",
             "Berean Standard Bible translation tables", Links: true),
 
+        // The same publisher and a different work, so a second entry rather than a line under the
+        // one above: the interlinear's English gloss stands on every word of the Greek New
+        // Testament, and one credit over both would put the tables' name on it. The file it comes
+        // in still carries Bible Hub's 2016 all-rights-reserved notice above the line saying it is
+        // now public domain; the owner ruled on 2026-09-20 that the licensing page's statement
+        // about the Berean texts is the one believed, and both are kept beside the data.
+        new("berean-interlinear", "Berean Interlinear Bible", "Bible Hub / Berean Bible",
+            "Public Domain",
+            "https://berean.bible/licensing.htm",
+            "https://interlinearbible.com",
+            "What each Greek word of Nestle 1904 means in English, word by word, as the Berean "
+            + "interlinear glosses it. The edition itself arrived with no English at all, so this is "
+            + "what lets a reader who has no Greek see what the word in front of them says.",
+            "Berean Interlinear Bible", WordGlosses: Sources.NestleSlug),
+
         // Public domain by the only statement attached to the bytes — the repository's README says
         // "License? Public Domain. Copy freely." and there is no LICENSE file and no licence on the
         // GitHub repository record. Robinson asks, without requiring it, that his name and the
@@ -294,6 +324,25 @@ public static class Datasets
             + "supplies: which tagged word pairs with which Greek word is matched within the verse "
             + "by this project, at a confidence, and no part of that pairing is stated by anyone.",
             "Zefania KJV+", Links: true),
+
+        // The same footing as the entry above and the same words for it. eBible's Public Domain line
+        // is over the package; nobody names who tagged the words or on what terms. toledot.info,
+        // which publishes a corrected copy of the same layer, traces it to the Zefania XML Strong
+        // module of December 2005, and eBible's copy carries that module's uncorrected errors. The
+        // prefix is the text's slug as the rows spell it, which is case-sensitive like every other.
+        new("luther1912-strong", "Strong tagging of the Lutherbibel 1912",
+            "not named by anyone; descended from the Zefania XML Strong module of December 2005, and "
+            + "read from the copy eBible.org publishes",
+            "No licence stated",
+            "https://ebible.org/deu1912/copyright.htm",
+            "https://ebible.org/find/details.php?id=deu1912",
+            "The Strong number on each word of Luther's 1912 German, which is what every link between "
+            + "the German and the Hebrew or Greek is matched on. The text under it is out of copyright "
+            + "by age; the tagging is somebody's work, and nobody who publishes it says whose. It is "
+            + "all this supplies: which tagged word pairs with which original word is matched within "
+            + "the verse by this project, at a confidence, and no part of that pairing is stated by "
+            + "anyone.",
+            "the Strong numbers LUTH1912 carries", Links: true),
 
         // Used as an input to the mapping and nothing more, and the declaration says so: the only
         // terms anyone states for this numbering permit use of the work unmodified, for a purpose
@@ -329,6 +378,37 @@ public static class Datasets
                 + "offered under CC BY-SA 3.0 in turn. Only the lexical table is taken and the "
                 + "Brenton text it annotates is public domain, which is what keeps the clause on "
                 + "the lemmas rather than on the Septuagint."),
+
+        // Two second analyses of the Greek New Testament, each a row per Nestle word in
+        // word_parsing. Both licences require attribution, and MACULA's names the exact string.
+        new("macula", "MACULA Greek Linguistic Datasets", "Biblica, Inc., published by Clear Bible",
+            "CC BY 4.0",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://github.com/Clear-Bible/macula-greek",
+            "A second reading of every word of Nestle 1904: its part of speech, whether it is a proper "
+            + "name, its lemma and its grammatical features. It is the one source here that states "
+            + "outright which Greek words are names, and it is published over this same edition, so "
+            + "each reading sits on the word it was made for without any alignment. Only the word "
+            + "table is taken; the syntax trees, semantic roles and the glossing layers bound into "
+            + "the same repository are not.",
+            "MACULA Greek Linguistic Datasets", Parsings: true,
+            Citation: "MACULA Greek Linguistic Datasets, available at "
+                + "https://github.com/Clear-Bible/macula-greek/"),
+
+        new("morphgnt", "MorphGNT: SBLGNT Edition", "James K. Tauber", "CC BY-SA 3.0",
+            "https://creativecommons.org/licenses/by-sa/3.0/",
+            "https://github.com/morphgnt/sblgnt",
+            "A second parsing and lemma for the words of Nestle 1904, made against the SBL Greek New "
+            + "Testament and placed on the Nestle word standing in the same place. It stands beside "
+            + "the edition's own morphology rather than replacing it, so where the two analyses "
+            + "disagree both are kept. Only the parsing is taken: none of the SBLGNT's own text is "
+            + "stored or served.",
+            "morphgnt/sblgnt", Parsings: true,
+            Citation: "Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. "
+                + "https://github.com/morphgnt/sblgnt DOI: 10.5281/zenodo.376200",
+            Obliges: "ShareAlike: the parsings taken from here, and anything published from them, are "
+                + "offered under CC BY-SA 3.0 in turn. They sit beside the Nestle text rather than "
+                + "adapting it, which keeps the clause on the parsings and off the edition."),
 
         // The lexicon every Strong number in the corpus resolves through, and the one dataset with
         // no declaration at all — it contributes neither rows carrying a source nor links, so the
@@ -384,18 +464,17 @@ public static class Datasets
             "What this project works out for itself. Corrections and separations it makes to the "
             + "datasets it carries, each recorded on the row it changed; and the word "
             + "correspondences no source states — the two Greek editions joined on the Strong "
-            + "numbers both of them tag, and the English function words the tagging skips, "
-            + "recovered from the morphology the Greek states. Every one of them carries a "
+            + "numbers both of them tag, the two Hebrew witnesses and the two Septuagints joined on "
+            + "the letters each pair writes alike, and the English function words the tagging "
+            + "skips, recovered from the morphology the Greek states. Every one of them carries a "
             + "confidence, which is how it is told apart from testimony.",
             "Essenthos", Links: true, Methods:
             [
                 "the Strong numbers both editions carry",
-                // Luther 1912 arrived tagged and the witnesses it reaches carry numbers too, so the
-                // pairing is drawn rather than stated -- and the row says which text printed them.
-                "the Strong numbers luth1912 carries",
                 "the words left over once the Strong numbers were paired",
                 "the untagged English function words",
                 "the consonants both Hebrew witnesses write",
+                "the letters both Greek editions print",
                 Sources.VerseReadingPrefix,
                 "records written for people a verse names and no dataset holds, each with the verse "
                 + "it rests on and, where the identification is open, who else it might be",

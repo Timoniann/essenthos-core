@@ -1,5 +1,7 @@
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Endpoints;
+using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Links;
 using FluentAssertions;
 using Xunit;
 
@@ -102,4 +104,51 @@ public sealed class DatasetAttributionTests
     public void AModelsReadingOfAVerseIsClaimedAsOurOwn() =>
         Datasets.Of("a reading of the verse by claude-sonnet-5, prompt sense-3, run to 2026-09-05")
             .Should().Be(Datasets.Own);
+
+    /// <summary>
+    /// A row nobody claims is listed as undeclared on the sources page, and the claim is an ordinal
+    /// prefix match. The strings are taken from the loaders that write them, so a slug respelt or a
+    /// method renamed in one place fails here rather than on the page.
+    /// </summary>
+    [Theory]
+    [InlineData("luther1912-strong", "BHSA")]
+    [InlineData("luther1912-strong", "NESTLE1904")]
+    public void LuthersStrongPairingsAreCreditedToTheTagging(string dataset, string against) =>
+        Datasets.Of(TaggedTextLinkLoader.Source(EbibleTextSource.Luther, against)).Should().Be(dataset);
+
+    [Fact]
+    public void TheSeptuagintLetterAlignmentIsClaimedAsOurOwn() =>
+        Datasets.Of(SeptuagintLinkLoader.Source).Should().Be(Datasets.Own);
+
+    /// <summary>
+    /// A parsing is neither an entity nor a link, so a dataset that contributes only parsings is
+    /// credited only if its declaration says it does and claims the string its rows carry.
+    /// </summary>
+    [Theory]
+    [InlineData(MaculaAnnotationLoader.Source, "macula")]
+    [InlineData(MorphGntParsingLoader.Source, "morphgnt")]
+    public void EachSecondAnalysisOfTheGreekIsCredited(string source, string dataset)
+    {
+        Datasets.Of(source).Should().Be(dataset);
+        Of(dataset).Parsings.Should().BeTrue();
+    }
+
+    /// <summary>MACULA's licence has one condition, and it is this exact string.</summary>
+    [Fact]
+    public void MaculaIsCitedInTheWordsItsLicenceRequires() =>
+        Of("macula").Citation.Should().Be(
+            "MACULA Greek Linguistic Datasets, available at https://github.com/Clear-Bible/macula-greek/");
+
+    /// <summary>
+    /// The English gloss on every Greek word is a second publisher's work inside the same text, and
+    /// the only thing that makes it countable — and so creditable — is the text it names.
+    /// </summary>
+    [Fact]
+    public void TheGreekGlossesAreCreditedToTheInterlinearThatMadeThem()
+    {
+        var berean = Of("berean-interlinear");
+
+        berean.WordGlosses.Should().Be(NestleTextSource.Slug);
+        berean.Author.Should().Contain("Bible Hub");
+    }
 }

@@ -16,9 +16,14 @@ internal static class NestleTextSource
 
     /// <summary>
     /// The 1904 edition is out of copyright; the transcription, morphology and Strong numbers are
-    /// released into the public domain by biblicalhumanities.org, which is what its morphology
-    /// readme states — read on 2026-08-31. So there is no rights holder to name, and serving it is
-    /// unconditioned.
+    /// released into the public domain by biblicalhumanities.org, which is what the readme of the
+    /// one component loaded here states — read on 2026-08-31 and again on 2026-09-20. So there is
+    /// no rights holder to name, and serving it is unconditioned.
+    ///
+    /// The repository itself declines a licence and its four components carry four different ones,
+    /// so the file is identified rather than the repository trusted: what is loaded is
+    /// <c>morph/Nestle1904.xml</c>, which is CC0, and not the markup in <c>xml/</c>, which is
+    /// share-alike. <c>Resources/Nestle1904/LICENCE.md</c> has the readings and the check.
     /// </summary>
     public static readonly TextDefinition Definition = new(
         Slug: Slug,
@@ -29,13 +34,22 @@ internal static class NestleTextSource
         Direction: TextDirection.LeftToRight,
         Versification: Versification.English,
         PublishedYear: 1904,
-        SourceUrl: "https://github.com/biblicalhumanities/Nestle1904",
+        SourceUrl: "https://github.com/biblicalhumanities/Nestle1904/tree/master/morph",
         RightsHolder: null,
         Licence: "CC0-1.0",
         LicenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
         Redistribution: Redistribution.PublicDomain,
         TextualFamily: "Alexandrian")
     {
+        RightsNote =
+            "The edition is out of copyright and the digital text carries no condition: the file "
+            + "read here is biblicalhumanities.org's morphology file, whose own readme waives every "
+            + "right under CC0. Its repository states no licence over the whole and its components "
+            + "differ — the XML markup in the same repository, which is not what is read, is "
+            + "share-alike. The English gloss on each word is a second work: the Berean interlinear, "
+            + "whose file still carries Bible Hub's 2016 all-rights-reserved notice above a line "
+            + "saying it is now public domain, which is what the publisher's licensing page says of "
+            + "the Berean texts.",
         Editors = "Eberhard Nestle",
         Edition = "The 1904 British and Foreign Bible Society printing",
         About = "Nestle collated no manuscripts for this text: he built it by taking, at every place "
