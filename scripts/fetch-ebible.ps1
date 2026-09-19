@@ -16,6 +16,14 @@
         Young1898              engylt      Young's Literal Translation
         WorldEnglish           engwebp     the World English Bible, updated edition
         Jps1917                engjps      the JPS TaNaKH of 1917, Old Testament only
+        KingJames2006          eng-kjv2006 the King James, standardised 1769 text, Strong-tagged
+
+    The last of them is not loaded as a text of its own. The corpus already serves a King James, from
+    bible4u, and that file prints no psalm superscription anywhere; this edition prints all 116 of
+    them, as the USFM the rest of the field writes them in. What is taken from it is those 116 lines
+    and nothing else, so that the 789,806 words already loaded and everything hanging off them stay
+    where they are. It is fetched whole rather than in part because the whole of it is the evidence
+    that its wording is ours: see Resources/KingJames2006/LICENCE.md for what that comparison found.
 
     Every one of them is public domain and says so in three places that agree: the catalogue's
     Copyright and Redistributable columns, the copyright page on the web, and the copy of that page
@@ -87,6 +95,7 @@ $Texts = @(
     [pscustomobject]@{ Folder = 'Young1898';            Id = 'engylt';    Books = 66; Verses = 23145 + 7957; Strongs = 0 }
     [pscustomobject]@{ Folder = 'WorldEnglish';         Id = 'engwebp';   Books = 66; Verses = 23145 + 7958; Strongs = 683868 }
     [pscustomobject]@{ Folder = 'Jps1917';              Id = 'engjps';    Books = 39; Verses = 23145;        Strongs = 0 }
+    [pscustomobject]@{ Folder = 'KingJames2006';        Id = 'eng-kjv2006'; Books = 66; Verses = 23145 + 7957; Strongs = 349308 }
 )
 
 if ($Only) {

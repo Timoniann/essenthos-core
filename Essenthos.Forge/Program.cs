@@ -60,6 +60,7 @@ builder.Services.AddScoped<MorphGntParsingLoader>();
 builder.Services.AddScoped<MaculaAnnotationLoader>();
 builder.Services.AddScoped<CanonicalFrameLoader>();
 builder.Services.AddScoped<SuperscriptionFrameLoader>();
+builder.Services.AddScoped<PsalmOpeningLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.NewTestamentLinkLoader>();
 builder.Services.AddScoped<AlignmentPipeline>();

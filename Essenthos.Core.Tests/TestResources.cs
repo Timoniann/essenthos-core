@@ -55,6 +55,17 @@ internal static class TestResources
     public static string EbibleFolder(string folder) =>
         System.IO.Path.Combine(ResolvedPath.Value, folder);
 
+    /// <summary>
+    /// The two complete editions the psalm openings a loaded text does not print are read out of.
+    /// Empty where the fetch scripts have not been run, which the tests over them check for rather
+    /// than failing on a missing folder.
+    /// </summary>
+    public static string KingJames2006Folder =>
+        System.IO.Path.Combine(ResolvedPath.Value, Essenthos.Core.Loading.LostPsalmOpenings.KingJamesFolder);
+
+    public static string OhienkoWikisourceFolder =>
+        System.IO.Path.Combine(ResolvedPath.Value, Essenthos.Core.Loading.LostPsalmOpenings.OhienkoFolder);
+
     /// <summary>Clear Bible's alignments, as the fetch script leaves them.</summary>
     public static string ClearBibleFolder => System.IO.Path.Combine(ResolvedPath.Value, "ClearBible");
 
