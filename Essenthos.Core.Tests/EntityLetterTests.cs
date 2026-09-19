@@ -45,7 +45,7 @@ public sealed class EntityLetterTests : IDisposable
     [Fact]
     public async Task EveryLetterIsListedAndTheEmptyOnesAreZero()
     {
-        var letters = await EncyclopediaEndpoints.Letters(_db.Entities);
+        var letters = await EncyclopediaEndpoints.Letters(Localised(_db.Entities));
 
         letters.Letters.Select(l => l.Letter).Should().Equal(
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
@@ -63,7 +63,7 @@ public sealed class EntityLetterTests : IDisposable
     [Fact]
     public async Task CaseDoesNotMoveANameToAnotherLetter()
     {
-        var letters = await EncyclopediaEndpoints.Letters(_db.Entities);
+        var letters = await EncyclopediaEndpoints.Letters(Localised(_db.Entities));
 
         Count(letters, "H").Should().Be(1);
         Count(letters, "T").Should().Be(1);
@@ -78,7 +78,7 @@ public sealed class EntityLetterTests : IDisposable
     [Fact]
     public async Task PunctuationBeforeTheFirstLetterIsPassedOver()
     {
-        var letters = await EncyclopediaEndpoints.Letters(_db.Entities);
+        var letters = await EncyclopediaEndpoints.Letters(Localised(_db.Entities));
 
         Count(letters, "K").Should().Be(1);
         letters.Letters.Should().OnlyContain(l => l.Letter.Length == 1 && char.IsLetter(l.Letter[0]));
@@ -89,7 +89,7 @@ public sealed class EntityLetterTests : IDisposable
     [Fact]
     public async Task EachLetterCountsExactlyWhatItsFilterReturns()
     {
-        var letters = await EncyclopediaEndpoints.Letters(_db.Entities);
+        var letters = await EncyclopediaEndpoints.Letters(Localised(_db.Entities));
 
         foreach (var letter in letters.Letters)
         {
@@ -100,7 +100,7 @@ public sealed class EntityLetterTests : IDisposable
     [Fact]
     public async Task TheCountsFollowTheKindFilter()
     {
-        var letters = await EncyclopediaEndpoints.Letters(_db.Entities.Where(e => e.Kind == EntityKind.Place));
+        var letters = await EncyclopediaEndpoints.Letters(Localised(_db.Entities.Where(e => e.Kind == EntityKind.Place)));
 
         Count(letters, "A").Should().Be(1);
         Count(letters, "T").Should().Be(0);
@@ -110,10 +110,40 @@ public sealed class EntityLetterTests : IDisposable
     private static int Count(EntityLettersResponse letters, string letter) =>
         letters.Letters.Single(l => l.Letter == letter).Count;
 
-    private Task<List<string>> Slugs(char letter) =>
-        EncyclopediaEndpoints.UnderLetter(_db.Entities, letter)
-            .OrderBy(e => e.Slug)
-            .Select(e => e.Slug)
+    /// <summary>
+    /// In a Ukrainian index a name the corpus holds in Ukrainian is filed under its Cyrillic
+    /// initial, the Ukrainian alphabet comes first and whole, and a name it holds only in English is
+    /// still there, under its Latin letter after it.
+    /// </summary>
+    [Fact]
+    public async Task AUkrainianIndexFilesTheUkrainianNameAndKeepsTheEnglishOnes()
+    {
+        var aaron = _db.Entities.Single(e => e.Slug == "aaron");
+        _db.EntityNameForms.Add(new EntityNameForm
+        {
+            EntityId = aaron.Id, Language = "ukr", GrammaticalCase = GrammaticalCases.Nominative,
+            Form = "Аарон", Method = LinkMethod.ModelReading, Confidence = 1, Source = "a test",
+        });
+        _db.SaveChanges();
+
+        var letters = await EncyclopediaEndpoints.Letters(Localised(_db.Entities, "ukr"), "ukr");
+
+        letters.Letters.Select(l => l.Letter).Take(4).Should().Equal("А", "Б", "В", "Г");
+        letters.Letters.Select(l => l.Letter).Should().Contain(["Ґ", "Є", "І", "Ї", "A", "Z"]);
+        Count(letters, "А").Should().Be(1);
+        Count(letters, "A").Should().Be(2, "Abraham and Ai have no Ukrainian name here");
+        letters.Total.Should().Be(7);
+        (await Slugs('а', "ukr")).Should().Equal("aaron");
+        (await Slugs('A', "ukr")).Should().Equal("abraham", "ai");
+    }
+
+    private IQueryable<LocalisedEntity> Localised(IQueryable<Entity> entities, string? language = null) =>
+        EntityNames.Localised(_db, entities, language);
+
+    private Task<List<string>> Slugs(char letter, string? language = null) =>
+        EncyclopediaEndpoints.UnderLetter(Localised(_db.Entities, language), letter)
+            .Select(l => l.Entity.Slug)
+            .OrderBy(slug => slug)
             .ToListAsync();
 
     private void Add(EntityKind kind, string slug, string name) =>

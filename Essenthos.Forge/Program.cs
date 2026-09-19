@@ -127,6 +127,7 @@ builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();
+builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<OwnRelationshipLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
@@ -632,6 +633,15 @@ if (args is ["locate", ..])
     var located = await locateScope.ServiceProvider.GetRequiredService<OpenBibleLocationLoader>()
         .Load(Path.Combine(resources, "OpenBible"));
     Console.WriteLine(located);
+    return 0;
+}
+
+// How each text spells each name, counted again from the words that name it, in an already loaded
+// corpus. The load does this as its last naming step; this is that step alone.
+if (args is ["spell", ..])
+{
+    using var spellScope = app.Services.CreateScope();
+    Console.WriteLine(await spellScope.ServiceProvider.GetRequiredService<EntityRenderingLoader>().Load());
     return 0;
 }
 

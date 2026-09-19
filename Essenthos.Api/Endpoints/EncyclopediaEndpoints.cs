@@ -80,12 +80,16 @@ internal static class EncyclopediaEndpoints
     /// Every located place, alphabetical, with the number of verses that name it so a map can size
     /// or filter its marks.
     /// </summary>
-    internal static async Task<PlaceMapResponse> Map(AppDbContext db, CancellationToken cancellationToken = default)
+    internal static async Task<PlaceMapResponse> Map(
+        AppDbContext db,
+        string? language = null,
+        CancellationToken cancellationToken = default)
     {
         var places = await db.PlaceLocations
             .OrderBy(l => l.Entity!.Name).ThenBy(l => l.Entity!.Slug)
             .Select(l => new
             {
+                l.EntityId,
                 l.Entity!.Slug,
                 l.Entity.Name,
                 l.Entity.PlaceKind,
@@ -111,6 +115,8 @@ internal static class EncyclopediaEndpoints
             .GroupBy(row => row.Slug)
             .ToDictionary(group => group.Key, group => group.Select(row => row.Chapter).Order().ToList());
 
+        var local = await EntityNames.Of(db, [.. places.Select(p => p.EntityId)], language, cancellationToken);
+
         return new PlaceMapResponse(
             places.Count,
             [.. places.Select(p => p.Source).Distinct().Select(Datasets.Of).OfType<string>()],
@@ -120,8 +126,40 @@ internal static class EncyclopediaEndpoints
                     chapters.GetValueOrDefault(p.Slug) ?? [])
                 {
                     PlaceKind = p.PlaceKind,
+                    LocalName = local.GetValueOrDefault(p.EntityId),
                 }),
             ]);
+    }
+
+    /// <summary>
+    /// Every text's spellings of one entity, a text's heading first. The texts in the corpus's own
+    /// order of languages and then of texts, which is the order the pane list already offers them in.
+    /// </summary>
+    private static async Task<List<EntityRenderingResponse>> Renderings(
+        AppDbContext db,
+        int entityId,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.EntityRenderings
+            .Where(r => r.EntityId == entityId)
+            .Select(r => new { r.Text!.Slug, r.Text.Language, r.TextId, r.Form, r.Occurrences, r.Heading })
+            .ToListAsync(cancellationToken);
+
+        return
+        [
+            .. rows
+                .GroupBy(r => (r.TextId, r.Slug, r.Language))
+                .OrderBy(g => g.Key.Language, StringComparer.Ordinal).ThenBy(g => g.Key.TextId)
+                .Select(g => new EntityRenderingResponse(
+                    g.Key.Slug,
+                    g.Key.Language,
+                    g.Single(r => r.Heading).Form,
+                    g.Sum(r => r.Occurrences),
+                    [
+                        .. g.OrderByDescending(r => r.Occurrences).ThenBy(r => r.Form, StringComparer.Ordinal)
+                            .Select(r => new EntitySpellingResponse(r.Form, r.Occurrences)),
+                    ])),
+        ];
     }
 
     /// <summary>The addresses of a set of namings, each address once.</summary>
@@ -274,54 +312,28 @@ internal static class EncyclopediaEndpoints
     /// hundred alphabetical names by verse count and present that as the corpus's own ranking.
     ///
     /// Both counts descend, because the question they answer only has a useful end at the top, and
-    /// both break ties on the name so that a page boundary falls in the same place twice.
+    /// both break ties on the name so that a page boundary falls in the same place twice. The name
+    /// is the one shown, in the language asked for and in that language's own alphabetical order.
     /// </summary>
-    private static IQueryable<Entity> Ordered(IQueryable<Entity> entities, string? sort, string? q) => sort switch
+    private static IQueryable<LocalisedEntity> Ordered(
+        AppDbContext db,
+        IQueryable<LocalisedEntity> entities,
+        string? sort,
+        string? q,
+        string? language) => sort switch
     {
-        "verses" => entities
-            .OrderByDescending(e => e.Verses
+        "verses" => EntityNames.Alphabetical(
+            entities.OrderByDescending(l => l.Entity.Verses
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
-                .Distinct().Count())
-            .ThenBy(e => e.Name).ThenBy(e => e.Slug),
-        "mentions" => entities
-            .OrderByDescending(e => e.Verses.Count)
-            .ThenBy(e => e.Name).ThenBy(e => e.Slug),
-        "name" => entities.OrderBy(e => e.Name).ThenBy(e => e.Slug),
-        _ => q is { Length: > 0 } ? ByRelevance(entities, q) : entities.OrderBy(e => e.Name).ThenBy(e => e.Slug),
+                .Distinct().Count()),
+            language),
+        "mentions" => EntityNames.Alphabetical(entities.OrderByDescending(l => l.Entity.Verses.Count), language),
+        "name" => EntityNames.Alphabetical(entities, language),
+        _ => q is { Length: > 0 }
+            ? EntityNames.ByRelevance(db, entities, q, language)
+            : EntityNames.Alphabetical(entities, language),
     };
-
-    /// <summary>
-    /// A searched index is ordered by how well the row answers what was typed, not by the alphabet.
-    ///
-    /// <c>Judah</c> matches twenty-seven rows and alphabetical order puts Ahaz, Amaziah and Asa
-    /// above the man and the tribe the reader meant, because each of them is <em>king of Judah</em>
-    /// in the sentence under their name. The order is therefore: the entity actually called that,
-    /// then the ones whose name opens with it — Judas, Judaea — then everything the word merely
-    /// occurs in.
-    ///
-    /// Every other name an entity carries counts for the first band, because Peter is Cephas and a
-    /// reader who types the other name has typed the thing itself and not a mention of it. Inside a
-    /// band the corpus's own weight breaks the tie, so the Judah with a thousand namings comes
-    /// before the Judah with two.
-    ///
-    /// Alphabetical stays the default for an unsearched index, and <c>sort=name</c> asks for it
-    /// back: a listing being paged through is a list to find a name in, and reordering that by
-    /// relevance to an empty query would be reordering it by nothing.
-    /// </summary>
-    private static IQueryable<Entity> ByRelevance(IQueryable<Entity> entities, string q)
-    {
-        var exactly = LikePatterns.Exactly(q);
-        var opening = LikePatterns.StartingWith(q);
-
-        return entities
-            .OrderBy(e =>
-                EF.Functions.ILike(e.Name, exactly) || e.Names.Any(n => EF.Functions.ILike(n.Label, exactly))
-                    ? 0
-                    : EF.Functions.ILike(e.Name, opening) ? 1 : 2)
-            .ThenByDescending(e => e.Verses.Count)
-            .ThenBy(e => e.Name).ThenBy(e => e.Slug);
-    }
 
     /// <summary>The orders <c>sort</c> accepts. Anything else is refused rather than ignored.</summary>
     private static readonly string[] Sorts = ["name", "verses", "mentions"];
@@ -334,16 +346,11 @@ internal static class EncyclopediaEndpoints
     private const string BeforeTheFirstLetter = "^[^[:alpha:]]*";
 
     /// <summary>
-    /// The letters an index of English names always offers, so a client can draw all of them — the
-    /// empty ones greyed — without holding an alphabet of its own.
-    /// </summary>
-    private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    /// <summary>
     /// The letter a name is filed under in the A to Z index: its first letter, in capitals, and the
     /// empty string for a name with no letter in it at all. The printed name as it stands — <em>the
     /// angel of the LORD</em> files under T, where a reader scanning a list of printed names will
-    /// look for it. The names are English, so in practice this is the Latin alphabet.
+    /// look for it — and it is the name shown in the language asked for, so <em>Аарон</em> files under
+    /// А.
     ///
     /// <para>
     /// The counts are read with this and the filter with <see cref="UnderLetter"/>, which says the
@@ -365,30 +372,34 @@ internal static class EncyclopediaEndpoints
     }
 
     /// <summary>The entities filed under one letter, whatever case it was asked in.</summary>
-    internal static IQueryable<Entity> UnderLetter(IQueryable<Entity> entities, char letter)
+    internal static IQueryable<LocalisedEntity> UnderLetter(IQueryable<LocalisedEntity> entities, char letter)
     {
         var pattern = $"{BeforeTheFirstLetter}[{char.ToUpperInvariant(letter)}{char.ToLowerInvariant(letter)}]";
-        return entities.Where(e => Regex.IsMatch(e.Name, pattern));
+        return entities.Where(l => Regex.IsMatch(l.Shown, pattern));
     }
 
     /// <summary>
-    /// How many entities each letter holds: every letter of <see cref="Alphabet"/>, empty ones at
-    /// zero, and any other letter a name happens to open with after them.
+    /// How many entities each letter holds: every letter of the language's alphabet, empty ones at
+    /// zero, and any other letter a name happens to open with after them — in a Ukrainian index, the
+    /// Latin initials of the names the corpus holds no Ukrainian name for. The alphabet is in the
+    /// response so a client can draw all of it, the empty letters greyed, without holding its own.
     ///
     /// Counted here rather than grouped in the database, because the grouping key is a string the
     /// provider cannot compute. It reads one column of five thousand short rows.
     /// </summary>
     internal static async Task<EntityLettersResponse> Letters(
-        IQueryable<Entity> entities,
+        IQueryable<LocalisedEntity> entities,
+        string? language = null,
         CancellationToken cancellationToken = default)
     {
-        var counted = (await entities.Select(e => e.Name).ToListAsync(cancellationToken))
+        var alphabet = EntityNames.Alphabet(language);
+        var counted = (await entities.Select(l => l.Shown).ToListAsync(cancellationToken))
             .GroupBy(FiledUnder)
             .ToDictionary(g => g.Key, g => g.Count());
 
-        var letters = Alphabet.Select(c => c.ToString())
+        var letters = alphabet.Select(c => c.ToString())
             .Concat(counted.Keys
-                .Where(letter => letter.Length > 0 && !Alphabet.Contains(letter, StringComparison.Ordinal))
+                .Where(letter => letter.Length > 0 && !alphabet.Contains(letter, StringComparison.Ordinal))
                 .Order(StringComparer.Ordinal))
             .Select(letter => new EntityLetterResponse(letter, counted.GetValueOrDefault(letter)))
             .ToList();
@@ -467,6 +478,22 @@ internal static class EncyclopediaEndpoints
                 return refusal!;
             }
 
+            if (q is { Length: > 0 })
+            {
+                // Every name the entity is called by, in every language and every text — Peter is
+                // Simon, Cephas and Simon Bar-Jonah, Aaron is Аарон and Aarón, and a search that
+                // only reads the headword finds each of them under one name of many.
+                //
+                // Asked first and on its own: the planner cannot estimate how many rows a disjunction
+                // of five name lookups keeps, guesses nearly all of them, and prices the ordering
+                // below high enough to compile it — which costs more than the query. Handed the ids,
+                // it knows.
+                var matched = await EntityNames.Matching(db, entities, q).Select(e => e.Id).ToListAsync(cancellationToken);
+                entities = db.Entities.Where(e => matched.Contains(e.Id));
+            }
+
+            var localised = EntityNames.Localised(db, entities, language);
+
             if (letter is { Length: > 0 })
             {
                 if (!OneLetter(letter, out var initial, out refusal))
@@ -474,27 +501,24 @@ internal static class EncyclopediaEndpoints
                     return refusal!;
                 }
 
-                entities = UnderLetter(entities, initial);
+                localised = UnderLetter(localised, initial);
             }
 
-            if (q is { Length: > 0 })
-            {
-                // The name as printed, and every other name the entity is called by — Peter is
-                // Simon, Cephas and Simon Bar-Jonah, and a search that only reads the headword
-                // finds him under one of the four.
-                var like = LikePatterns.Containing(q);
-                entities = entities.Where(e =>
-                    EF.Functions.ILike(e.Name, like)
-                    || EF.Functions.ILike(e.Slug, like)
-                    || e.Names.Any(n => EF.Functions.ILike(n.Label, like)));
-            }
-
-            var total = await entities.CountAsync(cancellationToken);
-            var page = await Ordered(entities, sort, q)
+            var total = await localised.CountAsync(cancellationToken);
+            var named = await Ordered(db, localised, sort, q, language)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 40, 1, MostPerPage))
-                .Select(Summary)
+                .Select(l => new { l.Entity.Slug, l.LocalName })
                 .ToListAsync(cancellationToken);
+
+            // The summaries in a second read, by slug: the projection is an expression the provider
+            // cannot put beside the name the first read ordered by.
+            var slugs = named.Select(row => row.Slug).ToList();
+            var summaries = await db.Entities
+                .Where(e => slugs.Contains(e.Slug))
+                .Select(Summary)
+                .ToDictionaryAsync(row => row.Slug, cancellationToken);
+            var page = named.Select(row => summaries[row.Slug] with { LocalName = row.LocalName }).ToList();
 
             var described = await Descriptors.Of(
                 db, page.Select(e => e.Slug), language, cancellationToken);
@@ -526,12 +550,13 @@ internal static class EncyclopediaEndpoints
         // the empty ones before a reader presses them. Takes the index's own kind filter.
         routes.MapGet("/entities/letters", async (
             [FromQuery] string? kind,
+            [FromQuery] string? language,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
             var entities = db.Entities.AsQueryable();
             return OfKind(ref entities, kind, out var refusal)
-                ? Results.Ok(await Letters(entities, cancellationToken))
+                ? Results.Ok(await Letters(EntityNames.Localised(db, entities, language), language, cancellationToken))
                 : refusal!;
         });
 
@@ -679,14 +704,20 @@ internal static class EncyclopediaEndpoints
                 Descriptor = await Descriptors.Of(
                     db, entity.Slug, language, cancellationToken),
                 Location = entity.Location,
+                LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
+                    .GetValueOrDefault(entity.Id),
+                Renderings = await Renderings(db, entity.Id, cancellationToken),
             });
         });
 
         // Every place that has a point, in one payload small enough to draw them all on one map:
         // about 1,300 rows of a slug, a name, two numbers and two words. The paged index cannot do
         // this without fourteen round trips, and a map is useless until it has all of them.
-        routes.MapGet("/places/map", async (AppDbContext db, CancellationToken cancellationToken) =>
-            Results.Ok(await Map(db, cancellationToken)));
+        routes.MapGet("/places/map", async (
+            [FromQuery] string? language,
+            AppDbContext db,
+            CancellationToken cancellationToken) =>
+            Results.Ok(await Map(db, language, cancellationToken)));
 
         routes.MapGet("/entities/{slug}/references", async (
             string slug,
@@ -1200,6 +1231,12 @@ internal record EntitySummaryResponse(
     /// the language it says it is in. Null where nothing has been generated for this entity yet.
     /// </summary>
     public EntityDescriptorResponse? Descriptor { get; init; }
+
+    /// <summary>
+    /// The name in the language asked for, where the corpus has one; null where it has none, or
+    /// where the language asked for is the headword's own, and a client shows the English name.
+    /// </summary>
+    public string? LocalName { get; init; }
 }
 
 internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items);
@@ -1208,7 +1245,8 @@ internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items
 internal record EntityLetterResponse(string Letter, int Count);
 
 /// <param name="Letters">
-/// A to Z in order, every one of them present, followed by any other letter a name opens with.
+/// The language's alphabet in order — A to Z for English — every letter present, followed by any
+/// other letter a name opens with.
 /// </param>
 internal record EntityLettersResponse(int Total, IList<EntityLetterResponse> Letters);
 
@@ -1339,7 +1377,31 @@ internal record EntityResponse(
     /// gazetteer cannot locate or locates only with coordinates this corpus does not hold.
     /// </summary>
     public EntityLocationResponse? Location { get; init; }
+
+    /// <summary>The name in the language asked for, as on the index; null where there is none.</summary>
+    public string? LocalName { get; init; }
+
+    /// <summary>
+    /// How each text prints the name, counted from the words that name this entity there: one entry
+    /// per text, its heading spelling first and every other spelling it prints after. Empty where no
+    /// word of any text is named as this entity.
+    /// </summary>
+    public IList<EntityRenderingResponse> Renderings { get; init; } = [];
 }
+
+/// <param name="Corpus">The text, by the id every other response names it by.</param>
+/// <param name="Language">The text's language, as the corpus codes it.</param>
+/// <param name="Name">The spelling the text is headed with.</param>
+/// <param name="Occurrences">How many words of the text name the entity, under every spelling.</param>
+/// <param name="Spellings">Every spelling the text prints, the commonest first.</param>
+internal record EntityRenderingResponse(
+    string Corpus,
+    string Language,
+    string Name,
+    int Occurrences,
+    IList<EntitySpellingResponse> Spellings);
+
+internal record EntitySpellingResponse(string Form, int Occurrences);
 
 /// <param name="Kind">
 /// What the point stands for: <c>point</c> the place itself, <c>representative-point</c> a spot
@@ -1374,6 +1436,9 @@ internal record PlacePointResponse(
     /// the entry does not say.
     /// </summary>
     public string? PlaceKind { get; init; }
+
+    /// <summary>The name in the language asked for, as on the index; null where there is none.</summary>
+    public string? LocalName { get; init; }
 }
 
 /// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>

@@ -1,0 +1,273 @@
+using Essenthos.Core.Corpus;
+
+namespace Essenthos.Core.Loading.Encyclopedia;
+
+/// <summary>One named word, as the query reads it: which entity, where, and how it is printed.</summary>
+internal readonly record struct NamedWord(
+    int EntityId,
+    int TextId,
+    int VerseId,
+    int Position,
+    string Surface,
+    string Trailer,
+    string? Lemma,
+    string Language);
+
+/// <summary>One spelling of one entity in one text, counted, and whether a list heads with it.</summary>
+internal sealed record Rendering(int EntityId, int TextId, string Form, string Folded, int Occurrences, bool Heading);
+
+/// <summary>
+/// How the words that name an entity in a text become that text's spellings of its name.
+///
+/// <para>
+/// Three things stand between an annotated word and a name. Adjacent words named as the same entity
+/// are one name — <em>Beth Shemesh</em> is two words of the Berean and one place. Quotation marks,
+/// punctuation and an English possessive are the sentence's and not the name's. And an annotation
+/// sometimes sits on a word that is not the name at all — <em>he</em>, <em>und</em>, <em>Sohn</em>,
+/// <em>Priester</em> — because it was carried across a link to whatever the name was rendered as.
+/// </para>
+///
+/// <para>
+/// The last is kept out by what the words have in common rather than by a list of words. A spelling
+/// in a script with capitals must begin with one, and every spelling kept must open the way the
+/// text's commonest spelling opens: <em>Аарона</em>, <em>Ааронові</em> and <em>Аароном</em> are the
+/// declension of <em>Аарон</em>, and <em>Sohn</em> is not anything of <em>Aaron</em>. It costs the rare
+/// genuinely different spelling a text also prints — <em>Oshea</em> beside <em>Joshua</em> — and
+/// that is the side to err on: a search that misses a variant is better than one that finds Aaron
+/// under <em>Priester</em>.
+/// </para>
+///
+/// <para>
+/// The heading is the spelling a list shows. Where the language has a nominative this corpus holds
+/// and the text prints it, that is the heading. Otherwise it is the shortest of the spellings printed
+/// at least a third as often as the commonest, which in a declining language is the nominative more
+/// often than the commonest is — the Ohienko Bible prints <em>Аарона</em> 128 times and <em>Аарон</em>
+/// 118 — and in a language that does not decline is simply the commonest.
+/// </para>
+/// </summary>
+internal static class Renderings
+{
+    /// <summary>How many opening letters a spelling must share with the commonest to be kept.</summary>
+    private const int SharedOpening = 3;
+
+    /// <summary>
+    /// A spelling printed at least this share as often as the commonest is a candidate heading. A
+    /// third keeps the nominative of a name whose genitive dominates and drops the stray form.
+    /// </summary>
+    private const double HeadingShare = 1.0 / 3.0;
+
+    /// <summary>The languages whose witnesses carry a lemma, which is the name without its case.</summary>
+    private static readonly HashSet<string> Original = new(StringComparer.Ordinal) { "hbo", "arc", "grc" };
+
+    /// <summary>
+    /// A lemma with a morpheme boundary in it is a segmentation and not a name: the Samaritan
+    /// Pentateuch writes <c>אהרנ/</c>.
+    /// </summary>
+    private const char MorphemeBoundary = '/';
+
+    private const string EnglishLanguage = "eng";
+
+    /// <summary>
+    /// Every text's spellings of every entity in <paramref name="words"/>.
+    /// </summary>
+    /// <param name="words">The named words, in any order.</param>
+    /// <param name="nominatives">
+    /// The nominative this corpus holds for an entity in a language, keyed by entity and language,
+    /// so that a text which prints it heads with it.
+    /// </param>
+    public static IEnumerable<Rendering> Of(
+        IEnumerable<NamedWord> words,
+        IReadOnlyDictionary<(int Entity, string Language), string> nominatives)
+    {
+        var names = new Dictionary<(int Entity, int Text), Dictionary<string, int>>();
+        var languages = new Dictionary<int, string>();
+
+        foreach (var run in Runs(words))
+        {
+            var first = run[0];
+            languages[first.TextId] = first.Language;
+
+            var name = Spelled(run);
+            if (name is null)
+            {
+                continue;
+            }
+
+            var key = (first.EntityId, first.TextId);
+            if (!names.TryGetValue(key, out var counted))
+            {
+                names[key] = counted = new Dictionary<string, int>(StringComparer.Ordinal);
+            }
+
+            counted[name] = counted.GetValueOrDefault(name) + 1;
+        }
+
+        foreach (var ((entity, text), counted) in names)
+        {
+            var nominative = nominatives.GetValueOrDefault((entity, languages[text]));
+            foreach (var rendering in Kept(entity, text, counted, nominative))
+            {
+                yield return rendering;
+            }
+        }
+    }
+
+    /// <summary>
+    /// The named words cut into names: consecutive words of one verse named as one entity in one
+    /// text are one name.
+    /// </summary>
+    internal static IEnumerable<List<NamedWord>> Runs(IEnumerable<NamedWord> words)
+    {
+        List<NamedWord>? run = null;
+
+        foreach (var word in words
+                     .OrderBy(w => w.EntityId).ThenBy(w => w.TextId).ThenBy(w => w.VerseId).ThenBy(w => w.Position))
+        {
+            if (run is not null)
+            {
+                var last = run[^1];
+                if (last.EntityId == word.EntityId && last.VerseId == word.VerseId && last.TextId == word.TextId
+                    && last.Position + 1 == word.Position && !EndsAClause(last))
+                {
+                    run.Add(word);
+                    continue;
+                }
+
+                yield return run;
+            }
+
+            run = [word];
+        }
+
+        if (run is not null)
+        {
+            yield return run;
+        }
+    }
+
+    /// <summary>
+    /// Whether punctuation follows the word, so that the next one starts another name even when both
+    /// name the same entity: <em>Irad zeugte Mahujael. Mahujael zeugte Methusael</em>.
+    /// </summary>
+    private static bool EndsAClause(NamedWord word) =>
+        word.Trailer.AsSpan().IndexOfAny(ClauseMarks) >= 0 || word.Surface.AsSpan().IndexOfAny(ClauseMarks) >= 0;
+
+    /// <summary>
+    /// The marks that close a clause in the scripts the corpus holds. Not the hyphen and not the
+    /// Hebrew maqaf, which join the parts of one name.
+    /// </summary>
+    private static readonly System.Buffers.SearchValues<char> ClauseMarks =
+        System.Buffers.SearchValues.Create(".,;:!?·;׃׀");
+
+    /// <summary>
+    /// One run as a name, or null when nothing in it is a name. A lower-case word in a script that
+    /// has capitals is not part of one — <em>he</em>, <em>und</em>, or the noun Brenton prints
+    /// straight after <em>Ἀαρών</em> that an annotation spilled onto.
+    /// </summary>
+    internal static string? Spelled(IReadOnlyList<NamedWord> run)
+    {
+        var parts = new List<string>(run.Count);
+        foreach (var word in run)
+        {
+            var part = Trimmed(Printed(word));
+            if (part.Length > 0 && !char.IsLower(part[0]))
+            {
+                parts.Add(part);
+            }
+        }
+
+        if (parts.Count == 0)
+        {
+            return null;
+        }
+
+        if (run[0].Language == EnglishLanguage)
+        {
+            parts[^1] = WithoutPossessive(parts[^1]);
+        }
+
+        return string.Join(' ', parts);
+    }
+
+    private static string Printed(NamedWord word) =>
+        Original.Contains(word.Language) && word.Lemma is { Length: > 0 } lemma && !lemma.Contains(MorphemeBoundary)
+            ? lemma
+            : word.Surface;
+
+    /// <summary>The word without whatever the sentence put around it — quotation marks, punctuation.</summary>
+    internal static string Trimmed(string word)
+    {
+        var start = 0;
+        var end = word.Length;
+        while (start < end && !IsPartOfAName(word[start]))
+        {
+            start++;
+        }
+
+        while (end > start && !IsPartOfAName(word[end - 1]))
+        {
+            end--;
+        }
+
+        return word[start..end];
+    }
+
+    /// <summary>A letter, or a Hebrew point or Greek accent riding on one.</summary>
+    private static bool IsPartOfAName(char c) =>
+        char.IsLetter(c) || char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.NonSpacingMark;
+
+    /// <summary><em>Aaron's</em> and <em>Aaron’s</em> are Aaron.</summary>
+    internal static string WithoutPossessive(string word) =>
+        word.Length > 2 && word[^1] == 's' && word[^2] is '\'' or '’' ? word[..^2] : word;
+
+    private static IEnumerable<Rendering> Kept(
+        int entity,
+        int text,
+        Dictionary<string, int> counted,
+        string? nominative)
+    {
+        // Spellings a search cannot tell apart are one spelling, printed as its commonest member:
+        // BHSA points Jerusalem four ways, and the Berean hyphenates what the King James runs together.
+        var spellings = counted
+            .GroupBy(c => NameFolding.Fold(c.Key))
+            .Where(g => g.Key.Length > 0)
+            .Select(g => (
+                Form: g.OrderByDescending(c => c.Value).ThenBy(c => c.Key, StringComparer.Ordinal).First().Key,
+                Folded: g.Key,
+                Occurrences: g.Sum(c => c.Value)))
+            .ToList();
+        if (spellings.Count == 0)
+        {
+            return [];
+        }
+
+        // A tie goes to the longer spelling, which is the name more often than the short word an
+        // annotation spilled onto: RV1909 prints "De los Isharitas" and both ends are named once.
+        var commonest = spellings
+            .OrderByDescending(c => c.Occurrences).ThenByDescending(c => c.Form.Length)
+            .ThenBy(c => c.Form, StringComparer.Ordinal)
+            .First();
+
+        var kept = spellings.Where(c => OpensLike(c.Folded, commonest.Folded)).ToList();
+
+        var foldedNominative = nominative is null ? null : NameFolding.Fold(nominative);
+        var heading = kept
+                          .Where(c => c.Folded == foldedNominative)
+                          .OrderByDescending(c => c.Occurrences)
+                          .Select(c => c.Form)
+                          .FirstOrDefault()
+                      ?? kept
+                          .Where(c => c.Occurrences >= commonest.Occurrences * HeadingShare)
+                          .OrderBy(c => c.Form.Length).ThenByDescending(c => c.Occurrences)
+                          .ThenBy(c => c.Form, StringComparer.Ordinal)
+                          .First().Form;
+
+        return kept.Select(c => new Rendering(entity, text, c.Form, c.Folded, c.Occurrences, c.Form == heading));
+    }
+
+    private static bool OpensLike(string folded, string opening)
+    {
+        var length = Math.Min(SharedOpening, Math.Min(folded.Length, opening.Length));
+        return string.CompareOrdinal(folded, 0, opening, 0, length) == 0;
+    }
+}

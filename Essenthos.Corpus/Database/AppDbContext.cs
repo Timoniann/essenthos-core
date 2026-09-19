@@ -129,6 +129,9 @@ public class AppDbContext : DbContext
     /// <summary>An entity's name in a reader's language, in the case a phrase puts it in.</summary>
     public DbSet<EntityNameForm> EntityNameForms { get; set; } = null!;
 
+    /// <summary>Each text's spellings of an entity's name, counted from the words that name it.</summary>
+    public DbSet<EntityRendering> EntityRenderings { get; set; } = null!;
+
     /// <summary>
     /// Which word names which person, place or people. The encyclopedia says a verse names
     /// somebody; this says which word of it does, which is what a reader hovering a word is asking.
@@ -618,12 +621,45 @@ public class AppDbContext : DbContext
                 .HasForeignKey(f => f.EntityId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // The encyclopedia's search reads every form for part of a name, in any language.
+            entity.HasIndex(f => f.Form)
+                .HasMethod("gin")
+                .HasOperators("gin_trgm_ops");
+
             entity.ToTable(
                 "entity_name_form",
                 t => AddProvenanceConstraints(t, "entity_name_form").HasComment(
                     "An entity's name in a reader's language, in the grammatical case a phrase "
                     + "puts it in. Produced with the name and never computed from it: a stemmer "
                     + "guessing the genitive of a Hebrew proper name is wrong often and silently."));
+        });
+
+        modelBuilder.Entity<EntityRendering>(entity =>
+        {
+            entity.HasOne(r => r.Entity)
+                .WithMany()
+                .HasForeignKey(r => r.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.Text)
+                .WithMany()
+                .HasForeignKey(r => r.TextId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // A search types part of a name, so the lookup is a substring and only a trigram index
+            // can answer that without reading every row.
+            entity.HasIndex(r => r.Folded)
+                .HasMethod("gin")
+                .HasOperators("gin_trgm_ops");
+
+            entity.ToTable("entity_rendering", t =>
+            {
+                t.HasCheckConstraint("ck_entity_rendering_occurrences", "occurrences > 0");
+                t.HasComment(
+                    "How one text spells an entity's name, counted from the words word_entity says "
+                    + "name it there. Derived and rebuilt with those annotations; it asserts nothing "
+                    + "they do not.");
+            });
         });
     }
 

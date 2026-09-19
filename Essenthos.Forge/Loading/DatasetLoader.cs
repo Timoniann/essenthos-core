@@ -164,6 +164,7 @@ internal sealed class DatasetLoader(
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
+            await CountHowEachTextSpellsEachName(stoppingToken);
             await PutThePlacesOnTheMap(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
@@ -1029,6 +1030,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<CrossedNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// Every text's spellings of every name, counted from the words that name it. After every pass
+    /// that names a word or corrects one, because it is a count of what they settled on and is
+    /// rebuilt whole each time.
+    /// </summary>
+    private async Task CountHowEachTextSpellsEachName(CancellationToken cancellationToken)
+    {
+        status.Starting("how each text spells each name");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<EntityRenderingLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 
