@@ -127,6 +127,7 @@ internal sealed class DatasetLoader(
             await TranslateTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
+            await OpenThePsalmsTheirEditionsOpenWith(resources, stoppingToken);
             await LemmatiseTheSeptuagint(resources, stoppingToken);
             await GlossTheGreek(resources, stoppingToken);
             await ParseTheGreekASecondTime(resources, stoppingToken);
@@ -274,6 +275,63 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<StrongTranslationLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The head of a psalm, where the file a text was loaded from does not print it: the King
+    /// James's 116 superscriptions, which Zefania XML has no element for, and the first line of
+    /// Ohienko's Psalm 7, which his own printing has and the digitisation here lost.
+    ///
+    /// After the frame and before the links. It creates no verse, so nothing here needs placing —
+    /// but the verse holding a title comes to stand at the title address as well as its own, and
+    /// whether the frame holds a title verse there is a question only a placed corpus can answer.
+    /// Before the links, because the verse links are derived from the addresses a verse covers.
+    ///
+    /// Silent where the complete editions have not been fetched, which is every fresh clone: the
+    /// psalms then read as they do today rather than the load failing over a folder that is
+    /// deliberately not in git.
+    /// </summary>
+    private async Task OpenThePsalmsTheirEditionsOpenWith(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the psalm openings their editions print");
+
+        var sources = new (string Slug, IReadOnlyList<PsalmOpening> Openings, string Folder, string Note)[]
+        {
+            (Bible4uTextSource.KingJames,
+                LostPsalmOpenings.KingJamesSuperscriptions(
+                    Path.Combine(resources, LostPsalmOpenings.KingJamesFolder)),
+                LostPsalmOpenings.KingJamesFolder,
+                "The 116 psalm superscriptions bible4u's file prints nowhere are taken from eBible's "
+                + "eng-kjv2006, the standardised 1769 text, which states Public Domain."),
+
+            (Bible4uTextSource.Ohienko,
+                LostPsalmOpenings.OhienkoLostLine(Path.Combine(resources, LostPsalmOpenings.OhienkoFolder)),
+                LostPsalmOpenings.OhienkoFolder,
+                "Modified: the first line of Psalm 7, which this digitisation dropped and Ohienko printed, "
+                + "is restored from the transcription of the 1988 printing on Ukrainian Wikisource, "
+                + "CC BY-SA 4.0, with its stress marks removed."),
+        };
+
+        foreach (var (slug, openings, folder, note) in sources)
+        {
+            if (openings.Count == 0)
+            {
+                logger.LogWarning(
+                    "The complete edition the {Slug} psalm openings are read from is not in {Folder}, so the "
+                    + "psalms it does not print stay as they are. Run scripts/fetch-ebible.ps1 and "
+                    + "scripts/fetch-ohienko-wikisource.ps1",
+                    slug, Path.Combine(resources, folder));
+                continue;
+            }
+
+            using var scope = services.CreateScope();
+            var loader = scope.ServiceProvider.GetRequiredService<PsalmOpeningLoader>();
+            var outcome = await loader.Load(slug, openings, note, cancellationToken);
+            if (outcome.Psalms > 0 || outcome.Placed > 0)
+            {
+                status.Record(outcome.ToString());
+            }
+        }
     }
 
     /// <summary>

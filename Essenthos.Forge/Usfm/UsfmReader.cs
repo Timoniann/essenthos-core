@@ -315,6 +315,98 @@ internal static partial class UsfmReader
     }
 
     /// <summary>
+    /// The superscription each chapter opens with, by chapter number, for the chapters that have
+    /// one. A psalm's title is <c>\d</c> and stands before the first verse, which is where a printed
+    /// Bible puts it and where no verse number can reach it.
+    ///
+    /// <see cref="Read"/> keeps those words and hands them to the verse that opens next, because a
+    /// text loaded from a USFM file has to hold them somewhere and the alternative is inventing a
+    /// verse number for them. This answers the other question — which words they are — for a caller
+    /// that already has the text and wants the title apart from the body.
+    /// </summary>
+    public static IReadOnlyDictionary<int, IReadOnlyList<UsfmWord>> Superscriptions(string content)
+    {
+        var titles = new Dictionary<int, IReadOnlyList<UsfmWord>>();
+        var words = new List<UsfmWord>();
+        var notes = new List<UsfmNote>();
+        var running = new Running();
+        var chapter = 0;
+        var opened = false;
+        var reading = false;
+
+        void Close()
+        {
+            if (chapter > 0 && words.Count > 0)
+            {
+                titles[chapter] = [.. words];
+            }
+
+            words.Clear();
+            notes.Clear();
+            running.Close();
+            reading = false;
+        }
+
+        foreach (var line in content.Split('\n'))
+        {
+            var trimmed = line.Trim();
+            if (trimmed.Length == 0)
+            {
+                continue;
+            }
+
+            if (trimmed[0] != '\\')
+            {
+                // A title written over more than one line: the marker opened it and this continues it.
+                if (reading)
+                {
+                    Words(trimmed, words, notes, running);
+                }
+
+                continue;
+            }
+
+            var match = Marker().Match(trimmed);
+            if (!match.Success)
+            {
+                throw new InvalidOperationException($"This is not a USFM marker: \"{trimmed}\"");
+            }
+
+            var rest = match.Groups["rest"].Value.Trim();
+            var marker = match.Groups["marker"].Value;
+            reading = false;
+
+            switch (marker)
+            {
+                case "c":
+                    Close();
+                    chapter = int.Parse(rest.Split(' ')[0]);
+                    opened = false;
+                    break;
+
+                case "v":
+                    opened = true;
+                    break;
+
+                // A title after the chapter's first verse is a heading inside the psalm rather than
+                // its superscription: Psalm 119 has twenty-two of them, one per letter of the
+                // Hebrew alphabet, and no edition means them as the psalm's title.
+                case "d":
+                    if (!opened)
+                    {
+                        reading = true;
+                        Words(rest, words, notes, running);
+                    }
+
+                    break;
+            }
+        }
+
+        Close();
+        return titles;
+    }
+
+    /// <summary>
     /// A verse number, and the letter after it where there is one.
     ///
     /// The Septuagint carries 317 of these — <c>50a</c>, <c>1b</c>, <c>1e</c> — mostly in Greek
@@ -644,7 +736,11 @@ internal static partial class UsfmReader
     /// the Hebrew — so the marker goes and the word stays. <c>\bk</c> is the title of a book quoted
     /// inside a verse, which the World English Bible uses twice, for the Book of the Wars of the
     /// LORD; the title is part of the sentence that names it.
+    ///
+    /// <c>\nd</c> is the divine name set in small capitals, which is how a printed King James tells
+    /// the tetragrammaton apart from <em>Lord</em>. The letters are the word and the capitals are
+    /// the typography, so the marker goes and the word stays, spelled as the edition spells it.
     /// </summary>
-    [GeneratedRegex(@"\\(?:wj|qs|bk)\*?")]
+    [GeneratedRegex(@"\\\+?(?:wj|qs|bk|nd)\*?")]
     private static partial Regex Marked();
 }

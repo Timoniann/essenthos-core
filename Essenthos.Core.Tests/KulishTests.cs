@@ -81,9 +81,9 @@ public class UsfmNoteTests
     }
 
     /// <summary>
-    /// The marker here is <c>\nd</c> rather than <c>\add</c>, which the reader has since been told
-    /// about: what is checked is that an undecided marker stops the load, not that any particular
-    /// one is undecided.
+    /// The marker here is <c>\sls</c>, which no text in this corpus uses: what is checked is that an
+    /// undecided marker stops the load, not that any particular one is undecided. It has been
+    /// <c>\add</c> and <c>\nd</c> before now, and both of those the reader has since been told about.
     /// </summary>
     [Fact]
     public void AnInlineMarkerItHasNotBeenToldAboutIsAnError()
@@ -92,12 +92,12 @@ public class UsfmNoteTests
             """
             \id GEN
             \c 1
-            \v 1 alpha \nd beta\nd* gamma
+            \v 1 alpha \sls beta\sls* gamma
             """;
 
         var act = () => UsfmReader.Read(unknown);
 
-        act.Should().Throw<InvalidOperationException>().WithMessage("*nd*");
+        act.Should().Throw<InvalidOperationException>().WithMessage("*sls*");
     }
 }
 
