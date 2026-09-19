@@ -1,4 +1,5 @@
-using Essenthos.Core.Macula;
+﻿using Essenthos.Core.Macula;
+using Essenthos.Core.Nestle;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
@@ -11,7 +12,7 @@ namespace Essenthos.Core.Tests;
 /// The figures are here so that a re-fetch says what it changed. They are also the answer to two
 /// questions this corpus had already asked and answered badly: which Greek words are names, which
 /// the naming pass had to infer from a capital letter in the lexicon, and what case an indeclinable
-/// numeral has, which the Nestle form-code reader answers with <em>nominative</em> 476 times.
+/// numeral has, which the Nestle form-code reader once answered with <em>nominative</em> 476 times.
 /// </summary>
 public class MaculaClassTests(ITestOutputHelper output)
 {
@@ -117,8 +118,7 @@ public class MaculaClassTests(ITestOutputHelper output)
 
     /// <summary>
     /// A third reading of the same form code, and it agrees with the second: an indeclinable
-    /// numeral has no case. This corpus reports all 476 of them nominative, because the reader takes
-    /// the first letter of the last hyphen-group and <c>NUI</c> begins with N.
+    /// numeral has no case, though <c>NUI</c> begins with N.
     /// </summary>
     [Fact]
     public void GivesTheIndeclinableNumeralsNoCaseAtAll()
@@ -137,7 +137,7 @@ public class MaculaClassTests(ITestOutputHelper output)
 
     /// <summary>
     /// The other half of the same reading fault. <c>-ATT</c> is a note about the form and stands
-    /// after the group that holds the case, so a reader looking in the last position calls 110
+    /// after the group that holds the case, so a reader looking in the last position would call 110
     /// verbs accusative. Here the case comes from the group that holds it: the participles have one,
     /// the finite verbs have none, and the pronouns are genitive rather than accusative.
     /// </summary>
@@ -155,6 +155,34 @@ public class MaculaClassTests(ITestOutputHelper output)
         attic.Count(word => word.Class == "verb" && word.Case is null).Should().Be(101);
         attic.Where(word => word.Class == "pron").Should().OnlyContain(word => word.Case == "genitive");
         attic.Where(word => word.Class == "adj").Should().OnlyContain(word => word.Case == "nominative");
+    }
+
+    /// <summary>
+    /// Every case the Nestle reader states, checked word by word against MACULA's reading of the
+    /// same code. Where the reader states one it must be MACULA's, bar six; where it states none and MACULA
+    /// does, the code has no case group — an indeclinable name, letter or transliteration, or an
+    /// adverb — and MACULA read the case from the syntax rather than from the form.
+    /// </summary>
+    [Fact]
+    public void TheNestleReaderStatesTheCaseMaculaReadsFromTheSameCode()
+    {
+        if (Absent())
+        {
+            return;
+        }
+
+        var words = Annotation().Where(word => word.Morph is not null).ToList();
+        var stated = words.Select(word => (word.Morph, word.Case, Ours: NestleCase.Of(word.Morph, null))).ToList();
+
+        // Six interrogatives coded I-NSN, τί used as "why", which MACULA reads from the syntax.
+        stated.Where(word => word.Ours is not null && word.Ours != word.Case)
+            .Select(word => $"{word.Morph}: {word.Ours} against {word.Case ?? "none"}")
+            .Should().Equal(Enumerable.Repeat("I-NSN: nominative against accusative", 6));
+        stated.Where(word => word.Ours is null && word.Case is not null)
+            .Select(word => word.Morph!)
+            .Distinct()
+            .Should().BeSubsetOf(
+                ["N-PRI", "N-OI", "N-LI", "ARAM", "HEB", "ADV", "ADV-S", "ADV-C", "ADV-K", "PRT-N"]);
     }
 
     /// <summary>

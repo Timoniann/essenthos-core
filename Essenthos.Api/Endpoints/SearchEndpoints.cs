@@ -1,5 +1,6 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 ﻿using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,16 +19,51 @@ namespace Essenthos.Core.Endpoints;
 /// folding for both the stored word and the typed term, which is the only way the two can be
 /// guaranteed to agree.
 ///
+/// A search runs over the whole corpus unless it is narrowed: <c>testament</c>, <c>fromBook</c> and
+/// <c>toBook</c>, and <c>book</c> as one book or several. They narrow each other, so a gospel range
+/// inside the New Testament is both. Narrowing in the caller instead would mean 27 requests whose
+/// totals and paging cannot honestly be added up.
+///
 /// A term matches a stored word first, then the word as it is printed, then part of one. The
 /// middle step is there because a row is a morpheme: Hebrew writes the preposition and the article
 /// onto the noun, so בְּרֵאשִׁית is two rows and one printed word, and a reader typing what the page
 /// shows is typing something no single row contains. The response says per term which of the three
 /// happened — a search that silently changes what it did is a search whose results cannot be read.
+/// <c>match</c> decides how far that goes: <c>whole</c> refuses the widening and <c>substring</c>
+/// asks for it outright.
 /// </summary>
 internal static class SearchEndpoints
 {
     /// <summary>A page bigger than this is a download, and there is an endpoint for reading text.</summary>
     private const int MostPerPage = 100;
+
+    /// <summary>
+    /// The books the scope allows, as bounds on the canonical ordinal where it is a range and a
+    /// list only where books were named: a testament is 27 or 39 ordinals, and two comparisons
+    /// read the index where a list of that size does not.
+    /// </summary>
+    private static IQueryable<Word> Within(IQueryable<Word> words, SearchScope scope)
+    {
+        if (scope.From is { } first)
+        {
+            words = words.Where(w => w.Verse!.Book!.CanonicalOrdinal >= first);
+        }
+
+        if (scope.To is { } last)
+        {
+            words = words.Where(w => w.Verse!.Book!.CanonicalOrdinal <= last);
+        }
+
+        if (scope.Books is not { Count: > 0 } named)
+        {
+            return words;
+        }
+
+        var ordinals = named.ToArray();
+        return ordinals.Length == 1
+            ? words.Where(w => w.Verse!.Book!.CanonicalOrdinal == ordinals[0])
+            : words.Where(w => ordinals.Contains(w.Verse!.Book!.CanonicalOrdinal));
+    }
 
     public static void MapSearch(this IEndpointRouteBuilder routes)
     {
@@ -35,6 +71,10 @@ internal static class SearchEndpoints
             [FromQuery] string? q,
             [FromQuery] string? corpus,
             [FromQuery] string? book,
+            [FromQuery] string? fromBook,
+            [FromQuery] string? toBook,
+            [FromQuery] string? testament,
+            [FromQuery] string? match,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
@@ -57,14 +97,16 @@ internal static class SearchEndpoints
                     $"There is no text \"{corpus}\". Ask /v1/corpora for the ones this corpus holds.");
             }
 
-            int? ordinal = null;
-            if (book is { Length: > 0 })
+            var (scope, hint) = SearchScope.Resolve(book, fromBook, toBook, testament);
+            if (scope is null)
             {
-                ordinal = BookReferences.ResolveOrdinal(book);
-                if (ordinal is null)
-                {
-                    return ApiResults.NotFound(BookReferences.FormatHint(book));
-                }
+                return ApiResults.NotFound(hint!);
+            }
+
+            var (widening, widenHint) = SearchScope.ResolveWidening(match);
+            if (widenHint is not null)
+            {
+                return Results.BadRequest(new ProblemResponse(widenHint));
             }
 
             var language = await db.Texts.Where(t => t.Id == text.Id).Select(t => t.Language)
@@ -79,16 +121,20 @@ internal static class SearchEndpoints
             foreach (var term in terms)
             {
                 var folded = WordFolding.Fold(term, language);
-                var words = db.Words.Where(w => w.TextId == text.Id && w.NormalisedText != null);
-                if (ordinal is { } only)
-                {
-                    words = words.Where(w => w.Verse!.Book!.CanonicalOrdinal == only);
-                }
+                var words = Within(db.Words.Where(w => w.TextId == text.Id && w.NormalisedText != null), scope);
 
                 var whole = words.Where(w => w.NormalisedText == folded);
                 var matching = TermMatching.Folded;
 
-                if (!await whole.AnyAsync(cancellationToken))
+                if (widening == SearchWidening.PartOfAWord)
+                {
+                    // Asked for outright, so the two narrower readings are not tried at all: a
+                    // reader who wants part of a word does not want to be told a whole one answered.
+                    whole = words.Where(w => EF.Functions.Like(w.NormalisedText!, LikePatterns.Containing(folded)));
+                    matching = TermMatching.Substring;
+                }
+
+                if (matching == TermMatching.Folded && !await whole.AnyAsync(cancellationToken))
                 {
                     // No row is that word. It may still be a word of the text: a row is a morpheme,
                     // and Hebrew prints several of them together, so בראשית is two rows and one
@@ -99,11 +145,14 @@ internal static class SearchEndpoints
                     matching = TermMatching.Printed;
                 }
 
-                if (!await whole.AnyAsync(cancellationToken))
+                if (matching == TermMatching.Printed
+                    && widening == SearchWidening.AsFarAsNeeded
+                    && !await whole.AnyAsync(cancellationToken))
                 {
                     // Nothing in the corpus is that word, printed or stored. Try it as part of one
                     // before giving up: a reader typing "beginn" means "beginning", and answering
-                    // nothing is worse than answering something and saying what was done.
+                    // nothing is worse than answering something and saying what was done. A caller
+                    // who asked for whole words only is answered nothing, which is what they asked.
                     var pattern = LikePatterns.Containing(folded);
                     whole = words.Where(w => EF.Functions.Like(w.NormalisedText!, pattern));
                     matching = TermMatching.Substring;
