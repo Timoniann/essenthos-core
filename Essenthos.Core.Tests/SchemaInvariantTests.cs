@@ -192,7 +192,7 @@ public sealed class SchemaInvariantTests : IDisposable
     public void ATextMayBeTranslatedFromMoreThanOneSource()
     {
         var masoretic = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["רֵאשִׁית"]));
-        var receptus = Corpus.Add(_db, "SCRIVENER1894", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
+        var receptus = Corpus.Add(_db, "TR1894", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
         var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["beginning"]));
         _db.SaveChanges();
 

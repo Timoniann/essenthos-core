@@ -155,6 +155,16 @@ internal sealed record OwnRecordRulings(
 /// records it takes the place of, and who else it might be.
 /// </summary>
 /// <param name="Why">What established it, as the claim a reader is shown.</param>
+/// <param name="Source">
+/// Who decided this one, where it is not the decision the file opens with. The owner ruled on
+/// Abimelech first and on the rest of the list later, and a claim crediting the first ruling with
+/// the second would misstate both.
+/// </param>
+/// <param name="Names">
+/// The names of a title no dataset holds as anybody, which this loader writes as a record of its
+/// own. Absent for a record that was a person and is held as a title now.
+/// </param>
+/// <param name="Bearers">Who the text gives the title to, each at the verse where it does.</param>
 internal sealed record TitleRecord(
     string Slug,
     string Name,
@@ -162,7 +172,30 @@ internal sealed record TitleRecord(
     string Notes,
     string Why,
     IReadOnlyList<ReplacedRecord>? Replaces,
-    IReadOnlyList<OwnAlternative>? Alternatives);
+    IReadOnlyList<OwnAlternative>? Alternatives,
+    string? Source = null,
+    IReadOnlyList<TitleName>? Names = null,
+    IReadOnlyList<TitleBearerRecord>? Bearers = null);
+
+/// <summary>
+/// One name of a title written here. A Strong number is given only where the word already names
+/// several records, so that the title joins a question the annotation pass cannot answer rather
+/// than answering it: <em>high priest</em> is a common noun, and a title that were the only record
+/// carrying its number would take every occurrence of the word.
+/// </summary>
+internal sealed record TitleName(
+    string Label,
+    string? Hebrew,
+    string? HebrewTransliterated,
+    string? Greek,
+    string? GreekTransliterated,
+    string? Meaning,
+    string? HebrewStrongNumber,
+    string? GreekStrongNumber);
+
+/// <param name="Reference">The verse naming the person and the title together, as <c>2KI 23:29</c>.</param>
+/// <param name="Why">What the verse says, so the claim can be checked against it.</param>
+internal sealed record TitleBearerRecord(string Slug, string Reference, string Why);
 
 /// <summary>A record written for one bearer of a title, which the title now answers for.</summary>
 internal sealed record ReplacedRecord(string Slug, string Why);

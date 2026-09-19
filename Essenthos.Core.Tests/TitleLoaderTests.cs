@@ -11,12 +11,15 @@ namespace Essenthos.Core.Tests;
 
 /// <summary>
 /// The names the owner ruled are titles borne by possibly more than one man — Abimelech of Gerar,
-/// Phicol, Ahuzzath — against the decision the corpus actually ships.
+/// Phicol, Ahuzzath, the Rabshakeh — and the titles no dataset holds as anybody, Pharaoh and the
+/// high priest among them, against the decision the corpus actually ships.
 ///
 /// <para>
 /// The records are set up as the loaded corpus holds them: persons, with a dataset's testimony and a
-/// reading's claim, Isaac's king split off as a second person, and Gideon's son beside them under
-/// the same name. What is under test is that the decision changes the first three and nothing else.
+/// reading's claim, Isaac's king split off as a second person, Gideon's son beside them under the
+/// same name, and every person the file names as a bearer. What is under test is that the decision
+/// changes the records it names, writes the titles it brings, joins the bearers at their verses and
+/// touches nothing else.
 /// </para>
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
@@ -36,7 +39,12 @@ public sealed class TitleLoaderTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
         _loader = new TitleLoader(_db, NullLogger<TitleLoader>.Instance);
 
-        foreach (var slug in new[] { "abimelech", "phicol", "ahuzzath", "abimelech-4", "abimelech-2", "achish" })
+        var held = _decision.Titles.Where(title => title.Names is null).Select(title => title.Slug)
+            .Concat(_decision.Titles.SelectMany(title => title.Bearers ?? []).Select(bearer => bearer.Slug))
+            .Concat(["abimelech-4", "abimelech-2", "achish"])
+            .Distinct();
+
+        foreach (var slug in held)
         {
             _db.Entities.Add(new Entity
             {
@@ -75,21 +83,94 @@ public sealed class TitleLoaderTests : IDisposable
         var outcome = await _loader.Load();
 
         outcome.Retitled.Should().Be(_decision.Titles.Count);
+        outcome.Missing.Should().Be(0);
 
-        foreach (var title in _decision.Titles)
+        foreach (var title in _decision.Titles.Where(title => title.Names is null))
         {
             var record = await _db.Entities.Include(e => e.Claims).SingleAsync(e => e.Slug == title.Slug);
+            var source = title.Source ?? _decision.Source;
 
             record.Kind.Should().Be(EntityKind.Title);
             record.Name.Should().Be(title.Name);
             record.Distinguisher.Should().Be(title.Distinguisher);
             record.Notes.Should().Be(title.Notes);
             record.Sex.Should().BeNull("a title is borne by whoever holds the office");
-            record.Source.Should().Be(_decision.Source);
+            record.Source.Should().Be(source);
             record.Claims.Select(c => (c.Method, c.Source)).Should().BeEquivalentTo(
-                new[] { (LinkMethod.StatedBySource, Dataset), (LinkMethod.Manual, _decision.Source) });
+                new[] { (LinkMethod.StatedBySource, Dataset), (LinkMethod.Manual, source) });
             record.Claims.Single(c => c.Method == LinkMethod.Manual).Note.Should().Be(title.Why);
         }
+    }
+
+    /// <summary>
+    /// Pharaoh is eight persons in the dataset and no record for the word, and the high priest is an
+    /// office, not anybody's name. Each is written as a record of this corpus's own, credited to the
+    /// owner's decision and to nothing it did not come from.
+    /// </summary>
+    [Fact]
+    public async Task ATitleNoDatasetHoldsIsWritten()
+    {
+        var outcome = await _loader.Load();
+
+        var written = _decision.Titles.Where(title => title.Names is not null).ToList();
+        written.Select(title => title.Slug).Should().Contain(new[] { "pharaoh-title", "caesar-title", "high-priest" });
+        outcome.Written.Should().Be(written.Count);
+
+        var pharaoh = await _db.Entities
+            .Include(e => e.Claims)
+            .Include(e => e.Names)
+            .SingleAsync(e => e.Slug == "pharaoh-title");
+
+        pharaoh.Kind.Should().Be(EntityKind.Title);
+        pharaoh.Name.Should().Be("Pharaoh");
+        pharaoh.SourceId.Should().Be("essenthos:title:pharaoh-title");
+        pharaoh.Claims.Should().ContainSingle().Which.Method.Should().Be(LinkMethod.Manual);
+        pharaoh.Names.Should().ContainSingle().Which.HebrewStrongNumber.Should().Be("H6547");
+
+        // A common noun would make every high priest in the Bible a word naming this record.
+        var highPriest = await _db.Entities.Include(e => e.Names).SingleAsync(e => e.Slug == "high-priest");
+        highPriest.Names.Should().OnlyContain(n => n.HebrewStrongNumber == null && n.GreekStrongNumber == null);
+    }
+
+    /// <summary>
+    /// A bearer is joined at the verse that names the person and the title together, and only
+    /// there: Pharaoh-nechoh at 2KI 23:29, and nine men in all who the text calls Pharaoh.
+    /// </summary>
+    [Fact]
+    public async Task ABearerIsJoinedAtTheVerseThatNamesBoth()
+    {
+        var outcome = await _loader.Load();
+
+        outcome.Bearers.Should().Be(_decision.Titles.Sum(title => title.Bearers?.Count ?? 0));
+
+        var pharaohs = await _db.TitleBearers
+            .Where(b => b.Title!.Slug == "pharaoh-title")
+            .Select(b => new { b.Bearer!.Slug, b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse, b.Source })
+            .ToListAsync();
+
+        pharaohs.Should().HaveCount(9);
+        pharaohs.Single(b => b.Slug == "pharaohneco").Should().BeEquivalentTo(new
+        {
+            Slug = "pharaohneco",
+            CanonicalBook = 12,
+            CanonicalChapter = 23,
+            CanonicalVerse = 29,
+            Source = _decision.Titles.Single(t => t.Slug == "pharaoh-title").Source,
+        });
+
+        var nehemiah = await _db.TitleBearers
+            .Where(b => b.Bearer!.Slug == "nehemiah")
+            .Select(b => b.Title!.Slug)
+            .ToListAsync();
+        nehemiah.Should().BeEquivalentTo(new[] { "governor", "tirshatha" });
+    }
+
+    /// <summary>Every reference the file gives a bearer is a verse of the canonical frame.</summary>
+    [Fact]
+    public void EveryBearerIsGivenAVerse()
+    {
+        _decision.Titles.SelectMany(title => title.Bearers ?? [])
+            .Should().OnlyContain(bearer => TitleLoader.Verse(bearer.Reference) != null && bearer.Why.Length > 0);
     }
 
     /// <summary>
@@ -141,12 +222,16 @@ public sealed class TitleLoaderTests : IDisposable
         (await _loader.Load()).AlreadyLoaded.Should().BeFalse();
         var claims = await _db.EntityClaims.CountAsync();
         var alternatives = await _db.EntityAlternatives.CountAsync();
+        var entities = await _db.Entities.CountAsync();
+        var bearers = await _db.TitleBearers.CountAsync();
 
         var again = await _loader.Load();
 
         again.AlreadyLoaded.Should().BeTrue();
         (await _db.EntityClaims.CountAsync()).Should().Be(claims);
         (await _db.EntityAlternatives.CountAsync()).Should().Be(alternatives);
+        (await _db.Entities.CountAsync()).Should().Be(entities);
+        (await _db.TitleBearers.CountAsync()).Should().Be(bearers);
     }
 
     /// <summary>
@@ -161,7 +246,10 @@ public sealed class TitleLoaderTests : IDisposable
         var outcome = await _loader.Load();
 
         outcome.AlreadyLoaded.Should().BeFalse();
-        outcome.Missing.Should().Be(_decision.Titles.Count);
+        outcome.Missing.Should().Be(
+            _decision.Titles.Count(title => title.Names is null)
+            + _decision.Titles.Sum(title => title.Bearers?.Count ?? 0));
+        (await _db.TitleBearers.AnyAsync()).Should().BeFalse("a bearer is never guessed at");
     }
 
     /// <summary>

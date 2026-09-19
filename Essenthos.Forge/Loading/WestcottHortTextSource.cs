@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Utils;
@@ -25,7 +26,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static partial class WestcottHortTextSource
 {
-    public const string Slug = "WESTCOTTHORT1881";
+    public const string Slug = Sources.WestcottHortSlug;
 
     /// <summary>
     /// Which side of a variant group Westcott and Hort printed. The other side is the reading they

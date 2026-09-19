@@ -107,7 +107,7 @@ public sealed class ParallelPairingTests : IDisposable
     public async Task AChapterOnlyOneTextReachesIsOfferedOnlyWhenThatTextIsOpen()
     {
         var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (150, 1, ["Praise"]));
-        var greek = Corpus.Add(_db, "LXX-SWETE", TextKind.ManuscriptTradition, "grc",
+        var greek = Corpus.Add(_db, "SWETE", TextKind.ManuscriptTradition, "grc",
             (150, 1, ["Αἰνεῖτε"]),
             (151, 1, ["Μικρὸς"]));
         _db.SaveChanges();
@@ -246,7 +246,7 @@ public sealed class ParallelPairingTests : IDisposable
     /// <summary>Two texts of one verse each, already sitting at the same canonical address.</summary>
     private (Text Greek, Text Hebrew) Pair()
     {
-        var greek = Corpus.Add(_db, "LXX-BRENTON", TextKind.Translation, "eng", (1, 1, ["a", "spreading", "trunk"]));
+        var greek = Corpus.Add(_db, "GRCBRENT", TextKind.Translation, "eng", (1, 1, ["a", "spreading", "trunk"]));
         var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (1, 1, ["a", "doe", "loosed"]));
         _db.SaveChanges();
         return (greek, hebrew);

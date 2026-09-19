@@ -57,6 +57,24 @@ internal static class TextAliases
             // Not UKR. That is the Ohienko's, declared above, and an alias that crossed the two
             // would answer a reader who typed the right code with the wrong Ukrainian Bible.
             [Sources.KulishSlug] = ["UKRK", "UKRKULISH"],
+
+            // The Greek editions were spelled out in full until 2026-09-19 and now carry the codes
+            // the field prints for them: RP2018 in the edition's own repository (byztxt), TR1894 and
+            // TR1550 at Bible Gateway, TISCH at CrossWire, STEP and bolls.life, and WH, the siglum a
+            // critical apparatus writes for Westcott and Hort, with the year. Not BYZ, which eBible
+            // gives the 1904 Patriarchal text and BibleWorks an older Robinson-Pierpont, and not
+            // WHNU, which is Westcott and Hort with the later critical text's variants. The long
+            // spellings stay, because they are in every link somebody saved before the change.
+            [Sources.ByzantineSlug] = ["ROBINSONPIERPONT2018"],
+            [Sources.ScrivenerSlug] = ["SCRIVENER1894"],
+            [Sources.StephanusSlug] = ["STEPHANUS1550"],
+            [Sources.TischendorfSlug] = ["TISCHENDORF1872"],
+            [Sources.WestcottHortSlug] = ["WESTCOTTHORT1881", "WH"],
+
+            // GRCBRENT is eBible's own identifier for Brenton's Greek. The hyphenated spellings are
+            // this project's earlier ones; neither Septuagint answers to LXX, which is Rahlfs's.
+            [Sources.BrentonSeptuagintSlug] = ["LXX-BRENTON"],
+            [Sources.SweteSlug] = ["LXX-SWETE"],
         };
 
     private static readonly Dictionary<string, string> CanonicalBySpelling = Index();

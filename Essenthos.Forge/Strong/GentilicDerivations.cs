@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Essenthos.Core.Strong;
 
@@ -51,6 +51,14 @@ public enum GentilicRefusal
 
     /// <summary>The entry derives itself, which says nothing and would draw a loop.</summary>
     PointsAtItself,
+
+    /// <summary>
+    /// The origin is itself a gentilic Strong states, so the people would descend from a people.
+    /// H722 is <em>patronymic from</em> H721, the Arvadite, while his own definition of it is
+    /// <em>a descendant of Arod</em>: the two words are spelled alike and he derived it from the
+    /// wrong one. Neither kind can be named after a people, so the clause is a slip and not a claim.
+    /// </summary>
+    DerivesFromAPeople,
 }
 
 /// <param name="Statement">
@@ -168,6 +176,19 @@ public static partial class GentilicDerivations
 
         refusal = stated is null ? GentilicRefusal.NamesNoNumber : GentilicRefusal.None;
         return stated;
+    }
+
+    /// <summary>
+    /// The claims that survive being read together. A claim whose origin is another claim's
+    /// gentilic is refused, because that is only visible once every entry has been read.
+    /// </summary>
+    public static IReadOnlyList<StatedGentilic> Together(
+        IReadOnlyCollection<StatedGentilic> stated,
+        out IReadOnlyList<StatedGentilic> refused)
+    {
+        var peoples = stated.Select(claim => claim.StrongNumber).ToHashSet(StringComparer.Ordinal);
+        refused = [.. stated.Where(claim => peoples.Contains(claim.OriginNumber))];
+        return [.. stated.Where(claim => !peoples.Contains(claim.OriginNumber))];
     }
 
     /// <summary>

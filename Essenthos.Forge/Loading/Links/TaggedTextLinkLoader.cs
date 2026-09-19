@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Strong;
@@ -212,11 +213,20 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
 
         var source = edition is null ? Source(fromSlug, toSlug) : Source(edition, toSlug);
 
+        // The source names both texts, so links written before either was renamed carry the names
+        // they had then; those are this loader's own links all the same.
+        var written = TextAliases.Of(fromSlug).Append(fromSlug)
+            .SelectMany(
+                _ => TextAliases.Of(toSlug).Append(toSlug),
+                (translation, witness) => edition is null ? Source(translation, witness) : Source(edition, witness))
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+
         // Only this loader's own links, from these numbers: a pair the aligner already reached is
         // not a pair the numbers have spoken about.
         if (await db.Links.AnyAsync(
                 l => l.FromTextId == from.Id && l.ToTextId == to.Id
-                     && l.Method == LinkMethod.StrongNumber && l.Source == source,
+                     && l.Method == LinkMethod.StrongNumber && written.Contains(l.Source),
                 cancellationToken))
         {
             logger.LogInformation("{From} and {To} are already linked by these numbers; nothing to do", fromSlug, toSlug);

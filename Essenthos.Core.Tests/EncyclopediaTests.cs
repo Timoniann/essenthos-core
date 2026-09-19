@@ -57,18 +57,18 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _output.WriteLine($"  on Jesus               {_corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id)}");
         _output.WriteLine($"prose still holding a row identifier {Leaked().Count}");
 
-        // One name of the 3,895 is this corpus's own and not the label file's: the divine name
-        // pointed as Elohim, H3069.
-        _corpus.Names.Should().HaveCount(3_895);
+        // One name of the 3,894 is this corpus's own and not the label file's: the divine name
+        // pointed as Elohim, H3069. Talitha's is not loaded, with her record.
+        _corpus.Names.Should().HaveCount(3_894);
         _corpus.Names.Count(n => n.HebrewStrongNumber is not null).Should().Be(3_681);
-        _corpus.Names.Count(n => n.GreekStrongNumber is not null).Should().Be(1_161);
-        strongNumbers.Should().Be(5_853);
+        _corpus.Names.Count(n => n.GreekStrongNumber is not null).Should().Be(1_160);
+        strongNumbers.Should().Be(5_852);
         _corpus.PlaceNames.Should().HaveCount(141);
         _corpus.NamesOf("jesus").Should().HaveCount(73);
-        _corpus.Relationships.Should().HaveCount(5_448);
+        _corpus.Relationships.Should().HaveCount(5_446);
         _corpus.Duplicates.Should().Be(2);
         _corpus.Unpaired.Should().Be(7);
-        _corpus.References.Should().HaveCount(30_105);
+        _corpus.References.Should().HaveCount(30_104);
         _corpus.Disputed.Should().Be(1_417);
         _corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id).Should().Be(1_631);
     }
@@ -92,6 +92,22 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
     public void TheGreekStrongNumbersAreLoaded()
     {
         _corpus.Names.Count(n => n.GreekStrongNumber is not null).Should().BeGreaterThan(1_000);
+    }
+
+    /// <summary>
+    /// <em>Talitha cumi</em> is what Jesus says to Jairus's daughter, and MRK 5:41 translates it:
+    /// <em>Damsel, I say unto thee, arise</em>. The dataset holds the word as a girl called Talitha;
+    /// no record is written for her, and nothing that hung off it is left pointing anywhere.
+    /// </summary>
+    [Fact]
+    public void AWordSaidToAGirlIsNotHerName()
+    {
+        _corpus.Entities.Values.Should().NotContain(entity => entity.Name == "Talitha");
+        _corpus.Entities.Values.Should().Contain(entity => entity.Slug == "jairus");
+
+        var ids = _corpus.Entities.Values.Select(entity => entity.Id).ToHashSet();
+        _corpus.Relationships.Should().OnlyContain(r => ids.Contains(r.FromEntityId) && ids.Contains(r.ToEntityId));
+        _corpus.Names.Should().OnlyContain(name => ids.Contains(name.EntityId));
     }
 
     /// <summary>

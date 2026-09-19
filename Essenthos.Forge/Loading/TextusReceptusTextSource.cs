@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Utils;
@@ -37,7 +38,7 @@ internal static class TextusReceptusTextSource
             : throw new InvalidOperationException($"The Textus Receptus has no book \"{book}\".");
 
     public static string Slug(Edition edition) =>
-        edition == Edition.Scrivener1894 ? "SCRIVENER1894" : "STEPHANUS1550";
+        edition == Edition.Scrivener1894 ? Sources.ScrivenerSlug : Sources.StephanusSlug;
 
     /// <summary>
     /// Both editions are long out of copyright, and Robinson's parsing and Strong numbers are

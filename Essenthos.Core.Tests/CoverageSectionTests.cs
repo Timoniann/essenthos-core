@@ -43,7 +43,7 @@ public sealed class CoverageSectionTests : IDisposable
 
         // A printed edition holding a verse the Hebrew does not, which is the shape of the whole
         // deuterocanon and of the sixty-five verses Brenton's Daniel 3 has beyond the Masoretic.
-        _septuagint = Corpus.Add(_db, "LXX-BRENTON", TextKind.PrintedEdition, "grc",
+        _septuagint = Corpus.Add(_db, "GRCBRENT", TextKind.PrintedEdition, "grc",
             (1, 1, ["ἐν", "ἀρχῇ"]), (1, 2, ["ἡ", "δὲ", "γῆ"]));
         _db.SaveChanges();
 
@@ -70,7 +70,7 @@ public sealed class CoverageSectionTests : IDisposable
     {
         var coverage = await Coverage();
 
-        coverage.Should().Contain(c => c.Text == "LXX-BRENTON");
+        coverage.Should().Contain(c => c.Text == "GRCBRENT");
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ public sealed class CoverageSectionTests : IDisposable
     [Fact]
     public async Task AWordInAVerseNoWitnessHoldsIsUnpairedRatherThanSilent()
     {
-        var coverage = (await Coverage()).Single(c => c.Text == "LXX-BRENTON");
+        var coverage = (await Coverage()).Single(c => c.Text == "GRCBRENT");
 
         coverage.Rendered.Should().Be(1);
         coverage.Silent.Should().Be(1);
@@ -111,7 +111,7 @@ public sealed class CoverageSectionTests : IDisposable
     public async Task AWordWithNothingToReachIsOutsideTheShareRatherThanBelowIt()
     {
         var measures = await _check.Measure();
-        var coverage = measures.Coverage.Single(c => c.Text == "LXX-BRENTON");
+        var coverage = measures.Coverage.Single(c => c.Text == "GRCBRENT");
 
         coverage.Words.Should().Be(5);
         coverage.Promised.Should().Be(2);

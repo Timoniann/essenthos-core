@@ -654,6 +654,26 @@ internal static class EncyclopediaEndpoints
                 .Select(c => new { c.Method, c.Confidence, c.Source, c.Note })
                 .ToListAsync(cancellationToken);
 
+            var bearers = await db.TitleBearers
+                .Where(b => b.TitleEntityId == entity.Id)
+                .OrderBy(b => b.CanonicalBook).ThenBy(b => b.CanonicalChapter).ThenBy(b => b.CanonicalVerse)
+                .Select(b => new
+                {
+                    b.Bearer!.Slug, b.Bearer.Kind, b.Bearer.Name, b.Bearer.Distinguisher,
+                    b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse, b.Note,
+                })
+                .ToListAsync(cancellationToken);
+
+            var titles = await db.TitleBearers
+                .Where(b => b.BearerEntityId == entity.Id)
+                .OrderBy(b => b.Title!.Name)
+                .Select(b => new
+                {
+                    b.Title!.Slug, b.Title.Kind, b.Title.Name, b.Title.Distinguisher,
+                    b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse, b.Note,
+                })
+                .ToListAsync(cancellationToken);
+
             var alternatives = await db.EntityAlternatives
                 .Where(a => a.EntityId == entity.Id)
                 .Select(a => new EntityAlternativeResponse(
@@ -707,6 +727,18 @@ internal static class EncyclopediaEndpoints
                 LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
                     .GetValueOrDefault(entity.Id),
                 Renderings = await Renderings(db, entity.Id, cancellationToken),
+                Bearers =
+                [
+                    .. bearers.Select(b => new EntityTitleResponse(
+                        b.Slug, EnumSpelling.Of(b.Kind), b.Name, b.Distinguisher,
+                        BookReferences.At(b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse)!, b.Note)),
+                ],
+                Titles =
+                [
+                    .. titles.Select(t => new EntityTitleResponse(
+                        t.Slug, EnumSpelling.Of(t.Kind), t.Name, t.Distinguisher,
+                        BookReferences.At(t.CanonicalBook, t.CanonicalChapter, t.CanonicalVerse)!, t.Note)),
+                ],
             });
         });
 
@@ -1387,6 +1419,15 @@ internal record EntityResponse(
     /// word of any text is named as this entity.
     /// </summary>
     public IList<EntityRenderingResponse> Renderings { get; init; } = [];
+
+    /// <summary>
+    /// Who the text gives this title to, each at the verse that names both. Empty on everything but
+    /// a title, and on a title the text gives nobody by name.
+    /// </summary>
+    public IList<EntityTitleResponse> Bearers { get; init; } = [];
+
+    /// <summary>The titles the text gives this person, each at the verse that names both.</summary>
+    public IList<EntityTitleResponse> Titles { get; init; } = [];
 }
 
 /// <param name="Corpus">The text, by the id every other response names it by.</param>
@@ -1402,6 +1443,19 @@ internal record EntityRenderingResponse(
     IList<EntitySpellingResponse> Spellings);
 
 internal record EntitySpellingResponse(string Form, int Occurrences);
+
+/// <summary>
+/// The other end of a title held: the person on a title's page, the title on a person's.
+/// </summary>
+/// <param name="Reference">The verse that names the person and the title together.</param>
+/// <param name="Note">What that verse says, so the claim can be checked against it.</param>
+internal record EntityTitleResponse(
+    string Slug,
+    string Kind,
+    string Name,
+    string? Distinguisher,
+    VerseRefResponse Reference,
+    string? Note);
 
 /// <param name="Kind">
 /// What the point stands for: <c>point</c> the place itself, <c>representative-point</c> a spot

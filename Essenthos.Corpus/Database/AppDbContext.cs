@@ -114,6 +114,9 @@ public class AppDbContext : DbContext
     /// <summary>Who else a record might be, where the evidence does not decide.</summary>
     public DbSet<EntityAlternative> EntityAlternatives { get; set; } = null!;
 
+    /// <summary>Who the text gives a title to, and the verse where it does.</summary>
+    public DbSet<TitleBearer> TitleBearers { get; set; } = null!;
+
     /// <summary>Where a place is, as one point, and whose coordinates they are.</summary>
     public DbSet<PlaceLocation> PlaceLocations { get; set; } = null!;
 
@@ -255,6 +258,20 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(a => a.AlternativeEntityId)
                 .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        // Either end going away takes the row with it: a bearer is a statement about both records.
+        modelBuilder.Entity<TitleBearer>(entity =>
+        {
+            entity.HasOne(b => b.Title)
+                .WithMany()
+                .HasForeignKey(b => b.TitleEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(b => b.Bearer)
+                .WithMany()
+                .HasForeignKey(b => b.BearerEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         // The claim is the dictionary's and the entity is only where it lands, so an entity going

@@ -86,7 +86,7 @@ RENDERING = 'KJV'
 # The Greek witnesses, which are four texts and not one. Every one of them states a Strong number on
 # every word it prints, so each is read rather than reached through the others -- the same rule
 # `EntityCandidates.GreekWitnesses` states on the loader's side.
-GREEK_WITNESSES = ('NESTLE1904', 'ROBINSONPIERPONT2018', 'SCRIVENER1894', 'STEPHANUS1550')
+GREEK_WITNESSES = ('NESTLE1904', 'RP2018', 'TR1894', 'TR1550')
 
 PROMPT_VERSION = 'sites-2'
 CHECK_VERSION = 'sites-check-1'

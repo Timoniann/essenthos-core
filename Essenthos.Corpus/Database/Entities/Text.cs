@@ -20,7 +20,7 @@ public class Text
 
     /// <summary>
     /// The public identifier, in the spelling the world uses for this text and therefore upper
-    /// case: <c>BHSA</c>, <c>NESTLE1904</c>, <c>SCRIVENER1894</c>, <c>LXX-BRENTON</c>, <c>KJV</c>,
+    /// case: <c>BHSA</c>, <c>NESTLE1904</c>, <c>TR1894</c>, <c>GRCBRENT</c>, <c>KJV</c>,
     /// <c>RUSV</c>, <c>UBIO</c>. Every piece of Bible software there is writes a version code that
     /// way, and a reader who has seen KJV everywhere else should not have to learn that this one
     /// place spells it differently.

@@ -252,14 +252,14 @@ carries `witnesses`, read the way a scholar reads them:
 
 - `words`: the original, one line per word -- BHSA Hebrew for the Old Testament, Nestle 1904 Greek for
   the New -- as `number surface lexeme strong morphology "gloss"`, followed by the words of each
-  rendering linked to it: `| KJV ... | BSB ... | RUSV ... | LXX-BRENTON ...`. A rendering word marked
+  rendering linked to it: `| KJV ... | BSB ... | RUSV ... | GRCBRENT ...`. A rendering word marked
   `~` was linked by a statistical aligner and may be wrong. The Hebrew article, the conjunction and the
   prepositions are words of their own, so you can see whether "the man" is `article + noun`, whether
   "sons of" is a construct plural, whether a name is a person (`pers`), a people (`gens`) or a place
   (`topo`), and whether "his son" carries a suffix.
 - `BSB` and `RUSV`: the Berean Standard Bible and the Russian Synodal, whole.
-- `LXX-SWETE` (and `LXX-BRENTON` where it reads otherwise): the Septuagint, a Greek witness to a Hebrew
-  text older than the one BHSA prints. `SCRIVENER1894`: the Textus Receptus the King James translated,
+- `SWETE` (and `GRCBRENT` where it reads otherwise): the Septuagint, a Greek witness to a Hebrew
+  text older than the one BHSA prints. `TR1894`: the Textus Receptus the King James translated,
   shown only where it reads otherwise than Nestle.
 - `no_original_word`: words a rendering prints that no original word is linked to -- often a supplied
   word, sometimes an addition from another witness.
@@ -516,10 +516,10 @@ def rendering(slug):
 
 HEBREW = 'BHSA'
 GREEK = 'NESTLE1904'
-RECEIVED = 'SCRIVENER1894'
+RECEIVED = 'TR1894'
 BEREAN = 'BSB'
-SWETE = 'LXX-SWETE'
-BRENTON = 'LXX-BRENTON'
+SWETE = 'SWETE'
+BRENTON = 'GRCBRENT'
 NOTES_FROM = ('WEB', 'ASV')
 LAST_OLD_TESTAMENT_BOOK = 39
 

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -7,16 +8,29 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <param name="Retitled">Records that were a person and are now held as a title.</param>
+/// <param name="Written">Titles no dataset held as anybody, written as records of their own.</param>
 /// <param name="Retired">Records written for one bearer of a title, which the title now answers for.</param>
-/// <param name="Missing">Titles whose record the encyclopedia does not hold, which is a corpus not yet loaded.</param>
-internal sealed record TitleOutcome(bool AlreadyLoaded, int Retitled, int Retired, int Missing, TimeSpan Elapsed)
+/// <param name="Bearers">People the text gives a title to, newly joined to it.</param>
+/// <param name="Missing">
+/// Titles or bearers whose record the encyclopedia does not hold, which is a corpus not yet loaded
+/// or a slug the file has to follow.
+/// </param>
+internal sealed record TitleOutcome(
+    bool AlreadyLoaded,
+    int Retitled,
+    int Written,
+    int Retired,
+    int Bearers,
+    int Missing,
+    TimeSpan Elapsed)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "the names the owner ruled titles are already held as titles"
-            : $"{Retitled} records held as titles rather than as one person and {Retired} records for a " +
-              $"single bearer of one withdrawn, in {Elapsed}" +
-              (Missing > 0 ? $"; {Missing} titles name a record the encyclopedia does not hold" : "");
+            : $"{Retitled} records held as titles rather than as one person, {Written} titles written, " +
+              $"{Bearers} bearers joined to their titles and {Retired} records for a single bearer of one " +
+              $"withdrawn, in {Elapsed}" +
+              (Missing > 0 ? $"; {Missing} titles or bearers name a record the encyclopedia does not hold" : "");
 }
 
 /// <summary>
@@ -48,6 +62,20 @@ internal sealed record TitleOutcome(bool AlreadyLoaded, int Retitled, int Retire
 /// </para>
 ///
 /// <para>
+/// **A title no dataset holds is written.** Pharaoh is eight persons in the dataset, one for each
+/// king the episodes tell apart, and no record for the word itself; the high priest and the
+/// governor are offices, not anybody's name. Those are records of this corpus's own, with the names
+/// the file gives them and nothing inherited.
+/// </para>
+///
+/// <para>
+/// **A bearer is joined only where a verse names both.** <em>Pharaoh-nechoh</em>, <em>Hilkiah the
+/// high priest</em>, <em>Tiberius Caesar</em>: the person and the title stand in one verse, and that
+/// verse is kept with the row. Where the text gives the title and nobody's name, as with the
+/// Rabshakeh at the wall or the Candace whose treasurer Philip met, the title stands with no bearer.
+/// </para>
+///
+/// <para>
 /// Idempotent per record. It runs after every pass that writes a person and before the references
 /// and descriptions, so on a cold corpus the records are persons while names are resolved among
 /// persons and titles by the time anything is read off them; on a loaded corpus a record already
@@ -64,6 +92,7 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         var wanted = decision.Titles
             .SelectMany(title => (title.Replaces ?? []).Select(replaced => replaced.Slug)
                 .Concat(title.Alternatives?.Select(alternative => alternative.Slug) ?? [])
+                .Concat(title.Bearers?.Select(bearer => bearer.Slug) ?? [])
                 .Append(title.Slug))
             .OfType<string>()
             .Distinct(StringComparer.Ordinal)
@@ -76,10 +105,25 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
             .AsSplitQuery()
             .ToDictionaryAsync(e => e.Slug, StringComparer.Ordinal, cancellationToken);
 
-        int retitled = 0, retired = 0, missing = 0;
+        var joined = await db.TitleBearers
+            .Where(b => wanted.Contains(b.Title!.Slug))
+            .Select(b => new { Title = b.Title!.Slug, Bearer = b.Bearer!.Slug })
+            .ToListAsync(cancellationToken);
+        var already = joined.Select(b => (b.Title, b.Bearer)).ToHashSet();
+
+        int retitled = 0, written = 0, retired = 0, bearers = 0, missing = 0;
         foreach (var title in decision.Titles)
         {
-            if (!records.TryGetValue(title.Slug, out var record))
+            var source = title.Source ?? decision.Source;
+            if (!records.TryGetValue(title.Slug, out var record) && title.Names is not null)
+            {
+                record = Write(title, source);
+                records[title.Slug] = record;
+                db.Entities.Add(record);
+                written++;
+            }
+
+            if (record is null)
             {
                 logger.LogWarning(
                     "The decision holds \"{Slug}\" as a title, and the encyclopedia holds no record of that " +
@@ -91,10 +135,42 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
             }
 
             if (record.Kind != EntityKind.Title
-                || !record.Claims.Any(claim => claim.Source == decision.Source))
+                || !record.Claims.Any(claim => claim.Source == source))
             {
-                Retitle(record, title, decision, records);
+                Retitle(record, title, decision, source, records);
                 retitled++;
+            }
+
+            foreach (var bearer in title.Bearers ?? [])
+            {
+                if (already.Contains((title.Slug, bearer.Slug)))
+                {
+                    continue;
+                }
+
+                if (!records.TryGetValue(bearer.Slug, out var holder) || Verse(bearer.Reference) is not { } verse)
+                {
+                    logger.LogWarning(
+                        "The title {Title} names {Bearer} at {Reference} as its bearer, and either the " +
+                        "encyclopedia holds no record of that slug or the reference is not a verse. " +
+                        "TitleRecords.json has to follow the record, or the reference be written as 2KI 23:29",
+                        title.Slug, bearer.Slug, bearer.Reference);
+                    missing++;
+                    continue;
+                }
+
+                db.TitleBearers.Add(new TitleBearer
+                {
+                    Title = record,
+                    Bearer = holder,
+                    CanonicalBook = verse.Book,
+                    CanonicalChapter = verse.Chapter,
+                    CanonicalVerse = verse.Verse,
+                    Note = bearer.Why,
+                    Source = source,
+                });
+                already.Add((title.Slug, bearer.Slug));
+                bearers++;
             }
 
             foreach (var replaced in title.Replaces ?? [])
@@ -113,15 +189,76 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         await db.SaveChangesAsync(cancellationToken);
 
         var outcome = new TitleOutcome(
-            retitled == 0 && retired == 0 && missing == 0, retitled, retired, missing, started.Elapsed);
+            retitled == 0 && written == 0 && retired == 0 && bearers == 0 && missing == 0,
+            retitled,
+            written,
+            retired,
+            bearers,
+            missing,
+            started.Elapsed);
         logger.LogInformation("The titles: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// A title no dataset holds, as a record of this corpus's own. Its claim and alternatives are
+    /// written by <see cref="Retitle"/> like any other title's, so a record written here and one
+    /// that was a person say the same things about themselves.
+    /// </summary>
+    private static Entity Write(TitleRecord title, string source) =>
+        new()
+        {
+            Kind = EntityKind.Title,
+            Slug = title.Slug,
+            Name = title.Name,
+            SourceId = OwnSourceId + title.Slug,
+            Source = source,
+            Names =
+            [
+                .. title.Names!.Select(name => new EntityName
+                {
+                    Label = name.Label,
+                    Hebrew = name.Hebrew,
+                    HebrewTransliterated = name.HebrewTransliterated,
+                    Greek = name.Greek,
+                    GreekTransliterated = name.GreekTransliterated,
+                    Meaning = name.Meaning,
+                    HebrewStrongNumber = name.HebrewStrongNumber,
+                    GreekStrongNumber = name.GreekStrongNumber,
+                    Kind = TitleName,
+                }),
+            ],
+        };
+
+    private const string OwnSourceId = "essenthos:title:";
+
+    /// <summary>The kind of label every name of a written title is, as the dataset spells it.</summary>
+    private const string TitleName = "title";
+
+    /// <summary>
+    /// A reference as the file writes it, a book's code and then chapter and verse, in the
+    /// canonical frame; null where it is not one.
+    /// </summary>
+    internal static (int Book, int Chapter, int Verse)? Verse(string reference)
+    {
+        var space = reference.LastIndexOf(' ');
+        if (space <= 0
+            || BookReferences.ResolveOrdinal(reference[..space]) is not { } book
+            || reference[(space + 1)..].Split(':') is not [var chapter, var verse]
+            || !int.TryParse(chapter, out var c)
+            || !int.TryParse(verse, out var v))
+        {
+            return null;
+        }
+
+        return (book, c, v);
     }
 
     private static void Retitle(
         Entity record,
         TitleRecord title,
         TitleDecision decision,
+        string source,
         IReadOnlyDictionary<string, Entity> records)
     {
         record.Kind = EntityKind.Title;
@@ -129,7 +266,7 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         record.Distinguisher = title.Distinguisher;
         record.Notes = title.Notes;
         record.Sex = null;
-        record.Source = decision.Source;
+        record.Source = source;
 
         foreach (var superseded in record.Claims
                      .Where(claim => claim.Method != LinkMethod.StatedBySource)
@@ -142,11 +279,11 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         {
             Method = EnumSpelling.ToLinkMethod(decision.Method),
             Confidence = null,
-            Source = decision.Source,
+            Source = source,
             Note = title.Why,
         });
 
-        foreach (var stale in record.Alternatives.Where(a => a.Source == decision.Source).ToList())
+        foreach (var stale in record.Alternatives.Where(a => a.Source == source).ToList())
         {
             record.Alternatives.Remove(stale);
         }
@@ -159,7 +296,7 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
                 Alternative = other,
                 Describes = other is null ? alternative.Describes ?? alternative.Slug : null,
                 Reason = alternative.Reason,
-                Source = decision.Source,
+                Source = source,
             });
         }
     }

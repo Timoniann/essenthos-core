@@ -89,6 +89,12 @@ internal sealed class StrongGentilicLoader(AppDbContext db, ILogger<StrongGentil
             }
         }
 
+        stated = [.. GentilicDerivations.Together(stated, out var chained)];
+        if (chained.Count > 0)
+        {
+            refusals[GentilicRefusal.DerivesFromAPeople] = chained.Count;
+        }
+
         var origins = await Origins(stated, cancellationToken);
         var rows = stated
             .Select(claim => new StrongGentilic

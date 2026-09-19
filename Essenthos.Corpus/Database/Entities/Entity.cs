@@ -237,6 +237,48 @@ public class EntityAlternative
 }
 
 /// <summary>
+/// One man or woman the text gives a title to, in the verse where it does: Pharaoh-nechoh at
+/// 2KI 23:29, Hilkiah the high priest at 2KI 22:4, Tiberius Caesar at LUK 3:1.
+///
+/// <para>
+/// A title is held by whoever holds the office, and the reason it is a record of its own is that
+/// the text often does not say who that is — the Pharaoh of the Exodus is never named, and the
+/// Rabshakeh who speaks at the wall is known only by his office. So a bearer is written only where
+/// the verse names the person and the title together, and the verse is required: it is the whole
+/// of what settles it, and a bearer nobody can check is a guess about who held an office.
+/// </para>
+/// </summary>
+[Index(nameof(TitleEntityId), nameof(BearerEntityId), IsUnique = true)]
+[Index(nameof(BearerEntityId))]
+public class TitleBearer
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int TitleEntityId { get; set; }
+
+    public Entity? Title { get; set; }
+
+    public int BearerEntityId { get; set; }
+
+    public Entity? Bearer { get; set; }
+
+    public int CanonicalBook { get; set; }
+
+    public int CanonicalChapter { get; set; }
+
+    public int CanonicalVerse { get; set; }
+
+    /// <summary>Why this verse settles it, in a sentence a reader can check against it.</summary>
+    public string? Note { get; set; }
+
+    public required string Source { get; set; }
+
+    public override string ToString() => $"TitleBearer({BearerEntityId} bears {TitleEntityId})";
+}
+
+/// <summary>
 /// One name or title an entity is called by, in the languages the source carries it in.
 ///
 /// This is where the encyclopedia meets the rest of the corpus: a label carries a Strong number,

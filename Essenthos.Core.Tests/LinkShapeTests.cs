@@ -175,7 +175,7 @@ public sealed class LinkShapeTests : IDisposable
     public void AReadingOneWitnessLacksIsStoredAsARowRatherThanAsSilence()
     {
         var nestle = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 18, ["μονογενὴς", "θεὸς"]));
-        var receptus = Corpus.Add(_db, "SCRIVENER1894", TextKind.CriticalEdition, "grc",
+        var receptus = Corpus.Add(_db, "TR1894", TextKind.CriticalEdition, "grc",
             (1, 18, ["μονογενὴς", "υἱός"]));
         _db.SaveChanges();
 
@@ -249,7 +249,7 @@ public sealed class LinkShapeTests : IDisposable
     public void TwoGreekWitnessesEachHaveTheirOwnBooksAndWords()
     {
         var nestle = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
-        var receptus = Corpus.Add(_db, "SCRIVENER1894", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
+        var receptus = Corpus.Add(_db, "TR1894", TextKind.CriticalEdition, "grc", (1, 1, ["ἀρχῇ"]));
         _db.SaveChanges();
 
         var books = _db.Books

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Nestle;
 using Essenthos.Core.Tischendorf;
@@ -24,7 +25,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class TischendorfTextSource
 {
-    public const string Slug = "TISCHENDORF1872";
+    public const string Slug = Sources.TischendorfSlug;
 
     /// <summary>The file stem of each book, and its place in the canon.</summary>
     private static readonly (string File, int Canonical)[] Canon =

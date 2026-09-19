@@ -14,8 +14,30 @@
 /// </summary>
 internal static class Sources
 {
-    /// <summary>Brenton's Septuagint, which GLAUx's lexical table annotates.</summary>
-    public const string BrentonSeptuagintSlug = "LXX-BRENTON";
+    /// <summary>
+    /// Brenton's Septuagint, which GLAUx's lexical table annotates. <c>GRCBRENT</c> is eBible's own
+    /// identifier for this Greek text, and <c>BRENTON</c> alone would name his English translation,
+    /// which e-Sword and theWord serve under it.
+    /// </summary>
+    public const string BrentonSeptuagintSlug = "GRCBRENT";
+
+    /// <summary>Swete's Septuagint, Codex Vaticanus as it stands.</summary>
+    public const string SweteSlug = "SWETE";
+
+    /// <summary>The Robinson-Pierpont Byzantine Textform, 2018, as its own repository spells it.</summary>
+    public const string ByzantineSlug = "RP2018";
+
+    /// <summary>Scrivener's Textus Receptus of 1894, as Bible Gateway spells it.</summary>
+    public const string ScrivenerSlug = "TR1894";
+
+    /// <summary>Stephanus's Textus Receptus of 1550, as Bible Gateway spells it.</summary>
+    public const string StephanusSlug = "TR1550";
+
+    /// <summary>Tischendorf's eighth edition, as CrossWire, STEP and bolls.life spell it.</summary>
+    public const string TischendorfSlug = "TISCH";
+
+    /// <summary>Westcott and Hort's 1881 text, by the siglum an apparatus writes for it.</summary>
+    public const string WestcottHortSlug = "WH1881";
 
     /// <summary>The Kulish Bible, the first complete Ukrainian one.</summary>
     public const string KulishSlug = "UKR1871";

@@ -188,6 +188,32 @@ public sealed class PlaceRegisterLoadTests : IDisposable
     }
 
     /// <summary>
+    /// Abez and Ebez: one town, named once at JOS 19:20, which the King James spells one way and the
+    /// gazetteer the other, so neither the spelling nor the number read through the King James meets
+    /// the surveyed place. Written as a record of its own it was a second page for the same verse.
+    /// </summary>
+    [Fact]
+    public async Task A_town_the_King_James_spells_otherwise_is_the_place_the_gazetteer_surveyed()
+    {
+        Held("ebez", "Ebez", "acd9b19");
+        _db.SaveChanges();
+
+        Register(Record("H77", "Abez", ["Abez", "Ebets", "ʼEbets"]));
+
+        var outcome = await Load();
+
+        outcome.Added.Should().Be(0);
+        outcome.Claimed.Should().Be(1);
+
+        var ebez = await Place("ebez");
+        ebez!.Name.Should().Be("Ebez");
+        ebez.Source.Should().Be(Ours);
+        ebez.Names.Should().ContainSingle().Which.Should().Match<EntityName>(
+            name => name.Label == "Abez" && name.HebrewStrongNumber == "H77");
+        (await _db.Entities.CountAsync(e => e.Slug == "abez")).Should().Be(0);
+    }
+
+    /// <summary>
     /// The number is asked only where the spelling answers nothing. Strong heads one Mizpah and the
     /// gazetteer surveys three, so a record that has already met one of them by name must not be
     /// spread over all three merely because the corpus reads the number onto each.

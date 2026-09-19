@@ -44,6 +44,9 @@ services:
       - max_parallel_workers_per_gather=4
     volumes:
       - corpus:/var/lib/postgresql
+      # Read on the first start only, into an empty data directory: pg_trgm, which the corpus needs
+      # and only a superuser can be relied on to create.
+      - ./initdb:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U essenthos -d essenthos_core"]
       interval: 10s

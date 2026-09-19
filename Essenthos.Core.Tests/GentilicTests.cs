@@ -129,6 +129,24 @@ public sealed class GentilicTests
         refusal.Should().Be(GentilicRefusal.TwoCandidates);
     }
 
+    /// <summary>
+    /// Strong derives the Arodites from the Arvadites, whose name is spelled with the same letters,
+    /// while his own definition makes them the descendants of Arod. Neither kind of gentilic is
+    /// named after a people, so a claim whose origin is another claim's people is refused once the
+    /// entries are read together.
+    /// </summary>
+    [Fact]
+    public void APeopleIsNotDerivedFromAPeople()
+    {
+        var arvadites = GentilicDerivations.Read("H721", "patrial from אַרְוַד (H719);", out _)!.Value;
+        var arodites = GentilicDerivations.Read("H722", "patronymic from אַרְוָדִי (H721);", out _)!.Value;
+
+        var kept = GentilicDerivations.Together([arvadites, arodites], out var refused);
+
+        kept.Should().ContainSingle().Which.StrongNumber.Should().Be("H721");
+        refused.Should().ContainSingle().Which.StrongNumber.Should().Be("H722");
+    }
+
     [Fact]
     public void AnEntryThatSaysNothingAboutAPeopleIsNotRead()
     {
@@ -170,11 +188,35 @@ public sealed class StatedGentilicCoverageTests : IClassFixture<BibleDataCorpus>
 
     private static List<StatedGentilic> Stated() =>
     [
-        .. Lexicon
-            .Select(entry => GentilicDerivations.Read(entry.StrongNumber, entry.Derivation, out _))
-            .Where(claim => claim is not null)
-            .Select(claim => claim!.Value),
+        .. GentilicDerivations.Together(
+            [
+                .. Lexicon
+                    .Select(entry => GentilicDerivations.Read(entry.StrongNumber, entry.Derivation, out _))
+                    .Where(claim => claim is not null)
+                    .Select(claim => claim!.Value),
+            ],
+            out _),
     ];
+
+    /// <summary>
+    /// Only one entry in the dictionary derives a people from a people, and it is the slip: the
+    /// Arodites are Arod's family, not the Arvadites'.
+    /// </summary>
+    [Fact]
+    public void OnlyTheAroditeClaimDerivesFromAPeople()
+    {
+        GentilicDerivations.Together(
+                [
+                    .. Lexicon
+                        .Select(entry => GentilicDerivations.Read(entry.StrongNumber, entry.Derivation, out _))
+                        .Where(claim => claim is not null)
+                        .Select(claim => claim!.Value),
+                ],
+                out var refused)
+            .Should().HaveCount(159);
+
+        refused.Select(claim => claim.StrongNumber).Should().Equal("H722");
+    }
 
     [Fact]
     public void WhatTheDictionaryStatesAndWhatItWithholds()
@@ -249,7 +291,7 @@ public sealed class StatedGentilicCoverageTests : IClassFixture<BibleDataCorpus>
         var reached = stated.Count(claim => origins.ContainsKey((claim.OriginNumber, claim.Kind)));
         _output.WriteLine($"{reached} of {stated.Count} stated origins reach exactly one entity");
 
-        reached.Should().Be(51);
+        reached.Should().Be(50);
 
         // Moab is two entities under one number, the man and the land, and the word Strong chose is
         // what tells them apart: a Moabite is patronymically from Moab, so the page is the man's.

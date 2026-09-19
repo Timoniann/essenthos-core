@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Essenthos.Core.Byzantine;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Utils;
 
@@ -23,7 +24,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class ByzantineTextSource
 {
-    public const string Slug = "ROBINSONPIERPONT2018";
+    public const string Slug = Sources.ByzantineSlug;
 
     /// <summary>
     /// The file stem of each book. The repository numbers them in canonical order and the New

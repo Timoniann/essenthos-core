@@ -69,6 +69,21 @@ server:
 A publication stops the API for the second or two the rename takes; Caddy holds requests through it.
 Measured on the rehearsal under continuous traffic: 2,230 requests, none failed, the slowest 5.4 s.
 
+## The database's extensions
+
+The corpus compares spellings with `similarity()` from `pg_trgm`, a contrib module of Postgres itself,
+and one migration creates it. Creating an extension needs a superuser or the database's owner, and the
+roles that restore and read a release are neither, so the container creates it instead:
+`initdb/00-extensions.sh` puts it into `template1` on the first start, as the superuser, and every
+database created afterwards has it — each release `forge publish` restores, and the app databases.
+The workstation's own `compose.yaml` does the same through `../initdb`, into the corpus database and
+`template1`.
+
+Both run only when the data directory is created. On a server whose Postgres was initialised before
+the script existed, run it once by hand:
+
+    docker compose exec db psql -U postgres -d template1 -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm;'
+
 ## Backups
 
 The corpus needs none: it is an artefact, rebuilt from sources this machine keeps. `essenthos_app` —

@@ -180,13 +180,13 @@ and the first verses naming both people, are also under `witnesses`, read the wa
 
 - `words`: the original, one line per word -- BHSA Hebrew for the Old Testament, Nestle 1904 Greek for
   the New -- as `number surface lexeme strong morphology "gloss"`, followed by the words of each
-  rendering linked to it: `| KJV ... | BSB ... | RUSV ... | LXX-BRENTON ...`. A rendering word marked
+  rendering linked to it: `| KJV ... | BSB ... | RUSV ... | GRCBRENT ...`. A rendering word marked
   `~` was linked by a statistical aligner and may be wrong. The Hebrew article, the conjunction and the
   prepositions are words of their own, so you can see whether "the man" is `article + noun` or a bare
   noun, whether "sons of" is a construct plural, and whether "his son" carries a suffix.
 - `BSB` and `RUSV`: the Berean Standard Bible and the Russian Synodal, whole.
-- `LXX-SWETE` (and `LXX-BRENTON` where it reads otherwise): the Septuagint, a Greek witness to a Hebrew
-  text older than the one BHSA prints. `SCRIVENER1894`: the Textus Receptus the King James translated,
+- `SWETE` (and `GRCBRENT` where it reads otherwise): the Septuagint, a Greek witness to a Hebrew
+  text older than the one BHSA prints. `TR1894`: the Textus Receptus the King James translated,
   shown only where it reads otherwise than Nestle.
 - `no_original_word`: words a rendering prints that no original word is linked to -- often a supplied
   word, sometimes an addition from another witness.
@@ -238,7 +238,7 @@ Return a single JSON array and nothing else, one object per pair, in the order g
 
   { "pair": "<id>", "verdict": "stated" | "moved" | "witnesses-differ" | "not-stated",
     "reference": "BOOK C:V" | null,
-    "witness": "BHSA" | "NESTLE1904" | "SCRIVENER1894" | "KJV" | "BSB" | "RUSV" | "LXX-SWETE" | "LXX-BRENTON" | null,
+    "witness": "BHSA" | "NESTLE1904" | "TR1894" | "KJV" | "BSB" | "RUSV" | "SWETE" | "GRCBRENT" | null,
     "original": "the Hebrew or Greek word or words the reading turns on" | null,
     "confidence": 0.0-1.0,
     "reason": "one sentence quoting the words that state it, or saying what is missing",

@@ -56,6 +56,384 @@
           "reason": "The Hebrew names him only once, and as one man. His name in the Septuagint's account of Abraham may be that translation bringing the two covenants at Beersheba into line with each other rather than a witness that the name was an office."
         }
       ]
+    },
+    {
+      "slug": "pharaoh-title",
+      "name": "Pharaoh",
+      "distinguisher": "the title of the kings of Egypt, which the text uses for eight kings it does not name and for Necho, whom it does",
+      "notes": "Pharaoh, Hebrew par'oh, is the Egyptian per-aa, 'great house', the palace and then the king who held it; the text uses it as the Egyptian court did, as the way to speak of the reigning king. The king who took Sarai (GEN 12), Joseph's king (GEN 37-50), the king of the oppression (EXO 1-2), the king of the Exodus (EXO 3-15), Solomon's father-in-law (1KI 3:1), the father of Bithiah (1CH 4:18), the king of Isaiah's oracle (ISA 19:11) and the king of Jeremiah's day (JER 25:19) are each called Pharaoh and none of them by a name, so the encyclopedia keeps each episode's king as his own record and this title as what they have in common. Twice the text gives the title and the name together: Pharaoh-nechoh (2KI 23:29) and Pharaoh-hophra (JER 44:30). Shishak and So are called king of Egypt and never Pharaoh, and are not joined here.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
+      "names": [
+        {
+          "label": "Pharaoh",
+          "hebrew": "פַּרְעֹה",
+          "hebrewTransliterated": "par'oh",
+          "greek": "Φαραώ",
+          "greekTransliterated": "Pharaō",
+          "meaning": "great house",
+          "hebrewStrongNumber": "H6547",
+          "greekStrongNumber": "G5328"
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "pharaoh",
+          "reference": "GEN 12:15",
+          "why": "The princes of Pharaoh saw Sarai and commended her before Pharaoh, and she was taken into Pharaoh's house."
+        },
+        {
+          "slug": "pharaoh-2",
+          "reference": "GEN 37:36",
+          "why": "The Midianites sold Joseph into Egypt unto Potiphar, an officer of Pharaoh's."
+        },
+        {
+          "slug": "pharaoh-3",
+          "reference": "EXO 1:11",
+          "why": "Israel built for Pharaoh treasure cities, Pithom and Raamses."
+        },
+        {
+          "slug": "pharaoh-4",
+          "reference": "EXO 3:10",
+          "why": "The LORD sends Moses unto Pharaoh, to bring the children of Israel out of Egypt."
+        },
+        {
+          "slug": "pharaoh-5",
+          "reference": "1KI 3:1",
+          "why": "Solomon made affinity with Pharaoh king of Egypt, and took Pharaoh's daughter."
+        },
+        {
+          "slug": "pharaoh-6",
+          "reference": "1CH 4:18",
+          "why": "Bithiah the daughter of Pharaoh, whom Mered took."
+        },
+        {
+          "slug": "pharaoh-7",
+          "reference": "ISA 19:11",
+          "why": "The princes of Zoan are fools, the counsel of the wise counsellors of Pharaoh is become brutish."
+        },
+        {
+          "slug": "pharaoh-8",
+          "reference": "JER 25:19",
+          "why": "Pharaoh king of Egypt, and his servants, and his princes, among those made to drink the cup."
+        },
+        {
+          "slug": "pharaohneco",
+          "reference": "2KI 23:29",
+          "why": "Pharaoh-nechoh king of Egypt went up against the king of Assyria; the title and the name together."
+        }
+      ]
+    },
+    {
+      "slug": "caesar-title",
+      "name": "Caesar",
+      "distinguisher": "the title of the Roman emperors, from the family name of Julius Caesar",
+      "notes": "Caesar was the family name of Julius Caesar, taken by Augustus as his heir and borne after him by every emperor, until it was the title of the office. The Gospels and Acts use it both with a name, Caesar Augustus (LUK 2:1), Tiberius Caesar (LUK 3:1) and Claudius Caesar (ACT 11:28, as the King James and the Textus Receptus read; the critical text has Claudius alone), and alone for whoever reigned: the Caesar to whom tribute is given (MAT 22:17-21) is Tiberius, and the Caesar to whom Paul appeals (ACT 25:8-12) is Nero, whom the text never names. Both of those are kept as the records the dataset holds for them, and joined here.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
+      "names": [
+        {
+          "label": "Caesar",
+          "hebrew": null,
+          "hebrewTransliterated": null,
+          "greek": "Καῖσαρ",
+          "greekTransliterated": "Kaisar",
+          "meaning": null,
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": "G2541"
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "caesaraugustus",
+          "reference": "LUK 2:1",
+          "why": "There went out a decree from Caesar Augustus, that all the world should be taxed."
+        },
+        {
+          "slug": "caesar",
+          "reference": "LUK 3:1",
+          "why": "In the fifteenth year of the reign of Tiberius Caesar; the Caesar of the tribute money in the Gospels."
+        },
+        {
+          "slug": "claudius",
+          "reference": "ACT 11:28",
+          "why": "A great dearth came to pass in the days of Claudius Caesar, as the King James and the Textus Receptus read."
+        },
+        {
+          "slug": "caesar-2",
+          "reference": "ACT 25:8",
+          "why": "Paul answers that he has not offended against Caesar, and appeals to him in the verses that follow."
+        }
+      ]
+    },
+    {
+      "slug": "high-priest",
+      "name": "High priest",
+      "distinguisher": "the chief of the priests, the one who alone entered the most holy place on the Day of Atonement",
+      "notes": "The Law speaks of the high priest as an office, 'the priest that is great among his brethren' (LEV 21:10), and names him as such only rarely before the exile: Hilkiah under Josiah (2KI 22:4), and after it Joshua son of Josedech (HAG 1:1) and Eliashib (NEH 3:1). In the New Testament the Greek archiereus is both the high priest and, in the plural, the chief priests as a body; the men it names singly are Caiaphas (MAT 26:3), Annas (ACT 4:6), Ananias (ACT 23:2) and, in the Lord's own words, Abiathar (MRK 2:26). Aaron, Eleazar, Eli, Zadok and Jehoiada held the office by every account, but the text calls them the priest rather than the high priest by name, and they are not joined here.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
+      "names": [
+        {
+          "label": "High priest",
+          "hebrew": "הַכֹּהֵן הַגָּדוֹל",
+          "hebrewTransliterated": "hakkohen haggadol",
+          "greek": "ἀρχιερεύς",
+          "greekTransliterated": "archiereus",
+          "meaning": "the great priest",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": null
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "hilkiah-2",
+          "reference": "2KI 22:4",
+          "why": "Go up to Hilkiah the high priest."
+        },
+        {
+          "slug": "eliashib-7",
+          "reference": "NEH 3:1",
+          "why": "Eliashib the high priest rose up with his brethren the priests, and they builded the sheep gate."
+        },
+        {
+          "slug": "joshua-4",
+          "reference": "HAG 1:1",
+          "why": "Joshua the son of Josedech, the high priest."
+        },
+        {
+          "slug": "caiaphas",
+          "reference": "MAT 26:3",
+          "why": "The palace of the high priest, who was called Caiaphas."
+        },
+        {
+          "slug": "annas",
+          "reference": "ACT 4:6",
+          "why": "Annas the high priest, and Caiaphas, and John, and Alexander."
+        },
+        {
+          "slug": "ananias-3",
+          "reference": "ACT 23:2",
+          "why": "The high priest Ananias commanded them that stood by him to smite him on the mouth."
+        },
+        {
+          "slug": "abiathar",
+          "reference": "MRK 2:26",
+          "why": "He went into the house of God in the days of Abiathar the high priest."
+        }
+      ]
+    },
+    {
+      "slug": "governor",
+      "name": "Governor",
+      "distinguisher": "a province's governor under the Persian kings (pechah) and under Rome (hegemon)",
+      "notes": "Two words, one office: the pechah of the Persian provinces, which Haggai gives to Zerubbabel and Ezra to Tatnai and Sheshbazzar, and the hegemon of the Gospels and Acts, the Roman governor of Judaea or Syria. The King James also writes governor for other words, for Joseph's shallit over Egypt (GEN 42:6) and for Gedaliah, whom Nebuchadnezzar set over the cities of Judah (JER 40:5); those are different words and are not joined here.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
+      "names": [
+        {
+          "label": "Governor",
+          "hebrew": "פֶּחָה",
+          "hebrewTransliterated": "pechah",
+          "greek": "ἡγεμών",
+          "greekTransliterated": "hēgemōn",
+          "meaning": "governor of a province",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": null
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "zerubbabel-2",
+          "reference": "HAG 1:1",
+          "why": "Zerubbabel the son of Shealtiel, governor of Judah."
+        },
+        {
+          "slug": "tattenai",
+          "reference": "EZR 5:3",
+          "why": "Tatnai, governor on this side the river."
+        },
+        {
+          "slug": "sheshbazzar",
+          "reference": "EZR 5:14",
+          "why": "Sheshbazzar, whom he had made governor."
+        },
+        {
+          "slug": "nehemiah",
+          "reference": "NEH 12:26",
+          "why": "In the days of Nehemiah the governor, and of Ezra the priest."
+        },
+        {
+          "slug": "quirinius",
+          "reference": "LUK 2:2",
+          "why": "This taxing was first made when Cyrenius was governor of Syria."
+        },
+        {
+          "slug": "pilate",
+          "reference": "MAT 27:2",
+          "why": "They delivered him to Pontius Pilate the governor."
+        },
+        {
+          "slug": "felix",
+          "reference": "ACT 23:24",
+          "why": "To bring Paul safe unto Felix the governor."
+        }
+      ]
+    },
+    {
+      "slug": "tetrarch",
+      "name": "Tetrarch",
+      "distinguisher": "a Roman client ruler of a part of a kingdom, below a king",
+      "notes": "Literally the ruler of a fourth part, and by the first century any client ruler of a portion of a divided kingdom, below the rank of king. Herod the Great's realm was divided among his sons, and Luke dates the Baptist's ministry by three tetrarchs: Herod over Galilee, his brother Philip over Ituraea and Trachonitis, and Lysanias over Abilene (LUK 3:1). Matthew and Mark also call Herod Antipas king (MAT 14:9; MRK 6:14), which is the courtesy of the people rather than his rank.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
+      "names": [
+        {
+          "label": "Tetrarch",
+          "hebrew": null,
+          "hebrewTransliterated": null,
+          "greek": "τετράρχης",
+          "greekTransliterated": "tetrarchēs",
+          "meaning": "ruler of a fourth part",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": null
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "herod-2",
+          "reference": "MAT 14:1",
+          "why": "At that time Herod the tetrarch heard of the fame of Jesus."
+        },
+        {
+          "slug": "philip-4",
+          "reference": "LUK 3:1",
+          "why": "His brother Philip tetrarch of Ituraea and of the region of Trachonitis."
+        },
+        {
+          "slug": "lysanias",
+          "reference": "LUK 3:1",
+          "why": "Lysanias the tetrarch of Abilene."
+        }
+      ]
+    },
+    {
+      "slug": "proconsul",
+      "name": "Proconsul",
+      "distinguisher": "the governor of a Roman senatorial province, which the King James calls a deputy",
+      "notes": "The anthypatos governed a province under the Senate rather than the emperor, and Luke gives the title exactly where it was correct: Cyprus (ACT 13:7) and Achaia (ACT 18:12) were senatorial provinces in those years. The King James renders it deputy.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
+      "names": [
+        {
+          "label": "Proconsul",
+          "hebrew": null,
+          "hebrewTransliterated": null,
+          "greek": "ἀνθύπατος",
+          "greekTransliterated": "anthypatos",
+          "meaning": "one acting in place of a consul",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": null
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "sergius",
+          "reference": "ACT 13:7",
+          "why": "The deputy of the country, Sergius Paulus, a prudent man."
+        },
+        {
+          "slug": "gallio",
+          "reference": "ACT 18:12",
+          "why": "When Gallio was the deputy of Achaia."
+        }
+      ]
+    },
+    {
+      "slug": "tirshatha",
+      "name": "Tirshatha",
+      "distinguisher": "a Persian title of the governor of Judah after the return, which the King James leaves untranslated",
+      "notes": "A Persian word, usually taken to mean his excellency, given to the governor of Judah. Ezra 2:63 and Nehemiah 7:65, 70 use it of the governor at the first return without naming him, where Zerubbabel and Sheshbazzar have both been proposed; Nehemiah 8:9 and 10:1 give it to Nehemiah by name.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
+      "names": [
+        {
+          "label": "Tirshatha",
+          "hebrew": "הַתִּרְשָׁתָא",
+          "hebrewTransliterated": "hattirshata",
+          "greek": null,
+          "greekTransliterated": null,
+          "meaning": "his excellency",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": null
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "nehemiah",
+          "reference": "NEH 8:9",
+          "why": "Nehemiah, which is the Tirshatha, and Ezra the priest the scribe."
+        }
+      ]
+    },
+    {
+      "slug": "rab-mag",
+      "name": "Rab-mag",
+      "distinguisher": "a title of a high Babylonian official, given with Nergal-sharezer's name when Jerusalem fell",
+      "notes": "An Akkadian title, rab mugi, of a high officer of the Babylonian court. It is written after Nergal-sharezer's name among the princes of the king of Babylon who sat in the middle gate when Jerusalem was taken (JER 39:3), and again in the list of those who released Jeremiah (JER 39:13).",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
+      "names": [
+        {
+          "label": "Rab-mag",
+          "hebrew": "רַב־מָג",
+          "hebrewTransliterated": "rab-mag",
+          "greek": null,
+          "greekTransliterated": null,
+          "meaning": "chief officer",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": null
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "nergalsarezer-2",
+          "reference": "JER 39:3",
+          "why": "Nergal-sharezer, Rab-mag, with all the residue of the princes of the king of Babylon."
+        }
+      ]
+    },
+    {
+      "slug": "rabshakeh",
+      "name": "Rabshakeh",
+      "distinguisher": "the title of a high Assyrian officer, whom Sennacherib sent to Jerusalem (2KI 18:17); the text gives no name",
+      "notes": "Akkadian rab shaqe, the chief cupbearer, by then one of the highest officers of the Assyrian court. The officer who speaks to the people on the wall in the Hebrew tongue (2KI 18:17-37; ISA 36) is known only by his office, and the dataset held the office as his name.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to"
+    },
+    {
+      "slug": "tartan",
+      "name": "Tartan",
+      "distinguisher": "the title of the Assyrian commander-in-chief, sent by Sennacherib (2KI 18:17) and by Sargon (ISA 20:1); the text gives no name",
+      "notes": "Akkadian turtanu, the commander of the army and the second man of the Assyrian state. The text gives the title twice without a name: Sennacherib's Tartan comes up to Jerusalem with the Rabshakeh (2KI 18:17), and Sargon's comes to Ashdod and takes it (ISA 20:1). Two reigns apart, they are unlikely to be one man.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to"
+    },
+    {
+      "slug": "rabsaris",
+      "name": "Rab-saris",
+      "distinguisher": "the title of a chief officer of the Assyrian and Babylonian courts; the text gives it to Sennacherib's envoy (2KI 18:17) and to Sarsechim and Nebushasban (JER 39:3, 13)",
+      "notes": "Akkadian rab sha reshi, the chief of the court officials. The text gives it to an unnamed envoy of Sennacherib (2KI 18:17), and at the fall of Jerusalem to two Babylonian officers by name, Sarsechim (JER 39:3) and Nebushasban (JER 39:13), who hold no record of their own here.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to"
+    },
+    {
+      "slug": "candace",
+      "name": "Candace",
+      "distinguisher": "the title of the queens of Meroë, whom Acts calls the queen of the Ethiopians (ACT 8:27); the text gives no name",
+      "notes": "Kandake was the title of the ruling queens of the kingdom of Meroë on the Nile, south of Egypt; Pliny the Elder writes that the name had passed from queen to queen for many years (Natural History 6.186), and Strabo tells of one who fought Rome under Augustus. The eunuch Philip baptised was treasurer 'under Candace queen of the Ethiopians' (ACT 8:27), which gives the title and not her name.",
+      "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to"
     }
   ],
   "rulings": [

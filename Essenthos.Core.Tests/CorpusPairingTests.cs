@@ -41,7 +41,7 @@ public sealed class CorpusPairingTests : IDisposable
         _hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (1, 1, ["בְּ", "רֵאשִׁית", "בָּרָא"]),
             (1, 2, ["אֵת", "הַ", "שָּׁמַיִם"]));
-        _greek = Corpus.Add(_db, "LXX-BRENTON", TextKind.PrintedEdition, "grc",
+        _greek = Corpus.Add(_db, "GRCBRENT", TextKind.PrintedEdition, "grc",
             (1, 1, ["ἐν", "ἀρχῇ", "ἐποίησεν"]),
             (1, 2, ["ὁ", "θεὸς", "τὸν"]),
             (1, 3, ["οὐρανὸν"]));
@@ -61,7 +61,7 @@ public sealed class CorpusPairingTests : IDisposable
 
         var pairing = (await _check.Measure()).Pairing.Single();
 
-        pairing.Text.Should().Be("LXX-BRENTON");
+        pairing.Text.Should().Be("GRCBRENT");
         pairing.Against.Should().Be("BHSA");
         pairing.Chapters.Should().Be(1);
         pairing.Divided.Should().Be(1);

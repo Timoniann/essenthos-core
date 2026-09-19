@@ -358,7 +358,7 @@ public static class Datasets
         // party until they were claimed here. PRB-0180.
         new(Own, "Essenthos", "this project", "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
-            "https://github.com/",
+            "https://essenthos.org",
             "What this project works out for itself. Corrections and separations it makes to the "
             + "datasets it carries, each recorded on the row it changed; and the word "
             + "correspondences no source states — the two Greek editions joined on the Strong "

@@ -154,6 +154,25 @@ internal sealed class PlaceRegisterLoader(
     /// <summary>The kind of label a name row made from a lexicon headword is.</summary>
     private const string LexiconName = "name";
 
+    /// <summary>
+    /// Entries whose place the corpus already holds under a spelling neither route can meet, by
+    /// Strong number, with the held record's slug and the reason they are one place.
+    ///
+    /// The number cannot reach it either: the gazetteer names the town as the modern translations
+    /// print it and the King James prints it another way, so the rendering the number is read
+    /// through never spells the gazetteer's name. Asked first, because it is a ruling on this entry
+    /// and not a guess the spelling has to confirm.
+    /// </summary>
+    internal static readonly IReadOnlyDictionary<string, (string Slug, string Why)> SamePlace =
+        new Dictionary<string, (string, string)>(StringComparer.Ordinal)
+        {
+            ["H77"] = ("ebez",
+                "One town of Issachar, named once, at JOS 19:20. Strong heads the word אֶבֶץ as Ebets "
+                + "and the King James prints it Abez; the gazetteer surveys it at the same verse as "
+                + "Ebez, the spelling of the modern translations, and records the King James's Abez "
+                + "among the names the translations give it."),
+        };
+
     public async Task<PlaceRegisterOutcome> Load(
         string resources,
         CancellationToken cancellationToken = default)
@@ -201,6 +220,7 @@ internal sealed class PlaceRegisterLoader(
 
         var byName = Index(held);
         var byNumber = await Derived(held, cancellationToken);
+        var bySlug = held.ToDictionary(place => place.Slug, StringComparer.Ordinal);
         var bearers = await Bearers(cancellationToken);
         var slugs = (await db.Entities.Select(e => e.Slug).ToListAsync(cancellationToken))
             .ToHashSet(StringComparer.Ordinal);
@@ -211,7 +231,7 @@ internal sealed class PlaceRegisterLoader(
 
         foreach (var record in records)
         {
-            var hits = Reach(record, byName, byNumber);
+            var hits = Reach(record, byName, byNumber, bySlug);
             if (hits.Count == 0)
             {
                 // Indexed as it is created, so that a second entry bearing the same name joins it
@@ -368,9 +388,18 @@ internal sealed class PlaceRegisterLoader(
     private static List<Spelling> Reach(
         PlaceRegisterRecord record,
         Dictionary<string, List<Spelling>> byName,
-        Dictionary<string, List<Entity>> byNumber)
+        Dictionary<string, List<Entity>> byNumber,
+        Dictionary<string, Entity> bySlug)
     {
         var hits = new List<Spelling>();
+        if (SamePlace.TryGetValue(record.Number, out var ruled) && bySlug.TryGetValue(ruled.Slug, out var same))
+        {
+            var met = new Spelling(same);
+            met.Met(false);
+            hits.Add(met);
+            return hits;
+        }
+
         foreach (var name in (record.Names ?? []).Append(record.Name))
         {
             if (!byName.TryGetValue(PlaceRegisterFiles.Normalise(name), out var at))

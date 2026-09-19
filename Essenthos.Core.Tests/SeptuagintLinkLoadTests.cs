@@ -34,9 +34,9 @@ public sealed class SeptuagintLinkLoadTests : IDisposable
         // The opening of Genesis, where the two editions differ in the three ways that matter: the
         // accent Swete prints and Brenton does not, the movable nu one keeps and the other drops,
         // and the article one has and the other has not.
-        _swete = Corpus.Add(_db, "LXX-SWETE", TextKind.CriticalEdition, "grc",
+        _swete = Corpus.Add(_db, "SWETE", TextKind.CriticalEdition, "grc",
             (1, 1, ["Ἐν", "ἀρχῇ", "ἐποίησεν", "ὁ", "θεὸς"]));
-        _brenton = Corpus.Add(_db, "LXX-BRENTON", TextKind.PrintedEdition, "grc",
+        _brenton = Corpus.Add(_db, "GRCBRENT", TextKind.PrintedEdition, "grc",
             (1, 1, ["Ἐν", "ἀρχῇ", "ἐποίησε", "θεός"]));
 
         _db.SaveChanges();

@@ -30,7 +30,7 @@ public sealed class StrongCandidateTests : IDisposable
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
-        _septuagint = Corpus.Add(_db, "LXX-BRENTON", TextKind.PrintedEdition, "grc",
+        _septuagint = Corpus.Add(_db, "GRCBRENT", TextKind.PrintedEdition, "grc",
             (1, 1, ["Ἐν", "ἀρχῇ", "ἐποίησεν", "ὁ", "θεὸς"]));
         _db.SaveChanges();
     }

@@ -80,16 +80,32 @@ internal static class SeptuagintTextSource
         TextualFamily: "Septuagint")
     {
         Editors = "Sir Lancelot Charles Lee Brenton",
-        Edition = "The Greek Brenton printed facing his English translation, following Codex Vaticanus",
-        About = "The Greek here is not Brenton's work in the way the English beside it is: he printed "
-                + "a text following Codex Vaticanus, and what he translated was that. Who first put "
-                + "these books into Greek is not known — the translation was made in Alexandria "
-                + "between roughly the third and the first century BC, by different hands book by "
-                + "book, which is why its books differ so much from one another in manner. Samuel "
-                + "Bagster and Sons published Brenton's edition in London in 1844 and added the "
-                + "Apocrypha in 1851. It arrived here with no annotation at all; its lemmas come from "
-                + "GLAUx.",
+        Edition = SeptuagintEdition,
+        About = SeptuagintAbout,
     };
+
+    /// <summary>
+    /// What the Greek is, as Brenton's own preface says and the Sixtine edition's history bears out:
+    /// the translation was made "from the Vatican text (Valpy's edition)", which is the Roman
+    /// edition of 1587 reprinted — Vaticanus at one remove, with the codex's lost leaves supplied
+    /// from other manuscripts, and not the codex itself. Swete's edition, the other Septuagint here,
+    /// is the codex as it stands.
+    /// </summary>
+    private const string SeptuagintEdition =
+        "The Greek Brenton printed facing his English translation: the Sixtine edition of 1587, which "
+        + "follows Codex Vaticanus, as Valpy reprinted it";
+
+    private const string SeptuagintAbout =
+        "The Greek here is not Brenton's work in the way the English beside it is. His preface says "
+        + "the translation was made from the Vatican text in Valpy's edition, which is the edition "
+        + "printed at Rome in 1587 under Sixtus V: it follows Codex Vaticanus but is not a transcript "
+        + "of it, and where the codex is lost, as for nearly all of Genesis, its editors filled the "
+        + "gap from other manuscripts. Swete's edition, also here, prints the codex as it stands. Who "
+        + "first put these books into Greek is not known — the translation was made in Alexandria "
+        + "between roughly the third and the first century BC, by different hands book by book, "
+        + "which is why its books differ so much from one another in manner. Samuel Bagster and Sons "
+        + "published Brenton's edition in London in 1844 and added the Apocrypha in 1851. It arrived "
+        + "here with no annotation at all; its lemmas come from GLAUx.";
 
     /// <summary>
     /// Esdras B, which is Ezra and Nehemiah under one heading: chapters 1 to 10 are Ezra and 11 to

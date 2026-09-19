@@ -459,11 +459,32 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     private static string? Sentences(params string?[] parts) =>
         Blank(string.Join(" ", parts.Where(part => !string.IsNullOrWhiteSpace(part))));
 
+    /// <summary>
+    /// Rows of the person file that name nobody, by the dataset's own id, with the reason.
+    ///
+    /// Not loaded at all rather than loaded and corrected: a record is a claim that somebody of that
+    /// name exists, and there is nothing true left of it once the name is taken away. Its labels,
+    /// verses and relationships fall away with it, because each of them is read through the record.
+    /// </summary>
+    internal static readonly IReadOnlyDictionary<string, string> NotAPerson =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["Talitha_1"] =
+                "ταλιθα is Aramaic for 'girl': Jesus says it to Jairus's daughter at MRK 5:41, and the " +
+                "verse translates it itself, 'which is, being interpreted, Damsel'. It is how she is " +
+                "addressed, not her name, and the text never names her.",
+        };
+
     internal static void People(string folder, Dictionary<string, Entity> entities, HashSet<string> slugs)
     {
         foreach (var row in Csv.Read(Path.Combine(folder, "BibleData-Person.csv")))
         {
             var id = row["person_id"];
+            if (NotAPerson.ContainsKey(id))
+            {
+                continue;
+            }
+
             entities[Key(EntityKind.Person, id)] = new Entity
             {
                 Kind = EntityKind.Person,

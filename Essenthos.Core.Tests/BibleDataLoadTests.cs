@@ -67,7 +67,7 @@ public sealed class BibleDataLoadTests : IDisposable
         var greek = await _db.EntityNames.CountAsync(n => n.GreekStrongNumber != null);
 
         both.Should().BeGreaterThan(800);
-        greek.Should().Be(1_161);
+        greek.Should().Be(1_160);
     }
 
     /// <summary>
