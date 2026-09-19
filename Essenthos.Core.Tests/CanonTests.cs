@@ -7,7 +7,7 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// A canon decides which books exist, in what order and under what heading (DOC-0090). Getting one
+/// A canon decides which books exist, in what order and under what heading. Getting one
 /// wrong is not a crash — it is a book quietly missing from a reading order, or listed twice, or
 /// numbered as something else. Nothing else would catch that, so it is caught here.
 /// </summary>
@@ -163,8 +163,8 @@ public class CanonTests
     [InlineData("WIS", 75)]
     public void TheSeptuagintFileNamesResolve(string code, int ordinal)
     {
-        // What Brenton's USFM files are called. TSK-0020 loads by these, so a code that does not
-        // resolve is a book that silently fails to load.
+        // What Brenton's USFM files are called. The Septuagint loads by these, so a code that
+        // does not resolve is a book that silently fails to load.
         BookReferences.ResolveOrdinal(code).Should().Be(ordinal);
     }
 }

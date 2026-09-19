@@ -10,9 +10,8 @@ namespace Essenthos.Core.Database.Entities;
 ///
 /// Deliberately not a word and not a verse: an entity is a thing the world contains, and where it
 /// is named is a separate fact recorded in <see cref="EntityVerse"/>. The old schema hung person
-/// annotations on King James words, so no other translation could show a name at all (PRB-0026);
-/// here the entity stands on its own and its references are addressed canonically, which every
-/// text shares.
+/// annotations on King James words, so no other translation could show a name at all; here the
+/// entity stands on its own and its references are addressed canonically, which every text shares.
 /// </summary>
 [Index(nameof(Slug), IsUnique = true)]
 [Index(nameof(Kind))]
@@ -399,10 +398,10 @@ public static class RelationshipCategories
 /// <para>
 /// **A relationship with no verse may exist, and only for a witness that gave none.** BibleData
 /// states 40 of its 5,448 rows without a reference and there is nothing to be done about that but
-/// say so; inventing a citation for them would be RUL-0024 in the one table where a reader is most
-/// likely to follow one. What this corpus concludes for itself always names the verse it read, and
-/// that is a database constraint rather than a habit: every method but
-/// <see cref="LinkMethod.StatedBySource"/> carries an address.
+/// say so; inventing a citation for them would be a guess wearing the clothes of a source, in the
+/// one table where a reader is most likely to follow one. What this corpus concludes for itself
+/// always names the verse it read, and that is a database constraint rather than a habit: every
+/// method but <see cref="LinkMethod.StatedBySource"/> carries an address.
 /// </para>
 /// </remarks>
 [Index(nameof(FromEntityId))]
@@ -605,9 +604,9 @@ public class Event
     /// </para>
     ///
     /// <para>
-    /// **It breaks ties on <see cref="YearFromCreation"/> and never moves the axis** (RUL-0107).
-    /// The numbers are one source's own and mean nothing beside another's, so they order events
-    /// within one year and are not a second axis, an offset, or a fraction of a year.
+    /// **It breaks ties on <see cref="YearFromCreation"/> and never moves the axis.** The numbers
+    /// are one source's own and mean nothing beside another's, so they order events within one year
+    /// and are not a second axis, an offset, or a fraction of a year.
     /// </para>
     /// </summary>
     public int? SequenceInYear { get; set; }

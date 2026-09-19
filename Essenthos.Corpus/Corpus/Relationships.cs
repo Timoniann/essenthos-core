@@ -60,9 +60,9 @@ internal static class Relationships
 
         // The counterpart's name in the case the reader's language puts it in. Without it the
         // section is English on a Ukrainian page, because the phrase and the case are one decision
-        // and a stemmer guessing the genitive of a Hebrew proper name is wrong often and silently
-        // (PRB-0451). A language with no form for a name is a gap the client fills with the English
-        // one, which is the same fallback the descriptor line already has.
+        // and a stemmer guessing the genitive of a Hebrew proper name is wrong often and silently.
+        // A language with no form for a name is a gap the client fills with the English one, which
+        // is the same fallback the descriptor line already has.
         var counterparts = rows
             .Select(row => row.Inward ? row.From : row.To)
             .Distinct()

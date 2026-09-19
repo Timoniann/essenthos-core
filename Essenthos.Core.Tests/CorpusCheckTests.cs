@@ -334,7 +334,7 @@ public sealed class CorpusCheckTests : IDisposable
     /// <summary>
     /// The Hebrew texts are deliberately not counted. They order their points and accents
     /// differently from canonical order as well, but there the column holds the witness's own text
-    /// and whether it may be rewritten is a decision nobody has taken — PRB-0386. A check that
+    /// and whether it may be rewritten is a decision nobody has taken. A check that
     /// reported an open question as a broken corpus would be worse than no check.
     /// </summary>
     [Fact]
@@ -372,7 +372,7 @@ public sealed class CorpusCheckTests : IDisposable
 
         // Every link carries the claim of whatever asserted it. A link with none is invisible to
         // the measures that read `link_claim`, and a fixture without one would test a shape no
-        // loader produces — which is exactly how PRB-0198 stayed hidden for a day.
+        // loader produces — which is exactly how a claimless link stayed hidden for a day.
         _db.LinkClaims.Add(new LinkClaim
         {
             LinkId = link.Id,
@@ -473,7 +473,7 @@ public sealed class CorpusCheckTests : IDisposable
     /// is not a guess either. Reported as one of the other two it says something false in one
     /// direction or the other: the King James against Nestle scored 0.0000 testimony on 129,626
     /// links made this way, which put the corpus's headline claim in the column reserved for a model
-    /// that has never seen a Strong number (PRB-0399).
+    /// that has never seen a Strong number.
     /// </summary>
     [Fact]
     public void APublishersTagIsNeitherTestimonyNorInference()

@@ -10,7 +10,8 @@ namespace Essenthos.Core.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // One repair, for the links written between `LinkClaims` and PRB-0198 being found.
+            // One repair, for the links written between `LinkClaims` arriving and the claimless
+            // ones being found.
             //
             // The first migration backfilled every link that existed when it ran, and nothing was
             // taught to keep it up — so the Berean's 403,343 links, every aligner run since and

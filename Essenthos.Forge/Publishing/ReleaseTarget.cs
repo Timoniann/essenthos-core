@@ -6,7 +6,7 @@ namespace Essenthos.Core.Publishing;
 ///
 /// Read from <c>Publish:Targets:&lt;name&gt;</c>. Everything here is an address rather than a
 /// secret, and is tracked; the one secret, the password the gate connects with, is read from user
-/// secrets or the environment like every other (RUL-0001).
+/// secrets or the environment like every other.
 /// </summary>
 /// <param name="Name">What <c>--to</c> takes: <c>dev</c>, <c>prod</c>, <c>rehearsal</c>.</param>
 /// <param name="Local">

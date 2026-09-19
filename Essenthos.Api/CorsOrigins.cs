@@ -16,7 +16,7 @@ internal static class CorsOrigins
     /// The rest are for previewing a branch beside the running client, which several agents do at a
     /// time — and a preview that cannot read the corpus is a branch nobody looks at before merging
     /// it. That is not hypothetical: the Go To work shipped with its dropdown never once opened in a
-    /// browser, because the only origin allowed was the one it was not served from (PRB-0407).
+    /// browser, because the only origin allowed was the one it was not served from.
     ///
     /// A range rather than every localhost origin, because a deployment that forgets to configure
     /// this should fall back to something bounded rather than to a policy.

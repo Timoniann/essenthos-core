@@ -26,15 +26,15 @@ measurement rather than an echo -- which is the only reason `score` can be read 
 
 **A verse in an entity's list is not a verse that names it.** `entity_verse` claims *this entity is
 mentioned here*, which is looser: Zimri's sixty verses print his name twelve times and the rest
-narrate a coup he is a byword in (PRB-0458). So every occurrence is stamped `namesTheName` -- the
-King James prints a spelling of the label, or a word of some text in that verse is annotated to an
-entity whose own name is the label -- and no bearer may rest on an unnamed verse alone. 10,113 of
-the 12,908 name their name; the other 2,795 are context and nothing more.
+narrate a coup he is a byword in. So every occurrence is stamped `namesTheName` -- the King James
+prints a spelling of the label, or a word of some text in that verse is annotated to an entity whose
+own name is the label -- and no bearer may rest on an unnamed verse alone. 10,113 of the 12,908 name
+their name; the other 2,795 are context and nothing more.
 
 **The occurrence budget takes the named verses first, and every book of them.** The pilot capped at
 the head of the list and lost Matthew's Jacob, which under a maximal register is a person rather
-than a nuance (PRB-0459). The budget now sorts named before unnamed, keeps the first and last named
-occurrence of every book whole, and samples what is left.
+than a nuance. The budget now sorts named before unnamed, keeps the first and last named occurrence
+of every book whole, and samples what is left.
 
 **The model never touches the database.** It is given a payload and returns JSON. Every answer is
 written to a file with the model, the effort level, the prompt version and the date, because it is a
@@ -101,10 +101,10 @@ FIRST_GREEK_BOOK = 40
 # The verse budget for one group, and how many of a book's verses are held back from the sampling.
 #
 # The pilot took the first 400 addresses in canonical order, so Jacob's budget ended in Genesis and
-# Matthew's Jacob never reached the model (PRB-0459). Under a maximal register that does not lose a
-# nuance, it loses a person. The budget is now spent on the verses that print the name first, keeps
-# the first and last of those in every book whole, and only then fills with the rest -- so a bearer
-# who appears once, late, in one book cannot fall outside it.
+# Matthew's Jacob never reached the model. Under a maximal register that does not lose a nuance, it
+# loses a person. The budget is now spent on the verses that print the name first, keeps the first
+# and last of those in every book whole, and only then fills with the rest -- so a bearer who
+# appears once, late, in one book cannot fall outside it.
 OCCURRENCES_SHOWN = 800
 BOOK_ANCHORS = 2
 
@@ -951,8 +951,8 @@ def check(args):
 # `verse` is a split some verse of this corpus makes: the King James prints the name and the reading
 # assigns that verse to this man and not to his namesake. `lexicon` is a split nothing we hold makes
 # -- the enumeration separates two men and no verse we have distinguishes them. Both are records
-# under the maximal grain; only one of them may cite a verse (RUL-0024), and a page has to be able
-# to say which it is looking at.
+# under the maximal grain; only one of them may cite a verse, and a page has to be able to say which
+# it is looking at.
 BY_A_VERSE = 'verse'
 BY_THE_LEXICON = 'lexicon'
 

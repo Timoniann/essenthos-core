@@ -9,8 +9,9 @@ namespace Essenthos.Core.Loading;
 ///
 /// A modern English translation, in the public domain since 30 April 2023 — its own licensing page:
 /// *"The Berean Bible and Majority Bible texts are officially placed into the public domain… Licensing
-/// is not required for any use."* Attributed anyway, per RUL-0181: the obligation is the smaller half
-/// of the reason, and the larger half is that a reader has to be able to tell what is ours.
+/// is not required for any use."* Attributed anyway, as every source here is whatever its licence
+/// says: the obligation is the smaller half of the reason, and the larger half is that a reader has
+/// to be able to tell what is ours.
 ///
 /// <para>
 /// **It is here for its tables, not for itself.** Every stated word-level correspondence this corpus
@@ -137,7 +138,7 @@ internal static class BereanTextSource
         // Refused rather than dropped. This skipped every reference it could not resolve and said
         // nothing, and the Berean names its nineteenth book "Psalm" where the table knew only
         // "Psalms" — so 2,461 verses, a whole book, were quietly absent from a text that reported
-        // itself as covering 1 to 66. A span hid it (PRB-0188); silence made it.
+        // itself as covering 1 to 66. A span hid it; silence made it.
         if (unresolved.Count > 0)
         {
             throw new InvalidOperationException(

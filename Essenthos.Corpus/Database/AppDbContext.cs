@@ -198,8 +198,8 @@ public class AppDbContext : DbContext
             // A relationship this corpus concludes for itself names the verse it read; one carried
             // in from a witness names whatever the witness gave, which for 40 of BibleData's rows
             // is nothing. Writing an address for those would be a citation a reader cannot follow
-            // dressed as one they can, which is the failure RUL-0024 is about, so the asymmetry is
-            // kept and only our own half of it is enforced.
+            // dressed as one they can, so the asymmetry is kept and only our own half of it is
+            // enforced.
             entity.ToTable(
                 "entity_relationship",
                 t =>
@@ -446,9 +446,9 @@ public class AppDbContext : DbContext
                 .HasForeignKey(r => r.VerseId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Exactly one primary placement per verse. The other invariant DOC-0007 names — that no
-            // two verses of one text claim the same primary placement — spans a join and belongs to
-            // the verification pass.
+            // Exactly one primary placement per verse. The other invariant — that no two verses of
+            // one text claim the same primary placement — spans a join and belongs to the
+            // verification pass.
             entity.HasIndex(r => r.VerseId)
                 .IsUnique()
                 .HasFilter("\"is_primary\"")
@@ -709,7 +709,7 @@ public class AppDbContext : DbContext
     ///
     /// Derived from the entity type rather than listed. The list was written by hand, so a new
     /// entity opted out of the convention by nobody remembering it — two tables were created
-    /// plural before anyone noticed (PRB-0083). A convention cannot be forgotten.
+    /// plural before anyone noticed. A convention cannot be forgotten.
     /// </summary>
     private static void NameTablesInTheSingular(ModelBuilder modelBuilder)
     {

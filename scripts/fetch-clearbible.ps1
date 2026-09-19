@@ -6,13 +6,13 @@
     Alignments between Hebrew and Greek source texts and translations, made by people rather than by
     a model. The English set aligns the Berean Standard Bible — a text this corpus already holds with
     its publisher's own tables — so the two can be compared, which is the only calibration the New
-    Testament has. FTR-0186.
+    Testament has.
 
     Licence: CC BY 4.0 per alignment set, stated in each set's TOML and nowhere else — the repository
-    carries no licence file at all. LICENCE.md beside the data quotes them. RUL-0105, RUL-0181.
+    carries no licence file at all. LICENCE.md beside the data quotes them.
 
     The Russian set is in this download and must not be loaded: its records do not correspond to the
-    token file shipped beside them. PRB-0185.
+    token file shipped beside them.
 
 .EXAMPLE
     ./scripts/fetch-clearbible.ps1

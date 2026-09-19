@@ -292,7 +292,7 @@ def main():
     asker.add_argument('--model', default='sonnet')
     asker.add_argument('--workers', type=int, default=4)
     asker.add_argument('--effort', default='medium',
-                       help='low was measured noisy on reading work (PRB-0437); medium is the default here')
+                       help='low was measured noisy on reading work; medium is the default here')
     asker.add_argument('--again', action='store_true')
     asker.set_defaults(run=ask)
 

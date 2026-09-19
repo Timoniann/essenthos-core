@@ -83,7 +83,7 @@ public sealed class StrongNameEntryTests
     /// <summary>
     /// Two kinds in the part of speech, no heading over the clause, and therefore no answer.
     /// <em>Anamim</em> would be reached by guessing and Rekem would be reached by guessing; null is
-    /// what the entry actually says (RUL-0024).
+    /// what the entry actually says.
     /// </summary>
     [Fact]
     public void TwoKindsAndNoHeadingLeavesTheClauseUndecided() =>

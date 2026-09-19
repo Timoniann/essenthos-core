@@ -38,7 +38,7 @@ internal sealed record PersonReachRecord(int EntityId, string? Slug, string? Nam
 /// corpus prints the name and the reading assigns it here, <see cref="PersonRegisterFiles.ByTheLexicon"/>
 /// where nothing we hold distinguishes this man from his namesake and the record rests on the
 /// enumeration alone. Null on a refusal. It is the field a page needs in order to say which of the
-/// two it is showing, which is the whole reason the maximal grain is affordable at all (RUL-0024).
+/// two it is showing, which is the whole reason the maximal grain is affordable at all.
 /// </param>
 /// <param name="Kept">
 /// Whether the bearer becomes a record. False lines are carried on purpose: what a register is asked
@@ -51,8 +51,7 @@ internal sealed record PersonReachRecord(int EntityId, string? Slug, string? Nam
 /// </param>
 /// <param name="OtherReferences">
 /// Verses the corpus attributes to somebody of this name that do not print it — a coup narrated
-/// around a byword, a genealogy under a second spelling. They are attached but never decisive
-/// (PRB-0458).
+/// around a byword, a genealogy under a second spelling. They are attached but never decisive.
 /// </param>
 internal sealed record PersonRegisterRecord(
     string Group,

@@ -14,8 +14,7 @@ internal static class BookReferences
 
     /// <summary>
     /// The books the default canon holds. Not the number of books that exist: the table runs past
-    /// this, and which of them a reader sees is a canon's question rather than a constant's
-    /// (DOC-0090).
+    /// this, and which of them a reader sees is a canon's question rather than a constant's.
     /// </summary>
     public const int CanonBookCount = 66;
 

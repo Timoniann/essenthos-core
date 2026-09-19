@@ -978,10 +978,10 @@ def score(args):
 
 PUBLISHED = 'Resources/Essenthos/lexicon'
 
-# Written beside the output every time, rather than by hand once. RUL-0181 says a source is credited
-# whatever its licence permits, and RUL-0105 says the statement lives beside the bytes -- and this
-# file is the awkward case both rules are really about, because the work being credited is partly
-# ours. A reader has to be able to tell which half is Strong's and which half is a machine's, and
+# Written beside the output every time, rather than by hand once. A source is credited whatever its
+# licence permits, and the statement of its terms lives beside the bytes -- and this file is the
+# awkward case both rules are really about, because the work being credited is partly ours. A
+# reader has to be able to tell which half is Strong's and which half is a machine's, and
 # the file that says so cannot be the one somebody forgets to write.
 ATTRIBUTION = """\
 # Strong's dictionary in {language_name} -- a machine translation, and whose is which

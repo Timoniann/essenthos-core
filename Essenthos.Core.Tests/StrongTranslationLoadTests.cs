@@ -115,7 +115,7 @@ public sealed class StrongTranslationLoadTests : IDisposable
     /// <summary>
     /// The guard is per number and per language, so a second language loads beside the first and a
     /// row already there is left exactly as it is. Guarding on whether the table holds anything is
-    /// what left another table empty for a whole load (PRB-0343).
+    /// what left another table empty for a whole load.
     /// </summary>
     [Fact]
     public async Task ASecondLanguageLoadsBesideTheFirstAndTheFirstIsLeftAlone()

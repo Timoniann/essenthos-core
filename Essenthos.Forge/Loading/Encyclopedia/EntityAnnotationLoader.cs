@@ -591,7 +591,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// resolution itself changes: asking it per kind newly resolves 597 occurrences of Egypt onto a
     /// record the loader had already spoken for by another number, so a warm corpus would take 587
     /// of the 1,400 and a cold load all of them, and the two states would disagree about what the
-    /// corpus says. Per pair they agree, which is the property PRB-0468 was about.
+    /// corpus says. Per pair they agree.
     /// </para>
     ///
     /// <para>
@@ -830,7 +830,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     ///
     /// An annotation is written when the resolution needs nobody, and what makes that true is the
     /// encyclopedia at the moment it is asked. The encyclopedia grows: the peoples made H3778 two
-    /// records' (PRB-0340) and the place register made H3405 two towns'. Where what is added is the
+    /// records' and the place register made H3405 two towns'. Where what is added is the
     /// same place under another name the row now says so and nothing changes, but where it is a
     /// second Jericho four kilometres from the first, the words already annotated go on asserting a
     /// certainty nothing supports — and a cold load of the same corpus writes nothing for them, so
@@ -864,7 +864,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     ///
     /// <para>
     /// One statement, inside the pass's own transaction. <c>ExecuteDelete</c> commits on its own
-    /// and would leave the corpus half-withdrawn if anything after it failed (MST-0184).
+    /// and would leave the corpus half-withdrawn if anything after it failed.
     /// </para>
     /// </summary>
     private static readonly string Withdraw =

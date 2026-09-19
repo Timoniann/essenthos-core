@@ -37,8 +37,8 @@ internal static class Descriptors
 {
     /// <summary>
     /// The confidence at or above which a clause is shown plainly. Below it the clause is kept and
-    /// marked rather than dropped, which is DOC-0191's rule: a description that quietly loses its
-    /// weakest clause reads as more certain than the corpus is.
+    /// marked rather than dropped, which is the descriptor contract's rule: a description that
+    /// quietly loses its weakest clause reads as more certain than the corpus is.
     /// </summary>
     private const double Plain = 0.70;
 
@@ -63,7 +63,7 @@ internal static class Descriptors
 
         // Everything the target contributes is taken along this join rather than looked up per
         // clause: a subquery in a projection is evaluated once per joined row, which is what took
-        // /v1/corpora from a millisecond to 46 seconds (PRB-0357).
+        // /v1/corpora from a millisecond to 46 seconds.
         var clauses = await db.EntityDescriptors
             .Where(d => wanted.Contains(d.Entity!.Slug))
             .OrderBy(d => d.EntityId).ThenBy(d => d.Ordinal)

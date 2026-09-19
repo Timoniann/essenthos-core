@@ -310,7 +310,7 @@ public sealed class RelationshipMergeTests : IDisposable
 
     /// <summary>
     /// Every response the page returns has to be registered in the source-generated context, or the
-    /// first request fails at runtime rather than the build failing here (RUL-0003).
+    /// first request fails at runtime rather than the build failing here.
     /// </summary>
     [Theory]
     [InlineData(typeof(EntityRelationshipWitnessResponse))]
@@ -346,7 +346,7 @@ public sealed class RelationshipMergeTests : IDisposable
     /// The counterpart's name in the case the reader's language wants, without which the section is
     /// English on a Ukrainian page. Nothing computes the form: a language the corpus has not
     /// declined a name into gets nothing here and the client falls back to the English name, which
-    /// is the same fallback the descriptor line already has (PRB-0451).
+    /// is the same fallback the descriptor line already has.
     /// </summary>
     [Fact]
     public async Task ARowCarriesTheCounterpartsNameInTheCaseTheLanguageAsksFor()

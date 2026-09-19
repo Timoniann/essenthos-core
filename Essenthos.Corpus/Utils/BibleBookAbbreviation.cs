@@ -88,7 +88,7 @@ public class BibleBookAbbreviation
         // The rest of what the Greek canons carry, and what Brenton prints. Numbered past the
         // Western deuterocanon rather than interleaved with it, because an ordinal here is an
         // identity — it is in every saved URL and on every book row in the database — and a canon
-        // decides order separately (DOC-0090).
+        // decides order separately.
         //
         // Greek Esther and Greek Daniel get no ordinal of their own: they are Esther and Daniel,
         // longer. A witness holds its own book at the same canonical ordinal and its own

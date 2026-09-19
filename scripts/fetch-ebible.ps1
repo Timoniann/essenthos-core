@@ -200,7 +200,7 @@ try {
         # of the copyright page, kept rather than the fetched one.
         if (-not (Test-Path (Join-Path $unpacked 'copr.htm'))) {
             throw 'The archive carries no copr.htm, so the licence would not sit beside the data. ' +
-                  'RUL-0105 is what this check is; nothing was replaced.'
+                  'A copy of the terms has to travel with the bytes; nothing was replaced.'
         }
 
         $root = Join-Path (Resolve-Path $ResourcesPath) $text.Folder

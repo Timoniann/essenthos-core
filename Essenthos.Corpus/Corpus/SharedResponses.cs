@@ -4,17 +4,17 @@ namespace Essenthos.Core.Corpus;
 /// The records more than one endpoint group answers with. Everything else lives beside the
 /// endpoint that returns it, and every one of them is registered in AppJsonSerializerContext.
 ///
-/// These are the shapes DOC-0002 defined for two corpora. They are answered from the witness model
-/// unchanged, so the client can move onto the new vocabulary a screen at a time rather than in one
-/// jump — which is what DOC-0008 asks for. Where the old shape cannot say something the new model
-/// knows, the field is named here and the mapping is explained where it is made.
+/// These are the shapes the v1 contract defined for two corpora. They are answered from the witness
+/// model unchanged, so the client can move onto the new vocabulary a screen at a time rather than in
+/// one jump. Where the old shape cannot say something the new model knows, the field is named here
+/// and the mapping is explained where it is made.
 /// </summary>
 internal record BookRefResponse(int Ordinal, string Name, string Slug);
 
 /// <param name="Books">
 /// Every canonical book the text holds. <paramref name="FirstBook"/> and <paramref name="LastBook"/>
-/// are kept because DOC-0002 defined them and clients read them, but they cannot be believed on
-/// their own: the Septuagint's books are 1-39 and 67-81, so its span says it covers John.
+/// are kept because the v1 contract defined them and clients read them, but they cannot be believed
+/// on their own: the Septuagint's books are 1-39 and 67-81, so its span says it covers John.
 /// </param>
 internal record CoverageResponse(int FirstBook, int LastBook, IReadOnlyList<int> Books);
 

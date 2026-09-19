@@ -54,25 +54,25 @@ internal sealed record NameFormOutcome(
 /// A clause names a <em>target</em>, and the line puts that target's name into a case:
 /// <em>тесть Мойсея</em>, not <em>тесть Мойсей</em>. The descriptor pass produces forms for the
 /// subject of the claims it writes, so the two sets only coincide once every entity has been
-/// described — PRB-0392 measured 205 of 985 loaded claims with a Ukrainian form for the entity they
-/// point at, which is four lines in five reading <em>брат Moses</em>. This loads the other half:
-/// forms asked for on their own, for the entities somebody else's claim already names.
+/// described — measured on the first tranche loaded, 205 of 985 claims had a Ukrainian form for the
+/// entity they point at, which is four lines in five reading <em>брат Moses</em>. This loads the
+/// other half: forms asked for on their own, for the entities somebody else's claim already names.
 /// </para>
 ///
 /// <para>
 /// **A form that carries its own preposition has it taken off, and a stored one that carries one is
 /// replaced.** <c>DescriptorPhrasings</c> supplies the preposition itself, so <em>в Авані</em>
-/// reaches a reader as <em>похований у в Авані</em> (PRB-0435). <see cref="NameForms"/> is the rule
-/// and it is deliberately narrow. Everything else about a form is the model's word: nothing here
-/// invents an ending, and a language a pass left out stays missing, because the rendering falls back
-/// to the English name and a wrong ending is worse than an English one (DOC-0191).
+/// reaches a reader as <em>похований у в Авані</em>. <see cref="NameForms"/> is the rule and it is
+/// deliberately narrow. Everything else about a form is the model's word: nothing here invents an
+/// ending, and a language a pass left out stays missing, because the rendering falls back to the
+/// English name and a wrong ending is worse than an English one.
 /// </para>
 ///
 /// <para>
 /// **The guard is on this loader's own rows, and per entity.** Guarding on "does the table hold
 /// anything" is what left a cold database with no name resolutions at all when another loader
-/// started writing into the same table a step earlier (PRB-0343) — and this loader writes into a
-/// table <see cref="EntityDescriptorLoader"/> is already filling, so that is not hypothetical here.
+/// started writing into the same table a step earlier — and this loader writes into a table
+/// <see cref="EntityDescriptorLoader"/> is already filling, so that is not hypothetical here.
 /// Per entity rather than per table because the passes arrive in batches over days: a second batch
 /// must load beside the first, and an entity this loader has already declined is left as it is.
 /// </para>
@@ -195,7 +195,7 @@ internal sealed class EntityNameFormLoader(
                             continue;
                         }
 
-                        // The stored form is the one PRB-0435 describes: it carries a preposition
+                        // The stored form is the one this loader repairs: it carries a preposition
                         // the phrase supplies. A pass that has since been asked for the bare form
                         // supersedes it rather than being refused by it.
                         db.EntityNameForms.Remove(standing);

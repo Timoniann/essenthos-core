@@ -9,8 +9,8 @@ internal readonly record struct ClearBibleRecord(IReadOnlyList<string> Source, I
 /// <param name="Excluded">
 /// Whether the token is punctuation. The file numbers it like a word and marks it out of the
 /// alignment, so an index that counts it and an index that does not are both defensible — which is
-/// why PRB-0185's Russian set could not be salvaged, and why this reads the flag rather than
-/// guessing.
+/// why the Russian set, 12,550 of whose records name a punctuation mark as the Russian word, could
+/// not be salvaged, and why this reads the flag rather than guessing.
 /// </param>
 /// <param name="Strong">
 /// The Strong number a source edition's row states for the word, as the file writes it, or null in a

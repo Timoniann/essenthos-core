@@ -8,8 +8,8 @@ namespace Essenthos.Core.Tests;
 /// <summary>
 /// The Septuagint is the one text in the corpus with no lemma, no Strong number and no morphology,
 /// which is why its alignment to BHSA is a statistical model rather than a lookup. GLAUx is the
-/// only openly licensed lemmatisation of it that does not descend from CATSS — DOC-0161 — and these
-/// tests pin the two things that have to be true for it to be usable: that the format parses, and
+/// only openly licensed lemmatisation of it that does not descend from CATSS, and these tests pin
+/// the two things that have to be true for it to be usable: that the format parses, and
 /// that a lemma written the Attic way still finds its Koine counterpart in Nestle's lemma list.
 /// </summary>
 public class GlauxLexiconTests

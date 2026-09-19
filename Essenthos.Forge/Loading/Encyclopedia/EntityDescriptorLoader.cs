@@ -89,9 +89,9 @@ internal sealed record DescriptorOutcome(
 /// <para>
 /// **The guard is on this loader's own rows, and per entity.** Guarding on "does the table hold
 /// anything" is what left a cold database with no name resolutions at all when another loader
-/// started writing into the same table a step earlier (PRB-0343). Per entity rather than per table
-/// because the passes arrive in batches over days: a second batch must load beside the first, and
-/// an entity already described is left exactly as it is.
+/// started writing into the same table a step earlier. Per entity rather than per table because
+/// the passes arrive in batches over days: a second batch must load beside the first, and an
+/// entity already described is left exactly as it is.
 /// </para>
 /// </summary>
 internal sealed class EntityDescriptorLoader(
@@ -115,8 +115,8 @@ internal sealed class EntityDescriptorLoader(
             logger.LogInformation(
                 "No descriptor files at {Directory}, so no entity describes itself yet. They are "
                 + "what a generation pass writes and they stay out of the repository; point "
-                + "\"{Key}\" at a directory of {Pattern} files, in the shape DOC-0191 states, to "
-                + "load them",
+                + "\"{Key}\" at a directory of {Pattern} files, one newline-delimited JSON object "
+                + "per entity, to load them",
                 directory,
                 DescriptorFiles.ConfigurationKey,
                 DescriptorFiles.FilePattern);
@@ -139,7 +139,7 @@ internal sealed class EntityDescriptorLoader(
         // 2026-09-09, so the credit a reader sees is the same string on both.
         // The file set settles that by taking the file that sorts last, and the database has to
         // settle it the same way or the two disagree — the later file wins on disk and the reader
-        // keeps the first answer for ever (PRB-0449). Same source, and there is nothing to do: that
+        // keeps the first answer for ever. Same source, and there is nothing to do: that
         // is an ordinary restart over files already loaded.
         var superseded = records
             .Where(record => entities.TryGetValue(record.Entity, out var id)
@@ -223,7 +223,7 @@ internal sealed class EntityDescriptorLoader(
                 // once, and a pass reading *Bethlehem, a city in Judah* means the territory while
                 // the name it reaches for is most often the patriarch's. A reader who follows that
                 // link arrives at Jacob's son, which is a false statement made by a link rather
-                // than by a sentence (PRB-0480). The right record usually exists, and choosing it
+                // than by a sentence. The right record usually exists, and choosing it
                 // here would be this loader naming a target the pass did not.
                 if (PlacingRelations.All.Contains(claim.Relation)
                     && kinds.GetValueOrDefault(targetId) != EntityKind.Place)
@@ -274,7 +274,7 @@ internal sealed class EntityDescriptorLoader(
                 // widened vocabulary produced -- and every wrong one sampled was a list: *Shallum,
                 // Amariah, and Joseph*, *Hodijah, Hashum, Bezai*, *Daniel, Hananiah, Mishael, and
                 // Azariah*. Standing beside somebody in a register is not keeping company with
-                // them, and a reader cannot check a claim the verse does not make (PRB-0453).
+                // them, and a reader cannot check a claim the verse does not make.
                 //
                 // A necessary condition and not a sufficient one: it removes the list-shaped
                 // reading, which is the whole of the measured failure, and leaves the judgement of
@@ -352,7 +352,9 @@ internal sealed class EntityDescriptorLoader(
             logger.LogWarning(
                 "{Count} descriptor clauses were refused and are not in the corpus: {Refused}. "
                 + "Each is a claim the generation pass made that this corpus cannot render or "
-                + "cannot let a reader check; DOC-0191 states what a clause has to be",
+                + "cannot let a reader check: a clause needs a relation from the closed "
+                + "vocabulary, a target this corpus holds, and a reference among the entity's own "
+                + "verses",
                 refused.Total,
                 refused);
         }
@@ -388,7 +390,7 @@ internal sealed class EntityDescriptorLoader(
     /// <summary>
     /// The name forms this record carries, as rows. A language with no form for an entity is a gap
     /// the rendering fills with the English name; an empty form is not a gap but a mistake, and is
-    /// not stored, and a preposition the phrase supplies for itself is taken off (PRB-0435).
+    /// not stored, and a preposition the phrase supplies for itself is taken off.
     /// </summary>
     private static readonly IReadOnlyDictionary<string, Dictionary<string, string>> NoNames =
         new Dictionary<string, Dictionary<string, string>>(StringComparer.Ordinal);
@@ -594,7 +596,7 @@ internal sealed class EntityDescriptorLoader(
         {
             // Said out loud, because this silence has two causes that look identical from outside:
             // a corpus without the text, and a rule looking for it under the wrong name. The second
-            // one shipped once and refused nothing for a day before anyone noticed (MST-0188).
+            // one shipped once and refused nothing for a day before anyone noticed.
             logger.LogWarning(
                 "{Count} companion-of clauses could not be checked against their verses: no words of "
                 + "the text {Text} were found for any of them. Either that text is not loaded, or the "
@@ -615,7 +617,7 @@ internal sealed class EntityDescriptorLoader(
     /// <summary>
     /// The text the generation pass was shown, and so the one a clause was read from. The loader's
     /// own constant and not a spelling of it: this was the string "kjv" until 2026-09-10, the corpus
-    /// writes "KJV", and the rule it serves found no text and refused nothing for a day (MST-0188).
+    /// writes "KJV", and the rule it serves found no text and refused nothing for a day.
     /// </summary>
     private const string Shown = Bible4uTextSource.KingJames;
 

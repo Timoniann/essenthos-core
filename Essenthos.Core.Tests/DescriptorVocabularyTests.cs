@@ -58,10 +58,11 @@ public sealed class DescriptorVocabularyTests
     /// The four clauses a place page is made of, in the one language that inflects them: each asks
     /// for the locative, and none of them may quietly go back to asking for the genitive.
     ///
-    /// It is asserted rather than left to the table because the genitive is what DOC-0191 asks a
-    /// generation pass for, so a phrasing that asks for it renders today and a phrasing that asks
-    /// for the locative renders the English name until TSK-0364's pass lands. Making the line look
-    /// finished is exactly the wrong reason to change one back, and it is a one-word edit.
+    /// It is asserted rather than left to the table because the genitive is the form the first
+    /// generation pass was asked for, so a phrasing that asks for it renders today and a phrasing
+    /// that asks for the locative renders the English name until a second pass fills the locatives
+    /// in. Making the line look finished is exactly the wrong reason to change one back, and it is
+    /// a one-word edit.
     /// </summary>
     [Theory]
     [InlineData("ukr")]
@@ -118,10 +119,10 @@ public sealed class DescriptorVocabularyTests
     }
 
     /// <summary>
-    /// No language asks for a case its own generation pass was never asked for. DOC-0191 says what
-    /// each pass produces — three forms for Ukrainian, two for German, the nominative alone for
-    /// English and Spanish — and a phrasing that reaches past them renders the English name for
-    /// every entity in the corpus rather than for the few missing a form.
+    /// No language asks for a case its own generation pass was never asked for. A pass produces
+    /// three forms for Ukrainian, two for German, the nominative alone for English and Spanish,
+    /// and a phrasing that reaches past them renders the English name for every entity in the
+    /// corpus rather than for the few missing a form.
     /// </summary>
     [Theory]
     [InlineData("eng", GrammaticalCases.Nominative)]
@@ -147,9 +148,9 @@ public sealed class DescriptorVocabularyTests
     }
 
     /// <summary>
-    /// The four the client is written in (FTR-0280), and Russian which it is not. Asserted because
-    /// the two halves drifted apart once already: the renderer spoke Russian and not German while
-    /// 1,159 German forms sat in the table with nothing to render them (PRB-0436).
+    /// The four the client is written in, and Russian which it is not. Asserted because the two
+    /// halves drifted apart once already: the renderer spoke Russian and not German while 1,159
+    /// German forms sat in the table with nothing to render them.
     /// </summary>
     [Fact]
     public void TheEncyclopediaSpeaksTheLanguagesTheClientIsWrittenIn() =>

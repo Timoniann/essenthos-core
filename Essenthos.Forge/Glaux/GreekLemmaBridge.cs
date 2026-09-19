@@ -15,7 +15,8 @@ namespace Essenthos.Core.Glaux;
 /// 6,849 Septuagint tokens — 1.19% of Brenton — that the direct join misses. The largest single
 /// case is <em>γίγνομαι</em> at 2,053. Rules that recovered nothing are not here: this is a bridge
 /// between two known conventions, not a general theory of Greek spelling, and a rule that fires on
-/// a word it was not meant for merges two lexemes into one, which is the failure RUL-0024 is about.
+/// a word it was not meant for merges two lexemes into one, which is a guess stored where the
+/// corpus says a source spoke.
 ///
 /// Candidates are offered in order and the caller takes the first that its own lemma list knows,
 /// so the unchanged lemma always wins over any rewriting of it.

@@ -14,7 +14,7 @@ namespace Essenthos.Core.Accounts;
 /// two tables and a lookup; the authorisation-code exchange, the state and correlation checks and
 /// the cookie protection are framework code somebody else maintains.
 ///
-/// There are no passwords anywhere (FTR-0580). A provider is switched on by configuring its client:
+/// There are no passwords anywhere. A provider is switched on by configuring its client:
 /// <c>Authentication:Google:ClientId</c> and <c>ClientSecret</c>, the same for GitHub. One that is not
 /// configured is not offered, so the API runs — and reading works — with neither.
 /// </summary>
@@ -24,8 +24,8 @@ internal static class AccountsSetup
     public const string ExternalScheme = "external";
 
     /// <summary>
-    /// Everything read here, before the application is built and its configuration disposed
-    /// (PRB-0414). Returns the providers that are configured, in the order a sign-in page offers them.
+    /// Everything read here, before the application is built and its configuration disposed.
+    /// Returns the providers that are configured, in the order a sign-in page offers them.
     /// </summary>
     public static IReadOnlyList<string> AddAccounts(this IServiceCollection services, IConfiguration configuration)
     {

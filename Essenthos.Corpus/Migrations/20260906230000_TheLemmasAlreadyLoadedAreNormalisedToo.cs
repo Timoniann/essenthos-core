@@ -15,8 +15,9 @@ namespace Essenthos.Core.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // PRB-0384 fixed the loader; PRB-0393 is what the fix did not reach. GlauxLemmaLoader
-            // returns early for a text whose lemmas are already written (RUL-0005), so a database
+            // The loader now writes Greek lemmas in canonical form; this is what that fix did not
+            // reach. GlauxLemmaLoader returns early for a text whose lemmas are already written --
+            // every loader is idempotent and skips the work it has already done -- so a database
             // loaded before that commit keeps the decomposed strings for ever and the twelfth
             // integrity check reports 560,219 of them -- every one Brenton's, and every one
             // unjoinable to the Nestle lemma it is spelled identically to on screen.
@@ -26,7 +27,7 @@ namespace Essenthos.Core.Migrations
             //
             // Greek only, and deliberately: the Hebrew texts order their points differently from
             // canonical order as well, and there the column holds the witness's own text. Whether
-            // that may be rewritten is PRB-0386 and is the owner's decision, not a migration's.
+            // that may be rewritten is the owner's decision, and not one a migration makes.
             migrationBuilder.Sql(
                 """
                 UPDATE word SET lemma = normalize(lemma, NFC)

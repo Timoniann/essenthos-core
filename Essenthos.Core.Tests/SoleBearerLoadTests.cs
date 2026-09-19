@@ -174,7 +174,7 @@ public sealed class SoleBearerLoadTests : IDisposable
     }
 
     /// <summary>
-    /// A record this corpus wrote for itself carries no name row of its own (PRB-0470), so an index
+    /// A record this corpus wrote for itself carries no name row of its own, so an index
     /// built out of <c>entity_name</c> alone would call a name unique that one of them already
     /// bears — and this pass would then say a page is the only Sheshan there is.
     /// </summary>

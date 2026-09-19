@@ -69,7 +69,7 @@ public class VerseAddressTests
 
     /// <summary>
     /// Every response record an endpoint returns is registered in the serializer context, and
-    /// forgetting one fails at runtime on the first request rather than at compile time (RUL-0003).
+    /// forgetting one fails at runtime on the first request rather than at compile time.
     /// </summary>
     [Theory]
     [InlineData(typeof(VerseTextResponse))]

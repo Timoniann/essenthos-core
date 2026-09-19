@@ -41,8 +41,8 @@ jobs:
 
     # The suite is not database-free. 74 of its tests build their own fixtures in Postgres and
     # assert what Postgres accepts, which no in-memory provider would answer honestly. A service
-    # container is per-run, so it also settles PRB-0154: nothing else is dropping this database
-    # mid-fixture, which is what happens when two runs share the one on the developer's machine.
+    # container is per-run, so nothing else is dropping this database mid-fixture, which is what
+    # happens when two runs share the one on the developer's machine.
     services:
       postgres:
         # The same Postgres the corpus is built, dumped and served with (compose.yaml, deploy/).

@@ -300,7 +300,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     /// tagging is not a word-level claim — it puts 23 tags on an average Old Testament verse drawn
     /// from a pool of 8.4 distinct numbers, so each Hebrew word's number lands on about three
     /// English tokens, and 59% of the tags stand on English function words — and persisting it
-    /// would be an inference stored where a reader takes a sourced claim to be. RUL-0024.
+    /// would be an inference stored where a reader takes a sourced claim to be.
     ///
     /// It is a test because it is a decision and not a fact about the file: a later pass "fixing"
     /// the missing numbers by reading them off the same files would undo it silently.
@@ -339,8 +339,8 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
 
     /// <summary>
     /// And that the other five mark nothing at all, which is worth checking rather than assuming:
-    /// annotation appearing on a text whose edition supplied none is the failure RUL-0024 exists
-    /// for, and this is what would catch it.
+    /// annotation appearing on a text whose edition supplied none is an inference wearing that
+    /// edition's authority, and this is what would catch it.
     /// </summary>
     [Theory]
     [InlineData(EnglishTextSource.Tyndale)]

@@ -72,7 +72,7 @@ internal sealed record PersonRegisterOutcome(
 /// assigns him — and only the verses that print his name. A verse a dataset attributes to somebody
 /// of this name without naming him is carried on the record as context and is never written as a
 /// reference, because a page whose citation does not contain the person is worse than a page with
-/// none (PRB-0458).
+/// none.
 /// </para>
 ///
 /// <para>
@@ -84,7 +84,7 @@ internal sealed record PersonRegisterOutcome(
 /// <para>
 /// <strong>A split the text does not make is still a split, and the row says so.</strong> Under this
 /// grain some persons stand on the lexicon's say-so and no verse of ours. That is a difference in
-/// what established the record and not licence to cite a verse nobody read (RUL-0024), so the claim
+/// what established the record and not licence to cite a verse nobody read, so the claim
 /// on such a record says which it is, in its own words and with its own confidence, and cites
 /// nothing.
 /// </para>
@@ -430,7 +430,7 @@ internal sealed class PersonRegisterLoader(
     /// <para>
     /// Only the references that print the name. A verse a dataset attributes to somebody of this
     /// name without naming him belongs to every namesake equally, and a page whose citation does not
-    /// contain the person is worse than a page with none (PRB-0458).
+    /// contain the person is worse than a page with none.
     /// </para>
     /// </summary>
     private static int Cite(Entity person, PersonRegisterRecord record)

@@ -84,7 +84,7 @@ internal sealed class DatasetLoader(
 
             // The Berean's own edition, because rebuilding it from the tables is right nine verses
             // in ten and a text that is right nine times in ten is not a text. The tables then say
-            // which of its words renders which Greek word. FTR-0182.
+            // which of its words renders which Greek word.
             await Load("the Berean Standard Bible", () => BereanTextSource.Read(
                 ResourcePaths.File(resources, "Berean", "bsb.txt"),
                 ResourcePaths.File(resources, "Berean", "bsb_tables.tsv")), stoppingToken);
@@ -538,7 +538,8 @@ internal sealed class DatasetLoader(
 
     /// <summary>
     /// The one text that arrived without lemmas. GLAUx is used as a dictionary and its own Greek is
-    /// never loaded; DOC-0161 is the licence reading and the reason that distinction matters.
+    /// never loaded, which is a licence distinction as much as a technical one: its lemmas are
+    /// CC BY-SA and are attributed as such, and none of its own text is republished here.
     /// </summary>
     private async Task LemmatiseTheSeptuagint(string resources, CancellationToken cancellationToken)
     {
@@ -704,8 +705,9 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The people, places and dated events the text names. DOC-0099 records why this dataset and
-    /// not the others, and BibleDataLoader records what had to be corrected in it.
+    /// The people, places and dated events the text names. BibleData is loaded and not the other
+    /// candidates because its chronology is the only one that is computed, cited and
+    /// self-consistent, and BibleDataLoader records what had to be corrected in it.
     ///
     /// **The computed chronology stops at Artaxerxes.** Its method is arithmetic over the
     /// genealogies and the reign lengths, and those stop where the Old Testament stops. Ussher

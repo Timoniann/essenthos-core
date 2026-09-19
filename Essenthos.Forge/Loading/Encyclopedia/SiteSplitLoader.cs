@@ -176,7 +176,7 @@ internal sealed class SiteSplitLoader(
     /// It is not certainty, and what is left open is what neither of them can see. The gazetteer's
     /// list is keyed to the verse, so it cannot say which word of a verse naming two of these places
     /// is which; the reading read the sentence and not the word. Beside that stands the gazetteer's
-    /// known habit of listing a verse the place is not actually named in (PRB-0458), and the
+    /// known habit of listing a verse the place is not actually named in, and the
     /// register's own dependence on records the place register minted, two of which can still turn
     /// out to be one place. Two accounts that never met, agreeing about the verse, leave nothing
     /// else open.
@@ -199,7 +199,7 @@ internal sealed class SiteSplitLoader(
     /// <summary>
     /// What established each standing, as a method and a number. Only the third is a reading, and
     /// the other two are inferences from a source's statement about a verse — the distinction
-    /// PRB-0340 settled for the gentilics and <see cref="EntityAnnotationLoader"/> keeps for the
+    /// already settled for the gentilics and <see cref="EntityAnnotationLoader"/> keeps for the
     /// resolutions. The source is not here because it names the witness, and the witness is a
     /// property of the occurrence rather than of the standing.
     /// </summary>

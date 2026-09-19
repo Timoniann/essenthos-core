@@ -14,7 +14,7 @@ namespace Essenthos.Core.Tests;
 /// which — and where the canonical frame disagrees, the source is the better witness.
 ///
 /// This exists because of the Reina-Valera. eBible mapped its two German texts into the English
-/// numbering and did not map the Spanish (PRB-0376), so in ten chapters the frame places a Spanish
+/// numbering and did not map the Spanish, so in ten chapters the frame places a Spanish
 /// verse one row from the Hebrew verse it renders. Clear Bible's hand-made alignment is keyed to the
 /// Spanish file's own numbering and joins the two correctly, and without this step the corpus holds
 /// that hand-made claim and its own verification reports it as a fault.

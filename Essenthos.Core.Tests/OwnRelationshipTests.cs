@@ -288,7 +288,7 @@ public sealed class OwnRelationshipTests : IDisposable
 
     /// <summary>
     /// Nothing of the witness's is deleted, rewritten or reordered. The corpus lost 14,515 rows to
-    /// a pass that believed it could rebuild them (PRB-0343), and BibleData's edge list is the
+    /// a pass that believed it could rebuild them, and BibleData's edge list is the
     /// answer key everything here is measured against.
     /// </summary>
     [Fact]
@@ -310,7 +310,7 @@ public sealed class OwnRelationshipTests : IDisposable
     /// <summary>
     /// The startup pipeline runs on every boot, and the descriptor passes arrive in batches over
     /// days: a second run must write nothing for an entity already related and must still reach one
-    /// that was described afterwards (RUL-0005).
+    /// that was described afterwards.
     /// </summary>
     [Fact]
     public async Task ASecondPassWritesNothingForAnEntityAlreadyRelated()
@@ -362,7 +362,7 @@ public sealed class OwnRelationshipTests : IDisposable
     /// And the other half of the same decision: a witness that gave no reference keeps its row.
     /// Forty of BibleData's 5,448 are like this and fourteen of those it calls explicit, which is a
     /// fact about that dataset — refusing them would delete it, and filling them in would be
-    /// writing a citation nobody can follow (RUL-0024).
+    /// writing a citation nobody can follow.
     /// </summary>
     [Fact]
     public async Task AWitnessThatGaveNoVerseKeepsItsRow()

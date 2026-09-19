@@ -41,8 +41,8 @@ internal sealed record PrintedEditionOutcome(
 /// carries <c>stated-by-source</c> and no confidence.
 ///
 /// The 52 groups where one side is empty are the interesting ones. They are written with words on
-/// one side and nothing on the other, which is what DOC-0007 built the link table to be able to
-/// say: an absence recorded rather than a hole left. Which edition lacks the word is the relation's
+/// one side and nothing on the other, which is what the link table was built to be able to say:
+/// an absence recorded rather than a hole left. Which edition lacks the word is the relation's
 /// to carry — <c>omits</c> where Stephanus does, <c>expands</c> where Scrivener does.
 /// </summary>
 internal sealed class PrintedEditionLinkLoader(AppDbContext db, ILogger<PrintedEditionLinkLoader> logger)
@@ -248,7 +248,7 @@ internal sealed class PrintedEditionLinkLoader(AppDbContext db, ILogger<PrintedE
 
         // The claim that says this loader is the one asserting these links. Written here rather
         // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus. PRB-0198.
+        // the measure spent a day reporting the migration instead of the corpus.
         await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);

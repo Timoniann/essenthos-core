@@ -284,7 +284,7 @@ internal static class EnumSpelling
 }
 
 /// <summary>
-/// Enums are stored as the words DOC-0007 uses, not as ordinals. Every measurement this project
+/// Enums are stored as the words the schema uses, not as ordinals. Every measurement this project
 /// rests on was taken by hand in psql, and <c>select relation, count(*) from link group by 1</c>
 /// answering <c>renders</c> rather than <c>2</c> is the difference between reading a result and
 /// decoding one.

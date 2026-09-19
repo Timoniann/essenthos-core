@@ -141,7 +141,6 @@ public sealed class TischendorfTests
     /// A lemma is an identifier, so two spellings of one is the same defect as a text answering to
     /// two slugs. This release is composed already and the check is here for the next one: the day
     /// a Greek lemma arrives decomposed, every join to it returns nothing and reports no error.
-    /// PRB-0384.
     /// </summary>
     [Fact]
     public void EveryLemmaIsComposed() =>
@@ -174,7 +173,8 @@ public sealed class TischendorfTests
     /// <summary>
     /// The homonym marker the analytical lexicon uses is not part of the lemma. Left on, 201 words
     /// carry a lemma spelt "δοῦλος (II)" that no other text in the corpus can ever equal, and the
-    /// join fails silently — which is the same failure PRB-0384 was, arriving by a different route.
+    /// join fails silently — the same failure as a lemma spelt with its accents decomposed,
+    /// arriving by a different route.
     /// </summary>
     [Fact]
     public void TheHomonymMarkerIsKeptOffTheLemma()

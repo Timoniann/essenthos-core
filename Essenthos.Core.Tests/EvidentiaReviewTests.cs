@@ -12,10 +12,10 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// The path from an EVIDENTIA proposal to the corpus. What these guard is RUL-0024 at the one
-/// place a rule's output could become a link: nothing gets there without a verdict, a verdict
-/// writes the claim it justifies and no stronger one, and the corpus's own links are settled
-/// against rather than overwritten.
+/// The path from an EVIDENTIA proposal to the corpus. What these guard is that nothing heuristic is
+/// stored as though a source had said it, at the one place a rule's output could become a link:
+/// nothing gets there without a verdict, a verdict writes the claim it justifies and no stronger
+/// one, and the corpus's own links are settled against rather than overwritten.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class EvidentiaReviewTests : IDisposable

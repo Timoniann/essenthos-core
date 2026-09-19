@@ -133,7 +133,6 @@ public class VerseWordsTests
     /// <summary>
     /// The King James file writes "Thus saith the Lord , Behold" wherever the small-caps divine
     /// name meets punctuation, and the reader used to store that space as part of the trailer.
-    /// PRB-0151.
     /// </summary>
     [Theory]
     [InlineData("Thus saith the Lord , Behold", "Lord, ")]

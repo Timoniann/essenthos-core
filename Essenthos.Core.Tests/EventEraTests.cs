@@ -152,9 +152,9 @@ public sealed class EventEraTests : IDisposable
     }
 
     /// <summary>
-    /// PRB-0156's other half, and the one the corpus cannot ask for itself: an event nobody put
-    /// anywhere inside its year is drawn after every event somebody did, rather than wherever the
-    /// database happens to sort a null.
+    /// The other half of ordering the events that share a year, and the one the corpus cannot ask
+    /// for itself: an event nobody put anywhere inside its year is drawn after every event somebody
+    /// did, rather than wherever the database happens to sort a null.
     ///
     /// Built here rather than read off the Annals because the busiest year in the corpus holds
     /// nothing but Annals and every Annal is sequenced, so the mixed year this is about does not

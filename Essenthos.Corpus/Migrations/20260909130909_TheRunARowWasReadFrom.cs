@@ -14,7 +14,7 @@ namespace Essenthos.Core.Migrations
             // is loaded. Nothing else on a row can tell one pass from another: the re-ask that
             // widened Lot's description ran as claude-sonnet-5 on 2026-09-09, and so did the batch
             // it corrects, so the credit a reader sees is the same string on both and the loader
-            // comparing them concluded it had already stored the answer (PRB-0449).
+            // comparing them concluded it had already stored the answer.
             //
             // Null on every row already here, and deliberately not backfilled. A blank answers for
             // no file, so the next load reads every described entity again from the files on disk

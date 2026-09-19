@@ -14,14 +14,16 @@ namespace Essenthos.Core.Loading;
 /// witness model can say and the previous one could not.
 ///
 /// It carries no annotation whatsoever: no morphology, no lemmas, no Strong numbers, no alignment
-/// to the Hebrew. That is the trade DOC-0085 records and the owner had already chosen — every
-/// annotated Septuagint in existence descends from CATSS and is NonCommercial or worse, and this
-/// one is public domain outright. What alignment there is to be had will be built here.
+/// to the Hebrew. That is the trade the owner had already chosen — every annotated Septuagint in
+/// existence descends from CATSS and is NonCommercial or worse, and this one is public domain
+/// outright. What alignment there is to be had will be built here.
 ///
-/// Sixteen of its fifty-two files had no ordinal until FTR-0091, which is why this could not be
-/// loaded before. Two of them are not extra books at all: Greek Esther and Greek Daniel are Esther
-/// and Daniel, longer, so they take those books' canonical ordinals and their own versification.
-/// One file is two books: Esdras B is Ezra and Nehemiah together, and is split on load.
+/// Sixteen of its fifty-two files had no ordinal until the canon stopped being sixty-six
+/// hard-coded books and became an ordered list a text can be asked about, which is why this could
+/// not be loaded before. Two of them are not extra books at all: Greek Esther and Greek Daniel are
+/// Esther and Daniel, longer, so they take those books' canonical ordinals and their own
+/// versification. One file is two books: Esdras B is Ezra and Nehemiah together, and is split on
+/// load.
 /// </summary>
 internal static class SeptuagintTextSource
 {

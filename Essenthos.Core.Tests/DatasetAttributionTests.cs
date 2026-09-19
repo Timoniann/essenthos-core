@@ -73,7 +73,8 @@ public sealed class DatasetAttributionTests
 
     /// <summary>
     /// A NonCommercial source restricts what may be published from it as surely as a share-alike
-    /// one does. RUL-0183 accepts the clause; accepting it is not the same as leaving it unsaid.
+    /// one does. This project is not commercial and accepts the clause; accepting it is not the
+    /// same as leaving it unsaid.
     /// </summary>
     [Fact]
     public void TheNonCommercialMappingSaysSo() =>

@@ -84,10 +84,10 @@ internal sealed record Reach(
     /// <see cref="Share"/> and different values here are not comparable, and this says so.
     ///
     /// It is the narrow reading on purpose and it must be read beside <see cref="Attested"/>, never
-    /// alone: everything that is not this word is not therefore a guess. That is what PRB-0399 was
-    /// about — the King James against Nestle scored 0.0000 here on 129,626 links made from Strong
-    /// numbers two publishers printed, which put the corpus's own headline claim in the same column
-    /// as a model that has never seen a Strong number.
+    /// alone: everything that is not this word is not therefore a guess. Read alone it has already
+    /// misled once — the King James against Nestle scored 0.0000 here on 129,626 links made from
+    /// Strong numbers two publishers printed, which put the corpus's own headline claim in the same
+    /// column as a model that has never seen a Strong number.
     /// </summary>
     public double Testimony => Reached == 0 ? 0 : (double)Stated / Reached;
 
@@ -314,8 +314,8 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<IntegrityCheck> Integrity)
 {
     /// <summary>
-    /// The share of links more than one method claims. It is the number DOC-0170 says the corpus
-    /// could not compute: a link four methods agree on and a link one model guessed at were stored
+    /// The share of links more than one method claims. It is the number the corpus could not
+    /// compute before: a link four methods agree on and a link one model guessed at were stored
     /// identically, so *92.1% correct* could be measured and *which 8%* could not.
     ///
     /// It should rise, and it will stay small for a long time, because most pairs of texts have

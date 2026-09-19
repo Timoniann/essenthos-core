@@ -61,8 +61,8 @@ public sealed class LinkShapeTests : IDisposable
 
     /// <summary>
     /// The claim is that the two Hebrew words together render the Greek one — not that they render
-    /// each other. A shared word identifier could not tell those apart, which is the whole of
-    /// DOC-0006 stated as a query.
+    /// each other. A shared word identifier could not tell those apart, which is the whole argument
+    /// against having one, stated as a query.
     /// </summary>
     [Fact]
     public void TwoWordsRenderingOneDoNotTherebyCorrespondToEachOther()

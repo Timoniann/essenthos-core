@@ -11,7 +11,7 @@
         <!--
             The application sets this, so the tests must. Without it the test project has ICU and
             the application does not, string.Normalize silently does nothing in one and works in
-            the other, and a test can pass over code that cannot work. PRB-0093 is what that cost.
+            the other, and a test can pass over code that cannot work.
         -->
         <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>

@@ -129,8 +129,7 @@ internal sealed record SoleBearerOutcome(
 /// parts <em>Anamim</em> a common noun and <em>Arvadite</em> an adjective while the encyclopedia
 /// files a man under each; and where one entry lists a man and the town named after him under one
 /// part of speech, which of them a record is is a register's question. Each of those keeps the
-/// provenance it had, and <see cref="SoleBearerRefusal"/> is the account a reader is owed
-/// (RUL-0024).
+/// provenance it had, and <see cref="SoleBearerRefusal"/> is the account a reader is owed.
 /// </para>
 ///
 /// <para>
@@ -390,7 +389,7 @@ internal sealed class SoleBearerLoader(AppDbContext db, ILogger<SoleBearerLoader
     ///
     /// A record's own <see cref="Entity.Name"/> counts as well as its name rows, and that is not
     /// belt and braces: 180 of the 181 records this corpus writes for itself carry no
-    /// <c>entity_name</c> row at all (PRB-0470), so an index built out of that table alone would
+    /// <c>entity_name</c> row at all, so an index built out of that table alone would
     /// call a name unique that one of them already bears.
     /// </summary>
     private async Task<Dictionary<string, int>> Carriers(CancellationToken cancellationToken)

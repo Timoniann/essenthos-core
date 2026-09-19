@@ -110,8 +110,8 @@ try {
     # own copy of it and is kept rather than the fetched one, so that what sits beside the data is
     # what eBible shipped with the data.
     if (-not (Test-Path (Join-Path $unpacked 'copr.htm'))) {
-        throw "The archive carries no copr.htm, so the licence would not sit beside the data. " +
-              "RUL-0105 is what this check is; nothing was replaced."
+        throw "The archive carries no copr.htm, so the licence would not sit beside the data. A " +
+              "licence is kept with the bytes it governs; nothing was replaced."
     }
 
     $root = Join-Path (Resolve-Path $ResourcesPath) 'Kulish'

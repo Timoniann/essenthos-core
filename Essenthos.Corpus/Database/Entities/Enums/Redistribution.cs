@@ -19,7 +19,7 @@ public enum Redistribution
     ///
     /// What it does not mean is that the whole site becomes ShareAlike. Creative Commons binds an
     /// adaptation and explicitly not a collection, and a corpus that serves texts side by side is a
-    /// collection — DOC-0181 is where that was settled after being got wrong twice.
+    /// collection — which was settled deliberately, after being got wrong twice.
     /// </summary>
     ShareAlike,
 

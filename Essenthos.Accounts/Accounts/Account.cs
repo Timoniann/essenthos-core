@@ -7,7 +7,7 @@ namespace Essenthos.Core.Accounts;
 ///
 /// Nothing here refers to a row of the corpus. The corpus is replaced wholesale by every release
 /// and renumbers every key when it is, so anything a reader writes about the text will address it
-/// canonically (RUL-0185) — and an account has nothing to address yet.
+/// canonically — and an account has nothing to address yet.
 /// </summary>
 public class Account : IRevised
 {
@@ -219,7 +219,7 @@ public class Device : IRevised
 /// can offer to continue it, and deleted with the device or the account.
 ///
 /// A chapter, not a verse: what somebody reads, in what order, is the most sensitive thing this product
-/// holds (DOC-0204), and a chapter is enough to continue from.
+/// holds, and a chapter is enough to continue from.
 /// </summary>
 public class Reading
 {

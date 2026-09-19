@@ -70,8 +70,8 @@ internal static class TischendorfTextSource
     /// and recording where each part of the grant came from — G. Clint Yale gave permission to
     /// distribute his accented Tischendorf in the public domain, Robinson's Westcott-Hort was
     /// already there, and Sandborg-Petersen released the edition built out of them. No ShareAlike,
-    /// no NonCommercial, no attribution condition — which is why RUL-0181 is the reason the three
-    /// names are recorded here rather than the licence being.
+    /// no NonCommercial, no attribution condition — so the three names are recorded here because
+    /// this project attributes every source it did not produce, and not because a licence asks.
     /// </summary>
     public static readonly TextDefinition Definition = new(
         Slug: Slug,

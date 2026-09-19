@@ -3,8 +3,8 @@ The target's name in the case the phrase puts it in -- asked for on its own, che
 
 A rendered descriptor line needs the *target's* forms: *тесть Мойсея*, not *тесть Мойсей*.
 `scripts/descriptors.py` produces forms for the *subject* of the claims it writes, so the two sets
-only coincide once every entity has been described -- PRB-0392 measured 205 of 985 loaded claims with
-a Ukrainian form for the entity they point at. This harness asks for the forms alone, for the
+only coincide once every entity has been described -- 205 of 985 loaded claims had a Ukrainian form
+for the entity they point at when that was measured. This harness asks for the forms alone, for the
 entities somebody else's claim already names, and does not re-ask the expensive half.
 
     python scripts/name-forms.py check                                  # the loaded forms, checked
@@ -13,8 +13,8 @@ entities somebody else's claim already names, and does not re-ask the expensive 
     python scripts/name-forms.py check   --dir .forms/run                # before anything is loaded
     python scripts/name-forms.py publish --dir .forms/run --out ../Resources/Essenthos/name-forms                                          --name targets-2026-09-09 --asked-at 2026-09-09
 
-`compare --dir` scores a run against the forms already loaded, which is how a model is chosen
-(DOC-0196), and `republish` writes PRB-0435's rows back without the preposition they carry.
+`compare --dir` scores a run against the forms already loaded, which is how a model is chosen, and
+`republish` writes the loaded forms that carry their own preposition back without it.
 
 Three things about the design are load-bearing:
 
@@ -495,7 +495,7 @@ def extract(args):
 
     key = keyed(loaded_forms())
     if args.repair:
-        # The entities the check refuses on rows that are already loaded: PRB-0435's 84 locatives
+        # The entities the check refuses on rows that are already loaded: the 84 locatives
         # carrying their own preposition, and the handful of forms that are a different name from
         # the nominative beside them. Asked again rather than edited, so what lands is a form
         # somebody produced and not one this script inferred.
@@ -512,9 +512,10 @@ def extract(args):
         # reads *місто в Judah* is Judah having a genitive and no locative rather than nothing.
         #
         # Which case a phrase wants is decided by the relation, and that table is C#'s
-        # (`DescriptorPhrasings`). Rather than keep a second copy of it here -- PRB-0447 is what
-        # that costs -- the rule is taken from the kind: a place can stand in a locative and a
-        # person cannot, so a targeted place wants all three cases and a targeted person two.
+        # (`DescriptorPhrasings`). Rather than keep a second copy of it here -- the relation mapping
+        # is already held twice, in Python and in C#, and the two have drifted apart -- the rule is
+        # taken from the kind: a place can stand in a locative and a person cannot, so a targeted
+        # place wants all three cases and a targeted person two.
         wanted = {'place': ('nominative', 'genitive', 'locative')}
         chosen = []
         for entity in all_entities:
@@ -800,7 +801,7 @@ def compare(args):
 
 
 def bare(language, value):
-    """The form with what the phrase supplies for itself taken off the front (PRB-0435)."""
+    """The form with what the phrase supplies for itself taken off the front."""
     words = value.split()
     while len(words) > 1 and (words[0].strip('.,').casefold() in PREPOSITIONS.get(language, ())
                               or words[0].strip('.,').casefold() in ARTICLES.get(language, ())):
@@ -817,8 +818,8 @@ def republish(args):
     without it.
 
     Read off the database as it stands rather than off a list, because the generation pass is still
-    running and every batch it loads adds more of them -- 84 rows over 1,167 entities when PRB-0435
-    was filed, 399 over 4,457 a day later. So this is re-run rather than kept, and the file it
+    running and every batch it loads adds more of them -- 84 rows over 1,167 entities when this was
+    first counted, 399 over 4,457 a day later. So this is re-run rather than kept, and the file it
     writes is replaced whole.
 
     Asking again does not close this. The run that was asked produced a Ukrainian locative for 11 of
@@ -871,8 +872,8 @@ def publish(args):
 
     **What the check refuses does not go in the file.** A case it refuses is dropped and a language
     whose nominative it refuses is dropped whole, because there is then nothing to check the rest
-    against. A dropped form falls back to the English name, which is DOC-0191's rule and the only
-    outcome a reader can see for what it is.
+    against. A dropped form falls back to the English name, which is what the descriptor contract
+    asks for and the only outcome a reader can see for what it is.
     """
     rows = produced(args.dir)
     with open(os.path.join(args.dir, 'manifest.json'), encoding='utf-8') as handle:
@@ -951,7 +952,9 @@ def main():
     publisher.set_defaults(run=publish)
 
     republisher = commands.add_parser(
-        'republish', help="PRB-0435's rows, as a file that supersedes them without the preposition")
+        'republish',
+        help='the loaded forms carrying their own preposition, as a file that supersedes them '
+             'without it')
     republisher.add_argument('--out', required=True)
     republisher.add_argument('--name', default='republished')
     republisher.set_defaults(run=republish)

@@ -6,7 +6,7 @@
     Brenton's Septuagint is public domain and arrived with no annotation at all. GLAUx annotates a
     different edition of the same book, and 99.4% of Brenton's tokens are written the same way
     somewhere in it, so it is used as a form-to-lemma dictionary against the text we already serve.
-    GLAUx's own Greek is never loaded. DOC-0161 has the licence reading in full.
+    GLAUx's own Greek is never loaded.
 
     Licence: CC BY-SA 3.0, which is what metadata.txt states for every Septuagint row and is the
     most restrictive of the three statements GLAUx makes about itself. The corpus attributes it at
@@ -43,8 +43,9 @@ $rows = Import-Csv -Path $metadata -Delimiter "`t"
 $books = $rows | Where-Object { $_.AUTHOR_STANDARD -eq 'Septuaginta' }
 
 if ($books.Count -ne 57) {
-    throw "metadata.txt names $($books.Count) Septuagint books and DOC-0161 measured 57. Either " +
-          "GLAUx has changed or the file did not download whole; check before trusting the result."
+    throw "metadata.txt names $($books.Count) Septuagint books and 57 were there when this was " +
+          "written. Either GLAUx has changed or the file did not download whole; check before " +
+          "trusting the result."
 }
 
 # @() so that a single distinct value stays an array; indexing a bare string gives a character.

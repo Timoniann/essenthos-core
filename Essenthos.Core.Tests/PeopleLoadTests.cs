@@ -143,7 +143,8 @@ public sealed class PeopleLoadTests : IDisposable
 
     /// <summary>
     /// The lexeme BHSA analyses as a gentilic and Strong derives from no word he numbers, which is
-    /// the Egyptians' case and the whole of PRB-0505.
+    /// the Egyptians' case: no numbered origin for the gentilic parse to read, so nothing but the
+    /// analysis reaches them and without it they get no record at all.
     /// </summary>
     private const string Analysed = "H4713";
 
