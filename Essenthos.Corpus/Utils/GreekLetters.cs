@@ -145,6 +145,49 @@ internal static class GreekLetters
         };
     }
 
+    /// <summary>
+    /// The word as it is spelt, with only case and the grave accent set aside. A grave is how an
+    /// acute is printed before another word, so καὶ and καί are one spelling; a breathing, a
+    /// circumflex or an iota subscript still makes another, and ἰού and ἰοῦ stay two.
+    /// </summary>
+    public static string Spelling(string word)
+    {
+        Span<char> spelt = stackalloc char[word.Length];
+        for (var i = 0; i < word.Length; i++)
+        {
+            spelt[i] = Acute(char.ToLowerInvariant(word[i]));
+        }
+
+        return new string(spelt);
+    }
+
+    private static char Acute(char c) => c switch
+    {
+        // ὰ ὲ ὴ ὶ ὸ ὺ ὼ, each followed in the block by its twin with the acute.
+        >= 'ὰ' and <= 'ώ' => Tonos((char)(c | 1)),
+        // A breathing, and an iota subscript, with the grave: two places before the same with the acute.
+        >= 'ἀ' and <= 'ᾯ' when (c & 7) is 2 or 3 => (char)(c + 2),
+        'ᾲ' or 'ῂ' or 'ῲ' => (char)(c + 2),
+        'ῒ' or 'ῢ' => Tonos((char)(c + 1)),
+        '̀' => '́',
+        _ => Tonos(c),
+    };
+
+    /// <summary>The acute of the polytonic block as the tonos it is canonically equal to.</summary>
+    private static char Tonos(char c) => c switch
+    {
+        'ά' => 'ά',
+        'έ' => 'έ',
+        'ή' => 'ή',
+        'ί' => 'ί',
+        'ό' => 'ό',
+        'ύ' => 'ύ',
+        'ώ' => 'ώ',
+        'ΐ' => 'ΐ',
+        'ΰ' => 'ΰ',
+        _ => c,
+    };
+
     /// <summary>Whether the two witnesses write the same word, accents aside.</summary>
     public static bool Same(string left, string right) =>
         string.Equals(Bare(left), Bare(right), StringComparison.Ordinal);

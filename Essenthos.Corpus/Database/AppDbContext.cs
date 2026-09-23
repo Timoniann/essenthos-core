@@ -522,6 +522,13 @@ public class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.Property(w => w.Break).HasConversion(EnumStorage.TextBreak);
+
+            // Every dictionary form a spelling is given anywhere in the corpus, read without touching
+            // the table: a word no edition lemmatises is glossed by how the words spelt like it are.
+            entity.HasIndex(w => w.NormalisedText)
+                .HasDatabaseName("ix_word_normalised_text_lemmatised")
+                .HasFilter("lemma IS NOT NULL")
+                .IncludeProperties(w => new { w.Surface, w.Lemma, w.TextId });
         });
 
         modelBuilder.Entity<VerseReference>(entity =>
