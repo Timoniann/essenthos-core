@@ -163,6 +163,7 @@ internal sealed class DatasetLoader(
             await WriteTheWordsForGod(stoppingToken);
             await HoldTheTitlesAsTitles(stoppingToken);
             await GiveTheNamesNoDatasetGives(stoppingToken);
+            await WriteTheThingsMadeAndTheTimesKept(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
@@ -1033,6 +1034,21 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OwnNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The objects and the appointed times, as records with the words that name them. After every
+    /// pass that names a word by its number, because a ruling here outranks those and should find
+    /// them in place, and before the references, so the pages list their verses on the boot that
+    /// writes them.
+    /// </summary>
+    private async Task WriteTheThingsMadeAndTheTimesKept(CancellationToken cancellationToken)
+    {
+        status.Starting("the objects and the appointed times");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<ThingLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

@@ -1,0 +1,1909 @@
+{
+  "about": "Occurrences of the words the objects and appointed times are named by that a reading of every occurrence could not settle, left unlinked for the project owner. Each entry names the record it is about, the Strong number, the verses (canonical numbering; #n is the nth occurrence of the number in the verse), the question, and the answers that would settle it. An answer is applied by adding the verses to the record's occurrence rules in Essenthos.Forge/Loading/Encyclopedia/ObjectRecords.json or ObservanceRecords.json. Every rule already in those files is a language model's reading and is shown to readers as one; a rule the owner has checked is marked by adding \"reviewed\": \"the project owner, <date>\" to it (and to the record, for its description, relations and names), which makes it the owner's ruling on the next load.",
+  "made": "2026-09-23, from a reading of every occurrence in BHSA and Nestle 1904 with the King James and Ohienko beside it",
+  "entries": [
+    {
+      "record": "boaz-pillar",
+      "strong": "H1162",
+      "references": [
+        "1KI 7:21",
+        "2CH 3:17"
+      ],
+      "question": "Boaz in these two verses is the bronze pillar of Solomon's temple, not Ruth's husband, and the rules of boaz-pillar and jachin-pillar say so. The Strong number had already resolved these words onto the person Boaz, and a model's reading cannot overrule that, so readers still see the man here until the rules are marked reviewed. Confirm the pillars?",
+      "options": [
+        "the pillars - mark both records' rules reviewed",
+        "leave as it is"
+      ]
+    },
+    {
+      "record": "sabbath",
+      "strong": "H7676",
+      "references": [
+        "LEV 23:11",
+        "LEV 23:15",
+        "LEV 23:16"
+      ],
+      "question": "In the counting to the Feast of Weeks, 'the morrow after the sabbath' (LEV 23:11, 15) and 'seven sabbaths' / 'the seventh sabbath' (LEV 23:15-16) are read by some as the weekly sabbath and by others as the first day of Unleavened Bread or simply 'weeks'. Link these to the Sabbath, or leave them unlinked?",
+      "options": [
+        "sabbath",
+        "none"
+      ]
+    },
+    {
+      "record": "day-of-atonement",
+      "strong": "H7676",
+      "references": [
+        "LEV 16:31",
+        "LEV 23:32"
+      ],
+      "question": "The Day of Atonement is called 'a sabbath of rest' (LEV 16:31; 23:32). Should the word 'sabbath' there point to the Day of Atonement, to the Sabbath, or to nothing?",
+      "options": [
+        "day-of-atonement",
+        "sabbath",
+        "none"
+      ]
+    },
+    {
+      "record": "sabbath",
+      "strong": "H7677",
+      "references": [
+        "LEV 16:31",
+        "LEV 23:24",
+        "LEV 23:32",
+        "LEV 23:39"
+      ],
+      "question": "The word 'shabbaton' (solemn rest) is used of the Day of Trumpets (LEV 23:24), the Day of Atonement (LEV 16:31; 23:32) and the first and eighth days of Booths (LEV 23:39, first and second occurrence). Should each point to the feast it describes, to the Sabbath, or to nothing?",
+      "options": [
+        "the feast it describes",
+        "sabbath",
+        "none"
+      ]
+    },
+    {
+      "record": "sabbath",
+      "strong": "G4521",
+      "references": [
+        "ACT 1:12"
+      ],
+      "question": "'A sabbath day's journey' (ACT 1:12) is a distance. Link it to the Sabbath, keep it for a future measures record, or leave it unlinked?",
+      "options": [
+        "sabbath",
+        "a measures record",
+        "none"
+      ]
+    },
+    {
+      "record": "new-moon",
+      "strong": "H2320",
+      "references": [
+        "NUM 28:14",
+        "1SA 20:27",
+        "1SA 20:34",
+        "HOS 5:7"
+      ],
+      "question": "In these verses 'chodesh' may be the new-moon day or simply 'month': 'the burnt offering of every month throughout the months' (NUM 28:14), 'the second day of the month' after Saul's new-moon meal (1SA 20:27, 34), and 'now shall a month devour them' (HOS 5:7). Link any of them to the New Moon?",
+      "options": [
+        "new-moon",
+        "none"
+      ]
+    },
+    {
+      "record": "passover",
+      "strong": "H6453",
+      "references": [
+        "2CH 30:1",
+        "2CH 30:2",
+        "2CH 30:5",
+        "2CH 30:15",
+        "2CH 30:17",
+        "2CH 30:18"
+      ],
+      "question": "Hezekiah's Passover was kept on the fourteenth day of the second month because the priests were not sanctified and the people not gathered in time (2CH 30:2-3, 15). Is it the Passover, or the second Passover of NUM 9?",
+      "options": [
+        "passover",
+        "second-passover"
+      ]
+    },
+    {
+      "record": "passover",
+      "strong": "H6453",
+      "references": [
+        "NUM 9:13",
+        "NUM 9:14"
+      ],
+      "question": "NUM 9:13 speaks of the clean man who fails to keep the Passover (at its proper time), and NUM 9:14 of the stranger who keeps it. They stand inside the second-Passover law but seem to be about the Passover itself. Link them to the Passover or to the second Passover?",
+      "options": [
+        "passover",
+        "second-passover"
+      ]
+    },
+    {
+      "record": "passover",
+      "strong": "G1859",
+      "references": [
+        "MAT 27:15",
+        "MRK 15:6"
+      ],
+      "question": "'At that feast the governor was wont to release a prisoner' (MAT 27:15; MRK 15:6) may mean 'at the Passover' (as JHN 18:39 says) or 'at every feast'. Link 'feast' here to the Passover?",
+      "options": [
+        "passover",
+        "appointed-times",
+        "none"
+      ]
+    },
+    {
+      "record": "appointed-times",
+      "strong": "G1859",
+      "references": [
+        "JHN 5:1"
+      ],
+      "question": "'A feast of the Jews' in JHN 5:1 is not named. Leave it unlinked, or link it to the appointed times in general?",
+      "options": [
+        "none",
+        "appointed-times"
+      ]
+    },
+    {
+      "record": "feast-of-unleavened-bread",
+      "strong": "H2282",
+      "references": [
+        "EXO 12:14",
+        "EZK 45:21",
+        "EZK 45:23"
+      ],
+      "question": "'Ye shall keep it a feast' (EXO 12:14) and Ezekiel's 'passover, a feast of seven days' (EZK 45:21, 23) could name the Passover or the Feast of Unleavened Bread. Which, or neither?",
+      "options": [
+        "passover",
+        "feast-of-unleavened-bread",
+        "none"
+      ]
+    },
+    {
+      "record": "feast-of-unleavened-bread",
+      "strong": "G106",
+      "references": [
+        "1CO 5:7",
+        "1CO 5:8"
+      ],
+      "question": "Paul's 'as ye are unleavened' and 'the unleavened bread of sincerity and truth' (1CO 5:7-8) are a figure drawn from the feast. Link them to the Feast of Unleavened Bread or leave them unlinked?",
+      "options": [
+        "feast-of-unleavened-bread",
+        "none"
+      ]
+    },
+    {
+      "record": "firstfruits",
+      "strong": "G536",
+      "references": [
+        "1CO 15:20",
+        "1CO 15:23"
+      ],
+      "question": "Paul calls the risen Christ 'the firstfruits' (1CO 15:20, 23). Link the word to the Firstfruits rite, or leave the figure unlinked?",
+      "options": [
+        "firstfruits",
+        "none"
+      ]
+    },
+    {
+      "record": "feast-of-weeks",
+      "strong": "H1061",
+      "references": [
+        "EXO 23:16",
+        "EXO 34:22",
+        "LEV 23:17",
+        "LEV 23:20"
+      ],
+      "question": "At the Feast of Weeks the two wave loaves are called 'firstfruits' (LEV 23:17, 20), and the feast itself is 'the firstfruits of thy labours' / 'of wheat harvest' (EXO 23:16; 34:22). Link these 'firstfruits' to the Feast of Weeks, to the Firstfruits (wave sheaf) record, or to nothing?",
+      "options": [
+        "feast-of-weeks",
+        "firstfruits",
+        "none"
+      ]
+    },
+    {
+      "record": "feast-of-weeks",
+      "strong": "H7620",
+      "references": [
+        "NUM 28:26"
+      ],
+      "question": "'After your weeks be out' (NUM 28:26) is literally 'in your weeks', possibly the feast's name. Link 'weeks' there to the Feast of Weeks?",
+      "options": [
+        "feast-of-weeks",
+        "none"
+      ]
+    },
+    {
+      "record": "day-of-atonement",
+      "strong": "H3725",
+      "references": [
+        "EXO 30:10",
+        "NUM 29:11"
+      ],
+      "question": "'The sin offering of atonements once in the year' (EXO 30:10) and 'the sin offering of atonement' among the tenth-day offerings (NUM 29:11) belong to the Day of Atonement but name its offering, not the day. Link them to the Day of Atonement?",
+      "options": [
+        "day-of-atonement",
+        "none"
+      ]
+    },
+    {
+      "record": "feast-of-booths",
+      "strong": "H5521",
+      "references": [
+        "LEV 23:42",
+        "LEV 23:43",
+        "NEH 8:14",
+        "NEH 8:15",
+        "NEH 8:16",
+        "NEH 8:17"
+      ],
+      "question": "These are the booths themselves that Israel lived in during the feast (and, in LEV 23:43, the booths of the wilderness). Should 'booths' here point to the Feast of Booths, or stay unlinked?",
+      "options": [
+        "feast-of-booths",
+        "none"
+      ]
+    },
+    {
+      "record": "feast-of-booths",
+      "strong": "H2282",
+      "references": [
+        "1KI 8:65",
+        "2CH 7:8"
+      ],
+      "question": "Solomon 'held the feast ... seven days and seven days, even fourteen days' (1KI 8:65; 2CH 7:8). The feast there may be the Feast of Booths or the whole fourteen-day celebration with the dedication. Link it to the Feast of Booths?",
+      "options": [
+        "feast-of-booths",
+        "none"
+      ]
+    },
+    {
+      "record": "sabbatical-year",
+      "strong": "H7676",
+      "references": [
+        "LEV 25:8"
+      ],
+      "question": "'Seven sabbaths of years' (LEV 25:8, twice) is the count of seven sabbatical cycles leading to the jubilee. Link 'sabbaths' here to the Sabbatical Year, to the Jubilee, or to nothing?",
+      "options": [
+        "sabbatical-year",
+        "jubilee",
+        "none"
+      ]
+    },
+    {
+      "record": "jubilee",
+      "strong": "H1865",
+      "references": [
+        "LEV 25:10",
+        "EZK 46:17"
+      ],
+      "question": "'Proclaim liberty' (LEV 25:10) is the jubilee's proclamation, and 'the year of liberty' (EZK 46:17) is probably the jubilee. Link 'liberty' in these two verses to the Jubilee? (JER 34 and ISA 61:1 use the same word for other releases.)",
+      "options": [
+        "jubilee",
+        "none"
+      ]
+    },
+    {
+      "record": "lords-supper",
+      "strong": "G2800",
+      "references": [
+        "ACT 2:42"
+      ],
+      "question": "'The breaking of bread' (ACT 2:42), and the breaking of bread on the first day of the week (ACT 20:7, verb G2806), may be the Lord's Supper or ordinary shared meals. Link them to the Lord's Supper?",
+      "options": [
+        "lords-supper",
+        "none"
+      ]
+    },
+    {
+      "record": "appointed-times",
+      "strong": "H4150",
+      "references": [
+        "ISA 33:20",
+        "LAM 1:4",
+        "LAM 2:6",
+        "LAM 2:7",
+        "LAM 2:22",
+        "EZK 36:38",
+        "HOS 9:5",
+        "HOS 12:9",
+        "ZEP 3:18",
+        "ZEC 8:19"
+      ],
+      "question": "In these verses 'mo'ed' is a solemn feast in the singular or poetic sense ('the city of our solemnities', 'none come to the solemn feasts', 'as in the days of the solemn feast'), or may mean an assembly or meeting place. Link them to the appointed times, or leave them?",
+      "options": [
+        "appointed-times",
+        "none"
+      ]
+    },
+    {
+      "record": "appointed-times",
+      "strong": "H2282",
+      "references": [
+        "EXO 10:9",
+        "EXO 23:18",
+        "EXO 32:5",
+        "JDG 21:19",
+        "PSA 81:3",
+        "PSA 118:27",
+        "ISA 29:1",
+        "ISA 30:29",
+        "EZK 45:17",
+        "EZK 46:11",
+        "HOS 2:11",
+        "HOS 9:5",
+        "AMO 5:21",
+        "AMO 8:10",
+        "NAM 1:15",
+        "MAL 2:3"
+      ],
+      "question": "Here 'chag' (feast) is unnamed or general: Israel's feasts in the prophets, the feast Moses asked to hold in the wilderness, Aaron's feast at the golden calf, the yearly feast at Shiloh, 'my feast' / the festal sacrifice. Link the general ones to the appointed times, a specific feast, or nothing?",
+      "options": [
+        "appointed-times",
+        "a specific feast",
+        "none"
+      ]
+    },
+    {
+      "record": "appointed-times",
+      "strong": "G1859",
+      "references": [
+        "COL 2:16"
+      ],
+      "question": "'An holyday' (a feast) beside new moon and sabbath in COL 2:16. Link it to the appointed times?",
+      "options": [
+        "appointed-times",
+        "none"
+      ]
+    },
+    {
+      "record": "feast-of-unleavened-bread",
+      "strong": "H4150",
+      "references": [
+        "2CH 30:22"
+      ],
+      "question": "'They did eat throughout the feast (mo'ed) seven days' (2CH 30:22) is Hezekiah's Unleavened Bread in the second month. Link it to the Feast of Unleavened Bread?",
+      "options": [
+        "feast-of-unleavened-bread",
+        "none"
+      ]
+    },
+    {
+      "record": "ark-of-the-covenant",
+      "strong": "G2787",
+      "references": [
+        "REV 11:19"
+      ],
+      "question": "John sees 'the ark of his testament' in God's temple in heaven. Is that this ark, the heavenly sanctuary's own, or neither?",
+      "options": [
+        "ark-of-the-covenant",
+        "heavenly-sanctuary",
+        "none"
+      ]
+    },
+    {
+      "record": "mercy-seat",
+      "strong": "G2435",
+      "references": [
+        "ROM 3:25"
+      ],
+      "question": "Paul says God set Christ forth as a hilasterion, the word Hebrews 9:5 uses for the mercy seat. Link it to the mercy seat, or leave it as 'propitiation'?",
+      "options": [
+        "mercy-seat",
+        "none"
+      ]
+    },
+    {
+      "record": "menorah",
+      "strong": "H4501",
+      "references": [
+        "1KI 7:49",
+        "1CH 28:15",
+        "2CH 4:7",
+        "2CH 4:20",
+        "JER 52:19"
+      ],
+      "question": "Solomon's ten golden lampstands (and David's gold weighed for them): the tabernacle lampstand's record, a record of their own, or none?",
+      "options": [
+        "menorah",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "menorah",
+      "strong": "H4501",
+      "references": [
+        "2CH 13:11"
+      ],
+      "question": "Abijah says the priests of Judah light 'the candlestick of gold' every evening - one lampstand in Solomon's temple. Is it this lampstand, one of Solomon's, or none?",
+      "options": [
+        "menorah",
+        "a record for Solomon's lampstands",
+        "none"
+      ]
+    },
+    {
+      "record": "tabernacle",
+      "strong": "H4908",
+      "references": [
+        "LEV 26:11",
+        "2SA 7:6",
+        "1CH 17:5"
+      ],
+      "question": "God speaks of his 'tabernacle' among Israel, or of having walked 'in a tent and in a tabernacle' since the Exodus. Is that the tabernacle itself, or his dwelling in a general sense?",
+      "options": [
+        "tabernacle",
+        "none"
+      ]
+    },
+    {
+      "record": "tabernacle",
+      "strong": "H4908",
+      "references": [
+        "2CH 29:6",
+        "PSA 26:8",
+        "PSA 43:3",
+        "PSA 46:4",
+        "PSA 74:7",
+        "PSA 84:1",
+        "PSA 132:5",
+        "PSA 132:7",
+        "EZK 37:27"
+      ],
+      "question": "The LORD's 'habitation' or 'tabernacles' in Chronicles, the Psalms and Ezekiel's promise mostly mean the temple or God's dwelling in Zion. Link any of them to the tabernacle, to Solomon's temple, or none?",
+      "options": [
+        "tabernacle",
+        "solomons-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "tabernacle",
+      "strong": "G4633",
+      "references": [
+        "HEB 9:2",
+        "HEB 9:3",
+        "HEB 9:6",
+        "HEB 9:8",
+        "HEB 13:10"
+      ],
+      "question": "Hebrews speaks of 'the first tabernacle' (the holy place) and of the tabernacle 'called the Holiest of all' (9:3), and of those who 'serve the tabernacle' (13:10). Link these to the tabernacle, to the holy of holies (9:3), or leave them?",
+      "options": [
+        "tabernacle",
+        "holy-of-holies",
+        "none"
+      ]
+    },
+    {
+      "record": "table-of-showbread",
+      "strong": "H7979",
+      "references": [
+        "1KI 7:48",
+        "1CH 28:16",
+        "2CH 4:8",
+        "2CH 4:19",
+        "2CH 13:11",
+        "2CH 29:18"
+      ],
+      "question": "Solomon's golden table (or ten tables) of showbread in the temple: this record, a record of its own, or none?",
+      "options": [
+        "table-of-showbread",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "table-of-showbread",
+      "strong": "H3899",
+      "references": [
+        "1KI 7:48",
+        "2CH 4:19"
+      ],
+      "question": "'The bread of the presence' on Solomon's golden table: link it with the table of showbread's bread, or leave it with Solomon's table?",
+      "options": [
+        "table-of-showbread",
+        "none"
+      ]
+    },
+    {
+      "record": "table-of-showbread",
+      "strong": "H4635",
+      "references": [
+        "1CH 9:32",
+        "1CH 23:29",
+        "2CH 2:4",
+        "2CH 13:11",
+        "2CH 29:18",
+        "NEH 10:33"
+      ],
+      "question": "'The showbread' (the arranged bread) in the temple service of Chronicles and Nehemiah: the same bread as this record, or none?",
+      "options": [
+        "table-of-showbread",
+        "none"
+      ]
+    },
+    {
+      "record": "table-of-showbread",
+      "strong": "H3899",
+      "references": [
+        "1SA 21:4#2"
+      ],
+      "question": "At Nob the priest says there is only 'hallowed bread' - the showbread given to David two verses later. Link this word to the showbread?",
+      "options": [
+        "table-of-showbread",
+        "none"
+      ]
+    },
+    {
+      "record": "altar-of-incense",
+      "strong": "G2369",
+      "references": [
+        "HEB 9:4"
+      ],
+      "question": "Hebrews says the most holy place 'had the golden thymiaterion'. KJV, Ohienko, Luther and Reina-Valera all translate it 'censer', others 'altar of incense'. Is it the altar of incense?",
+      "options": [
+        "altar-of-incense",
+        "none (a censer)"
+      ]
+    },
+    {
+      "record": "altar-of-incense",
+      "strong": "H4196",
+      "references": [
+        "1KI 6:20",
+        "1KI 6:22",
+        "1KI 7:48",
+        "1CH 28:18",
+        "2CH 4:19",
+        "2CH 26:16",
+        "2CH 26:19"
+      ],
+      "question": "Solomon's golden altar before the oracle, and the altar of incense Uzziah went in to use: the same record as the tabernacle's altar of incense, a record per build, or none?",
+      "options": [
+        "altar-of-incense",
+        "a record per build",
+        "none"
+      ]
+    },
+    {
+      "record": "altar-of-incense",
+      "strong": "G2379",
+      "references": [
+        "LUK 1:11"
+      ],
+      "question": "Zacharias sees an angel 'on the right side of the altar of incense' in Herod's temple: this record, a record per build, or none?",
+      "options": [
+        "altar-of-incense",
+        "a record per build",
+        "none"
+      ]
+    },
+    {
+      "record": "altar-of-incense",
+      "strong": "H4196",
+      "references": [
+        "LEV 16:12",
+        "LEV 16:18",
+        "LEV 16:20",
+        "LEV 16:33",
+        "NUM 16:46"
+      ],
+      "question": "'The altar before the LORD' of the Day of Atonement and the altar Aaron took fire from in NUM 16:46: is it the altar of incense or the bronze altar? Readers disagree.",
+      "options": [
+        "altar-of-incense",
+        "bronze-altar",
+        "none"
+      ]
+    },
+    {
+      "record": "bronze-altar",
+      "strong": "H4196",
+      "references": [
+        "1KI 8:64",
+        "2KI 16:14#1",
+        "2KI 16:15#2",
+        "1CH 22:1",
+        "2CH 4:1",
+        "2CH 7:7",
+        "2CH 29:18",
+        "2CH 29:27",
+        "2CH 35:16",
+        "EZK 9:2",
+        "EZK 43:27"
+      ],
+      "question": "Solomon's bronze altar of the temple (the one Ahaz moved aside, Hezekiah cleansed, Ezekiel saw) and Ezekiel's visionary altar: the bronze altar's record, a record per build, or none?",
+      "options": [
+        "bronze-altar",
+        "a record per build",
+        "none"
+      ]
+    },
+    {
+      "record": "bronze-altar",
+      "strong": "H4196",
+      "references": [
+        "EXO 28:43",
+        "EXO 29:12#1",
+        "EXO 29:12#2",
+        "EXO 29:13",
+        "EXO 29:16",
+        "EXO 29:18",
+        "EXO 29:20",
+        "EXO 29:21",
+        "EXO 29:25",
+        "EXO 29:36",
+        "EXO 29:37#1",
+        "EXO 29:37#2",
+        "EXO 29:37#3",
+        "EXO 29:38",
+        "EXO 29:44",
+        "LEV 1:5",
+        "LEV 1:7",
+        "LEV 1:8",
+        "LEV 1:9",
+        "LEV 1:11#1",
+        "LEV 1:11#2",
+        "LEV 1:12",
+        "LEV 1:13",
+        "LEV 1:15#1",
+        "LEV 1:15#2",
+        "LEV 1:15#3",
+        "LEV 1:16",
+        "LEV 1:17",
+        "LEV 2:2",
+        "LEV 2:8",
+        "LEV 2:9",
+        "LEV 2:12",
+        "LEV 3:2",
+        "LEV 3:5",
+        "LEV 3:8",
+        "LEV 3:11",
+        "LEV 3:13",
+        "LEV 3:16",
+        "LEV 4:19",
+        "LEV 4:26",
+        "LEV 4:31",
+        "LEV 4:35",
+        "LEV 5:9#1",
+        "LEV 5:9#2",
+        "LEV 5:12",
+        "LEV 6:9#1",
+        "LEV 6:9#2",
+        "LEV 6:10#1",
+        "LEV 6:10#2",
+        "LEV 6:12",
+        "LEV 6:13",
+        "LEV 6:14",
+        "LEV 6:15",
+        "LEV 7:2",
+        "LEV 7:5",
+        "LEV 7:31",
+        "LEV 8:15#1",
+        "LEV 8:15#2",
+        "LEV 8:15#3",
+        "LEV 8:16",
+        "LEV 8:19",
+        "LEV 8:21",
+        "LEV 8:24",
+        "LEV 8:28",
+        "LEV 8:30",
+        "LEV 9:7",
+        "LEV 9:8",
+        "LEV 9:9#1",
+        "LEV 9:9#2",
+        "LEV 9:10",
+        "LEV 9:12",
+        "LEV 9:13",
+        "LEV 9:14",
+        "LEV 9:17",
+        "LEV 9:18",
+        "LEV 9:20",
+        "LEV 9:24",
+        "LEV 10:12",
+        "LEV 14:20",
+        "LEV 16:25",
+        "LEV 17:6",
+        "LEV 17:11",
+        "LEV 21:23",
+        "LEV 22:22",
+        "NUM 3:31",
+        "NUM 5:25",
+        "NUM 5:26",
+        "NUM 7:1",
+        "NUM 7:10#1",
+        "NUM 7:10#2",
+        "NUM 7:11",
+        "NUM 7:84",
+        "NUM 7:88",
+        "NUM 18:3",
+        "NUM 18:5",
+        "NUM 18:7",
+        "NUM 18:17"
+      ],
+      "question": "Bare 'the altar' in the sacrificial laws and the tabernacle's consecration (EXO 28-29, LEV 1-9 and later chapters, NUM 5-7, 18) almost always means the bronze altar, but the text does not name it. Read these verse by verse and link them to the bronze altar, or leave them?",
+      "options": [
+        "bronze-altar",
+        "none"
+      ]
+    },
+    {
+      "record": "bronze-laver",
+      "strong": "H3595",
+      "references": [
+        "1KI 7:30",
+        "1KI 7:38",
+        "1KI 7:40",
+        "1KI 7:43",
+        "2CH 4:6",
+        "2CH 4:14"
+      ],
+      "question": "Solomon's ten bronze lavers on their bases are not the tabernacle laver. Do they get a record of their own, or none?",
+      "options": [
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "aarons-rod",
+      "strong": "H4294",
+      "references": [
+        "EXO 7:15",
+        "EXO 7:17",
+        "EXO 7:20"
+      ],
+      "question": "In the first plague Moses is told to take 'the rod which was turned to a serpent' (Aaron's rod in 7:10), God says 'I will smite with the rod in mine hand', and 'he' lifts up the rod. Whose rod is it?",
+      "options": [
+        "aarons-rod",
+        "moses-staff",
+        "none"
+      ]
+    },
+    {
+      "record": "aarons-rod",
+      "strong": "H4294",
+      "references": [
+        "NUM 17:5"
+      ],
+      "question": "'The man's rod, whom I shall choose, shall blossom' - spoken before it turned out to be Aaron's. Link it to Aaron's rod?",
+      "options": [
+        "aarons-rod",
+        "none"
+      ]
+    },
+    {
+      "record": "aarons-rod",
+      "strong": "H4294",
+      "references": [
+        "NUM 20:8",
+        "NUM 20:9",
+        "NUM 20:11"
+      ],
+      "question": "At Meribah Moses 'took the rod from before the LORD' - where Aaron's budded rod was kept (NUM 17:10) - but struck the rock with 'his rod'. Is it Aaron's rod or Moses' staff?",
+      "options": [
+        "aarons-rod",
+        "moses-staff",
+        "none"
+      ]
+    },
+    {
+      "record": "tablets-of-the-covenant",
+      "strong": "G4109",
+      "references": [
+        "2CO 3:3#1"
+      ],
+      "question": "Paul contrasts writing 'not in tables of stone' with the 'fleshy tables of the heart'. Is the first 'tables' the tablets of the covenant? (The second is figurative and left alone.)",
+      "options": [
+        "tablets-of-the-covenant",
+        "none"
+      ]
+    },
+    {
+      "record": "veil-of-the-sanctuary",
+      "strong": "H6532",
+      "references": [
+        "2CH 3:14"
+      ],
+      "question": "Solomon's veil for the temple: this record (one veil of the sanctuary through every build), a record per build, or none?",
+      "options": [
+        "veil-of-the-sanctuary",
+        "a record per build",
+        "none"
+      ]
+    },
+    {
+      "record": "veil-of-the-sanctuary",
+      "strong": "G2665",
+      "references": [
+        "MAT 27:51",
+        "MRK 15:38",
+        "LUK 23:45",
+        "HEB 6:19",
+        "HEB 10:20"
+      ],
+      "question": "The veil of Herod's temple torn at Jesus' death, and the veil Hebrews says hope enters within (6:19) and Christ opened, 'that is to say, his flesh' (10:20): this record, a record per build, or none?",
+      "options": [
+        "veil-of-the-sanctuary",
+        "a record per build",
+        "none"
+      ]
+    },
+    {
+      "record": "jachin-pillar",
+      "strong": "H5982",
+      "references": [
+        "1KI 7:15",
+        "1KI 7:16",
+        "1KI 7:17",
+        "1KI 7:18",
+        "1KI 7:19",
+        "1KI 7:20",
+        "1KI 7:21#1",
+        "1KI 7:22",
+        "1KI 7:41",
+        "1KI 7:42",
+        "2KI 25:13",
+        "2KI 25:16",
+        "2KI 25:17",
+        "2CH 3:15",
+        "2CH 3:16",
+        "2CH 3:17",
+        "2CH 4:12",
+        "2CH 4:13",
+        "JER 27:19",
+        "JER 52:17",
+        "JER 52:20",
+        "JER 52:21",
+        "JER 52:22"
+      ],
+      "question": "Here 'pillars' means Jachin and Boaz together ('two pillars', 'the one pillar ... the second pillar'). Link each such word to both pillar records, to neither, or to a record for the pair?",
+      "options": [
+        "both jachin-pillar and boaz-pillar",
+        "a record for the pair",
+        "none"
+      ]
+    },
+    {
+      "record": "solomons-temple",
+      "strong": "H1004",
+      "references": [
+        "PSA 23:6",
+        "PSA 27:4",
+        "PSA 42:4",
+        "PSA 52:8",
+        "PSA 55:14",
+        "PSA 84:10",
+        "PSA 92:13",
+        "PSA 116:19",
+        "PSA 118:26",
+        "PSA 122:1",
+        "PSA 122:9",
+        "PSA 134:1",
+        "PSA 135:2"
+      ],
+      "question": "In the Psalms 'the house of the LORD' or 'house of God' may be David's tent, Solomon's temple or the Second Temple, and the text does not date the psalms. Link these to one of them, or leave them unlinked?",
+      "options": [
+        "solomons-temple",
+        "second-temple",
+        "davids-tent-for-the-ark",
+        "none"
+      ]
+    },
+    {
+      "record": "solomons-temple",
+      "strong": "H1964",
+      "references": [
+        "PSA 5:7",
+        "PSA 27:4",
+        "PSA 48:9",
+        "PSA 65:4",
+        "PSA 68:29",
+        "PSA 79:1",
+        "PSA 138:2",
+        "JON 2:4"
+      ],
+      "question": "Psalms (and Jonah looking 'toward thy holy temple') speak of the temple without saying which. PSA 79:1 describes the temple defiled and Jerusalem in heaps. Which temple, if any?",
+      "options": [
+        "solomons-temple",
+        "second-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "heavenly-sanctuary",
+      "strong": "H1964",
+      "references": [
+        "2SA 22:7",
+        "PSA 11:4",
+        "PSA 18:6",
+        "PSA 29:9",
+        "ISA 6:1",
+        "MIC 1:2",
+        "JON 2:7",
+        "HAB 2:20"
+      ],
+      "question": "The LORD hears or speaks 'from his holy temple'. PSA 11:4 sets it beside 'the LORD's throne is in heaven'. Is this the heavenly sanctuary, the Jerusalem temple, or should it stay unlinked?",
+      "options": [
+        "heavenly-sanctuary",
+        "solomons-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "solomons-temple",
+      "strong": "H4720",
+      "references": [
+        "PSA 74:7",
+        "PSA 78:69",
+        "ISA 60:13",
+        "ISA 63:18"
+      ],
+      "question": "'Thy sanctuary' burnt or trodden down (PSA 74:7; ISA 63:18), built like high palaces (PSA 78:69), or beautified in the future (ISA 60:13). Solomon's temple, another, or none?",
+      "options": [
+        "solomons-temple",
+        "second-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "solomons-temple",
+      "strong": "H1004",
+      "references": [
+        "ISA 2:2",
+        "ISA 2:3",
+        "ISA 66:20",
+        "MIC 4:1",
+        "MIC 4:2",
+        "JER 33:11",
+        "ZEC 9:8",
+        "ZEC 14:20",
+        "ZEC 14:21"
+      ],
+      "question": "Prophecies of 'the mountain of the LORD's house' in the last days and of offerings brought to the house after the restoration. Is this any of the built temples, a record of its own, or none?",
+      "options": [
+        "none",
+        "second-temple",
+        "a record of its own"
+      ]
+    },
+    {
+      "record": "solomons-temple",
+      "strong": "H1004",
+      "references": [
+        "JOL 1:9",
+        "JOL 1:13",
+        "JOL 1:14",
+        "JOL 1:16",
+        "JOL 3:18",
+        "HOS 8:1",
+        "HOS 9:4",
+        "ZEC 11:13"
+      ],
+      "question": "Joel is not dated in the text, Hosea speaks to the northern kingdom, and Zechariah 11 is a sign-act; the 'house of the LORD' there could be the first temple, the second, or a figure for the people. Which?",
+      "options": [
+        "solomons-temple",
+        "second-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "solomons-temple",
+      "strong": "H1004",
+      "references": [
+        "JER 41:5",
+        "EZR 2:68#1",
+        "EZR 3:8#1"
+      ],
+      "question": "Men bring offerings to 'the house of the LORD' after it was burnt (JER 41:5), and the exiles 'came to the house of the LORD at Jerusalem' before rebuilding it (EZR 2:68; 3:8). Is this the ruined first temple, the second, or the site only?",
+      "options": [
+        "solomons-temple",
+        "second-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "second-temple",
+      "strong": "H1005",
+      "references": [
+        "EZR 5:11",
+        "EZR 5:12"
+      ],
+      "question": "The Jews tell Tatnai they are building 'the house that was builded these many years ago' which Nebuchadnezzar destroyed ('this house'). The text treats the two as one house. Link to the Second Temple, Solomon's, or neither?",
+      "options": [
+        "second-temple",
+        "solomons-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "second-temple",
+      "strong": "H1004",
+      "references": [
+        "HAG 2:3"
+      ],
+      "question": "'Who is left among you that saw this house in her first glory?' - the same house seen then and now. Second Temple, Solomon's, or neither?",
+      "options": [
+        "second-temple",
+        "solomons-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "second-temple",
+      "strong": "H1965",
+      "references": [
+        "EZR 5:15",
+        "EZR 6:5#2"
+      ],
+      "question": "Cyrus orders the vessels carried back 'into the temple that is in Jerusalem' before it had been rebuilt. Second Temple, or leave unlinked?",
+      "options": [
+        "second-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "second-temple",
+      "strong": "H1964",
+      "references": [
+        "ZEC 6:12",
+        "ZEC 6:13",
+        "ZEC 6:14",
+        "ZEC 6:15",
+        "MAL 3:1"
+      ],
+      "question": "'The Branch shall build the temple of the LORD' and 'the Lord shall suddenly come to his temple' are read of the Second Temple or messianically. Link, or leave to the reader?",
+      "options": [
+        "second-temple",
+        "herods-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "second-temple",
+      "strong": "H1004",
+      "references": [
+        "NEH 2:8#1"
+      ],
+      "question": "'The palace which appertained to the house' - is 'the house' the temple (Second Temple) here?",
+      "options": [
+        "second-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "ezekiels-temple",
+      "strong": "H4720",
+      "references": [
+        "EZK 44:7",
+        "EZK 44:8",
+        "EZK 44:15"
+      ],
+      "question": "These verses reproach Israel for what was done in 'my sanctuary' in the past - the first temple - inside the vision of the new one. Solomon's temple, Ezekiel's, or none?",
+      "options": [
+        "solomons-temple",
+        "ezekiels-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "ezekiels-temple",
+      "strong": "H1004",
+      "references": [
+        "EZK 44:7"
+      ],
+      "question": "Same question for 'to pollute it, even my house' in EZK 44:7.",
+      "options": [
+        "solomons-temple",
+        "ezekiels-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "second-temple",
+      "strong": "H4720",
+      "references": [
+        "DAN 8:11",
+        "DAN 11:31"
+      ],
+      "question": "The sanctuary cast down and polluted in Daniel's visions is usually read as the Second Temple under Antiochus, but the text does not name it. Link or not?",
+      "options": [
+        "second-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "herods-temple",
+      "strong": "G2411",
+      "references": [
+        "MAT 12:5"
+      ],
+      "question": "'The priests in the temple profane the sabbath' - a point of the law about temple service in general, or Herod's temple?",
+      "options": [
+        "herods-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "herods-temple",
+      "strong": "G3485",
+      "references": [
+        "MAT 26:61",
+        "MAT 27:40",
+        "MRK 14:58",
+        "MRK 15:29",
+        "JHN 2:19"
+      ],
+      "question": "'Destroy this temple and in three days I will raise it': the accusers mean the building, John says he spoke of his body (JHN 2:21). Link to Herod's temple or leave unlinked?",
+      "options": [
+        "herods-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "herods-temple",
+      "strong": "G3485",
+      "references": [
+        "MAT 23:35"
+      ],
+      "question": "Zacharias 'slain between the temple and the altar' - if he is the Zechariah of 2CH 24:20-21, this is Solomon's temple. Which?",
+      "options": [
+        "solomons-temple",
+        "herods-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "herods-temple",
+      "strong": "G3624",
+      "references": [
+        "LUK 11:51"
+      ],
+      "question": "The same Zacharias 'between the altar and the temple (house)'. Which?",
+      "options": [
+        "solomons-temple",
+        "herods-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "herods-temple",
+      "strong": "G3624",
+      "references": [
+        "MAT 21:13",
+        "MRK 11:17",
+        "LUK 19:46",
+        "MAT 23:38",
+        "LUK 13:35"
+      ],
+      "question": "'My house shall be called the house of prayer' (quoting Isaiah) and 'your house is left unto you desolate' (temple, city or people?). Link to Herod's temple or none?",
+      "options": [
+        "herods-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "herods-temple",
+      "strong": "G3485",
+      "references": [
+        "2TH 2:4",
+        "REV 11:1",
+        "REV 11:2"
+      ],
+      "question": "The man of sin sitting 'in the temple of God' and John measuring 'the temple of God' - a building in Jerusalem, the heavenly sanctuary, or a figure?",
+      "options": [
+        "herods-temple",
+        "heavenly-sanctuary",
+        "none"
+      ]
+    },
+    {
+      "record": "heavenly-sanctuary",
+      "strong": "G3485",
+      "references": [
+        "REV 3:12",
+        "REV 7:15",
+        "REV 14:15",
+        "REV 15:6",
+        "REV 15:8",
+        "REV 16:1",
+        "REV 16:17"
+      ],
+      "question": "These temple verses in Revelation are in heaven by their context but the verse itself does not say 'heaven' (REV 16:17 does only in the Textus Receptus). Link to the heavenly sanctuary?",
+      "options": [
+        "heavenly-sanctuary",
+        "none"
+      ]
+    },
+    {
+      "record": "heavenly-sanctuary",
+      "strong": "G4633",
+      "references": [
+        "HEB 8:2",
+        "HEB 9:11",
+        "REV 15:5"
+      ],
+      "question": "'The true tabernacle which the Lord pitched', 'a greater and more perfect tabernacle', 'the tabernacle of the testimony in heaven': the heavenly sanctuary or the tabernacle record?",
+      "options": [
+        "heavenly-sanctuary",
+        "tabernacle",
+        "none"
+      ]
+    },
+    {
+      "record": "holy-of-holies",
+      "strong": "G40",
+      "references": [
+        "HEB 8:2",
+        "HEB 9:8#2",
+        "HEB 9:12",
+        "HEB 9:24",
+        "HEB 10:19",
+        "HEB 13:11"
+      ],
+      "question": "Hebrews' 'the holies' (sanctuary, holiest, holy places) - the earthly most holy place, the heavenly sanctuary, or the whole sanctuary?",
+      "options": [
+        "holy-of-holies",
+        "heavenly-sanctuary",
+        "tabernacle",
+        "none"
+      ]
+    },
+    {
+      "record": "holy-of-holies",
+      "strong": "H1687",
+      "references": [
+        "PSA 28:2"
+      ],
+      "question": "'Toward thy holy oracle' - the inner room of the sanctuary (which one is not said). Link to the Holy of Holies?",
+      "options": [
+        "holy-of-holies",
+        "none"
+      ]
+    },
+    {
+      "record": "holy-of-holies",
+      "strong": "H6944",
+      "references": [
+        "NUM 18:10",
+        "1CH 6:49",
+        "DAN 9:24"
+      ],
+      "question": "'Most holy' here may be a place (KJV 'most holy place') or 'most holy things'; DAN 9:24 'anoint the most Holy' is a famous crux. Link or not?",
+      "options": [
+        "holy-of-holies",
+        "none"
+      ]
+    },
+    {
+      "record": "solomons-palace",
+      "strong": "H1004",
+      "references": [
+        "1KI 10:4",
+        "2CH 9:3"
+      ],
+      "question": "The queen of Sheba saw 'the house that he had built' - the palace or the temple?",
+      "options": [
+        "solomons-palace",
+        "solomons-temple",
+        "none"
+      ]
+    },
+    {
+      "record": "house-of-the-forest-of-lebanon",
+      "strong": "H1004",
+      "references": [
+        "ISA 22:8"
+      ],
+      "question": "'The armour of the house of the forest' in Isaiah - the same building as Solomon's house of the forest of Lebanon?",
+      "options": [
+        "house-of-the-forest-of-lebanon",
+        "none"
+      ]
+    },
+    {
+      "record": "house-of-the-forest-of-lebanon",
+      "strong": "H3293",
+      "references": [
+        "ISA 22:8"
+      ],
+      "question": "Same question for the word 'forest' in ISA 22:8.",
+      "options": [
+        "house-of-the-forest-of-lebanon",
+        "none"
+      ]
+    },
+    {
+      "record": "house-of-the-forest-of-lebanon",
+      "strong": "H3844",
+      "references": [
+        "1KI 7:2",
+        "1KI 10:17",
+        "1KI 10:21",
+        "2CH 9:16",
+        "2CH 9:20"
+      ],
+      "question": "'Lebanon' in the name of this building is currently linked to the place Lebanon, though the building stood in Jerusalem. Move these five words to this record, or leave them on the place?",
+      "options": [
+        "house-of-the-forest-of-lebanon",
+        "lebanon"
+      ]
+    },
+    {
+      "record": "house-of-the-forest-of-lebanon",
+      "strong": "H1004",
+      "references": [
+        "1KI 7:2"
+      ],
+      "question": "The encyclopedia already holds this as the place 'houseoftheforestoflebanon', with its point on the map, so no object record was written for it. Should it become a structure record with its words linked (H1004 at 1KI 7:2, 1KI 10:17-21, 2CH 9:16-20; H3293 at 1KI 7:2, 1KI 10:17-21, 2CH 9:16-20), replacing the place, or stay a place?",
+      "options": [
+        "a structure record, replacing the place",
+        "stay a place"
+      ]
+    },
+    {
+      "record": "solomons-porch",
+      "strong": "G4745",
+      "references": [
+        "JHN 10:23",
+        "ACT 3:11",
+        "ACT 5:12"
+      ],
+      "question": "The encyclopedia already holds this as the place 'solomonsportico', with its point on the map, so no object record was written for it. Should it become a structure record with its words linked (G4745 at JHN 10:23, ACT 3:11, ACT 5:12), replacing the place, or stay a place?",
+      "options": [
+        "a structure record, replacing the place",
+        "stay a place"
+      ]
+    },
+    {
+      "record": "beautiful-gate",
+      "strong": "G5611",
+      "references": [
+        "ACT 3:2",
+        "ACT 3:10"
+      ],
+      "question": "The encyclopedia already holds this as the place 'beautifulgate', with its point on the map, so no object record was written for it. Should it become a structure record with its words linked (G5611 at ACT 3:2, ACT 3:10; G2374 at ACT 3:2; G4439 at ACT 3:10), replacing the place, or stay a place?",
+      "options": [
+        "a structure record, replacing the place",
+        "stay a place"
+      ]
+    },
+    {
+      "record": "tent-of-meeting-outside-the-camp",
+      "strong": "H168",
+      "references": [
+        "NUM 11:16",
+        "NUM 11:24",
+        "NUM 11:26",
+        "NUM 12:4",
+        "NUM 12:5",
+        "NUM 12:10"
+      ],
+      "question": "The 'tabernacle of the congregation' to which the seventy elders went out (NUM 11) and where Aaron and Miriam were called (NUM 12) is argued to be the tent outside the camp. This tent, the tabernacle, or none? (Also: the tabernacle record must not claim EXO 33:7-11, linked here.)",
+      "options": [
+        "tent-of-meeting-outside-the-camp",
+        "tabernacle",
+        "none"
+      ]
+    },
+    {
+      "record": "davids-tent-for-the-ark",
+      "strong": "H168",
+      "references": [
+        "1KI 1:39",
+        "1KI 2:28",
+        "1KI 2:29",
+        "1KI 2:30"
+      ],
+      "question": "Zadok took oil 'out of the tabernacle' and Joab fled to 'the tabernacle of the LORD' in Jerusalem while the Mosaic tabernacle stood at Gibeon (2CH 1:3). David's tent, the tabernacle, or none?",
+      "options": [
+        "davids-tent-for-the-ark",
+        "tabernacle",
+        "none"
+      ]
+    },
+    {
+      "record": "davids-tent-for-the-ark",
+      "strong": "H1004",
+      "references": [
+        "2SA 12:20"
+      ],
+      "question": "David 'came into the house of the LORD, and worshipped' before the temple was built - his tent for the ark?",
+      "options": [
+        "davids-tent-for-the-ark",
+        "none"
+      ]
+    },
+    {
+      "record": "high-priests-ephod",
+      "strong": "H646",
+      "references": [
+        "1SA 2:28",
+        "1SA 14:3",
+        "1SA 21:9",
+        "1SA 23:6",
+        "1SA 23:9",
+        "1SA 30:7#1",
+        "1SA 30:7#2"
+      ],
+      "question": "The ephod worn by the priests of Eli's house and brought by Abiathar for asking counsel (and the ephod Goliath's sword was kept behind at Nob). Is this Aaron's ephod of Exodus 28, or another ephod?",
+      "options": [
+        "high-priests-ephod",
+        "none"
+      ]
+    },
+    {
+      "record": "micahs-image",
+      "strong": "H646",
+      "references": [
+        "JDG 17:5",
+        "JDG 18:14",
+        "JDG 18:17",
+        "JDG 18:18",
+        "JDG 18:20"
+      ],
+      "question": "Micah's ephod, kept with the graven image and taken by the Danites. Should it be part of the Micah's image record, a record of its own, or none?",
+      "options": [
+        "micahs-image",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "micahs-image",
+      "strong": "H8655",
+      "references": [
+        "JDG 17:5",
+        "JDG 18:14",
+        "JDG 18:17",
+        "JDG 18:18",
+        "JDG 18:20"
+      ],
+      "question": "Micah's teraphim (household gods), kept with the graven image. Part of the Micah's image record, a record of their own, or none?",
+      "options": [
+        "micahs-image",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "micahs-image",
+      "strong": "H4541",
+      "references": [
+        "JDG 17:3",
+        "JDG 17:4",
+        "JDG 18:14",
+        "JDG 18:17",
+        "JDG 18:18"
+      ],
+      "question": "The 'molten image' made alongside the graven image. The text lists it as a separate item (JDG 18:17-18) but does not say it went to Dan (18:20, 30). Same record as the graven image, a record of its own, or none?",
+      "options": [
+        "micahs-image",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "silver-trumpets",
+      "strong": "H2689",
+      "references": [
+        "NUM 31:6"
+      ],
+      "question": "Phinehas the priest goes to the war against Midian 'with the trumpets to blow in his hand', as NUM 10:9 ordains. Are these the two silver trumpets?",
+      "options": [
+        "silver-trumpets",
+        "none"
+      ]
+    },
+    {
+      "record": "silver-trumpets",
+      "strong": "H2689",
+      "references": [
+        "1CH 15:24",
+        "1CH 16:6",
+        "1CH 16:42",
+        "2CH 5:12",
+        "2CH 13:12",
+        "2CH 13:14",
+        "2CH 29:26",
+        "2CH 29:27",
+        "EZR 3:10",
+        "NEH 12:35",
+        "NEH 12:41"
+      ],
+      "question": "Priests blowing trumpets in later worship and war. The text does not say these are the two made in Numbers 10. Link them to that record, or leave them as trumpets in general?",
+      "options": [
+        "silver-trumpets",
+        "none"
+      ]
+    },
+    {
+      "record": "golden-calf",
+      "strong": "G3447",
+      "references": [
+        "ACT 7:41"
+      ],
+      "question": "Stephen says 'they made a calf' with a single Greek verb meaning 'to make a calf'. Link that verb to the golden calf?",
+      "options": [
+        "golden-calf",
+        "none"
+      ]
+    },
+    {
+      "record": "golden-calf",
+      "strong": "G1497",
+      "references": [
+        "ACT 7:41"
+      ],
+      "question": "In the same verse Stephen says they 'offered sacrifice unto the idol', meaning the calf. Link 'idol' to the golden calf?",
+      "options": [
+        "golden-calf",
+        "none"
+      ]
+    },
+    {
+      "record": "jeroboams-golden-calves",
+      "strong": "H5695",
+      "references": [
+        "HOS 8:5",
+        "HOS 8:6",
+        "HOS 13:2"
+      ],
+      "question": "Hosea's 'thy calf, O Samaria' and 'let them kiss the calves' do not name Jeroboam, Bethel or Dan. Jeroboam's calves, or calf-worship in general?",
+      "options": [
+        "jeroboams-golden-calves",
+        "none"
+      ]
+    },
+    {
+      "record": "jeroboams-golden-calves",
+      "strong": "H5697",
+      "references": [
+        "HOS 10:5"
+      ],
+      "question": "'The calves of Beth-aven' (a feminine form of the word). Beth-aven is often taken as a scornful name for Bethel. Jeroboam's calves, or none?",
+      "options": [
+        "jeroboams-golden-calves",
+        "none"
+      ]
+    },
+    {
+      "record": "goliaths-sword",
+      "strong": "H2719",
+      "references": [
+        "1SA 17:45"
+      ],
+      "question": "David tells Goliath 'thou comest to me with a sword' — Goliath's own sword, which David then used on him (17:51). Link it?",
+      "options": [
+        "goliaths-sword",
+        "none"
+      ]
+    },
+    {
+      "record": "moses-staff",
+      "strong": "H4294",
+      "references": [
+        "EXO 7:15",
+        "EXO 7:17",
+        "EXO 7:20"
+      ],
+      "question": "The rod of the first plague: 7:15 tells Moses to take 'the rod which was turned to a serpent' (Aaron's in 7:10), 7:19 tells Aaron to use his rod, and 17:5 later calls it the rod 'wherewith thou smotest the river'. Whose rod is it here?",
+      "options": [
+        "moses-staff",
+        "aarons-rod",
+        "none"
+      ]
+    },
+    {
+      "record": "moses-staff",
+      "strong": "H4294",
+      "references": [
+        "NUM 20:8",
+        "NUM 20:9",
+        "NUM 20:11"
+      ],
+      "question": "At Meribah Moses takes 'the rod from before the LORD' and strikes the rock 'with his rod'. Aaron's rod was laid up before the testimony (NUM 17:10). Moses' staff or Aaron's rod?",
+      "options": [
+        "moses-staff",
+        "aarons-rod",
+        "none"
+      ]
+    },
+    {
+      "record": "jacobs-pillar",
+      "strong": "H4676",
+      "references": [
+        "GEN 35:14"
+      ],
+      "question": "On his return to Bethel Jacob 'set up a pillar' again and poured oil on it. The same pillar as GEN 28:18, a second one, or none?",
+      "options": [
+        "jacobs-pillar",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "jacobs-pillar",
+      "strong": "H4678",
+      "references": [
+        "GEN 35:14"
+      ],
+      "question": "Same verse, the second word 'a pillar of stone' (a different form of the word). Same answer as the question above?",
+      "options": [
+        "jacobs-pillar",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "jacobs-pillar",
+      "strong": "H68",
+      "references": [
+        "GEN 35:14"
+      ],
+      "question": "Same verse, the word 'stone' in 'a pillar of stone'. Same answer as the two questions above?",
+      "options": [
+        "jacobs-pillar",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "altar-of-witness",
+      "strong": "H4196",
+      "references": [
+        "JOS 22:19#1"
+      ],
+      "question": "'Rebel not ... in building you an altar beside the altar of the LORD' — the accusers speak of the altar just built, but as a warning. Link this 'altar' to the altar by the Jordan?",
+      "options": [
+        "altar-of-witness",
+        "none"
+      ]
+    },
+    {
+      "record": "altar-of-witness",
+      "strong": "H5707",
+      "references": [
+        "JOS 22:27",
+        "JOS 22:28",
+        "JOS 22:34"
+      ],
+      "question": "The word 'witness' that the altar is said to be. In 22:34 it is the only source of the name 'Ed' the translations give. Link 'witness' to the altar?",
+      "options": [
+        "altar-of-witness",
+        "none"
+      ]
+    },
+    {
+      "record": "jordan-memorial-stones",
+      "strong": "H68",
+      "references": [
+        "JOS 4:9"
+      ],
+      "question": "'Joshua set up twelve stones in the midst of Jordan' where the priests stood. A second set (as the King James reads) or the same stones carried to Gilgal?",
+      "options": [
+        "jordan-memorial-stones",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "altar-the-lord-is-peace",
+      "strong": "H4196",
+      "references": [
+        "JDG 6:26",
+        "JDG 6:28#2"
+      ],
+      "question": "That same night Gideon is told to build 'an altar unto the LORD ... upon the top of this rock' and offers the bullock on it. The Jehovah-shalom altar of 6:24, or another?",
+      "options": [
+        "altar-the-lord-is-peace",
+        "a record of its own",
+        "none"
+      ]
+    },
+    {
+      "record": "altar-the-lord-is-my-banner",
+      "strong": "H5251",
+      "references": [
+        "EXO 17:15"
+      ],
+      "question": "The altar's name is tagged as two ordinary words, 'the LORD' (which stays God's) and 'banner'. Also link 'banner' to the altar?",
+      "options": [
+        "altar-the-lord-is-my-banner",
+        "none"
+      ]
+    },
+    {
+      "record": "altar-the-lord-is-peace",
+      "strong": "H7965",
+      "references": [
+        "JDG 6:24"
+      ],
+      "question": "The altar's name is tagged as 'the LORD' (which stays God's) and 'peace'. Also link 'peace' to the altar?",
+      "options": [
+        "altar-the-lord-is-peace",
+        "none"
+      ]
+    },
+    {
+      "record": "altar-el-elohe-israel",
+      "strong": "H410",
+      "references": [
+        "GEN 33:20"
+      ],
+      "question": "The altar's name is tagged as 'El', 'God of' and 'Israel', which belong to their own records. Leave the name words alone, or also link 'El' to the altar?",
+      "options": [
+        "altar-el-elohe-israel",
+        "none"
+      ]
+    },
+    {
+      "record": "cross-of-christ",
+      "strong": "G4716",
+      "references": [
+        "PHP 2:8",
+        "COL 2:14",
+        "HEB 12:2"
+      ],
+      "question": "'Obedient unto death, even the death of the cross', 'nailing it to his cross', 'endured the cross'. These point at the actual crucifixion. Link them to the object?",
+      "options": [
+        "cross-of-christ",
+        "none"
+      ]
+    },
+    {
+      "record": "cross-of-christ",
+      "strong": "G4716",
+      "references": [
+        "1CO 1:17",
+        "1CO 1:18",
+        "GAL 5:11",
+        "GAL 6:12",
+        "GAL 6:14",
+        "EPH 2:16",
+        "PHP 3:18",
+        "COL 1:20"
+      ],
+      "question": "Paul's 'the cross of Christ', 'the preaching of the cross', 'the offence of the cross', 'reconcile ... by the cross'. Is this the object (this record), or a theological sense to leave unlinked?",
+      "options": [
+        "cross-of-christ",
+        "none"
+      ]
+    },
+    {
+      "record": "crown-of-thorns",
+      "strong": "G173",
+      "references": [
+        "MAT 27:29",
+        "JHN 19:2"
+      ],
+      "question": "The word 'thorns' in 'a crown of thorns'. Link the material word to the crown too, or only the word 'crown'?",
+      "options": [
+        "crown-of-thorns",
+        "none"
+      ]
+    },
+    {
+      "record": "crown-of-thorns",
+      "strong": "G174",
+      "references": [
+        "MRK 15:17",
+        "JHN 19:5"
+      ],
+      "question": "The adjective 'thorny' ('crown of thorns' in English). Link it to the crown too, or only the word 'crown'?",
+      "options": [
+        "crown-of-thorns",
+        "none"
+      ]
+    },
+    {
+      "record": "inscription-on-the-cross",
+      "strong": "G156",
+      "references": [
+        "MAT 27:37",
+        "MRK 15:26"
+      ],
+      "question": "Matthew: they 'set up over his head his accusation written'; Mark: 'the superscription of his accusation'. Is 'accusation' the inscription itself (Matthew) or only its content (Mark)?",
+      "options": [
+        "inscription-on-the-cross",
+        "none"
+      ]
+    },
+    {
+      "record": "thirty-pieces-of-silver",
+      "strong": "H3701",
+      "references": [
+        "ZEC 11:12",
+        "ZEC 11:13"
+      ],
+      "question": "Zechariah's shepherd is paid thirty pieces of silver and casts them to the potter; Matthew says this was fulfilled (MAT 27:9). Same record, or leave the prophecy's silver unlinked?",
+      "options": [
+        "thirty-pieces-of-silver",
+        "none"
+      ]
+    },
+    {
+      "record": "thirty-pieces-of-silver",
+      "strong": "G3408",
+      "references": [
+        "ACT 1:18"
+      ],
+      "question": "Acts says Judas 'purchased a field with the reward of iniquity'. Is that reward the thirty pieces of silver?",
+      "options": [
+        "thirty-pieces-of-silver",
+        "none"
+      ]
+    },
+    {
+      "record": "seamless-tunic",
+      "strong": "G2441",
+      "references": [
+        "JHN 19:24"
+      ],
+      "question": "'For my vesture they did cast lots' — the psalm John quotes about the soldiers casting lots for the coat. Link 'vesture' to the seamless tunic?",
+      "options": [
+        "seamless-tunic",
+        "none"
+      ]
+    },
+    {
+      "record": "solomons-throne",
+      "strong": "H3678",
+      "references": [
+        "1KI 7:7"
+      ],
+      "question": "'A porch for the throne where he might judge' in Solomon's palace. Is this the ivory throne of 1KI 10:18?",
+      "options": [
+        "solomons-throne",
+        "none"
+      ]
+    },
+    {
+      "record": "steps-of-ahaz",
+      "strong": "H4600",
+      "references": [
+        "2KI 20:11"
+      ],
+      "question": "The first 'degrees' (steps) in this verse is tagged H4600 ('to press') by BHSA, which is a tagging error: the word is the same as the other two. Link it to the steps of Ahaz?",
+      "options": [
+        "steps-of-ahaz",
+        "none"
+      ]
+    },
+    {
+      "record": "rahabs-scarlet-cord",
+      "strong": "H2256",
+      "references": [
+        "JOS 2:15"
+      ],
+      "question": "'She let them down by a cord through the window.' The text does not say this rope was the scarlet line of 2:18. Same object, or none?",
+      "options": [
+        "rahabs-scarlet-cord",
+        "none"
+      ]
+    },
+    {
+      "record": "rahabs-scarlet-cord",
+      "strong": "H2339",
+      "references": [
+        "JOS 2:18"
+      ],
+      "question": "'This line of scarlet thread': link the word 'thread' to the cord too, or only 'line'?",
+      "options": [
+        "rahabs-scarlet-cord",
+        "none"
+      ]
+    },
+    {
+      "record": "moses-veil",
+      "strong": "G2571",
+      "references": [
+        "2CO 3:14",
+        "2CO 3:15",
+        "2CO 3:16"
+      ],
+      "question": "Paul turns Moses' veil into a figure: a veil 'in the reading of the old testament' and 'upon their heart'. Link these to Moses' veil, or leave them unlinked?",
+      "options": [
+        "moses-veil",
+        "none"
+      ]
+    }
+  ]
+}

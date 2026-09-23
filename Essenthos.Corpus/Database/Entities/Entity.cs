@@ -44,6 +44,13 @@ public class Entity
 
     public string? ModernEquivalent { get; set; }
 
+    /// <summary>
+    /// What sort of object or observance this is — <c>furnishing</c>, <c>vessel</c>,
+    /// <c>structure</c>, <c>vestment</c>; <c>feast</c>, <c>fast</c>, <c>sabbath</c>. Null on every
+    /// other kind, which the text does not sort this way.
+    /// </summary>
+    public string? Subtype { get; set; }
+
     public string? Notes { get; set; }
 
     /// <summary>
@@ -96,6 +103,12 @@ public class Entity
 
     /// <summary>Its pictures, each with whose it is and under what licence.</summary>
     public ICollection<EntityImage> Images { get; set; } = [];
+
+    /// <summary>The passages a reader is sent to about this entity, and those that command it.</summary>
+    public ICollection<EntityPassage> Passages { get; set; } = [];
+
+    /// <summary>Where an observance falls in the year, as the verses that appoint it state.</summary>
+    public ICollection<ObservanceTime> Times { get; set; } = [];
 
     public override string ToString() => $"Entity({Kind} {Slug})";
 }

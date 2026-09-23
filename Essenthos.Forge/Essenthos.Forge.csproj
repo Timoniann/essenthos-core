@@ -67,6 +67,10 @@
         <Content Remove="Loading\Encyclopedia\UnsettledRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\GenealogyRecords.json" />
+        <Content Remove="Loading\Encyclopedia\ObjectRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\ObjectRecords.json" />
+        <Content Remove="Loading\Encyclopedia\ObservanceRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\ObservanceRecords.json" />
 
         <!-- The peoples this corpus names, and the two things about them nothing else can supply:
              what to call the nine gentilics whose entry yields no usable English word, and the
