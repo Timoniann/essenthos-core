@@ -246,7 +246,7 @@ public sealed class ThingLoaderTests : IDisposable
         await _db.SaveChangesAsync();
         var pillar = Record("boaz-pillar") with
         {
-            Words = [new ThingWord("Boaz", "בֹּעַז", "boaz", Boaz, null, null, null, "in him is strength")],
+            Called = [new ThingWord("Boaz", "בֹּעַז", "boaz", Boaz, null, null, null, "in him is strength")],
         };
 
         await _loader.Load([pillar], CancellationToken.None);
@@ -347,6 +347,58 @@ public sealed class ThingLoaderTests : IDisposable
         (time.Month, time.Day, time.CanonicalChapter, time.CanonicalVerse).Should().Be((1, 14, 23, 5));
     }
 
+    /// <summary>
+    /// Leviticus 16 never says <em>the day of atonement</em> and is the whole of how it is kept, so the
+    /// verses of a commanding passage are the observance's references, under a source that says they
+    /// came from the passage and not from a word; a passage the file no longer lists takes them back.
+    /// </summary>
+    [Fact]
+    public async Task ACommandingPassageGivesItsVersesAsReferences()
+    {
+        var atonement = Record("day-of-atonement", "observance",
+            passages: [new ThingPassage("GEN 25", PassageRoles.Command, null), new ThingPassage("GEN 30:1", PassageRoles.Key, null)]);
+
+        await _loader.Load([atonement], CancellationToken.None);
+
+        var cited = await _db.EntityVerses
+            .Where(v => v.Source == ThingLoader.PassageSource)
+            .Select(v => new { v.CanonicalChapter, v.CanonicalVerse })
+            .ToListAsync();
+        cited.Select(v => (v.CanonicalChapter, v.CanonicalVerse)).Should().BeEquivalentTo(
+            [(25, 10), (25, 14)], "a key passage is to be read about it, and only a commanding one is cited");
+
+        (await _loader.Load([atonement], CancellationToken.None)).AlreadyLoaded.Should().BeTrue();
+
+        await _loader.Load(
+            [atonement with { Passages = [new ThingPassage("GEN 25:14", PassageRoles.Command, null)] }],
+            CancellationToken.None);
+        (await _db.EntityVerses.CountAsync(v => v.Source == ThingLoader.PassageSource)).Should().Be(1);
+    }
+
+    /// <summary>
+    /// A record's names are its names: the phrase whole, with the number of each word of it, and never
+    /// one word of the phrase as a name of its own.
+    /// </summary>
+    [Fact]
+    public async Task APhraseIsOneNameCarryingEachOfItsNumbers()
+    {
+        var atonement = Record("day-of-atonement", "observance") with
+        {
+            Called =
+            [
+                new ThingWord("Day of Atonement", "יוֹם הַכִּפֻּרִים", "yom hakkippurim", "H3117,H3725", null, null, null, null),
+                new ThingWord("Yom Kippur", null, null, null, null, null, null, null),
+            ],
+        };
+
+        await _loader.Load([atonement], CancellationToken.None);
+
+        var names = await _db.EntityNames.Where(n => n.Entity!.Slug == "day-of-atonement")
+            .Select(n => new { n.Label, n.HebrewStrongNumber }).ToListAsync();
+        names.Select(n => n.Label).Should().Equal("Day of Atonement", "Yom Kippur");
+        names[0].HebrewStrongNumber.Should().Be("H3117,H3725");
+    }
+
     /// <summary>The startup pipeline runs on every boot, and a second boot writes nothing.</summary>
     [Fact]
     public async Task ASecondBootWritesNothing()
@@ -416,6 +468,16 @@ public sealed class ThingFileTests
         _records.Select(r => r.Slug).Should().OnlyHaveUniqueItems();
         foreach (var record in _records)
         {
+            record.Called.Should().NotBeNullOrEmpty($"{record.Slug} has to be findable by its names");
+            foreach (var name in record.Called!)
+            {
+                name.Label.Should().NotBeNullOrWhiteSpace();
+                foreach (var number in $"{name.HebrewStrongNumber},{name.GreekStrongNumber}".Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    number.Should().MatchRegex("^[HG][0-9]+$", $"{record.Slug}: {name.Label}");
+                }
+            }
+
             record.Kind.Should().BeOneOf("object", "observance");
             Subtypes.Should().Contain(record.Subtype, $"{record.Slug} has to be sorted by a subtype the pages know");
             record.Names.Should().ContainKey("ukr", $"{record.Slug} needs its Ukrainian name");
@@ -448,6 +510,20 @@ public sealed class ThingFileTests
             }
         }
     }
+
+    /// <summary>The names readers search the appointed times by, in the Hebrew they are known by.</summary>
+    [Theory]
+    [InlineData("day-of-atonement", "Yom Kippur")]
+    [InlineData("day-of-trumpets", "Yom Teruah")]
+    [InlineData("feast-of-booths", "Sukkot")]
+    [InlineData("feast-of-weeks", "Shavuot")]
+    [InlineData("passover", "Pesach")]
+    [InlineData("new-moon", "Rosh Chodesh")]
+    [InlineData("sabbath", "Shabbat")]
+    [InlineData("feast-of-dedication", "Hanukkah")]
+    [InlineData("menorah", "Menorah")]
+    public void AnAppointedTimeAnswersToItsHebrewName(string slug, string name) =>
+        _records.Single(r => r.Slug == slug).Called!.Select(n => n.Label).Should().Contain(name);
 
     /// <summary>The slugs another agent's models are keyed on, which the files must keep.</summary>
     [Fact]

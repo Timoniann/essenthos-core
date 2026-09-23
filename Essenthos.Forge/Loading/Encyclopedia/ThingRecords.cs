@@ -44,6 +44,12 @@ internal sealed record ThingFile(string DecidedBy, IReadOnlyList<ThingRecord> Re
 /// The name in the other cases a phrase puts it in, where a language declines it — the genitive of
 /// <em>ковчег заповіту</em> that <em>частина ковчега заповіту</em> needs.
 /// </param>
+/// <param name="Called">
+/// The names it is called by, each whole: the text's own phrase in Hebrew or Greek with the Strong
+/// number of each of its words comma-joined, the transliteration a reader searches with, and its
+/// other names in English and Ukrainian. Never one word of a phrase on its own — <em>day</em> is not a
+/// name of the Day of Atonement.
+/// </param>
 /// <param name="Why">Why these occurrences are this record, which is what the record's claim says.</param>
 /// <param name="Reviewed">
 /// Who reviewed the record itself — its claim, its relations and its names — and when, once somebody
@@ -58,7 +64,7 @@ internal sealed record ThingRecord(
     IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>>? Forms,
     string Distinguisher,
     string? Notes,
-    IReadOnlyList<ThingWord>? Words,
+    IReadOnlyList<ThingWord>? Called,
     IReadOnlyList<ThingPassage>? Passages,
     IReadOnlyList<ThingTime>? Times,
     IReadOnlyList<ThingRelation>? Related,
@@ -69,7 +75,11 @@ internal sealed record ThingRecord(
     public EntityKind EntityKind => EnumSpelling.ToEntityKind(Kind);
 }
 
-/// <summary>A word the text calls the thing by, with its number in Strong's Dictionary.</summary>
+/// <summary>
+/// A name the thing is called by. <see cref="HebrewStrongNumber"/> and <see cref="GreekStrongNumber"/>
+/// hold the number of each word of it, comma-joined as a title's are, and are absent on a name that is
+/// no word of the text — a transliteration, or the name in another language.
+/// </summary>
 internal sealed record ThingWord(
     string Label,
     string? Hebrew,

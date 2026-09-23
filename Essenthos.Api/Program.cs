@@ -94,6 +94,14 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Every endpoint that takes a reader's language reads it as the corpus spells it, so the two-letter
+// code an interface locale uses reaches the same names the three-letter one does.
+app.Use(async (context, next) =>
+{
+    LanguageCodes.Rewrite(context.Request);
+    await next(context);
+});
+
 var v1 = app.MapGroup("/v1");
 v1.MapHealth();
 v1.MapRead();
