@@ -57,6 +57,9 @@ public class EntityImage
     /// <summary>What the picture shows, in a sentence that serves as its alternative text.</summary>
     public string? Caption { get; set; }
 
+    /// <summary>The caption in the other languages its list gives it in; mostly none.</summary>
+    public List<EntityImageCaption> Captions { get; set; } = [];
+
     /// <summary>Who made it, as its source asks to be credited.</summary>
     public required string Credit { get; set; }
 

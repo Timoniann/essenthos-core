@@ -386,6 +386,73 @@ public sealed class EntityImageTests : IDisposable
             "a blank caption is no caption of the owner's");
     }
 
+    /// <summary>
+    /// A picture on a thing's page is not the thing, and what it is instead is said only in its
+    /// caption: the caption a list gives in a reader's language reaches that reader, and anyone else
+    /// is given the English.
+    /// </summary>
+    [Fact]
+    public async Task ACaptionReachesAReaderInHisLanguageWhereTheListGivesIt()
+    {
+        var ark = Entity(EntityKind.Object, "noahs-ark");
+        var moses = Entity(EntityKind.Person, "moses");
+        await _db.SaveChangesAsync();
+
+        var images = Path.Combine(_resources, EntityImageLoader.Folder);
+        File.WriteAllText(Path.Combine(images, "generated", "manifest.json"),
+            """
+            {
+              "source": "Essenthos, generated", "credit": "Essenthos", "licence": "Our own work",
+              "images": [
+                { "entity": "moses", "file": "generated/moses.jpg", "caption": "Moses at eighty",
+                  "captions": { "UKR": " Мойсей у вісімдесят ", "deu": "", "spa": "Moisés a los ochenta" } }
+              ]
+            }
+            """);
+        await Loader().Load(_resources);
+
+        var stored = await _db.EntityImages.Include(i => i.Captions).SingleAsync(i => i.EntityId == moses.Id);
+        stored.Captions.Select(c => (c.Language, c.Caption)).Should().BeEquivalentTo(
+            [("ukr", "Мойсей у вісімдесят"), ("spa", "Moisés a los ochenta")]);
+
+        _db.EntityImages.Add(new EntityImage
+        {
+            EntityId = ark.Id, Kind = "public", Role = "primary", File = "commons/Durupinar.jpg", Digest = "0123456789ab",
+            Width = 1920, Height = 1285, Caption = "The Durupınar formation", Credit = "Zorka Sojka",
+            Licence = "CC BY-SA 4.0", Source = "Wikimedia Commons",
+            Captions = [new EntityImageCaption { Language = "ukr", Caption = "Формація Дурупинар" }],
+        });
+        await _db.SaveChangesAsync();
+
+        var ukrainian = (await ImageEndpoints.Of(_db, ark.Id, default, language: "ukr")).Single();
+        (ukrainian.Caption, ukrainian.CaptionLanguage).Should().Be(("Формація Дурупинар", "ukr"));
+
+        var german = (await ImageEndpoints.Of(_db, ark.Id, default, language: "deu")).Single();
+        (german.Caption, german.CaptionLanguage).Should().Be(("The Durupınar formation", null));
+
+        (await ImageEndpoints.Of(_db, moses.Id, default, language: "ukr")).Single().Caption.Should()
+            .BeNull("our own pictures go out bare in every language");
+
+        var wire = new JsonSerializerOptions(JsonSerializerDefaults.Web) { TypeInfoResolver = AppJsonSerializerContext.Default };
+        JsonSerializer.Serialize(ukrainian, wire).Should().Contain("\"captionLanguage\":\"ukr\"");
+    }
+
+    [Fact]
+    public void TheOwnersCaptionTakesTheListsTranslationsWithIt()
+    {
+        EntityImageLoader.Candidate Candidate(string file) => new(
+            1, "noahs-ark", "public", "primary", file, "The list's caption", "Credit", null, "CC BY 4.0", null,
+            "Wikimedia Commons", null, false, new Dictionary<string, string> { ["ukr"] = "Підпис списку" });
+
+        var applied = ImageChoices.Apply(
+            [Candidate("commons/a.jpg"), Candidate("commons/b.jpg")],
+            new ImageChoiceFile([new ImageChoice("noahs-ark", "commons/a.jpg", Caption: "His own caption")]),
+            out _);
+
+        (applied[0].Caption, applied[0].Captions).Should().Be(("His own caption", null));
+        applied[1].Captions.Should().ContainKey("ukr");
+    }
+
     [Fact]
     public void TheConsoleKnowsGodByTheSameRecordsTheLoaderDoes() =>
         Essenthos.Core.Desk.PortraitBoard.GodSourcePrefix.Should().Be(EntityImageLoader.GodSourcePrefix);
@@ -403,6 +470,9 @@ public sealed class EntityImageTests : IDisposable
             && i.File.StartsWith("commons/"));
         manifest.Images.Select(i => i.Entity).Should().OnlyHaveUniqueItems();
         manifest.Images.Select(i => i.Entity).Should().NotContain(["yhvh", "yhvh-2", "elohim"]);
+        manifest.Images.Where(i => i.Captions != null).Should().OnlyContain(i =>
+            i.Caption != null && new[] { "ukr", "deu", "spa" }.All(i.Captions!.ContainsKey),
+            "a caption worth translating is one every reader needs");
     }
 
     /// <summary>

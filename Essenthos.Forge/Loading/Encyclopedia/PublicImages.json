@@ -135,6 +135,21 @@
       "creditUrl": "https://commons.wikimedia.org/wiki/File:Tissot_Ishmael.jpg",
       "licence": "Public domain",
       "download": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Tissot_Ishmael.jpg"
+    },
+    {
+      "entity": "noahs-ark",
+      "file": "commons/Turecko_Noemova_archa_(03).jpg",
+      "caption": "The Durupınar formation near Doğubayazıt in Ağrı Province, Turkey, about 30 km south of Mount Ararat, in 2009. Some hold this boat-shaped ridge to be the remains of Noah's ark; its origin is disputed, and geologists have described it as a natural formation. The Bible says only that the ark rested upon the mountains of Ararat (Genesis 8:4).",
+      "captions": {
+        "ukr": "Формація Дурупинар біля Догубаязита в провінції Агри, Туреччина, приблизно за 30 км на південь від гори Арарат, 2009 рік. Дехто вважає цей схожий на човен хребет рештками Ноєвого ковчега; його походження спірне, і геологи описували його як природне утворення. Біблія каже лише, що ковчег спинився на горах Араратських (Буття 8:4).",
+        "deu": "Die Durupınar-Formation bei Doğubayazıt in der Provinz Ağrı, Türkei, rund 30 km südlich des Ararat, im Jahr 2009. Manche halten diesen schiffsförmigen Rücken für die Überreste der Arche Noah; seine Entstehung ist umstritten, und Geologen haben ihn als natürliche Bildung beschrieben. Die Bibel sagt nur, dass die Arche sich auf das Gebirge Ararat niederließ (1. Mose 8,4).",
+        "spa": "La formación de Durupınar, cerca de Doğubayazıt, en la provincia de Ağrı (Turquía), a unos 30 km al sur del monte Ararat, en 2009. Algunos tienen esta loma en forma de barco por los restos del arca de Noé; su origen es discutido, y los geólogos la han descrito como una formación natural. La Biblia dice solo que el arca reposó sobre los montes de Ararat (Génesis 8:4)."
+      },
+      "credit": "Zorka Sojka",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Turecko_Noemova_archa_(03).jpg",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "download": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Turecko_Noemova_archa_%2803%29.jpg/1920px-Turecko_Noemova_archa_%2803%29.jpg"
     }
   ]
 }

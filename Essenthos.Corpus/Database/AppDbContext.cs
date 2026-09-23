@@ -128,6 +128,8 @@ public class AppDbContext : DbContext
     /// <summary>The pictures of people and places, each credited, and whether it is ours.</summary>
     public DbSet<EntityImage> EntityImages { get; set; } = null!;
 
+    public DbSet<EntityImageCaption> EntityImageCaptions { get; set; } = null!;
+
     /// <summary>The passages an object's or an observance's page sends a reader to.</summary>
     public DbSet<EntityPassage> EntityPassages { get; set; } = null!;
 
@@ -294,6 +296,17 @@ public class AppDbContext : DbContext
                     "ck_entity_image_focus",
                     "(focus_x IS NULL OR focus_x BETWEEN 0 AND 1) AND (focus_y IS NULL OR focus_y BETWEEN 0 AND 1)");
             });
+        });
+
+        modelBuilder.Entity<EntityImageCaption>(entity =>
+        {
+            entity.HasOne(c => c.EntityImage)
+                .WithMany(i => i.Captions)
+                .HasForeignKey(c => c.EntityImageId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("entity_image_caption", t =>
+                t.HasCheckConstraint("ck_entity_image_caption_text", "length(caption) > 0"));
         });
 
         modelBuilder.Entity<EntityPassage>(entity =>

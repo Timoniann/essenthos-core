@@ -46,8 +46,9 @@ internal static class ImageChoices
 
     /// <summary>
     /// The candidates with the owner's choices applied: a hidden one left out and counted, a caption
-    /// replaced, and a picture he chose to lead with made the primary of its kind for its entity —
-    /// the one it was primary before joining the gallery — and moved ahead so it is the first of them.
+    /// replaced, with the list's translations of the caption it replaces dropped, and a picture he
+    /// chose to lead with made the primary of its kind for its entity — the one it was primary before
+    /// joining the gallery — and moved ahead so it is the first of them.
     /// </summary>
     public static List<EntityImageLoader.Candidate> Apply(
         IReadOnlyList<EntityImageLoader.Candidate> candidates, ImageChoiceFile choices, out int hidden)
@@ -78,10 +79,14 @@ internal static class ImageChoices
                 role = chosen.Contains((candidate.Slug, candidate.File)) ? EntityImageLoader.Primary : EntityImageLoader.Gallery;
             }
 
+            var own = !string.IsNullOrWhiteSpace(choice?.Caption);
             kept.Add(candidate with
             {
                 Role = role,
-                Caption = string.IsNullOrWhiteSpace(choice?.Caption) ? candidate.Caption : choice.Caption.Trim(),
+                Caption = own ? choice!.Caption!.Trim() : candidate.Caption,
+
+                // The list's translations are of the caption it wrote, not of the one he put in its place.
+                Captions = own ? null : candidate.Captions,
             });
         }
 
