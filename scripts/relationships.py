@@ -1202,6 +1202,23 @@ DECIDED_BY = 'the project owner, decided {date}'
 REVIEW = os.path.join('Resources', 'Essenthos', 'review')
 
 
+def decision_documents(where):
+    """
+    The owner's decisions: a folder of one JSON file each, as the review page stored them, or the
+    review list the owner's console keeps, whose `decisions` hold the same documents by key.
+    """
+    if os.path.isfile(where):
+        with open(where, encoding='utf-8') as handle:
+            yield from json.load(handle).get('decisions', {}).values()
+        return
+    for name in sorted(os.listdir(where)):
+        if not name.endswith('.json'):
+            continue
+        with open(os.path.join(where, name), encoding='utf-8') as handle:
+            document = json.load(handle)
+        yield document.get('data', document)
+
+
 def decide(args):
     """
     The owner's decisions from the review page, applied to the facts only BibleData states.
@@ -1226,12 +1243,7 @@ def decide(args):
     flipped = {int(row) for row in args.flip or []}
 
     decisions = []
-    for name in sorted(os.listdir(args.decisions)):
-        if not name.endswith('.json'):
-            continue
-        with open(os.path.join(args.decisions, name), encoding='utf-8') as handle:
-            document = json.load(handle)
-        body = document.get('data', document)
+    for body in decision_documents(args.decisions):
         if body.get('subset') in args.subsets and body.get('decision'):
             decisions.append(({int(row) for row in str(body['rows']).split('|')}, body))
 
@@ -1376,7 +1388,8 @@ def main():
 
     decider = commands.add_parser('decide', help="apply the owner's decisions from the review page")
     decider.add_argument('--decisions', required=True,
-                         help='a directory of the decision documents the review page stored, one JSON file each')
+                         help='the review list the console keeps (Resources/Essenthos/review/bibledata-relationships.json), '
+                              'or a directory of the decision documents the review page stored, one JSON file each')
     decider.add_argument('--subsets', nargs='+', default=[UNMAPPED],
                          help="which of the page's categories to apply; a decision in another is left alone")
     decider.add_argument('--reference', nargs='+',

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <RootNamespace>Essenthos.Core</RootNamespace>
+        <AssemblyName>Essenthos.Desk</AssemblyName>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <UserSecretsId>essenthos-core</UserSecretsId>
+        <!-- The owner's console runs on his own machine and nowhere else. No Dockerfile, compose file
+             or publish profile names it, and this keeps `dotnet publish` from making it look deployable. -->
+        <IsPublishable>false</IsPublishable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- The schema and nothing else: it reads the corpus, and the files it writes are the ones the
+             loaders read, so it never needs a loader of its own. -->
+        <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Essenthos.Core.Tests" />
+    </ItemGroup>
+
+</Project>

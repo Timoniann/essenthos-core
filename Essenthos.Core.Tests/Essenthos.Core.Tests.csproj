@@ -34,13 +34,14 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <!-- One suite over all four, because a test project per assembly would buy nothing: the
+    <!-- One suite over all of them, because a test project per assembly would buy nothing: the
          boundary that matters is that Essenthos.Api does not reference Essenthos.Forge, and that is
          enforced in the API's own project file rather than here. -->
     <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
     <ProjectReference Include="..\Essenthos.Accounts\Essenthos.Accounts.csproj" />
     <ProjectReference Include="..\Essenthos.Api\Essenthos.Api.csproj" />
     <ProjectReference Include="..\Essenthos.Forge\Essenthos.Forge.csproj" />
+    <ProjectReference Include="..\Essenthos.Desk\Essenthos.Desk.csproj" />
   </ItemGroup>
   <ItemGroup>
     <!-- The descriptor fixtures. The real files are the output of a generation pass and stay out

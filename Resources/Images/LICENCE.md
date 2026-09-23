@@ -16,8 +16,10 @@ source page and licence, because no two pictures here need share them.
   A picture with nothing under it reads as ours, and most of these are somebody else's work.
 - **Ours says it is ours.** A generated portrait is marked as generated on the page, so nobody takes
   it for a likeness anyone drew from life.
-- **God is never given a face or a figure.** A picture of YHVH, or of one of the words the text uses
-  of God, is refused by the loader whoever listed it.
+- **God is never given a face or a figure.** The one picture a record of God may have is ours, of the
+  glory as light with nothing in it to see (Exodus 24:10; Ezekiel 1:27–28), listed in
+  `generated/manifest.json` with `"glory": true`. Any other picture of YHVH, and any picture of one
+  of the words the text uses of God, is refused by the loader whoever listed it.
 - **Places are real, present-day photographs** or satellite views, never paintings of how a place
   might have looked.
 
@@ -44,5 +46,6 @@ Drop the file into `generated/` and list it in `generated/manifest.json`:
 ```
 
 `entity` is the person's slug and `file` the path under this folder; `focus` is where the face is,
-from 0 to 1 across and down, so a small crop keeps it. Then
+from 0 to 1 across and down, so a small crop keeps it. `glory` marks the picture of God's glory described
+above, and is read on no other entry. Then
 `dotnet run --project Essenthos.Forge -c Release -- images`.
