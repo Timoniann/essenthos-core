@@ -1113,7 +1113,7 @@ internal static class EncyclopediaEndpoints
     /// whole model exists to avoid — Ussher is up to 278 years from the base, so such a band could
     /// be wrong by two centuries while looking authoritative.
     /// </summary>
-    private static Dictionary<string, int[]> Span(
+    internal static Dictionary<string, int[]> Span(
         Dictionary<int, Dictionary<string, int>> years,
         int? startEventId,
         int? endEventId,

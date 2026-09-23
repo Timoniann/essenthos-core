@@ -191,6 +191,89 @@ public sealed class ContextEndpointTests : IDisposable
         context.PeriodsFrom.Should().BeNull();
     }
 
+    /// <summary>
+    /// The meaning shown is the headword's; a title's meaning is not the name's, and a record whose
+    /// proper names are several and none of them its headword says nothing.
+    /// </summary>
+    [Fact]
+    public async Task ANameMeansWhatItsHeadwordMeans()
+    {
+        var jacob = Record("jacob", EntityKind.Person);
+        var shinar = Record("shinar", EntityKind.Place);
+        var many = Record("many-names", EntityKind.Person);
+        await _db.SaveChangesAsync();
+        Name(jacob, "Israel", "he struggles with God");
+        Name(jacob, "Jacob", "follower");
+        Name(jacob, "Jacob My servant", "Jacob my servant", kind: "title");
+        Name(shinar, "Sennaar", "country of two rivers");
+        Name(many, "First", "one");
+        Name(many, "Second", "two");
+        foreach (var named in new[] { jacob, shinar, many })
+        {
+            NamedAt(named, 10, 1);
+        }
+
+        await _db.SaveChangesAsync();
+
+        var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
+
+        context.Entities.ToDictionary(e => e.Slug, e => e.Meaning).Should().BeEquivalentTo(
+            new Dictionary<string, string?>
+            {
+                ["jacob"] = "follower",
+                ["shinar"] = "country of two rivers",
+                ["many-names"] = null,
+            });
+    }
+
+    /// <summary>
+    /// A unit is counted once a verse, whichever texts carry its number, and a number that is not
+    /// only a unit is not counted at all.
+    /// </summary>
+    [Fact]
+    public async Task TheChaptersUnitsAreItsWordsNumbers()
+    {
+        _db.WordAt(_hebrew, 10, 2, 1).StrongNumber = "H520";
+        _db.WordAt(_english, 10, 2, 2).StrongNumber = "H520";
+        _db.WordAt(_hebrew, 10, 1, 1).StrongNumber = "H8255";
+        _db.WordAt(_hebrew, 10, 3, 1).StrongNumber = "H520";
+        _db.WordAt(_hebrew, 10, 3, 2).StrongNumber = "H3603";
+        await _db.SaveChangesAsync();
+
+        var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
+
+        context.Measures.Select(m => (m.Number, string.Join(',', m.Verses))).Should().Equal(
+            ("H8255", "1"),
+            ("H520", "2,3"));
+    }
+
+    /// <summary>A period carries its span in every reckoning that dates both its ends, as the timeline does.</summary>
+    [Fact]
+    public async Task APeriodCarriesItsYearsInEachReckoning()
+    {
+        var opens = Event("opens", 10, 1, 3031);
+        var closes = Event("closes", 12, 1, 3052);
+        var basis = new Chronology { Slug = "test-basis", Name = "Basis", LastYearBeforeTheCommonEra = 3961 };
+        var other = new Chronology { Slug = "test-other", Name = "Other", LastYearBeforeTheCommonEra = 4003 };
+        _db.Chronologies.AddRange(basis, other);
+        await _db.SaveChangesAsync();
+        _db.EventDates.AddRange(
+            new EventDate { EventId = opens.Id, ChronologyId = basis.Id, Year = 3031 },
+            new EventDate { EventId = closes.Id, ChronologyId = basis.Id, Year = 3052 },
+            new EventDate { EventId = opens.Id, ChronologyId = other.Id, Year = 3029 });
+        Period("reign", 1, 3031, 3052, opens: opens, closes: closes);
+        await _db.SaveChangesAsync();
+
+        var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
+
+        var reign = context.Periods.Should().ContainSingle().Subject;
+        reign.Years.Should().ContainKey("test-basis").WhoseValue.Should().Equal(3031, 3052);
+        reign.Years.Should().NotContainKey("test-other");
+    }
+
+    private void Name(Entity entity, string label, string meaning, string kind = "proper name") =>
+        _db.EntityNames.Add(new EntityName { EntityId = entity.Id, Label = label, Meaning = meaning, Kind = kind });
+
     private Entity Record(string slug, EntityKind kind)
     {
         var entity = new Entity
@@ -243,7 +326,13 @@ public sealed class ContextEndpointTests : IDisposable
     }
 
     private void Period(
-        string slug, int level, int start, int end, Database.Entities.Event? opens = null, string kind = "era") =>
+        string slug,
+        int level,
+        int start,
+        int end,
+        Database.Entities.Event? opens = null,
+        string kind = "era",
+        Database.Entities.Event? closes = null) =>
         _db.Periods.Add(new Period
         {
             Slug = slug,
@@ -253,6 +342,7 @@ public sealed class ContextEndpointTests : IDisposable
             StartYear = start,
             EndYear = end,
             StartEventId = opens?.Id,
+            EndEventId = closes?.Id,
             Source = "test",
         });
 }
