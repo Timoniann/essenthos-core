@@ -482,7 +482,10 @@
         "RUT 4:12",
         "ISA 48:1",
         "EZK 9:9",
-        "HOS 8:14"
+        "HOS 8:14",
+        "MAT 1:2",
+        "MAT 1:3",
+        "LUK 3:33"
       ],
       "question": "BibleData files these verses under Judah as 'Judah'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Judahites?",
       "options": [
@@ -493,11 +496,8 @@
     {
       "record": "judah",
       "label": "Judah",
-      "strong": "G2492",
+      "strong": "G2455",
       "references": [
-        "MAT 1:2",
-        "MAT 1:3",
-        "LUK 3:33",
         "HEB 7:14",
         "HEB 8:8",
         "REV 7:5"
