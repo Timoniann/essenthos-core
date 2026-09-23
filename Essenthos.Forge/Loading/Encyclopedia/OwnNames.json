@@ -1,0 +1,13 @@
+{
+  "names": [
+    {
+      "entities": ["heaven", "heaven-2"],
+      "label": "heavens",
+      "hebrew": "שָׁמַיִם",
+      "hebrewTransliterated": "shamayim",
+      "hebrewStrongNumber": "H8064",
+      "meaning": "the heavens; the Hebrew word has no singular",
+      "why": "Hebrew shamayim is plural in form and has no singular, so 'the heavens' is as much its name as 'heaven'. The project owner asked for it on 2026-09-23."
+    }
+  ]
+}

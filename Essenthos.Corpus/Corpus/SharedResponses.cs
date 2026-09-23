@@ -340,6 +340,13 @@ internal record EntityRelationshipResponse(
     public Dictionary<string, string>? Forms { get; init; }
 
     /// <summary>
+    /// What the counterpart is — <c>person</c>, <c>place</c>, <c>people</c> — so a page links it to
+    /// the right address. The rows are not only between people: YHVH is the creator of heaven, which
+    /// is a place, and David the king of the Israelites, who are a people.
+    /// </summary>
+    public string Kind { get; init; } = "person";
+
+    /// <summary>
     /// What established it. Two witnesses speak in this table and a reader who cannot tell a
     /// dataset's edge from a model's reading of a verse is being asked to trust both equally.
     /// </summary>

@@ -118,6 +118,7 @@ internal static class Relationships
                 r.ToEntityId == entityId ? r.From!.Slug : r.To!.Slug,
                 r.ToEntityId == entityId ? r.From!.Name : r.To!.Name,
                 r.ToEntityId == entityId ? r.From!.Distinguisher : r.To!.Distinguisher,
+                r.ToEntityId == entityId ? r.From!.Kind : r.To!.Kind,
                 r.ToEntityId == entityId,
                 BookReferences.At(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse),
                 r.Notes,
@@ -344,6 +345,7 @@ internal static class Relationships
         new(row.Type, row.Category, row.Slug, row.Name, row.Distinguisher, row.Inward,
             row.Reference, row.Notes)
         {
+            Kind = EnumSpelling.Of(row.Kind),
             Method = EnumSpelling.Of(row.Method),
             Confidence = row.Confidence,
             Source = row.Source,
@@ -375,6 +377,7 @@ internal static class Relationships
         string Slug,
         string Name,
         string? Distinguisher,
+        EntityKind Kind,
         bool Inward,
         VerseRefResponse? Reference,
         string? Notes,

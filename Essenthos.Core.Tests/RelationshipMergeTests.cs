@@ -70,6 +70,23 @@ public sealed class RelationshipMergeTests : IDisposable
     }
 
     /// <summary>
+    /// A row says what its counterpart is, so a page links heaven to a place and not to a person.
+    /// </summary>
+    [Fact]
+    public async Task ARowSaysWhatItsCounterpartIs()
+    {
+        var yhvh = Person("yhvh");
+        var heaven = Person("heaven");
+        heaven.Kind = EntityKind.Place;
+        _db.SaveChanges();
+        Stated(heaven, yhvh, "created-by", 1, 1, 1);
+
+        var row = (await Page(yhvh)).Should().ContainSingle().Which;
+
+        row.Kind.Should().Be("place");
+    }
+
+    /// <summary>
     /// The corroboration is the point, so it says everything a reader would need to weigh it: the
     /// dataset's own word for the relation, its own verse, and who it was.
     /// </summary>

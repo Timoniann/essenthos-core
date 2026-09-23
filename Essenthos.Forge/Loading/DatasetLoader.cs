@@ -162,6 +162,7 @@ internal sealed class DatasetLoader(
             await ReachTheNamesNobodyElseCarries(stoppingToken);
             await WriteTheWordsForGod(stoppingToken);
             await HoldTheTitlesAsTitles(stoppingToken);
+            await GiveTheNamesNoDatasetGives(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
@@ -1016,6 +1017,19 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<TitleLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The names a record answers to that no dataset gives it — heaven's plural. After the titles,
+    /// which can withdraw a record, and before the index counts and orders what it holds.
+    /// </summary>
+    private async Task GiveTheNamesNoDatasetGives(CancellationToken cancellationToken)
+    {
+        status.Starting("the names of our own");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<OwnNameLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 
