@@ -143,6 +143,8 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
 
     private const int Jeremiah = 24;
 
+    private const int Malachi = 39;
+
     /// <summary>
     /// Brenton's Exodus 21 runs to verse 37, which is the condition the data writes against the
     /// Hebrew column and against no Greek one. Every verse of its Exodus 22 is therefore one lower
@@ -234,6 +236,20 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
     }
 
     /// <summary>
+    /// The Septuagint ends Malachi with Elijah, the turning of hearts and then the law of Moses, which
+    /// the Hebrew puts first. Brenton numbers them 3:22 to 3:24, and each belongs beside the Hebrew
+    /// verse that says the same thing — not beside the one after it, where the data's own rows put it.
+    /// </summary>
+    [Theory]
+    [InlineData(22, 5)]
+    [InlineData(23, 6)]
+    [InlineData(24, 4)]
+    public void MalachiEndsWithMosesAndEachVerseStandsBesideItsOwnWords(int verse, int standard)
+    {
+        Placed(brenton.Edition, Malachi, 3, verse).Should().Be(new CanonicalReference(Malachi, 4, standard));
+    }
+
+    /// <summary>
     /// What the whole change amounts to. Reading the conditions moves 398 of Brenton's 28,597
     /// verses and leaves the other 99% exactly where the tradition put them — which is the shape
     /// this should have: the schemes agree almost everywhere, and the passages where they do not
@@ -252,4 +268,40 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
 
     private static CanonicalReference Placed(VersificationFrame frame, int book, int chapter, int verse) =>
         frame.Resolve(book, chapter, verse)[0];
+}
+
+/// <summary>
+/// The same end of Malachi in Swete, who numbers it 4:4 to 4:6 under another of the data's schemes
+/// and prints it in the same order as Brenton.
+/// </summary>
+public class SweteMalachiTests
+{
+    private const int Malachi = 39;
+
+    [Fact]
+    public void EachVerseStandsBesideItsOwnWords()
+    {
+        var malachi = SweteTextSource.Read(TestResources.SweteFolder).Books
+            .Single(book => book.CanonicalOrdinal == Malachi);
+        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(
+            Versification.Septuagint,
+            EditionShape.Of(
+            [
+                .. from chapter in malachi.Chapters
+                   from verse in chapter.Verses
+                   select (Malachi, chapter.Number, verse.Number, verse.Label,
+                       verse.Words.Sum(word => word.Surface.Length)),
+            ]));
+
+        frame.Resolve(Malachi, 4, 4)[0].Should().Be(new CanonicalReference(Malachi, 4, 5));
+        frame.Resolve(Malachi, 4, 5)[0].Should().Be(new CanonicalReference(Malachi, 4, 6));
+        frame.Resolve(Malachi, 4, 6)[0].Should().Be(new CanonicalReference(Malachi, 4, 4));
+    }
+
+    /// <summary>A correction that no longer finds its row is about a rule the data has stopped stating.</summary>
+    [Fact]
+    public void EveryCorrectionStillFindsTheRuleItCorrects()
+    {
+        TvtmsReader.Read(TestResources.Tvtms).Corrected.Should().BeEquivalentTo(TvtmsCorrections.All);
+    }
 }

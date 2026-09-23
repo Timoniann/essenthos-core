@@ -49,6 +49,7 @@ internal static class TvtmsReader
     {
         var blocks = new List<IReadOnlyList<TvtmsRow>>(512);
         var passage = new List<TvtmsRow>(64);
+        var corrected = new HashSet<TvtmsCorrection>();
         var inSection = false;
 
         foreach (var line in File.ReadLines(path))
@@ -66,7 +67,12 @@ internal static class TvtmsReader
 
             if (TryReadRow(line, out var row))
             {
-                passage.Add(row);
+                passage.Add(TvtmsCorrections.Apply(row, out var correction));
+                if (correction is not null)
+                {
+                    corrected.Add(correction);
+                }
+
                 continue;
             }
 
@@ -94,7 +100,7 @@ internal static class TvtmsReader
                 "release and not the spreadsheet export.");
         }
 
-        return new VersificationRules(blocks);
+        return new VersificationRules(blocks, corrected);
     }
 
     /// <summary>
@@ -147,7 +153,9 @@ internal static class TvtmsReader
 /// columns and exactly the Hebrew one — which is a thing the data says, in the tests it writes
 /// beside every rule, and the reader used not to ask.
 /// </summary>
-internal sealed class VersificationRules(IReadOnlyList<IReadOnlyList<TvtmsRow>> blocks)
+internal sealed class VersificationRules(
+    IReadOnlyList<IReadOnlyList<TvtmsRow>> blocks,
+    IReadOnlySet<TvtmsCorrection> corrected)
 {
     /// <summary>
     /// The names this file gives the numbering schemes of each tradition, the first being the one
@@ -169,6 +177,12 @@ internal sealed class VersificationRules(IReadOnlyList<IReadOnlyList<TvtmsRow>> 
     };
 
     public bool Covers(Versification tradition) => Schemes.ContainsKey(tradition);
+
+    /// <summary>
+    /// Which of <see cref="TvtmsCorrections.All"/> still found the row they correct. One that did not
+    /// is about a rule this release of the data no longer states.
+    /// </summary>
+    public IReadOnlySet<TvtmsCorrection> Corrected { get; } = corrected;
 
     /// <summary>
     /// The frame for a tradition, taking the scheme it is named after everywhere. It is what the
