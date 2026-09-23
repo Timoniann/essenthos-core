@@ -560,6 +560,18 @@ internal static class EncyclopediaEndpoints
                 : refusal!;
         });
 
+        // Many people at once, with only what a family tree is drawn from. A tree grows a
+        // generation at a time, and one request per generation beats one entity page per person.
+        routes.MapGet("/entities/family", async (
+            [FromQuery] string? slugs,
+            [FromQuery] string? language,
+            AppDbContext db,
+            CancellationToken cancellationToken) =>
+            FamilyEndpoints.Requested(slugs) is { } named
+                ? Results.Ok(await FamilyEndpoints.Family(db, named, language, cancellationToken))
+                : Results.BadRequest(new ProblemResponse(
+                    $"Name between 1 and {FamilyEndpoints.MostPeople} people, as slugs=moses,aaron.")));
+
         routes.MapGet("/entities/{slug}", async (
             string slug,
             [FromQuery] string? language,
