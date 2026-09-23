@@ -268,7 +268,7 @@ internal sealed class CompositionPipeline(
     /// again and a statement cannot be rebuilt at all.
     /// </para>
     /// </summary>
-    private async Task<(int Fresh, int Corroborated)> Write(
+    internal async Task<(int Fresh, int Corroborated)> Write(
         NpgsqlConnection connection,
         Database.Entities.Text from,
         Database.Entities.Text to,
@@ -289,6 +289,16 @@ internal sealed class CompositionPipeline(
             delete.Parameters.AddWithValue("from", from.Id);
             delete.Parameters.AddWithValue("to", to.Id);
             await delete.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        await using (var withdraw = new NpgsqlCommand(WithdrawEarlierAgreement, connection,
+                         (NpgsqlTransaction)transaction.GetDbTransaction()))
+        {
+            withdraw.Parameters.AddWithValue("from", from.Id);
+            withdraw.Parameters.AddWithValue("to", to.Id);
+            withdraw.Parameters.AddWithValue("aligner", EnumSpelling.Of(LinkMethod.Aligner));
+            withdraw.CommandTimeout = 600;
+            await withdraw.ExecuteNonQueryAsync(cancellationToken);
         }
 
         var firstId = await ReserveLinkIds(connection, fresh.Count, cancellationToken);
@@ -369,6 +379,21 @@ internal sealed class CompositionPipeline(
 
         return (fresh, agreeing);
     }
+
+    /// <summary>
+    /// The aligner's answers an earlier run left as claims on links a source states. A run replaces
+    /// the aligner's links between two texts, and its agreement with a statement is part of what it
+    /// answered, so that is replaced too: left in place, a rerun stacks a second aligner claim on
+    /// every stated pair it reaches again, under a differently worded route, and keeps an agreement
+    /// the model no longer makes on every pair it does not.
+    /// </summary>
+    private const string WithdrawEarlierAgreement =
+        """
+        DELETE FROM link_claim c
+        USING link l
+        WHERE c.link_id = l.id AND l.from_text_id = @from AND l.to_text_id = @to
+          AND l.method <> @aligner AND c.method = @aligner
+        """;
 
     /// <summary>
     /// What the aligner writes when it arrives at a pair somebody has already stated.
