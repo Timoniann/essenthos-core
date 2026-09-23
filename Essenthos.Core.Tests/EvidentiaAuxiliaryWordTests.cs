@@ -73,6 +73,20 @@ public class EvidentiaAuxiliaryWordTests
     }
 
     [Fact]
+    public void AReverentialHimTheParserTookForANameIsStillOneMan()
+    {
+        var proposals = Propose(
+            [English(1, Mark120, 1, "Him", "PROPN")],
+            [
+                GreekPronoun(11, Mark120, 1, "αὐτοὺς", "accusative", "plural"),
+                GreekPronoun(12, Mark120, 2, "αὐτὸν", "accusative", "singular"),
+            ],
+            ("him", "G846", 0.55));
+
+        proposals.Should().Equal((1L, 12L));
+    }
+
+    [Fact]
     public void ASubjectPronounMayStandOnAnArticleThatStandsForAPerson()
     {
         var proposals = Propose(

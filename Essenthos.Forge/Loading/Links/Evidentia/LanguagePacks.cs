@@ -40,6 +40,7 @@ internal sealed class EnglishLanguagePack : ILanguagePack
 
     public EvidentiaAnalysis Analyse(EvidentiaToken token)
     {
+        token = EnglishPersonalPronouns.Complete(token);
         var normalised = EnglishStemmer.Stem(token.Surface);
         return new EvidentiaAnalysis(
             token,
@@ -57,6 +58,45 @@ internal sealed class EnglishLanguagePack : ILanguagePack
         | (string.IsNullOrWhiteSpace(token.Lemma) ? LanguagePackCapability.None : LanguagePackCapability.Lemma)
         | (string.IsNullOrWhiteSpace(token.PartOfSpeech) ? LanguagePackCapability.None : LanguagePackCapability.PartOfSpeech)
         | (token.Morphology is { Count: > 0 } ? LanguagePackCapability.Morphology : LanguagePackCapability.None);
+}
+
+/// <summary>
+/// What an English personal pronoun says of itself, for the word the parser did not read as one: the
+/// Berean capitalises <em>Him</em> and <em>His</em> of God and the parser takes them for names, and it
+/// reads the King James <em>thee</em> as a numeral or a noun. Only what the form itself fixes is
+/// stated, so <em>her</em>, <em>you</em> and <em>it</em> say nothing of case.
+/// </summary>
+internal static class EnglishPersonalPronouns
+{
+    private static readonly Dictionary<string, (string Person, string? Number, string? Case, bool Possessive)> Forms =
+        new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["i"] = ("1", "Sing", "Nom", false), ["me"] = ("1", "Sing", "Acc", false),
+            ["my"] = ("1", "Sing", null, true), ["mine"] = ("1", "Sing", null, true),
+            ["we"] = ("1", "Plur", "Nom", false), ["us"] = ("1", "Plur", "Acc", false), ["our"] = ("1", "Plur", null, true),
+            ["thou"] = ("2", "Sing", "Nom", false), ["thee"] = ("2", "Sing", "Acc", false),
+            ["thy"] = ("2", "Sing", null, true), ["thine"] = ("2", "Sing", null, true),
+            ["ye"] = ("2", "Plur", "Nom", false), ["you"] = ("2", null, null, false), ["your"] = ("2", null, null, true),
+            ["he"] = ("3", "Sing", "Nom", false), ["him"] = ("3", "Sing", "Acc", false), ["his"] = ("3", "Sing", null, true),
+            ["she"] = ("3", "Sing", "Nom", false), ["her"] = ("3", "Sing", null, false),
+            ["it"] = ("3", "Sing", null, false), ["its"] = ("3", "Sing", null, true),
+            ["they"] = ("3", "Plur", "Nom", false), ["them"] = ("3", "Plur", "Acc", false), ["their"] = ("3", "Plur", null, true),
+        };
+
+    public static EvidentiaToken Complete(EvidentiaToken token)
+    {
+        if (!Forms.TryGetValue(token.Surface, out var form)
+            || token.Morphology?.Any(pair => pair.Key.Equals("PronType", StringComparison.OrdinalIgnoreCase)) == true)
+        {
+            return token;
+        }
+
+        var features = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { ["PronType"] = "Prs", ["Person"] = form.Person };
+        if (form.Number is not null) features["Number"] = form.Number;
+        if (form.Case is not null) features["Case"] = form.Case;
+        if (form.Possessive) features["Poss"] = "Yes";
+        return token with { PartOfSpeech = "PRON", Morphology = features };
+    }
 }
 
 internal sealed class SlavicLanguagePack : ILanguagePack
