@@ -37,10 +37,10 @@ OpenStreetMap's. What the repository holds that is left behind:
 
 - **the geometry** — thousands of GeoJSON and KML files for rivers, regions and roads, partly
   derived from OpenStreetMap. Not fetched. Only points are ever taken, never a line or a shape;
-- **the images** — 512x512 thumbnails whose terms "vary depending on the image", from Wikimedia
-  Commons contributors and from Sentinel-2. Not fetched;
-- **`geometry.jsonl`, `image.jsonl` and `source.jsonl`** — the geometry index, the image metadata
-  and the citations. Not fetched.
+- **`geometry.jsonl` and `source.jsonl`** — the geometry index and the citations. Not fetched.
+
+The images are fetched, since 2026-09-23, under their own terms rather than the dataset's; see the
+next section.
 
 ## Coordinates: one point per place, and never an OpenStreetMap one
 
@@ -83,6 +83,30 @@ its data as CC BY 4.0 and names OpenStreetMap as the only exception. The points 
 Wikidata (CC0), GeoNames (CC BY 4.0), Pleiades (CC BY) and to surveys, atlases and gazetteers
 without a stated licence of their own are therefore used as the repository states them, and
 attributed to it.
+
+## The place pictures: every one under its own licence, and always credited
+
+Decided 2026-09-23, when the owner allowed the thumbnail archive to be downloaded for the place pages.
+
+`scripts/fetch-images.ps1` takes `image.jsonl` from the same commit as `ancient.jsonl` and the
+512x512 archive `https://a.openbible.info/geo/thumbnails.zip` (1,650 files, 184 MB), kept here as
+`thumbnails.zip` and unpacked into `Resources/Images/openbible/`. The dataset's CC BY 4.0 does not
+reach the pictures: the readme says their licences "vary depending on the image", and `image.jsonl`
+states one per image — about three in five are photographs from Wikimedia Commons contributors under
+CC BY, CC BY-SA, GFDL, CC0 or the public domain, and the rest are satellite views credited
+"Contains modified Copernicus Sentinel data" under the Sentinel data terms. The archive's files are
+OpenBible.info's own crops and colour corrections of those originals, so each is credited to its
+photographer, linked to its Commons page, and shown as taken from OpenBible.info.
+
+One picture per place, the one the readme recommends: the place's own `media.thumbnail`, else that
+of the identification its highest-scored association resolves through (the one its point comes
+from), else that identification's resolution's. A picture is not taken when `image.jsonl` gives it
+no licence this corpus reads — `copyright` above all — or nobody to credit. At this commit that
+leaves none out: 1,335 of the 1,343 places carry a picture.
+
+Showing a picture unchanged beside an entry is not an adaptation of it, so a ShareAlike licence on a
+photograph asks for the credit and the licence named with it, which every picture carries, and
+reaches nothing else the corpus holds.
 
 ## Attribution
 

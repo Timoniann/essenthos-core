@@ -41,6 +41,7 @@ internal static class FamilyEndpoints
             .ToListAsync(cancellationToken);
 
         var local = await EntityNames.Of(db, ids, language, cancellationToken);
+        var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken);
         var order = slugs.Select((slug, index) => (slug, index)).ToDictionary(p => p.slug, p => p.index, StringComparer.Ordinal);
 
         return new EntityFamilyResponse(
@@ -60,7 +61,10 @@ internal static class FamilyEndpoints
                                 .Select(r => new FamilyTieResponse(r.Type, true, r.From)))
                             .Where(tie => tie.Slug != p.Slug)
                             .Distinct(),
-                    ])),
+                    ])
+                {
+                    Thumbnail = pictured.GetValueOrDefault(p.Slug),
+                }),
         ]);
     }
 
@@ -92,7 +96,11 @@ internal sealed record FamilyMemberResponse(
     string? LocalName,
     string? Distinguisher,
     string? Sex,
-    IList<FamilyTieResponse> Ties);
+    IList<FamilyTieResponse> Ties)
+{
+    /// <summary>The picture the person's page leads with, to show small; null where there is none.</summary>
+    public EntityThumbnailResponse? Thumbnail { get; init; }
+}
 
 /// <summary>
 /// One relationship as its pair: <c>son-of</c> read inward on Abraham's side is Isaac.

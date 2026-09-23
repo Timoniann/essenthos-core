@@ -69,6 +69,11 @@
              tribes of Israel, which no lexicon names because Hebrew names a tribe with the
              ancestor's own word. -->
         <EmbeddedResource Include="Loading\Encyclopedia\Peoples.json" />
+
+        <!-- The public works chosen to picture people and places, each with its author, licence and
+             source page. The pictures themselves are under Resources/Images, outside git. -->
+        <Content Remove="Loading\Encyclopedia\PublicImages.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\PublicImages.json" />
     </ItemGroup>
 
     <!-- An EVIDENTIA run records the build that made it, and a version number that never changes

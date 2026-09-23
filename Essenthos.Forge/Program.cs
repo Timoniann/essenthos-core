@@ -108,6 +108,7 @@ builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<UssherAnnalsLoader>();
 builder.Services.AddScoped<OpenBiblePlaceLoader>();
 builder.Services.AddScoped<OpenBibleLocationLoader>();
+builder.Services.AddScoped<EntityImageLoader>();
 builder.Services.AddScoped<WorldHistoryLoader>();
 builder.Services.AddScoped<PeopleLoader>();
 builder.Services.AddScoped<PlaceRegisterLoader>();
@@ -639,6 +640,16 @@ if (args is ["locate", ..])
     return 0;
 }
 
+// The pictures of people and places, drawn again from the images folder and its manifests in an
+// already loaded corpus. The load does the same as its last encyclopedia step; this is that step
+// alone, so a new portrait or a corrected credit arrives without reading the corpus again.
+if (args is ["images", ..])
+{
+    using var imagesScope = app.Services.CreateScope();
+    Console.WriteLine(await imagesScope.ServiceProvider.GetRequiredService<EntityImageLoader>().Load(resources));
+    return 0;
+}
+
 // How each text spells each name, counted again from the words that name it, in an already loaded
 // corpus. The load does this as its last naming step; this is that step alone.
 if (args is ["spell", ..])
@@ -744,6 +755,6 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 logger.LogError(
     "Nothing is known to do with \"{Verb}\". The verbs are load, verify, release, publish, rollback, releases, align, score, score-anchors, syntax, "
-    + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join and the evidentia family",
+    + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images and the evidentia family",
     args[0]);
 return 1;

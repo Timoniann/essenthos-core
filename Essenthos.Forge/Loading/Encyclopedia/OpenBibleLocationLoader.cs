@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text.Json;
 using Essenthos.Core.Database;
@@ -231,15 +231,15 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
         return new Reading(located, openStreetMap, commercial, unidentified);
     }
 
-    /// <summary>A resolution, and the score of the identification it belongs to.</summary>
-    private readonly record struct Resolution(JsonElement Element, int Score);
+    /// <summary>A resolution, the identification it belongs to, and that identification's score.</summary>
+    internal readonly record struct Resolution(JsonElement Element, int Score, JsonElement Identification);
 
     /// <summary>
     /// The resolution the gazetteer scores highest among a place's modern associations, which are
     /// already the identifications weighted by how sure anyone is of the site. A tie goes to the
     /// lower modern identifier, so a reload answers the same.
     /// </summary>
-    private static Resolution? Best(JsonElement root)
+    internal static Resolution? Best(JsonElement root)
     {
         if (!root.TryGetProperty("modern_associations", out var associations)
             || associations.ValueKind != JsonValueKind.Object
@@ -273,7 +273,8 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
             return null;
         }
 
-        return new Resolution(resolutions[resolution], best.Value.GetProperty("score").GetInt32());
+        return new Resolution(
+            resolutions[resolution], best.Value.GetProperty("score").GetInt32(), identifications[identification]);
     }
 
     /// <param name="Independent">
@@ -329,7 +330,7 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
             : null;
     }
 
-    private static string? Text(JsonElement element, string property) =>
+    internal static string? Text(JsonElement element, string property) =>
         element.TryGetProperty(property, out var value) && value.ValueKind == JsonValueKind.String
         && value.GetString() is { Length: > 0 } text
             ? text

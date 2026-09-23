@@ -125,6 +125,9 @@ public class AppDbContext : DbContext
     /// <summary>Where a place is, as one point, and whose coordinates they are.</summary>
     public DbSet<PlaceLocation> PlaceLocations { get; set; } = null!;
 
+    /// <summary>The pictures of people and places, each credited, and whether it is ours.</summary>
+    public DbSet<EntityImage> EntityImages { get; set; } = null!;
+
     /// <summary>
     /// The ordered clauses this corpus says an entity is, out of which its description is rendered
     /// in whatever language a reader asks for.
@@ -249,6 +252,31 @@ public class AppDbContext : DbContext
                 t.HasCheckConstraint(
                     "ck_place_location_kind",
                     "kind IN ('point', 'representative-point', 'center', 'settlement')");
+            });
+        });
+
+        modelBuilder.Entity<EntityImage>(entity =>
+        {
+            entity.HasOne(i => i.Entity)
+                .WithMany(e => e.Images)
+                .HasForeignKey(i => i.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // One picture a page leads with, of each kind: the public one and our own.
+            entity.HasIndex(i => new { i.EntityId, i.Kind })
+                .IsUnique()
+                .HasFilter("role = 'primary'")
+                .HasDatabaseName("ix_entity_image_one_primary_per_kind");
+
+            entity.ToTable("entity_image", t =>
+            {
+                t.HasCheckConstraint("ck_entity_image_kind", "kind IN ('public', 'generated')");
+                t.HasCheckConstraint("ck_entity_image_role", "role IN ('primary', 'gallery')");
+                t.HasCheckConstraint("ck_entity_image_credit", "length(credit) > 0 AND length(licence) > 0");
+                t.HasCheckConstraint("ck_entity_image_size", "width > 0 AND height > 0");
+                t.HasCheckConstraint(
+                    "ck_entity_image_focus",
+                    "(focus_x IS NULL OR focus_x BETWEEN 0 AND 1) AND (focus_y IS NULL OR focus_y BETWEEN 0 AND 1)");
             });
         });
 
