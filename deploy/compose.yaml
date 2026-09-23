@@ -11,7 +11,8 @@
 # any container starts, rather than starting one with an empty password.
 #
 # Nothing here builds anything. The images are built by CI and pulled by tag, and the corpus arrives
-# as a release restored by `forge publish` from the machine that built it.
+# as a release restored by `forge publish` from the machine that built it, which also puts the
+# pictures its rows name under HOST_DATA_ROOT/images.
 
 name: ${COMPOSE_PROJECT_NAME:-essenthos}
 
@@ -130,6 +131,11 @@ services:
       # The proxy terminates TLS; without this the API believes every request arrived over plain http
       # and builds its links and its sign-in callbacks accordingly.
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      Images__Path: /images
+    volumes:
+      # The pictures the corpus's rows name. The rows arrive in the release; `forge publish` puts the
+      # files here beside it, one folder per corpus, before it swaps the release in.
+      - ${HOST_DATA_ROOT}/images/corpus:/images:ro
     depends_on:
       db:
         condition: service_healthy
@@ -170,6 +176,9 @@ services:
       Authentication__GitHub__ClientSecret: ${GITHUB_DEV_CLIENT_SECRET:-}
       Cors__AllowedOrigins__0: https://${DEV_DOMAIN:?set DEV_DOMAIN}
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      Images__Path: /images
+    volumes:
+      - ${HOST_DATA_ROOT}/images/corpus_dev:/images:ro
     depends_on:
       db:
         condition: service_healthy

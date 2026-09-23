@@ -63,6 +63,74 @@ internal sealed class TargetHost(ReleaseTarget target)
     }
 
     /// <summary>
+    /// Where the target's API reads the pictures of this corpus: the data root's <c>images</c> folder,
+    /// one folder per corpus, which the API container mounts read-only at <c>/images</c>.
+    /// </summary>
+    public string ImagesFolder => target.IsRemote
+        ? $"{target.DataRoot.TrimEnd('/')}/images/{target.Database}"
+        : Path.Combine(target.DataRoot, "images", target.Database);
+
+    /// <summary>The pictures the target has, by path, with their SHA-256; none where the folder is not there yet.</summary>
+    public async Task<Dictionary<string, string>> Images(CancellationToken cancellationToken)
+    {
+        if (!target.IsRemote)
+        {
+            return ImageManifest.Read(ImagesFolder);
+        }
+
+        var folder = Shell.QuoteForRemote(ImagesFolder);
+        var listing = await Shell.Run(
+            "ssh", [.. SshOptions, target.Ssh, $"mkdir -p {folder} && cd {folder} && find . -type f -exec sha256sum {{}} +"],
+            cancellationToken);
+        return ImageManifest.Parse(listing);
+    }
+
+    /// <summary>
+    /// Puts <paramref name="files"/>, paths under <paramref name="source"/>, into the target's images
+    /// folder. Remote, they go as one tar through scp and are unpacked there, because a thousand
+    /// separate copies over ssh take minutes where one archive takes seconds.
+    /// </summary>
+    public async Task SendImages(string source, IReadOnlyList<string> files, CancellationToken cancellationToken)
+    {
+        if (files.Count == 0)
+        {
+            return;
+        }
+
+        if (!target.IsRemote)
+        {
+            foreach (var file in files)
+            {
+                var destination = Path.Combine(ImagesFolder, file);
+                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                File.Copy(Path.Combine(source, file), destination, overwrite: true);
+            }
+
+            return;
+        }
+
+        var list = Path.GetTempFileName();
+        var archive = Path.ChangeExtension(Path.GetTempFileName(), ".tar");
+        try
+        {
+            await File.WriteAllLinesAsync(list, files, cancellationToken);
+            await Shell.Run("tar", ["-cf", archive, "-C", source, "-T", list], cancellationToken);
+            var folder = Shell.QuoteForRemote(ImagesFolder);
+            var remote = $"{target.DataRoot.TrimEnd('/')}/images/{target.Database}.incoming.tar";
+            await Shell.Run("scp", ["-q", .. SshOptions, archive, $"{target.Ssh}:{remote}"], cancellationToken);
+            var quoted = Shell.QuoteForRemote(remote);
+            await Shell.Run(
+                "ssh", [.. SshOptions, target.Ssh, $"mkdir -p {folder} && tar -xf {quoted} -C {folder} && rm {quoted}"],
+                cancellationToken);
+        }
+        finally
+        {
+            File.Delete(list);
+            File.Delete(archive);
+        }
+    }
+
+    /// <summary>
     /// A connection string the gate can use, and whatever keeps it open: nothing for a target on this
     /// machine, an ssh tunnel for a remote one. Disposing it closes the tunnel.
     /// </summary>

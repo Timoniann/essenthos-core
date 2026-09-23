@@ -88,7 +88,7 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
             }
 
             var cited = new List<(string? Heading, NaveEntries.Citation Citation)>();
-            foreach (var line in NaveEntries.Lines(row["entry"]))
+            foreach (var line in NaveEntries.Lines(NaveCorrections.Apply(name, row["entry"])))
             {
                 unread += line.Unread;
                 cited.AddRange(line.Citations.Select(citation => (line.Heading, citation)));

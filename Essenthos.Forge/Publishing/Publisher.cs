@@ -6,6 +6,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -180,6 +181,8 @@ internal sealed class Publisher(
             }
         }
 
+        var pictures = await SendImages(host, cancellationToken);
+
         if (await host.Sql("postgres", $"SELECT 1 FROM pg_roles WHERE rolname = {TargetHost.Literal(target.Reader)}", cancellationToken) != "1")
         {
             logger.LogError("{Target} has no role {Reader}; the server's database was not initialised", target.Name, target.Reader);
@@ -205,6 +208,11 @@ internal sealed class Publisher(
         {
             logger.LogError("{Incoming} says it is release \"{Restored}\", not {Name}. Nothing was swapped",
                 target.Incoming, restored, record.Name);
+            return 1;
+        }
+
+        if (!await PicturesArePresent(host, pictures, cancellationToken))
+        {
             return 1;
         }
 
@@ -265,6 +273,71 @@ internal sealed class Publisher(
             "puts it back. {Seconds:F0} s in all",
             target.Name, record.Name, target.Previous, target.Name, (DateTimeOffset.UtcNow - started).TotalSeconds);
         return 0;
+    }
+
+    /// <summary>
+    /// This machine's pictures, sent where the target's API reads them: only those the target lacks or
+    /// has with other bytes, and nothing taken away. Returns what the target has afterwards.
+    /// </summary>
+    private async Task<Dictionary<string, string>> SendImages(TargetHost host, CancellationToken cancellationToken)
+    {
+        var source = Path.Combine(ResourcePaths.Read(configuration, environment.ContentRootPath), EntityImageLoader.Folder);
+        var here = ImageManifest.Read(source);
+        var there = await host.Images(cancellationToken);
+        var send = ImageManifest.ToSend(here, there);
+        if (send.Count == 0)
+        {
+            logger.LogInformation("The {Count:N0} pictures in {Folder} on {Target} are current", there.Count, host.ImagesFolder, host.Target.Name);
+            return there;
+        }
+
+        var bytes = send.Sum(file => new FileInfo(Path.Combine(source, file)).Length);
+        logger.LogInformation("Sending {Count:N0} pictures, {Bytes:N0} bytes, to {Folder} on {Target}",
+            send.Count, bytes, host.ImagesFolder, host.Target.Name);
+        await host.SendImages(source, send, cancellationToken);
+        foreach (var file in send)
+        {
+            there[file] = here[file];
+        }
+
+        return there;
+    }
+
+    /// <summary>
+    /// Whether every picture the incoming release names is where the target's API will look for it. A
+    /// missing one stops the publication, because its page would show the credit over a broken
+    /// picture; one whose bytes changed since the release was made is served as it now is, and said.
+    /// </summary>
+    private async Task<bool> PicturesArePresent(
+        TargetHost host, IReadOnlyDictionary<string, string> there, CancellationToken cancellationToken)
+    {
+        var target = host.Target;
+        if (await host.Sql(target.Incoming, "SELECT to_regclass('public.entity_image') IS NOT NULL", cancellationToken) != "t")
+        {
+            return true;
+        }
+
+        var rows = await host.Sql(target.Incoming, "SELECT file, digest FROM entity_image", cancellationToken);
+        var (missing, differing) = ImageManifest.Check(ImageManifest.Rows(rows), there);
+        foreach (var file in differing.Take(20))
+        {
+            logger.LogWarning("{File} on {Target} is not the picture {Incoming} was made with; it is served as it now is",
+                file, target.Name, target.Incoming);
+        }
+
+        if (missing.Count == 0)
+        {
+            return true;
+        }
+
+        foreach (var file in missing.Take(20))
+        {
+            logger.LogError("{Incoming} names the picture {File}, and neither this machine nor {Target} has it",
+                target.Incoming, file, target.Name);
+        }
+
+        logger.LogError("{Count} pictures of {Incoming} are missing; the live corpus is untouched", missing.Count, target.Incoming);
+        return false;
     }
 
     /// <summary>Exchanges the live corpus and the previous one, and restarts the API onto it.</summary>
