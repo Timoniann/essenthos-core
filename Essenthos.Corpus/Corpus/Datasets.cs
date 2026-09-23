@@ -200,6 +200,35 @@ public static class Datasets
             + "which is Stephenson's work.",
             "Ussher's Annals of the World"),
 
+        // The count is Maimonides' and the English is Hyamson's; which of Hyamson's numbers answers
+        // to which of the count's, and where a verse had to move to the English numbering, is this
+        // project's and is said on the row. Resources/Maimonides/LICENCE.md has the reading.
+        new("maimonides", "Maimonides' count of the commandments",
+            "Moses Maimonides, in Moses Hyamson's English of 1937–1949, read from Sefaria",
+            "Public Domain",
+            "https://en.wikipedia.org/wiki/Public_domain",
+            "https://www.sefaria.org/Sefer_HaMitzvot",
+            "The 613 commandments of the Torah, 248 positive and 365 negative, numbered as the Sefer "
+            + "HaMitzvot counts them, each with the verses it rests on. The titles are Hyamson's "
+            + "English of the list that opens the Mishneh Torah, shortened and not reworded. Where a "
+            + "verse he prints is in the Hebrew numbering it is moved to the English one, and five "
+            + "references are this project's, each saying why.",
+            Sources.MaimonidesPrefix),
+
+        // On trial: shown beside the chapter until the owner decides whether it stays. Nave's own
+        // text is out of copyright; the transcription is Stephenson's, under the licence of the
+        // BibleData release it comes in.
+        new("naves", "Nave's Topical Bible",
+            "Orville J. Nave, 1896, transcribed by Brady Stephenson",
+            "CC BY 4.0",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://github.com/BradyStephenson/bible-data",
+            "Some five thousand subjects and the verses Nave filed under each, which the reader "
+            + "shows beside a chapter as the topics its verses are filed under. Nave's index of 1896 "
+            + "is out of copyright; the Attribution licence covers the transcription, which is "
+            + "Stephenson's work.",
+            Sources.NavesPrefix),
+
         new("wikidata", "Wikidata", "the Wikidata contributors", "CC0",
             "https://creativecommons.org/publicdomain/zero/1.0/",
             "https://query.wikidata.org",

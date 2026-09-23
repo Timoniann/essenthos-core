@@ -74,6 +74,11 @@
     "files": 3,
     "sha256": "1af2faa0cd1407395f989cb7903536751c511c90dda3090d95a486d25cf20bd0"
   },
+  "Maimonides": {
+    "bytes": 661934,
+    "files": 4,
+    "sha256": "f6da274e9a13417996327282e84761ef1ef6c6f445e6630ec1db6a395f33f965"
+  },
   "MorphGnt": {
     "bytes": 8938504,
     "files": 28,

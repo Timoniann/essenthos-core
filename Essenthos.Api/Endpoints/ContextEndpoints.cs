@@ -138,6 +138,8 @@ internal static class ContextEndpoints
 
         var (periods, dated) = await Periods(db, book, chapter, events, cancellationToken);
         var measures = await Measures(db, book, chapter, cancellationToken);
+        var commandments = await CommandmentEndpoints.InChapter(db, book, chapter, cancellationToken);
+        var topics = await ChapterTopics.InChapter(db, book, chapter, cancellationToken);
 
         return new ChapterContextResponse(
             new BookRefResponse(book, BookReferences.Name(book), BookReferences.Slug(book)),
@@ -146,7 +148,9 @@ internal static class ContextEndpoints
             [.. events.Select(row => EncyclopediaEndpoints.Event(row, NoPlaces))],
             periods,
             dated,
-            measures);
+            measures,
+            commandments,
+            topics);
     }
 
     private static readonly IReadOnlyDictionary<string, string> NoPlaces = new Dictionary<string, string>();
@@ -363,6 +367,11 @@ internal static class ChapterPeriods
 /// The units of measure and money the chapter's words carry, by lexicon entry, in the order the
 /// chapter first uses them.
 /// </param>
+/// <param name="Commandments">
+/// The commandments of Maimonides' count that rest on a verse of this chapter, in the order the
+/// chapter gives them. Empty outside the Torah.
+/// </param>
+/// <param name="Topics">The subjects of Nave's Topical Bible filing verses of this chapter, the most verses first.</param>
 /// <param name="PeriodsFrom">
 /// <c>events</c> where the chapter's own events placed it, <c>neighbours</c> where it has none and
 /// the dated events on either side of it in the book did, and null where nothing placed it.
@@ -374,7 +383,9 @@ internal record ChapterContextResponse(
     IList<EventResponse> Events,
     IList<ContextPeriodResponse> Periods,
     string? PeriodsFrom,
-    IList<ContextMeasureResponse> Measures);
+    IList<ContextMeasureResponse> Measures,
+    IList<ContextCommandmentResponse> Commandments,
+    IList<ContextTopicResponse> Topics);
 
 /// <param name="StartYear">Its first year from creation in the default reckoning, which placed the chapter in it.</param>
 /// <param name="Years">

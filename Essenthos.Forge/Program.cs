@@ -130,6 +130,8 @@ builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<OwnNameLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
+builder.Services.AddScoped<CommandmentLoader>();
+builder.Services.AddScoped<NaveTopicLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();
 builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<OwnRelationshipLoader>();
@@ -656,6 +658,24 @@ if (args is ["spell", ..])
 {
     using var spellScope = app.Services.CreateScope();
     Console.WriteLine(await spellScope.ServiceProvider.GetRequiredService<EntityRenderingLoader>().Load());
+    return 0;
+}
+
+// The commandments and Nave's topics, for a corpus loaded before either was. The load does both as
+// its last steps; these are those steps alone.
+if (args is ["commandments", ..])
+{
+    using var commandmentScope = app.Services.CreateScope();
+    Console.WriteLine(await commandmentScope.ServiceProvider.GetRequiredService<CommandmentLoader>()
+        .Load(Path.Combine([AppContext.BaseDirectory, .. CommandmentLoader.FilePath])));
+    return 0;
+}
+
+if (args is ["topics", ..])
+{
+    using var topicScope = app.Services.CreateScope();
+    Console.WriteLine(await topicScope.ServiceProvider.GetRequiredService<NaveTopicLoader>()
+        .Load(Path.Combine(resources, "BibleData2026")));
     return 0;
 }
 

@@ -165,6 +165,10 @@ Resources/*/*
 # not reproducible from a fetch script -- reproducing it is another model run -- so it is carried.
 !Resources/Essenthos/**
 
+# Maimonides' count of the commandments as this project curated it from two public-domain works:
+# 613 rows, 59 KB. The downloads it is written from stay out, and scripts/maimonides.py puts them back.
+!Resources/Maimonides/commandments.tsv
+
 # JetBrains IDE settings
 .idea/
 

@@ -170,6 +170,8 @@ internal sealed class DatasetLoader(
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
             await CountHowEachTextSpellsEachName(stoppingToken);
             await PutThePlacesOnTheMap(resources, stoppingToken);
+            await CountTheCommandments(stoppingToken);
+            await FileTheVersesUnderNavesTopics(resources, stoppingToken);
             await PictureThePeopleAndPlaces(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
@@ -1163,6 +1165,31 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityImageLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The 613 commandments as Maimonides counted them. Read from the output folder, like the world
+    /// history, because the file is committed and never waits on a fetch.
+    /// </summary>
+    private async Task CountTheCommandments(CancellationToken cancellationToken)
+    {
+        status.Starting("the commandments");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<CommandmentLoader>();
+        status.Record(await loader.Load(
+            Path.Combine([AppContext.BaseDirectory, .. CommandmentLoader.FilePath]),
+            cancellationToken));
+    }
+
+    /// <summary>The subjects of Nave's Topical Bible and the verses filed under each, on trial.</summary>
+    private async Task FileTheVersesUnderNavesTopics(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("Nave's topics");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<NaveTopicLoader>();
+        status.Record(await loader.Load(Path.Combine(resources, "BibleData2026"), cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

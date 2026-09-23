@@ -161,6 +161,16 @@ public class AppDbContext : DbContext
 
     public DbSet<EventDate> EventDates { get; set; } = null!;
 
+    /// <summary>The 613 commandments as Maimonides counted them, and the verses each rests on.</summary>
+    public DbSet<Commandment> Commandments { get; set; } = null!;
+
+    public DbSet<CommandmentReference> CommandmentReferences { get; set; } = null!;
+
+    /// <summary>The subjects of Nave's topical index, and the verses it files under each.</summary>
+    public DbSet<Topic> Topics { get; set; } = null!;
+
+    public DbSet<TopicReference> TopicReferences { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         NameTablesInTheSingular(modelBuilder);

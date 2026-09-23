@@ -37,6 +37,10 @@
              assembly and is read from the output folder rather than through Dataset:ResourcesPath.
              That is why a clean checkout can load the world layer with no fetch step at all. -->
         <Content Include="..\Resources\WorldHistory\**" LinkBase="Resources\WorldHistory" CopyToOutputDirectory="PreserveNewest" />
+
+        <!-- The commandments as this project curated them from two public-domain works, committed
+             for the same reason and read the same way. -->
+        <Content Include="..\Resources\Maimonides\commandments.tsv" Link="Resources\Maimonides\commandments.tsv" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>

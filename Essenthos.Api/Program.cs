@@ -106,6 +106,7 @@ v1.MapSearch();
 v1.MapEncyclopedia();
 v1.MapContext();
 v1.MapImages(images);
+v1.MapCommandments();
 v1.MapDatasets();
 v1.MapAuth(providers);
 v1.MapMe();

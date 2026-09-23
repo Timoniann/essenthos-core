@@ -271,6 +271,98 @@ public sealed class ContextEndpointTests : IDisposable
         reign.Years.Should().NotContainKey("test-other");
     }
 
+    /// <summary>
+    /// The commandments a chapter gives are the ones resting on its verses, in the order the chapter
+    /// gives them; one resting on another chapter too is here only with this chapter's verses.
+    /// </summary>
+    [Fact]
+    public async Task TheChaptersCommandmentsAreThoseItsVersesGive()
+    {
+        Commandment(CommandmentKinds.Negative, 5, "Not to bow down", (10, 2, 3));
+        Commandment(CommandmentKinds.Positive, 9, "To sanctify", (10, 2, 2), (11, 1, 1));
+        Commandment(CommandmentKinds.Positive, 1, "To know", (10, 1, 1));
+        Commandment(CommandmentKinds.Positive, 2, "Elsewhere", (11, 1, 1));
+        await _db.SaveChangesAsync();
+
+        var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
+
+        context.Commandments.Select(c => (c.Kind, c.Number, string.Join(',', c.Verses))).Should().Equal(
+            (CommandmentKinds.Positive, 1, "1"),
+            (CommandmentKinds.Positive, 9, "2"),
+            (CommandmentKinds.Negative, 5, "2,3"));
+    }
+
+    /// <summary>
+    /// A topic filing more of the chapter's verses comes first. A whole chapter is every verse the
+    /// frame holds in it, and the heading each run is filed under is kept.
+    /// </summary>
+    [Fact]
+    public async Task TheChaptersTopicsComeMostVersesFirst()
+    {
+        Topic("NATIONS", ("The table of", null, null), ("Scattered", 3, 3));
+        Topic("NOAH", ("DESCENDANTS OF", 1, 1));
+        Topic("JAPHETH", (null, 2, 3));
+        Topic("BABEL", ("Tower of", 1, 1)).References[0].CanonicalChapter = 11;
+        await _db.SaveChangesAsync();
+
+        var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
+
+        context.Topics.Select(t => (t.Name, string.Join(',', t.Verses))).Should().Equal(
+            ("Nations", "1,2,3"),
+            ("Japheth", "2,3"),
+            ("Noah", "1"));
+        context.Topics[2].Entries.Should().ContainSingle().Which.Heading.Should().Be("Descendants of");
+        context.Topics[0].Entries.Select(e => (e.Heading, string.Join(',', e.Verses), e.WholeChapter)).Should().Equal(
+            ("The table of", "1,2,3", true),
+            ("Scattered", "3", false));
+    }
+
+    [Theory]
+    [InlineData("AARON", "Aaron")]
+    [InlineData("LORD'S SUPPER", "Lord's Supper")]
+    [InlineData("GOD, SOVEREIGNTY OF", "God, Sovereignty of")]
+    [InlineData("ABEL-BETH-MAACHAH", "Abel-Beth-Maachah")]
+    [InlineData("RULES OF DISCIPLINE IN, MOSAIC AND CHRISTIAN", "Rules of Discipline in, Mosaic and Christian")]
+    public void ATopicIsNamedAsAHeadingIsWritten(string printed, string shown) =>
+        ChapterTopics.Title(printed).Should().Be(shown);
+
+    private void Commandment(string kind, int number, string title, params (int Chapter, int First, int Last)[] verses) =>
+        _db.Commandments.Add(new Commandment
+        {
+            Kind = kind,
+            Number = number,
+            MishnehTorahNumber = number,
+            Title = title,
+            Source = "test",
+            References =
+            [
+                .. verses.Select(v => new CommandmentReference
+                {
+                    CanonicalBook = Genesis, CanonicalChapter = v.Chapter, FirstVerse = v.First, LastVerse = v.Last,
+                }),
+            ],
+        });
+
+    private Topic Topic(string name, params (string? Heading, int? First, int? Last)[] verses)
+    {
+        var topic = new Topic
+        {
+            Slug = name.ToLowerInvariant(),
+            Name = name,
+            Source = "test",
+            References =
+            [
+                .. verses.Select(v => new TopicReference
+                {
+                    CanonicalBook = Genesis, CanonicalChapter = 10, FirstVerse = v.First, LastVerse = v.Last,
+                    Heading = v.Heading,
+                }),
+            ],
+        };
+        _db.Topics.Add(topic);
+        return topic;
+    }
+
     private void Name(Entity entity, string label, string meaning, string kind = "proper name") =>
         _db.EntityNames.Add(new EntityName { EntityId = entity.Id, Label = label, Meaning = meaning, Kind = kind });
 
