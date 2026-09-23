@@ -1,5 +1,9 @@
 using System.Text.Json.Nodes;
+using Essenthos.Core.Configuration;
+using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Desk;
 
@@ -11,6 +15,11 @@ internal sealed record SummaryCount(string Key, int? Count, string? Problem);
 internal sealed record SummaryResponse(IReadOnlyList<SummaryCount> Counts, IReadOnlyDictionary<string, int> Waiting);
 
 internal sealed record ProblemResponse(string Problem);
+
+internal sealed record TextReaderRequest(string? Note);
+
+/// <param name="ReaderTranslation">The translation a new reader now opens in.</param>
+internal sealed record TextReaderResponse(string ReaderTranslation);
 
 /// <summary>The console's endpoints, one group per section of the page.</summary>
 internal static class DeskEndpoints
@@ -193,6 +202,52 @@ internal static class DeskEndpoints
         routes.MapGet("/operations/runs/{id}", (string id, int? from, Operations operations) =>
             operations.Log(id, from ?? 0) is { } log ? Results.Ok(log) : NotThere("There is no such run; the console remembers the last twenty."));
     }
+
+    public static void MapTexts(this RouteGroupBuilder routes)
+    {
+        routes.MapGet("/texts", (TextBoard board, AppDbContext db, CancellationToken cancellationToken) =>
+            board.List(db, cancellationToken));
+
+        routes.MapPost("/texts/census", async (TextBoard board, AppDbContext db, CancellationToken cancellationToken) =>
+        {
+            board.Recount();
+            return await board.List(db, cancellationToken);
+        });
+
+        routes.MapGet("/texts/problems", async (TextProblems problems, AppDbContext db, CancellationToken cancellationToken) =>
+        {
+            var texts = await db.Texts.AsNoTracking().ToListAsync(cancellationToken);
+            return await problems.List([.. texts.Select(TextProblems.Named)], cancellationToken);
+        });
+
+        routes.MapGet("/texts/{slug}/verification", async (string slug, AppDbContext db, CancellationToken cancellationToken) =>
+            await TextBoard.Verification(db, slug, cancellationToken) is { } verification
+                ? Results.Ok(verification)
+                : NotThere("There is no such text in the corpus."));
+
+        // The translation a reader opens in: one of the site's choices, which only a translation can be.
+        routes.MapPut("/texts/{slug}/reader", async (
+            string slug, TextReaderRequest request, SiteSwitches switches, AppDbContext db, CancellationToken cancellationToken) =>
+        {
+            var text = await db.Texts.AsNoTracking().FirstOrDefaultAsync(t => t.Slug == slug, cancellationToken);
+            if (text is null)
+            {
+                return NotThere("There is no such text in the corpus.");
+            }
+
+            if (text.Kind != TextKind.Translation)
+            {
+                return Results.UnprocessableEntity(new ProblemResponse(
+                    "The reader opens with a translation beside the original; this text is not a translation."));
+            }
+
+            await switches.Choose(SiteSettings.ReaderTranslation, text.Slug, TextsSection, text.Name, request.Note);
+            return Results.Ok(new TextReaderResponse(text.Slug));
+        });
+    }
+
+    /// <summary>The section a change made among the texts is logged under.</summary>
+    private const string TextsSection = "texts";
 
     private static SummaryCount Count(string key, Func<int?> count, string? absent)
     {

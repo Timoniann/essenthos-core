@@ -33,4 +33,10 @@ namespace Essenthos.Core.Desk;
 [JsonSerializable(typeof(OperationsResponse))]
 [JsonSerializable(typeof(RunStarted))]
 [JsonSerializable(typeof(RunLog))]
+[JsonSerializable(typeof(TextsResponse))]
+[JsonSerializable(typeof(TextCensusSnapshot))]
+[JsonSerializable(typeof(TextVerification))]
+[JsonSerializable(typeof(TextProblemsResponse))]
+[JsonSerializable(typeof(TextReaderRequest))]
+[JsonSerializable(typeof(TextReaderResponse))]
 internal sealed partial class DeskJsonContext : JsonSerializerContext;

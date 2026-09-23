@@ -7,13 +7,16 @@ namespace Essenthos.Core.Desk;
 /// <param name="Repository">The essenthos-core checkout whose tracked files a decision changes.</param>
 /// <param name="Resources">The corpus folder, which holds the pictures.</param>
 /// <param name="Workspace">The avioniq control folder, where every avioniq command is run from.</param>
-internal sealed record DeskPaths(string Repository, string Resources, string Workspace)
+/// <param name="Kept">Where the console keeps what it works out for itself, where configuration says.</param>
+internal sealed record DeskPaths(string Repository, string Resources, string Workspace, string? Kept = null)
 {
     public const string RepositoryKey = "Desk:Repository";
 
     public const string ResourcesKey = "Dataset:ResourcesPath";
 
     public const string WorkspaceKey = "Desk:Workspace";
+
+    public const string CacheKey = "Desk:Cache";
 
     /// <summary>What marks the checkout when walking up from the assembly.</summary>
     private const string RepositoryMarker = "Essenthos.Core.sln";
@@ -35,6 +38,12 @@ internal sealed record DeskPaths(string Repository, string Resources, string Wor
 
     public string Generated => Path.Combine(Images, "generated");
 
+    /// <summary>
+    /// What the console works out for itself and keeps between runs, such as the census of the texts:
+    /// nothing tracked and nothing a loader reads, so it lives outside the checkout and the corpus.
+    /// </summary>
+    public string Cache => Kept ?? Path.Combine(Path.GetTempPath(), "essenthos-desk");
+
     public static DeskPaths Read(IConfiguration configuration)
     {
         var repository = Configured(configuration, RepositoryKey, AppContext.BaseDirectory)
@@ -51,7 +60,8 @@ internal sealed record DeskPaths(string Repository, string Resources, string Wor
                             $"No avioniq control folder above {repository}. Set {WorkspaceKey} to the folder " +
                             $"holding {WorkspaceMarker}.");
 
-        return new DeskPaths(repository, resources, workspace);
+        var cache = configuration[CacheKey] is { Length: > 0 } kept ? Path.GetFullPath(Path.Combine(repository, kept)) : null;
+        return new DeskPaths(repository, resources, workspace, cache);
     }
 
     private static string? Configured(IConfiguration configuration, string key, string relativeTo)

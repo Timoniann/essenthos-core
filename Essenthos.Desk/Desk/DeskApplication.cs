@@ -48,6 +48,8 @@ internal static class DeskApplication
         builder.Services.AddSingleton<SiteSwitches>();
         builder.Services.AddScoped<PortraitBoard>();
         builder.Services.AddScoped<PortraitEditor>();
+        builder.Services.AddSingleton<TextBoard>();
+        builder.Services.AddSingleton<TextProblems>();
         builder.Services.AddSingleton(new OperationAllowance(
             builder.Configuration.GetSection("Desk:Operations").Get<string[]>() ?? []));
         builder.Services.AddSingleton<Operations>();
@@ -74,6 +76,7 @@ internal static class DeskApplication
         desk.MapThingReview();
         desk.MapPortraits();
         desk.MapOperations();
+        desk.MapTexts();
 
         return app;
     }
