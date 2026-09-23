@@ -44,7 +44,13 @@ it refuses.
 **The answer is removed from the prompt.** Each candidate is shown the verses the encyclopedia
 already attests it in, because that is what lets a model reason by parallel -- but every verse being
 asked about in the same batch is struck out of those lists first. Left in, a model could read the
-answer off the evidence and the agreement figure would measure nothing but its ability to copy.
+answer off the evidence and the agreement figure would measure nothing but its ability to copy. The
+same verses are struck out of the citations in each candidate's description, which is the dataset's
+prose and often names verses its own list does not hold: azariah-7 "explained the law to the people
+(NEH 8:7)" and lists no verse of Nehemiah, so a model reading the prose answered Nehemiah 8:7 with
+him and was scored against a list that says otherwise. What a description cites and its list does not
+hold is shown beside it as `cited_not_attested`. Under `sense-1` the prose went through whole, so the
+agreement measured under it does not carry over to a run under `sense-2`.
 
 **The model never touches the database.** It is given text and it returns JSON. Every answer is
 written to a file with the model id, the prompt version, the batch and the date, because it is a
@@ -93,7 +99,9 @@ import time
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-CONTAINER = 'essenthos-api-db-1'
+# The rebuild's own Postgres. The frozen API's container still holds an older copy of this database
+# under the same name, so a wrong container here answers every query and is wrong only in the data.
+CONTAINER = os.environ.get('ESSENTHOS_DB_CONTAINER', 'essenthos-core-db-1')
 DATABASE = 'essenthos_core'
 USER = 'essenthos'
 
@@ -102,7 +110,16 @@ USER = 'essenthos'
 WITNESS = 'BHSA'
 RENDERING = 'KJV'
 
-PROMPT_VERSION = 'sense-1'
+PROMPT_VERSION = 'sense-2'
+
+# A verse as a record's description cites it: `(NEH 8:7)`, `(EZR 2:2, NEH 7:7)`, in the book codes of
+# BibleData's own book file, in canonical order.
+CITED = re.compile(r'\b([1-3]?[A-Z]{2,3}) (\d+):(\d+)')
+CITED_BOOKS = [
+    'GEN', 'EXO', 'LEV', 'NUM', 'DEU', 'JOS', 'JDG', 'RUT', '1SA', '2SA', '1KI', '2KI', '1CH',
+    '2CH', 'EZR', 'NEH', 'EST', 'JOB', 'PSA', 'PRO', 'ECC', 'SNG', 'ISA', 'JER', 'LAM', 'EZK',
+    'DAN', 'HOS', 'JOL', 'AMO', 'OBA', 'JON', 'MIC', 'NAM', 'HAB', 'ZEP', 'HAG', 'ZEC', 'MAL',
+]
 
 # How many verses of prior attestation a candidate is shown. A name borne by one of David's officers
 # can be attested in a hundred places and the hundredth adds nothing the tenth did not; the cap keeps
@@ -212,6 +229,10 @@ holds under that name with the verses it is otherwise attested in, and every occ
 with its reference, the name type BHSA marks on it, the Hebrew verse with the word in question
 marked, the King James rendering of the same verse with the verse before and after it, and the King
 James words that the alignment says stand for this Hebrew word.
+
+A candidate's description and its attestation list come from the same dataset and do not always
+agree. Where the description cites a verse its own list does not hold, that verse is listed under
+"cited_not_attested": one of the two is wrong there, and the text decides which, not the description.
 
 Decide each occurrence on its own evidence. Genealogies, parallel lists and the line before are what
 usually settle it; the King James rendering may spell the name differently from the candidate label
@@ -537,21 +558,57 @@ def extract(args):
     print(f"{len(chosen)} names, {total} occurrences, {len(manifest['batches'])} batches -> {args.dir}")
 
 
+def cited(distinguisher):
+    """The verses a description cites, as (book, chapter, verse), each with the match that cites it."""
+    for match in CITED.finditer(distinguisher or ''):
+        code, chapter, verse = match.groups()
+        if code in CITED_BOOKS:
+            yield (CITED_BOOKS.index(code) + 1, int(chapter), int(verse)), match
+
+
+def described(distinguisher, asked):
+    """
+    The description with every verse this batch asks about struck out of its citations.
+
+    The description is the dataset's prose and the attestation list its data, and the two disagree
+    often enough to be a property of the dataset: azariah-7 describes a Levite who "explained the law
+    to the people (NEH 8:7)" and lists no verse of Nehemiah. Struck from the list and left in the
+    prose, an asked verse is either the answer copied -- where the list agrees -- or a wrong answer
+    stated, where it does not, and the model is scored against the list either way. So a citation is
+    struck exactly where the list's entry is, and the prose around it stays.
+    """
+    if not distinguisher:
+        return distinguisher
+    for _, match in sorted(((a, m) for a, m in cited(distinguisher) if a in asked),
+                           key=lambda found: found[1].start(), reverse=True):
+        distinguisher = distinguisher[:match.start()] + distinguisher[match.end():]
+    distinguisher = re.sub(r'\(\s*(?:,\s*)+', '(', distinguisher)
+    distinguisher = re.sub(r'(?:,\s*)+\)', ')', distinguisher)
+    distinguisher = re.sub(r',(\s*,)+', ',', distinguisher)
+    return re.sub(r'\s*\(\s*\)', '', distinguisher).strip()
+
+
 def shown(candidate, asked):
     """
     A candidate as the model sees it. Every verse this batch is asking about is struck out of the
-    attestation list: left in, the model would be reading the answer off the evidence and the
-    agreement figure would measure copying.
+    attestation list and out of the description's citations: left in, the model would be reading
+    the answer off the evidence and the agreement figure would measure copying. What the description
+    cites and the list does not hold is listed beside it, so the model sees where the dataset
+    disagrees with itself instead of taking the prose as settled.
     """
     attested = [tuple(a) for a in candidate['attested']]
     withheld = [a for a in attested if a in asked]
     keep = [a for a in attested if a not in asked]
     step = max(1, len(keep) // ATTESTATION_SHOWN + (1 if len(keep) % ATTESTATION_SHOWN else 0))
+    listed = set(attested)
     return {
         'key': candidate['key'],
         'kind': candidate['kind'],
         'name': candidate['name'],
-        'distinguisher': candidate['distinguisher'],
+        'distinguisher': described(candidate['distinguisher'], asked),
+        'cited_not_attested': [reference(*address) for address in sorted(
+            {address for address, _ in cited(candidate['distinguisher'])
+             if address not in listed and address not in asked})],
         'meaning': candidate['meaning'],
         'attested_in': [reference(*a) for a in keep[::step]],
         'attested_in_total': len(keep),

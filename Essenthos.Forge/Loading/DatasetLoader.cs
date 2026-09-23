@@ -169,6 +169,7 @@ internal sealed class DatasetLoader(
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
+            await FoldTheRecordsWrittenTwice(stoppingToken);
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
             await CountHowEachTextSpellsEachName(stoppingToken);
             await PutThePlacesOnTheMap(resources, stoppingToken);
@@ -1131,6 +1132,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityNameFormLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The people the dataset wrote two records for, one list each, folded into one. After every pass
+    /// that writes onto a record by the address a file gives it, because those files still name both,
+    /// and before the passes that count and picture what the records hold, so they count one man.
+    /// </summary>
+    private async Task FoldTheRecordsWrittenTwice(CancellationToken cancellationToken)
+    {
+        status.Starting("the records the dataset wrote twice for one person");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<DuplicateRecordLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>

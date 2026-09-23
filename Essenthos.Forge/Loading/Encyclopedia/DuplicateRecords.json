@@ -1,0 +1,262 @@
+{
+  "about": "Records BibleData wrote twice for one person, each folded into the record that keeps its address. The pairs come from an audit that showed a model every same-name, same-kind pair of records under one Strong number with their descriptions and verse lists: 1,021 pairs, 83 judged one referent, 40 of them with high confidence. Each high pair was then read again against its verses; the ones under 'merges' hold up, and the ones under 'declined' do not, or rest on a question the text leaves open. The record more words already name keeps its address, so fewer annotations move; on a tie the lower-numbered one does. Everything the folded record held moves with it, and its address, name, description and BibleData id stay on as a merged record, so a link to it still arrives and what the dataset said is not lost.",
+  "method": "model-reading",
+  "confidence": 0.9,
+  "source": "Essenthos: BibleData's same-name records compared pair by pair by claude-opus-5 (prompt records-1, 2026-09-06), and each pair it held to be one person read again against its verses by claude-opus-5-5 on 2026-09-23",
+  "merges": [
+    {
+      "strongNumber": "H285",
+      "keeps": "ahitub-3",
+      "folds": "ahitub-4",
+      "why": "1 Chronicles 9:11 and Nehemiah 11:11 are one list of the priests who settled in Jerusalem, written twice: in both Ahitub is Meraioth's father and 'the ruler of the house of God'."
+    },
+    {
+      "strongNumber": "H6698",
+      "keeps": "zur-2",
+      "folds": "zur",
+      "why": "Numbers 25:15 makes Zur, Cozbi's father, a head of a chief house in Midian, and Numbers 31:8 names Zur among the five kings of Midian slain in the war that avenged Peor; the second record's own description already asks whether they are one."
+    },
+    {
+      "strongNumber": "H6976",
+      "keeps": "hakkoz",
+      "folds": "hakkoz-2",
+      "why": "'Meremoth the son of Urijah, the son of Koz' (Nehemiah 3:4, 21) is the priestly house of Hakkoz whose sons could not prove their descent (Ezra 2:61, Nehemiah 7:63), and the first record already holds both verses."
+    },
+    {
+      "strongNumber": "H2226",
+      "keeps": "zerah-4",
+      "folds": "zerah-5",
+      "why": "1 Chronicles 6:20-21 and 6:39-43 are one Gershonite line read down and then up: Zimmah, Joah or Ethan, Iddo or Adaiah, Zerah, Jeaterai or Ethni. The Zerah of both is one man; Iddo and Adaiah are two spellings of his father."
+    },
+    {
+      "strongNumber": "H43",
+      "keeps": "abiasaph",
+      "folds": "ebiasaph",
+      "why": "Exodus 6:24's Abiasaph son of Korah is Chronicles' Ebiasaph (1 Chronicles 6:23, 37; 9:19), the same Korahite under two spellings; the first record already carries 'Ebiasaph' as a name."
+    },
+    {
+      "strongNumber": "H4812",
+      "keeps": "meraioth-2",
+      "folds": "meraioth-3",
+      "why": "1 Chronicles 9:11 and Nehemiah 11:11 are one list written twice: Zadok son of Meraioth son of Ahitub."
+    },
+    {
+      "strongNumber": "H5543",
+      "keeps": "sallu",
+      "folds": "sallu-2",
+      "why": "1 Chronicles 9:7 and Nehemiah 11:7 are one list of the Benjamites who settled in Jerusalem, written twice: Sallu son of Meshullam in both."
+    },
+    {
+      "strongNumber": "H5543",
+      "keeps": "sallai-2",
+      "folds": "sallu-3",
+      "why": "Nehemiah 12:7 lists Sallu among the priests who came up with Zerubbabel, and Nehemiah 12:20 names the same house a generation later as Sallai: the lists of 12:1-7 and 12:12-21 run in the same order, house for house."
+    },
+    {
+      "strongNumber": "H5718",
+      "keeps": "adaiah-4",
+      "folds": "adaiah-9",
+      "why": "1 Chronicles 9:12 and Nehemiah 11:12 are one list written twice: Adaiah son of Jeroham, of the line of Pashhur and Malchijah."
+    },
+    {
+      "strongNumber": "H5915",
+      "keeps": "achsah",
+      "folds": "achsah-2",
+      "why": "1 Chronicles 2:49 closes Caleb's genealogy with 'and the daughter of Caleb was Achsa', the Achsah of Joshua 15:16-17 and Judges 1:12-13."
+    },
+    {
+      "strongNumber": "H8274",
+      "keeps": "sherebiah-2",
+      "folds": "sherebiah",
+      "why": "The Levite of understanding brought to Ezra at the river Ahava (Ezra 8:18, 24) is the Sherebiah who stands with Jeshua and Hashabiah among the chief Levites of the same years (Nehemiah 8:7; 9:4-5; 10:12; 12:24); the second record already holds Ezra 8:18 and 8:24."
+    },
+    {
+      "strongNumber": "H2518",
+      "keeps": "hilkiah-3",
+      "folds": "hilkiah-6",
+      "why": "1 Chronicles 9:11 and Nehemiah 11:11 are one list written twice: Hilkiah son of Meshullam son of Zadok."
+    },
+    {
+      "strongNumber": "H6765",
+      "keeps": "zelophehad",
+      "folds": "zelophehad-2",
+      "why": "1 Chronicles 7:15 says 'the name of the second was Zelophehad: and Zelophehad had daughters', the Manassite of Numbers 26:33 and 27:1."
+    },
+    {
+      "strongNumber": "H3081",
+      "keeps": "jehucal",
+      "folds": "jucal",
+      "why": "Jeremiah 37:3 sends 'Jehucal the son of Shelemiah' to the prophet, and Jeremiah 38:1 names 'Jucal the son of Shelemiah' among the princes who hear him: one of Zedekiah's officers, the second spelling a shortening of the first."
+    },
+    {
+      "strongNumber": "H44",
+      "keeps": "iezer",
+      "folds": "abiezer-2",
+      "why": "Iezer son of Gilead (Numbers 26:30) is the clan Abiezer of Joshua 17:2 and Judges 6:34; 1 Chronicles 7:18 counts the same Abiezer among the Manassite families through Hammolecheth, and the first record already holds that verse and the name Abiezer."
+    },
+    {
+      "strongNumber": "H4983",
+      "keeps": "mattaniah-9",
+      "folds": "mattaniah-2",
+      "why": "1 Chronicles 9:15 and Nehemiah 11:17 are one list written twice: Mattaniah son of Micha of the line of Asaph, and both records already claim Nehemiah 12:8."
+    },
+    {
+      "strongNumber": "H5570",
+      "keeps": "senaah",
+      "folds": "hassenaah",
+      "why": "'The sons of Hassenaah' who built the fish gate (Nehemiah 3:3) are 'the children of Senaah' of the return (Ezra 2:35, Nehemiah 7:38): the same name with the article, under the same number."
+    },
+    {
+      "strongNumber": "H6583",
+      "keeps": "pashhur",
+      "folds": "pashhur-4",
+      "why": "Jeremiah 38:1's 'Pashur the son of Malchiah' is the Pashur son of Melchiah whom Zedekiah sends to Jeremiah in 21:1, a verse the first record already holds."
+    },
+    {
+      "strongNumber": "H7967",
+      "keeps": "jehoahaz-2",
+      "folds": "shallum-4",
+      "why": "1 Chronicles 3:15 lists Shallum as Josiah's fourth son, and Jeremiah 22:11 calls 'Shallum the son of Josiah' the king who reigned in his father's place: Jehoahaz. The first record already carries the name Shallum."
+    },
+    {
+      "strongNumber": "H3111",
+      "keeps": "joiada-2",
+      "folds": "joiada-3",
+      "why": "Nehemiah 12:10-11 and 13:28 both name Joiada son of Eliashib the high priest, and the first record already holds 13:28."
+    },
+    {
+      "strongNumber": "H3199",
+      "keeps": "jachin-2",
+      "folds": "jachin-4",
+      "why": "1 Chronicles 9:10 and Nehemiah 11:10 are one list written twice: Jedaiah, Joiarib, Jachin. The first record's own description cites Nehemiah 11:10."
+    },
+    {
+      "strongNumber": "H3395",
+      "keeps": "jeroham-3",
+      "folds": "jeroham-7",
+      "why": "1 Chronicles 9:12 and Nehemiah 11:12 are one list written twice, both naming Adaiah son of Jeroham; Nehemiah gives the longer line between Jeroham and Pashhur."
+    },
+    {
+      "strongNumber": "H475",
+      "keeps": "eliashib-7",
+      "folds": "eliashib-8",
+      "why": "Eliashib son of Joiakim in the high-priestly succession of Nehemiah 12:10 and 12:22 is Eliashib the high priest of Nehemiah 3:1 and 13:4, 28."
+    },
+    {
+      "strongNumber": "H499",
+      "keeps": "eleazar-4",
+      "folds": "eleazar-5",
+      "why": "1 Chronicles 24:28 repeats 23:21-22: Eleazar son of Mahli, who died and had no sons."
+    },
+    {
+      "strongNumber": "H623",
+      "keeps": "asaph-2",
+      "folds": "asaph-3",
+      "why": "The Asaph whose sons are the singers of the return (Ezra 2:41, Nehemiah 7:44) and from whom Zichri descends (1 Chronicles 9:15) is David's chief musician, Asaph son of Berechiah."
+    },
+    {
+      "strongNumber": "H3087",
+      "keeps": "jehozadak-2",
+      "folds": "jehozadak",
+      "why": "1 Chronicles 6:14-15 names Jehozadak son of Seraiah, carried away by Nebuchadnezzar, and Haggai 1:1 names Joshua son of Josedech the high priest: one man, whom the second record already holds at 1 Chronicles 6:14-15."
+    },
+    {
+      "strongNumber": "H3113",
+      "keeps": "joiakim",
+      "folds": "joiakim-2",
+      "why": "Nehemiah 12:10 and 12:26 both name Joiakim son of Jeshua the high priest; 12:26 adds 'the son of Jozadak'."
+    },
+    {
+      "strongNumber": "H4249",
+      "keeps": "mahli-3",
+      "folds": "mahli-2",
+      "why": "1 Chronicles 6:47 names Mahli son of Mushi son of Merari, and 23:23 and 24:30 the same son of Mushi."
+    },
+    {
+      "strongNumber": "H4918",
+      "keeps": "meshuallam",
+      "folds": "meshullam-14",
+      "why": "1 Chronicles 9:7 and Nehemiah 11:7 are one list written twice, and in both Meshullam is Sallu's father."
+    },
+    {
+      "strongNumber": "H6649",
+      "keeps": "zibeon-2",
+      "folds": "zibeon",
+      "why": "Genesis 36:2 names Anah the daughter of Zibeon, and 36:20-24 name Zibeon among the Horite chiefs of Seir with his son Anah; the one letter between Hivite and Horite is the variant the text is usually read through."
+    },
+    {
+      "strongNumber": "H6846",
+      "keeps": "zephaniah-2",
+      "folds": "zephaniah",
+      "why": "2 Kings 25:18 and Jeremiah 52:24 name Zephaniah the second priest, taken at Jerusalem's fall; he is Zephaniah son of Maaseiah the priest of Jeremiah 21:1, 29:25 and 37:3, and the second record already holds both lists."
+    },
+    {
+      "strongNumber": "H7597",
+      "keeps": "shealtiel-2",
+      "folds": "shealtiel",
+      "why": "1 Chronicles 3:17 names Salathiel son of Jeconiah, and Ezra 3:2 and Haggai 1:1 name Shealtiel the father of Zerubbabel; Matthew 1:12 joins the two in one line."
+    },
+    {
+      "strongNumber": "H40",
+      "keeps": "abimelech-2",
+      "folds": "abimelech-3",
+      "why": "2 Samuel 11:21 asks 'Who smote Abimelech the son of Jerubbesheth? did not a woman cast a piece of a millstone upon him from the wall?': Gideon's son of Judges 9:53, Jerubbesheth being Jerubbaal with Baal's name replaced."
+    },
+    {
+      "strongNumber": "H8227",
+      "keeps": "shaphan",
+      "folds": "shaphan-2",
+      "why": "Jeremiah 36:10-12 names 'Gemariah the son of Shaphan the scribe', and Elasah son of Shaphan (29:3) is his brother: the sons of Josiah's scribe, whose son Ahikam the first record already names."
+    }
+  ],
+  "declined": [
+    {
+      "strongNumber": "H475",
+      "pair": [
+        "eliashib-3",
+        "eliashib-7"
+      ],
+      "why": "Whether the Eliashib into whose son's chamber Ezra went (Ezra 10:6) is the high priest of Nehemiah's day is the old question of which of Ezra and Nehemiah came first; the text does not settle it."
+    },
+    {
+      "strongNumber": "H475",
+      "pair": [
+        "eliashib-3",
+        "eliashib-8"
+      ],
+      "why": "The same question as the pair above, from the other record."
+    },
+    {
+      "strongNumber": "H2216",
+      "pair": [
+        "zerubbabel-2",
+        "zerubbabel-3"
+      ],
+      "why": "Luke 3:27 runs David's line through Nathan and Neri, not through Jeconiah; whether its Zorobabel son of Salathiel is the governor is argued both ways, and Luke's Shealtiel is kept apart for the same reason."
+    },
+    {
+      "strongNumber": "H2997",
+      "pair": [
+        "ibneiah",
+        "ibnijah"
+      ],
+      "why": "1 Chronicles 9:8 names two men: 'Ibneiah the son of Jeroham' and, at the end of Meshullam's line in the same verse, 'Ibnijah'. Two words, two men."
+    },
+    {
+      "strongNumber": "H2811",
+      "pair": [
+        "hashabiah-4",
+        "hashabiah-5"
+      ],
+      "why": "Nothing but the name and the generation joins the ruler of half Keilah (Nehemiah 3:17) to the Merarite who came with Ezra (Ezra 8:19)."
+    },
+    {
+      "strongNumber": "H6934",
+      "pair": [
+        "kadmiel",
+        "kadmiel-2"
+      ],
+      "why": "The Kadmiel of the return under Zerubbabel (Ezra 2:40; 3:9) and the Kadmiel who stands on the stairs and seals the covenant under Nehemiah (9:4-5; 10:9) are ninety years apart; one may be the house the other founded, which is not one man."
+    }
+  ]
+}

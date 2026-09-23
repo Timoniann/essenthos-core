@@ -121,7 +121,8 @@ internal static class VerseEndpoints
             string? named = null;
             if (entity is { Length: > 0 })
             {
-                named = await db.Entities.Where(e => e.Slug == entity).Select(e => e.Slug)
+                var current = await MergedAddresses.Current(db, entity, cancellationToken);
+                named = await db.Entities.Where(e => e.Slug == current).Select(e => e.Slug)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (named is null)
                 {

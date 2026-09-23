@@ -122,6 +122,9 @@ public class AppDbContext : DbContext
     /// <summary>Who the text gives a title to, and the verse where it does.</summary>
     public DbSet<TitleBearer> TitleBearers { get; set; } = null!;
 
+    /// <summary>The records a dataset wrote twice for one person, and the one each was folded into.</summary>
+    public DbSet<MergedRecord> MergedRecords { get; set; } = null!;
+
     /// <summary>Where a place is, as one point, and whose coordinates they are.</summary>
     public DbSet<PlaceLocation> PlaceLocations { get; set; } = null!;
 
@@ -239,6 +242,20 @@ public class AppDbContext : DbContext
                         + "reader is shown is settled the way an annotation is, by claim standing "
                         + "and then confidence.");
                 });
+        });
+
+        // The folded record's address and testimony belong to the record it became part of, and go
+        // with it.
+        modelBuilder.Entity<MergedRecord>(entity =>
+        {
+            entity.Property(m => m.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(m => m.Entity)
+                .WithMany()
+                .HasForeignKey(m => m.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("merged_record", t => AddProvenanceConstraints(t, "merged_record"));
         });
 
         modelBuilder.Entity<EntityClaim>(entity =>
