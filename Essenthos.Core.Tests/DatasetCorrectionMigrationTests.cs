@@ -157,13 +157,58 @@ public sealed class DatasetCorrectionMigrationTests : IDisposable
             "files LUK 3:1 under a record it also gives another man of this name; the verse is this man's.");
     }
 
+    /// <summary>
+    /// Judas was filed under Job's number, G2492, because the loader dropped the letter of the
+    /// dataset's G2492a. Corrected in place he answers to G2455 as a cold load writes him, and Job,
+    /// whose number it really is, keeps it.
+    /// </summary>
+    [Fact]
+    public async Task Judas_answers_to_his_own_number_and_Job_keeps_his()
+    {
+        var judas = Person("judas", "person:Judas_1");
+        judas.Names.Add(new EntityName { Label = "Judas", Greek = "Ἰούδας", GreekStrongNumber = "G2492" });
+        judas.Names.Add(new EntityName { Label = "Judas Iscariot", GreekStrongNumber = "G2492,G2469" });
+        var job = Person("job", "person:Job_1");
+        job.Names.Add(new EntityName { Label = "Job", Greek = "Ιωβ", GreekStrongNumber = "G2492" });
+        var admin = Person("admin", "person:Admin_1");
+        admin.Names.Add(new EntityName { Label = "Admin", GreekStrongNumber = "G95" });
+        await _db.SaveChangesAsync();
+
+        await Migrate(new AGreekNameIsFiledUnderItsOwnNumber());
+        await Migrate(new AGreekNameIsFiledUnderItsOwnNumber());
+
+        var numbers = await _db.EntityNames.AsNoTracking().ToDictionaryAsync(n => n.Label, n => n.GreekStrongNumber);
+        numbers["Judas"].Should().Be(BibleDataLoader.Strong("G2492a", 'G'));
+        numbers["Judas Iscariot"].Should().Be(BibleDataLoader.Strong("G2492a, G2469", 'G'));
+        numbers["Job"].Should().Be("G2492");
+        numbers["Admin"].Should().BeNull();
+    }
+
+    [Fact]
+    public async Task Paul_answers_to_Saoul_once()
+    {
+        Person("saul-2", "person:Saul_2");
+        await _db.SaveChangesAsync();
+
+        await Migrate(new AGreekNameIsFiledUnderItsOwnNumber());
+        await Migrate(new AGreekNameIsFiledUnderItsOwnNumber());
+
+        var name = await _db.EntityNames.AsNoTracking().SingleAsync();
+        var loaded = BibleDataLoader.PaulCalledSaoul(
+            new Entity { Slug = "saul-2", Name = "Saul", SourceId = "person:Saul_2", Source = Dataset });
+        name.Should().BeEquivalentTo(loaded, options => options
+            .Excluding(n => n.Id).Excluding(n => n.EntityId).Excluding(n => n.Entity));
+    }
+
+    private Task Migrate() => Migrate(new TheDatasetsCorrectionsReachALoadedCorpus());
+
     /// <summary>The migration's statements, run in one transaction as the migrator runs them.</summary>
-    private async Task Migrate()
+    private async Task Migrate(Migration migration)
     {
         var builder = new MigrationBuilder(_db.Database.ProviderName);
-        typeof(TheDatasetsCorrectionsReachALoadedCorpus)
+        migration.GetType()
             .GetMethod("Up", BindingFlags.Instance | BindingFlags.NonPublic)!
-            .Invoke(new TheDatasetsCorrectionsReachALoadedCorpus(), [builder]);
+            .Invoke(migration, [builder]);
 
         await using var connection = _database.NewConnection();
         await connection.OpenAsync();

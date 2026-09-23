@@ -57,12 +57,13 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _output.WriteLine($"  on Jesus               {_corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id)}");
         _output.WriteLine($"prose still holding a row identifier {Leaked().Count}");
 
-        // One name of the 3,893 is this corpus's own and not the label file's: the divine name
-        // pointed as Elohim, H3069. Talitha's and Jashar's are not loaded, with their records.
-        _corpus.Names.Should().HaveCount(3_893);
+        // Two names of the 3,894 are this corpus's own and not the label file's: the divine name
+        // pointed as Elohim, H3069, and Paul called Σαούλ. Talitha's and Jashar's are not loaded,
+        // with their records.
+        _corpus.Names.Should().HaveCount(3_894);
         _corpus.Names.Count(n => n.HebrewStrongNumber is not null).Should().Be(3_680);
         _corpus.Names.Count(n => n.GreekStrongNumber is not null).Should().Be(1_160);
-        strongNumbers.Should().Be(5_851);
+        strongNumbers.Should().Be(5_850);
         _corpus.PlaceNames.Should().HaveCount(141);
         _corpus.NamesOf("jesus").Should().HaveCount(73);
         _corpus.Relationships.Should().HaveCount(5_446);
@@ -147,8 +148,42 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
     [InlineData("[NONE], H5333", 'H', "H5333")]
     [InlineData("many", 'G', null)]
     [InlineData("", 'H', null)]
+    [InlineData("G2492a", 'G', "G2455")]
+    [InlineData("G935, G2492a", 'G', "G935,G2455")]
+    [InlineData("G3102a", 'G', "G3158")]
+    [InlineData("G2490a", 'G', "G2490")]
+    [InlineData("G95a", 'G', null)]
+    [InlineData("G5101a, G2459", 'G', "G2459")]
+    [InlineData("G1234z", 'G', null)]
     public void AStrongNumberIsNormalisedToWhatTheLexiconIsKeyedBy(string written, char language, string? expected) =>
         BibleDataLoader.Strong(written, language).Should().Be(expected);
+
+    /// <summary>
+    /// The dataset's lettered Greek numbers are its own extension of Strong's, and the number before
+    /// the letter is sometimes another word: G2492a is Judas, and G2492 is Job.
+    /// </summary>
+    [Fact]
+    public void JudasIsNotFiledUnderJobsNumber()
+    {
+        _corpus.NamesOf("Judas_1").Where(n => n.Label == "Judas").Select(n => n.GreekStrongNumber)
+            .Should().Equal("G2455");
+        _corpus.Names.Where(n => n.GreekStrongNumber == "G2492")
+            .Select(n => _corpus.Entities.Values.Single(e => e.Id == n.EntityId).SourceId)
+            .Should().Equal("person:Job_1");
+        _corpus.NamesOf("Admin_1").Should().OnlyContain(n => n.GreekStrongNumber == null,
+            "Strong's has no number for Admin, and G95 is the adverb unjustly");
+    }
+
+    /// <summary>
+    /// Σαούλ is the king's name and Paul's: the risen Christ calls him by it at Acts 9:4.
+    /// </summary>
+    [Fact]
+    public void PaulAnswersToTheHebrewFormOfHisName()
+    {
+        _corpus.NamesOf("Saul_2").Select(n => n.GreekStrongNumber)
+            .Should().Contain(["G4569", "G3972", BibleDataLoader.CalledSaoul]);
+        _corpus.NamesOf("Saul_1").Select(n => n.GreekStrongNumber).Should().Contain(BibleDataLoader.CalledSaoul);
+    }
 
     /// <summary>
     /// The dataset writes its own word for an empty cell, and it was reaching the page: 163 names
