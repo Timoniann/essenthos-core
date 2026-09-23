@@ -1,0 +1,66 @@
+{
+  "about": "Places where Brenton's or Swete's Septuagint still stands beside a Hebrew verse whose words it does not carry after the frame fix of PRB-0660, and which could not be settled from the texts alone. Each entry names the edition, its own verse numbers, where the frame places them now, where their words are, the question and the answers that would settle it. An answer that asks for a placement is applied by writing the passage into Essenthos.Forge/Loading/Frame/TvtmsSupplements.cs (the edition's verses, where their words stand, and tests that recognise the edition), then loading as PRB-0660 describes. Nothing here reaches the corpus before that.",
+  "made": "2026-09-23, from a content check of every Brenton and Swete Old Testament verse against the BHSA verse sharing most translated words (Greek lemma or form to Hebrew Strong number, from the corpus's own aligner links), read against the King James where a run was found",
+  "entries": [
+    {
+      "key": "exodus-tabernacle",
+      "edition": "both",
+      "references": ["EXO 35:8-39:23"],
+      "placed": "Brenton 36:8-38 at its own numbers (the Hebrew scheme's tests pass on it by chance: its chapter 36 also has 38 verses); Swete 36:8-40 at its own numbers; 37-38 by the Greek scheme",
+      "words": "The Greek account of making the tabernacle is in another order: Brenton's and Swete's 36:8-38/40 are the priestly garments (Hebrew 39:1-31, with pieces of 28), 37 the hangings (Hebrew 36:8-38), 38 the ark, table and lampstand (Hebrew 37), with pluses and omissions throughout. About 40 verses of each edition stand beside unrelated Hebrew.",
+      "question": "The data's Greek schemes describe Rahlfs' division of these chapters and neither edition follows it verse for verse. Place both editions passage by passage by their words (about 120 verses to write down and read), or leave the Greek account at its own numbers as a different arrangement the reader shows as printed?",
+      "options": [
+        "place them by their words, passage by passage",
+        "leave them at their own numbers"
+      ]
+    },
+    {
+      "key": "three-kingdoms-swete",
+      "edition": "Swete",
+      "references": ["1KI 4:17-5:17", "1KI 6:1-34", "1KI 10:22-33"],
+      "placed": "by the Greek scheme's rules for Rahlfs' 3 Kingdoms, which Swete fails every test of",
+      "words": "Swete 5:1-4 and 5:9-16 carry the Hebrew's 5:1-4 and 5:9-16 (English numbering) but stand at 4:22-34; 6:9-11 carry 6:4-6; 10:26-33 carry 10:23-29. About 60 verses.",
+      "question": "Swete numbers 3 Kingdoms 4-6 and 10 neither as Rahlfs nor as the Hebrew. Write its division down verse by verse, as was done for its Proverbs, or leave 3 Kingdoms to the lettered-additions work (PRB-0249)?",
+      "options": [
+        "write Swete's division down",
+        "leave it with PRB-0249"
+      ]
+    },
+    {
+      "key": "lettered-hebrew-passages",
+      "edition": "both",
+      "references": ["PRO 24:22a-22t (Brenton)", "JOS 9:2a-2f (Brenton)", "1KI 2:35a-o, 2:46a-l, 12:24a-z, 16:28a-h", "EST additions", "DAN 3:24-90"],
+      "placed": "each lettered verse at the number it is printed under",
+      "words": "Some lettered verses are not Greek pluses but the Hebrew's own verses printed elsewhere: Brenton's Proverbs 24:22f-t are the Hebrew 30:1-14, Joshua 9:2a-f the Hebrew 8:30-35. Others duplicate a Hebrew passage (1 Kings 2:35a = 4:29) or have no Hebrew at all (Esther's additions).",
+      "question": "Should a lettered verse whose words are a Hebrew verse stand beside that verse (as Brenton's numbered Proverbs 24:35-62 now do), leaving only true pluses and duplicates at their printed number? This is the design question of PRB-0249.",
+      "options": [
+        "move lettered verses that are Hebrew verses",
+        "keep every lettered verse where it is printed"
+      ]
+    },
+    {
+      "key": "swete-psalm-91-title",
+      "edition": "Swete",
+      "references": ["PSA 91:1-16 (Hebrew 92)"],
+      "placed": "92:1-16",
+      "words": "Swete numbers the psalm's title as verse 1, so each verse stands one after its words (91:1 is the title, 91:2 the Hebrew 92:1).",
+      "question": "Place Swete's Psalm 91 one earlier (title at the title), which is certain from the text; the question is only whether other psalms of Swete do the same and should be checked together first.",
+      "options": [
+        "place it, and check Swete's other psalm titles",
+        "leave it"
+      ]
+    },
+    {
+      "key": "small-swaps",
+      "edition": "both",
+      "references": ["DEU 5:17-18", "DEU 14:16-17", "LEV 11:15-16", "JOS 19:47-48", "2CH 27:6-8 (Swete)", "EXO 38:27 (Brenton)"],
+      "placed": "at their own numbers",
+      "words": "The Greek orders a few verses differently (adultery before murder in Deuteronomy 5, the birds in Deuteronomy 14 and Leviticus 11) or numbers one verse apart (Swete 2 Chronicles 27:6-8 carry 27:5-7). Brenton's Exodus 38:27, the laver, carries the Hebrew 40:30-32; the Greek scheme placed it there and the fix, which takes the Hebrew scheme for Brenton's Exodus 40, put it back at its own number.",
+      "question": "Place each of these beside its words, or show the Greek order as printed? Leviticus 11 is PRB-0166.",
+      "options": [
+        "place them by their words",
+        "show them as printed"
+      ]
+    }
+  ]
+}

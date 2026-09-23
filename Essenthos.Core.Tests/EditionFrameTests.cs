@@ -48,6 +48,26 @@ public class VersificationTestTests
     }
 
     /// <summary>
+    /// The Reina-Valera numbers Numbers 30 as the Hebrew does and stops a verse short of it. That
+    /// fails one of the Hebrew column's tests and every one of the English column's, and the edition
+    /// is still the Hebrew's: its 30:1 is the English 29:40.
+    /// </summary>
+    [Fact]
+    public void AnEditionAVerseShortOfASchemeStillFollowsIt()
+    {
+        var numbers = EditionShape.Of(
+        [
+            .. Enumerable.Range(1, 39).Select(verse => (4, 29, verse, string.Empty, 40)),
+            .. Enumerable.Range(1, 16).Select(verse => (4, 30, verse, string.Empty, 40)),
+        ]);
+
+        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.English, numbers);
+
+        frame.Resolve(4, 30, 1).Should().Equal(new CanonicalReference(4, 29, 40));
+        frame.Resolve(4, 30, 16).Should().Equal(new CanonicalReference(4, 30, 15));
+    }
+
+    /// <summary>
     /// A verse is compared with another by how much text stands in it, which is how the data tells
     /// apart the two editions that both print an address and differ in which of them holds the
     /// material.
@@ -138,6 +158,8 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
     private const int Deuteronomy = 5;
 
     private const int Nehemiah = 16;
+
+    private const int Proverbs = 20;
 
     private const int Esther = 17;
 
@@ -250,10 +272,11 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
     }
 
     /// <summary>
-    /// What the whole change amounts to. Reading the conditions moves 398 of Brenton's 28,597
-    /// verses and leaves the other 99% exactly where the tradition put them — which is the shape
-    /// this should have: the schemes agree almost everywhere, and the passages where they do not
-    /// are the passages a reader is comparing.
+    /// What the whole change amounts to. Reading the conditions, and the passages written down for
+    /// this edition where the data describes none, moves 582 of Brenton's 28,597 verses and leaves
+    /// the other 98% exactly where the tradition put them — which is the shape this should have: the
+    /// schemes agree almost everywhere, and the passages where they do not are the passages a reader
+    /// is comparing.
     /// </summary>
     [Fact]
     public void ReadingTheConditionsMovesTheVersesTheSchemesDisagreeAbout()
@@ -263,7 +286,82 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
             brenton.Edition.Resolve(verse.Book, verse.Chapter, verse.Number, verse.Label.Length > 0)[0]);
 
         brenton.Verses.Should().HaveCount(28_597);
-        moved.Should().Be(398);
+        moved.Should().Be(582);
+    }
+
+    /// <summary>
+    /// Brenton leaves out Exodus 25:6, 28:23-28 and 40:7, 11 and 28, and Deuteronomy 14:18, and
+    /// numbers the rest of each passage as the Hebrew does. Every test the Hebrew column writes holds
+    /// except the ones asking for the verses it leaves out, and every test of the Greek column fails;
+    /// taking the Greek anyway, because it is the tradition's own, put each verse beside the Hebrew of
+    /// the next one or the one after.
+    /// </summary>
+    [Theory]
+    [InlineData(Exodus, 25, 10)]
+    [InlineData(Exodus, 28, 35)]
+    [InlineData(Exodus, 40, 20)]
+    [InlineData(Deuteronomy, 14, 21)]
+    public void AnEditionThatLeavesOutVersesFollowsTheSchemeItOtherwiseAnswersTo(int book, int chapter, int verse)
+    {
+        Placed(brenton.Edition, book, chapter, verse).Should().Be(new CanonicalReference(book, chapter, verse));
+    }
+
+    /// <summary>
+    /// Brenton's chapter 30 of Jeremiah runs Edom, Ammon, Kedar and Damascus; it ends Elam at 25:20
+    /// with the date the Hebrew opens it with; and its chapter 32 is the cup of wrath under the
+    /// Hebrew's own verse numbers. No scheme of the data divides the book that way, so each of these
+    /// stood beside a Hebrew verse about another nation.
+    /// </summary>
+    [Theory]
+    [InlineData(30, 1, 49, 7)]
+    [InlineData(30, 16, 49, 22)]
+    [InlineData(30, 17, 49, 1)]
+    [InlineData(30, 23, 49, 28)]
+    [InlineData(30, 29, 49, 23)]
+    [InlineData(25, 15, 49, 35)]
+    [InlineData(25, 20, 49, 34)]
+    [InlineData(32, 15, 25, 15)]
+    [InlineData(32, 38, 25, 38)]
+    public void BrentonsOwnDivisionOfJeremiahStandsBesideItsWords(
+        int chapter,
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        Placed(brenton.Edition, Jeremiah, chapter, verse)
+            .Should().Be(new CanonicalReference(Jeremiah, standardChapter, standardVerse));
+    }
+
+    /// <summary>
+    /// Agur's numerical sayings and the words of Lemuel's mother stand in chapter 24 of the Greek, and
+    /// Brenton numbers them on from 24:35 where Rahlfs keeps the Hebrew's numbers.
+    /// </summary>
+    [Theory]
+    [InlineData(35, 30, 15)]
+    [InlineData(53, 30, 33)]
+    [InlineData(54, 31, 1)]
+    [InlineData(62, 31, 9)]
+    public void BrentonsProverbsTwentyFourStandsBesideTheHebrewItCarries(
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        Placed(brenton.Edition, Proverbs, 24, verse)
+            .Should().Be(new CanonicalReference(Proverbs, standardChapter, standardVerse));
+    }
+
+    /// <summary>
+    /// Brenton runs the killing of the first ram into the laying on of hands, divides the burning of
+    /// it differently and splits the anointing at 8:30, so the verses between stand one ahead.
+    /// </summary>
+    [Fact]
+    public void BrentonsLeviticusEightIsPlacedByItsOwnDivision()
+    {
+        brenton.Edition.Resolve(Leviticus, 8, 18).Should()
+            .Equal(new CanonicalReference(Leviticus, 8, 18), new CanonicalReference(Leviticus, 8, 19));
+        Placed(brenton.Edition, Leviticus, 8, 25).Should().Be(new CanonicalReference(Leviticus, 8, 26));
+        Placed(brenton.Edition, Leviticus, 8, 29).Should().Be(new CanonicalReference(Leviticus, 8, 30));
+        Placed(brenton.Edition, Leviticus, 8, 30).Should().Be(new CanonicalReference(Leviticus, 8, 30));
     }
 
     private static CanonicalReference Placed(VersificationFrame frame, int book, int chapter, int verse) =>
@@ -304,4 +402,148 @@ public class SweteMalachiTests
     {
         TvtmsReader.Read(TestResources.Tvtms).Corrected.Should().BeEquivalentTo(TvtmsCorrections.All);
     }
+
+    /// <summary>
+    /// A supplement that stands apart from the data's passage for the same verses competes with it
+    /// rather than replacing it, and the verses end up placed twice.
+    /// </summary>
+    [Fact]
+    public void EverySupplementJoinsThePassageItWasWrittenFor()
+    {
+        TvtmsReader.Read(TestResources.Tvtms).Supplemented.Should()
+            .BeEquivalentTo(TvtmsSupplements.All.Where(supplement => supplement.Joins is not null));
+    }
+}
+
+/// <summary>Swete's whole Old Testament, read once.</summary>
+public sealed class SweteEdition
+{
+    private readonly Lazy<VersificationFrame> edition;
+
+    public SweteEdition()
+    {
+        edition = new Lazy<VersificationFrame>(() => TvtmsReader.Read(TestResources.Tvtms)
+            .Frame(Versification.Septuagint, EditionShape.Of(Verses)));
+    }
+
+    internal IReadOnlyList<(int Book, int Chapter, int Number, string Label, int Length)> Verses { get; } =
+    [
+        .. from book in SweteTextSource.Read(TestResources.SweteFolder).Books
+           from chapter in book.Chapters
+           from verse in chapter.Verses
+           select (book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label,
+               verse.Words.Sum(word => word.Surface.Length)),
+    ];
+
+    internal VersificationFrame Edition => edition.Value;
+}
+
+/// <summary>
+/// Swete, placed passage by passage where its words are. Each of these stood beside a Hebrew verse
+/// that says something else.
+/// </summary>
+public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
+{
+    private const int Exodus = 2;
+
+    private const int Joshua = 6;
+
+    private const int SecondSamuel = 10;
+
+    private const int FirstChronicles = 13;
+
+    private const int Nehemiah = 16;
+
+    private const int Proverbs = 20;
+
+    private const int Jeremiah = 24;
+
+    private const int Daniel = 27;
+
+    /// <summary>
+    /// The data writes the undivided form of a scheme as the rows that differ from the divided one,
+    /// so an edition that prints Exodus 38:27 whole answers to three rows about that verse and to the
+    /// Greek scheme's renumbering of chapter 40 as well. Taking the three alone left the chapter at
+    /// its own numbers, two verses before its words.
+    /// </summary>
+    [Theory]
+    [InlineData(13, 15)]
+    [InlineData(32, 38)]
+    public void AnUndividedSchemeIsTheDividedOneWithItsOwnRowsInstead(int verse, int standard)
+    {
+        Placed(Exodus, 40, verse).Should().Be(new CanonicalReference(Exodus, 40, standard));
+    }
+
+    /// <summary>
+    /// Where no scheme's tests can all be satisfied, the edition follows the one whose tests it
+    /// answers most: Swete's 1 Chronicles 6 is the English chapter, its Nehemiah 4 the second Greek
+    /// scheme and its Daniel 3:98-100 the Latin, each failing a test the others fail too.
+    /// </summary>
+    [Theory]
+    [InlineData(FirstChronicles, 6, 2, 6, 2)]
+    [InlineData(Nehemiah, 4, 1, 4, 1)]
+    [InlineData(Daniel, 3, 98, 4, 1)]
+    public void WhereNoSchemeHoldsTheOneThatHoldsMostIsTaken(
+        int book,
+        int chapter,
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        Placed(book, chapter, verse).Should().Be(new CanonicalReference(book, standardChapter, standardVerse));
+    }
+
+    [Fact]
+    public void AmmonIsJeremiahThirtyOneToFive()
+    {
+        Placed(Jeremiah, 30, 1).Should().Be(new CanonicalReference(Jeremiah, 49, 1));
+        Placed(Jeremiah, 30, 5).Should().Be(new CanonicalReference(Jeremiah, 49, 5));
+        Placed(Jeremiah, 30, 6).Should().Be(new CanonicalReference(Jeremiah, 49, 28));
+    }
+
+    [Theory]
+    [InlineData(18, 23, 19, 3)]
+    [InlineData(19, 1, 19, 4)]
+    [InlineData(19, 26, 19, 29)]
+    [InlineData(20, 10, 20, 20)]
+    [InlineData(20, 13, 20, 10)]
+    [InlineData(20, 24, 20, 30)]
+    [InlineData(24, 24, 30, 1)]
+    [InlineData(24, 38, 24, 23)]
+    [InlineData(24, 50, 30, 15)]
+    [InlineData(24, 77, 31, 9)]
+    [InlineData(29, 28, 31, 10)]
+    [InlineData(29, 43, 31, 26)]
+    [InlineData(29, 44, 31, 25)]
+    public void SwetesProverbsStandBesideTheHebrewTheyCarry(
+        int chapter,
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        Placed(Proverbs, chapter, verse)
+            .Should().Be(new CanonicalReference(Proverbs, standardChapter, standardVerse));
+    }
+
+    [Theory]
+    [InlineData(SecondSamuel, 18, 33, 18, 33)]
+    [InlineData(SecondSamuel, 19, 1, 19, 1)]
+    [InlineData(SecondSamuel, 19, 42, 19, 42)]
+    [InlineData(Joshua, 9, 2, 9, 2)]
+    [InlineData(Joshua, 9, 3, 8, 30)]
+    [InlineData(Joshua, 9, 9, 9, 3)]
+    [InlineData(Joshua, 9, 33, 9, 27)]
+    public void SwetesOwnNumberingIsPlacedByItsWords(
+        int book,
+        int chapter,
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        swete.Edition.Resolve(book, chapter, verse).Should()
+            .Equal(new CanonicalReference(book, standardChapter, standardVerse));
+    }
+
+    private CanonicalReference Placed(int book, int chapter, int verse) =>
+        swete.Edition.Resolve(book, chapter, verse)[0];
 }

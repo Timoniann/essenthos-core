@@ -1,14 +1,19 @@
 namespace Essenthos.Core.Loading.Frame;
 
 /// <param name="Scheme">The numbering scheme the corrected row is about, as the data names it.</param>
-/// <param name="Source">The verse as that scheme numbers it.</param>
-/// <param name="States">Where the data places it, which is what is corrected.</param>
+/// <param name="Source">The verse as the row names it.</param>
+/// <param name="States">Where the data places it.</param>
+/// <param name="Printed">Where that scheme prints the verse, which differs from <paramref name="Source"/>
+/// only where the row names the wrong one.</param>
 /// <param name="Standard">Where its words place it.</param>
+/// <param name="Tests">The row's tests restated for the verse it now names, or null to keep its own.</param>
 internal sealed record TvtmsCorrection(
     string Scheme,
     CanonicalReference Source,
     CanonicalReference States,
-    CanonicalReference Standard);
+    CanonicalReference Printed,
+    CanonicalReference Standard,
+    string? Tests = null);
 
 /// <summary>
 /// The rules of the versification data that the texts themselves contradict, and where the texts
@@ -25,9 +30,17 @@ internal sealed record TvtmsCorrection(
 /// of another verse beside the Hebrew and the English. Its own condensed table for the 3:22 scheme
 /// says what the words say.
 /// </para>
+/// <para>
+/// The Greek of Jeremiah prints the oracle against Ammon as 30:1-5, before Kedar at 30:6-11 and
+/// Damascus at 30:12-16. The data's Greek column names it 30:17-21 while testing that the chapter
+/// ends at 30:16, which no edition can satisfy, so the scheme failed for the one edition it was
+/// written for and Swete's Ammon stood beside the Hebrew of Jeremiah 30.
+/// </para>
 /// </summary>
 internal static class TvtmsCorrections
 {
+    private const string JeremiahGreekTests = "{0}=Exist & Jer.30:16=Last & Jer.25:19=Last";
+
     public static IReadOnlyList<TvtmsCorrection> All { get; } =
     [
         Correction("Greek", "Mal.4:4", "Mal.4:6", "Mal.4:5"),
@@ -36,6 +49,12 @@ internal static class TvtmsCorrections
         Correction("Greek2", "Mal.3:22", "Mal.4:6", "Mal.4:5"),
         Correction("Greek2", "Mal.3:23", "Mal.4:4", "Mal.4:6"),
         Correction("Greek2", "Mal.3:24", "Mal.4:5", "Mal.4:4"),
+        .. Enumerable.Range(1, 5).Select(verse => Renamed(
+            "Greek",
+            $"Jer.30:{verse + 16}",
+            $"Jer.30:{verse}",
+            $"Jer.49:{verse}",
+            JeremiahGreekTests)),
     ];
 
     /// <summary>
@@ -51,11 +70,27 @@ internal static class TvtmsCorrections
                 correction.States == row.Standards[0])
             : null;
 
-        return applied is null ? row : row with { Standards = [applied.Standard] };
+        return applied is null
+            ? row
+            : row with
+            {
+                Sources = [applied.Printed],
+                Standards = [applied.Standard],
+                Tests = applied.Tests is null ? row.Tests : VersificationTest.ParseAll(applied.Tests),
+            };
     }
 
     private static TvtmsCorrection Correction(string scheme, string source, string states, string standard) =>
-        new(scheme, Reference(source), Reference(states), Reference(standard));
+        new(scheme, Reference(source), Reference(states), Reference(source), Reference(standard));
+
+    private static TvtmsCorrection Renamed(
+        string scheme,
+        string source,
+        string printed,
+        string standard,
+        string tests) =>
+        new(scheme, Reference(source), Reference(standard), Reference(printed), Reference(standard),
+            string.Format(tests, printed));
 
     private static CanonicalReference Reference(string value) =>
         CanonicalReference.TryParse(value, out var reference)
