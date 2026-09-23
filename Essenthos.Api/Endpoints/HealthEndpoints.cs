@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Reflection;
+using System.Text.Json;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -18,6 +19,9 @@ namespace Essenthos.Core.Endpoints;
 ///
 /// <c>/health</c> is the report: what is in the corpus, and what the measures said about it. It
 /// counts millions of rows, so it is answered from a cache rather than recomputed for every caller.
+///
+/// <c>/health/version</c> says which code this process was built from and which corpus release it
+/// reads, so whoever deploys can tell what an environment runs without logging into it.
 /// </summary>
 internal static class HealthEndpoints
 {
@@ -48,6 +52,24 @@ internal static class HealthEndpoints
                 : Results.Json(
                     new HealthProbeResponse("the database is not reachable"),
                     statusCode: StatusCodes.Status503ServiceUnavailable));
+
+        routes.MapGet("/health/version", async (AppDbContext db, CancellationToken cancellationToken) =>
+        {
+            CorpusReleaseLabel? release = null;
+            try
+            {
+                release = await db.CorpusReleases
+                    .OrderByDescending(r => r.BuiltAt)
+                    .Select(r => new CorpusReleaseLabel(r.Name, r.BuiltAt))
+                    .FirstOrDefaultAsync(cancellationToken);
+            }
+            catch (Exception exception) when (exception is Npgsql.NpgsqlException or InvalidOperationException)
+            {
+                // The code's version is worth answering with even while the corpus is away.
+            }
+
+            return Results.Ok(new VersionResponse(Build.Commit, Build.BuiltAt, release));
+        });
 
         routes.MapGet("/health", async (AppDbContext db, CancellationToken cancellationToken) =>
         {
@@ -168,6 +190,34 @@ internal static class HealthEndpoints
         _ => [],
     };
 }
+
+/// <summary>What this process was built from, read once from its own assembly.</summary>
+internal static class Build
+{
+    private static readonly Assembly Api = typeof(Build).Assembly;
+
+    /// <summary>
+    /// The commit after the <c>+</c> the SDK appends to the informational version: from git on a
+    /// checkout, from the <c>SOURCE_COMMIT</c> build argument in the image. Null when neither was there.
+    /// </summary>
+    public static readonly string? Commit =
+        Api.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion is { } version
+        && version.IndexOf('+') is var plus and >= 0 && plus + 1 < version.Length
+            ? version[(plus + 1)..]
+            : null;
+
+    /// <summary>When the assembly was written, which in an image is when it was published.</summary>
+    public static readonly DateTimeOffset? BuiltAt =
+        Api.Location is { Length: > 0 } location && File.Exists(location)
+            ? new DateTimeOffset(File.GetLastWriteTimeUtc(location), TimeSpan.Zero)
+            : null;
+}
+
+/// <param name="Commit">The commit the running code was built from, or null where the build did not know it.</param>
+/// <param name="Release">The corpus release it reads; null on a working copy that was loaded rather than restored.</param>
+internal record VersionResponse(string? Commit, DateTimeOffset? BuiltAt, CorpusReleaseLabel? Release);
+
+internal record CorpusReleaseLabel(string Name, DateTimeOffset BuiltAt);
 
 /// <param name="Status">
 /// <c>live</c> or <c>ready</c> when it is, and the reason it is not when it is not. A word rather

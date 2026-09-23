@@ -54,7 +54,8 @@ internal sealed class Publisher(
     /// Verifies this machine's corpus, labels it, dumps it, and removes the label again, so the label
     /// travels in the dump and the working database stays a working database.
     /// </summary>
-    public async Task<int> Release(bool allowDirty, CancellationToken cancellationToken)
+    /// <param name="dryRun">Check what can be checked without measuring or dumping, say what would follow, and change nothing.</param>
+    public async Task<int> Release(bool allowDirty, CancellationToken cancellationToken, bool dryRun = false)
     {
         var version = ForgeVersion();
         if (version.EndsWith("-dirty", StringComparison.Ordinal) && !allowDirty)
@@ -72,6 +73,16 @@ internal sealed class Publisher(
                 "The corpus is missing {Count} migrations ({First} first). A release carries its schema, so it " +
                 "would carry the wrong one", pending.Count, pending[0]);
             return 1;
+        }
+
+        if (dryRun)
+        {
+            logger.LogInformation(
+                "Dry run: would measure the corpus against the gate (about two minutes), then dump {Database} as release " +
+                "{Name} into {Folder} with the label of {Version}. Nothing was measured, labelled or dumped",
+                new NpgsqlConnectionStringBuilder(db.Database.GetConnectionString()).Database,
+                Directory.Exists(Releases) ? NextName() : $"{DateTimeOffset.UtcNow:yyyyMMdd}a", Releases, version);
+            return 0;
         }
 
         logger.LogInformation("Measuring the corpus before anything is dumped");
@@ -139,12 +150,22 @@ internal sealed class Publisher(
         return 0;
     }
 
-    public async Task<int> Publish(string targetName, string? releaseName, bool withoutRehearsal, CancellationToken cancellationToken)
+    /// <param name="dryRun">
+    /// Read the target and the release, apply the same refusals a publication would, say every step that
+    /// would follow, and touch nothing — no ssh, no upload, no database.
+    /// </param>
+    public async Task<int> Publish(
+        string targetName, string? releaseName, bool withoutRehearsal, CancellationToken cancellationToken, bool dryRun = false)
     {
         var target = ReleaseTarget.Read(configuration, targetName, Repository);
         var host = new TargetHost(target);
         var record = ReadRecord(releaseName);
         var dump = Path.Combine(Releases, $"{record.Name}.dump");
+
+        if (dryRun)
+        {
+            return DescribePublication(target, record, dump, withoutRehearsal);
+        }
 
         if (await Sha256(dump, cancellationToken) != record.Sha256)
         {
@@ -275,6 +296,36 @@ internal sealed class Publisher(
         return 0;
     }
 
+    private int DescribePublication(ReleaseTarget target, ReleaseRecord record, string dump, bool withoutRehearsal)
+    {
+        if (!File.Exists(dump) || new FileInfo(dump).Length != record.Bytes)
+        {
+            logger.LogError("Dry run: {Dump} is missing or is not the size release {Name} recorded", dump, record.Name);
+            return 1;
+        }
+
+        if (target.After is { } after && !PublishedTo(record.Name).Contains(after) && !withoutRehearsal)
+        {
+            logger.LogError("Dry run: release {Name} has not been published to {After}, and {Target} only takes releases {After} has accepted",
+                record.Name, after, target.Name, after);
+            return 1;
+        }
+
+        var host = new TargetHost(target);
+        var pictures = Path.Combine(ResourcePaths.Read(configuration, environment.ContentRootPath), EntityImageLoader.Folder);
+        var count = Directory.Exists(pictures) ? Directory.EnumerateFiles(pictures, "*", SearchOption.AllDirectories).Count() : 0;
+        var where = target.IsRemote ? target.Ssh : "this machine";
+        logger.LogInformation("Dry run: publishing release {Name} ({Bytes:N0} bytes, built {BuiltAt:u}) to {Target} on {Where} would", record.Name, record.Bytes, record.BuiltAt, target.Name, where);
+        logger.LogInformation("  1. check the dump's SHA-256 against its record, and upload it unless {Target} already has it", target.Name);
+        logger.LogInformation("  2. send whichever of the {Count:N0} pictures here {Target} lacks or has with other bytes, into {Folder}", count, target.Name, host.ImagesFolder);
+        logger.LogInformation("  3. restore it into {Incoming} in {Container}, which nothing reads, and check its label", target.Incoming, target.Container);
+        logger.LogInformation("  4. check every picture it names is on {Target}, run the gate against it there, and check every bookmark finds its verse", target.Name);
+        logger.LogInformation("  5. grant {Reader} reading and nothing else, stop {Api}, rename {Incoming} to {Database} and {Database} to {Previous}, start {Api}",
+            target.Reader, target.ApiContainer, target.Incoming, target.Database, target.Database, target.Previous, target.ApiContainer);
+        logger.LogInformation("Nothing was uploaded, restored or swapped");
+        return 0;
+    }
+
     /// <summary>
     /// This machine's pictures, sent where the target's API reads them: only those the target lacks or
     /// has with other bytes, and nothing taken away. Returns what the target has afterwards.
@@ -341,9 +392,18 @@ internal sealed class Publisher(
     }
 
     /// <summary>Exchanges the live corpus and the previous one, and restarts the API onto it.</summary>
-    public async Task<int> Rollback(string targetName, CancellationToken cancellationToken)
+    public async Task<int> Rollback(string targetName, CancellationToken cancellationToken, bool dryRun = false)
     {
         var target = ReleaseTarget.Read(configuration, targetName, Repository);
+        if (dryRun)
+        {
+            logger.LogInformation(
+                "Dry run: rolling back {Target} on {Where} would stop {Api}, exchange {Database} and {Previous}, and start {Api}. " +
+                "Nothing was connected to or renamed",
+                target.Name, target.IsRemote ? target.Ssh : "this machine", target.ApiContainer, target.Database, target.Previous, target.ApiContainer);
+            return 0;
+        }
+
         var host = new TargetHost(target);
         if (!await host.DatabaseExists(target.Previous, cancellationToken))
         {

@@ -246,6 +246,21 @@ internal static class DeskEndpoints
         });
     }
 
+    /// <summary>
+    /// Where the site runs, and the runs that move code and corpus there. A run is started only for
+    /// what the page showed and the owner confirmed; production also wants its name typed.
+    /// </summary>
+    public static void MapDeployment(this RouteGroupBuilder routes)
+    {
+        routes.MapGet("/deploy", (Deployment deployment, CancellationToken cancellationToken) => deployment.Read(cancellationToken));
+
+        routes.MapPost("/deploy/runs", async (DeployRequest request, Deployment deployment, CancellationToken cancellationToken) =>
+        {
+            var started = await deployment.Start(request, cancellationToken);
+            return started.Run is null ? Results.Conflict(new ProblemResponse(started.Problem!)) : Results.Ok(started);
+        });
+    }
+
     /// <summary>The section a change made among the texts is logged under.</summary>
     private const string TextsSection = "texts";
 

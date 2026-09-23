@@ -33,6 +33,8 @@ namespace Essenthos.Core.Desk;
 [JsonSerializable(typeof(OperationsResponse))]
 [JsonSerializable(typeof(RunStarted))]
 [JsonSerializable(typeof(RunLog))]
+[JsonSerializable(typeof(DeploymentResponse))]
+[JsonSerializable(typeof(DeployRequest))]
 [JsonSerializable(typeof(TextsResponse))]
 [JsonSerializable(typeof(TextCensusSnapshot))]
 [JsonSerializable(typeof(TextVerification))]

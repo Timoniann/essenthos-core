@@ -98,6 +98,16 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
                 : Said(listed));
         }
 
+        return Launch(name, StepOf(name), avioniq.StartInfo(["services", "run", name]), Record);
+    }
+
+    /// <summary>
+    /// Starts a process as one of the console's runs: one at a time with every other run, its output
+    /// kept for the page to follow, and <paramref name="finished"/> called with how it ended. A
+    /// process that cannot be started at all is a run that failed at once, so it is recorded the same way.
+    /// </summary>
+    public RunStarted Launch(string name, string step, ProcessStartInfo start, Action<OperationRun> finished)
+    {
         Running run;
         lock (_lock)
         {
@@ -106,7 +116,7 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
                 return new RunStarted(null, "Another run has not finished. Wait for it, then start this one.");
             }
 
-            run = new Running((++_counter).ToString(System.Globalization.CultureInfo.InvariantCulture), name, StepOf(name), DateTime.UtcNow);
+            run = new Running((++_counter).ToString(System.Globalization.CultureInfo.InvariantCulture), name, step, DateTime.UtcNow);
             _runs.Insert(0, run);
             if (_runs.Count > MostRuns)
             {
@@ -114,7 +124,7 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
             }
         }
 
-        var process = new Process { StartInfo = avioniq.StartInfo(["services", "run", name]), EnableRaisingEvents = true };
+        var process = new Process { StartInfo = start, EnableRaisingEvents = true };
         process.OutputDataReceived += (_, line) => run.Add(line.Data);
         process.ErrorDataReceived += (_, line) => run.Add(line.Data);
         process.Exited += (_, _) =>
@@ -123,7 +133,7 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
             process.WaitForExit();
             run.Finish(process.ExitCode);
             process.Dispose();
-            Record(run);
+            finished(run.Snapshot());
         };
 
         try
@@ -133,10 +143,10 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
         catch (Exception exception) when (exception is System.ComponentModel.Win32Exception or FileNotFoundException)
         {
             logger.LogWarning(exception, "Could not start {Name}", name);
-            run.Add($"avioniq could not be started: {exception.Message}");
+            run.Add($"{start.FileName} could not be started: {exception.Message}");
             run.Finish(-1);
             process.Dispose();
-            Record(run);
+            finished(run.Snapshot());
             return new RunStarted(run.Snapshot(), null);
         }
 
@@ -145,6 +155,15 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
         process.BeginErrorReadLine();
         logger.LogInformation("Started {Name} as run {Id}", name, run.Id);
         return new RunStarted(run.Snapshot(), null);
+    }
+
+    /// <summary>The run that has not finished, if one has not.</summary>
+    public OperationRun? Current()
+    {
+        lock (_lock)
+        {
+            return _runs.FirstOrDefault(r => r.State == "running")?.Snapshot();
+        }
     }
 
     public RunLog? Log(string id, int from)
@@ -167,9 +186,8 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
     }
 
     /// <summary>A finished run, in the change log, so what waited on its step is known to have had it.</summary>
-    private void Record(Running run)
+    private void Record(OperationRun finished)
     {
-        var finished = run.Snapshot();
         _ = log.Append(ChangeLog.Apply, finished.Step, $"step/{finished.Step}", null, JsonValue.Create(finished.State), null, null)
             .ContinueWith(
                 task => logger.LogError(task.Exception, "The end of run {Id} could not be written to the change log", finished.Id),

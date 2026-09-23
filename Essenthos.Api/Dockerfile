@@ -21,7 +21,11 @@ RUN dotnet build "Essenthos.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "Essenthos.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+# The commit this image is built from. The build context carries no .git, so the SDK cannot find it
+# itself; given here, it ends up after the + of the informational version, which /v1/health/version
+# reports so whoever deploys can tell what an environment runs.
+ARG SOURCE_COMMIT=
+RUN dotnet publish "Essenthos.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false ${SOURCE_COMMIT:+/p:SourceRevisionId=$SOURCE_COMMIT}
 
 FROM base AS final
 WORKDIR /app
