@@ -17,6 +17,8 @@ internal sealed record FrameOutcome(string Slug, bool AlreadyPlaced, int Verses,
               "other than their own";
 }
 
+internal sealed record ReferenceDraft(int VerseId, int Book, int Chapter, int Verse, bool IsPrimary);
+
 /// <summary>
 /// Puts every verse of a text into the shared address space, so that a chapter asked for by its
 /// canonical name resolves in any text.
@@ -64,16 +66,17 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             })
             .ToListAsync(cancellationToken);
 
-        var placed = await db.VerseReferences
+        // The frame is derived data. A rule fixed after a corpus was loaded must replace the old
+        // placements rather than leave them behind just because every verse already has a row.
+        var existing = await db.VerseReferences
             .Where(reference => reference.Verse!.TextId == text.Id)
-            .Select(reference => reference.VerseId)
-            .ToHashSetAsync(cancellationToken);
-        var unplaced = verses.Where(verse => !placed.Contains(verse.Id)).ToList();
-        if (unplaced.Count == 0)
-        {
-            logger.LogInformation("Text {Slug} is already placed in the frame; nothing to do", text.Slug);
-            return new FrameOutcome(text.Slug, AlreadyPlaced: true, 0, 0, 0);
-        }
+            .Select(reference => new ReferenceDraft(
+                reference.VerseId,
+                reference.CanonicalBook,
+                reference.CanonicalChapter,
+                reference.CanonicalVerse,
+                reference.IsPrimary))
+            .ToListAsync(cancellationToken);
 
         // Which scheme of its tradition this edition follows is a question only the edition can
         // answer, and the versification data states the tests that ask it.
@@ -86,37 +89,45 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             .Select(v => new CanonicalReference(v.Book, v.ChapterNumber, v.Number))
             .ToHashSet();
 
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-
-        var references = 0;
-        var moved = 0;
-        await using (var writer = await connection.BeginBinaryImportAsync(ReferenceImport, cancellationToken))
-        {
-            foreach (var verse in unplaced)
-            {
-                var placements = frame.Resolve(
+        var expected = verses
+            .SelectMany(verse => frame.Resolve(
                     verse.Book,
                     verse.ChapterNumber,
                     verse.Number,
-                    lettered.Contains(new CanonicalReference(verse.Book, verse.ChapterNumber, verse.Number)));
+                    lettered.Contains(new CanonicalReference(verse.Book, verse.ChapterNumber, verse.Number)))
+                .Select((placement, index) => new ReferenceDraft(
+                    verse.Id,
+                    placement.Book,
+                    placement.Chapter,
+                    placement.Verse,
+                    index == 0)))
+            .ToList();
 
-                if (placements[0].Chapter != verse.ChapterNumber || placements[0].Verse != verse.Number)
-                {
-                    moved++;
-                }
+        var versesById = verses.ToDictionary(verse => verse.Id);
 
-                for (var i = 0; i < placements.Count; i++)
-                {
-                    var placement = placements[i];
-                    await writer.StartRowAsync(cancellationToken);
-                    await writer.WriteAsync(verse.Id, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(placement.Book, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(placement.Chapter, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(placement.Verse, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(i == 0, NpgsqlDbType.Boolean, cancellationToken);
-                    references++;
-                }
+        if (existing.Count == expected.Count && existing.ToHashSet().SetEquals(expected))
+        {
+            logger.LogInformation("Text {Slug} is already placed in the frame", text.Slug);
+            return new FrameOutcome(text.Slug, AlreadyPlaced: true, 0, 0, 0);
+        }
+
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        await db.VerseReferences
+            .Where(reference => reference.Verse!.TextId == text.Id)
+            .ExecuteDeleteAsync(cancellationToken);
+
+        await using (var writer = await connection.BeginBinaryImportAsync(ReferenceImport, cancellationToken))
+        {
+            foreach (var reference in expected)
+            {
+                await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(reference.VerseId, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(reference.Book, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(reference.Chapter, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(reference.Verse, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(reference.IsPrimary, NpgsqlDbType.Boolean, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
@@ -124,7 +135,11 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
 
         await transaction.CommitAsync(cancellationToken);
 
-        var outcome = new FrameOutcome(text.Slug, AlreadyPlaced: false, unplaced.Count, references, moved);
+        var moved = expected
+            .Where(reference => reference.IsPrimary)
+            .Count(reference => reference.Chapter != versesById[reference.VerseId].ChapterNumber ||
+                                reference.Verse != versesById[reference.VerseId].Number);
+        var outcome = new FrameOutcome(text.Slug, AlreadyPlaced: false, verses.Count, expected.Count, moved);
         logger.LogInformation("Placed {Outcome} in {Elapsed}", outcome, started.Elapsed);
         return outcome;
     }

@@ -199,7 +199,9 @@ internal sealed class VersificationRules(IReadOnlyList<IReadOnlyList<TvtmsRow>> 
         return Build(tradition, passage =>
             Chosen(passage, own, edition, requireEvidence: false) ??
             Chosen(passage, others, edition, requireEvidence: true) ??
-            Named(passage, own[0]));
+            (tradition == Versification.English
+                ? Named(passage, own[0]).Where(row => row.Tests?.FailsPieceExistence(edition) is not true)
+                : Named(passage, own[0])));
     }
 
     /// <summary>

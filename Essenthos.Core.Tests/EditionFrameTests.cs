@@ -17,6 +17,7 @@ public class VersificationTestTests
         (1, 1, 2, string.Empty, 10),
         (1, 1, 2, "b", 30),
         (1, 1, 3, string.Empty, 90),
+        (17, 1, 1, string.Empty, 40),
     ]);
 
     [Theory]
@@ -27,6 +28,7 @@ public class VersificationTestTests
     [InlineData("Gen.1:1=Last", false)]
     [InlineData("Gen.1:2.2=Exist", true)]
     [InlineData("Gen.1:1.2=Exist", false)]
+    [InlineData("Est.1:1.1=Exist", false)]
     [InlineData("Gen.1:1=Exist & Gen.1:3=Last", true)]
     [InlineData("Gen.1:1=Exist & Gen.1:1=Last", false)]
     public void AConditionIsAnsweredByTheEdition(string cell, bool expected)
@@ -35,6 +37,14 @@ public class VersificationTestTests
 
         conditions.Should().NotBeNull();
         conditions!.Answer(Edition).Should().Be(expected);
+    }
+
+    [Fact]
+    public void EnglishEstherDoesNotReceiveAdditionsItDoesNotPrint()
+    {
+        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.English, Edition);
+
+        frame.Resolve(17, 1, 1).Should().Equal(new CanonicalReference(17, 1, 1));
     }
 
     /// <summary>

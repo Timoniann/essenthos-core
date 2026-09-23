@@ -614,43 +614,12 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                     WHERE spoken.word_id = w.id AND spoken.entity_id = resolved.entity_id)
         """;
 
-    /// <summary>
-    /// Where the annotation is assembled before anything is written.
-    ///
-    /// <c>resolution</c> is what the name is worth before the verse list and the links are taken
-    /// into account, <c>source</c> is what established it in the words the row will carry, and
-    /// <c>distinguished</c> is whether anything had to be chosen. All three are on the row rather
-    /// than derived from it, because a Hebrew name, a Greek one and a place the corpus worked out
-    /// are three different assertions and the step that carries them onto a translation does not
-    /// know which it is carrying.
-    ///
-    /// <para>
-    /// Both drop themselves at commit. A temporary table outlives its transaction and belongs to
-    /// the connection, and connections here are pooled, so without this a second load in one
-    /// process fails on <em>relation already exists</em> — a start-up crash a long way from its
-    /// cause.
-    /// </para>
-    /// </summary>
     private const string Workspace =
-        """
-        CREATE TEMP TABLE annotation (
-            word_id bigint PRIMARY KEY,
-            entity_id integer NOT NULL,
-            carried double precision NOT NULL,
-            corroborated boolean NOT NULL,
-            stated boolean NOT NULL,
-            distinguished boolean NOT NULL,
-            resolution double precision NOT NULL,
-            source text NOT NULL,
-            note text NOT NULL)
-        ON COMMIT DROP;
-        CREATE TEMP TABLE attested (number text PRIMARY KEY) ON COMMIT DROP
-        """;
+        Annotating.Workspace + "; CREATE TEMP TABLE attested (number text PRIMARY KEY) ON COMMIT DROP";
 
     /// <summary>
-    /// The Hebrew occurrences that resolve without anyone choosing. <c>carried</c> is 1 because
-    /// nothing was crossed to reach them; the words of other texts divide it by what their link is
-    /// worth.
+    /// The Hebrew occurrences that resolve without anyone choosing. Their seed confidence is
+    /// multiplied by the link it crosses only when the shared carrying step reaches another text.
     ///
     /// <para>
     /// The marking is the join rather than a filter over it. A word BHSA does not commit on matches
@@ -665,12 +634,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </summary>
     private static readonly string Seed =
         $"""
-         INSERT INTO annotation
-             (word_id, entity_id, carried, corroborated, stated, distinguished, resolution, source,
-              note)
-         SELECT w.id, resolved.entity_id, 1.0, agreed.named, resolved.stated,
-                {Distinguished},
+         INSERT INTO pending_annotation
+             (word_id, entity_id, confidence, claim_confidence, corroborated, method, source, note)
+         SELECT w.id, resolved.entity_id,
+                CASE WHEN resolved.stated AND agreed.named THEN @corroborated
+                     WHEN resolved.stated THEN @resolution ELSE @derived END,
                 CASE WHEN resolved.stated THEN @resolution ELSE @derived END,
+                agreed.named,
+                CASE WHEN {Distinguished} THEN @form ELSE @method END,
                 CASE WHEN resolved.stated THEN @source ELSE @derivation END,
                 w.strong_number || ', which BHSA marks ' || (w.morphology->>'nameType')
          FROM word w
@@ -705,10 +676,12 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </summary>
     private static readonly string GreekSeed =
         $"""
-         INSERT INTO annotation
-             (word_id, entity_id, carried, corroborated, stated, distinguished, resolution, source,
-              note)
-         SELECT w.id, resolved.entity_id, 1.0, agreed.named, true, rivals.several, @resolution,
+         INSERT INTO pending_annotation
+             (word_id, entity_id, confidence, claim_confidence, corroborated, method, source, note)
+         SELECT w.id, resolved.entity_id,
+                CASE WHEN agreed.named THEN @corroborated ELSE @resolution END,
+                @resolution, agreed.named,
+                CASE WHEN rivals.several THEN @form ELSE @method END,
                 CASE WHEN rivals.several THEN @distinction ELSE @source END,
                 w.strong_number || ', which the lexicon writes as the name ' || lexicon.lemma
          FROM word w
@@ -729,99 +702,23 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          """;
 
     /// <summary>
-    /// The same annotations on the word each link says stands for one of those witness words —
-    /// by <see cref="Annotating.Reached"/>, which is the set's head and not every word of it,
-    /// except where the link pairs one name written several times with several words.
-    ///
-    /// A word reached from two witness words that name two different entities is left alone: the
-    /// links disagree about who is named and picking between them is the thing this loader does not
-    /// do. Where they agree, the strongest link decides the confidence, because being reached twice
-    /// is not weaker than being reached once.
-    ///
-    /// <para>
-    /// <c>rendered</c> asks of each witness name, and of each verse it reaches, how well that verse
-    /// renders it at best; <c>supported</c> then drops the reaches that are faint in a verse where
-    /// the name is already rendered firmly. The comparison is per verse rather than per text on
-    /// purpose: a link may land in a verse the translation divided differently, and a firm
-    /// rendering three verses away is no reason to take away the only account this verse has.
-    /// </para>
-    ///
-    /// <para>
-    /// It happens before unanimity rather than after, so that a leftover cannot veto a good reading
-    /// by disagreeing with it.
-    /// </para>
-    ///
-    /// <para>
     /// A reached word is <see cref="Distinguished"/> if the witness word was, and also if its own
     /// name is several records' — which is not the same question. The editions differ, and where
     /// they do the reached word is not the word that resolved: Scrivener prints Ἰωσῆς, which one
     /// man bears, at four places Nestle prints Ἰωσήφ or Ἰησοῦς, which many do. Reading the Nestle
     /// word as that man is a conclusion about a variant, and calling it a resolution that needed
     /// nobody would say of the word on the page something true only of the word beside it.
+    ///
+    /// <para>
+    /// The first half travels with the seed's method through <see cref="Annotating.Carry"/>; this
+    /// is the second.
     /// </para>
     /// </summary>
-    private static readonly string Carry =
+    private static readonly string DistinguishCarried =
         $"""
-        WITH reached AS (
-            SELECT other.word_id,
-                   w.text_id,
-                   w.verse_id,
-                   seed.entity_id,
-                   crossed.worth AS carried,
-                   seed.stated,
-                   seed.distinguished,
-                   seed.resolution,
-                   seed.source,
-                   l.method,
-                   seed.word_id AS through,
-                   witness.slug AS spoken_by
-            FROM annotation seed
-            JOIN word origin ON origin.id = seed.word_id
-            JOIN text witness ON witness.id = origin.text_id
-            JOIN link_word mine ON mine.word_id = seed.word_id
-            JOIN link l ON l.id = mine.link_id
-            CROSS JOIN LATERAL (SELECT {Annotating.LinkWorth} AS worth) crossed
-            CROSS JOIN LATERAL ({Annotating.Reached}) other
-            JOIN word w ON w.id = other.word_id
-        ),
-        rendered AS (
-            SELECT through, text_id, verse_id, max(carried) AS best
-            FROM reached GROUP BY 1, 2, 3
-        ),
-        leftover AS ({Annotating.Leftover}),
-        supported AS (
-            SELECT r.*
-            FROM reached r
-            JOIN rendered d ON d.through = r.through
-                 AND d.text_id = r.text_id AND d.verse_id = r.verse_id
-            WHERE (r.carried >= @faint OR d.best < @firm)
-              AND NOT EXISTS (SELECT 1 FROM leftover x WHERE x.word_id = r.word_id AND x.through = r.through)
-        ),
-        unanimous AS (
-            SELECT word_id FROM supported GROUP BY 1 HAVING count(DISTINCT entity_id) = 1
-        ),
-        strongest AS (
-            SELECT DISTINCT ON (r.word_id) r.*
-            FROM supported r JOIN unanimous u ON u.word_id = r.word_id
-            ORDER BY r.word_id, r.carried DESC, r.through
-        )
-        INSERT INTO annotation
-            (word_id, entity_id, carried, corroborated, stated, distinguished, resolution, source,
-             note)
-        SELECT s.word_id, s.entity_id, s.carried, agreed.named, s.stated,
-               s.distinguished OR {Distinguished},
-               s.resolution, s.source,
-               'through ' || s.spoken_by || ' word ' || s.through || ', linked by ' || s.method
-        FROM strongest s
-        JOIN word w ON w.id = s.word_id
-        CROSS JOIN LATERAL (SELECT EXISTS (
-            SELECT 1 FROM verse_reference r
-            JOIN entity_verse ev ON ev.entity_id = s.entity_id
-                 AND ev.canonical_book = r.canonical_book
-                 AND ev.canonical_chapter = r.canonical_chapter
-                 AND ev.canonical_verse = r.canonical_verse
-            WHERE r.verse_id = w.verse_id AND r.is_primary) AS named) agreed
-        ON CONFLICT (word_id) DO NOTHING
+        UPDATE pending_annotation a SET method = @form
+        FROM word w
+        WHERE w.id = a.word_id AND a.through IS NOT NULL AND {Distinguished}
         """;
 
     /// <summary>
@@ -919,12 +816,10 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// <summary>
     /// The conclusion, with the method the row actually earned.
     ///
-    /// <c>@method</c> is the resolution that needed nobody, and it is the honest answer for the
-    /// overwhelming majority: the number named one record in the whole encyclopedia and the gate
-    /// only agreed with it. <c>@form</c> is for the rest, where the number is several records' and
-    /// the gate is what chose between them — the annotation is then as good as BHSA's analysis of
-    /// that word, or as the encyclopedia's account of where the rivals are named, and no better. A
-    /// reader is owed the difference, and the row's own source says which of the two it was.
+    /// The seed already records the method it earned: the resolution that needed nobody for the
+    /// overwhelming majority, and the word's form where a rival had to be ruled out. The latter is
+    /// only as good as BHSA's analysis of that word, or as the encyclopedia's account of where the
+    /// rivals are named, and no better. A reader is owed the difference.
     ///
     /// <para>
     /// A word this loader has already named somebody else at is left as it is. Two links can reach
@@ -937,12 +832,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const string Settle =
         """
         INSERT INTO word_entity (word_id, entity_id, method, confidence, source, note)
-        SELECT a.word_id, a.entity_id,
-               CASE WHEN a.distinguished THEN @form ELSE @method END,
-               (CASE WHEN a.stated AND a.corroborated THEN @corroborated
-                     ELSE a.resolution END) * a.carried,
-               a.source, a.note
-        FROM annotation a
+        SELECT a.word_id, a.entity_id, a.method, a.confidence, a.source, a.note
+        FROM pending_annotation a
         WHERE NOT EXISTS (
             SELECT 1 FROM word_entity spoken
             WHERE spoken.word_id = a.word_id AND spoken.entity_id <> a.entity_id
@@ -958,10 +849,9 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const string Claim =
         """
         INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
-        SELECT a.id, CASE WHEN w.distinguished THEN @form ELSE @method END,
-               w.resolution * w.carried, w.source, a.note
+        SELECT a.id, w.method, w.claim_confidence, w.source, a.note
         FROM word_entity a
-        JOIN annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
+        JOIN pending_annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
         ON CONFLICT DO NOTHING
         """;
 
@@ -975,11 +865,10 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const string Agreement =
         """
         INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
-        SELECT a.id, CASE WHEN w.distinguished THEN @form ELSE @method END,
-               @confidence * w.carried, @source, a.note
+        SELECT a.id, w.method, @confidence * coalesce(w.link, 1.0), @source, a.note
         FROM word_entity a
-        JOIN annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
-        WHERE w.stated AND w.corroborated
+        JOIN pending_annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
+        WHERE w.source <> @derivation AND w.corroborated
         ON CONFLICT DO NOTHING
         """;
 
@@ -1045,26 +934,26 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         await Run(connection, transaction, Workspace, cancellationToken);
         await Run(connection, transaction, Seed, cancellationToken,
             ("witness", Witness), ("rendering", Rendering), ("source", Resolution),
-            ("derivation", Derivation), ("resolution", NameResolution), ("derived", DerivedName));
+            ("derivation", Derivation), ("resolution", NameResolution), ("derived", DerivedName),
+            ("method", EnumSpelling.Of(LinkMethod.StrongNumber)), ("form", EnumSpelling.Of(ByTheForm)),
+            ("corroborated", Corroborated));
 
         var refused = await Attest(connection, transaction, cancellationToken);
         await Run(connection, transaction, GreekSeed, cancellationToken,
             ("witnesses", EntityCandidates.GreekWitnesses), ("source", GreekResolution),
-            ("distinction", GreekDistinction), ("resolution", GreekNameResolution));
+            ("distinction", GreekDistinction), ("resolution", GreekNameResolution),
+            ("method", EnumSpelling.Of(LinkMethod.StrongNumber)), ("form", EnumSpelling.Of(ByTheForm)),
+            ("corroborated", Corroborated));
 
-        await Run(connection, transaction, Carry, cancellationToken,
-            ("faint", Annotating.Faint), ("firm", Annotating.Firm));
+        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
+        await Run(connection, transaction, DistinguishCarried, cancellationToken,
+            ("form", EnumSpelling.Of(ByTheForm)));
 
-        var method = EnumSpelling.Of(LinkMethod.StrongNumber);
-        var form = EnumSpelling.Of(ByTheForm);
         var settled = await Run(connection, transaction, Settle, cancellationToken,
-            ("method", method), ("form", form), ("corroborated", Corroborated),
             ("written", Written));
-        await Run(connection, transaction, Claim, cancellationToken,
-            ("method", method), ("form", form));
+        await Run(connection, transaction, Claim, cancellationToken);
         await Run(connection, transaction, Agreement, cancellationToken,
-            ("method", method), ("form", form), ("source", VerseList),
-            ("confidence", Corroborated));
+            ("source", VerseList), ("confidence", Corroborated), ("derivation", Derivation));
 
         var byText = await ByText(connection, transaction, cancellationToken);
         var corroborated = await Corroboration(connection, transaction, VerseList, cancellationToken);

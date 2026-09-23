@@ -325,6 +325,31 @@ public sealed class PersonRegisterLoadTests : IDisposable
     }
 
     [Fact]
+    public async Task Misfiled_Adah_verses_are_repaired_before_the_register_matches_bearers()
+    {
+        Held("adah", "Adah", "person:Adah_1", ["Adah"],
+            [(1, 4, 19), (1, 4, 20), (1, 4, 23), (1, 36, 2), (1, 36, 4), (1, 36, 10), (1, 36, 12), (1, 36, 16)]);
+        Held("basemath", "Basemath", "person:Basemath_1", ["Basemath", "Adah"], [(1, 26, 34)]);
+        await _db.SaveChangesAsync();
+
+        Register(
+            Bearer(1, "Wife of Lamech", ["GEN 4:19", "GEN 4:20", "GEN 4:23"], group: "Adah", name: "Adah"),
+            Bearer(2, "Daughter of Elon the Hittite and wife of Esau",
+                ["GEN 36:2", "GEN 36:4", "GEN 36:10", "GEN 36:12", "GEN 36:16"],
+                group: "Adah", name: "Adah"));
+
+        var outcome = await Load();
+
+        outcome.Claimed.Should().Be(2);
+        outcome.Added.Should().Be(0);
+        (await Person("adah"))!.Verses.Should().OnlyContain(verse =>
+            verse.CanonicalBook == 1 && verse.CanonicalChapter == 4);
+        (await Person("basemath"))!.Verses.Should().Contain(verse =>
+            verse.CanonicalBook == 1 && verse.CanonicalChapter == 36 && verse.CanonicalVerse == 2);
+        (await Person("adah-2")).Should().BeNull();
+    }
+
+    [Fact]
     public async Task Running_it_twice_writes_the_register_once()
     {
         Register(Bearer(4, "Son of Jehoadah", ["1CH 8:36"]));

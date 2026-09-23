@@ -43,7 +43,10 @@ internal static class Annotating
             word_id bigint PRIMARY KEY,
             entity_id integer NOT NULL,
             confidence double precision,
+            claim_confidence double precision,
             corroborated boolean NOT NULL,
+            method text,
+            source text,
             note text NOT NULL,
             through bigint,
             link double precision)
@@ -427,7 +430,11 @@ internal static class Annotating
                    CASE WHEN seed.confidence IS NULL
                         THEN nullif(crossed.worth, 1.0)
                         ELSE seed.confidence * crossed.worth END AS confidence,
-                   l.method,
+                   CASE WHEN seed.claim_confidence IS NULL THEN NULL
+                        ELSE seed.claim_confidence * crossed.worth END AS claim_confidence,
+                   seed.method,
+                   seed.source,
+                   l.method AS link_method,
                    seed.word_id AS through,
                    witness.slug AS spoken_by
             FROM pending_annotation seed
@@ -461,9 +468,10 @@ internal static class Annotating
             FROM supported r JOIN unanimous u ON u.word_id = r.word_id
             ORDER BY r.word_id, coalesce(r.confidence, 1.0) DESC, r.through
         )
-        INSERT INTO pending_annotation (word_id, entity_id, confidence, corroborated, note, through, link)
-        SELECT s.word_id, s.entity_id, s.confidence, agreed.named,
-               'through ' || s.spoken_by || ' word ' || s.through || ', linked by ' || s.method,
+        INSERT INTO pending_annotation
+            (word_id, entity_id, confidence, claim_confidence, corroborated, method, source, note, through, link)
+        SELECT s.word_id, s.entity_id, s.confidence, s.claim_confidence, agreed.named, s.method, s.source,
+               'through ' || s.spoken_by || ' word ' || s.through || ', linked by ' || s.link_method,
                s.through, s.link
         FROM strongest s
         JOIN word w ON w.id = s.word_id

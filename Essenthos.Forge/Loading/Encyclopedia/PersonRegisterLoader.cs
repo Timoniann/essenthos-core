@@ -139,6 +139,11 @@ internal sealed class PersonRegisterLoader(
 
     private const string SourceIdPrefix = "essenthos:";
 
+    /// <summary>Why Genesis 36's Adah is moved: the same woman the dataset keeps as Basemath.</summary>
+    private const string AdahIsBasemath =
+        "BibleData's Adah record is the wife of Lamech, but it also files the Hittite wife of Esau "
+        + "under it. The same dataset names that woman Basemath and gives her Adah as a name label.";
+
     /// <summary>
     /// Verses a dataset files under a held man that belong to a namesake the register adds, by the
     /// dataset's id for the man, the verse, and the register's key for the namesake, with the reason.
@@ -159,6 +164,16 @@ internal sealed class PersonRegisterLoader(
             + "calls Herod and who ruled nothing. The dataset holds both as one man, filed under the "
             + "husband's verses, with the tetrarch's verse, his title and a note calling him the "
             + "tetrarch."),
+        new("person:Adah_1", "GEN 36:2", "Adah#2", NotesToo: false,
+            AdahIsBasemath, Target: "person:Basemath_1", Obsolete: "essenthos:adah1"),
+        new("person:Adah_1", "GEN 36:4", "Adah#2", NotesToo: false,
+            AdahIsBasemath, Target: "person:Basemath_1", Obsolete: "essenthos:adah1"),
+        new("person:Adah_1", "GEN 36:10", "Adah#2", NotesToo: false,
+            AdahIsBasemath, Target: "person:Basemath_1", Obsolete: "essenthos:adah1"),
+        new("person:Adah_1", "GEN 36:12", "Adah#2", NotesToo: false,
+            AdahIsBasemath, Target: "person:Basemath_1", Obsolete: "essenthos:adah1"),
+        new("person:Adah_1", "GEN 36:16", "Adah#2", NotesToo: false,
+            AdahIsBasemath, Target: "person:Basemath_1", Obsolete: "essenthos:adah1"),
     ];
 
     /// <summary>The source id a record added for a register's bearer is written under.</summary>
@@ -172,6 +187,8 @@ internal sealed class PersonRegisterLoader(
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
+
+        var repaired = await RepairMisfiledVerses(cancellationToken);
 
         var directory = configuration[PersonRegisterFiles.ConfigurationKey] is { Length: > 0 } set
             ? set
@@ -190,7 +207,11 @@ internal sealed class PersonRegisterLoader(
 
         if (await db.EntityClaims.AnyAsync(c => c.Source == FromTheEnumeration, cancellationToken))
         {
-            logger.LogInformation("The person register is already there; nothing to do");
+            logger.LogInformation(
+                repaired == 0
+                    ? "The person register is already there; nothing to do"
+                    : "The person register is already there; repaired {Verses} misfiled verses",
+                repaired);
             return Nothing(started);
         }
 
@@ -333,6 +354,80 @@ internal sealed class PersonRegisterLoader(
         }
 
         return outcome;
+    }
+
+    /// <summary>
+    /// Corrects the small set of source rows that identify a different bearer from the one their
+    /// source record describes, before the shared-name matcher sees them. Moving the rows first
+    /// lets the ordinary evidence-based matcher retain both people rather than minting a duplicate.
+    /// </summary>
+    private async Task<int> RepairMisfiledVerses(CancellationToken cancellationToken)
+    {
+        var repairs = MisfiledVerses.Where(misfiled => misfiled.Target is not null).ToList();
+        if (repairs.Count == 0)
+        {
+            return 0;
+        }
+
+        var sourceIds = repairs
+            .SelectMany(misfiled => new[] { misfiled.Held, misfiled.Target! })
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        var held = await db.Entities
+            .Where(entity => sourceIds.Contains(entity.SourceId))
+            .Include(entity => entity.Verses)
+            .ToListAsync(cancellationToken);
+        var bySourceId = held.ToDictionary(entity => entity.SourceId, StringComparer.Ordinal);
+        var repaired = 0;
+
+        foreach (var misfiled in repairs)
+        {
+            var addresses = Addresses([misfiled.Reference]).ToList();
+            if (!bySourceId.TryGetValue(misfiled.Held, out var from)
+                || !bySourceId.TryGetValue(misfiled.Target!, out var to)
+                || addresses.Count != 1)
+            {
+                continue;
+            }
+
+            var address = addresses[0];
+            var verses = from.Verses
+                .Where(verse => (verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse)
+                    == (address.Book, address.Chapter, address.Verse))
+                .ToList();
+            foreach (var verse in verses)
+            {
+                from.Verses.Remove(verse);
+                if (!to.Verses.Any(existing =>
+                        (existing.CanonicalBook, existing.CanonicalChapter, existing.CanonicalVerse, existing.Source)
+                        == (verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse, verse.Source)))
+                {
+                    to.Verses.Add(verse);
+                }
+
+                repaired++;
+            }
+        }
+
+        var obsolete = repairs
+            .Select(misfiled => misfiled.Obsolete)
+            .Where(sourceId => !string.IsNullOrWhiteSpace(sourceId))
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        if (obsolete.Count > 0)
+        {
+            var stale = await db.Entities
+                .Where(entity => obsolete.Contains(entity.SourceId))
+                .ToListAsync(cancellationToken);
+            db.Entities.RemoveRange(stale);
+        }
+
+        if (repaired > 0 || obsolete.Count > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return repaired;
     }
 
     /// <summary>
@@ -610,4 +705,20 @@ internal sealed class PersonRegisterLoader(
 /// <param name="Bearer">The register's key for the namesake the verse belongs to.</param>
 /// <param name="NotesToo">Whether the dataset's note on the record describes the namesake too.</param>
 /// <param name="Why">Why the verse is the namesake's, which the claim on his record repeats.</param>
-internal sealed record Misfiled(string Held, string Reference, string Bearer, bool NotesToo, string Why);
+/// <param name="Target">
+/// The dataset's id for a record it already holds for the namesake. Where there is one the verse is
+/// moved to it before the register is matched, on every load, so the register never mints a second
+/// record for somebody the dataset already has.
+/// </param>
+/// <param name="Obsolete">
+/// The source id of the duplicate an earlier load minted because the verse had not been moved yet;
+/// removed where it is still there.
+/// </param>
+internal sealed record Misfiled(
+    string Held,
+    string Reference,
+    string Bearer,
+    bool NotesToo,
+    string Why,
+    string? Target = null,
+    string? Obsolete = null);

@@ -110,6 +110,8 @@ internal sealed record VersificationTest
         edition.Carries(Left.Book) && (Kind is Comparison.Exists or Comparison.Absent or Comparison.EndsChapter ||
                                        edition.Carries(Right.Book));
 
+    internal bool IsPieceExistence => Kind == Comparison.Exists && LeftPiece > 0;
+
     internal bool Holds(EditionShape edition) => Kind switch
     {
         Comparison.Exists => edition.Prints(Left, LeftPiece),
@@ -215,6 +217,14 @@ internal sealed record VersificationTest
 /// </param>
 internal sealed record VersificationConditions(IReadOnlyList<VersificationTest> Stated, bool Whole)
 {
+    /// <summary>
+    /// A rule that names a verse part only describes an edition that prints that part. It cannot be
+    /// the fallback when the edition prints the verse whole: doing that puts material the edition
+    /// lacks into its one undivided verse.
+    /// </summary>
+    internal bool FailsPieceExistence(EditionShape edition) =>
+        Stated.Any(test => test.IsPieceExistence && test.IsAbout(edition) && !test.Holds(edition));
+
     /// <summary>
     /// Whether this edition answers to the cell: false as soon as a condition it can answer fails,
     /// null while some condition is about a book it does not carry, and true when the whole cell
