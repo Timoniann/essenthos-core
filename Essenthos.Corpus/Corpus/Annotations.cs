@@ -57,6 +57,56 @@ internal static class Annotations
         return Settle(rows);
     }
 
+    /// <summary>
+    /// The canonical verses of one chapter where some word, in any text, names each entity as the
+    /// reader is told it — so a record only the Hebrew or the Greek names is there as well. Keyed by
+    /// slug, the verses in order.
+    ///
+    /// Read from the verse references rather than from the words: the chapter is a few hundred
+    /// verses across every text, and starting there keeps the join to the words that stand in it.
+    /// </summary>
+    public static async Task<Dictionary<string, SortedSet<int>>> InChapter(
+        AppDbContext db,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await (
+                from reference in db.VerseReferences
+                where reference.IsPrimary
+                      && reference.CanonicalBook == canonicalBook
+                      && reference.CanonicalChapter == canonicalChapter
+                join word in db.Words on reference.VerseId equals word.VerseId
+                join annotation in db.WordEntities on word.Id equals annotation.WordId
+                select new
+                {
+                    reference.CanonicalVerse,
+                    Claimed = new Claimed(
+                        annotation.WordId, annotation.Method, annotation.Confidence, annotation.Source,
+                        annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name),
+                })
+            .ToListAsync(cancellationToken);
+
+        var verseOf = new Dictionary<long, int>();
+        foreach (var row in rows)
+        {
+            verseOf[row.Claimed.WordId] = row.CanonicalVerse;
+        }
+
+        var verses = new Dictionary<string, SortedSet<int>>(StringComparer.Ordinal);
+        foreach (var (wordId, named) in Settle([.. rows.Select(row => row.Claimed)]))
+        {
+            if (!verses.TryGetValue(named.Slug, out var at))
+            {
+                verses[named.Slug] = at = [];
+            }
+
+            at.Add(verseOf[wordId]);
+        }
+
+        return verses;
+    }
+
     /// <summary>The same for one word, which is what the word panel asks.</summary>
     public static async Task<EntityRefResponse?> Of(
         AppDbContext db,

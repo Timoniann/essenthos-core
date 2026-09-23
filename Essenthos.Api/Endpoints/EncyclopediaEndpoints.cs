@@ -74,7 +74,7 @@ internal static class EncyclopediaEndpoints
     /// clamped, because the score is not: it runs past 1000 and below zero, and a clamp would state
     /// something the source did not.
     /// </summary>
-    private const double ScoreScale = 1000.0;
+    internal const double ScoreScale = 1000.0;
 
     /// <summary>
     /// Every located place, alphabetical, with the number of verses that name it so a map can size
