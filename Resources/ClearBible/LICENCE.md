@@ -67,6 +67,19 @@ had zero such records in 171,172. The archive is evidence for an upstream repair
 until its target tokenization matches the release's alignment records. What was decided about it is
 on **PRB-0185**.
 
+## Spanish RV09 — records that pair verses by number
+
+In the chapters where the Spanish and the Hebrew number their verses differently, some of the
+WLCM-RV09 records link a Spanish verse to the Hebrew verse that carries the same number, printed or
+in the English count, rather than to the one it renders — while the release's own `ot_RV09.tsv`
+names the right one in its `source_verse` column. Spanish Numbers 13:19 is listed against the
+Hebrew 13:18 and its words are linked to the Hebrew 13:19; Daniel 6 and 4, Job 39-40, 1 Chronicles
+21 and 2 Chronicles 33 are the worst. Measured on 2026-09-23: 725 of the 257,188 Old Testament
+records, none of the New Testament's. The loader refuses a record only where the token file and the
+canonical frame both put the verses apart and the record's Hebrew verse is the one numbered like the
+Spanish; a Spanish verse that opens with the last words of the Hebrew verse before it keeps its
+links (PRB-0694).
+
 ## What these data mean
 
 An alignment is a publisher's claim relating word **occurrences** in one named translation to a

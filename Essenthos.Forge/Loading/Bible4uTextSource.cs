@@ -12,7 +12,9 @@ namespace Essenthos.Core.Loading;
 /// Every one of them is numbered the way the King James is — 150 psalms with 9 and 10 separate,
 /// Malachi in four chapters, Joel in three — whatever the printed editions do. That was measured,
 /// not assumed, and it is why the Synodal can be placed in the shared frame at all: the
-/// versification data has no Russian scheme, and this file does not need one.
+/// versification data has no Russian scheme, and this file does not need one. Inside a few chapters
+/// the Synodal still divides the verses its own way under the English numbers, and the frame's
+/// supplements place those verses beside their words.
 /// </summary>
 internal static class Bible4uTextSource
 {

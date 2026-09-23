@@ -34,6 +34,12 @@ namespace Essenthos.Core.Loading.Links;
 /// verse the two editions were laid against each other in and has no word of ours: a word their
 /// edition has and ours has not, or a different word in its place. Nothing is guessed for them.
 /// </param>
+/// <param name="Astray">
+/// Records refused because they pair the translation's verse with the source verse of the same
+/// number where the file's own token list and the canonical frame both say the translation's verse
+/// renders another: in the Reina-Valera, the Hebrew verse that happens to carry the Spanish verse's
+/// number where the two divide a chapter differently. See <see cref="ClearBibleLinkLoader.Astray"/>.
+/// </param>
 /// <param name="Placed">
 /// Their words that became ours, on each side. It is the measure of the join itself rather than of
 /// the alignment, and it is what says whether an empty result means the two disagree or means
@@ -47,6 +53,7 @@ internal sealed record ClearBibleOutcome(
     int Contradicted,
     int Unresolved,
     int WithoutCounterpart,
+    int Astray,
     ClearBiblePlacement Placed,
     TimeSpan Elapsed)
 {
@@ -57,7 +64,8 @@ internal sealed record ClearBibleOutcome(
               $"holds ({(Records == 0 ? 0 : (double)Corroborated / Records):P1}), {Added} name words " +
               $"nothing joined, {Contradicted} disagree with a link already here, {Unresolved} could " +
               $"not be resolved to words on both sides ({WithoutCounterpart} of them naming a source word " +
-              $"the witness has no counterpart for); {Placed}";
+              $"the witness has no counterpart for), {Astray} refused for pairing verses by number where the " +
+              $"file and the frame both say they do not answer each other; {Placed}";
 }
 
 /// <param name="SourceWords">Their source words this corpus could name a word of its own for.</param>
@@ -192,14 +200,24 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
         var theirSource = await Placed(to, set.Join, source, placement.Source, cancellationToken);
 
         var existing = await Shapes(from.Id, to.Id, cancellationToken);
+        var renders = Renders(target);
+        var targetFrame = await Frame(from.Id, cancellationToken);
+        var sourceFrame = set.Join == ClearBibleJoin.Edition ? null : await Frame(to.Id, cancellationToken);
 
         var claims = new List<long>();
         var drafts = new List<Draft>();
         int records = 0, corroborated = 0, added = 0, contradicted = 0, unresolved = 0, withoutCounterpart = 0;
+        var astray = 0;
 
         foreach (var record in ClearBibleAlignment.Records(alignment))
         {
             records++;
+            if (Astray(record, renders, targetFrame, sourceFrame))
+            {
+                astray++;
+                continue;
+            }
+
             var witness = Ours(record.Source, theirSource);
             var translation = Ours(record.Target, theirTarget);
 
@@ -246,6 +264,7 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
             contradicted,
             unresolved,
             withoutCounterpart,
+            astray,
             placement.Read(),
             started.Elapsed);
         logger.LogInformation("Clear Bible on {From} against {To}: {Outcome}", set.From, set.To, outcome);
@@ -254,8 +273,9 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
 
     /// <summary>
     /// Everything one set said, removed so that the next <see cref="Load"/> says it again under the
-    /// join as it now stands: the links it wrote, and the claims it added to links somebody else wrote.
-    /// The links themselves stay where another source stated them first.
+    /// join as it now stands: the links it wrote, the claims it added to links somebody else wrote, and
+    /// the verse links its word links stated where the frame joins nothing. The links themselves stay
+    /// where another source stated them first.
     /// </summary>
     public async Task<int> Withdraw(ClearBibleSet set, CancellationToken cancellationToken = default)
     {
@@ -275,16 +295,131 @@ internal sealed class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLi
         var links = await db.Database.ExecuteSqlRawAsync(
             "DELETE FROM link WHERE from_text_id = {0} AND to_text_id = {1} AND source = {2}",
             [from, to, set.Statement], cancellationToken);
+        var verses = await db.Database.ExecuteSqlRawAsync(
+            "DELETE FROM verse_link WHERE from_text_id = {0} AND to_text_id = {1} AND source = {2}",
+            [from, to, set.Statement], cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
         logger.LogInformation(
-            "Withdrew what Clear Bible said about {From} and {To}: {Links} links and {Claims} claims on "
-            + "links another source stated", set.From, set.To, links, claims);
-        return links + claims;
+            "Withdrew what Clear Bible said about {From} and {To}: {Links} links, {Claims} claims on links "
+            + "another source stated and {Verses} verse links its word links stated", set.From, set.To, links,
+            claims, verses);
+        return links + claims + verses;
     }
 
     private static ClearBibleOutcome Nothing() =>
-        new(true, 0, 0, 0, 0, 0, 0, default, TimeSpan.Zero);
+        new(true, 0, 0, 0, 0, 0, 0, 0, default, TimeSpan.Zero);
+
+    /// <summary>
+    /// Whether a record pairs the translation's verse with the source verse of the same number where
+    /// the two number it differently. That is the one way these hand-made alignments go wrong
+    /// verse-wide: the Reina-Valera's Numbers 13:19, which the file itself and the frame both say
+    /// renders the Hebrew 13:18, has its words linked to the Hebrew 13:19, and in the chapters where
+    /// the Spanish runs a verse behind the English its words are linked to the Hebrew verse the
+    /// English numbers alike.
+    ///
+    /// All three have to hold. The file's list of the verses a token renders is kept verse by verse,
+    /// so a Spanish verse that opens with the last words of the Hebrew verse before it is listed
+    /// against the next one and its correct links would look astray; and it is keyed to one edition
+    /// where the alignment may be to another, as the Berean's Greek numbers Acts 19:41 where the list
+    /// does not. The frame is this project's reading of the versification data. Where the file and
+    /// the frame both put the verses apart and the record's source verse is merely the one carrying
+    /// the translation verse's own number, printed or placed, the record is the odd one out. A record
+    /// either of them says nothing about is kept.
+    /// </summary>
+    internal static bool Astray(
+        ClearBibleRecord record,
+        IReadOnlyDictionary<string, (int First, int Last)> renders,
+        IReadOnlyDictionary<int, HashSet<int>> targetFrame,
+        IReadOnlyDictionary<int, HashSet<int>>? sourceFrame)
+    {
+        var sources = record.Source.Select(ClearBibleAlignment.Verse).OfType<int>().ToHashSet();
+        var own = record.Target.Select(ClearBibleAlignment.Verse).OfType<int>().ToHashSet();
+        var said = new List<(int First, int Last)>(record.Target.Count);
+        foreach (var id in record.Target)
+        {
+            if (!renders.TryGetValue(ClearBibleAlignment.Word(id), out var range))
+            {
+                return false;
+            }
+
+            said.Add(range);
+        }
+
+        if (sources.Count == 0 || said.Count == 0 ||
+            sources.Any(verse => said.Any(range => range.First <= verse && verse <= range.Last)))
+        {
+            return false;
+        }
+
+        var here = Canonical(own, targetFrame);
+        var there = sourceFrame is null ? sources : Canonical(sources, sourceFrame);
+        return here.Count > 0 && there.Count > 0 && !here.Overlaps(there)
+               && (sources.Overlaps(own) || there.Overlaps(own));
+    }
+
+    private static HashSet<int> Canonical(IEnumerable<int> printed, IReadOnlyDictionary<int, HashSet<int>> frame)
+    {
+        var addresses = new HashSet<int>();
+        foreach (var verse in printed)
+        {
+            if (frame.TryGetValue(verse, out var placed))
+            {
+                addresses.UnionWith(placed);
+            }
+        }
+
+        return addresses;
+    }
+
+    /// <summary>The source verses the target file says each of its tokens renders, by word id.</summary>
+    private static Dictionary<string, (int First, int Last)> Renders(string tokens)
+    {
+        var renders = new Dictionary<string, (int, int)>(StringComparer.Ordinal);
+        foreach (var token in ClearBibleAlignment.Tokens(tokens))
+        {
+            if (token.Renders is { } range)
+            {
+                renders[ClearBibleAlignment.Word(token.Id)] = range;
+            }
+        }
+
+        return renders;
+    }
+
+    /// <summary>
+    /// Every canonical address the frame places each of a text's verses at, keyed by the verse the
+    /// text prints, both written as <see cref="ClearBibleAlignment.Verse(string)"/> writes them.
+    /// </summary>
+    private async Task<Dictionary<int, HashSet<int>>> Frame(int textId, CancellationToken cancellationToken)
+    {
+        var rows = await db.VerseReferences
+            .Where(reference => reference.Verse!.TextId == textId)
+            .Select(reference => new
+            {
+                reference.Verse!.Book!.CanonicalOrdinal,
+                reference.Verse.ChapterNumber,
+                reference.Verse.Number,
+                reference.CanonicalBook,
+                reference.CanonicalChapter,
+                reference.CanonicalVerse,
+            })
+            .ToListAsync(cancellationToken);
+
+        var frame = new Dictionary<int, HashSet<int>>();
+        foreach (var row in rows)
+        {
+            var printed = ClearBibleAlignment.Verse(row.CanonicalOrdinal, row.ChapterNumber, row.Number);
+            if (!frame.TryGetValue(printed, out var placed))
+            {
+                frame[printed] = placed = [];
+            }
+
+            placed.Add(ClearBibleAlignment.Verse(row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse));
+        }
+
+        return frame;
+    }
 
     /// <summary>
     /// Their word ids as ours, dropping a record whose words this corpus does not hold. A record

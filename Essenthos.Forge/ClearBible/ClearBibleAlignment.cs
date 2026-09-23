@@ -16,7 +16,16 @@ internal readonly record struct ClearBibleRecord(IReadOnlyList<string> Source, I
 /// The Strong number a source edition's row states for the word, as the file writes it, or null in a
 /// target file, which carries none.
 /// </param>
-internal readonly record struct ClearBibleToken(string Id, string Text, bool Excluded, string? Strong);
+/// <param name="Renders">
+/// The source verses a target file says the token renders, first and last, each as the eight digits
+/// <c>BBCCCVVV</c> read as a number; null where the file says nothing, as a source file does not.
+/// </param>
+internal readonly record struct ClearBibleToken(
+    string Id,
+    string Text,
+    bool Excluded,
+    string? Strong,
+    (int First, int Last)? Renders = null);
 
 /// <summary>
 /// Clear Bible's hand-made alignments, in Scripture Burrito form.
@@ -32,6 +41,9 @@ internal static class ClearBibleAlignment
 {
     /// <summary>Book, chapter, verse and word: the eleven digits that name a word.</summary>
     private const int WordIdLength = 11;
+
+    /// <summary>What a chapter and a verse are each counted in, three digits apiece.</summary>
+    private const int VerseDigits = 1000;
 
     public static IEnumerable<ClearBibleRecord> Records(string path)
     {
@@ -82,6 +94,8 @@ internal static class ClearBibleAlignment
         var header = reader.ReadLine()?.Split('\t') ?? [];
         var excludes = Array.IndexOf(header, "exclude");
         var strongs = Array.IndexOf(header, "strongs");
+        var renders = Array.IndexOf(header, "source_verse");
+        var rendersTo = Array.IndexOf(header, "source_verse_range_end");
 
         while (reader.ReadLine() is { } line)
         {
@@ -95,9 +109,24 @@ internal static class ClearBibleAlignment
                 cells[0],
                 cells[2],
                 excludes >= 0 && cells.Length > excludes && cells[excludes].Trim() is "y",
-                strongs >= 0 && cells.Length > strongs ? cells[strongs] : null);
+                strongs >= 0 && cells.Length > strongs ? cells[strongs] : null,
+                Number(cells, renders) is { } first ? (first, Number(cells, rendersTo) ?? first) : null);
         }
     }
+
+    private static int? Number(string[] cells, int column) =>
+        column >= 0 && cells.Length > column && int.TryParse(cells[column], out var verse) ? verse : null;
+
+    /// <summary>
+    /// The verse in an identifier as the eight digits <c>BBCCCVVV</c> read as a number, which is how a
+    /// target file writes the verses its tokens render, so the two compare directly and a range of
+    /// them runs in canonical order.
+    /// </summary>
+    public static int? Verse(string id) =>
+        Address(id, out var book, out var chapter, out var verse) ? Verse(book, chapter, verse) : null;
+
+    /// <inheritdoc cref="Verse(string)"/>
+    public static int Verse(int book, int chapter, int verse) => (book * VerseDigits + chapter) * VerseDigits + verse;
 
     /// <summary>
     /// The word an identifier names, whatever else the identifier carries. A source id is prefixed
