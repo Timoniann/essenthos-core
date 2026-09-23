@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -138,7 +139,7 @@ public sealed class MisfiledVerseLoadTests : IDisposable
     {
         _db = database.NewContext();
         Clear();
-        _loader = new MisfiledVerseLoader(_db, NullLogger<MisfiledVerseLoader>.Instance);
+        _loader = Loader(_db.Database.GetDbConnection().Database);
         _resources = Path.Combine(Path.GetTempPath(), $"essenthos-misfiled-{Guid.NewGuid():N}");
         Directory.CreateDirectory(Path.Combine(_resources, "Essenthos", "review"));
 
@@ -215,6 +216,9 @@ public sealed class MisfiledVerseLoadTests : IDisposable
 
     private string Review => Path.Combine(_resources, "Essenthos", "review", ReviewFile);
 
+    private MisfiledVerseLoader Loader(string ownerDatabase) =>
+        new(_db, new ReviewLists(ownerDatabase), NullLogger<MisfiledVerseLoader>.Instance);
+
     [Fact]
     public async Task The_nation_s_verses_move_to_the_people_and_the_man_keeps_his()
     {
@@ -264,6 +268,35 @@ public sealed class MisfiledVerseLoadTests : IDisposable
         Entries().Where(e => e["decision"] is not null).Should().HaveCount(2);
         Entries().Where(e => e["decision"] is null).Select(e => (string)e["references"]![0]!)
             .Should().BeEquivalentTo(["GEN 32:32"]);
+    }
+
+    [Fact]
+    public async Task A_load_into_another_database_reads_the_owner_s_answers_and_leaves_his_list_as_it_was()
+    {
+        await _loader.Load(_resources);
+        Answer("EXO 4:22", "israelites");
+        var his = File.ReadAllText(Review);
+        var elsewhere = new ReviewLists("essenthos_owner")
+            .For(_resources, ReviewFile, _db.Database.GetDbConnection().Database);
+
+        try
+        {
+            var rehearsal = await Loader("essenthos_owner").Load(_resources);
+
+            rehearsal.Decided.Should().Be(1);
+            (await Verses(_israelites)).Should().Contain("EXO 4:22");
+            File.ReadAllText(Review).Should().Be(his);
+            elsewhere.Should().NotStartWith(_resources);
+            var written = JsonNode.Parse(File.ReadAllText(elsewhere))!["entries"]!.AsArray().OfType<JsonObject>().ToList();
+            written.Where(e => e["decision"] is not null).Select(e => (string)e["decision"]!["answer"]!)
+                .Should().Equal("israelites");
+            written.Where(e => e["decision"] is null).Select(e => (string)e["references"]![0]!)
+                .Should().BeEquivalentTo(["GEN 32:32", "EXO 26:1"]);
+        }
+        finally
+        {
+            File.Delete(elsewhere);
+        }
     }
 
     [Fact]

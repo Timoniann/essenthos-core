@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -66,7 +67,8 @@ internal sealed record MisfiledVerseOutcome(
 /// **Where none of that decides, the row stays and the owner is asked**: the name bare after the
 /// man's death, a collective phrase within his lifetime, a verse that does not print the name at all.
 /// They are listed in <see cref="ReviewFile"/> beside the other review lists, and his answers there are
-/// applied on the next load.
+/// applied on the next load. A load into another database reads his answers and writes its own list
+/// elsewhere (<see cref="ReviewLists"/>), so rehearsing one on a copy leaves his list as it was.
 /// </para>
 ///
 /// <para>
@@ -83,7 +85,7 @@ internal sealed record MisfiledVerseOutcome(
 /// is not added twice.
 /// </para>
 /// </summary>
-internal sealed class MisfiledVerseLoader(AppDbContext db, ILogger<MisfiledVerseLoader> logger)
+internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, ILogger<MisfiledVerseLoader> logger)
 {
     /// <summary>The review list this pass keeps, beside the others the owner's console reads.</summary>
     public const string ReviewFile = "eponym-verses.json";
@@ -423,7 +425,7 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ILogger<MisfiledVerse
         var misfiled = await PutRight(cancellationToken);
         var (omitted, withdrawn) = await AddOmitted(cancellationToken);
 
-        var review = Path.Combine(resources, "Essenthos", "review", ReviewFile);
+        var review = ReviewLists.Owners(resources, ReviewFile);
         var answers = Answers(review);
 
         var rows = await Rows(cancellationToken);
@@ -451,9 +453,20 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ILogger<MisfiledVerse
         }
 
         await Move(moving, cancellationToken);
-        if (Directory.Exists(Path.GetDirectoryName(review)))
+        var database = db.Database.GetDbConnection().Database;
+        if (!lists.IsOwners(database))
         {
-            Write(review, open);
+            var elsewhere = lists.For(resources, ReviewFile, database);
+            Directory.CreateDirectory(Path.GetDirectoryName(elsewhere)!);
+            Write(review, elsewhere, open);
+            logger.LogWarning(
+                "This load ran against {Database}, not the database the owner's console reads, so the list of " +
+                "{Open} verses left for him was written to {Path} and his own at {Review} is as it was",
+                database, open.Count, elsewhere, review);
+        }
+        else if (Directory.Exists(Path.GetDirectoryName(review)))
+        {
+            Write(review, review, open);
         }
 
         var outcome = new MisfiledVerseOutcome(
@@ -929,15 +942,18 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ILogger<MisfiledVerse
     };
 
     /// <summary>
-    /// The review list: the answered entries as they stand, then one open entry for each man, label
-    /// and reason still unsettled. Written only when it changes.
+    /// The review list: the answered entries of <paramref name="answered"/> as they stand, then one
+    /// open entry for each man, label and reason still unsettled. Written only when it changes.
     /// </summary>
-    internal static void Write(string path, IReadOnlyList<(Row Row, string Why, string Strong)> open)
+    internal static void Write(
+        string answered,
+        string path,
+        IReadOnlyList<(Row Row, string Why, string Strong)> open)
     {
         var entries = new JsonArray();
-        foreach (var answered in Entries(path).Where(e => e["decision"] is not null))
+        foreach (var entry in Entries(answered).Where(e => e["decision"] is not null))
         {
-            entries.Add(answered.DeepClone());
+            entries.Add(entry.DeepClone());
         }
 
         foreach (var group in open.GroupBy(o => (o.Row.Eponym, o.Row.Label, o.Why)))
