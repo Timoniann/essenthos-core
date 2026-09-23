@@ -332,6 +332,35 @@ public sealed class CorpusCheckTests : IDisposable
     }
 
     /// <summary>
+    /// A Greek word carries G####, so a check that looked for the name only among the Hebrew numbers
+    /// could never find one, however many men the Greek name belongs to. It is asked of both columns.
+    /// </summary>
+    [Fact]
+    public async Task AGreekNameSeveralPeopleBearAnnotatedAsIfItWereOnesIsFound()
+    {
+        var greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 1, ["Ζαχαρίαν"]));
+        _db.SaveChanges();
+        var word = _db.WordAt(greek, 1, 1, 1);
+        word.StrongNumber = "G2197";
+
+        Entity Zechariah(string slug) => new()
+        {
+            Kind = EntityKind.Person, Slug = slug, Name = "Zechariah", SourceId = slug, Source = "a test",
+            Names = [new EntityName { Label = "Zechariah", GreekStrongNumber = "G2197" }],
+        };
+        var first = Zechariah("zechariah-1");
+        _db.Entities.AddRange(first, Zechariah("zechariah-2"));
+        _db.WordEntities.Add(new WordEntity
+        {
+            Word = word, Entity = first, Method = LinkMethod.StrongNumber, Confidence = 0.85, Source = "a test",
+        });
+        _db.SaveChanges();
+
+        (await Integrity("words a name-resolution annotated although the name is several people's"))
+            .Should().Be(1);
+    }
+
+    /// <summary>
     /// The Hebrew texts are deliberately not counted. They order their points and accents
     /// differently from canonical order as well, but there the column holds the witness's own text
     /// and whether it may be rewritten is a decision nobody has taken. A check that

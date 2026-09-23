@@ -344,6 +344,24 @@ public sealed class GreekEntityAnnotationTests : IDisposable
     }
 
     /// <summary>
+    /// What reachability ruled out stops being ruled out once a record the Greek does reach bears the
+    /// name too. Σαούλ was the king's alone until Paul was given it, and the verses of Paul's calling
+    /// kept the king only for as long as he had no rival; a warm corpus has to give them up exactly
+    /// as a cold load would never write them.
+    /// </summary>
+    [Fact]
+    public async Task AGreekNameAReachableRecordComesToBearIsWithdrawn()
+    {
+        (await Load()).Should().ContainKey(Greek(7).Id);
+
+        Attest(Named("zechariah-4", "Zechariah", EntityKind.Person, "G2197", "Ζαχαρίας"), Apostolic);
+        var named = await Load();
+
+        named.Should().NotContainKey(Greek(7).Id);
+        named.Should().ContainKey(Greek(1).Id, "Noah's number is still his alone");
+    }
+
+    /// <summary>
     /// The claim says what the conclusion says, and it names the same chooser. An annotation whose
     /// method reports a judgement and whose only claim reports none is a row that contradicts
     /// itself, and the claim is where an audit of provenance looks.

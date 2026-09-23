@@ -70,8 +70,11 @@ internal sealed record GreekNamesakeOutcome(
 /// </para>
 ///
 /// <para>
-/// Idempotent on its own source. It runs after every pass that names a Greek word and adds answers
-/// only where none of them did.
+/// It runs on every load and not once, and writes only to a word nothing names, which is what makes
+/// a second run write nothing. The question it answers changes under it: a record the encyclopedia
+/// gains can make a name one record's that was several, or several that was one, and the resolution
+/// by number then withdraws what it wrote. A pass that ran only on a cold corpus would leave those
+/// words empty on a warm one, and the two would disagree about what the corpus says.
 /// </para>
 /// </summary>
 internal sealed class GreekNamesakeLoader(AppDbContext db, ILogger<GreekNamesakeLoader> logger)
@@ -171,12 +174,6 @@ internal sealed class GreekNamesakeLoader(AppDbContext db, ILogger<GreekNamesake
 
     public async Task<GreekNamesakeOutcome> Load(CancellationToken cancellationToken = default)
     {
-        if (await db.WordEntities.AnyAsync(a => a.Source == Source, cancellationToken))
-        {
-            logger.LogInformation("The Greek names several people share are already told apart; nothing to do");
-            return new GreekNamesakeOutcome(true, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
-        }
-
         var started = Stopwatch.StartNew();
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -202,8 +199,8 @@ internal sealed class GreekNamesakeLoader(AppDbContext db, ILogger<GreekNamesake
         await transaction.CommitAsync(cancellationToken);
 
         var outcome = new GreekNamesakeOutcome(
-            false, occurrences, settled, several, unlisted, byText.Sum(t => t.Words), byText,
-            started.Elapsed);
+            settled == 0 && byText.Count > 0, occurrences, settled, several, unlisted,
+            byText.Sum(t => t.Words), byText, started.Elapsed);
         logger.LogInformation("Told the Greek namesakes apart: {Outcome}", outcome);
         return outcome;
     }

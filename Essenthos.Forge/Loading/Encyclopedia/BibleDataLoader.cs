@@ -746,8 +746,44 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             names.Add(NamePointedAsElohim(god));
         }
 
+        if (entities.TryGetValue(Paul, out var paul)
+            && !names.Any(n => n.EntityId == paul.Id && n.GreekStrongNumber == CalledSaoul))
+        {
+            names.Add(PaulCalledSaoul(paul));
+        }
+
         return names;
     }
+
+    /// <summary>The dataset's record of Saul of Tarsus, who is Paul from Acts 13:9.</summary>
+    private const string Paul = "person:Saul_2";
+
+    /// <summary>Σαούλ, the Hebrew name written as it stands, undeclined, in the Greek.</summary>
+    internal const string CalledSaoul = "G4549";
+
+    /// <summary>
+    /// Paul under the name the risen Christ and Ananias call him by — Σαούλ, the Hebrew name
+    /// undeclined, at Acts 9:4, 9:17, 22:7, 22:13 and 26:14 — where the narrative calls him Σαῦλος.
+    ///
+    /// The dataset gives him Σαῦλος and Παῦλος and files those verses under his name, but gives
+    /// Σαούλ only to the king, so without this the number those verses are written under would reach
+    /// one record and resolve every one of them to Saul son of Kish, whom Acts names once, at 13:21.
+    /// Strong's own entry for G4549 calls it the Jewish name of Paul. With the name here the number
+    /// is two men's, and which of them a verse means is the verse lists' to say. That is this
+    /// corpus's own statement, which is why it is added here and not read from the label file.
+    /// </summary>
+    internal static EntityName PaulCalledSaoul(Entity paul) =>
+        new()
+        {
+            EntityId = paul.Id,
+            Label = "Saul",
+            Hebrew = "שָׁאוּל",
+            HebrewTransliterated = "shaul",
+            Greek = "Σαούλ",
+            GreekTransliterated = "Saoúl",
+            GreekStrongNumber = CalledSaoul,
+            Kind = "proper name",
+        };
 
     /// <summary>
     /// The Strong number of the divine name where the Masoretes pointed it with the vowels of
@@ -1221,7 +1257,10 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// writes its null word inside a list, so <c>G935, none</c> is one number and not two.
     ///
     /// The homograph letter is dropped rather than kept, because the entry it would reach does not
-    /// exist — the distinction it makes is one the concordance does not carry.
+    /// exist — the distinction it makes is one the concordance does not carry. That is the Hebrew
+    /// column's letter. The Greek column's is the dataset's own extension of the numbering, and the
+    /// number before it is not always the name, so a lettered Greek number is read through
+    /// <see cref="BibleDataGreekNumbers"/> and refused where nobody has read it.
     ///
     /// <paramref name="language"/> is the letter the column already implies, and is what a number
     /// written without one gets: the Hebrew column's <c>H1350, 3478</c> is two Hebrew numbers.
@@ -1243,6 +1282,16 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
 
             var prefix = match.Groups[1].Value;
             var number = $"{(prefix.Length > 0 ? char.ToUpperInvariant(prefix[^1]) : language)}{match.Groups[2].Value}";
+            if (number[0] == 'G' && match.Groups[3].Value is { Length: > 0 } letter)
+            {
+                if (!BibleDataGreekNumbers.TryRead(number + letter, out var read) || read is null)
+                {
+                    continue;
+                }
+
+                number = read;
+            }
+
             if (!numbers.Contains(number, StringComparer.Ordinal))
             {
                 numbers.Add(number);
@@ -1256,6 +1305,6 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// A language letter that may be missing or doubled, the number with any padding zeros, and
     /// the lexicon's trailing homograph letter.
     /// </summary>
-    [GeneratedRegex(@"^([HG]*)0*([1-9][0-9]*)[A-Za-z]?$", RegexOptions.IgnoreCase)]
+    [GeneratedRegex(@"^([HG]*)0*([1-9][0-9]*)([A-Za-z]?)$", RegexOptions.IgnoreCase)]
     private static partial Regex StrongNumber();
 }

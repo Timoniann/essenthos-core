@@ -193,6 +193,26 @@ public sealed class GreekNamesakeTests : IDisposable
         named[rendering.Id].Confidence.Should().BeApproximately(0.96 * 0.9, 1e-9);
     }
 
+    /// <summary>
+    /// The pass is asked again on every load, because the encyclopedia can make a name several
+    /// records' after it first ran. A word left alone then is told apart the next time.
+    /// </summary>
+    [Fact]
+    public async Task ANameThatComesToBeSeveralRecordsIsToldApartOnTheNextLoad()
+    {
+        await _loader.Load();
+        (await Named()).Should().NotContainKey(Greek(4).Id);
+
+        Attest(await _db.Entities.SingleAsync(e => e.Slug == "messiah"), 4, BibleData);
+        Named("christ-2", Christ, "proper name");
+        await _db.SaveChangesAsync();
+
+        var second = await _loader.Load();
+
+        second.Settled.Should().Be(1);
+        (await Named())[Greek(4).Id].Entity!.Slug.Should().Be("messiah");
+    }
+
     [Fact]
     public async Task LoadingTwiceWritesNothingTheSecondTime()
     {

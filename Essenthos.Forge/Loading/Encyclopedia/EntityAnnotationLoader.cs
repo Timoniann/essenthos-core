@@ -723,7 +723,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
 
     /// <summary>
     /// What this loader wrote and would not write today, taken back: a number the encyclopedia no
-    /// longer answers with one place, and a place the word's own verse contradicts.
+    /// longer answers with one place, a place the word's own verse contradicts, and a Greek name a
+    /// second record the Greek reaches now bears.
     ///
     /// An annotation is written when the resolution needs nobody, and what makes that true is the
     /// encyclopedia at the moment it is asked. The encyclopedia grows: the peoples made H3778 two
@@ -760,13 +761,26 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </para>
     ///
     /// <para>
+    /// The fourth is the Greek resolution, whatever its method, where the word's number no longer
+    /// resolves to the record the row names among those the Greek reaches. A Greek row written by
+    /// the form names reachability as its chooser — the others named in no book the Greek holds —
+    /// and a record the encyclopedia gains that the Greek does reach is exactly what that chooser
+    /// can no longer rule out: Σαούλ is the king and, once the encyclopedia says so, Paul, and the
+    /// verses of Paul's calling are no longer the king's for want of a rival. It is asked only of
+    /// what the pass seeded — a witness word the record bears the number of, not one a link carried
+    /// the record to from a word of another number — and the words it carried to go with their
+    /// seed, as the others' do.
+    /// </para>
+    ///
+    /// <para>
     /// One statement, inside the pass's own transaction. <c>ExecuteDelete</c> commits on its own
     /// and would leave the corpus half-withdrawn if anything after it failed.
     /// </para>
     /// </summary>
     private static readonly string Withdraw =
         $"""
-         WITH seed AS (
+         WITH resolvable AS MATERIALIZED ({GreekResolvable}),
+         seed AS (
              SELECT a.word_id, a.entity_id
              FROM word_entity a
              JOIN word w ON w.id = a.word_id
@@ -794,6 +808,19 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                AND w.morphology->>'nameType' = 'pers'
                AND w.strong_number IS NOT NULL
                AND {ReadAsAPlace}
+             UNION
+             SELECT a.word_id, a.entity_id
+             FROM word_entity a
+             JOIN word w ON w.id = a.word_id
+             JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
+             WHERE a.source = ANY(@greek)
+               AND coalesce(a.note, '') NOT LIKE @carried
+               AND EXISTS (SELECT 1 FROM entity_name n
+                           WHERE n.greek_strong_number = w.strong_number
+                             AND {EntityCandidates.Resolves} = a.entity_id)
+               AND NOT EXISTS (SELECT 1 FROM resolvable
+                               WHERE resolvable.number = w.strong_number
+                                 AND resolvable.entity_id = a.entity_id)
          ),
          carried AS (
              SELECT other.word_id, seed.entity_id
@@ -900,7 +927,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             logger.LogInformation(
                 "Withdrew {Rows} name resolutions the encyclopedia no longer bears out: the number " +
                 "now answers with more than one place, or the word's own verse names a person and " +
-                "no place bearing it, or the reverse", withdrawn);
+                "no place bearing it, or the reverse, or a Greek name now answers with a second " +
+                "record the Greek reaches", withdrawn);
         }
 
         var unspoken = await db.Entities.CountAsync(
@@ -1176,7 +1204,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var withdrawn = await Run(connection, transaction, Withdraw, cancellationToken,
             ("written", Written), ("method", EnumSpelling.Of(LinkMethod.StrongNumber)),
-            ("witness", Witness));
+            ("witness", Witness), ("witnesses", EntityCandidates.GreekWitnesses),
+            ("greek", new[] { GreekResolution, GreekDistinction }), ("carried", Annotating.CarriedNote));
         await transaction.CommitAsync(cancellationToken);
         return withdrawn;
     }
