@@ -2,18 +2,21 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Desk;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// The owner's console, over HTTP as his browser reaches it: that it answers nobody else, that an
-/// answer reaches avioniq as his, and that a decision lands in the file the loader or the decide
-/// command reads — in the shape they read, and taken back exactly when he takes it back. The
+/// The owner's console, over HTTP as his browser reaches it: that it answers nobody else, that a
+/// decision lands in the file the loader or the decide command reads — in the shape they read, and
+/// taken back exactly when he takes it back — and that every change is in the change log. The
 /// files are temporary copies and avioniq is a stand-in that records what it was asked.
 /// </summary>
 public sealed class DeskTests : IAsyncLifetime
@@ -79,7 +82,7 @@ public sealed class DeskTests : IAsyncLifetime
     [Fact]
     public async Task ARequestAddressedByAnotherNameIsRefused()
     {
-        using var request = new HttpRequestMessage(HttpMethod.Get, "/desk-api/questions");
+        using var request = new HttpRequestMessage(HttpMethod.Get, "/desk-api/history");
         request.Headers.Host = "attacker.example";
 
         (await _http.SendAsync(request)).StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -90,14 +93,15 @@ public sealed class DeskTests : IAsyncLifetime
     [InlineData("Sec-Fetch-Site", "cross-site")]
     public async Task AnotherSitesPageCannotActInTheOwnersName(string header, string value)
     {
-        using var request = new HttpRequestMessage(HttpMethod.Post, "/desk-api/questions/answer")
+        using var request = new HttpRequestMessage(HttpMethod.Put, "/desk-api/settings/naveTopics")
         {
-            Content = JsonContent.Create(new { entity = "FTR-0001", number = 1, answer = "Yes" }),
+            Content = JsonContent.Create(new { value = false, note = "" }),
         };
         request.Headers.Add(header, value);
 
         (await _http.SendAsync(request)).StatusCode.Should().Be(HttpStatusCode.Forbidden);
-        Called().Should().NotContain(call => call.Contains("answer"));
+        File.Exists(SiteSettingsFile).Should().BeFalse();
+        File.Exists(ChangeLogFile).Should().BeFalse();
     }
 
     [Fact]
@@ -109,34 +113,74 @@ public sealed class DeskTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task TheOpenQuestionsAndTheWorkAwaitingSignOffAreListed()
+    public async Task ASwitchForTheSiteIsWrittenWhereTheApiReadsItAndLogged()
     {
-        var board = await Json<QuestionsResponse>(await _http.GetAsync("/desk-api/questions"));
+        var before = await Json<SiteSwitchesResponse>(await _http.GetAsync("/desk-api/settings"));
+        before.Settings.Select(s => s.Key).Should().Equal(SiteSettings.Catalogue.Select(s => s.Key));
+        before.Settings.Should().OnlyContain(s => s.Value == s.Default, "nothing is written until the owner sets a switch");
 
-        board.Available.Should().BeTrue();
-        board.Questions.Should().ContainSingle();
-        var question = board.Questions[0];
-        (question.Entity, question.Number, question.Blocking).Should().Be(("FTR-0001", 2, true));
-        question.Options.Should().Equal("Keep it", "Drop it");
-        board.SignOffs.Should().ContainSingle().Which.Title.Should().Be("Kings are marked");
+        (await Put("/desk-api/settings/naveTopics", new { value = false, note = "до кінця розгляду" })).StatusCode
+            .Should().Be(HttpStatusCode.OK);
+
+        var read = SiteSettings.Read(SiteSettingsFile);
+        (read[SiteSettings.NaveTopics], read[SiteSettings.GeneratedImages]).Should().Be((false, true));
+        var logged = Logged().Should().ContainSingle().Which;
+        (logged.Section, logged.Action, logged.Target, logged.Needs).Should().Be(("settings", "switch", "setting/naveTopics", null));
+        (logged.Before!.GetValue<bool>(), logged.After!.GetValue<bool>(), logged.Note).Should().Be((true, false, "до кінця розгляду"));
+        File.ReadAllText(ChangeLogFile).Should().Contain("до кінця розгляду", "Cyrillic is written as it is typed");
+
+        (await Put("/desk-api/settings/nothing", new { value = true, note = "" })).StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
-    public async Task AnAnswerReachesAvioniqAsTheOwnersOwn()
+    public async Task TheApiServesWhatTheConsoleSetOnTheNextRequest()
     {
-        var response = await Post("/desk-api/questions/answer", new { entity = "FTR-0001", number = 2, answer = "Keep it & say \"why\"" });
+        var served = new Essenthos.Core.Endpoints.SiteSettingsFile(
+            SiteSettingsFile, Microsoft.Extensions.Logging.Abstractions.NullLogger<Essenthos.Core.Endpoints.SiteSettingsFile>.Instance);
+        served.Is(SiteSettings.GeneratedImages).Should().BeTrue("with no file every switch is at its default");
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        Called().Should().Contain(call => call.SequenceEqual(new[] { "answer", "FTR-0001", "2", "Keep it & say \"why\"", "--by", "user" }));
+        await Put("/desk-api/settings/generatedImages", new { value = false, note = "" });
+        served.Is(SiteSettings.GeneratedImages).Should().BeFalse();
+
+        await Put("/desk-api/settings/generatedImages", new { value = true, note = "" });
+        File.SetLastWriteTimeUtc(SiteSettingsFile, DateTime.UtcNow.AddSeconds(1));
+        served.Is(SiteSettings.GeneratedImages).Should().BeTrue();
     }
 
     [Fact]
-    public async Task WhatAvioniqRefusesIsSaidInItsOwnWords()
+    public void ASwitchTheFileDoesNotNameIsAtItsDefaultAndOneTheSiteDoesNotKnowIsIgnored()
     {
-        var response = await Post("/desk-api/questions/answer", new { entity = "PRB-0404", number = 1, answer = "Yes" });
+        var file = JsonNode.Parse("""{ "settings": { "naveTopics": false, "somethingNew": true, "generatedImages": "yes" } }""");
 
-        response.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
-        (await Json<AnswerResponse>(response)).Problem.Should().Contain("No open question 1 on PRB-0404");
+        var read = SiteSettings.From(file);
+
+        read.Keys.Should().BeEquivalentTo(SiteSettings.Catalogue.Select(s => s.Key));
+        (read[SiteSettings.NaveTopics], read[SiteSettings.GeneratedImages]).Should().Be((false, true));
+        SiteSettings.Read(Path.Combine(_root, "absent.json")).Should().BeEquivalentTo(SiteSettings.Defaults());
+    }
+
+    /// <summary>
+    /// The log is appended to and never rewritten, one object a line, and a change that needs the
+    /// pictures loaded again waits until a run of that step from the console has succeeded after it.
+    /// </summary>
+    [Fact]
+    public async Task AChangeWaitsInTheLogUntilTheStepItNeedsHasRun()
+    {
+        var log = new ChangeLog(DeskPaths.Read(_app!.Services.GetRequiredService<IConfiguration>()));
+        await log.Append("pictures", "choice", "jerusalem openbible/a.jpg", null, new JsonObject { ["hidden"] = true }, null, "images");
+        await log.Append("occurrences", "answer", "objects-and-observances boaz-pillar H1162 1KI 7:21", null, null, null, "load");
+
+        var started = await Json<RunStarted>(await _http.PostAsync("/desk-api/operations/core-images/runs", null));
+        await Finished(started.Run!.Id);
+        await Task.Delay(200);
+        await log.Append("pictures", "choice", "jerusalem openbible/b.jpg", null, null, null, "images");
+
+        var read = await Json<ChangeLogResponse>(await _http.GetAsync("/desk-api/history"));
+
+        read.Entries.Select(e => (e.Line, e.Section, e.Waiting)).Should().Equal(
+            (4, "pictures", true), (3, "apply", false), (2, "occurrences", true), (1, "pictures", false));
+        read.Waiting.Should().BeEquivalentTo(new Dictionary<string, int> { ["images"] = 1, ["load"] = 1 });
+        File.ReadAllLines(ChangeLogFile).Should().HaveCount(4).And.OnlyContain(line => line.StartsWith("{\"at\":"));
     }
 
     [Fact]
@@ -157,6 +201,10 @@ public sealed class DeskTests : IAsyncLifetime
         decision["decidedAt"]!.GetValue<string>().Should().EndWith("Z");
         Relationships()["decisions"]!["70845"]!["decision"]!.GetValue<string>().Should().Be("confirm", "an earlier decision is kept");
         File.ReadAllText(Path.Combine(Review, RelationshipReview.FileName)).Should().Contain("Абієзер", "Cyrillic is written as it is typed");
+
+        var logged = Logged().Should().ContainSingle().Which;
+        (logged.Section, logged.Target, logged.Needs).Should().Be(("relationships", "joash descendant-of iezer (72185|72186)", "relationships"));
+        (logged.Before, logged.After!["decision"]!.GetValue<string>()).Should().Be((null, "remove"));
     }
 
     [Fact]
@@ -211,6 +259,9 @@ public sealed class DeskTests : IAsyncLifetime
         rule.Only.Should().Equal("1KI 7:21", "2CH 3:17");
         rule.Admits(11, 7, 21, 1).Should().BeTrue();
         Occurrences()["entries"]![0]!["decision"]!["applied"]!.GetValue<string>().Should().Be(ThingReview.Written);
+        var logged = Logged().Should().ContainSingle().Which;
+        (logged.Section, logged.Target, logged.Needs).Should().Be(
+            ("occurrences", "objects-and-observances boaz-pillar H1162 1KI 7:21, 2CH 3:17", "load"));
     }
 
     [Fact]
@@ -241,6 +292,42 @@ public sealed class DeskTests : IAsyncLifetime
 
         Occurrences()["entries"]![1]!["decision"]!["applied"]!.GetValue<string>().Should().Be(ThingReview.ByHand);
         Record("new-moon").Occurrences.Should().ContainSingle("nothing is written for an answer that needs a new record");
+        Logged().Single().Needs.Should().Be("agent");
+    }
+
+    /// <summary>
+    /// A list written later in the same shape — the Septuagint's placements — is answered on the same
+    /// page, by the key its entries carry, and an answer that changes something waits for an agent.
+    /// </summary>
+    [Fact]
+    public async Task AnyListOfTheSameShapeIsAnsweredAndItsOwnKeysAreKept()
+    {
+        WriteThings();
+        File.WriteAllText(Path.Combine(Review, "septuagint-placement.json"),
+            """
+            {
+              "about": "Where the Greek stands beside Hebrew it does not carry.",
+              "entries": [
+                { "key": "small-swaps", "edition": "both", "references": ["GEN 31:46-52"], "question": "Place them by their words?",
+                  "options": ["place them by their words", "show them as printed"] }
+              ]
+            }
+            """);
+        File.WriteAllText(Path.Combine(Review, "evidentia-gold-errors.json"), """{ "errors": [] }""");
+        File.WriteAllText(Path.Combine(Review, "bibledata-removed.json"), """[{ "id": "1", "why": "a record of a past decision" }]""");
+
+        var read = await Json<ThingQuestionsResponse>(await _http.GetAsync("/desk-api/review/occurrences"));
+
+        read.Lists.Select(l => (l.List, l.Open)).Should().Equal(("objects-and-observances", 2), ("septuagint-placement", 1));
+        var entry = read.Entries.Single(e => e.List == "septuagint-placement");
+        entry.Key.Should().Be("small-swaps");
+        entry.Options.Select(o => o.Effect).Should().Equal(ThingReview.ByHand, ThingReview.Nothing);
+
+        (await Put("/desk-api/review/occurrences/small-swaps", new { answer = "place them by their words", note = "" }))
+            .StatusCode.Should().Be(HttpStatusCode.OK);
+        JsonFiles.Read(Path.Combine(Review, "septuagint-placement.json"))["entries"]![0]!["decision"]!["answer"]!
+            .GetValue<string>().Should().Be("place them by their words");
+        Logged().Single().Should().Match<ChangeEntry>(e => e.Needs == "agent" && e.Target == "septuagint-placement small-swaps GEN 31:46-52");
     }
 
     /// <summary>
@@ -271,6 +358,7 @@ public sealed class DeskTests : IAsyncLifetime
 
         var decision = JsonFiles.Read(Path.Combine(Review, ThingReview.AncestorsFile))["entries"]![0]!["decision"]!;
         decision["answer"]!.GetValue<string>().Should().Be("israelites");
+        decision["applied"]!.GetValue<string>().Should().Be(ThingReview.OnLoad, "the load reads the answer back, whichever it is");
         File.ReadAllText(Path.Combine(Review, ThingReview.QuestionsFile)).Should().Be(objects);
         MisfiledVerseLoader.Answers(Path.Combine(Review, ThingReview.AncestorsFile))
             .Should().Contain(new KeyValuePair<(string, string, string), string>(("jacob", "Israel", "EXO 4:22"), "israelites"));
@@ -303,6 +391,9 @@ public sealed class DeskTests : IAsyncLifetime
         undone.Reviewed.Should().BeNull();
         undone.Occurrences![0].Reviewed.Should().BeNull();
         undone.Occurrences[1].Reviewed.Should().Be(ThingReview.AnswerStamp(JsonFiles.Today()), "the answer's own rule stays the owner's");
+
+        Logged().Where(e => e.Section == "records").Select(e => (e.Target, e.After?.GetValue<string>(), e.Needs)).Should().Equal(
+            ("object/boaz-pillar", "all", "load"), ("object/boaz-pillar", null, "load"));
     }
 
     [Fact]
@@ -322,9 +413,8 @@ public sealed class DeskTests : IAsyncLifetime
     {
         var operations = await Json<OperationsResponse>(await _http.GetAsync("/desk-api/operations"));
 
-        operations.Operations.Select(o => o.Name).Should().Equal("core-images", "failing", "core-unregistered");
-        operations.Operations.Single(o => o.Name == "core-unregistered").Registered.Should().BeFalse();
-        operations.Services.Should().ContainSingle().Which.Runnable.Should().BeFalse();
+        operations.Steps.Select(o => (o.Name, o.Step, o.Registered)).Should().Equal(
+            ("core-images", "images", true), ("failing", "failing", true), ("core-unregistered", "core-unregistered", false));
 
         (await _http.PostAsync("/desk-api/operations/core-clear/runs", null)).StatusCode.Should().Be(HttpStatusCode.Conflict);
         (await _http.PostAsync("/desk-api/operations/core-unregistered/runs", null)).StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -345,6 +435,29 @@ public sealed class DeskTests : IAsyncLifetime
 
         var failed = await Json<RunStarted>(await _http.PostAsync("/desk-api/operations/failing/runs", null));
         (await Finished(failed.Run!.Id)).Run.Should().Match<OperationRun>(r => r.State == "failed" && r.ExitCode == 3);
+
+        await Task.Delay(200);
+        Logged().Where(e => e.Section == ChangeLog.Apply).Select(e => (e.Action, e.After!.GetValue<string>())).Should()
+            .BeEquivalentTo([("images", "succeeded"), ("failing", "failed")]);
+    }
+
+    [Fact]
+    public async Task APictureChoiceIsWrittenWhereTheLoaderReadsItAndTheLeadMovesToIt()
+    {
+        var choices = new PictureChoices(DeskPaths.Read(_app!.Services.GetRequiredService<IConfiguration>()),
+            new ChangeLog(DeskPaths.Read(_app.Services.GetRequiredService<IConfiguration>())));
+        await choices.Choose("jerusalem", new PictureChoiceRequest("openbible/a.jpg", false, true, "", null), "Єрусалим");
+        await choices.Choose("jerusalem", new PictureChoiceRequest("openbible/b.jpg", false, true, " Мури зі сходу ", null), "Єрусалим");
+        await choices.Choose("jerusalem", new PictureChoiceRequest("openbible/c.jpg", true, false, null, "не те місто"), "Єрусалим");
+
+        var read = ImageChoices.Read(PictureChoicesFile);
+        read.Images.Should().BeEquivalentTo(
+        [
+            new ImageChoice("jerusalem", "openbible/b.jpg", null, true, "Мури зі сходу"),
+            new ImageChoice("jerusalem", "openbible/c.jpg", true),
+        ], "a.jpg lost the lead to b.jpg and, with nothing else chosen about it, left the file");
+        (await choices.Choose("jerusalem", new PictureChoiceRequest("../../secret.png", true, false, "", null))).Should().BeNull();
+        Logged().Should().HaveCount(3).And.OnlyContain(e => e.Section == "pictures" && e.Needs == "images" && e.Label == "Єрусалим");
     }
 
     [Theory]
@@ -364,6 +477,8 @@ public sealed class DeskTests : IAsyncLifetime
     [InlineData("Resources/Essenthos/review/objects-and-observances.json")]
     [InlineData("Resources/Essenthos/review/bibledata-relationships.json")]
     [InlineData("Resources/Essenthos/review/eponym-verses.json")]
+    [InlineData("Resources/Essenthos/review/septuagint-placement.json")]
+    [InlineData("Essenthos.Api/site-settings.json")]
     public void AFileWrittenBackUnchangedIsTheSameFile(string tracked)
     {
         var source = Path.Combine(Checkout(), tracked);
@@ -405,6 +520,15 @@ public sealed class DeskTests : IAsyncLifetime
 
         entries.Select(e => ThingReview.KeyOf(e!)).Should().OnlyHaveUniqueItems().And.HaveCount(entries.Count);
     }
+
+    private string SiteSettingsFile => Path.Combine(Repository, "Essenthos.Api", SiteSettings.FileName);
+
+    private string ChangeLogFile => Path.Combine(Repository, "Resources", "Essenthos", ChangeLog.FileName);
+
+    private string PictureChoicesFile => Path.Combine(Repository, "Resources", "Essenthos", PictureChoices.FileName);
+
+    private IReadOnlyList<ChangeEntry> Logged() =>
+        new ChangeLog(DeskPaths.Read(_app!.Services.GetRequiredService<IConfiguration>())).Read().Entries.Reverse().ToList();
 
     private async Task<RunLog> Finished(string id)
     {
@@ -527,9 +651,8 @@ public sealed class DeskTests : IAsyncLifetime
     }
 
     /// <summary>
-    /// avioniq as far as the console uses it: it records every call, answers the board's queries
-    /// with a question and a sign-off, refuses one answer, and runs two actions that print on both
-    /// streams, one of which fails.
+    /// avioniq as far as the console uses it: it records every call, lists its actions, and runs two
+    /// of them that print on both streams, one of which fails.
     /// </summary>
     private const string FakeAvioniq =
         """
@@ -538,17 +661,7 @@ public sealed class DeskTests : IAsyncLifetime
         const args = process.argv.slice(2)
         fs.appendFileSync(path.join(__dirname, "calls.log"), JSON.stringify(args) + "\n")
         const joined = args.join(" ")
-        if (joined === "--json questions") {
-          console.log(JSON.stringify([{ id: "FTR-0001", title: "Kings", questions: [
-            { n: 1, text: "Answered already", options: [], blocking: true, answer: "Yes" },
-            { n: 2, asked: "2026-09-20T10:00:00Z", by: "agent", text: "Keep or drop?", options: ["Keep it", "Drop it"], blocking: true }
-          ] }]))
-        } else if (joined === "--json waiting") {
-          console.log(JSON.stringify([
-            { id: "FTR-0641", kind: "sign-off", title: "Kings are marked", text: "Finished", since: "2026-09-22T11:03:36Z" },
-            { id: "FTR-0001", kind: "question", title: "Kings", text: "Keep or drop?" }
-          ]))
-        } else if (joined === "--json services list") {
+        if (joined === "--json services list") {
           console.log(JSON.stringify({
             services: [{ name: "core", kind: "service", project: "essenthos-core", description: "The API", state: "running" }],
             actions: [
@@ -557,11 +670,6 @@ public sealed class DeskTests : IAsyncLifetime
               { name: "failing", kind: "action", project: "essenthos-core", description: "Fails" }
             ]
           }))
-        } else if (args[0] === "answer" && args[1] === "PRB-0404") {
-          console.error("No open question 1 on PRB-0404.")
-          process.exit(1)
-        } else if (args[0] === "answer") {
-          console.log("answered")
         } else if (args[0] === "services" && args[1] === "run") {
           console.log("drawing the pictures")
           console.error("a warning on the other stream")

@@ -1,0 +1,7 @@
+{
+  "about": "Switches the project owner sets for the site in his console. The API serves them at /v1/settings and the site reads them at runtime; a switch not named here is at its default. Every change made in the console is also recorded in Resources/Essenthos/owner-changes.jsonl.",
+  "settings": {
+    "naveTopics": true,
+    "generatedImages": true
+  }
+}

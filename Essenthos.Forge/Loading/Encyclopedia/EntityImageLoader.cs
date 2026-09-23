@@ -16,6 +16,8 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Missing">Pictures left out because their file is not in the images folder.</param>
 /// <param name="Unheld">Pictures of a place or a person the encyclopedia holds no record of.</param>
 /// <param name="Refused">Pictures of God other than the glory, which are never shown.</param>
+/// <param name="Withheld">Our own pictures the owner has not approved yet or has rejected.</param>
+/// <param name="Hidden">Pictures the owner hid in his console.</param>
 internal sealed record EntityImageOutcome(
     int Places,
     int Curated,
@@ -25,13 +27,16 @@ internal sealed record EntityImageOutcome(
     int Missing,
     int Unheld,
     int Refused,
+    int Withheld,
+    int Hidden,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
         $"{Places} place pictures from the gazetteer, {Curated} curated public works and {Generated} of our " +
         $"own; left out: {Unlicensed} under terms that do not allow showing them, {Uncredited} with nobody " +
         $"to credit, {Missing} whose file is not in the images folder, {Unheld} of records the " +
-        $"encyclopedia does not hold and {Refused} of God that were not the glory, in {Elapsed}";
+        $"encyclopedia does not hold, {Refused} of God that were not the glory, {Withheld} of our own not " +
+        $"approved and {Hidden} the owner hid, in {Elapsed}";
 }
 
 /// <summary>
@@ -54,6 +59,14 @@ internal sealed record EntityImageOutcome(
 /// <c>download</c> is the address the fetch script takes the file from and is not read here, and
 /// <c>glory</c> is below. An entry with no
 /// credit or no licence is refused, because a picture with no credit under it reads as ours.
+/// </para>
+///
+/// <para>
+/// A generated entry may carry <c>"review"</c>: <c>pending</c> while the owner has not looked at it
+/// and <c>rejected</c> once he has said no, and either keeps it off the site; <c>approved</c>, or no
+/// review at all for an entry written by hand, shows it. And the owner's choices in
+/// <c>Resources/Essenthos/image-choices.json</c> — a picture hidden, a different one leading, a
+/// caption of his own — are applied over every list; see <see cref="ImageChoices"/>.
 /// </para>
 ///
 /// <para>
@@ -115,7 +128,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         var depiction = entities.ToDictionary(e => e.Id, e => (e.Kind, e.SourceId));
 
         var candidates = new List<Candidate>();
-        int unlicensed = 0, uncredited = 0, unheld = 0;
+        int unlicensed = 0, uncredited = 0, unheld = 0, withheld = 0;
 
         // The curated and generated lists first: somebody chose each of those, so where one names a
         // primary picture for a place it leads over the gazetteer's.
@@ -130,6 +143,12 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                         "Correct the slug in the manifest, or remove the entry.",
                         manifest.Name, entry.Entity);
                     unheld++;
+                    continue;
+                }
+
+                if (kind == Generated && entry.Review is ImageChoices.Pending or ImageChoices.Rejected)
+                {
+                    withheld++;
                     continue;
                 }
 
@@ -210,6 +229,9 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                 ancient, images);
         }
 
+        candidates = ImageChoices.Apply(
+            candidates, ImageChoices.Read(Path.Combine(resources, ImageChoices.Folder, ImageChoices.FileName)), out var hidden);
+
         var refused = candidates.RemoveAll(c =>
         {
             var (kind, sourceId) = depiction[c.EntityId];
@@ -247,6 +269,8 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
             missing,
             unheld,
             refused,
+            withheld,
+            hidden,
             started.Elapsed);
         logger.LogInformation("Pictured the people and places: {Outcome}", outcome);
         return outcome;
@@ -403,6 +427,7 @@ internal sealed record ImageManifest(
 /// That the picture is of the glory of God as light, with no face, body or figure in it: the one kind
 /// of picture a record of God may have, and only from the generated manifest.
 /// </param>
+/// <param name="Review">The owner's word on one of our own: <c>pending</c>, <c>approved</c> or <c>rejected</c>.</param>
 internal sealed record ImageManifestEntry(
     string Entity,
     string File,
@@ -414,4 +439,5 @@ internal sealed record ImageManifestEntry(
     string? Role = null,
     double[]? Focus = null,
     string? Download = null,
-    bool? Glory = null);
+    bool? Glory = null,
+    string? Review = null);

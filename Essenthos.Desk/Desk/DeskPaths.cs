@@ -21,7 +21,13 @@ internal sealed record DeskPaths(string Repository, string Resources, string Wor
     /// <summary>What marks the control folder when walking up from the checkout.</summary>
     private const string WorkspaceMarker = ".avioniq";
 
-    public string Review => Path.Combine(Repository, "Resources", "Essenthos", "review");
+    /// <summary>The owner's own tracked files: the review lists, his picture choices and the change log.</summary>
+    public string Owner => Path.Combine(Repository, "Resources", "Essenthos");
+
+    public string Review => Path.Combine(Owner, "review");
+
+    /// <summary>The site's switches, beside the API that serves them.</summary>
+    public string SiteSettings => Path.Combine(Repository, "Essenthos.Api", Configuration.SiteSettings.FileName);
 
     public string Records => Path.Combine(Repository, "Essenthos.Forge", "Loading", "Encyclopedia");
 

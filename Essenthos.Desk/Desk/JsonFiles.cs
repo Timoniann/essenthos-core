@@ -2,16 +2,28 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace Essenthos.Core.Desk;
 
 /// <summary>
 /// The tracked files a decision is written into, read and written back as they were written: the
-/// same indentation, the same line endings and no escaped Cyrillic or Hebrew, so that the diff a
-/// decision makes is the decision and nothing else.
+/// same indentation, the same line endings, the short lists kept on one line where the file keeps
+/// them so, and no escaped Cyrillic or Hebrew, so that the diff a decision makes is the decision and
+/// nothing else.
 /// </summary>
-internal static class JsonFiles
+internal static partial class JsonFiles
 {
+    private const string Scalar = @"(?:""(?:[^""\\]|\\.)*""|-?[0-9][0-9.eE+-]*|true|false|null)";
+
+    /// <summary>A property holding a non-empty array of plain values, written on one line.</summary>
+    [GeneratedRegex(@"""(?<name>[^""\\]+)"": \[" + Scalar + @"(?:, " + Scalar + @")*\]")]
+    private static partial Regex InlineArrays();
+
+    /// <summary>A property holding a non-empty array of plain values, one to a line as the writer puts them.</summary>
+    [GeneratedRegex(@"""(?<name>[^""\\]+)"": \[(?:\r?\n[ ]+(?<item>" + Scalar + @"),?)+\r?\n[ ]+\]")]
+    private static partial Regex ScalarArrays();
+
     private static readonly JsonDocumentOptions Reading = new()
     {
         AllowTrailingCommas = true,
@@ -60,7 +72,7 @@ internal static class JsonFiles
     /// </summary>
     public static void Write(string path, JsonNode node)
     {
-        var (indent, newLine, trailing) = Layout(path);
+        var (indent, newLine, trailing, inline) = Layout(path);
         var options = new JsonWriterOptions
         {
             Indented = true,
@@ -69,35 +81,43 @@ internal static class JsonFiles
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
 
-        var temporary = path + ".writing";
-        using (var stream = File.Create(temporary))
+        using var buffer = new MemoryStream();
+        using (var writer = new Utf8JsonWriter(buffer, options))
         {
-            using (var writer = new Utf8JsonWriter(stream, options))
-            {
-                node.WriteTo(writer);
-            }
-
-            if (trailing)
-            {
-                stream.Write(Encoding.UTF8.GetBytes(newLine));
-            }
+            node.WriteTo(writer);
         }
 
+        var text = Encoding.UTF8.GetString(buffer.ToArray());
+        if (inline.Count > 0)
+        {
+            text = ScalarArrays().Replace(text, array => inline.Contains(array.Groups["name"].Value)
+                ? $"\"{array.Groups["name"].Value}\": [{string.Join(", ", array.Groups["item"].Captures.Select(c => c.Value))}]"
+                : array.Value);
+        }
+
+        var temporary = path + ".writing";
+        File.WriteAllText(temporary, trailing ? text + newLine : text, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
         File.Move(temporary, path, overwrite: true);
     }
 
-    private static (int Indent, string NewLine, bool Trailing) Layout(string path)
+    /// <summary>
+    /// How the file is laid out: its indentation, its line ending, whether it ends in one, and the
+    /// properties whose arrays of plain values it writes on one line, which a hand-written list does
+    /// and the writer does not.
+    /// </summary>
+    private static (int Indent, string NewLine, bool Trailing, HashSet<string> Inline) Layout(string path)
     {
         if (!File.Exists(path))
         {
-            return (2, Environment.NewLine, true);
+            return (2, Environment.NewLine, true, []);
         }
 
         var text = File.ReadAllText(path);
         var newLine = text.Contains("\r\n", StringComparison.Ordinal) ? "\r\n" : "\n";
         var second = text.Split('\n').Skip(1).FirstOrDefault() ?? string.Empty;
         var indent = second.TakeWhile(c => c == ' ').Count();
-        return (indent is > 0 and <= 8 ? indent : 2, newLine, text.EndsWith('\n'));
+        var inline = InlineArrays().Matches(text).Select(m => m.Groups["name"].Value).ToHashSet(StringComparer.Ordinal);
+        return (indent is > 0 and <= 8 ? indent : 2, newLine, text.EndsWith('\n'), inline);
     }
 
     private static SemaphoreSlim Gate(string path)

@@ -41,10 +41,13 @@ internal static class DeskApplication
         builder.Services.AddSingleton(paths);
         builder.Services.AddSingleton(new LocalOnly(builder.Configuration.GetSection("Desk:Origins").Get<string[]>() ?? []));
         builder.Services.AddSingleton<Avioniq>();
-        builder.Services.AddSingleton<QuestionBoard>();
+        builder.Services.AddSingleton<ChangeLog>();
         builder.Services.AddSingleton<RelationshipReview>();
         builder.Services.AddSingleton<ThingReview>();
+        builder.Services.AddSingleton<PictureChoices>();
+        builder.Services.AddSingleton<SiteSwitches>();
         builder.Services.AddScoped<PortraitBoard>();
+        builder.Services.AddScoped<PortraitEditor>();
         builder.Services.AddSingleton(new OperationAllowance(
             builder.Configuration.GetSection("Desk:Operations").Get<string[]>() ?? []));
         builder.Services.AddSingleton<Operations>();
@@ -65,7 +68,8 @@ internal static class DeskApplication
 
         var desk = app.MapGroup(Prefix);
         desk.MapSummary();
-        desk.MapQuestions();
+        desk.MapHistory();
+        desk.MapSettings();
         desk.MapRelationshipReview();
         desk.MapThingReview();
         desk.MapPortraits();

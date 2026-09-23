@@ -242,6 +242,10 @@ public sealed class EntityImageTests : IDisposable
         leading.Keys.Should().BeEquivalentTo(["moses", "tel-own"]);
         leading["moses"].Kind.Should().Be("generated");
 
+        (await ImageEndpoints.Of(_db, moses.Id, default, generated: false)).Should().ContainSingle()
+            .Which.Kind.Should().Be("public", "the owner can take our own pictures off the site");
+        (await ImageEndpoints.Leading(_db, ["moses"], default, generated: false))["moses"].Kind.Should().Be("public");
+
         var wire = new JsonSerializerOptions(JsonSerializerDefaults.Web) { TypeInfoResolver = AppJsonSerializerContext.Default };
         var json = JsonSerializer.Serialize(pictures[0], wire);
         json.Should().Contain("\"url\":").And.Contain("\"focusY\":0.2").And.NotContain("Essenthos");
@@ -327,6 +331,59 @@ public sealed class EntityImageTests : IDisposable
             .ToListAsync();
         kept.Should().HaveCount(2).And.OnlyContain(i => i.File == "generated/glory.jpg" && i.Kind == "generated");
         kept.Select(i => i.EntityId).Should().BeEquivalentTo([god.Id, father.Id]);
+    }
+
+    /// <summary>
+    /// The owner's word and his choices, as his console writes them: one of our own waiting for his
+    /// word or refused by it stays off the site, a picture he hid is left out, and the one he chose
+    /// leads with his caption under it.
+    /// </summary>
+    [Fact]
+    public async Task ThePicturesFollowTheOwnersWordAndHisChoices()
+    {
+        var own = Entity(EntityKind.Place, "tel-own", openBibleId: "a-own");
+        var satellite = Entity(EntityKind.Place, "tel-satellite", openBibleId: "a-satellite");
+        var moses = Entity(EntityKind.Person, "moses");
+        await _db.SaveChangesAsync();
+
+        var images = Path.Combine(_resources, EntityImageLoader.Folder);
+        WriteJpeg(Path.Combine(images, "generated", "moses-new.jpg"));
+        WriteJpeg(Path.Combine(images, "generated", "moses-refused.jpg"));
+        File.WriteAllText(Path.Combine(images, "generated", "manifest.json"),
+            """
+            {
+              "source": "Essenthos, generated", "credit": "Essenthos", "licence": "Our own work",
+              "images": [
+                { "entity": "moses", "file": "generated/moses.jpg", "review": "approved" },
+                { "entity": "moses", "file": "generated/moses-older.jpg" },
+                { "entity": "moses", "file": "generated/moses-new.jpg", "review": "pending" },
+                { "entity": "moses", "file": "generated/moses-refused.jpg", "review": "rejected" }
+              ]
+            }
+            """);
+        Directory.CreateDirectory(Path.Combine(_resources, ImageChoices.Folder));
+        File.WriteAllText(Path.Combine(_resources, ImageChoices.Folder, ImageChoices.FileName),
+            """
+            {
+              "about": "The owner's choices.",
+              "images": [
+                { "entity": "tel-satellite", "file": "openbible/a-satellite.satellite.jpg", "hidden": true },
+                { "entity": "moses", "file": "generated/moses-older.jpg", "primary": true, "caption": "Мойсей на Синаї" },
+                { "entity": "tel-own", "file": "openbible/a-own.i1.jpg", "caption": "  " },
+                { "entity": "nobody-at-all", "file": "openbible/x.jpg", "hidden": true }
+              ]
+            }
+            """);
+
+        var outcome = await Loader().Load(_resources);
+
+        (outcome.Withheld, outcome.Hidden).Should().Be((2, 1));
+        (await _db.EntityImages.AnyAsync(i => i.EntityId == satellite.Id)).Should().BeFalse();
+        var portraits = await _db.EntityImages.Where(i => i.EntityId == moses.Id).OrderBy(i => i.Role).ToListAsync();
+        portraits.Select(i => (i.File, i.Role, i.Caption)).Should().Equal(
+            ("generated/moses.jpg", "gallery", null), ("generated/moses-older.jpg", "primary", "Мойсей на Синаї"));
+        (await _db.EntityImages.SingleAsync(i => i.EntityId == own.Id)).Caption.Should().Be("Tel Own from the south",
+            "a blank caption is no caption of the owner's");
     }
 
     [Fact]

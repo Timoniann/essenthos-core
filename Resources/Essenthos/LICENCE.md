@@ -120,3 +120,26 @@ the record's rules.
   them, and Strong's Dictionary (public domain) for the headwords. Easton's Bible Dictionary was used
   only to find the entries; none of its prose, and nothing of Theographic's matching, is reproduced.
 - **Terms.** Ours, under the project's own licence.
+
+## owner-changes.jsonl
+
+Every change the project owner makes in his local console (`Essenthos.Desk`), one JSON object a line,
+appended and never rewritten: `{"at", "section", "action", "target", "before", "after", "note",
+"needs"}`. `target` names what was changed the way the corpus is addressed from outside it — a slug, a
+verse, a file under `Resources/Images` — never a row id. `needs` says what has to run before the site
+shows the change: `images` (the Forge `images` verb), `load` (the next corpus load), `relationships`
+(`scripts/relationships.py decide`), `agent` (a change somebody has to make by hand), or null where it
+took effect when saved. A run the console starts is recorded as section `apply`, with the step as its
+action and `succeeded` or `failed` after it; an agent that applies a step outside the console appends
+a line of the same shape, so the console stops showing the change as waiting.
+
+- **Made by** the project owner. **Terms.** Ours.
+
+## image-choices.json
+
+The owner's choices about the pictures on person and place pages: `{ "entity": slug, "file": path under
+Resources/Images, "hidden"?, "primary"?, "caption"? }`. The image loader applies them over every list
+of pictures on its next run: a hidden picture is left out, the chosen one leads among the pictures of
+its kind, and the owner's caption replaces the source's.
+
+- **Made by** the project owner, in his console. **Terms.** Ours.

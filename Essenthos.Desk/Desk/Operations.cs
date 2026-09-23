@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Essenthos.Core.Desk;
 
@@ -20,28 +21,16 @@ internal sealed class OperationAllowance(IReadOnlyCollection<string> configured)
     public IEnumerable<string> Names => configured.Where(Allows);
 }
 
-/// <param name="Kind"><c>service</c>, which runs until stopped, or <c>action</c>, which runs and finishes.</param>
-/// <param name="Runnable">Whether the console may run it.</param>
-/// <param name="Registered">Whether avioniq knows it; an allowed operation nobody has registered yet is listed as missing.</param>
-internal sealed record ServiceEntry(
-    string Name,
-    string Kind,
-    string? Project,
-    string? Description,
-    string? State,
-    string? Command,
-    bool Runnable,
-    bool Registered);
+/// <param name="Name">The avioniq action.</param>
+/// <param name="Step">What it applies, as the change log names it: <c>images</c>, <c>load</c>, <c>backup</c>.</param>
+/// <param name="Registered">Whether avioniq knows it; an allowed action nobody has registered yet cannot be run.</param>
+internal sealed record StepEntry(string Name, string Step, bool Registered);
 
 /// <param name="State"><c>running</c>, <c>succeeded</c> or <c>failed</c>.</param>
-internal sealed record OperationRun(string Id, string Name, string State, int? ExitCode, string Started, string? Finished);
+internal sealed record OperationRun(string Id, string Name, string Step, string State, int? ExitCode, string Started, string? Finished);
 
-internal sealed record OperationsResponse(
-    bool Available,
-    string? Problem,
-    IReadOnlyList<ServiceEntry> Operations,
-    IReadOnlyList<ServiceEntry> Services,
-    IReadOnlyList<OperationRun> Runs);
+/// <param name="Problem">Why avioniq could not be asked what it runs, in a sentence; null when it was.</param>
+internal sealed record OperationsResponse(string? Problem, IReadOnlyList<StepEntry> Steps, IReadOnlyList<OperationRun> Runs);
 
 /// <param name="Next">The line to ask from next time.</param>
 internal sealed record RunLog(OperationRun Run, IReadOnlyList<string> Lines, int Next);
@@ -50,12 +39,22 @@ internal sealed record RunLog(OperationRun Run, IReadOnlyList<string> Lines, int
 internal sealed record RunStarted(OperationRun? Run, string? Problem);
 
 /// <summary>
-/// The runs that apply what the owner decided — the pictures drawn again, the corpus loaded — as
-/// avioniq actions, so they are the same runs avioniq lists and nothing runs that avioniq cannot
-/// see. One at a time: two loads against one database are a worse idea than a short wait.
+/// The runs that apply what the owner changed — the pictures drawn again, a backup of what was
+/// generated — as avioniq actions, so they are the same runs avioniq lists and nothing runs that
+/// avioniq cannot see. Offered only beside the change that needs one, one at a time, and each
+/// recorded in the change log when it ends.
 /// </summary>
-internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, ILogger<Operations> logger)
+internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, ChangeLog log, ILogger<Operations> logger)
 {
+    /// <summary>What each action applies, as the change log's <c>needs</c> names it.</summary>
+    private static readonly Dictionary<string, string> Steps = new(StringComparer.Ordinal)
+    {
+        ["core-images"] = "images",
+        ["core-load"] = "load",
+    };
+
+    public static string StepOf(string name) => Steps.TryGetValue(name, out var step) ? step : name;
+
     /// <summary>How many lines of one run are kept, which is more than any load prints.</summary>
     private const int MostLines = 50_000;
 
@@ -73,20 +72,13 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
     public async Task<OperationsResponse> Read(CancellationToken cancellationToken)
     {
         var listed = await avioniq.Run(["--json", "services", "list"], cancellationToken);
-        if (!listed.Succeeded)
-        {
-            return new OperationsResponse(false, Said(listed), [], [], Runs());
-        }
-
-        var board = JsonSerializer.Deserialize<Board>(listed.Output, Web) ?? new Board(null, null);
-        var actions = (board.Actions ?? []).ToDictionary(a => a.Name, StringComparer.Ordinal);
-        var operations = allowance.Names
-            .Select(name => actions.TryGetValue(name, out var action)
-                ? Entry(action, "action", runnable: true, registered: true)
-                : new ServiceEntry(name, "action", null, null, null, null, false, false))
-            .ToList();
-        var services = (board.Services ?? []).Select(s => Entry(s, "service", runnable: false, registered: true)).ToList();
-        return new OperationsResponse(true, null, operations, services, Runs());
+        var actions = listed.Succeeded
+            ? (JsonSerializer.Deserialize<Board>(listed.Output, Web)?.Actions ?? []).Select(a => a.Name).ToHashSet(StringComparer.Ordinal)
+            : [];
+        return new OperationsResponse(
+            listed.Succeeded ? null : Said(listed),
+            allowance.Names.Select(name => new StepEntry(name, StepOf(name), actions.Contains(name))).ToList(),
+            Runs());
     }
 
     public async Task<RunStarted> Start(string name, CancellationToken cancellationToken)
@@ -114,7 +106,7 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
                 return new RunStarted(null, "Another run has not finished. Wait for it, then start this one.");
             }
 
-            run = new Running((++_counter).ToString(System.Globalization.CultureInfo.InvariantCulture), name, DateTime.UtcNow);
+            run = new Running((++_counter).ToString(System.Globalization.CultureInfo.InvariantCulture), name, StepOf(name), DateTime.UtcNow);
             _runs.Insert(0, run);
             if (_runs.Count > MostRuns)
             {
@@ -131,6 +123,7 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
             process.WaitForExit();
             run.Finish(process.ExitCode);
             process.Dispose();
+            Record(run);
         };
 
         try
@@ -143,6 +136,7 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
             run.Add($"avioniq could not be started: {exception.Message}");
             run.Finish(-1);
             process.Dispose();
+            Record(run);
             return new RunStarted(run.Snapshot(), null);
         }
 
@@ -172,19 +166,26 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
         }
     }
 
-    private static ServiceEntry Entry(Listed listed, string kind, bool runnable, bool registered) =>
-        new(listed.Name, listed.Kind ?? kind, listed.Project, listed.Description, listed.State, listed.Command, runnable, registered);
+    /// <summary>A finished run, in the change log, so what waited on its step is known to have had it.</summary>
+    private void Record(Running run)
+    {
+        var finished = run.Snapshot();
+        _ = log.Append(ChangeLog.Apply, finished.Step, $"step/{finished.Step}", null, JsonValue.Create(finished.State), null, null)
+            .ContinueWith(
+                task => logger.LogError(task.Exception, "The end of run {Id} could not be written to the change log", finished.Id),
+                TaskContinuationOptions.OnlyOnFaulted);
+    }
 
     private static string Said(AvioniqResult result) =>
         (result.Error.Trim().Length > 0 ? result.Error : result.Output).Trim() is { Length: > 0 } text
             ? text
             : $"avioniq stopped with status {result.ExitCode} and said nothing.";
 
-    private sealed record Board(List<Listed>? Services, List<Listed>? Actions);
+    private sealed record Board(List<Listed>? Actions);
 
-    private sealed record Listed(string Name, string? Kind, string? Project, string? Description, string? State, string? Command);
+    private sealed record Listed(string Name);
 
-    private sealed class Running(string id, string name, DateTime started)
+    private sealed class Running(string id, string name, string step, DateTime started)
     {
         private readonly List<string> _lines = [];
 
@@ -234,7 +235,7 @@ internal sealed class Operations(Avioniq avioniq, OperationAllowance allowance, 
         {
             lock (_lines)
             {
-                return new OperationRun(id, name, _exitCode is null ? "running" : _exitCode == 0 ? "succeeded" : "failed",
+                return new OperationRun(id, name, step, _exitCode is null ? "running" : _exitCode == 0 ? "succeeded" : "failed",
                     _exitCode, started.ToString("O"), _finished?.ToString("O"));
             }
         }
