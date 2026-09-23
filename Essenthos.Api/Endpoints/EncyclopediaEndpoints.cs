@@ -1,3 +1,4 @@
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 ﻿using System.Linq.Expressions;
 using System.Text.RegularExpressions;
@@ -480,6 +481,7 @@ internal static class EncyclopediaEndpoints
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
+            SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
         {
             if (sort is { Length: > 0 } && !Sorts.Contains(sort))
@@ -539,7 +541,8 @@ internal static class EncyclopediaEndpoints
 
             var described = await Descriptors.Of(
                 db, page.Select(e => e.Slug), language, cancellationToken);
-            var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken);
+            var pictured = await ImageEndpoints.Leading(
+                db, slugs, cancellationToken, settings.Is(SiteSettings.GeneratedImages));
 
             return Results.Ok(new EntityListResponse(
                 total,
@@ -585,9 +588,11 @@ internal static class EncyclopediaEndpoints
             [FromQuery] string? slugs,
             [FromQuery] string? language,
             AppDbContext db,
+            SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
             FamilyEndpoints.Requested(slugs) is { } named
-                ? Results.Ok(await FamilyEndpoints.Family(db, named, language, cancellationToken))
+                ? Results.Ok(await FamilyEndpoints.Family(
+                    db, named, language, cancellationToken, settings.Is(SiteSettings.GeneratedImages)))
                 : Results.BadRequest(new ProblemResponse(
                     $"Name between 1 and {FamilyEndpoints.MostPeople} people, as slugs=moses,aaron.")));
 
@@ -595,6 +600,7 @@ internal static class EncyclopediaEndpoints
             string slug,
             [FromQuery] string? language,
             AppDbContext db,
+            SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
         {
             var entity = await db.Entities
@@ -770,7 +776,8 @@ internal static class EncyclopediaEndpoints
                 LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
                     .GetValueOrDefault(entity.Id),
                 Renderings = await Renderings(db, entity.Id, cancellationToken),
-                Images = await ImageEndpoints.Of(db, entity.Id, cancellationToken),
+                Images = await ImageEndpoints.Of(
+                    db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages)),
                 Bearers =
                 [
                     .. bearers.Select(b => new EntityTitleResponse(

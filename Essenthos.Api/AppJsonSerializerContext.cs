@@ -41,6 +41,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(IList<SyntaxWordResponse>))]
 [JsonSerializable(typeof(List<SyntaxGroupResponse>))]
 [JsonSerializable(typeof(Dictionary<string, string>))]
+[JsonSerializable(typeof(Dictionary<string, bool>))]
 [JsonSerializable(typeof(StrongEntryResponse))]
 [JsonSerializable(typeof(StrongGentilicResponse))]
 [JsonSerializable(typeof(StrongListResponse))]

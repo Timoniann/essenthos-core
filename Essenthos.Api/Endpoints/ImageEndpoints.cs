@@ -83,10 +83,12 @@ internal static class ImageEndpoints
     /// photograph, and nothing about how it was drawn. Somebody else's work always carries its credit.
     /// </para>
     /// </summary>
-    public static async Task<List<EntityImageResponse>> Of(AppDbContext db, int entityId, CancellationToken cancellationToken)
+    /// <param name="generated">Whether our own generated pictures are shown, which the owner switches for the site.</param>
+    public static async Task<List<EntityImageResponse>> Of(
+        AppDbContext db, int entityId, CancellationToken cancellationToken, bool generated = true)
     {
         var images = await db.EntityImages
-            .Where(i => i.EntityId == entityId)
+            .Where(i => i.EntityId == entityId && (generated || i.Kind != Generated))
             .OrderBy(i => i.Role == Primary ? 0 : 1)
             .ThenBy(i => i.Kind == Generated ? 0 : 1)
             .ThenBy(i => i.Ordinal)
@@ -114,10 +116,10 @@ internal static class ImageEndpoints
     /// Only the entities that have one are in it.
     /// </summary>
     public static async Task<Dictionary<string, EntityThumbnailResponse>> Leading(
-        AppDbContext db, IReadOnlyCollection<string> slugs, CancellationToken cancellationToken)
+        AppDbContext db, IReadOnlyCollection<string> slugs, CancellationToken cancellationToken, bool generated = true)
     {
         var primaries = await db.EntityImages
-            .Where(i => i.Role == Primary && slugs.Contains(i.Entity!.Slug))
+            .Where(i => i.Role == Primary && slugs.Contains(i.Entity!.Slug) && (generated || i.Kind != Generated))
             .Select(i => new { i.Entity!.Slug, i.File, i.Digest, i.Kind, i.FocusX, i.FocusY })
             .ToListAsync(cancellationToken);
 

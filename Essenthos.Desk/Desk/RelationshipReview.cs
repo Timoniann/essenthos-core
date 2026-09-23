@@ -23,8 +23,9 @@ internal sealed record RelationshipDecisionResponse(IReadOnlyDictionary<string, 
 /// file until somebody runs that command, as they always did.
 /// </para>
 /// </summary>
-internal sealed class RelationshipReview(DeskPaths paths)
+internal sealed class RelationshipReview(DeskPaths paths, ChangeLog log)
 {
+    public const string Section = "relationships";
     public const string FileName = "bibledata-relationships.json";
 
     public static readonly IReadOnlySet<string> Decisions =
@@ -66,8 +67,11 @@ internal sealed class RelationshipReview(DeskPaths paths)
 
     public static string Key(JsonNode fact) => (fact["id"]?.GetValue<string>() ?? string.Empty).Replace('|', '-');
 
-    public Task<RelationshipDecisionResponse?> Decide(string key, RelationshipDecisionRequest request) =>
-        JsonFiles.Change(File, node =>
+    public async Task<RelationshipDecisionResponse?> Decide(string key, RelationshipDecisionRequest request)
+    {
+        JsonNode? before = null, after = null;
+        string target = string.Empty, label = string.Empty;
+        var decided = await JsonFiles.Change(File, node =>
         {
             var fact = Fact(node, key);
             if (fact is null || !Valid(request.Decision, request.Note))
@@ -76,6 +80,9 @@ internal sealed class RelationshipReview(DeskPaths paths)
             }
 
             var decisions = DecisionsOf(node);
+            before = Logged(decisions[key]);
+            target = Target(fact);
+            label = Label(fact);
             var note = request.Note?.Trim() ?? string.Empty;
             if (request.Decision is null && note.Length == 0)
             {
@@ -86,12 +93,24 @@ internal sealed class RelationshipReview(DeskPaths paths)
                 decisions[key] = Body(fact, request.Decision, note);
             }
 
+            after = Logged(decisions[key]);
             return (true, new RelationshipDecisionResponse(new Dictionary<string, JsonNode?> { [key] = decisions[key]?.DeepClone() }));
         });
 
+        if (decided is not null)
+        {
+            await log.Append(Section, "decision", target, before, after, request.Note,
+                before?["decision"]?.ToString() == after?["decision"]?.ToString() ? null : Section, label);
+        }
+
+        return decided;
+    }
+
     /// <summary>Decides every fact named that has no decision yet, and leaves the decided ones as they are.</summary>
-    public Task<RelationshipDecisionResponse?> DecideAll(RelationshipBulkRequest request) =>
-        JsonFiles.Change(File, node =>
+    public async Task<RelationshipDecisionResponse?> DecideAll(RelationshipBulkRequest request)
+    {
+        var targets = new List<(string Target, string Label)>();
+        var decided = await JsonFiles.Change(File, node =>
         {
             if (!Decisions.Contains(request.Decision ?? string.Empty))
             {
@@ -109,10 +128,29 @@ internal sealed class RelationshipReview(DeskPaths paths)
 
                 decisions[key] = Body(fact, request.Decision, string.Empty);
                 written[key] = decisions[key]!.DeepClone();
+                targets.Add((Target(fact), Label(fact)));
             }
 
             return (written.Count > 0, new RelationshipDecisionResponse(written));
         });
+
+        foreach (var (target, label) in targets)
+        {
+            await log.Append(Section, "decision", target, null, new JsonObject { ["decision"] = request.Decision },
+                "decided together with the other undecided facts shown", Section, label);
+        }
+
+        return decided;
+    }
+
+    /// <summary>A fact as the change log names it: who, how and whom, by the slugs that survive a rebuild.</summary>
+    private static string Target(JsonNode fact) =>
+        $"{fact["a"]?["slug"]} {(fact["relation"] ?? fact["says"]?[0]?["type"])} {fact["b"]?["slug"]} ({fact["id"]})";
+
+    private static string Label(JsonNode fact) => $"{fact["a"]?["name"]} — {fact["b"]?["name"]}";
+
+    private static JsonObject? Logged(JsonNode? decision) =>
+        decision is null ? null : new JsonObject { ["decision"] = decision["decision"]?.DeepClone(), ["note"] = decision["note"]?.DeepClone() };
 
     private static bool Valid(string? decision, string? note) =>
         (decision is null || Decisions.Contains(decision)) && (note?.Length ?? 0) <= LongestNote;

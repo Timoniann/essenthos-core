@@ -7,7 +7,7 @@ namespace Essenthos.Core.Desk;
 /// nothing off this machine reaches it; a request whose Host is not the loopback at this port is
 /// refused, so a web page cannot reach it through a name rebound to 127.0.0.1; and a request
 /// carrying an Origin other than the console's own is refused, so a page open in another tab
-/// cannot answer a question or start a run in the owner's name.
+/// cannot change a decision or start a run in the owner's name.
 /// </summary>
 internal sealed class LocalOnly(IReadOnlyCollection<string> origins)
 {
@@ -16,7 +16,7 @@ internal sealed class LocalOnly(IReadOnlyCollection<string> origins)
     private const string CrossSite = "cross-site";
 
     /// <summary>
-    /// Refuses to start on any address but the loopback. A console that answers questions and starts
+    /// Refuses to start on any address but the loopback. A console that writes decisions and starts
     /// loads in the owner's name must never be reachable from the network, whatever somebody typed.
     /// </summary>
     public static void RequireLoopback(IConfiguration configuration)

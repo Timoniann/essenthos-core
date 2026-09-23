@@ -11,9 +11,9 @@ internal sealed record AvioniqResult(int ExitCode, string Output, string Error)
 }
 
 /// <summary>
-/// The avioniq command line, run from the control folder. The board is avioniq's; the console only
-/// asks it what is waiting and hands it the owner's answers, the same way a person at a terminal
-/// would, so nothing here reads or writes the store's files.
+/// The avioniq command line, run from the control folder. The console asks it which actions it has
+/// and runs the ones that apply the owner's changes, the same way a person at a terminal would, so
+/// every run is one avioniq lists and nothing here reads or writes the store's files.
 /// </summary>
 internal sealed class Avioniq(DeskPaths paths, IConfiguration configuration, ILogger<Avioniq> logger)
 {

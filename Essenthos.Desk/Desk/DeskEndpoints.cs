@@ -7,7 +7,8 @@ namespace Essenthos.Core.Desk;
 /// <param name="Problem">Why it could not be counted, in a sentence.</param>
 internal sealed record SummaryCount(string Key, int? Count, string? Problem);
 
-internal sealed record SummaryResponse(IReadOnlyList<SummaryCount> Counts);
+/// <param name="Waiting">How many changes wait on each step that applies them, from the change log.</param>
+internal sealed record SummaryResponse(IReadOnlyList<SummaryCount> Counts, IReadOnlyDictionary<string, int> Waiting);
 
 internal sealed record ProblemResponse(string Problem);
 
@@ -20,55 +21,62 @@ internal static class DeskEndpoints
     /// How much is waiting on the owner in each section. Each count stands alone, so one that cannot
     /// be read — avioniq missing, the corpus not loaded — says so without hiding the others.
     /// </summary>
+    /// <summary>
+    /// How much is waiting on the owner in each section, and how many of his changes wait on a step
+    /// that applies them. Each count stands alone, so one that cannot be read — the corpus not
+    /// loaded, a list missing — says so without hiding the others.
+    /// </summary>
     public static void MapSummary(this RouteGroupBuilder routes) =>
         routes.MapGet("/summary", async (
-            QuestionBoard board,
             RelationshipReview relationships,
             ThingReview things,
             PortraitBoard portraits,
+            ChangeLog log,
             CancellationToken cancellationToken) =>
         {
-            var counts = new List<SummaryCount>();
-            var questions = await board.Read(cancellationToken);
-            counts.Add(questions.Available
-                ? new SummaryCount("questions", questions.Questions.Count, null)
-                : new SummaryCount("questions", null, questions.Problem));
-            counts.Add(questions.Available
-                ? new SummaryCount("sign-offs", questions.SignOffs.Count, null)
-                : new SummaryCount("sign-offs", null, questions.Problem));
-
-            counts.Add(Count("relationships", () => relationships.Exists ? relationships.Undecided() : null,
-                "The relationship list is not in the review folder."));
-            counts.Add(Count("occurrences", () => things.Exists ? things.Unanswered() : null,
-                "The list of objects and appointed times is not in the review folder."));
-            counts.Add(Count("records", () => things.Unreviewed(), null));
+            var counts = new List<SummaryCount>
+            {
+                Count("relationships", () => relationships.Exists ? relationships.Undecided() : null,
+                    "The relationship list is not in the review folder."),
+                Count("occurrences", () => things.Exists ? things.Unanswered() : null,
+                    "There is no list of open questions in the review folder."),
+                Count("records", () => things.Unreviewed(), null),
+            };
 
             try
             {
                 var people = (await portraits.List(cancellationToken)).People;
-                var first = people.Where(p => p.Tier == 1 && !p.NeverPictured).ToList();
-                counts.Add(new SummaryCount("portraits", first.Count(p => !p.GeneratedListed), null));
-                counts.Add(new SummaryCount("briefs", first.Count(p => !p.Brief), null));
+                counts.Add(new SummaryCount("portraits",
+                    people.Count(p => p.Tier == 1 && !p.NeverPictured && PortraitsWaiting.Contains(p.Status)), null));
             }
             catch (Exception exception) when (exception is Npgsql.NpgsqlException or InvalidOperationException)
             {
-                const string problem = "The corpus could not be read. Start core-db, and load the corpus if it is empty.";
-                counts.Add(new SummaryCount("portraits", null, problem));
-                counts.Add(new SummaryCount("briefs", null, problem));
+                counts.Add(new SummaryCount("portraits", null,
+                    "The corpus could not be read. Start core-db, and load the corpus if it is empty."));
             }
 
-            return new SummaryResponse(counts);
+            var changes = log.Read();
+            counts.Add(new SummaryCount("history", changes.Waiting.Values.Sum(), null));
+            return new SummaryResponse(counts, changes.Waiting);
         });
 
-    public static void MapQuestions(this RouteGroupBuilder routes)
+    /// <summary>The statuses a first-tier portrait still waits in; the others are the owner's settled word.</summary>
+    private static readonly IReadOnlySet<string> PortraitsWaiting = new HashSet<string>(StringComparer.Ordinal)
     {
-        routes.MapGet("/questions", (QuestionBoard board, CancellationToken cancellationToken) => board.Read(cancellationToken));
+        PortraitBoard.NotStarted, PortraitBoard.Ready, PortraitBoard.ToGenerate, PortraitBoard.Generated,
+    };
 
-        routes.MapPost("/questions/answer", async (AnswerRequest request, QuestionBoard board, CancellationToken cancellationToken) =>
-        {
-            var answered = await board.Answer(request, cancellationToken);
-            return answered.Answered ? Results.Ok(answered) : Results.UnprocessableEntity(answered);
-        });
+    public static void MapHistory(this RouteGroupBuilder routes) =>
+        routes.MapGet("/history", (ChangeLog log) => log.Read());
+
+    public static void MapSettings(this RouteGroupBuilder routes)
+    {
+        routes.MapGet("/settings", (SiteSwitches switches) => switches.Read());
+
+        routes.MapPut("/settings/{key}", async (string key, SiteSwitchRequest request, SiteSwitches switches) =>
+            await switches.Set(key, request) is { } set
+                ? Results.Ok(set)
+                : NotThere("There is no such switch for the site."));
     }
 
     public static void MapRelationshipReview(this RouteGroupBuilder routes)
@@ -120,6 +128,47 @@ internal static class DeskEndpoints
                 ? Results.Ok(detail)
                 : NotThere("There is no such person in the corpus."));
 
+        routes.MapPut("/portraits/{slug}/brief/{field}", async (
+                string slug, string field, BriefFieldRequest request, PortraitEditor editor, CancellationToken cancellationToken) =>
+            Changed(await editor.SetField(slug, field, request, cancellationToken)));
+
+        routes.MapPut("/portraits/{slug}/status", async (
+                string slug, PortraitStatusRequest request, PortraitEditor editor, CancellationToken cancellationToken) =>
+            Changed(await editor.SetStatus(slug, request, cancellationToken)));
+
+        routes.MapPut("/portraits/{slug}/review", async (
+                string slug, PortraitReviewRequest request, PortraitEditor editor, CancellationToken cancellationToken) =>
+            Changed(await editor.SetReview(slug, request, cancellationToken)));
+
+        // The picture as the request's body, so nothing but its bytes crosses: no form, no field names.
+        routes.MapPost("/portraits/{slug}/upload", async (
+                string slug, string? name, bool? glory, string? note, HttpRequest request, PortraitEditor editor,
+                CancellationToken cancellationToken) =>
+            request.ContentLength > PortraitEditor.LargestUpload
+                ? Results.UnprocessableEntity(new ProblemResponse("The picture is larger than 30 MB."))
+                : Changed(await editor.Upload(slug, name, glory == true, note, request.Body, cancellationToken)));
+
+        routes.MapGet("/pictures", (PortraitBoard board, CancellationToken cancellationToken) => board.Pictured(cancellationToken));
+
+        routes.MapGet("/pictures/{slug}", async (string slug, PortraitBoard board, CancellationToken cancellationToken) =>
+            await board.Pictures(slug, cancellationToken) is { } set
+                ? Results.Ok(set)
+                : NotThere("There is no such person or place in the corpus."));
+
+        routes.MapPut("/pictures/{slug}/choice", async (
+            string slug, PictureChoiceRequest request, PictureChoices choices, PortraitBoard board,
+            CancellationToken cancellationToken) =>
+        {
+            if (await board.Pictures(slug, cancellationToken) is not { } before)
+            {
+                return NotThere("There is no such person or place in the corpus.");
+            }
+
+            return await choices.Choose(slug, request, before.Entity.LocalName ?? before.Entity.Name) is null
+                ? Results.UnprocessableEntity(new ProblemResponse("That picture is not under the images folder, or the caption is too long."))
+                : Results.Ok(await board.Pictures(slug, cancellationToken));
+        });
+
         // The pictures themselves, from the corpus's images folder and nowhere above it.
         routes.MapGet("/images/{**file}", (string file, DeskPaths paths) =>
             DeskPaths.Under(paths.Images, file) is { } path && File.Exists(path)
@@ -127,6 +176,9 @@ internal static class DeskEndpoints
                 ? Results.File(path, type)
                 : NotThere("There is no such picture in the images folder."));
     }
+
+    private static IResult Changed(PortraitChange change) =>
+        change.Detail is { } detail ? Results.Ok(detail) : Results.UnprocessableEntity(new ProblemResponse(change.Problem!));
 
     public static void MapOperations(this RouteGroupBuilder routes)
     {

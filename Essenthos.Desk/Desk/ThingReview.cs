@@ -15,7 +15,8 @@ internal sealed record ThingRecordName(string Slug, string Name, string? LocalNa
 
 internal sealed record ThingOption(string Text, ThingRecordName? Record, string Effect);
 
-/// <param name="Key">A short digest of the entry's record, number and verses, which is stable while the entry is.</param>
+/// <param name="Key">The entry's own key where it has one, else a short digest of its record, number and verses, which is stable while the entry is.</param>
+/// <param name="List">Which review list it is on, as the list's file is named without its extension.</param>
 /// <param name="Record">The record the entry is about, or null where the entry proposes one nobody has written yet.</param>
 /// <param name="Addresses">
 /// Each reference as the reading API addresses it, for showing its text, in step with
@@ -24,6 +25,7 @@ internal sealed record ThingOption(string Text, ThingRecordName? Record, string 
 /// <param name="Decision">What the owner answered and what that did, or null while it is open.</param>
 internal sealed record ThingQuestion(
     string Key,
+    string List,
     string RecordSlug,
     ThingRecordName? Record,
     string Strong,
@@ -33,7 +35,11 @@ internal sealed record ThingQuestion(
     IReadOnlyList<ThingOption> Options,
     JsonNode? Decision);
 
-internal sealed record ThingQuestionsResponse(string? About, IReadOnlyList<ThingQuestion> Entries);
+/// <param name="List">The file's name without its extension.</param>
+/// <param name="About">What the list says it is.</param>
+internal sealed record ThingList(string List, string? About, int Entries, int Open);
+
+internal sealed record ThingQuestionsResponse(IReadOnlyList<ThingList> Lists, IReadOnlyList<ThingQuestion> Entries);
 
 /// <param name="File"><c>objects</c> or <c>observances</c>: which of the two record files holds it.</param>
 /// <param name="Scope">How far the owner has reviewed it: <c>all</c>, <c>record</c>, or null.</param>
@@ -68,9 +74,19 @@ internal sealed record ThingRecordsResponse(IReadOnlyList<ThingRecordEntry> Reco
 /// The record files are embedded in the loader, so a change reaches the corpus on the next build and
 /// load of Essenthos.Forge, and not before.
 /// </para>
+///
+/// <para>
+/// Every list in the review folder of the same shape — <c>{ "about", "entries": [{ "question",
+/// "options", ... }] }</c> — is answered here: the verses under a people's ancestor, which the load
+/// reads back, and any list written since, whose answers wait for an agent to act on.
+/// </para>
 /// </summary>
-internal sealed class ThingReview(DeskPaths paths)
+internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
 {
+    public const string OccurrencesSection = "occurrences";
+
+    public const string RecordsSection = "records";
+
     public const string QuestionsFile = "objects-and-observances.json";
 
     /// <summary>
@@ -96,6 +112,9 @@ internal sealed class ThingReview(DeskPaths paths)
     /// <summary>What an answer did: nothing yet, because it asks for a record somebody has to write.</summary>
     public const string ByHand = "by-hand";
 
+    /// <summary>What an answer did: it is kept in its list, which the next load reads and applies.</summary>
+    public const string OnLoad = "load";
+
     private const string AnswerStampSuffix = ", on the review list";
 
     /// <summary>The longest note taken, which is a paragraph.</summary>
@@ -107,28 +126,78 @@ internal sealed class ThingReview(DeskPaths paths)
     /// <summary>The stamp an answer writes on the rule it adds, which says where the ruling was made.</summary>
     public static string AnswerStamp(string date) => $"the project owner, {date}{AnswerStampSuffix}";
 
-    private static readonly string[] LeftAlone = ["none", "leave as it is", "stay a place"];
+    /// <summary>How an option that leaves things as they are begins, in the lists written so far.</summary>
+    private static readonly string[] LeftAlone = ["none", "leave", "keep ", "stay a place", "show them as printed"];
 
     private readonly SemaphoreSlim _gate = new(1, 1);
 
-    private string Questions => Path.Combine(paths.Review, QuestionsFile);
-
-    /// <summary>Every list of open occurrences on this disk, the objects' first.</summary>
+    /// <summary>Every list of questions in the review folder: the objects' first, the ancestors' next, then the rest by name.</summary>
     private IEnumerable<string> QuestionLists =>
-        new[] { QuestionsFile, AncestorsFile }.Select(file => Path.Combine(paths.Review, file)).Where(File.Exists);
+        (Directory.Exists(paths.Review) ? Directory.EnumerateFiles(paths.Review, "*.json") : [])
+        .Where(IsQuestionList)
+        .OrderBy(path => Path.GetFileName(path) switch { QuestionsFile => 0, AncestorsFile => 1, _ => 2 })
+        .ThenBy(path => path, StringComparer.Ordinal);
+
+    /// <summary>
+    /// Whether a file in the review folder is a list of questions, remembered while the file is
+    /// unchanged: the folder also holds records of past decisions, some of them large, and every page
+    /// and count asks.
+    /// </summary>
+    private bool IsQuestionList(string path)
+    {
+        var written = File.GetLastWriteTimeUtc(path);
+        lock (_shapes)
+        {
+            if (_shapes.TryGetValue(path, out var known) && known.Written == written)
+            {
+                return known.IsList;
+            }
+        }
+
+        bool isList;
+        try
+        {
+            isList = JsonFiles.Read(path) is JsonObject root
+                     && root["entries"] is JsonArray entries
+                     && entries.OfType<JsonObject>().Any()
+                     && entries.OfType<JsonObject>().All(e => e["question"] is not null && e["options"] is JsonArray);
+        }
+        catch (System.Text.Json.JsonException)
+        {
+            isList = false;
+        }
+
+        lock (_shapes)
+        {
+            _shapes[path] = (written, isList);
+        }
+
+        return isList;
+    }
+
+    private readonly Dictionary<string, (DateTime Written, bool IsList)> _shapes = new(StringComparer.OrdinalIgnoreCase);
+
+    private static string ListOf(string path) => Path.GetFileNameWithoutExtension(path);
 
     private string[] RecordFiles => [Path.Combine(paths.Records, ObjectsFile), Path.Combine(paths.Records, ObservancesFile)];
 
-    public bool Exists => File.Exists(Questions);
+    public bool Exists => QuestionLists.Any();
 
     public ThingQuestionsResponse ReadQuestions()
     {
         var records = Records(RecordFiles.Select(JsonFiles.Read).ToArray());
-        var entries = QuestionLists
-            .SelectMany(list => (JsonFiles.Read(list)["entries"]?.AsArray() ?? []).OfType<JsonObject>())
-            .Select(entry => Question(entry, records))
-            .ToList();
-        return new ThingQuestionsResponse(JsonFiles.Read(Questions)["about"]?.GetValue<string>(), entries);
+        var lists = new List<ThingList>();
+        var entries = new List<ThingQuestion>();
+        foreach (var path in QuestionLists)
+        {
+            var node = JsonFiles.Read(path);
+            var listed = (node["entries"]?.AsArray() ?? []).OfType<JsonObject>().ToList();
+            lists.Add(new ThingList(ListOf(path), node["about"]?.GetValue<string>(), listed.Count,
+                listed.Count(e => e["decision"] is null)));
+            entries.AddRange(listed.Select(entry => Question(ListOf(path), entry, records)));
+        }
+
+        return new ThingQuestionsResponse(lists, entries);
     }
 
     public int Unanswered() =>
@@ -167,6 +236,8 @@ internal sealed class ThingReview(DeskPaths paths)
         }
 
         await _gate.WaitAsync();
+        ThingQuestion answered;
+        JsonNode? before;
         try
         {
             var (list, questions, entry) = QuestionLists
@@ -180,9 +251,11 @@ internal sealed class ThingReview(DeskPaths paths)
                 return null;
             }
 
+            var name = ListOf(list!);
+            before = entry["decision"]?.DeepClone();
             var files = RecordFiles.Select(JsonFiles.Read).ToArray();
             var records = Records(files);
-            var strong = entry["strong"]!.GetValue<string>();
+            var strong = entry["strong"]?.GetValue<string>() ?? string.Empty;
             var references = References(entry);
             var changed = new bool[files.Length];
 
@@ -198,7 +271,7 @@ internal sealed class ThingReview(DeskPaths paths)
             }
             else
             {
-                var effect = request.Answer is null ? Nothing : EffectOf(request.Answer, records);
+                var effect = request.Answer is null ? Nothing : EffectOf(name, request.Answer, records);
                 if (effect == Written && records.TryGetValue(request.Answer!, out var chosen))
                 {
                     changed[chosen.File] |= Write(chosen.Record, strong, references, AnswerStamp(JsonFiles.Today()));
@@ -222,13 +295,45 @@ internal sealed class ThingReview(DeskPaths paths)
             }
 
             JsonFiles.Write(list!, questions!);
-            return Question(entry, Records(files));
+            answered = Question(name, entry, Records(files));
         }
         finally
         {
             _gate.Release();
         }
+
+        var after = answered.Decision;
+        await log.Append(OccurrencesSection, "answer", TargetOf(answered), Said(before), Said(after), request.Note,
+            NeedsOf(after?["applied"]?.GetValue<string>(), before?["applied"]?.GetValue<string>()),
+            $"{answered.Record?.LocalName ?? answered.Record?.Name ?? answered.RecordSlug} · {string.Join(", ", answered.References)}".Trim(' ', '·'));
+        return answered;
     }
+
+    private static JsonObject? Said(JsonNode? decision) =>
+        decision is null ? null : new JsonObject { ["answer"] = decision["answer"]?.DeepClone(), ["note"] = decision["note"]?.DeepClone() };
+
+    /// <summary>
+    /// What has to happen before an answer shows: the next load where it wrote a rule or the load
+    /// reads it, an agent where it asks for a change by hand, and — for an answer taken back — whatever
+    /// the answer it replaced needed.
+    /// </summary>
+    private static string? NeedsOf(string? applied, string? was) =>
+        (applied, was) switch
+        {
+            (Written or OnLoad, _) or (_, Written or OnLoad) => "load",
+            (ByHand, _) or (_, ByHand) => "agent",
+            _ => null,
+        };
+
+    /// <summary>An entry as the change log names it: its list, its record or key, its number and its verses.</summary>
+    private static string TargetOf(ThingQuestion question) =>
+        string.Join(" ", new[]
+        {
+            question.List,
+            question.RecordSlug.Length > 0 ? question.RecordSlug : question.Key,
+            question.Strong,
+            string.Join(", ", question.References),
+        }.Where(part => part.Length > 0));
 
     /// <summary>Marks a record reviewed, or takes the review back. Null where no record has the slug or the scope is not one of the three.</summary>
     public async Task<ThingRecordEntry?> Review(string slug, ThingRecordRequest request)
@@ -239,6 +344,8 @@ internal sealed class ThingReview(DeskPaths paths)
         }
 
         await _gate.WaitAsync();
+        ThingRecordEntry reviewed;
+        string? before;
         try
         {
             var files = RecordFiles.Select(JsonFiles.Read).ToArray();
@@ -248,6 +355,7 @@ internal sealed class ThingReview(DeskPaths paths)
             }
 
             var record = found.Record;
+            before = Scope(record);
             var rules = (record["occurrences"]?.AsArray() ?? []).OfType<JsonObject>().ToList();
             if (record["reviewed"]?.GetValue<string>() is { } stamp)
             {
@@ -272,7 +380,7 @@ internal sealed class ThingReview(DeskPaths paths)
             }
 
             JsonFiles.Write(RecordFiles[found.File], files[found.File]);
-            return new ThingRecordEntry(
+            reviewed = new ThingRecordEntry(
                 found.File == 0 ? "objects" : "observances",
                 Scope(record),
                 rules.Count,
@@ -283,10 +391,21 @@ internal sealed class ThingReview(DeskPaths paths)
         {
             _gate.Release();
         }
+
+        await log.Append(RecordsSection, "review",
+            $"{(reviewed.File == "objects" ? "object" : "observance")}/{slug}",
+            before is null ? null : JsonValue.Create(before), reviewed.Scope is null ? null : JsonValue.Create(reviewed.Scope),
+            null, "load", reviewed.Record["names"]?["ukr"]?.GetValue<string>() ?? reviewed.Record["name"]?.GetValue<string>());
+        return reviewed;
     }
 
     public static string KeyOf(JsonNode entry)
     {
+        if (entry["key"] is JsonValue own && own.TryGetValue<string>(out var key) && key.Length > 0)
+        {
+            return key;
+        }
+
         var text = $"{entry["record"]}|{entry["strong"]}|{string.Join(",", References(entry))}";
         return Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(text)))[..12];
     }
@@ -310,8 +429,15 @@ internal sealed class ThingReview(DeskPaths paths)
             : RecordOnly;
     }
 
-    private static string EffectOf(string answer, IReadOnlyDictionary<string, (int File, JsonObject Record)> records) =>
-        records.ContainsKey(answer) ? Written
+    /// <summary>
+    /// What answering an entry of <paramref name="list"/> with <paramref name="answer"/> does. The
+    /// objects' list writes a record's rule; the ancestors' list is read back by the load, whatever
+    /// the answer; any other list is read by whoever acts on it, so only an answer that leaves things
+    /// as they are does nothing.
+    /// </summary>
+    private static string EffectOf(string list, string answer, IReadOnlyDictionary<string, (int File, JsonObject Record)> records) =>
+        list == ListOf(AncestorsFile) ? OnLoad
+        : list == ListOf(QuestionsFile) && records.ContainsKey(answer) ? Written
         : LeftAlone.Any(alone => answer.StartsWith(alone, StringComparison.Ordinal)) ? Nothing
         : ByHand;
 
@@ -406,15 +532,17 @@ internal sealed class ThingReview(DeskPaths paths)
                 found.Record["kind"]?.GetValue<string>() ?? string.Empty)
             : null;
 
-    private static ThingQuestion Question(JsonObject entry, IReadOnlyDictionary<string, (int File, JsonObject Record)> records)
+    private static ThingQuestion Question(
+        string list, JsonObject entry, IReadOnlyDictionary<string, (int File, JsonObject Record)> records)
     {
         var slug = entry["record"]?.GetValue<string>() ?? string.Empty;
         var options = (entry["options"]?.AsArray() ?? [])
             .Select(o => o!.GetValue<string>())
-            .Select(text => new ThingOption(text, Named(text, records), EffectOf(text, records)))
+            .Select(text => new ThingOption(text, Named(text, records), EffectOf(list, text, records)))
             .ToList();
         return new ThingQuestion(
             KeyOf(entry),
+            list,
             slug,
             Named(slug, records),
             entry["strong"]?.GetValue<string>() ?? string.Empty,

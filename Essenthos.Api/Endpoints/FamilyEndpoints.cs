@@ -24,7 +24,8 @@ internal static class FamilyEndpoints
         AppDbContext db,
         IReadOnlyCollection<string> slugs,
         string? language,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool generated = true)
     {
         var people = await db.Entities
             .Where(e => slugs.Contains(e.Slug))
@@ -41,7 +42,7 @@ internal static class FamilyEndpoints
             .ToListAsync(cancellationToken);
 
         var local = await EntityNames.Of(db, ids, language, cancellationToken);
-        var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken);
+        var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken, generated);
         var order = slugs.Select((slug, index) => (slug, index)).ToDictionary(p => p.slug, p => p.index, StringComparer.Ordinal);
 
         return new EntityFamilyResponse(

@@ -27,6 +27,7 @@ UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly)
 var allowedOrigins = CorsOrigins.Read(builder.Configuration);
 var databaseConnection = DatabaseConnection.Read(builder.Configuration);
 var images = ImageEndpoints.Folder(builder.Configuration, builder.Environment.ContentRootPath);
+var siteSettings = SiteSettingsFile.Path(builder.Configuration, builder.Environment.ContentRootPath);
 
 builder.Services.AddCors(options =>
 {
@@ -54,6 +55,8 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddSingleton<TextFacts>();
+builder.Services.AddSingleton(services =>
+    new SiteSettingsFile(siteSettings, services.GetRequiredService<ILogger<SiteSettingsFile>>()));
 
 // Accounts: the database the API owns and writes, and sign-in with whichever providers are
 // configured. Reading needs none of it.
@@ -114,6 +117,7 @@ v1.MapSearch();
 v1.MapEncyclopedia();
 v1.MapContext();
 v1.MapImages(images);
+v1.MapSettings();
 v1.MapCommandments();
 v1.MapDatasets();
 v1.MapAuth(providers);

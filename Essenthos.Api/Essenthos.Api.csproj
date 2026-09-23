@@ -25,6 +25,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <!-- The owner's switches for the site, which his console writes; published beside the API so
+             a deployed site carries the switches as they stood when it was built. -->
+        <Content Update="site-settings.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="9.4.1" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.12" />
     </ItemGroup>
