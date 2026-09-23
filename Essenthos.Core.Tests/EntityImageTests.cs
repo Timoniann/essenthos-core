@@ -244,7 +244,30 @@ public sealed class EntityImageTests : IDisposable
 
         var wire = new JsonSerializerOptions(JsonSerializerDefaults.Web) { TypeInfoResolver = AppJsonSerializerContext.Default };
         var json = JsonSerializer.Serialize(pictures[0], wire);
-        json.Should().Contain("\"url\":").And.Contain("\"credit\":\"Essenthos\"").And.Contain("\"focusY\":0.2");
+        json.Should().Contain("\"url\":").And.Contain("\"focusY\":0.2").And.NotContain("Essenthos");
+    }
+
+    [Fact]
+    public async Task OurPictureReachesAReaderWithoutItsRecordOfHowItWasMadeAndSomebodyElsesKeepsItsCredit()
+    {
+        var own = Entity(EntityKind.Place, "tel-own", openBibleId: "a-own");
+        var moses = Entity(EntityKind.Person, "moses");
+        await _db.SaveChangesAsync();
+        await Loader().Load(_resources);
+
+        var stored = await _db.EntityImages.SingleAsync(i => i.EntityId == moses.Id && i.Role == "primary");
+        stored.Should().BeEquivalentTo(new { Caption = "Moses at eighty", Credit = "Essenthos", Licence = "Our own work" },
+            o => o.ExcludingMissingMembers());
+
+        var portrait = (await ImageEndpoints.Of(_db, moses.Id, default))[0];
+        portrait.Kind.Should().Be("generated");
+        new[] { portrait.Caption, portrait.Credit, portrait.CreditUrl, portrait.Licence, portrait.LicenceUrl, portrait.Source }
+            .Should().OnlyContain(field => field == null);
+        (portrait.Width, portrait.FocusY).Should().Be((512, 0.2));
+
+        var photograph = (await ImageEndpoints.Of(_db, own.Id, default)).Single();
+        (photograph.Credit, photograph.Licence).Should().Be(("Own Credit", "CC BY-SA 4.0"));
+        photograph.Source.Should().NotBeNull();
     }
 
     [Fact]

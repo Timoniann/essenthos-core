@@ -14,8 +14,9 @@ source page and licence, because no two pictures here need share them.
 
 - **Never without a credit.** A picture with nobody to credit or no licence stated is not loaded.
   A picture with nothing under it reads as ours, and most of these are somebody else's work.
-- **Ours says it is ours.** A generated portrait is marked as generated on the page, so nobody takes
-  it for a likeness anyone drew from life.
+- **Ours is shown bare.** A generated portrait goes out with no caption, credit or marker: it is
+  plainly a picture, not a photograph. What its manifest entry states — caption, credit, licence, and
+  the tool, model, date and prompt it was made with — is our own record, stored and never served.
 - **God is never given a face or a figure.** The one picture a record of God may have is ours, of the
   glory as light with nothing in it to see (Exodus 24:10; Ezekiel 1:27–28), listed in
   `generated/manifest.json` with `"glory": true`. Any other picture of YHVH, and any picture of one

@@ -8,12 +8,12 @@ namespace Essenthos.Core.Database.Entities;
 /// One picture of a person or a place, and whose it is.
 ///
 /// <para>
-/// Two kinds, and a reader is always told which. A <see cref="Kind"/> of <c>public</c> is somebody
-/// else's work under an open licence — a photograph of the site as it stands today, or an old
-/// engraving of the person — and carries its author, where it was published and its licence, because
-/// a picture with no credit under it reads as ours. <c>generated</c> is ours: the one identity
-/// portrait a person may be given so a reader recognises them at a glance, and it is marked as made
-/// here rather than passed off as a likeness anybody drew from life.
+/// Two kinds. A <see cref="Kind"/> of <c>public</c> is somebody else's work under an open licence —
+/// a photograph of the site as it stands today, or an old engraving of the person — and carries its
+/// author, where it was published and its licence, because a picture with no credit under it reads
+/// as ours. <c>generated</c> is ours: the one identity portrait a person may be given so a reader
+/// recognises them at a glance. Its caption, credit, licence and source are our own record of how it
+/// was made, kept here and never shown: a painting plainly is not a photograph, and needs no label.
 /// </para>
 ///
 /// <para>

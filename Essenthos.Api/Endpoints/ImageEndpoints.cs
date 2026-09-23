@@ -76,6 +76,12 @@ internal static class ImageEndpoints
     /// <summary>
     /// Every picture of one entity, the one a page leads with first: our own portrait before a
     /// public work, because the portrait is the one meant to be recognised at a glance.
+    ///
+    /// <para>
+    /// Our own pictures go out bare. Their caption, credit, licence and collection are our record of
+    /// how each was made and stay in the corpus; a reader is shown a picture, which plainly is not a
+    /// photograph, and nothing about how it was drawn. Somebody else's work always carries its credit.
+    /// </para>
     /// </summary>
     public static async Task<List<EntityImageResponse>> Of(AppDbContext db, int entityId, CancellationToken cancellationToken)
     {
@@ -93,9 +99,13 @@ internal static class ImageEndpoints
 
         return
         [
-            .. images.Select(i => new EntityImageResponse(
-                Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, i.Caption, i.Credit, i.CreditUrl,
-                i.Licence, i.LicenceUrl, i.Source, i.FocusX, i.FocusY)),
+            .. images.Select(i => i.Kind == Generated
+                ? new EntityImageResponse(
+                    Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, null, null, null, null, null, null,
+                    i.FocusX, i.FocusY)
+                : new EntityImageResponse(
+                    Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, i.Caption, i.Credit, i.CreditUrl,
+                    i.Licence, i.LicenceUrl, i.Source, i.FocusX, i.FocusY)),
         ];
     }
 
@@ -123,16 +133,17 @@ internal static class ImageEndpoints
 }
 
 /// <summary>
-/// One picture of a person or a place, with everything its credit line needs.
+/// One picture of a person or a place, with everything its credit line needs. Ours has no credit
+/// line, and every field of one is null on it.
 /// </summary>
 /// <param name="Url">Where it is served, relative to the API's own address.</param>
 /// <param name="Kind"><c>public</c> for an openly licensed work of somebody else's, <c>generated</c> for ours.</param>
 /// <param name="Role"><c>primary</c> for the picture a page leads with, <c>gallery</c> for the rest.</param>
 /// <param name="Caption">What it shows, fit to be its alternative text. Null where the source says nothing.</param>
-/// <param name="Credit">Who made it, as its source asks to be credited.</param>
+/// <param name="Credit">Who made it, as its source asks to be credited. Null on ours.</param>
 /// <param name="CreditUrl">The page it was published on.</param>
-/// <param name="Licence">The licence's short name, such as <c>CC BY-SA 4.0</c>.</param>
-/// <param name="Source">The collection it was taken from.</param>
+/// <param name="Licence">The licence's short name, such as <c>CC BY-SA 4.0</c>. Null on ours.</param>
+/// <param name="Source">The collection it was taken from. Null on ours.</param>
 /// <param name="FocusX">Where its subject is across its width, from 0 to 1; null for the middle.</param>
 /// <param name="FocusY">Where its subject is down its height, from 0 to 1; null for the middle.</param>
 internal sealed record EntityImageResponse(
@@ -142,11 +153,11 @@ internal sealed record EntityImageResponse(
     int Width,
     int Height,
     string? Caption,
-    string Credit,
+    string? Credit,
     string? CreditUrl,
-    string Licence,
+    string? Licence,
     string? LicenceUrl,
-    string Source,
+    string? Source,
     double? FocusX,
     double? FocusY);
 
