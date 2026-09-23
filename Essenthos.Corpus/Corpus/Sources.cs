@@ -87,4 +87,19 @@ internal static class Sources
     public const string SynodalSlug = "RUSV";
 
     public const string OhienkoSlug = "UBIO";
+
+    /// <summary>
+    /// The commandments, and what their dataset declaration claims them by: whose count, whose
+    /// English, and where both were read.
+    /// </summary>
+    public const string Maimonides =
+        MaimonidesPrefix + ", in Moses Hyamson's English of the Mishneh Torah's list (1937-1949), read from Sefaria";
+
+    public const string MaimonidesPrefix = "Maimonides' Sefer HaMitzvot";
+
+    /// <summary>The topics, and what their dataset declaration claims them by.</summary>
+    public const string Naves =
+        NavesPrefix + ", as Brady Stephenson transcribed it in BibleData, CC BY 4.0";
+
+    public const string NavesPrefix = "Nave's Topical Bible (1896)";
 }

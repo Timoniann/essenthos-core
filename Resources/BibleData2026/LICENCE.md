@@ -57,6 +57,11 @@ the Alamo Polyglot, Strong's Hebrew concordance, Naves Topical Dictionary and Hi
 Names Dictionary. Loading any of those is a corpus decision and not a consequence of downloading
 them.
 
+**Nave's Topical Dictionary is now loaded, on trial**, by `NaveTopicLoader`, so the reader can show
+the topics a chapter's verses are filed under; the owner decides afterwards whether it stays. It is
+credited on its own at `/v1/datasets` as Nave's work of 1896 in Stephenson's transcription, under
+the CC BY 4.0 above. The other three are still carried and not loaded.
+
 None of the four is Stephenson's own composition, and their underlying works are out of copyright
 rather than licensed by him: Hitchcock (1869), Naves (1897) and Strong (1890) are public domain,
 and the Polyglot's ten component texts each carry their own terms — the World English Bible and

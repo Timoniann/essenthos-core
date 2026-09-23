@@ -42,6 +42,8 @@ public static class DatasetEndpoints
                 cancellationToken);
 
             var parsings = await Counted(db.WordParsings.Select(parsing => parsing.Source), cancellationToken);
+            var commandments = await Counted(db.Commandments.Select(c => c.Source), cancellationToken);
+            var topics = await Counted(db.Topics.Select(t => t.Source), cancellationToken);
 
             var answers = new List<DatasetResponse>();
             foreach (var dataset in Datasets.All)
@@ -82,10 +84,15 @@ public static class DatasetEndpoints
                     wordGlosses,
                     lexicon,
                     dataset.Links ? Of(links, dataset) : 0,
-                    dataset.Parsings ? Of(parsings, dataset) : 0);
+                    dataset.Parsings ? Of(parsings, dataset) : 0,
+                    Of(commandments, dataset),
+                    Of(topics, dataset));
 
                 if (counts is
-                    { Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Glosses: 0, Lexicon: 0, Links: 0, Parsings: 0 })
+                    {
+                        Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Glosses: 0, Lexicon: 0, Links: 0, Parsings: 0,
+                        Commandments: 0, Topics: 0,
+                    })
                 {
                     continue;
                 }
@@ -113,6 +120,8 @@ public static class DatasetEndpoints
             var undeclared = Undeclared(entities).Concat(Undeclared(events)).Concat(Undeclared(periods))
                 .Concat(Undeclared(links))
                 .Concat(Undeclared(parsings))
+                .Concat(Undeclared(commandments))
+                .Concat(Undeclared(topics))
                 .GroupBy(row => row.Source, StringComparer.Ordinal)
                 .Select(group => new UndeclaredResponse(group.Key, group.Sum(row => row.Rows)))
                 .OrderByDescending(row => row.Rows)
@@ -184,6 +193,8 @@ public record WorkResponse(
 
 /// <param name="Glosses">Words this dataset glosses, where the gloss on a word is what it supplies.</param>
 /// <param name="Parsings">Words given a second analysis by this dataset, beside the edition's own.</param>
+/// <param name="Commandments">Commandments of the Torah, as a count of them numbers them.</param>
+/// <param name="Topics">Subjects of a topical index, each with the verses filed under it.</param>
 public record DatasetCounts(
     int Entities,
     int Events,
@@ -192,7 +203,9 @@ public record DatasetCounts(
     int Glosses,
     int Lexicon,
     int Links,
-    int Parsings);
+    int Parsings,
+    int Commandments,
+    int Topics);
 
 /// <param name="Source">
 /// The source string as the rows carry it. A dataset that reaches the database without being
