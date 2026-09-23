@@ -457,7 +457,7 @@ public sealed class ThingFileTests
     private static readonly IReadOnlySet<string> Subtypes = new HashSet<string>(StringComparer.Ordinal)
     {
         "furnishing", "vessel", "structure", "vestment", "monument", "weapon", "image", "implement",
-        "feast", "fast", "sabbath", "new-moon", "sacred-year", "appointed-time", "rite",
+        "feast", "fast", "sabbath", "new-moon", "sacred-year", "appointed-time", "rite", "book",
     };
 
     private readonly IReadOnlyList<ThingRecord> _records = ThingFiles.Read();

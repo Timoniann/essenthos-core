@@ -113,19 +113,26 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
     /// <summary>
     /// Where the two layers would be about the same event.
     ///
-    /// These five items are the passion, the circumcision, the return from Egypt and the council at
+    /// The first five are the passion, the circumcision, the return from Egypt and the council at
     /// Jerusalem — narrative, not world history. Where the scripture layer holds the same event, two
     /// rows would draw the crucifixion twice with nothing saying it is one event, and one row with a
     /// year picked would be a reading the corpus had quietly made on the reader's behalf. So the
     /// scripture row stands, that layer being where these belong, and Wikidata's year is written
     /// onto it as the disagreement it is.
     ///
-    /// **The scripture layer holds none of them today**, because no chronology loaded here dates a
-    /// New Testament event. So each of these loads as a world row, which is what keeps the passion
-    /// on the axis at all, and the handoff waits for a scripture layer that reaches this far.
+    /// **The scripture layer holds none of those five today**, because no chronology loaded here
+    /// dates a New Testament event. So each of them loads as a world row, which is what keeps the
+    /// passion on the axis at all, and the handoff waits for a scripture layer that reaches this far.
     ///
     /// Keyed on the item identifier, never on the name: a name join between two datasets is the
     /// mistake this corpus has already made once. Each pair below was read on both sides.
+    ///
+    /// <para>
+    /// Solomon's Temple is the one the scripture layer does hold. Wikidata dates the building by its
+    /// inception, and BibleData dates the beginning of its construction from 1 Kings 6:1, the four
+    /// hundred and eightieth year after the Exodus: one beginning, two datasets, and the scripture
+    /// row is the one with the verse.
+    /// </para>
     /// </summary>
     internal static readonly Dictionary<string, string> AlreadyInScripture = new(StringComparer.Ordinal)
     {
@@ -134,6 +141,7 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
         ["http://www.wikidata.org/entity/Q13510036"] = "jesuscircumsized",
         ["http://www.wikidata.org/entity/Q619950"] = "jerusalemcouncil",
         ["http://www.wikidata.org/entity/Q7317265"] = "josephandmaryreturnfromegypt",
+        ["http://www.wikidata.org/entity/Q223644"] = "beginfirsttempleconstruction",
     };
 
     /// <summary>

@@ -321,7 +321,8 @@ public sealed class PersonRegisterLoadTests : IDisposable
         tetrarch.Notes.Should().Be("Philip the Tetrarch of Iturea and Trachonitis");
         tetrarch.Claims.Should().Contain(claim =>
             claim.Source == Dataset && claim.Method == LinkMethod.StatedBySource
-            && claim.Note!.Contains("person:Philip_2"));
+            && claim.Note!.StartsWith("files LUK 3:1 under a record it also gives another man of this name")
+            && !claim.Note.Contains("person:Philip_2"));
     }
 
     [Fact]

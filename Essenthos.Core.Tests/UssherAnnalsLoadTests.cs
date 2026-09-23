@@ -90,14 +90,18 @@ public sealed class UssherAnnalsLoadTests : IDisposable
 
     /// <summary>
     /// The rows the other loader wrote are titled by their own dataset, and nothing here changes
-    /// that: the column separates the two kinds of name rather than casting doubt on both.
+    /// that: the column separates the two kinds of name rather than casting doubt on both. The only
+    /// exceptions are the names the verse they cite contradicts, which this corpus renamed and says so.
     /// </summary>
     [Fact]
-    public async Task TheDatasetsThatTitleTheirOwnRowsStillSaySo() =>
+    public async Task TheDatasetsThatTitleTheirOwnRowsStillSaySo()
+    {
+        var renamed = BibleDataLoader.Misnamed.Values.Select(r => r.Name).ToList();
         (await _db.Events
-            .Where(e => e.Source != UssherAnnalsLoader.Source)
+            .Where(e => e.Source != UssherAnnalsLoader.Source && !renamed.Contains(e.Name))
             .AllAsync(e => e.NameSource == EventNames.FromTheSource))
         .Should().BeTrue();
+    }
 
     /// <summary>
     /// His year hangs on his own reckoning and never on the default one, which computes from the

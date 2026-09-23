@@ -318,7 +318,7 @@ internal sealed class PersonRegisterLoader(
                     Method = LinkMethod.StatedBySource,
                     Confidence = null,
                     Source = person.Source,
-                    Note = $"holds this man as {person.SourceId}, which is where this record's "
+                    Note = "holds this man as a record of its own, which is where this record's "
                            + "relationships, verses and descriptors come from and whose they stay",
                 });
 
@@ -493,7 +493,7 @@ internal sealed class PersonRegisterLoader(
                     Method = LinkMethod.StatedBySource,
                     Confidence = null,
                     Source = from.Source,
-                    Note = $"files {misfiled.Reference} under {from.SourceId}, a record it also gives "
+                    Note = $"files {misfiled.Reference} under a record it also gives "
                            + "another man of this name; the verse, the labels it uses only there"
                            + (misfiled.NotesToo ? " and its note" : "")
                            + $" are this man's. {misfiled.Why}",

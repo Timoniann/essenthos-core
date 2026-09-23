@@ -4814,6 +4814,61 @@
         }
       ],
       "why": "Read verse by verse by a language model on 2026-09-23, for the owner's review. H4533 occurs only in EXO 34:33-35, all Moses' veil; of G2571 only 2CO 3:13 is the veil on his face, 3:14-16 is Paul's figure and goes to review."
+    },
+    {
+      "slug": "book-of-jashar",
+      "kind": "object",
+      "subtype": "book",
+      "name": "Book of Jashar",
+      "names": {
+        "ukr": "Книга Праведного",
+        "deu": "Buch des Frommen",
+        "spa": "Libro de Jasher"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Книги Праведного",
+          "locative": "Книзі Праведного"
+        }
+      },
+      "distinguisher": "a lost writing the text cites for the sun standing still over Gibeon and for David's lament over Saul and Jonathan (JOS 10:13; 2SA 1:18)",
+      "notes": "When the sun stood still over Gibeon and the moon in the valley of Ajalon, the text asks, 'Is not this written in the book of Jasher?' (JOS 10:12-13); and David's lament over Saul and Jonathan, which he bade the children of Judah be taught, is written there (2SA 1:17-18). The Hebrew is סֵפֶר הַיָּשָׁר, 'the book of the upright': the King James keeps Jasher as a name, and Luther and Ohienko translate it. The text quotes it twice and says nothing else of it, and no copy of it is known. Brenton's Septuagint has no such question at JOS 10:13, and at 2SA 1:18 reads βιβλίον τοῦ εὐθοῦς, the book of the upright.",
+      "called": [
+        {
+          "label": "Book of Jashar",
+          "hebrew": "סֵפֶר הַיָּשָׁר",
+          "hebrewTransliterated": "sefer hayyashar",
+          "hebrewStrongNumber": "H5612,H3477",
+          "meaning": "the book of the upright (JOS 10:13)"
+        },
+        {
+          "label": "Book of Jasher"
+        },
+        {
+          "label": "Книга Праведного"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "JOS 10:12-14",
+          "role": "key"
+        },
+        {
+          "reference": "2SA 1:17-27",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H3477",
+          "only": [
+            "JOS 10:13",
+            "2SA 1:18"
+          ],
+          "with": "H5612"
+        }
+      ],
+      "why": "Read verse by verse by a language model on 2026-09-23, for the owner's review. Of the words BHSA numbers H3477, only these two stand beside סֵפֶר as the title of a book; everywhere else the word is 'upright' or 'right', said of people, ways and deeds. BibleData held the book as a man called Jashar, and that record is withdrawn."
     }
   ]
 }
