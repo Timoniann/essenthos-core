@@ -103,6 +103,7 @@ v1.MapSyntax();
 v1.MapWords();
 v1.MapSearch();
 v1.MapEncyclopedia();
+v1.MapContext();
 v1.MapDatasets();
 v1.MapAuth(providers);
 v1.MapMe();
