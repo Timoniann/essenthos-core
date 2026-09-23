@@ -69,6 +69,14 @@ internal sealed record TvtmsSupplement(
 /// verses of their own and swaps the weeping and the rallying at Judges 20:22-23. Where its verse
 /// merely starts half a line before the English one, it is left where it stands.
 /// </para>
+/// <para>
+/// The Synodal, as bible4u publishes it, is renumbered to the English chapters and verse counts, and
+/// in a few chapters keeps its own division inside them: Song of Songs 1 opens with <em>let him kiss
+/// me</em>, which the English numbers 1:2, and divides the last verse in two; Psalm 90 prints its
+/// title as a verse of its own and joins the flood and the grass; Isaiah 3 lists the ornaments in
+/// fewer verses and divides the last; Esther 1 and Revelation 20 divide a verse where the English
+/// does not.
+/// </para>
 /// </summary>
 internal static class TvtmsSupplements
 {
@@ -79,6 +87,8 @@ internal static class TvtmsSupplements
     private const string ReinaValera = "ReinaValera1909";
 
     private const string Kulish = "Kulish";
+
+    private const string Synodal = "Synodal1876";
 
     private const string BrentonJeremiah = "Jer.30:33=Last & Jer.25:20=Last";
 
@@ -98,12 +108,19 @@ internal static class TvtmsSupplements
     /// <summary>Kulish's Genesis 3, which ends at verse 23 and in no other edition here.</summary>
     private const string KulishEdition = "Gen.3:23=Last";
 
+    /// <summary>
+    /// The Synodal's last verse of Song of Songs 1, <em>the rafters of fir</em>, printed apart from
+    /// <em>the beams of our house are cedar</em>, which no other edition here does.
+    /// </summary>
+    private const string SynodalEdition = "Sng.1:16*2<Sng.1:15";
+
     private static readonly Dictionary<string, Versification> Traditions = new()
     {
         [Brenton] = Versification.Septuagint,
         [Swete] = Versification.Septuagint,
         [ReinaValera] = Versification.English,
         [Kulish] = Versification.English,
+        [Synodal] = Versification.English,
     };
 
     public static IReadOnlyList<TvtmsSupplement> All { get; } =
@@ -160,6 +177,7 @@ internal static class TvtmsSupplements
             ("Lev.11:15-16", "Lev.11:16")),
         .. ReinaValeraPassages,
         .. KulishPassages,
+        .. SynodalPassages,
     ];
 
     private static IEnumerable<TvtmsSupplement> ReinaValeraPassages =>
@@ -313,6 +331,27 @@ internal static class TvtmsSupplements
         Passage(Kulish, null, $"{KulishEdition} & Phm.1:24=Last",
             ("Phm.1:23", "Phm.1:23-24"),
             ("Phm.1:24", "Phm.1:25")),
+    ];
+
+    private static IEnumerable<TvtmsSupplement> SynodalPassages =>
+    [
+        Passage(Synodal, "Sng.1:2", SynodalEdition,
+            ("Sng.1:1-15", "Sng.1:2-16"),
+            ("Sng.1:16-17", "Sng.1:17")),
+        Passage(Synodal, "Psa.90:1", $"{SynodalEdition} & Psa.90:1*2<Psa.90:3",
+            ("Psa.90:1-2", "Psa.90:1"),
+            ("Psa.90:3-5", "Psa.90:2-4"),
+            ("Psa.90:6", "Psa.90:5-6")),
+        Passage(Synodal, null, $"{SynodalEdition} & Est.1:7*2<Est.1:8",
+            ("Est.1:7", "Est.1:6"),
+            ("Est.1:8", "Est.1:7-8")),
+        Passage(Synodal, null, $"{SynodalEdition} & Isa.3:20*2<Isa.3:19",
+            ("Isa.3:19", "Isa.3:19-20"),
+            ("Isa.3:20-24", "Isa.3:21-25"),
+            ("Isa.3:25-26", "Isa.3:26")),
+        Passage(Synodal, null, $"{SynodalEdition} & Rev.20:8*2<Rev.20:7",
+            ("Rev.20:7", "Rev.20:7-8"),
+            ("Rev.20:8-9", "Rev.20:9")),
     ];
 
     public static IReadOnlyList<string> Schemes(Versification tradition) =>

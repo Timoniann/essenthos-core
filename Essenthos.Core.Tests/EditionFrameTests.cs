@@ -709,6 +709,84 @@ public class KulishFrameTests(Kulish kulish) : IClassFixture<Kulish>
     }
 }
 
+/// <summary>The Synodal and the King James as bible4u publishes them, read once.</summary>
+public sealed class Bible4u
+{
+    internal TextSource Synodal { get; } =
+        Bible4uTextSource.Read(TestResources.Bible4u("RUSV"), "RUSV");
+
+    internal TextSource KingJames { get; } =
+        Bible4uTextSource.Read(TestResources.Bible4u("KJV"), "KJV");
+}
+
+/// <summary>
+/// The Synodal, renumbered by bible4u to the English chapters and verse counts, where it keeps its
+/// own division inside a chapter. Each of these stood beside an English and a Hebrew verse that says
+/// something else.
+/// </summary>
+public class SynodalFrameTests(Bible4u bible4u) : IClassFixture<Bible4u>
+{
+    private const int Esther = 17;
+
+    private const int Psalms = 19;
+
+    private const int SongOfSongs = 22;
+
+    private const int Isaiah = 23;
+
+    private const int Revelation = 66;
+
+    [Theory]
+    [InlineData(SongOfSongs, 1, 1, 1, 2)]
+    [InlineData(SongOfSongs, 1, 15, 1, 16)]
+    [InlineData(Psalms, 90, 3, 90, 2)]
+    [InlineData(Esther, 1, 7, 1, 6)]
+    [InlineData(Isaiah, 3, 20, 3, 21)]
+    [InlineData(Isaiah, 3, 24, 3, 25)]
+    [InlineData(Revelation, 20, 8, 20, 9)]
+    public void AVerseTheSynodalDividesApartStandsBesideItsWords(
+        int book,
+        int chapter,
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        EnglishEditions.Frame(bible4u.Synodal).Resolve(book, chapter, verse)[0].Should()
+            .Be(new CanonicalReference(book, standardChapter, standardVerse));
+    }
+
+    /// <summary>
+    /// A verse holding two English verses stands at both, two verses holding one stand at it, and
+    /// Psalm 90's title, printed as a verse of its own, stands with the verse the Hebrew prints it in.
+    /// </summary>
+    [Fact]
+    public void AVerseThatHoldsMoreOrLessThanOneStandsWhereItsWordsAre()
+    {
+        var edition = EnglishEditions.Frame(bible4u.Synodal);
+
+        edition.Resolve(Isaiah, 3, 19).Should()
+            .Equal(new CanonicalReference(Isaiah, 3, 19), new CanonicalReference(Isaiah, 3, 20));
+        edition.Resolve(Revelation, 20, 7).Should()
+            .Equal(new CanonicalReference(Revelation, 20, 7), new CanonicalReference(Revelation, 20, 8));
+        edition.Resolve(SongOfSongs, 1, 16).Should().Equal(new CanonicalReference(SongOfSongs, 1, 17));
+        edition.Resolve(SongOfSongs, 1, 17).Should().Equal(new CanonicalReference(SongOfSongs, 1, 17));
+        edition.Resolve(Psalms, 90, 1).Should().Equal(new CanonicalReference(Psalms, 90, 1));
+        edition.Resolve(Psalms, 90, 2).Should().Equal(new CanonicalReference(Psalms, 90, 1));
+    }
+
+    /// <summary>The King James comes from the same publisher and file format, and nothing here moves it.</summary>
+    [Theory]
+    [InlineData(SongOfSongs, 1, 1)]
+    [InlineData(Psalms, 90, 2)]
+    [InlineData(Isaiah, 3, 20)]
+    [InlineData(Revelation, 20, 8)]
+    public void TheKingJamesIsNotMoved(int book, int chapter, int verse)
+    {
+        EnglishEditions.Frame(bible4u.KingJames).Resolve(book, chapter, verse).Should()
+            .Equal(new CanonicalReference(book, chapter, verse));
+    }
+}
+
 /// <summary>An English-numbered edition's frame, built once: the whole Bible's shape is read for it.</summary>
 internal static class EnglishEditions
 {
