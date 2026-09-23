@@ -63,9 +63,13 @@ import time
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-CONTAINER = 'essenthos-api-db-1'
+# The rebuild's own Postgres. The frozen API's container still holds an older copy of this database
+# under the same name, so a wrong container here answers every query and is wrong only in the data.
+CONTAINER = os.environ.get('ESSENTHOS_DB_CONTAINER', 'essenthos-core-db-1')
 DATABASE = 'essenthos_core'
 USER = 'essenthos'
+# Every session is read-only on the server's side, so a statement that would write fails instead.
+READ_ONLY = 'PGOPTIONS=-c default_transaction_read_only=on'
 
 PROMPT_VERSION = 'forms-3'
 
@@ -102,7 +106,7 @@ BATCH_ENTITIES = 8
 def psql(sql):
     """One JSON value out of the live database. Read-only by construction: nothing here writes."""
     process = subprocess.run(
-        ['docker', 'exec', '-i', '-e', 'PGCLIENTENCODING=UTF8', CONTAINER,
+        ['docker', 'exec', '-i', '-e', 'PGCLIENTENCODING=UTF8', '-e', READ_ONLY, CONTAINER,
          'psql', '-U', USER, '-d', DATABASE, '-Aqt', '-v', 'ON_ERROR_STOP=1', '-f', '-'],
         input=sql.encode('utf-8'), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if process.returncode != 0:
