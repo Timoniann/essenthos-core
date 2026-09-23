@@ -49,4 +49,30 @@ public enum EntityKind
     /// says so.
     /// </summary>
     Title,
+
+    /// <summary>
+    /// One particular thing the text speaks of, made rather than born — the ark of the covenant, the
+    /// menorah of the tabernacle, Solomon's temple, Noah's ark.
+    ///
+    /// These are not names. The Hebrew says <em>the ark</em>, <em>the lampstand</em>, <em>the
+    /// house</em>, and the same word is Joseph's coffin, a lamp in a prophet's room or a Persian
+    /// palace elsewhere, so the question an occurrence asks is not which of several bearers but
+    /// whether it is this thing at all. A building is one of these rather than a place: a place is
+    /// where, and a structure is something made that stands at one, with a builder, a date and a
+    /// fate. What sort of thing it is — furnishing, vessel, structure, vestment — is
+    /// <see cref="Entity.Subtype"/>, so a class of things is never passed off as one of them.
+    /// </summary>
+    Object,
+
+    /// <summary>
+    /// A time the text appoints and Israel keeps again and again — the Sabbath, Passover, the Day of
+    /// Atonement, the feasts of the seventh month, the fasts of the exile.
+    ///
+    /// It is not an event, because an event happens once and this recurs; its facts are a position in
+    /// the calendar and the passages that command it, and the occasions the text records it being kept
+    /// are events of their own. It is not an object either: a Passover has no maker and the ark has no
+    /// day of the month. The two kinds share every table but one, so holding them as one kind later
+    /// would be a change of spelling rather than of shape.
+    /// </summary>
+    Observance,
 }

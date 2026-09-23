@@ -128,6 +128,7 @@ builder.Services.AddScoped<SoleBearerLoader>();
 builder.Services.AddScoped<TermLoader>();
 builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<OwnNameLoader>();
+builder.Services.AddScoped<ThingLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
 builder.Services.AddScoped<CommandmentLoader>();

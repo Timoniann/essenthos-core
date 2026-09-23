@@ -82,6 +82,8 @@ internal static class ContextEndpoints
             at.Add(row.CanonicalVerse);
         }
 
+        await AddPassages(db, book, chapter, verses, cancellationToken);
+
         var slugs = verses.Keys.ToList();
         var records = await db.Entities
             .Where(e => slugs.Contains(e.Slug))
@@ -93,6 +95,7 @@ internal static class ContextEndpoints
                 e.Name,
                 e.Distinguisher,
                 e.PlaceKind,
+                e.Subtype,
                 Location = e.Location == null
                     ? null
                     : new EntityLocationResponse(
@@ -119,6 +122,7 @@ internal static class ContextEndpoints
                 Descriptor = described.GetValueOrDefault(r.Slug),
                 Meaning = meanings.GetValueOrDefault(r.Id),
                 PlaceKind = r.PlaceKind,
+                Subtype = r.Subtype,
                 Location = r.Location,
             })
             .OrderByDescending(e => e.Verses.Count)
@@ -154,6 +158,49 @@ internal static class ContextEndpoints
     }
 
     private static readonly IReadOnlyDictionary<string, string> NoPlaces = new Dictionary<string, string>();
+
+    /// <summary>
+    /// The objects and observances whose passages run through the chapter, where no word of it names
+    /// them: Exodus 25 describes the ark in verses that say <em>it</em> and <em>thereof</em>, and a
+    /// panel that listed the ark only at the verses spelling its name would miss what the chapter is
+    /// about. A record a word already names keeps the verses the words give it — the passage is what
+    /// the chapter is about, and the words are where the text says it.
+    /// </summary>
+    private static async Task AddPassages(
+        AppDbContext db,
+        int book,
+        int chapter,
+        Dictionary<string, SortedSet<int>> verses,
+        CancellationToken cancellationToken)
+    {
+        var passages = await db.EntityPassages
+            .Where(p => p.CanonicalBook == book && p.CanonicalChapter <= chapter && p.EndChapter >= chapter)
+            .Select(p => new { p.Entity!.Slug, p.CanonicalChapter, p.CanonicalVerse, p.EndChapter, p.EndVerse })
+            .ToListAsync(cancellationToken);
+        passages = [.. passages.Where(p => !verses.ContainsKey(p.Slug))];
+        if (passages.Count == 0)
+        {
+            return;
+        }
+
+        var last = await db.VerseReferences
+            .Where(r => r.IsPrimary && r.CanonicalBook == book && r.CanonicalChapter == chapter)
+            .MaxAsync(r => (int?)r.CanonicalVerse, cancellationToken) ?? 0;
+        foreach (var passage in passages)
+        {
+            var from = passage.CanonicalChapter == chapter ? passage.CanonicalVerse ?? 1 : 1;
+            var to = passage.EndChapter == chapter ? passage.EndVerse ?? last : last;
+            if (!verses.TryGetValue(passage.Slug, out var at))
+            {
+                verses[passage.Slug] = at = [];
+            }
+
+            for (var verse = from; verse <= to; verse++)
+            {
+                at.Add(verse);
+            }
+        }
+    }
 
     /// <summary>
     /// The periods a chapter falls in, and what placed it there.
@@ -424,6 +471,9 @@ internal record ContextEntityResponse(
 
     /// <summary>A place's kind as its source classifies it; null for everything else.</summary>
     public string? PlaceKind { get; init; }
+
+    /// <summary>What sort of object or observance it is; null for everything else.</summary>
+    public string? Subtype { get; init; }
 
     /// <summary>Where a place is, where the gazetteer identifies it; null for a place it cannot.</summary>
     public EntityLocationResponse? Location { get; init; }

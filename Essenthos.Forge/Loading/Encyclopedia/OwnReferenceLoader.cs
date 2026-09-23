@@ -245,6 +245,6 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     /// words exactly as the person it was held as.
     /// </summary>
     private static string Named =>
-        string.Join(", ", new[] { EntityKind.Person, EntityKind.Place, EntityKind.Title }
+        string.Join(", ", new[] { EntityKind.Person, EntityKind.Place, EntityKind.Title, EntityKind.Object, EntityKind.Observance }
             .Select(kind => $"'{EnumSpelling.Of(kind)}'"));
 }

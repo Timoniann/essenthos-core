@@ -128,6 +128,12 @@ public class AppDbContext : DbContext
     /// <summary>The pictures of people and places, each credited, and whether it is ours.</summary>
     public DbSet<EntityImage> EntityImages { get; set; } = null!;
 
+    /// <summary>The passages an object's or an observance's page sends a reader to.</summary>
+    public DbSet<EntityPassage> EntityPassages { get; set; } = null!;
+
+    /// <summary>Where an observance falls in the year, as its verses state it.</summary>
+    public DbSet<ObservanceTime> ObservanceTimes { get; set; } = null!;
+
     /// <summary>
     /// The ordered clauses this corpus says an entity is, out of which its description is rendered
     /// in whatever language a reader asks for.
@@ -287,6 +293,47 @@ public class AppDbContext : DbContext
                 t.HasCheckConstraint(
                     "ck_entity_image_focus",
                     "(focus_x IS NULL OR focus_x BETWEEN 0 AND 1) AND (focus_y IS NULL OR focus_y BETWEEN 0 AND 1)");
+            });
+        });
+
+        modelBuilder.Entity<EntityPassage>(entity =>
+        {
+            entity.HasOne(p => p.Entity)
+                .WithMany(e => e.Passages)
+                .HasForeignKey(p => p.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("entity_passage", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_entity_passage_role",
+                    $"role IN ({string.Join(", ", PassageRoles.All.Select(role => $"'{role}'"))})");
+                t.HasCheckConstraint(
+                    "ck_entity_passage_runs_forward",
+                    "end_chapter > canonical_chapter OR (end_chapter = canonical_chapter "
+                    + "AND (canonical_verse IS NULL OR end_verse IS NULL OR end_verse >= canonical_verse))");
+                t.HasCheckConstraint("ck_entity_passage_source_not_empty", "length(btrim(source)) > 0");
+            });
+        });
+
+        modelBuilder.Entity<ObservanceTime>(entity =>
+        {
+            entity.HasOne(o => o.Entity)
+                .WithMany(e => e.Times)
+                .HasForeignKey(o => o.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("observance_time", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_observance_time_cycle",
+                    $"cycle IN ({string.Join(", ", ObservanceCycles.All.Select(cycle => $"'{cycle}'"))})");
+                t.HasCheckConstraint("ck_observance_time_month", "month IS NULL OR month BETWEEN 1 AND 12");
+                t.HasCheckConstraint("ck_observance_time_day", "day IS NULL OR day BETWEEN 1 AND 30");
+                t.HasCheckConstraint(
+                    "ck_observance_time_last_day",
+                    "last_day IS NULL OR (day IS NOT NULL AND last_day > day AND last_day <= 30)");
+                t.HasCheckConstraint("ck_observance_time_source_not_empty", "length(btrim(source)) > 0");
             });
         });
 

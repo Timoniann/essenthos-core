@@ -102,3 +102,21 @@ rows the reading could not defend.
   Nestle 1904 (public domain). Single words are quoted with their positions so a record can be
   checked against its verse; no annotation is reproduced beyond the rows each record is about.
 - **Terms.** Ours, under the project's own licence; the quoted words keep their own.
+
+## review/objects-and-observances.json
+
+The occurrences of the words the objects and the appointed times are named by that a reading of
+every occurrence could not settle — Solomon's ten lampstands against the menorah of the tabernacle,
+Hezekiah's Passover of the second month, the golden altar or the censer of Hebrews 9:4 — left unlinked
+for the project owner, each with the question and the answers that would settle it. The records
+themselves and the occurrences that were settled are in `Essenthos.Forge/Loading/Encyclopedia/
+ObjectRecords.json` and `ObservanceRecords.json`, where an answer is applied by adding the verses to
+the record's rules.
+
+- **Made by** Essenthos, by reading every occurrence of each word the records are named by, with a
+  language model doing the reading on 2026-09-23 and every rule checked against the verses it names.
+- **Read from** BHSA (CC BY-NC 4.0, ETCBC) and Nestle 1904 (public domain) for the words and their
+  Strong numbers, the King James Version (public domain) and the Ohienko Bible (public domain) beside
+  them, and Strong's Dictionary (public domain) for the headwords. Easton's Bible Dictionary was used
+  only to find the entries; none of its prose, and nothing of Theographic's matching, is reproduced.
+- **Terms.** Ours, under the project's own licence.

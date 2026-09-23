@@ -66,7 +66,10 @@ internal static class EncyclopediaEndpoints
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count(),
-            e.Verses.Count);
+            e.Verses.Count)
+        {
+            Subtype = e.Subtype,
+        };
 
     /// <summary>
     /// The gazetteer scores an identification in thousandths — 500 high confidence, 1000 very high —
@@ -419,10 +422,10 @@ internal static class EncyclopediaEndpoints
             return true;
         }
 
-        if (kind is not ("person" or "place" or "people" or "term" or "title"))
+        if (kind is not ("person" or "place" or "people" or "term" or "title" or "object" or "observance"))
         {
             refusal = Results.BadRequest(new ProblemResponse(
-                $"\"{kind}\" is not a kind of entity. Try person, place, people, term or title."));
+                $"\"{kind}\" is not a kind of entity. Try person, place, people, term, title, object or observance."));
             return false;
         }
 
@@ -451,6 +454,20 @@ internal static class EncyclopediaEndpoints
         wanted = letter[0];
         return true;
     }
+
+    /// <summary>A passage as the wire carries it: the book once, and the span in its own numbers.</summary>
+    internal static PassageResponse Passage(EntityPassage passage) =>
+        new(
+            passage.Role,
+            new BookRefResponse(
+                passage.CanonicalBook,
+                BookReferences.Name(passage.CanonicalBook),
+                BookReferences.Slug(passage.CanonicalBook)),
+            passage.CanonicalChapter,
+            passage.CanonicalVerse,
+            passage.EndChapter,
+            passage.EndVerse,
+            passage.Note);
 
     public static void MapEncyclopedia(this IEndpointRouteBuilder routes)
     {
@@ -592,6 +609,7 @@ internal static class EncyclopediaEndpoints
                     e.Sex,
                     e.Tribe,
                     e.PlaceKind,
+                    e.Subtype,
                     e.ModernEquivalent,
                     e.Notes,
                     e.OpenBibleId,
@@ -689,6 +707,16 @@ internal static class EncyclopediaEndpoints
                 })
                 .ToListAsync(cancellationToken);
 
+            var passages = await db.EntityPassages
+                .Where(p => p.EntityId == entity.Id)
+                .OrderBy(p => p.Ordinal)
+                .ToListAsync(cancellationToken);
+
+            var times = await db.ObservanceTimes
+                .Where(o => o.EntityId == entity.Id)
+                .OrderBy(o => o.Id)
+                .ToListAsync(cancellationToken);
+
             var alternatives = await db.EntityAlternatives
                 .Where(a => a.EntityId == entity.Id)
                 .Select(a => new EntityAlternativeResponse(
@@ -754,6 +782,14 @@ internal static class EncyclopediaEndpoints
                     .. titles.Select(t => new EntityTitleResponse(
                         t.Slug, EnumSpelling.Of(t.Kind), t.Name, t.Distinguisher,
                         BookReferences.At(t.CanonicalBook, t.CanonicalChapter, t.CanonicalVerse)!, t.Note)),
+                ],
+                Subtype = entity.Subtype,
+                Passages = [.. passages.Select(Passage)],
+                Times =
+                [
+                    .. times.Select(o => new ObservanceTimeResponse(
+                        o.Cycle, o.Month, o.Day, o.LastDay,
+                        BookReferences.At(o.CanonicalBook, o.CanonicalChapter, o.CanonicalVerse)!, o.Note)),
                 ],
             });
         });
@@ -1391,9 +1427,39 @@ internal record EntitySummaryResponse(
 
     /// <summary>The picture the entity's page leads with, to show small; null where it has none.</summary>
     public EntityThumbnailResponse? Thumbnail { get; init; }
+
+    /// <summary>What sort of object or observance it is; null on every other kind.</summary>
+    public string? Subtype { get; init; }
 }
 
 internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items);
+
+/// <summary>
+/// A stretch of Scripture an object's or an observance's page sends a reader to, as the record lists
+/// it: a role — <c>key</c> for one to read about it, <c>command</c> for one that appoints it — and the
+/// span. A verse left null is the start or the end of its chapter.
+/// </summary>
+internal record PassageResponse(
+    string Role,
+    BookRefResponse Book,
+    int Chapter,
+    int? Verse,
+    int EndChapter,
+    int? EndVerse,
+    string? Note);
+
+/// <summary>
+/// Where an observance falls, as the verse that appoints it says: the month counted from Abib, the
+/// day of that month — or of the week, for a weekly one — and the last day where it runs longer.
+/// Each is null where the text does not state it.
+/// </summary>
+internal record ObservanceTimeResponse(
+    string Cycle,
+    int? Month,
+    int? Day,
+    int? LastDay,
+    VerseRefResponse Reference,
+    string? Note);
 
 /// <param name="Count">How many entities are filed under this letter; zero for an empty one.</param>
 internal record EntityLetterResponse(string Letter, int Count);
@@ -1556,6 +1622,15 @@ internal record EntityResponse(
     /// Empty where it has none — which is most people, and always God.
     /// </summary>
     public IList<EntityImageResponse> Images { get; init; } = [];
+
+    /// <summary>What sort of object or observance it is — furnishing, structure, feast; null on every other kind.</summary>
+    public string? Subtype { get; init; }
+
+    /// <summary>The passages to read about it and those that command it, in the record's order.</summary>
+    public IList<PassageResponse> Passages { get; init; } = [];
+
+    /// <summary>Where an observance falls in the year, one entry per position a verse states.</summary>
+    public IList<ObservanceTimeResponse> Times { get; init; } = [];
 }
 
 /// <param name="Corpus">The text, by the id every other response names it by.</param>
