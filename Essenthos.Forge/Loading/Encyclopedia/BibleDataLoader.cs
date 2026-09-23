@@ -46,7 +46,7 @@ internal sealed record EncyclopediaOutcome(
 /// </summary>
 internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleDataLoader> logger)
 {
-    private const string Source = "BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0";
+    internal const string Source = "BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0";
 
     /// <summary>
     /// The identifier the dataset gives the God of Israel — and, in the New Testament, to Jesus as
@@ -459,6 +459,10 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     private static string? Sentences(params string?[] parts) =>
         Blank(string.Join(" ", parts.Where(part => !string.IsNullOrWhiteSpace(part))));
 
+    /// <summary>A note the dataset left without a full stop, given one so a sentence can follow it.</summary>
+    internal static string? Stopped(string? note) =>
+        note is null || note.EndsWith('.') || note.EndsWith('?') || note.EndsWith('!') ? note : note + ".";
+
     /// <summary>
     /// Rows of the person file that name nobody, by the dataset's own id, with the reason.
     ///
@@ -473,7 +477,86 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 "ταλιθα is Aramaic for 'girl': Jesus says it to Jairus's daughter at MRK 5:41, and the " +
                 "verse translates it itself, 'which is, being interpreted, Damsel'. It is how she is " +
                 "addressed, not her name, and the text never names her.",
+            ["Jashar_1"] =
+                "סֵפֶר הַיָּשָׁר, the book of Jashar or of the upright, is a writing JOS 10:13 and 2SA 1:18 " +
+                "cite, not a man; nobody in the text is called Jashar. The dataset's other four verses for " +
+                "the entry, JOS 10:3, 10:5, 10:23 and 12:12, name Jarmuth and not the book. The book is held " +
+                "among the things the text speaks of, with the two verses that cite it.",
         };
+
+    /// <summary>
+    /// Event names the verse the dataset cites for the event contradicts, by its event id, with the
+    /// name this corpus gives the event instead and why.
+    ///
+    /// <para>
+    /// Only the name is taken back. The date, the description and the arithmetic stay the dataset's,
+    /// and the event says whose its name now is, so a reader sees both the correction and what it
+    /// corrects.
+    /// </para>
+    /// </summary>
+    internal static readonly IReadOnlyDictionary<string, Renaming> Misnamed =
+        new Dictionary<string, Renaming>(StringComparer.Ordinal)
+        {
+            ["Judahs_fast_during_Av"] = new(
+                "Judah's fast during the month of Av (the ninth month)",
+                "Judah's fast in the ninth month",
+                "BibleData names this \"Judah's fast during the month of Av (the ninth month)\". JER 36:9, " +
+                "the verse it cites, says the ninth month and names no month; Av is the fifth month of the " +
+                "later Jewish calendar, and the ninth is the one ZEC 7:1 and NEH 1:1 call Chislev. The " +
+                "name is Essenthos's, read from the verse; the date, the description and the arithmetic " +
+                "are BibleData's."),
+        };
+
+    /// <param name="Was">The dataset's own name for the event, which is what a correction is made against.</param>
+    /// <param name="Name">The name the verse supports.</param>
+    /// <param name="Why">What the verse says and the dataset's name does not, for the event's notes.</param>
+    internal sealed record Renaming(string Was, string Name, string Why);
+
+    /// <summary>
+    /// Why the Levites of 2 Chronicles 31:15 are not sons of Levi, for the notes of the rows that
+    /// said so.
+    /// </summary>
+    private const string LevitesOfHezekiahsDay =
+        "Read as descent and not as father and son. 2CH 31:15 names Levites of Hezekiah's day who " +
+        "served under Kore; the dataset's own note says so, and it holds the Levites of 31:13 and 31:14 " +
+        "beside them as descendants of Levi. Levi is Jacob's son, centuries before them.";
+
+    private const string LeviteOfNehemiahsDay =
+        "Read as descent and not as father and son. NEH 13:13 names Mattaniah as the grandfather of " +
+        "Hanan, a Levite treasurer of Nehemiah's day, and the dataset holds the Levites of that day as " +
+        "descendants of Levi. Levi is Jacob's son, centuries before him.";
+
+    /// <summary>
+    /// Relationships the dataset states as father and son that its own rows and notes hold as descent
+    /// in a tribe, by its person ids and relation word, with the word they are read as and why.
+    ///
+    /// <para>
+    /// The same dataset writes <c>ancestor</c> for every other Levite of those chapters, and a family
+    /// tree draws <c>father</c> as a parent: six men of the monarchy and the return stood under Levi
+    /// beside Gershon, Kohath and Merari. Both directions of each tie are listed, because the dataset
+    /// writes both.
+    /// </para>
+    /// </summary>
+    internal static readonly IReadOnlyDictionary<(string From, string Type, string To), Restatement> Restated =
+        new Dictionary<(string, string, string), Restatement>
+        {
+            [("Levi_1", "father", "Miniamin_1")] = new("ancestor", LevitesOfHezekiahsDay),
+            [("Miniamin_1", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
+            [("Levi_1", "father", "Jeshua_2")] = new("ancestor", LevitesOfHezekiahsDay),
+            [("Jeshua_2", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
+            [("Levi_1", "father", "Shemaiah_12")] = new("ancestor", LevitesOfHezekiahsDay),
+            [("Shemaiah_12", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
+            [("Levi_1", "father", "Amariah_4")] = new("ancestor", LevitesOfHezekiahsDay),
+            [("Amariah_4", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
+            [("Levi_1", "father", "Shecaniah_3")] = new("ancestor", LevitesOfHezekiahsDay),
+            [("Shecaniah_3", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
+            [("Levi_1", "father", "Mattaniah_10")] = new("ancestor", LeviteOfNehemiahsDay),
+            [("Mattaniah_10", "son", "Levi_1")] = new("descendant", LeviteOfNehemiahsDay),
+        };
+
+    /// <param name="Type">The relation word the row is read as.</param>
+    /// <param name="Why">Why, added to the row's notes after the dataset's own.</param>
+    internal sealed record Restatement(string Type, string Why);
 
     internal static void People(string folder, Dictionary<string, Entity> entities, HashSet<string> slugs)
     {
@@ -772,18 +855,19 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
 
             var reference = frame.Resolve(row["reference_id"]);
             var type = row["relationship_type"];
+            var restated = Restated.GetValueOrDefault((row["person_id_1"], type, row["person_id_2"]));
             var relationship = new EntityRelationship
             {
                 FromEntityId = Read(from, type, reference, jesus).Id,
                 ToEntityId = Read(to, type, reference, jesus).Id,
-                Type = row["relationship_type"],
+                Type = restated?.Type ?? type,
                 Category = row["relationship_category"],
                 CanonicalBook = reference?.Book,
                 CanonicalChapter = reference?.Chapter,
                 CanonicalVerse = reference?.Verse,
                 Method = LinkMethod.StatedBySource,
                 Source = Source,
-                Notes = Blank(row["relationship_notes"]),
+                Notes = Sentences(Stopped(Blank(row["relationship_notes"])), restated?.Why),
             };
 
             var key = (relationship.FromEntityId, relationship.Type, relationship.ToEntityId,
@@ -919,10 +1003,15 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         foreach (var row in Csv.Read(Path.Combine(folder, "BibleData-Event.csv")))
         {
             var reference = frame.Resolve(row["event_reference_id"]);
+            var renamed = Misnamed.GetValueOrDefault(row["event_id"]) is { } renaming
+                          && renaming.Was == row["event_name"]
+                ? renaming
+                : null;
             events.Add(new Event
             {
                 Slug = Unique(Slugs.Of(row["event_id"]), slugs),
-                Name = row["event_name"],
+                Name = renamed?.Name ?? row["event_name"],
+                NameSource = renamed is null ? EventNames.FromTheSource : EventNames.Generated,
                 Description = Blank(row["event_description"]),
                 Kind = Blank(row["event_type"]),
                 EntityId = entities.TryGetValue(Key(EntityKind.Person, row["person_id"]), out var who) ? who.Id : null,
@@ -934,7 +1023,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 CanonicalChapter = reference?.Chapter,
                 CanonicalVerse = reference?.Verse,
                 Location = Blank(row["event_location"]),
-                Notes = Blank(row["event_notes"]),
+                Notes = Sentences(renamed?.Why, Blank(row["event_notes"])),
                 Source = Source,
             });
         }

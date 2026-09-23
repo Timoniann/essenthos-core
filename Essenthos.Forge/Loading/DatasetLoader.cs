@@ -165,6 +165,7 @@ internal sealed class DatasetLoader(
             await GiveTheNamesNoDatasetGives(stoppingToken);
             await WriteTheThingsMadeAndTheTimesKept(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
+            await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
@@ -1065,6 +1066,24 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The verses the dataset files under a man that name the people called after him, moved to the
+    /// people, and the few rows it files under the wrong record put right. After the annotations and
+    /// the references read off them, because a word already annotated to a people is part of what
+    /// decides a verse; before the descriptions, because a clause may cite only a verse its entity is
+    /// named in.
+    /// </summary>
+    private async Task GiveThePeoplesTheVersesFiledUnderTheirAncestors(
+        string resources,
+        CancellationToken cancellationToken)
+    {
+        status.Starting("the verses filed under a people's ancestor");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<MisfiledVerseLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     /// <summary>

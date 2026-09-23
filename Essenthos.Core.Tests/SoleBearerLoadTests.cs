@@ -103,7 +103,8 @@ public sealed class SoleBearerLoadTests : IDisposable
         var theirs = claims.Should().ContainSingle(claim => claim.Source == Dataset).Subject;
         theirs.Method.Should().Be(LinkMethod.StatedBySource);
         theirs.Confidence.Should().BeNull("a dataset states a record; it does not conclude one");
-        theirs.Note.Should().Contain("person:Sheshan_1");
+        theirs.Note.Should().StartWith("holds this one as a record of its own")
+            .And.NotContain("person:Sheshan_1", "a dataset's row identifier is not something a reader can use");
     }
 
     /// <summary>

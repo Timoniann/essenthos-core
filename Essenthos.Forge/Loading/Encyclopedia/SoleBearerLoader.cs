@@ -226,7 +226,7 @@ internal sealed class SoleBearerLoader(AppDbContext db, ILogger<SoleBearerLoader
                 Method = LinkMethod.StatedBySource,
                 Confidence = null,
                 Source = entity.Source,
-                Note = $"holds this one as {entity.SourceId}, which is where this record's "
+                Note = "holds this one as a record of its own, which is where this record's "
                        + "relationships, verses and descriptors come from and whose they stay",
             });
 

@@ -130,6 +130,7 @@ builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<OwnNameLoader>();
 builder.Services.AddScoped<ThingLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
+builder.Services.AddScoped<MisfiledVerseLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
 builder.Services.AddScoped<CommandmentLoader>();
 builder.Services.AddScoped<NaveTopicLoader>();
