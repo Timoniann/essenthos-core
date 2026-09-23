@@ -603,6 +603,7 @@ internal static class EncyclopediaEndpoints
             SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
         {
+            slug = await MergedAddresses.Current(db, slug, cancellationToken);
             var entity = await db.Entities
                 .Where(e => e.Slug == slug)
                 .Select(e => new
@@ -817,6 +818,7 @@ internal static class EncyclopediaEndpoints
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
+            slug = await MergedAddresses.Current(db, slug, cancellationToken);
             var entity = await db.Entities.Where(e => e.Slug == slug).Select(e => e.Id)
                 .FirstOrDefaultAsync(cancellationToken);
             if (entity == 0)

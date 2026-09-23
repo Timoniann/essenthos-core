@@ -125,6 +125,19 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
             .Select(e => new { e.Id, e.Slug, e.Kind, e.SourceId, e.OpenBibleId })
             .ToListAsync(cancellationToken);
         var bySlug = entities.ToDictionary(e => e.Slug, StringComparer.Ordinal);
+
+        // A picture listed under the address of a record since folded into another is a picture of
+        // the record it became part of, and the owner's word on it stays keyed by the address it was
+        // listed under.
+        var byId = entities.ToDictionary(e => e.Id);
+        foreach (var merged in await db.MergedRecords.Select(m => new { m.Slug, m.EntityId }).ToListAsync(cancellationToken))
+        {
+            if (byId.TryGetValue(merged.EntityId, out var into))
+            {
+                bySlug.TryAdd(merged.Slug, into);
+            }
+        }
+
         var byOpenBibleId = entities
             .Where(e => e.OpenBibleId != null)
             .ToLookup(e => e.OpenBibleId!, StringComparer.Ordinal);
@@ -177,7 +190,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
 
                 candidates.Add(new Candidate(
                     entity.Id,
-                    entity.Slug,
+                    entry.Entity,
                     kind,
                     entry.Role == Gallery ? Gallery : Primary,
                     entry.File.Replace('\\', '/'),

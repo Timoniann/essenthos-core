@@ -137,6 +137,7 @@ builder.Services.AddScoped<NaveTopicLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();
 builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<OwnRelationshipLoader>();
+builder.Services.AddScoped<DuplicateRecordLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddScoped<DatasetLoader>();
@@ -681,6 +682,15 @@ if (args is ["topics", ..])
     using var topicScope = app.Services.CreateScope();
     Console.WriteLine(await topicScope.ServiceProvider.GetRequiredService<NaveTopicLoader>()
         .Load(Path.Combine(resources, "BibleData2026")));
+    return 0;
+}
+
+// The records a dataset wrote twice for one person, folded into one, without the rest of the load.
+// The load does the same at its place in the pipeline; this is for a corpus already built.
+if (args is ["fold-records", ..])
+{
+    using var foldScope = app.Services.CreateScope();
+    Console.WriteLine(await foldScope.ServiceProvider.GetRequiredService<DuplicateRecordLoader>().Load());
     return 0;
 }
 
