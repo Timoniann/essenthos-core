@@ -276,6 +276,7 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
         EvidentiaProposalKind.UniqueTargetGlossReview => "unique-target-gloss-review",
         EvidentiaProposalKind.UniqueDictionarySenseReview => "unique-dictionary-sense-review",
         EvidentiaProposalKind.GlobalAssignmentReview => "global-assignment-review",
+        EvidentiaProposalKind.AttachedWord => "attached-word",
         _ => throw new ArgumentOutOfRangeException(nameof(kind), kind,
             $"{kind} has no stored spelling. Add it to EvidentiaDecisionRecorder.Spelling before a resolver emits it."),
     };

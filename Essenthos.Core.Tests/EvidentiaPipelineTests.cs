@@ -23,6 +23,16 @@ public class EvidentiaPipelineTests
     }
 
     [Fact]
+    public void Every_proposal_kind_has_a_stored_spelling()
+    {
+        foreach (var kind in Enum.GetValues<EvidentiaProposalKind>())
+        {
+            EvidentiaDecisionRecorder.Spelling(kind).Should().NotBeNullOrWhiteSpace(
+                "a stored run records every proposal the measurement makes, attached words included");
+        }
+    }
+
+    [Fact]
     public void A_pronoun_found_in_a_definition_neither_is_proposed_nor_keeps_a_noun_from_its_sense()
     {
         var target = new EvidentiaAnalysis(new EvidentiaToken(11, new EvidentiaAddress(40, 11, 1), 1, "בְּהֵמָה", "hbo", StrongNumber: "H929"), "בְּהֵמָה", null, "subs", EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
