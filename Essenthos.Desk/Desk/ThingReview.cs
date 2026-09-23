@@ -73,6 +73,12 @@ internal sealed class ThingReview(DeskPaths paths)
 {
     public const string QuestionsFile = "objects-and-observances.json";
 
+    /// <summary>
+    /// The verses a dataset files under a man a people is named after that the load could not settle,
+    /// which the load keeps beside this list in the same shape and reads the answers back from.
+    /// </summary>
+    public const string AncestorsFile = "eponym-verses.json";
+
     public const string ObjectsFile = "ObjectRecords.json";
 
     public const string ObservancesFile = "ObservanceRecords.json";
@@ -107,6 +113,10 @@ internal sealed class ThingReview(DeskPaths paths)
 
     private string Questions => Path.Combine(paths.Review, QuestionsFile);
 
+    /// <summary>Every list of open occurrences on this disk, the objects' first.</summary>
+    private IEnumerable<string> QuestionLists =>
+        new[] { QuestionsFile, AncestorsFile }.Select(file => Path.Combine(paths.Review, file)).Where(File.Exists);
+
     private string[] RecordFiles => [Path.Combine(paths.Records, ObjectsFile), Path.Combine(paths.Records, ObservancesFile)];
 
     public bool Exists => File.Exists(Questions);
@@ -114,16 +124,16 @@ internal sealed class ThingReview(DeskPaths paths)
     public ThingQuestionsResponse ReadQuestions()
     {
         var records = Records(RecordFiles.Select(JsonFiles.Read).ToArray());
-        var node = JsonFiles.Read(Questions);
-        var entries = (node["entries"]?.AsArray() ?? [])
-            .OfType<JsonObject>()
+        var entries = QuestionLists
+            .SelectMany(list => (JsonFiles.Read(list)["entries"]?.AsArray() ?? []).OfType<JsonObject>())
             .Select(entry => Question(entry, records))
             .ToList();
-        return new ThingQuestionsResponse(node["about"]?.GetValue<string>(), entries);
+        return new ThingQuestionsResponse(JsonFiles.Read(Questions)["about"]?.GetValue<string>(), entries);
     }
 
     public int Unanswered() =>
-        (JsonFiles.Read(Questions)["entries"]?.AsArray() ?? []).OfType<JsonObject>().Count(e => e["decision"] is null);
+        QuestionLists.Sum(list =>
+            (JsonFiles.Read(list)["entries"]?.AsArray() ?? []).OfType<JsonObject>().Count(e => e["decision"] is null));
 
     public ThingRecordsResponse ReadRecords()
     {
@@ -159,8 +169,11 @@ internal sealed class ThingReview(DeskPaths paths)
         await _gate.WaitAsync();
         try
         {
-            var questions = JsonFiles.Read(Questions);
-            var entry = (questions["entries"]?.AsArray() ?? []).OfType<JsonObject>().FirstOrDefault(e => KeyOf(e) == key);
+            var (list, questions, entry) = QuestionLists
+                .Select(path => (Path: path, Node: JsonFiles.Read(path)))
+                .Select(read => (read.Path, read.Node,
+                    Entry: (read.Node["entries"]?.AsArray() ?? []).OfType<JsonObject>().FirstOrDefault(e => KeyOf(e) == key)))
+                .FirstOrDefault(found => found.Entry is not null);
             var options = entry?["options"]?.AsArray().Select(o => o?.GetValue<string>()).ToList() ?? [];
             if (entry is null || (request.Answer is not null && !options.Contains(request.Answer)))
             {
@@ -208,7 +221,7 @@ internal sealed class ThingReview(DeskPaths paths)
                 }
             }
 
-            JsonFiles.Write(Questions, questions);
+            JsonFiles.Write(list!, questions!);
             return Question(entry, Records(files));
         }
         finally

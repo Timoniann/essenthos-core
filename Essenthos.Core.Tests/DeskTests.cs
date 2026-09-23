@@ -243,6 +243,39 @@ public sealed class DeskTests : IAsyncLifetime
         Record("new-moon").Occurrences.Should().ContainSingle("nothing is written for an answer that needs a new record");
     }
 
+    /// <summary>
+    /// The verses the load could not settle between a man and the people named after him are listed
+    /// beside the objects' occurrences and answered on the same page; the answer is kept in their own
+    /// list, which is where the load reads it back.
+    /// </summary>
+    [Fact]
+    public async Task AnAnswerAboutAPeoplesAncestorIsKeptInTheListTheLoadReads()
+    {
+        WriteThings();
+        MisfiledVerseLoader.ReviewFile.Should().Be(ThingReview.AncestorsFile);
+        File.WriteAllText(Path.Combine(Review, ThingReview.AncestorsFile),
+            """
+            {
+              "about": "Verses under a people's ancestor.",
+              "entries": [
+                { "record": "jacob", "label": "Israel", "strong": "H3478", "references": ["EXO 4:22"],
+                  "question": "The man or the Israelites?", "options": ["israelites", "leave as it is"] }
+              ]
+            }
+            """);
+        var objects = File.ReadAllText(Path.Combine(Review, ThingReview.QuestionsFile));
+
+        var key = await OccurrenceKey("jacob");
+        (await Put($"/desk-api/review/occurrences/{key}", new { answer = "israelites", note = "" }))
+            .StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var decision = JsonFiles.Read(Path.Combine(Review, ThingReview.AncestorsFile))["entries"]![0]!["decision"]!;
+        decision["answer"]!.GetValue<string>().Should().Be("israelites");
+        File.ReadAllText(Path.Combine(Review, ThingReview.QuestionsFile)).Should().Be(objects);
+        MisfiledVerseLoader.Answers(Path.Combine(Review, ThingReview.AncestorsFile))
+            .Should().Contain(new KeyValuePair<(string, string, string), string>(("jacob", "Israel", "EXO 4:22"), "israelites"));
+    }
+
     [Fact]
     public async Task AnAnswerThatIsNotAnOptionIsRefused()
     {
@@ -330,6 +363,7 @@ public sealed class DeskTests : IAsyncLifetime
     [InlineData("Essenthos.Forge/Loading/Encyclopedia/ObservanceRecords.json")]
     [InlineData("Resources/Essenthos/review/objects-and-observances.json")]
     [InlineData("Resources/Essenthos/review/bibledata-relationships.json")]
+    [InlineData("Resources/Essenthos/review/eponym-verses.json")]
     public void AFileWrittenBackUnchangedIsTheSameFile(string tracked)
     {
         var source = Path.Combine(Checkout(), tracked);
