@@ -83,16 +83,27 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
-    public void NothingIsAttachedToAGreekWord()
+    public void AgainstGreekOnlyAndIsAttachedAndOnlyOnKai()
     {
         var and = English(1, Mark114, 1, "and", "CCONJ");
         var the = English(2, Mark114, 2, "the", "DET");
         var gospel = English(3, Mark114, 3, "gospel", "NOUN");
-        var kai = Greek(11, Mark114, 1, "καὶ", "G2532", "conj");
+        var kai = Greek(11, Mark114, 1, "καὶ", "G2532", "conj", "καί");
         var article = Greek(12, Mark114, 2, "τὸ", "G3588", "det");
         var gospelNoun = Greek(13, Mark114, 3, "εὐαγγέλιον", "G2098", "noun");
 
-        Attach([and, the, gospel], [kai, article, gospelNoun], (gospel, gospelNoun)).Should().BeEmpty();
+        Attach([and, the, gospel], [kai, article, gospelNoun], (gospel, gospelNoun)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void AndIsNotPlacedOnAGreekConjunctionThatSubordinates()
+    {
+        var and = English(1, Mark114, 1, "And", "CCONJ");
+        var satan = English(2, Mark114, 2, "Satan", "PROPN");
+        var ei = Greek(11, Mark114, 1, "εἰ", "G1487", "conj", "εἰ");
+        var satanNoun = Greek(12, Mark114, 2, "Σατανᾶς", "G4567", "noun");
+
+        Attach([and, satan], [ei, satanNoun], (satan, satanNoun)).Should().BeEmpty();
     }
 
     private static IReadOnlyList<(long Source, long Target)> Attach(
@@ -124,6 +135,7 @@ public class EvidentiaAttachedWordTests
     private static EvidentiaToken Hebrew(long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech) =>
         new(id, address, position, surface, "hbo", StrongNumber: strong, PartOfSpeech: partOfSpeech);
 
-    private static EvidentiaToken Greek(long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech) =>
-        new(id, address, position, surface, "grc", StrongNumber: strong, PartOfSpeech: partOfSpeech);
+    private static EvidentiaToken Greek(
+        long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech, string? lemma = null) =>
+        new(id, address, position, surface, "grc", Lemma: lemma, StrongNumber: strong, PartOfSpeech: partOfSpeech);
 }

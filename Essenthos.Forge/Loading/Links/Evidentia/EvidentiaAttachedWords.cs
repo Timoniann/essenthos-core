@@ -38,10 +38,14 @@ internal enum EvidentiaAttachmentPlacement
 /// <em>the</em> with the noun; <em>and</em> goes on the ו BHSA writes as a word of its own before the
 /// word it joins; an auxiliary goes on the verb, which carries tense and mood in itself.</para>
 ///
+/// <para>Against Greek only <em>and</em> is placed, on the <em>καί</em> written directly before the
+/// rendering, which both annotations do.</para>
+///
 /// <para>Not placed, because on these texts they measured below the precision the lexical tiers
-/// already reach: verb particles, which the parser finds as often in a preposition's place; and
-/// every Greek word, where the Berean tables put the English article on the Greek article and the
-/// Clear Bible alignments put it with the noun. The roles come from the English UDPipe parse, so
+/// already reach: verb particles, which the parser finds as often in a preposition's place; the
+/// Greek article, which the Berean tables put on the English article and the Clear Bible
+/// alignments with the noun; and a Greek auxiliary, which is often a periphrastic <em>ἦσαν</em> of
+/// its own rather than part of the verb after it. The roles come from the English UDPipe parse, so
 /// every other source language is left alone.</para>
 /// </summary>
 internal static class EvidentiaAttachedWords
@@ -53,6 +57,14 @@ internal static class EvidentiaAttachedWords
     private const string EnglishLanguage = "eng";
 
     private const string HebrewLanguage = "hbo";
+
+    private const string GreekLanguage = "grc";
+
+    /// <summary>
+    /// Greek's <em>and</em>. Its other conjunctions standing before a word subordinate rather than join
+    /// (<em>εἰ</em>, <em>ὅτι</em>), and <em>δέ</em> is never written first.
+    /// </summary>
+    private const string GreekAnd = "καί";
 
     private static readonly HashSet<string> Articles = new(StringComparer.OrdinalIgnoreCase) { "the", "a", "an" };
 
@@ -106,7 +118,9 @@ internal static class EvidentiaAttachedWords
     }
 
     internal static EvidentiaAttachmentPlacement Placement(EvidentiaAttachment attachment, string witnessLanguage) =>
-        !witnessLanguage.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
+        witnessLanguage.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase)
+            ? attachment == EvidentiaAttachment.Conjunction ? EvidentiaAttachmentPlacement.OwnKindBefore : EvidentiaAttachmentPlacement.None
+            : !witnessLanguage.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
             ? EvidentiaAttachmentPlacement.None
             : attachment switch
             {
@@ -168,7 +182,7 @@ internal static class EvidentiaAttachedWords
 
         for (before--; wanted is not null && before >= 0 && Class(verse[before]) is "det" or "adp" or "conj"; before--)
         {
-            if (Class(verse[before]) == wanted)
+            if (Class(verse[before]) == wanted && IsTheWitnessAnd(verse[before]))
             {
                 return verse[before];
             }
@@ -176,6 +190,10 @@ internal static class EvidentiaAttachedWords
 
         return null;
     }
+
+    private static bool IsTheWitnessAnd(EvidentiaAnalysis word) =>
+        !word.Token.Language.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase)
+        || string.Equals(word.Token.Lemma, GreekAnd, StringComparison.Ordinal);
 
     private static (EvidentiaAttachment?, EvidentiaAnalysis?) Found(EvidentiaAttachment attachment, EvidentiaAnalysis? head) =>
         head is null ? (null, null) : (attachment, head);
