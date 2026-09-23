@@ -82,13 +82,19 @@ internal static class EvidentiaAuxiliaryWords
     /// <summary>
     /// Whether placing the source word on the target would put an auxiliary word on a kind of word it
     /// cannot correspond to, or put anything but an article on the article of a noun, which belongs to
-    /// that noun whatever the index learned from phrases. A target that states no class is not refused:
+    /// that noun whatever the index learned from phrases, or a personal pronoun on a Greek one whose
+    /// number or case says it is another. A target that states no class is not refused:
     /// nothing is known against it.
     /// </summary>
     public static bool PlacesOffItsKind(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
         if (target.Role == EvidentiaAuxiliaryRole.NominalArticle && IsEnglish(source.Token)
             && Feature(source.Token, "PronType") != "Art")
+        {
+            return true;
+        }
+
+        if (DisagreesAsAPersonalPronoun(source, target))
         {
             return true;
         }
@@ -200,6 +206,34 @@ internal static class EvidentiaAuxiliaryWords
 
         return false;
     }
+
+    /// <summary>
+    /// An English personal pronoun against a Greek one, where both say what they are: <em>his</em> is
+    /// a genitive and <em>him</em> is one man, so neither is αὐτῷ nor αὐτούς. The second person is left
+    /// alone, because <em>you</em> does not say how many it addresses and the parser guesses.
+    /// </summary>
+    private static bool DisagreesAsAPersonalPronoun(EvidentiaAnalysis source, EvidentiaAnalysis target)
+    {
+        if (!IsEnglish(source.Token) || Feature(source.Token, "PronType") != "Prs"
+            || !target.Token.Language.Equals("grc", StringComparison.OrdinalIgnoreCase)
+            || EvidentiaMorphologyLabels.PartOfSpeech(target.PartOfSpeech, target.Token.Language) != "pron")
+        {
+            return false;
+        }
+
+        if (Feature(source.Token, "Poss") == "Yes" && Case(target) is { } targetCase && targetCase != "gen")
+        {
+            return true;
+        }
+
+        return Feature(source.Token, "Person") is "1" or "3"
+               && Number(source) is { } sourceNumber
+               && Number(target) is { } targetNumber
+               && sourceNumber != targetNumber;
+    }
+
+    private static string? Number(EvidentiaAnalysis analysis) =>
+        EvidentiaMorphologyLabels.Feature(Feature(analysis.Token, "number"), analysis.Token.Language);
 
     private static bool IsEnglish(EvidentiaToken token) =>
         token.Language.Equals("eng", StringComparison.OrdinalIgnoreCase);

@@ -54,6 +54,25 @@ public class EvidentiaAuxiliaryWordTests
     }
 
     [Fact]
+    public void APersonalPronounTakesTheGreekOccurrenceOfItsOwnNumberAndCase()
+    {
+        var proposals = Propose(
+            [
+                English(1, Mark120, 1, "him", "PRON", ("PronType", "Prs"), ("Case", "Acc"), ("Number", "Sing"), ("Person", "3")),
+                English(2, Mark120, 2, "their", "PRON", ("PronType", "Prs"), ("Poss", "Yes"), ("Number", "Plur"), ("Person", "3")),
+            ],
+            [
+                GreekPronoun(11, Mark120, 1, "αὐτῶν", "genitive", "plural"),
+                GreekPronoun(12, Mark120, 2, "αὐτοὺς", "accusative", "plural"),
+                GreekPronoun(13, Mark120, 3, "αὐτοῦ", "genitive", "singular"),
+            ],
+            ("him", "G846", 0.55), ("their", "G846", 0.55));
+
+        proposals.Should().BeEquivalentTo([(1L, 13L), (2L, 11L)],
+            "him is one man and their is a genitive plural, whichever occurrence stands nearer");
+    }
+
+    [Fact]
     public void ASubjectPronounMayStandOnAnArticleThatStandsForAPerson()
     {
         var proposals = Propose(
@@ -206,6 +225,11 @@ public class EvidentiaAuxiliaryWordTests
         long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech, string? grammaticalCase) =>
         new(id, address, position, surface, "grc", StrongNumber: strong, PartOfSpeech: partOfSpeech,
             Morphology: grammaticalCase is null ? null : new Dictionary<string, string> { ["case"] = grammaticalCase });
+
+    private static EvidentiaToken GreekPronoun(
+        long id, EvidentiaAddress address, int position, string surface, string grammaticalCase, string number) =>
+        new(id, address, position, surface, "grc", StrongNumber: "G846", PartOfSpeech: "pron",
+            Morphology: new Dictionary<string, string> { ["case"] = grammaticalCase, ["number"] = number });
 
     private static EvidentiaToken Hebrew(
         long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech) =>
