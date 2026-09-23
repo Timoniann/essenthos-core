@@ -29,18 +29,11 @@ internal sealed class EvidentiaDictionaryProposalResolver
     }
 
     /// <summary>
-    /// The classes a definition names by their own meaning. A pronoun, an adverb, a preposition or a
-    /// conjunction turns up in the wording of a great many definitions without being what they define,
-    /// so a match on one says nothing about the verse; a word the parser did not classify is kept.
+    /// A pronoun, an adverb, a preposition or a conjunction turns up in the wording of a great many
+    /// definitions without being what they define, so a match on one says nothing about the verse.
     /// </summary>
-    private static readonly HashSet<string> OpenClasses = ["noun", "propn", "verb", "adj", "num"];
-
-    private static bool IsOpenClass(EvidentiaAnalysis source) =>
-        EvidentiaMorphologyLabels.PartOfSpeech(source.PartOfSpeech, source.Token.Language) is not { } partOfSpeech
-        || OpenClasses.Contains(partOfSpeech);
-
     private static bool IsExactDictionary(EvidentiaCandidate candidate) =>
-        IsOpenClass(candidate.Source)
+        EvidentiaMorphologyLabels.IsOpenClass(candidate.Source.PartOfSpeech, candidate.Source.Token.Language)
         && !candidate.PairsAContentWordWithAFunctionWord
         && !candidate.PlacesAnAuxiliaryWordOffItsKind
         && candidate.Evidence.Any(e => e.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)

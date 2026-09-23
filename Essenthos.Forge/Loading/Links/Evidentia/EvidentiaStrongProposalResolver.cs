@@ -86,6 +86,12 @@ internal enum EvidentiaProposalKind
 
     /// <summary>A grammatical word placed by the proposal of the word it belongs to.</summary>
     AttachedWord,
+
+    /// <summary>
+    /// A learned rendering too rare to pass the review floor, placed because it is the only sense of the
+    /// word in the verse and nothing else in the verse claims its one occurrence.
+    /// </summary>
+    ResidualKnownRendering,
 }
 
 internal sealed record EvidentiaProposal(

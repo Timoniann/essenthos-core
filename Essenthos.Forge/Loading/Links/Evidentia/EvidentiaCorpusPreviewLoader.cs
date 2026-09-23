@@ -109,8 +109,16 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             candidates, globalReviewKnownRenderingResolution.Proposals.Concat(dictionaryReviewResolution.Proposals), syntaxEligibleTargetGloss);
         var targetGlossReviewResolution = new EvidentiaResolution(
             dictionaryReviewResolution.Proposals.Concat(targetGlossOnlyResolution.Proposals).ToList(), 0);
+        var residualKnownRenderingResolution = knownRenderingProposalResolver.ResolveResidual(
+            candidates,
+            globalReviewKnownRenderingResolution.Proposals
+                .Concat(dictionaryReviewResolution.Proposals)
+                .Concat(syntaxTargetGlossOnlyResolution.Proposals));
         var syntaxTargetGlossReviewResolution = new EvidentiaResolution(
-            dictionaryReviewResolution.Proposals.Concat(syntaxTargetGlossOnlyResolution.Proposals).ToList(), 0);
+            dictionaryReviewResolution.Proposals
+                .Concat(syntaxTargetGlossOnlyResolution.Proposals)
+                .Concat(residualKnownRenderingResolution.Proposals)
+                .ToList(), 0);
         var sourceIds = source.Select(token => token.Id).ToHashSet();
         var targetIds = target.Select(token => token.Id).ToHashSet();
         var goldAnnotation = options.GoldInterlinear is { } interlinearFolder
