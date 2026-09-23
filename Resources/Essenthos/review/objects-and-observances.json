@@ -1,7 +1,20 @@
 {
-  "about": "Occurrences of the words the objects and appointed times are named by that a reading of every occurrence could not settle, left unlinked for the project owner. Each entry names the record it is about, the Strong number, the verses (canonical numbering; #n is the nth occurrence of the number in the verse), the question, and the answers that would settle it. An answer is applied by adding the verses to the record's occurrence rules in Essenthos.Forge/Loading/Encyclopedia/ObjectRecords.json or ObservanceRecords.json.",
+  "about": "Occurrences of the words the objects and appointed times are named by that a reading of every occurrence could not settle, left unlinked for the project owner. Each entry names the record it is about, the Strong number, the verses (canonical numbering; #n is the nth occurrence of the number in the verse), the question, and the answers that would settle it. An answer is applied by adding the verses to the record's occurrence rules in Essenthos.Forge/Loading/Encyclopedia/ObjectRecords.json or ObservanceRecords.json. Every rule already in those files is a language model's reading and is shown to readers as one; a rule the owner has checked is marked by adding \"reviewed\": \"the project owner, <date>\" to it (and to the record, for its description, relations and names), which makes it the owner's ruling on the next load.",
   "made": "2026-09-23, from a reading of every occurrence in BHSA and Nestle 1904 with the King James and Ohienko beside it",
   "entries": [
+    {
+      "record": "boaz-pillar",
+      "strong": "H1162",
+      "references": [
+        "1KI 7:21",
+        "2CH 3:17"
+      ],
+      "question": "Boaz in these two verses is the bronze pillar of Solomon's temple, not Ruth's husband, and the rules of boaz-pillar and jachin-pillar say so. The Strong number had already resolved these words onto the person Boaz, and a model's reading cannot overrule that, so readers still see the man here until the rules are marked reviewed. Confirm the pillars?",
+      "options": [
+        "the pillars - mark both records' rules reviewed",
+        "leave as it is"
+      ]
+    },
     {
       "record": "sabbath",
       "strong": "H7676",

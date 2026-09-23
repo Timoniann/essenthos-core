@@ -151,13 +151,7 @@ public sealed class ThingLoaderTests : IDisposable
         named.Should().NotContainKey(Hebrew(30, 2, 1).Id);
     }
 
-    /// <summary>
-    /// The pillar Boaz of 1 Kings 7:21 had been resolved by its number onto Ruth's husband. The pillar's
-    /// ruling outranks the resolution, so the reader is shown the pillar, and the resolution's own row
-    /// stays as the record of what it said.
-    /// </summary>
-    [Fact]
-    public async Task ARulingOutranksTheNumbersResolution()
+    private async Task ResolvedOntoTheMan()
     {
         var man = new Entity { Kind = EntityKind.Person, Slug = "boaz", Name = "Boaz", SourceId = "person:Boaz_1", Source = "a test" };
         _db.Entities.Add(man);
@@ -167,15 +161,74 @@ public sealed class ThingLoaderTests : IDisposable
             Source = "a resolution by number",
         });
         await _db.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// A model read these words, and says so: the annotation is a reading, with the number the corpus
+    /// measured for one, and not a person's ruling.
+    /// </summary>
+    [Fact]
+    public async Task AnUnreviewedRuleIsAModelsReading()
+    {
+        await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+
+        var shown = await Annotations.Of(_db, Hebrew(25, 10, 2).Id, CancellationToken.None);
+        shown!.Slug.Should().Be("ark-of-the-covenant");
+        shown.Method.Should().Be("model-reading");
+        shown.Confidence.Should().Be(ThingLoader.ByReading);
+    }
+
+    /// <summary>
+    /// The pillar Boaz of 1 Kings 7:21 had been resolved by its number onto Ruth's husband. A model's
+    /// reading cannot take a name away from a resolution, so until the owner has reviewed the rule the
+    /// reader is still shown the man, and the pillar's reading stands on the word beside it.
+    /// </summary>
+    [Fact]
+    public async Task AReadingDoesNotOverruleTheNumbersResolution()
+    {
+        await ResolvedOntoTheMan();
 
         await _loader.Load(
             [Record("boaz-pillar", rules: [new OccurrenceRule(Boaz, ["GEN 7:21"], null, null)])],
             CancellationToken.None);
 
+        (await Annotations.Of(_db, Hebrew(7, 21, 1).Id, CancellationToken.None))!.Slug.Should().Be("boaz");
+        (await _db.WordEntities.CountAsync(a => a.WordId == Hebrew(7, 21, 1).Id)).Should().Be(2);
+    }
+
+    /// <summary>Once the owner has reviewed the rule it is his ruling, and a ruling outranks the number.</summary>
+    [Fact]
+    public async Task AReviewedRuleOutranksTheNumbersResolution()
+    {
+        await ResolvedOntoTheMan();
+
+        var outcome = await _loader.Load(
+            [Record("boaz-pillar", rules: [new OccurrenceRule(Boaz, ["GEN 7:21"], null, null, "the project owner, 2026-09-24")])],
+            CancellationToken.None);
+
         var shown = await Annotations.Of(_db, Hebrew(7, 21, 1).Id, CancellationToken.None);
         shown!.Slug.Should().Be("boaz-pillar");
         shown.Method.Should().Be("manual");
-        (await _db.WordEntities.CountAsync(a => a.WordId == Hebrew(7, 21, 1).Id)).Should().Be(2);
+        shown.Confidence.Should().BeNull();
+        shown.Source.Should().Be(ThingLoader.ReviewedSource);
+        outcome.AlreadyLoaded.Should().BeFalse();
+    }
+
+    /// <summary>A review added to the file later turns the reading into a ruling on the next boot.</summary>
+    [Fact]
+    public async Task AReviewLandsOnTheNextBoot()
+    {
+        await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+
+        var reviewed = TheArk with { Reviewed = "the project owner, 2026-09-24" };
+        var record = Record("ark-of-the-covenant", rules: [reviewed]) with { Reviewed = "the project owner, 2026-09-24" };
+        (await _loader.Load([record], CancellationToken.None)).AlreadyLoaded.Should().BeFalse();
+
+        (await Annotations.Of(_db, Hebrew(25, 10, 2).Id, CancellationToken.None))!.Method.Should().Be("manual");
+        (await _db.WordEntities.CountAsync(a => a.Source == ThingLoader.Source)).Should().Be(0);
+        var claim = await _db.EntityClaims.SingleAsync(c => c.Entity!.Slug == "ark-of-the-covenant");
+        claim.Method.Should().Be(LinkMethod.Manual);
+        claim.Confidence.Should().BeNull();
     }
 
     /// <summary>
@@ -270,7 +323,9 @@ public sealed class ThingLoaderTests : IDisposable
         ark.Names.Should().ContainSingle().Which.HebrewStrongNumber.Should().Be(Ark);
         ark.Passages.OrderBy(p => p.Ordinal).Select(p => (p.CanonicalChapter, p.CanonicalVerse, p.EndChapter, p.EndVerse))
             .Should().Equal((25, 10, 25, 22), (37, null, 37, null));
-        ark.Claims.Should().ContainSingle().Which.Method.Should().Be(LinkMethod.Manual);
+        var established = ark.Claims.Should().ContainSingle().Which;
+        established.Method.Should().Be(LinkMethod.ModelReading, "a model read these verses and no person has yet");
+        established.Confidence.Should().Be(ThingLoader.ByReading);
 
         var forms = await _db.EntityNameForms.Where(f => f.EntityId == ark.Id)
             .ToDictionaryAsync(f => f.GrammaticalCase, f => f.Form);
@@ -282,7 +337,8 @@ public sealed class ThingLoaderTests : IDisposable
 
         var relation = await _db.EntityRelationships.SingleAsync(r => r.FromEntityId == ark.Id);
         relation.Type.Should().Be("stands-in");
-        relation.Method.Should().Be(LinkMethod.Manual);
+        relation.Method.Should().Be(LinkMethod.ModelReading);
+        relation.Confidence.Should().Be(ThingLoader.ByReading);
         relation.CanonicalChapter.Should().Be(40);
 
         var passover = await _db.Entities.Include(e => e.Times).SingleAsync(e => e.Slug == "passover");

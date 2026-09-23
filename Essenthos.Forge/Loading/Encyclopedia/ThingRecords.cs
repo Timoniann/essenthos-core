@@ -45,6 +45,10 @@ internal sealed record ThingFile(string DecidedBy, IReadOnlyList<ThingRecord> Re
 /// <em>ковчег заповіту</em> that <em>частина ковчега заповіту</em> needs.
 /// </param>
 /// <param name="Why">Why these occurrences are this record, which is what the record's claim says.</param>
+/// <param name="Reviewed">
+/// Who reviewed the record itself — its claim, its relations and its names — and when, once somebody
+/// has. Absent, the record is a model's reading and says so.
+/// </param>
 internal sealed record ThingRecord(
     string Slug,
     string Kind,
@@ -59,7 +63,8 @@ internal sealed record ThingRecord(
     IReadOnlyList<ThingTime>? Times,
     IReadOnlyList<ThingRelation>? Related,
     IReadOnlyList<OccurrenceRule>? Occurrences,
-    string? Why)
+    string? Why,
+    string? Reviewed = null)
 {
     public EntityKind EntityKind => EnumSpelling.ToEntityKind(Kind);
 }
@@ -101,7 +106,16 @@ internal sealed record ThingRelation(string Type, string To, string Reference, s
 /// Another Strong number that has to stand within <see cref="ThingLoader.Reach"/> words of the
 /// occurrence in the same verse: <em>altar</em> beside <em>incense</em>.
 /// </param>
-internal sealed record OccurrenceRule(string Strong, IReadOnlyList<string>? Only, IReadOnlyList<string>? Except, string? With)
+/// <param name="Reviewed">
+/// Who reviewed these occurrences and when — <c>the project owner, 2026-10-01</c>. That is what turns
+/// a model's reading of them into a ruling; absent, they are the reading.
+/// </param>
+internal sealed record OccurrenceRule(
+    string Strong,
+    IReadOnlyList<string>? Only,
+    IReadOnlyList<string>? Except,
+    string? With,
+    string? Reviewed = null)
 {
     public bool Admits(int book, int chapter, int verse, int nth) =>
         (Only is null || Only.Any(span => ScriptureSpan.Parse(span).Holds(book, chapter, verse, nth)))

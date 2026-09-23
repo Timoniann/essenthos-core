@@ -53,12 +53,18 @@ internal sealed record ThingOutcome(
 /// </para>
 ///
 /// <para>
-/// **The rules speak with a person's standing, and say so.** Each word is decided the way a ruling
-/// decides a person's name, so the annotation is <see cref="LinkMethod.Manual"/> and outranks what a
-/// number resolved: the bronze pillar Boaz of 1 Kings 7:21 had been read onto Ruth's husband, and
-/// the pillar's record now answers for that word while the resolution's row stays as the record of
-/// what it said. The rules seed the Hebrew witness and the Greek witnesses, and the translations
-/// reach the record through the links, by the one carrying rule every annotation follows.
+/// **A model read them, and they say so until a person has.** The verse lists were written by a
+/// language model reading every occurrence, so what they establish is a
+/// <see cref="LinkMethod.ModelReading"/> at <see cref="ByReading"/> — the record's claim, its
+/// relations, its names in other languages and every word its rules reach. That standing is below a
+/// resolution by number, as every model reading is: the reading can name a word nothing named and
+/// cannot take a name away, so the bronze pillar Boaz of 1 Kings 7:21, which the number resolved onto
+/// Ruth's husband, keeps showing the man until the owner has looked. A rule or a record the owner has
+/// reviewed says so in the file (<see cref="OccurrenceRule.Reviewed"/>, <see cref="ThingRecord.Reviewed"/>)
+/// and is written as <see cref="LinkMethod.Manual"/> under <see cref="ReviewedSource"/>, which is the
+/// standing that outranks the number. The rules seed the Hebrew witness and the Greek witnesses, and
+/// the translations reach the record through the links, by the one carrying rule every annotation
+/// follows.
 /// </para>
 ///
 /// <para>
@@ -69,9 +75,28 @@ internal sealed record ThingOutcome(
 /// </summary>
 internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
 {
+    /// <summary>What wrote the records and the words no person has reviewed yet.</summary>
     public const string Source =
-        "Essenthos, on the project owner's decision of 2026-09-23 that objects and appointed times are " +
-        "records of their own, each occurrence decided by its sense from the verse";
+        "Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's " +
+        "decision that objects and appointed times are records of their own";
+
+    /// <summary>What wrote a rule or a record the owner has reviewed, which is then his ruling.</summary>
+    public const string ReviewedSource =
+        "Essenthos, on the project owner's review of the readings of objects and appointed times";
+
+    /// <summary>
+    /// How sure a reading here is, which nobody has measured for these records. It is the rate the
+    /// corpus measured for a model's reading of a verse at the band it was not most sure of — 186
+    /// readings re-read, 13 wrong — and not the higher rate of its confident band, because no second
+    /// pass has re-read these and a number that claimed one had would overstate them.
+    /// </summary>
+    internal const double ByReading = 0.93;
+
+    private static LinkMethod MethodOf(bool reviewed) => reviewed ? LinkMethod.Manual : LinkMethod.ModelReading;
+
+    private static double? ConfidenceOf(bool reviewed) => reviewed ? null : ByReading;
+
+    private static string SourceOf(bool reviewed) => reviewed ? ReviewedSource : Source;
 
     private const string SourceIdPrefix = "essenthos:thing:";
 
@@ -109,8 +134,8 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
     /// <summary>The words these rules seeded last time, which is what decides whether to write again.</summary>
     private const string Seeded =
         """
-        SELECT word_id, entity_id FROM word_entity
-        WHERE source = @source AND coalesce(note, '') NOT LIKE @carried
+        SELECT word_id, entity_id, source = @reviewed FROM word_entity
+        WHERE source IN (@source, @reviewed) AND coalesce(note, '') NOT LIKE @carried
         """;
 
     public async Task<ThingOutcome> Load(CancellationToken cancellationToken = default) =>
@@ -281,14 +306,16 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
             changed = true;
         }
 
-        if (!entity.Claims.Any(c => c.Source == Source && c.Note == record.Why))
+        var reviewed = record.Reviewed is not null;
+        if (!entity.Claims.Any(c => c.Source == SourceOf(reviewed) && c.Method == MethodOf(reviewed)
+                                    && c.Note == record.Why))
         {
             entity.Claims.Clear();
             entity.Claims.Add(new EntityClaim
             {
-                Method = LinkMethod.Manual,
-                Confidence = null,
-                Source = Source,
+                Method = MethodOf(reviewed),
+                Confidence = ConfidenceOf(reviewed),
+                Source = SourceOf(reviewed),
                 Note = record.Why,
             });
             changed = true;
@@ -396,15 +423,15 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
                 CanonicalBook = verse.Book,
                 CanonicalChapter = verse.FromChapter,
                 CanonicalVerse = verse.FromVerse,
-                Method = LinkMethod.Manual,
-                Confidence = null,
-                Source = Source,
+                Method = MethodOf(record.Reviewed is not null),
+                Confidence = ConfidenceOf(record.Reviewed is not null),
+                Source = SourceOf(record.Reviewed is not null),
                 Notes = relation.Note,
             });
         }
 
         var held = await db.EntityRelationships
-            .Where(r => r.FromEntityId == entity.Id && r.Source == Source)
+            .Where(r => r.FromEntityId == entity.Id && (r.Source == Source || r.Source == ReviewedSource))
             .ToListAsync(cancellationToken);
         if (!held.Select(RelationKey).Order().SequenceEqual(wanted.Select(RelationKey).Order()))
         {
@@ -416,11 +443,12 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
     }
 
     private static string RelationKey(EntityRelationship r) =>
-        $"{r.ToEntityId}|{r.Type}|{r.CanonicalBook}|{r.CanonicalChapter}|{r.CanonicalVerse}|{r.Notes}";
+        $"{r.ToEntityId}|{r.Type}|{r.Method}|{r.CanonicalBook}|{r.CanonicalChapter}|{r.CanonicalVerse}|{r.Notes}";
 
     /// <summary>The name in each reader's language, and in the cases a phrase needs where the file gives them.</summary>
     private async Task Name(ThingRecord record, Entity entity, CancellationToken cancellationToken)
     {
+        var reviewed = record.Reviewed is not null;
         var wanted = new Dictionary<(string Language, string Case), string>();
         foreach (var (language, name) in record.Names ?? new Dictionary<string, string>())
         {
@@ -461,17 +489,17 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
                     Language = language,
                     GrammaticalCase = grammaticalCase,
                     Form = form,
-                    Method = LinkMethod.Manual,
-                    Confidence = null,
-                    Source = Source,
+                    Method = MethodOf(reviewed),
+                    Confidence = ConfidenceOf(reviewed),
+                    Source = SourceOf(reviewed),
                 });
             }
-            else if (existing.Form != form || existing.Source != Source)
+            else if (existing.Form != form || existing.Source != SourceOf(reviewed))
             {
                 existing.Form = form;
-                existing.Method = LinkMethod.Manual;
-                existing.Confidence = null;
-                existing.Source = Source;
+                existing.Method = MethodOf(reviewed);
+                existing.Confidence = ConfidenceOf(reviewed);
+                existing.Source = SourceOf(reviewed);
             }
         }
     }
@@ -481,7 +509,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
     /// given to neither and counted, because the file then says two things about it and the reader
     /// would be shown whichever was read first.
     /// </summary>
-    private async Task<(IReadOnlyDictionary<long, (int Entity, string Note)> Seed, int Refused)> Settled(
+    private async Task<(IReadOnlyDictionary<long, Seeding> Seed, int Refused)> Settled(
         IReadOnlyList<ThingRecord> records,
         IReadOnlyDictionary<string, int> held,
         CancellationToken cancellationToken)
@@ -489,7 +517,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var claimed = new Dictionary<long, (int Entity, string Note)>();
+        var claimed = new Dictionary<long, Seeding>();
         var disputed = new HashSet<long>();
         foreach (var record in records)
         {
@@ -512,7 +540,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
                         continue;
                     }
 
-                    claimed[wordId] = (entityId, note);
+                    claimed[wordId] = new Seeding(entityId, note, rule.Reviewed is not null);
                 }
             }
         }
@@ -552,51 +580,73 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         return words;
     }
 
+    /// <summary>One word the rules give a record, and whether a person has reviewed the rule that gave it.</summary>
+    private sealed record Seeding(int Entity, string Note, bool Reviewed);
+
     /// <summary>
     /// The seed written as annotations and carried along the links, unless it is exactly what was
-    /// seeded last time. Null where nothing had to be written.
+    /// seeded last time. The readings and the reviewed rules are written as two batches under their
+    /// own methods and sources, because a carried row takes its method from the batch it was carried
+    /// in. Null where nothing had to be written.
     /// </summary>
     private async Task<IReadOnlyList<(string Text, int Words)>?> Annotate(
-        IReadOnlyDictionary<long, (int Entity, string Note)> seed,
+        IReadOnlyDictionary<long, Seeding> seed,
         CancellationToken cancellationToken)
     {
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-        var before = new HashSet<(long, int)>();
+        var before = new HashSet<(long, int, bool)>();
         await using (var command = new NpgsqlCommand(Seeded, connection))
         {
             command.Parameters.AddWithValue("source", Source);
+            command.Parameters.AddWithValue("reviewed", ReviewedSource);
             command.Parameters.AddWithValue("carried", Annotating.CarriedNote);
             command.CommandTimeout = Annotating.Patient;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
-                before.Add((reader.GetInt64(0), reader.GetInt32(1)));
+                before.Add((reader.GetInt64(0), reader.GetInt32(1), reader.GetBoolean(2)));
             }
         }
 
-        if (before.SetEquals(seed.Select(s => (s.Key, s.Value.Entity))))
+        if (before.SetEquals(seed.Select(s => (s.Key, s.Value.Entity, s.Value.Reviewed))))
         {
             return null;
         }
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        await Annotating.Run(connection, transaction, "DELETE FROM word_entity WHERE source = @source",
-            cancellationToken, ("source", Source));
-        await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
-        await Annotating.Seed(
-            connection,
-            seed.Select(s => (s.Key, s.Value.Entity, (double?)null, false, s.Value.Note)),
-            cancellationToken);
-        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
+        await Annotating.Run(connection, transaction, "DELETE FROM word_entity WHERE source IN (@source, @reviewed)",
+            cancellationToken, ("source", Source), ("reviewed", ReviewedSource));
 
-        var method = EnumSpelling.Of(LinkMethod.Manual);
-        await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
-            ("method", method), ("source", Source));
-        await Annotating.Run(connection, transaction, Annotating.Claim, cancellationToken,
-            ("method", method), ("source", Source));
+        var byText = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var reviewed in new[] { false, true })
+        {
+            var batch = seed.Where(s => s.Value.Reviewed == reviewed).ToList();
+            if (batch.Count == 0)
+            {
+                continue;
+            }
 
-        var byText = await Annotating.ByText(connection, transaction, Source, cancellationToken);
+            await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
+            await Annotating.Seed(
+                connection,
+                batch.Select(s => (s.Key, s.Value.Entity, ConfidenceOf(reviewed), false, s.Value.Note)),
+                cancellationToken);
+            await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
+
+            var method = EnumSpelling.Of(MethodOf(reviewed));
+            await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
+                ("method", method), ("source", SourceOf(reviewed)));
+            await Annotating.Run(connection, transaction, Annotating.Claim, cancellationToken,
+                ("method", method), ("source", SourceOf(reviewed)));
+            await Annotating.Run(connection, transaction, "DROP TABLE pending_annotation", cancellationToken);
+
+            foreach (var (text, words) in await Annotating.ByText(connection, transaction, SourceOf(reviewed), cancellationToken))
+            {
+                byText[text] = byText.GetValueOrDefault(text) + words;
+            }
+        }
+
         await transaction.CommitAsync(cancellationToken);
-        return byText;
+        return [.. byText.OrderByDescending(t => t.Value).Select(t => (t.Key, t.Value))];
     }
 }
