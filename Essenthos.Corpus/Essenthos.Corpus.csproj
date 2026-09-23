@@ -38,6 +38,7 @@
         <InternalsVisibleTo Include="Essenthos.Api" />
         <InternalsVisibleTo Include="Essenthos.Forge" />
         <InternalsVisibleTo Include="Essenthos.Accounts" />
+        <InternalsVisibleTo Include="Essenthos.Desk" />
         <InternalsVisibleTo Include="Essenthos.Core.Tests" />
     </ItemGroup>
 

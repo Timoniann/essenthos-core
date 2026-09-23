@@ -260,6 +260,56 @@ public sealed class EntityImageTests : IDisposable
         EntityImageLoader.NeverDepicted(EntityKind.Person, "person:Moses_1").Should().BeFalse();
     }
 
+    [Theory]
+    [InlineData(EntityKind.Person, "person:YHVH_1", "generated", true, false)]
+    [InlineData(EntityKind.Person, "person:YHVH_2", "generated", true, false)]
+    [InlineData(EntityKind.Person, "person:YHVH_1", "generated", false, true)]
+    [InlineData(EntityKind.Person, "person:YHVH_1", "public", true, true)]
+    [InlineData(EntityKind.Person, "person:YHVH_1", "public", false, true)]
+    [InlineData(EntityKind.Term, "essenthos:term:H430", "generated", true, true)]
+    [InlineData(EntityKind.Person, "person:Moses_1", "generated", false, false)]
+    [InlineData(EntityKind.Person, "person:Moses_1", "public", false, false)]
+    public void TheOnlyPictureOfGodIsOurOwnOfTheGlory(EntityKind kind, string sourceId, string pictureKind, bool glory, bool refused) =>
+        EntityImageLoader.Refused(kind, sourceId, pictureKind, glory).Should().Be(refused);
+
+    [Fact]
+    public async Task TheGloryMarkedInTheManifestIsKeptForGodAndNothingElseOfHimIs()
+    {
+        var god = Entity(EntityKind.Person, "yhvh", sourceId: "person:YHVH_1");
+        var father = Entity(EntityKind.Person, "yhvh-2", sourceId: "person:YHVH_2");
+        var elohim = Entity(EntityKind.Term, "elohim", sourceId: "essenthos:term:H430");
+        await _db.SaveChangesAsync();
+
+        var images = Path.Combine(_resources, EntityImageLoader.Folder);
+        WriteJpeg(Path.Combine(images, "generated", "glory.jpg"));
+        File.WriteAllText(Path.Combine(images, "generated", "manifest.json"),
+            """
+            {
+              "source": "Essenthos, generated",
+              "credit": "Essenthos",
+              "licence": "Our own work",
+              "images": [
+                { "entity": "yhvh", "file": "generated/glory.jpg", "caption": "The glory of God as light", "glory": true },
+                { "entity": "yhvh-2", "file": "generated/glory.jpg", "glory": true },
+                { "entity": "yhvh", "file": "generated/yhvh.jpg" },
+                { "entity": "elohim", "file": "generated/glory.jpg", "glory": true }
+              ]
+            }
+            """);
+
+        var outcome = await Loader().Load(_resources);
+
+        outcome.Refused.Should().Be(2, "a picture of God not marked as the glory and any picture of a word for God are refused");
+        var kept = await _db.EntityImages.Where(i => i.EntityId == god.Id || i.EntityId == father.Id || i.EntityId == elohim.Id)
+            .ToListAsync();
+        kept.Should().HaveCount(2).And.OnlyContain(i => i.File == "generated/glory.jpg" && i.Kind == "generated");
+        kept.Select(i => i.EntityId).Should().BeEquivalentTo([god.Id, father.Id]);
+    }
+
+    [Fact]
+    public void TheConsoleKnowsGodByTheSameRecordsTheLoaderDoes() =>
+        Essenthos.Core.Desk.PortraitBoard.GodSourcePrefix.Should().Be(EntityImageLoader.GodSourcePrefix);
+
     [Fact]
     public void TheCuratedListCreditsAndLicensesEveryWork()
     {

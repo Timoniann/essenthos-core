@@ -15,7 +15,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Uncredited">Pictures left out because nobody is named to credit.</param>
 /// <param name="Missing">Pictures left out because their file is not in the images folder.</param>
 /// <param name="Unheld">Pictures of a place or a person the encyclopedia holds no record of.</param>
-/// <param name="Refused">Pictures of God, which are never shown.</param>
+/// <param name="Refused">Pictures of God other than the glory, which are never shown.</param>
 internal sealed record EntityImageOutcome(
     int Places,
     int Curated,
@@ -31,7 +31,7 @@ internal sealed record EntityImageOutcome(
         $"{Places} place pictures from the gazetteer, {Curated} curated public works and {Generated} of our " +
         $"own; left out: {Unlicensed} under terms that do not allow showing them, {Uncredited} with nobody " +
         $"to credit, {Missing} whose file is not in the images folder, {Unheld} of records the " +
-        $"encyclopedia does not hold and {Refused} of God, in {Elapsed}";
+        $"encyclopedia does not hold and {Refused} of God that were not the glory, in {Elapsed}";
 }
 
 /// <summary>
@@ -50,8 +50,9 @@ internal sealed record EntityImageOutcome(
 /// A manifest is <c>{ "source", "credit"?, "licence"?, "licenceUrl"?, "images": [...] }</c>, the
 /// top-level values standing for any entry that does not state its own. An entry is
 /// <c>{ "entity": slug, "file": path under the images folder, "caption", "credit", "creditUrl",
-/// "licence", "licenceUrl", "role": "primary" | "gallery", "focus": [x, y], "download" }</c>; the
-/// last is the address the fetch script takes the file from and is not read here. An entry with no
+/// "licence", "licenceUrl", "role": "primary" | "gallery", "focus": [x, y], "download", "glory" }</c>;
+/// <c>download</c> is the address the fetch script takes the file from and is not read here, and
+/// <c>glory</c> is below. An entry with no
 /// credit or no licence is refused, because a picture with no credit under it reads as ours.
 /// </para>
 ///
@@ -63,8 +64,10 @@ internal sealed record EntityImageOutcome(
 /// </para>
 ///
 /// <para>
-/// God is never given a face or a figure: a picture of YHVH, or of one of the words the text uses of
-/// God, is refused whoever listed it.
+/// God is never given a face or a figure. The one picture a record of God may have is ours, of the
+/// glory as light with nothing inside it to see — Exodus 24:10, Ezekiel 1:27–28 — marked
+/// <c>"glory": true</c> in the generated manifest by whoever put it there. Any other picture of
+/// YHVH is refused whoever listed it, and so is every picture of a word the text uses of God.
 /// </para>
 /// </summary>
 internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoader> logger)
@@ -89,7 +92,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
     public const string Gallery = "gallery";
 
     /// <summary>BibleData's identifiers for God, as the Father and as the God of Israel.</summary>
-    private const string GodSourcePrefix = "person:YHVH_";
+    internal const string GodSourcePrefix = "person:YHVH_";
 
     private static readonly JsonSerializerOptions ManifestJson = new(JsonSerializerDefaults.Web)
     {
@@ -109,10 +112,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         var byOpenBibleId = entities
             .Where(e => e.OpenBibleId != null)
             .ToLookup(e => e.OpenBibleId!, StringComparer.Ordinal);
-        var never = entities
-            .Where(e => NeverDepicted(e.Kind, e.SourceId))
-            .Select(e => e.Id)
-            .ToHashSet();
+        var depiction = entities.ToDictionary(e => e.Id, e => (e.Kind, e.SourceId));
 
         var candidates = new List<Candidate>();
         int unlicensed = 0, uncredited = 0, unheld = 0;
@@ -165,7 +165,8 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                     licence,
                     entry.LicenceUrl ?? (entry.Licence is null ? manifest.LicenceUrl : null),
                     manifest.Source,
-                    entry.Focus is [var x and >= 0 and <= 1, var y and >= 0 and <= 1] ? (x, y) : null));
+                    entry.Focus is [var x and >= 0 and <= 1, var y and >= 0 and <= 1] ? (x, y) : null,
+                    entry.Glory == true));
             }
         }
 
@@ -197,7 +198,8 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                     thumbnail.Licence,
                     thumbnail.LicenceUrl,
                     GazetteerSource,
-                    null)));
+                    null,
+                    false)));
             }
         }
         else
@@ -208,12 +210,17 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                 ancient, images);
         }
 
-        var refused = candidates.RemoveAll(c => never.Contains(c.EntityId));
+        var refused = candidates.RemoveAll(c =>
+        {
+            var (kind, sourceId) = depiction[c.EntityId];
+            return Refused(kind, sourceId, c.Kind, c.Glory);
+        });
         if (refused > 0)
         {
             logger.LogError(
-                "{Refused} pictures of God were listed and none is kept: God is never given a face or a figure. " +
-                "Remove them from the manifest they came from.",
+                "{Refused} pictures of God were listed and none is kept: God is never given a face or a figure. The " +
+                "one picture a record of God may have is our own of the glory, light with no figure, listed in the " +
+                "generated manifest with \"glory\": true. Remove the others from the manifest they came from.",
                 refused);
         }
 
@@ -249,8 +256,16 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
     /// Whether an entity may never be pictured: God, under either of the records the text is read to
     /// name him by, and every word the text uses of God.
     /// </summary>
-    internal static bool NeverDepicted(EntityKind kind, string sourceId) =>
-        kind == EntityKind.Term || sourceId.StartsWith(GodSourcePrefix, StringComparison.Ordinal);
+    internal static bool NeverDepicted(EntityKind kind, string sourceId) => kind == EntityKind.Term || IsGod(sourceId);
+
+    /// <summary>
+    /// Whether a picture is refused: any picture of a word the text uses of God, and any picture of
+    /// God but ours of the glory — a generated picture its manifest marks as light with no figure.
+    /// </summary>
+    internal static bool Refused(EntityKind kind, string sourceId, string pictureKind, bool glory) =>
+        NeverDepicted(kind, sourceId) && !(kind != EntityKind.Term && IsGod(sourceId) && pictureKind == Generated && glory);
+
+    private static bool IsGod(string sourceId) => sourceId.StartsWith(GodSourcePrefix, StringComparison.Ordinal);
 
     /// <summary>
     /// The rows the candidates make, in the order they were listed: the first primary of each kind an
@@ -366,7 +381,8 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         string Licence,
         string? LicenceUrl,
         string Source,
-        (double X, double Y)? Focus);
+        (double X, double Y)? Focus,
+        bool Glory);
 }
 
 /// <param name="Source">The collection the pictures come from, as a row's source says it.</param>
@@ -383,6 +399,10 @@ internal sealed record ImageManifest(
 /// <param name="Entity">The slug of the person or place pictured.</param>
 /// <param name="File">The path under the images folder.</param>
 /// <param name="Download">Where the fetch script takes the file from. Not read by the loader.</param>
+/// <param name="Glory">
+/// That the picture is of the glory of God as light, with no face, body or figure in it: the one kind
+/// of picture a record of God may have, and only from the generated manifest.
+/// </param>
 internal sealed record ImageManifestEntry(
     string Entity,
     string File,
@@ -393,4 +413,5 @@ internal sealed record ImageManifestEntry(
     string? LicenceUrl = null,
     string? Role = null,
     double[]? Focus = null,
-    string? Download = null);
+    string? Download = null,
+    bool? Glory = null);
