@@ -19,27 +19,36 @@
       },
       "distinguisher": "the portable tent-sanctuary Israel made at Sinai and carried through the wilderness (EXO 25:8-9)",
       "notes": "The LORD told Moses to have Israel make him a sanctuary after the pattern shown on the mount, that he might dwell among them (EXO 25:8-9). It was a frame of acacia boards hung with ten curtains of fine linen, covered by a tent of goats' hair and coverings of skins, with a veil dividing the holy place from the most holy (EXO 26:1-33); Bezaleel, Aholiab and the wise-hearted workmen made it (EXO 36:1-38), and Moses set it up on the first day of the first month of the second year, when the cloud covered it and the glory of the LORD filled it (EXO 40:17, 40:34-35). The Levites carried it and camped round about it (NUM 1:50-53), and in the land it was set up at Shiloh (JOS 18:1). In David's and Solomon's day it stood at the high place at Gibeon (1CH 21:29; 2CH 1:3), until the priests brought it up with the ark into Solomon's temple (1KI 8:4); PSA 78:60 says God forsook the tabernacle of Shiloh. Stephen and Hebrews recall it as made after the pattern shown to Moses (ACT 7:44; HEB 8:5; 9:1-8).",
-      "words": [
+      "called": [
         {
-          "label": "tabernacle",
+          "label": "Tabernacle",
           "hebrew": "מִשְׁכָּן",
           "hebrewTransliterated": "mishkan",
           "hebrewStrongNumber": "H4908",
-          "meaning": "dwelling, tabernacle"
+          "meaning": "dwelling place (EXO 25:9)"
         },
         {
-          "label": "tent (of meeting)",
-          "hebrew": "אֹהֶל",
-          "hebrewTransliterated": "ohel",
-          "hebrewStrongNumber": "H168",
-          "meaning": "tent"
+          "label": "Mishkan"
         },
         {
-          "label": "tabernacle",
+          "label": "Tent of meeting",
+          "hebrew": "אֹהֶל מוֹעֵד",
+          "hebrewTransliterated": "ohel mo'ed",
+          "hebrewStrongNumber": "H168,H4150",
+          "meaning": "the tent of the congregation (EXO 27:21)"
+        },
+        {
+          "label": "Ohel Moed"
+        },
+        {
+          "label": "Tabernacle",
           "greek": "σκηνή",
-          "greekTransliterated": "skene",
+          "greekTransliterated": "skēnē",
           "greekStrongNumber": "G4633",
-          "meaning": "tent, tabernacle"
+          "meaning": "tent (HEB 9:2)"
+        },
+        {
+          "label": "Скинія заповіту"
         }
       ],
       "passages": [
@@ -309,20 +318,27 @@
       },
       "distinguisher": "the seven-lamp lampstand of beaten gold that stood in the tabernacle's holy place (EXO 25:31-40)",
       "notes": "Moses was told to make it of a talent of pure gold, beaten work: a shaft with six branches, three on each side, with bowls made like almonds, knops and flowers, and seven lamps (EXO 25:31-39); Bezaleel made it so (EXO 37:17-24). It stood in the tent of the congregation on the south side, over against the table, outside the veil (EXO 26:35; 40:24-25). Aaron was to keep its lamps burning before the LORD from evening to morning with pure beaten olive oil (EXO 27:20-21; LEV 24:1-4), lighting them so that they gave light in front of it (NUM 8:1-4). On the march the Kohathites carried it wrapped in a cloth of blue and a covering of badgers' skins (NUM 4:9-10). The text does not say what became of it; Solomon made ten lampstands of gold for the temple (1KI 7:49), and Hebrews names the lampstand first among the furnishings of the holy place (HEB 9:2).",
-      "words": [
+      "called": [
         {
-          "label": "candlestick",
+          "label": "Menorah",
           "hebrew": "מְנוֹרָה",
           "hebrewTransliterated": "menorah",
           "hebrewStrongNumber": "H4501",
-          "meaning": "lampstand"
+          "meaning": "lampstand (EXO 25:31)"
         },
         {
-          "label": "candlestick",
+          "label": "Golden Lampstand"
+        },
+        {
+          "label": "Lampstand",
           "greek": "λυχνία",
           "greekTransliterated": "lychnia",
           "greekStrongNumber": "G3087",
-          "meaning": "lampstand"
+          "meaning": "HEB 9:2"
+        },
+        {
+          "label": "Менора",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -393,48 +409,30 @@
       },
       "distinguisher": "the gold-overlaid acacia table in the holy place on which the bread of the presence was set (EXO 25:23-30)",
       "notes": "It was made of acacia wood two cubits long, a cubit broad and a cubit and a half high, overlaid with pure gold, with a crown and border, rings and staves, and dishes, spoons, covers and bowls of gold (EXO 25:23-29; 37:10-16). It stood in the tent of the congregation on the north side, outside the veil, and bread was to be set on it before the LORD always (EXO 25:30; 26:35; 40:22-23). Leviticus orders twelve cakes of fine flour in two rows with pure frankincense, set out anew every sabbath and eaten by Aaron and his sons in the holy place (LEV 24:5-9); on the march it was covered with blue and the continual bread stayed on it (NUM 4:7). At Nob the priest gave David this bread, taken from before the LORD, when there was no other (1SA 21:6), which Jesus cites (MAT 12:3-4; MRK 2:25-26; LUK 6:3-4). For the temple Solomon made a table of gold, and Chronicles speaks of ten tables (1KI 7:48; 2CH 4:8, 4:19); Hebrews names the table and the bread in the holy place (HEB 9:2). This record holds the bread as well as the table.",
-      "words": [
+      "called": [
         {
-          "label": "table",
-          "hebrew": "שֻׁלְחָן",
-          "hebrewTransliterated": "shulchan",
-          "hebrewStrongNumber": "H7979",
-          "meaning": "table"
+          "label": "Table of the presence",
+          "hebrew": "שֻׁלְחַן הַפָּנִים",
+          "hebrewTransliterated": "shulchan happanim",
+          "hebrewStrongNumber": "H7979,H6440",
+          "meaning": "the table of shewbread (NUM 4:7)"
         },
         {
-          "label": "bread (of the presence)",
-          "hebrew": "לֶחֶם",
-          "hebrewTransliterated": "lechem",
-          "hebrewStrongNumber": "H3899",
-          "meaning": "bread"
+          "label": "Bread of the presence",
+          "hebrew": "לֶחֶם הַפָּנִים",
+          "hebrewTransliterated": "lechem happanim",
+          "hebrewStrongNumber": "H3899,H6440",
+          "meaning": "the shewbread (EXO 25:30)"
         },
         {
-          "label": "row (of bread)",
-          "hebrew": "מַעֲרֶכֶת",
-          "hebrewTransliterated": "maarekheth",
-          "hebrewStrongNumber": "H4635",
-          "meaning": "arrangement, row of loaves"
+          "label": "Lechem HaPanim"
         },
         {
-          "label": "table",
-          "greek": "τράπεζα",
-          "greekTransliterated": "trapeza",
-          "greekStrongNumber": "G5132",
-          "meaning": "table"
-        },
-        {
-          "label": "shewbread (setting forth)",
-          "greek": "πρόθεσις",
-          "greekTransliterated": "prothesis",
-          "greekStrongNumber": "G4286",
-          "meaning": "setting forth"
-        },
-        {
-          "label": "bread",
-          "greek": "ἄρτος",
-          "greekTransliterated": "artos",
-          "greekStrongNumber": "G740",
-          "meaning": "bread, loaf"
+          "label": "Shewbread",
+          "greek": "οἱ ἄρτοι τῆς προθέσεως",
+          "greekTransliterated": "hoi artoi tēs protheseōs",
+          "greekStrongNumber": "G740,G4286",
+          "meaning": "MAT 12:4"
         }
       ],
       "passages": [
@@ -551,13 +549,23 @@
       },
       "distinguisher": "the small gold-overlaid acacia altar before the veil on which incense was burned (EXO 30:1-10)",
       "notes": "It was a cubit long and a cubit broad, two cubits high, with horns, overlaid with pure gold, with a crown of gold, rings and staves (EXO 30:1-5; 37:25-28), and so it is also called the golden altar (EXO 39:38; 40:26; NUM 4:11). It stood before the veil that is by the ark of the testimony (EXO 30:6; 40:5, 40:26). Aaron burned sweet incense on it every morning and evening; no strange incense, burnt offering or drink offering was to be put on it, and once a year atonement was made on its horns with blood (EXO 30:7-10), as the blood of the sin offering for the priest or the congregation was put on its horns (LEV 4:7, 4:18). Solomon made an altar of gold for the temple (1KI 7:48), where Uzziah went in to burn incense on the altar of incense and was struck with leprosy (2CH 26:16-19), and Zacharias saw an angel standing on the right side of the altar of incense (LUK 1:11). Hebrews places a golden thymiaterion with the most holy place (HEB 9:4); KJV, Ohienko, Luther and Reina-Valera all render it as a censer, and whether it means this altar is left for review.",
-      "words": [
+      "called": [
         {
-          "label": "altar",
-          "hebrew": "מִזְבֵּחַ",
-          "hebrewTransliterated": "mizbeach",
-          "hebrewStrongNumber": "H4196",
-          "meaning": "altar"
+          "label": "Altar of incense",
+          "hebrew": "מִזְבַּח הַקְּטֹרֶת",
+          "hebrewTransliterated": "mizbach haqqetoret",
+          "hebrewStrongNumber": "H4196,H7004",
+          "meaning": "EXO 30:27"
+        },
+        {
+          "label": "Mizbach HaKetoret"
+        },
+        {
+          "label": "Golden altar",
+          "hebrew": "מִזְבַּח הַזָּהָב",
+          "hebrewTransliterated": "mizbach hazzahav",
+          "hebrewStrongNumber": "H4196,H2091",
+          "meaning": "EXO 39:38"
         }
       ],
       "passages": [
@@ -649,20 +657,40 @@
       },
       "distinguisher": "the gold-overlaid chest of acacia wood made at Sinai to hold the tablets of the testimony (EXO 25:10-22)",
       "notes": "It was a chest of acacia wood two and a half cubits long and a cubit and a half broad and high, overlaid with gold within and without, with a crown of gold, four rings and staves that were not to be taken out, and the mercy seat with two cherubim above it; the testimony was put inside and the LORD would speak from above the mercy seat (EXO 25:10-22; 37:1-9). Deuteronomy has Moses say he made an ark of acacia wood and put the second tablets in it (DEU 10:1-5). It went before Israel in the wilderness, the Jordan stood still when the priests bearing it stepped in, and it was carried round Jericho (NUM 10:33-36; JOS 3:14-17; 6:11-13). The Philistines took it, Dagon fell before it, and after seven months it was sent back and stayed at Kirjathjearim (1SA 4:11; 5:1-4; 6:1; 7:1-2) until David brought it into the city of David (2SA 6:1-17). Solomon's priests brought it into the most holy place of the temple, and there was nothing in it but the two tablets of stone (1KI 8:6-9); Josiah told the Levites to put it in the house Solomon built (2CH 35:3). Jeremiah says the day would come when it would not be remembered or made again (JER 3:16), and John saw the ark of his covenant in the temple of God in heaven (REV 11:19).",
-      "words": [
+      "called": [
         {
-          "label": "ark",
-          "hebrew": "אָרוֹן",
-          "hebrewTransliterated": "aron",
-          "hebrewStrongNumber": "H727",
-          "meaning": "chest, ark"
+          "label": "Ark of the covenant",
+          "hebrew": "אֲרוֹן הַבְּרִית",
+          "hebrewTransliterated": "aron habberit",
+          "hebrewStrongNumber": "H727,H1285",
+          "meaning": "JOS 3:6"
         },
         {
-          "label": "ark",
-          "greek": "κιβωτός",
-          "greekTransliterated": "kibotos",
-          "greekStrongNumber": "G2787",
-          "meaning": "box, chest, ark"
+          "label": "Aron HaBrit"
+        },
+        {
+          "label": "Ark of the testimony",
+          "hebrew": "אֲרוֹן הָעֵדֻת",
+          "hebrewTransliterated": "aron ha'edut",
+          "hebrewStrongNumber": "H727,H5715",
+          "meaning": "EXO 25:22"
+        },
+        {
+          "label": "Ark of God",
+          "hebrew": "אֲרוֹן הָאֱלֹהִים",
+          "hebrewTransliterated": "aron ha'elohim",
+          "hebrewStrongNumber": "H727,H430",
+          "meaning": "1SA 3:3"
+        },
+        {
+          "label": "Ark of the covenant",
+          "greek": "ἡ κιβωτὸς τῆς διαθήκης",
+          "greekTransliterated": "hē kibōtos tēs diathēkēs",
+          "greekStrongNumber": "G2787,G1242",
+          "meaning": "HEB 9:4"
+        },
+        {
+          "label": "Ковчег свідоцтва"
         }
       ],
       "passages": [
@@ -777,20 +805,20 @@
       },
       "distinguisher": "the jar holding an omer of manna laid up before the LORD for Israel's generations (EXO 16:32-34)",
       "notes": "The LORD commanded that an omer of manna be kept for Israel's generations, so that they might see the bread he fed them with in the wilderness (EXO 16:32). Moses told Aaron to take a jar, put an omer full of manna in it and lay it up before the LORD, and Aaron laid it up before the testimony (EXO 16:33-34). Exodus does not say what the jar was made of; Hebrews calls it a golden jar and places it in the ark of the covenant with Aaron's rod and the tablets (HEB 9:4). When the ark was brought into Solomon's temple there was nothing in it but the two tablets of stone (1KI 8:9), and the text does not mention the jar again.",
-      "words": [
+      "called": [
         {
-          "label": "pot",
+          "label": "Pot of manna",
           "hebrew": "צִנְצֶנֶת",
-          "hebrewTransliterated": "tsintseneth",
+          "hebrewTransliterated": "tsintsenet",
           "hebrewStrongNumber": "H6803",
-          "meaning": "jar"
+          "meaning": "a jar (EXO 16:33)"
         },
         {
-          "label": "pot",
-          "greek": "στάμνος",
-          "greekTransliterated": "stamnos",
-          "greekStrongNumber": "G4713",
-          "meaning": "jar"
+          "label": "Golden pot of manna",
+          "greek": "στάμνος χρυσῆ",
+          "greekTransliterated": "stamnos chrysē",
+          "greekStrongNumber": "G4713,G5552",
+          "meaning": "HEB 9:4"
         }
       ],
       "passages": [
@@ -832,20 +860,20 @@
       },
       "distinguisher": "the rod of Aaron that became a serpent before Pharaoh and budded before the testimony (NUM 17:8)",
       "notes": "Before Pharaoh Aaron cast down his rod and it became a serpent, and it swallowed up the rods of the magicians (EXO 7:9-12). At the LORD's word through Moses, Aaron stretched out his rod over the waters of Egypt, then for the frogs and over the dust for the lice (EXO 7:19; 8:5-6; 8:16-17). When the princes of the tribes each brought a rod, Aaron's name was written on the rod of Levi, and on the morrow it had budded, bloomed and yielded almonds (NUM 17:2-8). The LORD had it brought back before the testimony to be kept as a token against the rebels (NUM 17:10), and Hebrews places it in the ark of the covenant (HEB 9:4), though at the dedication of Solomon's temple the ark held only the tablets (1KI 8:9). In EXO 7:15-20 the rod is held by Moses and by Aaron in turn, and at Meribah Moses took 'the rod from before the LORD' (NUM 20:8-11); the text does not say whether that was this rod.",
-      "words": [
+      "called": [
         {
-          "label": "rod",
-          "hebrew": "מַטֶּה",
-          "hebrewTransliterated": "matteh",
-          "hebrewStrongNumber": "H4294",
-          "meaning": "rod, staff; tribe"
+          "label": "Rod of Aaron",
+          "hebrew": "מַטֵּה אַהֲרֹן",
+          "hebrewTransliterated": "matteh aharon",
+          "hebrewStrongNumber": "H4294,H175",
+          "meaning": "NUM 17:10"
         },
         {
-          "label": "rod",
-          "greek": "ῥάβδος",
-          "greekTransliterated": "rhabdos",
-          "greekStrongNumber": "G4464",
-          "meaning": "rod, staff"
+          "label": "Aaron's rod that budded",
+          "greek": "ἡ ῥάβδος Ἀαρὼν ἡ βλαστήσασα",
+          "greekTransliterated": "hē rhabdos Aarōn hē blastēsasa",
+          "greekStrongNumber": "G4464,G2,G985",
+          "meaning": "HEB 9:4"
         }
       ],
       "passages": [
@@ -923,20 +951,34 @@
       },
       "distinguisher": "the two tablets of stone, written by the finger of God, on which the ten commandments were given (EXO 31:18)",
       "notes": "On Sinai the LORD gave Moses two tablets of the testimony, tablets of stone written with the finger of God on both their sides (EXO 31:18; 32:15-16). Coming down and seeing the calf, Moses cast them out of his hands and broke them beneath the mount (EXO 32:19; DEU 9:17). The LORD had him hew two more like the first and wrote on them the words of the covenant, the ten commandments (EXO 34:1-4, 34:28; DEU 10:1-4), and Moses put them in the ark he had made (DEU 10:5). When Solomon's priests brought the ark into the temple there was nothing in it but these two tablets (1KI 8:9; 2CH 5:10), and Hebrews lists them among its contents (HEB 9:4). The text calls the second pair 'like unto the first' (EXO 34:1), and this record holds both pairs.",
-      "words": [
+      "called": [
         {
-          "label": "table(s)",
-          "hebrew": "לוּחַ",
-          "hebrewTransliterated": "luach",
-          "hebrewStrongNumber": "H3871",
-          "meaning": "tablet, board"
+          "label": "Tables of the covenant",
+          "hebrew": "לֻחֹת הַבְּרִית",
+          "hebrewTransliterated": "luchot habberit",
+          "hebrewStrongNumber": "H3871,H1285",
+          "meaning": "DEU 9:9"
         },
         {
-          "label": "tables",
-          "greek": "πλάξ",
-          "greekTransliterated": "plax",
-          "greekStrongNumber": "G4109",
-          "meaning": "flat stone, tablet"
+          "label": "Luchot HaBrit"
+        },
+        {
+          "label": "Tables of the testimony",
+          "hebrew": "לֻחֹת הָעֵדֻת",
+          "hebrewTransliterated": "luchot ha'edut",
+          "hebrewStrongNumber": "H3871,H5715",
+          "meaning": "EXO 31:18"
+        },
+        {
+          "label": "Tables of the covenant",
+          "greek": "αἱ πλάκες τῆς διαθήκης",
+          "greekTransliterated": "hai plakes tēs diathēkēs",
+          "greekStrongNumber": "G4109,G1242",
+          "meaning": "HEB 9:4"
+        },
+        {
+          "label": "Скрижалі заповіту",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1025,20 +1067,26 @@
       },
       "distinguisher": "the slab of pure gold with two cherubim that lay upon the ark of the covenant (EXO 25:17-22)",
       "notes": "It was made of pure gold, two cubits and a half long and a cubit and a half broad, with two cherubim of beaten gold at its ends, their wings spread over it and their faces toward it (EXO 25:17-20; 37:6-9). It was put above upon the ark, over the testimony, and there the LORD would meet with Moses and speak from between the cherubim (EXO 25:21-22; NUM 7:89). Because the LORD would appear in the cloud upon it, Aaron was not to come within the veil at all times; on the day of atonement he covered it with the cloud of incense and sprinkled blood upon it and before it seven times (LEV 16:2, 16:13-15). David gave Solomon the pattern of the place of the mercy seat for the temple (1CH 28:11), and Hebrews speaks of the cherubim of glory shadowing it (HEB 9:5). Ohienko renders it with two different words: віко in the Law and престол благодаті in Hebrews.",
-      "words": [
+      "called": [
         {
-          "label": "mercy seat",
+          "label": "Mercy seat",
           "hebrew": "כַּפֹּרֶת",
-          "hebrewTransliterated": "kapporeth",
+          "hebrewTransliterated": "kapporet",
           "hebrewStrongNumber": "H3727",
-          "meaning": "cover (of the ark), place of atonement"
+          "meaning": "the cover of atonement (EXO 25:17)"
         },
         {
-          "label": "mercyseat",
+          "label": "Kapporet"
+        },
+        {
+          "label": "Mercy seat",
           "greek": "ἱλαστήριον",
-          "greekTransliterated": "hilasterion",
+          "greekTransliterated": "hilastērion",
           "greekStrongNumber": "G2435",
-          "meaning": "place or means of atonement"
+          "meaning": "place of propitiation (HEB 9:5)"
+        },
+        {
+          "label": "Престол благодаті"
         }
       ],
       "passages": [
@@ -1112,20 +1160,23 @@
       },
       "distinguisher": "the woven curtain that divided the holy place from the most holy place in the tabernacle (EXO 26:31-33)",
       "notes": "It was woven of blue, purple and scarlet and fine twined linen with cherubim worked on it, and hung by hooks of gold on four gold-overlaid pillars of acacia wood (EXO 26:31-32; 36:35-36). The ark of the testimony stood behind it, so that it divided the holy place from the most holy, while the table, the lampstand and the altar of incense stood outside it (EXO 26:33-35; 40:21, 40:26). Aaron was not to come within it at all times, but on the day of atonement with incense and blood (LEV 16:2, 16:12-15), and when the camp moved it was taken down to cover the ark (NUM 4:5). Solomon made a veil of the same colours for the temple (2CH 3:14), and the veil of the temple was rent from top to bottom when Jesus died (MAT 27:51); whether those belong to this record is left for review. Hebrews calls the most holy place the tabernacle after the second veil and speaks of a way consecrated through the veil, that is, his flesh (HEB 9:3; 10:20).",
-      "words": [
+      "called": [
         {
-          "label": "vail",
+          "label": "Veil",
           "hebrew": "פָּרֹכֶת",
-          "hebrewTransliterated": "parokheth",
+          "hebrewTransliterated": "parokhet",
           "hebrewStrongNumber": "H6532",
-          "meaning": "veil, curtain"
+          "meaning": "the partition (EXO 26:31)"
         },
         {
-          "label": "veil",
-          "greek": "καταπέτασμα",
-          "greekTransliterated": "katapetasma",
-          "greekStrongNumber": "G2665",
-          "meaning": "curtain, veil"
+          "label": "Parochet"
+        },
+        {
+          "label": "Veil of the temple",
+          "greek": "τὸ καταπέτασμα τοῦ ναοῦ",
+          "greekTransliterated": "to katapetasma tou naou",
+          "greekStrongNumber": "G2665,G3485",
+          "meaning": "MAT 27:51"
         }
       ],
       "passages": [
@@ -1199,13 +1250,20 @@
       },
       "distinguisher": "the bronze-overlaid acacia altar of burnt offering that stood before the door of the tabernacle (EXO 27:1-8)",
       "notes": "It was five cubits long and five broad, foursquare, and three cubits high, of acacia wood overlaid with bronze, with horns at its four corners, a grate of bronze network, rings and staves, and hollow with boards (EXO 27:1-8; 38:1-7). It was set before the door of the tabernacle of the tent of the congregation, with the laver between it and the tent (EXO 40:6-7, 40:29-30); on it the burnt offerings were burned, and the blood of the sin offerings was put on its horns and poured out at its bottom (LEV 4:25, 4:30). The censers of Korah's company were beaten into broad plates to cover it, as a memorial to Israel (NUM 16:38-40). In David's and Solomon's day it stood with the tabernacle at the high place at Gibeon, where Solomon offered a thousand burnt offerings on it (1CH 21:29; 2CH 1:5-6). Solomon then made a bronze altar twenty cubits square for the temple (2CH 4:1), which Ahaz later moved aside for an altar copied from Damascus (2KI 16:10-15); whether those later altars belong to this record is left for review.",
-      "words": [
+      "called": [
         {
-          "label": "altar",
-          "hebrew": "מִזְבֵּחַ",
-          "hebrewTransliterated": "mizbeach",
-          "hebrewStrongNumber": "H4196",
-          "meaning": "altar"
+          "label": "Brazen altar",
+          "hebrew": "מִזְבַּח הַנְּחֹשֶׁת",
+          "hebrewTransliterated": "mizbach hannechoshet",
+          "hebrewStrongNumber": "H4196,H5178",
+          "meaning": "EXO 39:39"
+        },
+        {
+          "label": "Altar of burnt offering",
+          "hebrew": "מִזְבַּח הָעֹלָה",
+          "hebrewTransliterated": "mizbach ha'olah",
+          "hebrewStrongNumber": "H4196,H5930",
+          "meaning": "EXO 30:28"
         }
       ],
       "passages": [
@@ -1316,13 +1374,16 @@
       },
       "distinguisher": "the bronze basin on a bronze base between the tent of meeting and the altar, where the priests washed (EXO 30:17-21)",
       "notes": "Moses was told to make a laver of bronze with its foot of bronze and to put it between the tabernacle of the congregation and the altar, with water in it (EXO 30:17-18). Aaron and his sons were to wash their hands and their feet there whenever they went into the tent or came near the altar to minister, that they die not (EXO 30:19-21; 40:30-32). It was made of the bronze looking-glasses of the women who assembled at the door of the tabernacle of the congregation (EXO 38:8). It was anointed with the altar and its vessels when the tabernacle was consecrated (EXO 40:11; LEV 8:11). The text records nothing more of it; for the temple Solomon made ten bronze lavers on bases and the molten sea (1KI 7:23-39; 2CH 4:6).",
-      "words": [
+      "called": [
         {
-          "label": "laver",
+          "label": "Laver",
           "hebrew": "כִּיּוֹר",
           "hebrewTransliterated": "kiyyor",
           "hebrewStrongNumber": "H3595",
-          "meaning": "basin, laver"
+          "meaning": "basin (EXO 30:18)"
+        },
+        {
+          "label": "Kiyor"
         }
       ],
       "passages": [
@@ -1386,20 +1447,23 @@
       },
       "distinguisher": "the vessel of gopher wood that Noah built at God's command to come through the flood (GEN 6:14-16)",
       "notes": "God told Noah to make an ark of gopher wood with rooms, pitched within and without, three hundred cubits long, fifty broad and thirty high, with a window, a door in its side and lower, second and third storeys (GEN 6:14-16). Noah went in with his household and with the creatures by pairs, and the LORD shut him in (GEN 7:1-16); the waters increased and bore it up above the earth (GEN 7:17-18). It rested in the seventh month, on the seventeenth day of the month, upon the mountains of Ararat (GEN 8:4), and Noah sent out a raven and a dove before removing its covering (GEN 8:6-13). The text says nothing more of it after all went out of it (GEN 8:18-19; 9:18). Jesus, Hebrews and Peter recall it (MAT 24:38; LUK 17:27; HEB 11:7; 1PE 3:20).",
-      "words": [
+      "called": [
         {
-          "label": "ark",
+          "label": "Ark",
           "hebrew": "תֵּבָה",
           "hebrewTransliterated": "tevah",
           "hebrewStrongNumber": "H8392",
-          "meaning": "box, ark"
+          "meaning": "box, ark (GEN 6:14)"
         },
         {
-          "label": "ark",
+          "label": "Tevat Noach"
+        },
+        {
+          "label": "Ark",
           "greek": "κιβωτός",
-          "greekTransliterated": "kibotos",
+          "greekTransliterated": "kibōtos",
           "greekStrongNumber": "G2787",
-          "meaning": "box, chest, ark"
+          "meaning": "HEB 11:7"
         }
       ],
       "passages": [
@@ -1479,20 +1543,13 @@
       },
       "distinguisher": "the bronze pillar Solomon set up on the right of the temple porch (1KI 7:21)",
       "notes": "Hiram of Tyre, a worker in bronze, cast two pillars of bronze for Solomon, each eighteen cubits high and twelve cubits round, with chapiters of molten bronze adorned with nets of checker work, lily work and rows of pomegranates (1KI 7:13-20); Chronicles gives their length as thirty-five cubits (2CH 3:15-16). Solomon set them up at the porch of the temple, naming the right-hand pillar Jachin and the left-hand pillar Boaz (1KI 7:21; 2CH 3:17). Jeremiah spoke of the pillars among the things left in the house of the LORD that would be carried to Babylon (JER 27:19-22). When the Chaldeans took Jerusalem they broke the bronze pillars in pieces and carried the bronze to Babylon (2KI 25:13, 25:16-17; JER 52:17, 52:20-23).",
-      "words": [
+      "called": [
         {
           "label": "Jachin",
           "hebrew": "יָכִין",
-          "hebrewTransliterated": "Yakhin",
+          "hebrewTransliterated": "yakhin",
           "hebrewStrongNumber": "H3199",
-          "meaning": "he establishes"
-        },
-        {
-          "label": "pillar",
-          "hebrew": "עַמּוּד",
-          "hebrewTransliterated": "ammud",
-          "hebrewStrongNumber": "H5982",
-          "meaning": "pillar, column"
+          "meaning": "he establishes (1KI 7:21)"
         }
       ],
       "passages": [
@@ -1554,20 +1611,13 @@
       },
       "distinguisher": "the bronze pillar Solomon set up on the left of the temple porch (1KI 7:21)",
       "notes": "Hiram of Tyre, a worker in bronze, cast two pillars of bronze for Solomon, each eighteen cubits high and twelve cubits round, with chapiters of molten bronze adorned with nets of checker work, lily work and rows of pomegranates (1KI 7:13-20); Chronicles gives their length as thirty-five cubits (2CH 3:15-16). Solomon set them up at the porch of the temple, naming the right-hand pillar Jachin and the left-hand pillar Boaz (1KI 7:21; 2CH 3:17). Jeremiah spoke of the pillars among the things left in the house of the LORD that would be carried to Babylon (JER 27:19-22). When the Chaldeans took Jerusalem they broke the bronze pillars in pieces and carried the bronze to Babylon (2KI 25:13, 25:16-17; JER 52:17, 52:20-23).",
-      "words": [
+      "called": [
         {
           "label": "Boaz",
           "hebrew": "בֹּעַז",
-          "hebrewTransliterated": "Boaz",
+          "hebrewTransliterated": "boaz",
           "hebrewStrongNumber": "H1162",
-          "meaning": "in him is strength"
-        },
-        {
-          "label": "pillar",
-          "hebrew": "עַמּוּד",
-          "hebrewTransliterated": "ammud",
-          "hebrewStrongNumber": "H5982",
-          "meaning": "pillar, column"
+          "meaning": "in it is strength (1KI 7:21)"
         }
       ],
       "passages": [
@@ -1635,48 +1685,31 @@
       },
       "distinguisher": "the house of the LORD that Solomon built in Jerusalem and the Babylonians burnt (1KI 6:37)",
       "notes": "Solomon began to build the house of the LORD in the fourth year of his reign, in the month Zif, the four hundred and eightieth year after the exodus (1KI 6:1), on mount Moriah in Jerusalem, at the threshing floor of Ornan (2CH 3:1). It was sixty cubits long, twenty wide and thirty high, of stone made ready before it was brought, lined with cedar and overlaid with gold (1KI 6:2, 6:7, 6:15-22), and Hiram of Tyre cast its bronze work (1KI 7:13-47); it was finished in the eleventh year, in the month Bul, after seven years (1KI 6:38). At the dedication the priests brought the ark into the oracle and the cloud filled the house of the LORD (1KI 8:6-11). Later kings emptied its treasuries and repaired it (1KI 14:26; 2KI 12:4-14; 22:3-7), and Nebuzaradan burnt it in the nineteenth year of Nebuchadnezzar (2KI 25:8-9), breaking up its bronze and carrying it to Babylon (2KI 25:13-17). The old men at the founding of the Second Temple had seen this 'first house' (EZR 3:12).",
-      "words": [
+      "called": [
         {
-          "label": "house",
-          "hebrew": "בַּיִת",
-          "hebrewTransliterated": "bayit",
-          "hebrewStrongNumber": "H1004",
-          "meaning": "house; in these verses the house of the LORD"
+          "label": "House of the LORD",
+          "hebrew": "בֵּית יְהוָה",
+          "hebrewTransliterated": "beit adonai",
+          "hebrewStrongNumber": "H1004,H3068",
+          "meaning": "1KI 6:1"
         },
         {
-          "label": "temple",
-          "hebrew": "הֵיכָל",
-          "hebrewTransliterated": "heikhal",
-          "hebrewStrongNumber": "H1964",
-          "meaning": "temple, palace; the main hall of the sanctuary"
+          "label": "First Temple"
         },
         {
-          "label": "sanctuary",
-          "hebrew": "מִקְדָּשׁ",
-          "hebrewTransliterated": "miqdash",
-          "hebrewStrongNumber": "H4720",
-          "meaning": "sanctuary, holy place"
+          "label": "Beit HaMikdash",
+          "meaning": "the house of the sanctuary; the name in later Jewish usage, not the text's own"
         },
         {
-          "label": "house",
-          "hebrew": "בַּיִת",
-          "hebrewTransliterated": "bayit (Aramaic)",
-          "hebrewStrongNumber": "H1005",
-          "meaning": "house; the house of God (Ezra, Daniel)"
+          "label": "Temple",
+          "hebrew": "הֵיכַל יְהוָה",
+          "hebrewTransliterated": "heikhal adonai",
+          "hebrewStrongNumber": "H1964,H3068",
+          "meaning": "the temple of the LORD (2KI 18:16)"
         },
         {
-          "label": "temple",
-          "hebrew": "הֵיכַל",
-          "hebrewTransliterated": "heikhal (Aramaic)",
-          "hebrewStrongNumber": "H1965",
-          "meaning": "temple, palace"
-        },
-        {
-          "label": "house",
-          "greek": "οἶκος",
-          "greekTransliterated": "oikos",
-          "greekStrongNumber": "G3624",
-          "meaning": "house (ACT 7:47)"
+          "label": "Перший храм",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1974,34 +2007,20 @@
       },
       "distinguisher": "the house of God rebuilt at Jerusalem after the exile and finished in the sixth year of Darius (EZR 6:15)",
       "notes": "Cyrus king of Persia decreed in his first year that the house of the LORD be built again at Jerusalem, and returned the vessels Nebuchadnezzar had taken (EZR 1:1-11; 6:3-5). In the second year of their coming Zerubbabel and Jeshua began the work and the builders laid the foundation, while old men who had seen the first house wept (EZR 3:8-12). Opposition stopped the work until the second year of Darius (EZR 4:24); at the word of Haggai and Zechariah it began again (EZR 5:1-2; HAG 1:14), and the house was finished on the third day of Adar in Darius' sixth year and dedicated with offerings (EZR 6:15-17). Haggai asked who had seen the house in its first glory and promised that the glory of the latter house would be greater (HAG 2:3, 2:9), and Nehemiah's covenant bound the people to its service (NEH 10:32-39). The text of the Old Testament does not describe its end.",
-      "words": [
+      "called": [
         {
-          "label": "house",
-          "hebrew": "בַּיִת",
-          "hebrewTransliterated": "bayit",
-          "hebrewStrongNumber": "H1004",
-          "meaning": "house; in these verses the house of the LORD"
+          "label": "House of God",
+          "hebrew": "בֵּית אֱלָהָא",
+          "hebrewTransliterated": "beit elaha",
+          "hebrewStrongNumber": "H1005,H426",
+          "meaning": "the house of God in Jerusalem (EZR 6:15, Aramaic)"
         },
         {
-          "label": "temple",
-          "hebrew": "הֵיכָל",
-          "hebrewTransliterated": "heikhal",
-          "hebrewStrongNumber": "H1964",
-          "meaning": "temple, palace; the main hall of the sanctuary"
+          "label": "Zerubbabel's Temple"
         },
         {
-          "label": "house",
-          "hebrew": "בַּיִת",
-          "hebrewTransliterated": "bayit (Aramaic)",
-          "hebrewStrongNumber": "H1005",
-          "meaning": "house; the house of God (Ezra, Daniel)"
-        },
-        {
-          "label": "sanctuary",
-          "hebrew": "מִקְדָּשׁ",
-          "hebrewTransliterated": "miqdash",
-          "hebrewStrongNumber": "H4720",
-          "meaning": "sanctuary, holy place"
+          "label": "Beit HaMikdash HaSheni",
+          "meaning": "the name in later Jewish usage, not the text's own"
         }
       ],
       "passages": [
@@ -2134,27 +2153,20 @@
       },
       "distinguisher": "the temple standing in Jerusalem in the Gospels and Acts, forty-six years in building (JHN 2:20)",
       "notes": "The temple of the Gospels and Acts; the Jews told Jesus it had been forty-six years in building (JHN 2:20), and the text does not name its builder. Zacharias burned incense in its sanctuary (LUK 1:9), the child Jesus was presented there and later found among the teachers (LUK 2:22-38, 2:46), and Jesus drove the traders out of it and taught in it daily (MAT 21:12; JHN 2:14-16; LUK 21:37-38). When he died the veil of its sanctuary was torn from top to bottom (MAT 27:51). He foretold that not one stone of its buildings would be left upon another (MAT 24:1-2; MRK 13:1-2). The apostles taught daily in it and in Solomon's porch (ACT 3:11; 5:12, 5:42), and Paul was seized in it (ACT 21:26-30).",
-      "words": [
+      "called": [
         {
-          "label": "temple",
+          "label": "Temple",
           "greek": "ἱερόν",
           "greekTransliterated": "hieron",
           "greekStrongNumber": "G2411",
-          "meaning": "temple, the whole temple precincts"
+          "meaning": "the temple precincts (JHN 2:14)"
         },
         {
-          "label": "temple",
+          "label": "Sanctuary",
           "greek": "ναός",
           "greekTransliterated": "naos",
           "greekStrongNumber": "G3485",
-          "meaning": "temple, the sanctuary building itself"
-        },
-        {
-          "label": "house",
-          "greek": "οἶκος",
-          "greekTransliterated": "oikos",
-          "greekStrongNumber": "G3624",
-          "meaning": "house ('my Father's house', JHN 2:16)"
+          "meaning": "the temple house (JHN 2:20)"
         }
       ],
       "passages": [
@@ -2240,27 +2252,9 @@
       },
       "distinguisher": "the temple Ezekiel was shown and measured in a vision (EZK 41:1)",
       "notes": "In the twenty-fifth year of the captivity Ezekiel was brought in the visions of God to a very high mountain in the land of Israel and shown a temple (EZK 40:1-2). A man with a measuring reed led him through its gates, courts, chambers, porch and house to the most holy place, twenty cubits square (EZK 40:3-42:20; 41:4). The glory of the LORD, which had departed from the house in Jerusalem (EZK 10:18-19; 11:23), came into this house by the east gate and filled it (EZK 43:1-5), and Ezekiel was to show its form and laws to the house of Israel (EZK 43:10-12). Laws for its priests, offerings and prince follow (EZK 44-46), and water issued from under its threshold eastward and healed the waters (EZK 47:1-12). The text presents it as a vision; no verse records it being built.",
-      "words": [
+      "called": [
         {
-          "label": "house",
-          "hebrew": "בַּיִת",
-          "hebrewTransliterated": "bayit",
-          "hebrewStrongNumber": "H1004",
-          "meaning": "house; in these verses the house of the LORD"
-        },
-        {
-          "label": "temple",
-          "hebrew": "הֵיכָל",
-          "hebrewTransliterated": "heikhal",
-          "hebrewStrongNumber": "H1964",
-          "meaning": "temple, palace; the main hall of the sanctuary"
-        },
-        {
-          "label": "sanctuary",
-          "hebrew": "מִקְדָּשׁ",
-          "hebrewTransliterated": "miqdash",
-          "hebrewStrongNumber": "H4720",
-          "meaning": "sanctuary, holy place"
+          "label": "The Temple of Ezekiel's vision"
         }
       ],
       "passages": [
@@ -2329,13 +2323,13 @@
       },
       "distinguisher": "the temple of God in heaven that John saw opened (REV 11:19)",
       "notes": "Hebrews calls Christ a minister of the sanctuary and of the true tabernacle which the Lord pitched and not man, and says the earthly priests serve a copy and shadow of heavenly things, as Moses was told to build after the pattern shown him (HEB 8:1-5). Christ came by a greater and more perfect tabernacle not made with hands, and entered not into holy places made with hands but into heaven itself (HEB 9:11, 9:24). In Revelation the temple of God is opened in heaven and the ark of his testament is seen in it (REV 11:19); an angel comes out of the temple which is in heaven (REV 14:17), and the temple of the tabernacle of the testimony in heaven is opened and filled with smoke from God's glory (REV 15:5-8). In the new Jerusalem John saw no temple, for the Lord God and the Lamb are its temple (REV 21:22).",
-      "words": [
+      "called": [
         {
-          "label": "temple",
-          "greek": "ναός",
-          "greekTransliterated": "naos",
-          "greekStrongNumber": "G3485",
-          "meaning": "temple, sanctuary"
+          "label": "Temple of God in heaven",
+          "greek": "ὁ ναὸς τοῦ θεοῦ ὁ ἐν τῷ οὐρανῷ",
+          "greekTransliterated": "ho naos tou theou ho en tō ouranō",
+          "greekStrongNumber": "G3485,G2316,G3772",
+          "meaning": "REV 11:19"
         }
       ],
       "passages": [
@@ -2390,34 +2384,30 @@
       },
       "distinguisher": "the innermost room of the tabernacle and the temple, behind the veil, where the ark stood (1KI 6:16)",
       "notes": "The veil of the tabernacle divided the holy place from the most holy, and the ark with the mercy seat was put within it (EXO 26:33-34); the high priest alone entered, once a year, not without blood (LEV 16:2, 16:34; HEB 9:7). In Solomon's temple it was the oracle (devir), twenty cubits long, wide and high, overlaid with pure gold, where two cherubim of olive wood stood (1KI 6:16-28), and the priests brought the ark into it at the dedication (1KI 8:6-8). Ezekiel's visionary temple has a most holy place twenty cubits square (EZK 41:4). Hebrews calls the room behind the second veil the Holiest of all and reads the high priest's yearly entry as a figure of Christ's entry into heaven (HEB 9:3, 9:7-12, 9:24-25).",
-      "words": [
+      "called": [
         {
-          "label": "oracle",
+          "label": "Most holy place",
+          "hebrew": "קֹדֶשׁ הַקֳּדָשִׁים",
+          "hebrewTransliterated": "qodesh haqqodashim",
+          "hebrewStrongNumber": "H6944",
+          "meaning": "the holy of holies (EXO 26:33)"
+        },
+        {
+          "label": "Kodesh HaKodashim"
+        },
+        {
+          "label": "Oracle",
           "hebrew": "דְּבִיר",
           "hebrewTransliterated": "devir",
           "hebrewStrongNumber": "H1687",
-          "meaning": "inner sanctuary, oracle"
+          "meaning": "the inner sanctuary (1KI 6:16)"
         },
         {
-          "label": "most holy",
-          "hebrew": "קֹדֶשׁ",
-          "hebrewTransliterated": "qodesh",
-          "hebrewStrongNumber": "H6944",
-          "meaning": "holiness; qodesh haqqodashim, 'holy of holies'"
-        },
-        {
-          "label": "house",
-          "hebrew": "בַּיִת",
-          "hebrewTransliterated": "bayit",
-          "hebrewStrongNumber": "H1004",
-          "meaning": "house; 'the inner house', 'the most holy house'"
-        },
-        {
-          "label": "holiest",
-          "greek": "ἅγιος",
-          "greekTransliterated": "hagios",
+          "label": "Holiest of all",
+          "greek": "ἅγια ἁγίων",
+          "greekTransliterated": "hagia hagiōn",
           "greekStrongNumber": "G40",
-          "meaning": "holy; Hagia Hagion, 'Holiest of all' (HEB 9:3)"
+          "meaning": "HEB 9:3"
         }
       ],
       "passages": [
@@ -2522,13 +2512,16 @@
       },
       "distinguisher": "the great cast bronze basin on twelve oxen in Solomon's temple (1KI 7:23; 2KI 25:13)",
       "notes": "Hiram of Tyre cast for Solomon a molten sea ten cubits from brim to brim, five cubits high and thirty round, standing on twelve oxen that faced the four quarters (1KI 7:23-25; 2CH 4:2-4). It held two thousand baths by 1KI 7:26 and three thousand by 2CH 4:5, and it was for the priests to wash in (2CH 4:6). It stood on the right side of the house, eastward toward the south (1KI 7:39), and was made of the bronze David took from the cities of Hadarezer (1CH 18:8). Ahaz took it down from the bronze oxen and set it on a pavement of stones (2KI 16:17), and the Chaldeans broke it in pieces and carried its bronze to Babylon (2KI 25:13, 25:16; JER 52:17, 52:20).",
-      "words": [
+      "called": [
         {
-          "label": "sea",
-          "hebrew": "יָם",
-          "hebrewTransliterated": "yam",
-          "hebrewStrongNumber": "H3220",
-          "meaning": "sea; here the great cast basin"
+          "label": "Molten sea",
+          "hebrew": "הַיָּם מוּצָק",
+          "hebrewTransliterated": "hayyam mutsaq",
+          "hebrewStrongNumber": "H3220,H3332",
+          "meaning": "1KI 7:23"
+        },
+        {
+          "label": "Brazen Sea"
         }
       ],
       "passages": [
@@ -2606,13 +2599,17 @@
       },
       "distinguisher": "the tower begun with the city in the plain of Shinar (GEN 11:4)",
       "notes": "The people of one language, dwelling in the plain of Shinar, made brick and slime and said they would build a city and a tower whose top would reach to heaven, to make themselves a name lest they be scattered (GEN 11:1-4). The LORD came down to see the city and the tower which the children of men built, confounded their language and scattered them over the earth, and they left off building the city (GEN 11:5-8). The city was called Babel because the LORD there confounded the language of all the earth (GEN 11:9). The text names no builder and says nothing more of the tower.",
-      "words": [
+      "called": [
         {
-          "label": "tower",
+          "label": "Tower",
           "hebrew": "מִגְדָּל",
           "hebrewTransliterated": "migdal",
           "hebrewStrongNumber": "H4026",
-          "meaning": "tower"
+          "meaning": "GEN 11:4"
+        },
+        {
+          "label": "Migdal Bavel",
+          "meaning": "the name in later Jewish usage, not the text's own"
         }
       ],
       "passages": [
@@ -2655,13 +2652,13 @@
       },
       "distinguisher": "the king's house Solomon built for himself in thirteen years (1KI 7:1; 9:1)",
       "notes": "Solomon was thirteen years building his own house, after finishing the house of the LORD (1KI 7:1; 9:1, 9:10). With it he built the house of the forest of Lebanon, the porch of pillars, the porch for the throne where he judged, and a house for Pharaoh's daughter, all of costly hewn stone and cedar, round a great court (1KI 7:2-12). The levy raised by Solomon was for building it together with the temple, Millo and the wall of Jerusalem (1KI 9:15), and he made supports of almug wood for it (1KI 10:12). The text does not say what became of it: 'the king's house' burnt by Nebuzaradan (2KI 25:9) is not called Solomon's there.",
-      "words": [
+      "called": [
         {
-          "label": "house",
-          "hebrew": "בַּיִת",
-          "hebrewTransliterated": "bayit",
-          "hebrewStrongNumber": "H1004",
-          "meaning": "house; 'his own house', 'the king's house'"
+          "label": "King's house",
+          "hebrew": "בֵּית הַמֶּלֶךְ",
+          "hebrewTransliterated": "beit hammelekh",
+          "hebrewStrongNumber": "H1004,H4428",
+          "meaning": "1KI 9:1"
         }
       ],
       "passages": [
@@ -2723,13 +2720,13 @@
       },
       "distinguisher": "the tower in Siloam whose fall killed eighteen people (LUK 13:4)",
       "notes": "When some told Jesus of the Galileans whose blood Pilate had mingled with their sacrifices, he spoke also of the eighteen on whom the tower in Siloam fell and killed them (LUK 13:1-4). He said they were not sinners above all who dwelt in Jerusalem, and that unless his hearers repented they would likewise perish (LUK 13:4-5). This is its only mention; the text says nothing of who built it or when it fell.",
-      "words": [
+      "called": [
         {
-          "label": "tower",
-          "greek": "πύργος",
-          "greekTransliterated": "pyrgos",
-          "greekStrongNumber": "G4444",
-          "meaning": "tower"
+          "label": "Tower in Siloam",
+          "greek": "ὁ πύργος ἐν τῷ Σιλωάμ",
+          "greekTransliterated": "ho pyrgos en tō Silōam",
+          "greekStrongNumber": "G4444,G4611",
+          "meaning": "LUK 13:4"
         }
       ],
       "passages": [
@@ -2765,13 +2762,16 @@
       },
       "distinguisher": "the conduit by which Hezekiah brought water into Jerusalem (2KI 20:20)",
       "notes": "Kings records that Hezekiah made a pool and a conduit and brought water into the city (2KI 20:20). Chronicles says he stopped the upper watercourse of Gihon and brought it straight down to the west side of the city of David (2CH 32:30), after stopping the springs outside the city so that the kings of Assyria should not find much water (2CH 32:2-4). Isaiah reproaches Jerusalem for making a reservoir between the two walls for the water of the old pool (ISA 22:11). It is not the 'conduit of the upper pool' where Isaiah met Ahaz and the Rabshakeh stood (ISA 7:3; 2KI 18:17), which is named already in Ahaz's day.",
-      "words": [
+      "called": [
         {
-          "label": "conduit",
+          "label": "Conduit",
           "hebrew": "תְּעָלָה",
           "hebrewTransliterated": "te'alah",
           "hebrewStrongNumber": "H8585",
-          "meaning": "conduit, water channel"
+          "meaning": "2KI 20:20"
+        },
+        {
+          "label": "Siloam Tunnel"
         }
       ],
       "passages": [
@@ -2829,13 +2829,13 @@
       },
       "distinguisher": "the tent Moses pitched outside the camp, far off, before the tabernacle was made (EXO 33:7)",
       "notes": "After the golden calf Moses took the tent and pitched it outside the camp, far off, and called it the tent of meeting, and everyone who sought the LORD went out to it (EXO 33:7). When Moses went into it the pillar of cloud came down and stood at its door and the LORD spoke with him face to face, while the people rose and worshipped at their own tent doors (EXO 33:8-11). Joshua the son of Nun did not depart out of it (EXO 33:11). It comes before the making of the tabernacle (EXO 35-40), which was set in the midst of the camp (NUM 2:17); whether the tent of NUM 11:16-30 and 12:4-10 is this one is not settled by the text.",
-      "words": [
+      "called": [
         {
-          "label": "tent",
-          "hebrew": "אֹהֶל",
-          "hebrewTransliterated": "ohel",
-          "hebrewStrongNumber": "H168",
-          "meaning": "tent"
+          "label": "Tent of meeting",
+          "hebrew": "אֹהֶל מוֹעֵד",
+          "hebrewTransliterated": "ohel mo'ed",
+          "hebrewStrongNumber": "H168,H4150",
+          "meaning": "the tabernacle of the congregation, outside the camp (EXO 33:7)"
         }
       ],
       "passages": [
@@ -2876,13 +2876,13 @@
       },
       "distinguisher": "the tent David pitched in the city of David for the ark of God (2SA 6:17)",
       "notes": "David prepared a place for the ark of God in the city of David and pitched a tent for it (1CH 15:1). The ark was brought up from the house of Obed-edom with gladness and set in its place in the midst of the tent, and David offered burnt offerings and peace offerings before the LORD (2SA 6:12-17; 1CH 16:1). Chronicles keeps it distinct from the tabernacle of the LORD, which stood at the high place at Gibeon (1CH 16:39; 2CH 1:3-4). The ark stayed in the city of David until Solomon's priests brought it up into the temple (1KI 8:1-6).",
-      "words": [
+      "called": [
         {
-          "label": "tent",
+          "label": "Tent",
           "hebrew": "אֹהֶל",
           "hebrewTransliterated": "ohel",
           "hebrewStrongNumber": "H168",
-          "meaning": "tent"
+          "meaning": "the tent David pitched for the ark (2SA 6:17)"
         }
       ],
       "passages": [
@@ -2945,34 +2945,23 @@
       },
       "distinguisher": "the serpent of bronze Moses set on a pole in the wilderness, later broken by Hezekiah (NUM 21:9)",
       "notes": "When the people spoke against God and Moses and were bitten by fiery serpents, the LORD told Moses to make a fiery serpent and set it on a pole, and whoever was bitten and looked at it would live (NUM 21:6-8). Moses made a serpent of bronze and put it on a pole, and those who looked at it lived (NUM 21:9). Centuries later Hezekiah broke it in pieces, because the children of Israel had been burning incense to it until then; it was called Nehushtan (2KI 18:4). Jesus compares his own lifting up to Moses lifting up the serpent in the wilderness (JHN 3:14-15). In NUM 21:8 the thing to be made is called by the word for the fiery serpents (saraph), in NUM 21:9 and 2KI 18:4 by the ordinary word for a serpent with 'of bronze'.",
-      "words": [
-        {
-          "label": "serpent",
-          "hebrew": "נָחָשׁ",
-          "hebrewTransliterated": "nachash",
-          "hebrewStrongNumber": "H5175",
-          "meaning": "serpent, snake"
-        },
+      "called": [
         {
           "label": "Nehushtan",
           "hebrew": "נְחֻשְׁתָּן",
           "hebrewTransliterated": "nechushtan",
           "hebrewStrongNumber": "H5180",
-          "meaning": "the name given to the bronze serpent"
+          "meaning": "a thing of bronze (2KI 18:4)"
         },
         {
-          "label": "fiery serpent",
-          "hebrew": "שָׂרָף",
-          "hebrewTransliterated": "saraph",
-          "hebrewStrongNumber": "H8314",
-          "meaning": "burning one; a venomous serpent"
+          "label": "Serpent of brass",
+          "hebrew": "נְחַשׁ נְחֹשֶׁת",
+          "hebrewTransliterated": "nechash nechoshet",
+          "hebrewStrongNumber": "H5175,H5178",
+          "meaning": "NUM 21:9"
         },
         {
-          "label": "serpent",
-          "greek": "ὄφις",
-          "greekTransliterated": "ophis",
-          "greekStrongNumber": "G3789",
-          "meaning": "serpent, snake"
+          "label": "Нехуштан"
         }
       ],
       "passages": [
@@ -3044,13 +3033,13 @@
       },
       "distinguisher": "the gold, blue, purple and scarlet shoulder garment made for Aaron, bearing two onyx stones (EXO 28:6-14)",
       "notes": "The ephod is one of the holy garments made for Aaron (EXO 28:4), worked of gold, blue, purple, scarlet and fine twined linen (EXO 28:6), with a curiously wrought girdle of the same (EXO 28:8). Two onyx stones engraved with the names of the children of Israel were set on its shoulderpieces, so that Aaron bore their names before the LORD for a memorial (EXO 28:9-12). The breastplate was bound by its rings to the rings of the ephod with a lace of blue so that it should not come loose (EXO 28:28), and a robe of blue was made to go under it, called the robe of the ephod (EXO 28:31). It was made as commanded (EXO 39:2-7) and Moses put it on Aaron at his consecration (LEV 8:7). Other ephods in the text, such as the linen ephods of Samuel and David (1SA 2:18; 2SA 6:14) and Gideon's (JDG 8:27), are not this one.",
-      "words": [
+      "called": [
         {
-          "label": "ephod",
+          "label": "Ephod",
           "hebrew": "אֵפוֹד",
           "hebrewTransliterated": "ephod",
           "hebrewStrongNumber": "H646",
-          "meaning": "ephod, a priestly shoulder garment"
+          "meaning": "EXO 28:6"
         }
       ],
       "passages": [
@@ -3096,13 +3085,16 @@
       },
       "distinguisher": "the square folded breastpiece set with twelve stones for the tribes, fastened to the high priest's ephod (EXO 28:15-30)",
       "notes": "The breastplate of judgment was made of the same work and materials as the ephod (EXO 28:15), foursquare and doubled, a span long and a span wide (EXO 28:16). It was set with four rows of stones, twelve in all, each engraved with the name of one of the children of Israel (EXO 28:17-21). Chains and rings of gold bound it to the ephod with a lace of blue (EXO 28:22-28), so that Aaron bore the names of the tribes upon his heart when he went into the holy place (EXO 28:29). The Urim and the Thummim were put in it (EXO 28:30). It was made as commanded (EXO 39:8-21) and Moses put it on Aaron at his consecration (LEV 8:8).",
-      "words": [
+      "called": [
         {
-          "label": "breastplate",
-          "hebrew": "חֹשֶׁן",
-          "hebrewTransliterated": "choshen",
-          "hebrewStrongNumber": "H2833",
-          "meaning": "breastpiece, pouch"
+          "label": "Breastplate of judgment",
+          "hebrew": "חֹשֶׁן מִשְׁפָּט",
+          "hebrewTransliterated": "choshen mishpat",
+          "hebrewStrongNumber": "H2833,H4941",
+          "meaning": "EXO 28:15"
+        },
+        {
+          "label": "Choshen"
         }
       ],
       "passages": [
@@ -3145,20 +3137,13 @@
       },
       "distinguisher": "the means of judgment put in the high priest's breastpiece (EXO 28:30)",
       "notes": "Moses was told to put the Urim and the Thummim in the breastplate of judgment, to be on Aaron's heart when he went in before the LORD (EXO 28:30), and he did so at Aaron's consecration (LEV 8:8). The text never says what they looked like or how they were used. Eleazar the priest was to ask counsel for Joshua 'after the judgment of Urim before the LORD' (NUM 27:21), and Moses' blessing gives them to Levi (DEU 33:8). When Saul enquired, the LORD did not answer him by dreams, by Urim or by prophets (1SA 28:6). After the exile, priests who could not prove their descent were kept from the most holy things until a priest should stand up with Urim and Thummim (EZR 2:63; NEH 7:65).",
-      "words": [
+      "called": [
         {
-          "label": "Urim",
-          "hebrew": "אוּרִים",
-          "hebrewTransliterated": "urim",
-          "hebrewStrongNumber": "H224",
-          "meaning": "Urim, 'lights'"
-        },
-        {
-          "label": "Thummim",
-          "hebrew": "תֻּמִּים",
-          "hebrewTransliterated": "tummim",
-          "hebrewStrongNumber": "H8550",
-          "meaning": "Thummim, 'perfections'"
+          "label": "Urim and Thummim",
+          "hebrew": "הָאוּרִים וְהַתֻּמִּים",
+          "hebrewTransliterated": "ha'urim vehattummim",
+          "hebrewStrongNumber": "H224,H8550",
+          "meaning": "lights and perfections (EXO 28:30)"
         }
       ],
       "passages": [
@@ -3220,20 +3205,23 @@
       },
       "distinguisher": "the plate of pure gold engraved 'Holiness to the LORD' on the front of the high priest's mitre (EXO 28:36-38)",
       "notes": "Moses was told to make a plate of pure gold engraved like a signet with 'Holiness to the LORD' (EXO 28:36), tied with a lace of blue to the forefront of the mitre (EXO 28:37). It was to be on Aaron's forehead so that he might bear the iniquity of the holy things Israel hallowed, that they might be accepted before the LORD (EXO 28:38). The text calls it the holy crown (EXO 29:6) and 'the plate of the holy crown' (EXO 39:30), and Moses put it on Aaron's mitre at his consecration (LEV 8:9). The word for the plate (tsits) elsewhere means a flower, which is how the Ohienko Bible renders it ('квітка'); the word for crown (nezer) elsewhere means separation or a king's crown.",
-      "words": [
+      "called": [
         {
-          "label": "plate",
-          "hebrew": "צִיץ",
-          "hebrewTransliterated": "tsits",
-          "hebrewStrongNumber": "H6731",
-          "meaning": "shining plate; flower"
+          "label": "Holy crown",
+          "hebrew": "נֵזֶר הַקֹּדֶשׁ",
+          "hebrewTransliterated": "nezer haqqodesh",
+          "hebrewStrongNumber": "H5145,H6944",
+          "meaning": "EXO 29:6"
         },
         {
-          "label": "crown",
-          "hebrew": "נֵזֶר",
-          "hebrewTransliterated": "nezer",
-          "hebrewStrongNumber": "H5145",
-          "meaning": "consecration; crown"
+          "label": "Plate of pure gold",
+          "hebrew": "צִיץ זָהָב טָהוֹר",
+          "hebrewTransliterated": "tsits zahav tahor",
+          "hebrewStrongNumber": "H6731,H2091,H2889",
+          "meaning": "EXO 28:36"
+        },
+        {
+          "label": "Tzitz"
         }
       ],
       "passages": [
@@ -3285,13 +3273,13 @@
       },
       "distinguisher": "the pair of hammered silver trumpets made in the wilderness to call the assembly and move the camps (NUM 10:2)",
       "notes": "The LORD told Moses to make two trumpets of silver, each of a whole piece, to call the assembly and to set the camps on the move (NUM 10:2). Both blown together gathered the whole assembly at the door of the tabernacle, one alone the princes, and an alarm set the camps forward (NUM 10:3-7). The sons of Aaron, the priests, were to blow them, as an ordinance for ever (NUM 10:8). They were blown for an alarm in war, and over the burnt offerings and peace offerings on days of gladness, solemn days and new moons, for a memorial before God (NUM 10:9-10). Later passages have priests blowing trumpets without saying these are the same two; those are left for review.",
-      "words": [
+      "called": [
         {
-          "label": "trumpet",
-          "hebrew": "חֲצֹצְרָה",
-          "hebrewTransliterated": "chatsotsrah",
-          "hebrewStrongNumber": "H2689",
-          "meaning": "trumpet"
+          "label": "Two trumpets of silver",
+          "hebrew": "שְׁתֵּי חֲצוֹצְרֹת כֶּסֶף",
+          "hebrewTransliterated": "shetei chatsotserot kesef",
+          "hebrewStrongNumber": "H8147,H2689,H3701",
+          "meaning": "NUM 10:2"
         }
       ],
       "passages": [
@@ -3325,13 +3313,21 @@
       },
       "distinguisher": "the molten calf Aaron made from the people's gold at Sinai (EXO 32:4)",
       "notes": "While Moses was on the mountain the people asked Aaron to make them gods, and he took their golden earrings (EXO 32:1-3). He fashioned it with a graving tool and made it a molten calf, and they said, 'These be thy gods, O Israel' (EXO 32:4). Moses saw the calf and the dancing, broke the tables, burnt the calf, ground it to powder, strewed it on the water and made Israel drink it (EXO 32:19-20). Aaron told Moses he cast the gold into the fire 'and there came out this calf' (EXO 32:24), but the text says the LORD plagued the people 'because they made the calf, which Aaron made' (EXO 32:35). It is recalled in DEU 9:16-21, NEH 9:18, PSA 106:19 (in Horeb) and by Stephen (ACT 7:41).",
-      "words": [
+      "called": [
         {
-          "label": "calf",
-          "hebrew": "עֵגֶל",
-          "hebrewTransliterated": "egel",
-          "hebrewStrongNumber": "H5695",
-          "meaning": "calf, young bull"
+          "label": "Molten calf",
+          "hebrew": "עֵגֶל מַסֵּכָה",
+          "hebrewTransliterated": "egel massekhah",
+          "hebrewStrongNumber": "H5695,H4541",
+          "meaning": "EXO 32:4"
+        },
+        {
+          "label": "Egel HaZahav",
+          "meaning": "the name in later Jewish usage, not the text's own"
+        },
+        {
+          "label": "Золоте теля",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -3394,13 +3390,13 @@
       },
       "distinguisher": "the two calves of gold Jeroboam set up at Bethel and Dan (1KI 12:28-29)",
       "notes": "Fearing that the people would turn back to Rehoboam if they went up to sacrifice at Jerusalem, Jeroboam made two calves of gold and said, 'Behold thy gods, O Israel, which brought thee up out of the land of Egypt' (1KI 12:26-28). He set one in Bethel and the other in Dan (1KI 12:29), ordained a feast in the eighth month and sacrificed at Bethel to the calves he had made (1KI 12:32). He appointed priests for the high places and for the calves (2CH 11:15), and Abijah reproached Israel with them (2CH 13:8). Jehu, who destroyed Baal worship, did not depart from the golden calves in Bethel and Dan (2KI 10:29), and they are named among the sins for which Israel went into exile (2KI 17:16).",
-      "words": [
+      "called": [
         {
-          "label": "calf",
-          "hebrew": "עֵגֶל",
-          "hebrewTransliterated": "egel",
-          "hebrewStrongNumber": "H5695",
-          "meaning": "calf, young bull"
+          "label": "Two calves of gold",
+          "hebrew": "שְׁנֵי עֶגְלֵי זָהָב",
+          "hebrewTransliterated": "shenei eglei zahav",
+          "hebrewStrongNumber": "H8147,H5695,H2091",
+          "meaning": "1KI 12:28"
         }
       ],
       "passages": [
@@ -3469,13 +3465,13 @@
       },
       "distinguisher": "the image of gold sixty cubits high set up in the plain of Dura (DAN 3:1)",
       "notes": "Nebuchadnezzar made an image of gold sixty cubits high and six cubits broad and set it up in the plain of Dura in the province of Babylon (DAN 3:1). He gathered the princes, governors and officials of the provinces to its dedication (DAN 3:2-3). At the sound of the music all were to fall down and worship it, and whoever did not was to be cast into a burning fiery furnace (DAN 3:4-7). Shadrach, Meshach and Abednego refused, saying that even if their God did not deliver them they would not worship the golden image (DAN 3:12-18). It is a different thing from the great image of the king's dream in DAN 2:31-35, which the same word names.",
-      "words": [
+      "called": [
         {
-          "label": "image",
-          "hebrew": "צְלֵם",
-          "hebrewTransliterated": "tselem",
-          "hebrewStrongNumber": "H6755",
-          "meaning": "image, statue (Aramaic)"
+          "label": "Image of gold",
+          "hebrew": "צְלֵם דִּי־דְהַב",
+          "hebrewTransliterated": "tselem di-dehav",
+          "hebrewStrongNumber": "H6755,H1722",
+          "meaning": "DAN 3:1, Aramaic"
         }
       ],
       "passages": [
@@ -3518,13 +3514,13 @@
       },
       "distinguisher": "the Philistine's sword with which David beheaded him, later kept at Nob (1SA 21:9)",
       "notes": "After felling Goliath with a stone, David, who had no sword of his own, ran and stood on the Philistine, drew Goliath's sword out of its sheath, killed him and cut off his head with it (1SA 17:50-51). Later, fleeing from Saul, David asked Ahimelech the priest at Nob for a spear or sword (1SA 21:8). The priest answered that the sword of Goliath was there, wrapped in a cloth behind the ephod, and David said, 'There is none like that; give it me' (1SA 21:9). Doeg reported to Saul that Ahimelech had given David the sword of Goliath the Philistine (1SA 22:10).",
-      "words": [
+      "called": [
         {
-          "label": "sword",
-          "hebrew": "חֶרֶב",
-          "hebrewTransliterated": "cherev",
-          "hebrewStrongNumber": "H2719",
-          "meaning": "sword"
+          "label": "Sword of Goliath",
+          "hebrew": "חֶרֶב גָּלְיָת",
+          "hebrewTransliterated": "cherev golyat",
+          "hebrewStrongNumber": "H2719,H1555",
+          "meaning": "1SA 21:9"
         }
       ],
       "passages": [
@@ -3565,13 +3561,16 @@
       },
       "distinguisher": "the rod in Moses' hand at the bush, called the rod of God, with which he did the signs (EXO 4:2-20)",
       "notes": "At the bush the LORD asked Moses what was in his hand, and it was a rod; cast on the ground it became a serpent, and taken by the tail it became a rod again (EXO 4:2-4). He was told to take it in his hand to do the signs (EXO 4:17), and he returned to Egypt with 'the rod of God' in his hand (EXO 4:20). Moses stretched it out for the hail and the locusts (EXO 9:23; 10:13), was told to lift it up over the sea to divide it (EXO 14:16), and struck the rock at Horeb with the rod 'wherewith thou smotest the river' (EXO 17:5-6). During the battle with Amalek he stood on the hill with the rod of God in his hand (EXO 17:9). In EXO 7-8 several signs are done with Aaron's rod, and the text alternates between the two brothers in a way this record does not settle.",
-      "words": [
+      "called": [
         {
-          "label": "rod",
-          "hebrew": "מַטֶּה",
-          "hebrewTransliterated": "matteh",
-          "hebrewStrongNumber": "H4294",
-          "meaning": "staff, rod; also tribe"
+          "label": "Rod of God",
+          "hebrew": "מַטֵּה הָאֱלֹהִים",
+          "hebrewTransliterated": "matteh ha'elohim",
+          "hebrewStrongNumber": "H4294,H430",
+          "meaning": "EXO 4:20"
+        },
+        {
+          "label": "Rod of Moses"
         }
       ],
       "passages": [
@@ -3620,20 +3619,13 @@
       },
       "distinguisher": "the stone Jacob slept on, set up as a pillar and anointed at Bethel (GEN 28:18)",
       "notes": "On his way to Haran Jacob slept with a stone for his pillow and dreamed of the ladder (GEN 28:11-15). In the morning he set up that stone for a pillar, poured oil on its top, and called the place Bethel (GEN 28:18-19). He vowed that this stone, which he had set for a pillar, should be God's house (GEN 28:22). Years later God spoke to him as 'the God of Bethel, where thou anointedst the pillar' (GEN 31:13). On his return to Bethel Jacob again set up a pillar of stone where God had spoken with him and poured a drink offering and oil on it (GEN 35:14); the text does not say whether it was the same stone.",
-      "words": [
+      "called": [
         {
-          "label": "pillar",
+          "label": "Pillar",
           "hebrew": "מַצֵּבָה",
           "hebrewTransliterated": "matsevah",
           "hebrewStrongNumber": "H4676",
-          "meaning": "standing stone, pillar"
-        },
-        {
-          "label": "stone",
-          "hebrew": "אֶבֶן",
-          "hebrewTransliterated": "even",
-          "hebrewStrongNumber": "H68",
-          "meaning": "stone"
+          "meaning": "a standing stone (GEN 28:18)"
         }
       ],
       "passages": [
@@ -3692,13 +3684,13 @@
       },
       "distinguisher": "the great altar the eastern tribes built by the Jordan as a witness, not for sacrifice (JOS 22:10-34)",
       "notes": "Returning to their land east of the Jordan, the children of Reuben, Gad and the half tribe of Manasseh built a great altar by the Jordan (JOS 22:10). The rest of Israel gathered at Shiloh to go to war against them and sent Phinehas and ten princes to charge them with rebellion (JOS 22:11-20). They answered that it was not for burnt offering or sacrifice but a pattern of the LORD's altar, a witness between the tribes that their children too had a part in the LORD (JOS 22:23-29). Phinehas and the princes were satisfied (JOS 22:30-33). They called the altar a witness 'that the LORD is God' (JOS 22:34); the Hebrew of that verse has no separate name, and 'Ed' (witness) is supplied by the King James, the Ohienko and the Reina-Valera, while Luther has none.",
-      "words": [
+      "called": [
         {
-          "label": "altar",
-          "hebrew": "מִזְבֵּחַ",
-          "hebrewTransliterated": "mizbeach",
-          "hebrewStrongNumber": "H4196",
-          "meaning": "altar"
+          "label": "Ed",
+          "hebrew": "עֵד",
+          "hebrewTransliterated": "ed",
+          "hebrewStrongNumber": "H5707",
+          "meaning": "a witness (JOS 22:34)"
         }
       ],
       "passages": [
@@ -3741,13 +3733,13 @@
       },
       "distinguisher": "the twelve stones taken from the bed of the Jordan and set up at Gilgal as a memorial of the crossing (JOS 4:20)",
       "notes": "After Israel crossed the Jordan on dry ground, Joshua had one man from each tribe take a stone out of the river from where the priests' feet stood (JOS 4:2-5). The stones were to be a sign, so that when children asked what they meant they would be told the waters were cut off before the ark of the covenant (JOS 4:6-7). The men carried them to the place where they lodged (JOS 4:8), and Joshua pitched them in Gilgal (JOS 4:20), telling Israel to explain to their children that Israel came over this Jordan on dry land (JOS 4:21-24). JOS 4:9 says Joshua set up twelve stones in the midst of the Jordan where the priests stood; whether that is a second set is left open.",
-      "words": [
+      "called": [
         {
-          "label": "stones",
-          "hebrew": "אֶבֶן",
-          "hebrewTransliterated": "even",
-          "hebrewStrongNumber": "H68",
-          "meaning": "stone"
+          "label": "Twelve stones",
+          "hebrew": "שְׁתֵּים עֶשְׂרֵה אֲבָנִים",
+          "hebrewTransliterated": "shetem esreh avanim",
+          "hebrewStrongNumber": "H8147,H6240,H68",
+          "meaning": "JOS 4:20"
         }
       ],
       "passages": [
@@ -3795,13 +3787,13 @@
       },
       "distinguisher": "the iron bedstead of Og king of Bashan, kept in Rabbah of the Ammonites (DEU 3:11)",
       "notes": "Og king of Bashan was the last of the remnant of the giants (DEU 3:11). His bedstead was a bedstead of iron, nine cubits long and four wide 'after the cubit of a man' (DEU 3:11). The text says it was in Rabbath of the children of Ammon (DEU 3:11). It is mentioned once, in the account of Israel's defeat of Og at Edrei (DEU 3:1-11).",
-      "words": [
+      "called": [
         {
-          "label": "bedstead",
-          "hebrew": "עֶרֶשׂ",
-          "hebrewTransliterated": "eres",
-          "hebrewStrongNumber": "H6210",
-          "meaning": "couch, bed"
+          "label": "Bedstead of iron",
+          "hebrew": "עֶרֶשׂ בַּרְזֶל",
+          "hebrewTransliterated": "eres barzel",
+          "hebrewStrongNumber": "H6210,H1270",
+          "meaning": "DEU 3:11"
         }
       ],
       "passages": [
@@ -3839,13 +3831,13 @@
       },
       "distinguisher": "the ephod Gideon made from the Midianite gold and set up in Ophrah (JDG 8:27)",
       "notes": "After the victory over Midian Gideon refused to rule over Israel but asked every man for the earrings of his prey (JDG 8:22-25). The gold came to seventeen hundred shekels, besides ornaments and purple raiment (JDG 8:26). Gideon made an ephod of it and put it in his city, Ophrah, and all Israel went a whoring after it there, and it became a snare to Gideon and his house (JDG 8:27). The text does not describe it further.",
-      "words": [
+      "called": [
         {
-          "label": "ephod",
+          "label": "Ephod",
           "hebrew": "אֵפוֹד",
           "hebrewTransliterated": "ephod",
           "hebrewStrongNumber": "H646",
-          "meaning": "ephod"
+          "meaning": "JDG 8:27"
         }
       ],
       "passages": [
@@ -3888,13 +3880,13 @@
       },
       "distinguisher": "the altar Moses built and named after the victory over Amalek (EXO 17:15)",
       "notes": "Amalek fought with Israel at Rephidim, and Israel prevailed while Moses held up his hands on the hill (EXO 17:8-13). The LORD told Moses to write it for a memorial in a book (EXO 17:14). Moses built an altar and called its name Jehovah-nissi, 'the LORD is my banner' (EXO 17:15), with the saying that the LORD will have war with Amalek from generation to generation (EXO 17:16). The Hebrew has the name as two ordinary words, the LORD and banner; only the word 'altar' is linked here.",
-      "words": [
+      "called": [
         {
-          "label": "altar",
-          "hebrew": "מִזְבֵּחַ",
-          "hebrewTransliterated": "mizbeach",
-          "hebrewStrongNumber": "H4196",
-          "meaning": "altar"
+          "label": "Jehovah-nissi",
+          "hebrew": "יְהוָה נִסִּי",
+          "hebrewTransliterated": "adonai nissi",
+          "hebrewStrongNumber": "H3068,H5251",
+          "meaning": "the LORD is my banner (EXO 17:15)"
         }
       ],
       "passages": [
@@ -3932,13 +3924,13 @@
       },
       "distinguisher": "the altar Gideon built at Ophrah where the angel of the LORD appeared to him (JDG 6:24)",
       "notes": "The angel of the LORD appeared to Gideon under the oak in Ophrah while he was threshing wheat (JDG 6:11-12). Fire rose from the rock and consumed Gideon's offering, and the angel departed (JDG 6:21). Gideon feared because he had seen the angel face to face, and the LORD said to him, 'Peace be unto thee; fear not: thou shalt not die' (JDG 6:22-23). Gideon built an altar there and called it Jehovah-shalom, and the text says it was still in Ophrah of the Abiezrites 'unto this day' (JDG 6:24). The altar he built that night on the top of the rock after throwing down Baal's altar (JDG 6:25-28) may or may not be the same one.",
-      "words": [
+      "called": [
         {
-          "label": "altar",
-          "hebrew": "מִזְבֵּחַ",
-          "hebrewTransliterated": "mizbeach",
-          "hebrewStrongNumber": "H4196",
-          "meaning": "altar"
+          "label": "Jehovah-shalom",
+          "hebrew": "יְהוָה שָׁלוֹם",
+          "hebrewTransliterated": "adonai shalom",
+          "hebrewStrongNumber": "H3068,H7965",
+          "meaning": "the LORD is peace (JDG 6:24)"
         }
       ],
       "passages": [
@@ -3980,13 +3972,13 @@
       },
       "distinguisher": "the altar Jacob erected on the ground he bought before Shechem (GEN 33:20)",
       "notes": "Coming back from Padan-aram, Jacob came to Shalem, a city of Shechem, and pitched his tent before the city (GEN 33:18). He bought the parcel of field where his tent stood from the children of Hamor for a hundred pieces of money (GEN 33:19). There he erected an altar and called it El-elohe-Israel, 'God, the God of Israel' (GEN 33:20). Luther renders the verse as Jacob calling on the name of the mighty God of Israel, without an altar name.",
-      "words": [
+      "called": [
         {
-          "label": "altar",
-          "hebrew": "מִזְבֵּחַ",
-          "hebrewTransliterated": "mizbeach",
-          "hebrewStrongNumber": "H4196",
-          "meaning": "altar"
+          "label": "El-elohe-Israel",
+          "hebrew": "אֵל אֱלֹהֵי יִשְׂרָאֵל",
+          "hebrewTransliterated": "el elohei yisra'el",
+          "hebrewStrongNumber": "H410,H430,H3478",
+          "meaning": "God, the God of Israel (GEN 33:20)"
         }
       ],
       "passages": [
@@ -4029,13 +4021,13 @@
       },
       "distinguisher": "the cross on which Jesus was crucified at Golgotha (JHN 19:17)",
       "notes": "John says Jesus went out bearing his cross to the place called Golgotha, where they crucified him (JHN 19:17-18); the other gospels say the soldiers compelled Simon of Cyrene to carry it (MAT 27:32; MRK 15:21), Luke that they laid it on him to bear after Jesus (LUK 23:26). Pilate wrote a title and put it on the cross (JHN 19:19). Passers-by and the chief priests mocked him, 'come down from the cross' (MAT 27:40-42; MRK 15:30-32). His mother, her sister, Mary the wife of Cleophas and Mary Magdalene stood by it (JHN 19:25), and because of the sabbath the Jews asked that the bodies should not remain on the cross (JHN 19:31). Paul's and Hebrews' use of 'the cross' for the event and its meaning is left for review.",
-      "words": [
+      "called": [
         {
-          "label": "cross",
+          "label": "Cross",
           "greek": "σταυρός",
           "greekTransliterated": "stauros",
           "greekStrongNumber": "G4716",
-          "meaning": "stake, cross"
+          "meaning": "JHN 19:17"
         }
       ],
       "passages": [
@@ -4095,13 +4087,13 @@
       },
       "distinguisher": "the crown the soldiers plaited of thorns and put on Jesus' head (MAT 27:29)",
       "notes": "The soldiers plaited a crown of thorns, put it on Jesus' head and a reed in his right hand, and bowed the knee in mockery, saying, 'Hail, King of the Jews' (MAT 27:29). Mark has them clothe him in purple with it (MRK 15:17), and John puts it before Pilate's presentation (JHN 19:2). Jesus came out wearing the crown of thorns and the purple robe, and Pilate said, 'Behold the man' (JHN 19:5). Luke does not mention it.",
-      "words": [
+      "called": [
         {
-          "label": "crown",
-          "greek": "στέφανος",
-          "greekTransliterated": "stephanos",
-          "greekStrongNumber": "G4735",
-          "meaning": "wreath, crown"
+          "label": "Crown of thorns",
+          "greek": "ὁ ἀκάνθινος στέφανος",
+          "greekTransliterated": "ho akanthinos stephanos",
+          "greekStrongNumber": "G174,G4735",
+          "meaning": "JHN 19:5"
         }
       ],
       "passages": [
@@ -4143,20 +4135,24 @@
       },
       "distinguisher": "the title Pilate wrote, 'The King of the Jews', and set on the cross (JHN 19:19)",
       "notes": "Pilate wrote a title and put it on the cross: 'Jesus of Nazareth the King of the Jews' (JHN 19:19). Many of the Jews read it, because the place was near the city, and it was written in Hebrew, Greek and Latin (JHN 19:20). The chief priests asked him to write that he said he was King of the Jews, and Pilate answered, 'What I have written I have written' (JHN 19:21-22). The gospels give four wordings: Matthew 'This is Jesus the King of the Jews', set over his head as his accusation (MAT 27:37); Mark 'The King of the Jews' (MRK 15:26); Luke 'This is the King of the Jews' (LUK 23:38), where the King James adds that it was written in Greek, Latin and Hebrew and Nestle 1904 does not.",
-      "words": [
+      "called": [
         {
-          "label": "title",
+          "label": "Title",
           "greek": "τίτλος",
           "greekTransliterated": "titlos",
           "greekStrongNumber": "G5102",
-          "meaning": "title, placard"
+          "meaning": "JHN 19:19"
         },
         {
-          "label": "superscription",
+          "label": "Superscription",
           "greek": "ἐπιγραφή",
-          "greekTransliterated": "epigraphe",
+          "greekTransliterated": "epigraphē",
           "greekStrongNumber": "G1923",
-          "meaning": "inscription"
+          "meaning": "MRK 15:26"
+        },
+        {
+          "label": "INRI",
+          "meaning": "the Latin initials of the title; a later name"
         }
       ],
       "passages": [
@@ -4207,13 +4203,13 @@
       },
       "distinguisher": "the price the chief priests paid Judas to deliver Jesus, which bought the potter's field (MAT 26:15)",
       "notes": "Judas asked the chief priests what they would give him to deliver Jesus, and they covenanted with him for thirty pieces of silver (MAT 26:14-15). When he saw Jesus condemned he repented and brought the silver back, saying he had betrayed innocent blood (MAT 27:3-4). He cast the pieces down in the temple and went and hanged himself (MAT 27:5). The chief priests said it was not lawful to put them in the treasury because it was the price of blood, and bought with them the potter's field to bury strangers in (MAT 27:6-7). Matthew says this fulfilled what was spoken by Jeremy the prophet (MAT 27:9); the wording is close to ZEC 11:12-13, and the text is quoted here as it stands.",
-      "words": [
+      "called": [
         {
-          "label": "pieces of silver",
-          "greek": "ἀργύριον",
-          "greekTransliterated": "argyrion",
-          "greekStrongNumber": "G694",
-          "meaning": "silver, silver coin"
+          "label": "Thirty pieces of silver",
+          "greek": "τριάκοντα ἀργύρια",
+          "greekTransliterated": "triakonta argyria",
+          "greekStrongNumber": "G5144,G694",
+          "meaning": "MAT 26:15"
         }
       ],
       "passages": [
@@ -4256,13 +4252,13 @@
       },
       "distinguisher": "Jesus' coat woven in one piece, for which the soldiers cast lots (JHN 19:23)",
       "notes": "After the crucifixion the soldiers took Jesus' garments and made four parts, a part for each soldier, and also his coat (JHN 19:23). The coat was without seam, woven from the top throughout (JHN 19:23). They agreed not to tear it but to cast lots for whose it should be, and John says this fulfilled the scripture, 'They parted my raiment among them, and for my vesture they did cast lots' (JHN 19:24; PSA 22:18). Only John describes it.",
-      "words": [
+      "called": [
         {
-          "label": "coat",
-          "greek": "χιτών",
-          "greekTransliterated": "chiton",
-          "greekStrongNumber": "G5509",
-          "meaning": "tunic, undergarment"
+          "label": "Coat without seam",
+          "greek": "ὁ χιτὼν ἄραφος",
+          "greekTransliterated": "ho chitōn araphos",
+          "greekStrongNumber": "G5509,G729",
+          "meaning": "JHN 19:23"
         }
       ],
       "passages": [
@@ -4297,20 +4293,13 @@
       },
       "distinguisher": "the coat Israel made for Joseph, which his brothers dipped in blood (GEN 37:3)",
       "notes": "Israel loved Joseph more than all his children and made him a coat (GEN 37:3); the Hebrew is ketonet passim, which the King James renders 'of many colours', the Ohienko 'квітчасте' and Luther 'bunt'. His brothers stripped him of it before selling him (GEN 37:23). They killed a kid of the goats, dipped the coat in the blood and sent it to their father (GEN 37:31-32). Jacob knew it and said an evil beast had devoured Joseph (GEN 37:33). The same phrase describes the garment of Tamar the king's daughter (2SA 13:18-19), which is not this one.",
-      "words": [
+      "called": [
         {
-          "label": "coat",
-          "hebrew": "כְּתֹנֶת",
-          "hebrewTransliterated": "ketonet",
-          "hebrewStrongNumber": "H3801",
-          "meaning": "tunic, coat"
-        },
-        {
-          "label": "of many colours",
-          "hebrew": "פַּס",
-          "hebrewTransliterated": "pas",
-          "hebrewStrongNumber": "H6446",
-          "meaning": "(tunic) reaching to the palms or soles, or of pieces"
+          "label": "Coat of many colours",
+          "hebrew": "כְּתֹנֶת פַּסִּים",
+          "hebrewTransliterated": "ketonet passim",
+          "hebrewStrongNumber": "H3801,H6446",
+          "meaning": "GEN 37:3"
         }
       ],
       "passages": [
@@ -4361,13 +4350,13 @@
       },
       "distinguisher": "the mantle Elijah cast on Elisha and with which both divided the Jordan (1KI 19:19)",
       "notes": "At Horeb, when Elijah heard the still small voice, he wrapped his face in his mantle and stood at the entrance of the cave (1KI 19:13). Going from there he found Elisha ploughing and cast his mantle upon him, and Elisha left the oxen and followed him (1KI 19:19-21). At the Jordan Elijah wrapped his mantle together and struck the waters, and they divided so that the two went over on dry ground (2KI 2:8). When Elijah was taken up, Elisha took up the mantle that fell from him (2KI 2:13), struck the waters with it, saying, 'Where is the LORD God of Elijah?', and they parted again (2KI 2:14).",
-      "words": [
+      "called": [
         {
-          "label": "mantle",
-          "hebrew": "אַדֶּרֶת",
-          "hebrewTransliterated": "adderet",
-          "hebrewStrongNumber": "H155",
-          "meaning": "mantle, cloak; glory"
+          "label": "Mantle of Elijah",
+          "hebrew": "אַדֶּרֶת אֵלִיָּהוּ",
+          "hebrewTransliterated": "adderet eliyahu",
+          "hebrewStrongNumber": "H155,H452",
+          "meaning": "2KI 2:13"
         }
       ],
       "passages": [
@@ -4410,13 +4399,13 @@
       },
       "distinguisher": "the pitched papyrus basket in which the infant Moses was laid by the river (EXO 2:3)",
       "notes": "When Moses' mother could no longer hide him, she took an ark of bulrushes, daubed it with slime and pitch, put the child in it and laid it among the flags by the river's brink (EXO 2:3). His sister stood afar off to see what would be done to him (EXO 2:4). Pharaoh's daughter, coming down to wash at the river, saw the ark among the flags and sent her maid to fetch it (EXO 2:5-6). The Hebrew word for it, tevah, is used elsewhere only of Noah's ark (GEN 6:14).",
-      "words": [
+      "called": [
         {
-          "label": "ark",
-          "hebrew": "תֵּבָה",
-          "hebrewTransliterated": "tevah",
-          "hebrewStrongNumber": "H8392",
-          "meaning": "box, chest, ark"
+          "label": "Ark of bulrushes",
+          "hebrew": "תֵּבַת גֹּמֶא",
+          "hebrewTransliterated": "tevat gome",
+          "hebrewStrongNumber": "H8392,H1573",
+          "meaning": "EXO 2:3"
         }
       ],
       "passages": [
@@ -4448,13 +4437,13 @@
       },
       "distinguisher": "the great throne of ivory overlaid with gold, with six steps and twelve lions (1KI 10:18)",
       "notes": "Solomon made a great throne of ivory and overlaid it with the best gold (1KI 10:18). It had six steps and a round top behind, with stays on either side of the seat and two lions standing beside the stays (1KI 10:19). Twelve lions stood on the six steps, one on each side, and the text says there was not the like made in any kingdom (1KI 10:20). Chronicles adds a footstool of gold fastened to the throne (2CH 9:17-19).",
-      "words": [
+      "called": [
         {
-          "label": "throne",
-          "hebrew": "כִּסֵּא",
-          "hebrewTransliterated": "kisse",
-          "hebrewStrongNumber": "H3678",
-          "meaning": "seat, throne"
+          "label": "Great throne of ivory",
+          "hebrew": "כִּסֵּא שֵׁן גָּדוֹל",
+          "hebrewTransliterated": "kisse shen gadol",
+          "hebrewStrongNumber": "H3678,H8127,H1419",
+          "meaning": "1KI 10:18"
         }
       ],
       "passages": [
@@ -4499,20 +4488,20 @@
       },
       "distinguisher": "the two hundred large and three hundred small shields of beaten gold Solomon kept in the House of the Forest of Lebanon (1KI 10:16-17)",
       "notes": "Solomon made two hundred targets of beaten gold, six hundred shekels of gold to each (1KI 10:16), and three hundred shields of beaten gold, three pound of gold to each, and put them in the House of the Forest of Lebanon (1KI 10:17); Chronicles gives three hundred shekels for the smaller ones (2CH 9:16). In the fifth year of Rehoboam, Shishak king of Egypt came against Jerusalem and took away all the shields of gold that Solomon had made (1KI 14:25-26; 2CH 12:9). Rehoboam made shields of brass in their stead, which the guard carried when the king went into the house of the LORD (1KI 14:27-28; 2CH 12:10-11).",
-      "words": [
+      "called": [
         {
-          "label": "target",
-          "hebrew": "צִנָּה",
-          "hebrewTransliterated": "tsinnah",
-          "hebrewStrongNumber": "H6793",
-          "meaning": "large shield"
+          "label": "Targets of beaten gold",
+          "hebrew": "צִנּוֹת זָהָב שָׁחוּט",
+          "hebrewTransliterated": "tsinnot zahav shachut",
+          "hebrewStrongNumber": "H6793,H2091,H7820",
+          "meaning": "1KI 10:16"
         },
         {
-          "label": "shield",
-          "hebrew": "מָגֵן",
-          "hebrewTransliterated": "magen",
-          "hebrewStrongNumber": "H4043",
-          "meaning": "shield, buckler"
+          "label": "Shields of beaten gold",
+          "hebrew": "מָגִנִּים זָהָב שָׁחוּט",
+          "hebrewTransliterated": "maginnim zahav shachut",
+          "hebrewStrongNumber": "H4043,H2091,H7820",
+          "meaning": "1KI 10:17"
         }
       ],
       "passages": [
@@ -4577,13 +4566,13 @@
       },
       "distinguisher": "the steps (the King James 'dial') on which the shadow went back ten degrees as a sign to Hezekiah (2KI 20:11)",
       "notes": "When Hezekiah was sick and asked for a sign that he would be healed, Isaiah offered that the shadow should go forward or back ten degrees (2KI 20:8-9). Hezekiah asked that it go back, and at Isaiah's cry the LORD brought the shadow ten degrees backward on the steps of Ahaz, by which it had gone down (2KI 20:10-11). Isaiah's account says the sun returned ten degrees (ISA 38:8). The Hebrew word, ma'alot, means steps; the text does not say whether they were a stairway or an instrument, and the translations differ: 'dial' (King James), 'ступені' (Ohienko), 'Zeiger' (Luther), 'reloj' (Reina-Valera).",
-      "words": [
+      "called": [
         {
-          "label": "degrees, dial",
-          "hebrew": "מַעֲלָה",
-          "hebrewTransliterated": "ma'alah",
-          "hebrewStrongNumber": "H4609",
-          "meaning": "step, stair, degree"
+          "label": "Dial of Ahaz",
+          "hebrew": "מַעֲלוֹת אָחָז",
+          "hebrewTransliterated": "ma'alot achaz",
+          "hebrewStrongNumber": "H4609,H271",
+          "meaning": "the degrees of Ahaz (2KI 20:11)"
         }
       ],
       "passages": [
@@ -4619,20 +4608,13 @@
       },
       "distinguisher": "the carved image made from Micah's mother's silver, taken by the Danites and set up at Dan (JDG 18:30-31)",
       "notes": "Micah of mount Ephraim returned eleven hundred shekels he had taken from his mother, who had dedicated the silver to make a graven image and a molten image (JDG 17:1-3). She gave two hundred shekels to the founder, who made them, and they were in Micah's house (JDG 17:4), with an ephod and teraphim, and first a son and then a hired Levite as priest (JDG 17:5-13). The Danites, seeking land, took the graven image, the ephod, the teraphim and the molten image, and the Levite went with them (JDG 18:14-20). At Dan they set up the graven image, with Jonathan son of Gershom and his sons as priests (JDG 18:30), all the time the house of God was in Shiloh (JDG 18:31).",
-      "words": [
+      "called": [
         {
-          "label": "graven image",
-          "hebrew": "פֶּסֶל",
-          "hebrewTransliterated": "pesel",
-          "hebrewStrongNumber": "H6459",
-          "meaning": "carved image, idol"
-        },
-        {
-          "label": "graven image",
-          "hebrew": "פְּסִיל",
-          "hebrewTransliterated": "pesil",
-          "hebrewStrongNumber": "H6456",
-          "meaning": "carved image, idol"
+          "label": "Graven image and molten image",
+          "hebrew": "פֶּסֶל וּמַסֵּכָה",
+          "hebrewTransliterated": "pesel umassekhah",
+          "hebrewStrongNumber": "H6459,H4541",
+          "meaning": "JDG 17:3"
         }
       ],
       "passages": [
@@ -4689,13 +4671,13 @@
       },
       "distinguisher": "the spear Saul kept at hand, threw at David and Jonathan, and which David took from his bolster (1SA 26:7-12)",
       "notes": "When the evil spirit came on Saul he had a javelin in his hand and cast it at David twice (1SA 18:10-11); another time he drove it into the wall as David slipped away (1SA 19:9-10), and he cast it at his own son Jonathan (1SA 20:33). He sat under a tree in Gibeah with his spear in his hand when he heard David was found (1SA 22:6). In the wilderness of Ziph David found Saul asleep with his spear stuck in the ground at his bolster; he would not let Abishai strike with it, but took it and the cruse of water (1SA 26:7-12), asked Abner where the king's spear was (1SA 26:16), and told Saul, 'Behold the king's spear' (1SA 26:22). The Amalekite said he found Saul on mount Gilboa leaning on his spear (2SA 1:6). The Hebrew word is the same throughout, though the King James varies between 'javelin' and 'spear', and the text never says whether it was always one weapon.",
-      "words": [
+      "called": [
         {
-          "label": "spear, javelin",
-          "hebrew": "חֲנִית",
-          "hebrewTransliterated": "chanit",
-          "hebrewStrongNumber": "H2595",
-          "meaning": "spear"
+          "label": "Saul's spear",
+          "hebrew": "חֲנִית שָׁאוּל",
+          "hebrewTransliterated": "chanit sha'ul",
+          "hebrewStrongNumber": "H2595,H7586",
+          "meaning": "1SA 26:16"
         }
       ],
       "passages": [
@@ -4754,13 +4736,13 @@
       },
       "distinguisher": "the line of scarlet thread Rahab bound in her window at Jericho as the sign agreed with the spies (JOS 2:18)",
       "notes": "Rahab let the two spies down by a cord through her window, since her house was on the town wall (JOS 2:15). They told her to bind this line of scarlet thread in the window she had let them down by, and to gather her family into the house (JOS 2:18); anyone who went out would be responsible for his own blood (JOS 2:19). She agreed, sent them away, and bound the scarlet line in the window (JOS 2:21). The Hebrew word for the line, tiqvah, everywhere else means hope.",
-      "words": [
+      "called": [
         {
-          "label": "line",
-          "hebrew": "תִּקְוָה",
-          "hebrewTransliterated": "tiqvah",
-          "hebrewStrongNumber": "H8615",
-          "meaning": "cord; hope"
+          "label": "Line of scarlet thread",
+          "hebrew": "תִּקְוַת חוּט הַשָּׁנִי",
+          "hebrewTransliterated": "tiqvat chut hashani",
+          "hebrewStrongNumber": "H8615,H2339,H8144",
+          "meaning": "JOS 2:18"
         }
       ],
       "passages": [
@@ -4794,20 +4776,20 @@
       },
       "distinguisher": "the veil Moses put over his shining face after speaking with the LORD (EXO 34:33)",
       "notes": "When Moses came down from Sinai the skin of his face shone, and Aaron and the people were afraid to come near him (EXO 34:29-30). When he had finished speaking with them he put a veil on his face (EXO 34:33). He took it off whenever he went in before the LORD, spoke to Israel what he was commanded, and put it on again (EXO 34:34-35). Paul recalls that Moses put a veil over his face so that Israel could not look to the end of what was passing away (2CO 3:13), and goes on to speak of a veil over the reading of the old covenant and over hearts (2CO 3:14-16).",
-      "words": [
+      "called": [
         {
-          "label": "vail",
+          "label": "Veil",
           "hebrew": "מַסְוֶה",
           "hebrewTransliterated": "masveh",
           "hebrewStrongNumber": "H4533",
-          "meaning": "veil"
+          "meaning": "EXO 34:33"
         },
         {
-          "label": "veil",
+          "label": "Veil",
           "greek": "κάλυμμα",
           "greekTransliterated": "kalymma",
           "greekStrongNumber": "G2571",
-          "meaning": "covering, veil"
+          "meaning": "2CO 3:13"
         }
       ],
       "passages": [

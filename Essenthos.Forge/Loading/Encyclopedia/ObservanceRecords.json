@@ -13,27 +13,34 @@
       },
       "distinguisher": "the seventh day of every week, kept holy as a day of rest from all work (EXO 20:8-11)",
       "notes": "The seventh day is first named a sabbath when the manna was not given on it and a double portion fell on the sixth day (EXO 16:22-30). The fourth commandment grounds it in the six days of creation and God's rest on the seventh (EXO 20:8-11; GEN 2:2-3), and Deuteronomy adds the memory of slavery in Egypt (DEU 5:12-15). It is a sign between the LORD and Israel, and profaning it was a capital offence (EXO 31:13-17; NUM 15:32-36); no fire was to be kindled in the dwellings on it (EXO 35:3). Its offering was two lambs besides the daily burnt offering, and the shewbread was set out afresh every sabbath (NUM 28:9-10; LEV 24:8). Nehemiah shut the gates of Jerusalem against sabbath trade (NEH 13:15-22), and in the Gospels Jesus' healing and his disciples' plucking of grain on the sabbath are disputed, with his saying that the Son of man is Lord of the sabbath (MRK 2:23-28; LUK 13:10-17).",
-      "words": [
+      "called": [
         {
-          "label": "sabbath",
+          "label": "Sabbath",
           "hebrew": "שַׁבָּת",
-          "hebrewTransliterated": "shabbath",
+          "hebrewTransliterated": "shabbat",
           "hebrewStrongNumber": "H7676",
-          "meaning": "sabbath, day of rest"
+          "meaning": "rest; the seventh day (EXO 20:10)"
         },
         {
-          "label": "rest (sabbath of rest)",
-          "hebrew": "שַׁבָּתוֹן",
-          "hebrewTransliterated": "shabbathown",
-          "hebrewStrongNumber": "H7677",
-          "meaning": "a sabbath observance, solemn rest"
+          "label": "Shabbat"
         },
         {
-          "label": "sabbath",
+          "label": "Sabbath of rest",
+          "hebrew": "שַׁבַּת שַׁבָּתוֹן",
+          "hebrewTransliterated": "shabbat shabbaton",
+          "hebrewStrongNumber": "H7676,H7677",
+          "meaning": "a sabbath of solemn rest (EXO 31:15)"
+        },
+        {
+          "label": "Sabbath",
           "greek": "σάββατον",
           "greekTransliterated": "sabbaton",
           "greekStrongNumber": "G4521",
-          "meaning": "the sabbath; also 'week'"
+          "meaning": "the sabbath (MAT 12:8)"
+        },
+        {
+          "label": "Шабат",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -174,20 +181,27 @@
       },
       "distinguisher": "the first day of each month, marked with trumpets and burnt offerings (NUM 28:11)",
       "notes": "The law marks the beginnings of the months with the blowing of the silver trumpets over the offerings (NUM 10:10) and with a burnt offering of two bullocks, a ram and seven lambs, a meal and drink offering and a goat for a sin offering (NUM 28:11-15). Saul kept a meal on the new moon at which David was expected to sit at the king's table (1SA 20:5, 18, 24-27). The Shunammite's husband assumed that one went to the prophet on a new moon or a sabbath (2KI 4:23), and Amos accuses traders of waiting impatiently for the new moon to pass so they could sell grain (AMO 8:5). The prophets name new moons with sabbaths and feasts both in rebuke (ISA 1:13-14; HOS 2:11) and in hope (ISA 66:23), and Ezekiel's temple opens its east inner gate on the new moon (EZK 46:1-6). Paul lists the new moon among the observances by which no one should judge the Colossians (COL 2:16).",
-      "words": [
+      "called": [
         {
-          "label": "new moon",
-          "hebrew": "חֹדֶשׁ",
-          "hebrewTransliterated": "chodesh",
-          "hebrewStrongNumber": "H2320",
-          "meaning": "new moon; by implication, month"
+          "label": "New Moon",
+          "hebrew": "רֹאשׁ חֹדֶשׁ",
+          "hebrewTransliterated": "rosh chodesh",
+          "hebrewStrongNumber": "H7218,H2320",
+          "meaning": "the beginning of the month (NUM 10:10; 28:11)"
         },
         {
-          "label": "new moon",
-          "greek": "νουμηνία",
-          "greekTransliterated": "noumenia",
+          "label": "Rosh Chodesh"
+        },
+        {
+          "label": "New Moon",
+          "greek": "νεομηνία",
+          "greekTransliterated": "neomēnia",
           "greekStrongNumber": "G3561",
-          "meaning": "the festival of the new moon"
+          "meaning": "the new moon (COL 2:16)"
+        },
+        {
+          "label": "Рош Ходеш",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -285,34 +299,41 @@
       },
       "distinguisher": "the LORD's passover, kept at evening on the fourteenth day of the first month with a slain lamb (LEV 23:5)",
       "notes": "In Egypt each household took a lamb on the tenth day of the first month, killed it at evening on the fourteenth, put its blood on the doorposts and ate it roasted with unleavened bread and bitter herbs, in haste, because the LORD passed over the marked houses when he struck the firstborn (EXO 12:1-13, 21-27). No uncircumcised person might eat it, and not a bone of it was to be broken (EXO 12:43-49). The law fixes it at evening on the fourteenth day of the first month and later requires it to be sacrificed only at the place the LORD would choose (LEV 23:5; NUM 28:16; DEU 16:1-7). The text records it kept at Sinai (NUM 9:1-5), at Gilgal after the crossing of the Jordan (JOS 5:10-11), by Josiah, of whom it says no such passover had been held since the judges (2KI 23:21-23; 2CH 35:1-19), and by the returned exiles (EZR 6:19-21). Jesus ate the passover with his disciples before he suffered (LUK 22:7-15), and Paul calls Christ 'our passover' sacrificed for us (1CO 5:7).",
-      "words": [
+      "called": [
         {
-          "label": "passover",
+          "label": "Passover",
           "hebrew": "פֶּסַח",
-          "hebrewTransliterated": "pecach",
+          "hebrewTransliterated": "pesach",
           "hebrewStrongNumber": "H6453",
-          "meaning": "the Passover: the feast and its lamb"
+          "meaning": "the passing over (EXO 12:11, 27)"
         },
         {
-          "label": "passover",
+          "label": "Pesach"
+        },
+        {
+          "label": "the LORD's passover",
+          "hebrew": "פֶּסַח לַיהוָה",
+          "hebrewTransliterated": "pesach ladonai",
+          "hebrewStrongNumber": "H6453,H3068",
+          "meaning": "LEV 23:5"
+        },
+        {
+          "label": "Passover",
           "greek": "πάσχα",
           "greekTransliterated": "pascha",
           "greekStrongNumber": "G3957",
-          "meaning": "the Passover: the meal, the day, the feast or its lamb"
+          "meaning": "the Passover (LUK 22:1)"
         },
         {
-          "label": "feast",
-          "greek": "ἑορτή",
-          "greekTransliterated": "heorte",
-          "greekStrongNumber": "G1859",
-          "meaning": "a festival (where it names the Passover)"
+          "label": "Pascha"
         },
         {
-          "label": "feast",
-          "hebrew": "חַג",
-          "hebrewTransliterated": "chag",
-          "hebrewStrongNumber": "H2282",
-          "meaning": "a festival (in 'the feast of the passover')"
+          "label": "Песах",
+          "meaning": "the Ukrainian name in modern usage"
+        },
+        {
+          "label": "Великдень",
+          "meaning": "the Ukrainian name of the Christian feast that the word also names"
         }
       ],
       "passages": [
@@ -460,34 +481,27 @@
       },
       "distinguisher": "the seven days from the fifteenth of the first month on which only unleavened bread was eaten (LEV 23:6)",
       "notes": "The law sets it on the fifteenth day of the first month, the day after the Passover, for seven days, with a holy convocation on the first and the seventh day (LEV 23:6-8; NUM 28:17-25). Leaven was to be put out of the houses, and whoever ate leavened bread in those days was cut off from Israel (EXO 12:15-20). It remembers the day the LORD brought Israel out of Egypt in haste, and the bread is called 'the bread of affliction' (EXO 12:17; 13:3-10; DEU 16:3). It is the first of the three feasts at which every male was to appear before the LORD (EXO 23:14-15; 34:18; DEU 16:16). It was kept under Hezekiah and Josiah and by the returned exiles (2CH 30:13, 21; 35:17; EZR 6:22), and the Gospels treat it and the Passover as one season (LUK 22:1; MRK 14:12).",
-      "words": [
+      "called": [
         {
-          "label": "unleavened bread",
-          "hebrew": "מַצָּה",
-          "hebrewTransliterated": "matstsah",
-          "hebrewStrongNumber": "H4682",
-          "meaning": "unleavened bread (in the feast's name)"
+          "label": "Feast of Unleavened Bread",
+          "hebrew": "חַג הַמַּצּוֹת",
+          "hebrewTransliterated": "chag hamatzot",
+          "hebrewStrongNumber": "H2282,H4682",
+          "meaning": "LEV 23:6"
         },
         {
-          "label": "feast",
-          "hebrew": "חַג",
-          "hebrewTransliterated": "chag",
-          "hebrewStrongNumber": "H2282",
-          "meaning": "a festival"
+          "label": "Chag HaMatzot"
         },
         {
-          "label": "unleavened bread",
-          "greek": "ἄζυμος",
-          "greekTransliterated": "azymos",
-          "greekStrongNumber": "G106",
-          "meaning": "unleavened; the days of unleavened bread"
+          "label": "Feast of Unleavened Bread",
+          "greek": "ἡ ἑορτὴ τῶν ἀζύμων",
+          "greekTransliterated": "hē heortē tōn azymōn",
+          "greekStrongNumber": "G1859,G106",
+          "meaning": "LUK 22:1"
         },
         {
-          "label": "feast",
-          "greek": "ἑορτή",
-          "greekTransliterated": "heorte",
-          "greekStrongNumber": "G1859",
-          "meaning": "a festival (LUK 22:1)"
+          "label": "Мацот",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -624,20 +638,23 @@
       },
       "distinguisher": "the first sheaf of the harvest waved before the LORD on the morrow after the sabbath (LEV 23:10-11)",
       "notes": "When Israel entered the land and reaped, they were to bring a sheaf of the firstfruits of the harvest to the priest, who waved it before the LORD on the morrow after the sabbath (LEV 23:10-11). With it went a lamb of the first year for a burnt offering, a meal offering and a drink offering, and no bread, parched grain or fresh ears might be eaten until that day (LEV 23:12-14). The day of the sheaf is the start of the count of seven weeks to the Feast of Weeks (LEV 23:15). The text gives this day no feast name of its own; 'Firstfruits' here is a name for the rite, not the text's title for a day. Paul calls the risen Christ 'the firstfruits of them that slept' (1CO 15:20-23).",
-      "words": [
+      "called": [
         {
-          "label": "sheaf",
-          "hebrew": "עֹמֶר",
-          "hebrewTransliterated": "omer",
-          "hebrewStrongNumber": "H6016",
-          "meaning": "sheaf (the wave sheaf); also a dry measure"
+          "label": "Sheaf of the firstfruits",
+          "hebrew": "עֹמֶר רֵאשִׁית",
+          "hebrewTransliterated": "omer reshit",
+          "hebrewStrongNumber": "H6016,H7225",
+          "meaning": "the sheaf of the firstfruits of the harvest (LEV 23:10)"
         },
         {
-          "label": "firstfruits",
-          "hebrew": "רֵאשִׁית",
-          "hebrewTransliterated": "reshiyth",
-          "hebrewStrongNumber": "H7225",
-          "meaning": "first, beginning; firstfruit"
+          "label": "Omer"
+        },
+        {
+          "label": "Wave sheaf"
+        },
+        {
+          "label": "Сніп первоплодів",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -688,41 +705,45 @@
       },
       "distinguisher": "the harvest feast kept fifty days after the wave sheaf, called Pentecost in the New Testament (DEU 16:10)",
       "notes": "Seven full weeks were counted from the day of the wave sheaf, and on the fiftieth day a new meal offering of two leavened loaves was waved before the LORD with lambs, a bullock and rams (LEV 23:15-21). Exodus calls it the feast of harvest, the firstfruits of the wheat harvest (EXO 23:16; 34:22), and Numbers the day of the firstfruits (NUM 28:26-31). Deuteronomy counts the seven weeks from the first putting of the sickle to the grain and bids the household, the Levite, the stranger, the fatherless and the widow rejoice together (DEU 16:9-12). It is the second of the three pilgrim feasts (DEU 16:16; 2CH 8:13). In Acts the disciples were filled with the Holy Ghost when the day of Pentecost had fully come (ACT 2:1-4), and Paul planned his journeys around it (ACT 20:16; 1CO 16:8).",
-      "words": [
+      "called": [
         {
-          "label": "weeks",
-          "hebrew": "שָׁבוּעַ",
-          "hebrewTransliterated": "shabuwa",
-          "hebrewStrongNumber": "H7620",
-          "meaning": "a week (in 'the feast of weeks')"
+          "label": "Feast of Weeks",
+          "hebrew": "חַג שָׁבֻעֹת",
+          "hebrewTransliterated": "chag shavuot",
+          "hebrewStrongNumber": "H2282,H7620",
+          "meaning": "DEU 16:10"
         },
         {
-          "label": "feast",
-          "hebrew": "חַג",
-          "hebrewTransliterated": "chag",
-          "hebrewStrongNumber": "H2282",
-          "meaning": "a festival"
+          "label": "Shavuot"
         },
         {
-          "label": "firstfruits",
-          "hebrew": "בִּכּוּר",
-          "hebrewTransliterated": "bikkuwr",
-          "hebrewStrongNumber": "H1061",
-          "meaning": "firstfruits (in 'the day of the firstfruits')"
+          "label": "Day of the firstfruits",
+          "hebrew": "יוֹם הַבִּכּוּרִים",
+          "hebrewTransliterated": "yom habikkurim",
+          "hebrewStrongNumber": "H3117,H1061",
+          "meaning": "NUM 28:26"
         },
         {
-          "label": "day",
-          "hebrew": "יוֹם",
-          "hebrewTransliterated": "yowm",
-          "hebrewStrongNumber": "H3117",
-          "meaning": "day (in 'the day of the firstfruits')"
+          "label": "Feast of harvest",
+          "hebrew": "חַג הַקָּצִיר",
+          "hebrewTransliterated": "chag hakatzir",
+          "hebrewStrongNumber": "H2282,H7105",
+          "meaning": "EXO 23:16"
         },
         {
           "label": "Pentecost",
           "greek": "πεντηκοστή",
-          "greekTransliterated": "pentekoste",
+          "greekTransliterated": "pentēkostē",
           "greekStrongNumber": "G4005",
-          "meaning": "fiftieth (day); Pentecost"
+          "meaning": "the fiftieth day (ACT 2:1)"
+        },
+        {
+          "label": "П'ятидесятниця",
+          "meaning": "the Ukrainian name in modern usage"
+        },
+        {
+          "label": "Шавуот",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -821,27 +842,35 @@
       },
       "distinguisher": "the first day of the seventh month, a holy convocation marked by the blowing of trumpets (NUM 29:1)",
       "notes": "The first day of the seventh month was a day of solemn rest, a memorial of blowing, a holy convocation on which no servile work was done and an offering made by fire was brought (LEV 23:23-25). Numbers calls it a day of blowing and sets its burnt offering of a bullock, a ram and seven lambs with a goat for a sin offering, besides the new-moon and daily offerings (NUM 29:1-6). The text does not say what the blowing commemorates. After the return, burnt offerings on the altar began again from the first day of the seventh month (EZR 3:6), and on that day Ezra read the law to the assembled people, who were told that the day was holy and not a day for weeping (NEH 8:1-12).",
-      "words": [
+      "called": [
         {
-          "label": "blowing (of trumpets)",
-          "hebrew": "תְּרוּעָה",
-          "hebrewTransliterated": "teruwah",
-          "hebrewStrongNumber": "H8643",
-          "meaning": "a shout or blast; here the blowing of the day"
+          "label": "Day of Trumpets",
+          "hebrew": "יוֹם תְּרוּעָה",
+          "hebrewTransliterated": "yom teruah",
+          "hebrewStrongNumber": "H3117,H8643",
+          "meaning": "a day of blowing the trumpets (NUM 29:1)"
         },
         {
-          "label": "memorial",
-          "hebrew": "זִכְרוֹן",
-          "hebrewTransliterated": "zikrown",
-          "hebrewStrongNumber": "H2146",
-          "meaning": "a memorial"
+          "label": "Yom Teruah"
         },
         {
-          "label": "day",
-          "hebrew": "יוֹם",
-          "hebrewTransliterated": "yowm",
-          "hebrewStrongNumber": "H3117",
-          "meaning": "day (in 'a day of blowing')"
+          "label": "Memorial of blowing of trumpets",
+          "hebrew": "זִכְרוֹן תְּרוּעָה",
+          "hebrewTransliterated": "zikhron teruah",
+          "hebrewStrongNumber": "H2146,H8643",
+          "meaning": "LEV 23:24"
+        },
+        {
+          "label": "Rosh Hashanah",
+          "meaning": "the name in later Jewish usage, not the text's own"
+        },
+        {
+          "label": "Рош га-Шана",
+          "meaning": "the Ukrainian name in modern usage"
+        },
+        {
+          "label": "Йом Труа",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -915,27 +944,38 @@
       },
       "distinguisher": "the tenth day of the seventh month, when the high priest entered the holy of holies to make atonement and the people afflicted their souls (LEV 23:27)",
       "notes": "Once a year the high priest, in linen garments, entered within the veil with incense and the blood of a bullock and a goat to make atonement for the sanctuary, himself and the people, and a second goat bearing the people's iniquities was sent away into the wilderness (LEV 16:1-34). It fell on the tenth day of the seventh month: a sabbath of rest, a holy convocation, a day of no work at all on which every soul was to afflict itself or be cut off, kept from evening to evening (LEV 16:29-31; 23:26-32). Its offerings are listed in NUM 29:7-11. The trumpet of the jubilee was sounded on this day in the fiftieth year (LEV 25:9). Hebrews reads the high priest's yearly entry with blood as a figure of Christ's once-for-all entry (HEB 9:7, 25), and Luke dates Paul's dangerous voyage as after 'the fast' (ACT 27:9).",
-      "words": [
+      "called": [
         {
-          "label": "atonement",
-          "hebrew": "כִּפֻּר",
-          "hebrewTransliterated": "kippur",
-          "hebrewStrongNumber": "H3725",
-          "meaning": "atonement (in 'the day of atonement')"
+          "label": "Day of Atonement",
+          "hebrew": "יוֹם הַכִּפֻּרִים",
+          "hebrewTransliterated": "yom hakkippurim",
+          "hebrewStrongNumber": "H3117,H3725",
+          "meaning": "the day of atonements (LEV 23:27)"
         },
         {
-          "label": "day",
-          "hebrew": "יוֹם",
-          "hebrewTransliterated": "yowm",
-          "hebrewStrongNumber": "H3117",
-          "meaning": "day"
+          "label": "Yom Kippur"
         },
         {
-          "label": "the fast",
-          "greek": "νηστεία",
-          "greekTransliterated": "nesteia",
+          "label": "Yom HaKippurim"
+        },
+        {
+          "label": "the Fast",
+          "greek": "ἡ νηστεία",
+          "greekTransliterated": "hē nēsteia",
           "greekStrongNumber": "G3521",
-          "meaning": "fasting; the Fast (ACT 27:9)"
+          "meaning": "the fast of the seventh month (ACT 27:9)"
+        },
+        {
+          "label": "Йом Кіпур",
+          "meaning": "the Ukrainian name in modern usage"
+        },
+        {
+          "label": "День спокути",
+          "meaning": "the Ukrainian name in modern usage"
+        },
+        {
+          "label": "Судний день",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1034,41 +1074,41 @@
       },
       "distinguisher": "the seven-day autumn feast from the fifteenth of the seventh month, when Israel lived in booths (LEV 23:34)",
       "notes": "From the fifteenth day of the seventh month, after the gathering of grain and wine, Israel kept a feast to the LORD for seven days, taking boughs and dwelling in booths so that their generations would know that the LORD made them dwell in booths when he brought them out of Egypt (LEV 23:33-43; DEU 16:13-15). Exodus calls it the feast of ingathering at the end of the year (EXO 23:16; 34:22), and Numbers gives its daily offerings, beginning with thirteen bullocks and falling by one each day (NUM 29:12-34). In the year of release the law was to be read to all Israel at this feast (DEU 31:10-13). Solomon's temple was dedicated at the feast of the seventh month (1KI 8:2; 2CH 7:8-10); the returned exiles kept it and, under Nehemiah, dwelt in booths as had not been done since Joshua's days (EZR 3:4; NEH 8:13-18). Zechariah foresees the nations going up yearly to keep it (ZEC 14:16-19), and Jesus taught in the temple at this feast (JHN 7:2-39).",
-      "words": [
+      "called": [
         {
-          "label": "booths",
-          "hebrew": "סֻכָּה",
-          "hebrewTransliterated": "cukkah",
-          "hebrewStrongNumber": "H5521",
-          "meaning": "booth, hut (in 'the feast of booths')"
+          "label": "Feast of Booths",
+          "hebrew": "חַג הַסֻּכּוֹת",
+          "hebrewTransliterated": "chag hasukkot",
+          "hebrewStrongNumber": "H2282,H5521",
+          "meaning": "LEV 23:34"
         },
         {
-          "label": "feast",
-          "hebrew": "חַג",
-          "hebrewTransliterated": "chag",
-          "hebrewStrongNumber": "H2282",
-          "meaning": "a festival"
+          "label": "Sukkot"
         },
         {
-          "label": "ingathering",
-          "hebrew": "אָסִיף",
-          "hebrewTransliterated": "aciyph",
-          "hebrewStrongNumber": "H614",
-          "meaning": "the gathering in of crops"
+          "label": "Feast of Tabernacles"
         },
         {
-          "label": "feast of tabernacles",
+          "label": "Feast of Ingathering",
+          "hebrew": "חַג הָאָסִף",
+          "hebrewTransliterated": "chag ha'asif",
+          "hebrewStrongNumber": "H2282,H614",
+          "meaning": "EXO 23:16"
+        },
+        {
+          "label": "Feast of Tabernacles",
           "greek": "σκηνοπηγία",
-          "greekTransliterated": "skenopegia",
+          "greekTransliterated": "skēnopēgia",
           "greekStrongNumber": "G4634",
-          "meaning": "the pitching of tents; the Feast of Tabernacles"
+          "meaning": "the pitching of tents (JHN 7:2)"
         },
         {
-          "label": "feast",
-          "greek": "ἑορτή",
-          "greekTransliterated": "heorte",
-          "greekStrongNumber": "G1859",
-          "meaning": "a festival (JHN 7)"
+          "label": "Свято Кущів",
+          "meaning": "the Ukrainian name in modern usage"
+        },
+        {
+          "label": "Сукот",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1220,20 +1260,20 @@
       },
       "distinguisher": "the solemn assembly on the day after the seven days of Booths (LEV 23:36)",
       "notes": "After the seven days of Booths, the eighth day was a holy convocation and a solemn assembly on which an offering was made by fire and no servile work was done (LEV 23:36). It was a day of solemn rest like the first day of the feast (LEV 23:39). Its offering was smaller than on the days of the feast: one bullock, one ram and seven lambs, with a goat for a sin offering (NUM 29:35-38). Solomon's people kept it after the dedication and the feast and were sent home on the twenty-third day of the month (2CH 7:9-10), and the returned exiles held it after reading the law through the feast (NEH 8:18).",
-      "words": [
+      "called": [
         {
-          "label": "solemn assembly",
-          "hebrew": "עֲצֶרֶת",
-          "hebrewTransliterated": "atsereth",
-          "hebrewStrongNumber": "H6116",
-          "meaning": "an assembly, especially on a festival"
+          "label": "Solemn assembly of the eighth day",
+          "hebrew": "שְׁמִינִי עֲצֶרֶת",
+          "hebrewTransliterated": "shemini atzeret",
+          "hebrewStrongNumber": "H8066,H6116",
+          "meaning": "the eighth day, a solemn assembly (LEV 23:36; NUM 29:35)"
         },
         {
-          "label": "eighth",
-          "hebrew": "שְׁמִינִי",
-          "hebrewTransliterated": "sheminiy",
-          "hebrewStrongNumber": "H8066",
-          "meaning": "eighth"
+          "label": "Shemini Atzeret"
+        },
+        {
+          "label": "Шміні Ацерет",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1315,27 +1355,27 @@
       },
       "distinguisher": "every seventh year, when the land lay fallow and debts were released (LEV 25:4; DEU 15:1)",
       "notes": "Every seventh year the land was to keep a sabbath to the LORD: fields were not sown nor vineyards pruned, and what grew of itself was food for the owner, the servants, the stranger and the beasts (EXO 23:10-11; LEV 25:1-7). The LORD promised a sixth-year harvest large enough to last until the crops of the ninth (LEV 25:20-22). Deuteronomy calls it the year of release, when a creditor released what he had lent to his neighbour, and warns against refusing a loan because the release is near (DEU 15:1-11). The law was to be read to all Israel at the Feast of Booths in that year (DEU 31:10-13). The text says that the land enjoyed the sabbaths it had been denied while it lay desolate during the exile (LEV 26:34-35, 43; 2CH 36:21), and the returned community pledged to leave the seventh year (NEH 10:31).",
-      "words": [
+      "called": [
         {
-          "label": "release",
-          "hebrew": "שְׁמִטָּה",
-          "hebrewTransliterated": "shemittah",
-          "hebrewStrongNumber": "H8059",
-          "meaning": "remission of debt; suspension of labour"
+          "label": "Year of release",
+          "hebrew": "שְׁנַת הַשְּׁמִטָּה",
+          "hebrewTransliterated": "shenat hashemittah",
+          "hebrewStrongNumber": "H8141,H8059",
+          "meaning": "DEU 15:9"
         },
         {
-          "label": "sabbath (of the land)",
-          "hebrew": "שַׁבָּת",
-          "hebrewTransliterated": "shabbath",
-          "hebrewStrongNumber": "H7676",
-          "meaning": "sabbath; here the land's sabbath year"
+          "label": "Shmita"
         },
         {
-          "label": "rest",
-          "hebrew": "שַׁבָּתוֹן",
-          "hebrewTransliterated": "shabbathown",
-          "hebrewStrongNumber": "H7677",
-          "meaning": "a solemn rest"
+          "label": "Sabbath of rest for the land",
+          "hebrew": "שַׁבַּת שַׁבָּתוֹן",
+          "hebrewTransliterated": "shabbat shabbaton",
+          "hebrewStrongNumber": "H7676,H7677",
+          "meaning": "LEV 25:4"
+        },
+        {
+          "label": "Шміта",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1436,13 +1476,23 @@
       },
       "distinguisher": "the fiftieth year, proclaimed by trumpet, when land returned to its families and liberty was proclaimed (LEV 25:10)",
       "notes": "After seven sabbaths of years, the trumpet was to sound on the Day of Atonement and the fiftieth year was hallowed as a jubilee, with liberty proclaimed throughout the land (LEV 25:8-10). In it every man returned to his possession and family, and, as in the seventh year, the land was not sown or reaped (LEV 25:10-12). Land was to be sold only for the years left until the jubilee, because the land is the LORD's; houses in walled cities were an exception, and Israelites sold as servants went free in that year (LEV 25:13-17, 23-31, 39-54). The value of dedicated fields was reckoned from the jubilee (LEV 27:16-24), and the heads of Gilead feared that at the jubilee the inheritance of Zelophehad's daughters would pass for good to the tribe they married into (NUM 36:4). The text records no year in which a jubilee was kept.",
-      "words": [
+      "called": [
         {
-          "label": "jubilee",
+          "label": "Jubilee",
           "hebrew": "יוֹבֵל",
-          "hebrewTransliterated": "yowbel",
+          "hebrewTransliterated": "yovel",
           "hebrewStrongNumber": "H3104",
-          "meaning": "the ram's-horn blast; the jubilee year"
+          "meaning": "the ram's horn; the fiftieth year (LEV 25:10)"
+        },
+        {
+          "label": "Yovel"
+        },
+        {
+          "label": "Year of jubilee",
+          "hebrew": "שְׁנַת הַיּוֹבֵל",
+          "hebrewTransliterated": "shenat hayyovel",
+          "hebrewStrongNumber": "H8141,H3104",
+          "meaning": "LEV 25:13"
         }
       ],
       "passages": [
@@ -1497,13 +1547,13 @@
       },
       "distinguisher": "the days of the fourteenth and fifteenth of Adar that Esther and Mordecai established to remember the Jews' deliverance (EST 9:26)",
       "notes": "Haman cast pur, the lot, to find the day on which to destroy the Jews, and it fell on the thirteenth day of the twelfth month, Adar (EST 3:7, 13). When the Jews instead overcame their enemies, those in the provinces rested on the fourteenth and those in Shushan on the fifteenth, with feasting and gladness (EST 9:17-19). Mordecai wrote to all the Jews to keep both days every year as days of feasting, of sending portions to one another and gifts to the poor (EST 9:20-22). The days were called Purim after the name of Pur, and the Jews took it on themselves and their descendants never to let them lapse (EST 9:24-28). Esther and Mordecai confirmed it with a second letter, and her decree was written in the book (EST 9:29-32).",
-      "words": [
+      "called": [
         {
           "label": "Purim",
-          "hebrew": "פּוּר",
-          "hebrewTransliterated": "puwr",
+          "hebrew": "פּוּרִים",
+          "hebrewTransliterated": "purim",
           "hebrewStrongNumber": "H6332",
-          "meaning": "a lot; plural Purim, the feast"
+          "meaning": "lots (EST 9:26)"
         }
       ],
       "passages": [
@@ -1556,13 +1606,26 @@
       },
       "distinguisher": "the winter feast at Jerusalem during which Jesus walked in Solomon's porch (JHN 10:22)",
       "notes": "John records that it was the feast of the dedication at Jerusalem, that it was winter, and that Jesus walked in the temple in Solomon's porch, where the Jews asked him to say plainly whether he was the Christ (JHN 10:22-24). This is the only mention of the feast in the Bible. Its origin, the rededication of the temple after its profanation, is told in 1 Maccabees 4:36-59, a book outside this corpus. The Hebrew word for dedication used of the altar, the wall and the house in the Old Testament (NUM 7:10; NEH 12:27; the title of PSA 30) never names this feast.",
-      "words": [
+      "called": [
         {
-          "label": "dedication",
-          "greek": "ἐγκαίνια",
-          "greekTransliterated": "enkainia",
+          "label": "Feast of Dedication",
+          "greek": "τὰ ἐγκαίνια",
+          "greekTransliterated": "ta enkainia",
           "greekStrongNumber": "G1456",
-          "meaning": "renewal; the Feast of Dedication"
+          "meaning": "the renewal (JHN 10:22)"
+        },
+        {
+          "label": "Hanukkah",
+          "hebrew": "חֲנֻכָּה",
+          "hebrewTransliterated": "chanukkah",
+          "meaning": "dedication; the name in later Jewish usage, not the text's own"
+        },
+        {
+          "label": "Chanukah"
+        },
+        {
+          "label": "Ханука",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1596,13 +1659,33 @@
       },
       "distinguisher": "the fasts kept during the exile which Zechariah says will become feasts of joy (ZEC 8:19)",
       "notes": "In the fourth year of Darius men from Bethel asked the priests whether they should still weep in the fifth month, as they had done for many years (ZEC 7:1-3). The LORD's answer asked whether their fasting and mourning in the fifth and seventh months through the seventy years had been for him at all (ZEC 7:4-7). He then promised that the fast of the fourth month, of the fifth, of the seventh and of the tenth would become joy, gladness and cheerful feasts to Judah (ZEC 8:18-19). The text names only the months. They match the months in which the siege of Jerusalem began (tenth month), the city was broken into (fourth), the temple was burned (fifth) and Gedaliah was killed (seventh) (2KI 25:1-4, 8-9, 25; JER 52:4-13; 41:1-2), but Zechariah does not make that connection himself.",
-      "words": [
+      "called": [
         {
-          "label": "fast",
-          "hebrew": "צוֹם",
-          "hebrewTransliterated": "tsowm",
+          "label": "The fasts of the fourth, fifth, seventh and tenth months",
+          "hebrew": "צוֹם הָרְבִיעִי וְצוֹם הַחֲמִישִׁי וְצוֹם הַשְּׁבִיעִי וְצוֹם הָעֲשִׂירִי",
+          "hebrewTransliterated": "tzom harevi'i vetzom hachamishi vetzom hashevi'i vetzom ha'asiri",
           "hebrewStrongNumber": "H6685",
-          "meaning": "a fast"
+          "meaning": "ZEC 8:19"
+        },
+        {
+          "label": "Tisha b'Av",
+          "meaning": "the fast of the fifth month; the name in later Jewish usage, not the text's own"
+        },
+        {
+          "label": "Tzom Gedaliah",
+          "meaning": "the fast of the seventh month; the name in later Jewish usage, not the text's own"
+        },
+        {
+          "label": "Asarah b'Tevet",
+          "meaning": "the fast of the tenth month; the name in later Jewish usage, not the text's own"
+        },
+        {
+          "label": "Shiva Asar b'Tammuz",
+          "meaning": "the fast of the fourth month; the name in later Jewish usage, not the text's own"
+        },
+        {
+          "label": "Тиша бе-Ав",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1693,13 +1776,21 @@
       },
       "distinguisher": "the Passover kept on the fourteenth of the second month by those unclean or far away at the first (NUM 9:11)",
       "notes": "At Sinai some men were unclean from a dead body on the day of the Passover and asked Moses why they should be kept from bringing the LORD's offering (NUM 9:6-7). The LORD answered that anyone unclean by a dead body, or on a journey far off, should keep the Passover on the fourteenth day of the second month at evening, eating it with unleavened bread and bitter herbs, leaving none till morning and breaking no bone of it (NUM 9:9-12). A clean man at home who failed to keep the Passover was to be cut off (NUM 9:13). Hezekiah's Passover was kept in the second month because the priests had not sanctified themselves and the people had not gathered in time (2CH 30:2-3, 15), though the text does not cite this law for it.",
-      "words": [
+      "called": [
         {
-          "label": "passover",
-          "hebrew": "פֶּסַח",
-          "hebrewTransliterated": "pecach",
-          "hebrewStrongNumber": "H6453",
-          "meaning": "the Passover"
+          "label": "Passover of the second month",
+          "hebrew": "פֶּסַח בַּחֹדֶשׁ הַשֵּׁנִי",
+          "hebrewTransliterated": "pesach bachodesh hasheni",
+          "hebrewStrongNumber": "H6453,H2320,H8145",
+          "meaning": "NUM 9:11"
+        },
+        {
+          "label": "Pesach Sheni",
+          "meaning": "the name in later Jewish usage, not the text's own"
+        },
+        {
+          "label": "Песах Шені",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1743,13 +1834,13 @@
       },
       "distinguisher": "the feast Jeroboam set up at Bethel on the fifteenth of the eighth month, in imitation of the feast in Judah (1KI 12:32)",
       "notes": "Jeroboam ordained a feast on the fifteenth day of the eighth month, like the feast that was in Judah, and sacrificed on the altar at Bethel to the calves he had made (1KI 12:32). He appointed priests of the high places there, and the text says he chose the month 'of his own heart' (1KI 12:32-33). It was while he stood by this altar burning incense that the man of God from Judah cried against it (1KI 13:1-5). The feast it imitated falls a month earlier, on the fifteenth of the seventh month (LEV 23:34).",
-      "words": [
+      "called": [
         {
-          "label": "feast",
-          "hebrew": "חַג",
-          "hebrewTransliterated": "chag",
-          "hebrewStrongNumber": "H2282",
-          "meaning": "a festival"
+          "label": "Feast of the eighth month",
+          "hebrew": "חַג בַּחֹדֶשׁ הַשְּׁמִינִי",
+          "hebrewTransliterated": "chag bachodesh hashemini",
+          "hebrewStrongNumber": "H2282,H2320,H8066",
+          "meaning": "1KI 12:32"
         }
       ],
       "passages": [
@@ -1802,20 +1893,13 @@
       },
       "distinguisher": "the wood for the altar brought by lot, family by family, at appointed times each year (NEH 10:34)",
       "notes": "In the covenant sealed under Nehemiah, the priests, Levites and people cast lots for the wood offering, to bring it to the house of God by their fathers' houses at times appointed year by year, to burn on the altar as written in the law (NEH 10:34). The law it refers to is the command that the fire on the altar never go out, with the priest burning wood on it every morning (LEV 6:12-13). Nehemiah later lists the wood offering at appointed times among the reforms for which he asks God to remember him (NEH 13:31). The text does not say which days were appointed.",
-      "words": [
+      "called": [
         {
-          "label": "offering",
-          "hebrew": "קׇרְבָּן",
-          "hebrewTransliterated": "qorban",
-          "hebrewStrongNumber": "H7133",
-          "meaning": "an offering brought near"
-        },
-        {
-          "label": "wood",
-          "hebrew": "עֵץ",
-          "hebrewTransliterated": "ets",
-          "hebrewStrongNumber": "H6086",
-          "meaning": "tree; wood"
+          "label": "Wood offering",
+          "hebrew": "קֻרְבַּן הָעֵצִים",
+          "hebrewTransliterated": "qurban ha'etsim",
+          "hebrewStrongNumber": "H7133,H6086",
+          "meaning": "NEH 10:34"
         }
       ],
       "passages": [
@@ -1862,20 +1946,23 @@
       },
       "distinguisher": "the bread and cup Jesus gave his disciples the night he was betrayed, kept by the church in remembrance of him (1CO 11:20-26)",
       "notes": "At the Passover meal before his death Jesus took bread, gave thanks, broke it and said it was his body, and gave the cup as his blood of the new testament, shed for many (MAT 26:26-29; MRK 14:22-25; LUK 22:14-20). Luke and Paul record his words 'this do in remembrance of me' (LUK 22:19; 1CO 11:24-25). Paul names it the Lord's supper, rebukes the Corinthians because each went ahead with his own supper while others went hungry, and says that as often as they eat the bread and drink the cup they show the Lord's death till he come (1CO 11:20-26). He also calls the cup and the bread a communion of the blood and body of Christ and sets the Lord's table against the table of devils (1CO 10:16-21). It is a Christian rite, not one of the appointed times of LEV 23.",
-      "words": [
+      "called": [
         {
-          "label": "Lord's",
-          "greek": "κυριακός",
-          "greekTransliterated": "kyriakos",
-          "greekStrongNumber": "G2960",
-          "meaning": "belonging to the Lord"
+          "label": "The Lord's Supper",
+          "greek": "κυριακὸν δεῖπνον",
+          "greekTransliterated": "kyriakon deipnon",
+          "greekStrongNumber": "G2960,G1173",
+          "meaning": "1CO 11:20"
         },
         {
-          "label": "supper",
-          "greek": "δεῖπνον",
-          "greekTransliterated": "deipnon",
-          "greekStrongNumber": "G1173",
-          "meaning": "the chief meal, supper"
+          "label": "Eucharist"
+        },
+        {
+          "label": "Communion"
+        },
+        {
+          "label": "Причастя",
+          "meaning": "the Ukrainian name in modern usage"
         }
       ],
       "passages": [
@@ -1932,20 +2019,13 @@
       },
       "distinguisher": "the day on which John, in Patmos, was in the Spirit and received the Revelation (REV 1:10)",
       "notes": "John writes that he was in the isle called Patmos and was in the Spirit on the Lord's day when he heard behind him a great voice like a trumpet (REV 1:9-10). The adjective 'the Lord's' (kyriakos) is used in the New Testament only here and in 'the Lord's supper' (1CO 11:20). The text does not say which day of the week this was. It is a different expression from 'the day of the LORD', the prophets' day of judgment (JOL 2:31; 1TH 5:2), which is not this record.",
-      "words": [
+      "called": [
         {
-          "label": "Lord's",
-          "greek": "κυριακός",
-          "greekTransliterated": "kyriakos",
-          "greekStrongNumber": "G2960",
-          "meaning": "belonging to the Lord"
-        },
-        {
-          "label": "day",
-          "greek": "ἡμέρα",
-          "greekTransliterated": "hemera",
-          "greekStrongNumber": "G2250",
-          "meaning": "day"
+          "label": "The Lord's Day",
+          "greek": "ἡ κυριακὴ ἡμέρα",
+          "greekTransliterated": "hē kyriakē hēmera",
+          "greekStrongNumber": "G2960,G2250",
+          "meaning": "REV 1:10"
         }
       ],
       "passages": [
@@ -1988,13 +2068,16 @@
       },
       "distinguisher": "the LORD's set feasts proclaimed as holy convocations, listed together in LEV 23 (LEV 23:2)",
       "notes": "Leviticus 23 opens 'these are the feasts of the LORD', proclaimed as holy convocations in their seasons, and lists the sabbath, the Passover and Unleavened Bread, the wave sheaf, the Feast of Weeks, the blowing of trumpets, the Day of Atonement, and Booths with its eighth day (LEV 23:2-44). Numbers 28-29 gives the offerings for each in the same order, beginning with the daily offering, the sabbath and the new moons (NUM 28:1-29:40). Three of them, Unleavened Bread, Weeks and Booths, were pilgrim feasts at which every male appeared before the LORD (EXO 23:14-17; DEU 16:16). The historical books name 'the sabbaths, the new moons and the set feasts' as the rhythm of temple worship (1CH 23:31; 2CH 8:13; EZR 3:5), and the prophets both reject Israel's appointed feasts and promise their restoration (ISA 1:14; HOS 2:11; EZK 45:17).",
-      "words": [
+      "called": [
         {
-          "label": "appointed time, set feast",
-          "hebrew": "מוֹעֵד",
-          "hebrewTransliterated": "mowed",
-          "hebrewStrongNumber": "H4150",
-          "meaning": "an appointed time or festival (not 'tent of meeting')"
+          "label": "The appointed times of the LORD",
+          "hebrew": "מוֹעֲדֵי יְהוָה",
+          "hebrewTransliterated": "mo'adei adonai",
+          "hebrewStrongNumber": "H4150,H3068",
+          "meaning": "the LORD's set feasts (LEV 23:2)"
+        },
+        {
+          "label": "Moadim"
         }
       ],
       "passages": [

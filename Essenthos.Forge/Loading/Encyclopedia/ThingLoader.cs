@@ -131,6 +131,55 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
                         AND abs(beside.position - o.position) <= @reach)
         """;
 
+    /// <summary>
+    /// What says an appointed time stands in each verse of the passages that command it. Not that a
+    /// word there names it — Leviticus 16 never says <em>the day of atonement</em> and is the whole of
+    /// how it is kept — so these are references from the passage, read as such by the model that
+    /// listed the passages, and they say so beside the ones the words give.
+    /// </summary>
+    public const string PassageSource =
+        "Essenthos, from the passages that command it, as a language model read them on 2026-09-23";
+
+    /// <summary>
+    /// Every verse of every commanding passage, once per record, from the verses the canonical frame
+    /// holds; and the rows of that source no passage covers any longer, taken back.
+    /// </summary>
+    private const string CommandedVerses =
+        """
+        WITH wanted AS (
+            SELECT DISTINCT p.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
+            FROM entity_passage p
+            JOIN verse_reference r
+              ON r.is_primary
+             AND r.canonical_book = p.canonical_book
+             AND r.canonical_chapter BETWEEN p.canonical_chapter AND p.end_chapter
+             AND (r.canonical_chapter > p.canonical_chapter OR p.canonical_verse IS NULL
+                  OR r.canonical_verse >= p.canonical_verse)
+             AND (r.canonical_chapter < p.end_chapter OR p.end_verse IS NULL
+                  OR r.canonical_verse <= p.end_verse)
+            WHERE p.role = @command AND p.source = @passages),
+        withdrawn AS (
+            DELETE FROM entity_verse v
+            WHERE v.source = @source
+              AND NOT EXISTS (SELECT 1 FROM wanted w
+                              WHERE w.entity_id = v.entity_id AND w.canonical_book = v.canonical_book
+                                AND w.canonical_chapter = v.canonical_chapter
+                                AND w.canonical_verse = v.canonical_verse)
+            RETURNING 1),
+        written AS (
+            INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
+                                      label, disputed, source)
+            SELECT w.entity_id, w.canonical_book, w.canonical_chapter, w.canonical_verse, NULL, FALSE, @source
+            FROM wanted w
+            WHERE NOT EXISTS (SELECT 1 FROM entity_verse v
+                              WHERE v.source = @source AND v.entity_id = w.entity_id
+                                AND v.canonical_book = w.canonical_book
+                                AND v.canonical_chapter = w.canonical_chapter
+                                AND v.canonical_verse = w.canonical_verse)
+            RETURNING 1)
+        SELECT (SELECT count(*) FROM withdrawn) + (SELECT count(*) FROM written)
+        """;
+
     /// <summary>The words these rules seeded last time, which is what decides whether to write again.</summary>
     private const string Seeded =
         """
@@ -148,9 +197,10 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
 
         var (seed, refused) = await Settled(records, held, cancellationToken);
         var byText = await Annotate(seed, cancellationToken);
+        var referenced = await ReferThePassagesThatCommandThem(cancellationToken);
 
         var outcome = new ThingOutcome(
-            written == 0 && revised == 0 && missing == 0 && byText is null,
+            written == 0 && revised == 0 && missing == 0 && byText is null && referenced == 0,
             written, revised, missing, seed.Count, refused, byText ?? [], started.Elapsed);
         logger.LogInformation("The objects and the appointed times: {Outcome}", outcome);
         return outcome;
@@ -271,7 +321,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         Set(entity.Distinguisher, record.Distinguisher, v => entity.Distinguisher = v);
         Set(entity.Notes, record.Notes, v => entity.Notes = v);
 
-        var names = (record.Words ?? []).Select(w => new EntityName
+        var names = (record.Called ?? []).Select(w => new EntityName
         {
             Label = w.Label,
             Hebrew = w.Hebrew,
@@ -578,6 +628,18 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         }
 
         return words;
+    }
+
+    /// <summary>The references the commanding passages give, brought to the passages; how many changed.</summary>
+    private async Task<int> ReferThePassagesThatCommandThem(CancellationToken cancellationToken)
+    {
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        await using var command = new NpgsqlCommand(CommandedVerses, connection);
+        command.Parameters.AddWithValue("command", PassageRoles.Command);
+        command.Parameters.AddWithValue("passages", Source);
+        command.Parameters.AddWithValue("source", PassageSource);
+        command.CommandTimeout = Annotating.Patient;
+        return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     /// <summary>One word the rules give a record, and whether a person has reviewed the rule that gave it.</summary>
