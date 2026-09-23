@@ -37,8 +37,7 @@ internal enum EvidentiaAuxiliaryRole
 ///
 /// <para>Deliberately not covered: possessive and reflexive pronouns, which a Hebrew suffix on a noun
 /// or a preposition carries; object pronouns onto a Hebrew preposition, which is where the suffix
-/// stands; demonstrative and relative pronouns and content words onto an article, which are not
-/// auxiliary words; position relative to the host word; and every source language but English,
+/// stands; position relative to the host word; and every source language but English,
 /// since the roles come from the English UDPipe parse.</para>
 /// </summary>
 internal static class EvidentiaAuxiliaryWords
@@ -82,10 +81,18 @@ internal static class EvidentiaAuxiliaryWords
 
     /// <summary>
     /// Whether placing the source word on the target would put an auxiliary word on a kind of word it
-    /// cannot correspond to. A target that states no class is not refused: nothing is known against it.
+    /// cannot correspond to, or put anything but an article on the article of a noun, which belongs to
+    /// that noun whatever the index learned from phrases. A target that states no class is not refused:
+    /// nothing is known against it.
     /// </summary>
     public static bool PlacesOffItsKind(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
+        if (target.Role == EvidentiaAuxiliaryRole.NominalArticle && IsEnglish(source.Token)
+            && Feature(source.Token, "PronType") != "Art")
+        {
+            return true;
+        }
+
         var targetClass = EvidentiaMorphologyLabels.PartOfSpeech(target.PartOfSpeech, target.Token.Language);
         return source.Role switch
         {
@@ -109,7 +116,7 @@ internal static class EvidentiaAuxiliaryWords
             return ArticleRole(analyses, index);
         }
 
-        if (!token.Language.Equals("eng", StringComparison.OrdinalIgnoreCase))
+        if (!IsEnglish(token))
         {
             return EvidentiaAuxiliaryRole.None;
         }
@@ -193,6 +200,9 @@ internal static class EvidentiaAuxiliaryWords
 
         return false;
     }
+
+    private static bool IsEnglish(EvidentiaToken token) =>
+        token.Language.Equals("eng", StringComparison.OrdinalIgnoreCase);
 
     private static string? Case(EvidentiaAnalysis analysis) =>
         EvidentiaMorphologyLabels.Feature(Feature(analysis.Token, "case"), analysis.Token.Language);

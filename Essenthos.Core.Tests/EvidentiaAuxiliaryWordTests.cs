@@ -35,6 +35,25 @@ public class EvidentiaAuxiliaryWordTests
     }
 
     [Fact]
+    public void OnlyAnArticleIsPlacedOnTheArticleOfANoun()
+    {
+        var proposals = Propose(
+            [
+                English(1, Mark120, 1, "those", "PRON", ("PronType", "Dem"), ("Number", "Plur")),
+                English(2, Mark120, 2, "things", "NOUN", ("Number", "Plur")),
+            ],
+            [
+                Greek(11, Mark120, 1, "τοῦ", "G3588", "det", "genitive"),
+                Greek(12, Mark120, 2, "ὅσα", "G3745", "pron", "accusative"),
+                Greek(13, Mark120, 3, "τὰς", "G3588", "det", "accusative"),
+                Greek(14, Mark120, 4, "ἀκάνθας", "G173", "noun", "accusative"),
+            ],
+            ("those", "G3588", 0.40), ("things", "G3588", 0.35));
+
+        proposals.Should().BeEmpty("τοῦ and τὰς belong to the nouns after them, whatever the phrase links taught the index");
+    }
+
+    [Fact]
     public void ASubjectPronounMayStandOnAnArticleThatStandsForAPerson()
     {
         var proposals = Propose(
