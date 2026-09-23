@@ -100,7 +100,8 @@ internal static class TvtmsReader
                 "release and not the spreadsheet export.");
         }
 
-        return new VersificationRules(blocks, corrected);
+        var supplemented = TvtmsSupplements.Join(blocks);
+        return new VersificationRules(blocks, corrected, supplemented);
     }
 
     /// <summary>
@@ -155,7 +156,8 @@ internal static class TvtmsReader
 /// </summary>
 internal sealed class VersificationRules(
     IReadOnlyList<IReadOnlyList<TvtmsRow>> blocks,
-    IReadOnlySet<TvtmsCorrection> corrected)
+    IReadOnlySet<TvtmsCorrection> corrected,
+    IReadOnlySet<TvtmsSupplement> supplemented)
 {
     /// <summary>
     /// The names this file gives the numbering schemes of each tradition, the first being the one
@@ -176,6 +178,13 @@ internal sealed class VersificationRules(
         [Versification.Vulgate] = ["Latin", "Latin2"],
     };
 
+    /// <summary>The undivided form of a scheme, and the divided scheme it is written against.</summary>
+    private static readonly Dictionary<string, string> UndividedVariants = new()
+    {
+        ["GreekUndivided"] = "Greek",
+        ["Greek2Undivided"] = "Greek2",
+    };
+
     public bool Covers(Versification tradition) => Schemes.ContainsKey(tradition);
 
     /// <summary>
@@ -183,6 +192,13 @@ internal sealed class VersificationRules(
     /// is about a rule this release of the data no longer states.
     /// </summary>
     public IReadOnlySet<TvtmsCorrection> Corrected { get; } = corrected;
+
+    /// <summary>
+    /// Which of <see cref="TvtmsSupplements.All"/> found the passage of the data they were written to
+    /// join. One that did not stands as a passage of its own, where the data's rules for the same
+    /// verses would compete with it.
+    /// </summary>
+    public IReadOnlySet<TvtmsSupplement> Supplemented { get; } = supplemented;
 
     /// <summary>
     /// The frame for a tradition, taking the scheme it is named after everywhere. It is what the
@@ -202,20 +218,37 @@ internal sealed class VersificationRules(
     /// runs to verse 37, which is the condition the data writes against the Hebrew column and
     /// against no Greek one.
     ///
-    /// Where nothing can be decided the tradition's own scheme is used, so a passage the tests say
-    /// nothing about is placed exactly as it was before there were any tests to read.
+    /// Before any of the data's schemes, a passage written down for one edition in
+    /// <see cref="TvtmsSupplements"/> is taken if the edition answers every test of it.
+    ///
+    /// Where no scheme holds, the edition is not placed by a scheme it contradicts throughout: its
+    /// tradition's own scheme is kept if what fails is only whether a verse is printed in pieces,
+    /// and otherwise the scheme whose tests it answers most, as long as more of them hold than fail.
+    /// Brenton leaves out Exodus 25:6 and numbers the rest as the Hebrew does, failing one Hebrew
+    /// test and all thirty-one Greek ones; taking the Greek because it is Brenton's tradition put
+    /// every verse of the chapter beside the Hebrew of the next. An English edition keeps its own
+    /// fallback instead of the first of these, because there a failing piece names an addition it
+    /// does not print.
+    ///
+    /// Where nothing can be decided even so, the tradition's own scheme is used, so a passage the
+    /// tests say nothing about is placed exactly as it was before there were any tests to read.
     /// </summary>
     public VersificationFrame Frame(Versification tradition, EditionShape edition)
     {
         var own = Schemes[tradition];
         var others = Schemes.Where(scheme => scheme.Key != tradition).SelectMany(scheme => scheme.Value).ToArray();
+        var supplements = TvtmsSupplements.Schemes(tradition);
 
         return Build(tradition, passage =>
+            Chosen(passage, supplements, edition, requireEvidence: true) ??
             Chosen(passage, own, edition, requireEvidence: false) ??
             Chosen(passage, others, edition, requireEvidence: true) ??
             (tradition == Versification.English
-                ? Named(passage, own[0]).Where(row => row.Tests?.FailsPieceExistence(edition) is not true)
-                : Named(passage, own[0])));
+                ? Closest(passage, [.. own, .. others], edition) ??
+                  Named(passage, own[0]).Where(row => row.Tests?.FailsPieceExistence(edition) is not true)
+                : ApartFromPieces(passage, own[0], edition) ??
+                  Closest(passage, [.. own, .. others], edition) ??
+                  Named(passage, own[0])));
     }
 
     /// <summary>
@@ -259,8 +292,73 @@ internal sealed class VersificationRules(
         return best is null ? null : Named(passage, best);
     }
 
-    private static IEnumerable<TvtmsRow> Named(IReadOnlyList<TvtmsRow> passage, string scheme) =>
-        passage.Where(row => row.Traditions.Contains(scheme));
+    /// <summary>
+    /// The scheme, when the only tests of it the edition fails ask whether a verse is printed in
+    /// pieces. An edition that prints Exodus 38:11 whole still numbers the chapter as the scheme that
+    /// divides it does.
+    /// </summary>
+    private static IEnumerable<TvtmsRow>? ApartFromPieces(
+        IReadOnlyList<TvtmsRow> passage,
+        string scheme,
+        EditionShape edition)
+    {
+        var rows = Named(passage, scheme).ToList();
+        return rows.Count > 0 && rows.All(row =>
+            row.Tests?.Answer(edition) is not false || row.Tests.FailsOnlyPieceExistence(edition))
+            ? rows
+            : null;
+    }
+
+    /// <summary>
+    /// The scheme whose tests the edition answers most, counted as the rows that hold less the rows
+    /// that fail, or null where no scheme has more of the one than the other.
+    /// </summary>
+    private static IEnumerable<TvtmsRow>? Closest(
+        IReadOnlyList<TvtmsRow> passage,
+        IReadOnlyList<string> schemes,
+        EditionShape edition)
+    {
+        string? best = null;
+        var margin = 0;
+
+        foreach (var scheme in schemes)
+        {
+            var answers = Named(passage, scheme).Select(row => row.Tests?.Answer(edition)).ToList();
+            var held = answers.Count(answer => answer is true) - answers.Count(answer => answer is false);
+            if (held > margin)
+            {
+                best = scheme;
+                margin = held;
+            }
+        }
+
+        return best is null ? null : Named(passage, best);
+    }
+
+    /// <summary>
+    /// A scheme's rows in the passage. The undivided form of a scheme is written as the rows that
+    /// differ from the divided one — in Exodus 40 three rows about 38:27 and nothing about the
+    /// renumbering of the chapter — so it is the divided scheme's rows with its own in place of the
+    /// ones about the same verses.
+    /// </summary>
+    private static IEnumerable<TvtmsRow> Named(IReadOnlyList<TvtmsRow> passage, string scheme)
+    {
+        var rows = passage.Where(row => row.Traditions.Contains(scheme)).ToList();
+        if (rows.Count == 0 || !UndividedVariants.TryGetValue(scheme, out var divided))
+        {
+            return rows;
+        }
+
+        var covered = rows.SelectMany(row => row.Sources).ToHashSet();
+        return
+        [
+            .. rows,
+            .. passage.Where(row =>
+                row.Traditions.Contains(divided) &&
+                !row.Traditions.Contains(scheme) &&
+                !row.Sources.Any(covered.Contains)),
+        ];
+    }
 
     private VersificationFrame Build(
         Versification tradition,

@@ -226,6 +226,14 @@ internal sealed record VersificationConditions(IReadOnlyList<VersificationTest> 
         Stated.Any(test => test.IsPieceExistence && test.IsAbout(edition) && !test.Holds(edition));
 
     /// <summary>
+    /// Whether the cell fails, and fails only on whether a verse is printed in pieces: the edition
+    /// answers the rest of it.
+    /// </summary>
+    internal bool FailsOnlyPieceExistence(EditionShape edition) =>
+        FailsPieceExistence(edition) &&
+        Stated.All(test => test.IsPieceExistence || !test.IsAbout(edition) || test.Holds(edition));
+
+    /// <summary>
     /// Whether this edition answers to the cell: false as soon as a condition it can answer fails,
     /// null while some condition is about a book it does not carry, and true when the whole cell
     /// was read and held.
