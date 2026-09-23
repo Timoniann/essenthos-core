@@ -16,6 +16,7 @@ public sealed class NaveEntryTests
 {
     private const int Genesis = 1;
     private const int Exodus = 2;
+    private const int Numbers = 4;
     private const int FirstSamuel = 9;
     private const int FirstChronicles = 13;
     private const int Ezra = 15;
@@ -116,6 +117,56 @@ public sealed class NaveEntryTests
         NaveEntries.Lines(aaron["entry"])
             .Single(l => l.Heading == "Makes the golden calf")
             .Citations.Should().Contain(new NaveEntries.Citation(Exodus, 32, null, null));
+    }
+
+    /// <summary>
+    /// A verse the transcription writes after a semicolon, where Nave has a comma, is read as the
+    /// verse: Amram is in Exodus 6:20, and Exodus 20 does not mention him.
+    /// </summary>
+    [Fact]
+    public void AListedVerseAfterASemicolonIsReadAsTheVerseNotTheChapter()
+    {
+        const string entry = "-1. Father of Moses EXO 6:18; 20; NUM 26:58,59";
+
+        Cited(NaveEntries.Read(entry).Citations).Should().StartWith($"{Exodus} 6:18-18; {Exodus} 20:-");
+        Cited(NaveEntries.Read(NaveCorrections.Apply("AMRAM", entry)).Citations).Should().Be(
+            $"{Exodus} 6:18-18; {Exodus} 6:20-20; {Numbers} 26:58-58; {Numbers} 26:59-59");
+    }
+
+    [Fact]
+    public void ACorrectionIsOnlyForItsOwnSubject()
+    {
+        const string entry = "-Lineage of EXO 6:18; 20";
+
+        NaveCorrections.Apply("AARON", entry).Should().Be(entry);
+    }
+
+    /// <summary>
+    /// Every listed correction finds its citation once in its subject's entries in the file as it is
+    /// shipped, and turns a whole chapter into a verse; a new release that fixed or moved one shows
+    /// up here.
+    /// </summary>
+    [Fact]
+    public void EveryCorrectionMatchesTheShippedIndexOnceAndTurnsAChapterIntoAVerse()
+    {
+        var path = TestResources.Path("BibleData2026", NaveTopicLoader.FileName);
+        var rows = Essenthos.Core.Loading.Encyclopedia.Csv.Read(path).ToList();
+
+        foreach (var correction in NaveCorrections.All)
+        {
+            var entries = rows.Where(row => row["subject"].Trim() == correction.Subject).Select(row => row["entry"]).ToList();
+            entries.Sum(e => Occurrences(e, correction.Written)).Should().Be(1, correction.Written);
+
+            var before = WholeChapters(entries);
+            var after = WholeChapters(entries.Select(e => e.Replace(correction.Written, correction.Read, StringComparison.Ordinal)));
+            after.Should().Be(before - 1, correction.Written);
+        }
+
+        static int Occurrences(string text, string fragment) =>
+            (text.Length - text.Replace(fragment, "", StringComparison.Ordinal).Length) / fragment.Length;
+
+        static int WholeChapters(IEnumerable<string> entries) =>
+            entries.SelectMany(NaveEntries.Lines).SelectMany(l => l.Citations).Count(c => c.FirstVerse is null);
     }
 }
 
