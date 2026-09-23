@@ -7,7 +7,7 @@ source page and licence, because no two pictures here need share them.
 | Folder | What | Terms | Put here by |
 |---|---|---|---|
 | `openbible/` | OpenBible.info's 512x512 place thumbnails | per picture, from its `image.jsonl`; see `../OpenBible/LICENCE.md` | `scripts/fetch-images.ps1` |
-| `commons/` | public works chosen for people, listed in `Essenthos.Forge/Loading/Encyclopedia/PublicImages.json` | per entry, read on each file's Wikimedia Commons page | `scripts/fetch-images.ps1` |
+| `commons/` | public works chosen for people and things, listed in `Essenthos.Forge/Loading/Encyclopedia/PublicImages.json` | per entry, read on each file's Wikimedia Commons page | `scripts/fetch-images.ps1` |
 | `generated/` | our own identity portraits, one per person, with a `manifest.json` | ours; the manifest states the credit and licence shown | by hand |
 
 ## The rules every picture is loaded under
@@ -30,6 +30,14 @@ Chosen one by one, and only where the title names exactly one person the encyclo
 present fifteen of James Tissot's Old Testament watercolours and gouaches (about 1896–1902, most
 of them at the Jewish Museum, New York), public domain since the painter died in 1902. Each entry
 records its Commons page, which is where its credit and status were read on 2026-09-23.
+
+One is of a thing, and is not a picture of it: Zorka Sojka's photograph of the Durupınar formation
+near Doğubayazıt, Turkey (2009, CC BY-SA 4.0, shown as published), on Noah's ark's record. Some hold
+the formation to be the ark's remains; its origin is disputed and geologists have described it as
+natural, and its caption says so in each of the reader's languages (`captions` in the entry) — the
+text itself says only *the mountains of Ararat* (Genesis 8:4).
+The file is Commons' own 1920-pixel rendering of the 3872-pixel original, which is what `download`
+names.
 
 ## A generated portrait
 

@@ -84,8 +84,16 @@ internal static class ImageEndpoints
     /// </para>
     /// </summary>
     /// <param name="generated">Whether our own generated pictures are shown, which the owner switches for the site.</param>
+    /// <param name="language">
+    /// The reader's language, whose caption is given where the list wrote one in it; the English
+    /// caption otherwise.
+    /// </param>
     public static async Task<List<EntityImageResponse>> Of(
-        AppDbContext db, int entityId, CancellationToken cancellationToken, bool generated = true)
+        AppDbContext db,
+        int entityId,
+        CancellationToken cancellationToken,
+        bool generated = true,
+        string? language = null)
     {
         var images = await db.EntityImages
             .Where(i => i.EntityId == entityId && (generated || i.Kind != Generated))
@@ -96,6 +104,7 @@ internal static class ImageEndpoints
             {
                 i.File, i.Digest, i.Kind, i.Role, i.Width, i.Height, i.Caption, i.Credit, i.CreditUrl,
                 i.Licence, i.LicenceUrl, i.Source, i.FocusX, i.FocusY,
+                Local = i.Captions.Where(c => c.Language == language).Select(c => c.Caption).FirstOrDefault(),
             })
             .ToListAsync(cancellationToken);
 
@@ -106,8 +115,11 @@ internal static class ImageEndpoints
                     Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, null, null, null, null, null, null,
                     i.FocusX, i.FocusY)
                 : new EntityImageResponse(
-                    Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, i.Caption, i.Credit, i.CreditUrl,
-                    i.Licence, i.LicenceUrl, i.Source, i.FocusX, i.FocusY)),
+                    Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, i.Local ?? i.Caption, i.Credit,
+                    i.CreditUrl, i.Licence, i.LicenceUrl, i.Source, i.FocusX, i.FocusY)
+                {
+                    CaptionLanguage = i.Local is null ? null : language,
+                }),
         ];
     }
 
@@ -161,7 +173,14 @@ internal sealed record EntityImageResponse(
     string? LicenceUrl,
     string? Source,
     double? FocusX,
-    double? FocusY);
+    double? FocusY)
+{
+    /// <summary>
+    /// The language the caption is in where it is one written in the reader's; null for the English
+    /// its source or its list states.
+    /// </summary>
+    public string? CaptionLanguage { get; init; }
+}
 
 /// <summary>The picture an entity leads with, as small as a list needs it: where it is and what kind.</summary>
 internal sealed record EntityThumbnailResponse(string Url, string Kind, double? FocusX, double? FocusY);

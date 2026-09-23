@@ -54,8 +54,11 @@ internal sealed record EntityImageOutcome(
 /// <para>
 /// A manifest is <c>{ "source", "credit"?, "licence"?, "licenceUrl"?, "images": [...] }</c>, the
 /// top-level values standing for any entry that does not state its own. An entry is
-/// <c>{ "entity": slug, "file": path under the images folder, "caption", "credit", "creditUrl",
-/// "licence", "licenceUrl", "role": "primary" | "gallery", "focus": [x, y], "download", "glory" }</c>;
+/// <c>{ "entity": slug, "file": path under the images folder, "caption", "captions", "credit",
+/// "creditUrl", "licence", "licenceUrl", "role": "primary" | "gallery", "focus": [x, y], "download",
+/// "glory" }</c>; <c>captions</c> is the caption in a reader's language, by the three-letter code the
+/// texts are tagged with — <c>{ "ukr": "...", "deu": "..." }</c> — for a picture a reader must be
+/// told about in words he reads;
 /// <c>download</c> is the address the fetch script takes the file from and is not read here, and
 /// <c>glory</c> is below. An entry with no
 /// credit or no licence is refused, because a picture with no credit under it reads as ours.
@@ -185,7 +188,8 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                     entry.LicenceUrl ?? (entry.Licence is null ? manifest.LicenceUrl : null),
                     manifest.Source,
                     entry.Focus is [var x and >= 0 and <= 1, var y and >= 0 and <= 1] ? (x, y) : null,
-                    entry.Glory == true));
+                    entry.Glory == true,
+                    Captions(entry.Captions)));
             }
         }
 
@@ -348,6 +352,11 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                 Width = size.Width,
                 Height = size.Height,
                 Caption = candidate.Caption,
+                Captions =
+                [
+                    .. (candidate.Captions ?? new Dictionary<string, string>()).Select(c =>
+                        new EntityImageCaption { Language = c.Key, Caption = c.Value }),
+                ],
                 Credit = candidate.Credit,
                 CreditUrl = candidate.CreditUrl,
                 Licence = candidate.Licence,
@@ -388,6 +397,15 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         }
     }
 
+    /// <summary>The captions an entry gives in other languages, by lower-cased code, without the empty ones.</summary>
+    private static Dictionary<string, string>? Captions(IDictionary<string, string>? captions)
+    {
+        var given = captions?
+            .Where(c => !string.IsNullOrWhiteSpace(c.Key) && !string.IsNullOrWhiteSpace(c.Value))
+            .ToDictionary(c => c.Key.Trim().ToLowerInvariant(), c => c.Value.Trim(), StringComparer.Ordinal);
+        return given is { Count: > 0 } ? given : null;
+    }
+
     internal static ImageManifest Parse(Stream stream, string name) =>
         (JsonSerializer.Deserialize<ImageManifest>(stream, ManifestJson)
          ?? throw new InvalidDataException($"{name} is empty. It must hold {{ \"source\", \"images\": [...] }}."))
@@ -406,7 +424,8 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         string? LicenceUrl,
         string Source,
         (double X, double Y)? Focus,
-        bool Glory);
+        bool Glory,
+        IReadOnlyDictionary<string, string>? Captions = null);
 }
 
 /// <param name="Source">The collection the pictures come from, as a row's source says it.</param>
@@ -428,6 +447,7 @@ internal sealed record ImageManifest(
 /// of picture a record of God may have, and only from the generated manifest.
 /// </param>
 /// <param name="Review">The owner's word on one of our own: <c>pending</c>, <c>approved</c> or <c>rejected</c>.</param>
+/// <param name="Captions">The caption in other languages, by three-letter language code.</param>
 internal sealed record ImageManifestEntry(
     string Entity,
     string File,
@@ -440,4 +460,5 @@ internal sealed record ImageManifestEntry(
     double[]? Focus = null,
     string? Download = null,
     bool? Glory = null,
-    string? Review = null);
+    string? Review = null,
+    IDictionary<string, string>? Captions = null);

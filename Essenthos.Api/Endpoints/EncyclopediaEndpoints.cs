@@ -777,7 +777,7 @@ internal static class EncyclopediaEndpoints
                     .GetValueOrDefault(entity.Id),
                 Renderings = await Renderings(db, entity.Id, cancellationToken),
                 Images = await ImageEndpoints.Of(
-                    db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages)),
+                    db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages), language),
                 Bearers =
                 [
                     .. bearers.Select(b => new EntityTitleResponse(
