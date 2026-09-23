@@ -9,6 +9,7 @@ using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
+using NpgsqlTypes;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
@@ -17,18 +18,23 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Decided">Rows the owner answered on the review list, applied as answered.</param>
 /// <param name="Unsettled">Rows the rule could not settle, left where they are and listed for the owner.</param>
 /// <param name="Misfiled">Rows of <see cref="MisfiledVerseLoader.Misfiled"/> moved or withdrawn this run.</param>
+/// <param name="Omitted">Rows of <see cref="MisfiledVerseLoader.Omitted"/> added this run.</param>
+/// <param name="Withdrawn">Rows added by an earlier run that the list no longer holds, taken back.</param>
 internal sealed record MisfiledVerseOutcome(
     int Read,
     int ToThePeople,
     int Decided,
     int Unsettled,
     int Misfiled,
+    int Omitted,
+    int Withdrawn,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
         $"{Read} verse rows the dataset files under a people's ancestor read, {ToThePeople} moved to the " +
         $"people the verse names ({Decided} of the rows read answered by the owner), {Unsettled} left for " +
-        $"the owner to answer, and {Misfiled} rows filed under the wrong record put right, in {Elapsed}";
+        $"the owner to answer, {Misfiled} rows filed under the wrong record put right, and {Omitted} verses " +
+        $"the dataset leaves off a record added ({Withdrawn} withdrawn), in {Elapsed}";
 }
 
 /// <summary>
@@ -65,12 +71,16 @@ internal sealed record MisfiledVerseOutcome(
 ///
 /// <para>
 /// **The rest are single rows, listed by hand with the reason** (<see cref="Misfiled"/>): a label
-/// filed one verse early, a comparison read as a presence.
+/// filed one verse early, a comparison read as a presence. So are the verses it leaves off the record
+/// they are about (<see cref="Omitted"/>): the dataset lists the angel of the LORD in the Old
+/// Testament only, and the New Testament's <em>angel of the Lord</em> is added verse by verse,
+/// under this project's name and not the dataset's.
 /// </para>
 ///
 /// <para>
 /// Idempotent: a row once moved is no longer the ancestor's to read, a row put right is not found
-/// where it was, and a row left for the owner is listed again with his answer kept.
+/// where it was, a row left for the owner is listed again with his answer kept, and a verse added
+/// is not added twice.
 /// </para>
 /// </summary>
 internal sealed class MisfiledVerseLoader(AppDbContext db, ILogger<MisfiledVerseLoader> logger)
@@ -286,6 +296,85 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ILogger<MisfiledVerse
             "is there."),
     ];
 
+    /// <summary>
+    /// What a row of <see cref="Omitted"/> says about itself: the owner's ruling that an angel of the
+    /// Lord the text does not name is listed as the angel of the LORD, and whoever applied it to each
+    /// verse. A verse whose context names the angel goes to the angel it names instead.
+    /// </summary>
+    internal const string OnTheRuling =
+        "Essenthos, on the project owner's ruling of 2026-09-23 that an angel of the Lord the text does not " +
+        "name is the angel of the LORD, each verse read in its context and parallels by claude-opus-5-5";
+
+    /// <summary>
+    /// A verse the dataset leaves off the record it is about, by the record's source id, the verse,
+    /// the name the verse calls it by — none where the verse does not print one of the record's
+    /// names — and why the verse is the record's.
+    /// </summary>
+    internal sealed record OmittedRow(string SourceId, string Reference, string? Label, string Why);
+
+    private const string TheAngel = "person:the angel of the LORD_1";
+
+    private const string TheAngelOfTheLord = "the angel of the LORD";
+
+    private const string TheAngelOfGod = "the angel of G-d";
+
+    /// <summary>
+    /// Every verse of the King James and of the Greek witnesses that says <em>the angel of the
+    /// Lord</em> or <em>an angel of God</em> of one angel and is not on a record, placed. Left off on
+    /// purpose: Galatians 4:14, where Paul says he was received <em>as an angel of God</em>, which is
+    /// a comparison like 2 Samuel 14:17, and the plurals — <em>the angels of God</em> — which are no
+    /// one angel.
+    /// </summary>
+    internal static readonly IReadOnlyList<OmittedRow> Omitted =
+    [
+        new(TheAngel, "1CH 21:12", TheAngelOfTheLord,
+            "Gad offers David 'three days … the angel of the LORD destroying': the angel of 21:15-16 and of " +
+            "2 Samuel 24:16, both already on the record."),
+        new(TheAngel, "MAT 1:20", TheAngelOfTheLord,
+            "The angel of the Lord appears to Joseph in a dream; Matthew never names him, and Luke's Gabriel " +
+            "speaks to Mary, not to Joseph."),
+        new(TheAngel, "MAT 1:24", TheAngelOfTheLord,
+            "Joseph does 'as the angel of the Lord had bidden him': the angel of 1:20."),
+        new(TheAngel, "MAT 2:13", TheAngelOfTheLord,
+            "The angel of the Lord sends Joseph into Egypt in a dream; unnamed."),
+        new(TheAngel, "MAT 2:19", TheAngelOfTheLord,
+            "An angel of the Lord calls Joseph back from Egypt in a dream; unnamed."),
+        new(TheAngel, "MAT 28:2", TheAngelOfTheLord,
+            "The angel of the Lord rolls back the stone. The parallels name no one either: Mark 16:5 has a " +
+            "young man, Luke 24:4 two men, John 20:12 two angels."),
+        new(TheAngel, "LUK 2:9", TheAngelOfTheLord,
+            "The angel of the Lord comes upon the shepherds; he speaks in 2:10 and the heavenly host joins " +
+            "him in 2:13, and he is not named."),
+        new(TheAngel, "ACT 5:19", TheAngelOfTheLord,
+            "The angel of the Lord opens the prison doors for the apostles; unnamed."),
+        new(TheAngel, "ACT 7:30", TheAngelOfTheLord,
+            "Stephen recounts Exodus 3:2, the angel of the LORD in the flame of the bush, which is on the " +
+            "record. The Textus Receptus and the Byzantine text read 'an angel of the Lord'; Nestle has " +
+            "'an angel' alone."),
+        new(TheAngel, "ACT 7:35", null,
+            "Moses was sent 'by the hand of the angel which appeared to him in the bush': the angel of " +
+            "Exodus 3:2 and of 7:30."),
+        new(TheAngel, "ACT 7:38", null,
+            "'The angel which spake to him in the mount Sina': in Stephen's speech the angel at Sinai is the " +
+            "one of the bush, placed 'in the wilderness of mount Sina' at 7:30."),
+        new(TheAngel, "ACT 8:26", TheAngelOfTheLord,
+            "The angel of the Lord sends Philip to the Gaza road; unnamed."),
+        new(TheAngel, "ACT 10:3", TheAngelOfGod,
+            "Cornelius sees 'an angel of God'; 10:22 calls him a holy angel and 11:13 an angel, and none of " +
+            "them names him."),
+        new(TheAngel, "ACT 12:7", TheAngelOfTheLord,
+            "The angel of the Lord frees Peter; Peter says in 12:11 that 'the Lord hath sent his angel', and " +
+            "does not name him."),
+        new(TheAngel, "ACT 12:23", TheAngelOfTheLord,
+            "The angel of the Lord smites Herod, as the angel of the LORD smote the Assyrian camp in " +
+            "2 Kings 19:35; unnamed."),
+        new(TheAngel, "ACT 27:23", TheAngelOfGod,
+            "'The angel of God, whose I am, and whom I serve' stands by Paul in the storm; unnamed."),
+        new("person:Gabriel_1", "LUK 1:11", null,
+            "'An angel of the Lord' appears to Zacharias at the altar and in 1:19 answers him 'I am Gabriel, " +
+            "that stand in the presence of God': Gabriel's, not the unnamed angel's."),
+    ];
+
     private const string Dataset = BibleDataLoader.Source;
 
     private static readonly string[] Witnesses = ["BHSA", "NESTLE1904"];
@@ -332,6 +421,7 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ILogger<MisfiledVerse
     {
         var started = Stopwatch.StartNew();
         var misfiled = await PutRight(cancellationToken);
+        var (omitted, withdrawn) = await AddOmitted(cancellationToken);
 
         var review = Path.Combine(resources, "Essenthos", "review", ReviewFile);
         var answers = Answers(review);
@@ -367,7 +457,7 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ILogger<MisfiledVerse
         }
 
         var outcome = new MisfiledVerseOutcome(
-            rows.Count, moving.Count, decided, open.Count, misfiled, started.Elapsed);
+            rows.Count, moving.Count, decided, open.Count, misfiled, omitted, withdrawn, started.Elapsed);
         logger.LogInformation("The verses filed under the wrong record: {Outcome}", outcome);
         return outcome;
     }
@@ -749,6 +839,60 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ILogger<MisfiledVerse
         }
 
         return changed;
+    }
+
+    /// <summary>
+    /// Adds each row of <see cref="Omitted"/> its record does not already cite at that verse, from
+    /// the dataset or from this list, and takes back a row this list added that it no longer holds.
+    /// </summary>
+    private async Task<(int Added, int Withdrawn)> AddOmitted(CancellationToken cancellationToken)
+    {
+        const string sql =
+            """
+            WITH listed AS (
+                SELECT e.id AS entity_id, l.book, l.chapter, l.verse, l.label
+                FROM unnest(@records, @books, @chapters, @verses, @labels) AS l(record, book, chapter, verse, label)
+                JOIN entity e ON e.source_id = l.record),
+            withdrawn AS (
+                DELETE FROM entity_verse v
+                WHERE v.source = @ruling
+                  AND NOT EXISTS (
+                      SELECT 1 FROM listed l
+                      WHERE l.entity_id = v.entity_id
+                        AND (l.book, l.chapter, l.verse) = (v.canonical_book, v.canonical_chapter, v.canonical_verse))
+                RETURNING 1),
+            added AS (
+                INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
+                                          label, disputed, source)
+                SELECT l.entity_id, l.book, l.chapter, l.verse, l.label, FALSE, @ruling
+                FROM listed l
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM entity_verse v
+                    WHERE v.entity_id = l.entity_id AND v.source IN (@ruling, @dataset)
+                      AND (v.canonical_book, v.canonical_chapter, v.canonical_verse) = (l.book, l.chapter, l.verse))
+                RETURNING 1)
+            SELECT (SELECT count(*) FROM added), (SELECT count(*) FROM withdrawn)
+            """;
+        var at = Omitted
+            .Select(row => TitleLoader.Verse(row.Reference)
+                           ?? throw new InvalidDataException(
+                               $"{row.Reference} is not a verse; write an omitted row's reference as LUK 1:11."))
+            .ToList();
+
+        await using var command = await Command(sql, cancellationToken);
+        command.Parameters.AddWithValue("records", Omitted.Select(row => row.SourceId).ToArray());
+        command.Parameters.AddWithValue("books", at.Select(v => v.Book).ToArray());
+        command.Parameters.AddWithValue("chapters", at.Select(v => v.Chapter).ToArray());
+        command.Parameters.AddWithValue("verses", at.Select(v => v.Verse).ToArray());
+        command.Parameters.Add(new NpgsqlParameter("labels", NpgsqlDbType.Array | NpgsqlDbType.Text)
+        {
+            Value = Omitted.Select(row => row.Label).ToArray(),
+        });
+        command.Parameters.AddWithValue("ruling", OnTheRuling);
+        command.Parameters.AddWithValue("dataset", Dataset);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        await reader.ReadAsync(cancellationToken);
+        return (Convert.ToInt32(reader.GetInt64(0)), Convert.ToInt32(reader.GetInt64(1)));
     }
 
     /// <summary>

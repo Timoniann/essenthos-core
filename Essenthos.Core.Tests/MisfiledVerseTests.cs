@@ -288,6 +288,45 @@ public sealed class MisfiledVerseLoadTests : IDisposable
     }
 
     [Fact]
+    public async Task A_verse_the_dataset_leaves_off_is_added_once_under_the_ruling_and_taken_back_when_unlisted()
+    {
+        var angel = Person("theangelofthelord", "the angel of the LORD", "person:the angel of the LORD_1");
+        var gabriel = Person("gabriel", "Gabriel", "person:Gabriel_1");
+        _db.SaveChanges();
+        _db.EntityVerses.AddRange(
+            new EntityVerse { EntityId = angel.Id, CanonicalBook = 40, CanonicalChapter = 1, CanonicalVerse = 20, Label = "the angel of the LORD", Source = BibleDataLoader.Source },
+            new EntityVerse { EntityId = angel.Id, CanonicalBook = 48, CanonicalChapter = 4, CanonicalVerse = 14, Label = "the angel of G-d", Source = OnTheRuling });
+        _db.SaveChanges();
+
+        var first = await _loader.Load(_resources);
+        first.Omitted.Should().Be(Omitted.Count - 1, "the dataset already cites Matthew 1:20");
+        first.Withdrawn.Should().Be(1, "Galatians 4:14 is not on the list");
+        var again = await _loader.Load(_resources);
+        (again.Omitted, again.Withdrawn).Should().Be((0, 0));
+
+        var ours = await _db.EntityVerses.AsNoTracking().Where(v => v.Source == OnTheRuling).ToListAsync();
+        ours.Where(v => v.EntityId == gabriel.Id)
+            .Select(v => (v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse, v.Label))
+            .Should().Equal((42, 1, 11, (string?)null));
+        ours.Should().ContainSingle(v => v.EntityId == angel.Id && v.CanonicalBook == 44 && v.CanonicalChapter == 10
+                                         && v.CanonicalVerse == 3 && v.Label == "the angel of G-d");
+        ours.Should().NotContain(v => v.CanonicalBook == 40 && v.CanonicalChapter == 1 && v.CanonicalVerse == 20);
+        ours.Should().NotContain(v => v.CanonicalBook == 48);
+    }
+
+    [Fact]
+    public void Every_omitted_row_names_a_real_verse_once_and_says_why()
+    {
+        foreach (var row in Omitted)
+        {
+            TitleLoader.Verse(row.Reference).Should().NotBeNull(row.Reference);
+            row.Why.Should().NotBeNullOrWhiteSpace();
+        }
+
+        Omitted.Select(row => (row.SourceId, row.Reference)).Should().OnlyHaveUniqueItems();
+    }
+
+    [Fact]
     public void Every_misfiled_row_names_two_real_verses_and_says_why()
     {
         foreach (var row in MisfiledVerseLoader.Misfiled)
