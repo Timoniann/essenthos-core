@@ -660,7 +660,7 @@ internal sealed class EntityDescriptorLoader(
     {
         var misfiled = PersonRegisterLoader.MisfiledVerses;
         var ids = misfiled
-            .SelectMany(m => new[] { m.Held, PersonRegisterLoader.SourceIdOf(m.Bearer) })
+            .SelectMany(m => new[] { m.Held, Namesake(m) })
             .ToList();
         var bySource = (await db.Entities
                 .Where(e => ids.Contains(e.SourceId))
@@ -673,7 +673,7 @@ internal sealed class EntityDescriptorLoader(
         foreach (var m in misfiled)
         {
             if (bySource.TryGetValue(m.Held, out var from)
-                && bySource.TryGetValue(PersonRegisterLoader.SourceIdOf(m.Bearer), out var to)
+                && bySource.TryGetValue(Namesake(m), out var to)
                 && Reference(m.Reference) is { } verse)
             {
                 refiled[(from, verse.Book, verse.Chapter, verse.Verse)] = to;
@@ -682,6 +682,10 @@ internal sealed class EntityDescriptorLoader(
 
         return refiled;
     }
+
+    /// <summary>The record a misfiled verse went to: one the dataset holds, or the one the register added.</summary>
+    private static string Namesake(Misfiled misfiled) =>
+        misfiled.Target ?? PersonRegisterLoader.SourceIdOf(misfiled.Bearer);
 
     /// <summary>
     /// <c>NUM 10:29</c> as three numbers. The book is whatever the corpus already answers to — a

@@ -174,7 +174,115 @@ internal sealed class PersonRegisterLoader(
             AdahIsBasemath, Target: "person:Basemath_1", Obsolete: "essenthos:adah1"),
         new("person:Adah_1", "GEN 36:16", "Adah#2", NotesToo: false,
             AdahIsBasemath, Target: "person:Basemath_1", Obsolete: "essenthos:adah1"),
+
+        // The dataset's verse list puts these on a namesake whose own description, kinship or era
+        // it contradicts. Each was read in its context and parallels, disagreed with by a reading of
+        // the verse, adjudicated with a second model, and is assigned the same way by the register.
+        .. Namesake("person:Zadok_3", "person:Zadok_1", "Zadok#1",
+            "BibleData files it under the later Zadok whose son is Shallum (1 Chronicles 6:12). David's "
+            + "summons of Zadok and Abiathar, Zadok before the tabernacle at Gibeon, and Ezekiel's sons of "
+            + "Zadok are the high priest of 2 Samuel 8:17 and his line.",
+            "1CH 15:11", "1CH 16:39", "EZK 40:46", "EZK 43:19", "EZK 44:15", "EZK 48:11"),
+        .. Namesake("person:Azariah_7", "person:Azariah_15", "Azariah#26",
+            "'Azariah the ruler of the house of God' is the chief priest of the house of Zadok whom 2 "
+            + "Chronicles 31:10 names three verses earlier, not the pre-exilic son of Hilkiah of 1 Chronicles 6:13.",
+            "2CH 31:13"),
+        .. Namesake("person:Jeshua_7", "person:Jeshua_3", "Jeshua#2",
+            "'Jeshua begat Joiakim, Joiakim also begat Eliashib' is the high-priestly succession, and "
+            + "Nehemiah 12:26 names the same man 'Joiakim the son of Jeshua, the son of Jozadak'; the "
+            + "dataset files it under the Levite of Nehemiah 8:7.",
+            "NEH 12:10"),
+        .. Namesake("person:Ahijah_1", "person:Ahijah_3", "Ahijah#4",
+            "'Baasha the son of Ahijah': the dataset's own description makes ahijah-3 Baasha's father, and "
+            + "files the verse under the priest of Shiloh.",
+            "1KI 15:33"),
+        .. Namesake("person:Harim_3", "person:Harim_2", "Harim#3",
+            "Ezra 10:25 opens the lay families and 10:31 stands inside them, so this is the lay house of "
+            + "Ezra 2:32, whose descendants the dataset's own kinship makes exactly the men of this verse; "
+            + "the priestly Harim of Ezra 2:39 is answered at 10:21.",
+            "EZR 10:31"),
+        .. Namesake("person:Jeremoth_3", "person:Jerimoth_3", "Jerimoth#6",
+            "The lots of 1 Chronicles 25 fall to the sons of Asaph, Jeduthun and Heman named in 25:2-4, "
+            + "and Jerimoth is Heman's son; the dataset's own description of jerimoth-3 cites this verse. "
+            + "It files it under a Merarite of the courses of 1 Chronicles 23.",
+            "1CH 25:22"),
+        .. Namesake("person:Kadmiel_2", "person:Kadmiel_1", "Kadmiel#1",
+            "Nehemiah 12:1-9 is the roster of those who came up with Zerubbabel and Jeshua, and the "
+            + "dataset's own split of the two Kadmiels puts the returnee on that side of it, not the "
+            + "Levite of Nehemiah 9.",
+            "NEH 12:8"),
+        .. Namesake("person:Pharaoh_5", "person:Shishak_1", "Shishak#1",
+            "The verse names Shishak king of Egypt. The dataset holds a record for Shishak and gives it no "
+            + "verse, and files every one of them under the Pharaoh whose daughter Solomon married.",
+            "1KI 11:40", "1KI 14:25", "2CH 12:2", "2CH 12:5", "2CH 12:7", "2CH 12:9"),
+        .. Namesake("person:Elizaphan_1", "person:Elzaphan_1", "Elizaphan#1",
+            "1 Chronicles 15:5-10 lists the Levite houses, so the sons of Elizaphan are the Kohathite house "
+            + "of Elzaphan son of Uzziel, not the prince of Zebulun of Numbers 34:25.",
+            "1CH 15:8"),
+        .. Namesake("person:Seraiah_5", "person:Seraiah_2", "Seraiah#2",
+            "The Seraiah who begat Jehozadak is the chief priest of 2 Kings 25:18, whom the dataset's own "
+            + "kinship makes Jehozadak's father; it files the verse under a Simeonite of 1 Chronicles 4:35.",
+            "1CH 6:14"),
+        .. Namesake("person:Seraiah_8", "person:Seraiah_6", "Seraiah#10",
+            "Nehemiah 12:12-21 repeats the priestly houses of 12:1-7 in order with the next generation's "
+            + "heads, so 'of Seraiah, Meraiah' is the Seraiah of 12:1, whom the dataset's own kinship makes "
+            + "Meraiah's father.",
+            "NEH 12:12"),
+        .. Namesake("person:Nahor_1", "person:Nahor_2", "Nahor#2",
+            "Laban's grandfather, and the Nahor whose God is named beside Abraham's as 'the God of their "
+            + "father', is Abraham's brother, not their grandfather the son of Serug.",
+            "GEN 29:5", "GEN 31:53"),
+        .. Namesake("person:Amariah_1", "person:Amariah_2", "Amariah#2",
+            "Ezra's line runs Ahitub, Zadok, Shallum, which is the Amariah son of Azariah of 1 Chronicles "
+            + "6:11, as the verse itself says; the Amariah of 6:7 fathers the earlier Ahitub.",
+            "EZR 7:3"),
+        .. Namesake("person:Shebuel_1", "person:Shebuel_2", "Shebuel#2",
+            "The thirteenth lot of 1 Chronicles 25 falls among the singers named in 25:2-4, and Shubael is "
+            + "Heman's son there; the dataset's own description of shebuel-2 cites this verse. It files it "
+            + "under the Gershomite treasurer.",
+            "1CH 25:20"),
+        .. Namesake("person:Samuel_1", "person:Samuel_2", "Samuel#1",
+            "'Samuel the seer' and 'the word of the LORD by Samuel' are the prophet; the Simeonite prince "
+            + "of Numbers 34:20 is named in that one verse.",
+            "1CH 9:22", "1CH 11:3"),
+        .. Namesake("person:Jeroboam_1", "person:Jeroboam_2", "Jeroboam#2",
+            "Jeroboam king of Israel is named as Jotham of Judah's contemporary, which is the second "
+            + "Jeroboam; the son of Nebat reigned two centuries earlier.",
+            "1CH 5:17"),
+        .. Namesake("person:Hashabiah_7", "person:Hashabiah_4", "Hashabiah#6",
+            "Hashabiah, Sherebiah and Jeshua son of Kadmiel are the company of Ezra 8:18-24. The dataset's "
+            + "own kinship makes hashabiah-7 the great-grandfather of the overseer of Nehemiah 11:22, who "
+            + "cannot be a chief of the Levites in the same generation.",
+            "NEH 12:24"),
+        .. Namesake("person:Darius_1", "person:Darius_2", "Darius#1",
+            "Darius the Mede, who took the kingdom from Belshazzar and set Daniel over the presidents, is "
+            + "the son of Ahasuerus of Daniel 9:1, not the Persian king of Ezra 4:5.",
+            "DAN 5:31", "DAN 6:1", "DAN 6:6", "DAN 6:9", "DAN 6:25", "DAN 6:28", "DAN 11:1"),
+        .. Namesake("person:Gemariah_1", "person:Gemariah_2", "Gemariah#1",
+            "The verses name 'Gemariah the son of Shaphan the scribe'. The dataset holds a record for him "
+            + "and gives it no verse, and files these under the son of Hilkiah of Jeremiah 29:3.",
+            "JER 36:10", "JER 36:11", "JER 36:12", "JER 36:25"),
+        .. Namesake("person:Zechariah_5", "person:Zechariah_4", "Zechariah#3",
+            "Zechariah the firstborn of Meshelemiah is the porter of 1 Chronicles 9:21, not the musician "
+            + "of 1 Chronicles 15:18-24.",
+            "1CH 26:2", "1CH 26:14"),
+        .. Namesake("person:Shelemiah_6", "person:Shelemiah_8", "Shelemiah#5",
+            "Jehucal son of Shelemiah is Jucal son of Shelemiah of Jeremiah 38:1, which the dataset files "
+            + "under shelemiah-8, not the son of Abdeel sent to seize Baruch.",
+            "JER 37:3"),
+        .. Namesake("person:Ahitub_2", "person:Ahitub_3", "Ahitub#3",
+            "Ezra's Ahitub has a son Zadok whose son is Shallum, which is the line of 1 Chronicles 6:11-12; "
+            + "the Ahitub of David's Zadok has Ahimaaz for a grandson.",
+            "EZR 7:2"),
     ];
+
+    /// <summary>
+    /// One <see cref="Misfiled"/> for each verse the dataset files under one man that names another
+    /// record it already holds.
+    /// </summary>
+    private static IEnumerable<Misfiled> Namesake(
+        string held, string target, string bearer, string why, params string[] references) =>
+        references.Select(reference => new Misfiled(held, reference, bearer, NotesToo: false, why, Target: target));
 
     /// <summary>The source id a record added for a register's bearer is written under.</summary>
     internal static string SourceIdOf(string key) => SourceIdPrefix + Slugs.Of(key);
