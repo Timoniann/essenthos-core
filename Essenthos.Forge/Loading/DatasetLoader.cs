@@ -1070,10 +1070,10 @@ internal sealed class DatasetLoader(
 
     /// <summary>
     /// The verses the dataset files under a man that name the people called after him, moved to the
-    /// people, and the few rows it files under the wrong record put right. After the annotations and
-    /// the references read off them, because a word already annotated to a people is part of what
-    /// decides a verse; before the descriptions, because a clause may cite only a verse its entity is
-    /// named in.
+    /// people, the few rows it files under the wrong record put right, and the verses it leaves off a
+    /// record added. After the annotations and the references read off them, because a word already
+    /// annotated to a people is part of what decides a verse; before the descriptions, because a
+    /// clause may cite only a verse its entity is named in.
     /// </summary>
     private async Task GiveThePeoplesTheVersesFiledUnderTheirAncestors(
         string resources,
