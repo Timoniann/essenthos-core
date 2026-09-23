@@ -61,6 +61,18 @@ internal static class EvidentiaAuxiliaryWords
     };
 
     /// <summary>
+    /// The auxiliaries that carry no meaning of their own an original writes as a word: <em>did</em> of
+    /// <em>did eat</em> and <em>have</em> of <em>have seen</em> are the verb's tense, and an index learned
+    /// from phrases holds them on עשׂה and ἔχω as often as the phrases did. They are placed with their
+    /// verb or not at all; <em>be</em> and the modals stay, since εἰμί and δύναμαι are words of their own.
+    /// </summary>
+    private static readonly HashSet<string> EmptyAuxiliaries = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "have", "has", "had", "hast", "hath", "having", "hadst",
+        "do", "does", "did", "doth", "dost", "didst",
+    };
+
+    /// <summary>
     /// How far back a particle looks for its verb: <em>drove them out</em>, <em>brought the man out</em>.
     /// Further than that, across punctuation, or past a preposition or conjunction (<em>from off the
     /// face</em>), the particle is more often a preposition's.
@@ -103,7 +115,7 @@ internal static class EvidentiaAuxiliaryWords
         return source.Role switch
         {
             EvidentiaAuxiliaryRole.VerbParticle => targetClass is not (null or "verb" or "adv"),
-            EvidentiaAuxiliaryRole.AuxiliaryVerb => targetClass is not (null or "verb"),
+            EvidentiaAuxiliaryRole.AuxiliaryVerb => targetClass is not (null or "verb") || EmptyAuxiliaries.Contains(source.Token.Surface),
             EvidentiaAuxiliaryRole.PersonalPronoun => target.Role == EvidentiaAuxiliaryRole.NominalArticle,
             EvidentiaAuxiliaryRole.SubjectPronoun => target.Role == EvidentiaAuxiliaryRole.NominalArticle
                 || targetClass is "adp" or "conj"

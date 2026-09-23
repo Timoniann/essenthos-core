@@ -209,6 +209,25 @@ public class EvidentiaAuxiliaryWordTests
         proposals.Should().Contain((2L, 12L), "the parser reads 's as 'is', which does not make a noun an auxiliary");
     }
 
+    [Fact]
+    public void DoAndHaveAsAuxiliariesAreNotPlacedOnAVerbOfTheirOwn()
+    {
+        var proposals = Propose(
+            [
+                English(1, Genesis416, 1, "did", "AUX"),
+                English(2, Genesis416, 2, "eat", "VERB"),
+                English(3, Genesis416, 3, "can", "AUX"),
+            ],
+            [
+                Hebrew(11, Genesis416, 1, "עָשָׂה", "H6213", "verb"),
+                Hebrew(12, Genesis416, 2, "אָכַל", "H398", "verb"),
+                Hebrew(13, Genesis416, 3, "יָכֹל", "H3201", "verb"),
+            ],
+            ("did", "H6213", 0.47), ("eat", "H398", 0.65), ("can", "H3201", 0.55));
+
+        proposals.Should().BeEquivalentTo([(2L, 12L), (3L, 13L)], "did is the tense of eat; can is a word of its own");
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Propose(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
