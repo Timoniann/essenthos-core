@@ -21,6 +21,25 @@ public class EvidentiaPipelineTests
         proposal.Kind.Should().Be(EvidentiaProposalKind.UniqueDictionarySenseReview);
         proposal.Trace!.Tier.Should().Be("review");
     }
+
+    [Fact]
+    public void A_pronoun_found_in_a_definition_neither_is_proposed_nor_keeps_a_noun_from_its_sense()
+    {
+        var target = new EvidentiaAnalysis(new EvidentiaToken(11, new EvidentiaAddress(40, 11, 1), 1, "בְּהֵמָה", "hbo", StrongNumber: "H929"), "בְּהֵמָה", null, "subs", EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
+        EvidentiaCandidate Sense(long id, string text, string partOfSpeech) => new(
+            new EvidentiaAnalysis(Token(id, text, "eng", verse: 1), text, text, partOfSpeech, EvidentiaWordClass.Content, LanguagePackCapability.PartOfSpeech),
+            target,
+            [
+                new EvidentiaEvidence(EvidentiaEvidenceKind.ExactCanonicalAddress, 0.30, "canonical-frame"),
+                new EvidentiaEvidence(EvidentiaEvidenceKind.DictionarySense, 0.34, "strong-entry:eng"),
+            ]);
+
+        var proposal = Assert.Single(new EvidentiaDictionaryProposalResolver()
+            .ResolveAdditional([Sense(1, "livestock", "NOUN"), Sense(2, "that", "PRON")], []).Proposals);
+
+        proposal.Source.Token.Id.Should().Be(1, "'that' occurs in the definition, it is not what the definition defines");
+    }
+
     [Fact]
     public void Consecutive_unambiguous_word_edges_form_a_diagnostic_phrase()
     {
