@@ -19,10 +19,10 @@ namespace Essenthos.Core.Loading;
 /// None of them reaches the originals by itself. Three of the seven English packages at eBible
 /// arrive tagged with Strong numbers and none of that tagging is loaded: it is a verse-level list
 /// of the right numbers sprayed across every English token in the verse, so the number on a word is
-/// not a claim that the word renders that lemma. <see cref="TaggingIsNotOursToTake"/> sets out what
-/// was measured. So these six reach the Hebrew and Greek through this project's own aligner and
-/// through nothing else — with Young's the one that should reach them best, because Young rendered
-/// one lexeme by one lexeme far more consistently than any other version here.
+/// not a claim that the word renders that lemma. <see cref="Tagged"/> sets out what was measured.
+/// So these six reach the Hebrew and Greek through this project's own aligner and through nothing
+/// else — with Young's the one that should reach them best, because Young rendered one lexeme by
+/// one lexeme far more consistently than any other version here.
 ///
 /// The seventh English text the survey took, the Douay-Rheims, is not loaded. It is the only route
 /// in this set to the Vulgate and to a full deuterocanon, and both are what stop it: it follows the
@@ -309,7 +309,10 @@ internal static class EnglishTextSource
             StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
-    /// The Strong tagging three of these arrive with, and why none of it is loaded.
+    /// Whether the Strong tagging an edition arrives with is loaded, which for these is never: two of
+    /// them arrive tagged and both fail <see cref="StrongTagging"/>'s count. It is a count rather than
+    /// a list of names so that the next eBible text is judged the same way without anyone having to
+    /// remember to add it.
     ///
     /// The American Standard carries 705,378 tags and the World English Bible 683,868, and eBible
     /// names no tagger and no terms for either. That is the same silence the Spanish tagging came
@@ -335,8 +338,7 @@ internal static class EnglishTextSource
     /// the time the sequence of numbers is identical too, and their per-verse number sets agree
     /// 95.3% of the time across the Old Testament.
     /// </summary>
-    private static readonly HashSet<string> TaggingIsNotOursToTake =
-        new(["AmericanStandard1901", "WorldEnglish"], StringComparer.OrdinalIgnoreCase);
+    private static bool Tagged(IEnumerable<UsfmBook> books) => StrongTagging.IsWordLevel(books);
 
     /// <summary>
     /// The 66 books in canonical order, by the code each file states in its <c>\id</c> line, so
@@ -375,7 +377,7 @@ internal static class EnglishTextSource
             .Select(UsfmReader.Read)
             .ToDictionary(book => book.Book, StringComparer.Ordinal);
 
-        var tagged = !TaggingIsNotOursToTake.Contains(name);
+        var tagged = Tagged(books.Values);
         var drafts = new List<BookDraft>(text.LastBook - text.FirstBook + 1);
 
         for (var ordinal = text.FirstBook; ordinal <= text.LastBook; ordinal++)

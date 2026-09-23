@@ -244,7 +244,9 @@ internal static class EbibleTextSource
             .Select(path => UsfmReader.Read(File.ReadAllText(path)))
             .ToDictionary(book => book.Book, StringComparer.Ordinal);
 
-        var tagged = !TaggingIsNotOursToTake.Contains(name);
+        // Whose the numbers are is one question and whether they are word-level another; a layer
+        // has to pass both.
+        var tagged = !TaggingIsNotOursToTake.Contains(name) && StrongTagging.IsWordLevel(books.Values);
         var drafts = new List<BookDraft>(Canon.Length);
 
         for (var ordinal = 1; ordinal <= Canon.Length; ordinal++)
