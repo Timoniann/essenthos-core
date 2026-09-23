@@ -170,6 +170,7 @@ internal sealed class DatasetLoader(
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
             await FoldTheRecordsWrittenTwice(stoppingToken);
+            await MoveWhatWasReadOffTheMisfiledVerses(stoppingToken);
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
             await CountHowEachTextSpellsEachName(stoppingToken);
             await PutThePlacesOnTheMap(resources, stoppingToken);
@@ -1145,6 +1146,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<DuplicateRecordLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// What the passes read off a verse while the dataset filed it under the wrong man, moved to the
+    /// man it names. After the fold, because a clause moved to him may repeat one a folded record
+    /// brought, and before the passes that count and picture what the records hold.
+    /// </summary>
+    private async Task MoveWhatWasReadOffTheMisfiledVerses(CancellationToken cancellationToken)
+    {
+        status.Starting("what was read off the verses filed under the wrong man");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<RefiledTieLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

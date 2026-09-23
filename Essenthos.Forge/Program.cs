@@ -138,6 +138,7 @@ builder.Services.AddScoped<EntityNameFormLoader>();
 builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<OwnRelationshipLoader>();
 builder.Services.AddScoped<DuplicateRecordLoader>();
+builder.Services.AddScoped<RefiledTieLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddScoped<DatasetLoader>();
