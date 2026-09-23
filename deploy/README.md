@@ -12,7 +12,12 @@ Two things reach the server, separately:
 
 - **the code** — `scripts/deploy.ps1`, which copies this folder's tracked files and sets the image tags
   CI pushed for a commit;
-- **the corpus** — `forge publish --to dev`, then `--to prod`, from the machine that built it.
+- **the corpus** — `forge publish --to dev`, then `--to prod`, from the machine that built it. The
+  release carries the rows that name the pictures of people and places; publishing also sends the
+  picture files, from this machine's `Resources/Images`, into `/srv/essenthos/images/corpus_dev` or
+  `…/corpus`, which the API mounts read-only at `/images`. Only new or changed files travel, nothing
+  is ever removed — the previous release, which a rollback puts back, names pictures too — and a
+  release naming a picture the server does not have is refused before it is swapped in.
 
 Everything below can be rehearsed on a workstation first, and should be before anything changes on the
 server:
@@ -54,6 +59,7 @@ server:
         forge publish --to prod
 
    Until the first publication the API answers `/v1/health/ready` with 503: there is no corpus yet.
+   The first publication to each environment also sends every picture, about 180 MB.
 
 ## Every time
 
