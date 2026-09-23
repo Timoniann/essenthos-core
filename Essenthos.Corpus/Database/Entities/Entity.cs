@@ -94,6 +94,9 @@ public class Entity
     /// <summary>Where a place is, as one point, when a source says so under terms that allow it.</summary>
     public PlaceLocation? Location { get; set; }
 
+    /// <summary>Its pictures, each with whose it is and under what licence.</summary>
+    public ICollection<EntityImage> Images { get; set; } = [];
+
     public override string ToString() => $"Entity({Kind} {Slug})";
 }
 

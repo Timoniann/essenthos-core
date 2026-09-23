@@ -26,6 +26,7 @@ UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly)
 // is watching, discovered by a reader instead of by the person starting it.
 var allowedOrigins = CorsOrigins.Read(builder.Configuration);
 var databaseConnection = DatabaseConnection.Read(builder.Configuration);
+var images = ImageEndpoints.Folder(builder.Configuration, builder.Environment.ContentRootPath);
 
 builder.Services.AddCors(options =>
 {
@@ -104,6 +105,7 @@ v1.MapWords();
 v1.MapSearch();
 v1.MapEncyclopedia();
 v1.MapContext();
+v1.MapImages(images);
 v1.MapDatasets();
 v1.MapAuth(providers);
 v1.MapMe();

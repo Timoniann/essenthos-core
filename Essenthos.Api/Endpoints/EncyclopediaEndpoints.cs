@@ -522,6 +522,7 @@ internal static class EncyclopediaEndpoints
 
             var described = await Descriptors.Of(
                 db, page.Select(e => e.Slug), language, cancellationToken);
+            var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken);
 
             return Results.Ok(new EntityListResponse(
                 total,
@@ -529,6 +530,7 @@ internal static class EncyclopediaEndpoints
                     .. page.Select(e => e with
                     {
                         Descriptor = described.GetValueOrDefault(e.Slug),
+                        Thumbnail = pictured.GetValueOrDefault(e.Slug),
                     }),
                 ]));
         });
@@ -740,6 +742,7 @@ internal static class EncyclopediaEndpoints
                 LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
                     .GetValueOrDefault(entity.Id),
                 Renderings = await Renderings(db, entity.Id, cancellationToken),
+                Images = await ImageEndpoints.Of(db, entity.Id, cancellationToken),
                 Bearers =
                 [
                     .. bearers.Select(b => new EntityTitleResponse(
@@ -1385,6 +1388,9 @@ internal record EntitySummaryResponse(
     /// where the language asked for is the headword's own, and a client shows the English name.
     /// </summary>
     public string? LocalName { get; init; }
+
+    /// <summary>The picture the entity's page leads with, to show small; null where it has none.</summary>
+    public EntityThumbnailResponse? Thumbnail { get; init; }
 }
 
 internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items);
@@ -1544,6 +1550,12 @@ internal record EntityResponse(
 
     /// <summary>The titles the text gives this person, each at the verse that names both.</summary>
     public IList<EntityTitleResponse> Titles { get; init; } = [];
+
+    /// <summary>
+    /// Its pictures, the one the page leads with first, each with who made it and under what licence.
+    /// Empty where it has none — which is most people, and always God.
+    /// </summary>
+    public IList<EntityImageResponse> Images { get; init; } = [];
 }
 
 /// <param name="Corpus">The text, by the id every other response names it by.</param>

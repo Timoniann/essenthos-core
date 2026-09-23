@@ -170,6 +170,7 @@ internal sealed class DatasetLoader(
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
             await CountHowEachTextSpellsEachName(stoppingToken);
             await PutThePlacesOnTheMap(resources, stoppingToken);
+            await PictureThePeopleAndPlaces(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -1149,6 +1150,19 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OpenBibleLocationLoader>();
         status.Record(await loader.Load(Path.Combine(resources, "OpenBible"), cancellationToken));
+    }
+
+    /// <summary>
+    /// The pictures of people and places, each with its credit. Last, because it pictures whatever
+    /// records the steps before it settled on, found by slug and by the gazetteer's identifier.
+    /// </summary>
+    private async Task PictureThePeopleAndPlaces(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the pictures of people and places");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<EntityImageLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)
