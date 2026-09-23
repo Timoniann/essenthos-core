@@ -16,6 +16,13 @@ internal enum Route
 
     /// <summary>Aligned through a third text, whose own links to the target are stated.</summary>
     Composed = 4,
+
+    /// <summary>
+    /// Aligned through a second middle text, another translation whose links to the target a
+    /// different source states — so an answer it shares with the first is found twice over evidence
+    /// neither route shares.
+    /// </summary>
+    ComposedAgain = 8,
 }
 
 internal sealed record RoutedLink(long From, long To, double Confidence, Route Route);
@@ -36,7 +43,8 @@ internal sealed record RoutedLink(long From, long To, double Confidence, Route R
 /// different words, and choosing between them means being wrong about half of them.
 ///
 /// Where routes agree the pair has been found more than once over evidence that differs, and is
-/// combined as independent — one minus the product of the doubts. They are not fully independent:
+/// combined as independent — one minus the product of the doubts. The two direct readings are the
+/// exception, and are merged as one family (<see cref="MergeFamilies"/>). None are fully independent:
 /// all three read the same two verses, and a mistake in how the verse is divided misleads them
 /// alike. So the result is capped below certainty, and a pair no source has stated can never come
 /// to read as one that has been.
@@ -50,21 +58,60 @@ internal static class Routes
     /// </summary>
     public const double Ceiling = 0.98;
 
-    public static IReadOnlyList<RoutedLink> Merge(
-        params (Route Route, IEnumerable<(long From, long To, double Confidence)> Pairs)[] routes)
+    /// <summary>
+    /// The direct readings merged as one family and the composed one as another. The written and
+    /// the reduced reading are one model over two spellings of the same words: where the language
+    /// barely inflects, or the stemmer barely changes a word, they are the same answer twice, and
+    /// counting their agreement as two voices makes one guess look corroborated. So a pair the two
+    /// both reach keeps the better of their confidences, and only the route through the middle text,
+    /// which reads evidence the direct model never sees, raises it.
+    /// </summary>
+    /// <param name="composed">One set of pairs per middle text, in the order the texts were named.</param>
+    public static IReadOnlyList<RoutedLink> MergeFamilies(
+        IEnumerable<(long From, long To, double Confidence)> written,
+        IEnumerable<(long From, long To, double Confidence)> reduced,
+        IReadOnlyList<IEnumerable<(long From, long To, double Confidence)>> composed)
     {
+        if (composed.Count > Middles.Length)
+        {
+            throw new ArgumentException(
+                $"A composition goes through at most {Middles.Length} middle texts; {composed.Count} were named.",
+                nameof(composed));
+        }
+
         var merged = new Dictionary<(long, long), RoutedLink>();
 
-        foreach (var (route, pairs) in routes)
+        foreach (var (route, pairs) in new[] { (Route.Written, written), (Route.Reduced, reduced) })
         {
             foreach (var (from, to, confidence) in pairs)
             {
-                Keep(merged, from, to, confidence, route);
+                merged[(from, to)] = merged.TryGetValue((from, to), out var standing)
+                    ? new RoutedLink(from, to, Math.Max(standing.Confidence, confidence), standing.Route | route)
+                    : new RoutedLink(from, to, confidence, route);
+            }
+        }
+
+        for (var middle = 0; middle < composed.Count; middle++)
+        {
+            foreach (var (from, to, confidence) in composed[middle])
+            {
+                Keep(merged, from, to, confidence, Middles[middle]);
             }
         }
 
         return [.. merged.Values];
     }
+
+    /// <summary>The route each middle text's answers travel, in the order the texts are named.</summary>
+    public static readonly Route[] Middles = [Route.Composed, Route.ComposedAgain];
+
+    /// <summary>
+    /// How many readings found a pair that share no evidence: the two direct ones are one model over
+    /// two spellings of the same words, and each middle text is a route of its own.
+    /// </summary>
+    public static int Families(Route route) =>
+        ((route & (Route.Written | Route.Reduced)) != 0 ? 1 : 0)
+        + Middles.Count(middle => route.HasFlag(middle));
 
     private static void Keep(
         Dictionary<(long, long), RoutedLink> merged,
@@ -95,7 +142,8 @@ internal static class Routes
         Math.Min(Ceiling, 1 - ((1 - first) * (1 - second)));
 
     /// <summary>What to write in the link's source, so a reader can see which readings agreed.</summary>
-    public static string Describe(Route route, string viaSlug)
+    /// <param name="vias">The middle texts, in the order <see cref="Middles"/> numbers them.</param>
+    public static string Describe(Route route, params string[] vias)
     {
         var found = new List<string>(3);
         if (route.HasFlag(Route.Written))
@@ -108,9 +156,12 @@ internal static class Routes
             found.Add("as stems");
         }
 
-        if (route.HasFlag(Route.Composed))
+        for (var middle = 0; middle < Math.Min(vias.Length, Middles.Length); middle++)
         {
-            found.Add($"through {viaSlug}");
+            if (route.HasFlag(Middles[middle]))
+            {
+                found.Add($"through {vias[middle]}");
+            }
         }
 
         return $"SIL.Machine, aligned {string.Join(" and ", found)}";

@@ -10,19 +10,10 @@ namespace Essenthos.Core.Tests;
 /// </summary>
 public class RouteTests
 {
-    private static (Route, IEnumerable<(long, long, double)>) Written(params (long, long, double)[] pairs) =>
-        (Route.Written, pairs);
-
-    private static (Route, IEnumerable<(long, long, double)>) Reduced(params (long, long, double)[] pairs) =>
-        (Route.Reduced, pairs);
-
-    private static (Route, IEnumerable<(long, long, double)>) Composed(params (long, long, double)[] pairs) =>
-        (Route.Composed, pairs);
-
     [Fact]
     public void APairOnlyOneRouteFindsKeepsItsOwnConfidence()
     {
-        var merged = Routes.Merge(Written((1, 10, 0.42)), Reduced(), Composed());
+        var merged = Routes.MergeFamilies([(1, 10, 0.42)], [], []);
 
         merged.Should().ContainSingle().Which.Should().Be(new RoutedLink(1, 10, 0.42, Route.Written));
     }
@@ -36,7 +27,7 @@ public class RouteTests
     [Fact]
     public void AReadingThatLostAWordDoesNotOverruleTheOneThatFoundIt()
     {
-        var merged = Routes.Merge(Written((1, 10, 0.98)), Reduced((1, 10, 0.15)), Composed()).Single();
+        var merged = Routes.MergeFamilies([(1, 10, 0.98)], [(1, 10, 0.15)], []).Single();
 
         merged.Confidence.Should().BeGreaterThanOrEqualTo(0.98);
         merged.Route.Should().Be(Route.Written | Route.Reduced);
@@ -45,20 +36,19 @@ public class RouteTests
     [Fact]
     public void AgreementIsWorthMoreThanAnyRouteAlone()
     {
-        var merged = Routes.Merge(Written((1, 10, 0.26)), Reduced(), Composed((1, 10, 0.60))).Single();
+        var merged = Routes.MergeFamilies([(1, 10, 0.26)], [], [[(1, 10, 0.60)]]).Single();
 
         merged.Route.Should().Be(Route.Written | Route.Composed);
         merged.Confidence.Should().BeApproximately(0.704, 0.001);
     }
 
     [Fact]
-    public void AllThreeAgreeingCountsAllThree()
+    public void AllThreeAgreeingCountsTheTwoFamilies()
     {
-        var merged = Routes.Merge(
-            Written((1, 10, 0.4)), Reduced((1, 10, 0.4)), Composed((1, 10, 0.4))).Single();
+        var merged = Routes.MergeFamilies([(1, 10, 0.4)], [(1, 10, 0.4)], [[(1, 10, 0.4)]]).Single();
 
         merged.Route.Should().Be(Route.Written | Route.Reduced | Route.Composed);
-        merged.Confidence.Should().BeApproximately(0.784, 0.001);
+        merged.Confidence.Should().BeApproximately(0.64, 0.001);
     }
 
     /// <summary>
@@ -68,7 +58,7 @@ public class RouteTests
     [Fact]
     public void AgreementNeverAmountsToCertainty()
     {
-        Routes.Merge(Written((1, 10, 0.99)), Reduced((1, 10, 0.99)), Composed((1, 10, 0.99)))
+        Routes.MergeFamilies([(1, 10, 0.99)], [(1, 10, 0.99)], [[(1, 10, 0.99)], [(1, 10, 0.99)]])
             .Single().Confidence.Should().Be(Routes.Ceiling);
 
         Routes.Ceiling.Should().BeLessThan(1);
@@ -82,7 +72,7 @@ public class RouteTests
     [Fact]
     public void TheSameRouteArrivingTwiceIsNotTreatedAsAgreement()
     {
-        var merged = Routes.Merge(Composed((1, 10, 0.50), (1, 10, 0.60))).Single();
+        var merged = Routes.MergeFamilies([], [], [[(1, 10, 0.50), (1, 10, 0.60)]]).Single();
 
         merged.Confidence.Should().Be(0.60);
         merged.Route.Should().Be(Route.Composed);
@@ -91,7 +81,7 @@ public class RouteTests
     [Fact]
     public void EachPairIsMergedOnItsOwn()
     {
-        var merged = Routes.Merge(Written((1, 10, 0.3), (2, 20, 0.4)), Composed((2, 20, 0.5), (3, 30, 0.6)));
+        var merged = Routes.MergeFamilies([(1, 10, 0.3), (2, 20, 0.4)], [], [[(2, 20, 0.5), (3, 30, 0.6)]]);
 
         merged.Should().HaveCount(3);
         merged.Should().ContainSingle(link => link.Route.HasFlag(Route.Composed) && link.Route.HasFlag(Route.Written))
@@ -105,4 +95,39 @@ public class RouteTests
             .Should().Be("SIL.Machine, aligned as written and through KJV");
         Routes.Describe(Route.Reduced, "KJV").Should().Be("SIL.Machine, aligned as stems");
     }
+
+    /// <summary>
+    /// The written and the reduced reading are one model over two spellings of the same words. Where
+    /// the language barely inflects they are the same answer twice, and two copies of one guess are
+    /// not corroboration: the pair keeps the better of the two and counts as one family.
+    /// </summary>
+    [Fact]
+    public void TheTwoDirectReadingsAreOneFamily()
+    {
+        var merged = Routes.MergeFamilies([(1, 10, 0.6)], [(1, 10, 0.5)], []).Single();
+
+        merged.Confidence.Should().Be(0.6);
+        merged.Route.Should().Be(Route.Written | Route.Reduced);
+        Routes.Families(merged.Route).Should().Be(1);
+    }
+
+    [Fact]
+    public void EachMiddleTextIsAFamilyOfItsOwn()
+    {
+        var merged = Routes.MergeFamilies([], [(1, 10, 0.4)], [[(1, 10, 0.5)], [(1, 10, 0.5)]]).Single();
+
+        merged.Route.Should().Be(Route.Reduced | Route.Composed | Route.ComposedAgain);
+        Routes.Families(merged.Route).Should().Be(3);
+        merged.Confidence.Should().BeApproximately(1 - 0.6 * 0.5 * 0.5, 0.001);
+    }
+
+    [Fact]
+    public void TheSourceNamesEachMiddleText() =>
+        Routes.Describe(Route.Composed | Route.ComposedAgain, "KJV", "BSB")
+            .Should().Be("SIL.Machine, aligned through KJV and through BSB");
+
+    [Fact]
+    public void AThirdMiddleTextIsRefused() =>
+        FluentActions.Invoking(() => Routes.MergeFamilies([], [], [[], [], []]))
+            .Should().Throw<ArgumentException>().WithMessage("*at most 2*");
 }

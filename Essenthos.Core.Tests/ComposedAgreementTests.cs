@@ -27,11 +27,13 @@ public class ComposedAgreementTests
         [(11, 21)] = 500,
     };
 
+    private static readonly HashSet<long> NothingClaimed = [];
+
     [Fact]
     public void APairNothingStatesBecomesALinkOfItsOwn()
     {
         var (fresh, agreeing) = CompositionPipeline.Split(
-            [new RoutedLink(12, 22, 0.7, Route.Reduced)], Stated, "KJV");
+            [new RoutedLink(12, 22, 0.7, Route.Reduced)], Stated, NothingClaimed, "KJV");
 
         fresh.Should().ContainSingle().Which.From.Should().Be(12);
         agreeing.Should().BeEmpty();
@@ -41,7 +43,7 @@ public class ComposedAgreementTests
     public void APairASourceStatesBecomesAClaimOnTheLinkThatStatesIt()
     {
         var (fresh, agreeing) = CompositionPipeline.Split(
-            [new RoutedLink(11, 21, 0.7, Route.Reduced)], Stated, "KJV");
+            [new RoutedLink(11, 21, 0.7, Route.Reduced)], Stated, NothingClaimed, "KJV");
 
         fresh.Should().BeEmpty();
         agreeing.Should().ContainSingle();
@@ -57,7 +59,7 @@ public class ComposedAgreementTests
     public void TheClaimSaysWhichReadingsReachedThePair()
     {
         var (_, agreeing) = CompositionPipeline.Split(
-            [new RoutedLink(11, 21, 0.9, Route.Written | Route.Composed)], Stated, "KJV");
+            [new RoutedLink(11, 21, 0.9, Route.Written | Route.Composed)], Stated, NothingClaimed, "KJV");
 
         agreeing[0].Source.Should().Be(Routes.Describe(Route.Written | Route.Composed, "KJV"));
         agreeing[0].Source.Should().Contain("through KJV");
@@ -71,9 +73,38 @@ public class ComposedAgreementTests
     public void ThePairIsReadInTheDirectionItWasWritten()
     {
         var (fresh, agreeing) = CompositionPipeline.Split(
-            [new RoutedLink(21, 11, 0.7, Route.Reduced)], Stated, "KJV");
+            [new RoutedLink(21, 11, 0.7, Route.Reduced)], Stated, NothingClaimed, "KJV");
 
         fresh.Should().ContainSingle();
+        agreeing.Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// A word a printed Strong number or a hand alignment already answers for keeps that answer
+    /// alone. The aligner naming another word there is a rival guess, not a second reading.
+    /// </summary>
+    [Fact]
+    public void APairOnAWordASourceAnswersForOtherwiseIsNotWritten()
+    {
+        var (fresh, agreeing) = CompositionPipeline.Split(
+            [new RoutedLink(11, 22, 0.9, Route.Written | Route.Composed), new RoutedLink(12, 22, 0.9, Route.Reduced)],
+            Stated, new HashSet<long> { 11 }, "KJV");
+
+        fresh.Should().ContainSingle().Which.From.Should().Be(12);
+        agreeing.Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// A phrase a source states answers for each of its words: agreement with it is not a pair the
+    /// claim table can hold, and a rival beside it is still a rival.
+    /// </summary>
+    [Fact]
+    public void AWordInsideAStatedPhraseIsLeftToThePhrase()
+    {
+        var (fresh, agreeing) = CompositionPipeline.Split(
+            [new RoutedLink(13, 23, 0.9, Route.Written | Route.Composed)], Stated, new HashSet<long> { 13 }, "KJV");
+
+        fresh.Should().BeEmpty();
         agreeing.Should().BeEmpty();
     }
 }

@@ -234,14 +234,15 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         bool asWritten = false,
         Selection selection = Selection.BestPerSource,
         string modelType = "ibm4",
+        IReadOnlySet<int>? books = null,
         CancellationToken cancellationToken = default)
     {
         // Only the source is read as written. The target's own reduction is not a hedge — BHSA's
         // consonantal text and Nestle's lemmas are the forms those texts themselves carry, and both
         // were measured as plainly better than the pointing and the inflection they replace.
         var source = await Words(
-            fromSlug, asWritten ? Written : word => Reduce(word), cancellationToken);
-        var target = await Words(toSlug, word => Comparable(word), cancellationToken);
+            fromSlug, asWritten ? Written : word => Reduce(word), cancellationToken, books);
+        var target = await Words(toSlug, word => Comparable(word), cancellationToken, books);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
 
         Directory.CreateDirectory(workspace);
@@ -1074,13 +1075,20 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// twice.
     /// </para>
     /// </summary>
+    /// <param name="books">
+    /// The canonical books to read, or all of them. A trial on a few books trains on those books
+    /// alone, which is weaker than the whole text and never stronger.
+    /// </param>
     private async Task<Dictionary<(int, int, int), List<Word>>> Words(
         string slug,
         Func<WordForms, string> form,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        IReadOnlySet<int>? books = null)
     {
+        var within = books?.ToList();
         var rows = await db.VerseReferences
             .Where(r => r.Verse!.Text!.Slug == slug)
+            .Where(r => within == null || within.Contains(r.CanonicalBook))
             .SelectMany(r => r.Verse!.Words.Select(w => new
             {
                 r.CanonicalBook,
@@ -1128,6 +1136,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         "rus" or "ukr" => SlavicStemmer.Stem(word.Surface, IsName(word), suppletion),
         "eng" => EnglishStemmer.Stem(word.Surface),
         "grc" => GreekStemmer.Stem(word.Surface),
+        "deu" => GermanStemmer.Stem(word.Surface),
+        "spa" => SpanishStemmer.Stem(word.Surface),
         _ => word.Surface.ToLowerInvariant(),
     };
 
@@ -1147,7 +1157,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// them often enough; using the consonants instead raised precision by a quarter.
     /// </summary>
     private static string Comparable(WordForms word, bool suppletion = false) =>
-        word.Language is "rus" or "ukr" or "eng" ? Reduce(word, suppletion)
+        word.Language is "rus" or "ukr" or "eng" or "deu" or "spa" ? Reduce(word, suppletion)
         // A Greek witness with a lemma keeps it, and a word without one is reduced like any other
         // heavily inflected language rather than counted as eight words for one. Brenton had none
         // at all until GLAUx; it now has one on 97.1% of its words, so this is per word rather than

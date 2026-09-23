@@ -185,14 +185,40 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
 {
     using var composeScope = app.Services.CreateScope();
     var composer = composeScope.ServiceProvider.GetRequiredService<CompositionPipeline>();
+    // One middle text or two, named together: KJV,BSB.
+    var composeVias = composeVia.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier).ToList();
     var least = Array.IndexOf(args, "--min");
+
+    // How often each combination of readings must have named the stated word to be written at all.
+    var composePrecision = Option(args, "--precision") is { } bar
+        ? double.Parse(bar, System.Globalization.CultureInfo.InvariantCulture)
+        : Admission.DefaultPrecision;
+    var composeMinimum = least >= 0 && least + 1 < args.Length
+        ? double.Parse(args[least + 1], System.Globalization.CultureInfo.InvariantCulture)
+        : AlignmentPipeline.DefaultMinimumConfidence;
+
+    // A trial: the same three readings and the same merge, scored against what the corpus holds and
+    // written nowhere. --books trains on a few canonical books alone, which is the cheap first look.
+    if (args.Contains("--dry-run"))
+    {
+        logger.LogInformation("\n{Report}", await composer.Measure(
+            Identifier(composeFrom),
+            composeVias,
+            Identifier(composeTo),
+            composeMinimum,
+            Option(args, "--books") is { } composeBooks
+                ? composeBooks.Split(',').Select(int.Parse).ToHashSet()
+                : null,
+            composePrecision));
+        return 0;
+    }
+
     logger.LogInformation("{Outcome}", await composer.Run(
         Identifier(composeFrom),
-        Identifier(composeVia),
+        composeVias,
         Identifier(composeTo),
-        least >= 0 && least + 1 < args.Length
-            ? double.Parse(args[least + 1], System.Globalization.CultureInfo.InvariantCulture)
-            : AlignmentPipeline.DefaultMinimumConfidence));
+        composeMinimum,
+        composePrecision));
     return 0;
 }
 
