@@ -201,6 +201,13 @@ internal sealed class VersificationRules(
     public IReadOnlySet<TvtmsSupplement> Supplemented { get; } = supplemented;
 
     /// <summary>
+    /// Which of <see cref="TvtmsSupplements.All"/> stand apart from a passage of the data that places
+    /// some of the same verses by a scheme of the supplement's own tradition. The two are then chosen
+    /// between separately and the verse is given the addresses of both.
+    /// </summary>
+    public IReadOnlySet<TvtmsSupplement> Competing { get; } = Competitors(blocks, supplemented);
+
+    /// <summary>
     /// The frame for a tradition, taking the scheme it is named after everywhere. It is what the
     /// data says about the tradition rather than about any edition of it, which is all there is to
     /// go on when the edition's own shape is not to hand.
@@ -357,6 +364,25 @@ internal sealed class VersificationRules(
                 row.Traditions.Contains(divided) &&
                 !row.Traditions.Contains(scheme) &&
                 !row.Sources.Any(covered.Contains)),
+        ];
+    }
+
+    private static HashSet<TvtmsSupplement> Competitors(
+        IReadOnlyList<IReadOnlyList<TvtmsRow>> blocks,
+        IReadOnlySet<TvtmsSupplement> supplemented)
+    {
+        var placed = Schemes.ToDictionary(
+            tradition => tradition.Key,
+            tradition => blocks.SelectMany(block => block)
+                .Where(row => row.Traditions.Any(tradition.Value.Contains))
+                .SelectMany(row => row.Sources)
+                .ToHashSet());
+
+        return
+        [
+            .. TvtmsSupplements.All.Where(supplement =>
+                !supplemented.Contains(supplement) &&
+                supplement.Rows.Any(row => row.Sources.Any(placed[supplement.Tradition].Contains))),
         ];
     }
 

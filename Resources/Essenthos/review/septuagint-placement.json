@@ -53,10 +53,10 @@
     {
       "key": "small-swaps",
       "edition": "both",
-      "references": ["DEU 5:17-18", "DEU 14:16-17", "LEV 11:15-16", "JOS 19:47-48", "2CH 27:6-8 (Swete)", "EXO 38:27 (Brenton)"],
+      "references": ["DEU 5:17-18", "DEU 14:16-17", "JOS 19:47-48", "2CH 27:6-8 (Swete)", "EXO 38:27 (Brenton)"],
       "placed": "at their own numbers",
-      "words": "The Greek orders a few verses differently (adultery before murder in Deuteronomy 5, the birds in Deuteronomy 14 and Leviticus 11) or numbers one verse apart (Swete 2 Chronicles 27:6-8 carry 27:5-7). Brenton's Exodus 38:27, the laver, carries the Hebrew 40:30-32; the Greek scheme placed it there and the fix, which takes the Hebrew scheme for Brenton's Exodus 40, put it back at its own number.",
-      "question": "Place each of these beside its words, or show the Greek order as printed? Leviticus 11 is PRB-0166.",
+      "words": "The Greek orders a few verses differently (adultery before murder in Deuteronomy 5, the birds in Deuteronomy 14) or numbers one verse apart (Swete 2 Chronicles 27:6-8 carry 27:5-7). Brenton's Exodus 38:27, the laver, carries the Hebrew 40:30-32; the Greek scheme placed it there and the fix, which takes the Hebrew scheme for Brenton's Exodus 40, put it back at its own number.",
+      "question": "Place each of these beside its words, or show the Greek order as printed? The birds of Leviticus 11 are already placed by their words.",
       "options": [
         "place them by their words",
         "show them as printed"

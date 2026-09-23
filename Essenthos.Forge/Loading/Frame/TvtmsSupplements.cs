@@ -47,6 +47,28 @@ internal sealed record TvtmsSupplement(
 /// Septuagint's order under the Hebrew's verse numbers, which the data's tests cannot tell apart
 /// from Brenton's renumbering of the same three verses.
 /// </para>
+/// <para>
+/// Both Greek editions list the unclean birds of Leviticus 11:13-19 in their own order: the ostrich,
+/// the owl and the gull come before the raven, which the Hebrew names first. Brenton prints them as
+/// 11:15 and puts the raven with the hawk in 11:16, which stands with them at 11:16 and covers the
+/// Hebrew's raven as well; Swete prints no raven at all. The chapters count the same, so no scheme
+/// notices.
+/// </para>
+/// <para>
+/// The Reina-Valera of 1909, as eBible publishes it, follows the Spanish division where the Spanish
+/// runs ahead of the English — a chapter that opens one to three verses earlier, as the Hebrew and
+/// the Latin do — but it is numbered to the English count: the verse the Spanish moved away is left
+/// empty, every verse after it stands one to three places early, and the chapter's last verse holds
+/// what the count had no room for. Its Job 39:30 carries the English 39:27 to 40:5. The data's own
+/// Spanish column for Job says the same of the printed edition.
+/// </para>
+/// <para>
+/// Kulish's Bible of 1903 divides forty-odd chapters in its own way: it runs two verses into one at a
+/// chapter's end, opens Genesis 3 with what the English prints as two verses, gives the Hebrew's
+/// order of Leviticus 5-6 and Job 39-41 a division of its own, prints the titles of Psalm 60 as two
+/// verses of their own and swaps the weeping and the rallying at Judges 20:22-23. Where its verse
+/// merely starts half a line before the English one, it is left where it stands.
+/// </para>
 /// </summary>
 internal static class TvtmsSupplements
 {
@@ -54,11 +76,35 @@ internal static class TvtmsSupplements
 
     private const string Swete = "Swete";
 
+    private const string ReinaValera = "ReinaValera1909";
+
+    private const string Kulish = "Kulish";
+
     private const string BrentonJeremiah = "Jer.30:33=Last & Jer.25:20=Last";
+
+    private const string BrentonLeviticus = "Lev.8:30<Lev.8:29";
 
     private const string SweteProverbs = "Pro.24:77=Last";
 
     private const string SweteJoshua = "Jos.8:29=Last & Jos.9:33=Last";
+
+    /// <summary>
+    /// The verse eBible's Reina-Valera leaves empty at the start of Jonah's prayer, which no other
+    /// edition in the corpus lacks: it tells the file apart wherever a passage's own tests would also
+    /// describe a Bible that simply follows the Hebrew.
+    /// </summary>
+    private const string ReinaValeraEdition = "Jon.1:17=NotExist";
+
+    /// <summary>Kulish's Genesis 3, which ends at verse 23 and in no other edition here.</summary>
+    private const string KulishEdition = "Gen.3:23=Last";
+
+    private static readonly Dictionary<string, Versification> Traditions = new()
+    {
+        [Brenton] = Versification.Septuagint,
+        [Swete] = Versification.Septuagint,
+        [ReinaValera] = Versification.English,
+        [Kulish] = Versification.English,
+    };
 
     public static IReadOnlyList<TvtmsSupplement> All { get; } =
     [
@@ -75,7 +121,7 @@ internal static class TvtmsSupplements
         Passage(Brenton, null, "Pro.24:62=Last",
             ("Pro.24:35-53", "Pro.30:15-33"),
             ("Pro.24:54-62", "Pro.31:1-9")),
-        Passage(Brenton, null, "Lev.8:30<Lev.8:29",
+        Passage(Brenton, null, BrentonLeviticus,
             ("Lev.8:18", "Lev.8:18-19"),
             ("Lev.8:19", "Lev.8:20-21"),
             ("Lev.8:20", "Lev.8:21"),
@@ -107,6 +153,166 @@ internal static class TvtmsSupplements
             ("Jos.9:28-33", "Jos.9:22-27")),
         Passage(Swete, "Jos.24:29", "Jos.24:30.2=Exist & Jos.24:33.1=Exist",
             ("Jos.24:29-31", "Jos.24:29-31")),
+        Passage(Brenton, null, $"Lev.11:15<Lev.11:16 & {BrentonLeviticus}",
+            ("Lev.11:15", "Lev.11:16"),
+            ("Lev.11:16", "Lev.11:16; 11:15")),
+        Passage(Swete, null, $"Lev.11:16<Lev.11:15 & {SweteProverbs}",
+            ("Lev.11:15-16", "Lev.11:16")),
+        .. ReinaValeraPassages,
+        .. KulishPassages,
+    ];
+
+    private static IEnumerable<TvtmsSupplement> ReinaValeraPassages =>
+    [
+        Passage(ReinaValera, "Num.12:16", $"{ReinaValeraEdition} & Num.12:16=NotExist & Num.13:33=Last",
+            ("Num.13:1", "Num.12:16"),
+            ("Num.13:2-32", "Num.13:1-31"),
+            ("Num.13:33", "Num.13:32-33")),
+        Passage(ReinaValera, "Num.29:40", $"{ReinaValeraEdition} & Num.29:40=NotExist & Num.30:16=Last",
+            ("Num.30:1", "Num.29:40"),
+            ("Num.30:2-15", "Num.30:1-14"),
+            ("Num.30:16", "Num.30:15-16")),
+        Passage(ReinaValera, null, $"{ReinaValeraEdition} & Jdg.14:19<Jdg.14:18",
+            ("Jdg.14:19", "Jdg.14:18"),
+            ("Jdg.14:20", "Jdg.14:19-20")),
+        Passage(ReinaValera, "1Sa.23:29", $"{ReinaValeraEdition} & 1Sa.23:29=NotExist & 1Sa.24:22=Last",
+            ("1Sa.24:1", "1Sa.23:29"),
+            ("1Sa.24:2-21", "1Sa.24:1-20"),
+            ("1Sa.24:22", "1Sa.24:21-22")),
+        Passage(ReinaValera, null, $"{ReinaValeraEdition} & 2Sa.20:26=NotExist & 2Sa.20:25=Last",
+            ("2Sa.20:25", "2Sa.20:25-26")),
+        Passage(ReinaValera, "1Ki.22:43", $"{ReinaValeraEdition} & 1Ki.22:53=Last & 1Ki.22:45<1Ki.22:44",
+            ("1Ki.22:44", "1Ki.22:43"),
+            ("1Ki.22:45-52", "1Ki.22:44-51"),
+            ("1Ki.22:53", "1Ki.22:52-53")),
+        Passage(ReinaValera, null, $"{ReinaValeraEdition} & 1Ch.1:32<1Ch.1:31",
+            ("1Ch.1:30", "1Ch.1:30-31"),
+            ("1Ch.1:31-32", "1Ch.1:32")),
+        Passage(ReinaValera, null, $"{ReinaValeraEdition} & 1Ch.21:28<1Ch.21:27",
+            ("1Ch.21:16", "1Ch.21:15"),
+            ("1Ch.21:17-29", "1Ch.21:16-28"),
+            ("1Ch.21:30", "1Ch.21:29-30")),
+        Passage(ReinaValera, null, $"{ReinaValeraEdition} & 2Ch.33:25=NotExist & 2Ch.33:24=Last",
+            ("2Ch.33:10", "2Ch.33:10-11"),
+            ("2Ch.33:11-24", "2Ch.33:12-25")),
+        Passage(ReinaValera, null, $"{ReinaValeraEdition} & Job.35:16=NotExist & Job.35:15=Last",
+            ("Job.35:15", "Job.35:15-16")),
+        Passage(ReinaValera, "Job.38:39",
+            $"{ReinaValeraEdition} & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last",
+            ("Job.39:1-3", "Job.38:39-41"),
+            ("Job.39:4-29", "Job.39:1-26"),
+            ("Job.39:30", "Job.39:27-30; 40:1-5"),
+            ("Job.40:1-19", "Job.40:6-24")),
+        Passage(ReinaValera, "Hos.11:12", $"{ReinaValeraEdition} & Hos.11:12=NotExist & Hos.12:14=Last",
+            ("Hos.12:1", "Hos.11:12"),
+            ("Hos.12:2-13", "Hos.12:1-12"),
+            ("Hos.12:14", "Hos.12:13-14")),
+        Passage(ReinaValera, "Jon.1:17", $"{ReinaValeraEdition} & Jon.2:10=Last",
+            ("Jon.2:1", "Jon.1:17"),
+            ("Jon.2:2-9", "Jon.2:1-8"),
+            ("Jon.2:10", "Jon.2:9-10")),
+    ];
+
+    private static IEnumerable<TvtmsSupplement> KulishPassages =>
+    [
+        Passage(Kulish, "Gen.3:1", KulishEdition,
+            ("Gen.3:1", "Gen.3:1-2"),
+            ("Gen.3:2-23", "Gen.3:3-24")),
+        Passage(Kulish, null, $"{KulishEdition} & Gen.6:21=Last",
+            ("Gen.6:20", "Gen.6:20-21"),
+            ("Gen.6:21", "Gen.6:22")),
+        Passage(Kulish, null, $"{KulishEdition} & Gen.48:21=Last",
+            ("Gen.48:21", "Gen.48:21-22")),
+        Passage(Kulish, "Lev.6:1", $"{KulishEdition} & Lev.5:27=Last & Lev.6:22=Last",
+            ("Lev.5:20-24", "Lev.6:1-5"),
+            ("Lev.5:25", "Lev.6:5"),
+            ("Lev.5:26-27", "Lev.6:6-7"),
+            ("Lev.6:1-21", "Lev.6:8-28"),
+            ("Lev.6:22", "Lev.6:29-30")),
+        Passage(Kulish, null, $"{KulishEdition} & Lev.14:55=Last",
+            ("Lev.14:54", "Lev.14:54-55"),
+            ("Lev.14:55", "Lev.14:56-57")),
+        Passage(Kulish, null, $"{KulishEdition} & Lev.17:15=Last",
+            ("Lev.17:15", "Lev.17:15-16")),
+        Passage(Kulish, null, $"{KulishEdition} & Num.8:25=Last",
+            ("Num.8:25", "Num.8:25-26")),
+        Passage(Kulish, null, $"{KulishEdition} & Num.14:44=Last",
+            ("Num.14:44", "Num.14:44-45")),
+        Passage(Kulish, null, $"{KulishEdition} & Num.15:40=Last",
+            ("Num.15:40", "Num.15:40-41")),
+        Passage(Kulish, "Num.20:29", $"{KulishEdition} & Num.20:28=Last",
+            ("Num.20:28", "Num.20:28-29")),
+        Passage(Kulish, null, $"{KulishEdition} & Num.23:31=Last",
+            ("Num.23:18", "Num.23:17"),
+            ("Num.23:19-31", "Num.23:18-30")),
+        Passage(Kulish, null, $"{KulishEdition} & Num.25:17=Last",
+            ("Num.25:17", "Num.25:17-18")),
+        Passage(Kulish, null, $"{KulishEdition} & Num.27:22=Last",
+            ("Num.27:22", "Num.27:22-23")),
+        Passage(Kulish, null, $"{KulishEdition} & Deu.16:21=Last",
+            ("Deu.16:21", "Deu.16:21-22")),
+        Passage(Kulish, "Deu.24:22", $"{KulishEdition} & Deu.24:21=Last",
+            ("Deu.24:21", "Deu.24:21-22")),
+        Passage(Kulish, null, $"{KulishEdition} & Deu.27:7*2<Deu.27:8",
+            ("Deu.27:7", "Deu.27:6"),
+            ("Deu.27:8", "Deu.27:7-8")),
+        Passage(Kulish, "Deu.29:1", $"{KulishEdition} & Deu.28:69=Last & Deu.29:29=Last",
+            ("Deu.28:69", "Deu.29:1"),
+            ("Deu.29:1-2", "Deu.29:2")),
+        Passage(Kulish, null, $"{KulishEdition} & Deu.32:51=Last",
+            ("Deu.32:51", "Deu.32:51-52")),
+        Passage(Kulish, null, $"{KulishEdition} & Deu.34:11=Last",
+            ("Deu.34:11", "Deu.34:11-12")),
+        Passage(Kulish, null, $"{KulishEdition} & Jdg.20:22>Jdg.20:23",
+            ("Jdg.20:22", "Jdg.20:23"),
+            ("Jdg.20:23", "Jdg.20:22")),
+        Passage(Kulish, null, $"{KulishEdition} & 2Sa.2:33=Last",
+            ("2Sa.2:5", "2Sa.2:4"),
+            ("2Sa.2:6-33", "2Sa.2:5-32")),
+        Passage(Kulish, null, $"{KulishEdition} & Est.1:7*2<Est.1:8",
+            ("Est.1:7", "Est.1:6"),
+            ("Est.1:8", "Est.1:7-8")),
+        Passage(Kulish, null, $"{KulishEdition} & Job.21:33=Last",
+            ("Job.21:32", "Job.21:32-33"),
+            ("Job.21:33", "Job.21:34")),
+        Passage(Kulish, "Job.38:39", $"{KulishEdition} & Job.39:35=Last & Job.40:27=Last & Job.41:26=Last",
+            ("Job.39:31-35", "Job.40:1-5"),
+            ("Job.40:1-19", "Job.40:6-24"),
+            ("Job.40:20-27", "Job.41:1-8"),
+            ("Job.41:1-26", "Job.41:9-34")),
+        Passage(Kulish, "Psa.13:5", $"{KulishEdition} & Psa.13:5=Last",
+            ("Psa.13:5", "Psa.13:5-6")),
+        Passage(Kulish, "Psa.24:1", $"{KulishEdition} & Psa.24:9=Last",
+            ("Psa.24:9", "Psa.24:9-10")),
+        Passage(Kulish, "Psa.29:11", $"{KulishEdition} & Psa.29:10=Last",
+            ("Psa.29:7", "Psa.29:7-8"),
+            ("Psa.29:8-10", "Psa.29:9-11")),
+        Passage(Kulish, "Psa.54:7", $"{KulishEdition} & Psa.54:6=Last",
+            ("Psa.54:4", "Psa.54:4-5"),
+            ("Psa.54:5-6", "Psa.54:6-7")),
+        Passage(Kulish, "Psa.60:1", $"{KulishEdition} & Psa.60:14=Last",
+            ("Psa.60:1-2", "Psa.60:Title"),
+            ("Psa.60:3-14", "Psa.60:1-12")),
+        Passage(Kulish, "Psa.89:52", $"{KulishEdition} & Psa.89:51=Last",
+            ("Psa.89:51", "Psa.89:51-52")),
+        Passage(Kulish, "Psa.106:48", $"{KulishEdition} & Psa.106:47=Last",
+            ("Psa.106:47", "Psa.106:47-48")),
+        Passage(Kulish, null, $"{KulishEdition} & Psa.127:6=Last",
+            ("Psa.127:6", "Psa.127:5")),
+        Passage(Kulish, null, $"{KulishEdition} & Pro.30:32=Last",
+            ("Pro.30:30", "Pro.30:30-31"),
+            ("Pro.30:31-32", "Pro.30:32-33")),
+        Passage(Kulish, null, $"{KulishEdition} & Isa.3:20*2<Isa.3:19",
+            ("Isa.3:19", "Isa.3:19-20"),
+            ("Isa.3:20-21", "Isa.3:21-22"),
+            ("Isa.3:22", "Isa.3:22")),
+        Passage(Kulish, "Isa.9:21", $"{KulishEdition} & Isa.9:22=Last",
+            ("Isa.9:22", "Isa.9:21")),
+        Passage(Kulish, null, $"{KulishEdition} & Php.3:20=Last",
+            ("Php.3:20", "Php.3:20-21")),
+        Passage(Kulish, null, $"{KulishEdition} & Phm.1:24=Last",
+            ("Phm.1:23", "Phm.1:23-24"),
+            ("Phm.1:24", "Phm.1:25")),
     ];
 
     public static IReadOnlyList<string> Schemes(Versification tradition) =>
@@ -154,7 +360,7 @@ internal static class TvtmsSupplements
                              "versification data does, as in Jer.30:33=Last.");
 
         return new TvtmsSupplement(
-            Versification.Septuagint,
+            Traditions[scheme],
             scheme,
             joins is null ? null : References(joins)[0],
             [.. verses.SelectMany(pair => Rows(scheme, pair.Printed, pair.Standard, conditions))]);

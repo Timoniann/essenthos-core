@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Frame;
@@ -273,7 +274,7 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
 
     /// <summary>
     /// What the whole change amounts to. Reading the conditions, and the passages written down for
-    /// this edition where the data describes none, moves 582 of Brenton's 28,597 verses and leaves
+    /// this edition where the data describes none, moves 583 of Brenton's 28,597 verses and leaves
     /// the other 98% exactly where the tradition put them — which is the shape this should have: the
     /// schemes agree almost everywhere, and the passages where they do not are the passages a reader
     /// is comparing.
@@ -286,7 +287,7 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
             brenton.Edition.Resolve(verse.Book, verse.Chapter, verse.Number, verse.Label.Length > 0)[0]);
 
         brenton.Verses.Should().HaveCount(28_597);
-        moved.Should().Be(582);
+        moved.Should().Be(583);
     }
 
     /// <summary>
@@ -364,6 +365,21 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
         Placed(brenton.Edition, Leviticus, 8, 30).Should().Be(new CanonicalReference(Leviticus, 8, 30));
     }
 
+    /// <summary>
+    /// The Greek names the ostrich, the owl and the gull before the raven, which the Hebrew names
+    /// first, and Brenton puts the raven with the hawk. Both chapters hold 47 verses, so only the
+    /// birds say the verses stand apart. The raven and the hawk stand with the other birds, where
+    /// Swete's hawk stands too, and cover the Hebrew's raven.
+    /// </summary>
+    [Fact]
+    public void BrentonsBirdsStandBesideTheHebrewThatNamesThem()
+    {
+        brenton.Edition.Resolve(Leviticus, 11, 15).Should().Equal(new CanonicalReference(Leviticus, 11, 16));
+        brenton.Edition.Resolve(Leviticus, 11, 16).Should()
+            .Equal(new CanonicalReference(Leviticus, 11, 16), new CanonicalReference(Leviticus, 11, 15));
+        Placed(brenton.Edition, Leviticus, 11, 17).Should().Be(new CanonicalReference(Leviticus, 11, 17));
+    }
+
     private static CanonicalReference Placed(VersificationFrame frame, int book, int chapter, int verse) =>
         frame.Resolve(book, chapter, verse)[0];
 }
@@ -413,6 +429,16 @@ public class SweteMalachiTests
         TvtmsReader.Read(TestResources.Tvtms).Supplemented.Should()
             .BeEquivalentTo(TvtmsSupplements.All.Where(supplement => supplement.Joins is not null));
     }
+
+    /// <summary>
+    /// A supplement that stands apart from a passage of the data placing the same verses is chosen
+    /// separately from it, and the verse is given the addresses of both.
+    /// </summary>
+    [Fact]
+    public void NoSupplementStandsApartFromAPassageThatPlacesTheSameVerses()
+    {
+        TvtmsReader.Read(TestResources.Tvtms).Competing.Should().BeEmpty();
+    }
 }
 
 /// <summary>Swete's whole Old Testament, read once.</summary>
@@ -445,6 +471,8 @@ public sealed class SweteEdition
 public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
 {
     private const int Exodus = 2;
+
+    private const int Leviticus = 3;
 
     private const int Joshua = 6;
 
@@ -544,6 +572,161 @@ public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
             .Equal(new CanonicalReference(book, standardChapter, standardVerse));
     }
 
+    /// <summary>Swete prints no raven, so nothing of it stands beside the Hebrew's.</summary>
+    [Fact]
+    public void SwetesBirdsStandBesideTheHebrewThatNamesThem()
+    {
+        swete.Edition.Resolve(Leviticus, 11, 15).Should().Equal(new CanonicalReference(Leviticus, 11, 16));
+        swete.Edition.Resolve(Leviticus, 11, 16).Should().Equal(new CanonicalReference(Leviticus, 11, 16));
+    }
+
     private CanonicalReference Placed(int book, int chapter, int verse) =>
         swete.Edition.Resolve(book, chapter, verse)[0];
+}
+
+/// <summary>
+/// The Reina-Valera as eBible publishes it: the Spanish division, numbered to the English count, so
+/// the verse the Spanish moved to the next chapter is left empty and that chapter runs early.
+/// </summary>
+public class ReinaValeraFrameTests(Ebible ebible) : IClassFixture<Ebible>
+{
+    private const int Numbers = 4;
+
+    private const int FirstSamuel = 9;
+
+    private const int FirstKings = 11;
+
+    private const int Job = 18;
+
+    private const int Jonah = 32;
+
+    [Theory]
+    [InlineData(Numbers, 13, 1, 12, 16)]
+    [InlineData(Numbers, 13, 2, 13, 1)]
+    [InlineData(Numbers, 30, 1, 29, 40)]
+    [InlineData(FirstSamuel, 24, 1, 23, 29)]
+    [InlineData(FirstKings, 22, 44, 22, 43)]
+    [InlineData(Job, 39, 1, 38, 39)]
+    [InlineData(Job, 40, 1, 40, 6)]
+    [InlineData(Jonah, 2, 1, 1, 17)]
+    public void AChapterThatOpensEarlyStandsBesideItsWords(
+        int book,
+        int chapter,
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        EnglishEditions.Frame(ebible.ReinaValera).Resolve(book, chapter, verse)[0].Should()
+            .Be(new CanonicalReference(book, standardChapter, standardVerse));
+    }
+
+    /// <summary>
+    /// The chapter's last verse holds what the English count had no room for, and stands at every
+    /// address it carries rather than being split by this project.
+    /// </summary>
+    [Fact]
+    public void TheLastVerseOfTheChapterSpansWhatItHolds()
+    {
+        var edition = EnglishEditions.Frame(ebible.ReinaValera);
+
+        edition.Resolve(Numbers, 30, 16).Should()
+            .Equal(new CanonicalReference(Numbers, 30, 15), new CanonicalReference(Numbers, 30, 16));
+        edition.Resolve(Job, 39, 30).Should().Equal(
+        [
+            .. Enumerable.Range(27, 4).Select(verse => new CanonicalReference(Job, 39, verse)),
+            .. Enumerable.Range(1, 5).Select(verse => new CanonicalReference(Job, 40, verse)),
+        ]);
+    }
+
+    /// <summary>Luther comes from the same publisher in the English numbering, and nothing here moves it.</summary>
+    [Theory]
+    [InlineData(Numbers, 13, 1)]
+    [InlineData(Job, 39, 30)]
+    [InlineData(Jonah, 2, 1)]
+    public void AnEditionInTheEnglishNumberingIsNotMoved(int book, int chapter, int verse)
+    {
+        EnglishEditions.Frame(ebible.Luther).Resolve(book, chapter, verse).Should()
+            .Equal(new CanonicalReference(book, chapter, verse));
+    }
+}
+
+/// <summary>
+/// Kulish's Bible, which divides some forty chapters in its own way while declaring the English
+/// numbering. Each of these stood beside an English and a Hebrew verse that says something else.
+/// </summary>
+public class KulishFrameTests(Kulish kulish) : IClassFixture<Kulish>
+{
+    private const int Genesis = 1;
+
+    private const int Leviticus = 3;
+
+    private const int Judges = 7;
+
+    private const int SecondSamuel = 10;
+
+    private const int Job = 18;
+
+    private const int Psalms = 19;
+
+    [Theory]
+    [InlineData(Genesis, 3, 2, 3, 3)]
+    [InlineData(Genesis, 3, 23, 3, 24)]
+    [InlineData(Leviticus, 5, 20, 6, 1)]
+    [InlineData(Leviticus, 6, 1, 6, 8)]
+    [InlineData(Judges, 20, 22, 20, 23)]
+    [InlineData(Judges, 20, 23, 20, 22)]
+    [InlineData(SecondSamuel, 2, 6, 2, 5)]
+    [InlineData(Job, 39, 31, 40, 1)]
+    [InlineData(Job, 40, 20, 41, 1)]
+    [InlineData(Job, 41, 26, 41, 34)]
+    [InlineData(Psalms, 60, 3, 60, 1)]
+    public void AVerseKulishNumbersApartStandsBesideItsWords(
+        int book,
+        int chapter,
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        EnglishEditions.Frame(kulish.Source).Resolve(book, chapter, verse)[0].Should()
+            .Be(new CanonicalReference(book, standardChapter, standardVerse));
+    }
+
+    /// <summary>
+    /// Two English verses printed as one stand at both addresses, and Psalm 60's two title verses
+    /// are the title, as the Hebrew counts them.
+    /// </summary>
+    [Fact]
+    public void AVerseThatHoldsMoreThanOneStandsAtEach()
+    {
+        var edition = EnglishEditions.Frame(kulish.Source);
+
+        edition.Resolve(Genesis, 3, 1).Should()
+            .Equal(new CanonicalReference(Genesis, 3, 1), new CanonicalReference(Genesis, 3, 2));
+        edition.Resolve(Leviticus, 6, 22).Should()
+            .Equal(new CanonicalReference(Leviticus, 6, 29), new CanonicalReference(Leviticus, 6, 30));
+        edition.Resolve(Psalms, 60, 2).Should()
+            .Equal(new CanonicalReference(Psalms, 60, CanonicalReference.TitleVerse));
+    }
+}
+
+/// <summary>An English-numbered edition's frame, built once: the whole Bible's shape is read for it.</summary>
+internal static class EnglishEditions
+{
+    private static readonly Lazy<VersificationRules> Rules = new(() => TvtmsReader.Read(TestResources.Tvtms));
+
+    private static readonly ConcurrentDictionary<TextSource, VersificationFrame> Frames = new();
+
+    public static VersificationFrame Frame(TextSource source) => Frames.GetOrAdd(source, Place);
+
+    private static VersificationFrame Place(TextSource source) =>
+        Rules.Value.Frame(
+            Versification.English,
+            EditionShape.Of(
+            [
+                .. from book in source.Books
+                   from chapter in book.Chapters
+                   from verse in chapter.Verses
+                   select (book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label,
+                       verse.Words.Sum(word => word.Surface.Length)),
+            ]));
 }

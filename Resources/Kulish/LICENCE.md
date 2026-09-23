@@ -12,10 +12,11 @@ anything.
 
 **66 books, 1,189 chapters, 31,082 verses, 584,659 words** — 23,127 verses in the Old Testament and
 7,955 in the New, which is what eBible's catalogue states for it and what the files hold. Chapter
-and verse numbering is the English one throughout: 150 psalms with 9 and 10 apart, Malachi in four
-chapters, Joel in three. The files carry 204 footnotes and 2,079 spans marked as spoken by Jesus;
-neither is annotation, and there is none of any other kind — no lemmas, no morphology, no Strong
-numbers, no alignment to anything.
+and verse numbering is the English one: 150 psalms with 9 and 10 apart, Malachi in four chapters,
+Joel in three — except in some forty chapters it divides in its own way, which the frame places by
+passages this project wrote down in `Essenthos.Forge/Loading/Frame/TvtmsSupplements.cs`. The files
+carry 204 footnotes and 2,079 spans marked as spoken by Jesus; neither is annotation, and there is
+none of any other kind — no lemmas, no morphology, no Strong numbers, no alignment to anything.
 
 ## The licence, and there are two statements of it that agree
 

@@ -219,16 +219,14 @@ public class EbibleCorpusTests(Ebible ebible) : IClassFixture<Ebible>
     }
 
     /// <summary>
-    /// And the Spanish is not placed. eBible left the English slot empty at 18 seams and let the
+    /// And the Spanish is not renumbered. eBible left the English slot empty at 18 seams and let the
     /// following chapter run one to three verses late, merging the tail — so Numbers 30:1 of this
     /// file holds what the King James numbers 29:40, and its 30:16 holds two English verses at once.
-    /// Nothing is missing and 216 verses are at an address other than the one the German uses for
-    /// the same words, which is a wrong answer in a pane rather than a hole in the text.
+    /// Nothing is missing; the frame places those verses beside their words, and
+    /// <see cref="ReinaValeraFrameTests"/> checks that it does.
     ///
-    /// It is a test rather than a note because it is the defect a later reader would otherwise
-    /// rediscover from a reader's complaint, and because a fetch that quietly corrected it would
-    /// break the join to the one hand-made Spanish alignment that exists, which is keyed to these
-    /// addresses.
+    /// The file is kept as it is because a fetch that quietly corrected it would break the join to
+    /// the one hand-made Spanish alignment that exists, which is keyed to these addresses.
     /// </summary>
     [Fact]
     public void TheSpanishKeepsItsOwnVerseDivisionAtEighteenSeams()
