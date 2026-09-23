@@ -10,7 +10,7 @@ namespace Essenthos.Core.Desk;
 /// </summary>
 /// <param name="Line">Where it stands in the log, from 1, which is stable because the log is only appended to.</param>
 /// <param name="At">When, in UTC.</param>
-/// <param name="Section">Which part of the console: <c>portraits</c>, <c>pictures</c>, <c>relationships</c>, <c>occurrences</c>, <c>records</c>, <c>settings</c>, or <c>apply</c> for a run.</param>
+/// <param name="Section">Which part of the console: <c>portraits</c>, <c>pictures</c>, <c>relationships</c>, <c>occurrences</c>, <c>records</c>, <c>settings</c>, <c>deploy</c> for a deploy run (logged when it starts and when it ends), or <c>apply</c> for a run.</param>
 /// <param name="Action">What was done in it: <c>status</c>, <c>brief</c>, <c>upload</c>, <c>decision</c>, …</param>
 /// <param name="Target">What it was done to, named the way the corpus is addressed outside itself — a slug, a verse, a file under the images folder — never by a row id.</param>
 /// <param name="Label">What it was done to in words, as the owner reads it: a name, not an address. Null where the section names it itself.</param>

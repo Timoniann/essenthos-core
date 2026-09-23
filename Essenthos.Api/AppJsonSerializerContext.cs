@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 ﻿using System.Text.Json.Serialization;
 using Essenthos.Core.Endpoints;
 
@@ -11,6 +11,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(HealthProbeResponse))]
 [JsonSerializable(typeof(HealthResponse))]
 [JsonSerializable(typeof(CorpusReleaseResponse))]
+[JsonSerializable(typeof(VersionResponse))]
+[JsonSerializable(typeof(CorpusReleaseLabel))]
 [JsonSerializable(typeof(AuthProvidersResponse))]
 [JsonSerializable(typeof(MeResponse))]
 [JsonSerializable(typeof(MeUpdate))]

@@ -72,6 +72,18 @@ server:
 | undo a corpus | `forge rollback --to prod` |
 | see what is where | `forge releases`, `forge releases --on prod` |
 
+Each of these can be tried first: `scripts/deploy.ps1 … -WhatIf` and `forge release | publish | rollback
+… --dry-run` say what they would do and touch nothing.
+
+The owner's console (`Essenthos.Desk`) has a Deployment section that runs the same commands, behind a
+confirmation that says what will happen (production also wants its name typed), and records every run
+in `Resources/Essenthos/owner-changes.jsonl` under section `deploy`. It shows what each environment
+runs by asking `/v1/health/version` (the API's commit and corpus release) and `/version.json` (the
+reader's commit), both of which the images carry from the `SOURCE_COMMIT` build argument CI passes.
+Dev is behind a password; to let the console read dev's versions, give it the same user and password
+in user secrets as `Desk:Deploy:Environments:dev:User` and `…:Password` — otherwise it reports dev as
+answering behind its password and nothing more.
+
 A publication stops the API for the second or two the rename takes; Caddy holds requests through it.
 Measured on the rehearsal under continuous traffic: 2,230 requests, none failed, the slowest 5.4 s.
 

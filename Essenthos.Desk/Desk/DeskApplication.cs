@@ -53,6 +53,7 @@ internal static class DeskApplication
         builder.Services.AddSingleton(new OperationAllowance(
             builder.Configuration.GetSection("Desk:Operations").Get<string[]>() ?? []));
         builder.Services.AddSingleton<Operations>();
+        builder.Services.AddSingleton<Deployment>();
 
         var app = builder.Build();
 
@@ -77,6 +78,7 @@ internal static class DeskApplication
         desk.MapPortraits();
         desk.MapOperations();
         desk.MapTexts();
+        desk.MapDeployment();
 
         return app;
     }

@@ -10,10 +10,14 @@ for a commit. `forge publish` moves the corpus.
 Nothing is built on the server. The tags are full commit hashes, which CI pushes only from main and
 only once the tests pass, so a rollback is running this again with the previous hash.
 
+-WhatIf says what it would copy and run on the server, and touches nothing: no ssh, no scp.
+
 .EXAMPLE
 ./scripts/deploy.ps1 -Server deploy@203.0.113.10 -Environment dev -Commit 1a2b3c4...
 ./scripts/deploy.ps1 -Server deploy@203.0.113.10 -Environment prod -Commit 1a2b3c4... -WebCommit 9f8e7d...
+./scripts/deploy.ps1 -Server deploy@203.0.113.10 -Environment prod -Commit 1a2b3c4... -WhatIf
 #>
+[CmdletBinding(SupportsShouldProcess)]
 param(
     [Parameter(Mandatory)] [string] $Server,
     [Parameter(Mandatory)] [ValidateSet('dev', 'prod')] [string] $Environment,
@@ -38,12 +42,7 @@ $deploy = Join-Path $PSScriptRoot '..' 'deploy'
 $ssh = @('-o', 'BatchMode=yes')
 
 # Only tracked files go: .env and the rehearsal's files stay where they are.
-$files = git -C $deploy ls-files -- compose.yaml Caddyfile backup.sh initdb
-Write-Host "Copying $($files.Count) files to ${Server}:$Root/deploy"
-ssh @ssh $Server "mkdir -p '$Root/deploy/initdb'"
-foreach ($file in $files) {
-    scp -q @ssh (Join-Path $deploy $file) "${Server}:$Root/deploy/$file"
-}
+$files = @(git -C $deploy ls-files -- compose.yaml Caddyfile backup.sh initdb)
 
 $suffix = if ($Environment -eq 'dev') { '_DEV' } else { '' }
 $edits = @("s|^API${suffix}_IMAGE=.*|API${suffix}_IMAGE=$Registry/essenthos-api:$Commit|")
@@ -67,5 +66,22 @@ docker compose exec -T proxy caddy reload --config /etc/caddy/Caddyfile
 docker compose ps --format '{{.Service}}\t{{.Image}}\t{{.Status}}'
 "@
 
-ssh @ssh $Server ($remote -replace "`r", '')
+$remote = $remote -replace "`r", ''
+
+if (-not $PSCmdlet.ShouldProcess("$Environment on $Server", "Deploy API $Commit$(if ($WebCommit) { " and web $WebCommit" })")) {
+    Write-Host "Would copy $($files.Count) files to ${Server}:$Root/deploy:"
+    $files | ForEach-Object { Write-Host "  $_" }
+    Write-Host "Would run on ${Server}:"
+    $remote -split "`n" | ForEach-Object { Write-Host "  $_" }
+    Write-Host 'Nothing was copied and nothing ran on the server.'
+    return
+}
+
+Write-Host "Copying $($files.Count) files to ${Server}:$Root/deploy"
+ssh @ssh $Server "mkdir -p '$Root/deploy/initdb'"
+foreach ($file in $files) {
+    scp -q @ssh (Join-Path $deploy $file) "${Server}:$Root/deploy/$file"
+}
+
+ssh @ssh $Server $remote
 Write-Host "Deployed $Commit to $Environment. Check /v1/health/ready on it."

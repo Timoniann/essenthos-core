@@ -210,12 +210,13 @@ if (args is ["verify", ..])
 
 // A corpus release, and moving one to a server. See Publishing/Publisher.cs for the whole design;
 // in short: `release` verifies and dumps this machine's corpus into .releases/, `publish` restores
-// that file into a new database on a target, verifies it there, and only then swaps it in.
+// that file into a new database on a target, verifies it there, and only then swaps it in. Each of
+// release, publish and rollback takes --dry-run, which says what it would do and changes nothing.
 if (args is ["release", ..])
 {
     using var releaseScope = app.Services.CreateScope();
     return await releaseScope.ServiceProvider.GetRequiredService<Publisher>()
-        .Release(args.Contains("--allow-dirty"), CancellationToken.None);
+        .Release(args.Contains("--allow-dirty"), CancellationToken.None, dryRun: args.Contains("--dry-run"));
 }
 
 if (args is ["publish", ..])
@@ -225,7 +226,8 @@ if (args is ["publish", ..])
         Option(args, "--to") ?? throw new InvalidOperationException("forge publish --to <target> [--release <name>]"),
         Option(args, "--release"),
         args.Contains("--without-rehearsal"),
-        CancellationToken.None);
+        CancellationToken.None,
+        dryRun: args.Contains("--dry-run"));
 }
 
 if (args is ["rollback", ..])
@@ -233,7 +235,8 @@ if (args is ["rollback", ..])
     using var rollbackScope = app.Services.CreateScope();
     return await rollbackScope.ServiceProvider.GetRequiredService<Publisher>().Rollback(
         Option(args, "--to") ?? throw new InvalidOperationException("forge rollback --to <target>"),
-        CancellationToken.None);
+        CancellationToken.None,
+        dryRun: args.Contains("--dry-run"));
 }
 
 if (args is ["releases", ..])
