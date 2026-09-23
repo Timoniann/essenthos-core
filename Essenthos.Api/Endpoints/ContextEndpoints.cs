@@ -38,22 +38,44 @@ internal static class ContextEndpoints
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
         {
-            var ordinal = BookReferences.ResolveOrdinal(book);
-            if (ordinal is null)
-            {
-                return ApiResults.NotFound(BookReferences.FormatHint(book));
-            }
-
-            var chapterCount = await canon.ChapterCount(ordinal.Value, cancellationToken);
-            if (chapter < 1 || chapter > chapterCount)
-            {
-                return ApiResults.NotFound(
-                    $"{BookReferences.Name(ordinal.Value)} has {chapterCount} chapters in the shared numbering, " +
-                    $"so there is no chapter {chapter}.");
-            }
-
-            return Results.Ok(await Context(db, ordinal.Value, chapter, language, cancellationToken));
+            var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
+            return refusal ?? Results.Ok(await Context(db, ordinal, chapter, language, cancellationToken));
         });
+
+        // The families among the chapter's people, apart from the rest because a genealogy's trees
+        // are the one part of the panel that can run to hundreds of people.
+        routes.MapGet("/context/{book}/{chapter:int}/family", async (
+            string book,
+            int chapter,
+            [FromQuery] string? language,
+            AppDbContext db,
+            ICanonIndex canon,
+            CancellationToken cancellationToken) =>
+        {
+            var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
+            return refusal ?? Results.Ok(await ChapterFamily.Of(db, ordinal, chapter, language, cancellationToken));
+        });
+    }
+
+    /// <summary>The book's ordinal where the address names a chapter the shared numbering has, or why not.</summary>
+    private static async Task<(int Ordinal, IResult? Refusal)> Chapter(
+        ICanonIndex canon,
+        string book,
+        int chapter,
+        CancellationToken cancellationToken)
+    {
+        var ordinal = BookReferences.ResolveOrdinal(book);
+        if (ordinal is null)
+        {
+            return (0, ApiResults.NotFound(BookReferences.FormatHint(book)));
+        }
+
+        var chapterCount = await canon.ChapterCount(ordinal.Value, cancellationToken);
+        return chapter < 1 || chapter > chapterCount
+            ? (0, ApiResults.NotFound(
+                $"{BookReferences.Name(ordinal.Value)} has {chapterCount} chapters in the shared numbering, " +
+                $"so there is no chapter {chapter}."))
+            : (ordinal.Value, null);
     }
 
     internal static async Task<ChapterContextResponse> Context(
@@ -63,27 +85,7 @@ internal static class ContextEndpoints
         string? language,
         CancellationToken cancellationToken)
     {
-        var verses = await Annotations.InChapter(db, book, chapter, cancellationToken);
-
-        // Disputed rows are left out: they are the references the source itself would not assign
-        // to the record, and listing them here would assign them.
-        var stated = await db.EntityVerses
-            .Where(v => v.CanonicalBook == book && v.CanonicalChapter == chapter && !v.Disputed)
-            .Select(v => new { v.Entity!.Slug, v.CanonicalVerse })
-            .Distinct()
-            .ToListAsync(cancellationToken);
-        foreach (var row in stated)
-        {
-            if (!verses.TryGetValue(row.Slug, out var at))
-            {
-                verses[row.Slug] = at = [];
-            }
-
-            at.Add(row.CanonicalVerse);
-        }
-
-        await AddPassages(db, book, chapter, verses, cancellationToken);
-
+        var verses = await Named(db, book, chapter, cancellationToken);
         var slugs = verses.Keys.ToList();
         var records = await db.Entities
             .Where(e => slugs.Contains(e.Slug))
@@ -155,6 +157,40 @@ internal static class ContextEndpoints
             measures,
             commandments,
             topics);
+    }
+
+    /// <summary>
+    /// Every record the chapter names, with the verses naming it: the words of any text that name
+    /// it, the record's own list of verses, and the passages of objects and observances running
+    /// through the chapter.
+    /// </summary>
+    internal static async Task<Dictionary<string, SortedSet<int>>> Named(
+        AppDbContext db,
+        int book,
+        int chapter,
+        CancellationToken cancellationToken)
+    {
+        var verses = await Annotations.InChapter(db, book, chapter, cancellationToken);
+
+        // Disputed rows are left out: they are the references the source itself would not assign
+        // to the record, and listing them here would assign them.
+        var stated = await db.EntityVerses
+            .Where(v => v.CanonicalBook == book && v.CanonicalChapter == chapter && !v.Disputed)
+            .Select(v => new { v.Entity!.Slug, v.CanonicalVerse })
+            .Distinct()
+            .ToListAsync(cancellationToken);
+        foreach (var row in stated)
+        {
+            if (!verses.TryGetValue(row.Slug, out var at))
+            {
+                verses[row.Slug] = at = [];
+            }
+
+            at.Add(row.CanonicalVerse);
+        }
+
+        await AddPassages(db, book, chapter, verses, cancellationToken);
+        return verses;
     }
 
     private static readonly IReadOnlyDictionary<string, string> NoPlaces = new Dictionary<string, string>();
