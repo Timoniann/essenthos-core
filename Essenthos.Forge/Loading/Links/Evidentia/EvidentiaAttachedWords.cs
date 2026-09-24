@@ -85,10 +85,11 @@ internal enum EvidentiaAttachmentPlacement
 /// evidence that two words correspond: the placement follows the proposal of the head word, and a
 /// head left unplaced leaves its grammatical words unplaced too.
 ///
-/// <para>Where each goes is the convention of the witness, as the Berean tables and, for the King
-/// James, the Open Hebrew Bible state it. A Hebrew article is a prefix of its noun and both put
-/// <em>the</em> with the noun; <em>and</em> goes on the ו BHSA writes as a word of its own before the
-/// word it joins; an auxiliary goes on the verb, which carries tense and mood in itself.</para>
+/// <para>Each English word goes on its own part of the written word. BHSA writes the article, the
+/// prefixed prepositions and ו as words of their own, and <em>the</em> goes on the article, spelt out or
+/// swallowed by a preposition, where the answer keys put it with the noun; a noun the original writes
+/// without one leaves <em>the</em> to be said supplied. <em>and</em> goes on the ו before the word it
+/// joins; an auxiliary goes on the verb, which carries tense and mood in itself.</para>
 ///
 /// <para>A personal pronoun goes where the original writes the person: a subject on the verb whose
 /// ending names it, a possessive on the Hebrew noun whose suffix does, an object on the suffix of the
@@ -150,6 +151,8 @@ internal static class EvidentiaAttachedWords
     {
         Of, "out", "up", "off", "as", "down", "away", "forth",
     };
+
+    private const string HebrewArticle = "H9009";
 
     /// <summary>The Hebrew object marker, which BHSA classes as a preposition.</summary>
     private const string ObjectMarker = "H853";
@@ -238,13 +241,26 @@ internal static class EvidentiaAttachedWords
         for (var index = 0; index < words.Count; index++)
         {
             if (placedBySource.ContainsKey(words[index].Token.Id)
-                || Classify(words, index) is not ({ } attachment, { } head)
-                || HeadProposal(attachment, index, head, words, placedBySource) is not ({ } headProposal, var afterVerb)
-                || !targetsByVerse.TryGetValue(headProposal.Target.Token.Address, out var targetVerse)
-                || Place(attachment, words, index, headProposal.Target, targetVerse, afterVerb, placedBySource, taken) is not { } placement)
+                || Classify(words, index) is not ({ } attachment, { } head))
             {
                 continue;
             }
+
+            var found = Placed(attachment, index, head, words, placedBySource, targetsByVerse, taken);
+            if (found is null && attachment == EvidentiaAttachment.Conjunction
+                && Syntactic(words, words[index].Token.SyntacticHead) is { } clause && clause.Token.Id != head.Token.Id
+                && Placed(attachment, index, clause, words, placedBySource, targetsByVerse, taken) is { } onTheVerb
+                && OpensTheSentence(words[index]) == onTheVerb.Placement.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase))
+            {
+                found = onTheVerb;
+            }
+
+            if (found is not { } result)
+            {
+                continue;
+            }
+
+            var (placement, headProposal) = result;
 
             taken.Add(placement.Token.Id);
             var proposal = new EvidentiaProposal(
@@ -264,6 +280,29 @@ internal static class EvidentiaAttachedWords
 
         return attached;
     }
+
+    /// <summary>
+    /// <em>And</em> of <em>And God said</em> stands before the subject, and the וַ it renders is written on
+    /// the verb before it: וַיֹּאמֶר אֱלֹהִים. Where the head it was read with has no conjunction before its
+    /// rendering, <em>and</em> goes on the one before the rendering of its clause's verb - in Hebrew when it
+    /// opens a sentence, where the ו of a narrative verb stands; in Greek when it does not, since a
+    /// Greek sentence opens as often with δέ, which is no <em>and</em> this places.
+    /// </summary>
+    private static bool OpensTheSentence(EvidentiaAnalysis word) => char.IsUpper(word.Token.Surface[0]);
+
+    private static (EvidentiaAnalysis Placement, EvidentiaProposal Head)? Placed(
+        EvidentiaAttachment attachment,
+        int index,
+        EvidentiaAnalysis head,
+        IReadOnlyList<EvidentiaAnalysis> words,
+        Dictionary<long, EvidentiaProposal> placedBySource,
+        IReadOnlyDictionary<EvidentiaAddress, List<EvidentiaAnalysis>> targetsByVerse,
+        HashSet<long> taken) =>
+        HeadProposal(attachment, index, head, words, placedBySource) is ({ } headProposal, var afterVerb)
+        && targetsByVerse.TryGetValue(headProposal.Target.Token.Address, out var targetVerse)
+        && Place(attachment, words, index, headProposal.Target, targetVerse, afterVerb, placedBySource, taken) is { } placement
+            ? (placement, headProposal)
+            : null;
 
     /// <summary>
     /// The attachments that inherit the safe tier from their head. Each placed the word where the answer
@@ -325,8 +364,9 @@ internal static class EvidentiaAttachedWords
             ? EvidentiaAttachmentPlacement.None
             : attachment switch
             {
-                EvidentiaAttachment.Article or EvidentiaAttachment.AuxiliaryVerb => EvidentiaAttachmentPlacement.Rendering,
-                EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition => EvidentiaAttachmentPlacement.OwnKindBefore,
+                EvidentiaAttachment.AuxiliaryVerb => EvidentiaAttachmentPlacement.Rendering,
+                EvidentiaAttachment.Article or EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition =>
+                    EvidentiaAttachmentPlacement.OwnKindBefore,
                 EvidentiaAttachment.Genitive => EvidentiaAttachmentPlacement.Dependent,
                 EvidentiaAttachment.SubjectPronoun or EvidentiaAttachment.PossessivePronoun or EvidentiaAttachment.ObjectPronoun =>
                     EvidentiaAttachmentPlacement.AgreeingRendering,
@@ -626,7 +666,7 @@ internal static class EvidentiaAttachedWords
                 && EvidentiaPersonAgreement.Agrees(pronoun, word, suffix: true));
     }
 
-    private static int IndexOf(IReadOnlyList<EvidentiaAnalysis> words, EvidentiaAnalysis word)
+    internal static int IndexOf(IReadOnlyList<EvidentiaAnalysis> words, EvidentiaAnalysis word)
     {
         for (var index = 0; index < words.Count; index++)
         {
@@ -658,7 +698,9 @@ internal static class EvidentiaAttachedWords
 
         if (attachment == EvidentiaAttachment.Article)
         {
-            return ArticleBefore(word, rendering, verse, taken);
+            return rendering.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
+                ? HebrewArticleBefore(word, rendering, verse, taken)
+                : ArticleBefore(word, rendering, verse, taken);
         }
 
         var wanted = attachment == EvidentiaAttachment.Conjunction ? "conj" : null;
@@ -706,6 +748,23 @@ internal static class EvidentiaAttachedWords
         return null;
     }
 
+    /// <summary>
+    /// The article BHSA writes as the prefix of the rendering, spelt out or swallowed by a preposition
+    /// (לָ of לָאוֹר). A rendering without one leaves <em>the</em> to be said supplied.
+    /// </summary>
+    private static EvidentiaAnalysis? HebrewArticleBefore(
+        EvidentiaAnalysis article,
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        var at = IndexOf(verse, rendering);
+        return article.Token.Surface.Equals(DefiniteArticle, StringComparison.OrdinalIgnoreCase)
+            && at > 0 && verse[at - 1].Token.StrongNumber == HebrewArticle && !taken.Contains(verse[at - 1].Token.Id)
+                ? verse[at - 1]
+                : null;
+    }
+
     /// <summary>The nearest preposition written before the rendering, past an article: מִן הָ אֲדָמָה.</summary>
     private static EvidentiaAnalysis? PrepositionBefore(
         EvidentiaAnalysis rendering,
@@ -736,7 +795,7 @@ internal static class EvidentiaAttachedWords
     /// The nearest following word of one of the classes, within reach, not across punctuation or a
     /// negation: <em>must not eat</em> is annotated with its negation, which an original writes apart.
     /// </summary>
-    private static EvidentiaAnalysis? Forward(IReadOnlyList<EvidentiaAnalysis> words, int index, params string[] classes)
+    internal static EvidentiaAnalysis? Forward(IReadOnlyList<EvidentiaAnalysis> words, int index, params string[] classes)
     {
         for (var next = index + 1; next < words.Count && next - index <= HeadReach; next++)
         {
@@ -778,6 +837,6 @@ internal static class EvidentiaAttachedWords
     private static string? Feature(EvidentiaAnalysis word, string name) =>
         word.Token.Morphology?.FirstOrDefault(pair => pair.Key.Equals(name, StringComparison.OrdinalIgnoreCase)).Value;
 
-    private static string? Class(EvidentiaAnalysis word) =>
+    internal static string? Class(EvidentiaAnalysis word) =>
         EvidentiaMorphologyLabels.PartOfSpeech(word.PartOfSpeech ?? word.Token.PartOfSpeech, word.Token.Language);
 }

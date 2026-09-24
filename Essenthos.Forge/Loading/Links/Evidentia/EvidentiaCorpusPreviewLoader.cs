@@ -183,6 +183,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             targetAnalyses,
             lexicalProposals);
         List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
+        var absences = EvidentiaAbsences.Resolve(sourceAnalyses, targetAnalyses, finalProposals);
+        var byWord = EvidentiaWordScore.Of(sourceAnalyses, targetAnalyses, finalProposals, absences, goldAnnotation, out var absenceVerdicts);
         var safe = EvidentiaAttachedWords.Safe(globalKnownRenderingResolution.Proposals, attachedWords);
         List<EvidentiaProposal> safeProposals =
             [.. finalProposals.Where(proposal => safe.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))];
@@ -197,6 +199,13 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             canonicalBook,
             canonicalChapter,
             safe);
+        var suppliedWords = absences.Where(absence => absence.Kind == EvidentiaAbsenceKind.Supplied)
+            .ToDictionary(absence => absence.Word.Token.Id);
+        words = [.. words.Select(word => suppliedWords.TryGetValue(word.SourceWordId, out var absence)
+            ? word with { Absence = absence.Rationale, AbsenceCorrect = absenceVerdicts.GetValueOrDefault(word.SourceWordId) }
+            : word.TargetWordId is { } placed && goldAnnotation.CoveredSourceWords.Contains(word.SourceWordId)
+                ? word with { CorrectByWord = byWord.Accepted?.Contains((word.SourceWordId, placed)) }
+                : word)];
         options.Decisions?.Record(new EvidentiaChapterDecisions(
             canonicalBook, canonicalChapter, source, contentSourceWordIds, candidates,
             safeProposals, finalProposals));
@@ -253,7 +262,22 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 ? Disagreements(finalProposals, source, target, goldAnnotation, canonicalBook, canonicalChapter)
                 : [],
             EvidentiaSourceWordAccount.Of(words),
-            options.RecordWords ? words : []);
+            options.RecordWords ? words : [],
+            byWord,
+            options.RecordWords
+                ? [.. absences.Select(absence => new EvidentiaAbsenceRecord(
+                    canonicalBook,
+                    canonicalChapter,
+                    absence.Word.Token.Address.Verse,
+                    absence.Word.Token.Id,
+                    absence.Word.Token.Position,
+                    absence.Word.Token.Surface,
+                    absence.Word.Token.StrongNumber,
+                    absence.Kind.ToString(),
+                    absence.Rationale,
+                    absence.Anchor is { } anchor ? $"{anchor.Source.Token.Surface} → {anchor.Target.Token.Surface}" : null,
+                    absenceVerdicts.GetValueOrDefault(absence.Word.Token.Id)))]
+                : []);
     }
 
     public async Task<EvidentiaBookMeasurement> MeasureBook(
@@ -546,7 +570,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         // Only the links touching a word of the passage can yield a pair in it. Reading every link
         // between the two texts for each chapter carried a whole Bible's worth of rows per chapter,
         // and with the source string on each row it exhausted the server's shared memory.
-        var scopeWords = sourceIds.ToList();
+        // The target's words as well: a word the translation does not render is named by a link with
+        // nothing on the translation's side.
+        var scopeWords = sourceIds.Concat(targetIds).ToList();
         var inScope = db.LinkWords.Where(word => scopeWords.Contains(word.WordId)).Select(word => word.LinkId);
         var scopedLinks = db.Links.AsNoTracking()
             .Where(link => inScope.Contains(link.Id))
@@ -556,7 +582,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 || link.Method == LinkMethod.StrongNumber)
             .Where(link => goldSource == null || link.Source.Contains(goldSource));
         var described = await scopedLinks
-            .Select(link => new { link.Id, link.FromTextId, link.Method, link.Source })
+            .Select(link => new { link.Id, link.FromTextId, link.Method, link.Source, link.Relation })
             .ToDictionaryAsync(link => link.Id, cancellationToken);
         var links = await scopedLinks
             .SelectMany(link => link.Words.Select(word => new
@@ -583,7 +609,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                     link.Method,
                     link.Source,
                     left,
-                    right);
+                    right,
+                    link.Relation is LinkRelation.Omits or LinkRelation.Expands);
             })
             .ToList();
         return Annotated(goldLinks, sourceIds, targetIds);
@@ -613,10 +640,14 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     }
 
     private static EvidentiaGold Annotated(
-        IReadOnlyList<EvidentiaGoldLink> goldLinks,
+        IReadOnlyList<EvidentiaGoldLink> allLinks,
         IReadOnlySet<long> sourceIds,
         IReadOnlySet<long> targetIds)
     {
+        // An absence names words on one side only, whichever direction it was written in: those of
+        // the translation it supplies, or those of the original it leaves unrendered.
+        var absences = allLinks.Where(link => link.Absence).ToList();
+        var goldLinks = allLinks.Where(link => !link.Absence).ToList();
         var pairs = goldLinks
             .SelectMany(link => link.SourceWords.SelectMany(one => link.TargetWords.Select(two => (one, two))))
             .Where(pair => sourceIds.Contains(pair.one) && targetIds.Contains(pair.two))
@@ -636,7 +667,19 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             }
         }
 
-        return new EvidentiaGold(pairs, pairs.Select(pair => pair.one).ToHashSet(), bySourceWord);
+        return new EvidentiaGold(
+            pairs,
+            pairs.Select(pair => pair.one).ToHashSet(),
+            bySourceWord,
+            [.. goldLinks
+                .Select(link => link with
+                {
+                    SourceWords = [.. link.SourceWords.Where(sourceIds.Contains)],
+                    TargetWords = [.. link.TargetWords.Where(targetIds.Contains)],
+                })
+                .Where(link => link.SourceWords.Count > 0 && link.TargetWords.Count > 0)],
+            absences.SelectMany(link => link.SourceWords).Where(sourceIds.Contains).ToHashSet(),
+            absences.SelectMany(link => link.TargetWords).Where(targetIds.Contains).ToHashSet());
     }
 
     /// <summary>
@@ -738,6 +781,10 @@ internal sealed record EvidentiaBookMeasurement(
 
     public IReadOnlyList<EvidentiaWordRecord> Words => [.. Chapters.SelectMany(chapter => chapter.Words)];
 
+    public IReadOnlyList<EvidentiaAbsenceRecord> Absences => [.. Chapters.SelectMany(chapter => chapter.Absences)];
+
+    public EvidentiaWordMeasure ByWord => Chapters.Aggregate(default(EvidentiaWordMeasure), (running, next) => running + next.ByWord);
+
     /// <summary>
     /// The book's distinct content source forms, and how many of them the learned index holds an
     /// entry for. Unioned rather than summed: a form standing in four chapters is one word the
@@ -785,7 +832,8 @@ internal sealed record EvidentiaBookMeasurement(
                "distinct content source forms have an entry\n" +
                $"final abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
                $"content source words unplaced ({Abstention:P2})\n" +
-               WordAccount.Report() +
+               WordAccount.Report() + "\n" +
+               ByWord.Report() +
                string.Concat(Chapters
                    .Where(chapter => chapter.Samples.Count > 0)
                    .Select(chapter => $"\nsample, chapter {chapter.CanonicalChapter}:\n"
@@ -870,7 +918,9 @@ internal sealed record EvidentiaChapterMeasurement(
     IReadOnlyList<string> Samples,
     IReadOnlyList<EvidentiaDisagreement> Disagreements,
     EvidentiaSourceWordAccount WordAccount,
-    IReadOnlyList<EvidentiaWordRecord> Words)
+    IReadOnlyList<EvidentiaWordRecord> Words,
+    EvidentiaWordMeasure ByWord,
+    IReadOnlyList<EvidentiaAbsenceRecord> Absences)
 {
     /// <summary>What a stored run marks safe: the final proposals the safe renderings and their attached words hold.</summary>
     public const string SafeTierName = "safe tier";
@@ -948,7 +998,8 @@ internal sealed record EvidentiaChapterMeasurement(
                "distinct content source forms have an entry" +
                $"\nfinal abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
                $"content source words unplaced ({Abstention:P1})\n" +
-               WordAccount.Report() +
+               WordAccount.Report() + "\n" +
+               ByWord.Report() +
                (Samples.Count == 0 ? string.Empty : "\nsample:\n" + string.Join("\n", Samples));
     }
 }
@@ -1040,17 +1091,39 @@ internal readonly record struct EvidentiaTierScore(int Proposals, int Correct, i
         $"({Unscored:N0} unscored); gold recall: {Correct:N0}/{goldPairs:N0} ({Recall(goldPairs):P2})";
 }
 
+/// <param name="Absence">An <c>omits</c> or <c>expands</c> link: its words have no counterpart on the other side.</param>
 internal sealed record EvidentiaGoldLink(
     long Id,
     LinkMethod Method,
     string Source,
     IReadOnlyList<long> SourceWords,
-    IReadOnlyList<long> TargetWords);
+    IReadOnlyList<long> TargetWords,
+    bool Absence = false);
 
+/// <param name="Links">The correspondences in scope, each cut to the words of the passage it names.</param>
+/// <param name="SuppliedSourceWords">Words of the measured text the answer key says it supplies.</param>
+/// <param name="UnrenderedTargetWords">Words of the witness the answer key says the measured text leaves unrendered.</param>
 internal sealed record EvidentiaGold(
     IReadOnlySet<(long From, long To)> Pairs,
     IReadOnlySet<long> CoveredSourceWords,
-    IReadOnlyDictionary<long, List<EvidentiaGoldLink>> LinksBySourceWord);
+    IReadOnlyDictionary<long, List<EvidentiaGoldLink>> LinksBySourceWord,
+    IReadOnlyList<EvidentiaGoldLink> Links,
+    IReadOnlySet<long> SuppliedSourceWords,
+    IReadOnlySet<long> UnrenderedTargetWords);
+
+/// <summary>A word said to have no counterpart, and whether the answer key agrees; null where it cannot say.</summary>
+internal sealed record EvidentiaAbsenceRecord(
+    int CanonicalBook,
+    int CanonicalChapter,
+    int CanonicalVerse,
+    long WordId,
+    int Position,
+    string Surface,
+    string? StrongNumber,
+    string Kind,
+    string Rationale,
+    string? Anchor,
+    bool? Correct);
 
 internal sealed record EvidentiaGoldTarget(
     int Position,

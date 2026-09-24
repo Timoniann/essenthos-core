@@ -125,6 +125,21 @@ public class EvidentiaKnownRenderingIndexTests
     }
 
     [Fact]
+    public void APrefixIsLearntOnlyFromALinkThatNamesNothingElse()
+    {
+        // The Berean's divided on the whole of וַיַּבְדֵּל, and its and on a ו alone.
+        var divided = EvidentiaKnownRenderingIndex.StemsOnly(
+        [
+            new RenderingObservation(1, "divided", null, "H9000", 10),
+            new RenderingObservation(1, "divided", null, "H914", 10),
+        ]);
+        var and = EvidentiaKnownRenderingIndex.StemsOnly([new RenderingObservation(1, "and", null, "H9000", 11)]);
+
+        divided.Select(observation => observation.TargetStrongNumber).Should().Equal("H914");
+        and.Select(observation => observation.TargetStrongNumber).Should().Equal("H9000");
+    }
+
+    [Fact]
     public void AWitnessStatedLemmaIsAKeyOfItsOwn()
     {
         var evidence = Source(

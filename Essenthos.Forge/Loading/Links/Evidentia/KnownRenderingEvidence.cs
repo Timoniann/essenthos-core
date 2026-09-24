@@ -212,8 +212,10 @@ internal sealed class EvidentiaKnownRenderingIndex(
                     || (link.FromTextId == targetText.Id && link.ToTextId == sourceText.Id
                         && sourceMembership.Side == LinkSide.To && targetMembership.Side == LinkSide.From))
             select new RenderingObservation(
-                sourceWord.VerseId, sourceWord.Surface, sourceWord.Lemma, targetWord.StrongNumber!))
+                sourceWord.VerseId, sourceWord.Surface, sourceWord.Lemma, targetWord.StrongNumber!, link.Id))
             .ToListAsync(cancellationToken))
+            .GroupBy(observation => observation.LinkId)
+            .SelectMany(StemsOnly)
             .OrderBy(observation => observation.VerseId)
             .ThenBy(observation => observation.SourceSurface, StringComparer.Ordinal)
             .ThenBy(observation => observation.TargetStrongNumber, StringComparer.Ordinal)
@@ -253,6 +255,24 @@ internal sealed class EvidentiaKnownRenderingIndex(
         return byChapter.GetValueOrDefault((book, chapter), new HashSet<int>());
     }
 
+    /// <summary>
+    /// A link that names a whole written Hebrew word names its prefixes too - the Berean's
+    /// <em>divided</em> is on both וַ and יַּבְדֵּל - and the prefix is the stem's grammar, not what the
+    /// English word renders. Learnt as a rendering it made <em>divided</em> as much the ו's word as the
+    /// verb's, so a prefix is only learnt from a link that names nothing else.
+    /// </summary>
+    internal static IEnumerable<RenderingObservation> StemsOnly(IEnumerable<RenderingObservation> link)
+    {
+        var observations = link.ToList();
+        return observations.All(observation => IsPrefix(observation.TargetStrongNumber))
+            ? observations
+            : observations.Where(observation => !IsPrefix(observation.TargetStrongNumber));
+    }
+
+    /// <summary>BHSA's numbers for the prefixes it writes as words: ו, ב, כ, ל, the article and its ה.</summary>
+    private static bool IsPrefix(string strongNumber) =>
+        strongNumber.Length == 5 && strongNumber.StartsWith("H900", StringComparison.Ordinal);
+
     private sealed record RenderingCorpusKey(string FromSlug, string ToSlug, string Methods);
 
     private sealed record RenderingCorpus(string Language, IReadOnlyList<RenderingObservation> Observations);
@@ -262,7 +282,8 @@ internal sealed record RenderingObservation(
     int VerseId,
     string SourceSurface,
     string? SourceLemma,
-    string TargetStrongNumber);
+    string TargetStrongNumber,
+    long LinkId = 0);
 
 /// <summary>
 /// Turns rendering observations into a distribution per key. It is a pure function of what was

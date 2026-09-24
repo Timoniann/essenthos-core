@@ -17,7 +17,7 @@ public class EvidentiaAttachedWordTests
     private static readonly LanguagePackRegistry Packs = new([new EnglishLanguagePack(), new OriginalLanguagePack()]);
 
     [Fact]
-    public void AnEnglishArticleGoesWithTheHebrewNounItsNounWasPlacedOn()
+    public void AnEnglishArticleGoesOnTheArticleOfTheHebrewNounItsNounWasPlacedOn()
     {
         var the = English(1, Genesis122, 1, "the", "DET");
         var waters = English(2, Genesis122, 2, "waters", "NOUN");
@@ -26,7 +26,7 @@ public class EvidentiaAttachedWordTests
 
         var attached = Attach([the, waters], [article, water], (waters, water));
 
-        attached.Should().Equal((1L, 12L));
+        attached.Should().Equal((1L, 11L));
     }
 
     [Fact]
@@ -207,7 +207,7 @@ public class EvidentiaAttachedWordTests
 
         Attach([from, the, ground, with, wife, of, man], [min, article, soil, marker, woman, person],
                 (ground, soil), (wife, woman), (man, person))
-            .Should().BeEquivalentTo([(1L, 11L), (2L, 13L)]);
+            .Should().BeEquivalentTo([(1L, 11L), (2L, 12L)]);
     }
 
     [Fact]
@@ -228,7 +228,7 @@ public class EvidentiaAttachedWordTests
 
         Attach([face, of, the, deep, all, of2, days], [faceNoun, article, deepNoun, whole, day],
                 (face, faceNoun), (deep, deepNoun), (days, day))
-            .Should().BeEquivalentTo([(2L, 13L), (3L, 13L)]);
+            .Should().BeEquivalentTo([(2L, 13L), (3L, 12L)]);
     }
 
     [Fact]
@@ -322,7 +322,7 @@ public class EvidentiaAttachedWordTests
             [.. new[] { vav, article, water, hisSons }.Select(Analysis)],
             [safe, review]);
 
-        EvidentiaAttachedWords.Safe([safe], attached).Should().BeEquivalentTo([(3L, 13L), (2L, 13L)]);
+        EvidentiaAttachedWords.Safe([safe], attached).Should().BeEquivalentTo([(3L, 13L), (2L, 12L)]);
         attached.Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
             .Should().Contain([(1L, 11L), (4L, 14L)]);
     }

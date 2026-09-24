@@ -55,7 +55,10 @@ internal sealed record EvidentiaWordRecord(
     bool GoldCoversSourceWord,
     string? Rationale = null,
     bool Safe = false,
-    IReadOnlyList<EvidentiaCandidateTrace>? Candidates = null);
+    IReadOnlyList<EvidentiaCandidateTrace>? Candidates = null,
+    string? Absence = null,
+    bool? AbsenceCorrect = null,
+    bool? CorrectByWord = null);
 
 /// <summary>One of the strongest edges a word had in its own verse, kept so a word left unplaced can be read.</summary>
 internal sealed record EvidentiaCandidateTrace(
