@@ -16,7 +16,8 @@ namespace Essenthos.Core.Loading.Links;
 /// </param>
 /// <param name="Stated">
 /// The target words each source word is joined to by a link that is not the aligner's — a statement,
-/// a printed Strong number — which no reading of the composition looks at.
+/// a printed Strong number — which no reading of the composition looks at, with the prefixes written
+/// joined to them (<see cref="CompositionPipeline.Key"/>).
 /// </param>
 /// <param name="Frequent">
 /// The text's commonest forms, which in every language here are its articles, conjunctions,

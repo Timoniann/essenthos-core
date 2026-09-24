@@ -202,7 +202,8 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
         : AlignmentPipeline.DefaultMinimumConfidence;
 
     // A trial: the same three readings and the same merge, scored against what the corpus holds and
-    // written nowhere. --books trains on a few canonical books alone, which is the cheap first look.
+    // written nowhere. --books trains on a few canonical books alone, which is the cheap first look;
+    // --explain <file> writes every answer each reading gave, for asking why a word was left bare.
     if (args.Contains("--dry-run"))
     {
         logger.LogInformation("\n{Report}", await composer.Measure(
@@ -213,7 +214,8 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
             Option(args, "--books") is { } composeBooks
                 ? composeBooks.Split(',').Select(int.Parse).ToHashSet()
                 : null,
-            composePrecision));
+            composePrecision,
+            Option(args, "--explain")));
         return 0;
     }
 
