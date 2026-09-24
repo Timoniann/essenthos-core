@@ -509,7 +509,14 @@ internal static class InterlinearJoin
     private static string[] Pieces(InterlinearWord word) =>
         word.Written.ToLowerInvariant().Split(Apostrophes, StringSplitOptions.RemoveEmptyEntries);
 
-    private static string Apostrophe(string word) => word.Replace('’', '\'').Replace('ʼ', '\'');
+    /// <summary>
+    /// A word with its apostrophes made one, and without the quotation mark or bracket a corpus word
+    /// can open with: the corpus keeps <c>“Let</c> as one word where the source names <c>Let</c>.
+    /// </summary>
+    private static string Apostrophe(string word) =>
+        word.TrimStart(Opening).Replace('’', '\'').Replace('ʼ', '\'');
+
+    private static readonly char[] Opening = ['“', '‘', '"', '«', '„', '‚', '(', '[', '{'];
 
     private static readonly char[] Apostrophes = ['\'', '’', 'ʼ'];
 }

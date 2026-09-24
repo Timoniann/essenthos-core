@@ -138,6 +138,14 @@ internal sealed class DatasetLoader(
                     Path.Combine(resources, folder)), stoppingToken);
             }
 
+            // The one English besides the Berean whose words people tied to the originals, read from the
+            // aligned file the ties are drawn from later; and the Portuguese Almeida, whose New Testament
+            // Clear Bible's Portuguese set speaks about.
+            await Load(UnfoldingWordTextSource.Definition.Name, () => UnfoldingWordTextSource.Read(
+                Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder)), stoppingToken);
+            await Load(AlmeidaTextSource.Definition.Name, () => AlmeidaTextSource.Read(
+                Path.Combine(resources, AlmeidaTextSource.Folder)), stoppingToken);
+
             await LoadTheLexicon(resources, stoppingToken);
             await TranslateTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
@@ -673,6 +681,15 @@ internal sealed class DatasetLoader(
             Bible4uTextSource.Synodal,
             russian.Source,
             cancellationToken));
+
+        status.Starting("the unfoldingWord Literal Text alignment");
+
+        var literal = InterlinearLinkLoader.Interlinear(UnfoldingWordTextSource.Slug);
+        status.Record(await loader.Load(
+            Path.Combine(resources, "Door43", literal.Folder),
+            UnfoldingWordTextSource.Slug,
+            literal.Source,
+            cancellationToken));
     }
 
     /// <summary>
@@ -819,6 +836,24 @@ internal sealed class DatasetLoader(
             using var scope = services.CreateScope();
             var outcome = await scope.ServiceProvider.GetRequiredService<SuperscriptionFrameLoader>()
                 .Load(EbibleTextSource.Read(Path.Combine(resources, folder)), cancellationToken);
+
+            if (outcome.Verses > 0)
+            {
+                status.Record(outcome.ToString());
+            }
+        }
+
+        // The unfoldingWord Literal Text and the Almeida print a title before the first verse, as the
+        // English does.
+        foreach (var read in (Func<TextSource>[])
+                 [
+                     () => UnfoldingWordTextSource.Read(Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder)),
+                     () => AlmeidaTextSource.Read(Path.Combine(resources, AlmeidaTextSource.Folder)),
+                 ])
+        {
+            using var scope = services.CreateScope();
+            var outcome = await scope.ServiceProvider.GetRequiredService<SuperscriptionFrameLoader>()
+                .Load(read(), cancellationToken);
 
             if (outcome.Verses > 0)
             {

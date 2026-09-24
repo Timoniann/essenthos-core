@@ -39,6 +39,8 @@ internal static class TextCorpus
         .. EbibleTextSource.Definitions.Values,
         .. SwordTextSource.Definitions.Values,
         .. EnglishTextSource.Definitions.Values,
+        UnfoldingWordTextSource.Definition,
+        AlmeidaTextSource.Definition,
     ];
 
     /// <summary>The slugs of <see cref="Definitions"/>, which is what most checks actually want.</summary>

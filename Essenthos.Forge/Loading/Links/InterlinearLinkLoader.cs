@@ -101,10 +101,20 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         Bible4uTextSource.Synodal => ("ru_rsb",
             "Door43 Russian Synodal alignment of Titus, Philemon and 2 John, made in "
             + "translationCore and published at git.door43.org under CC0 1.0"),
+        UnfoldingWordTextSource.Slug => (UnfoldingWordTextSource.Folder, UnfoldingWordSource),
         _ => throw new ArgumentException(
-            $"Door43 interlinears exist for {Bible4uTextSource.Ohienko} and {Bible4uTextSource.Synodal}; " +
-            $"{slug} has none. Name one of those two as the source, or score against stored links instead."),
+            $"Door43 interlinears exist for {Bible4uTextSource.Ohienko}, {Bible4uTextSource.Synodal} and " +
+            $"{UnfoldingWordTextSource.Slug}; {slug} has none. Name one of those as the source, or score against " +
+            "stored links instead."),
     };
+
+    /// <summary>
+    /// What the links drawn from the unfoldingWord Literal Text's alignment say about themselves. It
+    /// names the release, because the alignment is revised from one release to the next.
+    /// </summary>
+    public const string UnfoldingWordSource =
+        "unfoldingWord Literal Text alignment to unfoldingWord's Hebrew Bible and Greek New Testament, "
+        + "release 90, git.door43.org/unfoldingWord/en_ult, CC BY-SA 4.0";
 
     private const string LinkImport =
         """

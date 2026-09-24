@@ -103,6 +103,7 @@ internal sealed record ClearBibleSet(
         VanDyckNewTestament(EbibleTextSource.VanDyck, NestleTextSource.Slug),
         IrvHindiOldTestament(EbibleTextSource.IrvHindi, BhsaTextSource.Slug),
         IrvHindiNewTestament(EbibleTextSource.IrvHindi, NestleTextSource.Slug),
+        AlmeidaNewTestament(AlmeidaTextSource.Slug, NestleTextSource.Slug),
     ];
 
     /// <summary>
@@ -250,6 +251,26 @@ internal sealed record ClearBibleSet(
         Path.Combine("data", "sources", "SBLGNT.tsv"),
         ClearBibleJoin.Letters,
         $"Clear Bible Alignments SBLGNT-IRVHin-manual, NLCI, {Repository}, CC BY 4.0, made by hand");
+
+    /// <summary>
+    /// The Almeida of 1911 against the Greek, New Testament only, and not made by hand: BiblioNexus
+    /// transferred it from their hand-made alignment of the Spanish Reina-Valera 1909, and the set's own
+    /// metadata says so — <c>process = "transfer from Spanish RVR09"</c> — while every one of its
+    /// records says <c>origin = "manual"</c>. The metadata is the statement about the set and is the one
+    /// repeated on every link, so that nobody reads a transfer as somebody's reading of the Portuguese.
+    ///
+    /// Its target is Project Gutenberg's eBook 62383, the file this corpus loads, and its token file reads
+    /// as that file does word for word, italics removed.
+    /// </summary>
+    public static ClearBibleSet AlmeidaNewTestament(string portugueseSlug, string greekSlug) => new(
+        portugueseSlug,
+        greekSlug,
+        Path.Combine("data", "por", "alignments", "JFA11", "SBLGNT-JFA11-transfer.json"),
+        Path.Combine("data", "por", "targets", "JFA11", "nt_JFA11.tsv"),
+        Path.Combine("data", "sources", "SBLGNT.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments SBLGNT-JFA11-transfer, BiblioNexus, {Repository}, CC BY 4.0, "
+        + "transferred from their Spanish Reina-Valera 1909 alignment, not made by hand");
 
     private static class Spanish
     {

@@ -1,10 +1,10 @@
 <#
 .SYNOPSIS
-    Fetches the German, Spanish, English, French, Arabic and Hindi Bibles the corpus holds, from
-    eBible.org.
+    Fetches the German, Spanish, English, French, Arabic, Hindi and modern Ukrainian Bibles the corpus
+    holds, from eBible.org.
 
 .DESCRIPTION
-    Fourteen texts, one publisher, one format and one set of checks, so they are one script rather
+    Fifteen texts, one publisher, one format and one set of checks, so they are one script rather
     than fourteen copies of the same hundred lines. The Kulish Bible arrives the same way and has its
     own script; that one is left where it is.
 
@@ -22,6 +22,7 @@
         Segond1910             fraLSG      la Bible Louis Segond 1910
         VanDyck1865            arb-vd      the Smith-Van Dyck Arabic Bible
         IrvHindi2019           hin2017     the Indian Revised Version, Hindi, 2019
+        BiblicaUkrainian2022   ukronpu     Biblica's Open New Ukrainian Translation, New Testament and Psalms
 
     The last of them is not loaded as a text of its own. The corpus already serves a King James, from
     bible4u, and that file prints no psalm superscription anywhere; this edition prints all 116 of
@@ -30,10 +31,13 @@
     where they are. It is fetched whole rather than in part because the whole of it is the evidence
     that its wording is ours: see Resources/KingJames2006/LICENCE.md for what that comparison found.
 
-    Every one of them but the Hindi is public domain, and each says what it is in three places that
-    agree: the catalogue's Copyright and Redistributable columns, the copyright page on the web, and
-    the copy of that page shipped inside the archive. The Hindi is Bridge Connectivity Solutions'
-    under CC BY-SA 4.0, and its three places say that instead. All three are checked rather than
+    Every one of them but the Hindi and the Ukrainian is public domain, and each says what it is in
+    three places that agree: the catalogue's Copyright and Redistributable columns, the copyright page
+    on the web, and the copy of that page shipped inside the archive. The Hindi is Bridge Connectivity
+    Solutions' and the Ukrainian Biblica's, both under CC BY-SA 4.0, and their three places say that
+    instead. Biblica publishes the same Ukrainian on open.bible under the same licence; eBible's copy
+    is taken because its archive carries the statement beside the bytes, and the two were compared
+    verse by verse on 2026-09-25 and read the same in all 10,483. All three are checked rather than
     assumed, and if any of them stops saying what it says today this stops and replaces nothing — a
     licence that moved under us is the owner's decision and not a download.
 
@@ -84,6 +88,9 @@ $ExpectedCatalogueLicence = 'public domain'
 $IrvLicence = 'Creative Commons Attribution Share-Alike license 4.0'
 $IrvCatalogueLicence = 'Copyright © 2017, 2018, 2019 Bridge Connectivity Solutions'
 
+$BiblicaLicence = 'Creative Commons Attribution Share-Alike license 4.0'
+$BiblicaCatalogueLicence = 'Copyright © 2022 Biblica, Inc.'
+
 # The codes eBible gives the files that are not scripture: a title page, a preface and a glossary.
 # They are matched on the \id line rather than on the file name, which carries eBible's own book
 # numbering and says nothing about what the file holds.
@@ -111,6 +118,8 @@ $Texts = @(
     [pscustomobject]@{ Folder = 'VanDyck1865';          Id = 'arb-vd';    Books = 66; Verses = 23145 + 7959; Strongs = 0 }
     [pscustomobject]@{ Folder = 'IrvHindi2019';         Id = 'hin2017';   Books = 66; Verses = 23145 + 7959; Strongs = 0
                        Licence = $IrvLicence; CatalogueLicence = $IrvCatalogueLicence }
+    [pscustomobject]@{ Folder = 'BiblicaUkrainian2022'; Id = 'ukronpu';   Books = 28; Verses = 2526 + 7957; Strongs = 0
+                       Licence = $BiblicaLicence; CatalogueLicence = $BiblicaCatalogueLicence }
 )
 
 if ($Only) {
