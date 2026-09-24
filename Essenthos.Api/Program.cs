@@ -55,6 +55,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddSingleton<TextFacts>();
+builder.Services.AddSingleton<WordForms>();
 builder.Services.AddSingleton(services =>
     new SiteSettingsFile(siteSettings, services.GetRequiredService<ILogger<SiteSettingsFile>>()));
 
@@ -111,6 +112,7 @@ v1.MapRead();
 v1.MapVerses();
 v1.MapParallel();
 v1.MapStrong();
+v1.MapRenderings();
 v1.MapSyntax();
 v1.MapWords();
 v1.MapSearch();

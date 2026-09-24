@@ -235,23 +235,37 @@ internal static class StrongEndpoints
                 return Results.NotFound(new ProblemResponse($"There is no text \"{corpus}\"."));
             }
 
-            // Counted only over the witnesses this text is linked to at all. G26 stands 348 times
-            // across the three Greek witnesses, but the King James is linked to two of them, so
-            // counting all three would report a third of the lexeme as unrendered when the truth is
-            // that those words belong to an edition this pair does not join.
-            var neighbours = await Neighbours(db, text.Id, cancellationToken);
+            // Counted over one edition of the original, the one the text is most fully joined to.
+            // G26 stands 116 times in each of the Greek editions the King James is linked to, and
+            // counting across them reported every rendering three times over; counting the
+            // translation's own tagged words as well reported more places reached than exist.
+            var witness = RenderingEndpoints.Primary(await RenderingEndpoints.Originals(db, text.Id, cancellationToken))
+                .FirstOrDefault(original => WritesNumber(original.Language, canonical));
+            var witnessId = witness?.Id ?? 0;
 
             var occurrences = await db.Words.CountAsync(
-                w => w.StrongNumber == canonical && neighbours.Contains(w.TextId), cancellationToken);
+                w => w.StrongNumber == canonical && w.TextId == witnessId, cancellationToken);
 
-            var reached = await db.LinkWords
+            var sides = db.LinkWords
                 .Where(side => side.Word!.StrongNumber == canonical
+                               && side.Word.TextId == witnessId
                                && (side.Link!.FromTextId == text.Id || side.Link.ToTextId == text.Id)
                                && (side.Link!.Relation == LinkRelation.Renders
-                                   || side.Link.Relation == LinkRelation.Equals))
+                                   || side.Link.Relation == LinkRelation.Equals));
+
+            var reached = await sides
                 .Select(side => side.WordId)
                 .Distinct()
                 .CountAsync(cancellationToken);
+
+            // What the count rests on: a publisher's tagging and a statistical aligner are different
+            // witnesses to the same number, and a reader citing it has to be able to say which.
+            var methods = await sides
+                .Select(side => new { side.LinkId, side.Link!.Method })
+                .Distinct()
+                .GroupBy(link => link.Method)
+                .Select(g => new { Method = g.Key, Links = g.Count() })
+                .ToListAsync(cancellationToken);
 
             var counted = await Renderings(
                 db, [canonical], text.Id, Math.Clamp(take ?? 40, 1, MostPerPage), cancellationToken);
@@ -262,8 +276,24 @@ internal static class StrongEndpoints
                 occurrences,
                 reached,
                 occurrences - reached,
-                counted.GetValueOrDefault(canonical, [])));
+                counted.GetValueOrDefault(canonical, []))
+            {
+                Witness = witness?.Slug,
+                Methods =
+                [
+                    .. methods
+                        .OrderByDescending(row => row.Links)
+                        .Select(row => new TextLinkMethodResponse(EnumSpelling.Of(row.Method), row.Links)),
+                ],
+            });
         });
+
+    /// <summary>
+    /// Whether an edition in this language can carry the number at all: a Hebrew number stands only
+    /// in a Hebrew or Aramaic text and a Greek one only in a Greek text.
+    /// </summary>
+    private static bool WritesNumber(string language, string number) =>
+        number.StartsWith('G') ? language == "grc" : language is "hbo" or "arc";
 
     /// <summary>
     /// The translation a lexicon card quotes when nobody names one: the English the Strong numbers
@@ -315,9 +345,10 @@ internal static class StrongEndpoints
     ///
     /// <para>
     /// A link counts for a number when a word carrying it stands on the side facing this text's
-    /// words. Only the words of texts linked to this one are looked up, which changes no answer —
-    /// the far side of such a link is always one of them — and spares the probe every word of every
-    /// witness this text is not joined to.
+    /// words, in the one edition of each original language the text is most fully joined to. A
+    /// translation linked to three Greek editions renders each Greek word three times over, once
+    /// per edition, and counting all three reported every phrase three times; a translation's own
+    /// tagged words, facing another translation, are not an original at all.
     /// </para>
     ///
     /// <para>
@@ -346,7 +377,7 @@ internal static class StrongEndpoints
                 JOIN link_word s ON s.word_id = sw.id
                 JOIN link l ON l.id = s.link_id
                 WHERE sw.strong_number = ANY(@numbers)
-                  AND sw.text_id = ANY(@neighbours)
+                  AND sw.text_id = ANY(@witnesses)
                   AND (l.from_text_id = @text OR l.to_text_id = @text)
                   AND l.relation IN ('renders', 'equals')
             ),
@@ -370,7 +401,9 @@ internal static class StrongEndpoints
             ORDER BY number, rank
             """;
 
-        var neighbours = await Neighbours(db, textId, cancellationToken);
+        var witnesses = RenderingEndpoints.Primary(await RenderingEndpoints.Originals(db, textId, cancellationToken))
+            .Select(original => original.Id)
+            .ToArray();
 
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         if (connection.State != ConnectionState.Open)
@@ -381,7 +414,7 @@ internal static class StrongEndpoints
         await using var command = new NpgsqlCommand(sql, connection);
         command.Parameters.AddWithValue("text", textId);
         command.Parameters.AddWithValue("numbers", numbers.ToArray());
-        command.Parameters.AddWithValue("neighbours", neighbours.ToArray());
+        command.Parameters.AddWithValue("witnesses", witnesses);
         command.Parameters.AddWithValue("take", take);
 
         var rows = new Dictionary<string, IList<StrongRenderingResponse>>();
@@ -562,7 +595,7 @@ internal record StrongOccurrenceListResponse(
     int Total,
     IList<StrongOccurrenceResponse> Items);
 
-/// <param name="Occurrences">Every word of the corpus carrying this number, in any witness.</param>
+/// <param name="Occurrences">Every word carrying this number in the edition the counts are made over.</param>
 /// <param name="Reached">
 /// How many of those the named text renders by some link. The gap between this and
 /// <paramref name="Occurrences"/> is the honest one: places the lexeme stands and nothing in this
@@ -578,6 +611,16 @@ internal record StrongRenderingsResponse(
     int Occurrences,
     int Reached,
     int Unrendered,
-    IList<StrongRenderingResponse> Renderings);
+    IList<StrongRenderingResponse> Renderings)
+{
+    /// <summary>
+    /// The edition of the original the counts are made over, as its slug. Null where the text is
+    /// linked to no edition that can carry the number.
+    /// </summary>
+    public string? Witness { get; init; }
+
+    /// <summary>What made the links the renderings are counted from, and how many each made.</summary>
+    public IList<TextLinkMethodResponse> Methods { get; init; } = [];
+}
 
 internal record StrongRenderingResponse(string Text, int Count);
