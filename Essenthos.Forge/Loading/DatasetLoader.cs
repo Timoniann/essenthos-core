@@ -133,6 +133,7 @@ internal sealed class DatasetLoader(
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
             await OpenThePsalmsTheirEditionsOpenWith(resources, stoppingToken);
+            await FinishTheVersesOhienkosFileCutShort(resources, stoppingToken);
             await RestoreWhatSwetesTranscriptionLost(resources, stoppingToken);
             await LemmatiseTheSeptuagint(resources, stoppingToken);
             await GlossTheGreek(resources, stoppingToken);
@@ -363,6 +364,37 @@ internal sealed class DatasetLoader(
             {
                 status.Record(outcome.ToString());
             }
+        }
+    }
+
+    /// <summary>
+    /// The ends of the seven verses the digitisation Ohienko is loaded from cut short, read from the
+    /// transcription of his printing. Beside the psalm openings and for the same reasons: it creates
+    /// no verse, and it has to come before the links and the searchable forms so that on a cold
+    /// corpus they see the whole verse. Silent where the transcription has not been fetched.
+    /// </summary>
+    private async Task FinishTheVersesOhienkosFileCutShort(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the verse endings Ohienko's file lost");
+
+        var folder = Path.Combine(resources, LostPsalmOpenings.OhienkoFolder);
+        var endings = LostVerseEndings.OhienkoVerses(folder);
+        if (endings.Count == 0)
+        {
+            logger.LogWarning(
+                "The transcription the ends of Ohienko's cut-short verses are read from is not in {Folder}, so "
+                + "those verses stay as the file has them. Run scripts/fetch-ohienko-wikisource.ps1",
+                folder);
+            return;
+        }
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<VerseEndingLoader>();
+        var outcome = await loader.Load(
+            Bible4uTextSource.Ohienko, endings, LostVerseEndings.OhienkoNote, cancellationToken);
+        if (outcome.Verses > 0)
+        {
+            status.Record(outcome.ToString());
         }
     }
 

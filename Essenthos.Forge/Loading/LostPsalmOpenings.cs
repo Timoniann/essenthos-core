@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Text;
 using Essenthos.Core.Usfm;
 
 namespace Essenthos.Core.Loading;
@@ -102,7 +100,10 @@ internal static class LostPsalmOpenings
         ];
     }
 
-    private static string? Psalms(string folder)
+    private static string? Psalms(string folder) => Book(folder, "PSA");
+
+    /// <summary>The file of an edition's folder that holds one book, by the code its <c>\id</c> line gives.</summary>
+    internal static string? Book(string folder, string code)
     {
         if (!Directory.Exists(folder))
         {
@@ -111,7 +112,7 @@ internal static class LostPsalmOpenings
 
         return Directory.EnumerateFiles(folder, "*.usfm")
             .FirstOrDefault(path => File.ReadLines(path).FirstOrDefault()?
-                .StartsWith("\\id PSA", StringComparison.Ordinal) == true);
+                .StartsWith($"\\id {code}", StringComparison.Ordinal) == true);
     }
 
     /// <summary>
@@ -119,19 +120,12 @@ internal static class LostPsalmOpenings
     /// the word aloud — Ohienko's printing has them and every other Ukrainian file here has none —
     /// and a word that kept them would match nothing the reader types and nothing the rest of the
     /// text spells the same way.
+    ///
+    /// Only the stress mark goes, and it is the only combining mark the transcription writes. Every
+    /// non-spacing mark after decomposition would also take the breve off й and the diaeresis off ї,
+    /// which are letters, on any runtime that decomposes them.
     /// </summary>
-    private static string Unaccented(string surface)
-    {
-        var decomposed = surface.Normalize(NormalizationForm.FormD);
-        var kept = new StringBuilder(decomposed.Length);
-        foreach (var character in decomposed)
-        {
-            if (CharUnicodeInfo.GetUnicodeCategory(character) != UnicodeCategory.NonSpacingMark)
-            {
-                kept.Append(character);
-            }
-        }
+    internal static string Unaccented(string surface) => surface.Replace(StressMark, string.Empty, StringComparison.Ordinal);
 
-        return kept.ToString().Normalize(NormalizationForm.FormC);
-    }
+    private const string StressMark = "\u0301";
 }
