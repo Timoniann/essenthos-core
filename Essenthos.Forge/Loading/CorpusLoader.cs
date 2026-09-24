@@ -28,6 +28,19 @@ internal sealed record LoadOutcome(
             : $"{Slug}: {Books} books, {Chapters} chapters, {Verses} verses, {Words} words in {Elapsed}";
 }
 
+internal sealed record BookAdditionOutcome(
+    string Slug,
+    IReadOnlyList<string> Books,
+    int Verses,
+    int Words,
+    TimeSpan Elapsed)
+{
+    public override string ToString() =>
+        Books.Count == 0
+            ? $"{Slug} holds every book its source does"
+            : $"{string.Join(", ", Books)} to {Slug}: {Verses} verses, {Words} words in {Elapsed}";
+}
+
 /// <summary>
 /// Writes one text and everything under it. There is one of these rather than one per witness,
 /// because the shape a witness is stored in no longer depends on what kind of witness it is: BHSA
@@ -54,7 +67,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     private const string RebuildVerses =
         """
         SELECT verse_id, string_agg("text" || trailer, '' ORDER BY "position") AS rebuilt
-        FROM word WHERE text_id = @textId GROUP BY verse_id
+        FROM word WHERE text_id = @textId AND (@verseIds IS NULL OR verse_id = ANY(@verseIds)) GROUP BY verse_id
         """;
 
     /// <summary>
@@ -115,9 +128,9 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         db.Texts.Add(text);
         await db.SaveChangesAsync(cancellationToken);
 
-        var verses = await WriteStructure(text, source, cancellationToken);
+        var verses = await WriteStructure(text, source.Books, cancellationToken);
         var words = await WriteWords(text, verses, cancellationToken);
-        await VerifyRoundTrip(text, verses, cancellationToken);
+        await VerifyRoundTrip(text, verses, whole: true, cancellationToken);
         await WriteSupplied(text, verses, cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);
@@ -131,6 +144,76 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
             words,
             started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
+        return outcome;
+    }
+
+    /// <summary>
+    /// The books a text's source now holds and the loaded text does not, written into it: a book the
+    /// edition always printed and the corpus could not read until now. The books already there keep
+    /// every row and every link, and take the position the source now gives them, so the new book
+    /// stands where the edition prints it.
+    ///
+    /// <para>
+    /// The text's rights note is brought up to the definition's where the definition only extends
+    /// it — a book read from another file usually says so there — and left alone, with a warning,
+    /// where a pass has written something of its own into it since.
+    /// </para>
+    /// </summary>
+    public async Task<BookAdditionOutcome> AddMissingBooks(
+        TextSource source,
+        CancellationToken cancellationToken = default)
+    {
+        var slug = source.Definition.Slug;
+        var texts = await db.Texts.ToListAsync(cancellationToken);
+        var text = texts.FirstOrDefault(t => string.Equals(t.Slug, slug, StringComparison.OrdinalIgnoreCase));
+        if (text is null)
+        {
+            return new BookAdditionOutcome(slug, [], 0, 0, TimeSpan.Zero);
+        }
+
+        var held = await db.Books.Where(b => b.TextId == text.Id).ToListAsync(cancellationToken);
+        var ordinals = held.Select(b => b.CanonicalOrdinal).ToHashSet();
+        var missing = source.Books.Where(b => !ordinals.Contains(b.CanonicalOrdinal)).ToList();
+        if (missing.Count == 0)
+        {
+            return new BookAdditionOutcome(text.Slug, [], 0, 0, TimeSpan.Zero);
+        }
+
+        var started = Stopwatch.StartNew();
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+
+        var positions = source.Books.ToDictionary(b => b.CanonicalOrdinal, b => b.Position);
+        foreach (var book in held)
+        {
+            book.Position = positions.GetValueOrDefault(book.CanonicalOrdinal, book.Position);
+        }
+
+        var verses = await WriteStructure(text, missing, cancellationToken);
+        var words = await WriteWords(text, verses, cancellationToken);
+        await VerifyRoundTrip(text, verses, whole: false, cancellationToken);
+        await WriteSupplied(text, verses, cancellationToken);
+
+        if (source.Definition.RightsNote is { } note && text.RightsNote != note)
+        {
+            if (text.RightsNote is null || note.StartsWith(text.RightsNote, StringComparison.Ordinal))
+            {
+                text.RightsNote = note;
+            }
+            else
+            {
+                logger.LogWarning(
+                    "{Slug} gained books and its rights note was not updated: the stored note is not the start of " +
+                    "the definition's, so something else has written into it. Compare the two and reconcile them " +
+                    "by hand.", text.Slug);
+            }
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+
+        var outcome = new BookAdditionOutcome(
+            text.Slug, [.. missing.Select(b => b.Name)], verses.Count, words, started.Elapsed);
+        logger.LogInformation("Added {Outcome}", outcome);
         return outcome;
     }
 
@@ -165,12 +248,12 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     /// </summary>
     private async Task<List<LoadedVerse>> WriteStructure(
         Text text,
-        TextSource source,
+        IEnumerable<BookDraft> books,
         CancellationToken cancellationToken)
     {
         var verses = new List<LoadedVerse>(32_000);
 
-        foreach (var bookDraft in source.Books)
+        foreach (var bookDraft in books)
         {
             var book = new Book
             {
@@ -202,7 +285,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
                     };
                     db.Verses.Add(verse);
                     verses.Add(new LoadedVerse(verse, verseDraft,
-                        $"{source.Definition.Slug} {bookDraft.Name} {chapterDraft.Number}:{verseDraft.Number}{verseDraft.Label}"));
+                        $"{text.Slug} {bookDraft.Name} {chapterDraft.Number}:{verseDraft.Number}{verseDraft.Label}"));
                 }
             }
         }
@@ -429,9 +512,14 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     /// load leaves nothing behind — a corpus that is silently wrong is worse than one that is
     /// missing, because only the second is noticed.
     /// </summary>
+    /// <param name="whole">
+    /// Whether these are all the text's verses. A book added to a text already loaded is checked on its
+    /// own verses, since the rest were checked when they were written.
+    /// </param>
     private async Task VerifyRoundTrip(
         Text text,
         List<LoadedVerse> verses,
+        bool whole,
         CancellationToken cancellationToken)
     {
         var expected = verses.ToDictionary(
@@ -442,6 +530,10 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         await using var command = new NpgsqlCommand(RebuildVerses, connection,
             (NpgsqlTransaction?)db.Database.CurrentTransaction?.GetDbTransaction());
         command.Parameters.AddWithValue("textId", text.Id);
+        command.Parameters.Add(new NpgsqlParameter("verseIds", NpgsqlDbType.Array | NpgsqlDbType.Integer)
+        {
+            Value = whole ? DBNull.Value : verses.Select(v => v.Verse.Id).ToArray(),
+        });
 
         var seen = 0;
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);

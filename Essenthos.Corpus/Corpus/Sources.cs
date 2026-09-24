@@ -27,6 +27,9 @@ internal static class Sources
     /// <summary>Swete's Septuagint, Codex Vaticanus as it stands.</summary>
     public const string SweteSlug = "SWETE";
 
+    /// <summary>Ottley's Isaiah, Codex Alexandrinus as it stands.</summary>
+    public const string OttleySlug = "OTTLEY";
+
     /// <summary>The Robinson-Pierpont Byzantine Textform, 2018, as its own repository spells it.</summary>
     public const string ByzantineSlug = "RP2018";
 

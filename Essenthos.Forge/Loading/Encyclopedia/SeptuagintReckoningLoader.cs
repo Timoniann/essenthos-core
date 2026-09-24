@@ -19,16 +19,17 @@ internal sealed record SeptuagintOutcome(
               $"{Dates} dates and {Unplaced} of the base reckoning's events left undated, in {Elapsed}";
 }
 
-/// <param name="FromSwete">
-/// The verses of Genesis this reckoning reads as Swete prints them — Codex Alexandrinus — rather than
-/// as Brenton does. Everything else is Brenton's.
+/// <param name="GenesisFromSwete">
+/// Whether this reckoning reads Genesis as Swete prints it — Codex Alexandrinus, since Vaticanus has
+/// lost the book up to 46:28 — rather than as Brenton does. Exodus and Kings are Brenton's either way:
+/// Swete prints Vaticanus there, which is not the manuscript this reckoning is named for.
 /// </param>
 internal sealed record SeptuagintDefinition(
     string Slug,
     string Name,
     string Authority,
     string Source,
-    IReadOnlyList<(int Chapter, int Verse)> FromSwete,
+    bool GenesisFromSwete,
     int Position);
 
 /// <summary>
@@ -48,18 +49,20 @@ internal sealed class SeptuagintReckoningLoader(AppDbContext db, ILogger<Septuag
 
     private const string CainanPerson = "person:Cainan_1";
 
+    private const int Genesis = 1;
+
     internal static readonly SeptuagintDefinition[] Definitions =
     [
         new("septuagint", "Septuagint (Brenton)",
             "Essenthos, computed from Brenton's Greek by BibleData's method",
             "Brenton's Septuagint, 1851, public domain: Genesis 5 and 11, Exodus 12:40, 3 Kingdoms 6:1",
-            [], 4),
+            false, 4),
         new("septuagint-alexandrinus", "Septuagint (Alexandrinus)",
-            "Essenthos, computed from Brenton's Greek with Codex Alexandrinus at Genesis 5:25–26",
-            "Brenton's Septuagint, 1851, public domain; Genesis 5:25–26 from Swete, The Old Testament " +
-            "in Greek, 1887, which prints Codex Alexandrinus there, digitised by First1KGreek under " +
-            "CC BY-SA 4.0",
-            [(5, 25), (5, 26)], 5),
+            "Essenthos, computed from Codex Alexandrinus's Genesis by BibleData's method",
+            "Genesis from Swete, The Old Testament in Greek, 1887, which prints Codex Alexandrinus there, " +
+            "digitised by First1KGreek under CC BY-SA 4.0 and with the words its transcription lost " +
+            "restored; Exodus 12:40 and 3 Kingdoms 6:1 from Brenton's Septuagint, 1851, public domain",
+            true, 5),
     ];
 
     public async Task<SeptuagintOutcome> Load(string resources, CancellationToken cancellationToken = default)
@@ -295,9 +298,9 @@ internal sealed class SeptuagintReckoningLoader(AppDbContext db, ILogger<Septuag
         int templeGap,
         int temple)
     {
-        var edition = definition.FromSwete.Count == 0
-            ? "Brenton's Greek, the Sixtine edition"
-            : "Brenton's Greek, except at Genesis 5:25–26, read as Codex Alexandrinus has it in Swete's edition";
+        var edition = definition.GenesisFromSwete
+            ? "Genesis as Codex Alexandrinus has it in Swete's edition, and Brenton's Greek for Exodus and Kings"
+            : "Brenton's Greek, the Sixtine edition";
         var methuselah = years["Death_Methuselah_1"].Year - years["Begin_Flood"].Year;
         var outlives = methuselah > 0
             ? $"he outlives the Flood by {methuselah} years"
@@ -358,12 +361,12 @@ internal sealed class SeptuagintReckoningLoader(AppDbContext db, ILogger<Septuag
         }
     }
 
-    /// <summary>Brenton's verses, with the ones the reckoning takes from Swete taken from Swete.</summary>
+    /// <summary>Brenton's verses, with Genesis taken from Swete where the reckoning reads it there.</summary>
     internal static Func<int, int, int, string?> Edition(
         SeptuagintDefinition definition,
         Func<int, int, int, string?> brenton,
         Func<int, int, int, string?> swete) =>
-        (book, chapter, verse) => book == 1 && definition.FromSwete.Contains((chapter, verse))
+        (book, chapter, verse) => book == Genesis && definition.GenesisFromSwete
             ? swete(book, chapter, verse)
             : brenton(book, chapter, verse);
 

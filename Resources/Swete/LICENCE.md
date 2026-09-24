@@ -14,8 +14,9 @@ below before it replaces anything.
 
 The files are one token per line — `10.1.1 ΚΑΙ` — where the number is the work's number in the TLG
 catalogue of the Septuagint, not a canonical ordinal. **55 files, 588,579 tokens, 11.3 MB.** The
-corpus loads 51 of them as **51 books, 1,041 chapters, 27,244 verses, 543,397 words**. No annotation
-of any kind: no morphology, no lemmas, no Strong numbers, no alignment to anything.
+corpus loads 51 of them, and Isaiah from First1KGreek's own TEI (below), as **52 books, 1,107
+chapters, 28,533 verses, 570,385 words**. No annotation of any kind: no morphology, no lemmas, no
+Strong numbers, no alignment to anything.
 
 ## The licence: on the transcription, not on the text
 
@@ -83,8 +84,12 @@ other; a link row holding two word ids and a method contains no text at all.
 - **Open Greek and Latin / First1KGreek** (`tlg0527`), the transcription. CC BY-SA 4.0.
 - **Nathan D. Smith** (`nathans/lxx-swete`), the one-token-per-line edition loaded here.
   CC BY-SA 4.0.
+- **Richard Rusden Ottley**, editor, *The Book of Isaiah according to the Septuagint (Codex
+  Alexandrinus)*, volume 2, Cambridge University Press, 1904 — the text `OTTLEY` — in the same
+  First1KGreek transcription (`tlg0527.tlg048.1st1K-grc2`, University of Leipzig). CC BY-SA 4.0.
 
-The `text` row carries the same, in `Essenthos.Core/Loading/SweteTextSource.cs`. RUL-0181: a fact
+The `text` rows carry the same, in `Essenthos.Forge/Loading/SweteTextSource.cs` and
+`OttleyTextSource.cs`. RUL-0181: a fact
 printed without a name has quietly been claimed as ours.
 
 ## What is in the folder and not in the corpus
@@ -93,12 +98,13 @@ printed without a name has quietly been claimed as ours.
 Greek editions of Isaiah — Swete's (`grc1`) and **Richard Rusden Ottley**'s *The Book of Isaiah
 according to the Septuagint (Codex Alexandrinus)*, Cambridge 1904 (`grc2`) — and `utils/build.sh`
 globs `tlg0527*grc*xml` and names its output after the *book*, so for the one work with two Greek
-editions the second overwrote the first. The file is Ottley's: it opens with the running head of
-Ottley's page (`προφήτης ιγ΄`, which is in `grc2` and not in `grc1`) and spells Uzziah `Ὀζίου`
-where Swete spells him `Ὀζείου`. Loading it would put Codex Alexandrinus into the corpus under
-Vaticanus's name. It is fetched so a reader can check this, and it is not loaded. Sirach is the
-only other work with two Greek editions and there the ordering favours us: `grc2` is Swete's and
-`grc1` is Hart's 1909 edition, so the file that survives is the right one.
+editions the second overwrote the first. The file is Ottley's: it opens with the manuscript's title
+as Ottley prints it (`προφήτης ιγ΄`, which is in `grc2` and not in `grc1`) and spells Uzziah `Ὀζίου`
+where Swete spells him `Ὀζείου`. Reading it would put Codex Alexandrinus into the corpus under
+Vaticanus's name. It is fetched so a reader can check this, and it is not read: both Isaiahs are
+read from First1KGreek's TEI instead (next section). Sirach is the only other work with two Greek
+editions and there the ordering favours us: `grc2` is Swete's and `grc1` is Hart's 1909 edition, so
+the file that survives is the right one.
 
 **`28.Odae.txt`** — the Odes, whose chapters this edition numbers `iva` and `ivb` where the corpus
 addresses a chapter by an integer, and whose verses keep the numbering of the passages they are
@@ -118,6 +124,58 @@ book's numbering; Brenton omits it as well.
 
 **Ecclesiastes does not exist upstream.** First1KGreek's `tlg0527` has no `tlg030`, so this edition
 supplies 38 of the 39 books of the Hebrew canon. The corpus reads Greek Ecclesiastes from Brenton.
+
+## `First1KGreek/` — Isaiah, twice, from the transcription itself
+
+Two files fetched from <https://github.com/OpenGreekAndLatin/First1KGreek>, pinned to commit
+`b67137e6b82669d08fe6ad1c225999ca6aca362c` (19 December 2024, the last commit to change either) and
+read at the source on **2026-09-24**, on the owner's approval of that day. They are kept under this
+project's own names, in a folder of their own, so that neither the clearing of this folder by
+`scripts/fetch-swete.ps1` nor a file named by the upstream build can overwrite them; the script
+fetches them again, checking the size and the licence below.
+
+| Kept as | Upstream | Bytes | What it is |
+|---|---|---|---|
+| `isaiah-swete-1905.xml` | `data/tlg0527/tlg048/tlg0527.tlg048.1st1K-grc1.xml` | 688,809 | Swete, volume 3, Cambridge University Press 1905 |
+| `isaiah-ottley-1904.xml` | `data/tlg0527/tlg048/tlg0527.tlg048.1st1K-grc2.xml` | 520,194 | Ottley, volume 2, Cambridge University Press 1904 |
+
+**Each states its licence in its own TEI header**, which is the statement attached to these bytes
+and the one read here (RUL-0105). Both read, in `publicationStmt/availability/licence`, with a target
+of `https://creativecommons.org/licenses/by-sa/4.0/`:
+
+> Available under a Creative Commons Attribution-ShareAlike 4.0 International License
+
+That agrees with First1KGreek's `license.md` and Zenodo record quoted above. Swete's file names
+Harvard College Library as publisher (2017) and Digital Divide Data as having corrected and encoded
+the text, under Gregory Crane; Ottley's names the University of Leipzig (2014), the same encoders, and
+Gregory R. Crane and Monica Berti as principals. The printed texts are out of copyright: Swete's for
+the reason given above, Ottley's because it was printed in 1904.
+
+**Swete's Isaiah** is read into the edition as its fifty-second book, after the Twelve where Swete
+prints it. **Ottley's is a text of its own**, `OTTLEY`, on the owner's decision of 2026-09-24: it is
+Codex Alexandrinus, a different manuscript from the Vaticanus Swete prints, and the only book of that
+codex the corpus holds.
+
+**What this project changes, and why ShareAlike does not reach further than that.** The conversion
+from TEI to words is this project's (`Essenthos.Forge/Swete/First1KGreekReader.cs`) and reproduces
+the upstream converter's output for `grc2` token for token apart from its brackets. On top of it a
+short list of repairs is made, each with what establishes it, in `SweteIsaiah.cs` and
+`OttleyIsaiah.cs` beside the reader: verse divisions the transcription lost (thirteen in Swete, ten
+in Ottley — at the verse number the page prints, which the transcription let into the text or kept
+as a line mark), two misnumbered verses of Swete's 38 renumbered and the end of his 31:9 given back
+to it, Latin letters standing for the identical Greek ones, two placeholders taken out of Ottley and
+his manuscript's title and colophon kept out of 1:1 and 66:24, and one line of Ottley's 2:20 read in
+its place. Misread letters are left as the transcription reads them. That is a modification of a
+CC BY-SA text, so each text's rights note says it is modified, and the modified text is shared under
+the same licence — which is all ShareAlike asks of it. It does not reach the annotation: a letter
+link or a verse link holds two row ids and a method and no text, and a folded search form is derived
+from these words and of no other text (RUL-0183).
+
+**Two verses Ottley does not number, and nothing supplies them.** Ottley numbers by the Hebrew and
+gives no number where the Greek has no counterpart: there is no 38:15 (its few words close 38:14)
+and no 40:7 (the Greek has the Hebrew's 40:7–8 once, as 40:8). Neither the page nor the file's line
+marks number them, where every division repaired above is numbered, so they are the edition's own
+omissions and are left. Every Greek Isaiah here lacks 2:22 and 56:12.
 
 ## How it is numbered, and where that differs from Brenton
 

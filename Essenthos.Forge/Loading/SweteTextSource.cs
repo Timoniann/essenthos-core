@@ -36,6 +36,12 @@ internal static class SweteTextSource
     private const string FileExtension = ".txt";
 
     /// <summary>
+    /// Isaiah's name among the edition's files. The file of that name is Ottley's and is not read;
+    /// the book is read from <see cref="SweteIsaiah.File"/>.
+    /// </summary>
+    private const string Isaiah = "48.Isaias";
+
+    /// <summary>
     /// The files this edition is read from, in the order Swete prints them, with each one's place
     /// in the shared canon.
     ///
@@ -54,7 +60,8 @@ internal static class SweteTextSource
     /// this edition numbers <c>iva</c> and <c>ivb</c> where the corpus addresses a chapter by an
     /// integer, and whose verses keep the numbering of the passages they are taken from.
     ///
-    /// Isaiah is missing for a different and worse reason, recorded on <see cref="NotLoaded"/>.
+    /// Isaiah is read from another file for a different and worse reason, recorded on
+    /// <see cref="NotLoaded"/> and <see cref="SweteIsaiah"/>. Swete prints it after the Twelve.
     /// </summary>
     private static readonly (string File, int Canonical)[] Canon =
     [
@@ -70,8 +77,8 @@ internal static class SweteTextSource
         ("36.Osee", 28), ("37.Amos", 30), ("38.Michaeas", 33), ("39.Joel", 29),
         ("40.Abdias", 31), ("41.Jonas", 32), ("42.Nahum", 34), ("43.Habacuc", 35),
         ("44.Sophonias", 36), ("45.Aggaeus", 37), ("46.Zacharias", 38), ("47.Malachias", 39),
-        ("49.Jeremias", 24), ("50.Baruch", 67), ("51.Threni_seu_Lamentationes", 25),
-        ("52.Epistula_Jeremiae", 76), ("53.Ezechiel", 26),
+        (Isaiah, 23), ("49.Jeremias", 24), ("50.Baruch", 67),
+        ("51.Threni_seu_Lamentationes", 25), ("52.Epistula_Jeremiae", 76), ("53.Ezechiel", 26),
         ("55.Susanna_Theodotionis_versio", 77), ("57.Daniel_Theodotionis_versio", 27),
         ("59.Bel_et_Draco_Theodotionis_versio", 78),
     ];
@@ -80,21 +87,23 @@ internal static class SweteTextSource
     /// The files the folder holds and this edition does not read, so that each absence is a
     /// decision somebody can find rather than a book that quietly never arrived.
     ///
-    /// <c>48.Isaias</c> is the serious one: it is not Swete's. The transcription it comes from
-    /// holds two Greek editions of Isaiah — Swete's, and Ottley's *The Book of Isaiah according to
-    /// the Septuagint (Codex Alexandrinus)*, Cambridge 1904 — and the script that produced these
-    /// files names its output after the book rather than after the edition, so for the one book
-    /// with two editions the second overwrote the first. What is in the file is Ottley's
-    /// Alexandrinus text: it opens with the running head of Ottley's page and spells Uzziah Ὀζίου
-    /// where Swete spells him Ὀζείου. Loading it would put a different manuscript into the corpus
-    /// under this edition's name, which is the one thing a witness must never do.
+    /// <c>48.Isaias</c> is the serious one: it is not Swete's. The transcription it comes from holds
+    /// two Greek editions of Isaiah — Swete's, and Ottley's *The Book of Isaiah according to the
+    /// Septuagint (Codex Alexandrinus)*, Cambridge 1904 — and the script that produced these files
+    /// names its output after the book rather than after the edition, so for the one book with two
+    /// editions the second overwrote the first. What is in the file is Ottley's Alexandrinus text: it
+    /// opens with the manuscript's title as Ottley prints it and spells Uzziah Ὀζίου where Swete
+    /// spells him Ὀζείου. Reading it would put a different manuscript into the corpus under this
+    /// edition's name, which is the one thing a witness must never do. Swete's Isaiah is read from
+    /// First1KGreek's own encoding instead (<see cref="SweteIsaiah"/>), and Ottley's is a text of its
+    /// own (<see cref="OttleyTextSource"/>), read from its encoding too.
     ///
     /// The other four are the Odes, whose chapters this edition numbers with Roman letters, and the
     /// Old Greek of Susanna, Daniel and Bel, which are a second witness rather than a second book.
     /// </summary>
     public static IReadOnlyList<string> NotLoaded =>
     [
-        "48.Isaias",
+        Isaiah,
         "28.Odae",
         "54.Susanna_translatio_Graeca",
         "56.Daniel_translatio_Graeca",
@@ -156,7 +165,7 @@ internal static class SweteTextSource
                      + "state Creative Commons Attribution-ShareAlike 4.0. So the obligation is on this "
                      + "digitisation of the edition and not on the edition, and it is an obligation to "
                      + "credit and to share alike anything derived from these files. "
-                     + SweteRestorations.Note,
+                     + SweteRestorations.Note + " " + SweteIsaiah.Note,
         Citation = "Henry Barclay Swete (ed.), The Old Testament in Greek according to the Septuagint, "
                    + "Cambridge University Press, 1887-1894, in the digital edition of Nathan D. Smith "
                    + "(nathans/lxx-swete) derived from the Open Greek and Latin First1KGreek transcription "
@@ -191,16 +200,20 @@ internal static class SweteTextSource
 
         foreach (var (file, canonical) in Canon)
         {
-            var path = Path.Combine(folder, FileName(file));
+            var path = file == Isaiah
+                ? Path.Combine(folder, SweteIsaiah.Folder, SweteIsaiah.File)
+                : Path.Combine(folder, FileName(file));
             if (!File.Exists(path))
             {
                 throw new InvalidOperationException(
-                    $"{Slug} is missing {FileName(file)}. Run scripts/fetch-swete.ps1 rather than "
+                    $"{Slug} is missing {Path.GetRelativePath(folder, path)}. Run scripts/fetch-swete.ps1 rather than "
                     + "loading part of an edition as though it were the whole of one — a book quietly "
                     + "absent from a witness reads as a book the witness does not contain.");
             }
 
-            var read = SweteReader.Read(SweteRestorations.Apply(file, File.ReadLines(path)));
+            var read = SweteReader.Read(file == Isaiah
+                ? SweteIsaiah.Lines(folder)
+                : SweteRestorations.Apply(file, File.ReadLines(path)));
             var chapters = read.Chapters.Select(Chapter).ToList();
 
             if (file == SecondEsdras.File)

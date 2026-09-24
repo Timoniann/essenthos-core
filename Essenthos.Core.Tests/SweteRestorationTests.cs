@@ -46,9 +46,8 @@ public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
     }
 
     /// <summary>
-    /// What reading all of it from Swete would do to the Alexandrinus reckoning: Nahor's hundred
-    /// years fewer bring Abram a century nearer the Flood than the reckoning that takes only
-    /// Methuselah from Swete.
+    /// What reading all of it from Swete does to the Alexandrinus reckoning: Nahor's hundred years
+    /// fewer bring Abram a century nearer the Flood than Brenton's numbers would with Methuselah's alone.
     /// </summary>
     [Fact]
     public void ReadWholeFromSweteAbramIsBornACenturyEarlier()

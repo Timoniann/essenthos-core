@@ -54,7 +54,7 @@ public sealed class SeptuagintEditions
 
     internal Func<int, int, int, string?> Swete { get; } = Verses(SweteTextSource.Read(TestResources.SweteFolder));
 
-    /// <summary>Brenton with Genesis 5:25–26 from Swete, as the Alexandrinus reckoning reads.</summary>
+    /// <summary>Brenton with Genesis from Swete, as the Alexandrinus reckoning reads.</summary>
     internal Func<int, int, int, string?> Alexandrinus => SeptuagintReckoningLoader.Edition(
         SeptuagintReckoningLoader.Definitions[1], Brenton, Swete);
 
@@ -81,13 +81,14 @@ public class SeptuagintReadingTests(SeptuagintEditions editions) : IClassFixture
     }
 
     /// <summary>
-    /// The two readings the owner asked to see side by side, and the ones they share. Swete's own
-    /// Genesis is read only where the reckoning takes it, which is Methuselah.
+    /// The two readings the owner asked to see side by side, and the ones they share. Alexandrinus
+    /// parts from Brenton at Methuselah and at Nahor.
     /// </summary>
     [Theory]
     [InlineData("methuselah-begets", 167, 187)]
     [InlineData("methuselah-after", 802, 782)]
-    [InlineData("nahor-begets", 179, 179)]
+    [InlineData("nahor-begets", 179, 79)]
+    [InlineData("nahor-after", 125, 129)]
     [InlineData("adam-begets", 230, 230)]
     [InlineData("lamech-begets", 188, 188)]
     [InlineData("arphaxad-begets", 135, 135)]
@@ -110,7 +111,7 @@ public class SeptuagintReadingTests(SeptuagintEditions editions) : IClassFixture
 
     [Theory]
     [InlineData(true, 2243, 3476)]
-    [InlineData(false, 2263, 3496)]
+    [InlineData(false, 2263, 3396)]
     public void TheFloodAndAbramFallWhereTheGreekPutsThem(bool brenton, int flood, int abram)
     {
         var years = SeptuagintReckoning.Compute(
@@ -228,9 +229,10 @@ public sealed class SeptuagintReckoningLoadTests : IDisposable
         var based = await _db.Chronologies.SingleAsync(c => c.Slug == "bibledata");
 
         // The Temple keeps its historical year, so the zero moves by what comes before it: 1,466
-        // years of genealogy less the forty of 1 Kings 6:1.
+        // years of genealogy less the forty of 1 Kings 6:1, and in Alexandrinus eighty fewer — twenty
+        // more for Methuselah, a hundred fewer for Nahor.
         brenton.LastYearBeforeTheCommonEra.Should().Be(based.LastYearBeforeTheCommonEra + 1466 - 40);
-        alexandrinus.LastYearBeforeTheCommonEra.Should().Be(based.LastYearBeforeTheCommonEra + 1486 - 40);
+        alexandrinus.LastYearBeforeTheCommonEra.Should().Be(based.LastYearBeforeTheCommonEra + 1386 - 40);
 
         var dated = await _db.EventDates.CountAsync(d => d.ChronologyId == brenton.Id);
         var baseDated = await _db.EventDates.CountAsync(d => d.ChronologyId == based.Id);

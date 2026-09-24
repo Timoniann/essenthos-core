@@ -47,9 +47,10 @@ internal enum SeptuagintSide
 /// **Two readings, because the owner asked for both.** The Greek of Genesis survives in more than one
 /// form. Brenton prints the Sixtine edition, where Methuselah begets Lamech at 167 — and so outlives
 /// the Flood by fourteen years. Codex Alexandrinus, which Swete prints because Vaticanus has lost
-/// Genesis up to 46:28, has him beget at 187. The second reckoning is Brenton's numbers with that one
-/// reading taken from Swete. Its transcription lost number words elsewhere in Genesis, at 9:28 and
-/// 12:4; <see cref="Swete.SweteRestorations"/> puts back those two witnesses agree on.
+/// Genesis up to 46:28, has him beget at 187 and Nahor beget Terah at 79 where Brenton has 179. The
+/// second reckoning reads the whole of Genesis from Swete. Its transcription lost number words in
+/// Genesis, at 9:28 and 12:4 among others; <see cref="Swete.SweteRestorations"/> puts back those two
+/// witnesses agree on.
 /// </para>
 ///
 /// <para>
