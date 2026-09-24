@@ -13,6 +13,8 @@ namespace Essenthos.Core.Desk;
 [JsonSerializable(typeof(SiteSwitchesResponse))]
 [JsonSerializable(typeof(SiteSwitch))]
 [JsonSerializable(typeof(SiteSwitchRequest))]
+[JsonSerializable(typeof(LicenceSetting))]
+[JsonSerializable(typeof(LicenceRequest))]
 [JsonSerializable(typeof(BriefFieldRequest))]
 [JsonSerializable(typeof(PortraitStatusRequest))]
 [JsonSerializable(typeof(PortraitReviewRequest))]

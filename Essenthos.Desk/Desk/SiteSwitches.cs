@@ -7,9 +7,15 @@ namespace Essenthos.Core.Desk;
 /// <param name="Default">What it does when the file says nothing.</param>
 internal sealed record SiteSwitch(string Key, bool Value, bool Default);
 
-internal sealed record SiteSwitchesResponse(IReadOnlyList<SiteSwitch> Settings);
+/// <param name="Value">The id of the licence our own work is under now, or undecided.</param>
+/// <param name="Options">Every licence it may be put under; undecided is not among them.</param>
+internal sealed record LicenceSetting(string Value, string Default, IReadOnlyList<OwnWorkLicence> Options);
+
+internal sealed record SiteSwitchesResponse(IReadOnlyList<SiteSwitch> Settings, LicenceSetting Licence);
 
 internal sealed record SiteSwitchRequest(bool Value, string? Note);
+
+internal sealed record LicenceRequest(string Value, string? Note);
 
 /// <summary>
 /// The site's switches as the owner sets them: the tracked file beside the API, which the API reads
@@ -28,7 +34,25 @@ internal sealed class SiteSwitches(DeskPaths paths, ChangeLog log)
     public SiteSwitchesResponse Read()
     {
         var values = SiteSettings.Read(paths.SiteSettings);
-        return new SiteSwitchesResponse(SiteSettings.Catalogue.Select(s => new SiteSwitch(s.Key, values[s.Key], s.Default)).ToList());
+        return new SiteSwitchesResponse(
+            SiteSettings.Catalogue.Select(s => new SiteSwitch(s.Key, values[s.Key], s.Default)).ToList(),
+            Licence());
+    }
+
+    public LicenceSetting Licence() =>
+        new(SiteSettings.ReadChoices(paths.SiteSettings)[SiteSettings.OwnWorkLicence], OwnWorkLicences.Undecided, OwnWorkLicences.Options);
+
+    /// <summary>Puts our own work under a licence, or back to undecided; null where no licence has that id.</summary>
+    public async Task<LicenceSetting?> SetLicence(LicenceRequest request)
+    {
+        if (!OwnWorkLicences.Ids.Contains(request.Value, StringComparer.Ordinal))
+        {
+            return null;
+        }
+
+        var label = OwnWorkLicences.Find(request.Value)?.Name ?? "Undecided";
+        await Choose(SiteSettings.OwnWorkLicence, request.Value, Section, label, request.Note);
+        return Licence();
     }
 
     /// <summary>Sets one switch; null where the catalogue has no switch by that name.</summary>

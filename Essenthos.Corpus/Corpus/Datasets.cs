@@ -127,8 +127,8 @@ public static class Datasets
         string Id,
         string Name,
         string Author,
-        string Licence,
-        string LicenceUrl,
+        string? Licence,
+        string? LicenceUrl,
         string Url,
         string Covers,
         string Prefix,
@@ -487,8 +487,8 @@ public static class Datasets
         // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly
         // all of it — correspondences nobody states, which read exactly like an undeclared third
         // party until they were claimed here.
-        new(Own, "Essenthos", "this project", "CC BY 4.0",
-            "https://creativecommons.org/licenses/by/4.0/",
+        // Its licence is the owner's to set for the site, and is filled in where it is served.
+        new(Own, "Essenthos", "this project", null, null,
             "https://essenthos.org",
             "What this project works out for itself. Corrections and separations it makes to the "
             + "datasets it carries, each recorded on the row it changed; and the word "

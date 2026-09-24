@@ -46,6 +46,9 @@ internal sealed class SiteSettingsFile(string path, ILogger<SiteSettingsFile> lo
 
     public bool Is(string key) => Values.TryGetValue(key, out var on) ? on : SiteSettings.Defaults()[key];
 
+    /// <summary>The licence the owner put Essenthos's own work under; null while he has not decided.</summary>
+    public OwnWorkLicence? OwnWorkLicence => OwnWorkLicences.Find(Choices[SiteSettings.OwnWorkLicence]);
+
     private void Refresh()
     {
         var written = File.Exists(path) ? File.GetLastWriteTimeUtc(path) : DateTime.MinValue;
@@ -89,6 +92,11 @@ internal static class SettingsEndpoints
             {
                 served[key] = chosen;
             }
+
+            // Named and linked, so every credit on our own work can print it as it is.
+            served[SiteSettings.OwnWorkLicence] = settings.OwnWorkLicence is { } licence
+                ? new JsonObject { ["id"] = licence.Id, ["name"] = licence.Name, ["url"] = licence.Url }
+                : null;
 
             return Results.Json(served, AppJsonSerializerContext.Default.JsonObject);
         });

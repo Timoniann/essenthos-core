@@ -82,6 +82,12 @@ internal static class DeskEndpoints
     {
         routes.MapGet("/settings", (SiteSwitches switches) => switches.Read());
 
+        routes.MapPut("/settings/licence", async (LicenceRequest request, SiteSwitches switches) =>
+            await switches.SetLicence(request) is { } set
+                ? Results.Ok(set)
+                : Results.UnprocessableEntity(new ProblemResponse(
+                    "There is no such licence to choose; pick one of those listed, or undecided.")));
+
         routes.MapPut("/settings/{key}", async (string key, SiteSwitchRequest request, SiteSwitches switches) =>
             await switches.Set(key, request) is { } set
                 ? Results.Ok(set)

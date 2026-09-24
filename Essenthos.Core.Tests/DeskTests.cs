@@ -148,6 +148,40 @@ public sealed class DeskTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task TheLicenceOfOurOwnWorkIsChosenOnceLoggedAndServedByTheApi()
+    {
+        var served = new Essenthos.Core.Endpoints.SiteSettingsFile(
+            SiteSettingsFile, Microsoft.Extensions.Logging.Abstractions.NullLogger<Essenthos.Core.Endpoints.SiteSettingsFile>.Instance);
+        var before = await Json<SiteSwitchesResponse>(await _http.GetAsync("/desk-api/settings"));
+        (before.Licence.Value, before.Licence.Default).Should().Be((OwnWorkLicences.Undecided, OwnWorkLicences.Undecided));
+        before.Licence.Options.Select(o => o.Id).Should().Contain(["cc-by-4.0", "cc0-1.0", "all-rights-reserved"]);
+        served.OwnWorkLicence.Should().BeNull("while the owner has not decided, the site states no licence");
+
+        var chosen = await Json<LicenceSetting>(await Put("/desk-api/settings/licence", new { value = "cc-by-sa-4.0", note = "поки що" }));
+
+        chosen.Value.Should().Be("cc-by-sa-4.0");
+        served.OwnWorkLicence.Should().Be(new OwnWorkLicence("cc-by-sa-4.0", "CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/"));
+        SiteSettings.Read(SiteSettingsFile).Should().BeEquivalentTo(SiteSettings.Defaults(), "a choice leaves the switches as they were");
+        var logged = Logged().Should().ContainSingle().Which;
+        (logged.Section, logged.Action, logged.Target, logged.Label, logged.Needs)
+            .Should().Be(("settings", "choice", "setting/ownWorkLicence", "CC BY-SA 4.0", null));
+        (logged.Before!.GetValue<string>(), logged.After!.GetValue<string>(), logged.Note).Should().Be((OwnWorkLicences.Undecided, "cc-by-sa-4.0", "поки що"));
+
+        (await Put("/desk-api/settings/licence", new { value = "mit", note = "" })).StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        SiteSettings.ReadChoices(SiteSettingsFile)[SiteSettings.OwnWorkLicence].Should().Be("cc-by-sa-4.0");
+
+        await Put("/desk-api/settings/licence", new { value = OwnWorkLicences.Undecided, note = "" });
+        File.SetLastWriteTimeUtc(SiteSettingsFile, DateTime.UtcNow.AddSeconds(1));
+        served.OwnWorkLicence.Should().BeNull();
+        Logged().Should().HaveCount(2);
+    }
+
+    [Fact]
+    public void ALicenceTheSiteDoesNotOfferIsReadAsUndecided() =>
+        SiteSettings.ChoicesFrom(JsonNode.Parse("""{ "settings": { "ownWorkLicence": "GPL" } }"""))[SiteSettings.OwnWorkLicence]
+            .Should().Be(OwnWorkLicences.Undecided);
+
+    [Fact]
     public void ASwitchTheFileDoesNotNameIsAtItsDefaultAndOneTheSiteDoesNotKnowIsIgnored()
     {
         var file = JsonNode.Parse("""{ "settings": { "naveTopics": false, "somethingNew": true, "generatedImages": "yes" } }""");
