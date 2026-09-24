@@ -41,6 +41,17 @@ public sealed class ImageManifestTests : IDisposable
     }
 
     [Fact]
+    public void OnlyPicturesLeaveTheMachine()
+    {
+        Picture("generated/david.webp", "d");
+        Picture("generated/briefs.json", "[{\"prompt\": \"\"}]");
+        Picture("generated/manifest.json", "{}");
+        Picture("LICENCE.md", "#");
+
+        ImageManifest.Read(Source).Keys.Should().BeEquivalentTo("generated/david.webp");
+    }
+
+    [Fact]
     public void AFolderThatIsNotThereHasNoPictures() =>
         ImageManifest.Read(Path.Combine(_root, "nowhere")).Should().BeEmpty();
 

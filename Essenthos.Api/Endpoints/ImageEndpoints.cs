@@ -32,6 +32,13 @@ internal static class ImageEndpoints
 
     public const string Generated = "generated";
 
+    /// <summary>
+    /// How a path is compared with the folder it must stay in: as the file system compares names. On
+    /// Linux <c>../IMAGES</c> is another folder, and ignoring case there would let a path into it.
+    /// </summary>
+    private static readonly StringComparison PathComparison =
+        OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+
     private static readonly Dictionary<string, string> ContentTypes = new(StringComparer.OrdinalIgnoreCase)
     {
         [".jpg"] = "image/jpeg",
@@ -56,7 +63,7 @@ internal static class ImageEndpoints
         routes.MapMethods("/images/{**file}", [HttpMethods.Get, HttpMethods.Head], (string file, HttpContext context) =>
         {
             var path = Path.GetFullPath(Path.Combine(root, file));
-            if (!path.StartsWith(root, StringComparison.OrdinalIgnoreCase)
+            if (!path.StartsWith(root, PathComparison)
                 || !ContentTypes.TryGetValue(Path.GetExtension(path), out var contentType)
                 || !File.Exists(path))
             {

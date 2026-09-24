@@ -75,6 +75,15 @@ internal sealed class Publisher(
             return 1;
         }
 
+        if (await Unreleasable(db, cancellationToken) is { Count: > 0 } withheld)
+        {
+            logger.LogError(
+                "The corpus holds {Texts}, which may not be redistributed or say nothing about it, and a release " +
+                "copies every text to a public server. Remove them from this database, or record the licence " +
+                "that permits it, and release again", string.Join(", ", withheld));
+            return 1;
+        }
+
         if (dryRun)
         {
             logger.LogInformation(
@@ -666,6 +675,17 @@ internal sealed class Publisher(
         var manifest = Path.Combine(ResourcePaths.Read(configuration, environment.ContentRootPath), "MANIFEST.json");
         return Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(manifest)));
     }
+
+    /// <summary>
+    /// The texts a release must not carry, by slug. The loader already refuses them, but a release is a
+    /// dump of whatever the database holds, however a row got there, so the dump is checked itself.
+    /// </summary>
+    internal static Task<List<string>> Unreleasable(AppDbContext db, CancellationToken cancellationToken) =>
+        db.Texts
+            .Where(t => t.Redistribution == Redistribution.Prohibited || t.Redistribution == Redistribution.Unknown)
+            .OrderBy(t => t.Slug)
+            .Select(t => t.Slug)
+            .ToListAsync(cancellationToken);
 
     private static async Task<string> Sha256(string file, CancellationToken cancellationToken)
     {
