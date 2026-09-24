@@ -97,7 +97,7 @@ public sealed class CompositionRerunTests : IDisposable
         try
         {
             return await _composer.Write(
-                (NpgsqlConnection)_db.Database.GetDbConnection(), _ukrainian, _greek, "KJV", merged,
+                (NpgsqlConnection)_db.Database.GetDbConnection(), _ukrainian, _greek, ["KJV"], merged,
                 CancellationToken.None);
         }
         finally

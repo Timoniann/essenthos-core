@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -8,14 +9,15 @@ using NpgsqlTypes;
 
 namespace Essenthos.Core.Loading.Links;
 
-/// <param name="Reached">Pairs the composed route proposes, before merging.</param>
-/// <param name="Agreed">Pairs both routes reached, which is the measure of whether either works.</param>
-/// <param name="Added">Pairs only the composed route reached — the coverage this buys.</param>
+/// <param name="Reached">Pairs the composed routes propose, before merging.</param>
+/// <param name="Agreed">Pairs readings that share no evidence both reached, which is the measure of whether any works.</param>
+/// <param name="Added">Pairs only the middle texts reached — the coverage composing buys.</param>
 /// <param name="Written">Pairs written as links of their own, because nothing else names those words.</param>
 /// <param name="Corroborated">
 /// Pairs a source has already stated, which become a second claim on the link that states them
 /// rather than a second link beside it.
 /// </param>
+/// <param name="Admitted">Which answers were written, per combination of readings, and from what confidence.</param>
 internal sealed record CompositionOutcome(
     string From,
     string Via,
@@ -26,12 +28,13 @@ internal sealed record CompositionOutcome(
     int Added,
     int Written,
     int Corroborated,
+    string Admitted,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
         $"{From} to {To} through {Via}: {Written} links from {Direct} direct and {Reached} composed — " +
             $"{Agreed} reached by more than one reading, {Added} only through {Via}, " +
-            $"{Corroborated} agreeing with a link a source already states";
+            $"{Corroborated} agreeing with a link a source already states; {Admitted}";
 
 }
 
@@ -78,73 +81,164 @@ internal sealed class CompositionPipeline(
         COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)
         """;
 
+    /// <param name="viaSlugs">
+    /// The middle texts, one or two. A second is a second route that shares no evidence with the
+    /// first, so the two agreeing is worth as much as either agreeing with the direct alignment.
+    /// </param>
     public async Task<CompositionOutcome> Run(
         string fromSlug,
-        string viaSlug,
+        IReadOnlyList<string> viaSlugs,
         string toSlug,
         double minimumConfidence,
+        double precision = Admission.DefaultPrecision,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
         var from = await Text(fromSlug, cancellationToken);
-        var via = await Text(viaSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var reduced = await aligner.Proposals(
-            fromSlug, toSlug, Workspace(fromSlug, toSlug), AgreementFloor,
-            cancellationToken: cancellationToken);
-        var written = await aligner.Proposals(
-            fromSlug, toSlug, Workspace(fromSlug, toSlug) + "-written", AgreementFloor, asWritten: true,
-            cancellationToken: cancellationToken);
-        var first = await aligner.Proposals(
-            fromSlug, viaSlug, Workspace(fromSlug, viaSlug), AgreementFloor,
-            cancellationToken: cancellationToken);
-        var second = await Carried(connection, via.Id, to.Id, cancellationToken);
-
-        var composed = Compose(first, second);
-
-        // Each route already keeps its own best answer per word; the merge can put two different
-        // best answers back on one word, and one of them is again a runner-up.
-        //
-        // Which one survives is decided by how many readings found it before it is decided by
-        // confidence, and that order matters. Matthew 1:4 has the Synodal's second "Аминадав"
-        // scored 1.000 against δέ by the written reading alone, while the stems and the English
-        // both say Ἀμιναδάβ less loudly. Taking the loudest answer takes the wrong one — and
-        // agreement between readings that share no evidence is the whole reason there are three.
-        var merged = Routes.Merge(
-                (Route.Written, written), (Route.Reduced, reduced), (Route.Composed, composed))
-            .Where(link => link.Confidence >= minimumConfidence)
-            .GroupBy(link => link.From)
-            .SelectMany(group =>
-            {
-                var agreed = group.Max(link => Readings(link.Route));
-                var contenders = group.Where(link => Readings(link.Route) == agreed).ToList();
-                var best = contenders.Max(link => link.Confidence);
-                return contenders.Where(link => link.Confidence >= best);
-            })
-            .ToList();
-
-        var (fresh, corroborated) = await Write(connection, from, to, viaSlug, merged, cancellationToken);
+        var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, false, null, cancellationToken);
+        var statements = await Statements(connection, from.Id, to.Id, cancellationToken);
+        var admission = Admission.Measure(
+            Merge(proposed, Admission.Everything(minimumConfidence)), statements, minimumConfidence, precision);
+        var merged = Merge(proposed, admission);
+        var (fresh, corroborated) = await Write(connection, from, to, [.. viaSlugs], merged, cancellationToken);
 
         var outcome = new CompositionOutcome(
-            fromSlug, viaSlug, toSlug,
-            written.Count + reduced.Count,
-            composed.Count,
-            merged.Count(link => Readings(link.Route) > 1),
-            merged.Count(link => link.Route == Route.Composed),
+            fromSlug, string.Join(" and ", viaSlugs), toSlug,
+            proposed.Written.Count + proposed.Reduced.Count,
+            proposed.Composed.Sum(route => route.Count),
+            merged.Count(link => Routes.Families(link.Route) > 1),
+            merged.Count(link => (link.Route & (Route.Written | Route.Reduced)) == 0),
             fresh,
             corroborated,
+            admission.Describe([.. viaSlugs]),
             started.Elapsed);
 
         logger.LogInformation("Composed {Outcome}", outcome);
         return outcome;
     }
 
-    private static string Workspace(string from, string to) =>
-        Path.Combine(Path.GetTempPath(), "essenthos-align", $"{from}-{to}");
+    /// <summary>
+    /// What a run would write and how far it would carry the text, without writing anything: the
+    /// coverage before and after, book by book, and how often the merged answer names the word a
+    /// source already states where one does. None of the three readings reads those statements, so
+    /// they are a held-out answer key and not the model repeating what it was given.
+    /// </summary>
+    /// <param name="books">
+    /// A trial on a few canonical books, trained on those books alone. The whole text trains on more
+    /// and scores at least as well, so a trial's figures are a floor.
+    /// </param>
+    public async Task<string> Measure(
+        string fromSlug,
+        IReadOnlyList<string> viaSlugs,
+        string toSlug,
+        double minimumConfidence,
+        IReadOnlySet<int>? books,
+        double precision = Admission.DefaultPrecision,
+        CancellationToken cancellationToken = default)
+    {
+        var started = Stopwatch.StartNew();
+        var from = await Text(fromSlug, cancellationToken);
+        var to = await Text(toSlug, cancellationToken);
+
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, true, books, cancellationToken);
+        var trained = started.Elapsed;
+        var statements = await Statements(connection, from.Id, to.Id, cancellationToken);
+        var scope = await CompositionTrial.Scope(connection, from.Id, to.Id, statements, books, cancellationToken);
+        var every = Merge(proposed, Admission.Everything(minimumConfidence));
+        var admission = Admission.Measure(every, statements, minimumConfidence, precision);
+
+        var report = new StringBuilder();
+        foreach (var (title, merged) in new[]
+                 {
+                     ("every answer from the ordinary threshold:", every),
+                     ($"as a run writes it — {admission.Describe([.. viaSlugs])}:", Merge(proposed, admission)),
+                 })
+        {
+            report.AppendLine(title).Append(CompositionTrial.Score(scope, merged, [.. viaSlugs]).Describe(
+                fromSlug, string.Join(" and ", viaSlugs), toSlug, minimumConfidence, books, trained, started.Elapsed));
+        }
+
+        return report.ToString();
+    }
+
+    /// <param name="Composed">One set of pairs per middle text.</param>
+    internal sealed record Proposed(
+        IReadOnlyList<(long From, long To, double Confidence)> Written,
+        IReadOnlyList<(long From, long To, double Confidence)> Reduced,
+        IReadOnlyList<IReadOnlyList<(long From, long To, double Confidence)>> Composed);
+
+    private async Task<Proposed> Propose(
+        NpgsqlConnection connection,
+        string fromSlug,
+        IReadOnlyList<string> viaSlugs,
+        string toSlug,
+        bool trial,
+        IReadOnlySet<int>? books,
+        CancellationToken cancellationToken)
+    {
+        var to = await Text(toSlug, cancellationToken);
+
+        var reduced = await aligner.Proposals(
+            fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books), AgreementFloor,
+            books: books, cancellationToken: cancellationToken);
+        var written = await aligner.Proposals(
+            fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books) + "-written", AgreementFloor, asWritten: true,
+            books: books, cancellationToken: cancellationToken);
+        var composed = new List<IReadOnlyList<(long From, long To, double Confidence)>>(viaSlugs.Count);
+        foreach (var viaSlug in viaSlugs)
+        {
+            var via = await Text(viaSlug, cancellationToken);
+            var first = await aligner.Proposals(
+                fromSlug, viaSlug, Workspace(fromSlug, viaSlug, trial, books), AgreementFloor,
+                books: books, cancellationToken: cancellationToken);
+            composed.Add(Compose(first, await Carried(connection, via.Id, to.Id, cancellationToken)));
+        }
+
+        return new Proposed(written, reduced, composed);
+    }
+
+    /// <summary>
+    /// The readings made into one answer per word.
+    ///
+    /// Each route already keeps its own best answer per word; the merge can put two different best
+    /// answers back on one word, and one of them is again a runner-up. Which one survives is decided
+    /// by how many readings found it before it is decided by confidence, and that order matters.
+    /// Matthew 1:4 has the Synodal's second "Аминадав" scored 1.000 against δέ by the written
+    /// reading alone, while the stems and the English both say Ἀμιναδάβ less loudly. Taking the
+    /// loudest answer takes the wrong one — and agreement between readings that share no evidence is
+    /// the whole reason there are three.
+    /// </summary>
+    /// <param name="admission">Which answers may be written at all, before one is chosen per word.</param>
+    internal static List<RoutedLink> Merge(Proposed proposed, Admission admission) =>
+        Routes.MergeFamilies(proposed.Written, proposed.Reduced, [.. proposed.Composed])
+            .Where(admission.Admits)
+            .GroupBy(link => link.From)
+            .SelectMany(group =>
+            {
+                var agreed = group.Max(link => Routes.Families(link.Route));
+                var contenders = group.Where(link => Routes.Families(link.Route) == agreed).ToList();
+                var best = contenders.Max(link => link.Confidence);
+                return contenders.Where(link => link.Confidence >= best);
+            })
+            .ToList();
+
+    /// <summary>
+    /// Where a pair's model is kept. A trial trains models of its own, which a run must never find
+    /// and reuse: a model is reused whenever its workspace exists, and a trial's may be over a few
+    /// books, or over tokens an earlier build reduced differently.
+    /// </summary>
+    internal static string Workspace(string from, string to, bool trial = false, IReadOnlySet<int>? books = null) =>
+        Path.Combine(Path.GetTempPath(), "essenthos-align",
+            $"{from}-{to}" + (trial ? "-trial" : string.Empty) +
+            (books is null ? string.Empty : $"-books-{string.Join('-', books.Order())}"));
 
     /// <summary>
     /// The two hops joined at the middle text's word. One link of the middle text may name several
@@ -272,13 +366,14 @@ internal sealed class CompositionPipeline(
         NpgsqlConnection connection,
         Database.Entities.Text from,
         Database.Entities.Text to,
-        string viaSlug,
+        string[] viaSlugs,
         IReadOnlyList<RoutedLink> merged,
         CancellationToken cancellationToken)
     {
         var renders = EnumSpelling.Of(LinkRelation.Renders);
         var stated = await Stated(connection, from.Id, to.Id, renders, cancellationToken);
-        var (fresh, agreeing) = Split(merged, stated, viaSlug);
+        var claimed = (await Statements(connection, from.Id, to.Id, cancellationToken)).Keys.ToHashSet();
+        var (fresh, agreeing) = Split(merged, stated, claimed, viaSlugs);
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
 
@@ -318,7 +413,7 @@ internal sealed class CompositionPipeline(
                 await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(fresh[i].Confidence, NpgsqlDbType.Double, cancellationToken);
                 await writer.WriteAsync(
-                    Routes.Describe(fresh[i].Route, viaSlug), NpgsqlDbType.Text, cancellationToken);
+                    Routes.Describe(fresh[i].Route, viaSlugs), NpgsqlDbType.Text, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
@@ -354,13 +449,26 @@ internal sealed class CompositionPipeline(
     /// Each corroboration keeps the confidence and the source of the pair that produced it: the
     /// source names which readings found it, and that is the only thing a claim from this run says
     /// which the stated link does not say for itself.
+    ///
+    /// <para>
+    /// A pair on a word some other method has already answered for, naming a different target
+    /// word, is neither: it is dropped. The answer that stands on that word — a printed Strong
+    /// number, a hand-made alignment — is the better-founded one, and a guess written beside it
+    /// would make the word read as contended between the two. Over Luther's Old Testament and the
+    /// Reina-Valera's, the aligner names another word on 10–12% of the stated words it reaches.
+    /// </para>
     /// </summary>
+    /// <param name="claimed">
+    /// Every source word a link that is not the aligner's names against the target, whatever its
+    /// shape: a phrase a source states answers for each of its words as much as a pair does.
+    /// </param>
     internal static (
         List<RoutedLink> Fresh,
         List<(long Link, double Confidence, string Source)> Agreeing) Split(
         IReadOnlyList<RoutedLink> merged,
         IReadOnlyDictionary<(long From, long To), long> stated,
-        string viaSlug)
+        IReadOnlySet<long> claimed,
+        params string[] viaSlugs)
     {
         var fresh = new List<RoutedLink>(merged.Count);
         var agreeing = new List<(long Link, double Confidence, string Source)>();
@@ -369,9 +477,9 @@ internal sealed class CompositionPipeline(
         {
             if (stated.TryGetValue((link.From, link.To), out var already))
             {
-                agreeing.Add((already, link.Confidence, Routes.Describe(link.Route, viaSlug)));
+                agreeing.Add((already, link.Confidence, Routes.Describe(link.Route, viaSlugs)));
             }
-            else
+            else if (!claimed.Contains(link.From))
             {
                 fresh.Add(link);
             }
@@ -443,10 +551,47 @@ internal sealed class CompositionPipeline(
         return stated;
     }
 
-    private static int Readings(Route route) =>
-        (route.HasFlag(Route.Written) ? 1 : 0)
-        + (route.HasFlag(Route.Reduced) ? 1 : 0)
-        + (route.HasFlag(Route.Composed) ? 1 : 0);
+    /// <summary>
+    /// The target words each source word is joined to by a link that is not the aligner's: the
+    /// words that already have an answer standing on them, and what it is. A source word a source
+    /// says renders nothing has an answer too, and it is the empty one.
+    /// </summary>
+    internal static async Task<Dictionary<long, HashSet<long>>> Statements(
+        NpgsqlConnection connection,
+        int fromTextId,
+        int toTextId,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(
+            """
+            SELECT f.word_id, t.word_id
+            FROM link l
+            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
+            LEFT JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
+            WHERE l.from_text_id = @from AND l.to_text_id = @to AND l.method <> 'aligner'
+            """, connection);
+        command.Parameters.AddWithValue("from", fromTextId);
+        command.Parameters.AddWithValue("to", toTextId);
+        command.CommandTimeout = 600;
+
+        var statements = new Dictionary<long, HashSet<long>>(400_000);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            var word = reader.GetInt64(0);
+            if (!statements.TryGetValue(word, out var targets))
+            {
+                statements[word] = targets = [];
+            }
+
+            if (!reader.IsDBNull(1))
+            {
+                targets.Add(reader.GetInt64(1));
+            }
+        }
+
+        return statements;
+    }
 
     private static async Task Row(
         NpgsqlBinaryImporter writer,
