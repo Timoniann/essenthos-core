@@ -1,11 +1,13 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Accounts;
 
 /// <summary>
 /// Who may use the admin area: an account another admin made one, or an account with a verified
 /// address the site's configuration names in <c>Accounts:BootstrapAdmins</c> — which is how the first
-/// admin exists at all, and why nobody's address is written in the code.
+/// admin exists at all. appsettings.json names the owner under <c>owner</c>, a key of its own, so a
+/// list given by user secrets (<c>:0</c>, <c>:1</c>) or by the environment adds to him rather than
+/// replacing him, on every machine and every server without a step anybody has to remember.
 ///
 /// Asked of the database on every admin request, one indexed lookup, and never cached: an admin whose
 /// role is taken away stops being one on their next request, as a revoked session does.
@@ -18,9 +20,9 @@ internal sealed class Admins(IReadOnlyList<string> configured)
     public IReadOnlyList<string> Configured { get; } = configured;
 
     /// <summary>
-    /// The addresses under <see cref="ConfigurationKey"/>: a list (<c>:0</c>, <c>:1</c>, … — what user
-    /// secrets and appsettings write) or one value separated by commas or semicolons (what an
-    /// environment variable can hold). Anything without an <c>@</c> is not an address and is dropped.
+    /// The addresses under <see cref="ConfigurationKey"/>: named or numbered children (<c>:owner</c>,
+    /// <c>:0</c>, <c>:1</c>, … — what appsettings and user secrets write) and one value separated by
+    /// commas or semicolons (what an environment variable can hold), all of them together. Anything without an <c>@</c> is not an address and is dropped.
     /// </summary>
     public static IReadOnlyList<string> Read(IConfiguration configuration)
     {

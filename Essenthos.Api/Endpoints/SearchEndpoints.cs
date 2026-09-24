@@ -109,6 +109,12 @@ internal static class SearchEndpoints
                 return Results.BadRequest(new ProblemResponse(widenHint));
             }
 
+            if (widening == SearchWidening.PartOfAWord &&
+                terms.FirstOrDefault(term => term.Length < SearchTerms.ShortestPart) is { } tooShort)
+            {
+                return Results.BadRequest(new ProblemResponse(SearchTerms.ShortPartHint(tooShort)));
+            }
+
             var language = await db.Texts.Where(t => t.Id == text.Id).Select(t => t.Language)
                 .FirstAsync(cancellationToken);
 
@@ -147,6 +153,7 @@ internal static class SearchEndpoints
 
                 if (matching == TermMatching.Printed
                     && widening == SearchWidening.AsFarAsNeeded
+                    && folded.Length >= SearchTerms.ShortestPart
                     && !await whole.AnyAsync(cancellationToken))
                 {
                     // Nothing in the corpus is that word, printed or stored. Try it as part of one
@@ -213,7 +220,7 @@ internal static class SearchEndpoints
                 ],
                 SearchTerms.Matching(matched),
                 [.. matched.Select(term => new SearchTermResponse(term.Text, SearchTerms.Name(term.Matching)))]));
-        });
+        }).RequireRateLimiting(RateLimits.Expensive);
     }
 }
 

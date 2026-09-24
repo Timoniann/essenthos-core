@@ -122,7 +122,7 @@ internal static class StrongEndpoints
             {
                 Corpus = text.Slug,
             });
-        });
+        }).RequireRateLimiting(RateLimits.Expensive);
 
         routes.MapGet("/strong/{number}/occurrences", async (
             string number,
@@ -324,7 +324,7 @@ internal static class StrongEndpoints
                         .Select(row => new TextLinkMethodResponse(EnumSpelling.Of(row.Method), row.Links)),
                 ],
             });
-        });
+        }).RequireRateLimiting(RateLimits.Expensive);
 
     /// <summary>
     /// Whether an edition in this language can carry the number at all: a Hebrew number stands only

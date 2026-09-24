@@ -88,7 +88,7 @@ internal static class RenderingEndpoints
                 [.. matched.Select(form => new WordFormResponse(form.Text, form.Count))],
                 matched.Sum(form => form.Count),
                 witnesses));
-        });
+        }).RequireRateLimiting(RateLimits.Expensive);
     }
 
     /// <summary>

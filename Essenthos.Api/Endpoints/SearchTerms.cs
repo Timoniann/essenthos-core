@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 ﻿namespace Essenthos.Core.Endpoints;
 
 /// <summary>
@@ -59,6 +59,13 @@ internal static class SearchTerms
     /// this is a sentence rather than a search.
     /// </summary>
     public const int MaxTerms = 8;
+
+    /// <summary>
+    /// The shortest term matched as part of a word. One or two letters are inside most words of any
+    /// text, so such a term narrows nothing and costs a scan of every word; a whole word that short is
+    /// still found.
+    /// </summary>
+    public const int ShortestPart = 3;
 
     public const string FullTextMatching = "fulltext";
 
@@ -169,6 +176,12 @@ internal static class SearchTerms
             TermMatching.Printed => "printed-word",
             _ => "substring",
         };
+    }
+
+    public static string ShortPartHint(string term)
+    {
+        return $"\"{term}\" is too short to search for as part of a word; each term needs at least {ShortestPart} " +
+            "letters. Search it as a whole word by leaving out match=substring.";
     }
 
     public static string FormatHint()
