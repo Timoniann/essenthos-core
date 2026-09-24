@@ -1,5 +1,7 @@
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Door43;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Loading.Frame;
 using FluentAssertions;
 using Xunit;
@@ -177,4 +179,94 @@ public class NewTextsThreeTests(ThirdBatchTexts texts) : IClassFixture<ThirdBatc
     private const int ALMEIDA_REFERENCES = 20_287;
     private const int ALMEIDA_RENDERINGS = 1_070;
     private const int LITERAL_VERSES = 23_186;
+}
+
+/// <summary>
+/// unfoldingWord aligns its translation to its own Hebrew and Greek, which are not BHSA and Nestle:
+/// where a word is spelled or accented differently, the join finds it by its Strong number — only
+/// where the number stands once in the source verse and once in the witness verse.
+/// </summary>
+public class InterlinearNumberTests
+{
+    [Theory]
+    [InlineData("c:d:H0776", "H776")]
+    [InlineData("H1254a", "H1254")]
+    [InlineData("G17220", "G1722")]
+    [InlineData("G35880", "G3588")]
+    public void AStrongCodeNamesTheLemmaTheCorpusWrites(string code, string lemma) =>
+        InterlinearJoin.Lemma(code).Should().Be(lemma);
+
+    [Fact]
+    public void AWordSpelledOtherwiseJoinsByItsNumberWhenItStandsOnceOnEachSide()
+    {
+        var (pairs, account) = Join(
+            [Word(1, "eng", "Absalom")],
+            [Word(101, "hbo", "אַבְשָׁלֹ֗ם", "H53"), Word(102, "hbo", "בְּנֹֽו", "H1121")],
+            [("H0053", "אַבְשָׁל֬וֹם", 1)],
+            new AlignmentSpan("H0053", "אַבְשָׁל֬וֹם", ["Absalom"], 1, 1));
+
+        pairs.Single().To.Should().Equal(101);
+        account.SpansJoinedByNumber.Should().Be(1);
+    }
+
+    [Fact]
+    public void ANumberTheWitnessHoldsTwiceIsRefused()
+    {
+        var (pairs, _) = Join(
+            [Word(1, "eng", "day")],
+            [Word(101, "hbo", "יֹ֥ום", "H3117"), Word(102, "hbo", "יֹֽום", "H3117")],
+            [("H3117", "יוֹם", 1)],
+            new AlignmentSpan("H3117", "יוֹם", ["day"], 1, 1));
+
+        pairs.Should().BeEmpty();
+    }
+
+    /// <summary>The prefix the source cuts off has to be spelled by the witness words before the one the number found.</summary>
+    [Fact]
+    public void APrefixIsJoinedOnlyWhereTheWitnessSpellsIt()
+    {
+        var witness = new[] { Word(100, "hbo", "וְ", "H9000"), Word(101, "hbo", "רֹמֵ֥שׂ", "H7430") };
+
+        Join([Word(1, "eng", "moving")], witness, [("c:H7430", "וְ⁠רֹמֵשׂ", 1)],
+                new AlignmentSpan("c:H7430", "וְ⁠רֹמֵשׂ", ["moving"], 1, 1)).Pairs
+            .Single().To.Should().Equal(100, 101);
+        Join([Word(1, "eng", "moving")], witness, [("b:H7430", "בְּ⁠רֹמֵשׂ", 1)],
+                new AlignmentSpan("b:H7430", "בְּ⁠רֹמֵשׂ", ["moving"], 1, 1)).Pairs
+            .Should().BeEmpty();
+    }
+
+    /// <summary>A psalm's title before verse 1 is kept for verse 1, where the corpus prints it.</summary>
+    [Fact]
+    public void ATitlesSpansGoToTheFirstVerse()
+    {
+        var verses = Usfm3AlignmentReader.Read(
+            """
+            \c 3
+            \d \zaln-s |x-strong="H4210" x-occurrence="1" x-occurrences="1" x-content="מִזְמ֥וֹר"\*\w A|x-occurrence="1" x-occurrences="1"\w* \w psalm|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            \q1 \v 1 \zaln-s |x-strong="H3068" x-occurrence="1" x-occurrences="1" x-content="יְהוָ֗ה"\*\w Yahweh|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """);
+
+        verses.Should().ContainSingle().Which.Number.Should().Be(1);
+        verses[0].Spans.Select(span => span.Strong).Should().Equal("H4210", "H3068");
+        verses[0].Originals.Should().HaveCount(2);
+    }
+
+    [Fact]
+    public void TheLiteralTextsBracesAreSuppliedWords() =>
+        UnfoldingWordTextSource.Unaligned(@"\v 2 darkness {was} over").Should().Be(@"\v 2 darkness \addwas\add* over");
+
+    private static (List<InterlinearPair> Pairs, InterlinearJoinAccount Account) Join(
+        IReadOnlyList<InterlinearWord> translated,
+        IReadOnlyList<InterlinearWord> original,
+        IReadOnlyList<(string, string, int)> originals,
+        params AlignmentSpan[] spans)
+    {
+        var pairs = new List<InterlinearPair>();
+        var account = new InterlinearJoinAccount();
+        InterlinearJoin.Verse("test 1:1", new AlignedVerse(1, 1, spans, Originals: originals), translated, original, pairs, account);
+        return (pairs, account);
+    }
+
+    private static InterlinearWord Word(long id, string language, string written, string? strong = null) =>
+        new(id, Essenthos.Core.Corpus.WordFolding.Fold(written, language), language, written, strong);
 }

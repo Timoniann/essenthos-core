@@ -297,7 +297,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
                     $"{name} {verse.Chapter}:{verse.Number}",
                     verse,
                     here.GetValueOrDefault(address) ?? [],
-                    there.GetValueOrDefault(address) ?? [],
+                    Witness(there, address),
                     pairs,
                     account);
             }
@@ -309,6 +309,19 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
 
         return new InterlinearJoinResult(drafts, books, total);
     }
+
+    /// <summary>
+    /// The witness words a verse of the interlinear is joined against. A psalm's first verse is printed
+    /// with its title at its head, and the witness numbers the title as a verse of its own, so the two
+    /// are read as one: a title word the verse repeats then counts twice and is refused rather than
+    /// guessed.
+    /// </summary>
+    private static List<InterlinearWord> Witness(
+        Dictionary<(int, int), List<InterlinearWord>> there,
+        (int Chapter, int Number) address) =>
+        address.Number == 1 && there.TryGetValue((address.Chapter, 0), out var title)
+            ? [.. title, .. there.GetValueOrDefault(address) ?? []]
+            : there.GetValueOrDefault(address) ?? [];
 
     /// <summary>The book a file is for, from a name like <c>17-EST.usfm</c>.</summary>
     private static int? Ordinal(string fileName)
@@ -334,6 +347,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
                 w.Position,
                 w.NormalisedText,
                 Written = w.Surface,
+                w.StrongNumber,
                 Language = w.Text!.Language,
             }))
             .ToListAsync(cancellationToken);
@@ -343,7 +357,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             .ToDictionary(
                 group => group.Key,
                 group => group.OrderBy(r => r.Position)
-                    .Select(r => new InterlinearWord(r.Id, r.NormalisedText ?? string.Empty, r.Language, r.Written))
+                    .Select(r => new InterlinearWord(r.Id, r.NormalisedText ?? string.Empty, r.Language, r.Written, r.StrongNumber))
                     .ToList());
     }
 

@@ -40,12 +40,17 @@ internal sealed record AlignmentSpan(
 /// them; <see cref="Spans"/> does not keep them, because only the innermost span names its words.
 /// </param>
 /// <param name="UnalignedWords">Translated words of the verse that stand outside every span.</param>
+/// <param name="Originals">
+/// Every original word the verse's milestones name, nested or not, once each: its Strong code, its
+/// spelling and its occurrence. It is what says whether a lemma stands in the source verse once.
+/// </param>
 internal sealed record AlignedVerse(
     int Chapter,
     int Number,
     IReadOnlyList<AlignmentSpan> Spans,
     int SharedOriginals = 0,
-    int UnalignedWords = 0);
+    int UnalignedWords = 0,
+    IReadOnlyList<(string Strong, string Content, int Occurrence)>? Originals = null);
 
 /// <summary>
 /// unfoldingWord's USFM 3 word alignment, which is a translation with each of its words tied to
@@ -71,16 +76,26 @@ internal static partial class Usfm3AlignmentReader
         var spans = new List<AlignmentSpan>();
         var shared = 0;
         var unaligned = 0;
+        var originals = new List<(string Strong, string Content, int Occurrence)>();
 
         void CloseVerse()
         {
-            if (number > 0 && spans.Count > 0)
+            open.Clear();
+
+            // A psalm's title stands before the first verse, and the corpus prints it at the head of
+            // that verse, so its spans are kept for it rather than dropped.
+            if (number == 0)
             {
-                verses.Add(new AlignedVerse(chapter, number, [.. spans], shared, unaligned));
+                return;
+            }
+
+            if (spans.Count > 0)
+            {
+                verses.Add(new AlignedVerse(chapter, number, [.. spans], shared, unaligned, [.. originals.Distinct()]));
             }
 
             spans.Clear();
-            open.Clear();
+            originals.Clear();
             shared = 0;
             unaligned = 0;
             number = 0;
@@ -91,6 +106,8 @@ internal static partial class Usfm3AlignmentReader
             if (token.Groups["chapter"].Success)
             {
                 CloseVerse();
+                spans.Clear();
+                originals.Clear();
                 chapter = int.Parse(token.Groups["chapter"].Value);
             }
             else if (token.Groups["verse"].Success)
@@ -101,6 +118,8 @@ internal static partial class Usfm3AlignmentReader
             else if (token.Groups["start"].Success)
             {
                 var attributes = token.Groups["start"].Value;
+                originals.Add((Attribute(attributes, "x-strong") ?? string.Empty,
+                    Attribute(attributes, "x-content") ?? string.Empty, Occurrence(attributes, "x-occurrence")));
                 open.Add(new OpenSpan(
                     Attribute(attributes, "x-strong") ?? string.Empty,
                     Attribute(attributes, "x-content") ?? string.Empty,
