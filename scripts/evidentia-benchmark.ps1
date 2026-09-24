@@ -8,7 +8,9 @@ param(
     # val: the passages no rule was chosen on (1 Samuel 17, Psalms 1-23, John 1-3);
     # val2: three more of other kinds, law, prophet and epistle (Exodus 21-23, Isaiah 40-42, Romans 5-8);
     # self: the King James against its own stated links; selfstrong: the same with source Strong allowed.
-    [string] $Runs = 'ind,val,val2,self',
+    # kjv, kjvval: the King James against its own links with the index learned from the Berean instead,
+    # so nothing the King James states teaches it (the passages of ind, and of val and val2).
+    [string] $Runs = 'ind,val,val2,kjv',
 
     [string] $Output = (Join-Path ([IO.Path]::GetTempPath()) 'essenthos-evidentia')
 )
@@ -38,6 +40,7 @@ $env:Dataset__ResourcesPath = Join-Path $checkout 'Resources'
 $env:DOTNET_ENVIRONMENT = 'Production'
 
 $independent = '--without-source-strong', '--learn-from', 'KJV'
+$kjv = '--without-source-strong', '--learn-from', 'BSB'
 $passages = @{
     ind        = @(
         @('ind-gen', 'BSB', 'BHSA', 1, 1, 10, $independent),
@@ -57,6 +60,18 @@ $passages = @{
         @('self-ruth', 'KJV', 'BHSA', 8, 0, 0, @('--without-source-strong')),
         @('self-jon', 'KJV', 'BHSA', 32, 0, 0, @('--without-source-strong')),
         @('self-mark', 'KJV', 'NESTLE1904', 41, 1, 4, @('--without-source-strong')))
+    kjv        = @(
+        @('kjv-gen', 'KJV', 'BHSA', 1, 1, 10, $kjv),
+        @('kjv-ruth', 'KJV', 'BHSA', 8, 0, 0, $kjv),
+        @('kjv-jon', 'KJV', 'BHSA', 32, 0, 0, $kjv),
+        @('kjv-mark', 'KJV', 'NESTLE1904', 41, 1, 4, $kjv))
+    kjvval     = @(
+        @('kjv-1sa', 'KJV', 'BHSA', 9, 17, 17, $kjv),
+        @('kjv-ps', 'KJV', 'BHSA', 19, 1, 23, $kjv),
+        @('kjv-john', 'KJV', 'NESTLE1904', 43, 1, 3, $kjv),
+        @('kjv-exo', 'KJV', 'BHSA', 2, 21, 23, $kjv),
+        @('kjv-isa', 'KJV', 'BHSA', 23, 40, 42, $kjv),
+        @('kjv-rom', 'KJV', 'NESTLE1904', 45, 5, 8, $kjv))
     selfstrong = @(
         @('sst-gen', 'KJV', 'BHSA', 1, 1, 10, @()),
         @('sst-ruth', 'KJV', 'BHSA', 8, 0, 0, @()),
@@ -68,17 +83,46 @@ $final = 'global review + syntax-gated target gloss + attached grammatical words
 $line = '^(?<tier>.+?): (?<correct>[\d,]+)/[\d,]+ \([^)]*\) counting every proposal; [\d,]+/(?<covered>[\d,]+) \([^)]*\) over gold-covered words .*gold recall: [\d,]+/(?<gold>[\d,]+)'
 function Number([string] $text) { [int]($text -replace ',', '') }
 
+# The by-word lines, each a run of part/whole counts in a fixed order.
+$byWord = [ordered]@{
+    coverage = 'Linked', 'Words', 'LinkedOrSupplied', 'Words2', 'Rendered', 'Originals', 'RenderedOrUnrendered', 'Originals2'
+    links    = 'ByPair', 'Links', 'Paired', 'Links2'
+    absences = 'SuppliedRight', 'SuppliedJudged', 'UnrenderedRight', 'UnrenderedJudged'
+    right    = 'SourceRight', 'SourceScope', 'OriginalRight', 'OriginalScope'
+}
+function Counts([string] $report) {
+    $counts = @{}
+    foreach ($name in $byWord.Keys) {
+        $found = Select-String -LiteralPath $report -Pattern "^by word, ${name}:" | Select-Object -First 1
+        if (-not $found) { continue }
+        $numbers = [regex]::Matches($found.Line, '([\d,]+)/([\d,]+)') | ForEach-Object { Number $_.Groups[1].Value; Number $_.Groups[2].Value }
+        $fields = $byWord[$name]
+        for ($i = 0; $i -lt $fields.Count; $i++) { $counts[$fields[$i]] = $numbers[$i] }
+    }
+    $counts
+}
+function Ratio($part, $whole) { '{0:N0}/{1:N0} = {2:P2}' -f $part, $whole, ($part / [Math]::Max(1, $whole)) }
+function ByWord([string] $name, $c) {
+    '{0,-10} by word: coverage {1} -> {2}, original {10} -> {11}; links by pair {3}, paired {4}; supplied {5}; unrendered {6}; right source {7}, original {8}, both {9}' -f $name,
+        (Ratio $c.Linked $c.Words), (Ratio $c.LinkedOrSupplied $c.Words), (Ratio $c.ByPair $c.Links), (Ratio $c.Paired $c.Links),
+        (Ratio $c.SuppliedRight $c.SuppliedJudged), (Ratio $c.UnrenderedRight $c.UnrenderedJudged),
+        (Ratio $c.SourceRight $c.SourceScope), (Ratio $c.OriginalRight $c.OriginalScope),
+        (Ratio ($c.SourceRight + $c.OriginalRight) ($c.SourceScope + $c.OriginalScope)),
+        (Ratio $c.Rendered $c.Originals), (Ratio $c.RenderedOrUnrendered $c.Originals)
+}
+
 Push-Location $snapshot
 try {
     foreach ($set in $Runs -split ',') {
-        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, self or selfstrong." }
+        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, kjv, kjvval, self or selfstrong." }
         $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0 }
+        $words = @{}
         foreach ($passage in $passages[$set]) {
             $name, $from, $to, $book, $first, $last, $flags = $passage
             $prefix = Join-Path $directory $name
             $arguments = @('Essenthos.Forge.dll', 'evidentia-measure-book', $from, $to, $book) + $flags
             if ($first -gt 0) { $arguments += '--from-chapter', $first, '--to-chapter', $last }
-            $arguments += '--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json"
+            $arguments += '--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json"
             & dotnet @arguments *> "$prefix.report.txt"
             if ($LASTEXITCODE -ne 0) { throw "$name failed; see $prefix.report.txt" }
             foreach ($match in (Select-String -LiteralPath "$prefix.report.txt" -Pattern $line)) {
@@ -95,11 +139,15 @@ try {
                     $total.SafeCorrect += $correct; $total.SafeCovered += $covered
                 }
             }
+            $counts = Counts "$prefix.report.txt"
+            ByWord $name $counts
+            foreach ($key in $counts.Keys) { $words[$key] = [int]$words[$key] + $counts[$key] }
         }
         '{0,-10} precision {1,5}/{2,-5} = {3:P2}   recall {1,5}/{4,-5} = {5:P2}   safe tier {6}/{7} = {8:P2}' -f "$set all",
             $total.Correct, $total.Covered, ($total.Correct / [Math]::Max(1, $total.Covered)), $total.Gold,
             ($total.Correct / [Math]::Max(1, $total.Gold)), $total.SafeCorrect, $total.SafeCovered,
             ($total.SafeCorrect / [Math]::Max(1, $total.SafeCovered))
+        ByWord "$set all" $words
     }
 }
 finally {

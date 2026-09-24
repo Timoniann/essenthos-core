@@ -369,6 +369,7 @@ if (args is ["evidentia-measure", var measureFrom, var measureTo, var measureBoo
         Identifier(measureFrom), Identifier(measureTo), book, chapter, EvidentiaOptions(args, resources));
     await WriteRows(args, "--disagreements", measurement.Disagreements);
     await WriteRows(args, "--words", measurement.Words);
+    await WriteRows(args, "--absences", measurement.Absences);
     logger.LogInformation("\n{Measurement}", measurement);
     return 0;
 }
@@ -393,6 +394,7 @@ if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, v
         lastChapter: toChapter);
     await WriteRows(args, "--disagreements", measurement.Disagreements);
     await WriteRows(args, "--words", measurement.Words);
+    await WriteRows(args, "--absences", measurement.Absences);
     logger.LogInformation("\n{Measurement}", measurement);
     return 0;
 }
