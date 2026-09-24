@@ -11,6 +11,9 @@ internal enum EvidentiaAttachment
     /// <summary><em>and</em> before the word it joins on.</summary>
     Conjunction,
 
+    /// <summary><em>in</em> of <em>in the beginning</em>.</summary>
+    Preposition,
+
     /// <summary><em>will</em> of <em>will send</em>.</summary>
     AuxiliaryVerb,
 
@@ -60,9 +63,16 @@ internal enum EvidentiaAttachmentPlacement
 /// word that names another person, or none, is left unplaced, and so is a subject the original writes
 /// as a pronoun of its own beside the verb, since both annotations put it there.</para>
 ///
-/// <para>Against Greek only <em>and</em> and the subject pronoun are placed: <em>and</em> on the
-/// <em>καί</em> written directly before the rendering, which both annotations do, and the subject on
-/// the verb whose ending names it.</para>
+/// <para>An English preposition goes on the preposition written before the rendering of the word it
+/// governs, past an article - BHSA writes <em>בְּ</em> of <em>בְּרֵאשִׁית</em> as a word of its own -
+/// or on that rendering itself where it is a preposition carrying the pronoun (<em>to him</em>, לוֹ).
+/// Not <em>of</em>, which Hebrew writes as the construct state of the noun before it, and not the
+/// particles of phrasal verbs (<em>out of</em>, <em>up</em>); and never the object marker את, which
+/// no English preposition renders.</para>
+///
+/// <para>Against Greek only <em>and</em>, the preposition and the subject pronoun are placed:
+/// <em>and</em> on the <em>καί</em> written directly before the rendering, which both annotations do,
+/// the preposition on the preposition before it, and the subject on the verb whose ending names it.</para>
 ///
 /// <para>Not placed, because on these texts they measured below the precision the lexical tiers
 /// already reach: verb particles, which the parser finds as often in a preposition's place; the
@@ -93,6 +103,14 @@ internal static class EvidentiaAttachedWords
 
     private static readonly HashSet<string> Conjunctions = new(StringComparer.OrdinalIgnoreCase) { "and" };
 
+    private static readonly HashSet<string> UnplacedPrepositions = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "of", "out", "up", "off", "as", "down", "away", "forth",
+    };
+
+    /// <summary>The Hebrew object marker, which BHSA classes as a preposition.</summary>
+    private const string ObjectMarker = "H853";
+
     private static readonly HashSet<string> Negations = new(StringComparer.OrdinalIgnoreCase) { "not", "n't", "never" };
 
     /// <summary>How far after its verb the preposition carrying an object pronoun may stand: <em>וַיֹּאמֶר לוֹ</em>.</summary>
@@ -115,45 +133,68 @@ internal static class EvidentiaAttachedWords
             .ToDictionary(group => group.Key, group => group.OrderBy(analysis => analysis.Token.Position).ToList());
         var taken = placed.Select(proposal => proposal.Target.Token.Id).ToHashSet();
         var proposals = new List<EvidentiaProposal>();
-        foreach (var verse in source
-                     .Where(analysis => analysis.Token.Language.Equals(EnglishLanguage, StringComparison.OrdinalIgnoreCase))
-                     .DistinctBy(analysis => analysis.Token.Id)
-                     .GroupBy(analysis => analysis.Token.Address))
+        var verses = source
+            .Where(analysis => analysis.Token.Language.Equals(EnglishLanguage, StringComparison.OrdinalIgnoreCase))
+            .DistinctBy(analysis => analysis.Token.Id)
+            .GroupBy(analysis => analysis.Token.Address)
+            .Select(verse => verse.OrderBy(analysis => analysis.Token.Position).ToList())
+            .ToList();
+        // A word can belong to one that is itself attached - and of and he said, to of to him - so the
+        // pass repeats until it places nothing new.
+        for (var placing = true; placing;)
         {
-            var words = verse.OrderBy(analysis => analysis.Token.Position).ToList();
-            for (var index = 0; index < words.Count; index++)
+            placing = false;
+            foreach (var words in verses)
             {
-                if (placedBySource.ContainsKey(words[index].Token.Id)
-                    || Classify(words, index) is not ({ } attachment, { } head)
-                    || HeadProposal(attachment, head, words, placedBySource) is not ({ } headProposal, var afterVerb)
-                    || !targetsByVerse.TryGetValue(headProposal.Target.Token.Address, out var targetVerse)
-                    || Place(attachment, words[index], headProposal.Target, targetVerse, afterVerb, taken) is not { } placement)
-                {
-                    continue;
-                }
-
-                taken.Add(placement.Token.Id);
-
-                proposals.Add(new EvidentiaProposal(
-                    words[index],
-                    placement,
-                    EvidentiaProposalKind.AttachedWord,
-                    Math.Max(0, headProposal.Confidence - ConfidenceBelowHead),
-                    new EvidentiaDecisionTrace(
-                        "attached",
-                        $"{attachment} of '{head.Token.Surface}'",
-                        headProposal.Trace?.Evidence ?? [])));
+                placing |= Attach(words, placedBySource, targetsByVerse, taken, proposals);
             }
         }
 
         return proposals;
     }
 
+    private static bool Attach(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        Dictionary<long, EvidentiaProposal> placedBySource,
+        IReadOnlyDictionary<EvidentiaAddress, List<EvidentiaAnalysis>> targetsByVerse,
+        HashSet<long> taken,
+        List<EvidentiaProposal> proposals)
+    {
+        var attached = false;
+        for (var index = 0; index < words.Count; index++)
+        {
+            if (placedBySource.ContainsKey(words[index].Token.Id)
+                || Classify(words, index) is not ({ } attachment, { } head)
+                || HeadProposal(attachment, head, words, placedBySource) is not ({ } headProposal, var afterVerb)
+                || !targetsByVerse.TryGetValue(headProposal.Target.Token.Address, out var targetVerse)
+                || Place(attachment, words[index], headProposal.Target, targetVerse, afterVerb, taken) is not { } placement)
+            {
+                continue;
+            }
+
+            taken.Add(placement.Token.Id);
+            var proposal = new EvidentiaProposal(
+                words[index],
+                placement,
+                EvidentiaProposalKind.AttachedWord,
+                Math.Max(0, headProposal.Confidence - ConfidenceBelowHead),
+                new EvidentiaDecisionTrace(
+                    "attached",
+                    $"{attachment} of '{head.Token.Surface}'",
+                    headProposal.Trace?.Evidence ?? []));
+            proposals.Add(proposal);
+            placedBySource[words[index].Token.Id] = proposal;
+            attached = true;
+        }
+
+        return attached;
+    }
+
     internal static EvidentiaAttachmentPlacement Placement(EvidentiaAttachment attachment, string witnessLanguage) =>
         witnessLanguage.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase)
             ? attachment switch
             {
-                EvidentiaAttachment.Conjunction => EvidentiaAttachmentPlacement.OwnKindBefore,
+                EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition => EvidentiaAttachmentPlacement.OwnKindBefore,
                 EvidentiaAttachment.SubjectPronoun => EvidentiaAttachmentPlacement.AgreeingRendering,
                 _ => EvidentiaAttachmentPlacement.None,
             }
@@ -162,7 +203,7 @@ internal static class EvidentiaAttachedWords
             : attachment switch
             {
                 EvidentiaAttachment.Article or EvidentiaAttachment.AuxiliaryVerb => EvidentiaAttachmentPlacement.Rendering,
-                EvidentiaAttachment.Conjunction => EvidentiaAttachmentPlacement.OwnKindBefore,
+                EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition => EvidentiaAttachmentPlacement.OwnKindBefore,
                 EvidentiaAttachment.SubjectPronoun or EvidentiaAttachment.PossessivePronoun or EvidentiaAttachment.ObjectPronoun =>
                     EvidentiaAttachmentPlacement.AgreeingRendering,
                 _ => EvidentiaAttachmentPlacement.None,
@@ -184,6 +225,12 @@ internal static class EvidentiaAttachedWords
         {
             return Found(EvidentiaAttachment.Conjunction,
                 Forward(words, index, "noun", "propn", "pron", "verb", "adj", "adv", "num"));
+        }
+
+        if (partOfSpeech == "adp" && !UnplacedPrepositions.Contains(word.Token.Surface))
+        {
+            return Found(EvidentiaAttachment.Preposition,
+                Forward(words, index, "noun", "propn", "pron", "adj", "num", "verb"));
         }
 
         if (partOfSpeech == "pron" && Feature(word, "PronType") == "Prs" && Feature(word, "Reflex") is null
@@ -248,7 +295,7 @@ internal static class EvidentiaAttachedWords
         Placement(attachment, rendering.Token.Language) switch
         {
             EvidentiaAttachmentPlacement.Rendering => rendering,
-            EvidentiaAttachmentPlacement.OwnKindBefore => OwnKindBefore(attachment, rendering, verse),
+            EvidentiaAttachmentPlacement.OwnKindBefore => OwnKindBefore(attachment, rendering, verse, taken),
             EvidentiaAttachmentPlacement.AgreeingRendering => afterVerb
                 ? PrepositionAfter(word, rendering, verse, taken)
                 : Agreeing(attachment, word, rendering, verse),
@@ -321,20 +368,40 @@ internal static class EvidentiaAttachedWords
     private static EvidentiaAnalysis? OwnKindBefore(
         EvidentiaAttachment attachment,
         EvidentiaAnalysis rendering,
-        IReadOnlyList<EvidentiaAnalysis> verse)
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
     {
-        var wanted = attachment == EvidentiaAttachment.Conjunction ? "conj" : null;
-        var before = verse.Count - 1;
-        while (before >= 0 && verse[before].Token.Id != rendering.Token.Id)
+        if (attachment == EvidentiaAttachment.Preposition)
         {
-            before--;
+            return Class(rendering) == "adp" ? rendering : PrepositionBefore(rendering, verse, taken);
         }
 
+        var wanted = attachment == EvidentiaAttachment.Conjunction ? "conj" : null;
+        var before = IndexOf(verse, rendering);
         for (before--; wanted is not null && before >= 0 && Class(verse[before]) is "det" or "adp" or "conj"; before--)
         {
             if (Class(verse[before]) == wanted && IsTheWitnessAnd(verse[before]))
             {
                 return verse[before];
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>The nearest preposition written before the rendering, past an article: מִן הָ אֲדָמָה.</summary>
+    private static EvidentiaAnalysis? PrepositionBefore(
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        for (var before = IndexOf(verse, rendering) - 1; before >= 0 && Class(verse[before]) is "det" or "adp" or "conj"; before--)
+        {
+            if (Class(verse[before]) == "adp")
+            {
+                return taken.Contains(verse[before].Token.Id) || verse[before].Token.StrongNumber == ObjectMarker
+                    ? null
+                    : verse[before];
             }
         }
 

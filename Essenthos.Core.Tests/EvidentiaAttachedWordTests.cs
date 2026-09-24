@@ -155,7 +155,7 @@ public class EvidentiaAttachedWordTests
         var say = Hebrew(11, Genesis122, 1, "יֹּאמֶר", "H559", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
         var toHim = Hebrew(12, Genesis122, 2, "לוֹ", "H9005", "prep", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
 
-        Attach([said, to, him], [say, toHim], (said, say)).Should().Equal((3L, 12L));
+        Attach([said, to, him], [say, toHim], (said, say)).Should().BeEquivalentTo([(3L, 12L), (2L, 12L)]);
     }
 
     [Fact]
@@ -169,6 +169,44 @@ public class EvidentiaAttachedWordTests
         var see = Greek(12, Mark114, 2, "εἶδον", "G3708", "verb", morphology: [("person", "third"), ("number", "plural")]);
 
         Attach([they, went, he, saw], [go, see], (went, go), (saw, see)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void APrepositionGoesOnThePrepositionBeforeItsNounButNeverOnTheObjectMarkerAndOfStaysUnplaced()
+    {
+        var from = English(1, Genesis122, 1, "from", "ADP");
+        var the = English(2, Genesis122, 2, "the", "DET");
+        var ground = English(3, Genesis122, 3, "ground", "NOUN");
+        var with = English(4, Genesis122, 4, "with", "ADP");
+        var wife = English(5, Genesis122, 5, "wife", "NOUN");
+        var of = English(6, Genesis122, 6, "of", "ADP");
+        var man = English(7, Genesis122, 7, "man", "NOUN");
+        var min = Hebrew(11, Genesis122, 1, "מִן", "H4480", "prep");
+        var article = Hebrew(12, Genesis122, 2, "הָ", "H9009", "art");
+        var soil = Hebrew(13, Genesis122, 3, "אֲדָמָה", "H127", "subs");
+        var marker = Hebrew(14, Genesis122, 4, "אֶת", "H853", "prep");
+        var woman = Hebrew(15, Genesis122, 5, "אִשְׁתּוֹ", "H802", "subs");
+        var person = Hebrew(16, Genesis122, 6, "אָדָם", "H120", "subs");
+
+        Attach([from, the, ground, with, wife, of, man], [min, article, soil, marker, woman, person],
+                (ground, soil), (wife, woman), (man, person))
+            .Should().BeEquivalentTo([(1L, 11L), (2L, 13L)]);
+    }
+
+    [Fact]
+    public void AWordFollowsAHeadThatIsItselfAttached()
+    {
+        var and = English(1, Genesis122, 1, "and", "CCONJ");
+        var he = English(2, Genesis122, 2, "he", "PRON");
+        var said = English(3, Genesis122, 3, "said", "VERB");
+        var to = English(4, Genesis122, 4, "to", "ADP");
+        var him = English(5, Genesis122, 5, "him", "PRON");
+        var vav = Hebrew(11, Genesis122, 1, "וַ", "H9000", "conj");
+        var say = Hebrew(12, Genesis122, 2, "יֹּאמֶר", "H559", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var toHim = Hebrew(13, Genesis122, 3, "לוֹ", "H9005", "prep", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+
+        Attach([and, he, said, to, him], [vav, say, toHim], (said, say))
+            .Should().BeEquivalentTo([(1L, 11L), (2L, 12L), (4L, 13L), (5L, 13L)]);
     }
 
     private static IReadOnlyList<(long Source, long Target)> Attach(
