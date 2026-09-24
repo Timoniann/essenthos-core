@@ -28,7 +28,7 @@ public static class DatasetEndpoints
 {
     public static void MapDatasets(this IEndpointRouteBuilder routes)
     {
-        routes.MapGet("/datasets", async (AppDbContext db, CancellationToken cancellationToken) =>
+        routes.MapGet("/datasets", async (AppDbContext db, SiteSettingsFile settings, CancellationToken cancellationToken) =>
         {
             var entities = await Counted(db.Entities.Select(e => e.Source), cancellationToken);
             var events = await Counted(db.Events.Select(e => e.Source), cancellationToken);
@@ -97,12 +97,15 @@ public static class DatasetEndpoints
                     continue;
                 }
 
+                var licence = dataset.Id == Datasets.Own
+                    ? (settings.OwnWorkLicence?.Name, settings.OwnWorkLicence?.Url)
+                    : (dataset.Licence, dataset.LicenceUrl);
                 answers.Add(new DatasetResponse(
                     dataset.Id,
                     dataset.Name,
                     dataset.Author,
-                    dataset.Licence,
-                    dataset.LicenceUrl,
+                    licence.Item1,
+                    licence.Item2,
                     dataset.Url,
                     dataset.Covers,
                     dataset.Citation,
@@ -152,6 +155,10 @@ public static class DatasetEndpoints
 
 }
 
+/// <param name="Licence">
+/// Its licence's short name. On this project's own entry, the one the owner set for our work, and
+/// null while he has not decided.
+/// </param>
 /// <param name="Counts">
 /// How many rows of each kind it accounts for, so a reader can see how much of what they are
 /// looking at rests on which licence.
@@ -174,8 +181,8 @@ public record DatasetResponse(
     string Id,
     string Name,
     string Author,
-    string Licence,
-    string LicenceUrl,
+    string? Licence,
+    string? LicenceUrl,
     string Url,
     string Covers,
     string? Citation,

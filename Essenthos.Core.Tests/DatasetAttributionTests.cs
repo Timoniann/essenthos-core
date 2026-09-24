@@ -54,10 +54,20 @@ public sealed class DatasetAttributionTests
     [Fact]
     public void EveryShareAlikeSourceSaysWhatItObliges() =>
         Datasets.All
-            .Where(dataset => dataset.Licence.Contains("BY-SA", StringComparison.Ordinal))
+            .Where(dataset => dataset.Licence?.Contains("BY-SA", StringComparison.Ordinal) == true)
             .Should().NotBeEmpty()
             .And.OnlyContain(dataset =>
                 dataset.Obliges != null && dataset.Obliges.Contains("ShareAlike"));
+
+    /// <summary>
+    /// Every source we carry states its licence where it is declared. Ours alone does not: what our
+    /// own work is published under is the owner's to set for the site, in one place.
+    /// </summary>
+    [Fact]
+    public void OnlyOurOwnWorkLeavesItsLicenceToTheSiteSetting() =>
+        Datasets.All
+            .Where(dataset => dataset.Licence is null || dataset.LicenceUrl is null)
+            .Should().ContainSingle().Which.Id.Should().Be(Datasets.Own);
 
     /// <summary>
     /// unfoldingWord's condition is not in any Creative Commons licence: a derivative work must

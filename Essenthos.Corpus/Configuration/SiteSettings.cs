@@ -10,7 +10,11 @@ public sealed record SiteSetting(string Key, bool Default);
 /// A text the project owner picks for the site, named by its identifier, and the one the site uses
 /// when nobody has picked.
 /// </summary>
-public sealed record SiteChoice(string Key, string Default);
+/// <param name="Allowed">The identifiers it may name, where only some may be named; any text otherwise.</param>
+public sealed record SiteChoice(string Key, string Default, IReadOnlyList<string>? Allowed = null)
+{
+    public bool Accepts(string value) => Allowed is null || Allowed.Contains(value, StringComparer.Ordinal);
+}
 
 /// <summary>
 /// The site's switches the project owner decides — whether a feature on trial is shown, whether our
@@ -48,9 +52,16 @@ public static class SiteSettings
     /// </summary>
     public const string ReaderTranslation = "readerTranslation";
 
+    /// <summary>
+    /// The licence Essenthos's own work is published under, by its id in <see cref="OwnWorkLicences"/>.
+    /// Undecided by default, and while it is, the site states none.
+    /// </summary>
+    public const string OwnWorkLicence = "ownWorkLicence";
+
     public static readonly IReadOnlyList<SiteChoice> Choices =
     [
         new(ReaderTranslation, "BSB"),
+        new(OwnWorkLicence, OwnWorkLicences.Undecided, OwnWorkLicences.Ids),
     ];
 
     private static readonly JsonDocumentOptions Reading = new()
@@ -103,7 +114,10 @@ public static class SiteSettings
         return values;
     }
 
-    /// <summary>Every choice, as the file names it where it names it as text, and at its default otherwise.</summary>
+    /// <summary>
+    /// Every choice, as the file names it where it names it as text the choice accepts, and at its
+    /// default otherwise.
+    /// </summary>
     public static IReadOnlyDictionary<string, string> ChoicesFrom(JsonNode? file)
     {
         var values = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -113,6 +127,7 @@ public static class SiteSettings
             values[choice.Key] = set?[choice.Key] is JsonValue value
                                  && value.TryGetValue<string>(out var chosen)
                                  && !string.IsNullOrWhiteSpace(chosen)
+                                 && choice.Accepts(chosen.Trim())
                 ? chosen.Trim()
                 : choice.Default;
         }
