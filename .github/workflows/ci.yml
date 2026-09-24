@@ -6,6 +6,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Read-only unless a job says otherwise: a step that is compromised, or a pull request that edits
+# this file, gets a token that can read the repository and write nothing.
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
