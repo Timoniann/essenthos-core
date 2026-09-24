@@ -83,7 +83,7 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
-    public void AgainstGreekOnlyAndIsAttachedAndOnlyOnKai()
+    public void AgainstGreekAndGoesOnKaiAndTheOnTheArticleBeforeTheNoun()
     {
         var and = English(1, Mark114, 1, "and", "CCONJ");
         var the = English(2, Mark114, 2, "the", "DET");
@@ -92,7 +92,24 @@ public class EvidentiaAttachedWordTests
         var article = Greek(12, Mark114, 2, "τὸ", "G3588", "det");
         var gospelNoun = Greek(13, Mark114, 3, "εὐαγγέλιον", "G2098", "noun");
 
-        Attach([and, the, gospel], [kai, article, gospelNoun], (gospel, gospelNoun)).Should().Equal((1L, 11L));
+        Attach([and, the, gospel], [kai, article, gospelNoun], (gospel, gospelNoun))
+            .Should().BeEquivalentTo([(1L, 11L), (2L, 12L)]);
+    }
+
+    [Fact]
+    public void AgainstGreekTheOfAnAdjectiveAndItsNounGoesOnTheNounsArticle()
+    {
+        var the = English(1, Mark114, 1, "the", "DET");
+        var unclean = English(2, Mark114, 2, "unclean", "ADJ");
+        var spirit = English(3, Mark114, 3, "spirit", "NOUN");
+        var article = Greek(11, Mark114, 1, "τὸ", "G3588", "det");
+        var spiritNoun = Greek(12, Mark114, 2, "πνεῦμα", "G4151", "noun");
+        var repeated = Greek(13, Mark114, 3, "τὸ", "G3588", "det");
+        var uncleanAdjective = Greek(14, Mark114, 4, "ἀκάθαρτον", "G169", "adj");
+
+        Attach([the, unclean, spirit], [article, spiritNoun, repeated, uncleanAdjective],
+                (unclean, uncleanAdjective), (spirit, spiritNoun))
+            .Should().Equal((1L, 11L));
     }
 
     [Fact]

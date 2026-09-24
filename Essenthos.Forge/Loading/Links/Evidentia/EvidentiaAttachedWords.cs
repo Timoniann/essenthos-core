@@ -70,16 +70,17 @@ internal enum EvidentiaAttachmentPlacement
 /// particles of phrasal verbs (<em>out of</em>, <em>up</em>); and never the object marker את, which
 /// no English preposition renders.</para>
 ///
-/// <para>Against Greek only <em>and</em>, the preposition and the subject pronoun are placed:
-/// <em>and</em> on the <em>καί</em> written directly before the rendering, which both annotations do,
-/// the preposition on the preposition before it, and the subject on the verb whose ending names it.</para>
+/// <para>Against Greek only <em>and</em>, <em>the</em>, the preposition and the subject pronoun are
+/// placed: <em>and</em> on the <em>καί</em> written directly before the rendering, which both
+/// annotations do; <em>the</em> on the article of its noun, past an adjective between them, which is
+/// where the Berean tables put it; the preposition on the preposition before the rendering; and the
+/// subject on the verb whose ending names it.</para>
 ///
 /// <para>Not placed, because on these texts they measured below the precision the lexical tiers
-/// already reach: verb particles, which the parser finds as often in a preposition's place; the
-/// Greek article, which the Berean tables put on the English article and the Clear Bible
-/// alignments with the noun; and a Greek auxiliary, which is often a periphrastic <em>ἦσαν</em> of
-/// its own rather than part of the verb after it. The roles come from the English UDPipe parse, so
-/// every other source language is left alone.</para>
+/// already reach: verb particles, which the parser finds as often in a preposition's place; and a
+/// Greek auxiliary, which is often a periphrastic <em>ἦσαν</em> of its own rather than part of the
+/// verb after it. The roles come from the English UDPipe parse, so every other source language is
+/// left alone.</para>
 /// </summary>
 internal static class EvidentiaAttachedWords
 {
@@ -99,7 +100,9 @@ internal static class EvidentiaAttachedWords
     /// </summary>
     private const string GreekAnd = "καί";
 
-    private static readonly HashSet<string> Articles = new(StringComparer.OrdinalIgnoreCase) { "the", "a", "an" };
+    private const string DefiniteArticle = "the";
+
+    private static readonly HashSet<string> Articles = new(StringComparer.OrdinalIgnoreCase) { DefiniteArticle, "a", "an" };
 
     private static readonly HashSet<string> Conjunctions = new(StringComparer.OrdinalIgnoreCase) { "and" };
 
@@ -165,7 +168,7 @@ internal static class EvidentiaAttachedWords
         {
             if (placedBySource.ContainsKey(words[index].Token.Id)
                 || Classify(words, index) is not ({ } attachment, { } head)
-                || HeadProposal(attachment, head, words, placedBySource) is not ({ } headProposal, var afterVerb)
+                || HeadProposal(attachment, index, head, words, placedBySource) is not ({ } headProposal, var afterVerb)
                 || !targetsByVerse.TryGetValue(headProposal.Target.Token.Address, out var targetVerse)
                 || Place(attachment, words[index], headProposal.Target, targetVerse, afterVerb, taken) is not { } placement)
             {
@@ -194,7 +197,8 @@ internal static class EvidentiaAttachedWords
         witnessLanguage.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase)
             ? attachment switch
             {
-                EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition => EvidentiaAttachmentPlacement.OwnKindBefore,
+                EvidentiaAttachment.Article or EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition =>
+                    EvidentiaAttachmentPlacement.OwnKindBefore,
                 EvidentiaAttachment.SubjectPronoun => EvidentiaAttachmentPlacement.AgreeingRendering,
                 _ => EvidentiaAttachmentPlacement.None,
             }
@@ -264,10 +268,21 @@ internal static class EvidentiaAttachedWords
     /// </summary>
     private static (EvidentiaProposal? Proposal, bool AfterVerb) HeadProposal(
         EvidentiaAttachment attachment,
+        int index,
         EvidentiaAnalysis head,
         IReadOnlyList<EvidentiaAnalysis> words,
         IReadOnlyDictionary<long, EvidentiaProposal> placedBySource)
     {
+        // Greek writes the article before its noun and repeats it before an attributive adjective
+        // (τὸ πνεῦμα τὸ ἀκάθαρτον), so the unclean spirit puts the on the noun's article.
+        if (attachment == EvidentiaAttachment.Article && Class(head) is "adj" or "num"
+            && Forward(words, index, "noun", "propn") is { } noun
+            && placedBySource.TryGetValue(noun.Token.Id, out var nounProposal)
+            && nounProposal.Target.Token.Language.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase))
+        {
+            return (nounProposal, false);
+        }
+
         if (placedBySource.TryGetValue(head.Token.Id, out var proposal))
         {
             return (proposal, false);
@@ -295,7 +310,7 @@ internal static class EvidentiaAttachedWords
         Placement(attachment, rendering.Token.Language) switch
         {
             EvidentiaAttachmentPlacement.Rendering => rendering,
-            EvidentiaAttachmentPlacement.OwnKindBefore => OwnKindBefore(attachment, rendering, verse, taken),
+            EvidentiaAttachmentPlacement.OwnKindBefore => OwnKindBefore(attachment, word, rendering, verse, taken),
             EvidentiaAttachmentPlacement.AgreeingRendering => afterVerb
                 ? PrepositionAfter(word, rendering, verse, taken)
                 : Agreeing(attachment, word, rendering, verse),
@@ -367,6 +382,7 @@ internal static class EvidentiaAttachedWords
     /// </summary>
     private static EvidentiaAnalysis? OwnKindBefore(
         EvidentiaAttachment attachment,
+        EvidentiaAnalysis word,
         EvidentiaAnalysis rendering,
         IReadOnlyList<EvidentiaAnalysis> verse,
         IReadOnlySet<long> taken)
@@ -376,6 +392,11 @@ internal static class EvidentiaAttachedWords
             return Class(rendering) == "adp" ? rendering : PrepositionBefore(rendering, verse, taken);
         }
 
+        if (attachment == EvidentiaAttachment.Article)
+        {
+            return ArticleBefore(word, rendering, verse, taken);
+        }
+
         var wanted = attachment == EvidentiaAttachment.Conjunction ? "conj" : null;
         var before = IndexOf(verse, rendering);
         for (before--; wanted is not null && before >= 0 && Class(verse[before]) is "det" or "adp" or "conj"; before--)
@@ -383,6 +404,38 @@ internal static class EvidentiaAttachedWords
             if (Class(verse[before]) == wanted && IsTheWitnessAnd(verse[before]))
             {
                 return verse[before];
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// The Greek article written before the rendering, past an adjective it also governs: <em>the</em>
+    /// of <em>the other side</em> on τὸ of τὸ πέραν. Greek has no indefinite article, so only
+    /// <em>the</em> is placed.
+    /// </summary>
+    private static EvidentiaAnalysis? ArticleBefore(
+        EvidentiaAnalysis article,
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        if (!article.Token.Surface.Equals(DefiniteArticle, StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        for (var before = IndexOf(verse, rendering) - 1; before >= 0; before--)
+        {
+            if (Class(verse[before]) == "det")
+            {
+                return taken.Contains(verse[before].Token.Id) ? null : verse[before];
+            }
+
+            if (Class(verse[before]) != "adj")
+            {
+                return null;
             }
         }
 
