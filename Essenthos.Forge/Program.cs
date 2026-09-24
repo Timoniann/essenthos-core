@@ -85,6 +85,7 @@ builder.Services.AddScoped<EvidentiaDictionarySenseIndex>();
 builder.Services.AddScoped<EvidentiaKnownRenderingIndex>();
 builder.Services.AddSingleton<IEvidentiaEvidenceSource, StrongNumberEvidenceSource>();
 builder.Services.AddScoped<CompositionPipeline>();
+builder.Services.AddScoped<NameListPass>();
 builder.Services.AddScoped<CorpusCheck>();
 builder.Services.AddScoped<StrongLexiconLoader>();
 builder.Services.AddScoped<StrongGentilicLoader>();
@@ -802,6 +803,26 @@ if (args is ["clearbible", ..])
     return 0;
 }
 
+// The names of each verse settled by spelling and order over links already written, so a pair need
+// not be aligned again for it. Reports and writes nothing without --apply. --chapters 1:46,40:1
+// reports those chapters apart, with examples; --books 1,13 reads those canonical books only.
+if (args is ["names", var namesFrom, var namesTo, ..])
+{
+    using var namesScope = app.Services.CreateScope();
+    var chapters = (Option(args, "--chapters") ?? string.Empty)
+        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+        .Select(chapter => chapter.Split(':'))
+        .Select(parts => (int.Parse(parts[0]), int.Parse(parts[1])))
+        .ToHashSet();
+    logger.LogInformation("\n{Report}", await namesScope.ServiceProvider.GetRequiredService<NameListPass>().Run(
+        Identifier(namesFrom),
+        Identifier(namesTo),
+        chapters,
+        Option(args, "--books") is { } namesBooks ? namesBooks.Split(',').Select(int.Parse).ToHashSet() : null,
+        args.Contains("--apply")));
+    return 0;
+}
+
 if (args is ["align", var alignFrom, var alignTo, ..])
 {
     using var alignScope = app.Services.CreateScope();
@@ -823,7 +844,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 
 logger.LogError(
-    "Nothing is known to do with \"{Verb}\". The verbs are load, verify, release, publish, rollback, releases, align, score, score-anchors, syntax, "
+    "Nothing is known to do with \"{Verb}\". The verbs are load, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
     + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images and the evidentia family",
     args[0]);
 return 1;

@@ -546,7 +546,7 @@ internal sealed class CompositionPipeline(
                 await writer.WriteAsync(to.Id, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(fresh[i].Confidence, NpgsqlDbType.Double, cancellationToken);
+                await writer.WriteAsync(Routes.Written(fresh[i].Confidence), NpgsqlDbType.Double, cancellationToken);
                 await writer.WriteAsync(
                     Routes.Describe(fresh[i].Route, viaSlugs), NpgsqlDbType.Text, cancellationToken);
             }
@@ -612,7 +612,7 @@ internal sealed class CompositionPipeline(
         {
             if (stated.TryGetValue((link.From, link.To), out var already))
             {
-                agreeing.Add((already, link.Confidence, Routes.Describe(link.Route, viaSlugs)));
+                agreeing.Add((already, Routes.Written(link.Confidence), Routes.Describe(link.Route, viaSlugs)));
             }
             else if (!claimed.Contains(link.From))
             {

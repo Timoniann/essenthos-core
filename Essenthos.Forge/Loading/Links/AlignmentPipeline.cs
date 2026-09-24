@@ -823,9 +823,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         foreach (var (sourceWords, targetWords, raw) in Parse(path, addresses, source, target))
         {
             proposed += raw.Count;
-            List<Candidate> verse = prior is null
-                ? raw
-                : prior.Rescore(raw, [.. targetWords.Select(word => word.Id)]);
+            List<Candidate> verse = NameLists.Settle(
+                prior is null ? raw : prior.Rescore(raw, [.. targetWords.Select(word => word.Id)]),
+                [.. sourceWords.Select(word => word.Name)],
+                [.. targetWords.Select(word => word.Name)],
+                [.. targetWords.Select(word => word.Letters)]);
 
             var crowded = verse
                 .GroupBy(pair => pair.Target)
@@ -942,11 +944,13 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(drafts[i].Translation, NpgsqlDbType.Double, cancellationToken);
+                await writer.WriteAsync(Routes.Written(drafts[i].Translation), NpgsqlDbType.Double, cancellationToken);
                 await writer.WriteAsync(
                     $"SIL.Machine {modelType}, symmetrised och" +
                     (syntax ? ", rescored on ETCBC phrase and clause structure" : string.Empty) +
-                    $", position {drafts[i].Position:F4}",
+                    (double.IsNaN(drafts[i].Position)
+                        ? ", the names of the verse paired by spelling and order"
+                        : $", position {drafts[i].Position:F4}"),
                     NpgsqlDbType.Text, cancellationToken);
             }
 
@@ -1162,22 +1166,45 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 Language = w.Text!.Language,
                 Consonantal = w.Morphology == null ? null : w.Morphology.RootElement.GetProperty("consonantal")
                     .GetString(),
+                Pos = w.Morphology == null ? null : w.Morphology.RootElement.GetProperty("pos").GetString(),
+                Form = w.Morphology == null ? null : w.Morphology.RootElement.GetProperty("form").GetString(),
+                Robinson = w.Morphology == null ? null : w.Morphology.RootElement.GetProperty("robinson").GetString(),
             }))
             .ToListAsync(cancellationToken);
+
+        var uncapitalised = rows
+            .Where(r => r.Position > 1 && r.Surface.Length > 0 && char.IsLower(r.Surface[0]))
+            .Select(r => r.Surface.ToLowerInvariant())
+            .ToHashSet();
 
         return rows
             .GroupBy(r => (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse))
             .ToDictionary(
                 group => group.Key,
                 group => group.OrderBy(r => r.Position)
-                    .Select(r => new Word(
-                        r.Id,
-                        AlignmentTokens.One(form(
-                            new WordForms(
-                                r.Surface, r.Lemma, r.Consonantal, r.StrongNumber, r.Language, r.Position))),
-                        r.StrongNumber))
+                    .Select(r =>
+                    {
+                        var forms = new WordForms(
+                            r.Surface, r.Lemma, r.Consonantal, r.StrongNumber, r.Language, r.Position);
+                        var letters = NameLists.Skeleton(r.Consonantal ?? r.Surface, r.Language);
+                        return new Word(
+                            r.Id,
+                            AlignmentTokens.One(form(forms)),
+                            r.StrongNumber,
+                            letters,
+                            IsNamed(forms, r.Pos, r.Form ?? r.Robinson, uncapitalised) && letters.Length > 0
+                                ? letters
+                                : null);
+                    })
                     .ToList());
     }
+
+    /// <summary>Every word of a text by address as it is written, with the consonants of its names.</summary>
+    internal Task<Dictionary<(int, int, int), List<Word>>> Named(
+        string slug,
+        IReadOnlySet<int>? books,
+        CancellationToken cancellationToken) =>
+        Words(slug, Written, cancellationToken, books);
 
     /// <summary>
     /// The word as the text writes it, except where the language inflects so heavily that writing
@@ -1210,6 +1237,24 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// </summary>
     private static bool IsName(WordForms word) =>
         word.Position > 1 && word.Surface.Length > 0 && char.IsUpper(word.Surface[0]);
+
+    /// <summary>
+    /// Whether a word is a proper name, for <see cref="NameLists"/>. BHSA and the Greek editions mark
+    /// their names; the translations capitalise them, and capitalise other words too. A word the same
+    /// text also writes in lower case mid-verse is not a name — God and god, Бога and бога — and one
+    /// in capitals throughout is LORD, which the translations do not transliterate.
+    /// </summary>
+    /// <param name="uncapitalised">Every word the text writes in lower case after its verse's first.</param>
+    private static bool IsNamed(WordForms word, string? pos, string? form, IReadOnlySet<string> uncapitalised) =>
+        pos == "nmpr"
+        || form == IndeclinableName
+        || (word.Language is "grc" && !string.IsNullOrEmpty(word.Lemma)
+            ? char.IsUpper(word.Lemma[0])
+            : word.Language is not "hbo" && IsName(word) && word.Surface.Any(char.IsLower)
+              && !uncapitalised.Contains(word.Surface.ToLowerInvariant()));
+
+    /// <summary>The Robinson code the Greek editions give a name that does not decline.</summary>
+    private const string IndeclinableName = "N-PRI";
 
     /// <summary>
     /// The form a model can learn from. BHSA writes full vowel pointing, so the same word appears as
@@ -1247,7 +1292,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         string? Language,
         int Position);
 
-    private sealed record Word(long Id, string Text, string? StrongNumber);
+    /// <param name="Letters">The consonants as <see cref="NameLists"/> compares them.</param>
+    /// <param name="Name">The same, where the word is a proper name, and null where it is not.</param>
+    internal sealed record Word(long Id, string Text, string? StrongNumber, string Letters = "", string? Name = null);
 
     private sealed record WordPosition((int Book, int Chapter, int Verse) Address, int Position);
 
