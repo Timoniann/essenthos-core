@@ -18,6 +18,14 @@ internal record VerseTextResponse(BookRefResponse Book, int Chapter, int Verse, 
     /// carries no word-level annotation to say so.
     /// </summary>
     public IList<VerseMarkResponse>? Marks { get; init; }
+
+    /// <summary>
+    /// The address the text itself gives this verse, in its own numbering, where that is not the one
+    /// asked for: the Synodal's <c>118:1</c> for Psalm 119:1, the Reina-Valera's own number where it
+    /// divides a chapter differently. More than one where the text divides what the shared frame
+    /// holds as one verse. Null where the two numberings agree.
+    /// </summary>
+    public IList<string>? Printed { get; init; }
 }
 
 /// <summary>
@@ -132,50 +140,7 @@ internal static class VerseEndpoints
             }
 
             var keys = wanted.Select(address => address.Key).Distinct().ToList();
-
-            // One query for every address asked for, keyed on the same arithmetic the encyclopedia
-            // orders verses by: a book never reaches a thousand chapters and a chapter never a
-            // thousand verses, so the three numbers pack into one the database can match on.
-            var rows = await db.Words
-                .Where(w => w.TextId == text.Id
-                            && keys.Contains((w.Verse!.Book!.CanonicalOrdinal * Address.BookStride)
-                                             + (w.Verse.ChapterNumber * Address.ChapterStride)
-                                             + w.Verse.Number))
-                .OrderBy(w => w.Verse!.Book!.CanonicalOrdinal).ThenBy(w => w.Verse!.ChapterNumber)
-                .ThenBy(w => w.Verse!.Number).ThenBy(w => w.Verse!.Label).ThenBy(w => w.Position)
-                .Select(w => new
-                {
-                    Ordinal = w.Verse!.Book!.CanonicalOrdinal,
-                    Chapter = w.Verse.ChapterNumber,
-                    Verse = w.Verse.Number,
-                    w.Verse.Label,
-                    w.Id,
-                    w.Surface,
-                    w.Trailer,
-                })
-                .ToListAsync(cancellationToken);
-
-            var naming = named is null
-                ? []
-                : await Naming(db, rows.Select(row => row.Id), named, cancellationToken);
-
-            var found = rows
-                .GroupBy(row => new { row.Ordinal, row.Chapter, row.Verse, row.Label })
-                .Select(group => new VerseTextResponse(
-                    new BookRefResponse(
-                        group.Key.Ordinal,
-                        BookReferences.Name(group.Key.Ordinal),
-                        BookReferences.Slug(group.Key.Ordinal)),
-                    group.Key.Chapter,
-                    group.Key.Verse,
-                    string.Concat(group.Select(row => row.Surface + row.Trailer)).Trim())
-                {
-                    Label = string.IsNullOrWhiteSpace(group.Key.Label) ? null : group.Key.Label,
-                    Marks = named is null
-                        ? null
-                        : Marks([.. group.Select(row => new MarkedWord(row.Surface, row.Trailer, naming.Contains(row.Id)))]),
-                })
-                .ToList();
+            var found = await Read(db, text.Id, keys, named, cancellationToken);
 
             var answered = found
                 .Select(verse => (verse.Book.Ordinal * Address.BookStride)
@@ -187,6 +152,127 @@ internal static class VerseEndpoints
                 found,
                 [.. wanted.Where(address => !answered.Contains(address.Key)).Select(address => address.Asked)]));
         });
+    }
+
+    /// <summary>
+    /// The verses at a set of addresses in the shared frame, each as one text reads it.
+    ///
+    /// <para>
+    /// An address names a place in the frame, not a row of the text: the Reina-Valera numbers 187
+    /// of its verses differently from the frame and the Synodal 30, so matching a text's own numbers
+    /// quoted the verse beside the one asked for. The placement a verse carries is what is matched,
+    /// and the verse's own number is sent back as <see cref="VerseTextResponse.Printed"/> wherever
+    /// it differs, together with any the edition prints in the verse itself.
+    /// </para>
+    ///
+    /// <para>
+    /// Where a verse is placed at an address as its primary placement, only such verses answer for
+    /// it; a verse that merely runs on into the address answers only where nothing is placed there.
+    /// Otherwise a text that joins two verses into one would print the joined verse twice over.
+    /// </para>
+    /// </summary>
+    internal static async Task<List<VerseTextResponse>> Read(
+        AppDbContext db,
+        int textId,
+        IReadOnlyCollection<int> keys,
+        string? named,
+        CancellationToken cancellationToken)
+    {
+        // The book narrows the match to what the placement index can find; the packed number then
+        // picks the addresses out of those books, on the same arithmetic the encyclopedia orders by.
+        var books = keys.Select(key => key / Address.BookStride).Distinct().ToList();
+        var placed = await db.VerseReferences
+            .Where(r => r.Verse!.TextId == textId
+                        && books.Contains(r.CanonicalBook)
+                        && keys.Contains((r.CanonicalBook * Address.BookStride)
+                                         + (r.CanonicalChapter * Address.ChapterStride)
+                                         + r.CanonicalVerse))
+            .Select(r => new
+            {
+                Key = (r.CanonicalBook * Address.BookStride) + (r.CanonicalChapter * Address.ChapterStride)
+                      + r.CanonicalVerse,
+                r.CanonicalBook,
+                r.CanonicalChapter,
+                r.CanonicalVerse,
+                r.IsPrimary,
+                r.VerseId,
+                OwnBook = r.Verse!.Book!.CanonicalOrdinal,
+                OwnChapter = r.Verse.ChapterNumber,
+                OwnVerse = r.Verse.Number,
+                r.Verse.Label,
+            })
+            .ToListAsync(cancellationToken);
+
+        var chosen = placed
+            .GroupBy(place => place.Key)
+            .SelectMany(group => group.Any(place => place.IsPrimary) ? group.Where(place => place.IsPrimary) : group)
+            .ToList();
+        var verseIds = chosen.Select(place => place.VerseId).Distinct().ToList();
+
+        var words = (await db.Words
+                .Where(w => verseIds.Contains(w.VerseId))
+                .Select(w => new { w.VerseId, w.Id, w.Surface, w.Trailer, w.Position })
+                .ToListAsync(cancellationToken))
+            .GroupBy(word => word.VerseId)
+            .ToDictionary(group => group.Key, group => group.OrderBy(word => word.Position).ToList());
+
+        var stated = (await db.StatedVerseNumbers
+                .Where(n => verseIds.Contains(n.VerseId))
+                .Select(n => new { n.VerseId, n.Position, n.ChapterNumber, n.Number })
+                .ToListAsync(cancellationToken))
+            .GroupBy(n => n.VerseId)
+            .ToDictionary(
+                group => group.Key,
+                group => group.OrderBy(n => n.Position).Select(n => $"{n.ChapterNumber}{WithinAddress}{n.Number}").ToList());
+
+        var naming = named is null
+            ? []
+            : await Naming(db, words.Values.SelectMany(list => list.Select(word => word.Id)), named, cancellationToken);
+
+        return chosen
+            .GroupBy(place => new { place.Key, place.CanonicalBook, place.CanonicalChapter, place.CanonicalVerse })
+            .OrderBy(group => group.Key.Key)
+            .Select(VerseTextResponse? (group) =>
+            {
+                var verses = group
+                    .OrderBy(place => place.OwnBook).ThenBy(place => place.OwnChapter)
+                    .ThenBy(place => place.OwnVerse).ThenBy(place => place.Label, StringComparer.Ordinal)
+                    .ToList();
+                var joined = verses.SelectMany(place => words.GetValueOrDefault(place.VerseId) ?? []).ToList();
+                if (joined.Count == 0)
+                {
+                    return null;
+                }
+
+                var asked = $"{group.Key.CanonicalChapter}{WithinAddress}{group.Key.CanonicalVerse}";
+                var printed = verses
+                    .SelectMany(place => stated.GetValueOrDefault(place.VerseId)
+                                         ?? (place.OwnBook == group.Key.CanonicalBook
+                                             ? [$"{place.OwnChapter}{WithinAddress}{place.OwnVerse}{place.Label}"]
+                                             : []))
+                    .Where(address => address != asked)
+                    .Distinct()
+                    .ToList();
+                var label = verses.Select(place => place.Label).FirstOrDefault(one => !string.IsNullOrWhiteSpace(one));
+
+                return new VerseTextResponse(
+                    new BookRefResponse(
+                        group.Key.CanonicalBook,
+                        BookReferences.Name(group.Key.CanonicalBook),
+                        BookReferences.Slug(group.Key.CanonicalBook)),
+                    group.Key.CanonicalChapter,
+                    group.Key.CanonicalVerse,
+                    string.Concat(joined.Select(word => word.Surface + word.Trailer)).Trim())
+                {
+                    Label = label,
+                    Marks = named is null
+                        ? null
+                        : Marks([.. joined.Select(word => new MarkedWord(word.Surface, word.Trailer, naming.Contains(word.Id)))]),
+                    Printed = printed.Count > 0 ? printed : null,
+                };
+            })
+            .OfType<VerseTextResponse>()
+            .ToList();
     }
 
     /// <summary>
