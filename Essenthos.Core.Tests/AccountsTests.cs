@@ -22,6 +22,10 @@ public sealed class AccountsTests
     [InlineData("/\\evil.example", "/")]
     [InlineData("https://evil.example", "/")]
     [InlineData("evil.example", "/")]
+    // A browser drops tabs and line breaks from an address, so each of these is //evil.example.
+    [InlineData("/\t/evil.example", "/")]
+    [InlineData("/\n/evil.example", "/")]
+    [InlineData("/\r/evil.example", "/")]
     [InlineData("", "/")]
     [InlineData(null, "/")]
     public void ReturnAddressesStayOnTheSite(string? requested, string expected) =>

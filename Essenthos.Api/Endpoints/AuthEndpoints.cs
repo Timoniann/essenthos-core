@@ -166,10 +166,12 @@ internal static class AuthEndpoints
     /// <summary>
     /// A path on this site, or the home page. A return address that names another origin is how a
     /// sign-in link is turned into a redirect to somebody else's page, and <c>//evil.example</c> and
-    /// <c>/\evil.example</c> are both read by browsers as another origin.
+    /// <c>/\evil.example</c> are both read by browsers as another origin. So is a tab or a line break
+    /// between the slashes, which a browser drops from an address before it reads it.
     /// </summary>
     public static string Local(string? returnUrl) =>
-        returnUrl is { Length: > 0 } url && url[0] == '/' && (url.Length == 1 || (url[1] != '/' && url[1] != '\\'))
+        returnUrl is { Length: > 0 } url && url[0] == '/' && (url.Length == 1 || (url[1] != '/' && url[1] != '\\')) &&
+        !url.Any(char.IsControl)
             ? url
             : "/";
 

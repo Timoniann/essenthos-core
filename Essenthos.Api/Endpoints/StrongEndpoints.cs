@@ -86,7 +86,7 @@ internal static class StrongEndpoints
 
             if (query is { Length: > 0 })
             {
-                var like = $"%{query}%";
+                var like = LikePatterns.Containing(query);
                 entries = entries.Where(e =>
                     EF.Functions.ILike(e.Lemma ?? string.Empty, like) ||
                     EF.Functions.ILike(e.Transliteration ?? string.Empty, like) ||

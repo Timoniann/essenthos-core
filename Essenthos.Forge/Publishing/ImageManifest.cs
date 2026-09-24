@@ -18,7 +18,16 @@ internal static class ImageManifest
     /// <summary>How many hex digits of the SHA-256 a picture row keeps as its digest.</summary>
     private const int DigestLength = 12;
 
-    /// <summary>Every file under <paramref name="folder"/> by its path there, with forward slashes, and its SHA-256.</summary>
+    /// <summary>
+    /// What the API serves as a picture. Nothing else under the images folder leaves this machine: the
+    /// portrait briefs beside the generated pictures carry their prompts and the owner's decisions.
+    /// </summary>
+    private static readonly HashSet<string> PictureExtensions = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ".jpg", ".jpeg", ".png", ".webp",
+    };
+
+    /// <summary>Every picture under <paramref name="folder"/> by its path there, with forward slashes, and its SHA-256.</summary>
     public static Dictionary<string, string> Read(string folder)
     {
         var manifest = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -27,7 +36,8 @@ internal static class ImageManifest
             return manifest;
         }
 
-        foreach (var file in Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories))
+        foreach (var file in Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+                     .Where(file => PictureExtensions.Contains(Path.GetExtension(file))))
         {
             using var stream = File.OpenRead(file);
             manifest[Relative(folder, file)] = Convert.ToHexStringLower(SHA256.HashData(stream));
