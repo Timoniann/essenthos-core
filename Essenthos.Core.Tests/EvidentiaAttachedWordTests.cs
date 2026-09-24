@@ -211,6 +211,27 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
+    public void OfGoesOnTheNounAConstructDependsOnAndNowhereElse()
+    {
+        var face = English(1, Genesis122, 1, "face", "NOUN");
+        var of = English(2, Genesis122, 2, "of", "ADP");
+        var the = English(3, Genesis122, 3, "the", "DET");
+        var deep = English(4, Genesis122, 4, "deep", "NOUN");
+        var all = English(5, Genesis122, 5, "all", "DET");
+        var of2 = English(6, Genesis122, 6, "of", "ADP");
+        var days = English(7, Genesis122, 7, "days", "NOUN");
+        var faceNoun = Hebrew(11, Genesis122, 1, "פְּנֵי", "H6440", "subs", ("state", "c"));
+        var article = Hebrew(12, Genesis122, 2, "תְ", "H9009", "art");
+        var deepNoun = Hebrew(13, Genesis122, 3, "הֹום", "H8415", "subs", ("state", "a"));
+        var whole = Hebrew(14, Genesis122, 4, "כָּל", "H3605", "subs", ("state", "c"));
+        var day = Hebrew(15, Genesis122, 5, "יְמֵי", "H3117", "subs", ("state", "c"));
+
+        Attach([face, of, the, deep, all, of2, days], [faceNoun, article, deepNoun, whole, day],
+                (face, faceNoun), (deep, deepNoun), (days, day))
+            .Should().BeEquivalentTo([(2L, 13L), (3L, 13L)]);
+    }
+
+    [Fact]
     public void AWordFollowsAHeadThatIsItselfAttached()
     {
         var and = English(1, Genesis122, 1, "and", "CCONJ");

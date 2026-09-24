@@ -14,6 +14,9 @@ internal enum EvidentiaAttachment
     /// <summary><em>in</em> of <em>in the beginning</em>.</summary>
     Preposition,
 
+    /// <summary><em>of</em> of <em>the face of the deep</em>, which Hebrew writes as a construct chain.</summary>
+    Genitive,
+
     /// <summary><em>will</em> of <em>will send</em>.</summary>
     AuxiliaryVerb,
 
@@ -38,6 +41,12 @@ internal enum EvidentiaAttachmentPlacement
 
     /// <summary>On the word of its own kind written directly before that rendering, and nowhere if there is none.</summary>
     OwnKindBefore,
+
+    /// <summary>
+    /// On the rendering of the governed noun, when the word before <em>of</em> was placed on the Hebrew
+    /// noun in the construct state it depends on.
+    /// </summary>
+    Dependent,
 
     /// <summary>
     /// On the rendering when its ending or suffix names the same person, number and gender as the
@@ -69,6 +78,11 @@ internal enum EvidentiaAttachmentPlacement
 /// Not <em>of</em>, which Hebrew writes as the construct state of the noun before it, and not the
 /// particles of phrasal verbs (<em>out of</em>, <em>up</em>); and never the object marker את, which
 /// no English preposition renders.</para>
+///
+/// <para>Against Hebrew <em>of</em> goes on the rendering of the noun it governs, and only where the
+/// word before it was placed on a noun in the construct state standing before that rendering, with
+/// nothing but an article between. Against Greek it is not placed: the annotations put <em>of</em> of
+/// a genitive on its article as often as on its noun.</para>
 ///
 /// <para>Against Greek only <em>and</em>, <em>the</em>, the preposition and the subject pronoun are
 /// placed: <em>and</em> on the <em>καί</em> written directly before the rendering, which both
@@ -106,13 +120,18 @@ internal static class EvidentiaAttachedWords
 
     private static readonly HashSet<string> Conjunctions = new(StringComparer.OrdinalIgnoreCase) { "and" };
 
+    private const string Of = "of";
+
     private static readonly HashSet<string> UnplacedPrepositions = new(StringComparer.OrdinalIgnoreCase)
     {
-        "of", "out", "up", "off", "as", "down", "away", "forth",
+        Of, "out", "up", "off", "as", "down", "away", "forth",
     };
 
     /// <summary>The Hebrew object marker, which BHSA classes as a preposition.</summary>
     private const string ObjectMarker = "H853";
+
+    /// <summary>BHSA's construct state, the noun that the next one depends on.</summary>
+    private const string ConstructState = "c";
 
     private static readonly HashSet<string> Negations = new(StringComparer.OrdinalIgnoreCase) { "not", "n't", "never" };
 
@@ -170,7 +189,7 @@ internal static class EvidentiaAttachedWords
                 || Classify(words, index) is not ({ } attachment, { } head)
                 || HeadProposal(attachment, index, head, words, placedBySource) is not ({ } headProposal, var afterVerb)
                 || !targetsByVerse.TryGetValue(headProposal.Target.Token.Address, out var targetVerse)
-                || Place(attachment, words[index], headProposal.Target, targetVerse, afterVerb, taken) is not { } placement)
+                || Place(attachment, words, index, headProposal.Target, targetVerse, afterVerb, placedBySource, taken) is not { } placement)
             {
                 continue;
             }
@@ -208,6 +227,7 @@ internal static class EvidentiaAttachedWords
             {
                 EvidentiaAttachment.Article or EvidentiaAttachment.AuxiliaryVerb => EvidentiaAttachmentPlacement.Rendering,
                 EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition => EvidentiaAttachmentPlacement.OwnKindBefore,
+                EvidentiaAttachment.Genitive => EvidentiaAttachmentPlacement.Dependent,
                 EvidentiaAttachment.SubjectPronoun or EvidentiaAttachment.PossessivePronoun or EvidentiaAttachment.ObjectPronoun =>
                     EvidentiaAttachmentPlacement.AgreeingRendering,
                 _ => EvidentiaAttachmentPlacement.None,
@@ -229,6 +249,11 @@ internal static class EvidentiaAttachedWords
         {
             return Found(EvidentiaAttachment.Conjunction,
                 Forward(words, index, "noun", "propn", "pron", "verb", "adj", "adv", "num"));
+        }
+
+        if (partOfSpeech == "adp" && word.Token.Surface.Equals(Of, StringComparison.OrdinalIgnoreCase))
+        {
+            return Found(EvidentiaAttachment.Genitive, Forward(words, index, "noun", "propn", "adj", "num", "pron"));
         }
 
         if (partOfSpeech == "adp" && !UnplacedPrepositions.Contains(word.Token.Surface))
@@ -302,20 +327,48 @@ internal static class EvidentiaAttachedWords
 
     private static EvidentiaAnalysis? Place(
         EvidentiaAttachment attachment,
-        EvidentiaAnalysis word,
+        IReadOnlyList<EvidentiaAnalysis> words,
+        int index,
         EvidentiaAnalysis rendering,
         IReadOnlyList<EvidentiaAnalysis> verse,
         bool afterVerb,
-        IReadOnlySet<long> taken) =>
-        Placement(attachment, rendering.Token.Language) switch
+        IReadOnlyDictionary<long, EvidentiaProposal> placedBySource,
+        IReadOnlySet<long> taken)
+    {
+        var word = words[index];
+        return Placement(attachment, rendering.Token.Language) switch
         {
             EvidentiaAttachmentPlacement.Rendering => rendering,
+            EvidentiaAttachmentPlacement.Dependent => index > 0
+                && placedBySource.TryGetValue(words[index - 1].Token.Id, out var governing)
+                && Class(words[index - 1]) is "noun" or "propn" or "adj" or "num"
+                    ? Dependent(governing.Target, rendering, verse)
+                    : null,
             EvidentiaAttachmentPlacement.OwnKindBefore => OwnKindBefore(attachment, word, rendering, verse, taken),
             EvidentiaAttachmentPlacement.AgreeingRendering => afterVerb
                 ? PrepositionAfter(word, rendering, verse, taken)
                 : Agreeing(attachment, word, rendering, verse),
             _ => null,
         };
+    }
+
+    /// <summary>
+    /// Where <em>of</em> goes once the noun before it and the noun after it are placed: on the governed
+    /// rendering, when the governing one is a construct standing before it with at most an article between.
+    /// </summary>
+    private static EvidentiaAnalysis? Dependent(
+        EvidentiaAnalysis governing,
+        EvidentiaAnalysis governed,
+        IReadOnlyList<EvidentiaAnalysis> verse)
+    {
+        var from = IndexOf(verse, governing);
+        var to = IndexOf(verse, governed);
+        return from >= 0 && to > from
+            && verse.Skip(from + 1).Take(to - from - 1).All(between => Class(between) == "det")
+            && string.Equals(Feature(governing, "state"), ConstructState, StringComparison.OrdinalIgnoreCase)
+                ? governed
+                : null;
+    }
 
     /// <summary>
     /// The rendering, if it names the pronoun's person: a subject in the verb's own ending - a
