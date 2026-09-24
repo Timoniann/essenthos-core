@@ -78,6 +78,7 @@ internal static class AccountsSetup
         }
 
         services.AddAuthorization();
+        services.AddSingleton(new Admins(Admins.Read(configuration)));
         return providers;
     }
 

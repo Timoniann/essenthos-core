@@ -30,6 +30,12 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
 
     public DbSet<Bookmark> Bookmarks => Set<Bookmark>();
 
+    public DbSet<Suggestion> Suggestions => Set<Suggestion>();
+
+    public DbSet<SuggestionMessage> SuggestionMessages => Set<SuggestionMessage>();
+
+    public DbSet<AdminAction> AdminActions => Set<AdminAction>();
+
     /// <summary>
     /// The keys that protect the sign-in flow's short-lived cookies. Here rather than on a disk so that
     /// every API process of one environment shares them, they survive a container being replaced, and
@@ -129,6 +135,50 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             bookmark.HasOne<Account>().WithMany().HasForeignKey(b => b.AccountId).OnDelete(DeleteBehavior.Cascade);
         });
 
+        model.Entity<Suggestion>(suggestion =>
+        {
+            suggestion.ToTable("suggestion");
+            suggestion.Property(s => s.Id).ValueGeneratedNever();
+            suggestion.Property(s => s.Category).HasMaxLength(16);
+            suggestion.Property(s => s.Status).HasMaxLength(16);
+            suggestion.Property(s => s.Body).HasMaxLength(Limits.SuggestionBody);
+            suggestion.Property(s => s.Fields).HasColumnType("jsonb");
+            suggestion.Property(s => s.Language).HasMaxLength(Limits.SuggestionField);
+            suggestion.Property(s => s.Locale).HasMaxLength(16);
+            // The admin list: what is new first, then by the latest message.
+            suggestion.HasIndex(s => new { s.Status, s.LastActivityAt });
+            suggestion.HasIndex(s => new { s.AccountId, s.CreatedAt });
+            suggestion.HasIndex(s => s.AssignedTo);
+            suggestion.HasOne<Account>().WithMany().HasForeignKey(s => s.AccountId).OnDelete(DeleteBehavior.Cascade);
+            suggestion.HasOne<Account>().WithMany().HasForeignKey(s => s.AssignedTo).OnDelete(DeleteBehavior.SetNull);
+        });
+
+        model.Entity<SuggestionMessage>(message =>
+        {
+            message.ToTable("suggestion_message");
+            message.Property(m => m.Kind).HasMaxLength(16);
+            message.Property(m => m.Body).HasMaxLength(Limits.SuggestionMessage);
+            message.HasIndex(m => new { m.SuggestionId, m.At });
+            message.HasIndex(m => new { m.AuthorId, m.At });
+            message.HasOne<Suggestion>().WithMany().HasForeignKey(m => m.SuggestionId).OnDelete(DeleteBehavior.Cascade);
+            message.HasOne<Account>().WithMany().HasForeignKey(m => m.AuthorId).OnDelete(DeleteBehavior.SetNull);
+        });
+
+        // No foreign keys: the record of what was done outlives the account and the suggestion it was
+        // done to, which is what the copied names are for.
+        model.Entity<AdminAction>(action =>
+        {
+            action.ToTable("admin_action");
+            action.Property(a => a.ActorName).HasMaxLength(Limits.DisplayName);
+            action.Property(a => a.AccountName).HasMaxLength(Limits.DisplayName);
+            action.Property(a => a.Action).HasMaxLength(32);
+            action.Property(a => a.Before).HasMaxLength(200);
+            action.Property(a => a.After).HasMaxLength(200);
+            action.HasIndex(a => a.At);
+            action.HasIndex(a => new { a.SuggestionId, a.At });
+            action.HasIndex(a => new { a.AccountId, a.At });
+        });
+
         model.Entity<AccountPhoto>(photo =>
         {
             photo.ToTable("account_photo");
@@ -195,4 +245,25 @@ public static class Limits
 
     /// <summary>How many bookmarks one account keeps; far past any reader, short of a bulk store.</summary>
     public const int BookmarksPerAccount = 50_000;
+
+    /// <summary>A suggestion's main text: a long letter, not a manuscript.</summary>
+    public const int SuggestionBody = 10_000;
+
+    /// <summary>Any one of a suggestion's short fields — a language, a title, an edition.</summary>
+    public const int SuggestionField = 200;
+
+    /// <summary>The longer fields — notes, sources, a suggested fix.</summary>
+    public const int SuggestionLongField = 4_000;
+
+    public const int SuggestionMessage = 10_000;
+
+    public const int SuggestionLinks = 10;
+
+    public const int SuggestionLink = 2_000;
+
+    /// <summary>How many suggestions one account may send in a day: more than anyone writes by hand.</summary>
+    public const int SuggestionsPerDay = 10;
+
+    /// <summary>How many follow-up messages one account may write in a day, across its suggestions.</summary>
+    public const int SuggestionMessagesPerDay = 60;
 }

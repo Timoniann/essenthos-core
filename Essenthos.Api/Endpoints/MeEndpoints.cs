@@ -15,12 +15,12 @@ internal static class MeEndpoints
     {
         var me = routes.MapGroup("/me").RequireAuthorization();
 
-        me.MapGet("", async (HttpContext context, AccountsDbContext db) =>
-            await Describe(db, context.User.AccountId(), context.RequestAborted) is { } account
+        me.MapGet("", async (HttpContext context, AccountsDbContext db, Admins admins) =>
+            await Describe(db, admins, context.User.AccountId(), context.RequestAborted) is { } account
                 ? Results.Ok(account)
                 : Results.Unauthorized());
 
-        me.MapPatch("", async (HttpContext context, AccountsDbContext db, MeUpdate update) =>
+        me.MapPatch("", async (HttpContext context, AccountsDbContext db, Admins admins, MeUpdate update) =>
         {
             var id = context.User.AccountId();
             var account = await db.Accounts.FirstAsync(a => a.Id == id, context.RequestAborted);
@@ -58,12 +58,12 @@ internal static class MeEndpoints
             }
 
             await db.SaveChangesAsync(context.RequestAborted);
-            return Results.Ok(await Describe(db, account.Id, context.RequestAborted));
+            return Results.Ok(await Describe(db, admins, account.Id, context.RequestAborted));
         });
 
         // The picture as the request body, not a form: one file, its type in Content-Type, and nothing
         // else to parse.
-        me.MapPut("/photo", async (HttpContext context, AccountsDbContext db) =>
+        me.MapPut("/photo", async (HttpContext context, AccountsDbContext db, Admins admins) =>
         {
             var content = await ReadCapped(context.Request, context.RequestAborted);
             if (content is null)
@@ -94,22 +94,22 @@ internal static class MeEndpoints
             var account = await db.Accounts.FirstAsync(a => a.Id == id, context.RequestAborted);
             account.PhotoVersion++;
             await db.SaveChangesAsync(context.RequestAborted);
-            return Results.Ok(await Describe(db, id, context.RequestAborted));
+            return Results.Ok(await Describe(db, admins, id, context.RequestAborted));
         });
 
-        me.MapDelete("/photo", async (HttpContext context, AccountsDbContext db) =>
+        me.MapDelete("/photo", async (HttpContext context, AccountsDbContext db, Admins admins) =>
         {
             var id = context.User.AccountId();
             await db.AccountPhotos.Where(p => p.AccountId == id).ExecuteDeleteAsync(context.RequestAborted);
             var account = await db.Accounts.FirstAsync(a => a.Id == id, context.RequestAborted);
             account.PhotoVersion = 0;
             await db.SaveChangesAsync(context.RequestAborted);
-            return Results.Ok(await Describe(db, id, context.RequestAborted));
+            return Results.Ok(await Describe(db, admins, id, context.RequestAborted));
         });
 
         // Disconnecting a provider, which is refused for the last one: an account with no way in is an
         // account nobody can ever reach again, including to delete it.
-        me.MapDelete("/providers/{provider}", async (HttpContext context, AccountsDbContext db, string provider) =>
+        me.MapDelete("/providers/{provider}", async (HttpContext context, AccountsDbContext db, Admins admins, string provider) =>
         {
             var id = context.User.AccountId();
             var credentials = await db.Credentials.Where(c => c.AccountId == id).ToListAsync(context.RequestAborted);
@@ -134,7 +134,7 @@ internal static class MeEndpoints
             }
 
             await db.SaveChangesAsync(context.RequestAborted);
-            return Results.Ok(await Describe(db, id, context.RequestAborted));
+            return Results.Ok(await Describe(db, admins, id, context.RequestAborted));
         });
 
         me.MapGet("/sessions", async (HttpContext context, AccountsDbContext db) =>
@@ -162,9 +162,9 @@ internal static class MeEndpoints
             return removed == 0 ? Results.NotFound(new ProblemResponse("No such session.")) : Results.NoContent();
         });
 
-        // Deleted, not hidden: the account, how it signed in, its sessions and its photo, in one
-        // statement the foreign keys cascade. Nothing else belongs to an account yet; when notes and
-        // articles do, what happens to an article others have commented on has to be decided first.
+        // Deleted, not hidden: the account, how it signed in, its sessions, its photo, its bookmarks and
+        // its suggestions, in one statement the foreign keys cascade. What it wrote as an admin stays,
+        // unsigned. When articles exist, what happens to one others have commented on has to be decided first.
         me.MapDelete("", async (HttpContext context, AccountsDbContext db) =>
         {
             var id = context.User.AccountId();
@@ -191,7 +191,7 @@ internal static class MeEndpoints
         });
     }
 
-    private static async Task<MeResponse?> Describe(AccountsDbContext db, Guid id, CancellationToken cancellationToken)
+    private static async Task<MeResponse?> Describe(AccountsDbContext db, Admins admins, Guid id, CancellationToken cancellationToken)
     {
         var account = await db.Accounts.AsNoTracking()
             .Where(a => a.Id == id)
@@ -212,7 +212,8 @@ internal static class MeEndpoints
                 account.PhotoVersion > 0 ? $"/v1/accounts/{account.Id}/photo?v={account.PhotoVersion}" : account.ProviderPhotoUrl,
                 account.PhotoVersion > 0,
                 account.Providers,
-                account.CreatedAt);
+                account.CreatedAt,
+                await admins.IsAdmin(db, id, cancellationToken));
     }
 
     /// <summary>The body, or null once it passes the cap — read no further than one byte over it.</summary>
@@ -256,6 +257,7 @@ internal static class MeEndpoints
 /// says which, so an account page knows whether "remove" means anything.
 /// </param>
 /// <param name="Providers">How this account signs in, with the address each reported.</param>
+/// <param name="Admin">Whether the admin area is theirs — for showing the way there; every admin route checks for itself.</param>
 internal record MeResponse(
     Guid Id,
     string DisplayName,
@@ -264,7 +266,8 @@ internal record MeResponse(
     string? Photo,
     bool PhotoUploaded,
     IReadOnlyList<ProviderResponse> Providers,
-    DateTimeOffset CreatedAt);
+    DateTimeOffset CreatedAt,
+    bool Admin);
 
 internal record ProviderResponse(string Provider, string? Email);
 
