@@ -20,6 +20,17 @@ title, which is where every other psalm of this text keeps its first line. The s
 transcription carries are dropped with it: they are an apparatus for saying a word aloud, and no
 other Ukrainian word in this corpus has one.
 
+**The ends of seven more verses are taken from it, on the owner's decision of 2026-09-24.** The same
+file cuts them short: Genesis 22:19, 44:26 and 50:11, 2 Samuel 17:20, Job 2:2, Isaiah 50:9 and
+Habakkuk 1:8 each stop where this copy goes on — Job 2:2 at *А сатана відповів Господеві й сказав:*,
+with the answer missing. They were found by comparing every verse outside the Psalms: in these seven
+and no others the loaded verse is the head of this one, the rest stands in no following verse of
+the loaded file, and the King James reads the same sense there. The rest of each verse is appended
+to the loaded one, written as bible4u writes Ohienko — without stress marks, quotation marks or
+dashes, none of which that file prints — and with no Strong number and no link, since nothing states
+what the words render. `Essenthos.Forge/Loading/LostVerseEndings.cs` lists them with the uk.wikisource
+page each was read from.
+
 ## Why the whole text is *not* taken, which the numbers below are the answer to
 
 Every verse of both was compared, 2026-09-20, over the 65 books outside the Psalms, where the two
@@ -56,7 +67,10 @@ Swapping the loaded Ohienko for this one would also cascade away 595,497 words, 
 That is a decision recorded on the board, not one taken here.
 
 **Nothing else may be read out of these files by address.** The chapter numbers are the pages' own.
-Psalm 7 is taken because both traditions call it 7; every other psalm would need the mapping first.
+Psalm 7 is taken because both traditions call it 7; every other psalm would need the mapping first. The seven
+verse endings are the one other exception, and each is taken only where the loaded verse is the head of
+the one at the same address here — a verse the two numberings place differently would not begin with the
+same words, and the loader stops rather than write it.
 
 ## The licence — CC BY-SA 4.0, and it has conditions
 
@@ -91,7 +105,7 @@ verse anchors and the footnotes are Wikisource contributors', not Ohienko's.
   the translation. It is **not** discharged for the transcribers of the one restored verse: nothing
   on screen names Ukrainian Wikisource. Filed rather than fixed here.
 - **Indicating a modification.** 4.0 requires that whoever passes the material on says it was
-  changed. Our copy now is bible4u's file with one verse restored from this one, so the loader
+  changed. Our copy now is bible4u's file with one verse and the ends of seven restored from this one, so the loader
   writes that sentence onto the text's `rights_note`, where the interface shows it beside the
   licence.
 - **ShareAlike.** It binds **Adapted Material** — a work based on this one and modified. Our copy of
