@@ -153,7 +153,14 @@ internal static class StrongEndpoints
                 words = words.Where(w => w.TextId == named.Id);
             }
 
-            var total = await words.CountAsync(cancellationToken);
+            // Per text as well as in all, because the total counts every edition of the original
+            // and every translation that tags its own words with the number, and a reader citing
+            // it has to be able to say which of those it is.
+            var byText = await words
+                .GroupBy(w => w.Text!.Slug)
+                .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
+                .ToListAsync(cancellationToken);
+            var total = byText.Sum(text => text.Count);
             var page = await words
                 .OrderBy(w => w.Text!.Slug)
                 .ThenBy(w => w.Verse!.Book!.CanonicalOrdinal)
@@ -178,6 +185,7 @@ internal static class StrongEndpoints
             return Results.Ok(new StrongOccurrenceListResponse(
                 canonical,
                 total,
+                [.. byText.OrderByDescending(text => text.Count).ThenBy(text => text.Corpus, StringComparer.Ordinal)],
                 [
                     .. page.Select(w => new StrongOccurrenceResponse(
                         w.Corpus,
@@ -590,10 +598,14 @@ internal record StrongOccurrenceResponse(
     string Text,
     string? Gloss);
 
+/// <param name="ByText">How many of <paramref name="Total"/> stand in each text, most first.</param>
 internal record StrongOccurrenceListResponse(
     string StrongNumber,
     int Total,
+    IList<StrongTextCountResponse> ByText,
     IList<StrongOccurrenceResponse> Items);
+
+internal record StrongTextCountResponse(string Corpus, int Count);
 
 /// <param name="Occurrences">Every word carrying this number in the edition the counts are made over.</param>
 /// <param name="Reached">
