@@ -49,6 +49,12 @@ internal sealed record UsfmVerse(int Number, IReadOnlyList<UsfmWord> Words, stri
     /// edition's own numbering it opens in an earlier verse than the one it states.
     /// </summary>
     public bool OpensBeforeItsStatedAddress { get; init; }
+
+    /// <summary>
+    /// The verse opens with a superscription the edition marks as one — a <c>\d</c> line before the
+    /// chapter's first verse — which the reader holds and gives to this verse.
+    /// </summary>
+    public bool MarksASuperscription { get; init; }
 }
 
 /// <param name="Chapter">The chapter of the edition's own numbering, which need not be the row's.</param>
@@ -134,7 +140,27 @@ internal static partial class UsfmReader
     /// <c>\h</c> and <c>\toc1</c> — are handled rather than discarded and so are not here.
     /// </summary>
     private static readonly HashSet<string> Matter =
-        ["toc2", "toc3", "mt", "mt1", "mt2", "mt3", "is", "is1", "ip", "imt", "rem", "cl", "ide"];
+    [
+        "toc2", "toc3", "mt", "mt1", "mt2", "mt3", "is", "is1", "ip", "imt", "rem", "cl", "ide",
+
+        // A book's introduction, its outline and the tables in it, which some editions print before
+        // the first chapter: the Segond has a page of it before every book.
+        "imt1", "imt2", "imt3", "ipi", "ib", "ie", "iot", "io1", "io2",
+        "tr", "th1", "th2", "tc1", "tc2", "tc3",
+
+        // References to other passages printed under a heading or over a section, a letter of the
+        // alphabet heading a stanza of Psalm 119, and a heading over a group of chapters. None is a
+        // word of the verse it stands beside.
+        "r", "mr", "qa", "ms2",
+    ];
+
+    /// <summary>
+    /// The headings an editor wrote over the text, where an edition prints them. In the older files
+    /// here a <c>\s1</c> line is the text's own — the subscription the King James and the Kulish
+    /// Bible print under an epistle — so it is kept; an edition that puts its publisher's section
+    /// titles there says so, and they are dropped.
+    /// </summary>
+    private static readonly HashSet<string> Headings = ["s", "s1", "s2", "ms", "ms1"];
 
     /// <summary>
     /// The passage markers that start the text afresh, and how. A blank line between stanzas is a
@@ -159,7 +185,16 @@ internal static partial class UsfmReader
         ["li1"] = TextBreak.Line,
     };
 
-    public static UsfmBook Read(string content)
+    /// <summary>The marker of a psalm's superscription.</summary>
+    private const string Superscription = "d";
+
+    public static UsfmBook Read(string content) => Read(content, editorialHeadings: false);
+
+    /// <param name="editorialHeadings">
+    /// Whether the edition's section headings are its editor's, as the modern printings of the
+    /// Segond, the Van Dyck and the Indian Revised Version are, rather than words of the text.
+    /// </param>
+    public static UsfmBook Read(string content, bool editorialHeadings)
     {
         string? book = null;
         var chapters = new List<UsfmChapter>();
@@ -171,6 +206,7 @@ internal static partial class UsfmReader
         var label = string.Empty;
         var title = string.Empty;
         var running = new Running();
+        var superscribed = false;
         TextBreak? pending = null;
 
         // A break waits for the first word after it, and two marks before one word are one break:
@@ -205,8 +241,11 @@ internal static partial class UsfmReader
                     Notes = [.. notes],
                     Stated = [.. running.Stated],
                     OpensBeforeItsStatedAddress = running.OpensBefore,
+                    MarksASuperscription = superscribed,
                 });
             }
+
+            superscribed = false;
 
             words.Clear();
             notes.Clear();
@@ -229,7 +268,7 @@ internal static partial class UsfmReader
             verses.Clear();
         }
 
-        foreach (var line in content.Split('\n'))
+        foreach (var line in Lines(content))
         {
             var trimmed = line.Trim();
             if (trimmed.Length == 0)
@@ -287,8 +326,14 @@ internal static partial class UsfmReader
                     break;
 
                 default:
+                    if (editorialHeadings && Headings.Contains(name))
+                    {
+                        break;
+                    }
+
                     if (Passage.Contains(name))
                     {
+                        superscribed |= name == Superscription && verse == 0 && rest.Length > 0;
                         if (Breaks.TryGetValue(name, out var opening))
                         {
                             pending = pending == TextBreak.Paragraph ? pending : opening;
@@ -312,6 +357,49 @@ internal static partial class UsfmReader
         return book is null
             ? throw new InvalidOperationException("The file has no \\id, so nothing says which book it is.")
             : new UsfmBook(book, chapters, title);
+    }
+
+    /// <summary>
+    /// The file's lines, with a footnote that runs on to the next line read as one. The Indian Revised
+    /// Version breaks one footnote of 2,956 across a paragraph, at Nehemiah 7:4, and its second line
+    /// opens with the footnote's own <c>\fp</c>.
+    /// </summary>
+    private static IEnumerable<string> Lines(string content)
+    {
+        const string opening = "\\f ";
+        const string closing = "\\f*";
+        string? open = null;
+
+        foreach (var line in content.Split('\n'))
+        {
+            var joined = open is null ? line : open + " " + line.Trim();
+            if (Count(joined, opening) > Count(joined, closing))
+            {
+                open = joined.TrimEnd();
+                continue;
+            }
+
+            open = null;
+            yield return joined;
+        }
+
+        if (open is not null)
+        {
+            yield return open;
+        }
+
+        static int Count(string text, string marker)
+        {
+            var count = 0;
+            for (var at = text.IndexOf(marker, StringComparison.Ordinal);
+                 at >= 0;
+                 at = text.IndexOf(marker, at + marker.Length, StringComparison.Ordinal))
+            {
+                count++;
+            }
+
+            return count;
+        }
     }
 
     /// <summary>
@@ -571,6 +659,10 @@ internal static partial class UsfmReader
             content = content[1..].TrimStart();
         }
         content = string.Join(' ', content.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
+        if (marker == Parenthesised && content.StartsWith('(') && content.EndsWith(')'))
+        {
+            content = content[1..^1].Trim();
+        }
 
         if (content.Length == 0)
         {
@@ -615,7 +707,7 @@ internal static partial class UsfmReader
 
             var token = text[start..at];
             var end = token.Length;
-            while (end > 0 && !char.IsLetterOrDigit(token[end - 1]) && token[end - 1] != 'ʼ')
+            while (end > 0 && !OfTheWord(token[end - 1]))
             {
                 end--;
             }
@@ -638,6 +730,19 @@ internal static partial class UsfmReader
             });
         }
     }
+
+    /// <summary>
+    /// Whether a character belongs to the word it ends rather than to the punctuation after it: a
+    /// letter or a digit, the modifier apostrophe, and a mark written over or under the letter before
+    /// it. Devanagari writes most of its vowels as marks — का is क with ा — and Arabic its vowels and
+    /// case endings, so a word that ends in one is a word and not a word and a stray mark.
+    /// </summary>
+    private static bool OfTheWord(char character) =>
+        char.IsLetterOrDigit(character)
+        || character == 'ʼ'
+        || char.GetUnicodeCategory(character) is System.Globalization.UnicodeCategory.NonSpacingMark
+            or System.Globalization.UnicodeCategory.SpacingCombiningMark
+            or System.Globalization.UnicodeCategory.EnclosingMark;
 
     /// <summary>
     /// The one thing an edition marked the letters of this word with, and null where it marked
@@ -715,9 +820,19 @@ internal static partial class UsfmReader
     /// note, and inventing a place for one on the way past would be worse than dropping it: it
     /// would be a claim about the text made by a regex. Its readable text is retained as a
     /// source-attributed verse note by <see cref="ReadNote"/>.
+    ///
+    /// <para>
+    /// The Indian Revised Version prints its cross references in the running text instead, in
+    /// brackets set bold italic — <c>\bdit (इब्रा. 1:10, इब्रा. 11:3) \bdit*</c> after Genesis 1:1 —
+    /// and uses the marker for nothing else: all 2,519 of them are a bracketed list of passages. They
+    /// are read as the cross references they are, without the brackets.
+    /// </para>
     /// </summary>
-    [GeneratedRegex(@"\\(?<note>f|x)\s.*?\\\k<note>\*")]
+    [GeneratedRegex(@"\\(?<note>f|x|bdit)\s.*?\\\k<note>\*")]
     private static partial Regex Note();
+
+    /// <summary>The marker the Indian Revised Version sets its bracketed cross references in.</summary>
+    private const string Parenthesised = "bdit";
 
     [GeneratedRegex(@"\\\+?[a-z][a-z0-9]*\*?")]
     private static partial Regex NoteMarker();
@@ -740,7 +855,11 @@ internal static partial class UsfmReader
     /// <c>\nd</c> is the divine name set in small capitals, which is how a printed King James tells
     /// the tetragrammaton apart from <em>Lord</em>. The letters are the word and the capitals are
     /// the typography, so the marker goes and the word stays, spelled as the edition spells it.
+    ///
+    /// <c>\it</c>, <c>\k</c> and <c>\tl</c> are italics, a keyword and a transliteration, which the
+    /// Indian Revised Version sets over words of its own verses, and <c>\ord</c> the raised letters
+    /// of an ordinal: typography again, over letters that are the text's.
     /// </summary>
-    [GeneratedRegex(@"\\\+?(?:wj|qs|bk|nd)\*?")]
+    [GeneratedRegex(@"\\\+?(?:wj|qs|bk|nd|it|k|tl|ord)\*?")]
     private static partial Regex Marked();
 }

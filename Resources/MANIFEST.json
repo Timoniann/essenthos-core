@@ -59,6 +59,11 @@
     "files": 60,
     "sha256": "67308d9dcae41b4589ae4997a401396de5659f6d21050e9b5c4e1246267c32e5"
   },
+  "IrvHindi2019": {
+    "bytes": 11469312,
+    "files": 67,
+    "sha256": "985de76768c1788543eda408bc38174abf2bec28348b7049ecc827b8f70cd9aa"
+  },
   "Jps1917": {
     "bytes": 3422072,
     "files": 40,
@@ -149,6 +154,11 @@
     "files": 41,
     "sha256": "b1dbf43a2217910bf8eb582baabafd542b812f5cf4effb77dc3e3fe80695c223"
   },
+  "Segond1910": {
+    "bytes": 20489348,
+    "files": 67,
+    "sha256": "06f680c49493e8c4137fa27c9b558f84647338f647d865f10708ecece0acaff5"
+  },
   "SenseReadings": {
     "bytes": 3342878,
     "files": 26,
@@ -203,6 +213,11 @@
     "bytes": 80744638,
     "files": 8,
     "sha256": "93b2a167aced03f91bfbaf6039899f29965fbc8042c00881792ff6538e97f013"
+  },
+  "VanDyck1865": {
+    "bytes": 7822806,
+    "files": 67,
+    "sha256": "fa9ac5dbc91f682346afa650ee064883d656a2e57ad5cd1f0d51fd4165cb3988"
   },
   "Versification": {
     "bytes": 5790928,

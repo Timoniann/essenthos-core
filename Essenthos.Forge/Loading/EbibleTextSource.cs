@@ -5,14 +5,18 @@ using Essenthos.Core.Usfm;
 namespace Essenthos.Core.Loading;
 
 /// <summary>
-/// The German and Spanish Bibles, as eBible publishes them: one reader for all three because they
-/// are one file format, and the same format Brenton and the Kulish Bible already arrive in.
+/// The German, Spanish, French, Arabic and Hindi Bibles, as eBible publishes them: one reader for
+/// all of them because they are one file format, and the same format Brenton and the Kulish Bible
+/// already arrive in.
 ///
-/// They are here because the interface is to speak German and Spanish and the corpus held no text
-/// in either. What could be taken was decided by reading licences rather than by fame: the Luther
-/// everybody names is four different texts with four rights positions, and so is the Reina-Valera.
-/// The three below are the ones whose terms are stated where the bytes are, in three places that
-/// agree, and whose translators have been dead long enough for the arithmetic to say the same.
+/// The German and the Spanish are here because the interface is to speak German and Spanish and the
+/// corpus held no text in either; the French, the Arabic and the Hindi because they are the Bibles
+/// most read in their languages that anybody may take, and because each has a hand-made word
+/// alignment to the Hebrew and the Greek published beside it. What could be taken was decided by
+/// reading licences rather than by fame: the Luther everybody names is four different texts with
+/// four rights positions, and so is the Reina-Valera. The ones below are those whose terms are stated
+/// where the bytes are, in three places that agree: public domain, with translators dead long enough
+/// for the arithmetic to say the same, and for the Hindi an open licence its publisher states.
 ///
 /// Two of them arrive carrying more than words. Luther 1912 and the Reina-Valera tag their words
 /// with Strong numbers — 365,353 and 390,758 of them — which is the only thing either file says
@@ -52,6 +56,26 @@ internal static class EbibleTextSource
     /// "JEHOVÁ es mi pastor".
     /// </summary>
     public const string ReinaValera = "RV1909";
+
+    /// <summary>
+    /// Louis Segond's French Bible in the revision of 1910, not the Segond 21 or the Nouvelle Segond
+    /// Révisée, which are in copyright. Genesis 1:1 reads "Au commencement, Dieu créa les cieux et
+    /// la terre", and the divine name is "l'Éternel" throughout.
+    /// </summary>
+    public const string Segond = "LSG1910";
+
+    /// <summary>
+    /// The Arabic Bible of Eli Smith and Cornelius Van Dyck, the Protestant Arabic Bible since 1865.
+    /// Not the Jesuit Bible of 1881 and not the modern Ketab El Hayat: Genesis 1:1 reads "فِي
+    /// ٱلْبَدْءِ خَلَقَ ٱللهُ ٱلسَّمَاوَاتِ وَٱلْأَرْضَ".
+    /// </summary>
+    public const string VanDyck = "AVD1865";
+
+    /// <summary>
+    /// The Indian Revised Version in Hindi, the only complete Hindi Bible anyone may take. Genesis
+    /// 1:1 reads "आदि में परमेश्वर ने आकाश और पृथ्वी की सृष्टि की।"
+    /// </summary>
+    public const string IrvHindi = "IRV2019";
 
     /// <summary>
     /// Each text's folder under <c>Resources</c> and the definition it loads with, so the download
@@ -173,7 +197,96 @@ internal static class EbibleTextSource
                 "Santa Biblia, Antigua versión de Casiodoro de Reina revisada por Cipriano de Valera, "
                 + "revisión de 1909, in the digital edition eBible.org publishes as spaRV1909.",
         },
+
+        ["Segond1910"] = Definition(
+            Segond, "fraLSG", "Louis Segond Bible", "Louis Segond 1910", "fra", 1880, "Mixed") with
+        {
+            Versification = Versification.Original,
+            Translators = "Louis Segond (1810-1885)",
+            Edition = "The revision of 1910",
+            EditionYear = 1910,
+            About =
+                "Louis Segond, a pastor of Geneva, translated the Old Testament from the Hebrew, published "
+                + "in 1874, and the New Testament from the Greek in 1880. The text served here is the "
+                + "revision of 1910, the Bible French Protestants read for most of the twentieth century "
+                + "and the last Segond that is out of copyright; the Segond 21 and the Nouvelle Segond "
+                + "Révisée are later and are not. It numbers most of the Old Testament as the Hebrew "
+                + "does — a psalm's title is its first verse, and Exodus 8, Leviticus 6 and Numbers 30 "
+                + "open where the Hebrew opens them — but gives Joel three chapters and Malachi four as "
+                + "the English does, and divides the end of Job and of Ecclesiastes 11 in its own way. "
+                + "Its New Testament prints Acts 8:37 and the doxology of the Lord's Prayer, and not the "
+                + "heavenly witnesses of 1 John 5:7.",
+            RightsNote =
+                "The text is public domain and says so in all three of eBible's places, and Segond died in "
+                + "1885. The Strong tagging that arrives with it is not loaded. eBible names nobody for "
+                + "it, and it is not a claim about words: \"créa les\" both carry H1254 and \"et la "
+                + "terre\" all three H8064 in Genesis 1:1. CrossWire's Strong-numbered Segond credits its "
+                + "numbers to Concordances et Traductions de la Bible, 2026, under \"Copyrighted; "
+                + "Permission to distribute granted to CrossWire\". The book introductions and section "
+                + "headings of eBible's edition are its editors' and are not loaded either.",
+            Citation =
+                "La Sainte Bible, traduction de Louis Segond, révision de 1910, in the digital edition "
+                + "eBible.org publishes as fraLSG.",
+        },
+
+        ["VanDyck1865"] = Definition(
+            VanDyck, "arb-vd", "Van Dyck Bible", "الكتاب المقدس، ترجمة فان دايك", "arb", 1865,
+            "Byzantine") with
+        {
+            Direction = TextDirection.RightToLeft,
+            Translators =
+                "Eli Smith (1801-1857) and Cornelius Van Alen Van Dyck (1818-1895), of the American "
+                + "mission in Syria",
+            About =
+                "The Arabic Bible of the American mission in Beirut. Eli Smith began it in 1847 and died "
+                + "in 1857 with part of it drafted; Cornelius Van Dyck revised what he had done and "
+                + "finished it, the New Testament in 1860 and the whole Bible in 1865, and the American "
+                + "Bible Society has printed it since. It is the Bible of the Arabic-speaking Protestant "
+                + "churches, and it is printed fully vowelled.",
+            RightsNote =
+                "Public domain and stated so by eBible in all three places; Van Dyck died in 1895. "
+                + "eBible's edition adds section headings of its own, which are not loaded.",
+            Citation =
+                "الكتاب المقدس, the Smith-Van Dyck translation, in the digital edition eBible.org "
+                + "publishes as arb-vd.",
+        },
+
+        ["IrvHindi2019"] = Definition(
+            IrvHindi, "hin2017", "Indian Revised Version (Hindi)",
+            "इंडियन रिवाइज्ड वर्जन (IRV) हिंदी - 2019", "hin", 2019, "Alexandrian") with
+        {
+            RightsHolder = "Bridge Connectivity Solutions Pvt. Ltd.",
+            Licence = "CC-BY-SA-4.0",
+            LicenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/",
+            Redistribution = Redistribution.ShareAlike,
+            Translators = "Bridge Connectivity Solutions",
+            Edition = "The edition of 2019",
+            About =
+                "A revision of the Hindi Bible prepared by Bridge Connectivity Solutions between 2017 and "
+                + "2019 and released under an open licence, which makes it the only complete Hindi Bible "
+                + "that anyone may take. Its Greek is a critical text: the heavenly witnesses of 1 John "
+                + "5:7 are absent and the doxology of the Lord's Prayer stands in brackets. It prints "
+                + "cross references in brackets in the running text, which are read here as the cross "
+                + "references they are.",
+            RightsNote =
+                "Copyright 2017, 2018, 2019 Bridge Connectivity Solutions, under Creative Commons "
+                + "Attribution-ShareAlike 4.0, stated in all three of eBible's places. ShareAlike binds "
+                + "an adaptation of this text, such as its searchable form, and not the texts it is read "
+                + "beside or the links that say which of its words renders which Hebrew or Greek word. "
+                + "The text is served unchanged; the introductions and section headings of this edition "
+                + "are its editors' and are not loaded.",
+            Citation =
+                "इंडियन रिवाइज्ड वर्जन (IRV) हिंदी - 2019, © 2017, 2018, 2019 Bridge Connectivity "
+                + "Solutions, CC BY-SA 4.0, in the digital edition eBible.org publishes as hin2017.",
+        },
     };
+
+    /// <summary>
+    /// Editions whose section headings, book introductions and outlines are their publishers',
+    /// printed over the text; they are dropped rather than read as words of the verse beside them.
+    /// </summary>
+    private static readonly HashSet<string> HeadingsAreTheEditors =
+        new(["Segond1910", "VanDyck1865", "IrvHindi2019"], StringComparer.OrdinalIgnoreCase);
 
     /// <summary>Every text this reader knows, by the folder its files are fetched into.</summary>
     public static IReadOnlyDictionary<string, TextDefinition> Definitions => Known;
@@ -204,9 +317,18 @@ internal static class EbibleTextSource
     /// nothing here stores a Spanish Strong number, so nothing serves one. A pass that reads them
     /// in memory to draw links has not been written yet.
     /// </para>
+    ///
+    /// <para>
+    /// The Segond's is nobody's that eBible will name. It arrived with eBible's revision of 2026-08-08
+    /// and is not word-level — Genesis 1:1 gives <c>et</c>, <c>la</c> and <c>terre</c> all H8064 —
+    /// and the one Strong-numbered Segond that says whose its numbers are, CrossWire's, credits them
+    /// to Concordances et Traductions de la Bible in 2026 and is distributed as "Copyrighted;
+    /// Permission to distribute granted to CrossWire". The French reaches the originals through Clear
+    /// Bible's hand-made alignment instead.
+    /// </para>
     /// </summary>
     private static readonly HashSet<string> TaggingIsNotOursToTake =
-        new(["ReinaValera1909"], StringComparer.OrdinalIgnoreCase);
+        new(["ReinaValera1909", "Segond1910"], StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     /// The 66 books in canonical order, by the code each file states in its <c>\id</c> line. Their
@@ -241,7 +363,7 @@ internal static class EbibleTextSource
         }
 
         var books = Directory.GetFiles(folder, "*.usfm")
-            .Select(path => UsfmReader.Read(File.ReadAllText(path)))
+            .Select(path => UsfmReader.Read(File.ReadAllText(path), HeadingsAreTheEditors.Contains(name)))
             .ToDictionary(book => book.Book, StringComparer.Ordinal);
 
         // Whose the numbers are is one question and whether they are word-level another; a layer
@@ -291,6 +413,7 @@ internal static class EbibleTextSource
                 note.AnchorWordPosition))],
             Stated = [.. verse.Stated.Select(address => new StatedNumberDraft(address.Chapter, address.Number))],
             OpensBeforeItsStatedAddress = verse.OpensBeforeItsStatedAddress,
+            MarksASuperscription = verse.MarksASuperscription,
         })]);
 
     /// <param name="translation">

@@ -761,8 +761,10 @@ internal sealed class DatasetLoader(
     /// On the Berean they are a second person's answer to the question the Berean's own tables
     /// answer: mostly it agrees, and where it agrees it adds a claim rather than a link — the first
     /// time this corpus could record that two independent methods reached the same word pair. On
-    /// the Reina-Valera they are the whole of what anybody has said, and every record becomes a
-    /// link.
+    /// the Reina-Valera, the Segond, the Van Dyck and the Indian Revised Version they are the whole
+    /// of what anybody has said, and every record becomes a link: no source states a single Spanish,
+    /// French, Arabic or Hindi correspondence otherwise, and those texts would otherwise reach the
+    /// originals the way the Slavic texts do, through this project's own model.
     /// </summary>
     private async Task ReadTheHandMadeAlignments(string resources, CancellationToken cancellationToken)
     {
@@ -772,25 +774,10 @@ internal sealed class DatasetLoader(
         var loader = scope.ServiceProvider.GetRequiredService<Links.ClearBibleLinkLoader>();
         var clearBible = Path.Combine(resources, "ClearBible");
 
-        status.Record(await loader.Load(
-            clearBible,
-            ClearBible.ClearBibleSet.Berean(BereanTextSource.Slug, NestleTextSource.Slug),
-            cancellationToken));
-
-        // The Reina-Valera's, which is not a second opinion but the only one: no source states a
-        // single Spanish correspondence otherwise, and the Spanish would otherwise reach the
-        // originals the way the Slavic texts do, through this project's own model.
-        status.Record(await loader.Load(
-            clearBible,
-            ClearBible.ClearBibleSet.ReinaValeraOldTestament(
-                EbibleTextSource.ReinaValera, BhsaTextSource.Slug),
-            cancellationToken));
-
-        status.Record(await loader.Load(
-            clearBible,
-            ClearBible.ClearBibleSet.ReinaValeraNewTestament(
-                EbibleTextSource.ReinaValera, NestleTextSource.Slug),
-            cancellationToken));
+        foreach (var set in ClearBible.ClearBibleSet.All())
+        {
+            status.Record(await loader.Load(clearBible, set, cancellationToken));
+        }
     }
 
     /// <summary>
@@ -816,6 +803,20 @@ internal sealed class DatasetLoader(
                 Bible4uTextSource.Read(
                     ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation),
                 cancellationToken);
+
+            if (outcome.Verses > 0)
+            {
+                status.Record(outcome.ToString());
+            }
+        }
+
+        // The Van Dyck and the Indian Revised Version mark a title as one, and the reader hands it to
+        // the psalm's first verse.
+        foreach (var (folder, _) in EbibleTextSource.Definitions)
+        {
+            using var scope = services.CreateScope();
+            var outcome = await scope.ServiceProvider.GetRequiredService<SuperscriptionFrameLoader>()
+                .Load(EbibleTextSource.Read(Path.Combine(resources, folder)), cancellationToken);
 
             if (outcome.Verses > 0)
             {

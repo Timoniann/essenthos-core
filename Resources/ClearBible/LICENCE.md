@@ -40,15 +40,15 @@ with the archive's extracted data.
 
 | language / target | source text | records | alignment terms | process | acquisition status |
 |---|---|---:|---|---|---|
-| Arabic AVD | SBLGNT, WLC | 2 | CC BY 4.0 | manual | candidate |
+| Arabic AVD | SBLGNT, WLC | 2 | CC BY 4.0 | manual | loaded against `AVD1865` (2026-09-25) |
 | Arabic ONAV | SBLGNT | 1 | **CC BY-SA 4.0** | manual | retained, excluded from loading |
 | Assamese IRVAsm | SBLGNT | 1 | CC BY 4.0 | manual | candidate |
 | Bengali IRVBen | SBLGNT | 1 | CC BY 4.0 | manual | candidate |
 | English BSB | BGNT, SBLGNT, WLCM | 3 | CC BY 4.0 | manual | current calibration source |
 | English YLT | SBLGNT, WLC | 2 | CC BY 4.0 | manual | candidate |
-| French LSG | SBLGNT, WLCM | 2 | CC BY 4.0 | one `manual`, one process unstated | candidate; inspect before load |
+| French LSG | SBLGNT, WLCM | 2 | CC BY 4.0 | one `manual`, one process unstated | loaded against `LSG1910`, renumbered; see below |
 | Hausa OHCB | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | candidate |
-| Hindi IRVHin | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | candidate |
+| Hindi IRVHin | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | loaded against `IRV2019` (2026-09-25) |
 | Portuguese JFA11 | SBLGNT | 1 | CC BY 4.0 | **transfer from Spanish RVR09** | retained; never call it manual |
 | Russian RUSSYN | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | blocked by token mismatch; see below |
 | Spanish RV09 | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | candidate |
@@ -90,6 +90,63 @@ Testament records have a lone *y*/*e* as their Spanish side, no source word that
 גַּם/אַף/καί, and an unaligned word after the *y*; in hand-checked samples of 140 and 21, none of the
 *y* renders the source word. The loader refuses these records and does not move them: which word
 after the *y* renders the source word is not stated by the record (PRB-0715).
+
+## French LSG — records numbered over a text the release does not ship
+
+Measured on 2026-09-25. **The release carries no list of the French words the records name.**
+`ot_LSG.tsv` is a header line and nothing else, here and on the repository's `main` (one commit,
+2024-07-18, "Added French data"). `nt_LSG.tsv` is full, but it does not match its own records:
+7,475 of the 104,807 French words the SBLGNT-LSG records name are a comma or a full stop in it, and
+996 are past the end of their verse — the Russian set's failure (PRB-0185), at half its rate. The
+`WLCM-LSG-manual.toml` is a copy of the Hindi one: its `identifier` reads `WLCM-IRVHin-manual` and
+its `team` NLCI, while the JSON's `creator` is Biblica.
+
+**What the records count is recoverable from the text itself.** They number each verse of the
+Segond divided at every elision (*l’un* is *l’* and *un*), with a hyphenated word kept whole and
+each mark of punctuation counted as a word. The token file divides some elisions and not others —
+*qu’il* is one token 405 times and two 420 times — which is why it drifts. Counted that way over
+eBible's `fraLSG` (the same letters as the token file in 7,946 of the New Testament's 7,959 verses):
+
+| | records | on punctuation or past the verse | verses refused | records kept | a proper name on a capitalised word |
+|---|---:|---:|---:|---:|---:|
+| WLCM-LSG (OT) | 203,597 | 1,812 | 1,689 | 184,833 | 98.7% |
+| SBLGNT-LSG (NT) | 104,807 | 1,079 | 980 | 90,465 | 86.1% |
+| *RV09's own token file, for comparison* | | | | | *97.3% (OT), 92.1% (NT)* |
+
+The New Testament's lower share is French, not drift: the misses are *pharisiens*, *païens*,
+*sabbat*, *roi*, *agneau* — words the English glosses capitalise and French does not. A verse where
+any record falls on punctuation or past its end is refused whole, because every number after the
+first place the two texts divide differently is out by as much. The loader does this
+(`ClearBibleNumbering.Retokenised`); nothing here rewrites the release's files.
+
+## Shifted records beyond the Spanish
+
+The *and* shape the Reina-Valera's set has (PRB-0715) was measured in the others on 2026-09-25:
+a record whose only target word is the translation's *and*, no source word a conjunction or גַּם/אַף/καί,
+and the word after the *and* named by nothing.
+
+| set | records on a lone *and* | of that shape | refused |
+|---|---:|---:|---|
+| WLCM-IRVHin (और, तथा, एवं) | 5,354 | 376 | yes: in a sample of 12 none renders the Hebrew — seven are the object marker אֵת, the rest the word after |
+| SBLGNT-IRVHin | 5,002 | 13 | no |
+| WLCM-LSG (*et*, renumbered) | 294 | 143 | yes: *homme* after *et* for אִישׁ, *cramoisi* for תּוֹלַעַת |
+| SBLGNT-LSG (*et*, renumbered) | 5,713 | 36 | no: *Et* for κἀγώ and τότε is the translation's choice |
+| WLCM-AVD, SBLGNT-AVD | 87, 284 | 0, 3 | no: Arabic writes *wa* on its word |
+
+## Psalm titles numbered as a verse 0
+
+The AVD, IRVHin and RV09 token files number a psalm's title as verse 0 (721, 973 and 1,115 words);
+eBible's editions print it at the head of verse 1. The loader lays the title's tokens at the head of
+verse 1 before joining. For the Reina-Valera this resolves 180 records that named title words and
+were unresolved (331 → 151 on a scratch copy, 2026-09-25).
+
+## Identity of the Arabic and Hindi targets
+
+`AVD`'s TOML points at the Digital Bible Library's fully vowelled Van Dyck and says in a comment
+that its author was not sure it is the same version. It is eBible's `arb-vd` letter for letter: all
+31,104 verses both number have the same letters once the title and the Psalm 119 stanza letters are
+set aside, and every one of the 348,102 records resolved but 408. `IRVHin` is eBible's `hin2017`:
+every target word of both files was placed.
 
 ## WLCM morphemes and BHSA words
 
