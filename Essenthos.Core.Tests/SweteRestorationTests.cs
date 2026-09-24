@@ -1,0 +1,243 @@
+using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Swete;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
+using Xunit;
+
+namespace Essenthos.Core.Tests;
+
+/// <summary>The words Swete printed and the transcription lost, put back where the witnesses agree.</summary>
+public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
+{
+    private const int Genesis = 1;
+
+    [Theory]
+    [InlineData(9, 28, "Ἔζησεν δὲ Νῶε μετὰ τὸν κατακλυσμὸν τριακόσια πεντήκοντα ἔτη.")]
+    [InlineData(11, 22, "Καὶ ἔζησεν Σερούχ ἑκατὸν τριάκοντα ἴτη, καὶ ἐγέννησεν τὸν Ναχώρ.")]
+    [InlineData(11, 25, "καὶ ἔζησεν Ναχὼρ μετὰ τὸ γεννῆσαι αὐτὸν τὸν Θαρά ἴτη ἑκατὸν εἴκοσι ἐννέα, καὶ ἐγέννησεν υἱοὺς καὶ θυγατέρας, καὶ ἀπέθανεν.")]
+    [InlineData(12, 4, "καὶ ἐπορεύθη Ἀβρὰμ καθάπερ ἐλάλησεν αὐτῷ κύριος, καὶ ᾤχετο μετ’ αὐτοῦ Λώτ· Ἀβρὰμ δὲ ἦν ἐτῶν ἑβδομήκοντα πέντε ὅτε ἐξῆλθεν ἐκ Χαρράν.")]
+    public void TheVerseReadsAsSwetePrintedIt(int chapter, int verse, string printed) =>
+        Swete.Text(swete.Verse(Genesis, chapter, verse)).Should().Be(printed);
+
+    /// <summary>
+    /// With the lost words back, Genesis can be read from Swete alone: every number is found, every
+    /// life of chapter 5 closes and Noah's does too, which the transcription's three hundred did not.
+    /// Codex Alexandrinus then reads as it is known to — Methuselah at 187, Arphaxad's 430, Eber's 370,
+    /// Nahor begetting at 79 and living 129 after.
+    /// </summary>
+    [Fact]
+    public void GenesisReadsWholeFromSwete()
+    {
+        var read = SeptuagintReckoning.Read(Genesis5To12());
+
+        read.Problems.Should().BeEmpty();
+        read.Values["noah-after"].Value.Should().Be(350);
+        read.Values["abram-leaves-haran"].Value.Should().Be(75);
+        read.Values["methuselah-begets"].Value.Should().Be(187);
+        read.Values["arphaxad-after"].Value.Should().Be(430);
+        read.Values["eber-after"].Value.Should().Be(370);
+        read.Values["nahor-begets"].Value.Should().Be(79);
+        read.Values["nahor-after"].Value.Should().Be(129);
+    }
+
+    /// <summary>
+    /// What reading all of it from Swete would do to the Alexandrinus reckoning: Nahor's hundred
+    /// years fewer bring Abram a century nearer the Flood than the reckoning that takes only
+    /// Methuselah from Swete.
+    /// </summary>
+    [Fact]
+    public void ReadWholeFromSweteAbramIsBornACenturyEarlier()
+    {
+        var years = SeptuagintReckoning.Compute(SeptuagintReckoning.Read(Genesis5To12()).Values, id => id);
+
+        years["Begin_Flood"].Year.Should().Be(2263);
+        years[SeptuagintReckoning.AbramBorn].Year.Should().Be(3396);
+    }
+
+    [Fact]
+    public void ARestorationThatNoLongerFindsItsWordsStopsTheRead()
+    {
+        var act = () => SweteRestorations.Apply("01.Genesis", ["1.9.28 τριακόσια", "1.9.28 πεντήκοντα"]).ToList();
+
+        act.Should().Throw<InvalidOperationException>().WithMessage("*9:28*");
+    }
+
+    [Fact]
+    public void EveryOtherLinePassesThroughUnchanged()
+    {
+        string[] lines = ["2.1.1 ταῦτα", "2.1.1 τὰ", "2.1.2 ὀνόματα"];
+
+        SweteRestorations.Apply("02.Exodus", lines).Should().Equal(lines);
+    }
+
+    /// <summary>
+    /// Brenton for Exodus and Kings, as the reckoning reads them; Genesis wholly from Swete.
+    /// </summary>
+    private Func<int, int, int, string?> Genesis5To12()
+    {
+        var brenton = SeptuagintTextSource.Read(TestResources.SeptuagintFolder);
+        return (book, chapter, verse) =>
+        {
+            var source = book == Genesis ? swete.Source : brenton;
+            var draft = source.Books.Single(b => b.CanonicalOrdinal == book)
+                .Chapters.SingleOrDefault(c => c.Number == chapter)?
+                .Verses.FirstOrDefault(v => v.Number == verse && v.Label.Length == 0);
+            return draft is null ? null : string.Join(' ', draft.Words.Select(word => word.Surface));
+        };
+    }
+}
+
+/// <summary>The same words written into a Swete loaded before they were restored.</summary>
+[Collection(WitnessDatabaseCollection.Name)]
+public sealed class SweteRestorationLoadTests : IDisposable
+{
+    private const string Genesis = "01.Genesis";
+
+    private readonly AppDbContext _db;
+    private readonly SweteRestorationLoader _loader;
+    private readonly SweteBook _digitised;
+    private readonly SweteBook _restored;
+
+    public SweteRestorationLoadTests(WitnessDatabase database)
+    {
+        _db = database.NewContext();
+        Clear();
+        _loader = new SweteRestorationLoader(_db, NullLogger<SweteRestorationLoader>.Instance);
+
+        var path = Path.Combine(TestResources.SweteFolder, SweteTextSource.FileName(Genesis));
+        _digitised = SweteReader.Read(File.ReadLines(path));
+        _restored = SweteReader.Read(SweteRestorations.Apply(Genesis, File.ReadLines(path)));
+    }
+
+    public void Dispose()
+    {
+        Clear();
+        _db.Dispose();
+    }
+
+    private void Clear() => _db.Database.ExecuteSqlRaw("DELETE FROM text");
+
+    private static IEnumerable<(int Chapter, int Verse)> Restored =>
+        SweteRestorations.All.Select(r => (r.Chapter, r.Verse)).Distinct();
+
+    private static IReadOnlyList<SweteWord> Words(SweteBook book, int chapter, int verse) =>
+        book.Chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse && v.Label.Length == 0).Words;
+
+    private Text Loaded(SweteBook book)
+    {
+        var text = Corpus.Add(_db, SweteTextSource.Slug, TextKind.CriticalEdition, "grc",
+            [.. Restored.Select(at => (at.Chapter, at.Verse,
+                Words(book, at.Chapter, at.Verse).Select(w => w.Surface).ToArray()))]);
+        _db.SaveChanges();
+
+        foreach (var (chapter, verse) in Restored)
+        {
+            var words = Words(book, chapter, verse);
+            for (var at = 0; at < words.Count; at++)
+            {
+                _db.WordAt(text, chapter, verse, at + 1).Trailer = words[at].Trailer;
+            }
+        }
+
+        text.RightsNote = "CC BY-SA 4.0.";
+        _db.SaveChanges();
+        return text;
+    }
+
+    private string Read(Text text, int chapter, int verse) =>
+        string.Concat(_db.Words.AsNoTracking()
+            .Where(w => w.TextId == text.Id && w.Verse!.ChapterNumber == chapter && w.Verse.Number == verse)
+            .OrderBy(w => w.Position)
+            .Select(w => w.Surface + w.Trailer)
+            .ToList());
+
+    private static string Expected(SweteBook book, int chapter, int verse) =>
+        string.Concat(Words(book, chapter, verse).Select(w => w.Surface + w.Trailer));
+
+    [Fact]
+    public async Task EveryVerseReadsAsRestoredAndSaysSo()
+    {
+        var text = Loaded(_digitised);
+
+        var outcome = await _loader.Load(TestResources.SweteFolder);
+
+        outcome.Verses.Should().Be(Restored.Count());
+        foreach (var (chapter, verse) in Restored)
+        {
+            Read(text, chapter, verse).Should().Be(Expected(_restored, chapter, verse), $"{chapter}:{verse}");
+        }
+
+        var row = await _db.Texts.AsNoTracking().SingleAsync(t => t.Id == text.Id);
+        row.RightsNote.Should().Be($"CC BY-SA 4.0. {SweteRestorations.Note}");
+        var restored = await _db.Words.AsNoTracking().SingleAsync(w => w.TextId == text.Id && w.Surface == "πεντήκοντα"
+                                                                       && w.Verse!.ChapterNumber == 9);
+        restored.NormalisedText.Should().Be("πεντηκοντα", "a word written here is searchable at once");
+    }
+
+    [Fact]
+    public async Task ASecondRunFindsNothingToDo()
+    {
+        Loaded(_digitised);
+        await _loader.Load(TestResources.SweteFolder);
+
+        var again = await _loader.Load(TestResources.SweteFolder);
+
+        again.Verses.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task ACorpusLoadedFromTheRestoredReaderIsLeftAlone()
+    {
+        Loaded(_restored);
+
+        (await _loader.Load(TestResources.SweteFolder)).Verses.Should().Be(0);
+    }
+
+    /// <summary>
+    /// A word both readings hold keeps its row and its link; a misread token that goes takes the
+    /// link it stood in alone with it, rather than leaving a link that names words on one side only.
+    /// </summary>
+    [Fact]
+    public async Task WhatBothReadingsShareKeepsItsLinks()
+    {
+        var text = Loaded(_digitised);
+        var brenton = Corpus.Add(_db, "GRCBRENT", TextKind.CriticalEdition, "grc", (11, 25, ["αὐτὸν"]));
+        _db.SaveChanges();
+
+        var kept = _db.WordAt(text, 11, 25, 7);
+        var misread = _db.WordAt(text, 11, 25, 9);
+        kept.Surface.Should().Be("αὐτὸν");
+        misread.Surface.Should().Be("αὐτὸν");
+        var equals = Link(text, brenton, LinkRelation.Equals, kept, _db.WordAt(brenton, 11, 25, 1));
+        var expands = Link(text, brenton, LinkRelation.Expands, misread, null);
+
+        await _loader.Load(TestResources.SweteFolder);
+
+        (await _db.Links.AnyAsync(l => l.Id == equals.Id)).Should().BeTrue();
+        (await _db.Words.AnyAsync(w => w.Id == kept.Id && w.Position == 7)).Should().BeTrue();
+        (await _db.Links.AnyAsync(l => l.Id == expands.Id)).Should().BeFalse();
+    }
+
+    private Link Link(Text from, Text to, LinkRelation relation, Word fromWord, Word? toWord)
+    {
+        var link = new Link
+        {
+            FromTextId = from.Id, ToTextId = to.Id, Relation = relation, Method = LinkMethod.Lexical,
+            Confidence = 0.9, Source = "a test",
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = fromWord, Side = LinkSide.From });
+        if (toWord is not null)
+        {
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = toWord, Side = LinkSide.To });
+        }
+
+        _db.SaveChanges();
+        return link;
+    }
+}

@@ -82,8 +82,7 @@ public class SeptuagintReadingTests(SeptuagintEditions editions) : IClassFixture
 
     /// <summary>
     /// The two readings the owner asked to see side by side, and the ones they share. Swete's own
-    /// Genesis is read only where the reckoning takes it: its digitisation loses a number word at
-    /// 9:28 and at 12:4, which is why the second reckoning is Brenton's but for Methuselah.
+    /// Genesis is read only where the reckoning takes it, which is Methuselah.
     /// </summary>
     [Theory]
     [InlineData("methuselah-begets", 167, 187)]
@@ -99,10 +98,6 @@ public class SeptuagintReadingTests(SeptuagintEditions editions) : IClassFixture
         SeptuagintReckoning.Read(editions.Brenton).Values[key].Value.Should().Be(brenton);
         SeptuagintReckoning.Read(editions.Alexandrinus).Values[key].Value.Should().Be(alexandrinus);
     }
-
-    [Fact]
-    public void SwetesGenesisAloneWouldComputeADigitisationFault() =>
-        SeptuagintReckoning.Read(editions.Swete).Problems.Should().Contain(problem => problem.StartsWith("noah"));
 
     [Fact]
     public void ExodusAndKingsAreReadFromBrentonForBoth()

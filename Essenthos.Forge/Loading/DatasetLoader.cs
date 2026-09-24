@@ -128,6 +128,7 @@ internal sealed class DatasetLoader(
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
             await OpenThePsalmsTheirEditionsOpenWith(resources, stoppingToken);
+            await RestoreWhatSwetesTranscriptionLost(resources, stoppingToken);
             await LemmatiseTheSeptuagint(resources, stoppingToken);
             await GlossTheGreek(resources, stoppingToken);
             await ParseTheGreekASecondTime(resources, stoppingToken);
@@ -283,6 +284,24 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<StrongTranslationLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The words Swete printed and the transcription lost, written into a Swete loaded before they
+    /// were restored. A cold load reads them from the reader and this finds nothing to do. Before the
+    /// two Septuagints are linked, so that on a cold corpus the link sees the restored verse.
+    /// </summary>
+    private async Task RestoreWhatSwetesTranscriptionLost(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the words Swete's transcription lost");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SweteRestorationLoader>();
+        var outcome = await loader.Load(Path.Combine(resources, "Swete"), cancellationToken);
+        if (outcome.Verses > 0)
+        {
+            status.Record(outcome.ToString());
+        }
     }
 
     /// <summary>
