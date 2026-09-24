@@ -24,5 +24,10 @@ public enum Redistribution
     ShareAlike,
 
     NonCommercialOnly,
+
+    /// <summary>
+    /// May not be redistributed at all: held on one machine for its owner's own use. A text with
+    /// this value is refused by the loader, so it never reaches a table anything serves from.
+    /// </summary>
     Prohibited,
 }

@@ -23,7 +23,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     EvidentiaDictionarySenseIndex dictionarySenseIndex,
     EvidentiaKnownRenderingIndex knownRenderingIndex,
     LanguagePackRegistry languagePacks,
-    InterlinearLinkLoader interlinear)
+    InterlinearLinkLoader interlinear,
+    EvidentiaFileSourceTexts fileSources)
 {
     private const string InterlinearGoldSource = "Door43 interlinear, joined in memory";
 
@@ -73,7 +74,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         CancellationToken cancellationToken = default)
     {
         options ??= new EvidentiaMeasurementOptions();
-        var sourceAnalysis = await SourceTokens(fromSlug, canonicalBook, canonicalChapter, null, cancellationToken);
+        var sourceAnalysis = options.SourceFromFiles
+            ? await udpipe.Annotate(fileSources.Tokens(fromSlug, canonicalBook, canonicalChapter, null), cancellationToken)
+            : await SourceTokens(fromSlug, canonicalBook, canonicalChapter, null, cancellationToken);
         var source = sourceAnalysis.Tokens;
         var target = await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken);
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
@@ -160,9 +163,12 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 .ToList(), 0);
         var sourceIds = source.Select(token => token.Id).ToHashSet();
         var targetIds = target.Select(token => token.Id).ToHashSet();
-        var goldAnnotation = options.GoldInterlinear is { } interlinearFolder
-            ? await InterlinearGold(fromSlug, interlinearFolder, sourceIds, targetIds, cancellationToken)
-            : await Gold(fromSlug, toSlug, sourceIds, targetIds, options.GoldSource, cancellationToken);
+        // A text read from its files has no link in the corpus, so it has no answer key of its own.
+        var goldAnnotation = options.SourceFromFiles
+            ? Annotated([], sourceIds, targetIds)
+            : options.GoldInterlinear is { } interlinearFolder
+                ? await InterlinearGold(fromSlug, interlinearFolder, sourceIds, targetIds, cancellationToken)
+                : await Gold(fromSlug, toSlug, sourceIds, targetIds, options.GoldSource, cancellationToken);
         var gold = goldAnnotation.Pairs;
         var covered = goldAnnotation.CoveredSourceWords;
         var contentSourceWordIds = previews.SelectMany(preview => preview.ContentSourceWordIds).ToHashSet();
@@ -206,6 +212,14 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             : word.TargetWordId is { } placed && goldAnnotation.CoveredSourceWords.Contains(word.SourceWordId)
                 ? word with { CorrectByWord = byWord.Accepted?.Contains((word.SourceWordId, placed)) }
                 : word)];
+        var routes = new List<EvidentiaRouteAgreement>();
+        var routeVerdicts = new Dictionary<(long From, long To), List<string>>();
+        foreach (var route in options.RouteTexts ?? [])
+        {
+            routes.Add(await RouteAgreement(
+                route, toSlug, canonicalBook, canonicalChapter, finalProposals, target, routeVerdicts, cancellationToken));
+        }
+
         options.Decisions?.Record(new EvidentiaChapterDecisions(
             canonicalBook, canonicalChapter, source, contentSourceWordIds, candidates,
             safeProposals, finalProposals, absences));
@@ -259,7 +273,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             knownRenderingEvidence?.AnsweredForms ?? new HashSet<string>(StringComparer.Ordinal),
             Samples(finalProposals, candidates, source, target, gold, options.SampleSize),
             options.RecordDisagreements
-                ? Disagreements(finalProposals, source, target, goldAnnotation, canonicalBook, canonicalChapter)
+                ? Disagreements(finalProposals, source, target, goldAnnotation, canonicalBook, canonicalChapter, routeVerdicts)
                 : [],
             EvidentiaSourceWordAccount.Of(words),
             options.RecordWords ? words : [],
@@ -277,7 +291,95 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                     absence.Rationale,
                     absence.Anchor is { } anchor ? $"{anchor.Source.Token.Surface} → {anchor.Target.Token.Surface}" : null,
                     absenceVerdicts.GetValueOrDefault(absence.Word.Token.Id)))]
-                : []);
+                : [])
+        {
+            Routes = routes,
+        };
+    }
+
+    /// <summary>
+    /// How far the links proposed for a text agree with the ones another English text's own links
+    /// imply. A word of the measured text and a word of the route text in the same verse that share a
+    /// learned-rendering key — the same lemma, as the language pack reads it — are taken to render the
+    /// same thing, so the original words the route text's own links — stated, or by the Strong number
+    /// it prints — put that word on are where the route says the measured word goes. A link is compared only where the route says something;
+    /// that is the whole of what it can check, and <see cref="EvidentiaRouteAgreement.Compared"/>
+    /// says how much that is.
+    /// </summary>
+    private async Task<EvidentiaRouteAgreement> RouteAgreement(
+        string route,
+        string toSlug,
+        int canonicalBook,
+        int canonicalChapter,
+        IReadOnlyList<EvidentiaProposal> proposals,
+        IReadOnlyList<EvidentiaToken> target,
+        Dictionary<(long From, long To), List<string>> verdicts,
+        CancellationToken cancellationToken)
+    {
+        var routeTokens = (await SourceTokens(route, canonicalBook, canonicalChapter, null, cancellationToken)).Tokens;
+        var targetById = target.DistinctBy(token => token.Id).ToDictionary(token => token.Id);
+        var routeGold = await Gold(
+            route, toSlug, routeTokens.Select(token => token.Id).ToHashSet(), targetById.Keys.ToHashSet(), null,
+            cancellationToken);
+        var linkedTo = routeGold.Pairs
+            .GroupBy(pair => pair.From)
+            .ToDictionary(group => group.Key, group => group.Select(pair => pair.To).ToHashSet());
+        var targetsByKey = new Dictionary<(int Verse, RenderingKey Key), HashSet<long>>();
+        foreach (var token in routeTokens)
+        {
+            if (!linkedTo.TryGetValue(token.Id, out var targets) || Analyse(token) is not { IsContentWord: true } analysis)
+            {
+                continue;
+            }
+
+            foreach (var key in RenderingKeys.Of(analysis))
+            {
+                if (!targetsByKey.TryGetValue((token.Address.Verse, key), out var known))
+                {
+                    targetsByKey[(token.Address.Verse, key)] = known = [];
+                }
+
+                known.UnionWith(targets);
+            }
+        }
+
+        var compared = 0;
+        var agreed = 0;
+        foreach (var proposal in proposals)
+        {
+            var word = proposal.Source.Token;
+            var said = RenderingKeys.Of(proposal.Source)
+                .SelectMany(key => targetsByKey.GetValueOrDefault((word.Address.Verse, key)) ?? [])
+                .ToHashSet();
+            if (said.Count == 0)
+            {
+                continue;
+            }
+
+            compared++;
+            var pair = (word.Id, proposal.Target.Token.Id);
+            if (!verdicts.TryGetValue(pair, out var verdict))
+            {
+                verdicts[pair] = verdict = [];
+            }
+
+            if (said.Contains(proposal.Target.Token.Id))
+            {
+                agreed++;
+                verdict.Add($"{route} agrees");
+            }
+            else
+            {
+                verdict.Add($"{route} puts it on " + string.Join(" ", said
+                    .Where(targetById.ContainsKey)
+                    .Select(id => targetById[id])
+                    .OrderBy(token => token.Address.Verse)
+                    .ThenBy(token => token.Position)
+                    .Select(token => token.Surface)));
+            }
+        }
+
+        return new EvidentiaRouteAgreement(route, proposals.Count, compared, agreed);
     }
 
     public async Task<EvidentiaBookMeasurement> MeasureBook(
@@ -290,7 +392,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         CancellationToken cancellationToken = default)
     {
         options ??= new EvidentiaMeasurementOptions();
-        var chapters = await db.VerseReferences.AsNoTracking()
+        var chapters = options.SourceFromFiles
+            ? [.. fileSources.Chapters(fromSlug, canonicalBook, firstChapter, lastChapter)]
+            : await db.VerseReferences.AsNoTracking()
             .Where(reference => reference.Verse!.Text!.Slug == fromSlug
                 && reference.CanonicalBook == canonicalBook)
             .Where(reference => !firstChapter.HasValue || reference.CanonicalChapter >= firstChapter.Value)
@@ -694,7 +798,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         IReadOnlyList<EvidentiaToken> target,
         EvidentiaGold gold,
         int canonicalBook,
-        int canonicalChapter)
+        int canonicalChapter,
+        IReadOnlyDictionary<(long From, long To), List<string>> routeVerdicts)
     {
         var byTargetId = target.DistinctBy(token => token.Id).ToDictionary(token => token.Id);
         var sourceByVerse = source.DistinctBy(token => token.Id)
@@ -738,7 +843,10 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                         proposal.Trace?.Rationale ?? string.Empty,
                         proposal.Confidence,
                         string.Join(" ", sourceByVerse.GetValueOrDefault(word.Address.Verse, [])
-                            .Select(token => token.Position == word.Position ? $"[{token.Surface}]" : token.Surface)));
+                            .Select(token => token.Position == word.Position ? $"[{token.Surface}]" : token.Surface)),
+                        routeVerdicts.TryGetValue((word.Id, proposal.Target.Token.Id), out var routes)
+                            ? string.Join("; ", routes)
+                            : null);
                 }),
         ];
     }
@@ -834,11 +942,30 @@ internal sealed record EvidentiaBookMeasurement(
                $"content source words unplaced ({Abstention:P2})\n" +
                WordAccount.Report() + "\n" +
                ByWord.Report() +
+               string.Concat(EvidentiaRouteAgreement.Total(Chapters.SelectMany(chapter => chapter.Routes))
+                   .Select(route => "\n" + route.Report())) +
                string.Concat(Chapters
                    .Where(chapter => chapter.Samples.Count > 0)
                    .Select(chapter => $"\nsample, chapter {chapter.CanonicalChapter}:\n"
                        + string.Join("\n", chapter.Samples)));
     }
+}
+
+/// <summary>
+/// How many of a passage's final links a route text could check, and how many of those it agrees
+/// with. <see cref="Links"/> is every final link, so the share a route reaches is part of the answer.
+/// </summary>
+internal sealed record EvidentiaRouteAgreement(string Route, int Links, int Compared, int Agreed)
+{
+    public static IEnumerable<EvidentiaRouteAgreement> Total(IEnumerable<EvidentiaRouteAgreement> routes) =>
+        routes.GroupBy(route => route.Route, StringComparer.Ordinal)
+            .Select(group => new EvidentiaRouteAgreement(
+                group.Key, group.Sum(route => route.Links), group.Sum(route => route.Compared), group.Sum(route => route.Agreed)));
+
+    public string Report() =>
+        $"route agreement with {Route}: {Agreed:N0}/{Compared:N0} ({(double)Agreed / Math.Max(1, Compared):P2}) " +
+        $"of the links the {Route} route reaches; {Compared:N0}/{Links:N0} links reached " +
+        $"({(double)Compared / Math.Max(1, Links):P2})";
 }
 
 internal sealed record EvidentiaCorpusPreview(
@@ -925,6 +1052,9 @@ internal sealed record EvidentiaChapterMeasurement(
     /// <summary>What a stored run marks safe: the final proposals the safe renderings and their attached words hold.</summary>
     public const string SafeTierName = "safe tier";
 
+    /// <summary>How far the final links agree with each route text asked for; empty where none was.</summary>
+    public IReadOnlyList<EvidentiaRouteAgreement> Routes { get; init; } = [];
+
     public double SourceCoverage => SourceWords == 0 ? 0 : (double)CoveredSourceWords / SourceWords;
     public double ContentCoverage => ContentSourceWords == 0
         ? 0
@@ -1000,6 +1130,7 @@ internal sealed record EvidentiaChapterMeasurement(
                $"content source words unplaced ({Abstention:P1})\n" +
                WordAccount.Report() + "\n" +
                ByWord.Report() +
+               string.Concat(Routes.Select(route => "\n" + route.Report())) +
                (Samples.Count == 0 ? string.Empty : "\nsample:\n" + string.Join("\n", Samples));
     }
 }
@@ -1050,7 +1181,9 @@ internal sealed record EvidentiaMeasurementOptions(
     bool RecordWords = false,
     IEvidentiaDecisionSink? Decisions = null,
     string? GoldInterlinear = null,
-    bool LearnAcrossLanguages = false);
+    bool LearnAcrossLanguages = false,
+    bool SourceFromFiles = false,
+    IReadOnlyList<string>? RouteTexts = null);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.
@@ -1152,4 +1285,5 @@ internal sealed record EvidentiaDisagreement(
     string Tier,
     string Rationale,
     double Confidence,
-    string SourceVerse);
+    string SourceVerse,
+    string? Routes = null);

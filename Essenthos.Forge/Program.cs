@@ -81,6 +81,7 @@ builder.Services.AddSingleton<EvidentiaTargetGlossProposalResolver>();
 builder.Services.AddSingleton<EvidentiaDictionaryProposalResolver>();
 builder.Services.AddSingleton<EvidentiaSyntaxReviewGate>();
 builder.Services.AddSingleton<UdpipeAnnotator>();
+builder.Services.AddSingleton<EvidentiaFileSourceTexts>();
 builder.Services.AddScoped<EvidentiaDictionarySenseIndex>();
 builder.Services.AddScoped<EvidentiaKnownRenderingIndex>();
 builder.Services.AddSingleton<IEvidentiaEvidenceSource, StrongNumberEvidenceSource>();
@@ -583,7 +584,11 @@ static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments, string r
     GoldInterlinear: arguments.Contains("--gold-interlinear")
         ? InterlinearFolder(resourcesPath, Identifier(arguments[1]))
         : null,
-    LearnAcrossLanguages: arguments.Contains("--learn-across-languages"));
+    LearnAcrossLanguages: arguments.Contains("--learn-across-languages"),
+    SourceFromFiles: arguments.Contains("--source-from-files"),
+    RouteTexts: OptionalText(arguments, "--routes") is { } routes
+        ? [.. routes.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier)]
+        : null);
 
 // Unlike `score`, this is an out-of-sample test: only 80% of the stated and Strong one-to-one pairs
 // reach SIL.Machine as its partial-alignment corpus, and a deterministic fifth of verses stays out

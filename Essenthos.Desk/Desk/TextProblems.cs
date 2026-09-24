@@ -59,6 +59,7 @@ internal sealed class TextProblems(Avioniq avioniq, ILogger<TextProblems> logger
         ["YLT"] = ["Young's Literal"],
         ["WEB"] = ["World English"],
         ["JPS1917"] = ["JPS"],
+        ["BBE"] = ["Basic English"],
     };
 
     /// <summary>Identifiers too short to be told from an ordinary word unless they are written in capitals.</summary>

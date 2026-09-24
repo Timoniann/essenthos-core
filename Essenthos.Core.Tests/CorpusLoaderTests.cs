@@ -206,6 +206,24 @@ public sealed class CorpusLoaderTests : IDisposable
         (await _db.Texts.CountAsync()).Should().Be(0);
     }
 
+    /// <summary>
+    /// Whatever the corpus holds can be served and is copied into every release, so a text that
+    /// may not be redistributed is refused before a row is written — the New World Translation's own
+    /// definition included, whatever reader hands it over.
+    /// </summary>
+    [Fact]
+    public async Task ATextThatMayNotBeRedistributedIsNeverWritten()
+    {
+        var prohibited = () => Loader().Load(
+            new TextSource(Definition with { Redistribution = Redistribution.Prohibited }, Sample().Books));
+        var newWorld = () => Loader().Load(new TextSource(NewWorldTextSource.Definition, Sample().Books));
+
+        (await prohibited.Should().ThrowAsync<InvalidOperationException>()).And.Message.Should().Contain("never written");
+        (await newWorld.Should().ThrowAsync<InvalidOperationException>()).And.Message.Should().Contain(NewWorldTextSource.Slug);
+        (await _db.Texts.CountAsync()).Should().Be(0);
+        (await _db.Words.CountAsync()).Should().Be(0);
+    }
+
     private static readonly TextDefinition Definition = new(
         Slug: "sample",
         Name: "A sample",

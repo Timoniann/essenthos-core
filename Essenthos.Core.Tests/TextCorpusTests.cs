@@ -99,8 +99,13 @@ public sealed class TextCorpusTests
         };
     }
 
+    /// <summary>
+    /// A text that may not be redistributed is offered by its source and deliberately kept out of
+    /// the corpus, which the loader enforces; it is the one kind of definition this list must not hold.
+    /// </summary>
     private static IEnumerable<string> Slugs(object? value) => value switch
     {
+        TextDefinition { Redistribution: Essenthos.Core.Database.Entities.Enums.Redistribution.Prohibited } => [],
         TextDefinition definition => [definition.Slug],
         IDictionary map => map.Values.Cast<object?>().SelectMany(Slugs),
         IEnumerable many and not string => many.Cast<object?>().SelectMany(Slugs),

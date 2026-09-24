@@ -4,6 +4,11 @@
     "files": 67,
     "sha256": "58c1766ac84589cdc39568411f59b5bc4f7330016b42169775aa29e6c8752e5e"
   },
+  "BasicEnglish": {
+    "bytes": 19694107,
+    "files": 67,
+    "sha256": "ea6649eb4a3a2a0bd712ec79d05daa5bb196d997b1947c0a07e607ae4a3be6be"
+  },
   "Berean": {
     "bytes": 95435158,
     "files": 3,
@@ -88,6 +93,11 @@
     "bytes": 43631728,
     "files": 2,
     "sha256": "02dd96165e56ce5d77cc3cea1a469aa6b88f5b865442034269dba901a9dc1343"
+  },
+  "NewWorld2013": {
+    "bytes": 15957353,
+    "files": 2,
+    "sha256": "067ec9bdfee0c51c7e121f5bcc853c0ac78ed928c8bd76d300c4d1f09dd40e31"
   },
   "OhienkoWikisource": {
     "bytes": 6720271,

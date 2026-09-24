@@ -23,6 +23,9 @@ public sealed class English
     internal TextSource JewishPublicationSociety { get; } =
         EnglishTextSource.Read(TestResources.EbibleFolder("Jps1917"));
 
+    internal TextSource BasicEnglish { get; } =
+        EnglishTextSource.Read(TestResources.EbibleFolder("BasicEnglish"));
+
     internal IEnumerable<WordDraft> Words(TextSource source) => source.Books
         .SelectMany(book => book.Chapters)
         .SelectMany(chapter => chapter.Verses)
@@ -75,7 +78,10 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     /// empty where the Textus Receptus prints a verse and its critical Greek does not; the World
     /// English Bible leaves five, four of them the same kind and the fifth Romans 16:25, whose
     /// doxology it prints at 14:24 instead; Tyndale leaves three, where a verse division made
-    /// seventeen years after his printing has nothing of his to number.
+    /// seventeen years after his printing has nothing of his to number. The Bible in Basic English
+    /// leaves the same sixteen as the American Standard, and nineteen of the Old Testament besides:
+    /// dots where its translators judged the Hebrew too uncertain to render, and asterisks for the
+    /// number of Saul's years at 1 Samuel 13:1.
     /// </param>
     [Theory]
     [InlineData(EnglishTextSource.Tyndale, 27, 260, 7957 - 3)]
@@ -84,6 +90,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     [InlineData(EnglishTextSource.Young, 66, 1189, 23145 + 7957)]
     [InlineData(EnglishTextSource.WorldEnglish, 66, 1189, 23145 + 7958 - 5)]
     [InlineData(EnglishTextSource.JewishPublicationSociety, 39, 929, 23145)]
+    [InlineData(EnglishTextSource.BasicEnglish, 66, 1189, 23145 + 7957 - 16 - 19)]
     public void EachHoldsTheBooksItsEditionHolds(string slug, int books, int chapters, int verses)
     {
         var source = Source(slug);
@@ -121,6 +128,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     [InlineData(EnglishTextSource.AmericanStandard)]
     [InlineData(EnglishTextSource.Young)]
     [InlineData(EnglishTextSource.WorldEnglish)]
+    [InlineData(EnglishTextSource.BasicEnglish)]
     public void EveryBookStandsWhereTheCanonPutsIt(string slug)
     {
         var source = Source(slug);
@@ -197,6 +205,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     [InlineData(EnglishTextSource.Young, true, true)]
     [InlineData(EnglishTextSource.AmericanStandard, false, false)]
     [InlineData(EnglishTextSource.WorldEnglish, false, true)]
+    [InlineData(EnglishTextSource.BasicEnglish, false, false)]
     public void EachNewTestamentShowsWhichGreekItFollows(string slug, bool actsEight37, bool doxology)
     {
         var source = Source(slug);
@@ -233,6 +242,21 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     {
         Text(english.Verse(english.WorldEnglish, 19, 23, 1)).Should().Contain("The LORD is my shepherd");
         english.Words(english.WorldEnglish).Count(word => word.Surface == "Yahweh").Should().BeLessThan(200);
+    }
+
+    /// <summary>
+    /// That the Bible in Basic English is the edition in Ogden's vocabulary and not another text
+    /// under a similar name: its readings are unlike any other English here, and it writes the
+    /// divine name as the Lord, keeping Yahweh for the few places the Hebrew explains the name.
+    /// </summary>
+    [Fact]
+    public void TheBibleInBasicEnglishSaysItInTheFewestWords()
+    {
+        Text(english.Verse(english.BasicEnglish, 1, 1, 1))
+            .Should().Be("At the first God made the heaven and the earth.");
+        Text(english.Verse(english.BasicEnglish, 19, 23, 1)).Should().Contain("The Lord takes care of me as his sheep");
+        english.Words(english.BasicEnglish).Count(word => word.Surface.StartsWith("Yahweh", StringComparison.Ordinal))
+            .Should().Be(8);
     }
 
     /// <summary>
@@ -287,6 +311,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     [InlineData(EnglishTextSource.AmericanStandard)]
     [InlineData(EnglishTextSource.Young)]
     [InlineData(EnglishTextSource.WorldEnglish)]
+    [InlineData(EnglishTextSource.BasicEnglish)]
     public void TheOthersStateNoNumberingOfTheirOwn(string slug) =>
         Source(slug).Books
             .SelectMany(book => book.Chapters)
@@ -312,6 +337,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     [InlineData(EnglishTextSource.Young)]
     [InlineData(EnglishTextSource.WorldEnglish)]
     [InlineData(EnglishTextSource.JewishPublicationSociety)]
+    [InlineData(EnglishTextSource.BasicEnglish)]
     public void NoneOfThemCarriesAStrongNumber(string slug) =>
         english.Words(Source(slug)).Should().OnlyContain(word => word.StrongNumber == null);
 
@@ -348,6 +374,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     [InlineData(EnglishTextSource.Young)]
     [InlineData(EnglishTextSource.WorldEnglish)]
     [InlineData(EnglishTextSource.JewishPublicationSociety)]
+    [InlineData(EnglishTextSource.BasicEnglish)]
     public void TheOthersCarryNoAnnotationAtAll(string slug) =>
         english.Words(Source(slug)).Should().OnlyContain(word =>
             word.Lemma == null && word.StrongNumber == null && word.Gloss == null
@@ -365,6 +392,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     [InlineData(EnglishTextSource.Young, 786938)]
     [InlineData(EnglishTextSource.WorldEnglish, 756240)]
     [InlineData(EnglishTextSource.JewishPublicationSociety, 611118)]
+    [InlineData(EnglishTextSource.BasicEnglish, 840285)]
     public void EveryWordIsCounted(string slug, int words) =>
         english.Words(Source(slug)).Should().HaveCount(words);
 
@@ -433,7 +461,8 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
         EnglishTextSource.Young => english.Young,
         EnglishTextSource.WorldEnglish => english.WorldEnglish,
         EnglishTextSource.JewishPublicationSociety => english.JewishPublicationSociety,
-        _ => throw new ArgumentOutOfRangeException(nameof(slug), slug, "That is not one of the six."),
+        EnglishTextSource.BasicEnglish => english.BasicEnglish,
+        _ => throw new ArgumentOutOfRangeException(nameof(slug), slug, "That is not one of the seven."),
     };
 
     private static string Text(VerseDraft verse) =>

@@ -12,8 +12,9 @@ namespace Essenthos.Core.Loading;
 /// text or by a different method: Tyndale from Erasmus's Greek eighty years before the King James
 /// existed, the Geneva independently from the Hebrew and Greek, the American Standard from the
 /// nineteenth-century critical text, Young by rule rather than by idiom, the World English Bible
-/// from the Byzantine Majority Text, and the JPS TaNaKH from the Masoretic text by translators
-/// outside the Christian tradition entirely. Which text each follows was read out of the file
+/// from the Byzantine Majority Text, the JPS TaNaKH from the Masoretic text by translators
+/// outside the Christian tradition entirely, and the Bible in Basic English in a vocabulary of a
+/// thousand words. Which text each follows was read out of the file
 /// rather than repeated from the literature — see each definition.
 ///
 /// None of them reaches the originals by itself. Three of the seven English packages at eBible
@@ -94,6 +95,16 @@ internal static class EnglishTextSource
     /// Adonai-jireh — and punctuates speech with single quotation marks throughout.
     /// </summary>
     public const string JewishPublicationSociety = "JPS1917";
+
+    /// <summary>
+    /// The Bible in Basic English, the whole Bible in a vocabulary of about a thousand words.
+    ///
+    /// Genesis 1:1 reads "At the first God made the heaven and the earth" and the twenty-third
+    /// psalm opens "The Lord takes care of me as his sheep": the sense of the original said in
+    /// the fewest English words that will carry it, which is the opposite end of the scale from
+    /// Young's and the reason to hold both.
+    /// </summary>
+    public const string BasicEnglish = "BBE";
 
     /// <summary>
     /// Each text's folder under <c>Resources</c>, the definition it loads with, and the canonical
@@ -299,6 +310,46 @@ internal static class EnglishTextSource
                 "The Holy Scriptures According to the Masoretic Text, Jewish Publication Society of "
                 + "America, 1917, in the digital edition eBible.org publishes as engjps.",
         }),
+
+        ["BasicEnglish"] = new(FirstBook: 1, LastBook: 66, Definition(
+            BasicEnglish, "engBBE", "Bible in Basic English", "eng", 1965, "Alexandrian") with
+        {
+            Translators = "A committee under Samuel Henry Hooke (1874-1968)",
+            Edition =
+                "Cambridge University Press, 1965: the New Testament of 1941 and the Old Testament "
+                + "of 1949 in one volume",
+            About =
+                "The Bible translated from the Hebrew and the Greek into Basic English, C. K. "
+                + "Ogden's controlled vocabulary of 850 words, widened by a hundred words for "
+                + "poetry and fifty for the Bible itself. Hooke's committee worked from the "
+                + "originals and not from an English version, so where it rephrases it rephrases "
+                + "the Hebrew and the Greek: Genesis 1:1 is \"At the first God made the heaven and "
+                + "the earth\" and the shepherd of the twenty-third psalm \"takes care of me as his "
+                + "sheep\". That makes it the text in this corpus furthest from a word-for-word "
+                + "rendering, and the one where a link from an English word to an original word is "
+                + "hardest to make and most worth checking. "
+                + "Its New Testament is the critical text's: sixteen verse slots are empty where "
+                + "the Textus Receptus prints a verse, Acts 8:37, Matthew 17:21 and John 5:4 among "
+                + "them, and neither the heavenly witnesses nor the doxology of the Lord's Prayer "
+                + "is there. Nineteen verses of the Old Testament are empty too: eighteen printed "
+                + "as dots where the translators judged the Hebrew too uncertain to put into Basic "
+                + "English, five in Job 34 and five in Job 36 among them, and 1 Samuel 13:1, where "
+                + "the number of Saul's years is left as asterisks. The divine name is the Lord, and Yahweh only where the Hebrew explains "
+                + "the name — Exodus 6 and Psalm 83:18 — and in three place names such as "
+                + "Yahweh-yireh at Genesis 22:14.",
+            RightsNote =
+                "Public domain and stated so by eBible in all three places. The copyright page gives "
+                + "the reason, and it is narrower than an expiry: the 1965 printing appeared in the "
+                + "United States without a copyright notice, which under the law of the time put "
+                + "it in the public domain there, and eBible reports that Cambridge conceded as "
+                + "much before the text was put online. That is a statement about the United "
+                + "States; Hooke died in 1968, and nobody has claimed the same for the United "
+                + "Kingdom. The Strong tagging that arrives with it, 727,511 tags smeared across "
+                + "whole verses like the American Standard's, is not loaded.",
+            Citation =
+                "The Bible in Basic English, Cambridge University Press, 1965, in the digital edition "
+                + "eBible.org publishes as engBBE.",
+        }),
     };
 
     /// <summary>Every text this reader knows, by the folder its files are fetched into.</summary>
@@ -345,7 +396,7 @@ internal static class EnglishTextSource
     /// that a book's place in this list is its canonical ordinal. The file names carry eBible's own
     /// numbering, which is neither the ordinal nor the position.
     /// </summary>
-    private static readonly string[] Canon =
+    internal static readonly string[] Canon =
     [
         "GEN", "EXO", "LEV", "NUM", "DEU", "JOS", "JDG", "RUT", "1SA", "2SA", "1KI", "2KI", "1CH",
         "2CH", "EZR", "NEH", "EST", "JOB", "PSA", "PRO", "ECC", "SNG", "ISA", "JER", "LAM", "EZK",
@@ -416,7 +467,7 @@ internal static class EnglishTextSource
     private static bool IsScripture(string content) =>
         !NotScripture.Any(code => content.StartsWith($"\\id {code}", StringComparison.Ordinal));
 
-    private static ChapterDraft Chapter(UsfmChapter chapter, bool tagged) => new(
+    internal static ChapterDraft Chapter(UsfmChapter chapter, bool tagged) => new(
         chapter.Number,
         [.. chapter.Verses.Select(verse => new VerseDraft(
             verse.Number,
