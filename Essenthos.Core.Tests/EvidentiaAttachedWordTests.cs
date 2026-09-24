@@ -418,6 +418,32 @@ public class EvidentiaAttachedWordTests
         Attach([psalm, of, david], [song, lamed, dawid], (psalm, song), (david, dawid)).Should().Equal((2L, 12L));
     }
 
+    [Fact]
+    public void APrepositionGoesBeforeTheFirstRenderingOfItsPhraseWhenAPossessiveOrAQuantifierCameBetween()
+    {
+        var @in = English(1, Mark114, 1, "in", "ADP") with { SyntacticHead = 3 };
+        var his = English(2, Mark114, 2, "his", "PRON");
+        var vineyard = English(3, Mark114, 3, "vineyard", "NOUN");
+        var en = Greek(11, Mark114, 1, "ἐν", "G1722", "prep");
+        var article = Greek(12, Mark114, 2, "τῷ", "G3588", "det");
+        var vineyardNoun = Greek(13, Mark114, 3, "ἀμπελῶνι", "G290", "noun");
+        var autou = Greek(14, Mark114, 4, "αὐτοῦ", "G846", "pron");
+
+        Attach([@in, his, vineyard], [en, article, vineyardNoun, autou], (his, autou), (vineyard, vineyardNoun))
+            .Should().Contain((1L, 11L));
+
+        var to = English(4, Genesis122, 1, "to", "ADP") with { SyntacticHead = 7 };
+        var all = English(5, Genesis122, 2, "all", "DET");
+        var the = English(6, Genesis122, 3, "the", "DET");
+        var kings = English(7, Genesis122, 4, "kings", "NOUN");
+        var lamed = Hebrew(21, Genesis122, 1, "לְ", "H9005", "prep");
+        var kol = Hebrew(22, Genesis122, 2, "כָל", "H3605", "subs");
+        var kingsNoun = Hebrew(23, Genesis122, 3, "מַלְכֵי", "H4428", "subs");
+
+        Attach([to, all, the, kings], [lamed, kol, kingsNoun], (all, kol), (kings, kingsNoun))
+            .Should().Contain((4L, 21L));
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Attach(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
