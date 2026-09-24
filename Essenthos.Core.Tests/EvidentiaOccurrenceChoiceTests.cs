@@ -12,6 +12,8 @@ public class EvidentiaOccurrenceChoiceTests
 {
     private static readonly EvidentiaAddress Genesis16 = new(1, 1, 6);
     private static readonly EvidentiaAddress Jonah115 = new(32, 1, 15);
+    private static readonly EvidentiaAddress Luke1314 = new(42, 13, 14);
+    private static readonly EvidentiaAddress Luke138 = new(42, 13, 8);
 
     [Fact]
     public void TwoOccurrencesOfOneLexemeAreNotCrossed()
@@ -64,6 +66,58 @@ public class EvidentiaOccurrenceChoiceTests
         proposals.Should().Contain((3L, 16L), "the sea stands between what threw and raging were placed on");
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void AnAnchorOutOfOrderDoesNotPullItsNeighbours(bool globally)
+    {
+        var proposals = Propose(
+            globally,
+            [
+                English(1, Luke1314, 2, "being"),
+                English(2, Luke1314, 3, "because"),
+                English(3, Luke1314, 4, "Jesus"),
+                English(4, Luke1314, 8, "said"),
+                English(5, Luke1314, 9, "multitude"),
+            ],
+            [
+                Greek(12, Luke1314, 2, "ὅτι", "G3754"),
+                Greek(14, Luke1314, 4, "Ἰησοῦς", "G2424"),
+                Greek(17, Luke1314, 7, "ὅτι", "G3754"),
+                Greek(18, Luke1314, 8, "ἔλεγεν", "G3004"),
+                Greek(19, Luke1314, 9, "εἰσίν", "G1510"),
+                Greek(20, Luke1314, 10, "ὄχλῳ", "G3793"),
+            ],
+            ("being", "G1510"), ("because", "G3754"), ("Jesus", "G2424"), ("said", "G3004"), ("multitude", "G3793"));
+
+        proposals.Should().Contain((2L, 12L), "being, whose only rendering stands at the far end, is no guide to its neighbour");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void TheDiagonalRunsOverTheVerseNotOverTheWordsThatHaveARendering(bool globally)
+    {
+        var proposals = Propose(
+            globally,
+            [
+                English(1, Luke138, 2, "answered"),
+                English(2, Luke138, 9, "also"),
+                English(3, Luke138, 16, "fertilize"),
+            ],
+            [
+                Greek(11, Luke138, 3, "ἀποκριθεὶς", "G611"),
+                Greek(12, Luke138, 9, "καὶ", "G2532"),
+                Greek(13, Luke138, 10, "τοῦτο", "G3778"),
+                Greek(14, Luke138, 12, "ἔτος", "G2094"),
+                Greek(15, Luke138, 18, "καὶ", "G2532"),
+                Greek(16, Luke138, 20, "κόπρια", "G2874"),
+            ],
+            ("answered", "G611"), ("also", "G2532"), ("fertilize", "G2874"), ("fertilize", "G3778"), ("fertilize", "G2094"));
+
+        proposals.Should().Contain((2L, 12L), "also stands mid-verse, and so does the first καί");
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Propose(
         bool globally,
         IReadOnlyList<EvidentiaToken> source,
@@ -87,6 +141,9 @@ public class EvidentiaOccurrenceChoiceTests
 
     private static EvidentiaToken Hebrew(long id, EvidentiaAddress address, int position, string surface, string strong) =>
         new(id, address, position, surface, "hbo", StrongNumber: strong, PartOfSpeech: "subs");
+
+    private static EvidentiaToken Greek(long id, EvidentiaAddress address, int position, string surface, string strong) =>
+        new(id, address, position, surface, "grc", StrongNumber: strong, PartOfSpeech: "noun");
 
     private sealed class Renderings((string Form, string Strong)[] renderings) : IEvidentiaEvidenceSource
     {
