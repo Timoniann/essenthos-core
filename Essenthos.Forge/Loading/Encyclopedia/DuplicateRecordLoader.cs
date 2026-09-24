@@ -197,6 +197,17 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         """,
         "DELETE FROM entity_descriptor WHERE entity_id = target_entity_id AND entity_id IN (SELECT kept FROM folding)",
 
+        // A claim both records carry from one source by one method is one claim: where they said
+        // different things of the two, the kept record's says both, as the person register writes a
+        // record two of its bearers reach.
+        """
+        UPDATE entity_claim k
+        SET note = coalesce(k.note || '; ', '') || o.note, confidence = greatest(k.confidence, o.confidence)
+        FROM entity_claim o JOIN folding f ON o.entity_id = f.folded
+        WHERE k.entity_id = f.kept AND k.method = o.method AND k.source = o.source
+          AND o.note IS NOT NULL AND strpos(coalesce(k.note, ''), o.note) = 0
+        """,
+
         // Rows one record may have only one of: the kept record's stands.
         MoveUnlessHeld("entity_claim", "c.method = o.method AND c.source = o.source"),
         MoveUnlessHeld("entity_name_form", "c.language = o.language AND c.grammatical_case = o.grammatical_case"),
@@ -327,7 +338,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                 RecordSourceId = folded.SourceId,
                 RecordSource = folded.Source,
                 Method = list.Method,
-                Confidence = list.Confidence,
+                Confidence = merge.Confidence ?? list.Confidence,
                 Reason = merge.Why,
                 Source = list.Source,
             }));
@@ -407,4 +418,5 @@ internal sealed record DuplicateRecordList(LinkMethod Method, double? Confidence
 /// <param name="Keeps">The record that stays, by address.</param>
 /// <param name="Folds">The record folded into it, by address.</param>
 /// <param name="Why">The verses that make them one person.</param>
-internal sealed record DuplicateRecordPair(string StrongNumber, string Keeps, string Folds, string Why);
+/// <param name="Confidence">How sure the reading of this pair is, where it is less sure than the list.</param>
+internal sealed record DuplicateRecordPair(string StrongNumber, string Keeps, string Folds, string Why, double? Confidence = null);

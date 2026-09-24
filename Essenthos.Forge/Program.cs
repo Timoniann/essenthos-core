@@ -719,6 +719,16 @@ if (args is ["topics", ..])
     return 0;
 }
 
+// The person register on a corpus already built: the verses a dataset filed under the wrong man put
+// back, and the bearers of those names matched again with the verses where they now stand. The load
+// does the same at its own step; run it before fold-records, which folds what it leaves twice.
+if (args is ["persons", ..])
+{
+    using var personScope = app.Services.CreateScope();
+    Console.WriteLine(await personScope.ServiceProvider.GetRequiredService<PersonRegisterLoader>().Load(resources));
+    return 0;
+}
+
 // The records a dataset wrote twice for one person, folded into one, without the rest of the load.
 // The load does the same at its place in the pipeline; this is for a corpus already built.
 if (args is ["fold-records", ..])

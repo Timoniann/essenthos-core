@@ -1,8 +1,8 @@
 {
-  "about": "Records BibleData wrote twice for one person, each folded into the record that keeps its address. The pairs come from an audit that showed a model every same-name, same-kind pair of records under one Strong number with their descriptions and verse lists: 1,021 pairs, 83 judged one referent, 40 of them with high confidence. Each high pair was then read again against its verses; the ones under 'merges' hold up, and the ones under 'declined' do not, or rest on a question the text leaves open. The record more words already name keeps its address, so fewer annotations move; on a tie the lower-numbered one does. Everything the folded record held moves with it, and its address, name, description and BibleData id stay on as a merged record, so a link to it still arrives and what the dataset said is not lost.",
+  "about": "Records BibleData wrote twice for one person, each folded into the record that keeps its address. The pairs come from an audit that showed a model every same-name, same-kind pair of records under one Strong number with their descriptions and verse lists: 1,021 pairs, 83 judged one referent, 40 of them with high confidence, 39 medium and 4 low. Every pair was then read again against its verses; the ones under 'merges' hold up, and the ones under 'declined' do not, or rest on a question the text leaves open. A pair read less surely than the list's own confidence carries its own. The record more words already name keeps its address, so fewer annotations move; on a tie the lower-numbered one does. Everything the folded record held moves with it, and its address, name, description and BibleData id stay on as a merged record, so a link to it still arrives and what the dataset said is not lost.",
   "method": "model-reading",
   "confidence": 0.9,
-  "source": "Essenthos: BibleData's same-name records compared pair by pair by claude-opus-5 (prompt records-1, 2026-09-06), and each pair it held to be one person read again against its verses by claude-opus-5-5 on 2026-09-23",
+  "source": "Essenthos: BibleData's same-name records compared pair by pair by claude-opus-5 (prompt records-1, 2026-09-06), and each pair it held to be one person read again against its verses by claude-opus-5-5, the high pairs on 2026-09-23 and the medium and low ones on 2026-09-24",
   "merges": [
     {
       "strongNumber": "H285",
@@ -207,6 +207,124 @@
       "keeps": "shaphan",
       "folds": "shaphan-2",
       "why": "Jeremiah 36:10-12 names 'Gemariah the son of Shaphan the scribe', and Elasah son of Shaphan (29:3) is his brother: the sons of Josiah's scribe, whose son Ahikam the first record already names."
+    },
+    {
+      "strongNumber": "H2216",
+      "keeps": "zerubbabel-2",
+      "folds": "zerubbabel",
+      "why": "1 Chronicles 3:19 names Zerubbabel among the grandsons of Jeconiah, father of Meshullam and Hananiah; he is the only Zerubbabel of the Old Testament, and the governor's record already holds the verse. Chronicles makes him the son of Pedaiah where Ezra 3:2 and Haggai 1:1 make him the son of Shealtiel, Pedaiah's brother, and both fathers stand on the one man, each at its verse.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H2766",
+      "keeps": "harim-3",
+      "folds": "harim",
+      "why": "The priests 'of the sons of Harim' of Ezra 10:21 descend, by the dataset's own kinship, from the Harim to whom the third lot fell (1 Chronicles 24:8), and the house of Harim whose sons came up with Zerubbabel (Ezra 2:39, Nehemiah 7:42) is the same ancestor: one priestly house named for one man, as the singers of the return are Asaph's.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H2766",
+      "keeps": "harim-2",
+      "folds": "harim-4",
+      "why": "'Malchijah the son of Harim' repairs the wall beside 'Hashub the son of Pahath-moab' (Nehemiah 3:11), each named by his lay house, and the record of the lay house of Harim (Ezra 2:32) already holds the verse and names its Malchijah; the second record is that one word written again.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H4441",
+      "keeps": "malchijah-6",
+      "folds": "malchijah-7",
+      "why": "Nehemiah 3:11's Malchijah son of Harim, who repaired the tower of the furnaces, is the Malchijah of the sons of Harim who put away his foreign wife thirteen years before (Ezra 10:31); the first record already holds the verse.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H7678",
+      "keeps": "shabbethai-2",
+      "folds": "shabbethai",
+      "why": "Ezra 10:15's 'Shabbethai the Levite' is the Levite who taught the law (Nehemiah 8:7) and had the oversight of the outward business of the house of God (Nehemiah 11:16): the name is borne by no one else, and the first record already holds Ezra 10:15.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H3442",
+      "keeps": "jeshua-7",
+      "folds": "jeshua-8",
+      "why": "Nehemiah 9:4-5 sets Jeshua first of the Levites on the stairs, beside Bani and Kadmiel, in the assembly that makes the sure covenant of 9:38, and the Levites who seal it are headed by 'Jeshua the son of Azaniah, Binnui of the sons of Henadad, Kadmiel' (10:9). One assembly, one Jeshua.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H2811",
+      "keeps": "hashabiah-4",
+      "folds": "hashabiah-6",
+      "why": "The second record is the Levite who sealed the covenant (Nehemiah 10:11) and holds no verse and no word of its own; the first holds the verse, and its Hashabiah stands beside Sherebiah there as in Ezra 8:19, 24 and Nehemiah 12:24.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H3189",
+      "keeps": "jahath-2",
+      "folds": "jahath-3",
+      "why": "1 Chronicles 6:20-21 and 6:39-43 are one Gershonite line read down and then up, the reading its Zerah is folded on; Jahath stands in both above Zimmah, and the first record already holds 6:43.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H2155",
+      "keeps": "zimmah",
+      "folds": "zimmah-2",
+      "why": "The same line of 1 Chronicles 6:20-21 and 6:39-43: Zimmah stands three generations above Zerah in both, father of Joah or Ethan; the two lists differ only over the generation between him and Jahath.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H511",
+      "keeps": "elkanah",
+      "folds": "elkanah-3",
+      "why": "Exodus 6:24 names Korah's sons Assir, Elkanah and Abiasaph, and 1 Chronicles 6:22-23 names Assir, Elkanah and Ebiasaph after Korah; 6:37 makes Ebiasaph Korah's own son, so the three of Chronicles are the brothers of Exodus, as the fold of Abiasaph and Ebiasaph already reads them.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H6551",
+      "keeps": "parosh",
+      "folds": "parosh-2",
+      "why": "'Pedaiah the son of Parosh' (Nehemiah 3:25) is of the house of Parosh, and the first record already holds the verse; the chief of the people who seal at Nehemiah 10:14 run Parosh, Pahath-moab, Elam, Zatthu, Bani, the houses of Ezra 2:3-10 in their order.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H564",
+      "keeps": "immer",
+      "folds": "immer-2",
+      "why": "Both records hold the house of Immer of the return (Ezra 2:37, Nehemiah 7:40) and its sons who put away foreign wives (Ezra 10:20), and both make its Hanani and Zebadiah their descendants; the Immer to whom the sixteenth lot fell (1 Chronicles 24:14) is the ancestor that house is named for.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H6043",
+      "keeps": "anaiah",
+      "folds": "anaiah-2",
+      "why": "The second record is the Anaiah who sealed at Nehemiah 10:22, whom the first already holds; the name stands nowhere else but Nehemiah 8:4, beside Ezra at the reading of the law, in the month the covenant was sealed.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H2582",
+      "keeps": "henadad-2",
+      "folds": "henadad",
+      "why": "Henadad is the Levite house of Ezra 3:9 and Nehemiah 3:24 and 10:9 and no one else; Bavvai son of Henadad (Nehemiah 3:18) builds among 'their brethren' after the Levites of 3:17, and the first record already holds the verse.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H4918",
+      "keeps": "shallum-6",
+      "folds": "meshullam-15",
+      "why": "Nehemiah 11:11 and 1 Chronicles 9:11 are one list written twice, and it is the high-priestly line of 1 Chronicles 6:12-13: Zadok, then Shallum or Meshullam, then Hilkiah and Azariah. The first record already holds both verses, and the second has no word of its own.",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H4918",
+      "keeps": "meshullam-8",
+      "folds": "meshullam-9",
+      "why": "The second record is the Meshullam who stood against the putting away of the foreign wives (Ezra 10:15), whom the first already holds beside the chief man Ezra sent to Iddo the year before (Ezra 8:16).",
+      "confidence": 0.8
+    },
+    {
+      "strongNumber": "H6659",
+      "keeps": "zadok-3",
+      "folds": "zadok-6",
+      "why": "1 Chronicles 9:11 and Nehemiah 11:11 are one list written twice, the list the folds of Ahitub, Meraioth and Hilkiah rest on: Zadok son of Meraioth in both, and both records hold both verses. Nehemiah 13:13's Zadok the scribe is another man, and his verse goes to a record of his own before the fold."
     }
   ],
   "declined": [
@@ -257,6 +375,222 @@
         "kadmiel-2"
       ],
       "why": "The Kadmiel of the return under Zerubbabel (Ezra 2:40; 3:9) and the Kadmiel who stands on the stairs and seals the covenant under Nehemiah (9:4-5; 10:9) are ninety years apart; one may be the house the other founded, which is not one man."
+    },
+    {
+      "strongNumber": "H2216",
+      "pair": [
+        "zerubbabel",
+        "zerubbabel-3"
+      ],
+      "why": "Luke 3:27, as for the pair of the governor's records: whether Luke's Zorobabel son of Salathiel is the governor is argued both ways."
+    },
+    {
+      "strongNumber": "H285",
+      "pair": [
+        "ahitub-2",
+        "ahitub-3"
+      ],
+      "why": "1 Chronicles 6 writes 'Amariah begat Ahitub, and Ahitub begat Zadok' twice, at 6:7-8 and at 6:11-12, six generations apart. The first Ahitub is the grandfather of David's Zadok's son Ahimaaz; the second is Ezra's ancestor (Ezra 7:2). Reading the second as the first written again is a conjecture about the text, not what it says."
+    },
+    {
+      "strongNumber": "H285",
+      "pair": [
+        "ahitub-2",
+        "ahitub-4"
+      ],
+      "why": "The second record is folded into the second of the pair above, as one list written twice, and that pair's answer holds."
+    },
+    {
+      "strongNumber": "H3107",
+      "pair": [
+        "jozabad-7",
+        "jozabad-8"
+      ],
+      "why": "Both verses are already held by a third record, the Levite son of Jeshua of Ezra 8:33, whom the audit that joined these two kept apart from each of them. Whether the Jozabads of Ezra 8:33 and 10:23 and Nehemiah 8:7 and 11:16 are one Levite or more is a question of three records, and a fold of two does not answer it."
+    },
+    {
+      "strongNumber": "H3442",
+      "pair": [
+        "jeshua-5",
+        "jeshua-7"
+      ],
+      "why": "The Levite house of Jeshua and Kadmiel came up with Zerubbabel (Ezra 2:40, 3:9); the Jeshua who stands with Kadmiel on the stairs (Nehemiah 9:4-5) is ninety years later. The two names together are one house, not one man, as with Kadmiel himself."
+    },
+    {
+      "strongNumber": "H3442",
+      "pair": [
+        "jeshua-5",
+        "jeshua-8"
+      ],
+      "why": "Ninety years again, and Nehemiah 10:9 names this Jeshua's father, Azaniah, where the other is the head of a house of the return."
+    },
+    {
+      "strongNumber": "H2518",
+      "pair": [
+        "hilkiah-2",
+        "hilkiah-3"
+      ],
+      "why": "The two share the high-priestly verses (1 Chronicles 6:13, 9:11, Ezra 7:1, Nehemiah 11:11), but the second also holds the Hilkiah who stood by Ezra (Nehemiah 8:4), a priest of the return (Nehemiah 12:7, 21) and Gemariah's father (Jeremiah 29:3), and the person register reads it as the man of Nehemiah 8:4. A fold would put all of them on Josiah's high priest; the high-priestly verses have to leave it instead."
+    },
+    {
+      "strongNumber": "H2518",
+      "pair": [
+        "hilkiah-2",
+        "hilkiah-6"
+      ],
+      "why": "The second record is folded into the second of the pair above, and that pair's answer holds."
+    },
+    {
+      "strongNumber": "H3048",
+      "pair": [
+        "jedaiah-2",
+        "jedaiah-3"
+      ],
+      "why": "The Jedaiah whose sons returned is 'of the house of Jeshua' (Ezra 2:36), which does not fit the head of the second course (1 Chronicles 24:7), and the record also holds the priest who came up with Zerubbabel (Nehemiah 12:6). The text does not make a house that bears a course's name the house of that course's head."
+    },
+    {
+      "strongNumber": "H3080",
+      "pair": [
+        "jehoiarib",
+        "jehoiarib-2"
+      ],
+      "why": "1 Chronicles 9:10 names priests who lived in Jerusalem after the return, which Nehemiah 11:10 writes as 'Jedaiah the son of Joiarib'; the head of the first course (1 Chronicles 24:7) is five centuries earlier. One may be the house the other founded, which is not one man."
+    },
+    {
+      "strongNumber": "H8304",
+      "pair": [
+        "seraiah-7",
+        "seraiah-8"
+      ],
+      "why": "Nothing but the name and the generation joins the first of the priests who seal (Nehemiah 10:2) to the ruler of the house of God (Nehemiah 11:11); Seraiah is also the first house of the priestly lists of 12:1 and 12:12."
+    },
+    {
+      "strongNumber": "H2811",
+      "pair": [
+        "hashabiah-5",
+        "hashabiah-6"
+      ],
+      "why": "With the second record folded as above, this is the pair already declined: nothing but the name and the generation joins the ruler of half Keilah (Nehemiah 3:17) to the Merarite who came with Ezra."
+    },
+    {
+      "strongNumber": "H3110",
+      "pair": [
+        "jehohanan",
+        "jonathan-10"
+      ],
+      "why": "The first record rests on Ezra 10:6, 'Johanan the son of Eliashib', and whether that Eliashib is the high priest is the question declined for Eliashib himself; the second already holds the Johanan of the high-priestly line at Nehemiah 12:22."
+    },
+    {
+      "strongNumber": "H4509",
+      "pair": [
+        "miniamin-2",
+        "miniamin-3"
+      ],
+      "why": "The first record is the house of Miniamin under which Joiakim's generation is counted (Nehemiah 12:17), the Miamin who came up with Zerubbabel (12:5); the priest with a trumpet at the dedication of the wall (12:41) is a man of Nehemiah's day who bears the house's name. A house and a man, as with Kadmiel."
+    },
+    {
+      "strongNumber": "H5416",
+      "pair": [
+        "nathan-4",
+        "nathan-5"
+      ],
+      "why": "1 Kings 4:5 writes 'the son of Nathan' twice, once for Azariah over the officers and once for Zabud the priest, and does not say they are brothers. If they are, their father is most likely the prophet or David's son, a third record, which this pair would not reach."
+    },
+    {
+      "strongNumber": "H2148",
+      "pair": [
+        "zechariah-4",
+        "zechariah-5"
+      ],
+      "why": "The verse the audit found on both (1 Chronicles 26:14) has since been moved to the first; the second is the Levite musician of the second degree (1 Chronicles 15:18-24, 16:5), and the person register keeps them apart. Name, era and office only."
+    },
+    {
+      "strongNumber": "H5662",
+      "pair": [
+        "obadiah-10",
+        "obadiah-11"
+      ],
+      "why": "One seals among the priests (Nehemiah 10:5), the other keeps the gates among the porters (Nehemiah 12:25); a priest is not a gatekeeper."
+    },
+    {
+      "strongNumber": "H6611",
+      "pair": [
+        "pethahiah-2",
+        "pethahiah-3"
+      ],
+      "why": "Nothing but the name, the generation and the office joins the Levite who put away his foreign wife (Ezra 10:23) to the Levite who called Israel to bless the Lord (Nehemiah 9:5); no one beside either is named in both."
+    },
+    {
+      "strongNumber": "H7597",
+      "pair": [
+        "shealtiel-2",
+        "shealtiel-3"
+      ],
+      "why": "Luke's Shealtiel, son of Neri (Luke 3:27), is kept apart for the reason Luke's Zerubbabel is."
+    },
+    {
+      "strongNumber": "H7597",
+      "pair": [
+        "shealtiel",
+        "shealtiel-3"
+      ],
+      "why": "The first record is folded into the first of the pair above, and that pair's answer holds."
+    },
+    {
+      "strongNumber": "H8018",
+      "pair": [
+        "shelemiah-6",
+        "shelemiah-8"
+      ],
+      "why": "The verse the audit read on both (Jeremiah 37:3) has since been moved to the second, so Jehucal's father at 37:3 and Jucal's at 38:1 is one record already. The son of Abdeel sent to seize Baruch (36:26) is joined to him by nothing but the name and the generation."
+    },
+    {
+      "strongNumber": "H844",
+      "pair": [
+        "asriel",
+        "asriel-2"
+      ],
+      "why": "1 Chronicles 7:14 sets Ashriel, whom Manasseh's wife bore, against Machir, whom his concubine bore, which makes him the brother of Gilead's father where Numbers 26:31 makes Asriel Gilead's son. The clan may be one; the verses make two generations of it."
+    },
+    {
+      "strongNumber": "H6659",
+      "pair": [
+        "zadok",
+        "zadok-3"
+      ],
+      "why": "1 Chronicles 6 writes Ahitub begetting Zadok twice, at 6:8 and at 6:12. The verses that joined them for the audit (1 Chronicles 15:11, 16:39 and Ezekiel's sons of Zadok) have since been moved to David's Zadok, and what remains of the second is Ezra's ancestor."
+    },
+    {
+      "strongNumber": "H1867",
+      "pair": [
+        "darius",
+        "darius-2"
+      ],
+      "why": "The verses that joined them for the audit, Daniel 5:31 and chapter 6, have since been moved to the second: the first is the Persian of Ezra, Haggai and Zechariah, the second the Mede, son of Ahasuerus (Daniel 9:1)."
+    },
+    {
+      "strongNumber": "H4441",
+      "pair": [
+        "malchijah-10",
+        "malchijah-2"
+      ],
+      "why": "Both hold Pashhur's father at Jeremiah 21:1 and 38:1, but the first is also the king's son whose dungeon held Jeremiah (38:6), and the second also the Malchijahs of Nehemiah 8:4, 10:3 and 12:42; the person register reads the first as the king's son. A fold would join all of them; the two verses have to leave the first instead."
+    },
+    {
+      "strongNumber": "H8227",
+      "pair": [
+        "shaphan",
+        "shaphan-3"
+      ],
+      "why": "Ezekiel 8:11 does not call Jaazaniah's father the scribe, and the scribe's sons the text names are Ahikam, Elasah and Gemariah. Name and generation only."
+    },
+    {
+      "strongNumber": "H8227",
+      "pair": [
+        "shaphan-2",
+        "shaphan-3"
+      ],
+      "why": "The first record is folded into the scribe's; the pair above answers it."
     }
   ]
 }
