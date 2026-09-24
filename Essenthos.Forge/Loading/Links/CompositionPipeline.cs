@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -106,7 +107,7 @@ internal sealed class CompositionPipeline(
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, false, null, cancellationToken);
-        var statements = await Statements(connection, from.Id, to.Id, cancellationToken);
+        var statements = await Key(connection, from.Id, to.Id, cancellationToken);
         var (admission, _) = await Admit(
             connection, from, viaSlugs, to, proposed, statements, minimumConfidence, precision, false, null,
             cancellationToken);
@@ -153,6 +154,7 @@ internal sealed class CompositionPipeline(
         double minimumConfidence,
         IReadOnlySet<int>? books,
         double precision = Admission.DefaultPrecision,
+        string? explain = null,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -164,12 +166,17 @@ internal sealed class CompositionPipeline(
 
         var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, true, books, cancellationToken);
         var trained = started.Elapsed;
-        var statements = await Statements(connection, from.Id, to.Id, cancellationToken);
+        var statements = await Key(connection, from.Id, to.Id, cancellationToken);
         var scope = await CompositionTrial.Scope(connection, from.Id, to.Id, statements, books, cancellationToken);
         var every = Merge(proposed, Admission.Everything(minimumConfidence));
         var (admission, measured) = await Admit(
             connection, from, viaSlugs, to, proposed, statements, minimumConfidence, precision, true, books,
             cancellationToken);
+
+        if (explain is not null)
+        {
+            await Explain(explain, fromSlug, viaSlugs, proposed, admission, books, cancellationToken);
+        }
 
         var report = new StringBuilder()
             .AppendLine("where each combination of readings named the stated word, from each confidence up:")
@@ -185,6 +192,44 @@ internal sealed class CompositionPipeline(
         }
 
         return report.ToString();
+    }
+
+    /// <summary>
+    /// Every answer each reading gave, one line per pair, for working out why a word was left
+    /// without a link: whether nothing proposed anything for it, or a combination was refused, or
+    /// its answer fell under the floor. The first hop to each middle text follows, since a route
+    /// that reached a middle word the middle text leaves unlinked proposes nothing to the target.
+    /// </summary>
+    private async Task Explain(
+        string path,
+        string fromSlug,
+        IReadOnlyList<string> viaSlugs,
+        Proposed proposed,
+        Admission admission,
+        IReadOnlySet<int>? books,
+        CancellationToken cancellationToken)
+    {
+        var chosen = Merge(proposed, admission).Select(link => (link.From, link.To)).ToHashSet();
+        await using var writer = new StreamWriter(path, false, new UTF8Encoding(false));
+        await writer.WriteLineAsync("reading\tfrom\tto\tconfidence\tadmitted\tchosen");
+        foreach (var link in Routes.MergeFamilies(proposed.Written, proposed.Reduced, [.. proposed.Composed]))
+        {
+            await writer.WriteLineAsync(string.Join('\t',
+                Admission.Name(link.Route, [.. viaSlugs]), link.From, link.To,
+                link.Confidence.ToString("F4", CultureInfo.InvariantCulture),
+                admission.Admits(link) ? 1 : 0, chosen.Contains((link.From, link.To)) ? 1 : 0));
+        }
+
+        foreach (var viaSlug in viaSlugs)
+        {
+            foreach (var (from, bridge, confidence) in await aligner.Proposals(
+                         fromSlug, viaSlug, Workspace(fromSlug, viaSlug, true, books), AgreementFloor,
+                         books: books, cancellationToken: cancellationToken))
+            {
+                await writer.WriteLineAsync(string.Join('\t',
+                    $"to {viaSlug}", from, bridge, confidence.ToString("F4", CultureInfo.InvariantCulture), 0, 0));
+            }
+        }
     }
 
     /// <param name="Composed">One set of pairs per middle text.</param>
@@ -257,7 +302,7 @@ internal sealed class CompositionPipeline(
         {
             var vias = viaSlugs.Where(via => via != proxy.Slug).ToList();
             var proxyProposed = await Propose(connection, proxy.Slug, vias, to.Slug, trial, books, cancellationToken);
-            var proxyStatements = await Statements(connection, proxy.Id, to.Id, cancellationToken);
+            var proxyStatements = await Key(connection, proxy.Id, to.Id, cancellationToken);
             var proxyEvery = Merge(proxyProposed, Admission.Everything(minimumConfidence));
             var floors = Admission.Measure(proxyEvery, proxyStatements, minimumConfidence, precision);
 
@@ -761,6 +806,100 @@ internal sealed class CompositionPipeline(
         while (await reader.ReadAsync(cancellationToken))
         {
             words.Add(reader.GetInt64(0));
+        }
+
+        return words;
+    }
+
+    /// <summary>
+    /// What a run is measured against: the statements, each read as naming the whole written word
+    /// of the target it names rather than the one word of it the corpus divides out.
+    ///
+    /// <para>
+    /// Luther's printed Strong numbers and Clear Bible's alignments name the Hebrew as it is written,
+    /// and reach this corpus on the host word. BHSA writes the conjunction, the article and the
+    /// prepositions ב, כ, ל and מ as words of their own, so a statement about וַיֹּאמֶר lands on the
+    /// verb, and the answer that gives the ו to <em>und</em> or <em>y</em> is scored as naming the
+    /// wrong word. Of their 242,646 and 259,726 statements into BHSA, 2,401 and 770 name such a word,
+    /// where the Berean's name 115,890 of 403,359; without this, a word rendering one of them could
+    /// almost never be measured right.
+    /// </para>
+    ///
+    /// <para>
+    /// Only the words written joined to the next one are added, never the host, so an answer naming
+    /// the noun is not made right by a statement about its article.
+    /// </para>
+    /// </summary>
+    internal static async Task<Dictionary<long, HashSet<long>>> Key(
+        NpgsqlConnection connection,
+        int fromTextId,
+        int toTextId,
+        CancellationToken cancellationToken)
+    {
+        var statements = await Statements(connection, fromTextId, toTextId, cancellationToken);
+        var together = WrittenTogether(await Spelling(connection, toTextId, cancellationToken));
+        foreach (var targets in statements.Values)
+        {
+            foreach (var target in targets.ToArray())
+            {
+                if (together.TryGetValue(target, out var joined))
+                {
+                    targets.UnionWith(joined);
+                }
+            }
+        }
+
+        return statements;
+    }
+
+    /// <summary>
+    /// For each word of a written word the corpus divides, the parts of it written joined to the
+    /// next: its proclitics.
+    /// </summary>
+    /// <param name="words">Every word of the text in reading order: its verse and what follows it.</param>
+    internal static Dictionary<long, long[]> WrittenTogether(
+        IReadOnlyList<(long Id, int Verse, string Trailer)> words)
+    {
+        var together = new Dictionary<long, long[]>();
+        var start = 0;
+        for (var i = 0; i < words.Count; i++)
+        {
+            var last = i + 1 == words.Count || words[i + 1].Verse != words[i].Verse || words[i].Trailer.Length > 0;
+            if (!last)
+            {
+                continue;
+            }
+
+            if (i > start)
+            {
+                var joined = words.Skip(start).Take(i - start).Select(word => word.Id).ToArray();
+                for (var at = start; at <= i; at++)
+                {
+                    together[words[at].Id] = joined;
+                }
+            }
+
+            start = i + 1;
+        }
+
+        return together;
+    }
+
+    private static async Task<List<(long Id, int Verse, string Trailer)>> Spelling(
+        NpgsqlConnection connection,
+        int textId,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(
+            "SELECT id, verse_id, trailer FROM word WHERE text_id = @text ORDER BY verse_id, position", connection);
+        command.Parameters.AddWithValue("text", textId);
+        command.CommandTimeout = 600;
+
+        var words = new List<(long, int, string)>(500_000);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            words.Add((reader.GetInt64(0), reader.GetInt32(1), reader.GetString(2)));
         }
 
         return words;
