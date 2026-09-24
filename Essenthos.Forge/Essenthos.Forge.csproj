@@ -89,6 +89,8 @@
              the warm pass to make alike. -->
         <Content Remove="Swete\SweteCorrections.json" />
         <EmbeddedResource Include="Swete\SweteCorrections.json" />
+        <Content Remove="Swete\SwetePage.json" />
+        <EmbeddedResource Include="Swete\SwetePage.json" />
     </ItemGroup>
 
     <!-- An EVIDENTIA run records the build that made it, and a version number that never changes

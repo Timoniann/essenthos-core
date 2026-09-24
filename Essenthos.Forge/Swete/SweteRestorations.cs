@@ -69,8 +69,12 @@ internal static class SweteRestorations
         + "restored by Essenthos where Brenton's Greek and the GLAUx treebank read the same words, in the "
         + "spelling Swete prints beside them. Letters the transcription misread are left as it reads them.";
 
-    /// <summary>These, and the corrections a rule settles, which are made the same way.</summary>
-    public static readonly IReadOnlyList<SweteRestoration> All = [.. Lost(), .. SweteCorrections.All];
+    /// <summary>
+    /// These, the corrections a rule settles, and the words read back off the printed page, which are
+    /// made the same way and in this order: a page restoration names its place in the verse as the
+    /// corrections leave it.
+    /// </summary>
+    public static readonly IReadOnlyList<SweteRestoration> All = [.. Lost(), .. SweteCorrections.All, .. SwetePage.All];
 
     private static IReadOnlyList<SweteRestoration> Lost() =>
     [

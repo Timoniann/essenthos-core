@@ -173,7 +173,11 @@ other books of Swete, `SweteRestorations.cs` puts back seventeen words of Genesi
 and GLAUx agree, and `SweteCorrections.json`, written by `scripts/swete-corrections.py`, corrects
 letters and spaces by rule: a Latin letter for the Greek one it looks like, the chapter or verse
 number Swete prints in the margin run into a verse's first word, and two words run together where
-Brenton and GLAUx both read them apart. Misread letters are left as the transcription reads them. That is a modification of a
+Brenton and GLAUx both read them apart. Where Brenton and GLAUx both read words the transcription
+lacks, the printed page settles it (`SweteScans/`, the Internet Archive's scans): `SwetePage.json`,
+written by `scripts/swete-scans.py`, puts back what the page prints there, in its spelling and with
+the volume and page it was read on, and leaves the verse alone where the page prints it as the
+transcription does. Misread letters are left as the transcription reads them. That is a modification of a
 CC BY-SA text, so each text's rights note says it is modified, and the modified text is shared under
 the same licence — which is all ShareAlike asks of it. It does not reach the annotation: a letter
 link or a verse link holds two row ids and a method and no text, and a folded search form is derived

@@ -1,0 +1,467 @@
+# Gaps settled by reading the page image where the OCR could not: book, verse, the gap's position
+# in the verse's words, what the page prints there (nothing: the page prints the verse as the transcription
+# does), volume, scan leaf. Read by eye on 2026-09-24; scripts/swete-scans.py --settled takes it.
+01.Genesis	7:11	30	ἠνεῴχθησαν·	1	43
+01.Genesis	9:1	0	Καὶ ηὐλόγησεν ὁ θεὸς τὸν Νῶε καὶ τοὺς υἱοὺς αὐτοῦ,	1	45
+01.Genesis	12:6	12	τὴν	1	51
+01.Genesis	13:9	7		1	52
+01.Genesis	13:9	19	σὺ εἰς δεξιά, ἐγὼ	1	52
+01.Genesis	18:29	17	ἕνεκεν	1	60
+01.Genesis	20:18	1		1	64
+01.Genesis	24:5	17	τὴν γῆν ταύτην· ἀποστρέψω τὸν υἱόν σου εἰς τὴν γῆν ὅθεν ἐξῆλθες	1	69
+01.Genesis	24:8	23	ἀποστρέψῃς	1	70
+01.Genesis	24:43	23	ἐγὼ εἴπω	1	72
+01.Genesis	24:51	3	σου,	1	72
+01.Genesis	25:33	4	Ὄμοσόν	1	76
+01.Genesis	26:1	12	ἐγενήθη	1	76
+01.Genesis	27:22	14		1	79
+01.Genesis	27:46	8	μου διὰ	1	81
+01.Genesis	28:1	0	προσκαλεσάμενος δὲ Ἰσαὰκ	1	81
+01.Genesis	28:15	25	ἐγκαταλείπω	1	82
+01.Genesis	29:25	17		1	85
+01.Genesis	29:26	4	ἔστιν	1	85
+01.Genesis	30:26	9	δεδούλευκά	1	87
+01.Genesis	33:7	8	προσεκύνησαν· καὶ	1	95
+01.Genesis	34:15	0		1	97
+01.Genesis	35:10	9	κληθήσεται	1	99
+01.Genesis	35:12	9	δέδωκα αὐτήν, καὶ	1	99
+01.Genesis	35:15	14	θεός, Βαιθήλ.	1	99
+01.Genesis	36:7	0	ἦν γὰρ αὐτῶν τὰ ὑπάρχοντα πολλὰ τοῦ οἰκεῖν ἅμα,	1	100
+01.Genesis	36:15	9	Θαιμάν,	1	101
+01.Genesis	36:15	10	Ὠμάρ,	1	101
+01.Genesis	36:17	9	Ζάρε,	1	101
+01.Genesis	36:20	3	Σηεὶρ	1	101
+01.Genesis	36:25	2	υἱοὶ	1	101
+01.Genesis	37:2	7		1	103
+01.Genesis	37:13	2	Ἰσραὴλ	1	103
+01.Genesis	38:2	8	ὄνομα	1	105
+01.Genesis	41:31	2	ἐπιγνωσθήσεται	1	112
+01.Genesis	41:31	11	ἐσομένου	1	112
+01.Genesis	42:15	18	ἔλθῃ ὧδε.	1	115
+01.Genesis	42:21	19		1	115
+01.Genesis	46:27	15	εἰσελθοῦσαι	1	125
+01.Genesis	47:3	13	Φαραώ Ποιμένες	1	126
+01.Genesis	47:19	25	Φαραώ·	1	127
+01.Genesis	48:5	10		1	129
+01.Genesis	48:20	19	Ἐφράιμ καὶ	1	130
+01.Genesis	48:21	20	τῶν πατέρων ὑμῶν·	1	130
+01.Genesis	50:6	3		1	134
+02.Exodus	1:17	8	ἐποίησαν καθότι	1	137
+02.Exodus	2:16	14	παραγενόμεναι δὲ ἤντλουν ἕως ἔπλησαν τὰς δεξαμενάς, ποτίσαι τὰ	1	138
+02.Exodus	5:1	0	Καὶ μετὰ ταῦτα εἰσῆλθεν Μωυσῆς	1	143
+02.Exodus	6:1	0	καὶ εἶπεν	1	145
+02.Exodus	6:8	7	ἣν	1	145
+02.Exodus	6:9	12	τῆς ὀλιγοψυχίας	1	146
+02.Exodus	6:20	4	Ἰωχάβεδ	1	146
+02.Exodus	10:6	24	πατέρες	1	154
+02.Exodus	10:15	40	Αἰγύπτου.	1	155
+02.Exodus	12:27	15	Αἰγύπτῳ,	1	159
+02.Exodus	15:25	1	δὲ Μωυσῆς	1	167
+02.Exodus	16:1	0	ἀπῆραν δὲ	1	167
+02.Exodus	18:3	1	τοὺς	1	171
+02.Exodus	18:8	17	Ἰσραήλ,	1	171
+02.Exodus	18:8	27	καὶ	1	171
+02.Exodus	21:33	4	λάκκον ἢ λατομήσῃ, καὶ μὴ καλύψῃ αὐτόν, καὶ ἐμπέσῃ ἐκεῖ μόσχος	1	178
+02.Exodus	23:28	11		1	182
+02.Exodus	27:11	1		1	190
+02.Exodus	28:3	11		1	191
+02.Exodus	30:26	11		1	198
+02.Exodus	31:13	1	σὺ	1	200
+02.Exodus	33:21	1	εἶπεν	1	204
+02.Exodus	34:10	1	εἶπεν Κύριος πρὸς Μωυσῆν Ἰδοὺ ἐγὼ τίθημί σοι διαθήκην ἐνώπιον παντὸς	1	205
+02.Exodus	34:31	8	Ἀαρὼν καὶ	1	207
+02.Exodus	34:35	7	Μωσῆ	1	207
+02.Exodus	36:1	0	Καὶ ἐποίησεν Βεσελεὴλ	1	210
+02.Exodus	36:8	9	ἁγίων,	1	210
+02.Exodus	36:8	18	Μωυσῇ.	1	210
+02.Exodus	36:21	24	δώδεκα	1	211
+02.Exodus	37:17	11	ἀγκύλαι	1	213
+03.Leviticus	2:1	0	Ἐὰν δὲ ψυχὴ προσφέρῃ δῶρον θυσίαν τῷ κυρίῳ, σεμίδαλις ἔσται	1	221
+03.Leviticus	3:9	18	ψόαις περιελεῖ	1	223
+03.Leviticus	3:16	14	στέαρ	1	223
+03.Leviticus	6:13	0		1	229
+03.Leviticus	6:23	9		1	229
+03.Leviticus	8:2	4	υἱοὺς	1	232
+03.Leviticus	8:32	9	πυρὶ κατακαυθήσεται.	1	235
+03.Leviticus	8:35	17	μὴ	1	235
+03.Leviticus	9:22	11	ποιήσας	1	237
+03.Leviticus	11:5	5	μηρυκισμὸν	1	239
+03.Leviticus	11:9	3	φάγεσθε	1	239
+03.Leviticus	11:29	2	ὑμῖν	1	240
+03.Leviticus	13:34	5	θραῦσμα	1	245
+03.Leviticus	13:58	25		1	247
+03.Leviticus	15:18	7	κοίτην	1	252
+03.Leviticus	15:18	15	ἑσπέρας.	1	252
+03.Leviticus	15:21	14	σῶμα	1	252
+03.Leviticus	18:9	7	ἢ	1	258
+03.Leviticus	22:16	15	Κύριος	1	267
+03.Leviticus	22:21	25	εἰσδεκτόν,	1	267
+03.Leviticus	25:30	10	κυρωθήσεται	1	275
+03.Leviticus	25:37	6	ἐπὶ	1	275
+03.Leviticus	26:24	15	ὑμῶν.	1	278
+03.Leviticus	26:30	10	ὑμῶν, καὶ	1	279
+04.Numeri	1:2	14		1	283
+04.Numeri	1:32	11	πατριῶν	1	285
+04.Numeri	1:32	18	αὐτῶν,	1	285
+04.Numeri	3:12	1	ἐγὼ ἰδοὺ εἴληφα	1	289
+04.Numeri	5:10	5		1	297
+04.Numeri	5:10	12	ἔσται.	1	297
+04.Numeri	5:14	6	ζηλώσῃ	1	297
+04.Numeri	7:29	2	θυσίαν σωτηρίου δαμάλεις δύο, κριοὺς πέντε, ἀμνάδας	1	302
+04.Numeri	7:29	3	πέντε·	1	302
+04.Numeri	8:22	22	καθὼς συνέταξεν	1	306
+04.Numeri	9:18	7		1	308
+04.Numeri	9:18	8	προστάγματος	1	308
+04.Numeri	10:6	10	παρεμβάλλουσαι λίβα· καὶ σαλπιεῖτε σημασίαν τρίτην, καὶ ἐξαροῦσιν	1	308
+04.Numeri	10:6	17	σαλπιεῖτε	1	308
+04.Numeri	11:15	18		1	311
+04.Numeri	11:16	0	Καὶ	1	311
+04.Numeri	11:18	27		1	311
+04.Numeri	15:14	30	ποιήσει	1	320
+04.Numeri	16:25	12	πάντες	1	323
+04.Numeri	18:1	21		1	326
+04.Numeri	19:11	4	πάσης ψυχῆς	1	330
+04.Numeri	20:23	6	Ἀαρὼν ἐν	1	332
+04.Numeri	21:8	4	Μωυσῆν	1	333
+04.Numeri	21:8	14	ἐὰν δάκῃ	1	333
+04.Numeri	21:13	6	Ἀρνὼν	1	333
+04.Numeri	24:1	0	Καὶ ἰδὼν	1	341
+04.Numeri	28:15	16	σπονδὴ	1	353
+04.Numeri	29:27	0	αἱ	1	353
+04.Numeri	29:36	7	Κυρίου·	1	354
+04.Numeri	29:39	13	ἑκούσια ὑμῶν καὶ	1	354
+04.Numeri	31:54	13	ἑκατοντάρχων,	1	359
+04.Numeri	32:6	2	Μωυσῆς	1	359
+04.Numeri	32:30	14	αὐτῶν	1	361
+04.Numeri	32:42	14	ἐκ	1	362
+04.Numeri	33:56	5	αὐτούς, ποιήσω ὑμᾶς.	1	365
+04.Numeri	35:5	44	πόλεων.	1	367
+05.Deuteronomium	2:5	18	ἐν κλήρῳ	1	374
+05.Deuteronomium	3:14	7	Ἀρβὸκ	1	379
+05.Deuteronomium	3:24	28		1	379
+05.Deuteronomium	4:21	2		1	382
+05.Deuteronomium	6:8	1	ἀφάψεις	1	387
+05.Deuteronomium	7:1	0	Ἐὰν δὲ εἰσαγάγῃ σε Κύριος ὁ θεός σου εἰς τὴν γῆν εἰς ἣν εἰσπορεύῃ	1	388
+05.Deuteronomium	7:8	23		1	389
+05.Deuteronomium	7:15	3		1	390
+05.Deuteronomium	7:15	14	ἑώρακας	1	390
+05.Deuteronomium	8:6	8	πορεύεσθαι	1	391
+05.Deuteronomium	8:15	7	μεγάλης	1	392
+05.Deuteronomium	8:16	9		1	392
+05.Deuteronomium	12:5	22		1	400
+05.Deuteronomium	12:6	2		1	400
+05.Deuteronomium	15:21	2		1	408
+05.Deuteronomium	16:11	12	θυγάτηρ	1	408
+05.Deuteronomium	16:11	25	προσήλυτος	1	408
+05.Deuteronomium	18:18	1	ἀναστήσω	1	412
+05.Deuteronomium	19:1	0	Ἐὰν δὲ ἀφανίσῃ Κύριος ὁ θεός σου τὰ ἔθνη ἃ ὁ θεὸς δίδωσίν σοι	1	413
+05.Deuteronomium	28:32	13		1	432
+05.Deuteronomium	30:10	30	ἐπὶ Κύριον	1	438
+05.Deuteronomium	30:10	43	σου.	1	438
+05.Deuteronomium	30:13	5	λέγων	1	438
+05.Deuteronomium	30:16	24		1	438
+05.Deuteronomium	31:15	25		1	440
+05.Deuteronomium	32:6	19		1	442
+05.Deuteronomium	32:30	4	καὶ δύο μετακινήσουσιν μυριάδας,	1	445
+05.Deuteronomium	32:43	14	καὶ ἐνισχυσάτωσαν αὐτῷ πάντες ἄγγελοι θεοῦ·	1	446
+05.Deuteronomium	33:8	22	Ἀντιλογίας.	1	448
+05.Deuteronomium	33:9	0		1	448
+05.Deuteronomium	33:28	0	καὶ κατασκηνώσει Ἰσραὴλ πεποιθώς,	1	450
+05.Deuteronomium	33:29	0	μακάριος	1	450
+06.Josue	2:13	14	καὶ πάντα	1	455
+06.Josue	4:1	0	Καὶ ἐπεὶ	1	457
+06.Josue	5:13	8	ἀναβλέψας τοῖς	1	460
+06.Josue	7:12	0	οὐ	1	464
+06.Josue	10:1	18	Ἰερειχὼ	1	471
+06.Josue	10:14	15	ὅτι Κύριος	1	472
+06.Josue	15:3	18	Ἁσωρών,	1	482
+06.Josue	15:3	26	δυσμὰς	1	482
+06.Josue	17:7	7	ἐστιν	1	487
+06.Josue	17:7	17	Ἱαμεὶν	1	487
+06.Josue	17:8	3	καὶ Θαφὲθ	1	487
+06.Josue	18:5	5	Ἰούδας	1	489
+06.Josue	19:9	3	Ἰούδα	1	491
+06.Josue	19:9	13	Ἰούδα	1	491
+06.Josue	21:25	14	τὰ ἀφωρισμένα	1	496
+06.Josue	21:31	7		1	496
+06.Josue	21:32	11	Κάδες	1	496
+06.Josue	24:11	6	εἰς Ἰερειχώ·	1	504
+06.Josue	24:32	31		1	506
+10.Ruth	2:1	12	ἰσχύι	1	571
+10.Ruth	2:2	1	εἶπεν Ῥοὺθ	1	571
+10.Ruth	2:18	1	ἦρεν	1	573
+10.Ruth	2:22	2	Νωεμεὶν	1	573
+10.Ruth	3:10	22	ὀπίσω	1	574
+10.Ruth	4:3	14	Ἀβειμέλεχ,	1	575
+10.Ruth	4:22	7	ἐγέννησεν τὸν Δαυείδ.	1	576
+11.Regnorum_I	1:25	6	Ἅννα	1	579
+11.Regnorum_I	2:1	17	εὐφράνθην ἐν σωτηρίᾳ σου.	1	579
+11.Regnorum_I	2:11	8	Ἁρμαθάιμ·	1	580
+11.Regnorum_I	2:16	20	ψυχή	1	581
+11.Regnorum_I	3:9	23	τόπῳ	1	583
+11.Regnorum_I	3:21	3	δηλωθῆναι	1	584
+11.Regnorum_I	3:21	11	ἐπιστεύθη	1	584
+11.Regnorum_I	3:21	12		1	584
+11.Regnorum_I	4:4	15	ἀμφότεροι	1	584
+11.Regnorum_I	4:16	23		1	585
+11.Regnorum_I	5:8	22	κιβωτὸς	1	586
+11.Regnorum_I	7:1	0	καὶ ἔρχονται οἱ ἄνδρες Καριαθιαρεὶμ	1	589
+11.Regnorum_I	7:6	3	Μασσηφάθ,	1	589
+11.Regnorum_I	7:6	29	Ἰσραὴλ εἰς Μασσηφάθ.	1	589
+11.Regnorum_I	7:10	17	φωνῇ	1	590
+11.Regnorum_I	8:9	8	διαμαρτυρόμενος	1	591
+11.Regnorum_I	9:8	7	καὶ εἶπεν	1	593
+11.Regnorum_I	9:8	17	δώσεις	1	593
+11.Regnorum_I	10:1	0	καὶ ἔλαβεν Σαμουὴλ τὸν φακὸν τοῦ ἐλαίου καὶ ἐπέχεεν	1	594
+11.Regnorum_I	12:8	0	ὡς εἰσῆλθεν Ἰακὼβ καὶ οἱ υἱοὶ αὐτοῦ εἰς Αἴγυπτον,	1	598
+11.Regnorum_I	12:21	3	ὀπίσω τῶν	1	599
+11.Regnorum_I	13:6	11	ἐκρύβη	1	600
+11.Regnorum_I	13:8	1	διέλιπεν	1	600
+11.Regnorum_I	13:8	10	παρεγένετο	1	600
+11.Regnorum_I	13:15	1	ἀνέστη Σαμουὴλ	1	601
+11.Regnorum_I	14:43	14	Γευόμενος	1	605
+11.Regnorum_I	14:45	1	εἶπεν	1	605
+11.Regnorum_I	14:45	11	σωτηρίαν	1	605
+11.Regnorum_I	14:49	1	ἦσαν	1	605
+11.Regnorum_I	15:12	10	ἀπηγγέλη	1	606
+11.Regnorum_I	15:16	5	Ἄνες,	1	607
+11.Regnorum_I	15:34	1	ἀπῆλθεν	1	608
+11.Regnorum_I	15:34	11	εἰς Γαβαά.	1	608
+11.Regnorum_I	16:23	1	ἐγενήθη	1	610
+11.Regnorum_I	22:18	26	τριακοσίους	1	624
+11.Regnorum_I	22:20	7	Ἀχειτώβ,	1	624
+11.Regnorum_I	23:1	0	Καὶ ἀπηγγέλη τῷ Δαυεὶδ λέγοντες Ἰδοὺ οἱ ἀλλόφυλοι πολεμοῦσιν	1	624
+11.Regnorum_I	23:25	16	τὴν	1	626
+11.Regnorum_I	24:5	17	ἐχθρόν	1	627
+11.Regnorum_I	25:16	0	καὶ	1	629
+11.Regnorum_I	25:29	19	θεῷ, καὶ ψυχὴν ἐχθρῶν	1	631
+11.Regnorum_I	26:25	10	ποιήσεις	1	634
+11.Regnorum_I	30:1	20	Σεκελάκ,	1	638
+11.Regnorum_I	30:22	29	ἐξειλάμεθα,	1	640
+12.Regnorum_II	1:7	7	εἶδεν	1	643
+12.Regnorum_II	1:9	6	ἐπάνω	1	643
+12.Regnorum_II	1:23	9	εὐπρεπεῖς	1	645
+12.Regnorum_II	2:7	13	κύριος	1	646
+12.Regnorum_II	2:22	13	Ἰωάβ;	1	647
+12.Regnorum_II	2:29	1	Ἀβεννὴρ	1	647
+12.Regnorum_II	3:14	18	ἀκροβυστίαις	1	649
+12.Regnorum_II	3:36	12	βασιλεὺς	1	651
+12.Regnorum_II	4:1	0	Καὶ	1	651
+12.Regnorum_II	4:2	6	Μεμφιβόσθε	1	651
+12.Regnorum_II	4:4	2	Ἰωναθὰν	1	651
+12.Regnorum_II	4:9	15	εἶπεν	1	652
+12.Regnorum_II	6:2	28	ὄνομα Κυρίου	1	654
+12.Regnorum_II	6:20	22	δεδόξασται σήμερον ὁ βασιλεὺς Ἰσραήλ, ὃς ἀπεκαλύφθη σήμερον ἐν ὀφθαλμοῖς	1	656
+12.Regnorum_II	7:20	17		1	657
+12.Regnorum_II	7:29	34		1	658
+12.Regnorum_II	13:26	3		1	669
+12.Regnorum_II	14:8	4		1	671
+12.Regnorum_II	17:1	0	Καὶ εἶπεν Ἀχειτόφελ	1	678
+12.Regnorum_II	20:1	0	Καὶ ἐκεῖ ἐπικαλούμενος υἱὸς παράνομος καὶ ὄνομα αὐτῷ Σάβεε,	1	687
+12.Regnorum_II	20:16	11	εἴπατε δὴ πρὸς Ἰωάβ Ἔγγισον ἕως ὧδε, καὶ λαλήσω πρὸς αὐτόν.	1	689
+12.Regnorum_II	23:10	2	καὶ ἐπάταξεν ἐν τοῖς ἀλλοφύλοις ἕως οὗ ἐκοπίασεν ἡ χεὶρ αὐτοῦ,	1	696
+13.Regnorum_III	1:44	14	καὶ Βαναιοὺ υἱὸν Ἰωδᾶε καὶ τὸν Χερεθθεὶ καὶ τὸν Φελεθθεί, καὶ	1	704
+13.Regnorum_III	1:49	1	ἐξανέστησαν πάντες οἱ κλητοὶ Ἀδωνειού, καὶ ἦλθον ἀνὴρ εἰς τὴν	1	704
+13.Regnorum_III	4:18	0		1	713
+13.Regnorum_III	5:15	1		1	716
+13.Regnorum_III	6:1	0	Καὶ ἐγενήθη ἐν τῷ τεσσερακοστῷ καὶ τετρακοσιοστῷ	1	716
+13.Regnorum_III	8:9	12	ἃ	1	724
+13.Regnorum_III	8:54	8	ὅλην τὴν	1	728
+13.Regnorum_III	10:12	9		1	732
+13.Regnorum_III	10:21	13		1	732
+13.Regnorum_III	11:2	16	εἰσελεύσονται εἰς ὑμᾶς, μὴ ἐκκλίνωσιν τὰς καρδίας ὑμῶν ὀπίσω	1	734
+13.Regnorum_III	12:30	17		1	743
+13.Regnorum_III	13:11	1		1	744
+13.Regnorum_III	15:18	3		1	749
+13.Regnorum_III	16:33	12		1	753
+13.Regnorum_III	16:34	0		1	754
+14.Regnorum_IV	2:5	14	Εἰ ἔγνως ὅτι σήμερον λαμβάνει Κύριος τὸν κύριόν σου ἐπάνωθεν	1	775
+14.Regnorum_IV	2:20	13		1	777
+14.Regnorum_IV	3:2	22	στήλας	1	777
+14.Regnorum_IV	3:23	6	ἐμαχέσαντο	1	779
+14.Regnorum_IV	4:6	9	μὲ	1	779
+14.Regnorum_IV	4:6	21	ἔλαιον.	1	780
+14.Regnorum_IV	6:15	20	παιδάριον	1	786
+14.Regnorum_IV	8:5	33	εἶπεν Γιεζεί	1	790
+14.Regnorum_IV	8:6	19		1	790
+14.Regnorum_IV	8:18	10	Ἀχαὰβ ἦν	1	791
+14.Regnorum_IV	8:26	15	Ἰσραήλ.	1	791
+14.Regnorum_IV	8:29	21	Ἁζαὴλ	1	792
+14.Regnorum_IV	9:15	2	Ἰωρὰμ ὁ	1	793
+14.Regnorum_IV	9:16	19	κατετόξευσαν	1	793
+14.Regnorum_IV	9:18	5	ἀπαντὴν	1	793
+14.Regnorum_IV	9:18	38	ἀνέστρεψεν.	1	794
+14.Regnorum_IV	9:23	2	Ἰωρὰμ	1	794
+14.Regnorum_IV	10:4	15	στησόμεθα ἡμεῖς;	1	795
+14.Regnorum_IV	10:6	4		1	796
+14.Regnorum_IV	10:9	13	Δίκαιοι	1	796
+14.Regnorum_IV	10:30	20	μου ἐποίησας	1	798
+14.Regnorum_IV	14:21	9	αὐτὸς υἱὸς	1	806
+14.Regnorum_IV	14:27	7	Ἰσραὴλ	1	806
+14.Regnorum_IV	15:21	5	Μαναὴμ καὶ	1	808
+14.Regnorum_IV	15:31	10	ἰδού ἐστιν	1	809
+14.Regnorum_IV	16:6	12	ἐξέβαλεν τοὺς	1	810
+14.Regnorum_IV	16:10	2	βασιλεὺς Ἀχὰζ	1	810
+14.Regnorum_IV	16:20	13	Ἑζεκίας	1	811
+14.Regnorum_IV	17:8	3	δικαιώμασιν τῶν	1	812
+14.Regnorum_IV	18:15	6	τὸ εὑρεθὲν ἐν οἴκῳ Κυρίου καὶ ἐν θησαυροῖς οἴκου τοῦ βασιλέως.	1	815
+14.Regnorum_IV	19:1	0	Καὶ ἐγένετο ὡς ἤκουσεν	1	817
+14.Regnorum_IV	19:28	13	μου·	1	820
+14.Regnorum_IV	19:28	26	ᾗ ἦλθες ἐν αὐτῇ.	1	820
+14.Regnorum_IV	19:31	8	Σειών·	1	820
+14.Regnorum_IV	21:7	22	οἴκῳ	1	823
+14.Regnorum_IV	21:17	25	βασιλεῦσιν	1	824
+14.Regnorum_IV	22:12	16	Μειχαίου	1	825
+14.Regnorum_IV	22:13	43	βιβλίου	1	825
+14.Regnorum_IV	23:16	7		1	828
+14.Regnorum_IV	23:16	29	ῥῆμα	1	828
+14.Regnorum_IV	24:1	0	ἐν ταῖς ἡμέραις αὐτοῦ ἀνέβη Ναβουχοδονοσὸρ βασιλεὺς Βαβυλῶνος,	1	830
+14.Regnorum_IV	24:3	17	πάντα	1	830
+14.Regnorum_IV	25:4	9	πολέμου	1	832
+14.Regnorum_IV	25:27	0	Καὶ	1	834
+15.Paralipomenon_I	1:6	1		2	19
+15.Paralipomenon_I	1:47	7		2	21
+15.Paralipomenon_I	2:16	1		2	22
+15.Paralipomenon_I	6:29	0		2	31
+15.Paralipomenon_I	9:19	34		2	40
+15.Paralipomenon_I	9:43	11		2	41
+15.Paralipomenon_I	12:20	0		2	47
+15.Paralipomenon_I	21:9	5		2	62
+15.Paralipomenon_I	23:29	0		2	66
+15.Paralipomenon_I	26:11	0		2	70
+15.Paralipomenon_I	28:1	11		2	74
+15.Paralipomenon_I	28:1	38		2	74
+15.Paralipomenon_I	28:4	35		2	75
+15.Paralipomenon_I	28:13	22		2	75
+15.Paralipomenon_I	29:5	0		2	76
+15.Paralipomenon_I	29:5	2		2	76
+16.Paralipomenon_II	3:11	11		2	83
+16.Paralipomenon_II	6:19	22		2	87
+16.Paralipomenon_II	6:40	0		2	89
+16.Paralipomenon_II	12:13	2		2	99
+16.Paralipomenon_II	15:2	1	ἐξῆλθεν	2	102
+16.Paralipomenon_II	15:2	11		2	102
+16.Paralipomenon_II	17:6	2		2	104
+16.Paralipomenon_II	20:10	3		2	109
+16.Paralipomenon_II	20:10	5		2	109
+16.Paralipomenon_II	20:15	8		2	110
+16.Paralipomenon_II	20:33	13		2	111
+16.Paralipomenon_II	23:8	11		2	115
+16.Paralipomenon_II	25:23	8		2	121
+16.Paralipomenon_II	26:11	13		2	122
+16.Paralipomenon_II	26:21	1		2	123
+16.Paralipomenon_II	27:1	0		2	123
+16.Paralipomenon_II	27:1	1		2	123
+16.Paralipomenon_II	28:1	0		2	123
+16.Paralipomenon_II	28:8	12		2	124
+16.Paralipomenon_II	28:24	23		2	126
+16.Paralipomenon_II	33:14	4		2	137
+17.Esdras_A	5:29	16		2	161
+17.Esdras_A	6:8	16		2	165
+17.Esdras_A	8:22	28		2	170
+17.Esdras_A	9:13	1		2	177
+18.Esdras_B	3:10	19		2	184
+18.Esdras_B	3:11	30		2	185
+18.Esdras_B	3:13	21		2	185
+18.Esdras_B	5:12	23		2	188
+18.Esdras_B	5:15	7		2	188
+18.Esdras_B	5:15	19		2	188
+18.Esdras_B	6:3	28		2	188
+18.Esdras_B	6:5	18		2	189
+18.Esdras_B	6:22	13		2	190
+18.Esdras_B	7:26	30		2	192
+18.Esdras_B	9:6	2		2	195
+18.Esdras_B	10:7	3		2	197
+18.Esdras_B	10:33	0		2	199
+18.Esdras_B	11:7	2		2	201
+18.Esdras_B	14:1	0	Καὶ	2	206
+18.Esdras_B	17:49	4		2	213
+18.Esdras_B	19:4	8		2	217
+18.Esdras_B	19:16	0		2	218
+18.Esdras_B	19:21	10		2	218
+18.Esdras_B	21:13	9		2	223
+18.Esdras_B	22:24	1		2	225
+20.Judith	1:7	1	ἀπέστειλεν Ναβουχοδονοσὸρ βασιλεὺς Ἀσσυρίων ἐπὶ πάντας τοὺς	2	800
+20.Judith	2:7	1		2	801
+20.Judith	2:28	2		2	803
+20.Judith	9:8	36		2	818
+20.Judith	10:8	0		2	819
+21.Tobias	6:3	16		2	846
+21.Tobias	8:15	14		2	853
+21.Tobias	12:5	13		2	858
+21.Tobias	13:6	13		2	861
+23.Machabaeorum_i	1:15	16		3	619
+23.Machabaeorum_i	1:54	1		3	621
+23.Machabaeorum_i	3:18	16		3	627
+23.Machabaeorum_i	3:43	14		3	629
+23.Machabaeorum_i	4:10	12		3	631
+23.Machabaeorum_i	5:41	11		3	638
+23.Machabaeorum_i	6:28	12		3	642
+23.Machabaeorum_i	7:31	14		3	646
+23.Machabaeorum_i	9:9	15		3	651
+23.Machabaeorum_i	10:45	23		3	659
+23.Machabaeorum_i	13:49	9		3	675
+23.Machabaeorum_i	15:6	0		3	681
+24.Machabaeorum_ii	4:4	1		3	694
+24.Machabaeorum_ii	4:19	25		3	696
+24.Machabaeorum_ii	9:21	6		3	712
+24.Machabaeorum_ii	12:27	15		3	721
+24.Machabaeorum_ii	12:44	1		3	722
+25.Machabaeorum_iii	1:20	6		3	734
+25.Machabaeorum_iii	7:1	2		3	750
+25.Machabaeorum_iii	7:21	0		3	752
+27.Psalmi	15:2	7		2	244
+27.Psalmi	47:15	15		2	293
+27.Psalmi	58:17	22		2	306
+27.Psalmi	61:9	12		2	308
+27.Psalmi	64:6	17		2	311
+27.Psalmi	65:3	18	σου.	2	312
+27.Psalmi	70:22	9	σου,	2	322
+27.Psalmi	73:15	5		2	328
+27.Psalmi	74:1	6		2	328
+27.Psalmi	103:14	0		2	369
+27.Psalmi	104:13	6		2	372
+27.Psalmi	105:48	18		2	378
+27.Psalmi	117:16	4		2	392
+27.Psalmi	117:24	1		2	393
+27.Psalmi	118:95	0		2	400
+27.Psalmi	118:170	6		2	405
+27.Psalmi	144:2	10		2	426
+29.Proverbia	19:7	0		2	470
+29.Proverbia	19:23	0		2	471
+29.Proverbia	27:15	9		2	490
+31.Canticum	2:17	13		2	527
+31.Canticum	3:11	0		2	529
+31.Canticum	4:10	0		2	530
+31.Canticum	8:2	20	ἀπὸ νάματος ῥοῶν σου.	2	535
+31.Canticum	8:10	5		2	536
+32.Job	9:16	11		2	554
+32.Job	27:15	0		2	586
+32.Job	34:27	0	ὅτι ἐξέκλιναν ἐκ νόμου θεοῦ,	2	603
+32.Job	42:7	23		2	618
+33.Sapientia_Salomonis	6:12	13		2	631
+36.Osee	2:1	6		3	26
+37.Amos	4:13	1		3	45
+37.Amos	8:11	21		3	50
+39.Joel	1:9	12		3	62
+43.Habacuc	2:5	0	ὁ	3	83
+43.Habacuc	2:5	2		3	83
+44.Sophonias	2:14	28		3	91
+46.Zacharias	2:7	0		3	100
+46.Zacharias	2:10	16		3	100
+46.Zacharias	3:9	11	τὸν	3	102
+49.Jeremias	1:5	14		3	247
+49.Jeremias	4:19	0		3	256
+49.Jeremias	21:13	22		3	292
+49.Jeremias	25:12	4		3	300
+49.Jeremias	41:5	16		3	345
+53.Ezechiel	10:9	16		3	424
+53.Ezechiel	15:2	16		3	433
+53.Ezechiel	40:39	8		3	499
+53.Ezechiel	41:16	1		3	502
+53.Ezechiel	45:20	5		3	512
+53.Ezechiel	47:6	9		3	516
+53.Ezechiel	48:28	6		3	520
+57.Daniel_Theodotionis_versio	3:15	30		3	537
+57.Daniel_Theodotionis_versio	6:19	18		3	569
+57.Daniel_Theodotionis_versio	10:15	18		3	589

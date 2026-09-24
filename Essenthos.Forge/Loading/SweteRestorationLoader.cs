@@ -151,7 +151,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
         if (verses > 0)
         {
-            foreach (var note in new[] { SweteRestorations.Note, SweteCorrections.Note })
+            foreach (var note in new[] { SweteRestorations.Note, SweteCorrections.Note, SwetePage.Note })
             {
                 if (text.RightsNote?.Contains(note, StringComparison.Ordinal) != true)
                 {
