@@ -3,8 +3,8 @@
     Fetches the German, Spanish and English Bibles the corpus holds, from eBible.org.
 
 .DESCRIPTION
-    Nine texts, one publisher, one format and one set of checks, so they are one script rather
-    than nine copies of the same hundred lines. The Kulish Bible arrives the same way and has its
+    Eleven texts, one publisher, one format and one set of checks, so they are one script rather
+    than eleven copies of the same hundred lines. The Kulish Bible arrives the same way and has its
     own script; that one is left where it is.
 
         Luther1912             deu1912     Lutherbibel 1912, Strong-tagged
@@ -16,6 +16,7 @@
         Young1898              engylt      Young's Literal Translation
         WorldEnglish           engwebp     the World English Bible, updated edition
         Jps1917                engjps      the JPS TaNaKH of 1917, Old Testament only
+        BasicEnglish           engBBE      the Bible in Basic English, 1965
         KingJames2006          eng-kjv2006 the King James, standardised 1769 text, Strong-tagged
 
     The last of them is not loaded as a text of its own. The corpus already serves a King James, from
@@ -31,8 +32,8 @@
     saying what it says today this stops and replaces nothing — a licence that moved under us is the
     owner's decision and not a download.
 
-    That is the statement over the text. It is NOT a statement about the Strong tagging that three
-    of the nine arrive with: eBible names no tagger and no terms for it anywhere, and the licence
+    That is the statement over the text. It is NOT a statement about the Strong tagging that several
+    of them arrive with: eBible names no tagger and no terms for it anywhere, and the licence
     notes beside the data say so rather than reading eBible's public-domain line as covering a layer
     nobody has claimed.
 
@@ -60,7 +61,7 @@ param(
     # The default matches Dataset:ResourcesPath: this project's own Resources folder.
     [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources'),
 
-    # One folder name, where only one text is wanted. All nine by default.
+    # One folder name, where only one text is wanted. All of them by default.
     [string] $Only
 )
 
@@ -95,6 +96,7 @@ $Texts = @(
     [pscustomobject]@{ Folder = 'Young1898';            Id = 'engylt';    Books = 66; Verses = 23145 + 7957; Strongs = 0 }
     [pscustomobject]@{ Folder = 'WorldEnglish';         Id = 'engwebp';   Books = 66; Verses = 23145 + 7958; Strongs = 683868 }
     [pscustomobject]@{ Folder = 'Jps1917';              Id = 'engjps';    Books = 39; Verses = 23145;        Strongs = 0 }
+    [pscustomobject]@{ Folder = 'BasicEnglish';         Id = 'engBBE';    Books = 66; Verses = 23145 + 7957; Strongs = 727511 }
     [pscustomobject]@{ Folder = 'KingJames2006';        Id = 'eng-kjv2006'; Books = 66; Verses = 23145 + 7957; Strongs = 349308 }
 )
 

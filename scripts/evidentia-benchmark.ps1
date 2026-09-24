@@ -10,6 +10,9 @@ param(
     # self: the King James against its own stated links; selfstrong: the same with source Strong allowed.
     # kjv, kjvval: the King James against its own links with the index learned from the Berean instead,
     # so nothing the King James states teaches it (the passages of ind, and of val and val2).
+    # bbe, nwt: the Bible in Basic English and the New World Translation, read from their files, over
+    # the passages of ind and val. Neither states a link, so there is no gold: what they report is
+    # coverage and how far the links agree with the King James's and the Berean's own.
     [string] $Runs = 'ind,val,val2,kjv',
 
     [string] $Output = (Join-Path ([IO.Path]::GetTempPath()) 'essenthos-evidentia')
@@ -40,6 +43,7 @@ $env:Dataset__ResourcesPath = Join-Path $checkout 'Resources'
 $env:DOTNET_ENVIRONMENT = 'Production'
 
 $independent = '--without-source-strong', '--learn-from', 'KJV'
+$fromFiles = $independent + '--source-from-files', '--routes', 'KJV,BSB'
 $kjv = '--without-source-strong', '--learn-from', 'BSB'
 $passages = @{
     ind        = @(
@@ -72,6 +76,22 @@ $passages = @{
         @('kjv-exo', 'KJV', 'BHSA', 2, 21, 23, $kjv),
         @('kjv-isa', 'KJV', 'BHSA', 23, 40, 42, $kjv),
         @('kjv-rom', 'KJV', 'NESTLE1904', 45, 5, 8, $kjv))
+    bbe        = @(
+        @('bbe-gen', 'BBE', 'BHSA', 1, 1, 10, $fromFiles),
+        @('bbe-ruth', 'BBE', 'BHSA', 8, 0, 0, $fromFiles),
+        @('bbe-jon', 'BBE', 'BHSA', 32, 0, 0, $fromFiles),
+        @('bbe-mark', 'BBE', 'NESTLE1904', 41, 1, 4, ($fromFiles + '--learn-from-strong-numbers')),
+        @('bbe-1sa', 'BBE', 'BHSA', 9, 17, 17, $fromFiles),
+        @('bbe-ps', 'BBE', 'BHSA', 19, 1, 23, $fromFiles),
+        @('bbe-john', 'BBE', 'NESTLE1904', 43, 1, 3, ($fromFiles + '--learn-from-strong-numbers')))
+    nwt        = @(
+        @('nwt-gen', 'NWT2013', 'BHSA', 1, 1, 10, $fromFiles),
+        @('nwt-ruth', 'NWT2013', 'BHSA', 8, 0, 0, $fromFiles),
+        @('nwt-jon', 'NWT2013', 'BHSA', 32, 0, 0, $fromFiles),
+        @('nwt-mark', 'NWT2013', 'NESTLE1904', 41, 1, 4, ($fromFiles + '--learn-from-strong-numbers')),
+        @('nwt-1sa', 'NWT2013', 'BHSA', 9, 17, 17, $fromFiles),
+        @('nwt-ps', 'NWT2013', 'BHSA', 19, 1, 23, $fromFiles),
+        @('nwt-john', 'NWT2013', 'NESTLE1904', 43, 1, 3, ($fromFiles + '--learn-from-strong-numbers')))
     selfstrong = @(
         @('sst-gen', 'KJV', 'BHSA', 1, 1, 10, @()),
         @('sst-ruth', 'KJV', 'BHSA', 8, 0, 0, @()),
@@ -101,6 +121,25 @@ function Counts([string] $report) {
     }
     $counts
 }
+# How far the final links agree with a route text's own, where the route reaches them.
+$routeLine = '^route agreement with (?<route>\S+): (?<agreed>[\d,]+)/(?<compared>[\d,]+) .*; [\d,]+/(?<links>[\d,]+) links reached'
+function Routes([string] $report) {
+    $routes = [ordered]@{}
+    foreach ($match in (Select-String -LiteralPath $report -Pattern $routeLine)) {
+        $groups = $match.Matches[0].Groups
+        $routes[$groups['route'].Value] = @{
+            Agreed = Number $groups['agreed'].Value; Compared = Number $groups['compared'].Value; Links = Number $groups['links'].Value
+        }
+    }
+    $routes
+}
+function RouteSummary([string] $name, $routes) {
+    foreach ($route in $routes.Keys) {
+        $r = $routes[$route]
+        '{0,-10} route {1,-4}: agrees {2}; reaches {3} of the links' -f $name, $route,
+            (Ratio $r.Agreed $r.Compared), (Ratio $r.Compared $r.Links)
+    }
+}
 function Ratio($part, $whole) { '{0:N0}/{1:N0} = {2:P2}' -f $part, $whole, ($part / [Math]::Max(1, $whole)) }
 function ByWord([string] $name, $c) {
     '{0,-10} by word: coverage {1} -> {2}, original {10} -> {11}; links by pair {3}, paired {4}; supplied {5}; unrendered {6}; right source {7}, original {8}, both {9}' -f $name,
@@ -114,9 +153,10 @@ function ByWord([string] $name, $c) {
 Push-Location $snapshot
 try {
     foreach ($set in $Runs -split ',') {
-        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, kjv, kjvval, self or selfstrong." }
+        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, kjv, kjvval, self, selfstrong, bbe or nwt." }
         $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0 }
         $words = @{}
+        $routes = [ordered]@{}
         foreach ($passage in $passages[$set]) {
             $name, $from, $to, $book, $first, $last, $flags = $passage
             $prefix = Join-Path $directory $name
@@ -141,6 +181,12 @@ try {
             }
             $counts = Counts "$prefix.report.txt"
             ByWord $name $counts
+            $passageRoutes = Routes "$prefix.report.txt"
+            RouteSummary $name $passageRoutes
+            foreach ($route in $passageRoutes.Keys) {
+                if (-not $routes.Contains($route)) { $routes[$route] = @{ Agreed = 0; Compared = 0; Links = 0 } }
+                foreach ($field in 'Agreed', 'Compared', 'Links') { $routes[$route][$field] += $passageRoutes[$route][$field] }
+            }
             foreach ($key in $counts.Keys) { $words[$key] = [int]$words[$key] + $counts[$key] }
         }
         '{0,-10} precision {1,5}/{2,-5} = {3:P2}   recall {1,5}/{4,-5} = {5:P2}   safe tier {6}/{7} = {8:P2}' -f "$set all",
@@ -148,6 +194,7 @@ try {
             ($total.Correct / [Math]::Max(1, $total.Gold)), $total.SafeCorrect, $total.SafeCovered,
             ($total.SafeCorrect / [Math]::Max(1, $total.SafeCovered))
         ByWord "$set all" $words
+        RouteSummary "$set all" $routes
     }
 }
 finally {

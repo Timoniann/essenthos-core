@@ -69,6 +69,16 @@ internal sealed record TextDefinition(
                 $"The text \"{Slug}\" does not say whether it may be served publicly. Set Redistribution to " +
                 $"what the licence actually permits; Unknown is not public domain, it is nobody having looked.");
         }
+
+        // Every text in the corpus can be served and travels in every corpus release, so the only
+        // place a text that may not be redistributed can be kept safe is outside it.
+        if (Redistribution == Redistribution.Prohibited)
+        {
+            throw new InvalidOperationException(
+                $"The text \"{Slug}\" may not be redistributed, so it is never written to the corpus: whatever the " +
+                "corpus holds can be served and is copied into every release. Read it from its file in the " +
+                "process that needs it, as the EVIDENTIA benchmark does with --source-from-files.");
+        }
     }
 
     private static void Require(string value, string name, string? what = null)
