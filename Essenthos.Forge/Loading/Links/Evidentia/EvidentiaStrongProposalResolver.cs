@@ -101,6 +101,15 @@ internal enum EvidentiaProposalKind
 
     /// <summary>A word the verse repeats, placed on as many free occurrences of its one lexeme, in order.</summary>
     RepeatedRenderingInOrder,
+
+    /// <summary>A noun, name or adjective on the one free word of its verse whose gloss in context names it, and no other.</summary>
+    UniqueContextGlossReview,
+
+    /// <summary>An open-class word whose only free candidate a dictionary sense and the original's own gloss both name.</summary>
+    DictionaryAndGlossReview,
+
+    /// <summary><em>you</em> or <em>but</em> on the one free word of its verse that is its own counterpart.</summary>
+    UniqueCounterpart,
 }
 
 /// <param name="Head">For an attached word, the proposal of the word it belongs to.</param>

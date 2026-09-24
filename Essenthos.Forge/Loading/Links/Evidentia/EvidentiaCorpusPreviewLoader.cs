@@ -24,11 +24,13 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     EvidentiaKnownRenderingIndex knownRenderingIndex,
     LanguagePackRegistry languagePacks,
     InterlinearLinkLoader interlinear,
-    EvidentiaFileSourceTexts fileSources)
+    EvidentiaFileSourceTexts fileSources,
+    EvidentiaContextGlossIndex contextGlossIndex)
 {
     private const string InterlinearGoldSource = "Door43 interlinear, joined in memory";
 
     private readonly Dictionary<string, SyntaxPrior> syntaxByTargetText = new(StringComparer.Ordinal);
+    private IReadOnlyDictionary<string, string>? greekGlosses;
     private IReadOnlyList<(IReadOnlyList<long> From, IReadOnlyList<long> To)>? interlinearPairs;
 
     public async Task<EvidentiaCorpusPreview> Preview(
@@ -153,6 +155,31 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 .. anchoredGapResolution.Proposals,
                 .. classMatchedTargetGlossResolution.Proposals,
             ]);
+        var contextGlossProposals = EvidentiaContextGloss.Resolve(
+            sourceAnalyses,
+            targetAnalyses,
+            contextGlossIndex.For(target, await GreekGlosses(cancellationToken)),
+            [
+                .. globalReviewKnownRenderingResolution.Proposals,
+                .. dictionaryReviewResolution.Proposals,
+                .. syntaxTargetGlossOnlyResolution.Proposals,
+                .. residualKnownRenderingResolution.Proposals,
+                .. anchoredGapResolution.Proposals,
+                .. classMatchedTargetGlossResolution.Proposals,
+                .. repeatedRenderingResolution.Proposals,
+            ]);
+        var dictionaryAndGlossProposals = EvidentiaCounterparts.DictionaryAndGloss(
+            candidates,
+            [
+                .. globalReviewKnownRenderingResolution.Proposals,
+                .. dictionaryReviewResolution.Proposals,
+                .. syntaxTargetGlossOnlyResolution.Proposals,
+                .. residualKnownRenderingResolution.Proposals,
+                .. anchoredGapResolution.Proposals,
+                .. classMatchedTargetGlossResolution.Proposals,
+                .. repeatedRenderingResolution.Proposals,
+                .. contextGlossProposals,
+            ]);
         var syntaxTargetGlossReviewResolution = new EvidentiaResolution(
             dictionaryReviewResolution.Proposals
                 .Concat(syntaxTargetGlossOnlyResolution.Proposals)
@@ -160,6 +187,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 .Concat(anchoredGapResolution.Proposals)
                 .Concat(classMatchedTargetGlossResolution.Proposals)
                 .Concat(repeatedRenderingResolution.Proposals)
+                .Concat(contextGlossProposals)
+                .Concat(dictionaryAndGlossProposals)
                 .ToList(), 0);
         var sourceIds = source.Select(token => token.Id).ToHashSet();
         var targetIds = target.Select(token => token.Id).ToHashSet();
@@ -189,6 +218,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             targetAnalyses,
             lexicalProposals);
         List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
+        finalProposals.AddRange(EvidentiaCounterparts.Resolve(sourceAnalyses, targetAnalyses, finalProposals));
+
         var absences = EvidentiaAbsences.Resolve(sourceAnalyses, targetAnalyses, finalProposals);
         var byWord = EvidentiaWordScore.Of(sourceAnalyses, targetAnalyses, finalProposals, absences, goldAnnotation, out var absenceVerdicts);
         var safe = EvidentiaAttachedWords.Safe(globalKnownRenderingResolution.Proposals, attachedWords);
@@ -204,7 +235,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             covered,
             canonicalBook,
             canonicalChapter,
-            safe);
+            safe,
+            options.RecordWords ? target : null);
         var suppliedWords = absences.Where(absence => absence.Kind == EvidentiaAbsenceKind.Supplied)
             .ToDictionary(absence => absence.Word.Token.Id);
         words = [.. words.Select(word => suppliedWords.TryGetValue(word.SourceWordId, out var absence)
@@ -421,6 +453,14 @@ internal sealed class EvidentiaCorpusPreviewLoader(
 
     private EvidentiaAnalysis? Analyse(EvidentiaToken token) =>
         languagePacks.TryAnalyse(token, out var analysis) ? analysis : null;
+
+    private async Task<IReadOnlyDictionary<string, string>> GreekGlosses(CancellationToken cancellationToken) =>
+        greekGlosses ??= (await db.LexiconGlosses.AsNoTracking()
+                .Where(gloss => gloss.StrongNumber.StartsWith("G"))
+                .Select(gloss => new { gloss.Lemma, gloss.Gloss })
+                .ToListAsync(cancellationToken))
+            .GroupBy(gloss => gloss.Lemma, StringComparer.Ordinal)
+            .ToDictionary(group => group.Key, group => string.Join(" ", group.Select(gloss => gloss.Gloss)), StringComparer.Ordinal);
 
     private async Task<List<EvidentiaToken>> Tokens(
         string slug,

@@ -41,7 +41,7 @@ internal sealed class EnglishLanguagePack : ILanguagePack
     public EvidentiaAnalysis Analyse(EvidentiaToken token)
     {
         token = EnglishPersonalPronouns.Complete(token);
-        var normalised = EnglishStemmer.Stem(token.Surface);
+        var normalised = EnglishStemmer.Stem(EnglishSpelling.Common(token.Surface));
         return new EvidentiaAnalysis(
             token,
             normalised,
@@ -58,6 +58,60 @@ internal sealed class EnglishLanguagePack : ILanguagePack
         | (string.IsNullOrWhiteSpace(token.Lemma) ? LanguagePackCapability.None : LanguagePackCapability.Lemma)
         | (string.IsNullOrWhiteSpace(token.PartOfSpeech) ? LanguagePackCapability.None : LanguagePackCapability.PartOfSpeech)
         | (token.Morphology is { Count: > 0 } ? LanguagePackCapability.Morphology : LanguagePackCapability.None);
+}
+
+/// <summary>
+/// One spelling for what two editions write two ways: the possessive's <em>'s</em> comes off, since the
+/// original writes the noun either way, and the British <em>-our</em> of <em>neighbour</em> and a few
+/// other spellings the King James keeps become the ones a modern translation prints.
+/// </summary>
+internal static class EnglishSpelling
+{
+    private static readonly string[] Possessives = ["’s", "'s", "’", "'"];
+
+    private static readonly string[] OurWords =
+    [
+        "neighbour", "honour", "labour", "favour", "saviour", "savour", "colour", "behaviour", "harbour",
+        "rumour", "vapour", "odour", "valour", "armour", "fervour", "humour", "splendour", "succour",
+        "clamour", "vigour", "ardour", "endeavour",
+    ];
+
+    private static readonly (string British, string American)[] Stems =
+    [
+        ("plough", "plow"), ("defence", "defense"), ("offence", "offense"), ("judgement", "judgment"),
+        ("grey", "gray"), ("travell", "travel"), ("jewell", "jewel"), ("counsell", "counsel"), ("marvell", "marvel"),
+    ];
+
+    public static string Common(string surface)
+    {
+        var word = surface.ToLowerInvariant();
+        foreach (var possessive in Possessives)
+        {
+            if (word.Length > possessive.Length + 2 && word.EndsWith(possessive, StringComparison.Ordinal))
+            {
+                word = word[..^possessive.Length];
+                break;
+            }
+        }
+
+        foreach (var our in OurWords)
+        {
+            if (word.StartsWith(our, StringComparison.Ordinal))
+            {
+                return our[..^3] + "or" + word[our.Length..];
+            }
+        }
+
+        foreach (var (british, american) in Stems)
+        {
+            if (word.StartsWith(british, StringComparison.Ordinal))
+            {
+                return american + word[british.Length..];
+            }
+        }
+
+        return word;
+    }
 }
 
 /// <summary>

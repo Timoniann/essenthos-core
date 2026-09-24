@@ -83,6 +83,7 @@ builder.Services.AddSingleton<EvidentiaDictionaryProposalResolver>();
 builder.Services.AddSingleton<EvidentiaSyntaxReviewGate>();
 builder.Services.AddSingleton<UdpipeAnnotator>();
 builder.Services.AddSingleton<EvidentiaFileSourceTexts>();
+builder.Services.AddSingleton<EvidentiaContextGlossIndex>();
 builder.Services.AddScoped<EvidentiaDictionarySenseIndex>();
 builder.Services.AddScoped<EvidentiaKnownRenderingIndex>();
 builder.Services.AddSingleton<IEvidentiaEvidenceSource, StrongNumberEvidenceSource>();

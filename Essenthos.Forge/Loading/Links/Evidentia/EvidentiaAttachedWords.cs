@@ -43,6 +43,27 @@ internal enum EvidentiaAttachment
 
     /// <summary><em>because</em>, <em>that</em> or <em>if</em>, which opens the clause of the verb it belongs to.</summary>
     Subordinator,
+
+    /// <summary><em>Then</em>, <em>So</em>, <em>Now</em>, <em>But</em> or <em>Yet</em> opening a sentence, on the conjunction of its verb.</summary>
+    SentenceConjunction,
+
+    /// <summary><em>O</em> of <em>O LORD</em>, which the original says with the name itself.</summary>
+    Vocative,
+
+    /// <summary><em>out</em> of <em>went out</em>: a particle of direction, which the original's verb carries in its meaning.</summary>
+    PhrasalParticle,
+
+    /// <summary><em>went</em> of <em>went out</em>, where the particle was placed on the verb and the verb was not.</summary>
+    VerbOfItsParticle,
+
+    /// <summary><em>of</em> of <em>A Psalm of David</em>, on the ל written before the noun it governs.</summary>
+    GenitivePreposition,
+
+    /// <summary><em>Let</em> of <em>Let there be light</em>, which the original writes in its jussive <em>be</em>.</summary>
+    LetBe,
+
+    /// <summary><em>surely</em> of <em>you will surely die</em>, which Hebrew writes as the infinitive absolute beside the verb.</summary>
+    InfinitiveAbsolute,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -78,6 +99,21 @@ internal enum EvidentiaAttachmentPlacement
 
     /// <summary>On a conjunction other than <em>and</em> written directly before the rendering of the clause's verb.</summary>
     ConjunctionBefore,
+
+    /// <summary>
+    /// On the conjunction that opens the clause of the rendering: the ו written before it in Hebrew, and
+    /// in Greek the καί, δέ, οὖν, τότε or ἀλλά standing before it in the same clause.
+    /// </summary>
+    ClauseConjunction,
+
+    /// <summary>On the ל written before the rendering of the governed noun, past an article.</summary>
+    LamedBefore,
+
+    /// <summary>On the rendering, where it is the original's own <em>be</em>.</summary>
+    BeVerb,
+
+    /// <summary>On the infinitive absolute of the rendering's own lexeme, written beside it.</summary>
+    InfinitiveAbsolute,
 }
 
 /// <summary>
@@ -115,10 +151,24 @@ internal enum EvidentiaAttachmentPlacement
 /// where the Berean tables put it; the preposition on the preposition before the rendering; and the
 /// subject on the verb whose ending names it.</para>
 ///
+/// <para>A word that opens a sentence with <em>Then</em>, <em>So</em>, <em>Now</em>, <em>But</em> or
+/// <em>Yet</em> renders the conjunction of its clause's verb - the ו of וַיֹּאמֶר, the καί or δέ of the
+/// Greek - and goes there only where the two stand alike: both first in their verse, or neither. A
+/// word first in the English verse against a ו further in is as often a reordered clause, whose
+/// conjunction another word renders; the postpositive δέ is never first and is exempt.</para>
+///
+/// <para>Some words go on a word another already holds, where the original says both in one: <em>O</em>
+/// with the name it calls, <em>Let</em> of <em>Let there be</em> with the jussive היה, a particle of
+/// direction with its verb (<em>went out</em>, יָצָא), and the verb with its particle where only the
+/// particle was placed. <em>of</em> before a noun whose rendering has a ל written before it goes on the
+/// ל, and <em>surely</em> on the infinitive absolute of its verb's own lexeme.</para>
+///
 /// <para>Not placed, because on these texts they measured below the precision the lexical tiers
-/// already reach: verb particles, which the parser finds as often in a preposition's place; and a
-/// Greek auxiliary, which is often a periphrastic <em>ἦσαν</em> of its own rather than part of the
-/// verb after it. The roles come from the English UDPipe parse, so every other source language is
+/// already reach: <em>up</em> and the other idiomatic particles; a Greek auxiliary, which is often a
+/// periphrastic <em>ἦσαν</em> of its own rather than part of the verb after it; an auxiliary on the
+/// negation after it (<em>will not</em>, 89-91%); a copula on its predicate where the original writes
+/// no <em>be</em> (81-83%); <em>there is</em> on אֵין (86%); and Greek <em>of</em> on its genitive
+/// noun (55-64%). The roles come from the English UDPipe parse, so every other source language is
 /// left alone.</para>
 /// </summary>
 internal static class EvidentiaAttachedWords
@@ -144,6 +194,34 @@ internal static class EvidentiaAttachedWords
     private static readonly HashSet<string> Articles = new(StringComparer.OrdinalIgnoreCase) { DefiniteArticle, "a", "an" };
 
     private static readonly HashSet<string> Conjunctions = new(StringComparer.OrdinalIgnoreCase) { "and" };
+
+    /// <summary>Case-sensitive: only the word that opens a sentence says <em>Then</em> rather than <em>then</em>.</summary>
+    private static readonly HashSet<string> SentenceConjunctions = new(StringComparer.Ordinal) { "Then", "So", "Now", "But", "Yet" };
+
+    /// <summary>καί, δέ, οὖν, τότε and ἀλλά.</summary>
+    private static readonly HashSet<string> GreekClauseConjunctions = new(StringComparer.Ordinal) { "G2532", "G1161", "G3767", "G5119", "G235" };
+
+    /// <summary>δέ, which stands second in its clause and so never first in a verse.</summary>
+    private const string Postpositive = "G1161";
+
+    /// <summary>How far before the rendering a Greek clause conjunction may stand without another verb between.</summary>
+    private const int ClauseConjunctionReach = 4;
+
+    private const string Vocative = "O";
+
+    private const string Let = "let";
+
+    /// <summary>The particles of direction a Hebrew or Greek verb of motion carries in itself; <em>up</em> is idiom as often.</summary>
+    private static readonly HashSet<string> DirectionalParticles = new(StringComparer.OrdinalIgnoreCase) { "out", "down", "off", "away", "forth" };
+
+    private const string ParticleRelation = "compound:prt";
+
+    /// <summary>The adverbs English writes for the Hebrew infinitive absolute that strengthens a verb.</summary>
+    private static readonly HashSet<string> Emphatic = new(StringComparer.OrdinalIgnoreCase) { "surely", "certainly", "indeed", "utterly", "fully" };
+
+    private const string InfinitiveAbsoluteTense = "infa";
+
+    private const string Lamed = "H9005";
 
     private const string Of = "of";
 
@@ -240,13 +318,44 @@ internal static class EvidentiaAttachedWords
         var attached = false;
         for (var index = 0; index < words.Count; index++)
         {
-            if (placedBySource.ContainsKey(words[index].Token.Id)
-                || Classify(words, index) is not ({ } attachment, { } head))
+            if (placedBySource.ContainsKey(words[index].Token.Id))
             {
                 continue;
             }
 
-            var found = Placed(attachment, index, head, words, placedBySource, targetsByVerse, taken);
+            var (classified, classifiedHead) = Classify(words, index);
+            var attachment = classified ?? EvidentiaAttachment.None;
+            var head = classifiedHead!;
+            var found = classified is { } primary && classifiedHead is { } primaryHead
+                ? Placed(primary, index, primaryHead, words, placedBySource, targetsByVerse, taken)
+                : null;
+            if (found is null && attachment == EvidentiaAttachment.Genitive
+                && Placed(EvidentiaAttachment.GenitivePreposition, index, head, words, placedBySource, targetsByVerse, taken) is { } lamed)
+            {
+                found = lamed;
+                attachment = EvidentiaAttachment.GenitivePreposition;
+            }
+
+            if (found is null)
+            {
+                foreach (var (other, otherHead) in Fallbacks(words, index))
+                {
+                    if (Placed(other, index, otherHead, words, placedBySource, targetsByVerse, taken) is { } placedOther)
+                    {
+                        found = placedOther;
+                        attachment = other;
+                        head = otherHead;
+                        break;
+                    }
+                }
+            }
+
+            if (found is { } conjunction && attachment == EvidentiaAttachment.SentenceConjunction
+                && !StandsAlike(index, conjunction.Placement, targetsByVerse))
+            {
+                found = null;
+            }
+
             if (found is null && attachment == EvidentiaAttachment.Conjunction
                 && Syntactic(words, words[index].Token.SyntacticHead) is { } clause && clause.Token.Id != head.Token.Id
                 && Placed(attachment, index, clause, words, placedBySource, targetsByVerse, taken) is { } onTheVerb
@@ -289,6 +398,51 @@ internal static class EvidentiaAttachedWords
     /// Greek sentence opens as often with δέ, which is no <em>and</em> this places.
     /// </summary>
     private static bool OpensTheSentence(EvidentiaAnalysis word) => char.IsUpper(word.Token.Surface[0]);
+
+    private static bool StandsAlike(
+        int index,
+        EvidentiaAnalysis conjunction,
+        IReadOnlyDictionary<EvidentiaAddress, List<EvidentiaAnalysis>> targetsByVerse) =>
+        conjunction.Token.StrongNumber == Postpositive
+        || targetsByVerse.TryGetValue(conjunction.Token.Address, out var verse) && (index == 0) == (IndexOf(verse, conjunction) == 0);
+
+    /// <summary>
+    /// What a word left unplaced by its own kind may still attach as: each is tried in turn and the
+    /// first that finds a place is taken, so none of them displaces an attachment the word already has.
+    /// </summary>
+    private static IEnumerable<(EvidentiaAttachment, EvidentiaAnalysis)> Fallbacks(IReadOnlyList<EvidentiaAnalysis> words, int index)
+    {
+        var word = words[index];
+        if (word.Token.Surface.Equals(Let, StringComparison.OrdinalIgnoreCase))
+        {
+            for (var next = index + 1; next < words.Count && next - index <= 2; next++)
+            {
+                if (words[next].Lemma == Be)
+                {
+                    yield return (EvidentiaAttachment.LetBe, words[next]);
+                    break;
+                }
+            }
+        }
+
+        if (Emphatic.Contains(word.Token.Surface)
+            && Syntactic(words, word.Token.SyntacticHead) is { } emphasised && Class(emphasised) == "verb")
+        {
+            yield return (EvidentiaAttachment.InfinitiveAbsolute, emphasised);
+        }
+
+        if (word.Token.Relation == ParticleRelation && DirectionalParticles.Contains(word.Token.Surface)
+            && Syntactic(words, word.Token.SyntacticHead) is { } verb && Class(verb) == "verb")
+        {
+            yield return (EvidentiaAttachment.PhrasalParticle, verb);
+        }
+
+        if (Class(word) == "verb"
+            && words.FirstOrDefault(other => other.Token.SyntacticHead == word.Token.Id && other.Token.Relation == ParticleRelation) is { } particle)
+        {
+            yield return (EvidentiaAttachment.VerbOfItsParticle, particle);
+        }
+    }
 
     private static (EvidentiaAnalysis Placement, EvidentiaProposal Head)? Placed(
         EvidentiaAttachment attachment,
@@ -358,6 +512,9 @@ internal static class EvidentiaAttachedWords
                 EvidentiaAttachment.Copula => EvidentiaAttachmentPlacement.BeBeside,
                 EvidentiaAttachment.Expletive => EvidentiaAttachmentPlacement.Rendering,
                 EvidentiaAttachment.Subordinator => EvidentiaAttachmentPlacement.ConjunctionBefore,
+                EvidentiaAttachment.SentenceConjunction => EvidentiaAttachmentPlacement.ClauseConjunction,
+                EvidentiaAttachment.Vocative or EvidentiaAttachment.PhrasalParticle or EvidentiaAttachment.VerbOfItsParticle =>
+                    EvidentiaAttachmentPlacement.Rendering,
                 _ => EvidentiaAttachmentPlacement.None,
             }
             : !witnessLanguage.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
@@ -374,6 +531,12 @@ internal static class EvidentiaAttachedWords
                 EvidentiaAttachment.Copula => EvidentiaAttachmentPlacement.BeBeside,
                 EvidentiaAttachment.Expletive => EvidentiaAttachmentPlacement.Rendering,
                 EvidentiaAttachment.Subordinator => EvidentiaAttachmentPlacement.ConjunctionBefore,
+                EvidentiaAttachment.SentenceConjunction => EvidentiaAttachmentPlacement.ClauseConjunction,
+                EvidentiaAttachment.Vocative or EvidentiaAttachment.PhrasalParticle or EvidentiaAttachment.VerbOfItsParticle =>
+                    EvidentiaAttachmentPlacement.Rendering,
+                EvidentiaAttachment.GenitivePreposition => EvidentiaAttachmentPlacement.LamedBefore,
+                EvidentiaAttachment.LetBe => EvidentiaAttachmentPlacement.BeVerb,
+                EvidentiaAttachment.InfinitiveAbsolute => EvidentiaAttachmentPlacement.InfinitiveAbsolute,
                 _ => EvidentiaAttachmentPlacement.None,
             };
 
@@ -393,6 +556,18 @@ internal static class EvidentiaAttachedWords
         {
             return Found(EvidentiaAttachment.Conjunction,
                 Forward(words, index, "noun", "propn", "pron", "verb", "adj", "adv", "num"));
+        }
+
+        if (word.Token.Surface == Vocative)
+        {
+            return Found(EvidentiaAttachment.Vocative, Forward(words, index, "propn", "noun"));
+        }
+
+        if (partOfSpeech is "adv" or "conj" && SentenceConjunctions.Contains(word.Token.Surface))
+        {
+            var clause = Syntactic(words, word.Token.SyntacticHead);
+            return Found(EvidentiaAttachment.SentenceConjunction,
+                clause is not null && Class(clause) == "verb" ? clause : Forward(words, index, "verb"));
         }
 
         if (partOfSpeech == "conj" && word.Token.Relation == MarkerRelation
@@ -518,6 +693,12 @@ internal static class EvidentiaAttachedWords
             EvidentiaAttachmentPlacement.Infinitive => Infinitive(rendering, verse, taken),
             EvidentiaAttachmentPlacement.BeBeside => BeBeside(rendering, verse, taken),
             EvidentiaAttachmentPlacement.ConjunctionBefore => ConjunctionBefore(rendering, verse, taken),
+            EvidentiaAttachmentPlacement.ClauseConjunction => ClauseConjunction(rendering, verse, taken),
+            EvidentiaAttachmentPlacement.LamedBefore =>
+                PrepositionBefore(rendering, verse, taken) is { Token.StrongNumber: Lamed } lamed ? lamed : null,
+            EvidentiaAttachmentPlacement.BeVerb =>
+                rendering.Token.StrongNumber is { } be && BeVerbs.Contains(be) ? rendering : null,
+            EvidentiaAttachmentPlacement.InfinitiveAbsolute => InfinitiveAbsoluteBeside(rendering, verse, taken),
             _ => null,
         };
     }
@@ -597,6 +778,55 @@ internal static class EvidentiaAttachedWords
             && !(verse[at - 1].Token.StrongNumber is { } strong && Coordinators.Contains(strong))
             ? verse[at - 1]
             : null;
+    }
+
+    /// <summary>
+    /// The conjunction that opens the clause of the rendering, if free: in Hebrew the one written before
+    /// it past a preposition or article, in Greek one of its clause conjunctions standing before it with
+    /// no other verb between.
+    /// </summary>
+    private static EvidentiaAnalysis? ClauseConjunction(
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        var at = IndexOf(verse, rendering);
+        if (rendering.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase))
+        {
+            for (var before = at - 1; before >= 0 && Class(verse[before]) is "det" or "adp" or "conj"; before--)
+            {
+                if (Class(verse[before]) == "conj")
+                {
+                    return taken.Contains(verse[before].Token.Id) ? null : verse[before];
+                }
+            }
+
+            return null;
+        }
+
+        for (var before = at - 1; before >= 0 && at - before <= ClauseConjunctionReach && Class(verse[before]) != "verb"; before--)
+        {
+            if (verse[before].Token.StrongNumber is { } strong && GreekClauseConjunctions.Contains(strong))
+            {
+                return taken.Contains(verse[before].Token.Id) ? null : verse[before];
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>The free infinitive absolute of the rendering's own lexeme, written just before or after it: מוֹת תָּמוּת.</summary>
+    private static EvidentiaAnalysis? InfinitiveAbsoluteBeside(
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        var at = IndexOf(verse, rendering);
+        return new[] { at - 1, at + 1, at - 2 }
+            .Where(index => at >= 0 && index >= 0 && index < verse.Count)
+            .Select(index => verse[index])
+            .FirstOrDefault(word => !taken.Contains(word.Token.Id) && word.Token.StrongNumber == rendering.Token.StrongNumber
+                && string.Equals(Feature(word, "tense"), InfinitiveAbsoluteTense, StringComparison.OrdinalIgnoreCase));
     }
 
     private static bool IsInfinitive(EvidentiaAnalysis word) =>

@@ -58,7 +58,26 @@ internal sealed record EvidentiaWordRecord(
     IReadOnlyList<EvidentiaCandidateTrace>? Candidates = null,
     string? Absence = null,
     bool? AbsenceCorrect = null,
-    bool? CorrectByWord = null);
+    bool? CorrectByWord = null,
+    IReadOnlyList<EvidentiaGoldTargetTrace>? Gold = null);
+
+/// <summary>
+/// A word the answer key puts the source word on, whether another word's proposal holds it, and what
+/// the evidence said of the pair: kept so a word left unplaced can be read against what it missed.
+/// </summary>
+internal sealed record EvidentiaGoldTargetTrace(
+    long TargetWordId,
+    int Position,
+    string Surface,
+    string? StrongNumber,
+    string? Lemma,
+    string? Gloss,
+    long? HeldBy,
+    double? Score,
+    IReadOnlyList<string>? Evidence,
+    int? Observations,
+    double? Share,
+    double? NextShare);
 
 /// <summary>One of the strongest edges a word had in its own verse, kept so a word left unplaced can be read.</summary>
 internal sealed record EvidentiaCandidateTrace(
@@ -164,8 +183,15 @@ internal readonly record struct EvidentiaSourceWordAccount(
         IReadOnlySet<long> covered,
         int canonicalBook,
         int canonicalChapter,
-        IReadOnlySet<(long From, long To)>? safe = null)
+        IReadOnlySet<(long From, long To)>? safe = null,
+        IReadOnlyList<EvidentiaToken>? target = null)
     {
+        var targetById = (target ?? []).DistinctBy(token => token.Id).ToDictionary(token => token.Id);
+        var holderByTarget = proposals
+            .GroupBy(proposal => proposal.Target.Token.Id)
+            .ToDictionary(group => group.Key, group => group.First().Source.Token.Id);
+        var goldBySource = gold.GroupBy(pair => pair.From)
+            .ToDictionary(group => group.Key, group => group.Select(pair => pair.To).ToList());
         var proposalBySource = proposals
             .GroupBy(proposal => proposal.Source.Token.Id)
             .ToDictionary(group => group.Key, group => group.First());
@@ -198,12 +224,41 @@ internal readonly record struct EvidentiaSourceWordAccount(
                     covered.Contains(token.Id),
                     proposal?.Trace?.Rationale,
                     proposal is not null && safe is not null && safe.Contains((token.Id, proposal.Target.Token.Id)),
-                    Strongest(candidatesBySource.GetValueOrDefault(token.Id) ?? []));
+                    Strongest(candidatesBySource.GetValueOrDefault(token.Id) ?? []),
+                    Gold: target is null ? null : GoldTargets(
+                        token.Id, goldBySource.GetValueOrDefault(token.Id) ?? [], targetById, holderByTarget,
+                        candidatesBySource.GetValueOrDefault(token.Id) ?? []));
             }),
         ];
     }
 
     private const int TracedCandidates = 4;
+
+    private static IReadOnlyList<EvidentiaGoldTargetTrace> GoldTargets(
+        long sourceWordId,
+        IReadOnlyList<long> goldTargets,
+        IReadOnlyDictionary<long, EvidentiaToken> targetById,
+        IReadOnlyDictionary<long, long> holderByTarget,
+        IReadOnlyList<EvidentiaCandidate> candidates) =>
+    [
+        .. goldTargets.Where(targetById.ContainsKey).Select(id =>
+        {
+            var word = targetById[id];
+            var candidate = candidates
+                .Where(candidate => candidate.Target.Token.Id == id)
+                .OrderByDescending(candidate => candidate.Score)
+                .FirstOrDefault();
+            var support = candidate?.Evidence
+                .Where(evidence => evidence.Kind == EvidentiaEvidenceKind.KnownRendering)
+                .Select(evidence => evidence.Support)
+                .FirstOrDefault();
+            var holder = holderByTarget.TryGetValue(id, out var held) && held != sourceWordId ? held : (long?)null;
+            return new EvidentiaGoldTargetTrace(
+                id, word.Position, word.Surface, word.StrongNumber, word.Lemma, word.Gloss, holder,
+                candidate?.Score, candidate is null ? null : [.. candidate.Evidence.Select(evidence => evidence.Kind.ToString())],
+                support?.Observations, support?.Share, support?.NextShare);
+        }),
+    ];
 
     private static IReadOnlyList<EvidentiaCandidateTrace> Strongest(IReadOnlyList<EvidentiaCandidate> candidates) =>
     [
