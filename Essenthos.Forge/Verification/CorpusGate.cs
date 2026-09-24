@@ -24,14 +24,14 @@ internal static class CorpusGate
         if (measures.Rendered < floor)
         {
             logger.LogError(
-                "{Rendered:P1} of the words in a linked text reach a witness, below the floor of {Floor:P1}. Either " +
+                "{Rendered:P1} of the words in a linked text reach a witness or are shown to have none, below the floor of {Floor:P1}. Either " +
                 "the load lost something, or the floor is stale and should be raised deliberately",
                 measures.Rendered, floor);
             return false;
         }
 
         logger.LogInformation(
-            "{Rendered:P1} of the words in a linked text reach a witness, floor {Floor:P1}; the weakest section of " +
+            "{Rendered:P1} of the words in a linked text reach a witness or are shown to have none, floor {Floor:P1}; the weakest section of " +
             "any one text reaches {Weakest:P1}",
             measures.Rendered, floor, measures.Weakest);
         return true;

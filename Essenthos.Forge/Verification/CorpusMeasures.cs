@@ -40,7 +40,15 @@ internal sealed record Coverage(
     /// </summary>
     public int Promised => Words - Unpaired;
 
-    public double Share => Promised <= 0 ? 0 : (double)Rendered / Promised;
+    /// <summary>
+    /// The words this section has answered for: those that reach a witness, and those a link says
+    /// have no counterpart there — a supplied *the*, an unrendered ו. A word shown to be the
+    /// translator's own has been placed as surely as one shown to render something, and leaving it
+    /// out made every absence written read as a word lost.
+    /// </summary>
+    public int Accounted => Rendered + StatedAbsent;
+
+    public double Share => Promised <= 0 ? 0 : (double)Accounted / Promised;
 }
 
 /// <param name="Lexical">
@@ -340,7 +348,7 @@ internal sealed record CorpusMeasures(
     /// counting it as a failure publishes the shape of the canon as a defect in the alignment.
     /// </summary>
     public double Rendered => Words is > 0
-        ? (double)RenderedWords / Words
+        ? (double)(RenderedWords + AbsentWords) / Words
         : 0;
 
     /// <summary>
@@ -359,6 +367,9 @@ internal sealed record CorpusMeasures(
 
     /// <inheritdoc cref="Words"/>
     public int RenderedWords => Coverage.Sum(c => c.Rendered);
+
+    /// <summary>Words a link says have no counterpart, which <see cref="Rendered"/> counts as answered for.</summary>
+    public int AbsentWords => Coverage.Sum(c => c.StatedAbsent);
 
     /// <summary>
     /// Words in a verse no witness the text is linked to holds at all, and therefore outside
@@ -400,7 +411,7 @@ internal sealed record CorpusMeasures(
                               $"{c.Silent,10} {c.Unpaired,10}   {c.Share,7:P1}");
         }
 
-        report.AppendLine($"  {RenderedWords} of {Words} words had a counterpart to reach and reached it; " +
+        report.AppendLine($"  {RenderedWords} of {Words} words had a counterpart to reach and reached it, and {AbsentWords} are shown to have none; " +
                           $"{UnpairedWords} more have none in this corpus and are outside the share");
 
         report.AppendLine("reach         lexical    reached   share, then what reached them");

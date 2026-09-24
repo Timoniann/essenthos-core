@@ -789,7 +789,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         if (previous is null)
         {
             logger.LogInformation(
-                "Verified: {Rendered:P1} of the words in a linked text reach a witness", current.Rendered);
+                "Verified: {Rendered:P1} of the words in a linked text reach a witness or are shown to have none", current.Rendered);
             return;
         }
 
@@ -797,7 +797,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         if (fallen.Count > 0)
         {
             logger.LogWarning(
-                "Verified: {Rendered:P1} of the words in a linked text reach a witness, {Before:P1} last time. " +
+                "Verified: {Rendered:P1} of the words in a linked text reach a witness or are shown to have none, {Before:P1} last time. " +
                 "A text that reaches fewer of its words than it did before has lost something: {Fallen}",
                 current.Rendered, previous.Rendered,
                 string.Join("; ", fallen.Select(pair =>
@@ -806,7 +806,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         }
 
         logger.LogInformation(
-            "Verified: {Rendered:P1} of the words in a linked text reach a witness, {Before:P1} last time",
+            "Verified: {Rendered:P1} of the words in a linked text reach a witness or are shown to have none, {Before:P1} last time",
             current.Rendered, previous.Rendered);
     }
 

@@ -79,6 +79,9 @@ public sealed class CorpusCheckTests : IDisposable
         coverage.Rendered.Should().Be(1);
         coverage.StatedAbsent.Should().Be(1);
         coverage.Silent.Should().Be(1);
+
+        // The word shown to have no counterpart is answered for; only the silent one is not.
+        coverage.Share.Should().BeApproximately(2d / 3, 1e-12);
     }
 
     /// <summary>
@@ -476,7 +479,8 @@ public sealed class CorpusCheckTests : IDisposable
         measures.RenderedWords.Should().Be(measures.Coverage.Sum(c => c.Rendered));
         measures.RenderedWords.Should().BeLessThanOrEqualTo(measures.Words);
         (measures.Words + measures.UnpairedWords).Should().Be(measures.Coverage.Sum(c => c.Words));
-        measures.Rendered.Should().BeApproximately((double)measures.RenderedWords / measures.Words, 1e-12);
+        measures.AbsentWords.Should().Be(measures.Coverage.Sum(c => c.StatedAbsent));
+        measures.Rendered.Should().BeApproximately((double)(measures.RenderedWords + measures.AbsentWords) / measures.Words, 1e-12);
     }
     /// <summary>
     /// Reach says how much of what it counted rests on testimony, because without that the table
