@@ -137,7 +137,10 @@ public class EvidentiaAbsenceTests
             [.. source.Select(Analysis)],
             [.. target.Select(Analysis)],
             Proposals(placed),
-            [.. absences.Select(absence => new EvidentiaAbsence(Analysis(absence.Word), absence.Kind, "test", null))],
+            [.. absences.Select(absence => new EvidentiaAbsence(
+                Analysis(absence.Word),
+                absence.Kind == EvidentiaAbsenceKind.Supplied ? EvidentiaAbsenceRule.UnwrittenArticle : EvidentiaAbsenceRule.Conjunction,
+                null))],
             gold,
             out _);
 

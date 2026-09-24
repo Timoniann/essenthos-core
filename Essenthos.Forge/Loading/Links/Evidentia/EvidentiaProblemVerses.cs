@@ -55,7 +55,9 @@ internal sealed record EvidentiaProblemVerse(
 
 /// <summary>
 /// The owner's loop, from a stored run: which verses mapped worst, what was decided in them, and
-/// whether a fix made them better.
+/// whether a fix made them better. It reads how the verse's words were placed, so the absences a run
+/// states are left out: they are made only once the words they rest on are placed, and counting them
+/// would count those placements twice.
 /// </summary>
 internal sealed class EvidentiaProblemVerses(AppDbContext db, EvidentiaRunner runner)
 {
@@ -129,7 +131,7 @@ internal sealed class EvidentiaProblemVerses(AppDbContext db, EvidentiaRunner ru
         CancellationToken cancellationToken = default)
     {
         var rows = await db.EvidentiaDecisions.AsNoTracking()
-            .Where(decision => runIds.Contains(decision.RunId))
+            .Where(decision => runIds.Contains(decision.RunId) && decision.Absence == null)
             .Select(decision => new
             {
                 decision.RunId,
@@ -201,7 +203,7 @@ internal sealed class EvidentiaProblemVerses(AppDbContext db, EvidentiaRunner ru
             .Where(verse => after.ContainsKey(verse.Address))
             .ToDictionary(verse => verse.Address);
         var decisions = await db.EvidentiaDecisions.AsNoTracking()
-            .Where(decision => decision.RunId == beforeRunId || decision.RunId == afterRunId)
+            .Where(decision => (decision.RunId == beforeRunId || decision.RunId == afterRunId) && decision.Absence == null)
             .Select(decision => new
             {
                 decision.RunId,
@@ -267,6 +269,7 @@ internal sealed class EvidentiaProblemVerses(AppDbContext db, EvidentiaRunner ru
     {
         var decisions = await db.EvidentiaDecisions.AsNoTracking()
             .Where(decision => decision.RunId == runId
+                && decision.Absence == null
                 && decision.CanonicalBook == address.Book
                 && decision.CanonicalChapter == address.Chapter
                 && decision.CanonicalVerse == address.Verse)

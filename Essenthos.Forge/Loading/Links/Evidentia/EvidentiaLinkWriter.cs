@@ -9,14 +9,19 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// <param name="Written">Whether anything reached the database; false for a plan.</param>
 /// <param name="Verdicts">Approved and corrected reviews not yet written.</param>
 /// <param name="NewLinks">Links the verdicts created.</param>
+/// <param name="NewAbsences">Of those, the ones saying a word has no counterpart.</param>
 /// <param name="OnExisting">Verdicts that became claims on a link naming exactly their words.</param>
 /// <param name="Within">Verdicts that became claims on a link naming more words than theirs.</param>
 /// <param name="Promoted">Existing links whose settled answer a verdict outranked.</param>
-/// <param name="Withheld">Verdicts not written because the corpus places the word elsewhere with more standing.</param>
+/// <param name="Withheld">
+/// Verdicts not written because the corpus places the word elsewhere with more standing, or, for an
+/// absence, gives the word a counterpart at all.
+/// </param>
 internal sealed record EvidentiaApplyOutcome(
     bool Written,
     int Verdicts,
     int NewLinks,
+    int NewAbsences,
     int OnExisting,
     int Within,
     int Promoted,
@@ -26,7 +31,7 @@ internal sealed record EvidentiaApplyOutcome(
 {
     public override string ToString() =>
         (Written ? "EVIDENTIA verdicts written" : "EVIDENTIA verdicts NOT written (plan only; pass --write to write)")
-        + $": {Verdicts:N0} approved or corrected; {NewLinks:N0} new links, {OnExisting:N0} claims on a link naming the same words, "
+        + $": {Verdicts:N0} approved or corrected; {NewLinks:N0} new links ({NewAbsences:N0} of them absences), {OnExisting:N0} claims on a link naming the same words, "
         + $"{Within:N0} on a link naming more, {Promoted:N0} links whose settled answer changed, {Withheld:N0} withheld; in {Elapsed}"
         + (Lines.Count == 0 ? string.Empty : "\n" + string.Join("\n", Lines));
 }
@@ -51,8 +56,18 @@ internal sealed record EvidentiaApplyOutcome(
 /// A link naming more words gains them with a note saying so and keeps its answer, because the
 /// verdict speaks to one pair of its words and not to the link. And where a link that outranks the
 /// verdict already places the source word on other words, a rule's claim is withheld: a heuristic
-/// may not add a second rendering beside one a source states. A person's is not withheld — a person
+/// may not add a second rendering beside one a source states. A person's pair is not withheld — a person
 /// reviewing the word decided knowing what the corpus says. Nothing here deletes a link.
+/// </para>
+///
+/// <para>
+/// **An absence is written as the corpus writes every other one**: a word the translation supplies
+/// as an <see cref="LinkRelation.Expands"/> link naming it on the <c>from</c> side alone, a word of
+/// the original it does not render as an <see cref="LinkRelation.Omits"/> link naming it on the
+/// <c>to</c> side alone, with the same claims a pair would carry. It settles against the links that
+/// already say something about that word: the same absence gains the claims, a wider absence gains
+/// them with a note, and any link giving the word a counterpart keeps the absence out, a person's
+/// as much as a rule's.
 /// </para>
 /// </summary>
 internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verseLinks)
@@ -63,6 +78,8 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
     private const int ConfidenceDigits = 4;
 
     private const string WithinNote = "names one word pair of this link";
+
+    private const string WithinAbsenceNote = "names one word of this absence";
 
     public async Task<EvidentiaApplyOutcome> Apply(int runId, bool write, CancellationToken cancellationToken = default)
     {
@@ -95,7 +112,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             }
         }
 
-        return new EvidentiaApplyOutcome(write, verdictIds.Count, tally.NewLinks, tally.OnExisting, tally.Within,
+        return new EvidentiaApplyOutcome(write, verdictIds.Count, tally.NewLinks, tally.NewAbsences, tally.OnExisting, tally.Within,
             tally.Promoted, tally.Withheld, tally.Lines, elapsed.Elapsed);
     }
 
@@ -106,12 +123,13 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             .Where(review => reviewIds.Contains(review.Id))
             .OrderBy(review => review.Id)
             .ToListAsync(cancellationToken);
-        var sourceWords = reviews.Select(review => review.Decision!.SourceWordId).Distinct().ToList();
+        var claimed = reviews.Select(review => Claimed(review)).ToList();
+        var words = claimed.Select(claim => claim.Word).Distinct().ToList();
         var touching = await db.Links
             .Include(link => link.Words)
             .Include(link => link.Claims)
             .AsSplitQuery()
-            .Where(link => link.Words.Any(word => sourceWords.Contains(word.WordId)))
+            .Where(link => link.Words.Any(word => words.Contains(word.WordId)))
             .Where(link => (link.FromTextId == run.FromTextId && link.ToTextId == run.ToTextId)
                 || (link.FromTextId == run.ToTextId && link.ToTextId == run.FromTextId))
             .ToListAsync(cancellationToken);
@@ -119,23 +137,28 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             .SelectMany(link => Sides(link, run).Source.Select(word => (word, link)))
             .GroupBy(pair => pair.word)
             .ToDictionary(group => group.Key, group => group.Select(pair => pair.link).Distinct().ToList());
+        var byTargetWord = touching
+            .SelectMany(link => Sides(link, run).Target.Select(word => (word, link)))
+            .GroupBy(pair => pair.word)
+            .ToDictionary(group => group.Key, group => group.Select(pair => pair.link).Distinct().ToList());
 
-        foreach (var review in reviews)
+        foreach (var (review, claim) in reviews.Zip(claimed))
         {
-            var decision = review.Decision!;
-            var source = decision.SourceWordId;
-            var target = review.CorrectedTargetWordId ?? decision.TargetWordId!.Value;
             var claims = Claims(run, review);
-            var strongest = claims.MaxBy(claim => ClaimStanding.Of(claim.Method))!;
-            var links = bySourceWord.GetValueOrDefault(source) ?? [];
+            var strongest = claims.MaxBy(held => ClaimStanding.Of(held.Method))!;
+            var index = claim.OnSource ? bySourceWord : byTargetWord;
+            var links = index.GetValueOrDefault(claim.Word) ?? [];
 
             var exact = links.FirstOrDefault(link => Sides(link, run) is var (from, to)
-                && from.SetEquals([source]) && to.SetEquals([target]));
+                && from.SetEquals(claim.Source) && to.SetEquals(claim.Target));
             var within = exact is null
-                ? links.FirstOrDefault(link => Sides(link, run) is var (from, to) && from.Contains(source) && to.Contains(target))
+                ? links.FirstOrDefault(link => Sides(link, run) is var (from, to)
+                    && from.IsSupersetOf(claim.Source) && to.IsSupersetOf(claim.Target)
+                    && (claim.Relation == LinkRelation.Renders || Counterparts(link, run, claim).Count == 0))
                 : null;
             var elsewhere = links
-                .Where(link => Sides(link, run) is var (_, to) && to.Count > 0 && !to.Contains(target))
+                .Where(link => Counterparts(link, run, claim) is { Count: > 0 } counterparts
+                    && (claim.Relation != LinkRelation.Renders || !counterparts.IsSupersetOf(claim.Target)))
                 .MaxBy(link => ClaimStanding.Of(link.Method));
 
             if (exact is not null)
@@ -154,23 +177,25 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                     tally.Lines.Add($"link {exact.Id}: settled answer now {EnumSpelling.Of(strongest.Method)} (review {review.Id})");
                 }
 
-                claims.ForEach(claim => Keep(exact, claim));
+                claims.ForEach(held => Keep(exact, held));
                 review.Link = exact;
                 tally.OnExisting++;
             }
             else if (within is not null)
             {
-                claims.ForEach(claim => Keep(within, new LinkClaim
+                claims.ForEach(held => Keep(within, new LinkClaim
                 {
-                    Method = claim.Method, Confidence = claim.Confidence, Source = claim.Source,
-                    Note = Joined(WithinNote, claim.Note),
+                    Method = held.Method, Confidence = held.Confidence, Source = held.Source,
+                    Note = Joined(claim.Relation == LinkRelation.Renders ? WithinNote : WithinAbsenceNote, held.Note),
                 }));
                 review.Link = within;
                 tally.Within++;
             }
-            else if (elsewhere is not null && ClaimStanding.Of(elsewhere.Method) > ClaimStanding.Of(strongest.Method))
+            else if (elsewhere is not null && Withheld(claim, strongest, elsewhere))
             {
-                review.Withheld = $"link {elsewhere.Id} ({EnumSpelling.Of(elsewhere.Method)}) places this word on other words";
+                review.Withheld = claim.Relation == LinkRelation.Renders
+                    ? $"link {elsewhere.Id} ({EnumSpelling.Of(elsewhere.Method)}) places this word on other words"
+                    : $"link {elsewhere.Id} ({EnumSpelling.Of(elsewhere.Method)}) gives this word a counterpart";
                 tally.Withheld++;
                 tally.Lines.Add($"review {review.Id} withheld: {review.Withheld}");
                 continue;
@@ -181,27 +206,28 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                 {
                     FromTextId = run.FromTextId,
                     ToTextId = run.ToTextId,
-                    Relation = LinkRelation.Renders,
+                    Relation = claim.Relation,
                     Method = strongest.Method,
                     Confidence = strongest.Confidence,
                     Source = strongest.Source,
                     Note = strongest.Note,
                     Words =
                     [
-                        new LinkWord { WordId = source, Side = LinkSide.From },
-                        new LinkWord { WordId = target, Side = LinkSide.To },
+                        .. claim.Source.Select(word => new LinkWord { WordId = word, Side = LinkSide.From }),
+                        .. claim.Target.Select(word => new LinkWord { WordId = word, Side = LinkSide.To }),
                     ],
                     Claims = [.. claims],
                 };
                 db.Links.Add(link);
-                if (!bySourceWord.TryGetValue(source, out var standing))
+                if (!index.TryGetValue(claim.Word, out var standing))
                 {
-                    bySourceWord[source] = standing = [];
+                    index[claim.Word] = standing = [];
                 }
 
                 standing.Add(link);
                 review.Link = link;
                 tally.NewLinks++;
+                tally.NewAbsences += claim.Relation == LinkRelation.Renders ? 0 : 1;
             }
 
             review.Withheld = null;
@@ -213,6 +239,42 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             await db.SaveChangesAsync(cancellationToken);
         }
     }
+
+    /// <summary>
+    /// The correspondence a verdict states, in the run's orientation: a pair for a proposal or a
+    /// correction, one word with nothing opposite it for an absence. The corpus's links are looked up
+    /// by the pair's source word, or by the absent word.
+    /// </summary>
+    private static Correspondence Claimed(EvidentiaReview review)
+    {
+        var decision = review.Decision!;
+        if (review.Verdict == EvidentiaVerdict.Corrected || decision.Absence is null)
+        {
+            var source = decision.SourceWordId!.Value;
+            return new Correspondence(LinkRelation.Renders, source, true, [source],
+                [review.CorrectedTargetWordId ?? decision.TargetWordId!.Value]);
+        }
+
+        return decision.Absence == LinkRelation.Expands
+            ? new Correspondence(LinkRelation.Expands, decision.SourceWordId!.Value, true, [decision.SourceWordId.Value], [])
+            : new Correspondence(LinkRelation.Omits, decision.TargetWordId!.Value, false, [], [decision.TargetWordId.Value]);
+    }
+
+    /// <summary>The words a link sets opposite the claim's own word.</summary>
+    private static HashSet<long> Counterparts(Link link, EvidentiaRun run, Correspondence claim) =>
+        Sides(link, run) is var (from, to) && claim.OnSource ? to : from;
+
+    /// <summary>
+    /// Whether a link that gives the word other counterparts keeps the verdict out. A pair is kept
+    /// out by a link that outranks it, and a person's pair by none. An absence is kept out by any
+    /// link giving the word a counterpart, whoever stated either: a second rendering beside a first
+    /// is two answers a reader can weigh, but a word shown as supplied and as rendered at once is a
+    /// contradiction, and nothing here deletes the link that would resolve it. Where a person holds
+    /// that link wrong, it is the link that has to be corrected.
+    /// </summary>
+    private static bool Withheld(Correspondence claim, LinkClaim strongest, Link elsewhere) =>
+        claim.Relation != LinkRelation.Renders
+        || ClaimStanding.Of(elsewhere.Method) > ClaimStanding.Of(strongest.Method);
 
     /// <summary>
     /// Link sides as the run reads them: its source text's words, then its target's. A link stored
@@ -271,9 +333,19 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             _ => $"{first}; {second}",
         };
 
+    /// <param name="Word">The word the verdict is about, and which the corpus's links to it are found by.</param>
+    /// <param name="OnSource">Whether that word is of the run's source text.</param>
+    private sealed record Correspondence(
+        LinkRelation Relation,
+        long Word,
+        bool OnSource,
+        HashSet<long> Source,
+        HashSet<long> Target);
+
     private sealed class Tally
     {
         public int NewLinks;
+        public int NewAbsences;
         public int OnExisting;
         public int Within;
         public int Promoted;

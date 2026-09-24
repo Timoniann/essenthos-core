@@ -10,12 +10,45 @@ internal enum EvidentiaAbsenceKind
     NotRendered,
 }
 
+/// <summary>
+/// One rule that says a word has no counterpart, with how often it was right where the Berean's own
+/// tables could judge it: the Berean Standard Bible read against them over the benchmark passages and
+/// the unseen validation passages. A stored absence claims that record — its confidence is the rule's
+/// measured precision, smoothed so that a rule never wrong on a few hundred words does not claim
+/// certainty.
+/// </summary>
+/// <param name="Spelling">The rule's stored name, which a link's source names it by.</param>
+internal sealed record EvidentiaAbsenceRule(string Spelling, EvidentiaAbsenceKind Kind, string Rationale, int Right, int Judged)
+{
+    public static readonly EvidentiaAbsenceRule IndefiniteArticle =
+        new("supplied-indefinite-article", EvidentiaAbsenceKind.Supplied, "indefinite article", 386, 386);
+
+    public static readonly EvidentiaAbsenceRule UnwrittenArticle =
+        new("supplied-article", EvidentiaAbsenceKind.Supplied, "article the original does not write", 1_072, 1_104);
+
+    public static readonly EvidentiaAbsenceRule Conjunction =
+        new("unrendered-conjunction", EvidentiaAbsenceKind.NotRendered, "conjunction no word of the verse renders", 192, 199);
+
+    public static readonly EvidentiaAbsenceRule ObjectMarker =
+        new("unrendered-object-marker", EvidentiaAbsenceKind.NotRendered, "object marker", 267, 274);
+
+    public static readonly EvidentiaAbsenceRule Article =
+        new("unrendered-article", EvidentiaAbsenceKind.NotRendered, "article no the of the verse renders", 117, 118);
+
+    /// <summary>The measured precision with one right and one wrong added, so it stays below 1.</summary>
+    public double Confidence => (Right + 1.0) / (Judged + 2.0);
+}
+
 /// <param name="Anchor">The placed word the claim rests on: the head of a supplied article, or the word a prefix is written onto.</param>
 internal sealed record EvidentiaAbsence(
     EvidentiaAnalysis Word,
-    EvidentiaAbsenceKind Kind,
-    string Rationale,
-    EvidentiaProposal? Anchor);
+    EvidentiaAbsenceRule Rule,
+    EvidentiaProposal? Anchor)
+{
+    public EvidentiaAbsenceKind Kind => Rule.Kind;
+
+    public string Rationale => Rule.Rationale;
+}
 
 /// <summary>
 /// The grammatical words that render one another across the languages: <em>and</em> and its kin for ו,
@@ -151,12 +184,12 @@ internal static class EvidentiaAbsences
             if (IndefiniteArticles.Contains(word.Token.Surface)
                 && !(rendering.Token.StrongNumber is { } strong && NumeralOne.Contains(strong)))
             {
-                yield return new EvidentiaAbsence(word, EvidentiaAbsenceKind.Supplied, "indefinite article", headProposal);
+                yield return new EvidentiaAbsence(word, EvidentiaAbsenceRule.IndefiniteArticle, headProposal);
             }
             else if (word.Token.Surface.Equals(DefiniteArticle, StringComparison.OrdinalIgnoreCase)
                      && !HasArticle(rendering, verse))
             {
-                yield return new EvidentiaAbsence(word, EvidentiaAbsenceKind.Supplied, "article the original does not write", headProposal);
+                yield return new EvidentiaAbsence(word, EvidentiaAbsenceRule.UnwrittenArticle, headProposal);
             }
         }
     }
@@ -222,19 +255,19 @@ internal static class EvidentiaAbsences
                 && hebrew
                 && Anchor(verse, index, placedByTarget) is { } joined)
             {
-                yield return new EvidentiaAbsence(word, EvidentiaAbsenceKind.NotRendered, "conjunction no word of the verse renders", joined);
+                yield return new EvidentiaAbsence(word, EvidentiaAbsenceRule.Conjunction, joined);
             }
             else if (hebrew && word.Token.StrongNumber == ObjectMarker
                      && !HasSuffix(word)
                      && Anchor(verse, index, placedByTarget) is { } marked)
             {
-                yield return new EvidentiaAbsence(word, EvidentiaAbsenceKind.NotRendered, "object marker", marked);
+                yield return new EvidentiaAbsence(word, EvidentiaAbsenceRule.ObjectMarker, marked);
             }
             else if (functionClass == EvidentiaFunctionClass.Article && !freeArticle
                      && hebrew
                      && Anchor(verse, index, placedByTarget) is { } noun)
             {
-                yield return new EvidentiaAbsence(word, EvidentiaAbsenceKind.NotRendered, "article no the of the verse renders", noun);
+                yield return new EvidentiaAbsence(word, EvidentiaAbsenceRule.Article, noun);
             }
         }
     }
