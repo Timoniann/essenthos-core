@@ -110,6 +110,7 @@ builder.Services.AddScoped<OpenBiblePlaceLoader>();
 builder.Services.AddScoped<OpenBibleLocationLoader>();
 builder.Services.AddScoped<EntityImageLoader>();
 builder.Services.AddScoped<WorldHistoryLoader>();
+builder.Services.AddScoped<SeptuagintReckoningLoader>();
 builder.Services.AddScoped<PeopleLoader>();
 builder.Services.AddScoped<PlaceRegisterLoader>();
 builder.Services.AddScoped<PersonRegisterLoader>();
