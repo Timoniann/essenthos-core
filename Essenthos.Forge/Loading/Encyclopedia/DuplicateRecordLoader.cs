@@ -16,6 +16,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Missing">Pairs naming a record the encyclopedia does not hold, left alone.</param>
 /// <param name="Moved">Rows moved onto the record that stays, across every table that names a record.</param>
 /// <param name="Joined">Rows that said again what the record that stays already said, joined into its own.</param>
+/// <param name="Parted">Rows a split moved off the dataset's record onto the other man's, this run.</param>
 internal sealed record DuplicateRecordOutcome(
     int Listed,
     int Folded,
@@ -23,12 +24,14 @@ internal sealed record DuplicateRecordOutcome(
     int Missing,
     int Moved,
     int Joined,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int Parted = 0)
 {
     public override string ToString() =>
-        $"{Listed} records the dataset wrote twice for one person: {Folded} folded into the record that " +
+        $"{Listed} records the dataset wrote twice for one referent: {Folded} folded into the record that " +
         $"stays ({Moved} rows moved, {Joined} that repeated it joined), {AlreadyFolded} folded by an earlier " +
-        $"run, {Missing} naming a record not held, in {Elapsed}";
+        $"run, {Missing} naming a record not held, in {Elapsed}" +
+        (Parted > 0 ? $"; {Parted} rows of a record that held two men moved to the other" : "");
 }
 
 /// <summary>
@@ -277,8 +280,177 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
          INSERT INTO fold_count SELECT count(*), false FROM moved
          """;
 
-    public Task<DuplicateRecordOutcome> Load(CancellationToken cancellationToken = default) =>
-        Fold(Read(), cancellationToken);
+    public async Task<DuplicateRecordOutcome> Load(CancellationToken cancellationToken = default)
+    {
+        var list = Read();
+        var folded = await Fold(list, cancellationToken);
+        var parted = await Split(list.Splits ?? [], cancellationToken);
+        return folded with { Parted = parted };
+    }
+
+    /// <summary>
+    /// The words, verses and name a dataset's record holds for a second man, moved to his record.
+    ///
+    /// <para>
+    /// **The fold's other half.** BibleData writes Bartholomew and Nathanael as one man, because a
+    /// tradition does, and every word of John that says Nathanael then names a man the chapter never
+    /// calls Bartholomew. Where the owner has ruled that the verses are the other man's, what the
+    /// record holds in them moves: the annotations of their words, in every text; the verse rows, the
+    /// dataset's and ours alike, keeping their sources, because they are still the same testimony
+    /// about the verse; and the name the record holds for him, which his own record carries instead.
+    /// An annotation his record already has for the same word keeps the moved one's testimony as its
+    /// claims, as a fold does. The rest of the record stays as it was.
+    /// </para>
+    ///
+    /// <para>
+    /// After the passes that annotate and cite, so that what they wrote is moved rather than written
+    /// again beside it; a split already made finds nothing left to move.
+    /// </para>
+    /// </summary>
+    /// <returns>The rows moved or joined.</returns>
+    internal async Task<int> Split(IReadOnlyList<DuplicateRecordSplit> splits, CancellationToken cancellationToken = default)
+    {
+        if (splits.Count == 0)
+        {
+            return 0;
+        }
+
+        var slugs = splits.SelectMany(s => new[] { s.From, s.To }).Distinct(StringComparer.Ordinal).ToList();
+        var held = await db.Entities
+            .Where(e => slugs.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
+
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        var parted = 0;
+        foreach (var split in splits)
+        {
+            if (!held.TryGetValue(split.From, out var from) || !held.TryGetValue(split.To, out var to))
+            {
+                logger.LogWarning(
+                    "The list of records written wrongly moves {Name} from \"{From}\" to \"{To}\", and the encyclopedia " +
+                    "does not hold both. Correct the pair in {Resource}, or load the record it moves to first.",
+                    split.Name, split.From, split.To, Resource);
+                continue;
+            }
+
+            var spans = split.Verses.Select(ScriptureSpan.Parse).ToList();
+            await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+            await Annotating.Run(connection, transaction, Parting, cancellationToken,
+                ("books", spans.Select(v => v.Book).ToArray()),
+                ("fromChapters", spans.Select(v => v.FromChapter).ToArray()),
+                ("fromVerses", spans.Select(v => v.FromVerse ?? 0).ToArray()),
+                ("toChapters", spans.Select(v => v.ToChapter).ToArray()),
+                ("toVerses", spans.Select(v => v.ToVerse ?? int.MaxValue).ToArray()));
+            foreach (var statement in SplitStatements)
+            {
+                await Annotating.Run(connection, transaction, statement, cancellationToken,
+                    ("from", from), ("to", to), ("name", split.Name));
+            }
+
+            var (moved, joined) = await Counted(connection, transaction, cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            if (moved + joined > 0)
+            {
+                logger.LogInformation(
+                    "Moved {Rows} rows of {Name} from {From} to {To}: {Why}", moved + joined, split.Name, split.From,
+                    split.To, split.Why);
+            }
+
+            parted += moved + joined;
+        }
+
+        return parted;
+    }
+
+    /// <summary>The verses a split moves, as the spans the file writes, and the tally of what moved.</summary>
+    private const string Parting =
+        """
+        CREATE TEMP TABLE parting (book integer NOT NULL, from_chapter integer NOT NULL, from_verse integer NOT NULL,
+                                   to_chapter integer NOT NULL, to_verse integer NOT NULL) ON COMMIT DROP;
+        INSERT INTO parting SELECT * FROM unnest(@books, @fromChapters, @fromVerses, @toChapters, @toVerses);
+        CREATE TEMP TABLE fold_count (rows integer NOT NULL, joined boolean NOT NULL) ON COMMIT DROP
+        """;
+
+    /// <summary>Whether the row a statement names by <c>{0}</c> stands in a verse the split moves.</summary>
+    private const string InParting =
+        """
+        EXISTS (SELECT 1 FROM parting p
+                WHERE p.book = {0}.canonical_book
+                  AND ({0}.canonical_chapter, {0}.canonical_verse) >= (p.from_chapter, p.from_verse)
+                  AND ({0}.canonical_chapter, {0}.canonical_verse) <= (p.to_chapter, p.to_verse))
+        """;
+
+    /// <summary>
+    /// The statements of a split, in order: the annotations, joined where his record already names
+    /// the word and moved where it does not; the verse rows, the same way; and the name.
+    /// </summary>
+    private static readonly string[] SplitStatements =
+    [
+        $"""
+         CREATE TEMP TABLE parted ON COMMIT DROP AS
+         SELECT a.id, a.word_id, t.id AS joins
+         FROM word_entity a
+         JOIN word w ON w.id = a.word_id
+         JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+         LEFT JOIN word_entity t ON t.word_id = a.word_id AND t.entity_id = @to
+         WHERE a.entity_id = @from AND {string.Format(InParting, "r")}
+         """,
+        """
+        INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
+        SELECT p.joins, a.method, a.confidence, a.source, a.note
+        FROM parted p JOIN word_entity a ON a.id = p.id
+        WHERE p.joins IS NOT NULL
+        ON CONFLICT DO NOTHING
+        """,
+        """
+        INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
+        SELECT p.joins, c.method, c.confidence, c.source, c.note
+        FROM parted p JOIN word_entity_claim c ON c.word_entity_id = p.id
+        WHERE p.joins IS NOT NULL
+        ON CONFLICT DO NOTHING
+        """,
+        """
+        WITH gone AS (DELETE FROM word_entity a USING parted p WHERE a.id = p.id AND p.joins IS NOT NULL RETURNING 1)
+        INSERT INTO fold_count SELECT count(*), true FROM gone
+        """,
+        """
+        WITH moved AS (
+            UPDATE word_entity a SET entity_id = @to FROM parted p WHERE a.id = p.id AND p.joins IS NULL RETURNING 1)
+        INSERT INTO fold_count SELECT count(*), false FROM moved
+        """,
+        $"""
+         WITH gone AS (
+             DELETE FROM entity_verse v
+             WHERE v.entity_id = @from AND {string.Format(InParting, "v")}
+               AND EXISTS (SELECT 1 FROM entity_verse o
+                           WHERE o.entity_id = @to AND o.source = v.source
+                             AND o.label IS NOT DISTINCT FROM v.label AND o.disputed = v.disputed
+                             AND (o.canonical_book, o.canonical_chapter, o.canonical_verse)
+                                 = (v.canonical_book, v.canonical_chapter, v.canonical_verse))
+             RETURNING 1)
+         INSERT INTO fold_count SELECT count(*), true FROM gone
+         """,
+        $"""
+         WITH moved AS (
+             UPDATE entity_verse v SET entity_id = @to
+             WHERE v.entity_id = @from AND {string.Format(InParting, "v")}
+             RETURNING 1)
+         INSERT INTO fold_count SELECT count(*), false FROM moved
+         """,
+        """
+        WITH gone AS (
+            DELETE FROM entity_name n
+            WHERE n.entity_id = @from AND n.label = @name
+              AND EXISTS (SELECT 1 FROM entity_name o WHERE o.entity_id = @to AND o.label = @name)
+            RETURNING 1)
+        INSERT INTO fold_count SELECT count(*), true FROM gone
+        """,
+        """
+        WITH moved AS (UPDATE entity_name n SET entity_id = @to WHERE n.entity_id = @from AND n.label = @name RETURNING 1)
+        INSERT INTO fold_count SELECT count(*), false FROM moved
+        """,
+    ];
 
     internal async Task<DuplicateRecordOutcome> Fold(DuplicateRecordList list, CancellationToken cancellationToken = default)
     {
@@ -340,7 +512,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                 Method = list.Method,
                 Confidence = merge.Confidence ?? list.Confidence,
                 Reason = merge.Why,
-                Source = list.Source,
+                Source = merge.Source ?? list.Source,
             }));
         }
 
@@ -407,16 +579,42 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
             EnumSpelling.ToLinkMethod(list.Method),
             list.Confidence,
             list.Source,
-            list.Merges);
+            list.Merges,
+            list.Splits);
     }
 }
 
-internal sealed record DuplicateRecordFile(string Method, double? Confidence, string Source, IReadOnlyList<DuplicateRecordPair> Merges);
+internal sealed record DuplicateRecordFile(
+    string Method,
+    double? Confidence,
+    string Source,
+    IReadOnlyList<DuplicateRecordPair> Merges,
+    IReadOnlyList<DuplicateRecordSplit>? Splits = null);
 
-internal sealed record DuplicateRecordList(LinkMethod Method, double? Confidence, string Source, IReadOnlyList<DuplicateRecordPair> Merges);
+internal sealed record DuplicateRecordList(
+    LinkMethod Method,
+    double? Confidence,
+    string Source,
+    IReadOnlyList<DuplicateRecordPair> Merges,
+    IReadOnlyList<DuplicateRecordSplit>? Splits = null);
+
+/// <summary>A second man a dataset's record holds, and the verses that are his.</summary>
+/// <param name="From">The dataset's record, by address.</param>
+/// <param name="To">His own record, by address.</param>
+/// <param name="Name">The name the dataset's record holds for him, which moves with him.</param>
+/// <param name="Verses">The verses that are his, as spans: <c>JHN 1:45-49</c>.</param>
+/// <param name="Why">Who ruled so, and on what.</param>
+internal sealed record DuplicateRecordSplit(string From, string To, string Name, IReadOnlyList<string> Verses, string Why);
 
 /// <param name="Keeps">The record that stays, by address.</param>
 /// <param name="Folds">The record folded into it, by address.</param>
 /// <param name="Why">The verses that make them one person.</param>
 /// <param name="Confidence">How sure the reading of this pair is, where it is less sure than the list.</param>
-internal sealed record DuplicateRecordPair(string StrongNumber, string Keeps, string Folds, string Why, double? Confidence = null);
+/// <param name="Source">Who said so, where the pair was not read with the rest of the list.</param>
+internal sealed record DuplicateRecordPair(
+    string StrongNumber,
+    string Keeps,
+    string Folds,
+    string Why,
+    double? Confidence = null,
+    string? Source = null);

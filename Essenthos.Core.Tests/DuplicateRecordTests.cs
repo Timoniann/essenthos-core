@@ -307,6 +307,82 @@ public sealed class DuplicateRecordTests : IDisposable
         (await _db.Entities.CountAsync()).Should().Be(3);
     }
 
+    private static readonly DuplicateRecordSplit Helkiah =
+        new("hilkiah-6", "meshullam-15", "Helkiah", ["GEN 9:11"], "a ruling");
+
+    private void Labels(Entity entity, int book, int chapter, int verse, string? label, string source) =>
+        _db.EntityVerses.Add(new EntityVerse
+        {
+            Entity = entity, CanonicalBook = book, CanonicalChapter = chapter, CanonicalVerse = verse, Label = label,
+            Source = source,
+        });
+
+    /// <summary>
+    /// A record the dataset wrote for two men. The second man's verse moves to his record with the
+    /// word that names him there and the name the dataset held for him; the first man keeps the rest.
+    /// </summary>
+    [Fact]
+    public async Task ASplitMovesTheSecondMansWordsVersesAndName()
+    {
+        Names(_folded, LinkMethod.Lexical, 0.9, "the lexicon");
+        Labels(_folded, 1, 9, 11, "Helkiah", BibleData);
+        Labels(_folded, 1, 9, 11, null, "our own words");
+        Labels(_folded, 16, 11, 11, "Hilkiah", BibleData);
+        _db.EntityNames.Add(new EntityName { Entity = _folded, Label = "Hilkiah", HebrewStrongNumber = "H2518" });
+        _db.EntityNames.Add(new EntityName { Entity = _folded, Label = "Helkiah", HebrewStrongNumber = "H2518" });
+        await _db.SaveChangesAsync();
+
+        var parted = await _loader.Split([Helkiah]);
+
+        parted.Should().Be(4);
+        (await _db.WordEntities.AsNoTracking().SingleAsync()).EntityId.Should().Be(_meshullam.Id);
+        var verses = await _db.EntityVerses.AsNoTracking().ToListAsync();
+        verses.Where(v => v.CanonicalBook == 1).Should().HaveCount(2).And.OnlyContain(v => v.EntityId == _meshullam.Id);
+        verses.Single(v => v.CanonicalBook == 16).EntityId.Should().Be(_folded.Id);
+        var names = await _db.EntityNames.AsNoTracking().ToListAsync();
+        names.Single(n => n.Label == "Helkiah").EntityId.Should().Be(_meshullam.Id);
+        names.Single(n => n.Label == "Hilkiah").EntityId.Should().Be(_folded.Id);
+    }
+
+    /// <summary>
+    /// His own record already names the word, by the owner's ruling: the dataset's annotation is not
+    /// kept beside it, and what it said stays as the ruling's claim.
+    /// </summary>
+    [Fact]
+    public async Task ASplitJoinsAnAnnotationHisRecordAlreadyHas()
+    {
+        var ruling = Names(_meshullam, LinkMethod.Manual, null, "the owner's ruling");
+        Names(_folded, LinkMethod.Lexical, 0.9, "the lexicon");
+        await _db.SaveChangesAsync();
+
+        await _loader.Split([Helkiah]);
+
+        var row = await _db.WordEntities.AsNoTracking().Include(a => a.Claims).SingleAsync();
+        row.Id.Should().Be(ruling.Id);
+        row.Claims.Select(c => c.Source).Should().Contain("the lexicon");
+    }
+
+    [Fact]
+    public async Task ASplitMadeFindsNothingLeftToMove()
+    {
+        Names(_folded, LinkMethod.Lexical, 0.9, "the lexicon");
+        await _db.SaveChangesAsync();
+        await _loader.Split([Helkiah]);
+
+        (await _loader.Split([Helkiah])).Should().Be(0);
+        (await _loader.Split([Helkiah with { To = "nobody" }])).Should().Be(0);
+    }
+
+    /// <summary>A pair read on another day, under another ruling, says whose reading it is.</summary>
+    [Fact]
+    public async Task APairCarriesItsOwnSourceWhereItHasOne()
+    {
+        await _loader.Fold(new DuplicateRecordList(LinkMethod.ModelReading, 0.9, "a test",
+            [new DuplicateRecordPair("H2518", "hilkiah-3", "hilkiah-6", "one word", Source: "the owner's rule")]));
+
+        (await _db.MergedRecords.AsNoTracking().SingleAsync()).Source.Should().Be("the owner's rule");
+    }
+
     /// <summary>The list as shipped: every pair names two records, and no record is both kept and folded.</summary>
     [Fact]
     public void TheShippedListFoldsEachRecordOnceAndNeverARecordThatStays()
@@ -319,5 +395,8 @@ public sealed class DuplicateRecordTests : IDisposable
         list.Merges.Should().OnlyContain(m => m.Keeps != m.Folds && m.Why.Length > 0);
         list.Confidence.Should().BeInRange(0, 1);
         list.Merges.Should().OnlyContain(m => m.Confidence == null || (m.Confidence > 0 && m.Confidence <= 1));
+        list.Splits.Should().NotBeNullOrEmpty();
+        list.Splits!.SelectMany(split => split.Verses).Should().OnlyContain(span => ScriptureSpan.TryParse(span) != null);
+        list.Splits.Select(split => split.From).Should().NotIntersectWith(list.Merges.Select(m => m.Folds));
     }
 }

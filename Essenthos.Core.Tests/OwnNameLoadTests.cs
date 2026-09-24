@@ -71,6 +71,6 @@ public sealed class OwnNameLoadTests : IDisposable
     {
         var outcome = await new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance).Load();
 
-        outcome.Missing.Should().Be(2, "the scratch database holds neither heaven the list names");
+        outcome.Missing.Should().Be(1, "the scratch database does not hold the heaven the list names");
     }
 }

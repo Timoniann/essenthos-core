@@ -232,6 +232,56 @@ public sealed class ThingLoaderTests : IDisposable
     }
 
     /// <summary>
+    /// A list may name words for a record it does not write: <em>the woman</em> is Eve, whom another
+    /// source holds. The words are hers, the record is left as it was, and a record the encyclopedia
+    /// does not hold is counted rather than invented.
+    /// </summary>
+    [Fact]
+    public async Task AListNamesWordsForARecordItDoesNotWrite()
+    {
+        var eve = new Entity { Kind = EntityKind.Person, Slug = "eve", Name = "Eve", SourceId = "person:Eve_1", Source = "a test" };
+        _db.Entities.Add(eve);
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load(
+            ThingSet.Narratives,
+            [],
+            [
+                new ThingReference("eve", [new OccurrenceRule(Ark, ["GEN 25:14#1"], null, null)], "the woman"),
+                new ThingReference("nobody", [TheArk], "nobody"),
+            ],
+            CancellationToken.None);
+
+        var shown = await Annotations.Of(_db, Hebrew(25, 14, 1).Id, CancellationToken.None);
+        shown!.Slug.Should().Be("eve");
+        shown.Source.Should().Be(ThingSet.Narratives.Source);
+        (await Annotations.Of(_db, Hebrew(25, 14, 2).Id, CancellationToken.None)).Should().BeNull();
+        outcome.Missing.Should().Be(1, "the list names words for a record nobody holds");
+        (await _db.Entities.SingleAsync(e => e.Slug == "eve")).Source.Should().Be("a test");
+    }
+
+    /// <summary>
+    /// Two lists are loaded one after the other on every boot, and neither takes back what the other
+    /// wrote: each finds its own words by its own sources.
+    /// </summary>
+    [Fact]
+    public async Task EachListKeepsToItsOwnWords()
+    {
+        await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+        var serpent = Record("serpent", kind: "person", rules: [new OccurrenceRule(Boaz, ["GEN 7:21"], null, null)]);
+        await _loader.Load(ThingSet.Narratives, [serpent], [], CancellationToken.None);
+
+        var again = await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+
+        again.AlreadyLoaded.Should().BeTrue();
+        (await Named()).Should().HaveCount(3);
+        var written = await _db.Entities.SingleAsync(e => e.Slug == "serpent");
+        written.Kind.Should().Be(EntityKind.Person);
+        written.Source.Should().Be(ThingSet.Narratives.Source);
+        (await Annotations.Of(_db, Hebrew(7, 21, 1).Id, CancellationToken.None))!.Slug.Should().Be("serpent");
+    }
+
+    /// <summary>
     /// A number somebody else is named by stays off these records' names, so the words of it in
     /// Ruth are still one man's to resolve.
     /// </summary>
@@ -457,7 +507,7 @@ public sealed class ThingFileTests
     private static readonly IReadOnlySet<string> Subtypes = new HashSet<string>(StringComparer.Ordinal)
     {
         "furnishing", "vessel", "structure", "vestment", "monument", "weapon", "image", "implement",
-        "feast", "fast", "sabbath", "new-moon", "sacred-year", "appointed-time", "rite", "book",
+        "feast", "fast", "sabbath", "new-moon", "sacred-year", "appointed-time", "rite", "book", "tree",
     };
 
     private readonly IReadOnlyList<ThingRecord> _records = ThingFiles.Read();
@@ -524,6 +574,50 @@ public sealed class ThingFileTests
     [InlineData("menorah", "Menorah")]
     public void AnAppointedTimeAnswersToItsHebrewName(string slug, string name) =>
         _records.Single(r => r.Slug == slug).Called!.Select(n => n.Label).Should().Contain(name);
+
+    /// <summary>
+    /// The narratives' records are beings, a city and a man, and each is written as the others are:
+    /// named in Ukrainian, sorted by a kind the pages know, every span readable, and no address
+    /// another list holds, since two lists writing one record would each undo the other.
+    /// </summary>
+    [Fact]
+    public void TheNarrativesFileIsWellFormed()
+    {
+        var file = ThingFiles.Read(ThingSet.Narratives);
+
+        file.Records.Select(r => r.Slug).Should().OnlyHaveUniqueItems()
+            .And.NotIntersectWith(_records.Select(r => r.Slug));
+        foreach (var record in file.Records)
+        {
+            record.Kind.Should().BeOneOf("person", "place");
+            record.Names.Should().ContainKey("ukr", $"{record.Slug} needs its Ukrainian name");
+            record.Called.Should().NotBeNullOrEmpty();
+            record.Distinguisher.Should().NotBeNullOrWhiteSpace();
+            record.Occurrences.Should().NotBeNullOrEmpty($"{record.Slug} has to name its words");
+        }
+
+        foreach (var rule in file.Records.SelectMany(r => r.Occurrences ?? []).Concat(file.Refers!.SelectMany(r => r.Occurrences)))
+        {
+            rule.Strong.Should().MatchRegex("^[HG][0-9]+$");
+            foreach (var span in (rule.Only ?? []).Concat(rule.Except ?? []))
+            {
+                ScriptureSpan.TryParse(span).Should().NotBeNull(span);
+            }
+        }
+
+        file.Refers.Should().ContainSingle(r => r.Slug == "eve");
+    }
+
+    /// <summary>
+    /// Nathanael's words are the owner's ruling, which is what lets them show him and not the record
+    /// of Bartholomew; the New Jerusalem's in Revelation 21 likewise, and not the earthly city's.
+    /// </summary>
+    [Theory]
+    [InlineData("nathanael", "G3482")]
+    [InlineData("new-jerusalem", "G2419")]
+    public void TheWordsTheOwnerRuledOnSaySo(string slug, string strong) =>
+        ThingFiles.Read(ThingSet.Narratives).Records.Single(r => r.Slug == slug).Occurrences!
+            .Should().Contain(rule => rule.Strong == strong && rule.Reviewed != null);
 
     /// <summary>The slugs another agent's models are keyed on, which the files must keep.</summary>
     [Fact]

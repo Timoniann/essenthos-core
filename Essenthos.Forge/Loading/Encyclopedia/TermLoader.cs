@@ -11,13 +11,15 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Referenced">
 /// Verse references added: one per entry and canonical verse, however many times the word stands in it.
 /// </param>
-internal sealed record TermOutcome(bool AlreadyLoaded, int Written, int Referenced, TimeSpan Elapsed)
+/// <param name="Moved">The dataset's verse rows moved off the divine name onto the word the verse says.</param>
+internal sealed record TermOutcome(bool AlreadyLoaded, int Written, int Referenced, TimeSpan Elapsed, int Moved = 0)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "the words for God are already entries of their own, with their verses"
             : $"{Written} words for God written as entries of their own and {Referenced} verse references " +
-              $"read off every word BHSA numbers with them, in {Elapsed}";
+              $"read off every word BHSA numbers with them, and {Moved} of the dataset's rows on the divine " +
+              $"name moved to the word for God the verse says, in {Elapsed}";
 }
 
 /// <summary>
@@ -42,6 +44,17 @@ internal sealed record TermOutcome(bool AlreadyLoaded, int Written, int Referenc
 /// **Nothing annotates a word with these.** BHSA marks none of the three as a name, so the annotation
 /// pass never resolves an occurrence to one, and a Strong number on a <c>term</c> record cannot
 /// compete with a person's or a place's for a word marked as either.
+/// </para>
+///
+/// <para>
+/// **The dataset's rows that read one of them as the name are moved to the word.** BibleData files a
+/// verse on YHVH wherever it reads God, and in a verse whose Hebrew has no יהוה and says elohim, el
+/// or eloah, the row it labels <em>G-d</em> rests on that word alone. The owner has ruled that such a
+/// word is not the name. The row keeps the dataset's source and label, because it is still the
+/// dataset's testimony that the verse says God; it moves to the entry of the word the verse says, so
+/// YHVH is not listed in a chapter that never writes the name. Where the verse says two of the words,
+/// which one the label means is not the row's to say, and it stays where it is; so do rows labelled
+/// with a title — the Most High, the Almighty, Lord — which are not these words' to take.
 /// </para>
 ///
 /// <para>
@@ -113,6 +126,42 @@ internal sealed class TermLoader(AppDbContext db, ILogger<TermLoader> logger)
                 AND cited.source = @source)
         """;
 
+    /// <summary>The numbers whose letters are the name, which a verse needs for the name to be in it.</summary>
+    internal static readonly string[] DivineName = ["H3068", "H3069", "H3050"];
+
+    /// <summary>How the dataset spells God in a label, and how it spells the titles of Adonai and of the name.</summary>
+    private const string SaysGod = "%G-d%";
+
+    private const string SaysLord = "%lord%";
+
+    /// <summary>
+    /// The dataset's rows on the divine name in a verse whose Hebrew does not write it and says one
+    /// word for God, labelled God and not Lord, moved to that word's entry.
+    /// </summary>
+    private const string OffTheName =
+        """
+        WITH said AS (
+            SELECT r.canonical_book, r.canonical_chapter, r.canonical_verse,
+                   bool_or(w.strong_number = ANY(@name)) AS named,
+                   array_agg(DISTINCT w.strong_number) FILTER (WHERE w.strong_number = ANY(@terms)) AS terms
+            FROM word w
+            JOIN text t ON t.id = w.text_id AND t.slug = @witness
+            JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+            WHERE w.strong_number = ANY(@name) OR w.strong_number = ANY(@terms)
+            GROUP BY r.canonical_book, r.canonical_chapter, r.canonical_verse),
+        moving AS (
+            SELECT v.id, term.id AS term_id
+            FROM entity_verse v
+            JOIN entity divine ON divine.id = v.entity_id AND divine.source_id = @divine
+            JOIN said ON (said.canonical_book, said.canonical_chapter, said.canonical_verse)
+                         = (v.canonical_book, v.canonical_chapter, v.canonical_verse)
+            JOIN entity_name n ON n.kind = @nameKind AND n.hebrew_strong_number = said.terms[1]
+            JOIN entity term ON term.id = n.entity_id AND term.source_id LIKE @prefix
+            WHERE v.source = @dataset AND NOT said.named AND cardinality(said.terms) = 1
+              AND v.label LIKE @god AND v.label NOT ILIKE @lord)
+        UPDATE entity_verse v SET entity_id = m.term_id FROM moving m WHERE v.id = m.id
+        """;
+
     public async Task<TermOutcome> Load(CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -181,7 +230,23 @@ internal sealed class TermLoader(AppDbContext db, ILogger<TermLoader> logger)
             ],
             cancellationToken);
 
-        var outcome = new TermOutcome(written == 0 && referenced == 0, written, referenced, started.Elapsed);
+        var moved = await db.Database.ExecuteSqlRawAsync(
+            OffTheName,
+            [
+                new NpgsqlParameter("name", DivineName),
+                new NpgsqlParameter("terms", Terms.Select(t => t.StrongNumber).ToArray()),
+                new NpgsqlParameter("witness", EntityCandidates.Witness),
+                new NpgsqlParameter("divine", BibleDataLoader.DivineName),
+                new NpgsqlParameter("nameKind", NameKind),
+                new NpgsqlParameter("prefix", SourceIdPrefix + "%"),
+                new NpgsqlParameter("dataset", BibleDataLoader.Source),
+                new NpgsqlParameter("god", SaysGod),
+                new NpgsqlParameter("lord", SaysLord),
+            ],
+            cancellationToken);
+
+        var outcome = new TermOutcome(
+            written == 0 && referenced == 0 && moved == 0, written, referenced, started.Elapsed, moved);
         logger.LogInformation("The words for God: {Outcome}", outcome);
         return outcome;
     }

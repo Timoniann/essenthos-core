@@ -22,6 +22,7 @@ public sealed class TermLoaderTests : IDisposable
 {
     private readonly AppDbContext _db;
     private readonly TermLoader _loader;
+    private readonly Text _hebrew;
 
     public TermLoaderTests(WitnessDatabase database)
     {
@@ -29,16 +30,16 @@ public sealed class TermLoaderTests : IDisposable
         Clear();
         _loader = new TermLoader(_db, NullLogger<TermLoader>.Instance);
 
-        var hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
+        _hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
             (1, 1, ["אלהים", "אלהים"]),
             (1, 2, ["אל"]),
             (1, 3, ["ארץ"]));
         _db.SaveChanges();
 
-        _db.WordAt(hebrew, 1, 1, 1).StrongNumber = "H430";
-        _db.WordAt(hebrew, 1, 1, 2).StrongNumber = "H430";
-        _db.WordAt(hebrew, 1, 2, 1).StrongNumber = "H410";
-        _db.WordAt(hebrew, 1, 3, 1).StrongNumber = "H776";
+        _db.WordAt(_hebrew, 1, 1, 1).StrongNumber = "H430";
+        _db.WordAt(_hebrew, 1, 1, 2).StrongNumber = "H430";
+        _db.WordAt(_hebrew, 1, 2, 1).StrongNumber = "H410";
+        _db.WordAt(_hebrew, 1, 3, 1).StrongNumber = "H776";
 
         _db.StrongEntries.AddRange(
             new StrongEntry { StrongNumber = "H430", Lemma = "אֱלֹהִים", Transliteration = "ʼĕlôhîym", Definition = "gods" },
@@ -85,6 +86,41 @@ public sealed class TermLoaderTests : IDisposable
 
         again.AlreadyLoaded.Should().BeTrue();
         (await _db.Entities.CountAsync(e => e.Kind == EntityKind.Term)).Should().Be(2);
+    }
+
+    /// <summary>
+    /// The dataset files a verse on YHVH wherever it reads God. Where the verse says el and not the
+    /// name, the row it labels God moves to el's entry, still the dataset's; where the name is in the
+    /// verse, or the label is a title, or the verse says no word for God at all, it stays.
+    /// </summary>
+    [Fact]
+    public async Task TheDatasetsGodIsMovedOffTheNameWhereTheVerseSaysOnlyAWordForGod()
+    {
+        _db.WordAt(_hebrew, 1, 1, 2).StrongNumber = TermLoader.DivineName[0];
+        var yhvh = new Entity
+        {
+            Kind = EntityKind.Person, Slug = "yhvh", Name = "YHVH", SourceId = BibleDataLoader.DivineName, Source = "a test",
+        };
+        _db.Entities.Add(yhvh);
+        foreach (var (verse, label) in new[] { (1, "G-d"), (2, "G-d"), (2, "the Most High"), (2, "Lord G-d"), (3, "G-d") })
+        {
+            _db.EntityVerses.Add(new EntityVerse
+            {
+                Entity = yhvh, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = verse, Label = label,
+                Source = BibleDataLoader.Source,
+            });
+        }
+
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load();
+
+        outcome.Moved.Should().Be(1);
+        var el = await _db.Entities.SingleAsync(e => e.Slug == "el");
+        var moved = await _db.EntityVerses.AsNoTracking().SingleAsync(v => v.EntityId == el.Id && v.Source == BibleDataLoader.Source);
+        (moved.CanonicalVerse, moved.Label).Should().Be((2, "G-d"));
+        (await _db.EntityVerses.CountAsync(v => v.EntityId == yhvh.Id)).Should().Be(4);
+        (await _loader.Load()).Moved.Should().Be(0);
     }
 
     private void Clear()

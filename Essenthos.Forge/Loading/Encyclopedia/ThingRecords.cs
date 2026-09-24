@@ -8,34 +8,113 @@ using Essenthos.Core.Database.Entities.Enums;
 namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <summary>
-/// The objects and the observances this corpus holds, as the files say them: one list of records,
+/// The records the files hold, as the files say them. The objects and the observances are one list,
 /// read from two files because they were decided and reviewed as two lists and not because they are
-/// two shapes. An object and an observance are the same record with different fields filled.
+/// two shapes: an object and an observance are the same record with different fields filled. The
+/// beings, things and places the narratives turn on are another list, in a file of their own.
 /// </summary>
 internal static class ThingFiles
 {
-    private const string ObjectsResource = "Essenthos.Core.Loading.Encyclopedia.ObjectRecords.json";
-
-    private const string ObservancesResource = "Essenthos.Core.Loading.Encyclopedia.ObservanceRecords.json";
-
     private static readonly JsonSerializerOptions Shape = new()
     {
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
 
-    public static IReadOnlyList<ThingRecord> Read() => [.. Read(ObjectsResource), .. Read(ObservancesResource)];
+    public static IReadOnlyList<ThingRecord> Read() => Read(ThingSet.MadeAndKept).Records;
 
-    private static IReadOnlyList<ThingRecord> Read(string resource)
+    /// <summary>Every file of a list, as one: its records, and the words it names for records it does not write.</summary>
+    public static ThingFile Read(ThingSet set)
+    {
+        var files = set.Resources.Select(Read).ToList();
+        return new ThingFile(
+            string.Join(" ", files.Select(f => f.DecidedBy)),
+            [.. files.SelectMany(f => f.Records)],
+            [.. files.SelectMany(f => f.Refers ?? [])]);
+    }
+
+    private static ThingFile Read(string resource)
     {
         using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resource)
                            ?? throw new InvalidOperationException($"{resource} is not embedded in the Forge assembly.");
-        return JsonSerializer.Deserialize<ThingFile>(stream, Shape)?.Records ?? [];
+        return JsonSerializer.Deserialize<ThingFile>(stream, Shape) ?? new ThingFile("", [], null);
     }
 }
 
+/// <summary>
+/// One list of records, and the sources its rows are written under — which is also how a load of
+/// the list finds what it wrote last time and takes back only that.
+/// </summary>
+/// <param name="About">What the list is, in a phrase the load's log reads with.</param>
+/// <param name="Source">What wrote its records and the words no person has reviewed yet.</param>
+/// <param name="ReviewedSource">What wrote a rule or a record the owner has reviewed, which is then his ruling.</param>
+/// <param name="PassageSource">What says a verse stands in a passage that commands a record.</param>
+/// <param name="Resources">The embedded files the list is read from.</param>
+internal sealed record ThingSet(
+    string About,
+    string Source,
+    string ReviewedSource,
+    string PassageSource,
+    IReadOnlyList<string> Resources)
+{
+    public const string MadeAndKeptAbout = "the objects and the appointed times";
+
+    public const string MadeAndKeptSource =
+        "Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's " +
+        "decision that objects and appointed times are records of their own";
+
+    public const string MadeAndKeptReviewedSource =
+        "Essenthos, on the project owner's review of the readings of objects and appointed times";
+
+    /// <summary>
+    /// What says an appointed time stands in each verse of the passages that command it. Not that a
+    /// word there names it — Leviticus 16 never says <em>the day of atonement</em> and is the whole of
+    /// how it is kept — so these are references from the passage, read as such by the model that
+    /// listed the passages, and they say so beside the ones the words give.
+    /// </summary>
+    public const string MadeAndKeptPassageSource =
+        "Essenthos, from the passages that command it, as a language model read them on 2026-09-23";
+
+    public static readonly ThingSet MadeAndKept = new(
+        MadeAndKeptAbout,
+        MadeAndKeptSource,
+        MadeAndKeptReviewedSource,
+        MadeAndKeptPassageSource,
+        [
+            "Essenthos.Core.Loading.Encyclopedia.ObjectRecords.json",
+            "Essenthos.Core.Loading.Encyclopedia.ObservanceRecords.json",
+        ]);
+
+    /// <summary>
+    /// The serpent and the cherubim of Eden, the Holy Spirit, the New Jerusalem, Nathanael, and the
+    /// words the narrative refers to a named record by without its name.
+    /// </summary>
+    public static readonly ThingSet Narratives = new(
+        "the beings, the things and the places the narratives turn on",
+        "Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's " +
+        "decision that the beings, things and places the narratives turn on are records of their own",
+        "Essenthos, on the project owner's rulings on the beings, things and places the narratives turn on",
+        "Essenthos, from the passages about the beings, things and places the narratives turn on, as a " +
+        "language model read them on 2026-09-24",
+        ["Essenthos.Core.Loading.Encyclopedia.NarrativeRecords.json"]);
+
+    public string SourceOf(bool reviewed) => reviewed ? ReviewedSource : Source;
+}
+
 /// <param name="DecidedBy">Who decided that these are records, and when, in a sentence.</param>
-internal sealed record ThingFile(string DecidedBy, IReadOnlyList<ThingRecord> Records);
+/// <param name="Refers">Words the file names for records it does not write itself.</param>
+internal sealed record ThingFile(
+    string DecidedBy,
+    IReadOnlyList<ThingRecord> Records,
+    IReadOnlyList<ThingReference>? Refers = null);
+
+/// <summary>
+/// Words that refer to a record the file does not write — a dataset's, or another list's — without
+/// spelling its name: <em>the woman</em> of Genesis 3, who is Eve. The record is left as it is; only
+/// the words are named, by the same rules and under the same sources as the file's own records.
+/// </summary>
+/// <param name="Why">Why these occurrences are that record, which is what each word's note rests on.</param>
+internal sealed record ThingReference(string Slug, IReadOnlyList<OccurrenceRule> Occurrences, string Why);
 
 /// <summary>One object or observance, with everything the page and the reader need of it.</summary>
 /// <param name="Kind"><c>object</c> or <c>observance</c>, as the kind is spelled in the database.</param>

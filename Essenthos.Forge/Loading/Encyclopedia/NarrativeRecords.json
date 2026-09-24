@@ -1,0 +1,413 @@
+{
+  "decidedBy": "the project owner, 2026-09-24: the beings, things and places the chapters turn on are records of their own — the serpent and the cherubim as beings, the Holy Spirit, the New Jerusalem apart from the earthly city, and Nathanael as the text names him — and 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt. Each record says only what its verses say; an identification a later verse makes is cited to that verse.",
+  "records": [
+    {
+      "slug": "serpent-of-eden",
+      "kind": "person",
+      "name": "The Serpent",
+      "names": {
+        "ukr": "Змій",
+        "deu": "Die Schlange",
+        "spa": "La serpiente"
+      },
+      "distinguisher": "the serpent that spoke to the woman in the garden of Eden (GEN 3:1)",
+      "notes": "The serpent was more subtil than any beast of the field which the LORD God had made (GEN 3:1). It asked the woman whether God had said they should not eat of every tree of the garden, and told her they would not surely die, but that their eyes would be opened and they would be as gods, knowing good and evil (GEN 3:1-5). The woman said, The serpent beguiled me, and I did eat (GEN 3:13). The LORD God cursed it above all cattle and above every beast of the field: upon its belly it should go and dust it should eat all the days of its life, and he put enmity between it and the woman, and between its seed and her seed (GEN 3:14-15). Genesis says nothing more of what it was. Paul recalls that the serpent beguiled Eve through his subtilty (2CO 11:3). Revelation calls the great dragon 'that old serpent, called the Devil, and Satan' (REV 12:9; 20:2): that identification is Revelation's statement, and Genesis does not make it.",
+      "called": [
+        {
+          "label": "Serpent",
+          "hebrew": "נָחָשׁ",
+          "hebrewTransliterated": "nachash",
+          "hebrewStrongNumber": "H5175",
+          "meaning": "GEN 3:1"
+        },
+        {
+          "label": "Serpent",
+          "greek": "ὄφις",
+          "greekTransliterated": "ophis",
+          "greekStrongNumber": "G3789",
+          "meaning": "2CO 11:3"
+        },
+        {
+          "label": "That old serpent",
+          "greek": "ὁ ὄφις ὁ ἀρχαῖος",
+          "greekTransliterated": "ho ophis ho archaios",
+          "greekStrongNumber": "G3789,G744",
+          "meaning": "REV 12:9; 20:2"
+        },
+        {
+          "label": "Змій"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "GEN 3:1-15",
+          "role": "key"
+        },
+        {
+          "reference": "2CO 11:3",
+          "role": "key"
+        },
+        {
+          "reference": "REV 12:9",
+          "role": "key"
+        },
+        {
+          "reference": "REV 20:2",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H5175",
+          "only": [
+            "GEN 3:1",
+            "GEN 3:2",
+            "GEN 3:4",
+            "GEN 3:13",
+            "GEN 3:14"
+          ]
+        },
+        {
+          "strong": "G3789",
+          "only": [
+            "2CO 11:3",
+            "REV 12:9",
+            "REV 20:2"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by a language model on 2026-09-24, for the owner's review. Every H5175 of Genesis 3 is this serpent (five words); the other 26 are serpents in general, Moses' rod become a serpent and the bronze serpent, which has its own record. Of the fourteen verses with G3789, 2CO 11:3 recalls the serpent that beguiled Eve and REV 12:9 and 20:2 call the dragon 'that old serpent'; REV 12:14-15, the serpent of the same vision, and the rest, serpents in general and the bronze serpent of JHN 3:14, are not linked."
+    },
+    {
+      "slug": "cherubim",
+      "kind": "person",
+      "name": "Cherubim",
+      "names": {
+        "ukr": "Херувими",
+        "deu": "Die Cherubim",
+        "spa": "Los querubines"
+      },
+      "distinguisher": "the living beings God placed at the east of the garden of Eden (GEN 3:24), whose form Ezekiel saw (EZK 10:20)",
+      "notes": "When he had driven out the man, the LORD God placed at the east of the garden of Eden cherubims, and a flaming sword which turned every way, to keep the way of the tree of life (GEN 3:24). Genesis does not describe them. Ezekiel saw them by the river Chebar and says, I knew that they were the cherubims (EZK 10:15, 20): every one had four faces and four wings, and the likeness of a man's hands under their wings (EZK 10:21; 1:5-11), with a wheel beside each (EZK 10:9-13); in 10:14 the first face is the face of a cherub where 1:10 has the face of an ox. Two cherubim of beaten gold were made at the two ends of the mercy seat, stretching forth their wings on high and their faces one to another (EXO 25:18-20; 37:7-9), and from between them God spoke with Moses (EXO 25:22; NUM 7:89); the LORD of hosts is called he which dwelleth between the cherubims where the ark is named (1SA 4:4; 2SA 6:2). Cherubim were also woven into the curtains and the veil of the tabernacle (EXO 26:1, 31), carved and set up in Solomon's temple (1KI 6:23-35) and carved on the walls of the temple of Ezekiel's vision (EZK 41:18-20); those are the work's figures of them and are not linked to this record. The prince of Tyre is addressed as the anointed cherub that covereth (EZK 28:14, 16), a figure of speech.",
+      "called": [
+        {
+          "label": "Cherubim",
+          "hebrew": "כְּרוּבִים",
+          "hebrewTransliterated": "keruvim",
+          "hebrewStrongNumber": "H3742",
+          "meaning": "GEN 3:24"
+        },
+        {
+          "label": "Cherub",
+          "hebrew": "כְּרוּב",
+          "hebrewTransliterated": "keruv",
+          "hebrewStrongNumber": "H3742",
+          "meaning": "the singular (EZK 10:14)"
+        },
+        {
+          "label": "Cherubim",
+          "greek": "Χερουβίν",
+          "greekTransliterated": "Cheroubin",
+          "greekStrongNumber": "G5502",
+          "meaning": "HEB 9:5"
+        },
+        {
+          "label": "Херувими"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "GEN 3:24",
+          "role": "key"
+        },
+        {
+          "reference": "EXO 25:18-22",
+          "role": "key"
+        },
+        {
+          "reference": "EZK 10:1-22",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H3742",
+          "only": [
+            "GEN 3:24",
+            "EXO 25:18-20",
+            "EXO 25:22",
+            "EXO 37:7-9",
+            "NUM 7:89",
+            "1SA 4:4",
+            "2SA 6:2",
+            "1CH 13:6",
+            "EZK 9:3",
+            "EZK 10",
+            "EZK 11:22"
+          ]
+        },
+        {
+          "strong": "G5502",
+          "only": [
+            "HEB 9:5"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by a language model on 2026-09-24, for the owner's review. Of the 91 H3742: GEN 3:24 and Ezekiel's vision (EZK 9:3; 10; 11:22) are the beings; EXO 25:18-22, 37:7-9 and NUM 7:89 are the two cherubim of gold on the mercy seat, as are those the LORD dwells between where the verse names the ark (1SA 4:4; 2SA 6:2; 1CH 13:6) and HEB 9:5. Not linked: the cherubim woven into the curtains and the veil (EXO 26; 36), those Solomon made and carved for the temple (1KI 6-8; 2CH 3-5; 1CH 28:18), the carvings of Ezekiel's temple (EZK 41), the address to the prince of Tyre (EZK 28:14, 16), the cherub the LORD rode upon in David's song (2SA 22:11; PSA 18:10), and the same title where no ark is named (2KI 19:15; ISA 37:16; PSA 80:1; 99:1)."
+    },
+    {
+      "slug": "holy-spirit",
+      "kind": "person",
+      "name": "Holy Spirit",
+      "names": {
+        "ukr": "Святий Дух",
+        "deu": "Der Heilige Geist",
+        "spa": "El Espíritu Santo"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Святого Духа",
+          "locative": "Святому Дусі"
+        }
+      },
+      "distinguisher": "whom the text calls the Holy Spirit and the Spirit of God (MAT 28:19; 1CO 3:16)",
+      "notes": "The phrase stands three times in the Hebrew Bible: take not thy holy spirit from me (PSA 51:11), and Israel rebelled and vexed his holy Spirit, and where is he that put his holy Spirit within him (ISA 63:10-11). In the New Testament the Holy Ghost came upon Mary (LUK 1:35), and at Jesus' baptism descended in a bodily shape like a dove upon him (LUK 3:22; MAT 3:16; JHN 1:32-33); Jesus, full of the Holy Ghost, was led by the Spirit into the wilderness (LUK 4:1). Jesus told the disciples to baptize in the name of the Father, and of the Son, and of the Holy Ghost (MAT 28:19), and said that the Holy Ghost, whom the Father will send in my name, shall teach you all things (JHN 14:26). At Pentecost they were all filled with the Holy Ghost and began to speak with other tongues (ACT 2:4). The text says the Holy Ghost spoke by the mouth of David and by Esaias the prophet (ACT 1:16; 28:25), said Separate me Barnabas and Saul (ACT 13:2), and forbade Paul to preach the word in Asia (ACT 16:6); Paul writes that the Spirit itself beareth witness with our spirit and maketh intercession for us (ROM 8:16, 26), and that the body is the temple of the Holy Ghost (1CO 6:19). The words linked here are those the text calls holy spirit or the Spirit of God, and the Spirit the same verse or passage speaks of. The Hebrew Bible's spirit of God and spirit of the LORD are not linked, because the same words name an evil spirit from God (1SA 16:15-16, 23; 18:10) and can be read a wind from God (GEN 1:2); nor are the seven Spirits of God of Revelation (REV 3:1; 4:5; 5:6).",
+      "called": [
+        {
+          "label": "Holy Spirit",
+          "greek": "πνεῦμα ἅγιον",
+          "greekTransliterated": "pneuma hagion",
+          "greekStrongNumber": "G4151,G40",
+          "meaning": "MAT 28:19"
+        },
+        {
+          "label": "Holy Ghost"
+        },
+        {
+          "label": "Spirit of God",
+          "greek": "πνεῦμα θεοῦ",
+          "greekTransliterated": "pneuma theou",
+          "greekStrongNumber": "G4151,G2316",
+          "meaning": "MAT 3:16; ROM 8:14"
+        },
+        {
+          "label": "Holy spirit",
+          "hebrew": "רוּחַ קֹדֶשׁ",
+          "hebrewTransliterated": "ruach qodesh",
+          "hebrewStrongNumber": "H7307,H6944",
+          "meaning": "PSA 51:11; ISA 63:10-11"
+        },
+        {
+          "label": "Святий Дух"
+        },
+        {
+          "label": "Дух Святий"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "ACT 2:1-4",
+          "role": "key"
+        },
+        {
+          "reference": "ROM 8:1-27",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "G4151",
+          "with": "G40"
+        },
+        {
+          "strong": "G4151",
+          "only": [
+            "MAT 3:16",
+            "MAT 4:1",
+            "MAT 12:28",
+            "MRK 1:10",
+            "MRK 1:12",
+            "LUK 4:1#2",
+            "JHN 1:32",
+            "JHN 1:33#1",
+            "ACT 2:4#2",
+            "ROM 8:2",
+            "ROM 8:9#2",
+            "ROM 8:11",
+            "ROM 8:14",
+            "ROM 8:16#1",
+            "ROM 8:23",
+            "ROM 8:26",
+            "ROM 8:27",
+            "ROM 15:19",
+            "1CO 2:10",
+            "1CO 2:11#2",
+            "1CO 2:14",
+            "1CO 3:16",
+            "1CO 6:11",
+            "1CO 7:40",
+            "1CO 12:3#1",
+            "2CO 3:3",
+            "1PE 4:14",
+            "1JN 4:2#1"
+          ]
+        },
+        {
+          "strong": "H7307",
+          "only": [
+            "PSA 51:11",
+            "ISA 63:10",
+            "ISA 63:11"
+          ],
+          "with": "H6944"
+        }
+      ],
+      "why": "Read verse by verse by a language model on 2026-09-24, for the owner's review, on his rule that the Holy Spirit is linked where the text says Holy Spirit or Spirit of God. Every πνεῦμα within three words of ἅγιος names it: 365 words of the four Greek editions in 94 verses, the Textus Receptus adding JHN 7:39, ACT 6:3, 8:18, 1CO 2:13 and 1JN 5:7. Of the 121 standing beside θεός, the verses that say the Spirit of God are linked; God is a Spirit (JHN 4:24), the spirit of slumber (ROM 11:8), the Spirit of his Son (GAL 4:6), a habitation of God through the Spirit (EPH 2:22), PHP 3:3, where the editions read it apart, the spirit of fear (2TI 1:7), the spirits of just men (HEB 12:23), 1PE 4:6, every spirit that confesseth (1JN 4:2#2) and the seven Spirits of God and the God of the spirits of the prophets in Revelation are not. The Spirit without an epithet is linked only where the same verse or passage names it: the dove at the baptism (MRK 1:10; JHN 1:32-33), the leading into the wilderness (MAT 4:1; MRK 1:12; LUK 4:1), the utterance at Pentecost (ACT 2:4), 1CO 2:10, and in Romans 8, after 8:9 and 8:11 call it the Spirit of God, the verses where both the King James and Nestle's edition print it as the Spirit (8:2, 9, 11, 14, 16, 23, 26, 27); 8:4-6, 8:10, 8:13 and 8:15, which the two read apart, are left. In the Hebrew Bible only holy spirit is linked (PSA 51:11; ISA 63:10-11)."
+    },
+    {
+      "slug": "new-jerusalem",
+      "kind": "place",
+      "name": "New Jerusalem",
+      "names": {
+        "ukr": "Новий Єрусалим",
+        "deu": "Das neue Jerusalem",
+        "spa": "La nueva Jerusalén"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Нового Єрусалима",
+          "locative": "Новому Єрусалимі"
+        }
+      },
+      "distinguisher": "the holy city John saw coming down from God out of heaven (REV 21:2)",
+      "notes": "Jesus promises him that overcometh to write upon him the name of the city of my God, which is new Jerusalem, which cometh down out of heaven from my God (REV 3:12). John saw the holy city, new Jerusalem, coming down from God out of heaven, prepared as a bride adorned for her husband (REV 21:2), and was carried away in the spirit to a great and high mountain and shown that great city, the holy Jerusalem, descending out of heaven from God, having the glory of God (REV 21:10-11). It had a wall great and high with twelve gates, at the gates twelve angels, and on them the names of the twelve tribes of the children of Israel; the wall had twelve foundations, and in them the names of the twelve apostles of the Lamb (REV 21:12-14). The angel measured the city with a golden reed: it lieth foursquare, twelve thousand furlongs, the length and the breadth and the height of it equal, and the wall an hundred and forty and four cubits (REV 21:15-17). The wall was of jasper and the city pure gold, like unto clear glass; the foundations were garnished with twelve precious stones, and the twelve gates were twelve pearls (REV 21:18-21). John saw no temple therein, for the Lord God Almighty and the Lamb are the temple of it, and the city had no need of the sun, neither of the moon (REV 21:22-23); the river of water of life proceeded out of the throne, and on either side of the river was the tree of life (REV 22:1-2). It is seen in a vision and has no place on a map. Paul speaks of Jerusalem which is above (GAL 4:26) and Hebrews of the heavenly Jerusalem (HEB 12:22); those verses do not call it new and are not linked to this record.",
+      "called": [
+        {
+          "label": "New Jerusalem",
+          "greek": "καινὴ Ἱερουσαλήμ",
+          "greekTransliterated": "kainē Hierousalēm",
+          "greekStrongNumber": "G2537,G2419",
+          "meaning": "REV 3:12; 21:2"
+        },
+        {
+          "label": "Holy city",
+          "greek": "πόλις ἁγία",
+          "greekTransliterated": "polis hagia",
+          "greekStrongNumber": "G4172,G40",
+          "meaning": "REV 21:2"
+        },
+        {
+          "label": "Новий Єрусалим"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "REV 3:12",
+          "role": "key"
+        },
+        {
+          "reference": "REV 21:1-22:5",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "G2419",
+          "only": [
+            "REV 21:2",
+            "REV 21:10"
+          ],
+          "reviewed": "the project owner, 2026-09-24, deciding that the city of these two verses is a record apart from the earthly Jerusalem"
+        },
+        {
+          "strong": "G2419",
+          "only": [
+            "REV 3:12"
+          ]
+        }
+      ],
+      "why": "Every G2419 of Revelation names this city: 3:12 and 21:2 call it new Jerusalem, 21:10 the holy Jerusalem descending out of heaven from God. The owner ruled on 2026-09-24 that the city of 21:2 and 21:10 is a record apart from the earthly Jerusalem, which is what lets these words show it and not the city of the map; 3:12 was read by a language model the same day and waits for his review."
+    },
+    {
+      "slug": "nathanael",
+      "kind": "person",
+      "name": "Nathanael",
+      "names": {
+        "ukr": "Натанаїл",
+        "deu": "Nathanael",
+        "spa": "Natanael"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Натанаїла",
+          "locative": "Натанаїлі"
+        }
+      },
+      "distinguisher": "of Cana in Galilee, whom Philip brought to Jesus (JHN 1:45; 21:2)",
+      "notes": "Philip found Nathanael and told him, We have found him, of whom Moses in the law, and the prophets, did write, Jesus of Nazareth; and Nathanael said, Can there any good thing come out of Nazareth? (JHN 1:45-46). Jesus said of him, Behold an Israelite indeed, in whom is no guile, and that he had seen him under the fig tree before Philip called him; Nathanael answered, Rabbi, thou art the Son of God; thou art the King of Israel (JHN 1:47-49). After the resurrection he was among the disciples at the sea of Tiberias, where John names him Nathanael of Cana in Galilee (JHN 21:1-2). The name stands only in John. A tradition identifies him with Bartholomew, whom Matthew, Mark and Luke name beside Philip in the lists of the twelve (MAT 10:3; MRK 3:18; LUK 6:14; ACT 1:13); no verse says they are one man, and BibleData, which follows the tradition, holds the name Nathanael on its record of Bartholomew.",
+      "called": [
+        {
+          "label": "Nathanael",
+          "greek": "Ναθαναήλ",
+          "greekTransliterated": "Nathanaēl",
+          "greekStrongNumber": "G3482",
+          "meaning": "God has given (JHN 1:45)"
+        },
+        {
+          "label": "Натанаїл"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "JHN 1:43-51",
+          "role": "key"
+        },
+        {
+          "reference": "JHN 21:1-2",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "G3482",
+          "only": [
+            "JHN 1:45-49",
+            "JHN 21:2"
+          ],
+          "reviewed": "the project owner, 2026-09-24"
+        }
+      ],
+      "why": "The owner ruled on 2026-09-24 that the man John 1:45-49 and 21:2 name is Nathanael, the name the text uses, and that his identification with Bartholomew is a later tradition and not the text's, kept in the notes. Every G3482 of the Greek editions stands in those verses."
+    }
+  ],
+  "refers": [
+    {
+      "slug": "eve",
+      "occurrences": [
+        {
+          "strong": "H802",
+          "only": [
+            "GEN 2:22",
+            "GEN 2:23",
+            "GEN 2:25",
+            "GEN 3:1",
+            "GEN 3:2",
+            "GEN 3:4",
+            "GEN 3:6",
+            "GEN 3:8",
+            "GEN 3:12",
+            "GEN 3:13",
+            "GEN 3:15",
+            "GEN 3:16",
+            "GEN 3:17",
+            "GEN 3:20",
+            "GEN 3:21",
+            "GEN 4:1",
+            "GEN 4:25"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by a language model on 2026-09-24, on the project owner's ruling of that day that 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt. From the woman made from the rib (GEN 2:22) to Adam knowing his wife (GEN 4:1, 25), every H802 is she, 'the woman' or 'his wife' (18 words in 17 verses); GEN 2:24, 'shall cleave unto his wife', speaks of any man and his wife and is left, and so is every woman after GEN 4:25."
+    }
+  ]
+}
