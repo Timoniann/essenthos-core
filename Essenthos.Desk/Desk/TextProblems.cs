@@ -51,6 +51,7 @@ internal sealed class TextProblems(Avioniq avioniq, ILogger<TextProblems> logger
         ["LUTH1912"] = ["Luther", "Lutherbibel"],
         ["ELB1905"] = ["Elberfelder"],
         ["RV1909"] = ["Reina-Valera", "Reina Valera"],
+        ["KRV"] = ["Korean Revised", "개역한글"],
         ["TISCH"] = ["Tischendorf"],
         ["WH1881"] = ["Westcott"],
         ["TYN1534"] = ["Tyndale"],

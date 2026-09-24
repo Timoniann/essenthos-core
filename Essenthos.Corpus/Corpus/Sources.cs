@@ -56,6 +56,13 @@ internal static class Sources
         "the Bob Jones University Strong numbering of the Synodal (1996), read from swmail/RST";
 
     /// <summary>
+    /// What every link drawn from the Chinese Union Version's Strong numbers begins with. It names
+    /// whose numbers they are and the copy they were read from.
+    /// </summary>
+    public const string UnionStrongCredit =
+        "the Faith Hope Love foundation's Strong numbering of the Chinese Union Version, read from CrossWire's ChiUn and ChiUns";
+
+    /// <summary>
     /// How a translated lexicon row begins. The English of the lexicon is public domain and the
     /// rendering into a reader's language is this project's, so the row names the model, the prompt
     /// version and the day, and the English stays beside it.

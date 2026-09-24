@@ -108,6 +108,7 @@ builder.Services.AddScoped<BereanLinkLoader>();
 builder.Services.AddScoped<ClearBibleLinkLoader>();
 builder.Services.AddScoped<TaggedTextLinkLoader>();
 builder.Services.AddScoped<SynodalStrongLinkLoader>();
+builder.Services.AddScoped<UnionStrongLinkLoader>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<UssherAnnalsLoader>();
@@ -677,6 +678,28 @@ if (args is ["synodal-strong", ..])
     // The links just written and the guesses just removed decide which Synodal words an annotation
     // reaches, and nothing on a restart asks that again.
     await synodalScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    return 0;
+}
+
+// The Chinese Union Version by the Strong numbers FHL put on it, read from the module and never
+// stored, the way the Synodal's are. With no witness named it runs the three the numbering reaches.
+if (args is ["union-strong", ..])
+{
+    using var unionScope = app.Services.CreateScope();
+    var modules = SwordTextSource.Texts.Values
+        .Where(text => text.Segmentation == SwordSegmentation.Tagged)
+        .ToDictionary(text => text.Definition.Slug, text => Path.Combine(resources, text.Folder));
+    string[] unionWitnesses = args.Length > 1 ? [.. args[1..].Select(Identifier)] : UnionStrongLinkLoader.Witnesses;
+
+    foreach (var outcome in await unionScope.ServiceProvider.GetRequiredService<UnionStrongLinkLoader>()
+                 .Load(modules, unionWitnesses))
+    {
+        logger.LogInformation("{Outcome}", outcome);
+    }
+
+    logger.LogInformation(
+        "{Outcome}", await unionScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    await unionScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
     return 0;
 }
 

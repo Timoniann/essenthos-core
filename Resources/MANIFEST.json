@@ -29,6 +29,11 @@
     "files": 56,
     "sha256": "0ef51da34ca072d262ee55772465eab25506765a5e4b3deda318b537a52749ac"
   },
+  "ChineseUnion1919": {
+    "bytes": 6588985,
+    "files": 15,
+    "sha256": "53219a167c7e9aea4cebe3218c5ee1a6794795434def0e22f753f5c172324c8d"
+  },
   "ClearBible": {
     "bytes": 1326683562,
     "files": 102,
@@ -63,6 +68,11 @@
     "bytes": 12514444,
     "files": 67,
     "sha256": "6c02edfb49aa435821f987055767067957c02174f5fd59b9d3a7510abbb27643"
+  },
+  "KoreanRevised1961": {
+    "bytes": 1802943,
+    "files": 8,
+    "sha256": "56b4be3c6c9f498f39055b9748f85fc2ac3f1daf4585bc5e3936e15c398bd139"
   },
   "Kulish": {
     "bytes": 6326684,

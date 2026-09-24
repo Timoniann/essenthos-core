@@ -116,6 +116,15 @@ internal sealed class DatasetLoader(
                     Path.Combine(resources, folder)), stoppingToken);
             }
 
+            // The Chinese Union Version in both scripts and the Korean Revised Version, from CrossWire's
+            // modules. The Chinese reaches the originals through FHL's Strong numbers, which are read
+            // by their own command and never stored; the Korean carries nothing but its words.
+            foreach (var text in SwordTextSource.Texts.Values)
+            {
+                await Load(text.Definition.Name, () => SwordTextSource.Read(
+                    Path.Combine(resources, text.Folder)), stoppingToken);
+            }
+
             // The English that is not the King James in other spelling: Tyndale, which the King
             // James is largely a revision of, and five more each made from a different underlying
             // text or by a different method. None of them carries a usable word map, so all six
@@ -807,6 +816,20 @@ internal sealed class DatasetLoader(
                 Bible4uTextSource.Read(
                     ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation),
                 cancellationToken);
+
+            if (outcome.Verses > 0)
+            {
+                status.Record(outcome.ToString());
+            }
+        }
+
+        // The Korean marks a title as one; the Chinese prints it in parentheses at the head of the
+        // verse, which its reader takes for the same statement.
+        foreach (var text in SwordTextSource.Texts.Values)
+        {
+            using var scope = services.CreateScope();
+            var outcome = await scope.ServiceProvider.GetRequiredService<SuperscriptionFrameLoader>()
+                .Load(SwordTextSource.Read(Path.Combine(resources, text.Folder)), cancellationToken);
 
             if (outcome.Verses > 0)
             {

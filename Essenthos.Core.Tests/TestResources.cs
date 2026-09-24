@@ -38,6 +38,9 @@ internal static class TestResources
     public static string SynodalStrong =>
         System.IO.Path.Combine([ResolvedPath.Value, .. Essenthos.Core.Loading.Links.SynodalStrongLinkLoader.EditionFile]);
 
+    /// <summary>A folder of the corpus sources, which <see cref="Path"/> cannot name since it expects a file.</summary>
+    public static string Folder(string relative) => System.IO.Path.Combine(ResolvedPath.Value, relative);
+
     /// <summary>Brenton's Septuagint, one USFM file per book.</summary>
     public static string SeptuagintFolder => System.IO.Path.Combine(ResolvedPath.Value, "Septuagint");
 
