@@ -813,7 +813,8 @@ if (args is ["align", var alignFrom, var alignTo, ..])
         confidence >= 0 && confidence + 1 < args.Length
             ? double.Parse(args[confidence + 1], System.Globalization.CultureInfo.InvariantCulture)
             : AlignmentPipeline.DefaultMinimumConfidence,
-        args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4"));
+        args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
+        replace: args.Contains("--replace")));
     return 0;
 }
 

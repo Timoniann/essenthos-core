@@ -113,6 +113,45 @@ public sealed class VerseFrameTests : IDisposable
         found[1].Printed.Should().Equal("12:6");
     }
 
+    /// <summary>
+    /// A text with no verse at a psalm's title prints the title in the psalm's first verse, which
+    /// answers for it; one that places a verse at the title answers with that verse alone.
+    /// </summary>
+    [Fact]
+    public async Task AnswersATitleWithTheFirstVerseWhereNothingIsPlacedAtIt()
+    {
+        Place(4, 1);
+        _db.SaveChanges();
+
+        var found = await VerseEndpoints.Read(_db, _text.Id, [Key(12, 0)], null, default);
+
+        found.Should().ContainSingle();
+        found[0].Verse.Should().Be(0);
+        found[0].Text.Should().Be("Y se fue Abram");
+        found[0].Printed.Should().Equal("12:4");
+    }
+
+    [Fact]
+    public async Task AnswersATitleWithTheVersePlacedAtIt()
+    {
+        Place(4, 1);
+        Place(5, 0);
+        _db.SaveChanges();
+
+        var found = await VerseEndpoints.Read(_db, _text.Id, [Key(12, 0), Key(12, 1)], null, default);
+
+        found.Select(verse => (verse.Verse, verse.Text)).Should().Equal((0, "Y tomó Abram a Sarai"), (1, "Y se fue Abram"));
+    }
+
+    /// <summary>A psalm's title stands at verse 0 of the frame, and a page can ask for it there.</summary>
+    [Theory]
+    [InlineData("psalms:3:0", true)]
+    [InlineData("psalms:3:-1", false)]
+    [InlineData("psalms:0:1", false)]
+    [InlineData("genesis:1:0", false)]
+    public void ReadsVerseZeroAsAnAddress(string asked, bool readable) =>
+        (VerseEndpoints.Address.Parse(asked) is not null).Should().Be(readable);
+
     private static int Key(int chapter, int verse) =>
         VerseEndpoints.Address.BookStride + (chapter * VerseEndpoints.Address.ChapterStride) + verse;
 

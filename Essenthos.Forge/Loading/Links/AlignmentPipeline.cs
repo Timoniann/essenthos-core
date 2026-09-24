@@ -94,16 +94,18 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         string workspace,
         double minimumConfidence,
         string modelType,
+        bool replace = false,
         CancellationToken cancellationToken = default)
     {
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
 
-        if (await db.Links.AnyAsync(
+        if (!replace && await db.Links.AnyAsync(
                 l => l.FromTextId == from.Id && l.ToTextId == to.Id && l.Method == LinkMethod.Aligner,
                 cancellationToken))
         {
-            logger.LogInformation("{From} and {To} are already aligned; nothing to do", fromSlug, toSlug);
+            logger.LogInformation(
+                "{From} and {To} are already aligned; nothing to do. Add --replace to align them again", fromSlug, toSlug);
             return new AlignmentOutcome(fromSlug, toSlug, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
@@ -128,7 +130,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var (drafts, proposed, collapsed, below) = Read(
             alignmentFile, addresses, source, target, minimumConfidence, Selection.BestPerSource, prior);
 
-        await Store(from.Id, to.Id, modelType, prior.Known, drafts, cancellationToken);
+        await Store(from.Id, to.Id, modelType, prior.Known, drafts, replace, cancellationToken);
 
         var outcome = new AlignmentOutcome(
             fromSlug, toSlug, addresses.Count, proposed, collapsed, below, drafts.Count, started.Elapsed);
@@ -159,6 +161,15 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// Trains the model and runs it, unless the workspace already holds the answer. Training the
     /// twenty-three thousand verse pairs takes minutes, and the threshold is a question about how to
     /// read the output rather than how to produce it, so a measurement sweep reuses one run.
+    ///
+    /// <para>
+    /// An answer is reused only for the verses it was made from. The output says nothing about which
+    /// verse a line is, so it is read against the verses the corpus shares now, line by line; one
+    /// made while a text lacked the Psalms put each verse's pairs on the verse 2,461 lines earlier
+    /// from Psalm 1:1 to the end, and left the last 2,461 with none. So the inputs are written out
+    /// again and compared with the ones the answer was trained on, and anything that differs trains
+    /// afresh.
+    /// </para>
     /// </summary>
     private async Task<string> Align(
         string fromSlug,
@@ -178,21 +189,41 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var alignmentFile = Path.Combine(workspace, "alignment", "pharaoh.txt");
         var modelPrefix = Path.Combine(workspace, "model", $"{fromSlug}-{toSlug}");
 
-        if (File.Exists(alignmentFile))
-        {
-            logger.LogInformation("Reusing the alignment already in {Workspace}", workspace);
-            return alignmentFile;
-        }
-
-        Directory.CreateDirectory(workspace);
         var shared = shareAnchorTokens && anchors is not null
             ? SharedAnchorTokens(source, target, anchors)
             : null;
-        Write(sourceFile, addresses, source, shared?.Source);
-        Write(targetFile, addresses, target, shared?.Target);
+        var inputs = new List<(string Path, string[] Lines)>
+        {
+            (sourceFile, Lines(addresses, source, shared?.Source)),
+            (targetFile, Lines(addresses, target, shared?.Target)),
+        };
         if (anchors is not null)
         {
-            WriteAnchors(anchorFile, addresses, anchors);
+            inputs.Add((anchorFile, AnchorLines(addresses, anchors)));
+        }
+
+        if (File.Exists(alignmentFile))
+        {
+            if (Unchanged(inputs))
+            {
+                logger.LogInformation("Reusing the alignment already in {Workspace}", workspace);
+                return alignmentFile;
+            }
+
+            logger.LogWarning(
+                "The alignment in {Workspace} was made from other verses than {From} and {To} share now; training again",
+                workspace, fromSlug, toSlug);
+            Directory.Delete(Path.GetDirectoryName(alignmentFile)!, recursive: true);
+            if (Directory.Exists(Path.GetDirectoryName(modelPrefix)))
+            {
+                Directory.Delete(Path.GetDirectoryName(modelPrefix)!, recursive: true);
+            }
+        }
+
+        Directory.CreateDirectory(workspace);
+        foreach (var (path, lines) in inputs)
+        {
+            File.WriteAllLines(path, lines);
         }
         Directory.CreateDirectory(Path.GetDirectoryName(alignmentFile)!);
         Directory.CreateDirectory(Path.GetDirectoryName(modelPrefix)!);
@@ -590,7 +621,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         {
             if (line >= addresses.Count)
             {
-                yield break;
+                throw Misaligned(path, addresses.Count);
             }
 
             var address = addresses[line++];
@@ -614,7 +645,16 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
             yield return (sourceWords, targetWords, pairs);
         }
+
+        if (line != addresses.Count)
+        {
+            throw Misaligned(path, addresses.Count);
+        }
     }
+
+    private static InvalidOperationException Misaligned(string path, int verses) =>
+        new($"{path} does not hold one line for each of the {verses} verses the two texts share, so its lines " +
+            "cannot be matched to verses and nothing was written from it. Delete its workspace and run again.");
 
     /// <summary>
     /// What the model proposed for one pair of texts, with the syntax of the target read over it,
@@ -859,6 +899,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         string modelType,
         bool syntax,
         List<AlignedDraft> drafts,
+        bool replace,
         CancellationToken cancellationToken)
     {
         if (drafts.Count == 0)
@@ -868,6 +909,19 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        // The earlier run's links go in the same transaction the new ones arrive in, so the pair is
+        // never read with neither or with both. Their words and claims go with them.
+        if (replace)
+        {
+            await using var delete = new NpgsqlCommand(
+                "DELETE FROM link WHERE from_text_id = @from AND to_text_id = @to AND method = 'aligner'",
+                connection);
+            delete.Parameters.AddWithValue("from", fromTextId);
+            delete.Parameters.AddWithValue("to", toTextId);
+            delete.CommandTimeout = 600;
+            await delete.ExecuteNonQueryAsync(cancellationToken);
+        }
 
         var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
         var renders = EnumSpelling.Of(LinkRelation.Renders);
@@ -978,28 +1032,35 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// That is checked here rather than trusted: a shifted alignment is wrong in a way that looks
     /// exactly like a right one.
     /// </summary>
-    private static void Write(
-        string path,
+    private static string[] Lines(
         List<(int, int, int)> addresses,
         Dictionary<(int, int, int), List<Word>> words,
         IReadOnlyDictionary<((int Book, int Chapter, int Verse) Address, int Position), string>? shared = null)
     {
-        var lines = new List<string>(addresses.Count);
+        var lines = new string[addresses.Count];
 
-        foreach (var address in addresses)
+        for (var i = 0; i < addresses.Count; i++)
         {
+            var address = addresses[i];
             var verse = words[address];
             var (book, chapter, number) = address;
-            lines.Add(AlignmentTokens.Line(
+            lines[i] = AlignmentTokens.Line(
                 verse.Select((word, position) => shared is not null
                     && shared.TryGetValue((address, position), out var token)
                         ? token
                         : word.Text),
-                $"{book} {chapter}:{number}"));
+                $"{book} {chapter}:{number}");
         }
 
-        File.WriteAllLines(path, lines);
+        return lines;
     }
+
+    /// <summary>
+    /// Whether every input file in a workspace holds exactly the lines it would be written with now,
+    /// which is the only thing that says the answer beside them is about these verses.
+    /// </summary>
+    internal static bool Unchanged(IEnumerable<(string Path, string[] Lines)> inputs) =>
+        inputs.All(input => File.Exists(input.Path) && File.ReadLines(input.Path).SequenceEqual(input.Lines));
 
     /// <summary>
     /// Gives both ends of a known correspondence the target's Strong number as a temporary shared
@@ -1039,15 +1100,14 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         return new SharedTokens(left, right);
     }
 
-    private static void WriteAnchors(
-        string path,
+    private static string[] AnchorLines(
         List<(int Book, int Chapter, int Verse)> addresses,
         IReadOnlyDictionary<(int Book, int Chapter, int Verse), List<(int Source, int Target)>> anchors) =>
-        File.WriteAllLines(
-            path,
-            addresses.Select(address => anchors.TryGetValue(address, out var pairs)
+        [
+            .. addresses.Select(address => anchors.TryGetValue(address, out var pairs)
                 ? string.Join(' ', pairs.Select(pair => $"{pair.Source}-{pair.Target}"))
-                : string.Empty));
+                : string.Empty),
+        ];
 
     private async Task<Database.Entities.Text> Text(string slug, CancellationToken cancellationToken) =>
         await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken)
