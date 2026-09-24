@@ -28,6 +28,18 @@ internal enum EvidentiaAttachment
 
     /// <summary><em>him</em> of <em>struck him</em> or <em>to him</em>, a suffix of the verb or of the preposition.</summary>
     ObjectPronoun,
+
+    /// <summary><em>to</em> of <em>to separate</em>, which Hebrew writes as ל before the infinitive.</summary>
+    Infinitive,
+
+    /// <summary>
+    /// <em>was</em> of <em>there was light</em> or <em>was good</em>, a form of <em>be</em> that is no
+    /// other verb's auxiliary.
+    /// </summary>
+    Copula,
+
+    /// <summary><em>there</em> of <em>there was</em>, which says nothing of its own.</summary>
+    Expletive,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -54,6 +66,12 @@ internal enum EvidentiaAttachmentPlacement
     /// verb, when its suffix names it.
     /// </summary>
     AgreeingRendering,
+
+    /// <summary>On the preposition written directly before an infinitive, or on the infinitive where there is none.</summary>
+    Infinitive,
+
+    /// <summary>On the original's own verb <em>be</em>, written directly beside the rendering of the word it links.</summary>
+    BeBeside,
 }
 
 /// <summary>
@@ -140,6 +158,24 @@ internal static class EvidentiaAttachedWords
 
     /// <summary>How far from the verb an original writes a subject pronoun of its own: <em>וְהוּא יִמְשָׁל</em>.</summary>
     private const int SubjectPronounReach = 3;
+
+    private const string To = "to";
+
+    private const string Be = "be";
+
+    private const string There = "there";
+
+    /// <summary>The verb <em>be</em> of each original: היה, εἰμί and γίνομαι.</summary>
+    private static readonly HashSet<string> BeVerbs = new(StringComparer.Ordinal) { "H1961", "G1510", "G1096" };
+
+    /// <summary>The relations by which a form of <em>be</em> is the tense of another verb rather than a verb of its own.</summary>
+    private static readonly HashSet<string> AuxiliaryRelations = new(StringComparer.Ordinal) { "aux", "aux:pass" };
+
+    private const string ExpletiveRelation = "expl";
+
+    private const string SubjectRelation = "nsubj";
+
+    private const string CopulaRelation = "cop";
 
     public static IReadOnlyList<EvidentiaProposal> Resolve(
         IReadOnlyList<EvidentiaAnalysis> source,
@@ -263,6 +299,9 @@ internal static class EvidentiaAttachedWords
                 EvidentiaAttachment.Article or EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition =>
                     EvidentiaAttachmentPlacement.OwnKindBefore,
                 EvidentiaAttachment.SubjectPronoun => EvidentiaAttachmentPlacement.AgreeingRendering,
+                EvidentiaAttachment.Infinitive => EvidentiaAttachmentPlacement.Infinitive,
+                EvidentiaAttachment.Copula => EvidentiaAttachmentPlacement.BeBeside,
+                EvidentiaAttachment.Expletive => EvidentiaAttachmentPlacement.Rendering,
                 _ => EvidentiaAttachmentPlacement.None,
             }
             : !witnessLanguage.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
@@ -274,6 +313,9 @@ internal static class EvidentiaAttachedWords
                 EvidentiaAttachment.Genitive => EvidentiaAttachmentPlacement.Dependent,
                 EvidentiaAttachment.SubjectPronoun or EvidentiaAttachment.PossessivePronoun or EvidentiaAttachment.ObjectPronoun =>
                     EvidentiaAttachmentPlacement.AgreeingRendering,
+                EvidentiaAttachment.Infinitive => EvidentiaAttachmentPlacement.Infinitive,
+                EvidentiaAttachment.Copula => EvidentiaAttachmentPlacement.BeBeside,
+                EvidentiaAttachment.Expletive => EvidentiaAttachmentPlacement.Rendering,
                 _ => EvidentiaAttachmentPlacement.None,
             };
 
@@ -298,6 +340,23 @@ internal static class EvidentiaAttachedWords
         if (partOfSpeech == "adp" && word.Token.Surface.Equals(Of, StringComparison.OrdinalIgnoreCase))
         {
             return Found(EvidentiaAttachment.Genitive, Forward(words, index, "noun", "propn", "adj", "num", "pron"));
+        }
+
+        if (partOfSpeech == "part" && word.Token.Surface.Equals(To, StringComparison.OrdinalIgnoreCase))
+        {
+            return Found(EvidentiaAttachment.Infinitive, Forward(words, index, "verb"));
+        }
+
+        if (partOfSpeech == "pron" && word.Token.Relation == ExpletiveRelation
+            && word.Token.Surface.Equals(There, StringComparison.OrdinalIgnoreCase))
+        {
+            return Found(EvidentiaAttachment.Expletive, Syntactic(words, word.Token.SyntacticHead));
+        }
+
+        if (partOfSpeech is "aux" or "verb" && word.Lemma == Be && word.Token.Relation is { } relation
+            && !AuxiliaryRelations.Contains(relation))
+        {
+            return Found(EvidentiaAttachment.Copula, CopulaAnchor(words, word));
         }
 
         if (partOfSpeech == "adp" && !UnplacedPrepositions.Contains(word.Token.Surface))
@@ -392,9 +451,75 @@ internal static class EvidentiaAttachedWords
             EvidentiaAttachmentPlacement.AgreeingRendering => afterVerb
                 ? PrepositionAfter(word, rendering, verse, taken)
                 : Agreeing(attachment, word, rendering, verse),
+            EvidentiaAttachmentPlacement.Infinitive => Infinitive(rendering, verse, taken),
+            EvidentiaAttachmentPlacement.BeBeside => BeBeside(rendering, verse, taken),
             _ => null,
         };
     }
+
+    /// <summary>
+    /// The word a form of <em>be</em> links, whose rendering its verb stands beside: the subject of
+    /// <em>there was light</em>, which the parse makes the verb's own, and the predicate of <em>it was
+    /// good</em>, which the parse makes the verb's head.
+    /// </summary>
+    private static EvidentiaAnalysis? CopulaAnchor(IReadOnlyList<EvidentiaAnalysis> words, EvidentiaAnalysis be)
+    {
+        var dependents = words.Where(other => other.Token.SyntacticHead == be.Token.Id).ToList();
+        if (dependents.Any(other => other.Token.Relation == ExpletiveRelation))
+        {
+            var subjects = dependents.Where(other => other.Token.Relation == SubjectRelation).ToList();
+            return subjects.Count == 1 ? subjects[0] : null;
+        }
+
+        return be.Token.Relation == CopulaRelation ? Syntactic(words, be.Token.SyntacticHead) : null;
+    }
+
+    private static EvidentiaAnalysis? Syntactic(IReadOnlyList<EvidentiaAnalysis> words, long? id) =>
+        id is { } head ? words.FirstOrDefault(other => other.Token.Id == head) : null;
+
+    /// <summary>
+    /// The original's own <em>be</em>, free, written directly before or after the rendering: וַיְהִי עֶרֶב.
+    /// Further away it is as often another clause's verb.
+    /// </summary>
+    private static EvidentiaAnalysis? BeBeside(
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        var at = IndexOf(verse, rendering);
+        var beside = new[] { at - 1, at + 1 }
+            .Where(index => at >= 0 && index >= 0 && index < verse.Count)
+            .Select(index => verse[index])
+            .Where(word => word.Token.StrongNumber is { } strong && BeVerbs.Contains(strong) && !taken.Contains(word.Token.Id))
+            .ToList();
+        return beside.Count == 1 ? beside[0] : null;
+    }
+
+    /// <summary>
+    /// Where <em>to</em> goes once its verb is placed on an infinitive: on the ל written before it, or on
+    /// the infinitive itself where the original writes none, as Greek never does. A verb rendered by any
+    /// other form leaves it unplaced, since <em>to</em> is then often a ἵνα the parse does not see.
+    /// </summary>
+    private static EvidentiaAnalysis? Infinitive(
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        if (!IsInfinitive(rendering))
+        {
+            return null;
+        }
+
+        var at = IndexOf(verse, rendering);
+        return at > 0 && Class(verse[at - 1]) == "adp" && !taken.Contains(verse[at - 1].Token.Id)
+            && verse[at - 1].Token.StrongNumber != ObjectMarker
+            ? verse[at - 1]
+            : rendering;
+    }
+
+    private static bool IsInfinitive(EvidentiaAnalysis word) =>
+        EvidentiaPersonAgreement.IsInfinitive(word)
+        || string.Equals(Feature(word, "mood"), "infinitive", StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Where <em>of</em> goes once the noun before it and the noun after it are placed: on the governed

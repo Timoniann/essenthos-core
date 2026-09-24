@@ -248,6 +248,47 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
+    public void ToGoesOnTheLamedBeforeAnInfinitiveAndNowhereWhenItsVerbIsNotOne()
+    {
+        var to = English(1, Genesis122, 1, "to", "PART");
+        var separate = English(2, Genesis122, 2, "separate", "VERB");
+        var to2 = English(3, Genesis122, 3, "to", "PART");
+        var eat = English(4, Genesis122, 4, "eat", "VERB");
+        var lamed = Hebrew(11, Genesis122, 1, "לְ", "H9005", "prep");
+        var divide = Hebrew(12, Genesis122, 2, "הַבְדִּיל", "H914", "verb", ("tense", "infc"));
+        var eats = Hebrew(13, Genesis122, 3, "תֹאכַל", "H398", "verb", ("tense", "impf"));
+
+        Attach([to, separate, to2, eat], [lamed, divide, eats], (separate, divide), (eat, eats)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void ThereWasGoesOnTheVerbBeWrittenBesideItsSubjectAndAndFollowsIt()
+    {
+        var and = English(1, Genesis122, 1, "and", "CCONJ");
+        var there = English(2, Genesis122, 2, "there", "PRON") with { SyntacticHead = 3, Relation = "expl" };
+        var was = English(3, Genesis122, 3, "was", "VERB") with { Lemma = "be", Relation = "root" };
+        var evening = English(4, Genesis122, 4, "evening", "NOUN") with { SyntacticHead = 3, Relation = "nsubj" };
+        var vav = Hebrew(11, Genesis122, 1, "וַ", "H9000", "conj");
+        var be = Hebrew(12, Genesis122, 2, "יְהִי", "H1961", "verb");
+        var dusk = Hebrew(13, Genesis122, 3, "עֶרֶב", "H6153", "subs");
+
+        Attach([and, there, was, evening], [vav, be, dusk], (evening, dusk))
+            .Should().BeEquivalentTo([(3L, 12L), (2L, 12L), (1L, 11L)]);
+    }
+
+    [Fact]
+    public void ACopulaIsNotPlacedWhereTheOriginalWritesNoBeBesideThePredicate()
+    {
+        var was = English(1, Genesis122, 1, "was", "AUX") with { Lemma = "be", SyntacticHead = 2, Relation = "cop" };
+        var good = English(2, Genesis122, 2, "good", "ADJ");
+        var be = Hebrew(11, Genesis122, 1, "הָיָה", "H1961", "verb");
+        var said = Hebrew(12, Genesis122, 2, "אָמַר", "H559", "verb");
+        var fine = Hebrew(13, Genesis122, 3, "טוֹב", "H2896", "adjv");
+
+        Attach([was, good], [be, said, fine], (good, fine)).Should().BeEmpty();
+    }
+
+    [Fact]
     public void AnArticleAndAPossessiveShareTheSafeTierOfTheirNounAndAConjunctionDoesNot()
     {
         var and = English(1, Genesis122, 1, "and", "CCONJ");
