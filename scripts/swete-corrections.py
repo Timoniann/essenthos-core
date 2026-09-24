@@ -28,7 +28,8 @@ The second is a list to check against the page, not a list of corrections: where
 both witnesses read, the same comparison run the other way — Swete reading a word both lack — finds
 between a third and a half as many, and genuine readings run both ways, so something like one such
 gap in three is what Vaticanus prints rather than what the transcription lost. That holds even where
-Brenton reads the verse exactly as Swete apart from the one word. Only the page tells them apart.
+Brenton reads the verse exactly as Swete apart from the one word. Only the page tells them apart,
+and scripts/swete-scans.py reads it.
 
 A worktree has no corpus of its own: --resources points at the main checkout's.
 """
@@ -371,35 +372,37 @@ def entry(book, chapter, verse, tokens, at, token, printed, kind):
     }
 
 
-def measure(books, runs, witnesses, corrections, excluded, gaps_path):
-    """How many verses stand short of GLAUx by two words or more, before and after, and why."""
+def short_verses(books, runs, witnesses, corrections):
+    """
+    Every verse of Swete two words or more short of GLAUx at the same address once the corrections
+    are made: its words as they then stand, the deficit, the gaps Brenton and GLAUx both fill (the
+    position in those words each is missing before, and the missing words' folded keys), and why it
+    is short.
+    """
     fixed = collections.defaultdict(dict)
     for c in corrections:
         fixed[(c['book'], c['chapter'], c['verse'])][c['digitised']] = c['printed']
 
-    short_before = short_after = comparable = 0
-    reasons = collections.Counter()
-    candidates = []
     for book in books:
         g, b = witnesses[book]
         for ref, tokens in runs[book]:
             _, chapter, verse = ref.split('.')
             if (chapter, verse) not in g:
                 continue
-            comparable += 1
+            record = {'book': book, 'chapter': chapter, 'verse': verse, 'ref': ref, 'gaps': {}}
             words = [t for t in tokens if fold(t)]
             if len(g[(chapter, verse)]) - len(words) < 2:
+                yield dict(record, reason=None)
                 continue
-            short_before += 1
             text = ' '.join(tokens)
             for digitised, printed in fixed.get((book, chapter, verse), {}).items():
                 text = text.replace(digitised, printed, 1)
             now = [t for t in text.split(' ') if fold(t)]
             deficit = len(g[(chapter, verse)]) - len(now)
+            record.update(words=now, deficit=deficit, short=True)
             if deficit < 2:
-                reasons['whole after the corrections'] += 1
+                yield dict(record, reason='whole after the corrections')
                 continue
-            short_after += 1
             swete = [key(bare(t)) for t in now]
             gk = [key(w) for w in g[(chapter, verse)]]
             bk = [key(bare(w)) for w in b.get((chapter, verse), [])]
@@ -408,18 +411,37 @@ def measure(books, runs, witnesses, corrections, excluded, gaps_path):
             agreed = {at: w for at, w in g_inserts.items() if b_inserts.get(at) == w}
             missing = sum(len(w) for w in agreed.values())
             if (chapter, verse) not in b:
-                reasons['Brenton does not print the verse (Psalms of Solomon, a division of its own)'] += 1
+                reason = 'Brenton does not print the verse (Psalms of Solomon, a division of its own)'
             elif missing >= deficit:
-                reasons['both witnesses read the missing words: a loss or a reading of Vaticanus, only the page can tell'] += 1
+                reason = 'both witnesses read the missing words: a loss or a reading of Vaticanus, only the page can tell'
             elif missing > 0:
-                reasons['partly words both witnesses read, partly words only GLAUx reads or a different division'] += 1
+                reason = 'partly words both witnesses read, partly words only GLAUx reads or a different division'
             elif len(swete) >= len(bk) - 1:
-                reasons['Brenton is as long as Swete: GLAUx reads a fuller text or divides the verse otherwise'] += 1
+                reason = 'Brenton is as long as Swete: GLAUx reads a fuller text or divides the verse otherwise'
             else:
-                reasons['the witnesses disagree with each other where Swete is short'] += 1
-            if agreed:
-                for at, w in sorted(agreed.items()):
-                    candidates.append(f"{book}\t{chapter}:{verse}\t{deficit}\t{' '.join(now[max(0, at - 3):at])} [{' '.join(w)}] {' '.join(now[at:at + 3])}")
+                reason = 'the witnesses disagree with each other where Swete is short'
+            record['gaps'] = agreed
+            yield dict(record, reason=reason)
+
+
+def measure(books, runs, witnesses, corrections, excluded, gaps_path):
+    """How many verses stand short of GLAUx by two words or more, before and after, and why."""
+    short_before = short_after = comparable = 0
+    reasons = collections.Counter()
+    candidates = []
+    for record in short_verses(books, runs, witnesses, corrections):
+        comparable += 1
+        if record['reason'] is None:
+            continue
+        short_before += 1
+        reasons[record['reason']] += 1
+        if record['reason'] == 'whole after the corrections':
+            continue
+        short_after += 1
+        now = record['words']
+        for at, w in sorted(record['gaps'].items()):
+            candidates.append(f"{record['book']}\t{record['chapter']}:{record['verse']}\t{record['deficit']}\t"
+                              f"{' '.join(now[max(0, at - 3):at])} [{' '.join(w)}] {' '.join(now[at:at + 3])}")
 
     print(f'\nVerses of Swete two words or more short of GLAUx at the same address, of {comparable} both hold:')
     print(f'  before {short_before}, after {short_after}')

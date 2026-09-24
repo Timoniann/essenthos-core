@@ -173,7 +173,7 @@ public sealed class SweteRestorationLoadTests : IDisposable
         }
 
         var row = await _db.Texts.AsNoTracking().SingleAsync(t => t.Id == text.Id);
-        row.RightsNote.Should().Be($"CC BY-SA 4.0. {SweteRestorations.Note} {SweteCorrections.Note}");
+        row.RightsNote.Should().Be($"CC BY-SA 4.0. {SweteRestorations.Note} {SweteCorrections.Note} {SwetePage.Note}");
         var restored = await _db.Words.AsNoTracking().SingleAsync(w => w.TextId == text.Id && w.Surface == "πεντήκοντα"
                                                                        && w.Verse!.ChapterNumber == 9);
         restored.NormalisedText.Should().Be("πεντηκοντα", "a word written here is searchable at once");
@@ -231,15 +231,15 @@ public sealed class SweteRestorationLoadTests : IDisposable
     public async Task ACorrectedLetterKeepsItsRow()
     {
         var text = Loaded(_digitised);
-        var numeral = _db.WordAt(text, 9, 1, 1);
-        numeral.Surface.Should().Be("IXκαὶ");
+        var numeral = _db.WordAt(text, 32, 1, 1);
+        numeral.Surface.Should().Be("XXXIIεἰς");
 
         await _loader.Load(TestResources.SweteFolder);
 
         var corrected = await _db.Words.AsNoTracking().SingleAsync(w => w.Id == numeral.Id);
-        corrected.Surface.Should().Be("καὶ");
+        corrected.Surface.Should().Be("εἰς");
         corrected.Position.Should().Be(1);
-        corrected.NormalisedText.Should().Be("και");
+        corrected.NormalisedText.Should().Be("εισ");
     }
 
     private Link Link(Text from, Text to, LinkRelation relation, Word fromWord, Word? toWord)
@@ -268,7 +268,7 @@ public sealed class SweteRestorationLoadTests : IDisposable
 public class SweteCorrectionTests(Swete swete) : IClassFixture<Swete>
 {
     [Theory]
-    [InlineData(1, 9, 1, "καὶ")]
+    [InlineData(1, 9, 1, "Καὶ")]
     [InlineData(19, 1, 1, "ΜΑΚΑΡΙΟΣ")]
     [InlineData(20, 3, 22, "ἔσται")]
     public void TheVerseOpensWithItsWordAndNotItsNumber(int book, int chapter, int verse, string first)
@@ -305,7 +305,7 @@ public class SweteCorrectionTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void NoCorrectionIsMadeInAVerseRestoredByHand()
     {
-        var byHand = SweteRestorations.All.Except(SweteCorrections.All)
+        var byHand = SweteRestorations.All.Except(SweteCorrections.All).Except(SwetePage.All)
             .Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).ToHashSet();
 
         SweteCorrections.All.Should().NotContain(c => byHand.Contains(ValueTuple.Create(c.Book, c.Chapter, c.Verse, c.Label)));
@@ -314,6 +314,48 @@ public class SweteCorrectionTests(Swete swete) : IClassFixture<Swete>
     private IReadOnlyList<string> Words(int book, int chapter, int verse, string label) =>
         [.. swete.Book(book).Chapters.Single(c => c.Number == chapter).Verses
             .Single(v => v.Number == verse && v.Label == label).Words.Select(w => w.Surface)];
+}
+
+/// <summary>
+/// The words read back off the printed page: what the page prints where the transcription has none,
+/// and nothing where the page prints the verse as the transcription does.
+/// </summary>
+public class SwetePageTests(Swete swete) : IClassFixture<Swete>
+{
+    private const int Genesis = 1;
+
+    [Theory]
+    [InlineData(12, 9, "καὶ ἀπῆρεν Ἀβρὰμ καὶ πορευθεὶς ἐστρατοπέδευσεν ἐν τῇ ἐρήμῳ.")]
+    [InlineData(13, 4, "εἰς τὸν τόπον τοῦ θυσιαστηρίου οὗ")]
+    [InlineData(25, 33, "καὶ εἶπεν αὐτῷ Ἰακώβ Ὄμοσόν μοι σήμερον.")]
+    public void TheVerseReadsAsThePagePrintsIt(int chapter, int verse, string printed) =>
+        Swete.Text(swete.Verse(Genesis, chapter, verse)).Should().Contain(printed);
+
+    /// <summary>
+    /// At 26:1 the page prints ἐγενήθη where Brenton and GLAUx read ἐγένετο: what goes back is the
+    /// page's word, not the witnesses'.
+    /// </summary>
+    [Fact]
+    public void ThePagesWordGoesInWhereItIsNotTheWitnesses() =>
+        Swete.Text(swete.Verse(Genesis, 26, 1)).Should().Contain("ὃς ἐγενήθη ἐν τῷ χρόνῳ");
+
+    /// <summary>
+    /// At 29:25 Brenton and GLAUx read ἐδούλευσα παρὰ σοί, and the page prints ἐδούλευσα σοί as the
+    /// transcription does: a reading of the manuscript, left as it is.
+    /// </summary>
+    [Fact]
+    public void AVerseThePagePrintsAsTheTranscriptionDoesIsLeft() =>
+        Swete.Text(swete.Verse(Genesis, 29, 25)).Should().Contain("ἐδούλευσα σοί;");
+
+    [Fact]
+    public void EveryRestorationAddsWordsAndCitesItsPage()
+    {
+        SwetePage.All.Should().NotBeEmpty();
+        SwetePage.All.Where(r => Words(r.Printed) <= Words(r.Digitised) || !r.Why.Contains("vol.", StringComparison.Ordinal))
+            .Should().BeEmpty();
+    }
+
+    private static int Words(string tokens) => tokens.Split(' ').Length;
 }
 
 /// <summary>
@@ -351,7 +393,9 @@ public sealed class SweteCorrectionLoadTests : IDisposable
 
         var verses = SweteRestorations.All.Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).Distinct().ToList();
         outcome.Verses.Should().Be(verses.Count);
-        outcome.Words.Should().Be(17 + SweteCorrections.All.Count(c => c.Why.StartsWith("Two words", StringComparison.Ordinal)));
+        outcome.Words.Should().Be(17
+                                  + SweteCorrections.All.Count(c => c.Why.StartsWith("Two words", StringComparison.Ordinal))
+                                  + SwetePage.All.Sum(r => r.Printed.Split(' ').Length - r.Digitised.Split(' ').Length));
 
         var cold = SweteTextSource.Read(TestResources.SweteFolder);
         var text = await _db.Texts.SingleAsync(t => t.Slug == SweteTextSource.Slug);

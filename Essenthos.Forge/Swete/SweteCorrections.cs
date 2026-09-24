@@ -23,7 +23,7 @@ namespace Essenthos.Core.Swete;
 /// <para>
 /// Nothing is restored that the transcription does not hold: a word both witnesses read and Swete
 /// lacks is as often a reading of Vaticanus as a word the transcription lost, and only the page tells
-/// them apart. Misread letters stay as they are, for the reason <see cref="SweteRestorations"/> gives.
+/// them apart — which <see cref="SwetePage"/> reads. Misread letters stay as they are, for the reason <see cref="SweteRestorations"/> gives.
 /// </para>
 /// </summary>
 internal static class SweteCorrections
