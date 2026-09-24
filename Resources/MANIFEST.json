@@ -1,4 +1,9 @@
 {
+  "Almeida1911": {
+    "bytes": 5188215,
+    "files": 3,
+    "sha256": "d3f73402053231c3411cad0cc5cf4337fb18a59e83688705b33a0a1231d0b1cd"
+  },
   "AmericanStandard1901": {
     "bytes": 19357510,
     "files": 67,
@@ -24,6 +29,11 @@
     "files": 19,
     "sha256": "7e6aaa7e7f7aac37733bb117df2ec09dfc5a8e90086d0186bfafdb27c6d08768"
   },
+  "BiblicaUkrainian2022": {
+    "bytes": 2134658,
+    "files": 30,
+    "sha256": "c4f75235471b502fc34eb61c942defa524aed3df0625c1adae0e0adf9f023391"
+  },
   "Byzantine": {
     "bytes": 6173042,
     "files": 56,
@@ -35,14 +45,14 @@
     "sha256": "53219a167c7e9aea4cebe3218c5ee1a6794795434def0e22f753f5c172324c8d"
   },
   "ClearBible": {
-    "bytes": 1326683562,
-    "files": 102,
-    "sha256": "6276b639803981e002b249c941943045061edf15a6b1e721a612a5bf161120a6"
+    "bytes": 1326694987,
+    "files": 103,
+    "sha256": "1fc235c38d7d66d11c0350b00df46dd9bafc7430d0892969e5d0e4d5d8f90fff"
   },
   "Door43": {
-    "bytes": 3717627,
-    "files": 21,
-    "sha256": "6bc7a1c8b157263c925362117b29a600e75aa9034bd9f68b87883b3b7a59b23e"
+    "bytes": 81489931,
+    "files": 80,
+    "sha256": "996b4316ef0a9e718767c8adca7ab1ec1822a8fa851c8e1193b59df05c466fe1"
   },
   "Elberfelder1905": {
     "bytes": 4596093,

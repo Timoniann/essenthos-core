@@ -1,8 +1,8 @@
 # Door43 — unfoldingWord USFM 3.0 word alignment
 
-Two sources live here, both translations with each of their words tied by hand to the original
-word it renders, both fetched from `git.door43.org`. They arrive in the same format and are read
-by the same reader, and their terms are **not** the same. Read both sections.
+Three sources live here, all translations with each of their words tied by hand to the original
+word it renders, all fetched from `git.door43.org`. They arrive in the same format and are read
+by the same reader, and their terms are **not** the same. Read every section.
 
 Everything quoted below was read from the files themselves, on 2026-09-04 for `ru_rsb` and on
 2026-09-02 for `uk_ubio` (DOC-0003).
@@ -97,3 +97,38 @@ Everything quoted below was read from the files themselves, on 2026-09-04 for `r
 - **Attribution**, which CC0 does not require and RUL-0181 does: the Russian Synodal alignment of
   Titus, Philemon and 2 John was made in translationCore by contributors to the Door43 World
   Missions Community and published at `git.door43.org` under CC0 1.0.
+
+---
+
+## `en_ult` — unfoldingWord® Literal Text, release 90
+
+- **Where** <https://git.door43.org/unfoldingWord/en_ult>, tag `v90` (2026-08-17), archive
+  `archive/v90.zip`, SHA-256 `a89587587717d1cb30d1f9d4727a206e2ee5488291a3c2425cc0529ceecad509`,
+  fetched by `scripts/fetch-door43-ult.ps1` on 2026-09-25 with the owner's approval (NOT-0195,
+  DOC-0207 §6 item 9). `LICENSE.md` and `manifest.yaml` of the release are kept beside the books.
+- **What** the English ULT, an open revision of the ASV 1901, in the 56 books unfoldingWord has
+  finished checking (Numbers, 1-2 Chronicles, Ecclesiastes, Isaiah, Jeremiah, Ezekiel, Daniel, Amos
+  and Zechariah are not in the release). Every English word stands in a `\zaln-s` milestone naming
+  the word of unfoldingWord's Hebrew Bible (`hbo/uhb` 2.1.26) or Greek New Testament
+  (`el-x-koine/ugnt` 0.26) it renders: 357,632 milestones. The same files are loaded as the text
+  `ULT` (23,186 verses, 568,381 words) and read for its links.
+- **Licence: CC BY-SA 4.0.** `manifest.yaml` states `rights: CC BY-SA 4.0`; `LICENSE.md` reads:
+
+  > This work is made available under the Creative Commons Attribution-ShareAlike 4.0 International
+  > License. … Under the terms of the CC BY-SA license, you may copy and redistribute this unmodified
+  > work as long as you keep the unfoldingWord® trademark intact. If you modify a copy or translate
+  > this work, thereby creating a derivative work, you must remove the unfoldingWord® trademark. On
+  > the derivative work, you must indicate what changes you have made and attribute the work as
+  > follows: "The original work by unfoldingWord is available from unfoldingword.org/ult". You must
+  > also make your derivative work available under the same license (CC BY-SA).
+
+- **What that obliges.** The text row carries `share-alike` and is served unchanged under
+  unfoldingWord's name. The links are re-serialised from the alignment, the same position as
+  `uk_ubio` above: their published form is CC BY-SA 4.0, credited as the licence asks
+  (`Datasets.cs`, `unfoldingword-ult`).
+- **How it is joined.** unfoldingWord's Hebrew and Greek are not BHSA and Nestle 1904. A span is
+  joined where its original word is spelled, morpheme by morpheme, in the same canonical verse of
+  ours with the occurrence it states; otherwise by its Strong number only where that lemma stands
+  once in the source verse and once in ours, with any prefix spelled by the words before it; anything
+  else is refused. Measured on a scratch copy on 2026-09-25: 331,393 of 338,583 spans joined
+  (97.9%, 808 of them by number), 98.0% of the Old and 98.4% of the New Testament's words linked.
