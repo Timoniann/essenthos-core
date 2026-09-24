@@ -20,12 +20,14 @@ internal readonly record struct ClearBibleRecord(IReadOnlyList<string> Source, I
 /// The source verses a target file says the token renders, first and last, each as the eight digits
 /// <c>BBCCCVVV</c> read as a number; null where the file says nothing, as a source file does not.
 /// </param>
+/// <param name="Part">The part of speech a source edition's row states, or null in a target file.</param>
 internal readonly record struct ClearBibleToken(
     string Id,
     string Text,
     bool Excluded,
     string? Strong,
-    (int First, int Last)? Renders = null);
+    (int First, int Last)? Renders = null,
+    string? Part = null);
 
 /// <summary>
 /// Clear Bible's hand-made alignments, in Scripture Burrito form.
@@ -96,6 +98,7 @@ internal static class ClearBibleAlignment
         var strongs = Array.IndexOf(header, "strongs");
         var renders = Array.IndexOf(header, "source_verse");
         var rendersTo = Array.IndexOf(header, "source_verse_range_end");
+        var parts = Array.IndexOf(header, "pos");
 
         while (reader.ReadLine() is { } line)
         {
@@ -110,7 +113,8 @@ internal static class ClearBibleAlignment
                 cells[2],
                 excludes >= 0 && cells.Length > excludes && cells[excludes].Trim() is "y",
                 strongs >= 0 && cells.Length > strongs ? cells[strongs] : null,
-                Number(cells, renders) is { } first ? (first, Number(cells, rendersTo) ?? first) : null);
+                Number(cells, renders) is { } first ? (first, Number(cells, rendersTo) ?? first) : null,
+                parts >= 0 && cells.Length > parts ? cells[parts] : null);
         }
     }
 
@@ -142,6 +146,23 @@ internal static class ClearBibleAlignment
         }
 
         return digits.Length >= WordIdLength ? digits[..WordIdLength].ToString() : string.Empty;
+    }
+
+    /// <summary>
+    /// What an identifier names, all of it: the word, and in the Westminster morphology the morpheme
+    /// of the word as well. Its twelfth digit tells the ו of <em>וַיֹּאמֶר</em> from the verb, which
+    /// BHSA writes as two words; reduced to the word, a record about the one is a record about the
+    /// other. A target id's part is not kept this way, because the target files do not number it.
+    /// </summary>
+    public static string Unit(string id)
+    {
+        var digits = id.AsSpan();
+        while (digits.Length > 0 && !char.IsAsciiDigit(digits[0]))
+        {
+            digits = digits[1..];
+        }
+
+        return digits.Length >= WordIdLength ? digits.ToString() : string.Empty;
     }
 
     /// <summary>The canonical address in an identifier: book, chapter, verse.</summary>

@@ -49,6 +49,10 @@ internal enum ClearBibleJoin
 /// the licence rather than the path: a reader asking where a claim came from is not asking where
 /// the bytes sit on this machine.
 /// </param>
+/// <param name="Shift">
+/// The translation's word for <em>and</em>, where the set puts source words on it that the word after
+/// it renders; null where it does not. See <see cref="Loading.Links.ClearBibleLinkLoader.Shifted"/>.
+/// </param>
 /// <summary>
 /// One of Clear Bible's alignments, and everything about it that differs from the others.
 ///
@@ -65,7 +69,8 @@ internal sealed record ClearBibleSet(
     string Target,
     string Source,
     ClearBibleJoin Join,
-    string Statement)
+    string Statement,
+    ClearBibleShift? Shift = null)
 {
     private const string Repository = "github.com/Clear-Bible/Alignments";
 
@@ -108,7 +113,8 @@ internal sealed record ClearBibleSet(
         Path.Combine("data", "spa", "targets", "RV09", "ot_RV09.tsv"),
         Path.Combine("data", "sources", "WLCM.tsv"),
         ClearBibleJoin.Letters,
-        $"Clear Bible Alignments WLCM-RV09-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand");
+        $"Clear Bible Alignments WLCM-RV09-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand",
+        new ClearBibleShift(Spanish.And, new HashSet<int> { Hebrew.Also, Hebrew.Even }));
 
     /// <inheritdoc cref="ReinaValeraOldTestament"/>
     public static ClearBibleSet ReinaValeraNewTestament(string spanishSlug, string greekSlug) => new(
@@ -118,5 +124,34 @@ internal sealed record ClearBibleSet(
         Path.Combine("data", "spa", "targets", "RV09", "nt_RV09.tsv"),
         Path.Combine("data", "sources", "SBLGNT.tsv"),
         ClearBibleJoin.Letters,
-        $"Clear Bible Alignments SBLGNT-RV09-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand");
+        $"Clear Bible Alignments SBLGNT-RV09-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand",
+        new ClearBibleShift(Spanish.And, new HashSet<int> { Greek.And }));
+
+    private static class Spanish
+    {
+        public static readonly HashSet<string> And = new(["y", "e"], StringComparer.Ordinal);
+    }
+
+    /// <summary>The Strong numbers of the Hebrew particles a translation can render with <em>and</em>.</summary>
+    private static class Hebrew
+    {
+        /// <summary>גַּם.</summary>
+        public const int Also = 1571;
+
+        /// <summary>אַף.</summary>
+        public const int Even = 637;
+    }
+
+    private static class Greek
+    {
+        /// <summary>καί, which the SBLGNT tags an adverb where it means <em>also</em>.</summary>
+        public const int And = 2532;
+    }
 }
+
+/// <param name="And">The translation's word for <em>and</em>, in lower case.</param>
+/// <param name="Also">
+/// The Strong numbers of the source words that are not tagged conjunctions and can still be rendered
+/// by it, like גַּם and καί where it means <em>also</em>.
+/// </param>
+internal sealed record ClearBibleShift(IReadOnlySet<string> And, IReadOnlySet<int> Also);
