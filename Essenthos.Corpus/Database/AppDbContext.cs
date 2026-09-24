@@ -175,6 +175,14 @@ public class AppDbContext : DbContext
 
     public DbSet<EventDate> EventDates { get; set; } = null!;
 
+    /// <summary>
+    /// The periods of the lands around the Bible as scholars define them, from PeriodO, each under
+    /// the work that defines it.
+    /// </summary>
+    public DbSet<PeriodAuthority> PeriodAuthorities { get; set; } = null!;
+
+    public DbSet<PeriodDefinition> PeriodDefinitions { get; set; } = null!;
+
     /// <summary>The 613 commandments as Maimonides counted them, and the verses each rests on.</summary>
     public DbSet<Commandment> Commandments { get; set; } = null!;
 
@@ -643,6 +651,17 @@ public class AppDbContext : DbContext
 
             entity.Property(r => r.Configuration).HasColumnType("jsonb");
             entity.Property(r => r.Scope).HasColumnType("jsonb");
+        });
+
+        modelBuilder.Entity<PeriodDefinition>(entity =>
+        {
+            entity.Property(p => p.Labels).HasColumnType("jsonb");
+            entity.Property(p => p.Coverage).HasColumnType("jsonb");
+
+            entity.HasOne(p => p.Authority)
+                .WithMany(a => a.Periods)
+                .HasForeignKey(p => p.AuthorityId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<EvidentiaDecision>(entity =>

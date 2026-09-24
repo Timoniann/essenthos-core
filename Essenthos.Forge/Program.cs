@@ -114,6 +114,7 @@ builder.Services.AddScoped<OpenBiblePlaceLoader>();
 builder.Services.AddScoped<OpenBibleLocationLoader>();
 builder.Services.AddScoped<EntityImageLoader>();
 builder.Services.AddScoped<WorldHistoryLoader>();
+builder.Services.AddScoped<PeriodOLoader>();
 builder.Services.AddScoped<SeptuagintReckoningLoader>();
 builder.Services.AddScoped<PeopleLoader>();
 builder.Services.AddScoped<PlaceRegisterLoader>();
@@ -716,6 +717,15 @@ if (args is ["commandments", ..])
     using var commandmentScope = app.Services.CreateScope();
     Console.WriteLine(await commandmentScope.ServiceProvider.GetRequiredService<CommandmentLoader>()
         .Load(Path.Combine([AppContext.BaseDirectory, .. CommandmentLoader.FilePath])));
+    return 0;
+}
+
+// The periods of the lands from PeriodO, for a corpus loaded before they were. The load does this
+// beside the world history; this is that step alone.
+if (args is ["lands", ..])
+{
+    using var landsScope = app.Services.CreateScope();
+    Console.WriteLine(await landsScope.ServiceProvider.GetRequiredService<PeriodOLoader>().Load(resources));
     return 0;
 }
 

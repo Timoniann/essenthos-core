@@ -119,6 +119,7 @@ v1.MapSyntax();
 v1.MapWords();
 v1.MapSearch();
 v1.MapEncyclopedia();
+v1.MapLandPeriods();
 v1.MapContext();
 v1.MapImages(images);
 v1.MapSettings();
