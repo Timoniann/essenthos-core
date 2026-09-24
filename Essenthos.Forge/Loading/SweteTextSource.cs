@@ -103,6 +103,9 @@ internal static class SweteTextSource
 
     public static string FileName(string book) => book + FileExtension;
 
+    /// <summary>The book of the shared canon a file of this edition is read as.</summary>
+    public static int Canonical(string file) => Canon.Single(entry => entry.File == file).Canonical;
+
     /// <summary>
     /// The licence is on the transcription and not on the text, and both statements attached to the
     /// bytes say the same thing. <c>nathans/lxx-swete</c>'s README: <em>"The Greek text and its
@@ -152,7 +155,8 @@ internal static class SweteTextSource
                      + "Smith converted that into the one-token-per-line files loaded here — and both "
                      + "state Creative Commons Attribution-ShareAlike 4.0. So the obligation is on this "
                      + "digitisation of the edition and not on the edition, and it is an obligation to "
-                     + "credit and to share alike anything derived from these files.",
+                     + "credit and to share alike anything derived from these files. "
+                     + SweteRestorations.Note,
         Citation = "Henry Barclay Swete (ed.), The Old Testament in Greek according to the Septuagint, "
                    + "Cambridge University Press, 1887-1894, in the digital edition of Nathan D. Smith "
                    + "(nathans/lxx-swete) derived from the Open Greek and Latin First1KGreek transcription "
@@ -196,7 +200,7 @@ internal static class SweteTextSource
                     + "absent from a witness reads as a book the witness does not contain.");
             }
 
-            var read = SweteReader.Read(File.ReadLines(path));
+            var read = SweteReader.Read(SweteRestorations.Apply(file, File.ReadLines(path)));
             var chapters = read.Chapters.Select(Chapter).ToList();
 
             if (file == SecondEsdras.File)

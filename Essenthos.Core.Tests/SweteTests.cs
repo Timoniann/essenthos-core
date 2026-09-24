@@ -160,7 +160,7 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(543397);
+            .Should().Be(543414);
     }
 
     /// <summary>

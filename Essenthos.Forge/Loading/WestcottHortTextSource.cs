@@ -145,7 +145,7 @@ internal static partial class WestcottHortTextSource
                         [.. chapter.OrderBy(v => v.Verse.Number).Select(v => Verse(v.Verse, v.Marks))]))]));
         }
 
-        return new TextSource(Definition, books);
+        return GreekWitnessNumbers.Apply(new TextSource(Definition, books));
     }
 
     /// <summary>
