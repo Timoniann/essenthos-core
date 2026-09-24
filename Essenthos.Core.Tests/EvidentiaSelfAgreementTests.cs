@@ -71,8 +71,18 @@ public class EvidentiaSelfAgreementTests
     [InlineData("honourable", "honorable")]
     [InlineData("four", "four")]
     [InlineData("its", "its")]
+    [InlineData("didn’t", "not")]
+    [InlineData("won't", "not")]
     public void ASpellingTwoEditionsWriteTwoWaysBecomesOne(string surface, string expected) =>
         EnglishSpelling.Common(surface).Should().Be(expected);
+
+    [Theory]
+    [InlineData("‘Behold", "Behold")]
+    [InlineData("“Lord,", "Lord")]
+    [InlineData("them—do", "them")]
+    [InlineData("sixty-six", "sixty-six")]
+    public void AWordIsLookedUpWithoutTheMarksPrintedAgainstIt(string surface, string expected) =>
+        Analysis(English(1, surface, "NOUN")).Token.Surface.Should().Be(expected);
 
     private static EvidentiaAnalysis Analysis(EvidentiaToken token)
     {
