@@ -218,7 +218,8 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
         composeVias,
         Identifier(composeTo),
         composeMinimum,
-        composePrecision));
+        composePrecision,
+        args.Contains("--unmeasured")));
     return 0;
 }
 
