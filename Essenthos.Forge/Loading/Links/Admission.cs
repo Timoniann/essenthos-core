@@ -5,7 +5,11 @@ namespace Essenthos.Core.Loading.Links;
 /// <param name="Confidence">The confidence from which answers found this way are written.</param>
 /// <param name="Scored">The answers on stated words the floor was measured over.</param>
 /// <param name="Precision">How often those at or above the floor named the stated word.</param>
-internal sealed record RouteFloor(double Confidence, int Scored, double Precision)
+/// <param name="Basis">
+/// Where it was measured, when not on the pair being written: the text whose statements it was read
+/// off, or the combinations it was taken from.
+/// </param>
+internal sealed record RouteFloor(double Confidence, int Scored, double Precision, string? Basis = null)
 {
     public bool Refused => Confidence > 1;
 }
@@ -37,6 +41,8 @@ internal sealed record RouteFloor(double Confidence, int Scored, double Precisio
 /// <para>
 /// A combination with too few stated answers to measure keeps the ordinary threshold, as every
 /// composition did before this was measured, and the outcome says which ones were not measured.
+/// A pair with nothing stated at all — most English translations against the originals — borrows
+/// its floors from texts in its language that are stated, composed the same way (<see cref="Borrow"/>).
 /// </para>
 /// </summary>
 internal sealed class Admission
@@ -54,15 +60,20 @@ internal sealed class Admission
 
     private const double Unreachable = 1.01;
 
+    private static readonly double[] Bands = [0.25, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
+
     private readonly IReadOnlyDictionary<Route, RouteFloor> _floors;
     private readonly double _threshold;
     private readonly double _precision;
+    private readonly string? _measuredOn;
 
-    private Admission(IReadOnlyDictionary<Route, RouteFloor> floors, double threshold, double precision)
+    private Admission(
+        IReadOnlyDictionary<Route, RouteFloor> floors, double threshold, double precision, string? measuredOn = null)
     {
         _floors = floors;
         _threshold = threshold;
         _precision = precision;
+        _measuredOn = measuredOn;
     }
 
     /// <summary>Every answer from the ordinary threshold, which is what a measurement starts from.</summary>
@@ -94,6 +105,102 @@ internal sealed class Admission
         }
 
         return new Admission(floors, threshold, precision);
+    }
+
+    /// <summary>
+    /// Floors for a pair nothing states, read off other texts in its language that state the target,
+    /// each composed through this pair's middle texts except itself and measured on its own
+    /// statements as a pair of its own would be.
+    ///
+    /// <para>
+    /// Such a text reads only some of this pair's routes: the Berean composed through the King James
+    /// cannot say what the route through the Berean adds. So an answer's combination is cut down to
+    /// the routes each text read, and the answer is written from the floor that text measured for
+    /// what is left — which is to say, where a composition through that text's middle texts alone
+    /// would have written it, at a precision measured on a text of the same language composed
+    /// exactly that way. Where several would, the lowest floor stands, since any one of them would
+    /// have written the answer. What none of them measured keeps the threshold.
+    /// </para>
+    ///
+    /// <para>
+    /// The cut is what keeps the measure honest. Measured whole on the Berean, the direct model and
+    /// the King James agreeing are right 94% of the time; composed through both middle texts, the
+    /// same agreement splits into the answers the Berean also reached and those it did not, and the
+    /// second are the harder half. A composition through the King James alone writes both halves
+    /// together, and that whole is what the 94% was measured on.
+    /// </para>
+    /// </summary>
+    /// <param name="measured">
+    /// Each text measured, the routes of this pair it read, and its floors keyed by those routes.
+    /// </param>
+    /// <param name="vias">This pair's middle texts, which name the routes and say how many there are.</param>
+    public static Admission Borrow(
+        IReadOnlyList<(string Text, Route Reads, IReadOnlyDictionary<Route, RouteFloor> Floors)> measured,
+        string[] vias,
+        double threshold,
+        double precision = DefaultPrecision)
+    {
+        var floors = new Dictionary<Route, RouteFloor>();
+        foreach (var route in Possible(vias.Length))
+        {
+            var loosest = measured
+                .Select(text => (text.Text, Part: route & text.Reads, text.Floors))
+                .Where(cut => cut.Part != Route.None && cut.Floors.ContainsKey(cut.Part))
+                .Select(cut => (cut.Text, cut.Part, Floor: cut.Floors[cut.Part]))
+                .OrderBy(cut => cut.Floor.Confidence)
+                .ThenBy(cut => cut.Text, StringComparer.Ordinal)
+                .FirstOrDefault();
+            if (loosest.Floor is not null)
+            {
+                floors[route] = loosest.Floor with
+                {
+                    Basis = loosest.Part == route
+                        ? $"on {loosest.Text}"
+                        : $"as {Name(loosest.Part, vias)} on {loosest.Text}",
+                };
+            }
+        }
+
+        var texts = measured.Select(text => text.Text).Distinct().Order(StringComparer.Ordinal).ToList();
+        return new Admission(floors, threshold, precision, texts.Count == 0 ? null : string.Join(" and ", texts));
+    }
+
+    /// <summary>Every combination of readings a pair through this many middle texts can produce.</summary>
+    private static IEnumerable<Route> Possible(int middles)
+    {
+        var flags = new[] { Route.Written, Route.Reduced }.Concat(Routes.Middles.Take(middles)).ToArray();
+        for (var mask = 1; mask < 1 << flags.Length; mask++)
+        {
+            yield return flags.Where((_, i) => (mask & (1 << i)) != 0).Aggregate(Route.None, (all, flag) => all | flag);
+        }
+    }
+
+    /// <summary>
+    /// How often each combination's answers on stated words named the stated word, from each
+    /// confidence up: what a floor is read off, printed so that a bar can be chosen by looking.
+    /// </summary>
+    public static string Curves(
+        IEnumerable<RoutedLink> every,
+        IReadOnlyDictionary<long, HashSet<long>> statements,
+        params string[] vias)
+    {
+        var lines = new List<string>();
+        foreach (var route in every.Where(link => statements.ContainsKey(link.From)).GroupBy(link => link.Route)
+                     .Where(route => route.Count() >= FewestToMeasure)
+                     .OrderByDescending(route => route.Count()))
+        {
+            var bands = Bands.Select(band =>
+            {
+                var above = route.Where(link => link.Confidence >= band).ToList();
+                var right = above.Count(link => statements[link.From].Contains(link.To));
+                return above.Count == 0
+                    ? $"{Number(band)} –"
+                    : $"{Number(band)} {(double)right / above.Count:P1} of {above.Count}";
+            });
+            lines.Add($"    {Name(route.Key, vias)}: {string.Join("; ", bands)}");
+        }
+
+        return string.Join(Environment.NewLine, lines);
     }
 
     /// <summary>
@@ -132,12 +239,15 @@ internal sealed class Admission
         var written = _floors.Where(entry => !entry.Value.Refused)
             .OrderByDescending(entry => entry.Value.Scored)
             .Select(entry => $"{Name(entry.Key, vias)} from {Number(entry.Value.Confidence)} " +
-                             $"({entry.Value.Precision:P0} of {entry.Value.Scored})");
+                             $"({entry.Value.Precision:P0} of {entry.Value.Scored}{Basis(entry.Value)})");
         var refused = _floors.Where(entry => entry.Value.Refused)
             .OrderByDescending(entry => entry.Value.Scored)
-            .Select(entry => $"{Name(entry.Key, vias)} ({entry.Value.Precision:P0} of {entry.Value.Scored})");
+            .Select(entry => $"{Name(entry.Key, vias)} ({entry.Value.Precision:P0} of {entry.Value.Scored}{Basis(entry.Value)})");
 
-        return $"each combination of readings measured against {_precision:P0}; " +
+        var where = _measuredOn is null
+            ? string.Empty
+            : $" on {_measuredOn}, which state the target where this pair states nothing";
+        return $"each combination of readings measured against {_precision:P0}{where}; " +
                $"written: {string.Join(", ", written)}; refused: {string.Join(", ", refused)}; " +
                $"anything else from {Number(_threshold)}";
     }
@@ -150,6 +260,8 @@ internal sealed class Admission
             }
             .Concat(Routes.Middles.Select((middle, i) => route.HasFlag(middle) && i < vias.Length ? vias[i] : null))
             .OfType<string>());
+
+    private static string Basis(RouteFloor floor) => floor.Basis is null ? string.Empty : $" {floor.Basis}";
 
     private static string Number(double value) => value.ToString("F2", CultureInfo.InvariantCulture);
 }

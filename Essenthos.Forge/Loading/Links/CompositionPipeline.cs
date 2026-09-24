@@ -85,12 +85,17 @@ internal sealed class CompositionPipeline(
     /// The middle texts, one or two. A second is a second route that shares no evidence with the
     /// first, so the two agreeing is worth as much as either agreeing with the direct alignment.
     /// </param>
+    /// <param name="unmeasured">
+    /// Write every answer from the threshold where nothing, in this pair or in another text of its
+    /// language, states the target to measure against. Otherwise such a run is refused.
+    /// </param>
     public async Task<CompositionOutcome> Run(
         string fromSlug,
         IReadOnlyList<string> viaSlugs,
         string toSlug,
         double minimumConfidence,
         double precision = Admission.DefaultPrecision,
+        bool unmeasured = false,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -102,8 +107,17 @@ internal sealed class CompositionPipeline(
 
         var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, false, null, cancellationToken);
         var statements = await Statements(connection, from.Id, to.Id, cancellationToken);
-        var admission = Admission.Measure(
-            Merge(proposed, Admission.Everything(minimumConfidence)), statements, minimumConfidence, precision);
+        var (admission, _) = await Admit(
+            connection, from, viaSlugs, to, proposed, statements, minimumConfidence, precision, false, null,
+            cancellationToken);
+        if (admission.Floors.Count == 0 && !unmeasured)
+        {
+            throw new InvalidOperationException(
+                $"Nothing states {toSlug} for {fromSlug}, or for any other text in its language, so there is " +
+                "no measure of which of its answers are right. Run it with --dry-run to see what it would add, " +
+                "and add --unmeasured to write every answer from the threshold regardless.");
+        }
+
         var merged = Merge(proposed, admission);
         var (fresh, corroborated) = await Write(connection, from, to, [.. viaSlugs], merged, cancellationToken);
 
@@ -153,9 +167,13 @@ internal sealed class CompositionPipeline(
         var statements = await Statements(connection, from.Id, to.Id, cancellationToken);
         var scope = await CompositionTrial.Scope(connection, from.Id, to.Id, statements, books, cancellationToken);
         var every = Merge(proposed, Admission.Everything(minimumConfidence));
-        var admission = Admission.Measure(every, statements, minimumConfidence, precision);
+        var (admission, measured) = await Admit(
+            connection, from, viaSlugs, to, proposed, statements, minimumConfidence, precision, true, books,
+            cancellationToken);
 
-        var report = new StringBuilder();
+        var report = new StringBuilder()
+            .AppendLine("where each combination of readings named the stated word, from each confidence up:")
+            .AppendLine(measured);
         foreach (var (title, merged) in new[]
                  {
                      ("every answer from the ordinary threshold:", every),
@@ -184,7 +202,9 @@ internal sealed class CompositionPipeline(
         IReadOnlySet<int>? books,
         CancellationToken cancellationToken)
     {
+        var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
+        var joins = await VerseJoins.Load(connection, from.Id, to.Id, cancellationToken);
 
         var reduced = await aligner.Proposals(
             fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books), AgreementFloor,
@@ -199,10 +219,116 @@ internal sealed class CompositionPipeline(
             var first = await aligner.Proposals(
                 fromSlug, viaSlug, Workspace(fromSlug, viaSlug, trial, books), AgreementFloor,
                 books: books, cancellationToken: cancellationToken);
-            composed.Add(Compose(first, await Carried(connection, via.Id, to.Id, cancellationToken)));
+            composed.Add(Compose(first, await Carried(connection, via.Id, to.Id, cancellationToken), joins));
         }
 
         return new Proposed(written, reduced, composed);
+    }
+
+    /// <summary>
+    /// Which answers a run writes: measured on the pair's own statements where it has enough, and
+    /// otherwise on the other texts in its language that state the target, each composed the same
+    /// way. Also returns what each combination scored from each confidence up, for a dry run to print.
+    /// </summary>
+    private async Task<(Admission Admission, string Measured)> Admit(
+        NpgsqlConnection connection,
+        Database.Entities.Text from,
+        IReadOnlyList<string> viaSlugs,
+        Database.Entities.Text to,
+        Proposed proposed,
+        IReadOnlyDictionary<long, HashSet<long>> statements,
+        double minimumConfidence,
+        double precision,
+        bool trial,
+        IReadOnlySet<int>? books,
+        CancellationToken cancellationToken)
+    {
+        var every = Merge(proposed, Admission.Everything(minimumConfidence));
+        var own = Admission.Measure(every, statements, minimumConfidence, precision);
+        if (own.Floors.Count > 0)
+        {
+            return (own, $"  {from.Slug} to {to.Slug}, on its own statements:{Environment.NewLine}" +
+                         Admission.Curves(every, statements, [.. viaSlugs]));
+        }
+
+        var measured = new List<(string Text, Route Reads, IReadOnlyDictionary<Route, RouteFloor> Floors)>();
+        var report = new StringBuilder();
+        foreach (var proxy in await Proxies(connection, from, to.Id, cancellationToken))
+        {
+            var vias = viaSlugs.Where(via => via != proxy.Slug).ToList();
+            var proxyProposed = await Propose(connection, proxy.Slug, vias, to.Slug, trial, books, cancellationToken);
+            var proxyStatements = await Statements(connection, proxy.Id, to.Id, cancellationToken);
+            var proxyEvery = Merge(proxyProposed, Admission.Everything(minimumConfidence));
+            var floors = Admission.Measure(proxyEvery, proxyStatements, minimumConfidence, precision);
+
+            var middles = vias.Select(via => Routes.Middles[viaSlugs.ToList().IndexOf(via)]).ToArray();
+            measured.Add((
+                proxy.Slug,
+                middles.Aggregate(Route.Written | Route.Reduced, (reads, middle) => reads | middle),
+                floors.Floors.ToDictionary(entry => Translated(entry.Key, middles), entry => entry.Value)));
+            report.AppendLine($"  {proxy.Slug} to {to.Slug} through {string.Join(" and ", vias)}, on its statements; " +
+                              floors.Describe([.. vias]))
+                .AppendLine(Admission.Curves(proxyEvery, proxyStatements, [.. vias]));
+        }
+
+        return (Admission.Borrow(measured, [.. viaSlugs], minimumConfidence, precision), report.ToString());
+    }
+
+    /// <summary>
+    /// A route as another composition numbers it, renumbered for this one: its middle texts are
+    /// this pair's, named in another order or with one left out.
+    /// </summary>
+    /// <param name="middles">For each of the other composition's middle texts, the route it takes here.</param>
+    internal static Route Translated(Route route, Route[] middles)
+    {
+        var translated = route & (Route.Written | Route.Reduced);
+        for (var i = 0; i < middles.Length; i++)
+        {
+            if (route.HasFlag(Routes.Middles[i]))
+            {
+                translated |= middles[i];
+            }
+        }
+
+        return translated;
+    }
+
+    /// <summary>
+    /// The other texts in the source's language whose words a source states against the target,
+    /// enough of them to measure on, most first. For English against the originals, the King James
+    /// and the Berean.
+    /// </summary>
+    private static async Task<List<(int Id, string Slug)>> Proxies(
+        NpgsqlConnection connection,
+        Database.Entities.Text from,
+        int toTextId,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(
+            """
+            SELECT t.id, t.slug
+            FROM link l
+            JOIN text t ON t.id = l.from_text_id
+            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
+            WHERE l.to_text_id = @to AND l.method <> 'aligner' AND t.language = @language AND t.id <> @from
+            GROUP BY t.id, t.slug
+            HAVING count(DISTINCT f.word_id) >= @fewest
+            ORDER BY count(DISTINCT f.word_id) DESC, t.slug
+            """, connection);
+        command.Parameters.AddWithValue("to", toTextId);
+        command.Parameters.AddWithValue("language", from.Language);
+        command.Parameters.AddWithValue("from", from.Id);
+        command.Parameters.AddWithValue("fewest", Admission.FewestToMeasure);
+        command.CommandTimeout = 600;
+
+        var proxies = new List<(int, string)>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            proxies.Add((reader.GetInt32(0), reader.GetString(1)));
+        }
+
+        return proxies;
     }
 
     /// <summary>
@@ -246,10 +372,14 @@ internal sealed class CompositionPipeline(
     /// join is over words rather than links, and several paths may reach the same pair. Those are
     /// one claim found several times over the same evidence, so the pair takes the best path and
     /// not the sum of them.
+    ///
+    /// A pair whose verses the frame does not join is not proposed at all: the middle text may be
+    /// stated across a verse boundary it draws where these two texts do not.
     /// </summary>
-    private static List<(long From, long To, double Confidence)> Compose(
+    internal static List<(long From, long To, double Confidence)> Compose(
         IReadOnlyList<(long From, long To, double Confidence)> first,
-        ILookup<long, (long To, double Confidence)> second)
+        ILookup<long, (long To, double Confidence)> second,
+        VerseJoins joins)
     {
         var best = new Dictionary<(long, long), double>(400_000);
 
@@ -257,6 +387,11 @@ internal sealed class CompositionPipeline(
         {
             foreach (var (to, stated) in second[bridge])
             {
+                if (!joins.Joins(from, to))
+                {
+                    continue;
+                }
+
                 var key = (from, to);
                 var confidence = carried * stated;
                 if (!best.TryGetValue(key, out var standing) || confidence > standing)
