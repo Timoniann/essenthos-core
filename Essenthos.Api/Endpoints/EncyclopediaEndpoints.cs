@@ -1036,7 +1036,10 @@ internal static class EncyclopediaEndpoints
                 await Periods(db, years, cancellationToken)));
         });
 
-        routes.MapGet("/timeline", async (AppDbContext db, CancellationToken cancellationToken) =>
+        routes.MapGet("/timeline", async (
+            AppDbContext db,
+            SiteSettingsFile settings,
+            CancellationToken cancellationToken) =>
         {
             var events = await InOrder(db.Events)
                 .Select(e => new
@@ -1049,11 +1052,20 @@ internal static class EncyclopediaEndpoints
                     e.Region,
                     e.Uri,
                     e.SequenceInYear,
+                    e.Location,
                     EntitySlug = e.Entity == null ? null : e.Entity.Slug,
                 })
                 .ToListAsync(cancellationToken);
 
             var years = await EventYears(db, db.EventDates, cancellationToken);
+            var periods = await Periods(db, years, cancellationToken);
+
+            var pictures = await TimelinePictures.Of(
+                db,
+                [.. events.Select(e => (e.EntitySlug, e.Location))],
+                periods.Select(p => p.EntitySlug),
+                settings.Is(SiteSettings.GeneratedImages),
+                cancellationToken);
 
             return Results.Ok(new TimelineResponse(
                 LastYearBeforeChrist,
@@ -1068,9 +1080,12 @@ internal static class EncyclopediaEndpoints
                         e.Uri,
                         e.EntitySlug,
                         e.SequenceInYear != null,
-                        years.GetValueOrDefault(e.Id) ?? [])),
+                        years.GetValueOrDefault(e.Id) ?? [])
+                    {
+                        Picture = pictures.ForEvent(e.EntitySlug, e.Location),
+                    }),
                 ],
-                await Periods(db, years, cancellationToken)));
+                [.. periods.Select(p => p with { Picture = pictures.ForPeriod(p.EntitySlug) })]));
         });
     }
 
@@ -1949,6 +1964,49 @@ internal record ChronologyListResponse(
 /// this axis into an astronomical one by subtracting it — and can do so without a <c>Date</c>,
 /// which is the point. Each chronology carries its own; this is the default's.
 /// </param>
+/// <summary>
+/// The pictures the timeline shows small beside its events and periods, read from the encyclopedia
+/// rather than found anew: an event's is the one its person's page leads with, or failing that its
+/// place's — the place its own page links to, by the same rule. Nothing is looked up that the
+/// encyclopedia does not already show, and most events have neither.
+/// </summary>
+internal sealed class TimelinePictures
+{
+    private readonly Dictionary<string, EntityThumbnailResponse> _leading;
+    private readonly Dictionary<string, string> _places;
+
+    private TimelinePictures(Dictionary<string, EntityThumbnailResponse> leading, Dictionary<string, string> places)
+    {
+        _leading = leading;
+        _places = places;
+    }
+
+    public static async Task<TimelinePictures> Of(
+        AppDbContext db,
+        IReadOnlyCollection<(string? Entity, string? Location)> events,
+        IEnumerable<string?> periodEntities,
+        bool generated,
+        CancellationToken cancellationToken)
+    {
+        var places = await EncyclopediaEndpoints.PlacesNamed(db, events.Select(e => e.Location), cancellationToken);
+        var slugs = events.Select(e => e.Entity)
+            .Concat(places.Values)
+            .Concat(periodEntities)
+            .OfType<string>()
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+
+        return new TimelinePictures(await ImageEndpoints.Leading(db, slugs, cancellationToken, generated), places);
+    }
+
+    public EntityThumbnailResponse? ForEvent(string? entity, string? location) =>
+        Leading(entity) ?? Leading(location is null ? null : _places.GetValueOrDefault(location.ToLowerInvariant()));
+
+    public EntityThumbnailResponse? ForPeriod(string? entity) => Leading(entity);
+
+    private EntityThumbnailResponse? Leading(string? slug) => slug is null ? null : _leading.GetValueOrDefault(slug);
+}
+
 internal record TimelineResponse(
     int LastAnnoMundiBeforeTheCommonEra,
     IList<ChronologyResponse> Chronologies,
@@ -1996,7 +2054,14 @@ internal record TimelineEventResponse(
     string? Uri,
     string? EntitySlug,
     bool Sequenced,
-    IDictionary<string, int> Years);
+    IDictionary<string, int> Years)
+{
+    /// <summary>
+    /// The picture its person's page leads with, or its place's where the person has none; null for
+    /// most, which the encyclopedia has no picture for. Sent only by the timeline.
+    /// </summary>
+    public EntityThumbnailResponse? Picture { get; init; }
+}
 
 /// <param name="Level">
 /// Which row to draw it on — 0 the eras, 1 the spans of rule and captivity, 2 the lives and
@@ -2026,4 +2091,8 @@ internal record TimelinePeriodResponse(
     string? ParentSlug,
     string? EntitySlug,
     string? Notes,
-    IDictionary<string, int[]> Years);
+    IDictionary<string, int[]> Years)
+{
+    /// <summary>The picture its person's page leads with; null where there is none, and on the period list.</summary>
+    public EntityThumbnailResponse? Picture { get; init; }
+}
