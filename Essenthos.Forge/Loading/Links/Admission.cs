@@ -114,20 +114,21 @@ internal sealed class Admission
     ///
     /// <para>
     /// Such a text reads only some of this pair's routes: the Berean composed through the King James
-    /// cannot say what the route through the Berean adds. So an answer's combination is cut down to
-    /// the routes each text read, and the answer is written from the floor that text measured for
-    /// what is left — which is to say, where a composition through that text's middle texts alone
-    /// would have written it, at a precision measured on a text of the same language composed
-    /// exactly that way. Where several would, the lowest floor stands, since any one of them would
-    /// have written the answer. What none of them measured keeps the threshold.
+    /// has no route through the Berean. What it measured for a combination speaks for this pair's
+    /// answers only where the route it could not read <em>also</em> found them. Composed through
+    /// both middle texts, the answers the direct model and the King James agree on split into those
+    /// the Berean reached too and those it did not, and the second are the harder half: over
+    /// Luther's Old Testament, 98% and 89% against his printed Strong numbers, where the two together
+    /// are 96%. So the Berean's measure of the direct model and the King James agreeing is a floor
+    /// for the answers all three reached — they are the easier half of what it measured — and says
+    /// nothing about the answers the Berean did not reach, which are the harder half.
     /// </para>
     ///
     /// <para>
-    /// The cut is what keeps the measure honest. Measured whole on the Berean, the direct model and
-    /// the King James agreeing are right 94% of the time; composed through both middle texts, the
-    /// same agreement splits into the answers the Berean also reached and those it did not, and the
-    /// second are the harder half. A composition through the King James alone writes both halves
-    /// together, and that whole is what the 94% was measured on.
+    /// A combination is written from the floor measured on a text for the part of it that text read,
+    /// if the routes that text could not read all found the answer; the lowest such floor stands,
+    /// since each is a floor. A combination no text can speak for in that way is refused, because
+    /// nothing measured it.
     /// </para>
     /// </summary>
     /// <param name="measured">
@@ -140,29 +141,36 @@ internal sealed class Admission
         double threshold,
         double precision = DefaultPrecision)
     {
+        if (measured.Count == 0)
+        {
+            return new Admission(new Dictionary<Route, RouteFloor>(), threshold, precision);
+        }
+
+        var texts = measured.Select(text => text.Text).Distinct().Order(StringComparer.Ordinal).ToList();
+        var every = Possible(vias.Length).Aggregate(Route.None, (all, route) => all | route);
         var floors = new Dictionary<Route, RouteFloor>();
         foreach (var route in Possible(vias.Length))
         {
-            var loosest = measured
+            var lowest = measured
+                .Where(text => (every & ~text.Reads & route) == (every & ~text.Reads))
                 .Select(text => (text.Text, Part: route & text.Reads, text.Floors))
-                .Where(cut => cut.Part != Route.None && cut.Floors.ContainsKey(cut.Part))
+                .Where(cut => cut.Floors.ContainsKey(cut.Part))
                 .Select(cut => (cut.Text, cut.Part, Floor: cut.Floors[cut.Part]))
                 .OrderBy(cut => cut.Floor.Confidence)
                 .ThenBy(cut => cut.Text, StringComparer.Ordinal)
                 .FirstOrDefault();
-            if (loosest.Floor is not null)
-            {
-                floors[route] = loosest.Floor with
+
+            floors[route] = lowest.Floor is null
+                ? new RouteFloor(Unreachable, 0, 0, $"measured on neither {string.Join(" nor ", texts)}")
+                : lowest.Floor with
                 {
-                    Basis = loosest.Part == route
-                        ? $"on {loosest.Text}"
-                        : $"as {Name(loosest.Part, vias)} on {loosest.Text}",
+                    Basis = lowest.Part == route
+                        ? $"on {lowest.Text}"
+                        : $"as {Name(lowest.Part, vias)} on {lowest.Text}",
                 };
-            }
         }
 
-        var texts = measured.Select(text => text.Text).Distinct().Order(StringComparer.Ordinal).ToList();
-        return new Admission(floors, threshold, precision, texts.Count == 0 ? null : string.Join(" and ", texts));
+        return new Admission(floors, threshold, precision, string.Join(" and ", texts));
     }
 
     /// <summary>Every combination of readings a pair through this many middle texts can produce.</summary>
@@ -240,15 +248,19 @@ internal sealed class Admission
             .OrderByDescending(entry => entry.Value.Scored)
             .Select(entry => $"{Name(entry.Key, vias)} from {Number(entry.Value.Confidence)} " +
                              $"({entry.Value.Precision:P0} of {entry.Value.Scored}{Basis(entry.Value)})");
-        var refused = _floors.Where(entry => entry.Value.Refused)
+        var refused = _floors.Where(entry => entry.Value.Refused && entry.Value.Scored > 0)
             .OrderByDescending(entry => entry.Value.Scored)
             .Select(entry => $"{Name(entry.Key, vias)} ({entry.Value.Precision:P0} of {entry.Value.Scored}{Basis(entry.Value)})");
+        var unmeasured = _floors.Where(entry => entry.Value.Scored == 0)
+            .Select(entry => Name(entry.Key, vias))
+            .ToList();
 
         var where = _measuredOn is null
             ? string.Empty
             : $" on {_measuredOn}, which state the target where this pair states nothing";
         return $"each combination of readings measured against {_precision:P0}{where}; " +
                $"written: {string.Join(", ", written)}; refused: {string.Join(", ", refused)}; " +
+               (unmeasured.Count == 0 ? string.Empty : $"refused as measured on neither: {string.Join(", ", unmeasured)}; ") +
                $"anything else from {Number(_threshold)}";
     }
 
