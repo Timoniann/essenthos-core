@@ -114,10 +114,37 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             globalReviewKnownRenderingResolution.Proposals
                 .Concat(dictionaryReviewResolution.Proposals)
                 .Concat(syntaxTargetGlossOnlyResolution.Proposals));
+        List<EvidentiaAnalysis> sourceAnalyses = [.. source.Select(Analyse).OfType<EvidentiaAnalysis>()];
+        List<EvidentiaAnalysis> targetAnalyses = [.. target.Select(Analyse).OfType<EvidentiaAnalysis>()];
+        var anchoredGapResolution = EvidentiaAnchoredGap.Resolve(
+            sourceAnalyses,
+            targetAnalyses,
+            candidates,
+            [
+                .. globalReviewKnownRenderingResolution.Proposals,
+                .. dictionaryReviewResolution.Proposals,
+                .. syntaxTargetGlossOnlyResolution.Proposals,
+                .. residualKnownRenderingResolution.Proposals,
+            ]);
+        var classMatchedTargetGlossResolution = targetGlossProposalResolver.ResolveAdditional(
+            candidates,
+            [
+                .. globalReviewKnownRenderingResolution.Proposals,
+                .. dictionaryReviewResolution.Proposals,
+                .. syntaxTargetGlossOnlyResolution.Proposals,
+                .. residualKnownRenderingResolution.Proposals,
+                .. anchoredGapResolution.Proposals,
+            ],
+            candidates
+                .Where(candidate => EvidentiaMorphologyLabels.AreCounterparts(candidate.Source, candidate.Target))
+                .Select(candidate => (candidate.Source.Token.Id, candidate.Target.Token.Id))
+                .ToHashSet());
         var syntaxTargetGlossReviewResolution = new EvidentiaResolution(
             dictionaryReviewResolution.Proposals
                 .Concat(syntaxTargetGlossOnlyResolution.Proposals)
                 .Concat(residualKnownRenderingResolution.Proposals)
+                .Concat(anchoredGapResolution.Proposals)
+                .Concat(classMatchedTargetGlossResolution.Proposals)
                 .ToList(), 0);
         var sourceIds = source.Select(token => token.Id).ToHashSet();
         var targetIds = target.Select(token => token.Id).ToHashSet();
@@ -140,8 +167,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             .Concat(globalReviewKnownRenderingResolution.Proposals)
             .ToList();
         var attachedWords = EvidentiaAttachedWords.Resolve(
-            EvidentiaAuxiliaryWords.Mark([.. source.Select(Analyse).OfType<EvidentiaAnalysis>()]),
-            [.. target.Select(Analyse).OfType<EvidentiaAnalysis>()],
+            EvidentiaAuxiliaryWords.Mark(sourceAnalyses),
+            targetAnalyses,
             lexicalProposals);
         List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
         var words = EvidentiaSourceWordAccount.Classify(

@@ -83,7 +83,7 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
-    public void AgainstGreekOnlyAndIsAttachedAndOnlyOnKai()
+    public void AgainstGreekAndGoesOnKaiAndTheOnTheArticleBeforeTheNoun()
     {
         var and = English(1, Mark114, 1, "and", "CCONJ");
         var the = English(2, Mark114, 2, "the", "DET");
@@ -92,7 +92,24 @@ public class EvidentiaAttachedWordTests
         var article = Greek(12, Mark114, 2, "τὸ", "G3588", "det");
         var gospelNoun = Greek(13, Mark114, 3, "εὐαγγέλιον", "G2098", "noun");
 
-        Attach([and, the, gospel], [kai, article, gospelNoun], (gospel, gospelNoun)).Should().Equal((1L, 11L));
+        Attach([and, the, gospel], [kai, article, gospelNoun], (gospel, gospelNoun))
+            .Should().BeEquivalentTo([(1L, 11L), (2L, 12L)]);
+    }
+
+    [Fact]
+    public void AgainstGreekTheOfAnAdjectiveAndItsNounGoesOnTheNounsArticle()
+    {
+        var the = English(1, Mark114, 1, "the", "DET");
+        var unclean = English(2, Mark114, 2, "unclean", "ADJ");
+        var spirit = English(3, Mark114, 3, "spirit", "NOUN");
+        var article = Greek(11, Mark114, 1, "τὸ", "G3588", "det");
+        var spiritNoun = Greek(12, Mark114, 2, "πνεῦμα", "G4151", "noun");
+        var repeated = Greek(13, Mark114, 3, "τὸ", "G3588", "det");
+        var uncleanAdjective = Greek(14, Mark114, 4, "ἀκάθαρτον", "G169", "adj");
+
+        Attach([the, unclean, spirit], [article, spiritNoun, repeated, uncleanAdjective],
+                (unclean, uncleanAdjective), (spirit, spiritNoun))
+            .Should().Equal((1L, 11L));
     }
 
     [Fact]
@@ -104,6 +121,130 @@ public class EvidentiaAttachedWordTests
         var satanNoun = Greek(12, Mark114, 2, "Σατανᾶς", "G4567", "noun");
 
         Attach([and, satan], [ei, satanNoun], (satan, satanNoun)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void ASubjectPronounGoesOnTheVerbWhoseEndingNamesItAndNotOnAParticiple()
+    {
+        var he = English(1, Genesis122, 1, "he", "PRON");
+        var said = English(2, Genesis122, 2, "said", "VERB");
+        var she = English(3, Genesis122, 3, "she", "PRON");
+        var going = English(4, Genesis122, 4, "went", "VERB");
+        var say = Hebrew(11, Genesis122, 1, "יֹּאמֶר", "H559", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var walking = Hebrew(12, Genesis122, 2, "הֹלֶכֶת", "H1980", "verb", ("tense", "ptca"), ("number", "sg"), ("gender", "f"));
+
+        Attach([he, said, she, going], [say, walking], (said, say), (going, walking)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void ASubjectPronounIsNotPlacedOnAVerbOfAnotherPersonOrBesideAPronounTheOriginalWritesApart()
+    {
+        var she = English(1, Genesis122, 1, "she", "PRON");
+        var said = English(2, Genesis122, 2, "said", "VERB");
+        var he = English(3, Genesis122, 3, "he", "PRON");
+        var rules = English(4, Genesis122, 4, "rules", "VERB");
+        var say = Hebrew(11, Genesis122, 1, "יֹּאמֶר", "H559", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var pronoun = Hebrew(12, Genesis122, 2, "הוּא", "H1931", "prps", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var rule = Hebrew(13, Genesis122, 3, "יִמְשָׁל", "H4910", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+
+        Attach([she, said, he, rules], [say, pronoun, rule], (said, say), (rules, rule)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void APossessiveGoesOnTheNounWhoseSuffixNamesIt()
+    {
+        var his = English(1, Genesis122, 1, "his", "PRON");
+        var sons = English(2, Genesis122, 2, "sons", "NOUN");
+        var my = English(3, Genesis122, 3, "my", "PRON");
+        var hand = English(4, Genesis122, 4, "hand", "NOUN");
+        var hisSons = Hebrew(11, Genesis122, 1, "בָנָיו", "H1121", "subs", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+        var hisHand = Hebrew(12, Genesis122, 2, "יָדוֹ", "H3027", "subs", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+
+        Attach([his, sons, my, hand], [hisSons, hisHand], (sons, hisSons), (hand, hisHand)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void AnObjectAfterAnUnplacedPrepositionGoesOnThePrepositionWrittenAfterTheVerb()
+    {
+        var said = English(1, Genesis122, 1, "said", "VERB");
+        var to = English(2, Genesis122, 2, "to", "ADP");
+        var him = English(3, Genesis122, 3, "him", "PRON");
+        var say = Hebrew(11, Genesis122, 1, "יֹּאמֶר", "H559", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var toHim = Hebrew(12, Genesis122, 2, "לוֹ", "H9005", "prep", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+
+        Attach([said, to, him], [say, toHim], (said, say)).Should().BeEquivalentTo([(3L, 12L), (2L, 12L)]);
+    }
+
+    [Fact]
+    public void AgainstGreekASubjectGoesOnTheVerbOfItsPersonAndNumber()
+    {
+        var they = English(1, Mark114, 1, "they", "PRON");
+        var went = English(2, Mark114, 2, "went", "VERB");
+        var he = English(3, Mark114, 3, "he", "PRON");
+        var saw = English(4, Mark114, 4, "saw", "VERB");
+        var go = Greek(11, Mark114, 1, "ἀπῆλθον", "G565", "verb", morphology: [("person", "third"), ("number", "plural")]);
+        var see = Greek(12, Mark114, 2, "εἶδον", "G3708", "verb", morphology: [("person", "third"), ("number", "plural")]);
+
+        Attach([they, went, he, saw], [go, see], (went, go), (saw, see)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void APrepositionGoesOnThePrepositionBeforeItsNounButNeverOnTheObjectMarkerAndOfStaysUnplaced()
+    {
+        var from = English(1, Genesis122, 1, "from", "ADP");
+        var the = English(2, Genesis122, 2, "the", "DET");
+        var ground = English(3, Genesis122, 3, "ground", "NOUN");
+        var with = English(4, Genesis122, 4, "with", "ADP");
+        var wife = English(5, Genesis122, 5, "wife", "NOUN");
+        var of = English(6, Genesis122, 6, "of", "ADP");
+        var man = English(7, Genesis122, 7, "man", "NOUN");
+        var min = Hebrew(11, Genesis122, 1, "מִן", "H4480", "prep");
+        var article = Hebrew(12, Genesis122, 2, "הָ", "H9009", "art");
+        var soil = Hebrew(13, Genesis122, 3, "אֲדָמָה", "H127", "subs");
+        var marker = Hebrew(14, Genesis122, 4, "אֶת", "H853", "prep");
+        var woman = Hebrew(15, Genesis122, 5, "אִשְׁתּוֹ", "H802", "subs");
+        var person = Hebrew(16, Genesis122, 6, "אָדָם", "H120", "subs");
+
+        Attach([from, the, ground, with, wife, of, man], [min, article, soil, marker, woman, person],
+                (ground, soil), (wife, woman), (man, person))
+            .Should().BeEquivalentTo([(1L, 11L), (2L, 13L)]);
+    }
+
+    [Fact]
+    public void OfGoesOnTheNounAConstructDependsOnAndNowhereElse()
+    {
+        var face = English(1, Genesis122, 1, "face", "NOUN");
+        var of = English(2, Genesis122, 2, "of", "ADP");
+        var the = English(3, Genesis122, 3, "the", "DET");
+        var deep = English(4, Genesis122, 4, "deep", "NOUN");
+        var all = English(5, Genesis122, 5, "all", "DET");
+        var of2 = English(6, Genesis122, 6, "of", "ADP");
+        var days = English(7, Genesis122, 7, "days", "NOUN");
+        var faceNoun = Hebrew(11, Genesis122, 1, "פְּנֵי", "H6440", "subs", ("state", "c"));
+        var article = Hebrew(12, Genesis122, 2, "תְ", "H9009", "art");
+        var deepNoun = Hebrew(13, Genesis122, 3, "הֹום", "H8415", "subs", ("state", "a"));
+        var whole = Hebrew(14, Genesis122, 4, "כָּל", "H3605", "subs", ("state", "c"));
+        var day = Hebrew(15, Genesis122, 5, "יְמֵי", "H3117", "subs", ("state", "c"));
+
+        Attach([face, of, the, deep, all, of2, days], [faceNoun, article, deepNoun, whole, day],
+                (face, faceNoun), (deep, deepNoun), (days, day))
+            .Should().BeEquivalentTo([(2L, 13L), (3L, 13L)]);
+    }
+
+    [Fact]
+    public void AWordFollowsAHeadThatIsItselfAttached()
+    {
+        var and = English(1, Genesis122, 1, "and", "CCONJ");
+        var he = English(2, Genesis122, 2, "he", "PRON");
+        var said = English(3, Genesis122, 3, "said", "VERB");
+        var to = English(4, Genesis122, 4, "to", "ADP");
+        var him = English(5, Genesis122, 5, "him", "PRON");
+        var vav = Hebrew(11, Genesis122, 1, "וַ", "H9000", "conj");
+        var say = Hebrew(12, Genesis122, 2, "יֹּאמֶר", "H559", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var toHim = Hebrew(13, Genesis122, 3, "לוֹ", "H9005", "prep", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+
+        Attach([and, he, said, to, him], [vav, say, toHim], (said, say))
+            .Should().BeEquivalentTo([(1L, 11L), (2L, 12L), (4L, 13L), (5L, 13L)]);
     }
 
     private static IReadOnlyList<(long Source, long Target)> Attach(
@@ -132,10 +273,18 @@ public class EvidentiaAttachedWordTests
     private static EvidentiaToken English(long id, EvidentiaAddress address, int position, string surface, string partOfSpeech) =>
         new(id, address, position, surface, "eng", PartOfSpeech: partOfSpeech);
 
-    private static EvidentiaToken Hebrew(long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech) =>
-        new(id, address, position, surface, "hbo", StrongNumber: strong, PartOfSpeech: partOfSpeech);
+    private static EvidentiaToken Hebrew(
+        long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech,
+        params (string Name, string Value)[] morphology) =>
+        new(id, address, position, surface, "hbo", StrongNumber: strong, PartOfSpeech: partOfSpeech,
+            Morphology: Features(partOfSpeech, morphology));
 
     private static EvidentiaToken Greek(
-        long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech, string? lemma = null) =>
-        new(id, address, position, surface, "grc", Lemma: lemma, StrongNumber: strong, PartOfSpeech: partOfSpeech);
+        long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech, string? lemma = null,
+        (string Name, string Value)[]? morphology = null) =>
+        new(id, address, position, surface, "grc", Lemma: lemma, StrongNumber: strong, PartOfSpeech: partOfSpeech,
+            Morphology: Features(partOfSpeech, morphology ?? []));
+
+    private static Dictionary<string, string> Features(string partOfSpeech, (string Name, string Value)[] morphology) =>
+        morphology.Append(("pos", partOfSpeech)).ToDictionary(feature => feature.Item1, feature => feature.Item2);
 }

@@ -92,6 +92,12 @@ internal enum EvidentiaProposalKind
     /// word in the verse and nothing else in the verse claims its one occurrence.
     /// </summary>
     ResidualKnownRendering,
+
+    /// <summary>
+    /// A word with some lexical evidence for the one free word of its class the original leaves
+    /// between the renderings of its placed neighbours.
+    /// </summary>
+    AnchoredGapReview,
 }
 
 internal sealed record EvidentiaProposal(
