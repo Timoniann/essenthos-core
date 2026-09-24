@@ -116,6 +116,15 @@ internal static class SweteTextSource
     public static int Canonical(string file) => Canon.Single(entry => entry.File == file).Canonical;
 
     /// <summary>
+    /// Where a chapter of a file stands in the corpus: its own book and number, except in Esdras B,
+    /// whose chapters after Ezra's are Nehemiah's counted from one.
+    /// </summary>
+    public static (int Canonical, int Chapter) Placed(string file, int chapter) =>
+        file == SecondEsdras.File && chapter > SecondEsdras.LastEzraChapter
+            ? (SecondEsdras.Nehemiah, chapter - SecondEsdras.LastEzraChapter)
+            : (Canonical(file), chapter);
+
+    /// <summary>
     /// The licence is on the transcription and not on the text, and both statements attached to the
     /// bytes say the same thing. <c>nathans/lxx-swete</c>'s README: <em>"The Greek text and its
     /// annotations in the data directory are published under the terms of the Creative Commons
@@ -165,7 +174,7 @@ internal static class SweteTextSource
                      + "state Creative Commons Attribution-ShareAlike 4.0. So the obligation is on this "
                      + "digitisation of the edition and not on the edition, and it is an obligation to "
                      + "credit and to share alike anything derived from these files. "
-                     + SweteRestorations.Note + " " + SweteIsaiah.Note,
+                     + SweteRestorations.Note + " " + SweteCorrections.Note + " " + SweteIsaiah.Note,
         Citation = "Henry Barclay Swete (ed.), The Old Testament in Greek according to the Septuagint, "
                    + "Cambridge University Press, 1887-1894, in the digital edition of Nathan D. Smith "
                    + "(nathans/lxx-swete) derived from the Open Greek and Latin First1KGreek transcription "
@@ -193,7 +202,11 @@ internal static class SweteTextSource
         public const int LastEzraChapter = 10;
     }
 
-    public static TextSource Read(string folder)
+    /// <param name="restored">
+    /// False for the edition as the transcription reads it, without <see cref="SweteRestorations"/>:
+    /// what a corpus loaded before them holds.
+    /// </param>
+    public static TextSource Read(string folder, bool restored = true)
     {
         var books = new List<BookDraft>(Canon.Length + 1);
         var position = 0;
@@ -213,7 +226,7 @@ internal static class SweteTextSource
 
             var read = SweteReader.Read(file == Isaiah
                 ? SweteIsaiah.Lines(folder)
-                : SweteRestorations.Apply(file, File.ReadLines(path)));
+                : restored ? SweteRestorations.Apply(file, File.ReadLines(path)) : File.ReadLines(path));
             var chapters = read.Chapters.Select(Chapter).ToList();
 
             if (file == SecondEsdras.File)

@@ -293,9 +293,10 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The words Swete printed and the transcription lost, written into a Swete loaded before they
-    /// were restored. A cold load reads them from the reader and this finds nothing to do. Before the
-    /// two Septuagints are linked, so that on a cold corpus the link sees the restored verse.
+    /// The words Swete printed and the transcription lost, and the letters and spaces it got wrong
+    /// that a rule settles, written into a Swete loaded before they were restored. A cold load reads
+    /// them from the reader and this finds nothing to do. Before the two Septuagints are linked, so
+    /// that on a cold corpus the link sees the restored verse.
     /// </summary>
     private async Task RestoreWhatSwetesTranscriptionLost(string resources, CancellationToken cancellationToken)
     {

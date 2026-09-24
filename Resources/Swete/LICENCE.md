@@ -163,9 +163,17 @@ short list of repairs is made, each with what establishes it, in `SweteIsaiah.cs
 `OttleyIsaiah.cs` beside the reader: verse divisions the transcription lost (thirteen in Swete, ten
 in Ottley — at the verse number the page prints, which the transcription let into the text or kept
 as a line mark), two misnumbered verses of Swete's 38 renumbered and the end of his 31:9 given back
-to it, Latin letters standing for the identical Greek ones, two placeholders taken out of Ottley and
+to it, Latin letters standing for the identical Greek ones, a placeholder taken out of Ottley and
 his manuscript's title and colophon kept out of 1:1 and 66:24, and one line of Ottley's 2:20 read in
-its place. Misread letters are left as the transcription reads them. That is a modification of a
+its place. Three words Ottley's file lost where the verse is left without them — βραχίων at 53:1,
+καταπάτημα at 5:5 where the other placeholder stands, the end of παραλελυμένα at 35:3 — are put back
+where Brenton, Swete and GLAUx read them and Ottley's own foot-notes record no manuscript differing
+from A there, and the letters of a foot-note read into πορεύσονται at 35:9 are taken out. In the
+other books of Swete, `SweteRestorations.cs` puts back seventeen words of Genesis 5–12 where Brenton
+and GLAUx agree, and `SweteCorrections.json`, written by `scripts/swete-corrections.py`, corrects
+letters and spaces by rule: a Latin letter for the Greek one it looks like, the chapter or verse
+number Swete prints in the margin run into a verse's first word, and two words run together where
+Brenton and GLAUx both read them apart. Misread letters are left as the transcription reads them. That is a modification of a
 CC BY-SA text, so each text's rights note says it is modified, and the modified text is shared under
 the same licence — which is all ShareAlike asks of it. It does not reach the annotation: a letter
 link or a verse link holds two row ids and a method and no text, and a folded search form is derived

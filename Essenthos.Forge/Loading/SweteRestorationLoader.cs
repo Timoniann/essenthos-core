@@ -12,9 +12,9 @@ namespace Essenthos.Core.Loading;
 internal sealed record SweteRestorationOutcome(int Verses, int Words, TimeSpan Elapsed)
 {
     public override string ToString() => Verses == 0
-        ? "Swete's text already holds the words its transcription lost"
-        : $"{Verses} verses of Swete's text rewritten with the words its transcription lost, {Words} words " +
-          $"added, in {Elapsed}";
+        ? "Swete's text already holds the words its transcription lost and the letters it corrects"
+        : $"{Verses} verses of Swete's text rewritten with the words its transcription lost and the letters it " +
+          $"corrects, {Words} words added, in {Elapsed}";
 }
 
 /// <summary>
@@ -66,6 +66,11 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                           WHERE other.link_id = l.id AND other.side = lw.side AND other.word_id <> @id);
         """;
 
+    private const string Rewrite =
+        """
+        UPDATE word SET "text" = @surface, trailer = @trailer, normalised_text = @normalised WHERE id = @id;
+        """;
+
     private const string Remove =
         """
         DELETE FROM word WHERE id = @id;
@@ -91,26 +96,35 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
 
+        var held = (await db.Books.Where(b => b.TextId == text.Id).Select(b => b.CanonicalOrdinal)
+            .ToListAsync(cancellationToken)).ToHashSet();
+
         foreach (var book in SweteRestorations.Books)
         {
             var path = Path.Combine(folder, SweteTextSource.FileName(book));
             var digitised = SweteReader.Read(File.ReadLines(path));
             var restored = SweteReader.Read(SweteRestorations.Apply(book, File.ReadLines(path)));
-            var canonical = SweteTextSource.Canonical(book);
 
-            foreach (var (chapter, verse) in SweteRestorations.All
+            foreach (var here in SweteRestorations.All
                          .Where(r => r.Book == book)
-                         .Select(r => (r.Chapter, r.Verse))
-                         .Distinct())
+                         .GroupBy(r => (r.Chapter, r.Verse, r.Label)))
             {
-                var before = Words(digitised, chapter, verse);
-                var after = Words(restored, chapter, verse);
+                var (chapter, verse, label) = here.Key;
+                var (canonical, placed) = SweteTextSource.Placed(book, chapter);
+                if (!held.Contains(canonical))
+                {
+                    // A corpus loaded without the book, which only a test builds.
+                    continue;
+                }
+
+                var before = Words(digitised, chapter, verse, label);
+                var after = Words(restored, chapter, verse, label);
                 var stored = await db.Words
                     .Where(w => w.TextId == text.Id
                                 && w.Verse!.Book!.CanonicalOrdinal == canonical
-                                && w.Verse.ChapterNumber == chapter
+                                && w.Verse.ChapterNumber == placed
                                 && w.Verse.Number == verse
-                                && w.Verse.Label == string.Empty)
+                                && w.Verse.Label == label)
                     .OrderBy(w => w.Position)
                     .Select(w => new StoredWord(w.Id, w.VerseId, w.Position, w.Surface, w.Trailer))
                     .ToListAsync(cancellationToken);
@@ -123,23 +137,28 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                 if (!Same(stored, before))
                 {
                     throw new InvalidOperationException(
-                        $"{text.Slug} {BookReferences.Name(canonical)} {chapter}:{verse} reads neither as the " +
+                        $"{text.Slug} {BookReferences.Name(canonical)} {placed}:{verse}{label} reads neither as the " +
                         $"transcription nor as its restoration: \"{string.Concat(stored.Select(w => w.Surface + w.Trailer))}\". " +
                         "The corpus holds a Swete loaded from other files; load the text again from these before " +
                         "restoring anything in it. Nothing was changed.");
                 }
 
-                added += await Write(text, stored, after, cancellationToken);
-                await EnsureRebuilds(stored[0].VerseId, after, chapter, verse, cancellationToken);
+                added += await Write(text, stored, after, here.All(SweteCorrections.KeepsTheWord), cancellationToken);
+                await EnsureRebuilds(stored[0].VerseId, after, $"{placed}:{verse}{label}", cancellationToken);
                 verses++;
             }
         }
 
-        if (verses > 0 && text.RightsNote?.Contains(SweteRestorations.Note, StringComparison.Ordinal) != true)
+        if (verses > 0)
         {
-            text.RightsNote = text.RightsNote is { Length: > 0 } existing
-                ? $"{existing} {SweteRestorations.Note}"
-                : SweteRestorations.Note;
+            foreach (var note in new[] { SweteRestorations.Note, SweteCorrections.Note })
+            {
+                if (text.RightsNote?.Contains(note, StringComparison.Ordinal) != true)
+                {
+                    text.RightsNote = text.RightsNote is { Length: > 0 } existing ? $"{existing} {note}" : note;
+                }
+            }
+
             await db.SaveChangesAsync(cancellationToken);
         }
 
@@ -152,8 +171,8 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
     private sealed record StoredWord(long Id, int VerseId, int Position, string Surface, string Trailer);
 
-    private static IReadOnlyList<SweteWord> Words(SweteBook book, int chapter, int verse) =>
-        book.Chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse && v.Label.Length == 0).Words;
+    private static IReadOnlyList<SweteWord> Words(SweteBook book, int chapter, int verse, string label) =>
+        book.Chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse && v.Label == label).Words;
 
     private static bool Same(IReadOnlyList<StoredWord> stored, IReadOnlyList<SweteWord> words) =>
         stored.Count == words.Count
@@ -162,14 +181,17 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
     /// <summary>
     /// The stretch between what the two readings share at the head and at the tail is what differs.
-    /// Its digitised rows go — a misread token is not a word the edition prints, so nothing standing
-    /// on it is kept — and the printed words are written in their place. Returns how many words the
-    /// verse gained.
+    /// Where every change to the verse corrects a word's letters — a Latin letter, a margin number —
+    /// each row is rewritten in place and keeps its links, since it is the same word. Otherwise
+    /// its digitised rows go — a misread token is not a word the edition prints, so nothing standing on
+    /// it is kept — and the printed words are written in their place. Returns how many words the verse
+    /// gained.
     /// </summary>
     private async Task<int> Write(
         Text text,
         List<StoredWord> stored,
         IReadOnlyList<SweteWord> after,
+        bool inPlace,
         CancellationToken cancellationToken)
     {
         var head = 0;
@@ -190,6 +212,21 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         var old = stored.Count - head - tail;
         var now = after.Count - head - tail;
         var verseId = stored[0].VerseId;
+
+        if (inPlace && old == now)
+        {
+            for (var i = 0; i < old; i++)
+            {
+                var word = after[head + i];
+                await Execute(Rewrite, cancellationToken,
+                    ("id", stored[head + i].Id),
+                    ("surface", word.Surface),
+                    ("trailer", word.Trailer),
+                    ("normalised", WordFolding.Fold(word.Surface, text.Language)));
+            }
+
+            return 0;
+        }
 
         for (var i = 0; i < old; i++)
         {
@@ -229,8 +266,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
     private async Task EnsureRebuilds(
         int verseId,
         IReadOnlyList<SweteWord> after,
-        int chapter,
-        int verse,
+        string address,
         CancellationToken cancellationToken)
     {
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -243,7 +279,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         if (rebuilt != expected)
         {
             throw new InvalidOperationException(
-                $"Swete {chapter}:{verse} reads \"{rebuilt}\" after its restoration where \"{expected}\" was " +
+                $"Swete {address} reads \"{rebuilt}\" after its restoration where \"{expected}\" was " +
                 "written. The words went to the wrong positions; the transaction is rolled back, so nothing " +
                 "was changed.");
         }

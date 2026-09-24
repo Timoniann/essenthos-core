@@ -12,10 +12,22 @@ namespace Essenthos.Core.Swete;
 /// those numbers as line marks even where it failed to open the verse, so the last verse of a
 /// chapter often runs into the one before it with its own number standing beside it; those are
 /// divided, at the words Swete and Brenton both begin the verse with. Two tokens are the
-/// transcription's own placeholders rather than words, and are taken out. Three Greek words carry a
+/// transcription's own placeholders rather than words: one is taken out, and the other stands where
+/// a word was lost that is put back below. Three Greek words carry a
 /// Latin letter that looks exactly like the Greek one. And the manuscript's title and colophon,
 /// which Ottley prints above 1:1 and below 66:24, are a title and a colophon, not words of either
 /// verse.
+/// </para>
+///
+/// <para>
+/// **A word the file lost is put back only where the verse is left without it and Ottley himself
+/// says the manuscript has it.** His foot-notes record where the other uncials differ from
+/// Alexandrinus, and the TEI keeps them. Where the file leaves an article or a preposition with
+/// nothing after it, Brenton, Swete and GLAUx all read the same word there, and the note on that
+/// verse records no manuscript differing from A at that word, the word is A's and the transcription
+/// lost it: βραχίων at 53:1, καταπάτημα at 5:5, the end of παραλελυμένα at 35:3. Where the verse
+/// reads whole without it — σώσει at the end of 35:4, which the others follow with ἡμᾶς — nothing
+/// is added.
 /// </para>
 ///
 /// <para>
@@ -35,7 +47,9 @@ internal static class OttleyIsaiah
     public const string Note =
         "Modified: ten verse divisions the transcription lost are restored by Essenthos where Ottley's "
         + "own verse number stands in the margin and Swete and Brenton begin the verse at the same words; "
-        + "two placeholders the transcription left for what it could not read are taken out; three Latin "
+        + "three words it lost where the verse is left without them are put back where Brenton, Swete and "
+        + "GLAUx read them and Ottley's own apparatus records no manuscript differing, and letters of a foot-note it read into a word are taken out; "
+        + "a placeholder the transcription left for what it could not read is taken out; three Latin "
         + "letters standing for the Greek ones they look like are written as Greek; the manuscript's title "
         + "above 1:1 and colophon below 66:24 are not counted as words of those verses; and one line the "
         + "transcription set down out of its place in 2:20 is read in its place. Letters the transcription "
@@ -45,6 +59,10 @@ internal static class OttleyIsaiah
         "Ottley's own number for the verse stands in the margin of this line; Swete and Brenton begin the verse at these words";
 
     private const string Latin = "A Latin letter for the Greek one it looks exactly like";
+
+    private const string Lost =
+        "Brenton, Swete and GLAUx all read the word here, where the file leaves the verse without it, and "
+        + "Ottley's apparatus on the verse records no manuscript differing from A at this word";
 
     public static IReadOnlyList<string> Lines(string folder) =>
         EditionRepairs.Apply(File,
@@ -64,9 +82,9 @@ internal static class OttleyIsaiah
             + "only their order is the page's"),
         EditionRepair.Divide(2, "20", "τοῦ εἰσελθεῖν", "τοῦ εἰσελθεῖν", "21", Margin),
         EditionRepair.Divide(3, "25", "καὶ πενθήσουσιν", "καὶ πενθήσουσιν", "26", Margin),
-        EditionRepair.Replace(5, "5", "x003E;", "",
-            "A character reference the transcription left undecoded, where Swete and Brenton read καταπάτημα; "
-            + "what Ottley prints there is not in the file"),
+        EditionRepair.Replace(5, "5", "x003E;", "καταπάτημα",
+            $"A character reference the transcription left undecoded where the verse ends on a preposition. {Lost}: "
+            + "the note on 5:5 records only οἶκον for τοῖχον; καταπάτημα as Ottley prints it at 7:25"),
         EditionRepair.Divide(12, "4", "ὑμνήσατε τὸ ὄνομα Κυρίου,", "ὑμνήσατε τὸ ὄνομα Κυρίου,", "5", Margin),
         EditionRepair.Divide(12, "5", "ἀγαλλιᾶσθε", "ἀγαλλιᾶσθε", "6", Margin),
         EditionRepair.Divide(22, "24", "πέν τῇ ἡμέρᾳ.", "πέν τῇ ἡμέρᾳ.", "25", Margin),
@@ -75,10 +93,19 @@ internal static class OttleyIsaiah
         EditionRepair.Replace(34, "11", "ABBREV", "",
             "The transcription's placeholder for an abbreviation it did not expand; the word it stands for "
             + "is not in the file"),
+        EditionRepair.Replace(35, "3", "παραλεφοβεῖσθε·", "παραλελυμένα",
+            $"παραλε- is the head of παραλελυμένα, run into φοβεῖσθε· from the end of the line 35:4 prints whole. {Lost}: "
+            + "the notes on chapter 35 pass from 2 to 4"),
+        EditionRepair.Replace(35, "9", "πορεύευρον σονται", "πορεύσονται",
+            "πορεύσονται runs over the page, and ευρον, the first letters of the foot-note printed beneath it "
+            + "(\"14 γαρ] ευροντες Β\"), was read into the word; the note stands between its halves in the file"),
         EditionRepair.Divide(35, "9", "καὶ συνηγμένοι", "καὶ συνηγμένοι", "10", Margin),
         EditionRepair.Divide(38, "21", "καὶ εἶπεν Ἑζεκίας", "καὶ εἶπεν Ἑζεκίας", "22", Margin),
         EditionRepair.Divide(44, "27", "ὁ λέγων Κύρῳ", "ὁ λέγων Κύρῳ", "28", Margin),
         EditionRepair.Replace(53, "1", "Kύριε,", "Κύριε,", Latin),
+        EditionRepair.Replace(53, "1", "καὶ ὃ Κυρίου", "καὶ ὃ βραχίων Κυρίου",
+            $"The article stands with nothing to name. {Lost}: the notes on chapter 53 open at verse 2; "
+            + "βραχίων as Ottley prints it at 40:10, and ὃ left as the transcription misreads ὁ"),
         EditionRepair.Replace(59, "1", "Mὴ", "Μὴ", Latin),
         EditionRepair.Replace(66, "24", "σαρκί. ΗΣΑΙΑΣ ΠΡΟΦΗΤΗΣ.", "σαρκί.",
             "The manuscript's colophon, Ἠσαΐας προφήτης, which Ottley prints below the last verse"),
