@@ -479,6 +479,22 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                   WHERE lw.link_id = l.id
                     AND lw.side = CASE l.relation WHEN 'omits' THEN 'from' ELSE 'to' END)
             """),
+        // A word the corpus says has no counterpart in the other text and that a link between the
+        // same two texts gives one. The reader would show it supplied and rendered at once, and
+        // whichever it drew first would be a confident answer contradicted a line further down.
+        ("words shown as having no counterpart and as rendered at once",
+            """
+            SELECT count(DISTINCT aw.word_id) FROM link a
+            JOIN link_word aw ON aw.link_id = a.id
+            WHERE a.relation IN ('omits', 'expands')
+              AND EXISTS (
+                  SELECT 1 FROM link_word rw
+                  JOIN link r ON r.id = rw.link_id
+                  WHERE rw.word_id = aw.word_id
+                    AND r.relation NOT IN ('omits', 'expands')
+                    AND ((r.from_text_id = a.from_text_id AND r.to_text_id = a.to_text_id)
+                      OR (r.from_text_id = a.to_text_id AND r.to_text_id = a.from_text_id)))
+            """),
         // A link nothing claims. Every loader writes its claim in the same transaction as the link,
         // so this is zero — and it is here because for one day it was not: the migration
         // backfilled the links that existed and nothing kept it up, so 403,343 links written

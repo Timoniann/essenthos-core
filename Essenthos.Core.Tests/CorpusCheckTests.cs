@@ -285,6 +285,16 @@ public sealed class CorpusCheckTests : IDisposable
     }
 
     [Fact]
+    public async Task AWordShownAsAbsentAndAsRenderedIsFound()
+    {
+        Link(LinkRelation.Expands, english: 2, hebrew: null);
+        Link(LinkRelation.Renders, english: 2, hebrew: 1);
+        Link(LinkRelation.Expands, english: 3, hebrew: null);
+
+        (await Integrity("words shown as having no counterpart and as rendered at once")).Should().Be(1);
+    }
+
+    [Fact]
     public async Task ALinkNamingNoWordAtAllIsFound()
     {
         _db.Links.Add(new Link
