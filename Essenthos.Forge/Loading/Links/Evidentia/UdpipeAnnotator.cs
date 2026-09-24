@@ -72,23 +72,22 @@ internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnviron
             throw new InvalidOperationException($"Local UDPipe exited {process.ExitCode}: {error.Result.Trim()}");
         }
 
-        var analysis = output.Result.Split('\n')
-            .Where(line => !line.StartsWith('#') && !string.IsNullOrWhiteSpace(line))
-            .Select(line => line.TrimEnd('\r').Split('\t'))
-            .Where(columns => columns.Length >= 6 && int.TryParse(columns[0], out _))
-            .ToList();
-        var reconciliation = Reconcile(tokens, analysis.Where(columns => Letters(columns[1]).Length > 0).ToList());
+        var lexical = Rows(output.Result).Where(row => Letters(row.Columns[1]).Length > 0).ToList();
+        var reconciliation = Reconcile(tokens, [.. lexical.Select(row => row.Columns)]);
         if (reconciliation.ByCorpusIndex is null)
         {
             return new UdpipeAnnotation(tokens, UdpipeAnnotationStatus.TokenMismatch, reconciliation.Detail);
         }
 
+        var heads = Heads(tokens, lexical, reconciliation.CorpusIndexByParsedWord!);
         return new UdpipeAnnotation(
             tokens.Select((token, index) => !reconciliation.ByCorpusIndex.TryGetValue(index, out var columns) ? token : token with
             {
                 Lemma = columns[2] == "_" ? token.Lemma : columns[2],
                 PartOfSpeech = columns[3] == "_" ? token.PartOfSpeech : columns[3],
                 Morphology = Features(columns[5]) ?? token.Morphology,
+                SyntacticHead = heads.TryGetValue(index, out var head) ? head : null,
+                Relation = columns.Length > 7 && columns[7] != "_" ? columns[7] : null,
             }).ToList(),
             UdpipeAnnotationStatus.Annotated);
     }
@@ -143,6 +142,7 @@ internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnviron
         IReadOnlyList<string[]> parsedWords)
     {
         var byCorpusIndex = new Dictionary<int, string[]>();
+        var corpusIndexByParsedWord = new int[parsedWords.Count];
         var parsedIndex = 0;
         for (var corpusIndex = 0; corpusIndex < tokens.Count; corpusIndex++)
         {
@@ -156,6 +156,7 @@ internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnviron
             string[]? firstParsedPart = null;
             while (actual.Length < expected.Length && parsedIndex < parsedWords.Count)
             {
+                corpusIndexByParsedWord[parsedIndex] = corpusIndex;
                 var parsedPart = parsedWords[parsedIndex++];
                 actual += Letters(parsedPart[1]);
                 firstParsedPart ??= parsedPart;
@@ -171,8 +172,61 @@ internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnviron
         }
 
         return parsedIndex == parsedWords.Count
-            ? new ReconciliationResult(byCorpusIndex, null)
+            ? new ReconciliationResult(byCorpusIndex, null, corpusIndexByParsedWord)
             : new ReconciliationResult(null, $"UDPipe left {parsedWords.Count - parsedIndex} lexical tokens unmatched");
+    }
+
+    /// <summary>Every word line of the CoNLL-U output, with the sentence it stands in; a word's head is numbered within it.</summary>
+    private static List<(int Sentence, string[] Columns)> Rows(string conllu)
+    {
+        var rows = new List<(int Sentence, string[] Columns)>();
+        var sentence = 0;
+        foreach (var line in conllu.Split('\n').Select(line => line.TrimEnd('\r')))
+        {
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                sentence++;
+                continue;
+            }
+
+            var columns = line.Split('\t');
+            if (!line.StartsWith('#') && columns.Length >= 6 && int.TryParse(columns[0], out _))
+            {
+                rows.Add((sentence, columns));
+            }
+        }
+
+        return rows;
+    }
+
+    /// <summary>
+    /// The corpus word each word's syntactic head is, by corpus index. A head that is punctuation, or the
+    /// root, is no word of the corpus, and the word then has none.
+    /// </summary>
+    private static Dictionary<int, long> Heads(
+        IReadOnlyList<EvidentiaToken> tokens,
+        IReadOnlyList<(int Sentence, string[] Columns)> lexical,
+        IReadOnlyList<int> corpusIndexByParsedWord)
+    {
+        var corpusIndexByWord = new Dictionary<(int Sentence, string Id), int>();
+        for (var parsed = 0; parsed < lexical.Count; parsed++)
+        {
+            corpusIndexByWord[(lexical[parsed].Sentence, lexical[parsed].Columns[0])] = corpusIndexByParsedWord[parsed];
+        }
+
+        var heads = new Dictionary<int, long>();
+        for (var parsed = 0; parsed < lexical.Count; parsed++)
+        {
+            var (sentence, columns) = lexical[parsed];
+            var corpusIndex = corpusIndexByParsedWord[parsed];
+            if (columns.Length > 6 && !heads.ContainsKey(corpusIndex)
+                && corpusIndexByWord.TryGetValue((sentence, columns[6]), out var head) && head != corpusIndex)
+            {
+                heads[corpusIndex] = tokens[head].Id;
+            }
+        }
+
+        return heads;
     }
 
     private static IReadOnlyDictionary<string, string>? Features(string value)
@@ -196,9 +250,11 @@ internal sealed record UdpipeAnnotation(
     UdpipeAnnotationStatus Status,
     string? Detail = null);
 
+/// <param name="CorpusIndexByParsedWord">Which corpus word each parsed word was read into.</param>
 internal sealed record ReconciliationResult(
     Dictionary<int, string[]>? ByCorpusIndex,
-    string? Detail);
+    string? Detail,
+    IReadOnlyList<int>? CorpusIndexByParsedWord = null);
 
 internal enum UdpipeAnnotationStatus
 {

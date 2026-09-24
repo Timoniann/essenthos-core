@@ -98,14 +98,19 @@ internal enum EvidentiaProposalKind
     /// between the renderings of its placed neighbours.
     /// </summary>
     AnchoredGapReview,
+
+    /// <summary>A word the verse repeats, placed on as many free occurrences of its one lexeme, in order.</summary>
+    RepeatedRenderingInOrder,
 }
 
+/// <param name="Head">For an attached word, the proposal of the word it belongs to.</param>
 internal sealed record EvidentiaProposal(
     EvidentiaAnalysis Source,
     EvidentiaAnalysis Target,
     EvidentiaProposalKind Kind,
     double Confidence,
-    EvidentiaDecisionTrace? Trace = null);
+    EvidentiaDecisionTrace? Trace = null,
+    EvidentiaProposal? Head = null);
 
 internal sealed record EvidentiaDecisionTrace(
     string Tier,

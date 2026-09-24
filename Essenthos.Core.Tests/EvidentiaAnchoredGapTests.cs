@@ -64,6 +64,50 @@ public class EvidentiaAnchoredGapTests
         EvidentiaMorphologyLabels.AreCounterparts(firmament, make).Should().BeFalse();
     }
 
+    [Fact]
+    public void AWordTheVerseRepeatsGoesOnAsManyOccurrencesOfItsLexemeInOrder()
+    {
+        var firmament = English(1, 1, "firmament", "NOUN");
+        var under = English(2, 2, "under", "ADP");
+        var firmament2 = English(3, 3, "firmament", "NOUN");
+        var expanse = Hebrew(11, 1, "רָקִיעַ", "H7549", "subs");
+        var below = Hebrew(12, 2, "תַּחַת", "H8478", "prep");
+        var expanse2 = Hebrew(13, 3, "רָקִיעַ", "H7549", "subs");
+
+        Repeated([firmament, under, firmament2], [expanse, below, expanse2], [], ("firmament", "H7549"))
+            .Should().Equal((1L, 11L), (3L, 13L));
+        Repeated([firmament, under, firmament2], [expanse, below, expanse2], [(firmament, expanse)], ("firmament", "H7549"))
+            .Should().BeEmpty("two words are left for one free occurrence");
+    }
+
+    [Fact]
+    public void TwoDifferentWordsOnOneLexemeAreNotPairedByOrder()
+    {
+        var stalk = English(1, 1, "stalk", "NOUN");
+        var head = English(2, 2, "head", "NOUN");
+        var ear = Hebrew(11, 1, "שִׁבֹּלֶת", "H7641", "subs");
+        var ear2 = Hebrew(12, 2, "שִׁבֹּלֶת", "H7641", "subs");
+
+        Repeated([stalk, head], [ear, ear2], [], ("stalk", "H7641"), ("head", "H7641")).Should().BeEmpty();
+    }
+
+    private static IReadOnlyList<(long Source, long Target)> Repeated(
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        IReadOnlyList<(EvidentiaToken Source, EvidentiaToken Target)> placed,
+        params (string Form, string Strong)[] renderings)
+    {
+        var preview = new EvidentiaPipeline(Packs, [new Renderings(renderings)])
+            .Preview(new EvidentiaRequest(source, target, AllowSourceStrongEvidence: false));
+        var reserved = placed
+            .Select(pair => new EvidentiaProposal(Analysis(pair.Source), Analysis(pair.Target), EvidentiaProposalKind.GlobalReviewKnownRendering, 0.8))
+            .ToList();
+        return EvidentiaRepeatedRendering.Resolve([.. target.Select(Analysis)], preview.Candidates, reserved)
+            .Proposals
+            .Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
+            .ToList();
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Gap(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,

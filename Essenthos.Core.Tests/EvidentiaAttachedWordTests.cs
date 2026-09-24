@@ -247,6 +247,86 @@ public class EvidentiaAttachedWordTests
             .Should().BeEquivalentTo([(1L, 11L), (2L, 12L), (4L, 13L), (5L, 13L)]);
     }
 
+    [Fact]
+    public void ToGoesOnTheLamedBeforeAnInfinitiveAndNowhereWhenItsVerbIsNotOne()
+    {
+        var to = English(1, Genesis122, 1, "to", "PART");
+        var separate = English(2, Genesis122, 2, "separate", "VERB");
+        var to2 = English(3, Genesis122, 3, "to", "PART");
+        var eat = English(4, Genesis122, 4, "eat", "VERB");
+        var lamed = Hebrew(11, Genesis122, 1, "לְ", "H9005", "prep");
+        var divide = Hebrew(12, Genesis122, 2, "הַבְדִּיל", "H914", "verb", ("tense", "infc"));
+        var eats = Hebrew(13, Genesis122, 3, "תֹאכַל", "H398", "verb", ("tense", "impf"));
+
+        Attach([to, separate, to2, eat], [lamed, divide, eats], (separate, divide), (eat, eats)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void ThereWasGoesOnTheVerbBeWrittenBesideItsSubjectAndAndFollowsIt()
+    {
+        var and = English(1, Genesis122, 1, "and", "CCONJ");
+        var there = English(2, Genesis122, 2, "there", "PRON") with { SyntacticHead = 3, Relation = "expl" };
+        var was = English(3, Genesis122, 3, "was", "VERB") with { Lemma = "be", Relation = "root" };
+        var evening = English(4, Genesis122, 4, "evening", "NOUN") with { SyntacticHead = 3, Relation = "nsubj" };
+        var vav = Hebrew(11, Genesis122, 1, "וַ", "H9000", "conj");
+        var be = Hebrew(12, Genesis122, 2, "יְהִי", "H1961", "verb");
+        var dusk = Hebrew(13, Genesis122, 3, "עֶרֶב", "H6153", "subs");
+
+        Attach([and, there, was, evening], [vav, be, dusk], (evening, dusk))
+            .Should().BeEquivalentTo([(3L, 12L), (2L, 12L), (1L, 11L)]);
+    }
+
+    [Fact]
+    public void ACopulaIsNotPlacedWhereTheOriginalWritesNoBeBesideThePredicate()
+    {
+        var was = English(1, Genesis122, 1, "was", "AUX") with { Lemma = "be", SyntacticHead = 2, Relation = "cop" };
+        var good = English(2, Genesis122, 2, "good", "ADJ");
+        var be = Hebrew(11, Genesis122, 1, "הָיָה", "H1961", "verb");
+        var said = Hebrew(12, Genesis122, 2, "אָמַר", "H559", "verb");
+        var fine = Hebrew(13, Genesis122, 3, "טוֹב", "H2896", "adjv");
+
+        Attach([was, good], [be, said, fine], (good, fine)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void ASubordinatorGoesOnTheConjunctionDirectlyBeforeItsVerbButNotOnTheOriginalsAnd()
+    {
+        var because = English(1, Genesis122, 1, "because", "SCONJ") with { SyntacticHead = 2, Relation = "mark" };
+        var rested = English(2, Genesis122, 2, "rested", "VERB");
+        var when = English(3, Genesis122, 3, "when", "SCONJ") with { SyntacticHead = 4, Relation = "mark" };
+        var slept = English(4, Genesis122, 4, "slept", "VERB");
+        var ki = Hebrew(11, Genesis122, 1, "כִּי", "H3588", "conj");
+        var rest = Hebrew(12, Genesis122, 2, "שָׁבַת", "H7673", "verb");
+        var vav = Hebrew(13, Genesis122, 3, "וַ", "H9000", "conj");
+        var sleep = Hebrew(14, Genesis122, 4, "יִּישָׁן", "H3462", "verb");
+
+        Attach([because, rested, when, slept], [ki, rest, vav, sleep], (rested, rest), (slept, sleep)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void AnArticleAndAPossessiveShareTheSafeTierOfTheirNounAndAConjunctionDoesNot()
+    {
+        var and = English(1, Genesis122, 1, "and", "CCONJ");
+        var the = English(2, Genesis122, 2, "the", "DET");
+        var waters = English(3, Genesis122, 3, "waters", "NOUN");
+        var his = English(4, Genesis122, 4, "his", "PRON");
+        var sons = English(5, Genesis122, 5, "sons", "NOUN");
+        var vav = Hebrew(11, Genesis122, 1, "וְ", "H9000", "conj");
+        var article = Hebrew(12, Genesis122, 2, "הַ", "H9009", "art");
+        var water = Hebrew(13, Genesis122, 3, "מַּיִם", "H4325", "subs");
+        var hisSons = Hebrew(14, Genesis122, 4, "בָנָיו", "H1121", "subs", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+        var safe = new EvidentiaProposal(Analysis(waters), Analysis(water), EvidentiaProposalKind.GlobalStableKnownRendering, 0.8);
+        var review = new EvidentiaProposal(Analysis(sons), Analysis(hisSons), EvidentiaProposalKind.GlobalReviewKnownRendering, 0.6);
+        var attached = EvidentiaAttachedWords.Resolve(
+            EvidentiaAuxiliaryWords.Mark([.. new[] { and, the, waters, his, sons }.Select(Analysis)]),
+            [.. new[] { vav, article, water, hisSons }.Select(Analysis)],
+            [safe, review]);
+
+        EvidentiaAttachedWords.Safe([safe], attached).Should().BeEquivalentTo([(3L, 13L), (2L, 13L)]);
+        attached.Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
+            .Should().Contain([(1L, 11L), (4L, 14L)]);
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Attach(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,

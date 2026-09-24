@@ -96,7 +96,9 @@ internal sealed record EvidentiaToken(
     string? StrongNumber = null,
     string? Gloss = null,
     string? PartOfSpeech = null,
-    IReadOnlyDictionary<string, string>? Morphology = null);
+    IReadOnlyDictionary<string, string>? Morphology = null,
+    long? SyntacticHead = null,
+    string? Relation = null);
 
 /// <summary>
 /// What a language pack concluded a word is. <see cref="Unknown"/> is the reason this is not a

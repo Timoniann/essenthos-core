@@ -22,6 +22,7 @@ public class EvidentiaAdapterTests
         reconciliation.ByCorpusIndex.Should().NotBeNull();
         reconciliation.ByCorpusIndex![0][2].Should().Be("beer", "the first part carries the analysis");
         reconciliation.ByCorpusIndex[1][3].Should().Be("NOUN");
+        reconciliation.CorpusIndexByParsedWord.Should().Equal([0, 0, 1], "a head can name either part of a split word");
     }
 
     [Fact]
