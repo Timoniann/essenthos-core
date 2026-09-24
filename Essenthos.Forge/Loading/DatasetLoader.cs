@@ -811,6 +811,12 @@ internal sealed class DatasetLoader(
         status.Record(await world.Load(
             Path.Combine(AppContext.BaseDirectory, "Resources", "WorldHistory"),
             cancellationToken));
+
+        // The Septuagint's chronology, computed from its own Greek. Last, because it dates the base
+        // reckoning's events and the world's alike, and both have to be there to be dated.
+        using var greek = services.CreateScope();
+        var septuagint = greek.ServiceProvider.GetRequiredService<SeptuagintReckoningLoader>();
+        status.Record(await septuagint.Load(resources, cancellationToken));
     }
 
     /// <summary>
