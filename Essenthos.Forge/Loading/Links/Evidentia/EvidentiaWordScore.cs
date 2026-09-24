@@ -84,7 +84,12 @@ internal static class EvidentiaWordScore
         var pairedSources = paired.Select(pair => pair.Item1).ToHashSet();
         var pairedTargets = paired.Select(pair => pair.Item2).ToHashSet();
 
-        var byPlace = targetById.Values.ToDictionary(word => (word.Token.Address, word.Token.Position));
+        // Two verses of one text can stand at one address (Nestle's 3 John 1:15 at the King James's 1:14),
+        // each counting its words from one; a place two words claim says nothing about which comes next.
+        var byPlace = targetById.Values
+            .GroupBy(word => (word.Token.Address, word.Token.Position))
+            .Where(place => place.Count() == 1)
+            .ToDictionary(place => place.Key, place => place.First());
 
         // The King James's key leaves the prefixes to no one - the heaven is on שָּׁמַיִם alone - so the
         // on the הַ written on that word is the finer placement, not another one.
