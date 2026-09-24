@@ -35,7 +35,10 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
+        // Retry-After is how a client on another origin learns how long a refusal lasts; a browser
+        // hides every header it is not told it may show.
         policy.WithOrigins(allowedOrigins)
+            .WithExposedHeaders("Retry-After")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
