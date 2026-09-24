@@ -25,7 +25,9 @@ UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly)
 // the database and a CORS policy that has quietly fallen back to the defaults — a failure nobody
 // is watching, discovered by a reader instead of by the person starting it.
 var allowedOrigins = CorsOrigins.Read(builder.Configuration);
-var databaseConnection = DatabaseConnection.Read(builder.Configuration);
+var databaseConnection = StatementTimeout.Apply(DatabaseConnection.Read(builder.Configuration), builder.Configuration);
+var rateLimits = RateLimits.Read(builder.Configuration);
+var proxies = Proxies.Read(builder.Configuration);
 var images = ImageEndpoints.Folder(builder.Configuration, builder.Environment.ContentRootPath);
 var siteSettings = SiteSettingsFile.Path(builder.Configuration, builder.Environment.ContentRootPath);
 
@@ -39,6 +41,8 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+
+builder.Services.AddRateLimits(rateLimits);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -56,6 +60,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddSingleton<TextFacts>();
 builder.Services.AddSingleton<ContextWeightsCache>();
+builder.Services.AddSingleton<DatasetCountsCache>();
 builder.Services.AddSingleton<WordForms>();
 builder.Services.AddSingleton(services =>
     new SiteSettingsFile(siteSettings, services.GetRequiredService<ILogger<SiteSettingsFile>>()));
@@ -85,9 +90,20 @@ if (args is ["migrate", ..] || app.Environment.IsDevelopment())
     }
 }
 
+app.UseProxies(proxies);
+
 app.UseExceptionHandler(handler => handler.Run(async context =>
 {
     var feature = context.Features.Get<IExceptionHandlerFeature>();
+    if (StatementTimeout.Stopped(feature?.Error))
+    {
+        app.Logger.LogWarning("A query for {Path}{Query} ran past the statement timeout", context.Request.Path, context.Request.QueryString);
+        context.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
+        context.Response.ContentType = "text/plain";
+        await context.Response.WriteAsync(StatementTimeout.Message);
+        return;
+    }
+
     app.Logger.LogError(feature?.Error, "Unhandled exception for {Path}", context.Request.Path);
     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
     context.Response.ContentType = "text/plain";
@@ -96,6 +112,10 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
         "the API's own log.");
 }));
 
+// CORS ahead of the limits, so a browser on another origin is told it was refused rather than
+// seeing a request that failed without a reason; a preflight is answered here and never counted.
+app.UseCors();
+app.UseRateLimits(rateLimits);
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -133,8 +153,6 @@ v1.MapDevices();
 v1.MapBookmarks();
 v1.MapSuggestions();
 v1.MapAdmin();
-
-app.UseCors();
 
 // Every chapter's context is weighed against counts over the whole Bible; counting them as the
 // process starts spares the first reader to open the panel the wait.

@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 ﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -28,81 +28,16 @@ public static class DatasetEndpoints
 {
     public static void MapDatasets(this IEndpointRouteBuilder routes)
     {
-        routes.MapGet("/datasets", async (AppDbContext db, SiteSettingsFile settings, CancellationToken cancellationToken) =>
+        routes.MapGet("/datasets", async (DatasetCountsCache counts, SiteSettingsFile settings, CancellationToken cancellationToken) =>
         {
-            var entities = await Counted(db.Entities.Select(e => e.Source), cancellationToken);
-            var events = await Counted(db.Events.Select(e => e.Source), cancellationToken);
-            var periods = (await Counted(db.Periods.Select(p => p.Source), cancellationToken))
-                .Concat(await Counted(db.PeriodDefinitions.Select(p => p.Source), cancellationToken))
-                .ToList();
-
-            // Only the links somebody stated. The aligner's millions are this project's own
-            // inference and belong to no third party, and sweeping them would cost a second a call
-            // to count nothing.
-            var links = await Counted(
-                db.Links.Where(link => link.Method != LinkMethod.Aligner).Select(link => link.Source),
-                cancellationToken);
-
-            var parsings = await Counted(db.WordParsings.Select(parsing => parsing.Source), cancellationToken);
-            var commandments = await Counted(db.Commandments.Select(c => c.Source), cancellationToken);
-            var topics = await Counted(db.Topics.Select(t => t.Source), cancellationToken);
-
-            var answers = new List<DatasetResponse>();
-            foreach (var dataset in Datasets.All)
+            var tally = await counts.Get(cancellationToken);
+            var answers = tally.Counted.Select(counted =>
             {
-                // A dataset that annotates a text rather than contributing rows is counted by the
-                // words it annotates. Only GLAUx does this today, and its licence is share-alike,
-                // so a dataset that fell out of this list for having no rows would be the one whose
-                // attribution matters most.
-                var lemmas = dataset.Lemmas is null
-                    ? 0
-                    : await db.Words.CountAsync(
-                        word => word.Text!.Slug == dataset.Lemmas && word.Lemma != null,
-                        cancellationToken);
-
-                // The same shape as the lemmas above: a gloss on a word carries no source of its
-                // own, so the text it sits on is what makes the credit countable.
-                var wordGlosses = dataset.WordGlosses is null
-                    ? 0
-                    : await db.Words.CountAsync(
-                        word => word.Text!.Slug == dataset.WordGlosses && word.Gloss != null,
-                        cancellationToken);
-
-                var lexicon = dataset.Lexicon
-                    ? await db.StrongEntries.CountAsync(cancellationToken)
-                    : dataset.Glossary
-                        ? await db.LexiconGlosses
-                            .Where(gloss => gloss.Source.StartsWith(dataset.Prefix))
-                            .Select(gloss => gloss.Entry)
-                            .Distinct()
-                            .CountAsync(cancellationToken)
-                        : 0;
-
-                var counts = new DatasetCounts(
-                    Of(entities, dataset),
-                    Of(events, dataset),
-                    Of(periods, dataset),
-                    lemmas,
-                    wordGlosses,
-                    lexicon,
-                    dataset.Links ? Of(links, dataset) : 0,
-                    dataset.Parsings ? Of(parsings, dataset) : 0,
-                    Of(commandments, dataset),
-                    Of(topics, dataset));
-
-                if (counts is
-                    {
-                        Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Glosses: 0, Lexicon: 0, Links: 0, Parsings: 0,
-                        Commandments: 0, Topics: 0,
-                    })
-                {
-                    continue;
-                }
-
+                var dataset = counted.Dataset;
                 var licence = dataset.Id == Datasets.Own
                     ? (settings.OwnWorkLicence?.Name, settings.OwnWorkLicence?.Url)
                     : (dataset.Licence, dataset.LicenceUrl);
-                answers.Add(new DatasetResponse(
+                return new DatasetResponse(
                     dataset.Id,
                     dataset.Name,
                     dataset.Author,
@@ -112,28 +47,110 @@ public static class DatasetEndpoints
                     dataset.Covers,
                     dataset.Citation,
                     dataset.Obliges,
-                    counts,
+                    counted.Counts,
                     dataset.Contains is null
                         ? []
                         : [.. dataset.Contains.Select(work => new WorkResponse(
-                            work.Name, work.Author, work.Licence, work.LicenceUrl, work.Covers))]));
+                            work.Name, work.Author, work.Licence, work.LicenceUrl, work.Covers))]);
+            }).ToList();
+
+            return Results.Ok(new DatasetListResponse(answers, [.. tally.Undeclared]));
+        });
+    }
+
+    /// <summary>
+    /// Every declared dataset with the rows it accounts for, leaving out those with none, and the rows
+    /// no declaration claims. A dozen counts over the corpus, which is why it is kept rather than
+    /// asked for each page that credits a source.
+    /// </summary>
+    internal static async Task<DatasetTally> Count(AppDbContext db, CancellationToken cancellationToken)
+    {
+        var entities = await Counted(db.Entities.Select(e => e.Source), cancellationToken);
+        var events = await Counted(db.Events.Select(e => e.Source), cancellationToken);
+        var periods = (await Counted(db.Periods.Select(p => p.Source), cancellationToken))
+            .Concat(await Counted(db.PeriodDefinitions.Select(p => p.Source), cancellationToken))
+            .ToList();
+
+        // Only the links somebody stated. The aligner's millions are this project's own
+        // inference and belong to no third party, and sweeping them would cost a second a call
+        // to count nothing.
+        var links = await Counted(
+            db.Links.Where(link => link.Method != LinkMethod.Aligner).Select(link => link.Source),
+            cancellationToken);
+
+        var parsings = await Counted(db.WordParsings.Select(parsing => parsing.Source), cancellationToken);
+        var commandments = await Counted(db.Commandments.Select(c => c.Source), cancellationToken);
+        var topics = await Counted(db.Topics.Select(t => t.Source), cancellationToken);
+
+        var counted = new List<(Datasets.Dataset Dataset, DatasetCounts Counts)>();
+        foreach (var dataset in Datasets.All)
+        {
+            // A dataset that annotates a text rather than contributing rows is counted by the
+            // words it annotates. Only GLAUx does this today, and its licence is share-alike,
+            // so a dataset that fell out of this list for having no rows would be the one whose
+            // attribution matters most.
+            var lemmas = dataset.Lemmas is null
+                ? 0
+                : await db.Words.CountAsync(
+                    word => word.Text!.Slug == dataset.Lemmas && word.Lemma != null,
+                    cancellationToken);
+
+            // The same shape as the lemmas above: a gloss on a word carries no source of its
+            // own, so the text it sits on is what makes the credit countable.
+            var wordGlosses = dataset.WordGlosses is null
+                ? 0
+                : await db.Words.CountAsync(
+                    word => word.Text!.Slug == dataset.WordGlosses && word.Gloss != null,
+                    cancellationToken);
+
+            var lexicon = dataset.Lexicon
+                ? await db.StrongEntries.CountAsync(cancellationToken)
+                : dataset.Glossary
+                    ? await db.LexiconGlosses
+                        .Where(gloss => gloss.Source.StartsWith(dataset.Prefix))
+                        .Select(gloss => gloss.Entry)
+                        .Distinct()
+                        .CountAsync(cancellationToken)
+                    : 0;
+
+            var counts = new DatasetCounts(
+                Of(entities, dataset),
+                Of(events, dataset),
+                Of(periods, dataset),
+                lemmas,
+                wordGlosses,
+                lexicon,
+                dataset.Links ? Of(links, dataset) : 0,
+                dataset.Parsings ? Of(parsings, dataset) : 0,
+                Of(commandments, dataset),
+                Of(topics, dataset));
+
+            if (counts is
+                {
+                    Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Glosses: 0, Lexicon: 0, Links: 0, Parsings: 0,
+                    Commandments: 0, Topics: 0,
+                })
+            {
+                continue;
             }
 
-            // Rows whose source no declaration claims. Reported rather than dropped: a dataset
-            // loaded without being declared here is exactly the thing this endpoint exists to
-            // catch, and a silent zero would let it be published unattributed.
-            var undeclared = Undeclared(entities).Concat(Undeclared(events)).Concat(Undeclared(periods))
-                .Concat(Undeclared(links))
-                .Concat(Undeclared(parsings))
-                .Concat(Undeclared(commandments))
-                .Concat(Undeclared(topics))
-                .GroupBy(row => row.Source, StringComparer.Ordinal)
-                .Select(group => new UndeclaredResponse(group.Key, group.Sum(row => row.Rows)))
-                .OrderByDescending(row => row.Rows)
-                .ToList();
+            counted.Add((dataset, counts));
+        }
 
-            return Results.Ok(new DatasetListResponse(answers, undeclared));
-        });
+        // Rows whose source no declaration claims. Reported rather than dropped: a dataset
+        // loaded without being declared here is exactly the thing this endpoint exists to
+        // catch, and a silent zero would let it be published unattributed.
+        var undeclared = Undeclared(entities).Concat(Undeclared(events)).Concat(Undeclared(periods))
+            .Concat(Undeclared(links))
+            .Concat(Undeclared(parsings))
+            .Concat(Undeclared(commandments))
+            .Concat(Undeclared(topics))
+            .GroupBy(row => row.Source, StringComparer.Ordinal)
+            .Select(group => new UndeclaredResponse(group.Key, group.Sum(row => row.Rows)))
+            .OrderByDescending(row => row.Rows)
+            .ToList();
+
+        return new DatasetTally(counted, undeclared);
     }
 
     private static async Task<List<(string Source, int Rows)>> Counted(
@@ -223,3 +240,51 @@ public record DatasetCounts(
 public record UndeclaredResponse(string Source, int Rows);
 
 public record DatasetListResponse(IList<DatasetResponse> Items, IList<UndeclaredResponse> Undeclared);
+
+internal sealed record DatasetTally(
+    IReadOnlyList<(Datasets.Dataset Dataset, DatasetCounts Counts)> Counted,
+    IReadOnlyList<UndeclaredResponse> Undeclared);
+
+/// <summary>
+/// The dataset counts, kept for a few minutes. Every page that credits a source asks for them and they
+/// cost the database most of a second; a published corpus does not change under a running API, and a
+/// corpus loaded on a workstation is counted afresh a few minutes later.
+/// </summary>
+internal sealed class DatasetCountsCache(IServiceScopeFactory scopes)
+{
+    private static readonly TimeSpan Lifetime = TimeSpan.FromMinutes(5);
+
+    private readonly SemaphoreSlim _gate = new(1, 1);
+
+    private (DatasetTally Tally, DateTimeOffset CountedAt)? _kept;
+
+    public async Task<DatasetTally> Get(CancellationToken cancellationToken)
+    {
+        if (Fresh() is { } tally)
+        {
+            return tally;
+        }
+
+        await _gate.WaitAsync(cancellationToken);
+        try
+        {
+            if (Fresh() is { } counted)
+            {
+                return counted;
+            }
+
+            await using var scope = scopes.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var fresh = await DatasetEndpoints.Count(db, cancellationToken);
+            _kept = (fresh, DateTimeOffset.UtcNow);
+            return fresh;
+        }
+        finally
+        {
+            _gate.Release();
+        }
+    }
+
+    private DatasetTally? Fresh() =>
+        _kept is { } kept && DateTimeOffset.UtcNow - kept.CountedAt < Lifetime ? kept.Tally : null;
+}

@@ -18,6 +18,9 @@
 	# The API is stopped while a corpus release is swapped in and started again after it. Caddy
 	# resolves "api" afresh on each connection, and for up to twenty seconds keeps retrying a request
 	# whose upstream refuses it, so a publication is a pause rather than an error page.
+	#
+	# X-Forwarded-For is written here from the connection, and whatever a client sent in it is dropped,
+	# since no proxy in front of this one is trusted. The API limits each reader by that address.
 	reverse_proxy {args[0]}:8080 {
 		lb_try_duration 20s
 		lb_try_interval 250ms

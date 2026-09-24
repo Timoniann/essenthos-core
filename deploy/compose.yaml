@@ -130,9 +130,11 @@ services:
       # The first admins, by verified address, comma-separated; the admin area names the rest.
       Accounts__BootstrapAdmins: ${ADMIN_EMAILS:-}
       Cors__AllowedOrigins__0: https://${SITE_DOMAIN:?set SITE_DOMAIN}
-      # The proxy terminates TLS; without this the API believes every request arrived over plain http
-      # and builds its links and its sign-in callbacks accordingly.
-      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      # The proxy terminates TLS and passes the reader's address on. Its headers are believed from its
+      # address alone: the API is limited per reader by that address, and a header anyone else could
+      # write would let them be any reader they liked. Without it the API believes every request came
+      # over plain http from the proxy, and builds its links and its sign-in callbacks accordingly.
+      ForwardedHeaders__KnownProxies: 10.89.0.2
       Images__Path: /images
     volumes:
       # The pictures the corpus's rows name. The rows arrive in the release; `forge publish` puts the
@@ -178,7 +180,7 @@ services:
       Authentication__GitHub__ClientSecret: ${GITHUB_DEV_CLIENT_SECRET:-}
       Accounts__BootstrapAdmins: ${ADMIN_EMAILS:-}
       Cors__AllowedOrigins__0: https://${DEV_DOMAIN:?set DEV_DOMAIN}
-      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      ForwardedHeaders__KnownProxies: 10.89.0.2
       Images__Path: /images
     volumes:
       - ${HOST_DATA_ROOT}/images/corpus_dev:/images:ro
@@ -208,6 +210,9 @@ services:
       ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL, the address Let's Encrypt writes to about expiring certificates}
       DEV_USER: ${DEV_USER:?set DEV_USER}
       DEV_PASSWORD_HASH: ${DEV_PASSWORD_HASH:?set DEV_PASSWORD_HASH with `docker run --rm caddy:2.10-alpine caddy hash-password`}
+    networks:
+      default:
+        ipv4_address: 10.89.0.2
     ports:
       - "${PROXY_HTTP_PORT:-80}:80"
       - "${PROXY_HTTPS_PORT:-443}:443"
@@ -243,3 +248,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+# One network, with the proxy at a fixed address the APIs are told to believe and every other container
+# given one from the upper half. The API is published on no port, so the proxy is the only thing that
+# reaches it from outside.
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.89.0.0/24
+          ip_range: 10.89.0.128/25
