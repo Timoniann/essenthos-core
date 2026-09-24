@@ -345,47 +345,50 @@ internal static class Annotating
     /// word beside it (<see cref="SameWord"/>) is a second rendering of it and keeps it too. A text that
     /// writes no capitals at all has no word written as a name, and nothing in it is taken back.
     /// </para>
+    ///
+    /// <para>
+    /// Asked of every row <see cref="Carry"/> reached, as the <c>leftover</c> flag of <c>judged</c>,
+    /// rather than as a list of words joined back: the words beside a word are the other rows of its
+    /// seed, text and verse, gathered by a window over them.
+    /// </para>
     /// </summary>
     public static readonly string Leftover =
         $"""
-         WITH crowd AS MATERIALIZED (
-             SELECT DISTINCT r.through, r.text_id, r.verse_id, r.word_id, w.text, w.normalised_text,
-                    before.id IS NULL OR before.trailer ~ '[.!?]' AS opens
-             FROM reached r
-             JOIN word w ON w.id = r.word_id
-             LEFT JOIN word before ON before.verse_id = w.verse_id AND before.position = w.position - 1
-             WHERE (r.through, r.text_id, r.verse_id) IN (
-                 SELECT through, text_id, verse_id FROM reached
-                 GROUP BY 1, 2, 3 HAVING count(DISTINCT word_id) > 1)
-         ),
          written AS MATERIALIZED (
              SELECT spelled.text_id, spelled.normalised_text,
                     EXISTS (SELECT 1 FROM word lower_case
                             WHERE lower_case.text_id = spelled.text_id
                               AND lower_case.normalised_text = spelled.normalised_text
                               AND lower_case.text !~ '^[[:upper:]]') AS lower
-             FROM (SELECT DISTINCT text_id, normalised_text FROM crowd) spelled
+             FROM (SELECT DISTINCT text_id, normalised_text FROM beside WHERE crowded) spelled
          ),
-         word_in_crowd AS MATERIALIZED (
-             SELECT c.through, c.text_id, c.verse_id, c.word_id,
-                    lower(regexp_replace(c.text, '{Ornament}', '', 'g')) AS bare,
-                    c.text ~ '^[[:upper:]]' AS capital,
-                    c.text ~ '^[[:upper:]]' AND NOT c.opens AS capitalised_here,
-                    coalesce(written.lower, FALSE) AS lower
+         word_in_crowd AS (
+             SELECT b.*,
+                    lower(regexp_replace(b.spelling, '{Ornament}', '', 'g')) AS bare,
+                    b.spelling ~ '^[[:upper:]]' AS capital,
+                    b.spelling ~ '^[[:upper:]]' AND NOT b.opens AS capitalised_here,
+                    b.crowded AND coalesce(written.lower, FALSE) AS lower
+             FROM beside b
+             LEFT JOIN written ON written.text_id = b.text_id
+                  AND written.normalised_text = b.normalised_text
+         ),
+         crowd AS (
+             SELECT c.*,
+                    bool_or(c.capital AND NOT c.lower) OVER verse AS named_beside,
+                    array_agg(c.word_id) FILTER (WHERE c.capital) OVER verse AS capitals,
+                    array_agg(c.bare) FILTER (WHERE c.capital) OVER verse AS capital_bares
+             FROM word_in_crowd c
+             WINDOW verse AS (PARTITION BY c.through, c.text_id, c.verse_id)
+         ),
+         judged AS (
+             SELECT c.*,
+                    c.lower AND NOT c.capitalised_here AND c.named_beside
+                        AND NOT EXISTS (
+                            SELECT 1 FROM unnest(c.capitals, c.capital_bares) twin(word_id, bare)
+                            WHERE twin.word_id <> c.word_id
+                              AND similarity(twin.bare, c.bare) >= {SameWord}) AS leftover
              FROM crowd c
-             LEFT JOIN written ON written.text_id = c.text_id
-                  AND written.normalised_text = c.normalised_text
          )
-         SELECT DISTINCT stray.word_id, stray.through
-         FROM word_in_crowd stray
-         JOIN word_in_crowd name ON name.through = stray.through AND name.text_id = stray.text_id
-              AND name.verse_id = stray.verse_id AND name.word_id <> stray.word_id
-         WHERE stray.lower AND NOT stray.capitalised_here AND name.capital AND NOT name.lower
-           AND NOT EXISTS (
-               SELECT 1 FROM word_in_crowd twin
-               WHERE twin.through = stray.through AND twin.text_id = stray.text_id
-                 AND twin.verse_id = stray.verse_id AND twin.word_id <> stray.word_id
-                 AND twin.capital AND similarity(twin.bare, stray.bare) >= {SameWord})
          """;
 
     /// <summary>
@@ -418,6 +421,13 @@ internal static class Annotating
     /// one pass can carry seeds from several witnesses and each row still says where it came from.
     /// Takes <c>@faint</c> and <c>@firm</c>; <see cref="CarryAcrossLinks"/> supplies both.
     /// </para>
+    ///
+    /// <para>
+    /// Everything asked of a verse or of a word is a window over the rows reached, never a join of
+    /// them to themselves. The planner cannot see inside a CTE, so it takes such a join to match
+    /// one row and answers it with a nested loop, which is quadratic in the links reached — and one
+    /// source's seeds reach hundreds of thousands of words, a dozen texts over for every Hebrew one.
+    /// </para>
     /// </summary>
     public static readonly string Carry =
         $"""
@@ -425,6 +435,9 @@ internal static class Annotating
             SELECT other.word_id,
                    w.text_id,
                    w.verse_id,
+                   w.text AS spelling,
+                   w.normalised_text,
+                   before.id IS NULL OR before.trailer ~ '[.!?]' AS opens,
                    seed.entity_id,
                    crossed.worth AS link,
                    CASE WHEN seed.confidence IS NULL
@@ -445,27 +458,28 @@ internal static class Annotating
             CROSS JOIN LATERAL (SELECT {LinkWorth} AS worth) crossed
             CROSS JOIN LATERAL ({Reached}) other
             JOIN word w ON w.id = other.word_id
+            LEFT JOIN word before ON before.verse_id = w.verse_id AND before.position = w.position - 1
             WHERE seed.through IS NULL
         ),
-        rendered AS (
-            SELECT through, text_id, verse_id, max(link) AS best
-            FROM reached GROUP BY 1, 2, 3
-        ),
-        leftover AS ({Leftover}),
-        supported AS (
-            SELECT r.*
+        beside AS MATERIALIZED (
+            SELECT r.*,
+                   max(r.link) OVER verse AS best,
+                   min(r.word_id) OVER verse <> max(r.word_id) OVER verse AS crowded
             FROM reached r
-            JOIN rendered d ON d.through = r.through
-                 AND d.text_id = r.text_id AND d.verse_id = r.verse_id
-            WHERE (r.link >= @faint OR d.best < @firm)
-              AND NOT EXISTS (SELECT 1 FROM leftover x WHERE x.word_id = r.word_id AND x.through = r.through)
+            WINDOW verse AS (PARTITION BY r.through, r.text_id, r.verse_id)
         ),
-        unanimous AS (
-            SELECT word_id FROM supported GROUP BY 1 HAVING count(DISTINCT entity_id) = 1
+        {Leftover},
+        supported AS (
+            SELECT j.*,
+                   min(j.entity_id) OVER word = max(j.entity_id) OVER word AS unanimous
+            FROM judged j
+            WHERE (j.link >= @faint OR j.best < @firm) AND NOT j.leftover
+            WINDOW word AS (PARTITION BY j.word_id)
         ),
         strongest AS (
             SELECT DISTINCT ON (r.word_id) r.*
-            FROM supported r JOIN unanimous u ON u.word_id = r.word_id
+            FROM supported r
+            WHERE r.unanimous
             ORDER BY r.word_id, coalesce(r.confidence, 1.0) DESC, r.through
         )
         INSERT INTO pending_annotation
@@ -474,14 +488,13 @@ internal static class Annotating
                'through ' || s.spoken_by || ' word ' || s.through || ', linked by ' || s.link_method,
                s.through, s.link
         FROM strongest s
-        JOIN word w ON w.id = s.word_id
         CROSS JOIN LATERAL (SELECT EXISTS (
             SELECT 1 FROM verse_reference r
             JOIN entity_verse ev ON ev.entity_id = s.entity_id
                  AND ev.canonical_book = r.canonical_book
                  AND ev.canonical_chapter = r.canonical_chapter
                  AND ev.canonical_verse = r.canonical_verse
-            WHERE r.verse_id = w.verse_id AND r.is_primary) AS named) agreed
+            WHERE r.verse_id = s.verse_id AND r.is_primary) AS named) agreed
         ON CONFLICT (word_id) DO NOTHING
         """;
 
