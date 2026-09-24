@@ -496,6 +496,13 @@ internal sealed class CompositionPipeline(
     /// stated row keeps the source's identity because a guess can be rebuilt by running the aligner
     /// again and a statement cannot be rebuilt at all.
     /// </para>
+    ///
+    /// <para>
+    /// A pair onto a word of the target that something other than the aligner says the translation
+    /// does not render is not written either. That is the answer standing on the word, as an empty
+    /// answer on a source word is; and a rerun that put the guess back would show the word as
+    /// unrendered and rendered at once, undoing every guess an absence was allowed to withdraw.
+    /// </para>
     /// </summary>
     internal async Task<(int Fresh, int Corroborated)> Write(
         NpgsqlConnection connection,
@@ -508,7 +515,9 @@ internal sealed class CompositionPipeline(
         var renders = EnumSpelling.Of(LinkRelation.Renders);
         var stated = await Stated(connection, from.Id, to.Id, renders, cancellationToken);
         var claimed = (await Statements(connection, from.Id, to.Id, cancellationToken)).Keys.ToHashSet();
-        var (fresh, agreeing) = Split(merged, stated, claimed, viaSlugs);
+        var unrendered = await Unrendered(connection, from.Id, to.Id, cancellationToken);
+        var (fresh, agreeing) = Split(
+            [.. merged.Where(link => !unrendered.Contains(link.To))], stated, claimed, viaSlugs);
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
 
@@ -726,6 +735,35 @@ internal sealed class CompositionPipeline(
         }
 
         return statements;
+    }
+
+    /// <summary>The target words a link that is not the aligner's says the source text does not render.</summary>
+    private static async Task<HashSet<long>> Unrendered(
+        NpgsqlConnection connection,
+        int fromTextId,
+        int toTextId,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(
+            """
+            SELECT t.word_id
+            FROM link l
+            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
+            WHERE l.from_text_id = @from AND l.to_text_id = @to AND l.relation = @omits AND l.method <> 'aligner'
+            """, connection);
+        command.Parameters.AddWithValue("from", fromTextId);
+        command.Parameters.AddWithValue("to", toTextId);
+        command.Parameters.AddWithValue("omits", EnumSpelling.Of(LinkRelation.Omits));
+        command.CommandTimeout = 600;
+
+        var words = new HashSet<long>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            words.Add(reader.GetInt64(0));
+        }
+
+        return words;
     }
 
     private static async Task Row(

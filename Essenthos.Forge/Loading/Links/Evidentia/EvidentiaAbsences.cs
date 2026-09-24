@@ -35,8 +35,23 @@ internal sealed record EvidentiaAbsenceRule(string Spelling, EvidentiaAbsenceKin
     public static readonly EvidentiaAbsenceRule Article =
         new("unrendered-article", EvidentiaAbsenceKind.NotRendered, "article no the of the verse renders", 117, 118);
 
+    /// <summary>
+    /// The safe tier's precision on the independent sample. An absence in that tier whose rule is
+    /// measured at least this well is held more surely than the aligner's guess on the same word.
+    /// </summary>
+    public const double SafeTierPrecision = 0.9554;
+
+    public static readonly IReadOnlyList<EvidentiaAbsenceRule> All =
+        [IndefiniteArticle, UnwrittenArticle, Conjunction, ObjectMarker, Article];
+
     /// <summary>The measured precision with one right and one wrong added, so it stays below 1.</summary>
     public double Confidence => (Right + 1.0) / (Judged + 2.0);
+
+    /// <summary>Whether a safe-tier absence by this rule takes its word out of a link only the aligner states.</summary>
+    public bool OutranksTheAligner => Confidence >= SafeTierPrecision;
+
+    public static EvidentiaAbsenceRule? Named(string? spelling) =>
+        All.FirstOrDefault(rule => rule.Spelling == spelling);
 }
 
 /// <param name="Anchor">The placed word the claim rests on: the head of a supplied article, or the word a prefix is written onto.</param>
@@ -92,6 +107,9 @@ internal static class EvidentiaAbsences
     private const string HebrewArticle = "H9009";
 
     private const string GreekArticle = "G3588";
+
+    /// <summary>The numbers the article of the original is written under.</summary>
+    public static readonly IReadOnlyList<string> ArticleNumbers = [HebrewArticle, GreekArticle];
 
     private const string ObjectMarker = "H853";
 

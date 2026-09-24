@@ -53,6 +53,9 @@ public class AppDbContext : DbContext
 
     public DbSet<EvidentiaReview> EvidentiaReviews { get; set; } = null!;
 
+    /// <summary>Words an applied absence took out of an aligner's link, with all the link said, so it can be undone.</summary>
+    public DbSet<EvidentiaWithdrawal> EvidentiaWithdrawals { get; set; } = null!;
+
     public DbSet<VerseLink> VerseLinks { get; set; } = null!;
 
     public DbSet<VerseLinkVerse> VerseLinkVerses { get; set; } = null!;
@@ -729,6 +732,34 @@ public class AppDbContext : DbContext
                     "ck_evidentia_review_reviewer_not_empty",
                     "length(btrim(\"reviewer\")) > 0");
             });
+        });
+
+        modelBuilder.Entity<EvidentiaWithdrawal>(entity =>
+        {
+            entity.Property(w => w.Relation).HasConversion(EnumStorage.LinkRelation);
+            entity.Property(w => w.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(w => w.Review)
+                .WithMany()
+                .HasForeignKey(w => w.ReviewId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(w => w.Word)
+                .WithMany()
+                .HasForeignKey(w => w.WordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(w => w.Link)
+                .WithMany()
+                .HasForeignKey(w => w.LinkId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // The claims are one list kept as three columns; a claim that lost its confidence or
+            // its note to a misaligned array would read back as a different claim.
+            entity.ToTable("evidentia_withdrawal", table => table.HasCheckConstraint(
+                "ck_evidentia_withdrawal_claims_aligned",
+                "cardinality(\"claim_sources\") = cardinality(\"claim_confidences\") " +
+                "AND cardinality(\"claim_sources\") = cardinality(\"claim_notes\")"));
         });
     }
 
