@@ -72,6 +72,54 @@ public sealed class ContextEndpointTests : IDisposable
     }
 
     /// <summary>
+    /// A person's row carries the picture the person's page leads with, small, and nothing else's
+    /// does; with the site's own portraits switched off, only a credited public picture is left.
+    /// </summary>
+    [Fact]
+    public async Task APersonCarriesThePictureTheirPageLeadsWith()
+    {
+        var noah = Record("noah", EntityKind.Person);
+        var gomer = Record("gomer", EntityKind.Person);
+        var ararat = Record("ararat", EntityKind.Place);
+        await _db.SaveChangesAsync();
+        Names(_db.WordAt(_english, 10, 1, 6), noah);
+        Names(_db.WordAt(_hebrew, 10, 2, 3), gomer);
+        NamedAt(ararat, 10, 1);
+        _db.EntityImages.AddRange(
+            new EntityImage
+            {
+                EntityId = noah.Id, Kind = "generated", Role = "primary", File = "generated/noah.webp",
+                Digest = "0123456789ab", Width = 512, Height = 768, Credit = "Essenthos", Licence = "Ours", Source = "Essenthos",
+            },
+            new EntityImage
+            {
+                EntityId = gomer.Id, Kind = "public", Role = "primary", File = "commons/Gomer.jpg",
+                Digest = "ba9876543210", Width = 300, Height = 400, Credit = "James Tissot",
+                Licence = "Public domain", Source = "Wikimedia Commons",
+            },
+            new EntityImage
+            {
+                EntityId = ararat.Id, Kind = "public", Role = "primary", File = "commons/Ararat.jpg",
+                Digest = "aaaaaaaaaaaa", Width = 800, Height = 600, Credit = "Somebody",
+                Licence = "CC BY 4.0", Source = "Wikimedia Commons",
+            });
+        await _db.SaveChangesAsync();
+
+        var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
+
+        context.Entities.Single(e => e.Slug == "noah").Thumbnail!.Url
+            .Should().Be("/v1/images/generated/noah.webp?v=0123456789ab");
+        context.Entities.Single(e => e.Slug == "gomer").Thumbnail!.Kind.Should().Be("public");
+        context.Entities.Single(e => e.Slug == "ararat").Thumbnail.Should().BeNull();
+
+        var withoutOurs = await ContextEndpoints.Context(
+            _db, Genesis, 10, null, await ContextWeights.Count(_db, default), default, generated: false);
+
+        withoutOurs.Entities.Single(e => e.Slug == "noah").Thumbnail.Should().BeNull();
+        withoutOurs.Entities.Single(e => e.Slug == "gomer").Thumbnail.Should().NotBeNull();
+    }
+
+    /// <summary>
     /// Two readings of equal standing that name two different men are the corpus saying it does
     /// not know, and the panel does not pick one of them any more than the reader does.
     /// </summary>

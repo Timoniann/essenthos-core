@@ -1,3 +1,4 @@
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using System.Linq.Expressions;
 using Essenthos.Core.Database;
@@ -37,11 +38,13 @@ internal static class ContextEndpoints
             AppDbContext db,
             ICanonIndex canon,
             ContextWeightsCache weights,
+            SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
         {
             var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
             return refusal ?? Results.Ok(await Context(
-                db, ordinal, chapter, language, await weights.Get(cancellationToken), cancellationToken));
+                db, ordinal, chapter, language, await weights.Get(cancellationToken), cancellationToken,
+                settings.Is(SiteSettings.GeneratedImages)));
         });
 
         // The families among the chapter's people, apart from the rest because a genealogy's trees
@@ -95,7 +98,8 @@ internal static class ContextEndpoints
         int chapter,
         string? language,
         ContextWeights weights,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool generated = true)
     {
         var (verses, how, spoken) = await NamedAndHow(db, book, chapter, cancellationToken);
         ChapterSalience.SettleWordsForGod(verses, how, spoken);
@@ -126,6 +130,13 @@ internal static class ContextEndpoints
         var described = await Descriptors.Of(db, slugs, language, cancellationToken);
         var meanings = await Meanings(db, [.. records.Select(r => r.Id)], cancellationToken);
         var namesUsed = await ChapterSalience.NamesUsed(db, book, chapter, cancellationToken);
+        // A face for the people only: a place's or a thing's picture is its page's, and a row of the
+        // words for God carries the one picture God's record leads with, which is light and not a face.
+        var pictured = await ImageEndpoints.Leading(
+            db,
+            [.. records.Where(r => r.Kind == EntityKind.Person).Select(r => r.Slug)],
+            cancellationToken,
+            generated);
 
         var entities = records
             .Select(r => new ContextEntityResponse(
@@ -147,6 +158,7 @@ internal static class ContextEndpoints
                 ChapterName = ChapterSalience.WordsForGod.Contains(r.Slug)
                     ? null
                     : ChapterSalience.NameUsed(r.Name, namesUsed.GetValueOrDefault(r.Slug)),
+                Thumbnail = pictured.GetValueOrDefault(r.Slug),
             })
             .OrderByDescending(e => ChapterSalience.Of(e.Slug, verses, how, spoken))
             .ThenBy(e => weights.EntityChapters.GetValueOrDefault(e.Slug, int.MaxValue))
@@ -610,4 +622,7 @@ internal record ContextEntityResponse(
     /// where the chapter uses the headword or labels nothing.
     /// </summary>
     public string? ChapterName { get; init; }
+
+    /// <summary>The picture a person's page leads with, to show small beside the name; null for everything else.</summary>
+    public EntityThumbnailResponse? Thumbnail { get; init; }
 }
