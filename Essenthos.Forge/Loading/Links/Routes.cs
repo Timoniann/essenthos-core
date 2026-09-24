@@ -59,6 +59,14 @@ internal static class Routes
     public const double Ceiling = 0.98;
 
     /// <summary>
+    /// The confidence an inferred pair is written with: its own score, held at <see cref="Ceiling"/>.
+    /// A model scores a pair exactly 1 when it has seen the two words together and never apart, which
+    /// is the thinnest evidence it has; written as it stands, it is the one number in the corpus that
+    /// reads as certainty, on the one method with no claim to it.
+    /// </summary>
+    public static double Written(double confidence) => Math.Min(Ceiling, confidence);
+
+    /// <summary>
     /// The direct readings merged as one family and the composed one as another. The written and
     /// the reduced reading are one model over two spellings of the same words: where the language
     /// barely inflects, or the stemmer barely changes a word, they are the same answer twice, and
