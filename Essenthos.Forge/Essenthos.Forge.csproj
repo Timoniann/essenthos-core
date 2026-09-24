@@ -84,6 +84,11 @@
              source page. The pictures themselves are under Resources/Images, outside git. -->
         <Content Remove="Loading\Encyclopedia\PublicImages.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PublicImages.json" />
+
+        <!-- The corrections scripts/swete-corrections.py writes out, one per token, for the reader and
+             the warm pass to make alike. -->
+        <Content Remove="Swete\SweteCorrections.json" />
+        <EmbeddedResource Include="Swete\SweteCorrections.json" />
     </ItemGroup>
 
     <!-- An EVIDENTIA run records the build that made it, and a version number that never changes

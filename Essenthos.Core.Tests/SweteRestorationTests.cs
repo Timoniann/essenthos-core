@@ -8,6 +8,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Essenthos.Core.Tests;
 
@@ -69,9 +70,9 @@ public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void EveryOtherLinePassesThroughUnchanged()
     {
-        string[] lines = ["2.1.1 ταῦτα", "2.1.1 τὰ", "2.1.2 ὀνόματα"];
+        string[] lines = ["41.1.1 καὶ", "41.1.1 ἐγένετο", "41.1.2 ἀνάστηθι"];
 
-        SweteRestorations.Apply("02.Exodus", lines).Should().Equal(lines);
+        SweteRestorations.Apply("41.Jonas", lines).Should().Equal(lines);
     }
 
     /// <summary>
@@ -122,7 +123,7 @@ public sealed class SweteRestorationLoadTests : IDisposable
     private void Clear() => _db.Database.ExecuteSqlRaw("DELETE FROM text");
 
     private static IEnumerable<(int Chapter, int Verse)> Restored =>
-        SweteRestorations.All.Select(r => (r.Chapter, r.Verse)).Distinct();
+        SweteRestorations.All.Where(r => r.Book == Genesis).Select(r => (r.Chapter, r.Verse)).Distinct();
 
     private static IReadOnlyList<SweteWord> Words(SweteBook book, int chapter, int verse) =>
         book.Chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse && v.Label.Length == 0).Words;
@@ -172,7 +173,7 @@ public sealed class SweteRestorationLoadTests : IDisposable
         }
 
         var row = await _db.Texts.AsNoTracking().SingleAsync(t => t.Id == text.Id);
-        row.RightsNote.Should().Be($"CC BY-SA 4.0. {SweteRestorations.Note}");
+        row.RightsNote.Should().Be($"CC BY-SA 4.0. {SweteRestorations.Note} {SweteCorrections.Note}");
         var restored = await _db.Words.AsNoTracking().SingleAsync(w => w.TextId == text.Id && w.Surface == "πεντήκοντα"
                                                                        && w.Verse!.ChapterNumber == 9);
         restored.NormalisedText.Should().Be("πεντηκοντα", "a word written here is searchable at once");
@@ -222,6 +223,25 @@ public sealed class SweteRestorationLoadTests : IDisposable
         (await _db.Links.AnyAsync(l => l.Id == expands.Id)).Should().BeFalse();
     }
 
+    /// <summary>
+    /// A correction that leaves the verse as many words long rewrites the word in place: it is the
+    /// same word the edition prints, so its row, and everything standing on it, stays.
+    /// </summary>
+    [Fact]
+    public async Task ACorrectedLetterKeepsItsRow()
+    {
+        var text = Loaded(_digitised);
+        var numeral = _db.WordAt(text, 9, 1, 1);
+        numeral.Surface.Should().Be("IXκαὶ");
+
+        await _loader.Load(TestResources.SweteFolder);
+
+        var corrected = await _db.Words.AsNoTracking().SingleAsync(w => w.Id == numeral.Id);
+        corrected.Surface.Should().Be("καὶ");
+        corrected.Position.Should().Be(1);
+        corrected.NormalisedText.Should().Be("και");
+    }
+
     private Link Link(Text from, Text to, LinkRelation relation, Word fromWord, Word? toWord)
     {
         var link = new Link
@@ -238,5 +258,118 @@ public sealed class SweteRestorationLoadTests : IDisposable
 
         _db.SaveChanges();
         return link;
+    }
+}
+
+/// <summary>
+/// The corrections a rule settles in every book: a Latin letter for the Greek one it looks like, the
+/// margin number run into a verse's first word, two words run together.
+/// </summary>
+public class SweteCorrectionTests(Swete swete) : IClassFixture<Swete>
+{
+    [Theory]
+    [InlineData(1, 9, 1, "καὶ")]
+    [InlineData(19, 1, 1, "ΜΑΚΑΡΙΟΣ")]
+    [InlineData(20, 3, 22, "ἔσται")]
+    public void TheVerseOpensWithItsWordAndNotItsNumber(int book, int chapter, int verse, string first)
+    {
+        var words = Words(book, chapter, verse, verse == 22 && book == 20 ? "a" : "");
+
+        words[0].Should().Be(first);
+    }
+
+    [Theory]
+    [InlineData(1, 40, 12, "’Ιωσήφ")]
+    [InlineData(13, 12, 40, "Νεφθαλεὶ")]
+    [InlineData(26, 30, 8, "Αἴγυπτον")]
+    [InlineData(1, 6, 21, "βρωμάτων")]
+    [InlineData(1, 6, 22, "κύριος")]
+    public void TheWordReadsInGreekLetters(int book, int chapter, int verse, string word) =>
+        Words(book, chapter, verse, "").Should().Contain(word);
+
+    /// <summary>
+    /// Where no rule settles a Latin letter the token is left as the transcription reads it: Psalm 63
+    /// opens Bἰς where every witness has Εἰς, so the letter on the page is not a B at all.
+    /// </summary>
+    [Fact]
+    public void AMisreadLetterIsLeftAsItIs() =>
+        Words(19, 63, 1, "")[0].Should().Be("Bἰς");
+
+    [Fact]
+    public void EveryCorrectionChangesSomethingAndSaysWhy()
+    {
+        SweteCorrections.All.Should().NotBeEmpty();
+        SweteCorrections.All.Should().OnlyContain(c => c.Digitised != c.Printed && c.Why.Length > 0);
+    }
+
+    [Fact]
+    public void NoCorrectionIsMadeInAVerseRestoredByHand()
+    {
+        var byHand = SweteRestorations.All.Except(SweteCorrections.All)
+            .Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).ToHashSet();
+
+        SweteCorrections.All.Should().NotContain(c => byHand.Contains(ValueTuple.Create(c.Book, c.Chapter, c.Verse, c.Label)));
+    }
+
+    private IReadOnlyList<string> Words(int book, int chapter, int verse, string label) =>
+        [.. swete.Book(book).Chapters.Single(c => c.Number == chapter).Verses
+            .Single(v => v.Number == verse && v.Label == label).Words.Select(w => w.Surface)];
+}
+
+/// <summary>
+/// Every restoration and correction written into a whole Swete loaded before them, as the corpus
+/// this machine holds was: each verse must come out as a cold load reads it.
+/// </summary>
+[Collection(WitnessDatabaseCollection.Name)]
+public sealed class SweteCorrectionLoadTests : IDisposable
+{
+    private readonly AppDbContext _db;
+    private readonly ITestOutputHelper _output;
+
+    public SweteCorrectionLoadTests(WitnessDatabase database, ITestOutputHelper output)
+    {
+        _db = database.NewContext();
+        _output = output;
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
+    }
+
+    public void Dispose()
+    {
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
+        _db.Dispose();
+    }
+
+    [Fact]
+    public async Task AWholeSweteLoadedBeforeThemReadsAsACorpusLoadedAfter()
+    {
+        await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance)
+            .Load(SweteTextSource.Read(TestResources.SweteFolder, restored: false));
+        var loader = new SweteRestorationLoader(_db, NullLogger<SweteRestorationLoader>.Instance);
+
+        var outcome = await loader.Load(TestResources.SweteFolder);
+        _output.WriteLine(outcome.ToString());
+
+        var verses = SweteRestorations.All.Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).Distinct().ToList();
+        outcome.Verses.Should().Be(verses.Count);
+        outcome.Words.Should().Be(17 + SweteCorrections.All.Count(c => c.Why.StartsWith("Two words", StringComparison.Ordinal)));
+
+        var cold = SweteTextSource.Read(TestResources.SweteFolder);
+        var text = await _db.Texts.SingleAsync(t => t.Slug == SweteTextSource.Slug);
+        foreach (var (book, chapter, verse, label) in verses)
+        {
+            var (canonical, placed) = SweteTextSource.Placed(book, chapter);
+            var expected = string.Concat(cold.Books.Single(b => b.CanonicalOrdinal == canonical)
+                .Chapters.Single(c => c.Number == placed).Verses.Single(v => v.Number == verse && v.Label == label)
+                .Words.Select(w => w.Surface + w.Trailer));
+            var stored = string.Concat(await _db.Words.AsNoTracking()
+                .Where(w => w.TextId == text.Id && w.Verse!.Book!.CanonicalOrdinal == canonical
+                            && w.Verse.ChapterNumber == placed && w.Verse.Number == verse && w.Verse.Label == label)
+                .OrderBy(w => w.Position)
+                .Select(w => w.Surface + w.Trailer)
+                .ToListAsync());
+            stored.Should().Be(expected, $"{book} {chapter}:{verse}{label}");
+        }
+
+        (await loader.Load(TestResources.SweteFolder)).Verses.Should().Be(0);
     }
 }

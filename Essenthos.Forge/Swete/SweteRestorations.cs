@@ -8,13 +8,15 @@ namespace Essenthos.Core.Swete;
 /// </param>
 /// <param name="Printed">What the edition prints in their place, in the same form.</param>
 /// <param name="Why">What establishes the printed words, which is the whole of the claim.</param>
+/// <param name="Label">The letter after the verse number, where the edition prints one.</param>
 internal sealed record SweteRestoration(
     string Book,
     int Chapter,
     int Verse,
     string Digitised,
     string Printed,
-    string Why);
+    string Why,
+    string Label = "");
 
 /// <summary>
 /// Words Swete printed and the transcription lost, put back where two witnesses independent of the
@@ -67,7 +69,10 @@ internal static class SweteRestorations
         + "restored by Essenthos where Brenton's Greek and the GLAUx treebank read the same words, in the "
         + "spelling Swete prints beside them. Letters the transcription misread are left as it reads them.";
 
-    public static readonly IReadOnlyList<SweteRestoration> All =
+    /// <summary>These, and the corrections a rule settles, which are made the same way.</summary>
+    public static readonly IReadOnlyList<SweteRestoration> All = [.. Lost(), .. SweteCorrections.All];
+
+    private static IReadOnlyList<SweteRestoration> Lost() =>
     [
         new(Genesis, 5, 15, "ἔτη, ἐγέννησεν", "ἔτη, καὶ ἐγέννησεν",
             $"{Witnesses} καὶ ἐγέννησε(ν), as every other begetting of the chapter does."),
@@ -177,7 +182,7 @@ internal static class SweteRestorations
         {
             throw new InvalidOperationException(
                 $"{book} no longer reads as the transcription these restorations were made against: " +
-                string.Join("; ", missed.Select(r => $"{r.Chapter}:{r.Verse} \"{r.Digitised}\"")) +
+                string.Join("; ", missed.Select(r => $"{r.Chapter}:{r.Verse}{r.Label} \"{r.Digitised}\"")) +
                 ". The files were fetched again at another commit, or the verse moved. Read the verse " +
                 $"afresh and correct or remove the entry in {nameof(SweteRestorations)} — upstream may " +
                 "have restored the words itself.");
@@ -197,7 +202,7 @@ internal static class SweteRestorations
 
         var parts = reference.Split('.');
         var here = parts.Length == 3
-            ? restorations.Where(r => parts[1] == r.Chapter.ToString() && parts[2] == r.Verse.ToString()).ToList()
+            ? restorations.Where(r => parts[1] == r.Chapter.ToString() && parts[2] == $"{r.Verse}{r.Label}").ToList()
             : [];
 
         var result = tokens;
@@ -228,7 +233,7 @@ internal static class SweteRestorations
         if (found.Count != 1)
         {
             throw new InvalidOperationException(
-                $"{restoration.Book} {restoration.Chapter}:{restoration.Verse} holds \"{restoration.Digitised}\" " +
+                $"{restoration.Book} {restoration.Chapter}:{restoration.Verse}{restoration.Label} holds \"{restoration.Digitised}\" " +
                 $"{found.Count} times where a restoration needs it exactly once: \"{string.Join(' ', tokens)}\". " +
                 $"Lengthen the entry in {nameof(SweteRestorations)} until it names one place.");
         }

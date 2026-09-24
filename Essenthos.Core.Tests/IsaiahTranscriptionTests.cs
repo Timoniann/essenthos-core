@@ -257,7 +257,7 @@ public class OttleyTests
     {
         Book.Chapters.Should().HaveCount(66);
         Book.Chapters.Sum(chapter => chapter.Verses.Count).Should().Be(1288);
-        Book.Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(27161);
+        Book.Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(27162);
 
         var missing = Book.Chapters.SelectMany(chapter =>
             Enumerable.Range(1, chapter.Verses.Max(v => v.Number))
@@ -280,6 +280,22 @@ public class OttleyTests
     [InlineData(44, 28, "ὁ λέγων Κύρῳ φρονεῖν", "θεμελιώσω.")]
     public void AVerseTheTranscriptionRanOnOpensWhereOttleyNumbersIt(int chapter, int verse, string opening, string end) =>
         Text(chapter, verse).Should().StartWith(opening).And.EndWith(end);
+
+    /// <summary>
+    /// A word the file lost where the verse is left without it, which Brenton, Swete and GLAUx read
+    /// and Ottley's own apparatus records no manuscript lacking; and πορεύσονται whole, without the
+    /// letters of the foot-note the transcription read into it at the foot of the page.
+    /// </summary>
+    [Theory]
+    [InlineData(53, 1, "καὶ ὃ βραχίων Κυρίου τίνι ἀπεκαλύφθη;")]
+    [InlineData(5, 5, "καὶ ἔσται εἷς καταπάτημα")]
+    [InlineData(35, 3, "καὶ γόνατα παραλελυμένα")]
+    public void AWordTheFileLostIsBack(int chapter, int verse, string end) =>
+        Text(chapter, verse).Should().EndWith(end);
+
+    [Fact]
+    public void AFootNoteReadIntoAWordIsTakenOut() =>
+        Text(35, 9).Should().Contain("ἀλλὰ πορεύσονται ἐν αὐτῇ").And.NotContain("ευρον");
 
     [Fact]
     public void NoPlaceholderAndNoLatinLetterIsLeft() =>

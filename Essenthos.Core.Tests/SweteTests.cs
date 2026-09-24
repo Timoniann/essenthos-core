@@ -160,7 +160,7 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(570385);
+            .Should().Be(570461);
     }
 
     /// <summary>
@@ -267,7 +267,7 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     /// </summary>
     [Fact]
     public void SirachOpensAtItsFirstChapterRatherThanAtItsPreface() =>
-        swete.Verse(72, 1, 1).Words[0]!.Surface.Should().Be("ΠΑΣA");
+        swete.Verse(72, 1, 1).Words[0]!.Surface.Should().Be("ΠΑΣΑ");
 
     [Fact]
     public void TheEpistleOfJeremiahIsOneChapter()
