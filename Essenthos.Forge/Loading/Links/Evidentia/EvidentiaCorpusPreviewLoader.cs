@@ -180,7 +180,10 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             gold,
             covered,
             canonicalBook,
-            canonicalChapter);
+            canonicalChapter,
+            globalKnownRenderingResolution.Proposals
+                .Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
+                .ToHashSet());
         options.Decisions?.Record(new EvidentiaChapterDecisions(
             canonicalBook, canonicalChapter, source, contentSourceWordIds, candidates,
             globalKnownRenderingResolution.Proposals, finalProposals));

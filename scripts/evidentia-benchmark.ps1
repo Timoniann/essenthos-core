@@ -6,8 +6,9 @@ param(
 
     # ind: BSB against the Berean and Clear Bible gold (Genesis 1-10, Ruth, Jonah, Mark 1-4);
     # val: the passages no rule was chosen on (1 Samuel 17, Psalms 1-23, John 1-3);
+    # val2: three more of other kinds, law, prophet and epistle (Exodus 21-23, Isaiah 40-42, Romans 5-8);
     # self: the King James against its own stated links; selfstrong: the same with source Strong allowed.
-    [string] $Runs = 'ind,val,self',
+    [string] $Runs = 'ind,val,val2,self',
 
     [string] $Output = (Join-Path ([IO.Path]::GetTempPath()) 'essenthos-evidentia')
 )
@@ -47,6 +48,10 @@ $passages = @{
         @('val-1sa', 'BSB', 'BHSA', 9, 17, 17, $independent),
         @('val-ps', 'BSB', 'BHSA', 19, 1, 23, $independent),
         @('val-john', 'BSB', 'NESTLE1904', 43, 1, 3, ($independent + '--learn-from-strong-numbers')))
+    val2       = @(
+        @('val2-exo', 'BSB', 'BHSA', 2, 21, 23, $independent),
+        @('val2-isa', 'BSB', 'BHSA', 23, 40, 42, $independent),
+        @('val2-rom', 'BSB', 'NESTLE1904', 45, 5, 8, ($independent + '--learn-from-strong-numbers')))
     self       = @(
         @('self-gen', 'KJV', 'BHSA', 1, 1, 10, @('--without-source-strong')),
         @('self-ruth', 'KJV', 'BHSA', 8, 0, 0, @('--without-source-strong')),
@@ -66,7 +71,7 @@ function Number([string] $text) { [int]($text -replace ',', '') }
 Push-Location $snapshot
 try {
     foreach ($set in $Runs -split ',') {
-        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, self or selfstrong." }
+        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, self or selfstrong." }
         $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0 }
         foreach ($passage in $passages[$set]) {
             $name, $from, $to, $book, $first, $last, $flags = $passage

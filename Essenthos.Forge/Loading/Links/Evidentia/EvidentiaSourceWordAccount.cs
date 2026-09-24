@@ -52,7 +52,19 @@ internal sealed record EvidentiaWordRecord(
     string? TargetStrongNumber,
     string? ProposalKind,
     bool? Correct,
-    bool GoldCoversSourceWord);
+    bool GoldCoversSourceWord,
+    string? Rationale = null,
+    bool Safe = false,
+    IReadOnlyList<EvidentiaCandidateTrace>? Candidates = null);
+
+/// <summary>One of the strongest edges a word had in its own verse, kept so a word left unplaced can be read.</summary>
+internal sealed record EvidentiaCandidateTrace(
+    long TargetWordId,
+    string TargetSurface,
+    string? TargetStrongNumber,
+    double Score,
+    IReadOnlyList<string> Evidence,
+    double? RenderingShare);
 
 /// <summary>
 /// Every source word of a passage, counted once: how many were placed, how many of those the gold
@@ -148,7 +160,8 @@ internal readonly record struct EvidentiaSourceWordAccount(
         IReadOnlySet<(long From, long To)> gold,
         IReadOnlySet<long> covered,
         int canonicalBook,
-        int canonicalChapter)
+        int canonicalChapter,
+        IReadOnlySet<(long From, long To)>? safe = null)
     {
         var proposalBySource = proposals
             .GroupBy(proposal => proposal.Source.Token.Id)
@@ -179,10 +192,33 @@ internal readonly record struct EvidentiaSourceWordAccount(
                     proposal?.Target.Token.StrongNumber,
                     proposal?.Kind.ToString(),
                     proposal is null ? null : gold.Contains((token.Id, proposal.Target.Token.Id)),
-                    covered.Contains(token.Id));
+                    covered.Contains(token.Id),
+                    proposal?.Trace?.Rationale,
+                    proposal is not null && safe is not null && safe.Contains((token.Id, proposal.Target.Token.Id)),
+                    Strongest(candidatesBySource.GetValueOrDefault(token.Id) ?? []));
             }),
         ];
     }
+
+    private const int TracedCandidates = 4;
+
+    private static IReadOnlyList<EvidentiaCandidateTrace> Strongest(IReadOnlyList<EvidentiaCandidate> candidates) =>
+    [
+        .. candidates
+            .Where(candidate => candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress))
+            .OrderByDescending(candidate => candidate.Score)
+            .Take(TracedCandidates)
+            .Select(candidate => new EvidentiaCandidateTrace(
+                candidate.Target.Token.Id,
+                candidate.Target.Token.Surface,
+                candidate.Target.Token.StrongNumber,
+                candidate.Score,
+                [.. candidate.Evidence.Select(evidence => evidence.Kind.ToString())],
+                candidate.Evidence
+                    .Where(evidence => evidence.Kind == EvidentiaEvidenceKind.KnownRendering)
+                    .Select(evidence => evidence.Support?.Share)
+                    .FirstOrDefault())),
+    ];
 
     /// <summary>The evidence some tier proposes from; anything else only ranks a candidate.</summary>
     private static readonly IReadOnlySet<EvidentiaEvidenceKind> ProposingEvidence = new HashSet<EvidentiaEvidenceKind>
