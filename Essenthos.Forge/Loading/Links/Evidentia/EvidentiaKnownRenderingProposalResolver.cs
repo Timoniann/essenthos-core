@@ -71,12 +71,13 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
     {
         policy ??= Safe;
         var proposals = new List<EvidentiaProposal>();
-        foreach (var verse in candidates
+        var all = candidates as IReadOnlyCollection<EvidentiaCandidate> ?? [.. candidates];
+        var extents = OccurrenceFrame.Extents(all);
+        foreach (var verse in all
                      .Where(IsExactKnownRendering)
                      .GroupBy(candidate => candidate.Source.Token.Address))
         {
-            var sourceCount = verse.Select(candidate => candidate.Source.Token.Id).Distinct().Count();
-            var targetCount = verse.Select(candidate => candidate.Target.Token.Id).Distinct().Count();
+            var (sourceCount, targetCount) = extents[verse.Key];
             // Counted before the auxiliary words are set aside, so refusing one word does not move
             // the relative position of every other word in the verse.
             var groups = verse
@@ -128,12 +129,13 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
     {
         policy ??= Review;
         var proposals = new List<EvidentiaProposal>();
-        foreach (var verse in candidates
+        var all = candidates as IReadOnlyCollection<EvidentiaCandidate> ?? [.. candidates];
+        var extents = OccurrenceFrame.Extents(all);
+        foreach (var verse in all
                      .Where(IsExactKnownRendering)
                      .GroupBy(candidate => candidate.Source.Token.Address))
         {
-            var sourceCount = verse.Select(candidate => candidate.Source.Token.Id).Distinct().Count();
-            var targetCount = verse.Select(candidate => candidate.Target.Token.Id).Distinct().Count();
+            var (sourceCount, targetCount) = extents[verse.Key];
             // Counted before the auxiliary words are set aside, so refusing one word does not move
             // the relative position of every other word in the verse.
             var choices = verse
@@ -455,12 +457,68 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
         }
 
         public static OccurrenceFrame Of(IEnumerable<RankedChoiceGroup> groups, int sourceCount, int targetCount) =>
-            new([
+            new(InOrder([
                 .. groups
                     .Where(group => group.Candidates.Select(candidate => candidate.Target.Token.Id).Distinct().Count() == 1)
                     .Select(group => (Source: group.Candidates[0].Source.Token.Position, Target: group.Candidates[0].Target.Token.Position))
                     .OrderBy(anchor => anchor.Source),
-            ], sourceCount, targetCount);
+            ]), sourceCount, targetCount);
+
+        /// <summary>
+        /// How far each verse runs on either side, read from the last word position any candidate of the
+        /// verse names, whatever its evidence: the positions scored are the words' own, so the diagonal
+        /// has to be drawn over the same scale, not over how many words happened to have a rendering.
+        /// </summary>
+        public static IReadOnlyDictionary<EvidentiaAddress, (int Source, int Target)> Extents(IEnumerable<EvidentiaCandidate> candidates) =>
+            candidates
+                .Where(candidate => candidate.Source.Token.Address == candidate.Target.Token.Address)
+                .GroupBy(candidate => candidate.Source.Token.Address)
+                .ToDictionary(
+                    verse => verse.Key,
+                    verse => (verse.Max(candidate => candidate.Source.Token.Position), verse.Max(candidate => candidate.Target.Token.Position)));
+
+        /// <summary>
+        /// The longest run of anchors whose renderings keep their order: a single word whose only
+        /// rendering stands at the other end of the verse would otherwise pull every neighbour after it.
+        /// </summary>
+        private static List<(int Source, int Target)> InOrder(List<(int Source, int Target)> anchors)
+        {
+            if (anchors.Count < 3)
+            {
+                return anchors;
+            }
+
+            var length = new int[anchors.Count];
+            var previous = new int[anchors.Count];
+            var best = 0;
+            for (var i = 0; i < anchors.Count; i++)
+            {
+                length[i] = 1;
+                previous[i] = -1;
+                for (var j = 0; j < i; j++)
+                {
+                    if (anchors[j].Source < anchors[i].Source && anchors[j].Target < anchors[i].Target && length[j] + 1 > length[i])
+                    {
+                        length[i] = length[j] + 1;
+                        previous[i] = j;
+                    }
+                }
+
+                if (length[i] > length[best])
+                {
+                    best = i;
+                }
+            }
+
+            var chain = new List<(int Source, int Target)>();
+            for (var i = best; i >= 0; i = previous[i])
+            {
+                chain.Add(anchors[i]);
+            }
+
+            chain.Reverse();
+            return chain;
+        }
 
         public double Score(EvidentiaCandidate candidate)
         {

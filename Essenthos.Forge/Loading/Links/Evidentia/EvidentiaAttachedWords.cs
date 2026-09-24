@@ -64,6 +64,12 @@ internal enum EvidentiaAttachment
 
     /// <summary><em>surely</em> of <em>you will surely die</em>, which Hebrew writes as the infinitive absolute beside the verb.</summary>
     InfinitiveAbsolute,
+
+    /// <summary>
+    /// <em>in</em> of <em>in his vineyard</em> or <em>to</em> of <em>to all the kings</em>, read with the noun it
+    /// governs when the word after it was a possessive or a quantifier the original writes elsewhere.
+    /// </summary>
+    PrepositionOfPhrase,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -77,6 +83,9 @@ internal enum EvidentiaAttachmentPlacement
 
     /// <summary>On the word of its own kind written directly before that rendering, and nowhere if there is none.</summary>
     OwnKindBefore,
+
+    /// <summary>On the preposition written before the first rendering of its phrase's words.</summary>
+    PhraseStart,
 
     /// <summary>
     /// On the rendering of the governed noun, when the word before <em>of</em> was placed on the Hebrew
@@ -176,6 +185,11 @@ internal static class EvidentiaAttachedWords
     private const double ConfidenceBelowHead = 0.10;
 
     private const int HeadReach = 3;
+
+    /// <summary>How many words a preposition may stand before the noun it governs: <em>for all the glorious things</em>.</summary>
+    private const int PhraseReach = 4;
+
+    private static readonly HashSet<string> Quantifiers = new(StringComparer.OrdinalIgnoreCase) { "all", "every", "each", "any" };
 
     private const string EnglishLanguage = "eng";
 
@@ -442,6 +456,14 @@ internal static class EvidentiaAttachedWords
         {
             yield return (EvidentiaAttachment.VerbOfItsParticle, particle);
         }
+
+        if (Class(word) == "adp" && !UnplacedPrepositions.Contains(word.Token.Surface) && !OpensTheSentence(word)
+            && Syntactic(words, word.Token.SyntacticHead) is { } governed && Class(governed) is "noun" or "propn"
+            && IndexOf(words, governed) is var at && at > index && at - index <= PhraseReach
+            && !words.Skip(index).Take(at - index).Any(Punctuated))
+        {
+            yield return (EvidentiaAttachment.PrepositionOfPhrase, governed);
+        }
     }
 
     private static (EvidentiaAnalysis Placement, EvidentiaProposal Head)? Placed(
@@ -507,6 +529,7 @@ internal static class EvidentiaAttachedWords
             {
                 EvidentiaAttachment.Article or EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition =>
                     EvidentiaAttachmentPlacement.OwnKindBefore,
+                EvidentiaAttachment.PrepositionOfPhrase => EvidentiaAttachmentPlacement.PhraseStart,
                 EvidentiaAttachment.SubjectPronoun => EvidentiaAttachmentPlacement.AgreeingRendering,
                 EvidentiaAttachment.Infinitive => EvidentiaAttachmentPlacement.Infinitive,
                 EvidentiaAttachment.Copula => EvidentiaAttachmentPlacement.BeBeside,
@@ -524,6 +547,7 @@ internal static class EvidentiaAttachedWords
                 EvidentiaAttachment.AuxiliaryVerb => EvidentiaAttachmentPlacement.Rendering,
                 EvidentiaAttachment.Article or EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition =>
                     EvidentiaAttachmentPlacement.OwnKindBefore,
+                EvidentiaAttachment.PrepositionOfPhrase => EvidentiaAttachmentPlacement.PhraseStart,
                 EvidentiaAttachment.Genitive => EvidentiaAttachmentPlacement.Dependent,
                 EvidentiaAttachment.SubjectPronoun or EvidentiaAttachment.PossessivePronoun or EvidentiaAttachment.ObjectPronoun =>
                     EvidentiaAttachmentPlacement.AgreeingRendering,
@@ -687,6 +711,7 @@ internal static class EvidentiaAttachedWords
                     ? Dependent(governing.Target, rendering, verse)
                     : null,
             EvidentiaAttachmentPlacement.OwnKindBefore => OwnKindBefore(attachment, word, rendering, verse, taken),
+            EvidentiaAttachmentPlacement.PhraseStart => PhraseStart(words, index, verse, placedBySource, taken),
             EvidentiaAttachmentPlacement.AgreeingRendering => afterVerb
                 ? PrepositionAfter(word, rendering, verse, taken)
                 : Agreeing(attachment, word, rendering, verse),
@@ -993,6 +1018,40 @@ internal static class EvidentiaAttachedWords
             && at > 0 && verse[at - 1].Token.StrongNumber == HebrewArticle && !taken.Contains(verse[at - 1].Token.Id)
                 ? verse[at - 1]
                 : null;
+    }
+
+    /// <summary>
+    /// The preposition before the first word the phrase's renderings take, where they stand together:
+    /// <em>in his vineyard</em> is ἐν τῷ ἀμπελῶνι αὐτοῦ, whose possessive comes last, and <em>to all the
+    /// kings</em> is לְ כָל מַלְכֵי, whose quantifier stands between the preposition and the noun.
+    /// </summary>
+    private static EvidentiaAnalysis? PhraseStart(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        int index,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlyDictionary<long, EvidentiaProposal> placedBySource,
+        IReadOnlySet<long> taken)
+    {
+        if (Syntactic(words, words[index].Token.SyntacticHead) is not { } governed || IndexOf(words, governed) is var head && head <= index)
+        {
+            return null;
+        }
+
+        // Hebrew writes a possessive on its noun, so a phrase the preposition's own rule missed is as often
+        // one it should not reach; only a quantifier standing between them (לְ כָל מַלְכֵי) held.
+        if (verse.Count > 0 && verse[0].Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
+            && !Quantifiers.Contains(words[index + 1].Token.Surface))
+        {
+            return null;
+        }
+
+        var at = Enumerable.Range(index + 1, head - index)
+            .Select(phrase => placedBySource.TryGetValue(words[phrase].Token.Id, out var placed) ? IndexOf(verse, placed.Target) : -1)
+            .Where(position => position >= 0)
+            .ToList();
+        return at.Count > 0 && at.Max() - at.Min() <= head - index
+            ? PrepositionBefore(verse[at.Min()], verse, taken)
+            : null;
     }
 
     /// <summary>The nearest preposition written before the rendering, past an article: מִן הָ אֲדָמָה.</summary>

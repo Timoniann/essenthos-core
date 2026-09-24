@@ -40,7 +40,7 @@ internal sealed class EnglishLanguagePack : ILanguagePack
 
     public EvidentiaAnalysis Analyse(EvidentiaToken token)
     {
-        token = EnglishPersonalPronouns.Complete(token);
+        token = EnglishPersonalPronouns.Complete(EnglishSpelling.Bare(token));
         var normalised = EnglishStemmer.Stem(EnglishSpelling.Common(token.Surface));
         return new EvidentiaAnalysis(
             token,
@@ -82,9 +82,37 @@ internal static class EnglishSpelling
         ("grey", "gray"), ("travell", "travel"), ("jewell", "jewel"), ("counsell", "counsel"), ("marvell", "marvel"),
     ];
 
+    private static readonly string[] Negated = ["n’t", "n't"];
+
+    /// <summary>
+    /// The word without the quotation marks and dashes an edition prints against it: <em>‘Behold</em> is
+    /// <em>Behold</em>, and <em>them—do</em>, two words the edition joined with a dash, is the first.
+    /// </summary>
+    public static EvidentiaToken Bare(EvidentiaToken token)
+    {
+        var surface = token.Surface;
+        var dash = surface.IndexOfAny(['—', '–']);
+        if (dash > 0 && surface[..dash].Any(char.IsLetter))
+        {
+            surface = surface[..dash];
+        }
+
+        var bare = surface.Trim().TrimStart(Marks).TrimEnd(Marks);
+        return bare.Length > 0 && bare != token.Surface ? token with { Surface = bare } : token;
+    }
+
+    private static readonly char[] Marks = ['“', '”', '‘', '’', '"', '\'', '(', ')', '[', ']', '—', '–', '-', ',', '.', ';', ':', '!', '?'];
+
     public static string Common(string surface)
     {
         var word = surface.ToLowerInvariant();
+        // didn’t, won’t, can’t: the original writes the negation, and the tense the contraction carries
+        // is English's own.
+        if (Negated.Any(ending => word.EndsWith(ending, StringComparison.Ordinal) && word.Length > ending.Length))
+        {
+            return "not";
+        }
+
         foreach (var possessive in Possessives)
         {
             if (word.Length > possessive.Length + 2 && word.EndsWith(possessive, StringComparison.Ordinal))
