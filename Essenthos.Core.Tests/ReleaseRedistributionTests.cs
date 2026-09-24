@@ -42,10 +42,18 @@ public sealed class ReleaseRedistributionTests : IDisposable
         Text("KJV", Redistribution.PublicDomain);
         Text("BSB", Redistribution.ShareAlike);
         Text("BHSA", Redistribution.NonCommercialOnly);
-        (await Publisher.Unreleasable(_db, CancellationToken.None)).Should().BeEmpty();
+        (await Ours()).Should().BeEmpty();
 
         Text("NWT2013", Redistribution.Prohibited);
         Text("XYZ", Redistribution.Unknown);
-        (await Publisher.Unreleasable(_db, CancellationToken.None)).Should().Equal("NWT2013", "XYZ");
+        (await Ours()).Should().Equal("NWT2013", "XYZ");
     }
+
+    /// <summary>
+    /// What the check refuses among this test's own texts: the database is shared, and a class
+    /// running beside this one may hold texts of its own for the moment it runs.
+    /// </summary>
+    private async Task<IReadOnlyList<string>> Ours() =>
+        [.. (await Publisher.Unreleasable(_db, CancellationToken.None))
+            .Where(slug => slug is "KJV" or "BSB" or "BHSA" or "NWT2013" or "XYZ")];
 }
