@@ -171,6 +171,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             targetAnalyses,
             lexicalProposals);
         List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
+        var safe = EvidentiaAttachedWords.Safe(globalKnownRenderingResolution.Proposals, attachedWords);
+        List<EvidentiaProposal> safeProposals =
+            [.. finalProposals.Where(proposal => safe.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))];
         var words = EvidentiaSourceWordAccount.Classify(
             source,
             Analyse,
@@ -181,12 +184,10 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             covered,
             canonicalBook,
             canonicalChapter,
-            globalKnownRenderingResolution.Proposals
-                .Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
-                .ToHashSet());
+            safe);
         options.Decisions?.Record(new EvidentiaChapterDecisions(
             canonicalBook, canonicalChapter, source, contentSourceWordIds, candidates,
-            globalKnownRenderingResolution.Proposals, finalProposals));
+            safeProposals, finalProposals));
         return new EvidentiaChapterMeasurement(
             fromSlug,
             toSlug,
@@ -227,6 +228,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             EvidentiaTierScore.Of(targetGlossReviewResolution.Proposals, gold, covered),
             EvidentiaTierScore.Of(syntaxTargetGlossReviewResolution.Proposals, gold, covered),
             EvidentiaTierScore.Of(attachedWords, gold, covered),
+            EvidentiaTierScore.Of(safeProposals, gold, covered),
             new EvidentiaTierScore(
                 unambiguous.Count,
                 unambiguous.Intersect(gold).Count(),
@@ -711,6 +713,7 @@ internal sealed record EvidentiaBookMeasurement(
     public EvidentiaTierScore GlobalReviewAndSyntaxTargetGloss => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.GlobalReviewAndSyntaxTargetGloss));
     public EvidentiaTierScore AttachedWords => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.AttachedWords));
     public EvidentiaTierScore WithAttachedWords => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.WithAttachedWords));
+    public EvidentiaTierScore SafeTier => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.SafeTier));
     public int FallbackVerses => Chapters.Sum(chapter => chapter.FallbackVerses);
     public int ContentSourceWords => Chapters.Sum(chapter => chapter.ContentSourceWords);
     public int FinalProposedSourceWords => Chapters.Sum(chapter => chapter.FinalProposedSourceWords);
@@ -765,6 +768,7 @@ internal sealed record EvidentiaBookMeasurement(
                GlobalReviewAndSyntaxTargetGloss.Report("global review + syntax-gated target gloss", GoldPairs) + "\n" +
                AttachedWords.Report("attached grammatical words", GoldPairs) + "\n" +
                WithAttachedWords.Report("global review + syntax-gated target gloss + attached grammatical words", GoldPairs) + "\n" +
+               SafeTier.Report(EvidentiaChapterMeasurement.SafeTierName, GoldPairs) + "\n" +
                $"learned index reach: {IndexAnsweredForms.Count:N0}/{IndexAskedForms.Count:N0} " +
                "distinct content source forms have an entry\n" +
                $"final abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
@@ -846,6 +850,7 @@ internal sealed record EvidentiaChapterMeasurement(
     EvidentiaTierScore TargetGlossReview,
     EvidentiaTierScore SyntaxTargetGlossReview,
     EvidentiaTierScore AttachedWords,
+    EvidentiaTierScore SafeTier,
     EvidentiaTierScore Unambiguous,
     int FinalProposedSourceWords,
     IReadOnlySet<string> IndexAskedForms,
@@ -855,6 +860,9 @@ internal sealed record EvidentiaChapterMeasurement(
     EvidentiaSourceWordAccount WordAccount,
     IReadOnlyList<EvidentiaWordRecord> Words)
 {
+    /// <summary>What a stored run marks safe: the final proposals the safe renderings and their attached words hold.</summary>
+    public const string SafeTierName = "safe tier";
+
     public double SourceCoverage => SourceWords == 0 ? 0 : (double)CoveredSourceWords / SourceWords;
     public double ContentCoverage => ContentSourceWords == 0
         ? 0
@@ -904,6 +912,7 @@ internal sealed record EvidentiaChapterMeasurement(
               GlobalReviewAndSyntaxTargetGloss.Report("global review + syntax-gated target gloss", GoldPairs) + "\n" +
               AttachedWords.Report("attached grammatical words", GoldPairs) + "\n" +
               WithAttachedWords.Report("global review + syntax-gated target gloss + attached grammatical words", GoldPairs) + "\n" +
+              SafeTier.Report(SafeTierName, GoldPairs) + "\n" +
               Unambiguous.Report("single-candidate graph", GoldPairs);
 
         return $"EVIDENTIA measurement {From} → {To}; mode: " +

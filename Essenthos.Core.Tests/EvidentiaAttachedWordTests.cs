@@ -247,6 +247,30 @@ public class EvidentiaAttachedWordTests
             .Should().BeEquivalentTo([(1L, 11L), (2L, 12L), (4L, 13L), (5L, 13L)]);
     }
 
+    [Fact]
+    public void AnArticleAndAPossessiveShareTheSafeTierOfTheirNounAndAConjunctionDoesNot()
+    {
+        var and = English(1, Genesis122, 1, "and", "CCONJ");
+        var the = English(2, Genesis122, 2, "the", "DET");
+        var waters = English(3, Genesis122, 3, "waters", "NOUN");
+        var his = English(4, Genesis122, 4, "his", "PRON");
+        var sons = English(5, Genesis122, 5, "sons", "NOUN");
+        var vav = Hebrew(11, Genesis122, 1, "וְ", "H9000", "conj");
+        var article = Hebrew(12, Genesis122, 2, "הַ", "H9009", "art");
+        var water = Hebrew(13, Genesis122, 3, "מַּיִם", "H4325", "subs");
+        var hisSons = Hebrew(14, Genesis122, 4, "בָנָיו", "H1121", "subs", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+        var safe = new EvidentiaProposal(Analysis(waters), Analysis(water), EvidentiaProposalKind.GlobalStableKnownRendering, 0.8);
+        var review = new EvidentiaProposal(Analysis(sons), Analysis(hisSons), EvidentiaProposalKind.GlobalReviewKnownRendering, 0.6);
+        var attached = EvidentiaAttachedWords.Resolve(
+            EvidentiaAuxiliaryWords.Mark([.. new[] { and, the, waters, his, sons }.Select(Analysis)]),
+            [.. new[] { vav, article, water, hisSons }.Select(Analysis)],
+            [safe, review]);
+
+        EvidentiaAttachedWords.Safe([safe], attached).Should().BeEquivalentTo([(3L, 13L), (2L, 13L)]);
+        attached.Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
+            .Should().Contain([(1L, 11L), (4L, 14L)]);
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Attach(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,

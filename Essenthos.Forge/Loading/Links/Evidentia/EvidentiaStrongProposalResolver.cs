@@ -100,12 +100,14 @@ internal enum EvidentiaProposalKind
     AnchoredGapReview,
 }
 
+/// <param name="Head">For an attached word, the proposal of the word it belongs to.</param>
 internal sealed record EvidentiaProposal(
     EvidentiaAnalysis Source,
     EvidentiaAnalysis Target,
     EvidentiaProposalKind Kind,
     double Confidence,
-    EvidentiaDecisionTrace? Trace = null);
+    EvidentiaDecisionTrace? Trace = null,
+    EvidentiaProposal? Head = null);
 
 internal sealed record EvidentiaDecisionTrace(
     string Tier,

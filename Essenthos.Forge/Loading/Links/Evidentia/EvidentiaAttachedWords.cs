@@ -203,7 +203,8 @@ internal static class EvidentiaAttachedWords
                 new EvidentiaDecisionTrace(
                     "attached",
                     $"{attachment} of '{head.Token.Surface}'",
-                    headProposal.Trace?.Evidence ?? []));
+                    headProposal.Trace?.Evidence ?? []),
+                headProposal);
             proposals.Add(proposal);
             placedBySource[words[index].Token.Id] = proposal;
             attached = true;
@@ -211,6 +212,49 @@ internal static class EvidentiaAttachedWords
 
         return attached;
     }
+
+    /// <summary>
+    /// The attachments that inherit the safe tier from their head. Each placed the word where the answer
+    /// keys put it at least as often as the safe tier's own renderings do, on the passages the rules
+    /// were chosen on and on those they were not: an article, the <em>of</em> of a construct chain and a
+    /// possessive written as the suffix of the noun. The others - a conjunction, a preposition, a subject
+    /// or object pronoun and an auxiliary - stay in review however safe their head is.
+    /// </summary>
+    private static readonly HashSet<EvidentiaAttachment> SafeWithTheirHead =
+    [
+        EvidentiaAttachment.Article,
+        EvidentiaAttachment.Genitive,
+        EvidentiaAttachment.PossessivePronoun,
+    ];
+
+    /// <summary>
+    /// The safe tier once attached words are counted with it: the safe renderings, and every attached word
+    /// of a kind that inherits the tier whose head is itself in it.
+    /// </summary>
+    public static IReadOnlySet<(long From, long To)> Safe(
+        IReadOnlyList<EvidentiaProposal> safe,
+        IReadOnlyList<EvidentiaProposal> attached)
+    {
+        var pairs = safe.Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id)).ToHashSet();
+        // In the order they were attached, so a word attached to an attached word finds its head decided.
+        foreach (var proposal in attached)
+        {
+            if (proposal.Head is { } head
+                && pairs.Contains((head.Source.Token.Id, head.Target.Token.Id))
+                && Attachment(proposal) is { } attachment
+                && SafeWithTheirHead.Contains(attachment))
+            {
+                pairs.Add((proposal.Source.Token.Id, proposal.Target.Token.Id));
+            }
+        }
+
+        return pairs;
+    }
+
+    private static EvidentiaAttachment? Attachment(EvidentiaProposal proposal) =>
+        proposal.Trace?.Rationale.Split(' ', 2)[0] is { } name && Enum.TryParse<EvidentiaAttachment>(name, out var attachment)
+            ? attachment
+            : null;
 
     internal static EvidentiaAttachmentPlacement Placement(EvidentiaAttachment attachment, string witnessLanguage) =>
         witnessLanguage.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase)

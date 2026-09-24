@@ -91,7 +91,7 @@ try {
                     '{0,-10} precision {1,5}/{2,-5} = {3:P2}   recall {1,5}/{4,-5} = {5:P2}' -f $name, $correct, $covered,
                         ($correct / [Math]::Max(1, $covered)), $gold, ($correct / [Math]::Max(1, $gold))
                 }
-                elseif ($tier -eq 'global stable') {
+                elseif ($tier -eq 'safe tier') {
                     $total.SafeCorrect += $correct; $total.SafeCovered += $covered
                 }
             }
