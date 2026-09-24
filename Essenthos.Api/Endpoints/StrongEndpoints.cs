@@ -1,6 +1,7 @@
 using Essenthos.Core.Corpus;
 ﻿using System.Data;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Strong;
 using Microsoft.AspNetCore.Mvc;
@@ -153,55 +154,84 @@ internal static class StrongEndpoints
                 words = words.Where(w => w.TextId == named.Id);
             }
 
-            // Per text as well as in all, because the total counts every edition of the original
-            // and every translation that tags its own words with the number, and a reader citing
-            // it has to be able to say which of those it is.
-            var byText = await words
-                .GroupBy(w => w.Text!.Slug)
-                .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
-                .ToListAsync(cancellationToken);
-            var total = byText.Sum(text => text.Count);
-            var page = await words
-                .OrderBy(w => w.Text!.Slug)
-                .ThenBy(w => w.Verse!.Book!.CanonicalOrdinal)
-                .ThenBy(w => w.Verse!.ChapterNumber)
-                .ThenBy(w => w.Verse!.Number)
-                .ThenBy(w => w.Position)
-                .Skip(Math.Max(0, skip ?? 0))
-                .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
-                .Select(w => new
+            return Results.Ok(await OccurrencePage(db, canonical, words, skip, take, cancellationToken));
+        });
+
+        MapRenderings(routes);
+    }
+
+    /// <summary>One page of the words carrying a number, with how many stand in each text.</summary>
+    internal static async Task<StrongOccurrenceListResponse> OccurrencePage(
+        AppDbContext db,
+        string canonical,
+        IQueryable<Word> words,
+        int? skip,
+        int? take,
+        CancellationToken cancellationToken)
+    {
+        // Per text as well as in all, because the total counts every edition of the original
+        // and every translation that tags its own words with the number, and a reader citing
+        // it has to be able to say which of those it is.
+        var byText = await words
+            .GroupBy(w => w.Text!.Slug)
+            .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
+            .ToListAsync(cancellationToken);
+        var total = byText.Sum(text => text.Count);
+
+        // Each occurrence is answered at the place its verse stands in the shared frame, which
+        // is what a link opens and what a quote in another text is looked up by. BHSA numbers
+        // 2,036 verses otherwise, the Septuagint more: its Malachi 3:19 is the frame's 4:1.
+        var page = await (
+                from w in words
+                join placed in db.VerseReferences on w.VerseId equals placed.VerseId
+                where placed.IsPrimary
+                orderby w.Text!.Slug, placed.CanonicalBook, placed.CanonicalChapter, placed.CanonicalVerse,
+                    w.Position, w.Id
+                select new
                 {
                     Corpus = w.Text!.Slug,
-                    Ordinal = w.Verse!.Book!.CanonicalOrdinal,
-                    w.Verse!.ChapterNumber,
-                    Verse = w.Verse!.Number,
+                    placed.CanonicalBook,
+                    placed.CanonicalChapter,
+                    placed.CanonicalVerse,
+                    w.VerseId,
+                    OwnBook = w.Verse!.Book!.CanonicalOrdinal,
+                    OwnChapter = w.Verse.ChapterNumber,
+                    OwnVerse = w.Verse.Number,
+                    w.Verse.Label,
                     w.Id,
                     w.Position,
                     w.Surface,
                     w.Gloss,
                 })
-                .ToListAsync(cancellationToken);
+            .Skip(Math.Max(0, skip ?? 0))
+            .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
+            .ToListAsync(cancellationToken);
+        var stated = await VerseEndpoints.StatedNumbers(
+            db, [.. page.Select(w => w.VerseId).Distinct()], cancellationToken);
 
-            return Results.Ok(new StrongOccurrenceListResponse(
-                canonical,
-                total,
-                [.. byText.OrderByDescending(text => text.Count).ThenBy(text => text.Corpus, StringComparer.Ordinal)],
-                [
-                    .. page.Select(w => new StrongOccurrenceResponse(
-                        w.Corpus,
-                        w.Ordinal,
-                        BookReferences.Name(w.Ordinal),
-                        BookReferences.Slug(w.Ordinal),
-                        w.ChapterNumber,
-                        w.Verse,
-                        w.Id,
-                        w.Position,
-                        w.Surface,
-                        w.Gloss)),
-                ]));
-        });
-
-        MapRenderings(routes);
+        return new StrongOccurrenceListResponse(
+            canonical,
+            total,
+            [.. byText.OrderByDescending(text => text.Count).ThenBy(text => text.Corpus, StringComparer.Ordinal)],
+            [
+                .. page.Select(w => new StrongOccurrenceResponse(
+                    w.Corpus,
+                    w.CanonicalBook,
+                    BookReferences.Name(w.CanonicalBook),
+                    BookReferences.Slug(w.CanonicalBook),
+                    w.CanonicalChapter,
+                    w.CanonicalVerse,
+                    w.Id,
+                    w.Position,
+                    w.Surface,
+                    w.Gloss)
+                {
+                    Printed = VerseEndpoints.Printed(
+                        stated.GetValueOrDefault(w.VerseId),
+                        w.OwnBook, w.OwnChapter, w.OwnVerse, w.Label,
+                        w.CanonicalBook, w.CanonicalChapter, w.CanonicalVerse),
+                }),
+            ]);
     }
 
     /// <summary>
@@ -586,6 +616,8 @@ internal record StrongListResponse(int Total, IList<StrongEntryResponse> Items)
     public string? Corpus { get; init; }
 }
 
+/// <param name="Chapter">The chapter of the shared frame the word's verse stands in.</param>
+/// <param name="Verse">The verse of the shared frame, which is where a link opens and a quote is read.</param>
 internal record StrongOccurrenceResponse(
     string Corpus,
     int BookOrdinal,
@@ -596,7 +628,14 @@ internal record StrongOccurrenceResponse(
     long WordId,
     int Position,
     string Text,
-    string? Gloss);
+    string? Gloss)
+{
+    /// <summary>
+    /// The address the word's own text gives its verse, where that is not the frame's: BHSA's
+    /// <c>3:19</c> for Malachi 4:1, <c>3:1</c> for a psalm's title. Null where the two agree.
+    /// </summary>
+    public IList<string>? Printed { get; init; }
+}
 
 /// <param name="ByText">How many of <paramref name="Total"/> stand in each text, most first.</param>
 internal record StrongOccurrenceListResponse(

@@ -67,6 +67,14 @@ internal static class VerseEndpoints
 
     private const char WithinAddress = ':';
 
+    /// <summary>Where the frame places a psalm's title: before the psalm's first verse.</summary>
+    private const int TitleVerse = 0;
+
+    private const int FirstVerse = 1;
+
+    /// <summary>The one book whose chapters have titles the frame numbers apart.</summary>
+    private const int Psalms = 19;
+
     public static void MapVerses(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/verses", async (
@@ -181,10 +189,12 @@ internal static class VerseEndpoints
         // The book narrows the match to what the placement index can find; the packed number then
         // picks the addresses out of those books, on the same arithmetic the encyclopedia orders by.
         var books = keys.Select(key => key / Address.BookStride).Distinct().ToList();
-        var placed = await db.VerseReferences
+        var titles = keys.Where(key => key % Address.ChapterStride == TitleVerse).ToHashSet();
+        var sought = keys.Concat(titles.Select(title => title - TitleVerse + FirstVerse)).Distinct().ToList();
+        var found = await db.VerseReferences
             .Where(r => r.Verse!.TextId == textId
                         && books.Contains(r.CanonicalBook)
-                        && keys.Contains((r.CanonicalBook * Address.BookStride)
+                        && sought.Contains((r.CanonicalBook * Address.BookStride)
                                          + (r.CanonicalChapter * Address.ChapterStride)
                                          + r.CanonicalVerse))
             .Select(r => new
@@ -203,6 +213,17 @@ internal static class VerseEndpoints
             })
             .ToListAsync(cancellationToken);
 
+        // A text that gives a psalm's title no verse of its own prints it in the psalm's first verse,
+        // as the Berean does, so that verse answers for the title where nothing else is placed there.
+        var held = found.Select(place => place.Key).ToHashSet();
+        var placed = found
+            .Where(place => keys.Contains(place.Key))
+            .Concat(found
+                .Where(place => place.CanonicalVerse == FirstVerse)
+                .Select(place => place with { Key = place.Key - FirstVerse + TitleVerse, CanonicalVerse = TitleVerse })
+                .Where(place => titles.Contains(place.Key) && !held.Contains(place.Key)))
+            .ToList();
+
         var chosen = placed
             .GroupBy(place => place.Key)
             .SelectMany(group => group.Any(place => place.IsPrimary) ? group.Where(place => place.IsPrimary) : group)
@@ -216,14 +237,7 @@ internal static class VerseEndpoints
             .GroupBy(word => word.VerseId)
             .ToDictionary(group => group.Key, group => group.OrderBy(word => word.Position).ToList());
 
-        var stated = (await db.StatedVerseNumbers
-                .Where(n => verseIds.Contains(n.VerseId))
-                .Select(n => new { n.VerseId, n.Position, n.ChapterNumber, n.Number })
-                .ToListAsync(cancellationToken))
-            .GroupBy(n => n.VerseId)
-            .ToDictionary(
-                group => group.Key,
-                group => group.OrderBy(n => n.Position).Select(n => $"{n.ChapterNumber}{WithinAddress}{n.Number}").ToList());
+        var stated = await StatedNumbers(db, verseIds, cancellationToken);
 
         var naming = named is null
             ? []
@@ -246,10 +260,9 @@ internal static class VerseEndpoints
 
                 var asked = $"{group.Key.CanonicalChapter}{WithinAddress}{group.Key.CanonicalVerse}";
                 var printed = verses
-                    .SelectMany(place => stated.GetValueOrDefault(place.VerseId)
-                                         ?? (place.OwnBook == group.Key.CanonicalBook
-                                             ? [$"{place.OwnChapter}{WithinAddress}{place.OwnVerse}{place.Label}"]
-                                             : []))
+                    .SelectMany(place => OwnNumbers(
+                        stated.GetValueOrDefault(place.VerseId),
+                        place.OwnBook, place.OwnChapter, place.OwnVerse, place.Label, group.Key.CanonicalBook))
                     .Where(address => address != asked)
                     .Distinct()
                     .ToList();
@@ -273,6 +286,59 @@ internal static class VerseEndpoints
             })
             .OfType<VerseTextResponse>()
             .ToList();
+    }
+
+    /// <summary>
+    /// The numbers an edition prints inside each of these verses, in the order it prints them, as
+    /// <c>chapter:verse</c>. Most verses have none, and are numbered by their own row.
+    /// </summary>
+    internal static async Task<Dictionary<int, List<string>>> StatedNumbers(
+        AppDbContext db,
+        IReadOnlyCollection<int> verseIds,
+        CancellationToken cancellationToken) =>
+        (await db.StatedVerseNumbers
+            .Where(n => verseIds.Contains(n.VerseId))
+            .Select(n => new { n.VerseId, n.Position, n.ChapterNumber, n.Number })
+            .ToListAsync(cancellationToken))
+        .GroupBy(n => n.VerseId)
+        .ToDictionary(
+            group => group.Key,
+            group => group.OrderBy(n => n.Position).Select(n => $"{n.ChapterNumber}{WithinAddress}{n.Number}").ToList());
+
+    /// <summary>
+    /// How a text numbers one of its verses: what the edition prints in it where it prints anything,
+    /// and otherwise the verse's own chapter and number. Nothing where the text holds the verse in
+    /// another book than the one it is placed in, since a bare <c>chapter:verse</c> would then name
+    /// a place in the wrong book.
+    /// </summary>
+    internal static IEnumerable<string> OwnNumbers(
+        IEnumerable<string>? stated,
+        int ownBook,
+        int ownChapter,
+        int ownVerse,
+        string label,
+        int placedBook) =>
+        stated ?? (ownBook == placedBook ? [$"{ownChapter}{WithinAddress}{ownVerse}{label}"] : []);
+
+    /// <summary>
+    /// How a text numbers one verse placed at a frame address, where that differs from the address.
+    /// </summary>
+    internal static IList<string>? Printed(
+        IEnumerable<string>? stated,
+        int ownBook,
+        int ownChapter,
+        int ownVerse,
+        string label,
+        int placedBook,
+        int placedChapter,
+        int placedVerse)
+    {
+        var asked = $"{placedChapter}{WithinAddress}{placedVerse}";
+        var printed = OwnNumbers(stated, ownBook, ownChapter, ownVerse, label, placedBook)
+            .Where(address => address != asked)
+            .Distinct()
+            .ToList();
+        return printed.Count > 0 ? printed : null;
     }
 
     /// <summary>
@@ -353,6 +419,10 @@ internal static class VerseEndpoints
 
         internal const int BookStride = 1_000_000;
 
+        /// <summary>
+        /// Verse 0 is an address in the Psalms and nowhere else: it is where the frame places a
+        /// psalm's title, which BHSA numbers as the psalm's first verse.
+        /// </summary>
         public static Address? Parse(string asked)
         {
             var parts = asked.Split(WithinAddress);
@@ -361,7 +431,7 @@ internal static class VerseEndpoints
                 || !int.TryParse(parts[1], out var chapter)
                 || !int.TryParse(parts[2], out var verse)
                 || chapter < 1
-                || verse < 1)
+                || verse < (ordinal == Psalms ? TitleVerse : FirstVerse))
             {
                 return null;
             }
