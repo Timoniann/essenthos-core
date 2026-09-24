@@ -80,6 +80,24 @@ canonical frame both put the verses apart and the record's Hebrew verse is the o
 Spanish; a Spanish verse that opens with the last words of the Hebrew verse before it keeps its
 links (PRB-0694).
 
+## Spanish RV09 — records on the *y* before the word that renders them
+
+Some WLCM-RV09 and SBLGNT-RV09 records put a Hebrew or Greek word on the Spanish *y* that stands
+before the word rendering it, and leave that word unaligned: Genesis 1:4's וַיַּרְא is on the *Y* of
+*Y vió*, and *vió* is on nothing. The set almost never aligns the Hebrew ו itself (14 records), so
+this is not the conjunction misread. Measured on 2026-09-24: 4,974 Old Testament and 163 New
+Testament records have a lone *y*/*e* as their Spanish side, no source word that is a conjunction or
+גַּם/אַף/καί, and an unaligned word after the *y*; in hand-checked samples of 140 and 21, none of the
+*y* renders the source word. The loader refuses these records and does not move them: which word
+after the *y* renders the source word is not stated by the record (PRB-0715).
+
+## WLCM morphemes and BHSA words
+
+The loader keys WLCM by morpheme, not by word: a record naming the prefix of *מֵעֵץ* is stored
+against BHSA's separate מִן, not against עֵץ. It lays each verse's morphemes in the order their ids
+number them (the file lists 781 verses out of that order) and compares a pronominal suffix as part
+of its word, since BHSA never divides one (PRB-0716).
+
 ## What these data mean
 
 An alignment is a publisher's claim relating word **occurrences** in one named translation to a
