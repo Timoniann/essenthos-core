@@ -293,11 +293,12 @@ public sealed class ContextEndpointTests : IDisposable
     }
 
     /// <summary>
-    /// A topic filing more of the chapter's verses comes first. A whole chapter is every verse the
-    /// frame holds in it, and the heading each run is filed under is kept.
+    /// A topic's verses are the verses of the chapter its entry cites, a whole chapter being every
+    /// verse the frame holds in it, and the heading each run is filed under is kept. The order is the
+    /// ranking's, which <see cref="ContextRankingTests"/> holds.
     /// </summary>
     [Fact]
-    public async Task TheChaptersTopicsComeMostVersesFirst()
+    public async Task TheChaptersTopicsKeepTheLinesTheyAreFiledUnder()
     {
         Topic("NATIONS", ("The table of", null, null), ("Scattered", 3, 3));
         Topic("NOAH", ("DESCENDANTS OF", 1, 1));
@@ -307,14 +308,18 @@ public sealed class ContextEndpointTests : IDisposable
 
         var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
 
-        context.Topics.Select(t => (t.Name, string.Join(',', t.Verses))).Should().Equal(
+        context.Topics.Select(t => (t.Name, string.Join(',', t.Verses))).Should().BeEquivalentTo(
+        [
             ("Nations", "1,2,3"),
             ("Japheth", "2,3"),
-            ("Noah", "1"));
-        context.Topics[2].Entries.Should().ContainSingle().Which.Heading.Should().Be("Descendants of");
-        context.Topics[0].Entries.Select(e => (e.Heading, string.Join(',', e.Verses), e.WholeChapter)).Should().Equal(
-            ("The table of", "1,2,3", true),
-            ("Scattered", "3", false));
+            ("Noah", "1"),
+        ]);
+        context.Topics.Single(t => t.Name == "Noah").Entries.Should().ContainSingle()
+            .Which.Heading.Should().Be("Descendants of");
+        context.Topics.Single(t => t.Name == "Nations").Entries
+            .Select(e => (e.Heading, string.Join(',', e.Verses), e.WholeChapter)).Should().Equal(
+                ("The table of", "1,2,3", true),
+                ("Scattered", "3", false));
     }
 
     [Theory]

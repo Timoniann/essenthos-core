@@ -36,10 +36,12 @@ internal static class ContextEndpoints
             [FromQuery] string? language,
             AppDbContext db,
             ICanonIndex canon,
+            ContextWeightsCache weights,
             CancellationToken cancellationToken) =>
         {
             var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
-            return refusal ?? Results.Ok(await Context(db, ordinal, chapter, language, cancellationToken));
+            return refusal ?? Results.Ok(await Context(
+                db, ordinal, chapter, language, await weights.Get(cancellationToken), cancellationToken));
         });
 
         // The families among the chapter's people, apart from the rest because a genealogy's trees
@@ -78,14 +80,25 @@ internal static class ContextEndpoints
             : (ordinal.Value, null);
     }
 
+    /// <summary>The context with the weights counted afresh, for a caller that holds none.</summary>
     internal static async Task<ChapterContextResponse> Context(
         AppDbContext db,
         int book,
         int chapter,
         string? language,
+        CancellationToken cancellationToken) =>
+        await Context(db, book, chapter, language, await ContextWeights.Count(db, cancellationToken), cancellationToken);
+
+    internal static async Task<ChapterContextResponse> Context(
+        AppDbContext db,
+        int book,
+        int chapter,
+        string? language,
+        ContextWeights weights,
         CancellationToken cancellationToken)
     {
-        var (verses, how) = await NamedAndHow(db, book, chapter, cancellationToken);
+        var (verses, how, spoken) = await NamedAndHow(db, book, chapter, cancellationToken);
+        ChapterSalience.SettleWordsForGod(verses, how, spoken);
         var slugs = verses.Keys.ToList();
         var records = await db.Entities
             .Where(e => slugs.Contains(e.Slug))
@@ -112,6 +125,7 @@ internal static class ContextEndpoints
         var local = await EntityNames.Of(db, [.. records.Select(r => r.Id)], language, cancellationToken);
         var described = await Descriptors.Of(db, slugs, language, cancellationToken);
         var meanings = await Meanings(db, [.. records.Select(r => r.Id)], cancellationToken);
+        var namesUsed = await ChapterSalience.NamesUsed(db, book, chapter, cancellationToken);
 
         var entities = records
             .Select(r => new ContextEntityResponse(
@@ -129,8 +143,13 @@ internal static class ContextEndpoints
                 Location = r.Location,
                 How = [.. how.GetValueOrDefault(r.Slug) ?? []],
                 SourceId = Datasets.Of(r.Source),
+                Group = ChapterSalience.WordsForGod.Contains(r.Slug) ? ChapterSalience.GodGroup : null,
+                ChapterName = ChapterSalience.WordsForGod.Contains(r.Slug)
+                    ? null
+                    : ChapterSalience.NameUsed(r.Name, namesUsed.GetValueOrDefault(r.Slug)),
             })
-            .OrderByDescending(e => e.Verses.Count)
+            .OrderByDescending(e => ChapterSalience.Of(e.Slug, verses, how, spoken))
+            .ThenBy(e => weights.EntityChapters.GetValueOrDefault(e.Slug, int.MaxValue))
             .ThenBy(e => e.LocalName ?? e.Name, StringComparer.CurrentCulture)
             .ThenBy(e => e.Slug, StringComparer.Ordinal)
             .ToList();
@@ -148,7 +167,7 @@ internal static class ContextEndpoints
         var (periods, dated) = await Periods(db, book, chapter, events, cancellationToken);
         var measures = await Measures(db, book, chapter, cancellationToken);
         var commandments = await CommandmentEndpoints.InChapter(db, book, chapter, cancellationToken);
-        var topics = await ChapterTopics.InChapter(db, book, chapter, cancellationToken);
+        var topics = await ChapterTopics.InChapter(db, book, chapter, weights, entities, cancellationToken);
 
         return new ChapterContextResponse(
             new BookRefResponse(book, BookReferences.Name(book), BookReferences.Slug(book)),
@@ -179,8 +198,15 @@ internal static class ContextEndpoints
     /// of some text names it (<c>words</c>), the record's source lists a verse of the chapter
     /// (<c>listed</c>), or a passage about it runs through the chapter (<c>passage</c>). A record
     /// can arrive by more than one, and the reader is told which.
+    ///
+    /// <para>
+    /// <c>Spoken</c> holds the verses where the words themselves name each record: the annotated
+    /// words, and the verses this corpus lists for a record because of the words it numbers or
+    /// annotates. The rest of a record's verses are a source's list alone.
+    /// </para>
     /// </summary>
-    internal static async Task<(Dictionary<string, SortedSet<int>> Verses, Dictionary<string, SortedSet<string>> How)>
+    internal static async Task<(Dictionary<string, SortedSet<int>> Verses, Dictionary<string, SortedSet<string>> How,
+            Dictionary<string, SortedSet<int>> Spoken)>
         NamedAndHow(
             AppDbContext db,
             int book,
@@ -189,12 +215,13 @@ internal static class ContextEndpoints
     {
         var verses = await Annotations.InChapter(db, book, chapter, cancellationToken);
         var how = verses.Keys.ToDictionary(slug => slug, _ => new SortedSet<string>(StringComparer.Ordinal) { "words" });
+        var spoken = verses.ToDictionary(pair => pair.Key, pair => new SortedSet<int>(pair.Value), StringComparer.Ordinal);
 
         // Disputed rows are left out: they are the references the source itself would not assign
         // to the record, and listing them here would assign them.
         var stated = await db.EntityVerses
             .Where(v => v.CanonicalBook == book && v.CanonicalChapter == chapter && !v.Disputed)
-            .Select(v => new { v.Entity!.Slug, v.CanonicalVerse })
+            .Select(v => new { v.Entity!.Slug, v.CanonicalVerse, v.Source })
             .Distinct()
             .ToListAsync(cancellationToken);
         foreach (var row in stated)
@@ -206,6 +233,15 @@ internal static class ContextEndpoints
 
             at.Add(row.CanonicalVerse);
             Route(how, row.Slug, "listed");
+            if (ChapterSalience.FromTheWords(row.Source))
+            {
+                if (!spoken.TryGetValue(row.Slug, out var said))
+                {
+                    spoken[row.Slug] = said = [];
+                }
+
+                said.Add(row.CanonicalVerse);
+            }
         }
 
         var before = verses.Keys.ToHashSet(StringComparer.Ordinal);
@@ -215,7 +251,7 @@ internal static class ContextEndpoints
             Route(how, slug, "passage");
         }
 
-        return (verses, how);
+        return (verses, how, spoken);
     }
 
     private static void Route(Dictionary<string, SortedSet<string>> how, string slug, string route)
@@ -476,8 +512,9 @@ internal static class ChapterPeriods
 }
 
 /// <param name="Entities">
-/// Every record the chapter names, the most often named first: by how many of its verses name the
-/// record, then by the name shown.
+/// Every record the chapter names, the most present first: by the verses whose words name it, a
+/// verse only a source's list gives counting half; then the record found in fewer chapters of the
+/// Bible first, then by the name shown.
 /// </param>
 /// <param name="Events">The events the sources set in this chapter, in the order of its verses.</param>
 /// <param name="Periods">The periods the chapter falls in, the widest first.</param>
@@ -489,7 +526,10 @@ internal static class ChapterPeriods
 /// The commandments of Maimonides' count that rest on a verse of this chapter, in the order the
 /// chapter gives them. Empty outside the Torah.
 /// </param>
-/// <param name="Topics">The subjects of Nave's Topical Bible filing verses of this chapter, the most verses first.</param>
+/// <param name="Topics">
+/// The subjects of Nave's Topical Bible filing verses of this chapter: its themes, the most particular
+/// to it first, then the entries of the people it names, then the index's readings of it.
+/// </param>
 /// <param name="PeriodsFrom">
 /// <c>events</c> where the chapter's own events placed it, <c>neighbours</c> where it has none and
 /// the dated events on either side of it in the book did, and null where nothing placed it.
@@ -557,4 +597,17 @@ internal record ContextEntityResponse(
 
     /// <summary>The declared dataset its record comes from, where one claims it.</summary>
     public string? SourceId { get; init; }
+
+    /// <summary>
+    /// <c>god</c> for the records of the words for God, which a reader is shown as one row saying
+    /// which of them the chapter uses; null for everything else.
+    /// </summary>
+    public string? Group { get; init; }
+
+    /// <summary>
+    /// The name the chapter calls it by where that is not its headword: John 1 calls the man his
+    /// record heads Bartholomew <em>Nathanael</em>. English, as the source labels the verse; null
+    /// where the chapter uses the headword or labels nothing.
+    /// </summary>
+    public string? ChapterName { get; init; }
 }

@@ -55,6 +55,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddSingleton<TextFacts>();
+builder.Services.AddSingleton<ContextWeightsCache>();
 builder.Services.AddSingleton<WordForms>();
 builder.Services.AddSingleton(services =>
     new SiteSettingsFile(siteSettings, services.GetRequiredService<ILogger<SiteSettingsFile>>()));
@@ -134,5 +135,9 @@ v1.MapSuggestions();
 v1.MapAdmin();
 
 app.UseCors();
+
+// Every chapter's context is weighed against counts over the whole Bible; counting them as the
+// process starts spares the first reader to open the panel the wait.
+app.Lifetime.ApplicationStarted.Register(() => _ = app.Services.GetRequiredService<ContextWeightsCache>().Warm());
 
 app.Run();
