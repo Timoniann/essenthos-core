@@ -12,6 +12,7 @@ internal interface IEvidentiaDecisionSink
 /// <param name="ContentSourceWordIds">The words coverage is counted over.</param>
 /// <param name="Safe">The safe tier's proposals, which mark a final proposal as confirmed.</param>
 /// <param name="Final">The proposals the measurement scores as its final tier.</param>
+/// <param name="Absences">The words the measurement says have no counterpart, each resting on a final proposal.</param>
 internal sealed record EvidentiaChapterDecisions(
     int CanonicalBook,
     int CanonicalChapter,
@@ -19,7 +20,8 @@ internal sealed record EvidentiaChapterDecisions(
     IReadOnlySet<long> ContentSourceWordIds,
     IReadOnlyList<EvidentiaCandidate> Candidates,
     IReadOnlyList<EvidentiaProposal> Safe,
-    IReadOnlyList<EvidentiaProposal> Final);
+    IReadOnlyList<EvidentiaProposal> Final,
+    IReadOnlyList<EvidentiaAbsence>? Absences = null);
 
 /// <summary>
 /// Turns a chapter's candidates and proposals into one decision per word, for storage.
@@ -35,6 +37,13 @@ internal sealed record EvidentiaChapterDecisions(
 /// A word is recorded if it is a content word or if something was proposed for it. Function words
 /// nothing proposed are left out: EVIDENTIA does not attempt them, and a row saying so for every
 /// <em>the</em> in the Bible would be most of the table.
+/// </para>
+///
+/// <para>
+/// An absence is recorded as the link it would become: a supplied word on its source side alone,
+/// an unrendered word of the original on its target side alone. Its tier is the tier of the pair it
+/// rests on, and its confidence the lower of that pair's and the rule's own measured precision,
+/// because an absence is only as right as the placement it was read from.
 /// </para>
 /// </summary>
 /// <param name="verses">Only these verses are kept, when a run repeats part of an earlier one.</param>
@@ -98,12 +107,27 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
                 .ThenBy(candidate => candidate.Target.Token.Position)
                 .ToList());
 
+        var absences = chapter.Absences ?? [];
+        var supplied = absences.Where(absence => absence.Kind == EvidentiaAbsenceKind.Supplied)
+            .GroupBy(absence => absence.Word.Token.Id)
+            .ToDictionary(group => group.Key, group => group.First());
         foreach (var word in chapter.Source.DistinctBy(token => token.Id).OrderBy(token => token.Address.Verse)
                      .ThenBy(token => token.Position))
         {
             var content = chapter.ContentSourceWordIds.Contains(word.Id);
             var proposed = final.GetValueOrDefault(word.Id);
-            if ((!content && proposed is null) || (verses is not null && !verses.Contains(word.Address)))
+            if (verses is not null && !verses.Contains(word.Address))
+            {
+                continue;
+            }
+
+            if (proposed is null && supplied.TryGetValue(word.Id, out var absence))
+            {
+                yield return Absent(runId, absence, content, safe);
+                continue;
+            }
+
+            if (!content && proposed is null)
             {
                 continue;
             }
@@ -113,6 +137,50 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
                 ? Abstained(runId, word, content, candidates, taken)
                 : Proposed(runId, word, content, proposed, candidates, taken, safe);
         }
+
+        foreach (var absence in absences
+                     .Where(absence => absence.Kind == EvidentiaAbsenceKind.NotRendered)
+                     .DistinctBy(absence => absence.Word.Token.Id)
+                     .Where(absence => verses is null || verses.Contains(absence.Word.Token.Address))
+                     .OrderBy(absence => absence.Word.Token.Address.Verse)
+                     .ThenBy(absence => absence.Word.Token.Position))
+        {
+            yield return Absent(runId, absence, content: false, safe);
+        }
+    }
+
+    /// <summary>A word the run says has no counterpart, described by the rule that said so and the pair it rests on.</summary>
+    private static EvidentiaDecision Absent(
+        int runId,
+        EvidentiaAbsence absence,
+        bool content,
+        IReadOnlySet<(long, long)> safe)
+    {
+        var word = absence.Word.Token;
+        var anchor = absence.Anchor;
+        var decision = New(runId, word, content, 0);
+        if (absence.Kind == EvidentiaAbsenceKind.Supplied)
+        {
+            decision.Absence = LinkRelation.Expands;
+        }
+        else
+        {
+            decision.SourceWordId = null;
+            decision.TargetWordId = word.Id;
+            decision.Absence = LinkRelation.Omits;
+        }
+
+        decision.Kind = absence.Rule.Spelling;
+        decision.Tier = anchor is null
+            ? ReviewTier
+            : safe.Contains((anchor.Source.Token.Id, anchor.Target.Token.Id)) ? SafeTier : anchor.Trace?.Tier ?? ReviewTier;
+        decision.Rationale = anchor is null
+            ? absence.Rationale
+            : $"{absence.Rationale}; rests on '{anchor.Source.Token.Surface}' → '{anchor.Target.Token.Surface}'";
+        decision.Confidence = (float)Math.Min(absence.Rule.Confidence, anchor?.Confidence ?? absence.Rule.Confidence);
+        decision.AnchorSourceWordId = anchor?.Source.Token.Id;
+        decision.AnchorTargetWordId = anchor?.Target.Token.Id;
+        return decision;
     }
 
     private static EvidentiaDecision Proposed(

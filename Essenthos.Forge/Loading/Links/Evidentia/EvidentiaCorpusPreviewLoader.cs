@@ -208,7 +208,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 : word)];
         options.Decisions?.Record(new EvidentiaChapterDecisions(
             canonicalBook, canonicalChapter, source, contentSourceWordIds, candidates,
-            safeProposals, finalProposals));
+            safeProposals, finalProposals, absences));
         return new EvidentiaChapterMeasurement(
             fromSlug,
             toSlug,

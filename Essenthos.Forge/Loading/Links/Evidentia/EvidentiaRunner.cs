@@ -50,18 +50,21 @@ internal sealed record EvidentiaBookScope(int Book, int? FromChapter = null, int
     };
 }
 
+/// <param name="Proposals">Words placed on a word of the other text.</param>
+/// <param name="Absences">Words said to have no counterpart, supplied or not rendered.</param>
 internal sealed record EvidentiaRunOutcome(
     int RunId,
     int Decisions,
     int Proposals,
     int Safe,
     int Abstentions,
+    int Absences,
     TimeSpan Elapsed,
     IReadOnlyList<EvidentiaBookMeasurement> Measurements)
 {
     public override string ToString() =>
         $"EVIDENTIA run {RunId}: {Decisions:N0} decisions stored — {Proposals:N0} proposals ({Safe:N0} in the safe tier), " +
-        $"{Abstentions:N0} words placed nowhere — in {Elapsed}. Nothing was written to the corpus.\n" +
+        $"{Absences:N0} absences, {Abstentions:N0} words placed nowhere — in {Elapsed}. Nothing was written to the corpus.\n" +
         string.Join("\n", Measurements);
 }
 
@@ -85,7 +88,8 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
             exact_address, neighbouring_address, matching_form, shared_strong, dictionary_sense,
             target_gloss, known_rendering, morphology, syntax, statistical_aligner,
             rendering_observations, rendering_share, rendering_next_share, rendering_form,
-            alternative_word_ids, alternative_scores, alternative_distances, alternative_taken)
+            alternative_word_ids, alternative_scores, alternative_distances, alternative_taken,
+            absence, anchor_source_word_id, anchor_target_word_id)
         FROM STDIN (FORMAT BINARY)
         """;
 
@@ -165,7 +169,7 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
 
         var evidenceSources = new SortedDictionary<string, SortedSet<string>>(StringComparer.Ordinal);
         var measurements = new List<EvidentiaBookMeasurement>(books.Count);
-        int decisions = 0, proposals = 0, safe = 0;
+        int decisions = 0, proposals = 0, safe = 0, absences = 0;
         foreach (var book in books)
         {
             var recorder = new EvidentiaDecisionRecorder(run.Id, verses);
@@ -174,7 +178,8 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
             await Write(recorder.Decisions, cancellationToken);
 
             decisions += recorder.Decisions.Count;
-            proposals += recorder.Decisions.Count(decision => decision.TargetWordId is not null);
+            proposals += recorder.Decisions.Count(decision => decision.Absence is null && decision.TargetWordId is not null);
+            absences += recorder.Decisions.Count(decision => decision.Absence is not null);
             safe += recorder.Decisions.Count(decision => decision.Tier == EvidentiaDecisionRecorder.SafeTier);
             foreach (var (kind, sources) in recorder.EvidenceSources)
             {
@@ -191,8 +196,8 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
         run.FinishedAt = DateTimeOffset.UtcNow;
         await db.SaveChangesAsync(cancellationToken);
 
-        return new EvidentiaRunOutcome(run.Id, decisions, proposals, safe, decisions - proposals, elapsed.Elapsed,
-            measurements);
+        return new EvidentiaRunOutcome(run.Id, decisions, proposals, safe, decisions - proposals - absences, absences,
+            elapsed.Elapsed, measurements);
     }
 
     /// <summary>Every stored run, newest first, with what it holds and how much of it was reviewed.</summary>
@@ -211,7 +216,8 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
                 run.RuleVersion,
                 run.Scope,
                 Decisions = run.Decisions.Count(),
-                Proposals = run.Decisions.Count(decision => decision.TargetWordId != null),
+                Proposals = run.Decisions.Count(decision => decision.Absence == null && decision.TargetWordId != null),
+                Absences = run.Decisions.Count(decision => decision.Absence != null),
                 Reviewed = run.Decisions.Count(decision => decision.Review != null),
                 Applied = run.Decisions.Count(decision => decision.Review != null && decision.Review.AppliedAt != null),
             })
@@ -221,7 +227,7 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
             : string.Join("\n", runs.Select(run =>
                 $"run {run.Id} {run.From} → {run.To} {run.Scope.RootElement.GetRawText()}"
                 + (run.ParentRunId is { } parent ? $" repeating run {parent}" : string.Empty)
-                + $"; {run.Decisions:N0} decisions, {run.Proposals:N0} proposals, {run.Reviewed:N0} reviewed, {run.Applied:N0} written; "
+                + $"; {run.Decisions:N0} decisions, {run.Proposals:N0} proposals, {run.Absences:N0} absences, {run.Reviewed:N0} reviewed, {run.Applied:N0} written; "
                 + $"{run.StartedAt:u}" + (run.FinishedAt is null ? " UNFINISHED" : string.Empty) + $"; {run.RuleVersion}"));
     }
 
@@ -241,7 +247,7 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
             {
                 await writer.StartRowAsync(cancellationToken);
                 await writer.WriteAsync(decision.RunId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(decision.SourceWordId, NpgsqlDbType.Bigint, cancellationToken);
+                await Nullable(writer, decision.SourceWordId, NpgsqlDbType.Bigint, cancellationToken);
                 await writer.WriteAsync(decision.CanonicalBook, NpgsqlDbType.Smallint, cancellationToken);
                 await writer.WriteAsync(decision.CanonicalChapter, NpgsqlDbType.Smallint, cancellationToken);
                 await writer.WriteAsync(decision.CanonicalVerse, NpgsqlDbType.Smallint, cancellationToken);
@@ -274,6 +280,10 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
                 await Reference(writer, decision.AlternativeScores, NpgsqlDbType.Array | NpgsqlDbType.Real, cancellationToken);
                 await Reference(writer, decision.AlternativeDistances, NpgsqlDbType.Array | NpgsqlDbType.Smallint, cancellationToken);
                 await Reference(writer, decision.AlternativeTaken, NpgsqlDbType.Array | NpgsqlDbType.Boolean, cancellationToken);
+                await Reference(writer, decision.Absence is { } absence ? EnumSpelling.Of(absence) : null,
+                    NpgsqlDbType.Text, cancellationToken);
+                await Nullable(writer, decision.AnchorSourceWordId, NpgsqlDbType.Bigint, cancellationToken);
+                await Nullable(writer, decision.AnchorTargetWordId, NpgsqlDbType.Bigint, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);

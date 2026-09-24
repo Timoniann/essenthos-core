@@ -36,14 +36,16 @@ internal sealed class EvidentiaReviewQueue(AppDbContext db)
             .OrderBy(decision => decision.CanonicalBook)
             .ThenBy(decision => decision.CanonicalChapter)
             .ThenBy(decision => decision.CanonicalVerse)
+            .ThenBy(decision => decision.SourceWordId == null)
             .ThenBy(decision => decision.SourceWord!.Position)
+            .ThenBy(decision => decision.TargetWord!.Position)
             .Take(filter.Take)
             .Select(decision => new
             {
                 decision,
-                Source = decision.SourceWord!.Surface,
-                Target = decision.TargetWord!.Surface,
-                TargetStrong = decision.TargetWord!.StrongNumber,
+                Source = decision.SourceWord == null ? null : decision.SourceWord.Surface,
+                Target = decision.TargetWord == null ? null : decision.TargetWord.Surface,
+                TargetStrong = decision.TargetWord == null ? null : decision.TargetWord.StrongNumber,
             })
             .ToListAsync(cancellationToken);
         var alternatives = await Surfaces(
@@ -54,9 +56,20 @@ internal sealed class EvidentiaReviewQueue(AppDbContext db)
         foreach (var row in rows)
         {
             report.Append(
-                    $"#{row.decision.Id} {row.decision.CanonicalBook}:{row.decision.CanonicalChapter}:{row.decision.CanonicalVerse} ")
-                .Append(
-                    $"'{row.Source}' → '{row.Target}' [{row.TargetStrong ?? "no-strong"}] ")
+                $"#{row.decision.Id} {row.decision.CanonicalBook}:{row.decision.CanonicalChapter}:{row.decision.CanonicalVerse} ");
+            if (row.decision.Absence is { } absence)
+            {
+                report.Append(absence == LinkRelation.Expands
+                        ? $"'{row.Source}' supplied, nothing in the original "
+                        : $"'{row.Target}' [{row.TargetStrong ?? "no-strong"}] not rendered by the translation ")
+                    .Append($"({EnumSpelling.Of(absence)}) {row.decision.Tier} {row.decision.Kind} {row.decision.Confidence:F2}; ")
+                    .Append(row.decision.Rationale)
+                    .Append('\n');
+                continue;
+            }
+
+            report.Append(
+                    $"'{row.Source}' →'{row.Target}' [{row.TargetStrong ?? "no-strong"}] ")
                 .Append(
                     $"{row.decision.Tier} {row.decision.Kind} {row.decision.Confidence:F2}; ")
                 .Append(EvidentiaTrace.Signals(row.decision))
@@ -78,16 +91,25 @@ internal sealed class EvidentiaReviewQueue(AppDbContext db)
 
     /// <summary>
     /// The source word renders a different target word. It may correct an abstention as well as a
-    /// proposal: a word the run placed nowhere is still a word a person can place.
+    /// proposal: a word the run placed nowhere is still a word a person can place, and so is a word
+    /// the run said the translation supplies. A word of the original the run said is not rendered has
+    /// no source word to place, so that decision is approved or rejected, never corrected.
     /// </summary>
     public async Task<int> Correct(long decisionId, long targetWordId, string reviewer, string? note,
         CancellationToken cancellationToken = default)
     {
         var decision = await db.EvidentiaDecisions.AsNoTracking()
             .Where(row => row.Id == decisionId)
-            .Select(row => new { row.Run!.ToTextId })
+            .Select(row => new { row.Run!.ToTextId, row.SourceWordId })
             .SingleOrDefaultAsync(cancellationToken)
             ?? throw new InvalidOperationException($"There is no EVIDENTIA decision {decisionId}. List them with evidentia-queue.");
+        if (decision.SourceWordId is null)
+        {
+            throw new InvalidOperationException(
+                $"Decision {decisionId} says a word of the original is not rendered, so there is no word of the translation to place. " +
+                "Reject it with evidentia-reject and place the word that does render it through that word's own decision.");
+        }
+
         var inTarget = await db.Words.AsNoTracking()
             .AnyAsync(word => word.Id == targetWordId && word.TextId == decision.ToTextId, cancellationToken);
         if (!inTarget)
@@ -160,7 +182,7 @@ internal sealed class EvidentiaReviewQueue(AppDbContext db)
 
         foreach (var decision in decisions)
         {
-            if (decision.TargetWordId is null && verdict != EvidentiaVerdict.Corrected)
+            if (decision.TargetWordId is null && decision.Absence is null && verdict != EvidentiaVerdict.Corrected)
             {
                 throw new InvalidOperationException(
                     $"Decision {decision.Id} placed its word nowhere, so there is nothing to {(verdict == EvidentiaVerdict.Approved ? "approve" : "reject")}. " +
@@ -194,7 +216,7 @@ internal sealed class EvidentiaReviewQueue(AppDbContext db)
 
     private IQueryable<EvidentiaDecision> Scoped(int runId, EvidentiaQueueFilter filter) =>
         db.EvidentiaDecisions.AsNoTracking()
-            .Where(decision => decision.RunId == runId && decision.TargetWordId != null)
+            .Where(decision => decision.RunId == runId && (decision.TargetWordId != null || decision.Absence != null))
             .Where(decision => filter.Tier == null || decision.Tier == filter.Tier)
             .Where(decision => filter.Book == null || decision.CanonicalBook == filter.Book)
             .Where(decision => filter.Chapter == null || decision.CanonicalChapter == filter.Chapter)

@@ -257,6 +257,160 @@ public sealed class EvidentiaReviewTests : IDisposable
         abstained.AlternativeTaken.Should().Equal(true);
     }
 
+    [Fact]
+    public async Task AnAbsenceIsWrittenOnTheSideTheRelationSaysWithTheRulesClaim()
+    {
+        Absence(LinkRelation.Expands, English(2), EvidentiaDecisionRecorder.SafeTier);
+        Absence(LinkRelation.Omits, Hebrew(2), EvidentiaDecisionRecorder.SafeTier);
+
+        var accepted = await Queue().AcceptTier(_run.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier),
+            Reviewer, null);
+        var outcome = await Writer().Apply(_run.Id, write: true);
+
+        accepted.Should().Be(2, "an absence waits in the queue like a proposal");
+        outcome.NewLinks.Should().Be(2);
+        outcome.NewAbsences.Should().Be(2);
+        var links = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Claims)
+            .OrderBy(row => row.Id).ToListAsync();
+        links.Select(link => (link.Relation, link.Words.Single().WordId, link.Words.Single().Side)).Should().Equal(
+            (LinkRelation.Expands, English(2), LinkSide.From),
+            (LinkRelation.Omits, Hebrew(2), LinkSide.To));
+        links.Should().AllSatisfy(link =>
+        {
+            link.FromTextId.Should().Be(_english.Id);
+            link.Method.Should().Be(LinkMethod.RuleBased, "a rule said it and nobody read it");
+            link.Confidence.Should().BeApproximately(RuleConfidence, 0.0001);
+            link.Claims.Should().ContainSingle().Which.Source.Should().Contain($"EVIDENTIA run {_run.Id}");
+        });
+        links[0].Source.Should().EndWith("supplied-article");
+        links[1].Source.Should().EndWith("unrendered-conjunction");
+    }
+
+    [Fact]
+    public async Task AnAbsenceTheCorpusAlreadyStatesGainsTheClaimAndARenderingKeepsAnyAbsenceOut()
+    {
+        var stated = ExistingAbsence(LinkRelation.Omits, Hebrew(2));
+        ExistingLink(English(2), Hebrew(1), LinkMethod.Aligner, 0.35);
+        Absence(LinkRelation.Omits, Hebrew(2), EvidentiaDecisionRecorder.SafeTier);
+        var supplied = Absence(LinkRelation.Expands, English(2), EvidentiaDecisionRecorder.SafeTier);
+        await Queue().AcceptTier(_run.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Reviewer, null);
+
+        var unread = await Writer().Apply(_run.Id, write: true);
+
+        unread.OnExisting.Should().Be(1, "the Berean already says the word is not rendered");
+        unread.NewLinks.Should().Be(0);
+        unread.Withheld.Should().Be(1, "the aligner gives 'the' a counterpart, and an absence may not stand beside it");
+        var claims = await _db.LinkClaims.AsNoTracking().Where(claim => claim.LinkId == stated).ToListAsync();
+        claims.Select(claim => claim.Method).Should().BeEquivalentTo([LinkMethod.StatedBySource, LinkMethod.RuleBased]);
+        (await _db.Links.AsNoTracking().SingleAsync(link => link.Id == stated)).Method.Should().Be(LinkMethod.StatedBySource);
+
+        await Queue().Approve([supplied.Id], Reviewer, "the original has no article here");
+        var read = await Writer().Apply(_run.Id, write: true);
+
+        read.Withheld.Should().Be(1, "a word shown as supplied and as rendered at once is a contradiction, whoever approved it");
+        read.NewLinks.Should().Be(0);
+        (await _db.EvidentiaReviews.AsNoTracking().SingleAsync(review => review.DecisionId == supplied.Id))
+            .Withheld.Should().Contain("aligner");
+    }
+
+    [Fact]
+    public async Task AnUnrenderedWordHasNoTranslationWordToCorrect()
+    {
+        var omitted = Absence(LinkRelation.Omits, Hebrew(2), EvidentiaDecisionRecorder.SafeTier);
+        var supplied = Absence(LinkRelation.Expands, English(2), EvidentiaDecisionRecorder.SafeTier);
+
+        var refused = () => Queue().Correct(omitted.Id, Hebrew(1), Reviewer, null);
+        await Queue().Correct(supplied.Id, Hebrew(1), Reviewer, "it renders the article of the next word");
+        await Writer().Apply(_run.Id, write: true);
+
+        await refused.Should().ThrowAsync<InvalidOperationException>().WithMessage("*evidentia-reject*");
+        var link = await StoredLink();
+        link.Words.Should().BeEquivalentTo([(English(2), LinkSide.From), (Hebrew(1), LinkSide.To)],
+            "a corrected supplied word is a pair, written as one");
+    }
+
+    [Fact]
+    public async Task ARunKeepsItsAbsencesWithTheTierAndConfidenceOfThePairTheyRestOn()
+    {
+        var the = Analysis(English(2), _english, 2, "the");
+        var god = Analysis(English(4), _english, 4, "God");
+        var elohim = Analysis(Hebrew(3), _hebrew, 3, "אלהים");
+        var created = Analysis(Hebrew(2), _hebrew, 2, "ברא");
+        var anchor = new EvidentiaProposal(god, elohim, EvidentiaProposalKind.GlobalReviewKnownRendering, 0.965,
+            EvidentiaDecisionTrace.For(new EvidentiaCandidate(god, elohim, []), "review", "test"));
+        var recorder = new EvidentiaDecisionRecorder(_run.Id);
+        recorder.Record(new EvidentiaChapterDecisions(1, 1, [the.Token, god.Token], new HashSet<long> { god.Token.Id }, [],
+            [anchor], [anchor],
+            [
+                new EvidentiaAbsence(the, EvidentiaAbsenceRule.UnwrittenArticle, anchor),
+                new EvidentiaAbsence(created, EvidentiaAbsenceRule.Conjunction, anchor),
+            ]));
+
+        await new EvidentiaRunner(_db, null!).Write(recorder.Decisions, CancellationToken.None);
+
+        var stored = await _db.EvidentiaDecisions.AsNoTracking().Where(decision => decision.Absence != null)
+            .OrderBy(decision => decision.Id).ToListAsync();
+        stored.Should().BeEquivalentTo(new object[]
+        {
+            new
+            {
+                SourceWordId = (long?)English(2), TargetWordId = (long?)null, Absence = (LinkRelation?)LinkRelation.Expands,
+                Kind = "supplied-article", Tier = EvidentiaDecisionRecorder.SafeTier,
+                AnchorSourceWordId = (long?)English(4), AnchorTargetWordId = (long?)Hebrew(3), Abstention = (EvidentiaAbstention?)null,
+            },
+            new
+            {
+                SourceWordId = (long?)null, TargetWordId = (long?)Hebrew(2), Absence = (LinkRelation?)LinkRelation.Omits,
+                Kind = "unrendered-conjunction", Tier = EvidentiaDecisionRecorder.SafeTier,
+                AnchorSourceWordId = (long?)English(4), AnchorTargetWordId = (long?)Hebrew(3), Abstention = (EvidentiaAbstention?)null,
+            },
+        }, options => options.WithStrictOrdering());
+        stored[0].Confidence.Should().BeApproximately(0.965f, 0.0001f);
+        stored[1].Confidence.Should().BeApproximately((float)EvidentiaAbsenceRule.Conjunction.Confidence, 0.0001f,
+            "the rule's own record is below the pair's confidence here");
+        stored[0].Rationale.Should().Contain("'God' → 'אלהים'");
+    }
+
+    private EvidentiaDecision Absence(LinkRelation relation, long word, string tier)
+    {
+        var decision = new EvidentiaDecision
+        {
+            RunId = _run.Id,
+            SourceWordId = relation == LinkRelation.Expands ? word : null,
+            TargetWordId = relation == LinkRelation.Omits ? word : null,
+            CanonicalBook = 1,
+            CanonicalChapter = 1,
+            CanonicalVerse = 1,
+            Absence = relation,
+            Kind = relation == LinkRelation.Expands ? "supplied-article" : "unrendered-conjunction",
+            Tier = tier,
+            Rationale = "test",
+            Confidence = RuleConfidence,
+        };
+        _db.EvidentiaDecisions.Add(decision);
+        _db.SaveChanges();
+        _db.ChangeTracker.Clear();
+        return decision;
+    }
+
+    private long ExistingAbsence(LinkRelation relation, long word)
+    {
+        var link = new Link
+        {
+            FromTextId = _english.Id,
+            ToTextId = _hebrew.Id,
+            Relation = relation,
+            Method = LinkMethod.StatedBySource,
+            Source = "an existing loader",
+            Words = [new LinkWord { WordId = word, Side = relation == LinkRelation.Omits ? LinkSide.To : LinkSide.From }],
+            Claims = [new LinkClaim { Method = LinkMethod.StatedBySource, Source = "an existing loader" }],
+        };
+        _db.Links.Add(link);
+        _db.SaveChanges();
+        _db.ChangeTracker.Clear();
+        return link.Id;
+    }
+
     private EvidentiaDecision Proposal(long source, long target, string tier = "review")
     {
         var decision = new EvidentiaDecision

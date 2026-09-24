@@ -19,6 +19,15 @@ namespace Essenthos.Core.Database.Entities;
 /// </para>
 ///
 /// <para>
+/// **An absence is a decision about one word too**, with only that word's side filled: a word of
+/// the translation the original does not have (<see cref="LinkRelation.Expands"/>, a source word
+/// and no target) or a word of the original the translation does not render
+/// (<see cref="LinkRelation.Omits"/>, a target word and no source). It carries no candidate edges;
+/// its evidence is the rule that made it, in <see cref="Kind"/> and <see cref="Rationale"/>, and the
+/// placed pair it rests on, in <see cref="AnchorSourceWordId"/> and <see cref="AnchorTargetWordId"/>.
+/// </para>
+///
+/// <para>
 /// For an abstention the signal columns and <see cref="Score"/> are the best candidate's, so the row
 /// still says what evidence the policy declined.
 /// </para>
@@ -44,7 +53,8 @@ public class EvidentiaDecision
 
     public EvidentiaRun? Run { get; set; }
 
-    public long SourceWordId { get; set; }
+    /// <summary>Null exactly for an <see cref="LinkRelation.Omits"/> absence, which is about a word of the target alone.</summary>
+    public long? SourceWordId { get; set; }
 
     public Word? SourceWord { get; set; }
 
@@ -58,7 +68,7 @@ public class EvidentiaDecision
     /// <summary>Whether a language pack called the word a content word, which is what coverage counts.</summary>
     public bool Content { get; set; }
 
-    /// <summary>Null exactly when the run placed the word nowhere.</summary>
+    /// <summary>Null where the run placed the word nowhere, or where it says the word has no counterpart.</summary>
     public long? TargetWordId { get; set; }
 
     public Word? TargetWord { get; set; }
@@ -86,6 +96,18 @@ public class EvidentiaDecision
     public short Candidates { get; set; }
 
     public EvidentiaAbstention? Abstention { get; set; }
+
+    /// <summary>
+    /// Set where the decision is that a word has no counterpart, as the link it would become says
+    /// it: <see cref="LinkRelation.Expands"/> for a word the translation supplies,
+    /// <see cref="LinkRelation.Omits"/> for a word of the original it does not render.
+    /// </summary>
+    public LinkRelation? Absence { get; set; }
+
+    /// <summary>The source word of the placed pair an absence rests on: the head of a supplied article, or the word a prefix is written onto.</summary>
+    public long? AnchorSourceWordId { get; set; }
+
+    public long? AnchorTargetWordId { get; set; }
 
     public float? ExactAddress { get; set; }
 
@@ -131,5 +153,5 @@ public class EvidentiaDecision
     public EvidentiaReview? Review { get; set; }
 
     public override string ToString() =>
-        $"EvidentiaDecision({SourceWordId} to {TargetWordId?.ToString() ?? "nothing"}, {Kind ?? Abstention?.ToString()})";
+        $"EvidentiaDecision({SourceWordId?.ToString() ?? "nothing"} to {TargetWordId?.ToString() ?? "nothing"}, {Kind ?? Abstention?.ToString()})";
 }

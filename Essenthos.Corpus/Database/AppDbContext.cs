@@ -645,6 +645,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<EvidentiaDecision>(entity =>
         {
             entity.Property(d => d.Abstention).HasConversion(EnumStorage.EvidentiaAbstention);
+            entity.Property(d => d.Absence).HasConversion(EnumStorage.LinkRelation);
 
             entity.HasOne(d => d.Run)
                 .WithMany(r => r.Decisions)
@@ -661,6 +662,9 @@ public class AppDbContext : DbContext
                 .HasForeignKey(d => d.TargetWordId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            var expands = EnumSpelling.Of(LinkRelation.Expands);
+            var omits = EnumSpelling.Of(LinkRelation.Omits);
+
             // A proposal says what it is and how sure; an abstention says why. Neither may be stored
             // as the other, because the problem-verse ranking counts them apart.
             entity.ToTable("evidentia_decision", table =>
@@ -670,7 +674,18 @@ public class AppDbContext : DbContext
                     "\"target_word_id\" IS NULL OR (\"kind\" IS NOT NULL AND \"confidence\" IS NOT NULL AND \"abstention\" IS NULL)");
                 table.HasCheckConstraint(
                     "ck_evidentia_decision_abstention_has_reason",
-                    "\"target_word_id\" IS NOT NULL OR (\"abstention\" IS NOT NULL AND \"kind\" IS NULL)");
+                    $"\"target_word_id\" IS NOT NULL OR \"absence\" = '{expands}' OR (\"abstention\" IS NOT NULL AND \"kind\" IS NULL)");
+
+                // An absence names the one word that has no counterpart, on the side the relation
+                // says, and is described like a proposal: the rule that made it and how sure it is.
+                table.HasCheckConstraint(
+                    "ck_evidentia_decision_absence_names_its_side",
+                    $"\"absence\" IS NULL OR (\"kind\" IS NOT NULL AND \"confidence\" IS NOT NULL AND \"abstention\" IS NULL AND " +
+                    $"CASE \"absence\" WHEN '{expands}' THEN \"source_word_id\" IS NOT NULL AND \"target_word_id\" IS NULL " +
+                    $"WHEN '{omits}' THEN \"source_word_id\" IS NULL AND \"target_word_id\" IS NOT NULL ELSE FALSE END)");
+                table.HasCheckConstraint(
+                    "ck_evidentia_decision_only_an_omission_lacks_its_source",
+                    $"\"source_word_id\" IS NOT NULL OR \"absence\" = '{omits}'");
                 table.HasCheckConstraint(
                     "ck_evidentia_decision_confidence_range",
                     "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
