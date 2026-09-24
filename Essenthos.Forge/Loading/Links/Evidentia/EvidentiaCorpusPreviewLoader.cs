@@ -139,12 +139,24 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 .Where(candidate => EvidentiaMorphologyLabels.AreCounterparts(candidate.Source, candidate.Target))
                 .Select(candidate => (candidate.Source.Token.Id, candidate.Target.Token.Id))
                 .ToHashSet());
+        var repeatedRenderingResolution = EvidentiaRepeatedRendering.Resolve(
+            targetAnalyses,
+            candidates,
+            [
+                .. globalReviewKnownRenderingResolution.Proposals,
+                .. dictionaryReviewResolution.Proposals,
+                .. syntaxTargetGlossOnlyResolution.Proposals,
+                .. residualKnownRenderingResolution.Proposals,
+                .. anchoredGapResolution.Proposals,
+                .. classMatchedTargetGlossResolution.Proposals,
+            ]);
         var syntaxTargetGlossReviewResolution = new EvidentiaResolution(
             dictionaryReviewResolution.Proposals
                 .Concat(syntaxTargetGlossOnlyResolution.Proposals)
                 .Concat(residualKnownRenderingResolution.Proposals)
                 .Concat(anchoredGapResolution.Proposals)
                 .Concat(classMatchedTargetGlossResolution.Proposals)
+                .Concat(repeatedRenderingResolution.Proposals)
                 .ToList(), 0);
         var sourceIds = source.Select(token => token.Id).ToHashSet();
         var targetIds = target.Select(token => token.Id).ToHashSet();
