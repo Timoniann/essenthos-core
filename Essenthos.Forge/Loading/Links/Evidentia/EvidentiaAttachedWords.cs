@@ -40,6 +40,9 @@ internal enum EvidentiaAttachment
 
     /// <summary><em>there</em> of <em>there was</em>, which says nothing of its own.</summary>
     Expletive,
+
+    /// <summary><em>because</em>, <em>that</em> or <em>if</em>, which opens the clause of the verb it belongs to.</summary>
+    Subordinator,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -72,6 +75,9 @@ internal enum EvidentiaAttachmentPlacement
 
     /// <summary>On the original's own verb <em>be</em>, written directly beside the rendering of the word it links.</summary>
     BeBeside,
+
+    /// <summary>On a conjunction other than <em>and</em> written directly before the rendering of the clause's verb.</summary>
+    ConjunctionBefore,
 }
 
 /// <summary>
@@ -176,6 +182,16 @@ internal static class EvidentiaAttachedWords
     private const string SubjectRelation = "nsubj";
 
     private const string CopulaRelation = "cop";
+
+    private const string MarkerRelation = "mark";
+
+    private const string SubordinatingConjunction = "SCONJ";
+
+    /// <summary>
+    /// The original's words for <em>and</em>: ו, καί and δέ. They open a clause as often as they join a
+    /// word, and English writes them as <em>and</em>, which is placed by its own rule.
+    /// </summary>
+    private static readonly HashSet<string> Coordinators = new(StringComparer.Ordinal) { "H9000", "G2532", "G1161" };
 
     public static IReadOnlyList<EvidentiaProposal> Resolve(
         IReadOnlyList<EvidentiaAnalysis> source,
@@ -302,6 +318,7 @@ internal static class EvidentiaAttachedWords
                 EvidentiaAttachment.Infinitive => EvidentiaAttachmentPlacement.Infinitive,
                 EvidentiaAttachment.Copula => EvidentiaAttachmentPlacement.BeBeside,
                 EvidentiaAttachment.Expletive => EvidentiaAttachmentPlacement.Rendering,
+                EvidentiaAttachment.Subordinator => EvidentiaAttachmentPlacement.ConjunctionBefore,
                 _ => EvidentiaAttachmentPlacement.None,
             }
             : !witnessLanguage.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
@@ -316,6 +333,7 @@ internal static class EvidentiaAttachedWords
                 EvidentiaAttachment.Infinitive => EvidentiaAttachmentPlacement.Infinitive,
                 EvidentiaAttachment.Copula => EvidentiaAttachmentPlacement.BeBeside,
                 EvidentiaAttachment.Expletive => EvidentiaAttachmentPlacement.Rendering,
+                EvidentiaAttachment.Subordinator => EvidentiaAttachmentPlacement.ConjunctionBefore,
                 _ => EvidentiaAttachmentPlacement.None,
             };
 
@@ -335,6 +353,12 @@ internal static class EvidentiaAttachedWords
         {
             return Found(EvidentiaAttachment.Conjunction,
                 Forward(words, index, "noun", "propn", "pron", "verb", "adj", "adv", "num"));
+        }
+
+        if (partOfSpeech == "conj" && word.Token.Relation == MarkerRelation
+            && string.Equals(word.PartOfSpeech ?? word.Token.PartOfSpeech, SubordinatingConjunction, StringComparison.OrdinalIgnoreCase))
+        {
+            return Found(EvidentiaAttachment.Subordinator, Syntactic(words, word.Token.SyntacticHead));
         }
 
         if (partOfSpeech == "adp" && word.Token.Surface.Equals(Of, StringComparison.OrdinalIgnoreCase))
@@ -453,6 +477,7 @@ internal static class EvidentiaAttachedWords
                 : Agreeing(attachment, word, rendering, verse),
             EvidentiaAttachmentPlacement.Infinitive => Infinitive(rendering, verse, taken),
             EvidentiaAttachmentPlacement.BeBeside => BeBeside(rendering, verse, taken),
+            EvidentiaAttachmentPlacement.ConjunctionBefore => ConjunctionBefore(rendering, verse, taken),
             _ => null,
         };
     }
@@ -515,6 +540,23 @@ internal static class EvidentiaAttachedWords
             && verse[at - 1].Token.StrongNumber != ObjectMarker
             ? verse[at - 1]
             : rendering;
+    }
+
+    /// <summary>
+    /// The conjunction written directly before the rendering of the clause's verb - כִּי, אֲשֶׁר, ὅτι,
+    /// εἰ - when it is free and is not the original's <em>and</em>. One word further back it is as often
+    /// the conjunction of another clause.
+    /// </summary>
+    private static EvidentiaAnalysis? ConjunctionBefore(
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        var at = IndexOf(verse, rendering);
+        return at > 0 && Class(verse[at - 1]) == "conj" && !taken.Contains(verse[at - 1].Token.Id)
+            && !(verse[at - 1].Token.StrongNumber is { } strong && Coordinators.Contains(strong))
+            ? verse[at - 1]
+            : null;
     }
 
     private static bool IsInfinitive(EvidentiaAnalysis word) =>

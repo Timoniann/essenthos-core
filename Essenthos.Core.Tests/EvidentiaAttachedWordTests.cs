@@ -289,6 +289,21 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
+    public void ASubordinatorGoesOnTheConjunctionDirectlyBeforeItsVerbButNotOnTheOriginalsAnd()
+    {
+        var because = English(1, Genesis122, 1, "because", "SCONJ") with { SyntacticHead = 2, Relation = "mark" };
+        var rested = English(2, Genesis122, 2, "rested", "VERB");
+        var when = English(3, Genesis122, 3, "when", "SCONJ") with { SyntacticHead = 4, Relation = "mark" };
+        var slept = English(4, Genesis122, 4, "slept", "VERB");
+        var ki = Hebrew(11, Genesis122, 1, "כִּי", "H3588", "conj");
+        var rest = Hebrew(12, Genesis122, 2, "שָׁבַת", "H7673", "verb");
+        var vav = Hebrew(13, Genesis122, 3, "וַ", "H9000", "conj");
+        var sleep = Hebrew(14, Genesis122, 4, "יִּישָׁן", "H3462", "verb");
+
+        Attach([because, rested, when, slept], [ki, rest, vav, sleep], (rested, rest), (slept, sleep)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
     public void AnArticleAndAPossessiveShareTheSafeTierOfTheirNounAndAConjunctionDoesNot()
     {
         var and = English(1, Genesis122, 1, "and", "CCONJ");
