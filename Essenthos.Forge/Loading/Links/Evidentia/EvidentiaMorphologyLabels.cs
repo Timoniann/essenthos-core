@@ -72,6 +72,29 @@ internal static class EvidentiaMorphologyLabels
 
     private static readonly HashSet<string> OpenClasses = ["noun", "propn", "verb", "adj", "num"];
 
+    /// <summary>
+    /// Whether a word of one language and a word of another are of classes that render one another: a
+    /// noun a noun or a name, an adjective an adjective or a noun (Hebrew writes many as nouns), a verb
+    /// a verb. Only the open classes and adverbs have counterparts; anything else answers false.
+    /// </summary>
+    public static bool AreCounterparts(EvidentiaAnalysis source, EvidentiaAnalysis target) =>
+        ClassOf(source) is { } sourceClass && Counterparts.TryGetValue(sourceClass, out var classes)
+        && ClassOf(target) is { } targetClass && classes.Contains(targetClass);
+
+    public static bool HasCounterparts(EvidentiaAnalysis word) => ClassOf(word) is { } wordClass && Counterparts.ContainsKey(wordClass);
+
+    private static string? ClassOf(EvidentiaAnalysis word) => PartOfSpeech(word.PartOfSpeech ?? word.Token.PartOfSpeech, word.Token.Language);
+
+    private static readonly Dictionary<string, string[]> Counterparts = new(StringComparer.Ordinal)
+    {
+        ["noun"] = ["noun", "propn"],
+        ["propn"] = ["propn", "noun"],
+        ["verb"] = ["verb"],
+        ["adj"] = ["adj", "noun"],
+        ["num"] = ["num", "noun", "adj"],
+        ["adv"] = ["adv"],
+    };
+
     private static string? Normalise(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToLowerInvariant();
 

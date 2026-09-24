@@ -20,17 +20,6 @@ internal static class EvidentiaAnchoredGap
         EvidentiaEvidenceKind.MatchingNormalisedForm,
     ];
 
-    /// <summary>The classes that may stand in for one another across the two languages.</summary>
-    private static readonly Dictionary<string, string[]> Counterparts = new(StringComparer.Ordinal)
-    {
-        ["noun"] = ["noun", "propn"],
-        ["propn"] = ["propn", "noun"],
-        ["verb"] = ["verb"],
-        ["adj"] = ["adj", "noun"],
-        ["num"] = ["num", "noun", "adj"],
-        ["adv"] = ["adv"],
-    };
-
     public static EvidentiaResolution Resolve(
         IReadOnlyList<EvidentiaAnalysis> source,
         IReadOnlyList<EvidentiaAnalysis> target,
@@ -60,8 +49,7 @@ internal static class EvidentiaAnchoredGap
             {
                 var word = words[index];
                 if (placedBySource.ContainsKey(word.Token.Id)
-                    || Class(word) is not { } wordClass
-                    || !Counterparts.TryGetValue(wordClass, out var counterparts)
+                    || !EvidentiaMorphologyLabels.HasCounterparts(word)
                     || Anchor(words, index, -1, placedBySource) is not { } left
                     || Anchor(words, index, +1, placedBySource) is not { } right
                     || left.Token.Address != right.Token.Address
@@ -76,7 +64,7 @@ internal static class EvidentiaAnchoredGap
                         && EvidentiaMorphologyLabels.IsFunctionWord(other.PartOfSpeech, other.Token.Language) != true)
                     .ToList();
                 if (gap.Count != 1
-                    || Class(gap[0]) is not { } gapClass || !counterparts.Contains(gapClass)
+                    || !EvidentiaMorphologyLabels.AreCounterparts(word, gap[0])
                     || !supported.TryGetValue((word.Token.Id, gap[0].Token.Id), out var candidate))
                 {
                     continue;

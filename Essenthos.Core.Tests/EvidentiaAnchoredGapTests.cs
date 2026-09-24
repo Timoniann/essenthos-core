@@ -48,6 +48,22 @@ public class EvidentiaAnchoredGapTests
             .Should().BeEmpty("nothing says made renders the verb");
     }
 
+    [Fact]
+    public void ANounRendersANounOrANameAndAVerbOnlyAVerb()
+    {
+        var made = Analysis(English(1, 1, "made", "VERB"));
+        var firmament = Analysis(English(2, 2, "firmament", "NOUN"));
+        var make = Analysis(Hebrew(11, 1, "יַּעַשׂ", "H6213", "verb"));
+        var expanse = Analysis(Hebrew(12, 2, "רָקִיעַ", "H7549", "subs"));
+        var eden = Analysis(Hebrew(13, 3, "עֵדֶן", "H5731", "nmpr"));
+
+        EvidentiaMorphologyLabels.AreCounterparts(made, make).Should().BeTrue();
+        EvidentiaMorphologyLabels.AreCounterparts(firmament, expanse).Should().BeTrue();
+        EvidentiaMorphologyLabels.AreCounterparts(firmament, eden).Should().BeTrue();
+        EvidentiaMorphologyLabels.AreCounterparts(made, expanse).Should().BeFalse();
+        EvidentiaMorphologyLabels.AreCounterparts(firmament, make).Should().BeFalse();
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Gap(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
