@@ -77,6 +77,11 @@ internal sealed class DatasetLoader(
             await Load("Swete's Septuagint", () => SweteTextSource.Read(
                 Path.Combine(resources, "Swete")), stoppingToken);
 
+            // Codex Alexandrinus, in the one book it is printed whole here: Ottley's Isaiah, a
+            // diplomatic text of a different manuscript from the Vaticanus Swete prints.
+            await Load("Ottley's Isaiah", () => OttleyTextSource.Read(
+                Path.Combine(resources, "Swete")), stoppingToken);
+
             // The Torah as the Samaritan community transmitted it, which is the first text here
             // that disagrees with BHSA about the Hebrew rather than about a translation of it.
             await Load("the Samaritan Pentateuch", () => SamaritanTextSource.Read(
@@ -561,6 +566,10 @@ internal sealed class DatasetLoader(
         var loader = scope.ServiceProvider.GetRequiredService<SeptuagintLinkLoader>();
         status.Record(await loader.Load(
             SweteTextSource.Slug, SeptuagintTextSource.Slug, cancellationToken));
+
+        // Alexandrinus against Vaticanus, the two Cambridge diplomatic texts, in Isaiah.
+        status.Record(await loader.Load(
+            OttleyTextSource.Slug, SweteTextSource.Slug, cancellationToken));
     }
 
     /// <summary>
@@ -1289,7 +1298,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<CorpusLoader>();
-        status.Record(await loader.Load(source, cancellationToken));
+        var loaded = await loader.Load(source, cancellationToken);
+        status.Record(loaded);
+
+        // A book the source gained after the text was loaded — Swete's Isaiah, which could not be
+        // read until its own transcription was — goes into the text already there rather than
+        // waiting for the whole text to be loaded again.
+        if (loaded.AlreadyLoaded)
+        {
+            var added = await loader.AddMissingBooks(source, cancellationToken);
+            if (added.Books.Count > 0)
+            {
+                status.Record(added);
+            }
+        }
 
         // What the edition calls its own verses, where its publisher renumbered it and it says so
         // in the text. Guarded on its own rows rather than on the text's, so it reaches a database

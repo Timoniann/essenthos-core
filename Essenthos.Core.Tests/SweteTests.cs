@@ -127,7 +127,7 @@ public class SweteUnnumberedTests
     }
 }
 
-/// <summary>Read once; fifty-one files of half a million tokens is a few seconds.</summary>
+/// <summary>Read once; fifty-two books of half a million tokens is a few seconds.</summary>
 public sealed class Swete
 {
     internal TextSource Source { get; } = SweteTextSource.Read(TestResources.SweteFolder);
@@ -152,15 +152,15 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void TheWholeEditionIsRead()
     {
-        swete.Source.Books.Should().HaveCount(51);
-        swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1041);
+        swete.Source.Books.Should().HaveCount(52);
+        swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1107);
         swete.Source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count))
-            .Should().Be(27244);
+            .Should().Be(28533);
         swete.Source.Books
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(543414);
+            .Should().Be(570385);
     }
 
     /// <summary>
@@ -171,7 +171,7 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void EveryBookKeepsTheEditionOwnOrderAndTheSharedOrdinal()
     {
-        swete.Source.Books.Select(book => book.Position).Should().Equal(Enumerable.Range(1, 51));
+        swete.Source.Books.Select(book => book.Position).Should().Equal(Enumerable.Range(1, 52));
         swete.Source.Books.Select(book => book.CanonicalOrdinal).Should().OnlyHaveUniqueItems();
         swete.Book(30).Position.Should().Be(33, "Amos stands second among the Twelve here");
         swete.Book(29).Position.Should().Be(35, "and Joel fourth");
@@ -307,7 +307,8 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     /// <summary>
     /// Every file the folder holds and the edition does not read, so that an absence stays a
     /// decision rather than becoming a book that quietly never arrived. Isaiah is the one that
-    /// matters: the file is Ottley's Codex Alexandrinus text of 1904 and not Swete's.
+    /// matters: the file is Ottley's Codex Alexandrinus text of 1904 and not Swete's, and the Isaiah
+    /// read is Swete's own, from the transcription of his volume.
     /// </summary>
     [Fact]
     public void WhatIsNotLoadedIsStillOnDisk()
@@ -318,7 +319,7 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
                 .Should().BeTrue($"{book} is left out on purpose and the reason needs the file to check");
         }
 
-        swete.Source.Books.Should().NotContain(book => book.CanonicalOrdinal == 23);
+        Swete.Text(swete.Verse(23, 1, 1)).Should().Contain("Ὀζείου").And.NotContain("Ὀζίου");
     }
 
     /// <summary>

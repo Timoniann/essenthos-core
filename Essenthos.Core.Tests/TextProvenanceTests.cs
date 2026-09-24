@@ -41,7 +41,7 @@ public sealed class TextProvenanceTests
     private static TextDefinition Of(string slug) => All.Single(definition => definition.Slug == slug);
 
     [Fact]
-    public void TheCorpusHoldsTwentyFourTexts() => All.Should().HaveCount(24);
+    public void TheCorpusHoldsTwentyFiveTexts() => All.Should().HaveCount(25);
 
     /// <summary>
     /// Every text says what it is. A licence and a year identify a file, not an edition, and the
@@ -141,16 +141,18 @@ public sealed class TextProvenanceTests
     ///
     /// Checked as a pair rather than one at a time: the fault was not two wrong rows, it was a
     /// vocabulary that could not express the answer, so both rows were as right as they could be.
+    /// Ottley's Isaiah came later, from the same transcription as Swete and under the same terms.
     /// </summary>
     [Fact]
     public void EveryShareAlikeTextSaysShareAlike()
     {
         All.Where(definition => definition.Licence.Contains("SA", StringComparison.OrdinalIgnoreCase))
             .Should().OnlyContain(definition => definition.Redistribution == Redistribution.ShareAlike)
-            .And.HaveCount(2);
+            .And.HaveCount(3);
 
         Of(Bible4uTextSource.Ohienko).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(SweteTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(OttleyTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
     }
 
     /// <summary>

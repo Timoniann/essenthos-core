@@ -87,6 +87,17 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
     private const string LinkWordImport =
         "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
 
+    /// <summary>The books of the frame the pair already has links in, read off the first edition's words.</summary>
+    private const string LinkedBooks =
+        """
+        SELECT DISTINCT r.canonical_book
+        FROM link l
+        JOIN link_word lw ON lw.link_id = l.id AND lw.side = 'from'
+        JOIN word w ON w.id = lw.word_id
+        JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+        WHERE l.from_text_id = @from AND l.to_text_id = @to
+        """;
+
     public async Task<SeptuagintLinkOutcome> Load(
         string fromSlug,
         string toSlug,
@@ -103,15 +114,25 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
                 "alphabet; a pair in two languages needs the aligner.");
         }
 
-        if (await db.Links.AnyAsync(l => l.FromTextId == from.Id && l.ToTextId == to.Id, cancellationToken))
+        // Book by book, so that a book either edition gains after the pair was linked — Swete's
+        // Isaiah — is linked on its own, and the books already linked keep every link they have.
+        // Only the books still to link are read, so a pair with nothing to do costs three queries.
+        var linked = await Linked(from.Id, to.Id, cancellationToken);
+        HashSet<int>? pending = null;
+        if (linked.Count > 0)
         {
-            logger.LogInformation("{From} and {To} are already linked; nothing to do", fromSlug, toSlug);
-            return new SeptuagintLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
+            pending = [.. (await Books(from.Id, cancellationToken)).Intersect(await Books(to.Id, cancellationToken))];
+            pending.ExceptWith(linked);
+            if (pending.Count == 0)
+            {
+                logger.LogInformation("{From} and {To} are already linked; nothing to do", fromSlug, toSlug);
+                return new SeptuagintLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
+            }
         }
 
         var started = Stopwatch.StartNew();
-        var here = await Words(from.Id, cancellationToken);
-        var there = await Words(to.Id, cancellationToken);
+        var here = await Words(from.Id, pending, cancellationToken);
+        var there = await Words(to.Id, pending, cancellationToken);
 
         var drafts = new List<GreekDraft>(600_000);
         var byBook = new SortedDictionary<int, (int Expanded, int Omitted)>();
@@ -193,12 +214,15 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
     /// fact about the sources rather than about the method: give Swete lemmas and the same code
     /// gains a second kind of evidence without changing.
     /// </summary>
+    /// <param name="books">The books of the frame to read, or null for all of them.</param>
     private async Task<Dictionary<(int Book, int Chapter, int Verse), List<GreekWord>>> Words(
         int textId,
+        IReadOnlySet<int>? books,
         CancellationToken cancellationToken)
     {
         var rows = await db.VerseReferences
             .Where(r => r.IsPrimary && r.Verse!.TextId == textId)
+            .Where(r => books == null || books.Contains(r.CanonicalBook))
             .SelectMany(r => r.Verse!.Words.Select(w => new
             {
                 r.CanonicalBook,
@@ -308,6 +332,32 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
             "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
         command.Parameters.AddWithValue("count", count);
         return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
+    }
+
+    /// <summary>The books of the frame an edition stands in.</summary>
+    private async Task<List<int>> Books(int textId, CancellationToken cancellationToken) =>
+        await db.VerseReferences
+            .Where(r => r.IsPrimary && r.Verse!.TextId == textId)
+            .Select(r => r.CanonicalBook)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
+    private async Task<HashSet<int>> Linked(int fromTextId, int toTextId, CancellationToken cancellationToken)
+    {
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        await using var command = new NpgsqlCommand(LinkedBooks, connection);
+        command.Parameters.AddWithValue("from", fromTextId);
+        command.Parameters.AddWithValue("to", toTextId);
+
+        var books = new HashSet<int>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            books.Add(reader.GetInt32(0));
+        }
+
+        return books;
     }
 
     private async Task<Database.Entities.Text> Text(string slug, CancellationToken cancellationToken) =>

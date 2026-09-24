@@ -29,6 +29,12 @@
     the one book with two Greek editions was overwritten by the second. It is fetched so that a
     reader can see for themselves what the file holds.
 
+    Both Isaiahs are then fetched from First1KGreek itself -- Swete's (grc1) and Ottley's (grc2),
+    the TEI the upstream script converts -- into First1KGreek/ under this project's own names, so
+    neither this script's clearing of the folder nor any file the upstream names can overwrite
+    them. Each states its licence in its own header, and that statement is checked before either
+    is kept.
+
 .EXAMPLE
     ./scripts/fetch-swete.ps1
 #>
@@ -54,6 +60,16 @@ $UpstreamLicence = 'https://raw.githubusercontent.com/OpenGreekAndLatin/First1KG
 $UpstreamZenodo = 'https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/.zenodo.json'
 
 $ExpectedLicence = 'Creative Commons Attribution-ShareAlike 4.0'
+
+# First1KGreek's two Greek editions of Isaiah, pinned to the last commit that changed them, with the
+# name each is kept under and its size in bytes at that commit.
+$First1KGreekCommit = 'b67137e6b82669d08fe6ad1c225999ca6aca362c'
+$First1KGreekRaw = "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/$First1KGreekCommit/data/tlg0527/tlg048"
+$Isaiahs = @(
+    @{ Source = 'tlg0527.tlg048.1st1K-grc1.xml'; Target = 'isaiah-swete-1905.xml'; Bytes = 688809 },
+    @{ Source = 'tlg0527.tlg048.1st1K-grc2.xml'; Target = 'isaiah-ottley-1904.xml'; Bytes = 520194 }
+)
+$ExpectedTeiLicence = 'Creative Commons Attribution-ShareAlike 4.0 International'
 $ExpectedUpstreamLicence = 'Attribution-ShareAlike 4.0 International'
 $ExpectedZenodoLicence = 'CC-BY-SA-4.0'
 
@@ -133,6 +149,27 @@ try {
     Copy-Item -Path (Join-Path $root.FullName 'README.md') -Destination $target -Force
     Copy-Item -Path (Join-Path $root.FullName 'COPYING-Code') -Destination $target -Force
     Set-Content -Path (Join-Path $target 'first1kgreek-license.md') -Value $upstream -Encoding UTF8 -NoNewline
+
+    $transcribed = Join-Path $target 'First1KGreek'
+    New-Item -ItemType Directory -Force -Path $transcribed | Out-Null
+    foreach ($isaiah in $Isaiahs) {
+        $staged = Join-Path $staging $isaiah.Target
+        Invoke-WebRequest -Uri "$First1KGreekRaw/$($isaiah.Source)" -OutFile $staged `
+            -Headers @{ 'User-Agent' = 'essenthos' }
+        $bytes = (Get-Item $staged).Length
+        if ($bytes -ne $isaiah.Bytes) {
+            throw "$($isaiah.Source) is $bytes bytes where it was $($isaiah.Bytes) at $First1KGreekCommit. " +
+                  "A pinned file cannot change size; the download is partial or not the file. It was not kept."
+        }
+        # The header's <licence> element runs over a line break, so the whitespace is folded first.
+        $header = ((Get-Content $staged -Raw -Encoding UTF8) -split '</teiHeader>')[0] -replace '\s+', ' '
+        if ($header -notmatch [regex]::Escape($ExpectedTeiLicence)) {
+            throw "$($isaiah.Source) no longer states `"$ExpectedTeiLicence`" in its header. Read what " +
+                  "it says and record it in Resources/Swete/LICENCE.md before keeping it."
+        }
+        Move-Item -Path $staged -Destination (Join-Path $transcribed $isaiah.Target) -Force
+    }
+    Write-Host "  Isaiah from First1KGreek at $($First1KGreekCommit.Substring(0, 7)): Swete's and Ottley's, both CC BY-SA 4.0 in their headers"
 
     $size = (Get-ChildItem $target -Recurse -File | Measure-Object -Property Length -Sum).Sum / 1MB
     Write-Host ("{0:N0} tokens in {1} books, {2:N1} MB in {3}" -f $tokens, $files.Count, $size, $target)
