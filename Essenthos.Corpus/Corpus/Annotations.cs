@@ -107,6 +107,50 @@ internal static class Annotations
         return verses;
     }
 
+    /// <summary>
+    /// The same over a whole book: the canonical verses naming each entity, as chapter and verse.
+    /// Genesis is some thirty-five thousand annotations across its texts, read in one query.
+    /// </summary>
+    public static async Task<Dictionary<string, HashSet<(int Chapter, int Verse)>>> InBook(
+        AppDbContext db,
+        int canonicalBook,
+        CancellationToken cancellationToken)
+    {
+        var rows = await (
+                from reference in db.VerseReferences
+                where reference.IsPrimary && reference.CanonicalBook == canonicalBook
+                join word in db.Words on reference.VerseId equals word.VerseId
+                join annotation in db.WordEntities on word.Id equals annotation.WordId
+                select new
+                {
+                    reference.CanonicalChapter,
+                    reference.CanonicalVerse,
+                    Claimed = new Claimed(
+                        annotation.WordId, annotation.Method, annotation.Confidence, annotation.Source,
+                        annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name),
+                })
+            .ToListAsync(cancellationToken);
+
+        var verseOf = new Dictionary<long, (int, int)>();
+        foreach (var row in rows)
+        {
+            verseOf[row.Claimed.WordId] = (row.CanonicalChapter, row.CanonicalVerse);
+        }
+
+        var verses = new Dictionary<string, HashSet<(int Chapter, int Verse)>>(StringComparer.Ordinal);
+        foreach (var (wordId, named) in Settle([.. rows.Select(row => row.Claimed)]))
+        {
+            if (!verses.TryGetValue(named.Slug, out var at))
+            {
+                verses[named.Slug] = at = [];
+            }
+
+            at.Add(verseOf[wordId]);
+        }
+
+        return verses;
+    }
+
     /// <summary>The same for one word, which is what the word panel asks.</summary>
     public static async Task<EntityRefResponse?> Of(
         AppDbContext db,
