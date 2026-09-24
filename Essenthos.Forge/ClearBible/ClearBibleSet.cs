@@ -34,6 +34,21 @@ internal enum ClearBibleJoin
     Edition,
 }
 
+/// <summary>Where the numbers a record gives the translation's words come from.</summary>
+internal enum ClearBibleNumbering
+{
+    /// <summary>The token file the release ships beside the alignment.</summary>
+    TokenFile,
+
+    /// <summary>
+    /// The translation's own words, counted the way the records count them, because the release's
+    /// token file does not: every word divided after an elided article or pronoun, a hyphenated word
+    /// kept whole and each mark of punctuation counted as a word. See
+    /// <see cref="Loading.Links.ClearBibleLinkLoader.Retokenised"/>.
+    /// </summary>
+    Retokenised,
+}
+
 /// <param name="From">The translation the alignment is about, as the corpus slugs it.</param>
 /// <param name="To">The witness it aligns that translation to.</param>
 /// <param name="Alignment">The records, relative to the download.</param>
@@ -53,6 +68,7 @@ internal enum ClearBibleJoin
 /// The translation's word for <em>and</em>, where the set puts source words on it that the word after
 /// it renders; null where it does not. See <see cref="Loading.Links.ClearBibleLinkLoader.Shifted"/>.
 /// </param>
+/// <param name="Numbering">Where the numbers the records give the translation's words come from.</param>
 /// <summary>
 /// One of Clear Bible's alignments, and everything about it that differs from the others.
 ///
@@ -70,7 +86,8 @@ internal sealed record ClearBibleSet(
     string Source,
     ClearBibleJoin Join,
     string Statement,
-    ClearBibleShift? Shift = null)
+    ClearBibleShift? Shift = null,
+    ClearBibleNumbering Numbering = ClearBibleNumbering.TokenFile)
 {
     private const string Repository = "github.com/Clear-Bible/Alignments";
 
@@ -80,6 +97,12 @@ internal sealed record ClearBibleSet(
         Berean(BereanTextSource.Slug, NestleTextSource.Slug),
         ReinaValeraOldTestament(EbibleTextSource.ReinaValera, BhsaTextSource.Slug),
         ReinaValeraNewTestament(EbibleTextSource.ReinaValera, NestleTextSource.Slug),
+        SegondOldTestament(EbibleTextSource.Segond, BhsaTextSource.Slug),
+        SegondNewTestament(EbibleTextSource.Segond, NestleTextSource.Slug),
+        VanDyckOldTestament(EbibleTextSource.VanDyck, BhsaTextSource.Slug),
+        VanDyckNewTestament(EbibleTextSource.VanDyck, NestleTextSource.Slug),
+        IrvHindiOldTestament(EbibleTextSource.IrvHindi, BhsaTextSource.Slug),
+        IrvHindiNewTestament(EbibleTextSource.IrvHindi, NestleTextSource.Slug),
     ];
 
     /// <summary>
@@ -127,9 +150,120 @@ internal sealed record ClearBibleSet(
         $"Clear Bible Alignments SBLGNT-RV09-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand",
         new ClearBibleShift(Spanish.And, new HashSet<int> { Greek.And }));
 
+    /// <summary>
+    /// The Segond of 1910 against the Hebrew, hand-made by Biblica's team, whole Old Testament.
+    ///
+    /// The release ships no list of its French words: the Old Testament token file is a header and
+    /// nothing else, and the New Testament's does not match its own records — 7,475 of the 104,807
+    /// French words they name are a comma or a full stop in it, the way the Russian set's are. The
+    /// records were numbered over the text divided at every elision, so that <em>l’un</em> is two
+    /// words, with a hyphenated word kept whole and each mark of punctuation counted; the token
+    /// file divides some elisions and not others. Counted that way over eBible's text, which has the
+    /// same letters in 7,946 of the New Testament's 7,959 verses, 0.9% of the words the Old
+    /// Testament's records name are punctuation, and a verse where any is has its records refused
+    /// whole, since past that point every number in it is out. Of the records kept, a Hebrew proper
+    /// name falls on a capitalised French word 98.7% of the time, where the Reina-Valera's own token
+    /// file gives 97.3%.
+    ///
+    /// The set puts about two hundred Hebrew words on <em>et</em> where the next word renders them,
+    /// as the Reina-Valera's does on <em>y</em>; in the New Testament the same shape is 36 records
+    /// out of 5,713 on <em>et</em>, and those read as the translation's own choice.
+    /// </summary>
+    public static ClearBibleSet SegondOldTestament(string frenchSlug, string hebrewSlug) => new(
+        frenchSlug,
+        hebrewSlug,
+        Path.Combine("data", "fra", "alignments", "LSG", "WLCM-LSG-manual.json"),
+        string.Empty,
+        Path.Combine("data", "sources", "WLCM.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments WLCM-LSG-manual, Biblica, {Repository}, CC BY 4.0, made by hand",
+        new ClearBibleShift(French.And, new HashSet<int> { Hebrew.Also, Hebrew.Even }),
+        ClearBibleNumbering.Retokenised);
+
+    /// <inheritdoc cref="SegondOldTestament"/>
+    public static ClearBibleSet SegondNewTestament(string frenchSlug, string greekSlug) => new(
+        frenchSlug,
+        greekSlug,
+        Path.Combine("data", "fra", "alignments", "LSG", "SBLGNT-LSG-manual.json"),
+        string.Empty,
+        Path.Combine("data", "sources", "SBLGNT.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments SBLGNT-LSG-manual, Biblica, {Repository}, CC BY 4.0, made by hand",
+        Numbering: ClearBibleNumbering.Retokenised);
+
+    /// <summary>
+    /// The Van Dyck against the Hebrew, hand-made by BiblioNexus, whole Old Testament.
+    ///
+    /// Its metadata points at the Digital Bible Library's fully vowelled Van Dyck rather than at
+    /// eBible's, and says in a comment that nobody was sure it is the same version. It is: every
+    /// word of both token files falls on a word of eBible's text, with a psalm's title — which the
+    /// files number as a verse 0 — laid at the head of its first verse, and 408 of the two sets'
+    /// 348,102 records name a Hebrew or Greek word this corpus could not place.
+    /// </summary>
+    public static ClearBibleSet VanDyckOldTestament(string arabicSlug, string hebrewSlug) => new(
+        arabicSlug,
+        hebrewSlug,
+        Path.Combine("data", "arb", "alignments", "AVD", "WLCM-AVD-manual.json"),
+        Path.Combine("data", "arb", "targets", "AVD", "ot_AVD.tsv"),
+        Path.Combine("data", "sources", "WLCM.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments WLCM-AVD-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand");
+
+    /// <inheritdoc cref="VanDyckOldTestament"/>
+    public static ClearBibleSet VanDyckNewTestament(string arabicSlug, string greekSlug) => new(
+        arabicSlug,
+        greekSlug,
+        Path.Combine("data", "arb", "alignments", "AVD", "SBLGNT-AVD-manual.json"),
+        Path.Combine("data", "arb", "targets", "AVD", "nt_AVD.tsv"),
+        Path.Combine("data", "sources", "SBLGNT.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments SBLGNT-AVD-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand");
+
+    /// <summary>
+    /// The Indian Revised Version against the Hebrew, hand-made by NLCI, whole Old Testament.
+    ///
+    /// The set's own terms are CC BY 4.0 and the text's are CC BY-SA 4.0. A link names a Hindi word
+    /// and a Hebrew or Greek one and holds no text of either, so it is a statement about the text
+    /// and not an adaptation of it, and it carries the set's terms rather than the text's.
+    ///
+    /// The Old Testament set puts 376 Hebrew words on <em>और</em> where nothing names the word after
+    /// it, as the Reina-Valera's does on <em>y</em>; in a sample of twelve, none is rendered by the
+    /// <em>और</em> — seven are the object marker אֵת and the rest belong to the word after. The New
+    /// Testament's has 13 of that shape and they are left alone.
+    /// </summary>
+    public static ClearBibleSet IrvHindiOldTestament(string hindiSlug, string hebrewSlug) => new(
+        hindiSlug,
+        hebrewSlug,
+        Path.Combine("data", "hin", "alignments", "IRVHin", "WLCM-IRVHin-manual.json"),
+        Path.Combine("data", "hin", "targets", "IRVHin", "ot_IRVHin.tsv"),
+        Path.Combine("data", "sources", "WLCM.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments WLCM-IRVHin-manual, NLCI, {Repository}, CC BY 4.0, made by hand",
+        new ClearBibleShift(Hindi.And, new HashSet<int> { Hebrew.Also, Hebrew.Even }));
+
+    /// <inheritdoc cref="IrvHindiOldTestament"/>
+    public static ClearBibleSet IrvHindiNewTestament(string hindiSlug, string greekSlug) => new(
+        hindiSlug,
+        greekSlug,
+        Path.Combine("data", "hin", "alignments", "IRVHin", "SBLGNT-IRVHin-manual.json"),
+        Path.Combine("data", "hin", "targets", "IRVHin", "nt_IRVHin.tsv"),
+        Path.Combine("data", "sources", "SBLGNT.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments SBLGNT-IRVHin-manual, NLCI, {Repository}, CC BY 4.0, made by hand");
+
     private static class Spanish
     {
         public static readonly HashSet<string> And = new(["y", "e"], StringComparer.Ordinal);
+    }
+
+    private static class French
+    {
+        public static readonly HashSet<string> And = new(["et"], StringComparer.Ordinal);
+    }
+
+    private static class Hindi
+    {
+        public static readonly HashSet<string> And = new(["और", "तथा", "एवं"], StringComparer.Ordinal);
     }
 
     /// <summary>The Strong numbers of the Hebrew particles a translation can render with <em>and</em>.</summary>

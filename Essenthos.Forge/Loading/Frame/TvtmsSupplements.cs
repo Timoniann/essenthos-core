@@ -77,6 +77,15 @@ internal sealed record TvtmsSupplement(
 /// fewer verses and divides the last; Esther 1 and Revelation 20 divide a verse where the English
 /// does not.
 /// </para>
+/// <para>
+/// The Segond of 1910 numbers the Old Testament as the Hebrew does and its psalm titles as their
+/// first verses, except in two places it divides in its own way. At the end of Job it runs Job 38
+/// three verses short, opens chapter 39 with the lion and the raven, closes it with the first five
+/// verses of the Lord's second speech, and splits the Hebrew's 40:25-41:26 into 40:20-28 and 41:1-25;
+/// Clear Bible's hand-made alignment of it, which pairs its words with the Hebrew's, says the same of
+/// every verse it covers. And it closes Ecclesiastes 11 at verse 8, opening chapter 12 with
+/// "Rejoice, O young man".
+/// </para>
 /// </summary>
 internal static class TvtmsSupplements
 {
@@ -89,6 +98,8 @@ internal static class TvtmsSupplements
     private const string Kulish = "Kulish";
 
     private const string Synodal = "Synodal1876";
+
+    private const string Segond = "Segond1910";
 
     private const string BrentonJeremiah = "Jer.30:33=Last & Jer.25:20=Last";
 
@@ -121,6 +132,7 @@ internal static class TvtmsSupplements
         [ReinaValera] = Versification.English,
         [Kulish] = Versification.English,
         [Synodal] = Versification.English,
+        [Segond] = Versification.Original,
     };
 
     public static IReadOnlyList<TvtmsSupplement> All { get; } =
@@ -178,6 +190,7 @@ internal static class TvtmsSupplements
         .. ReinaValeraPassages,
         .. KulishPassages,
         .. SynodalPassages,
+        .. SegondPassages,
     ];
 
     private static IEnumerable<TvtmsSupplement> ReinaValeraPassages =>
@@ -352,6 +365,21 @@ internal static class TvtmsSupplements
         Passage(Synodal, null, $"{SynodalEdition} & Rev.20:8*2<Rev.20:7",
             ("Rev.20:7", "Rev.20:7-8"),
             ("Rev.20:8-9", "Rev.20:9")),
+    ];
+
+    private static IEnumerable<TvtmsSupplement> SegondPassages =>
+    [
+        Passage(Segond, "Job.38:39", "Job.39:38=Last & Job.40:28=Last & Job.41:25=Last",
+            ("Job.39:1-3", "Job.38:39-41"),
+            ("Job.39:4-33", "Job.39:1-30"),
+            ("Job.39:34-38", "Job.40:1-5"),
+            ("Job.40:1-19", "Job.40:6-24"),
+            ("Job.40:20-27", "Job.41:1-8"),
+            ("Job.40:28", "Job.41:9"),
+            ("Job.41:1-25", "Job.41:10-34")),
+        Passage(Segond, null, "Ecc.11:8=Last & Ecc.12:16=Last",
+            ("Ecc.12:1-2", "Ecc.11:9-10"),
+            ("Ecc.12:3-16", "Ecc.12:1-14")),
     ];
 
     public static IReadOnlyList<string> Schemes(Versification tradition) =>

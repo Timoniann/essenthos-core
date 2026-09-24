@@ -1,10 +1,11 @@
 <#
 .SYNOPSIS
-    Fetches the German, Spanish and English Bibles the corpus holds, from eBible.org.
+    Fetches the German, Spanish, English, French, Arabic and Hindi Bibles the corpus holds, from
+    eBible.org.
 
 .DESCRIPTION
-    Eleven texts, one publisher, one format and one set of checks, so they are one script rather
-    than eleven copies of the same hundred lines. The Kulish Bible arrives the same way and has its
+    Fourteen texts, one publisher, one format and one set of checks, so they are one script rather
+    than fourteen copies of the same hundred lines. The Kulish Bible arrives the same way and has its
     own script; that one is left where it is.
 
         Luther1912             deu1912     Lutherbibel 1912, Strong-tagged
@@ -18,6 +19,9 @@
         Jps1917                engjps      the JPS TaNaKH of 1917, Old Testament only
         BasicEnglish           engBBE      the Bible in Basic English, 1965
         KingJames2006          eng-kjv2006 the King James, standardised 1769 text, Strong-tagged
+        Segond1910             fraLSG      la Bible Louis Segond 1910
+        VanDyck1865            arb-vd      the Smith-Van Dyck Arabic Bible
+        IrvHindi2019           hin2017     the Indian Revised Version, Hindi, 2019
 
     The last of them is not loaded as a text of its own. The corpus already serves a King James, from
     bible4u, and that file prints no psalm superscription anywhere; this edition prints all 116 of
@@ -26,11 +30,12 @@
     where they are. It is fetched whole rather than in part because the whole of it is the evidence
     that its wording is ours: see Resources/KingJames2006/LICENCE.md for what that comparison found.
 
-    Every one of them is public domain and says so in three places that agree: the catalogue's
-    Copyright and Redistributable columns, the copyright page on the web, and the copy of that page
-    shipped inside the archive. All three are checked rather than assumed, and if any of them stops
-    saying what it says today this stops and replaces nothing — a licence that moved under us is the
-    owner's decision and not a download.
+    Every one of them but the Hindi is public domain, and each says what it is in three places that
+    agree: the catalogue's Copyright and Redistributable columns, the copyright page on the web, and
+    the copy of that page shipped inside the archive. The Hindi is Bridge Connectivity Solutions'
+    under CC BY-SA 4.0, and its three places say that instead. All three are checked rather than
+    assumed, and if any of them stops saying what it says today this stops and replaces nothing — a
+    licence that moved under us is the owner's decision and not a download.
 
     That is the statement over the text. It is NOT a statement about the Strong tagging that several
     of them arrive with: eBible names no tagger and no terms for it anywhere, and the licence
@@ -70,10 +75,14 @@ $ProgressPreference = 'SilentlyContinue'
 
 $Catalogue = 'https://ebible.org/Scriptures/translations.csv'
 
-# What the copyright page and the catalogue must say. Two spellings of one claim, because eBible
-# writes it in title case on the page and in lower case in the column.
+# What the copyright page and the catalogue must say, unless a text states other terms of its own.
+# Two spellings of one claim, because eBible writes it in title case on the page and in lower case in
+# the column.
 $ExpectedLicence = 'Public Domain'
 $ExpectedCatalogueLicence = 'public domain'
+
+$IrvLicence = 'Creative Commons Attribution Share-Alike license 4.0'
+$IrvCatalogueLicence = 'Copyright © 2017, 2018, 2019 Bridge Connectivity Solutions'
 
 # The codes eBible gives the files that are not scripture: a title page, a preface and a glossary.
 # They are matched on the \id line rather than on the file name, which carries eBible's own book
@@ -98,6 +107,10 @@ $Texts = @(
     [pscustomobject]@{ Folder = 'Jps1917';              Id = 'engjps';    Books = 39; Verses = 23145;        Strongs = 0 }
     [pscustomobject]@{ Folder = 'BasicEnglish';         Id = 'engBBE';    Books = 66; Verses = 23145 + 7957; Strongs = 727511 }
     [pscustomobject]@{ Folder = 'KingJames2006';        Id = 'eng-kjv2006'; Books = 66; Verses = 23145 + 7957; Strongs = 349308 }
+    [pscustomobject]@{ Folder = 'Segond1910';           Id = 'fraLSG';    Books = 66; Verses = 23211 + 7959; Strongs = 705728 }
+    [pscustomobject]@{ Folder = 'VanDyck1865';          Id = 'arb-vd';    Books = 66; Verses = 23145 + 7959; Strongs = 0 }
+    [pscustomobject]@{ Folder = 'IrvHindi2019';         Id = 'hin2017';   Books = 66; Verses = 23145 + 7959; Strongs = 0
+                       Licence = $IrvLicence; CatalogueLicence = $IrvCatalogueLicence }
 )
 
 if ($Only) {
@@ -154,11 +167,13 @@ try {
         $archive = "https://ebible.org/Scriptures/${id}_usfm.zip"
 
         Write-Host "$($text.Folder) — reading the licence at $copyrightPage"
+        $licence = if ($text.Licence) { $text.Licence } else { $ExpectedLicence }
+        $catalogueLicence = if ($text.CatalogueLicence) { $text.CatalogueLicence } else { $ExpectedCatalogueLicence }
 
         $copyright = (Invoke-WebRequest -Uri $copyrightPage -UseBasicParsing `
             -Headers @{ 'User-Agent' = 'essenthos' }).Content
-        if ($copyright -notmatch [regex]::Escape($ExpectedLicence)) {
-            throw "$copyrightPage no longer says `"$ExpectedLicence`". That statement is the whole " +
+        if ($copyright -notmatch [regex]::Escape($licence)) {
+            throw "$copyrightPage no longer says `"$licence`". That statement is the whole " +
                   "reason this text could be loaded without asking anyone, so nothing was replaced. " +
                   "Read what it says now, and record it in Resources/$($text.Folder)/LICENCE.md, " +
                   'before fetching again.'
@@ -170,14 +185,14 @@ try {
                   'terms to check the copyright page against; nothing was replaced.'
         }
 
-        if ($row.Copyright -ne $ExpectedCatalogueLicence -or $row.Redistributable -ne 'True') {
+        if ($row.Copyright -ne $catalogueLicence -or $row.Redistributable -ne 'True') {
             throw "eBible's catalogue now says Copyright=`"$($row.Copyright)`" and " +
                   "Redistributable=`"$($row.Redistributable)`" for $id, where it said " +
-                  "`"$ExpectedCatalogueLicence`" and `"True`". Two statements about the same bytes " +
+                  "`"$catalogueLicence`" and `"True`". Two statements about the same bytes " +
                   'that disagree is the case a person has to read; nothing was replaced.'
         }
 
-        Write-Host "  copyright page and catalogue both say public domain, source files dated $($row.sourceDate)"
+        Write-Host "  copyright page and catalogue both say $catalogueLicence, source files dated $($row.sourceDate)"
 
         $zipPath = Join-Path $staging "$id.zip"
         Get-WithResume -Uri $archive -Path $zipPath
