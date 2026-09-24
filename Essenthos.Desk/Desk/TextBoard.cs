@@ -146,11 +146,17 @@ internal sealed class TextBoard(IServiceScopeFactory scopes, DeskPaths paths, IL
 
     public async Task<TextsResponse> List(AppDbContext db, CancellationToken cancellationToken)
     {
-        if (Census is null)
+        var loadedAt = await LastLoad(db, cancellationToken);
+
+        // A census older than the corpus's last checked load is counted again by itself, so the page
+        // shows what the corpus holds now without the owner having to ask; a census that failed waits
+        // for him, rather than failing again on every visit.
+        var stale = Census is null || (loadedAt is not null && !string.Equals(Census.LoadedAt, loadedAt, StringComparison.Ordinal));
+        if (stale)
         {
             lock (_lock)
             {
-                if (_counting is null && _problem is null)
+                if (_counting is not { IsCompleted: false } && _problem is null)
                 {
                     _countingSince = JsonFiles.Now();
                     _counting = Task.Run(Count);
@@ -160,7 +166,6 @@ internal sealed class TextBoard(IServiceScopeFactory scopes, DeskPaths paths, IL
 
         var census = Census;
         var texts = await db.Texts.AsNoTracking().OrderBy(t => t.Slug).ToListAsync(cancellationToken);
-        var loadedAt = await LastLoad(db, cancellationToken);
         var counts = census?.Texts.ToDictionary(t => t.Text, StringComparer.OrdinalIgnoreCase) ?? [];
 
         return new TextsResponse(
