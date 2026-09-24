@@ -4906,6 +4906,204 @@
         }
       ],
       "why": "Read verse by verse by a language model on 2026-09-23, for the owner's review. Of the words BHSA numbers H3477, only these two stand beside סֵפֶר as the title of a book; everywhere else the word is 'upright' or 'right', said of people, ways and deeds. BibleData held the book as a man called Jashar, and that record is withdrawn."
+    },
+    {
+      "slug": "tree-of-life",
+      "kind": "object",
+      "subtype": "tree",
+      "name": "Tree of Life",
+      "names": {
+        "ukr": "Дерево життя",
+        "deu": "Der Baum des Lebens",
+        "spa": "El árbol de la vida"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Дерева життя",
+          "locative": "Дереві життя"
+        }
+      },
+      "distinguisher": "the tree in the midst of the garden of Eden (GEN 2:9) and beside the river of the city John saw (REV 22:2)",
+      "notes": "The LORD God made every tree to grow out of the ground, the tree of life also in the midst of the garden, and the tree of knowledge of good and evil (GEN 2:9). When the man had eaten of the tree of knowledge, the LORD God said, lest he put forth his hand, and take also of the tree of life, and eat, and live for ever, and sent him forth from the garden; and he placed at the east of the garden cherubims, and a flaming sword which turned every way, to keep the way of the tree of life (GEN 3:22-24). In Revelation, to him that overcometh is given to eat of the tree of life, which is in the midst of the paradise of God (REV 2:7); on either side of the river of water of life was the tree of life, which bare twelve manner of fruits and yielded her fruit every month, and the leaves of the tree were for the healing of the nations (REV 22:2), and blessed are they that have right to the tree of life (REV 22:14). At REV 22:19 Nestle's edition reads the tree of life where the Textus Receptus and the King James read the book of life. Proverbs calls wisdom, the fruit of the righteous, a desire fulfilled and a wholesome tongue a tree of life (PRO 3:18; 11:30; 13:12; 15:4); those are figures of speech and are not linked.",
+      "called": [
+        {
+          "label": "Tree of life",
+          "hebrew": "עֵץ הַחַיִּים",
+          "hebrewTransliterated": "ets ha-chayyim",
+          "hebrewStrongNumber": "H6086,H2416",
+          "meaning": "GEN 2:9"
+        },
+        {
+          "label": "Tree of life",
+          "greek": "ξύλον τῆς ζωῆς",
+          "greekTransliterated": "xylon tēs zōēs",
+          "greekStrongNumber": "G3586,G2222",
+          "meaning": "REV 2:7"
+        },
+        {
+          "label": "Дерево життя"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "GEN 2:9",
+          "role": "key"
+        },
+        {
+          "reference": "GEN 3:22-24",
+          "role": "key"
+        },
+        {
+          "reference": "REV 22:1-2",
+          "role": "key"
+        }
+      ],
+      "related": [
+        {
+          "type": "stands-at",
+          "to": "thegarden",
+          "reference": "GEN 2:9"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H6086",
+          "only": [
+            "GEN 2:9#2",
+            "GEN 3:22",
+            "GEN 3:24"
+          ]
+        },
+        {
+          "strong": "G3586",
+          "only": [
+            "REV 2:7",
+            "REV 22:2",
+            "REV 22:14",
+            "REV 22:19"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by a language model on 2026-09-24, for the owner's review. Every H6086 of Genesis 2-3 read in turn: the second tree of 2:9 and those of 3:22 and 3:24 are the tree of life; Proverbs' tree of life (PRO 3:18; 11:30; 13:12; 15:4) is a figure and is not linked. Every G3586 of REV 2:7 and 22 is this tree, 22:2 twice, the tree and the leaves of the tree; 22:19 only in the editions that read ξύλου there."
+    },
+    {
+      "slug": "tree-of-knowledge-of-good-and-evil",
+      "kind": "object",
+      "subtype": "tree",
+      "name": "Tree of the Knowledge of Good and Evil",
+      "names": {
+        "ukr": "Дерево пізнання добра і зла",
+        "deu": "Der Baum der Erkenntnis des Guten und Bösen",
+        "spa": "El árbol del conocimiento del bien y del mal"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Дерева пізнання добра і зла",
+          "locative": "Дереві пізнання добра і зла"
+        }
+      },
+      "distinguisher": "the tree in the midst of the garden of Eden whose fruit the man was commanded not to eat (GEN 2:17)",
+      "notes": "The LORD God made the tree of knowledge of good and evil to grow in the garden, with the tree of life (GEN 2:9), and commanded the man: of the tree of the knowledge of good and evil, thou shalt not eat of it: for in the day that thou eatest thereof thou shalt surely die (GEN 2:16-17). The woman told the serpent that God had said of the fruit of the tree which is in the midst of the garden, Ye shall not eat of it, neither shall ye touch it, lest ye die; the serpent said their eyes would be opened and they would be as gods, knowing good and evil (GEN 3:3-5). When the woman saw that the tree was good for food, and pleasant to the eyes, and a tree to be desired to make one wise, she took of the fruit thereof and did eat, and gave also unto her husband with her, and he did eat (GEN 3:6). The LORD God asked the man, Hast thou eaten of the tree, whereof I commanded thee that thou shouldest not eat? (GEN 3:11-12), and cursed the ground for his sake, because he had eaten of it (GEN 3:17). The text does not name its fruit.",
+      "called": [
+        {
+          "label": "Tree of the knowledge of good and evil",
+          "hebrew": "עֵץ הַדַּעַת טוֹב וָרָע",
+          "hebrewTransliterated": "ets ha-da'at tov va-ra",
+          "hebrewStrongNumber": "H6086,H1847,H2896,H7451",
+          "meaning": "GEN 2:17"
+        },
+        {
+          "label": "Дерево пізнання добра і зла"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "GEN 2:9",
+          "role": "key"
+        },
+        {
+          "reference": "GEN 2:16-17",
+          "role": "key"
+        },
+        {
+          "reference": "GEN 3:1-17",
+          "role": "key"
+        }
+      ],
+      "related": [
+        {
+          "type": "stands-at",
+          "to": "thegarden",
+          "reference": "GEN 2:9"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H6086",
+          "only": [
+            "GEN 2:9#3",
+            "GEN 2:17",
+            "GEN 3:3",
+            "GEN 3:6",
+            "GEN 3:11",
+            "GEN 3:12",
+            "GEN 3:17"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by a language model on 2026-09-24, for the owner's review. Every tree of Genesis 2-3 read in turn: the third of 2:9 and that of 2:17 are named in full; 3:3, the tree which is in the midst of the garden, both trees of 3:6, and those of 3:11, 3:12 and 3:17 are the tree the man was commanded not to eat of. The first tree of 2:9 and those of 2:16, 3:1, 3:2 and 3:8 are the trees of the garden, and 3:22 and 3:24 the tree of life."
+    },
+    {
+      "slug": "flaming-sword",
+      "kind": "object",
+      "subtype": "weapon",
+      "name": "Flaming Sword",
+      "names": {
+        "ukr": "Полум’яний меч",
+        "deu": "Das flammende Schwert",
+        "spa": "La espada encendida"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Полум’яного меча",
+          "locative": "Полум’яному мечі"
+        }
+      },
+      "distinguisher": "the flaming sword which turned every way, placed with the cherubim at the east of Eden (GEN 3:24)",
+      "notes": "When he had driven out the man, the LORD God placed at the east of the garden of Eden cherubims, and a flaming sword which turned every way, to keep the way of the tree of life (GEN 3:24). The Hebrew says the flame of the sword that turns itself. The text says nothing more of it: not who held it, nor how long it stood.",
+      "called": [
+        {
+          "label": "Flaming sword",
+          "hebrew": "לַהַט הַחֶרֶב הַמִּתְהַפֶּכֶת",
+          "hebrewTransliterated": "lahat ha-cherev ha-mithappechet",
+          "hebrewStrongNumber": "H3858,H2719",
+          "meaning": "the flame of the sword that turns itself (GEN 3:24)"
+        },
+        {
+          "label": "Полум’яний меч"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "GEN 3:24",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H3858",
+          "only": [
+            "GEN 3:24"
+          ]
+        },
+        {
+          "strong": "H2719",
+          "only": [
+            "GEN 3:24"
+          ]
+        }
+      ],
+      "why": "Read by a language model on 2026-09-24, for the owner's review: the sword of GEN 3:24 is named once, by the flame and the sword together, and both words are linked."
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "about": "Records BibleData wrote twice for one person, each folded into the record that keeps its address. The pairs come from an audit that showed a model every same-name, same-kind pair of records under one Strong number with their descriptions and verse lists: 1,021 pairs, 83 judged one referent, 40 of them with high confidence, 39 medium and 4 low. Every pair was then read again against its verses; the ones under 'merges' hold up, and the ones under 'declined' do not, or rest on a question the text leaves open. A pair read less surely than the list's own confidence carries its own. The record more words already name keeps its address, so fewer annotations move; on a tie the lower-numbered one does. Everything the folded record held moves with it, and its address, name, description and BibleData id stay on as a merged record, so a link to it still arrives and what the dataset said is not lost.",
+  "about": "Records BibleData wrote twice for one person, each folded into the record that keeps its address; the same for the two records it writes for one Hebrew word of the creation, earth and heaven, by the owner's ruling of 2026-09-24, each pair carrying its own source; and, under 'splits', a record it wrote once for two men, whose second man's verses move to his own record. The pairs come from an audit that showed a model every same-name, same-kind pair of records under one Strong number with their descriptions and verse lists: 1,021 pairs, 83 judged one referent, 40 of them with high confidence, 39 medium and 4 low. Every pair was then read again against its verses; the ones under 'merges' hold up, and the ones under 'declined' do not, or rest on a question the text leaves open. A pair read less surely than the list's own confidence carries its own. The record more words already name keeps its address, so fewer annotations move; on a tie the lower-numbered one does. Everything the folded record held moves with it, and its address, name, description and BibleData id stay on as a merged record, so a link to it still arrives and what the dataset said is not lost.",
   "method": "model-reading",
   "confidence": 0.9,
   "source": "Essenthos: BibleData's same-name records compared pair by pair by claude-opus-5 (prompt records-1, 2026-09-06), and each pair it held to be one person read again against its verses by claude-opus-5-5, the high pairs on 2026-09-23 and the medium and low ones on 2026-09-24",
@@ -325,6 +325,20 @@
       "keeps": "zadok-3",
       "folds": "zadok-6",
       "why": "1 Chronicles 9:11 and Nehemiah 11:11 are one list written twice, the list the folds of Ahitub, Meraioth and Hilkiah rest on: Zadok son of Meraioth in both, and both records hold both verses. Nehemiah 13:13's Zadok the scribe is another man, and his verse goes to a record of his own before the fold."
+    },
+    {
+      "strongNumber": "H776",
+      "keeps": "earth",
+      "folds": "earth-2",
+      "why": "Both are the one Hebrew word ארץ, which BibleData files as the planet (earth) or as dry land (earth-2) verse by verse, and the split does not follow the text: 'replenish the earth' of GEN 1:28 is on both, of GEN 9:1 on the second; 'the face of all the earth' of GEN 11:4 on the second and of 11:8-9 on the first; the flood prevails upon the earth on either side (GEN 7:6-24). The one distinction the text makes, God calling the dry land Earth against the seas (GEN 1:10), is the same word, and the few verses where it is one country's land (GEN 13:6; EXO 8:16-17; 9:23, 33; 10:5, 15) the dataset files under dry land, not as a sense of their own.",
+      "source": "Essenthos, on the project owner's ruling of 2026-09-24 that where BibleData splits the same words into two records without a distinction the text makes, the two are one record; the verses were read against the rule by claude-opus-5-5 the same day"
+    },
+    {
+      "strongNumber": "H8064",
+      "keeps": "heaven",
+      "folds": "heaven-2",
+      "why": "Both are the one Hebrew word שמים, which BibleData files as the abode of stars (heaven) or of birds (heaven-2), and the text puts both in the same place: the lights are set 'in the firmament of the heaven' (GEN 1:14-17) and the fowl fly 'in the open firmament of heaven' (GEN 1:20), and God called the firmament Heaven (GEN 1:8). The two records already share the name 'expanse of the heavens'.",
+      "source": "Essenthos, on the project owner's ruling of 2026-09-24 that where BibleData splits the same words into two records without a distinction the text makes, the two are one record; the verses were read against the rule by claude-opus-5-5 the same day"
     }
   ],
   "declined": [
@@ -591,6 +605,18 @@
         "shaphan-3"
       ],
       "why": "The first record is folded into the scribe's; the pair above answers it."
+    }
+  ],
+  "splits": [
+    {
+      "from": "bartholomew",
+      "to": "nathanael",
+      "name": "Nathanael",
+      "verses": [
+        "JHN 1:45-49",
+        "JHN 21:2"
+      ],
+      "why": "The project owner ruled on 2026-09-24 that the man John 1:45-49 and 21:2 name is Nathanael, as the text names him, and that his identification with Bartholomew, which BibleData follows by holding the name on its record of Bartholomew, is a later tradition and not the text's."
     }
   ]
 }

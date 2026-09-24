@@ -71,6 +71,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\ObjectRecords.json" />
         <Content Remove="Loading\Encyclopedia\ObservanceRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ObservanceRecords.json" />
+        <Content Remove="Loading\Encyclopedia\NarrativeRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\NarrativeRecords.json" />
         <Content Remove="Loading\Encyclopedia\DuplicateRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\DuplicateRecords.json" />
 

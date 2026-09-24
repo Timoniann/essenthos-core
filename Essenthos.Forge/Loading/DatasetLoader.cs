@@ -171,6 +171,7 @@ internal sealed class DatasetLoader(
             await HoldTheTitlesAsTitles(stoppingToken);
             await GiveTheNamesNoDatasetGives(stoppingToken);
             await WriteTheThingsMadeAndTheTimesKept(stoppingToken);
+            await WriteWhatTheNarrativesTurnOn(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
@@ -1126,6 +1127,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<ThingLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The serpent, the cherubim, the Holy Spirit, the New Jerusalem and Nathanael, and the words the
+    /// narrative refers to Eve by. Beside the objects, for the same reasons, and before the fold,
+    /// which moves onto Nathanael what the dataset's record of Bartholomew holds of him.
+    /// </summary>
+    private async Task WriteWhatTheNarrativesTurnOn(CancellationToken cancellationToken)
+    {
+        status.Starting(ThingSet.Narratives.About);
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<ThingLoader>();
+        status.Record(await loader.Load(ThingSet.Narratives, cancellationToken));
     }
 
     /// <summary>

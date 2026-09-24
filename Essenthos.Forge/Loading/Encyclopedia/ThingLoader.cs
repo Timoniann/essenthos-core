@@ -17,6 +17,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Words">Witness words the rules settle, before the links carry them anywhere.</param>
 /// <param name="Refused">Words two records' rules both claim, which neither is given.</param>
 /// <param name="ByText">Words naming one of these records afterwards, per text, the carried ones included.</param>
+/// <param name="About">What the list is, as <see cref="ThingSet.About"/> says it.</param>
 internal sealed record ThingOutcome(
     bool AlreadyLoaded,
     int Written,
@@ -25,12 +26,13 @@ internal sealed record ThingOutcome(
     int Words,
     int Refused,
     IReadOnlyList<(string Text, int Words)> ByText,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    string About = ThingSet.MadeAndKeptAbout)
 {
     public override string ToString() =>
         AlreadyLoaded
-            ? "the objects and the appointed times are already records, with the words that name them"
-            : $"{Written} objects and appointed times written and {Revised} revised; {Words} witness words " +
+            ? $"{About} are already records, with the words that name them"
+            : $"{Written} of {About} written and {Revised} revised; {Words} witness words " +
               $"are theirs by the file's rules and {Refused} were claimed twice and given to neither, in " +
               $"{Elapsed}" + (Missing > 0 ? $"; {Missing} slugs or relations the file names could not be written" : "") +
               (ByText.Count > 0 ? ". Per text: " + string.Join(", ", ByText.Select(t => $"{t.Text} {t.Words}")) : "");
@@ -72,17 +74,22 @@ internal sealed record ThingOutcome(
 /// fields, names, passages, times and relations — and the annotations are written again only when
 /// the words the rules settle have changed, so a boot after the first writes nothing.
 /// </para>
+///
+/// <para>
+/// **Each list is loaded on its own** (<see cref="ThingSet"/>): the objects and the appointed times
+/// are one, and the beings, things and places the narratives turn on another, decided on another
+/// day. A list writes and takes back only what went under its own sources, and a list may also
+/// name words for a record another list or a dataset holds — <em>the woman</em> of Genesis 3 for
+/// Eve — without writing that record.
+/// </para>
 /// </summary>
 internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
 {
-    /// <summary>What wrote the records and the words no person has reviewed yet.</summary>
-    public const string Source =
-        "Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's " +
-        "decision that objects and appointed times are records of their own";
+    /// <summary>What wrote the objects and the appointed times and the words no person has reviewed yet.</summary>
+    public const string Source = ThingSet.MadeAndKeptSource;
 
     /// <summary>What wrote a rule or a record the owner has reviewed, which is then his ruling.</summary>
-    public const string ReviewedSource =
-        "Essenthos, on the project owner's review of the readings of objects and appointed times";
+    public const string ReviewedSource = ThingSet.MadeAndKeptReviewedSource;
 
     /// <summary>
     /// How sure a reading here is, which nobody has measured for these records. It is the rate the
@@ -95,8 +102,6 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
     private static LinkMethod MethodOf(bool reviewed) => reviewed ? LinkMethod.Manual : LinkMethod.ModelReading;
 
     private static double? ConfidenceOf(bool reviewed) => reviewed ? null : ByReading;
-
-    private static string SourceOf(bool reviewed) => reviewed ? ReviewedSource : Source;
 
     private const string SourceIdPrefix = "essenthos:thing:";
 
@@ -137,8 +142,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
     /// how it is kept — so these are references from the passage, read as such by the model that
     /// listed the passages, and they say so beside the ones the words give.
     /// </summary>
-    public const string PassageSource =
-        "Essenthos, from the passages that command it, as a language model read them on 2026-09-23";
+    public const string PassageSource = ThingSet.MadeAndKeptPassageSource;
 
     /// <summary>
     /// Every verse of every commanding passage, once per record, from the verses the canonical frame
@@ -187,22 +191,39 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         WHERE source IN (@source, @reviewed) AND coalesce(note, '') NOT LIKE @carried
         """;
 
-    public async Task<ThingOutcome> Load(CancellationToken cancellationToken = default) =>
-        await Load(ThingFiles.Read(), cancellationToken);
+    /// <summary>The list being loaded; the objects and the appointed times unless a load says otherwise.</summary>
+    private ThingSet _set = ThingSet.MadeAndKept;
 
-    internal async Task<ThingOutcome> Load(IReadOnlyList<ThingRecord> records, CancellationToken cancellationToken)
+    public Task<ThingOutcome> Load(CancellationToken cancellationToken = default) =>
+        Load(ThingSet.MadeAndKept, cancellationToken);
+
+    public Task<ThingOutcome> Load(ThingSet set, CancellationToken cancellationToken = default)
     {
+        var file = ThingFiles.Read(set);
+        return Load(set, file.Records, file.Refers ?? [], cancellationToken);
+    }
+
+    internal Task<ThingOutcome> Load(IReadOnlyList<ThingRecord> records, CancellationToken cancellationToken) =>
+        Load(ThingSet.MadeAndKept, records, [], cancellationToken);
+
+    internal async Task<ThingOutcome> Load(
+        ThingSet set,
+        IReadOnlyList<ThingRecord> records,
+        IReadOnlyList<ThingReference> refers,
+        CancellationToken cancellationToken)
+    {
+        _set = set;
         var started = Stopwatch.StartNew();
         var (written, revised, missing, held) = await Write(records, cancellationToken);
 
-        var (seed, refused) = await Settled(records, held, cancellationToken);
+        var (seed, refused, unheld) = await Settled(records, held, refers, cancellationToken);
         var byText = await Annotate(seed, cancellationToken);
         var referenced = await ReferThePassagesThatCommandThem(cancellationToken);
 
         var outcome = new ThingOutcome(
-            written == 0 && revised == 0 && missing == 0 && byText is null && referenced == 0,
-            written, revised, missing, seed.Count, refused, byText ?? [], started.Elapsed);
-        logger.LogInformation("The objects and the appointed times: {Outcome}", outcome);
+            written == 0 && revised == 0 && missing + unheld == 0 && byText is null && referenced == 0,
+            written, revised, missing + unheld, seed.Count, refused, byText ?? [], started.Elapsed, set.About);
+        logger.LogInformation("{About}: {Outcome}", set.About, outcome);
         return outcome;
     }
 
@@ -256,7 +277,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
                     Slug = record.Slug,
                     Name = record.Name,
                     SourceId = SourceIdPrefix + record.Slug,
-                    Source = Source,
+                    Source = _set.Source,
                 };
                 Revise(entity, record, elsewhere);
                 db.Entities.Add(entity);
@@ -303,7 +324,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         number is not null && elsewhere.Contains(number) ? null : number;
 
     /// <summary>Brings a record to the file's entry, and says whether anything had to change.</summary>
-    private static bool Revise(Entity entity, ThingRecord record, IReadOnlySet<string> elsewhere)
+    private bool Revise(Entity entity, ThingRecord record, IReadOnlySet<string> elsewhere)
     {
         var changed = false;
         void Set<T>(T current, T wanted, Action<T> assign)
@@ -357,7 +378,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         }
 
         var reviewed = record.Reviewed is not null;
-        if (!entity.Claims.Any(c => c.Source == SourceOf(reviewed) && c.Method == MethodOf(reviewed)
+        if (!entity.Claims.Any(c => c.Source == _set.SourceOf(reviewed) && c.Method == MethodOf(reviewed)
                                     && c.Note == record.Why))
         {
             entity.Claims.Clear();
@@ -365,7 +386,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
             {
                 Method = MethodOf(reviewed),
                 Confidence = ConfidenceOf(reviewed),
-                Source = SourceOf(reviewed),
+                Source = _set.SourceOf(reviewed),
                 Note = record.Why,
             });
             changed = true;
@@ -384,7 +405,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
     private static string TimeKey(ObservanceTime t) =>
         $"{t.Cycle}|{t.Month}|{t.Day}|{t.LastDay}|{t.CanonicalBook}|{t.CanonicalChapter}|{t.CanonicalVerse}|{t.Note}";
 
-    private static EntityPassage Passage(ThingPassage passage, int ordinal)
+    private EntityPassage Passage(ThingPassage passage, int ordinal)
     {
         if (!PassageRoles.All.Contains(passage.Role))
         {
@@ -404,11 +425,11 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
             EndChapter = span.ToChapter,
             EndVerse = span.ToVerse,
             Note = passage.Note,
-            Source = Source,
+            Source = _set.Source,
         };
     }
 
-    private static ObservanceTime Time(ThingTime time)
+    private ObservanceTime Time(ThingTime time)
     {
         var span = ScriptureSpan.Parse(time.Reference);
         if (!span.IsVerse || !ObservanceCycles.All.Contains(time.Cycle))
@@ -428,7 +449,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
             CanonicalChapter = span.FromChapter,
             CanonicalVerse = span.FromVerse!.Value,
             Note = time.Note,
-            Source = Source,
+            Source = _set.Source,
         };
     }
 
@@ -475,13 +496,13 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
                 CanonicalVerse = verse.FromVerse,
                 Method = MethodOf(record.Reviewed is not null),
                 Confidence = ConfidenceOf(record.Reviewed is not null),
-                Source = SourceOf(record.Reviewed is not null),
+                Source = _set.SourceOf(record.Reviewed is not null),
                 Notes = relation.Note,
             });
         }
 
         var held = await db.EntityRelationships
-            .Where(r => r.FromEntityId == entity.Id && (r.Source == Source || r.Source == ReviewedSource))
+            .Where(r => r.FromEntityId == entity.Id && (r.Source == _set.Source || r.Source == _set.ReviewedSource))
             .ToListAsync(cancellationToken);
         if (!held.Select(RelationKey).Order().SequenceEqual(wanted.Select(RelationKey).Order()))
         {
@@ -541,15 +562,15 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
                     Form = form,
                     Method = MethodOf(reviewed),
                     Confidence = ConfidenceOf(reviewed),
-                    Source = SourceOf(reviewed),
+                    Source = _set.SourceOf(reviewed),
                 });
             }
-            else if (existing.Form != form || existing.Source != SourceOf(reviewed))
+            else if (existing.Form != form || existing.Source != _set.SourceOf(reviewed))
             {
                 existing.Form = form;
                 existing.Method = MethodOf(reviewed);
                 existing.Confidence = ConfidenceOf(reviewed);
-                existing.Source = SourceOf(reviewed);
+                existing.Source = _set.SourceOf(reviewed);
             }
         }
     }
@@ -557,30 +578,53 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
     /// <summary>
     /// Which witness words the rules give to which record. A word two records' rules both claim is
     /// given to neither and counted, because the file then says two things about it and the reader
-    /// would be shown whichever was read first.
+    /// would be shown whichever was read first. The words the list names for records it does not
+    /// write are settled the same way, on those records; one the encyclopedia does not hold is counted.
     /// </summary>
-    private async Task<(IReadOnlyDictionary<long, Seeding> Seed, int Refused)> Settled(
+    private async Task<(IReadOnlyDictionary<long, Seeding> Seed, int Refused, int Unheld)> Settled(
         IReadOnlyList<ThingRecord> records,
         IReadOnlyDictionary<string, int> held,
+        IReadOnlyList<ThingReference> refers,
         CancellationToken cancellationToken)
     {
+        var elsewhere = refers.Select(r => r.Slug).Distinct(StringComparer.Ordinal).ToList();
+        var others = await db.Entities
+            .Where(e => elsewhere.Contains(e.Slug))
+            .Select(e => new { e.Slug, e.Id, e.Name })
+            .ToDictionaryAsync(e => e.Slug, StringComparer.Ordinal, cancellationToken);
+
+        var named = records
+            .Where(r => held.ContainsKey(r.Slug))
+            .Select(r => (Entity: held[r.Slug], r.Name, Rules: r.Occurrences ?? []))
+            .ToList();
+        var unheld = 0;
+        foreach (var reference in refers)
+        {
+            if (!others.TryGetValue(reference.Slug, out var other))
+            {
+                logger.LogWarning(
+                    "{About} name words for the record {Slug}, which the encyclopedia does not hold, so they were " +
+                    "not written. The file has to follow the record's slug",
+                    _set.About, reference.Slug);
+                unheld++;
+                continue;
+            }
+
+            named.Add((other.Id, other.Name, reference.Occurrences));
+        }
+
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         var claimed = new Dictionary<long, Seeding>();
         var disputed = new HashSet<long>();
-        foreach (var record in records)
+        foreach (var (entityId, name, rules) in named)
         {
-            if (!held.TryGetValue(record.Slug, out var entityId))
-            {
-                continue;
-            }
-
-            foreach (var rule in record.Occurrences ?? [])
+            foreach (var rule in rules)
             {
                 foreach (var (wordId, reference) in await Words(connection, rule, cancellationToken))
                 {
-                    var note = $"{rule.Strong} at {reference}, which the record file reads as {record.Name}";
+                    var note = $"{rule.Strong} at {reference}, which the record file reads as {name}";
                     if (claimed.TryGetValue(wordId, out var first) && first.Entity != entityId)
                     {
                         disputed.Add(wordId);
@@ -600,7 +644,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
             claimed.Remove(word);
         }
 
-        return (claimed, disputed.Count);
+        return (claimed, disputed.Count, unheld);
     }
 
     private static async Task<List<(long WordId, string Reference)>> Words(
@@ -636,8 +680,8 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         await using var command = new NpgsqlCommand(CommandedVerses, connection);
         command.Parameters.AddWithValue("command", PassageRoles.Command);
-        command.Parameters.AddWithValue("passages", Source);
-        command.Parameters.AddWithValue("source", PassageSource);
+        command.Parameters.AddWithValue("passages", _set.Source);
+        command.Parameters.AddWithValue("source", _set.PassageSource);
         command.CommandTimeout = Annotating.Patient;
         return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
@@ -659,8 +703,8 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         var before = new HashSet<(long, int, bool)>();
         await using (var command = new NpgsqlCommand(Seeded, connection))
         {
-            command.Parameters.AddWithValue("source", Source);
-            command.Parameters.AddWithValue("reviewed", ReviewedSource);
+            command.Parameters.AddWithValue("source", _set.Source);
+            command.Parameters.AddWithValue("reviewed", _set.ReviewedSource);
             command.Parameters.AddWithValue("carried", Annotating.CarriedNote);
             command.CommandTimeout = Annotating.Patient;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -677,7 +721,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await Annotating.Run(connection, transaction, "DELETE FROM word_entity WHERE source IN (@source, @reviewed)",
-            cancellationToken, ("source", Source), ("reviewed", ReviewedSource));
+            cancellationToken, ("source", _set.Source), ("reviewed", _set.ReviewedSource));
 
         var byText = new Dictionary<string, int>(StringComparer.Ordinal);
         foreach (var reviewed in new[] { false, true })
@@ -697,12 +741,12 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
 
             var method = EnumSpelling.Of(MethodOf(reviewed));
             await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
-                ("method", method), ("source", SourceOf(reviewed)));
+                ("method", method), ("source", _set.SourceOf(reviewed)));
             await Annotating.Run(connection, transaction, Annotating.Claim, cancellationToken,
-                ("method", method), ("source", SourceOf(reviewed)));
+                ("method", method), ("source", _set.SourceOf(reviewed)));
             await Annotating.Run(connection, transaction, "DROP TABLE pending_annotation", cancellationToken);
 
-            foreach (var (text, words) in await Annotating.ByText(connection, transaction, SourceOf(reviewed), cancellationToken))
+            foreach (var (text, words) in await Annotating.ByText(connection, transaction, _set.SourceOf(reviewed), cancellationToken))
             {
                 byText[text] = byText.GetValueOrDefault(text) + words;
             }

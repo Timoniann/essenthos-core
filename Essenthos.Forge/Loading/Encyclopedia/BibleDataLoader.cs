@@ -52,7 +52,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// The identifier the dataset gives the God of Israel — and, in the New Testament, to Jesus as
     /// well. See <see cref="Divide"/>.
     /// </summary>
-    private const string DivineName = "person:YHVH_1";
+    internal const string DivineName = "person:YHVH_1";
 
     /// <summary>
     /// The dataset's second entity of the same name: the Father, as the New Testament names him.
