@@ -33,6 +33,12 @@ public class Account : IRevised
     /// </summary>
     public int PhotoVersion { get; set; }
 
+    /// <summary>
+    /// Granted by another admin in the admin area. An account can also be an admin because one of its
+    /// verified addresses is in the site's configuration, which this does not record.
+    /// </summary>
+    public bool Admin { get; set; }
+
     public DateTimeOffset CreatedAt { get; set; }
 
     public DateTimeOffset UpdatedAt { get; set; }

@@ -127,6 +127,8 @@ services:
       Authentication__Google__ClientSecret: ${GOOGLE_CLIENT_SECRET:-}
       Authentication__GitHub__ClientId: ${GITHUB_CLIENT_ID:-}
       Authentication__GitHub__ClientSecret: ${GITHUB_CLIENT_SECRET:-}
+      # The first admins, by verified address, comma-separated; the admin area names the rest.
+      Accounts__BootstrapAdmins: ${ADMIN_EMAILS:-}
       Cors__AllowedOrigins__0: https://${SITE_DOMAIN:?set SITE_DOMAIN}
       # The proxy terminates TLS; without this the API believes every request arrived over plain http
       # and builds its links and its sign-in callbacks accordingly.
@@ -174,6 +176,7 @@ services:
       Authentication__Google__ClientSecret: ${GOOGLE_CLIENT_SECRET:-}
       Authentication__GitHub__ClientId: ${GITHUB_DEV_CLIENT_ID:-}
       Authentication__GitHub__ClientSecret: ${GITHUB_DEV_CLIENT_SECRET:-}
+      Accounts__BootstrapAdmins: ${ADMIN_EMAILS:-}
       Cors__AllowedOrigins__0: https://${DEV_DOMAIN:?set DEV_DOMAIN}
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
       Images__Path: /images
