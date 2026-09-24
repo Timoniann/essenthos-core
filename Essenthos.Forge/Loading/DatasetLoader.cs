@@ -5,6 +5,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Loading.Links.Evidentia;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
 using Essenthos.Core.Loading.Encyclopedia;
@@ -161,6 +162,7 @@ internal sealed class DatasetLoader(
             await LinkFromTheInterlinear(resources, stoppingToken);
             await CoverThePsalmTitles(resources, stoppingToken);
             await JoinTheVerses(stoppingToken);
+            await ReplayTheVerdictsOnEvidentia(resources, stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
             await ReadTheStatedKinship(stoppingToken);
             await NameThePeoples(resources, stoppingToken);
@@ -854,6 +856,22 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<VerseLinkLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The verdicts given on EVIDENTIA's proposals, from the ledger kept beside the other decisions
+    /// of this project: a run the database does not hold is written again and its verdicts applied,
+    /// and a verdict whose link was deleted is written again. After every linking step, because a
+    /// verdict settles against the links the corpus already has, and before the encyclopedia, so the
+    /// annotations are carried over the links the verdicts wrote.
+    /// </summary>
+    private async Task ReplayTheVerdictsOnEvidentia(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the verdicts on EVIDENTIA's proposals");
+
+        using var scope = services.CreateScope();
+        var ledger = scope.ServiceProvider.GetRequiredService<EvidentiaLedger>();
+        status.Record((await ledger.Replay(resources, cancellationToken: cancellationToken)).ToString());
     }
 
     /// <summary>

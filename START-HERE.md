@@ -97,6 +97,14 @@ design is DOC-0203; the server, its compose file, the deploy script and the one-
 are in `deploy/README.md`. The whole thing runs on this machine as a rehearsal, with targets
 `rehearsal-dev` and `rehearsal`, and should be run there before anything changes on the server.
 
+**Every decision the owner makes lives in a file, and a release refuses to go without them.** The
+console writes his review lists, record files, picture choices and switches, and logs each change in
+`Resources/Essenthos/owner-changes.jsonl`; the verdicts given on EVIDENTIA's proposals are written by
+the Forge to `Resources/Essenthos/evidentia/`, one folder per run, whenever one is recorded, and every
+load replays them (`forge evidentia-export`, `forge evidentia-replay` by hand). `forge release` refuses
+while any of the owner's files is uncommitted, while a change of his waits on a step nobody has run
+since, or while the database holds a verdict the ledger does not; `--allow-unrecorded` overrides it.
+
 ## What carries over, and what does not
 
 **Carry unchanged** — they read sources and know nothing about the schema: `TextFabric/`, `Bhsa/`, `Nestle/`, `Zefania/`, `XmlBible/`, `Csv/`, `Strong/`, `Utils/`.

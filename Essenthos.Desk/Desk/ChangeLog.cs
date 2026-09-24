@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Essenthos.Core.Configuration;
 
 namespace Essenthos.Core.Desk;
 
@@ -52,11 +53,11 @@ internal sealed record ChangeLogResponse(IReadOnlyList<ChangeEntry> Entries, IRe
 /// </summary>
 internal sealed class ChangeLog(DeskPaths paths)
 {
-    public const string FileName = "owner-changes.jsonl";
+    public const string FileName = OwnerChanges.FileName;
 
-    public const string Apply = "apply";
+    public const string Apply = OwnerChanges.Apply;
 
-    public const string Succeeded = "succeeded";
+    public const string Succeeded = OwnerChanges.Succeeded;
 
     private static readonly JsonWriterOptions Writing = new()
     {

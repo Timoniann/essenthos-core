@@ -144,7 +144,7 @@ internal sealed class EntityDescriptorLoader(
         var superseded = records
             .Where(record => entities.TryGetValue(record.Entity, out var id)
                 && described.TryGetValue(id, out var loaded)
-                && !loaded.Contains(record.File))
+                && !loaded.Contains(record.Run))
             .Select(record => entities[record.Entity])
             .ToHashSet();
 
@@ -198,7 +198,7 @@ internal sealed class EntityDescriptorLoader(
             }
 
             var source = Source(record);
-            if (described.TryGetValue(entityId, out var loaded) && loaded.Contains(record.File))
+            if (described.TryGetValue(entityId, out var loaded) && loaded.Contains(record.Run))
             {
                 skipped++;
                 continue;
@@ -299,7 +299,7 @@ internal sealed class EntityDescriptorLoader(
                     Method = method,
                     Confidence = confidence,
                     Source = credit,
-                    Run = record.File,
+                    Run = record.Run,
                     Note = claim.Reason,
                     Claims =
                     [
@@ -436,7 +436,7 @@ internal sealed class EntityDescriptorLoader(
                     Method = LinkMethod.ModelReading,
                     Confidence = 1,
                     Source = source,
-                    Run = record.File,
+                    Run = record.Run,
                 });
 
                 written++;
