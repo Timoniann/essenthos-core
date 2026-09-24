@@ -106,6 +106,71 @@ public class EvidentiaAttachedWordTests
         Attach([and, satan], [ei, satanNoun], (satan, satanNoun)).Should().BeEmpty();
     }
 
+    [Fact]
+    public void ASubjectPronounGoesOnTheVerbWhoseEndingNamesItAndNotOnAParticiple()
+    {
+        var he = English(1, Genesis122, 1, "he", "PRON");
+        var said = English(2, Genesis122, 2, "said", "VERB");
+        var she = English(3, Genesis122, 3, "she", "PRON");
+        var going = English(4, Genesis122, 4, "went", "VERB");
+        var say = Hebrew(11, Genesis122, 1, "יֹּאמֶר", "H559", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var walking = Hebrew(12, Genesis122, 2, "הֹלֶכֶת", "H1980", "verb", ("tense", "ptca"), ("number", "sg"), ("gender", "f"));
+
+        Attach([he, said, she, going], [say, walking], (said, say), (going, walking)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void ASubjectPronounIsNotPlacedOnAVerbOfAnotherPersonOrBesideAPronounTheOriginalWritesApart()
+    {
+        var she = English(1, Genesis122, 1, "she", "PRON");
+        var said = English(2, Genesis122, 2, "said", "VERB");
+        var he = English(3, Genesis122, 3, "he", "PRON");
+        var rules = English(4, Genesis122, 4, "rules", "VERB");
+        var say = Hebrew(11, Genesis122, 1, "יֹּאמֶר", "H559", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var pronoun = Hebrew(12, Genesis122, 2, "הוּא", "H1931", "prps", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var rule = Hebrew(13, Genesis122, 3, "יִמְשָׁל", "H4910", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+
+        Attach([she, said, he, rules], [say, pronoun, rule], (said, say), (rules, rule)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void APossessiveGoesOnTheNounWhoseSuffixNamesIt()
+    {
+        var his = English(1, Genesis122, 1, "his", "PRON");
+        var sons = English(2, Genesis122, 2, "sons", "NOUN");
+        var my = English(3, Genesis122, 3, "my", "PRON");
+        var hand = English(4, Genesis122, 4, "hand", "NOUN");
+        var hisSons = Hebrew(11, Genesis122, 1, "בָנָיו", "H1121", "subs", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+        var hisHand = Hebrew(12, Genesis122, 2, "יָדוֹ", "H3027", "subs", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+
+        Attach([his, sons, my, hand], [hisSons, hisHand], (sons, hisSons), (hand, hisHand)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void AnObjectAfterAnUnplacedPrepositionGoesOnThePrepositionWrittenAfterTheVerb()
+    {
+        var said = English(1, Genesis122, 1, "said", "VERB");
+        var to = English(2, Genesis122, 2, "to", "ADP");
+        var him = English(3, Genesis122, 3, "him", "PRON");
+        var say = Hebrew(11, Genesis122, 1, "יֹּאמֶר", "H559", "verb", ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var toHim = Hebrew(12, Genesis122, 2, "לוֹ", "H9005", "prep", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+
+        Attach([said, to, him], [say, toHim], (said, say)).Should().Equal((3L, 12L));
+    }
+
+    [Fact]
+    public void AgainstGreekASubjectGoesOnTheVerbOfItsPersonAndNumber()
+    {
+        var they = English(1, Mark114, 1, "they", "PRON");
+        var went = English(2, Mark114, 2, "went", "VERB");
+        var he = English(3, Mark114, 3, "he", "PRON");
+        var saw = English(4, Mark114, 4, "saw", "VERB");
+        var go = Greek(11, Mark114, 1, "ἀπῆλθον", "G565", "verb", morphology: [("person", "third"), ("number", "plural")]);
+        var see = Greek(12, Mark114, 2, "εἶδον", "G3708", "verb", morphology: [("person", "third"), ("number", "plural")]);
+
+        Attach([they, went, he, saw], [go, see], (went, go), (saw, see)).Should().Equal((1L, 11L));
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Attach(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
@@ -132,10 +197,18 @@ public class EvidentiaAttachedWordTests
     private static EvidentiaToken English(long id, EvidentiaAddress address, int position, string surface, string partOfSpeech) =>
         new(id, address, position, surface, "eng", PartOfSpeech: partOfSpeech);
 
-    private static EvidentiaToken Hebrew(long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech) =>
-        new(id, address, position, surface, "hbo", StrongNumber: strong, PartOfSpeech: partOfSpeech);
+    private static EvidentiaToken Hebrew(
+        long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech,
+        params (string Name, string Value)[] morphology) =>
+        new(id, address, position, surface, "hbo", StrongNumber: strong, PartOfSpeech: partOfSpeech,
+            Morphology: Features(partOfSpeech, morphology));
 
     private static EvidentiaToken Greek(
-        long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech, string? lemma = null) =>
-        new(id, address, position, surface, "grc", Lemma: lemma, StrongNumber: strong, PartOfSpeech: partOfSpeech);
+        long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech, string? lemma = null,
+        (string Name, string Value)[]? morphology = null) =>
+        new(id, address, position, surface, "grc", Lemma: lemma, StrongNumber: strong, PartOfSpeech: partOfSpeech,
+            Morphology: Features(partOfSpeech, morphology ?? []));
+
+    private static Dictionary<string, string> Features(string partOfSpeech, (string Name, string Value)[] morphology) =>
+        morphology.Append(("pos", partOfSpeech)).ToDictionary(feature => feature.Item1, feature => feature.Item2);
 }
