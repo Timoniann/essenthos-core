@@ -113,6 +113,7 @@ v1.MapVerses();
 v1.MapParallel();
 v1.MapStrong();
 v1.MapRenderings();
+v1.MapLinkChecks();
 v1.MapSyntax();
 v1.MapWords();
 v1.MapSearch();

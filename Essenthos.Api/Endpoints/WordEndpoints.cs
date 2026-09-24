@@ -71,45 +71,8 @@ internal static class WordEndpoints
                 return Results.NotFound(new ProblemResponse($"{text.Slug} has no word {id}."));
             }
 
-            // Every word this one is linked to, in both directions at once. The reader wants the
-            // other texts' words whichever side of the link this word happens to sit on, and a link
-            // that states an absence has nothing on the other side to show.
-            var linked = await db.LinkWords
-                .Where(side => side.WordId == id
-                               && side.Link!.Relation != LinkRelation.Expands
-                               && side.Link.Relation != LinkRelation.Omits)
-                .SelectMany(side => db.LinkWords
-                    .Where(other => other.LinkId == side.LinkId && other.Side != side.Side)
-                    .Select(other => new
-                    {
-                        other.WordId,
-                        Corpus = other.Word!.Text!.Slug,
-                        other.Word.Surface,
-                        other.Word.Gloss,
-                        Kind = other.Word.Text!.Kind,
-                        Position = other.Word.Verse!.Number * 1000 + other.Word.Position,
-                        CanonicalBook = other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalBook,
-                        CanonicalChapter = other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalChapter,
-                        CanonicalVerse = other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
-                    }))
-                .ToListAsync(cancellationToken);
-
-            var renderings = linked
-                .DistinctBy(row => row.WordId)
-                .OrderBy(row => row.Corpus)
-                .ThenBy(row => row.Position)
-                .Select(row => new WordRenderingResponse(
-                    row.Corpus,
-                    row.Surface,
-                    row.Gloss,
-                    row.WordId,
-                    new VerseRefResponse(
-                        row.CanonicalBook,
-                        BookReferences.Name(row.CanonicalBook),
-                        BookReferences.Slug(row.CanonicalBook),
-                        row.CanonicalChapter,
-                        row.CanonicalVerse)))
-                .ToList();
+            var linked = await Linked(db, id, cancellationToken);
+            var renderings = await Renderings(db, linked, cancellationToken);
 
             // The same set the reader highlights on: the witness words this one reaches, plus its
             // own id where it is a witness itself. Texts.Counterparts explains why it is the
@@ -179,6 +142,105 @@ internal static class WordEndpoints
                 syntax));
         });
     }
+
+    /// <summary>
+    /// Every word this one is linked to, in both directions at once. The reader wants the other
+    /// texts' words whichever side of the link this word happens to sit on, and a link that states
+    /// an absence has nothing on the other side to show.
+    /// </summary>
+    internal static async Task<List<LinkedWord>> Linked(
+        AppDbContext db,
+        long id,
+        CancellationToken cancellationToken) =>
+        await db.LinkWords
+            .Where(side => side.WordId == id
+                           && side.Link!.Relation != LinkRelation.Expands
+                           && side.Link.Relation != LinkRelation.Omits)
+            .SelectMany(side => db.LinkWords
+                .Where(other => other.LinkId == side.LinkId && other.Side != side.Side)
+                .Select(other => new LinkedWord(
+                    other.WordId,
+                    other.LinkId,
+                    side.Link!.Method,
+                    side.Link.Confidence,
+                    side.Link.Source,
+                    other.Word!.Text!.Slug,
+                    other.Word.Surface,
+                    other.Word.Gloss,
+                    other.Word.Text!.Kind,
+                    other.Word.Verse!.Number * 1000 + other.Word.Position,
+                    other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalBook,
+                    other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalChapter,
+                    other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalVerse)))
+            .ToListAsync(cancellationToken);
+
+    /// <summary>
+    /// The linked words as renderings, each with what made its link and who says so.
+    ///
+    /// Every method that made a claim on the link is named, so a rendering one source stated and
+    /// the aligner also found says both rather than only the claim that won the link. Where two
+    /// links reach the same word, the one a source stated speaks for it, and after that the surer
+    /// inference: the same order the chapter's highlighting is described in.
+    /// </summary>
+    internal static async Task<IList<WordRenderingResponse>> Renderings(
+        AppDbContext db,
+        IReadOnlyCollection<LinkedWord> linked,
+        CancellationToken cancellationToken)
+    {
+        var linkIds = linked.Select(row => row.LinkId).Distinct().ToList();
+        var claims = (await db.LinkClaims
+                .Where(claim => linkIds.Contains(claim.LinkId))
+                .Select(claim => new { claim.LinkId, claim.Method })
+                .ToListAsync(cancellationToken))
+            .ToLookup(claim => claim.LinkId, claim => claim.Method);
+
+        return
+        [
+            .. linked
+                .OrderByDescending(row => row.Confidence is null)
+                .ThenByDescending(row => row.Confidence)
+                .DistinctBy(row => row.WordId)
+                .OrderBy(row => row.Corpus)
+                .ThenBy(row => row.Position)
+                .Select(row => new WordRenderingResponse(
+                    row.Corpus,
+                    row.Surface,
+                    row.Gloss,
+                    row.WordId,
+                    new VerseRefResponse(
+                        row.CanonicalBook,
+                        BookReferences.Name(row.CanonicalBook),
+                        BookReferences.Slug(row.CanonicalBook),
+                        row.CanonicalChapter,
+                        row.CanonicalVerse),
+                    EnumSpelling.Of(row.Method),
+                    row.Confidence,
+                    [
+                        .. claims[row.LinkId]
+                            .Where(method => method != row.Method)
+                            .Distinct()
+                            .Select(method => EnumSpelling.Of(method))
+                            .Order(StringComparer.Ordinal),
+                    ],
+                    Datasets.Match(row.Source)?.Name)),
+        ];
+    }
+
+    /// <param name="Position">Verse number and position folded into one key, for ordering only.</param>
+    internal sealed record LinkedWord(
+        long WordId,
+        long LinkId,
+        LinkMethod Method,
+        double? Confidence,
+        string Source,
+        string Corpus,
+        string Surface,
+        string? Gloss,
+        TextKind Kind,
+        int Position,
+        int CanonicalBook,
+        int CanonicalChapter,
+        int CanonicalVerse);
 
     /// <summary>
     /// Whether the edition prints this word as its own, rather than as a rendering of anything in
@@ -312,5 +374,20 @@ internal record WordDetailResponse(
 /// which is the same coordinate, the difference is visible; compared against either text's own
 /// numbering it is not.
 /// </param>
+/// <param name="Method">What made the link this rendering stands on.</param>
+/// <param name="Confidence">
+/// How sure the process that made it was, and null where a source or a person stated it — the
+/// only kind of link that carries no number.
+/// </param>
+/// <param name="AlsoBy">The other methods that made the same claim on the same link.</param>
+/// <param name="StatedBy">The dataset the link's source belongs to, where a dataset stated it.</param>
 internal record WordRenderingResponse(
-    string Corpus, string Text, string? Gloss, long WordId, VerseRefResponse Reference);
+    string Corpus,
+    string Text,
+    string? Gloss,
+    long WordId,
+    VerseRefResponse Reference,
+    string Method,
+    double? Confidence,
+    IList<string> AlsoBy,
+    string? StatedBy);

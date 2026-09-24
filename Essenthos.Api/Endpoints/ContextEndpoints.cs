@@ -85,7 +85,7 @@ internal static class ContextEndpoints
         string? language,
         CancellationToken cancellationToken)
     {
-        var verses = await Named(db, book, chapter, cancellationToken);
+        var (verses, how) = await NamedAndHow(db, book, chapter, cancellationToken);
         var slugs = verses.Keys.ToList();
         var records = await db.Entities
             .Where(e => slugs.Contains(e.Slug))
@@ -98,6 +98,7 @@ internal static class ContextEndpoints
                 e.Distinguisher,
                 e.PlaceKind,
                 e.Subtype,
+                e.Source,
                 Location = e.Location == null
                     ? null
                     : new EntityLocationResponse(
@@ -126,6 +127,8 @@ internal static class ContextEndpoints
                 PlaceKind = r.PlaceKind,
                 Subtype = r.Subtype,
                 Location = r.Location,
+                How = [.. how.GetValueOrDefault(r.Slug) ?? []],
+                SourceId = Datasets.Of(r.Source),
             })
             .OrderByDescending(e => e.Verses.Count)
             .ThenBy(e => e.LocalName ?? e.Name, StringComparer.CurrentCulture)
@@ -168,9 +171,24 @@ internal static class ContextEndpoints
         AppDbContext db,
         int book,
         int chapter,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken) =>
+        (await NamedAndHow(db, book, chapter, cancellationToken)).Verses;
+
+    /// <summary>
+    /// The three routes a record reaches the chapter by, which are three different claims: a word
+    /// of some text names it (<c>words</c>), the record's source lists a verse of the chapter
+    /// (<c>listed</c>), or a passage about it runs through the chapter (<c>passage</c>). A record
+    /// can arrive by more than one, and the reader is told which.
+    /// </summary>
+    internal static async Task<(Dictionary<string, SortedSet<int>> Verses, Dictionary<string, SortedSet<string>> How)>
+        NamedAndHow(
+            AppDbContext db,
+            int book,
+            int chapter,
+            CancellationToken cancellationToken)
     {
         var verses = await Annotations.InChapter(db, book, chapter, cancellationToken);
+        var how = verses.Keys.ToDictionary(slug => slug, _ => new SortedSet<string>(StringComparer.Ordinal) { "words" });
 
         // Disputed rows are left out: they are the references the source itself would not assign
         // to the record, and listing them here would assign them.
@@ -187,10 +205,27 @@ internal static class ContextEndpoints
             }
 
             at.Add(row.CanonicalVerse);
+            Route(how, row.Slug, "listed");
         }
 
+        var before = verses.Keys.ToHashSet(StringComparer.Ordinal);
         await AddPassages(db, book, chapter, verses, cancellationToken);
-        return verses;
+        foreach (var slug in verses.Keys.Where(slug => !before.Contains(slug)))
+        {
+            Route(how, slug, "passage");
+        }
+
+        return (verses, how);
+    }
+
+    private static void Route(Dictionary<string, SortedSet<string>> how, string slug, string route)
+    {
+        if (!how.TryGetValue(slug, out var routes))
+        {
+            how[slug] = routes = new SortedSet<string>(StringComparer.Ordinal);
+        }
+
+        routes.Add(route);
     }
 
     private static readonly IReadOnlyDictionary<string, string> NoPlaces = new Dictionary<string, string>();
@@ -513,4 +548,13 @@ internal record ContextEntityResponse(
 
     /// <summary>Where a place is, where the gazetteer identifies it; null for a place it cannot.</summary>
     public EntityLocationResponse? Location { get; init; }
+
+    /// <summary>
+    /// How it reaches the chapter: <c>words</c> where a word of some text names it, <c>listed</c>
+    /// where its source lists a verse here, <c>passage</c> where a passage about it runs through.
+    /// </summary>
+    public IList<string> How { get; init; } = [];
+
+    /// <summary>The declared dataset its record comes from, where one claims it.</summary>
+    public string? SourceId { get; init; }
 }
