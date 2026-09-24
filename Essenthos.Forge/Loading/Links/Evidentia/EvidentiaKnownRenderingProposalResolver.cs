@@ -163,6 +163,66 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
     }
 
     /// <summary>
+    /// A last pass over the content words the review tier refused for their score: the corpus renders
+    /// such a form many ways, none of them often, so which one stands in this verse is the only
+    /// question. It is answered only where the verse leaves one answer - the word has a single learned
+    /// sense among the words still free, that sense occurs there once, and no other free word claims
+    /// that occurrence - and only for the classes whose renderings are their own words, since a
+    /// pronoun or an adverb spread thin across the index spreads onto whatever is left over.
+    /// </summary>
+    public EvidentiaResolution ResolveResidual(
+        IEnumerable<EvidentiaCandidate> candidates,
+        IEnumerable<EvidentiaProposal> reserved)
+    {
+        var reservedSources = reserved.Select(proposal => proposal.Source.Token.Id).ToHashSet();
+        var reservedTargets = reserved.Select(proposal => proposal.Target.Token.Id).ToHashSet();
+        var proposals = new List<EvidentiaProposal>();
+        foreach (var verse in candidates
+                     .Where(candidate => IsExactKnownRendering(candidate)
+                         && !candidate.PlacesAnAuxiliaryWordOffItsKind
+                         && !candidate.PairsAContentWordWithAFunctionWord
+                         && candidate.Target.Token.StrongNumber is not null
+                         && EvidentiaMorphologyLabels.IsOpenClass(candidate.Source.PartOfSpeech, candidate.Source.Token.Language)
+                         && !reservedSources.Contains(candidate.Source.Token.Id)
+                         && !reservedTargets.Contains(candidate.Target.Token.Id))
+                     .GroupBy(candidate => candidate.Source.Token.Address))
+        {
+            var claimants = verse
+                .GroupBy(candidate => candidate.Target.Token.Id)
+                .ToDictionary(group => group.Key, group => group.Select(candidate => candidate.Source.Token.Id).Distinct().Count());
+            foreach (var word in verse.GroupBy(candidate => candidate.Source.Token.Id))
+            {
+                var senses = word.GroupBy(candidate => candidate.Target.Token.StrongNumber!).ToList();
+                if (senses.Count != 1)
+                {
+                    continue;
+                }
+
+                var occurrences = senses[0].DistinctBy(candidate => candidate.Target.Token.Id).ToList();
+                if (occurrences.Count != 1 || claimants[occurrences[0].Target.Token.Id] != 1
+                    || KnownSupport(occurrences) is not { } support
+                    || support.Observations < EvidentiaDefaults.MinimumRenderingObservations
+                    || support.Share < EvidentiaDefaults.ResidualRenderingShare)
+                {
+                    continue;
+                }
+
+                var candidate = occurrences[0];
+                var known = KnownScore(candidate);
+                proposals.Add(new EvidentiaProposal(
+                    candidate.Source,
+                    candidate.Target,
+                    EvidentiaProposalKind.ResidualKnownRendering,
+                    Math.Min(MaximumConfidence, known + ConfidenceOffset),
+                    EvidentiaDecisionTrace.For(candidate, "review",
+                        $"only learned rendering of the word in the verse, and the word the only one to claim it; share {support.Share:F2}")));
+            }
+        }
+
+        return new EvidentiaResolution(proposals, 0);
+    }
+
+    /// <summary>
     /// The source words whose learned rendering the policy accepts before any target is assigned,
     /// so a word left unplaced can be told apart as refused or as having lost its target.
     /// </summary>

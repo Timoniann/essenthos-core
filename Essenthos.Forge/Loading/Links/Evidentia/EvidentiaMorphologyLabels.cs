@@ -62,6 +62,16 @@ internal static class EvidentiaMorphologyLabels
             ? null
             : universal is "det" or "adp" or "conj" or "aux";
 
+    /// <summary>
+    /// Whether the label is one of the classes whose words carry a meaning of their own - noun, name,
+    /// verb, adjective, numeral - rather than one whose words take their sense from what they stand
+    /// beside. An unclassified word is not held against: true where nothing is known.
+    /// </summary>
+    public static bool IsOpenClass(string? label, string language) =>
+        PartOfSpeech(label, language) is not { } universal || OpenClasses.Contains(universal);
+
+    private static readonly HashSet<string> OpenClasses = ["noun", "propn", "verb", "adj", "num"];
+
     private static string? Normalise(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToLowerInvariant();
 

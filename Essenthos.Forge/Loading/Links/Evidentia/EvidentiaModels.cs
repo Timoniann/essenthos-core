@@ -35,6 +35,13 @@ internal static class EvidentiaDefaults
     public const double ReviewRenderingScore = 0.30;
     public const double ReviewRenderingLead = 0.05;
 
+    /// <summary>
+    /// The least share of a form's renderings a sense needs before the residual pass may place it where
+    /// the verse leaves no other answer. Below one in twenty the sense is as often a phrase link's
+    /// by-product as a rendering.
+    /// </summary>
+    public const double ResidualRenderingShare = 0.05;
+
     /// <summary>A word named in a reader-language Strong definition, which is a secondary reading.</summary>
     public const double DictionarySenseScore = 0.34;
 

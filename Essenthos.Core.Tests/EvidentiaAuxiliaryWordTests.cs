@@ -35,6 +35,58 @@ public class EvidentiaAuxiliaryWordTests
     }
 
     [Fact]
+    public void OnlyAnArticleIsPlacedOnTheArticleOfANoun()
+    {
+        var proposals = Propose(
+            [
+                English(1, Mark120, 1, "those", "PRON", ("PronType", "Dem"), ("Number", "Plur")),
+                English(2, Mark120, 2, "things", "NOUN", ("Number", "Plur")),
+            ],
+            [
+                Greek(11, Mark120, 1, "τοῦ", "G3588", "det", "genitive"),
+                Greek(12, Mark120, 2, "ὅσα", "G3745", "pron", "accusative"),
+                Greek(13, Mark120, 3, "τὰς", "G3588", "det", "accusative"),
+                Greek(14, Mark120, 4, "ἀκάνθας", "G173", "noun", "accusative"),
+            ],
+            ("those", "G3588", 0.40), ("things", "G3588", 0.35));
+
+        proposals.Should().BeEmpty("τοῦ and τὰς belong to the nouns after them, whatever the phrase links taught the index");
+    }
+
+    [Fact]
+    public void APersonalPronounTakesTheGreekOccurrenceOfItsOwnNumberAndCase()
+    {
+        var proposals = Propose(
+            [
+                English(1, Mark120, 1, "him", "PRON", ("PronType", "Prs"), ("Case", "Acc"), ("Number", "Sing"), ("Person", "3")),
+                English(2, Mark120, 2, "their", "PRON", ("PronType", "Prs"), ("Poss", "Yes"), ("Number", "Plur"), ("Person", "3")),
+            ],
+            [
+                GreekPronoun(11, Mark120, 1, "αὐτῶν", "genitive", "plural"),
+                GreekPronoun(12, Mark120, 2, "αὐτοὺς", "accusative", "plural"),
+                GreekPronoun(13, Mark120, 3, "αὐτοῦ", "genitive", "singular"),
+            ],
+            ("him", "G846", 0.55), ("their", "G846", 0.55));
+
+        proposals.Should().BeEquivalentTo([(1L, 13L), (2L, 11L)],
+            "him is one man and their is a genitive plural, whichever occurrence stands nearer");
+    }
+
+    [Fact]
+    public void AReverentialHimTheParserTookForANameIsStillOneMan()
+    {
+        var proposals = Propose(
+            [English(1, Mark120, 1, "Him", "PROPN")],
+            [
+                GreekPronoun(11, Mark120, 1, "αὐτοὺς", "accusative", "plural"),
+                GreekPronoun(12, Mark120, 2, "αὐτὸν", "accusative", "singular"),
+            ],
+            ("him", "G846", 0.55));
+
+        proposals.Should().Equal((1L, 12L));
+    }
+
+    [Fact]
     public void ASubjectPronounMayStandOnAnArticleThatStandsForAPerson()
     {
         var proposals = Propose(
@@ -157,6 +209,25 @@ public class EvidentiaAuxiliaryWordTests
         proposals.Should().Contain((2L, 12L), "the parser reads 's as 'is', which does not make a noun an auxiliary");
     }
 
+    [Fact]
+    public void DoAndHaveAsAuxiliariesAreNotPlacedOnAVerbOfTheirOwn()
+    {
+        var proposals = Propose(
+            [
+                English(1, Genesis416, 1, "did", "AUX"),
+                English(2, Genesis416, 2, "eat", "VERB"),
+                English(3, Genesis416, 3, "can", "AUX"),
+            ],
+            [
+                Hebrew(11, Genesis416, 1, "עָשָׂה", "H6213", "verb"),
+                Hebrew(12, Genesis416, 2, "אָכַל", "H398", "verb"),
+                Hebrew(13, Genesis416, 3, "יָכֹל", "H3201", "verb"),
+            ],
+            ("did", "H6213", 0.47), ("eat", "H398", 0.65), ("can", "H3201", 0.55));
+
+        proposals.Should().BeEquivalentTo([(2L, 12L), (3L, 13L)], "did is the tense of eat; can is a word of its own");
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Propose(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
@@ -187,6 +258,11 @@ public class EvidentiaAuxiliaryWordTests
         long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech, string? grammaticalCase) =>
         new(id, address, position, surface, "grc", StrongNumber: strong, PartOfSpeech: partOfSpeech,
             Morphology: grammaticalCase is null ? null : new Dictionary<string, string> { ["case"] = grammaticalCase });
+
+    private static EvidentiaToken GreekPronoun(
+        long id, EvidentiaAddress address, int position, string surface, string grammaticalCase, string number) =>
+        new(id, address, position, surface, "grc", StrongNumber: "G846", PartOfSpeech: "pron",
+            Morphology: new Dictionary<string, string> { ["case"] = grammaticalCase, ["number"] = number });
 
     private static EvidentiaToken Hebrew(
         long id, EvidentiaAddress address, int position, string surface, string strong, string partOfSpeech) =>

@@ -28,8 +28,13 @@ internal sealed class EvidentiaDictionaryProposalResolver
         return new EvidentiaResolution(proposals, 0);
     }
 
+    /// <summary>
+    /// A pronoun, an adverb, a preposition or a conjunction turns up in the wording of a great many
+    /// definitions without being what they define, so a match on one says nothing about the verse.
+    /// </summary>
     private static bool IsExactDictionary(EvidentiaCandidate candidate) =>
-        !candidate.PairsAContentWordWithAFunctionWord
+        EvidentiaMorphologyLabels.IsOpenClass(candidate.Source.PartOfSpeech, candidate.Source.Token.Language)
+        && !candidate.PairsAContentWordWithAFunctionWord
         && !candidate.PlacesAnAuxiliaryWordOffItsKind
         && candidate.Evidence.Any(e => e.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress)
         && candidate.Evidence.Any(e => e.Kind == EvidentiaEvidenceKind.DictionarySense);

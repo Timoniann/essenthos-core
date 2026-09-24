@@ -37,8 +37,7 @@ internal enum EvidentiaAuxiliaryRole
 ///
 /// <para>Deliberately not covered: possessive and reflexive pronouns, which a Hebrew suffix on a noun
 /// or a preposition carries; object pronouns onto a Hebrew preposition, which is where the suffix
-/// stands; demonstrative and relative pronouns and content words onto an article, which are not
-/// auxiliary words; position relative to the host word; and every source language but English,
+/// stands; position relative to the host word; and every source language but English,
 /// since the roles come from the English UDPipe parse.</para>
 /// </summary>
 internal static class EvidentiaAuxiliaryWords
@@ -62,6 +61,18 @@ internal static class EvidentiaAuxiliaryWords
     };
 
     /// <summary>
+    /// The auxiliaries that carry no meaning of their own an original writes as a word: <em>did</em> of
+    /// <em>did eat</em> and <em>have</em> of <em>have seen</em> are the verb's tense, and an index learned
+    /// from phrases holds them on עשׂה and ἔχω as often as the phrases did. They are placed with their
+    /// verb or not at all; <em>be</em> and the modals stay, since εἰμί and δύναμαι are words of their own.
+    /// </summary>
+    private static readonly HashSet<string> EmptyAuxiliaries = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "have", "has", "had", "hast", "hath", "having", "hadst",
+        "do", "does", "did", "doth", "dost", "didst",
+    };
+
+    /// <summary>
     /// How far back a particle looks for its verb: <em>drove them out</em>, <em>brought the man out</em>.
     /// Further than that, across punctuation, or past a preposition or conjunction (<em>from off the
     /// face</em>), the particle is more often a preposition's.
@@ -82,15 +93,29 @@ internal static class EvidentiaAuxiliaryWords
 
     /// <summary>
     /// Whether placing the source word on the target would put an auxiliary word on a kind of word it
-    /// cannot correspond to. A target that states no class is not refused: nothing is known against it.
+    /// cannot correspond to, or put anything but an article on the article of a noun, which belongs to
+    /// that noun whatever the index learned from phrases, or a personal pronoun on a Greek one whose
+    /// number or case says it is another. A target that states no class is not refused:
+    /// nothing is known against it.
     /// </summary>
     public static bool PlacesOffItsKind(EvidentiaAnalysis source, EvidentiaAnalysis target)
     {
+        if (target.Role == EvidentiaAuxiliaryRole.NominalArticle && IsEnglish(source.Token)
+            && Feature(source.Token, "PronType") != "Art")
+        {
+            return true;
+        }
+
+        if (DisagreesAsAPersonalPronoun(source, target))
+        {
+            return true;
+        }
+
         var targetClass = EvidentiaMorphologyLabels.PartOfSpeech(target.PartOfSpeech, target.Token.Language);
         return source.Role switch
         {
             EvidentiaAuxiliaryRole.VerbParticle => targetClass is not (null or "verb" or "adv"),
-            EvidentiaAuxiliaryRole.AuxiliaryVerb => targetClass is not (null or "verb"),
+            EvidentiaAuxiliaryRole.AuxiliaryVerb => targetClass is not (null or "verb") || EmptyAuxiliaries.Contains(source.Token.Surface),
             EvidentiaAuxiliaryRole.PersonalPronoun => target.Role == EvidentiaAuxiliaryRole.NominalArticle,
             EvidentiaAuxiliaryRole.SubjectPronoun => target.Role == EvidentiaAuxiliaryRole.NominalArticle
                 || targetClass is "adp" or "conj"
@@ -109,7 +134,7 @@ internal static class EvidentiaAuxiliaryWords
             return ArticleRole(analyses, index);
         }
 
-        if (!token.Language.Equals("eng", StringComparison.OrdinalIgnoreCase))
+        if (!IsEnglish(token))
         {
             return EvidentiaAuxiliaryRole.None;
         }
@@ -193,6 +218,37 @@ internal static class EvidentiaAuxiliaryWords
 
         return false;
     }
+
+    /// <summary>
+    /// An English personal pronoun against a Greek one, where both say what they are: <em>his</em> is
+    /// a genitive and <em>him</em> is one man, so neither is αὐτῷ nor αὐτούς. The second person is left
+    /// alone, because <em>you</em> does not say how many it addresses and the parser guesses.
+    /// </summary>
+    private static bool DisagreesAsAPersonalPronoun(EvidentiaAnalysis source, EvidentiaAnalysis target)
+    {
+        if (!IsEnglish(source.Token) || Feature(source.Token, "PronType") != "Prs"
+            || !target.Token.Language.Equals("grc", StringComparison.OrdinalIgnoreCase)
+            || EvidentiaMorphologyLabels.PartOfSpeech(target.PartOfSpeech, target.Token.Language) != "pron")
+        {
+            return false;
+        }
+
+        if (Feature(source.Token, "Poss") == "Yes" && Case(target) is { } targetCase && targetCase != "gen")
+        {
+            return true;
+        }
+
+        return Feature(source.Token, "Person") is "1" or "3"
+               && Number(source) is { } sourceNumber
+               && Number(target) is { } targetNumber
+               && sourceNumber != targetNumber;
+    }
+
+    private static string? Number(EvidentiaAnalysis analysis) =>
+        EvidentiaMorphologyLabels.Feature(Feature(analysis.Token, "number"), analysis.Token.Language);
+
+    private static bool IsEnglish(EvidentiaToken token) =>
+        token.Language.Equals("eng", StringComparison.OrdinalIgnoreCase);
 
     private static string? Case(EvidentiaAnalysis analysis) =>
         EvidentiaMorphologyLabels.Feature(Feature(analysis.Token, "case"), analysis.Token.Language);
