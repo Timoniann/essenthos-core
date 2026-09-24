@@ -178,7 +178,7 @@ public sealed class DescriptorTests : IDisposable
             .ToListAsync();
 
         clauses.Select(c => c.Relation).Should().Equal("son-of", "father-in-law-of");
-        clauses.Should().OnlyContain(c => c.Run == "reask-0001.jsonl",
+        clauses.Should().OnlyContain(c => c.Run!.StartsWith("reask-0001.jsonl#"),
             "nothing of the superseded pass is left beside the new answer, and the two are told "
             + "apart by their files because their credits are the same string");
     }
@@ -199,6 +199,30 @@ public sealed class DescriptorTests : IDisposable
         clause.Method.Should().Be(LinkMethod.Manual);
         clause.Confidence.Should().BeNull();
         clause.Source.Should().Be(EntityDescriptorLoader.SourcePrefix + " the project owner, decided 2026-09-11");
+    }
+
+    /// <summary>
+    /// A decision the owner adds later is written into the same file under the same name, because the
+    /// command that writes his decisions rewrites its files in place. A load over a corpus that
+    /// already holds the first version has to see that the record changed, not only which file it is in.
+    /// </summary>
+    [Fact]
+    public async Task ADecisionAddedToARecordInTheSameFileReachesACorpusAlreadyLoaded()
+    {
+        (await Load("decided")).Clauses.Should().Be(1);
+
+        var again = await Load("decided-again");
+
+        again.Superseded.Should().Be(1, "the record in decided.jsonl is not the one loaded");
+        again.Skipped.Should().Be(0);
+        var clauses = await _db.EntityDescriptors
+            .Where(d => d.Entity!.Slug == "hobab-1")
+            .OrderBy(d => d.Ordinal)
+            .ToListAsync();
+        clauses.Select(c => c.Relation).Should().Equal("son-of", "father-in-law-of");
+        clauses.Should().OnlyContain(c => c.Method == LinkMethod.Manual && c.Run!.StartsWith("decided.jsonl#"));
+
+        (await Load("decided-again")).Skipped.Should().Be(1, "loading the same record twice writes it once");
     }
 
     /// <summary>

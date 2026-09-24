@@ -75,6 +75,7 @@ builder.Services.AddScoped<EvidentiaCorpusPreviewLoader>();
 builder.Services.AddScoped<EvidentiaRunner>();
 builder.Services.AddScoped<EvidentiaReviewQueue>();
 builder.Services.AddScoped<EvidentiaLinkWriter>();
+builder.Services.AddScoped<EvidentiaLedger>();
 builder.Services.AddScoped<EvidentiaProblemVerses>();
 builder.Services.AddSingleton<EvidentiaStrongProposalResolver>();
 builder.Services.AddSingleton<EvidentiaKnownRenderingProposalResolver>();
@@ -230,6 +231,7 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
         composeMinimum,
         composePrecision,
         args.Contains("--unmeasured")));
+    await Replay(composeScope, (from, to) => Between(from, to, Identifier(composeFrom), Identifier(composeTo)));
     return 0;
 }
 
@@ -256,7 +258,8 @@ if (args is ["release", ..])
 {
     using var releaseScope = app.Services.CreateScope();
     return await releaseScope.ServiceProvider.GetRequiredService<Publisher>()
-        .Release(args.Contains("--allow-dirty"), CancellationToken.None, dryRun: args.Contains("--dry-run"));
+        .Release(args.Contains("--allow-dirty"), CancellationToken.None, dryRun: args.Contains("--dry-run"),
+            allowUnrecorded: args.Contains("--allow-unrecorded"));
 }
 
 if (args is ["publish", ..])
@@ -454,6 +457,7 @@ if (args is ["evidentia-approve" or "evidentia-reject", ..])
     logger.LogInformation(
         "{Settled} decisions {Verdict}; nothing reaches the corpus until evidentia-apply --write",
         settled, approving ? "approved" : "rejected");
+    await Record(verdictScope, await queue.RunOf(ids.First()));
     return 0;
 }
 
@@ -466,6 +470,8 @@ if (args is ["evidentia-correct", var correctDecision, var correctTarget, ..])
     logger.LogInformation(
         "Decision {Decision} corrected to word {Target}; nothing reaches the corpus until evidentia-apply --write",
         correctDecision, correctTarget);
+    await Record(correctScope,
+        await correctScope.ServiceProvider.GetRequiredService<EvidentiaReviewQueue>().RunOf(long.Parse(correctDecision)));
     return 0;
 }
 
@@ -478,6 +484,7 @@ if (args is ["evidentia-accept-tier", var acceptRun, ..])
     logger.LogInformation(
         "{Accepted} proposals accepted with their tier, unread. They will be written as rule-based claims, never as a " +
         "person's, and only by evidentia-apply --write", accepted);
+    await Record(acceptScope, int.Parse(acceptRun));
     return 0;
 }
 
@@ -488,6 +495,38 @@ if (args is ["evidentia-apply", var applyRun, ..])
     using var applyScope = app.Services.CreateScope();
     logger.LogInformation("\n{Outcome}", await applyScope.ServiceProvider.GetRequiredService<EvidentiaLinkWriter>()
         .Apply(int.Parse(applyRun), args.Contains("--write")));
+    return 0;
+}
+
+// The verdicts of every run that has any, or of the runs named, written to the ledger under
+// Resources/Essenthos/evidentia. The verbs that record a verdict do this themselves.
+if (args is ["evidentia-export", ..])
+{
+    using var exportScope = app.Services.CreateScope();
+    var ledger = exportScope.ServiceProvider.GetRequiredService<EvidentiaLedger>();
+    var named = Positional(args, 1).Select(int.Parse).ToList();
+    if (named.Count == 0)
+    {
+        foreach (var outcome in await ledger.ExportAll(resources))
+        {
+            logger.LogInformation("{Outcome}", outcome);
+        }
+    }
+
+    foreach (var run in named)
+    {
+        logger.LogInformation("{Outcome}", await ledger.Export(run, resources));
+    }
+
+    return 0;
+}
+
+// The ledger's verdicts put back into the corpus: a run it does not hold written again and applied,
+// a verdict whose link was deleted written again. What every load does as one of its steps.
+if (args is ["evidentia-replay", ..])
+{
+    using var replayScope = app.Services.CreateScope();
+    logger.LogInformation("\n{Outcome}", await replayScope.ServiceProvider.GetRequiredService<EvidentiaLedger>().Replay(resources));
     return 0;
 }
 
@@ -521,6 +560,17 @@ if (args is ["evidentia-compare", var compareBefore, var compareAfter, ..])
         .Compare(int.Parse(compareBefore), int.Parse(compareAfter)));
     return 0;
 }
+
+// A verdict recorded is written to the ledger at once, so no verdict lives only in this database.
+async Task Record(IServiceScope scope, int runId) =>
+    logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<EvidentiaLedger>().Export(runId, resources));
+
+// The ledger's verdicts on the runs a command's texts reach, put back after it rewrote their links
+// and deleted, with a link it replaced, the claims a verdict had put on it.
+async Task Replay(IServiceScope scope, Func<string, string, bool> runs) =>
+    logger.LogInformation("\n{Outcome}", await scope.ServiceProvider.GetRequiredService<EvidentiaLedger>().Replay(resources, runs));
+
+static bool Between(string from, string to, string one, string two) => (from == one && to == two) || (from == two && to == one);
 
 // The arguments from a position up to the first option.
 static IEnumerable<string> Positional(string[] arguments, int from) =>
@@ -829,6 +879,10 @@ if (args is ["redraw", var redrawSource, var redrawSlug])
             return 1;
     }
 
+    // The Berean tables join the Berean to a witness; Clear Bible's sets join a translation to either original.
+    await Replay(redrawScope, redrawSource == "berean"
+        ? (from, to) => Between(from, to, BereanTextSource.Slug, slug)
+        : (from, to) => from == slug || to == slug);
     logger.LogInformation(
         "{Outcome}", await redrawScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
     await redrawScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
@@ -872,6 +926,11 @@ if (args is ["names", var namesFrom, var namesTo, ..])
         chapters,
         Option(args, "--books") is { } namesBooks ? namesBooks.Split(',').Select(int.Parse).ToHashSet() : null,
         args.Contains("--apply")));
+    if (args.Contains("--apply"))
+    {
+        await Replay(namesScope, (from, to) => Between(from, to, Identifier(namesFrom), Identifier(namesTo)));
+    }
+
     return 0;
 }
 
@@ -891,6 +950,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
             : AlignmentPipeline.DefaultMinimumConfidence,
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
         replace: args.Contains("--replace")));
+    await Replay(alignScope, (from, to) => Between(from, to, alignOne, alignTwo));
     return 0;
 }
 

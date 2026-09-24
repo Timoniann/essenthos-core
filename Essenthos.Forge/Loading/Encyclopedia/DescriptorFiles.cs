@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
@@ -62,6 +64,16 @@ internal sealed record DescriptorRecord(
     /// by, and this carries that answer down to the database.
     /// </summary>
     public string File { get; init; } = string.Empty;
+
+    /// <summary>A digest of the line as the file writes it, set by the reader.</summary>
+    public string Digest { get; init; } = string.Empty;
+
+    /// <summary>
+    /// What the loader records a row as coming from: the file and the line's digest. The file alone
+    /// cannot tell a record rewritten in place from the one it replaced — a decision added to an
+    /// entity whose record stays in the same file — so a warm load would keep the old answer.
+    /// </summary>
+    public string Run => $"{File}#{Digest}";
 }
 
 /// <summary>
@@ -133,10 +145,16 @@ internal static class DescriptorFiles
                     order.Add(record.Entity);
                 }
 
-                bySlug[record.Entity] = record with { File = Path.GetFileName(file) };
+                bySlug[record.Entity] = record with { File = Path.GetFileName(file), Digest = DigestOf(line) };
             }
         }
 
         return ([.. order.Select(slug => bySlug[slug])], files, replaced);
     }
+
+    /// <summary>The characters of a digest a run keeps: enough that two versions of one record never share it.</summary>
+    private const int DigestLength = 16;
+
+    private static string DigestOf(string line) =>
+        Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(line)))[..DigestLength];
 }

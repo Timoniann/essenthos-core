@@ -222,6 +222,13 @@ internal sealed class EvidentiaReviewQueue(AppDbContext db)
             .Where(decision => filter.Chapter == null || decision.CanonicalChapter == filter.Chapter)
             .Where(decision => filter.Verse == null || decision.CanonicalVerse == filter.Verse);
 
+    /// <summary>The run a decision belongs to.</summary>
+    public Task<int> RunOf(long decisionId, CancellationToken cancellationToken = default) =>
+        db.EvidentiaDecisions.AsNoTracking()
+            .Where(decision => decision.Id == decisionId)
+            .Select(decision => decision.RunId)
+            .SingleAsync(cancellationToken);
+
     private async Task Run(int runId, CancellationToken cancellationToken)
     {
         var finished = await db.EvidentiaRuns.AsNoTracking()

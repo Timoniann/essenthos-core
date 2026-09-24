@@ -7,6 +7,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Links.Evidentia;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -43,8 +44,44 @@ internal sealed class Publisher(
         ? configured
         : Path.Combine(Repository, ".releases");
 
+    /// <summary>
+    /// What the owner decided that a rebuild of the corpus would not find: his files not committed,
+    /// his changes waiting on a step that has not run since, and EVIDENTIA verdicts the ledger does
+    /// not hold. Each is a sentence saying what to do.
+    /// </summary>
+    internal async Task<IReadOnlyList<string>> Unrecorded(CancellationToken cancellationToken)
+    {
+        var unrecorded = new List<string>();
+        if (Directory.Exists(Path.Combine(Repository, ".git")) || File.Exists(Path.Combine(Repository, ".git")))
+        {
+            var changed = await Shell.Run("git",
+                ["-C", Repository, "status", "--porcelain", "--untracked-files=all", "--", .. OwnerChanges.Tracked], cancellationToken);
+            if (changed.Length > 0)
+            {
+                // Two status letters and the path; the output comes trimmed, so the first line may have lost a leading space.
+                var files = changed.Split('\n', StringSplitOptions.RemoveEmptyEntries).Select(line => line[2..].Trim()).ToList();
+                unrecorded.Add($"{files.Count} of the owner's files are not committed ({string.Join(", ", files.Take(5))}"
+                               + (files.Count > 5 ? ", …" : string.Empty) + "); commit them in the checkout at " + Repository);
+            }
+        }
+        else
+        {
+            logger.LogWarning("{Repository} is not a git checkout, so whether the owner's files are committed cannot be told", Repository);
+        }
+
+        foreach (var (step, count) in OwnerChanges.Waiting(Path.Combine(Resources, OwnerChanges.DefaultPath)).OrderBy(pair => pair.Key, StringComparer.Ordinal))
+        {
+            unrecorded.Add($"{count} of the owner's changes wait on {step}; run it, then append an {OwnerChanges.Apply} line for {step} to {OwnerChanges.FileName}");
+        }
+
+        unrecorded.AddRange(await EvidentiaLedger.Unrecorded(db, Resources, cancellationToken));
+        return unrecorded;
+    }
+
+    private string Resources => ResourcePaths.Read(configuration, environment.ContentRootPath);
+
     /// <summary>The checkout root: the folder that holds Resources/.</summary>
-    private string Repository => Path.GetDirectoryName(ResourcePaths.Read(configuration, environment.ContentRootPath))!;
+    private string Repository => Path.GetDirectoryName(Resources)!;
 
     private string SourceContainer => configuration["Publish:SourceContainer"] is { Length: > 0 } container
         ? container
@@ -55,7 +92,8 @@ internal sealed class Publisher(
     /// travels in the dump and the working database stays a working database.
     /// </summary>
     /// <param name="dryRun">Check what can be checked without measuring or dumping, say what would follow, and change nothing.</param>
-    public async Task<int> Release(bool allowDirty, CancellationToken cancellationToken, bool dryRun = false)
+    /// <param name="allowUnrecorded">Release although some of the owner's decisions are not yet committed, applied or in the ledger.</param>
+    public async Task<int> Release(bool allowDirty, CancellationToken cancellationToken, bool dryRun = false, bool allowUnrecorded = false)
     {
         var version = ForgeVersion();
         if (version.EndsWith("-dirty", StringComparison.Ordinal) && !allowDirty)
@@ -82,6 +120,20 @@ internal sealed class Publisher(
                 "copies every text to a public server. Remove them from this database, or record the licence " +
                 "that permits it, and release again", string.Join(", ", withheld));
             return 1;
+        }
+
+        if (await Unrecorded(cancellationToken) is { Count: > 0 } unrecorded)
+        {
+            if (!allowUnrecorded)
+            {
+                logger.LogError(
+                    "A release carries every decision the owner has made, and these are not yet where a rebuild finds them: {Unrecorded}. " +
+                    "Do what each says and release again, or pass --allow-unrecorded and accept a release without them",
+                    string.Join("; ", unrecorded));
+                return 1;
+            }
+
+            logger.LogWarning("Released although the owner's decisions are not all recorded: {Unrecorded}", string.Join("; ", unrecorded));
         }
 
         if (dryRun)
