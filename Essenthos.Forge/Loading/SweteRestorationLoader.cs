@@ -104,6 +104,9 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
             var path = Path.Combine(folder, SweteTextSource.FileName(book));
             var digitised = SweteReader.Read(File.ReadLines(path));
             var restored = SweteReader.Read(SweteRestorations.Apply(book, File.ReadLines(path)));
+            var earlier = SweteRestorations.Earlier
+                .Select(set => SweteReader.Read(SweteRestorations.Apply(book, File.ReadLines(path), set)))
+                .ToList();
 
             foreach (var here in SweteRestorations.All
                          .Where(r => r.Book == book)
@@ -134,7 +137,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                     continue;
                 }
 
-                if (!Same(stored, before))
+                if (!Same(stored, before) && !earlier.Any(pass => Same(stored, Words(pass, chapter, verse, label))))
                 {
                     throw new InvalidOperationException(
                         $"{text.Slug} {BookReferences.Name(canonical)} {placed}:{verse}{label} reads neither as the " +

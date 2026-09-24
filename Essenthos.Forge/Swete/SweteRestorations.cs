@@ -76,6 +76,14 @@ internal static class SweteRestorations
     /// </summary>
     public static readonly IReadOnlyList<SweteRestoration> All = [.. Lost(), .. SweteCorrections.All, .. SwetePage.All];
 
+    /// <summary>
+    /// The restorations as earlier passes made them, oldest first: the Genesis words alone, then with
+    /// the letter corrections. A corpus restored by one of them reads as that set and not as the
+    /// transcription, and the pass carries it on to <see cref="All"/> rather than refusing it.
+    /// </summary>
+    public static readonly IReadOnlyList<IReadOnlyList<SweteRestoration>> Earlier =
+        [Lost(), [.. Lost(), .. SweteCorrections.All]];
+
     private static IReadOnlyList<SweteRestoration> Lost() =>
     [
         new(Genesis, 5, 15, "ἔτη, ἐγέννησεν", "ἔτη, καὶ ἐγέννησεν",
@@ -127,9 +135,12 @@ internal static class SweteRestorations
     /// A file's lines with its restorations made: the same references, with the printed tokens in
     /// place of the digitised ones. Everything else passes through unchanged and in order.
     /// </summary>
-    public static IEnumerable<string> Apply(string book, IEnumerable<string> lines)
+    public static IEnumerable<string> Apply(string book, IEnumerable<string> lines) => Apply(book, lines, All);
+
+    /// <summary><see cref="Apply(string, IEnumerable{string})"/> with one set of restorations rather than all of them.</summary>
+    public static IEnumerable<string> Apply(string book, IEnumerable<string> lines, IReadOnlyList<SweteRestoration> set)
     {
-        var restorations = All.Where(r => r.Book == book).ToList();
+        var restorations = set.Where(r => r.Book == book).ToList();
         if (restorations.Count == 0)
         {
             foreach (var line in lines)

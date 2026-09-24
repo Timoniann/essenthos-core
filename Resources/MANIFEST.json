@@ -159,6 +159,11 @@
     "files": 61,
     "sha256": "9e5e793e158155ef13b75208c1438a8402d2a7ae18f36477bf25e07597d2cc76"
   },
+  "SweteScans": {
+    "bytes": 386558821,
+    "files": 472,
+    "sha256": "bfd19bd500e75a5212c9c9883844eae592335a388a5d30ca8705c057e4360bdc"
+  },
   "SynodalStrong": {
     "bytes": 25106788,
     "files": 2,
