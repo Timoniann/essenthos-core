@@ -236,6 +236,16 @@ public static class Datasets
             + "and archaeological ages, so the text can be read against what else was happening.",
             "Wikidata"),
 
+        // Public domain, and attributed on every band anyway: the period's own authority is named
+        // where its dates are shown, and this is the credit for having gathered them.
+        new("periodo", "PeriodO", "Adam Rabinowitz, Ryan Shaw and the PeriodO contributors", "CC0",
+            "https://creativecommons.org/publicdomain/zero/1.0/",
+            "https://perio.do",
+            "The periods of the lands around the Bible — the Levant, Egypt, Mesopotamia, Anatolia, "
+            + "Persia, the Aegean and Rome — each as a published work dates it, drawn behind the "
+            + "timeline's events, with every authority's dates kept where they disagree.",
+            "PeriodO"),
+
         // The corpus's single most load-bearing source, and the one that went longest unnamed: every
         // stated word-level correspondence the Old Testament has comes from it.
         new("openhebrewbible", "Open Hebrew Bible Project", "Eliran Wong", "CC BY-NC 4.0",

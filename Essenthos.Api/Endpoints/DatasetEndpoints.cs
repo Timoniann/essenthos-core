@@ -32,7 +32,9 @@ public static class DatasetEndpoints
         {
             var entities = await Counted(db.Entities.Select(e => e.Source), cancellationToken);
             var events = await Counted(db.Events.Select(e => e.Source), cancellationToken);
-            var periods = await Counted(db.Periods.Select(p => p.Source), cancellationToken);
+            var periods = (await Counted(db.Periods.Select(p => p.Source), cancellationToken))
+                .Concat(await Counted(db.PeriodDefinitions.Select(p => p.Source), cancellationToken))
+                .ToList();
 
             // Only the links somebody stated. The aligner's millions are this project's own
             // inference and belong to no third party, and sweeping them would cost a second a call

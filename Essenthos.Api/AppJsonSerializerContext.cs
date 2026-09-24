@@ -177,6 +177,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(EventResponse))]
 [JsonSerializable(typeof(EventListResponse))]
 [JsonSerializable(typeof(TimelineResponse))]
+[JsonSerializable(typeof(TimelineLandsResponse))]
 [JsonSerializable(typeof(PeriodListResponse))]
 [JsonSerializable(typeof(ChronologyListResponse))]
 [JsonSerializable(typeof(TimelineEventResponse))]

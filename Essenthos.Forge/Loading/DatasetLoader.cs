@@ -873,6 +873,12 @@ internal sealed class DatasetLoader(
             Path.Combine(AppContext.BaseDirectory, "Resources", "WorldHistory"),
             cancellationToken));
 
+        // The periods of the lands around it, as the scholars who define them date them. Beside the
+        // world's events rather than among them: they are bands under an authority, not moments.
+        using var lands = services.CreateScope();
+        var periodO = lands.ServiceProvider.GetRequiredService<PeriodOLoader>();
+        status.Record(await periodO.Load(resources, cancellationToken));
+
         // The Septuagint's chronology, computed from its own Greek. Last, because it dates the base
         // reckoning's events and the world's alike, and both have to be there to be dated.
         using var greek = services.CreateScope();
