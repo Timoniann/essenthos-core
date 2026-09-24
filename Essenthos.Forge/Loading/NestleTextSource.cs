@@ -104,7 +104,7 @@ internal static class NestleTextSource
                 Abbreviation: canonical.StandardAbbreviation.Full));
         }
 
-        return new TextSource(Definition, books);
+        return GreekWitnessNumbers.Apply(new TextSource(Definition, books));
     }
 
     private static WordDraft Draft(NestleWord word) => new(
