@@ -327,6 +327,97 @@ public class EvidentiaAttachedWordTests
             .Should().Contain([(1L, 11L), (4L, 14L)]);
     }
 
+    [Fact]
+    public void ASentenceConjunctionGoesOnTheVavOfItsVerbOnlyWhereBothStandFirstInTheirVerse()
+    {
+        var then = English(1, Genesis122, 1, "Then", "ADV") with { SyntacticHead = 3, Relation = "advmod" };
+        var god = English(2, Genesis122, 2, "God", "PROPN");
+        var said = English(3, Genesis122, 3, "said", "VERB");
+        var vav = Hebrew(11, Genesis122, 1, "וַ", "H9000", "conj");
+        var say = Hebrew(12, Genesis122, 2, "יֹּאמֶר", "H559", "verb");
+        var elohim = Hebrew(13, Genesis122, 3, "אֱלֹהִים", "H430", "subs");
+
+        Attach([then, god, said], [vav, say, elohim], (god, elohim), (said, say)).Should().Equal((1L, 11L));
+
+        var first = Hebrew(21, Genesis122, 1, "אֱלֹהִים", "H430", "subs");
+        var later = Hebrew(22, Genesis122, 2, "וַ", "H9000", "conj");
+        var saying = Hebrew(23, Genesis122, 3, "יֹּאמֶר", "H559", "verb");
+
+        Attach([then, god, said], [first, later, saying], (god, first), (said, saying)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void OGoesWithTheNameItCallsOnTheOneWordTheOriginalWrites()
+    {
+        var o = English(1, Genesis122, 1, "O", "INTJ");
+        var lord = English(2, Genesis122, 2, "LORD", "PROPN");
+        var yhwh = Hebrew(11, Genesis122, 1, "יְהוָה", "H3068", "nmpr");
+
+        Attach([o, lord], [yhwh], (lord, yhwh)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void AParticleOfDirectionGoesWithItsVerbAndAnIdiomaticOneDoesNot()
+    {
+        var went = English(1, Genesis122, 1, "went", "VERB");
+        var out_ = English(2, Genesis122, 2, "out", "ADP") with { SyntacticHead = 1, Relation = "compound:prt" };
+        var gave = English(3, Genesis122, 3, "gave", "VERB");
+        var up = English(4, Genesis122, 4, "up", "ADP") with { SyntacticHead = 3, Relation = "compound:prt" };
+        var goOut = Hebrew(11, Genesis122, 1, "יֵּצֵא", "H3318", "verb");
+        var give = Hebrew(12, Genesis122, 2, "נָתַן", "H5414", "verb");
+
+        Attach([went, out_, gave, up], [goOut, give], (went, goOut), (gave, give)).Should().Equal((2L, 11L));
+    }
+
+    [Fact]
+    public void AVerbGoesWhereItsParticleWasPlacedWhenOnlyTheParticleFoundTheOriginalsVerb()
+    {
+        var went = English(1, Mark114, 1, "went", "VERB");
+        var out_ = English(2, Mark114, 2, "out", "ADP") with { SyntacticHead = 1, Relation = "compound:prt" };
+        var goOut = Greek(11, Mark114, 1, "ἐξῆλθεν", "G1831", "verb");
+
+        Attach([went, out_], [goOut], (out_, goOut)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void LetOfLetThereBeGoesOnTheJussiveBeAndNowhereElse()
+    {
+        var let = English(1, Genesis122, 1, "Let", "VERB");
+        var there = English(2, Genesis122, 2, "there", "PRON");
+        var be = English(3, Genesis122, 3, "be", "AUX") with { Lemma = "be" };
+        var light = English(4, Genesis122, 4, "light", "NOUN");
+        var yehi = Hebrew(11, Genesis122, 1, "יְהִי", "H1961", "verb");
+        var or = Hebrew(12, Genesis122, 2, "אוֹר", "H216", "subs");
+        var sprout = Hebrew(21, Genesis122, 1, "תַּדְשֵׁא", "H1876", "verb");
+
+        Attach([let, there, be, light], [yehi, or], (be, yehi), (light, or)).Should().Contain((1L, 11L));
+        Attach([let, there, be, light], [sprout, or], (be, sprout), (light, or)).Should().NotContain(pair => pair.Source == 1L);
+    }
+
+    [Fact]
+    public void SurelyGoesOnTheInfinitiveAbsoluteOfItsVerbsOwnLexeme()
+    {
+        var surely = English(1, Genesis122, 1, "surely", "ADV") with { SyntacticHead = 2, Relation = "advmod" };
+        var die = English(2, Genesis122, 2, "die", "VERB");
+        var dying = Hebrew(11, Genesis122, 1, "מוֹת", "H4191", "verb", ("tense", "infa"));
+        var shallDie = Hebrew(12, Genesis122, 2, "תָּמוּת", "H4191", "verb", ("tense", "impf"));
+
+        Attach([surely, die], [dying, shallDie], (die, shallDie)).Should().Equal((1L, 11L));
+    }
+
+    [Fact]
+    public void OfGoesOnTheLamedBeforeItsNounWhereNoConstructStandsBeforeIt()
+    {
+        var psalm = English(1, Genesis122, 1, "Psalm", "NOUN");
+        var of = English(2, Genesis122, 2, "of", "ADP");
+        var david = English(3, Genesis122, 3, "David", "PROPN");
+        var song = Hebrew(11, Genesis122, 1, "מִזְמוֹר", "H4210", "subs", ("state", "a"));
+        var lamed = Hebrew(12, Genesis122, 2, "לְ", "H9005", "prep");
+        var dawid = Hebrew(13, Genesis122, 3, "דָוִד", "H1732", "nmpr");
+
+        Attach([psalm, of, david], [song, lamed, dawid], (psalm, song), (david, dawid)).Should().Equal((2L, 12L));
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Attach(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
