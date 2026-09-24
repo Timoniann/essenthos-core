@@ -97,6 +97,7 @@ internal sealed record PersonRegisterOutcome(
 internal sealed class PersonRegisterLoader(
     AppDbContext db,
     IConfiguration configuration,
+    DuplicateRecordLoader duplicates,
     ILogger<PersonRegisterLoader> logger)
 {
     /// <summary>
@@ -139,6 +140,11 @@ internal sealed class PersonRegisterLoader(
 
     private const string SourceIdPrefix = "essenthos:";
 
+    /// <summary>What the dataset's testimony says once a record it held becomes ours.</summary>
+    private const string HeldAsItsOwn =
+        "holds this man as a record of its own, which is where this record's relationships, verses and "
+        + "descriptors come from and whose they stay";
+
     /// <summary>Why Genesis 36's Adah is moved: the same woman the dataset keeps as Basemath.</summary>
     private const string AdahIsBasemath =
         "BibleData's Adah record is the wife of Lamech, but it also files the Hittite wife of Esau "
@@ -164,6 +170,10 @@ internal sealed class PersonRegisterLoader(
             + "calls Herod and who ruled nothing. The dataset holds both as one man, filed under the "
             + "husband's verses, with the tetrarch's verse, his title and a note calling him the "
             + "tetrarch."),
+        new("person:Zadok_6", "NEH 13:13", "Zadok#7", NotesToo: false,
+            "The dataset's record is Zadok son of Meraioth of Nehemiah 11:11, the same list as 1 Chronicles "
+            + "9:11. Nehemiah 13:13 names Zadok the scribe, whom Nehemiah made a treasurer over the "
+            + "storehouses a generation after the lists of chapter 11."),
         new("person:Adah_1", "GEN 36:2", "Adah#2", NotesToo: false,
             AdahIsBasemath, Target: "person:Basemath_1", Obsolete: "essenthos:adah1"),
         new("person:Adah_1", "GEN 36:4", "Adah#2", NotesToo: false,
@@ -276,6 +286,15 @@ internal sealed class PersonRegisterLoader(
             "EZR 7:2"),
     ];
 
+    /// <summary>The verses <see cref="MisfiledVerses"/> takes off each record, by the dataset's id for it.</summary>
+    private static readonly Dictionary<string, HashSet<(int Book, int Chapter, int Verse)>> Misplaced =
+        MisfiledVerses
+            .GroupBy(misfiled => misfiled.Held, StringComparer.Ordinal)
+            .ToDictionary(
+                held => held.Key,
+                held => Addresses([.. held.Select(misfiled => misfiled.Reference)]).ToHashSet(),
+                StringComparer.Ordinal);
+
     /// <summary>
     /// One <see cref="Misfiled"/> for each verse the dataset files under one man that names another
     /// record it already holds.
@@ -320,6 +339,9 @@ internal sealed class PersonRegisterLoader(
                     ? "The person register is already there; nothing to do"
                     : "The person register is already there; repaired {Verses} misfiled verses",
                 repaired);
+            logger.LogInformation(
+                "Matched the namesakes of the misfiled verses again: {Outcome}",
+                await Rematch(PersonRegisterFiles.Read(directory), cancellationToken));
             return Nothing(started);
         }
 
@@ -352,24 +374,7 @@ internal sealed class PersonRegisterLoader(
             .AsSplitQuery()
             .ToListAsync(cancellationToken);
 
-        var byGroup = new Dictionary<string, List<Entity>>(StringComparer.Ordinal);
-        foreach (var person in held.OrderBy(e => e.Id))
-        {
-            foreach (var label in person.Names
-                         .Where(name => name.Kind == ProperName)
-                         .Select(name => name.Label)
-                         .Append(person.Name)
-                         .Distinct(StringComparer.Ordinal)
-                         .Where(label => groups.Contains(label)))
-            {
-                if (!byGroup.TryGetValue(label, out var already))
-                {
-                    byGroup[label] = already = [];
-                }
-
-                already.Add(person);
-            }
-        }
+        var byGroup = Grouped(held, groups);
 
         var slugs = (await db.Entities.Select(e => e.Slug).ToListAsync(cancellationToken))
             .ToHashSet(StringComparer.Ordinal);
@@ -384,23 +389,13 @@ internal sealed class PersonRegisterLoader(
                 .OrderBy(record => record.Id)
                 .ToList();
             var candidates = byGroup.TryGetValue(group, out var found) ? found : [];
-            var links = Match(mine, candidates);
+            var links = Match(mine, candidates, Attested);
 
             foreach (var record in mine)
             {
                 if (!links.TryGetValue(record.Id, out var hit))
                 {
-                    hit = new Entity
-                    {
-                        Kind = EntityKind.Person,
-                        Slug = Unique(Slugs.Of(record.Name), slugs),
-                        Name = record.Name,
-                        Distinguisher = record.Description,
-                        SourceId = SourceIdOf(record.Key),
-                        Source = FromTheEnumeration,
-                        Names = { Name(record) },
-                    };
-
+                    hit = Bearer(record, slugs);
                     added.Add(hit);
                 }
 
@@ -421,16 +416,7 @@ internal sealed class PersonRegisterLoader(
         {
             if (!string.Equals(person.Source, FromTheEnumeration, StringComparison.Ordinal))
             {
-                person.Claims.Add(new EntityClaim
-                {
-                    Method = LinkMethod.StatedBySource,
-                    Confidence = null,
-                    Source = person.Source,
-                    Note = "holds this man as a record of its own, which is where this record's "
-                           + "relationships, verses and descriptors come from and whose they stay",
-                });
-
-                person.Source = FromTheEnumeration;
+                BecomeOurs(person);
             }
 
             person.Claims.Add(Claim(from));
@@ -596,16 +582,36 @@ internal sealed class PersonRegisterLoader(
 
             if (!string.Equals(to.Source, from.Source, StringComparison.Ordinal))
             {
-                to.Claims.Add(new EntityClaim
+                var says = " under a record it also gives another man of this name; the verse, the labels it "
+                           + "uses only there" + (misfiled.NotesToo ? " and its note" : "")
+                           + $" are this man's. {misfiled.Why}";
+                var said = to.Claims.FirstOrDefault(claim =>
+                    claim.Method == LinkMethod.StatedBySource
+                    && string.Equals(claim.Source, from.Source, StringComparison.Ordinal));
+
+                // One claim per source on a record, so a second verse moved for the same reason joins
+                // the first one's.
+                if (said is null)
                 {
-                    Method = LinkMethod.StatedBySource,
-                    Confidence = null,
-                    Source = from.Source,
-                    Note = $"files {misfiled.Reference} under a record it also gives "
-                           + "another man of this name; the verse, the labels it uses only there"
-                           + (misfiled.NotesToo ? " and its note" : "")
-                           + $" are this man's. {misfiled.Why}",
-                });
+                    to.Claims.Add(new EntityClaim
+                    {
+                        Method = LinkMethod.StatedBySource,
+                        Confidence = null,
+                        Source = from.Source,
+                        Note = $"files {misfiled.Reference}{says}",
+                    });
+                }
+                else
+                {
+                    var several = says.Replace("; the verse, ", "; the verses, ", StringComparison.Ordinal);
+                    var ending = said.Note?.EndsWith(says, StringComparison.Ordinal) == true ? says
+                        : said.Note?.EndsWith(several, StringComparison.Ordinal) == true ? several
+                        : null;
+                    if (ending is not null)
+                    {
+                        said.Note = said.Note![..^ending.Length] + $", {misfiled.Reference}{several}";
+                    }
+                }
             }
 
             moved += verses.Count;
@@ -616,6 +622,336 @@ internal sealed class PersonRegisterLoader(
 
     private static PersonRegisterOutcome Nothing(Stopwatch started) =>
         new(true, 0, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
+
+    /// <summary>
+    /// The register matched again, on a corpus it has already been read into, for the names a
+    /// misfiled verse belongs to.
+    ///
+    /// <para>
+    /// A corpus read before a verse was moved to the man it names was matched with the verse where
+    /// the dataset had put it: the bearer reached the wrong man, that record's claim describes him,
+    /// and the man the record really is was added a second time. Matching the name again with the
+    /// verses where they now stand says where each bearer belongs, and this moves what the register
+    /// wrote to follow it — its claim and the verses it cited — and nothing any other pass wrote.
+    /// </para>
+    ///
+    /// <para>
+    /// **A bearer leaves a record only when the record no longer shares a verse with him.** One that
+    /// still does and carries him beside another bearer of the name is a record a fold made of two,
+    /// which is a reading of ours that one man stands under both, and it is left as it is. A record
+    /// the register added for a bearer who now reaches a held one is folded into it, so its address
+    /// still arrives; a bearer it reaches nowhere any more is added, as a load from nothing adds him.
+    /// </para>
+    /// </summary>
+    internal async Task<RegisterRematchOutcome> Rematch(
+        IReadOnlyList<PersonRegisterRecord> entries,
+        CancellationToken cancellationToken = default)
+    {
+        var started = Stopwatch.StartNew();
+        var bearers = MisfiledVerses.Select(misfiled => misfiled.Bearer).ToHashSet(StringComparer.Ordinal);
+        var records = entries.Where(record => record.Kept).ToList();
+        var groups = records
+            .Where(record => bearers.Contains(record.Key))
+            .Select(record => record.Group)
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToList();
+        if (groups.Count == 0)
+        {
+            return new RegisterRematchOutcome(0, 0, 0, 0, started.Elapsed);
+        }
+
+        var people = await db.Entities
+            .Where(e => e.Kind == EntityKind.Person
+                        && (groups.Contains(e.Name)
+                            || e.Names.Any(n => n.Kind == ProperName && groups.Contains(n.Label))))
+            .Include(e => e.Names)
+            .Include(e => e.Verses)
+            .Include(e => e.Claims)
+            .AsSplitQuery()
+            .ToListAsync(cancellationToken);
+
+        var ours = records.Select(record => SourceIdOf(record.Key)).ToHashSet(StringComparer.Ordinal);
+        bool AddedHere(Entity person) => ours.Contains(person.SourceId);
+        var held = people.Where(person => !AddedHere(person)).OrderBy(person => person.Id).ToList();
+        var byGroup = Grouped(held, groups);
+
+        var attested = new Dictionary<Entity, HashSet<(int Book, int Chapter, int Verse)>>();
+        HashSet<(int Book, int Chapter, int Verse)> Attests(Entity person) =>
+            attested.TryGetValue(person, out var known) ? known : attested[person] = Attested(person);
+        bool Shares(Entity person, PersonRegisterRecord record) =>
+            Addresses(record.References).Any(Attests(person).Contains);
+
+        var prefixes = records.Select(record => (Record: record, Prefix: Prefix(record))).ToList();
+        var before = new Dictionary<Entity, List<PersonRegisterRecord>>();
+        foreach (var person in people)
+        {
+            if (Ours(person)?.Note is { } note)
+            {
+                before[person] = prefixes
+                    .Where(p => note.StartsWith(p.Prefix, StringComparison.Ordinal)
+                                || note.Contains("; " + p.Prefix, StringComparison.Ordinal))
+                    .Select(p => p.Record)
+                    .ToList();
+            }
+        }
+
+        var after = before.ToDictionary(pair => pair.Key, pair => pair.Value.ToList());
+        List<PersonRegisterRecord> On(Entity person) =>
+            after.TryGetValue(person, out var on) ? on : after[person] = [];
+
+        var slugs = (await db.Entities.Select(e => e.Slug).ToListAsync(cancellationToken))
+            .ToHashSet(StringComparer.Ordinal);
+        var folds = new List<(Entity Added, Entity Into, PersonRegisterRecord Record)>();
+        var made = new Dictionary<Entity, List<PersonRegisterRecord>>();
+        var unplaced = new List<(PersonRegisterRecord Record, Entity Into)>();
+
+        foreach (var group in groups)
+        {
+            var mine = records
+                .Where(record => string.Equals(record.Group, group, StringComparison.Ordinal))
+                .OrderBy(record => record.Id)
+                .ToList();
+            var links = Match(mine, byGroup.TryGetValue(group, out var found) ? found : [], Attests);
+
+            foreach (var record in mine)
+            {
+                var at = after.Where(pair => pair.Value.Contains(record)).Select(pair => pair.Key).ToList();
+                if (links.TryGetValue(record.Id, out var into))
+                {
+                    if (at.Contains(into) || at.Any(person => !AddedHere(person) && Shares(person, record)))
+                    {
+                        continue;
+                    }
+
+                    foreach (var person in at)
+                    {
+                        On(person).Remove(record);
+                        if (AddedHere(person))
+                        {
+                            folds.Add((person, into, record));
+                        }
+                    }
+
+                    if (at.Count == 0)
+                    {
+                        unplaced.Add((record, into));
+                    }
+                    else
+                    {
+                        On(into).Add(record);
+                    }
+
+                    continue;
+                }
+
+                var stale = at.Where(person => !AddedHere(person) && !Shares(person, record)).ToList();
+                if (stale.Count == 0)
+                {
+                    continue;
+                }
+
+                foreach (var person in stale)
+                {
+                    On(person).Remove(record);
+                }
+
+                if (at.Count == stale.Count)
+                {
+                    var bearer = Bearer(record, slugs);
+                    db.Entities.Add(bearer);
+                    made[bearer] = [record];
+                    On(bearer).Add(record);
+                }
+            }
+        }
+
+        // A bearer no record names goes to the record he reaches once the others have moved, and
+        // only to one carrying no other bearer of his name: a record carrying two is a fold's.
+        foreach (var (record, into) in unplaced)
+        {
+            if (!On(into).Any(other => string.Equals(other.Group, record.Group, StringComparison.Ordinal)))
+            {
+                On(into).Add(record);
+            }
+        }
+
+        var rewritten = 0;
+        foreach (var (person, now) in after)
+        {
+            var was = before.TryGetValue(person, out var earlier) ? earlier : [];
+            if (was.ToHashSet().SetEquals(now))
+            {
+                continue;
+            }
+
+            rewritten++;
+            foreach (var record in now.Except(was))
+            {
+                Cite(person, record);
+            }
+
+            foreach (var record in was.Except(now))
+            {
+                Uncite(person, record, now);
+            }
+
+            var claim = Ours(person);
+            if (now.Count == 0)
+            {
+                if (claim is not null)
+                {
+                    person.Claims.Remove(claim);
+                    db.EntityClaims.Remove(claim);
+                }
+
+                if (!AddedHere(person)
+                    && person.Claims.FirstOrDefault(c => c.Method == LinkMethod.StatedBySource
+                                                         && c.Note == HeldAsItsOwn) is { } theirs)
+                {
+                    person.Source = theirs.Source;
+                    person.Claims.Remove(theirs);
+                    db.EntityClaims.Remove(theirs);
+                }
+
+                continue;
+            }
+
+            var fresh = Claim([.. now.OrderBy(record => record.Group, StringComparer.Ordinal).ThenBy(record => record.Id)]);
+            if (claim is null)
+            {
+                if (!string.Equals(person.Source, FromTheEnumeration, StringComparison.Ordinal))
+                {
+                    BecomeOurs(person);
+                }
+
+                person.Claims.Add(fresh);
+            }
+            else
+            {
+                claim.Note = fresh.Note;
+                claim.Confidence = fresh.Confidence;
+            }
+        }
+
+        // After the claims, so a record the register lets go of says whose it is again before the
+        // dataset's verses leave it with that dataset's name on them.
+        var refiled = Refile(held, made);
+        await db.SaveChangesAsync(cancellationToken);
+
+        var folded = 0;
+        if (folds.Count > 0)
+        {
+            var pairs = folds
+                .Select(fold => new DuplicateRecordPair(
+                    fold.Record.StrongNumbers?.FirstOrDefault() ?? "",
+                    fold.Into.Slug,
+                    fold.Added.Slug,
+                    $"The person register added this record for {fold.Record.Group} #{fold.Record.Id} while the "
+                    + "verse that names him was still filed under a namesake. With the verse where it belongs, "
+                    + "the register reaches the record he is on."))
+                .ToList();
+            folded = (await duplicates.Fold(
+                new DuplicateRecordList(ByTheReading, OnTheVerses, FromTheEnumeration, pairs),
+                cancellationToken)).Folded;
+        }
+
+        return new RegisterRematchOutcome(rewritten, folded, made.Count, refiled, started.Elapsed);
+    }
+
+    /// <summary>
+    /// The verses a held record attests a bearer by: every verse on its list but the ones this pass
+    /// cited for a bearer itself, which would draw him back to wherever he was put, and the ones
+    /// <see cref="MisfiledVerses"/> says the dataset filed under it for another man, which are that
+    /// man's evidence and not this one's.
+    /// </summary>
+    private static HashSet<(int Book, int Chapter, int Verse)> Attested(Entity person)
+    {
+        var elsewhere = Misplaced.TryGetValue(person.SourceId, out var verses) ? verses : [];
+        return person.Verses
+            .Where(verse => !string.Equals(verse.Source, FromTheAssignment, StringComparison.Ordinal))
+            .Select(verse => (verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse))
+            .Where(address => !elsewhere.Contains(address))
+            .ToHashSet();
+    }
+
+    /// <summary>The held people each name's bearers can reach, lowest row first.</summary>
+    private static Dictionary<string, List<Entity>> Grouped(IEnumerable<Entity> held, IReadOnlyCollection<string> groups)
+    {
+        var byGroup = new Dictionary<string, List<Entity>>(StringComparer.Ordinal);
+        foreach (var person in held.OrderBy(e => e.Id))
+        {
+            foreach (var label in person.Names
+                         .Where(name => name.Kind == ProperName)
+                         .Select(name => name.Label)
+                         .Append(person.Name)
+                         .Distinct(StringComparer.Ordinal)
+                         .Where(groups.Contains))
+            {
+                if (!byGroup.TryGetValue(label, out var already))
+                {
+                    byGroup[label] = already = [];
+                }
+
+                already.Add(person);
+            }
+        }
+
+        return byGroup;
+    }
+
+    /// <summary>A record for a bearer no held record is.</summary>
+    private static Entity Bearer(PersonRegisterRecord record, HashSet<string> slugs) =>
+        new()
+        {
+            Kind = EntityKind.Person,
+            Slug = Unique(Slugs.Of(record.Name), slugs),
+            Name = record.Name,
+            Distinguisher = record.Description,
+            SourceId = SourceIdOf(record.Key),
+            Source = FromTheEnumeration,
+            Names = { Name(record) },
+        };
+
+    /// <summary>The dataset's testimony kept as a claim, as the record becomes ours.</summary>
+    private static void BecomeOurs(Entity person)
+    {
+        person.Claims.Add(new EntityClaim
+        {
+            Method = LinkMethod.StatedBySource,
+            Confidence = null,
+            Source = person.Source,
+            Note = HeldAsItsOwn,
+        });
+
+        person.Source = FromTheEnumeration;
+    }
+
+    /// <summary>The claim this pass writes on a record, if it has written one.</summary>
+    private static EntityClaim? Ours(Entity person) =>
+        person.Claims.FirstOrDefault(claim =>
+            claim.Method == ByTheReading && string.Equals(claim.Source, FromTheEnumeration, StringComparison.Ordinal));
+
+    /// <summary>How a claim begins what it says of one bearer, as <see cref="Says"/> writes it.</summary>
+    private static string Prefix(PersonRegisterRecord record) => $"{record.Group} #{record.Id}, ";
+
+    /// <summary>
+    /// The verses this pass cited on a record for a bearer who is no longer on it, but for those a
+    /// bearer who stays there was cited for too.
+    /// </summary>
+    private void Uncite(Entity person, PersonRegisterRecord record, IReadOnlyList<PersonRegisterRecord> staying)
+    {
+        var kept = staying.SelectMany(other => Addresses(other.References)).ToHashSet();
+        var gone = Addresses(record.References).Where(address => !kept.Contains(address)).ToHashSet();
+        foreach (var verse in person.Verses
+                     .Where(verse => string.Equals(verse.Source, FromTheAssignment, StringComparison.Ordinal)
+                                     && gone.Contains((verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse)))
+                     .ToList())
+        {
+            person.Verses.Remove(verse);
+            db.EntityVerses.Remove(verse);
+        }
+    }
 
     /// <summary>
     /// The verses this reading gives a bearer that his record does not already hold, added beside
@@ -685,14 +1021,11 @@ internal sealed class PersonRegisterLoader(
     /// </summary>
     private static Dictionary<int, Entity> Match(
         IReadOnlyList<PersonRegisterRecord> records,
-        IReadOnlyList<Entity> candidates)
+        IReadOnlyList<Entity> candidates,
+        Func<Entity, HashSet<(int Book, int Chapter, int Verse)>> attests)
     {
         var reached = new HashSet<Entity>();
-        var attested = candidates.ToDictionary(
-            person => person,
-            person => person.Verses
-                .Select(verse => (verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse))
-                .ToHashSet());
+        var attested = candidates.ToDictionary(person => person, attests);
 
         var pairs = new List<(int Shared, int Bearer, int Person, PersonRegisterRecord Record, Entity Entity)>();
         foreach (var record in records)
@@ -806,6 +1139,20 @@ internal sealed class PersonRegisterLoader(
 
         return candidate;
     }
+}
+
+/// <param name="Rewritten">Records whose claim now names other bearers than it did.</param>
+/// <param name="Folded">Records the register added for a man it now reaches on a record already held, folded into it.</param>
+/// <param name="Added">Bearers the register now reaches nowhere, added as a load from nothing adds them.</param>
+/// <param name="Refiled">Verse rows moved to a bearer added here, from the record the dataset filed them under.</param>
+internal sealed record RegisterRematchOutcome(int Rewritten, int Folded, int Added, int Refiled, TimeSpan Elapsed)
+{
+    public override string ToString() =>
+        Rewritten + Folded + Added == 0
+            ? "every bearer of those names is on the record its verses reach"
+            : $"{Rewritten} records now name the bearers their verses reach, {Folded} records added for a man "
+              + $"already held folded into his, and {Added} bearers added with {Refiled} verses the dataset "
+              + $"filed under a namesake, in {Elapsed}";
 }
 
 /// <param name="Held">The dataset's id for the man the verse is filed under.</param>

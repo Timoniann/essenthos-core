@@ -224,6 +224,43 @@ public sealed class DuplicateRecordTests : IDisposable
         Occurrences = occurrences, Heading = heading,
     };
 
+    /// <summary>
+    /// The person register reached each record for a different one of its bearers. Folded, the man
+    /// is both, and the claim says both; what the dataset said of each in the same words is said once.
+    /// </summary>
+    [Fact]
+    public async Task AClaimBothRecordsCarryFromOneSourceSaysWhatEachSaid()
+    {
+        Claims(_kept, LinkMethod.ModelReading, 0.9, "the register", "Hilkiah #3, of 1 Chronicles 9:11");
+        Claims(_folded, LinkMethod.ModelReading, 0.7, "the register", "Hilkiah #6, of Nehemiah 11:11");
+        Claims(_kept, LinkMethod.StatedBySource, null, BibleData, "holds this man as a record of its own");
+        Claims(_folded, LinkMethod.StatedBySource, null, BibleData, "holds this man as a record of its own");
+        await _db.SaveChangesAsync();
+
+        await _loader.Fold(List(("hilkiah-3", "hilkiah-6")));
+
+        var claims = await _db.EntityClaims.AsNoTracking().ToListAsync();
+        claims.Should().HaveCount(2).And.OnlyContain(c => c.EntityId == _kept.Id);
+        var register = claims.Single(c => c.Method == LinkMethod.ModelReading);
+        register.Note.Should().Be("Hilkiah #3, of 1 Chronicles 9:11; Hilkiah #6, of Nehemiah 11:11");
+        register.Confidence.Should().Be(0.9);
+    }
+
+    private void Claims(Entity entity, LinkMethod method, double? confidence, string source, string note) =>
+        _db.EntityClaims.Add(new EntityClaim
+        {
+            Entity = entity, Method = method, Confidence = confidence, Source = source, Note = note,
+        });
+
+    [Fact]
+    public async Task APairReadLessSurelyThanTheListSaysSo()
+    {
+        await _loader.Fold(new DuplicateRecordList(LinkMethod.ModelReading, 0.9, "a test",
+            [new DuplicateRecordPair("H2518", "hilkiah-3", "hilkiah-6", "one list written twice", 0.8)]));
+
+        (await _db.MergedRecords.AsNoTracking().SingleAsync()).Confidence.Should().Be(0.8);
+    }
+
     [Fact]
     public async Task ASecondRunFindsNothingLeftToFold()
     {
@@ -281,5 +318,6 @@ public sealed class DuplicateRecordTests : IDisposable
         list.Merges.Select(m => m.Folds).Should().NotIntersectWith(list.Merges.Select(m => m.Keeps));
         list.Merges.Should().OnlyContain(m => m.Keeps != m.Folds && m.Why.Length > 0);
         list.Confidence.Should().BeInRange(0, 1);
+        list.Merges.Should().OnlyContain(m => m.Confidence == null || (m.Confidence > 0 && m.Confidence <= 1));
     }
 }

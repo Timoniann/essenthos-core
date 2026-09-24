@@ -97,7 +97,10 @@ public sealed class RefiledVerseTests : IDisposable
         await _db.SaveChangesAsync();
 
         var register = new PersonRegisterLoader(
-            _db, new ConfigurationBuilder().Build(), NullLogger<PersonRegisterLoader>.Instance);
+            _db,
+            new ConfigurationBuilder().Build(),
+            new DuplicateRecordLoader(_db, NullLogger<DuplicateRecordLoader>.Instance),
+            NullLogger<PersonRegisterLoader>.Instance);
         await register.Load(Path.Combine(Path.GetTempPath(), $"no-register-{Guid.NewGuid():N}"));
 
         var verses = await _db.EntityVerses.AsNoTracking()
