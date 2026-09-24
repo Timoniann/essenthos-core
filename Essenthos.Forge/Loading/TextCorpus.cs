@@ -37,6 +37,7 @@ internal static class TextCorpus
         .. Bible4uTextSource.Definitions.Values,
         KulishTextSource.Definition,
         .. EbibleTextSource.Definitions.Values,
+        .. SwordTextSource.Definitions.Values,
         .. EnglishTextSource.Definitions.Values,
     ];
 

@@ -404,6 +404,26 @@ public static class Datasets
                 + "of the work unmodified and for propagating the gospel; the corpus holds neither the "
                 + "tagged text nor its numbers, only correspondences derived from them."),
 
+        // Released by FHL under the GNU FDL, which permits this use without asking. They are read the
+        // way the Synodal's numbering is — for one run, never stored — so nothing of the numbering
+        // itself is served; Resources/ChineseUnion1919/LICENCE.md has the statement and the reading.
+        new("fhl-cuv-strong", "Strong numbering of the Chinese Union Version",
+            "the Faith Hope Love foundation (信望愛), in its Chinese Bible Online Library project; the copy read "
+            + "is CrossWire's ChiUn and ChiUns modules, rebuilt from bible.fhl.net in 2021",
+            "GNU Free Documentation License",
+            "https://www.gnu.org/licenses/fdl-1.3.html",
+            "https://www.fhl.net/gb/fhl/fhl8.html",
+            "Which words of the Chinese Union Version render which Hebrew or Greek word, matched within the "
+            + "verse on the Strong numbers FHL keyed to the spans of its transcription. The numbering is read "
+            + "for the length of one run and never stored or served: the corpus holds only the links drawn "
+            + "from it, each carrying a confidence, because a number is a lemma and which occurrence a word "
+            + "renders is this project's inference.",
+            Sources.UnionStrongCredit, Links: true,
+            Obliges: "FHL asks that its Strong numbers be credited and not stripped from a copy of its file; the "
+                + "corpus copies neither the file nor the numbers, and credits FHL on every link drawn from them. "
+                + "The FDL does not say whether correspondences derived from the numbers are a modified version "
+                + "of them."),
+
         new("glaux", "GLAUx", "Alek Keersmaekers and the GLAUx contributors", "CC BY-SA 3.0",
             "https://creativecommons.org/licenses/by-sa/3.0/",
             "https://github.com/alekkeersmaekers/glaux",
