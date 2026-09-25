@@ -493,11 +493,6 @@
       "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
     },
     {
-      "verb": "correct",
-      "arguments": [],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
       "verb": "reload",
       "arguments": [
         "GEEZ81"
@@ -664,15 +659,6 @@
       "arguments": [
         "ALM1911",
         "KJV,BSB",
-        "BHSA"
-      ],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "ALM1911",
-        "KJV,BSB",
         "NESTLE1904"
       ],
       "note": "run on essenthos_core on 2026-09-25"
@@ -685,6 +671,11 @@
         "--apply"
       ],
       "at": "2026-09-25T14:13:56.7515299+00:00"
+    },
+    {
+      "verb": "correct",
+      "arguments": [],
+      "at": "2026-09-25T14:41:54.077339+00:00"
     }
   ]
 }
