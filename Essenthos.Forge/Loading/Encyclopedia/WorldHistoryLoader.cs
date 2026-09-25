@@ -44,7 +44,7 @@ internal sealed record WorldOutcome(
 /// </summary>
 internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLoader> logger)
 {
-    private const string Source = "Wikidata, query.wikidata.org, CC0";
+    internal const string Source = "Wikidata, query.wikidata.org, CC0";
 
     /// <summary>
     /// The year the default reckoning calls 1 BCE. Every reckoning gets its own answer in
@@ -188,7 +188,7 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
         var beginnings = 0;
         var deferred = 0;
 
-        foreach (var file in new[] { "wikidata-events.csv", "wikidata-inception.csv" })
+        foreach (var file in EventFiles)
         {
             var path = Path.Combine(folder, file);
             if (!File.Exists(path))
@@ -213,14 +213,16 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                     continue;
                 }
 
+                var (today, then) = Regions(item.Countries, year, item.Lifetimes);
                 var made = new Event
                 {
                     Slug = Unique(Slugs.Of(item.Label), taken),
                     Name = item.Label,
                     Kind = Kind(item.Type, inception),
-                    Description = Described(item.Type, item.Where, inception),
+                    Description = Described(item.Type, inception),
                     Realm = Realms.World,
-                    Region = item.Where,
+                    Region = today,
+                    RegionAtTheTime = then,
                     Uri = item.Uri,
                     YearFromCreation = DefaultReckoningZero + year,
                     Source = Source,
@@ -305,7 +307,7 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                 StartYear = DefaultReckoningZero + from,
                 EndYear = DefaultReckoningZero + to,
                 Realm = Realms.World,
-                Region = item.Where,
+                Region = Regions(item.Countries, from, item.Lifetimes).Today,
                 Uri = item.Uri,
                 Notes = item.Type,
                 Source = Source,
@@ -315,19 +317,102 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
         return periods;
     }
 
-    private sealed record Item(string Uri, string Label, string Time, string Until, string Type, string? Where);
+    private static readonly string[] EventFiles = ["wikidata-events.csv", "wikidata-inception.csv"];
+
+    /// <summary>
+    /// Today's country and the country of the time for every event item, keyed by item, where the
+    /// files carry the countries' years — and nothing where they were fetched before the queries
+    /// asked for them, since then there is nothing to add to what the load already wrote.
+    /// </summary>
+    internal static Dictionary<string, (string? Today, string? Then)> StatedRegions(string folder)
+    {
+        var regions = new Dictionary<string, (string? Today, string? Then)>(StringComparer.Ordinal);
+        foreach (var file in EventFiles)
+        {
+            var path = Path.Combine(folder, file);
+            if (!File.Exists(path))
+            {
+                continue;
+            }
+
+            foreach (var item in Items(path, "time"))
+            {
+                if (!item.Lifetimes)
+                {
+                    return [];
+                }
+
+                if (Year(item.Time) is { } year)
+                {
+                    regions.TryAdd(item.Uri, Regions(item.Countries, year, lifetimes: true));
+                }
+            }
+        }
+
+        return regions;
+    }
+
+    private sealed record Item(
+        string Uri, string Label, string Time, string Until, string Type, IReadOnlyList<Country> Countries,
+        bool Lifetimes);
+
+    /// <summary>
+    /// A country the source states for an item, with the years it existed where the file carries
+    /// them: the statement's own start and end if it has them, else the country's founding and
+    /// dissolution. <see cref="Historical"/> is Wikidata's <em>historical country</em>, which is how
+    /// Ancient Greece, with no dissolution date of its own, is still not somebody's country today.
+    /// </summary>
+    internal sealed record Country(string Label, int? Start, int? End, bool Historical);
+
+    /// <summary>
+    /// Today's country and the country of the time, out of what the source states for one item.
+    ///
+    /// <para>
+    /// <b>Today's</b> is the first that has not ended and is not a historical country. <b>Of the
+    /// time</b> is one whose own years contain the event's — never a guess from the modern border,
+    /// and the latest-founded where several do, that being the nearer polity: Babylon is in the
+    /// Neo-Babylonian Empire in 600 BCE and not in the Babylonia it had been part of for a thousand
+    /// years. Either is null where nothing stated qualifies, and a state of 1867 on a stele of 1200
+    /// BCE qualifies as neither.
+    /// </para>
+    /// <para>
+    /// A file fetched before the query asked for those years has none, and then all this can say
+    /// is the one country the query returned first, which is today's or the last known — the
+    /// reading the corpus always had, and documented on <see cref="Event.Region"/> as exactly that.
+    /// </para>
+    /// </summary>
+    internal static (string? Today, string? Then) Regions(IReadOnlyList<Country> countries, int year, bool lifetimes)
+    {
+        if (!lifetimes)
+        {
+            return (countries.Count == 0 ? null : countries[0].Label, null);
+        }
+
+        var today = countries.FirstOrDefault(c => c.End is null && !c.Historical)?.Label;
+        var then = countries
+            .Where(c => c.Start is { } start && start <= year && (c.End is null || year <= c.End))
+            .OrderByDescending(c => c.Start)
+            .Select(c => c.Label)
+            .FirstOrDefault();
+
+        return (today, then);
+    }
 
     /// <summary>
     /// One row per item, from a result set that has several.
     ///
     /// The query asks for the type and the country, and an item with three types in two countries
-    /// comes back six times. The first row wins: they are the same item, and which of its three
-    /// types is named first is not worth a rule.
+    /// comes back six times. The first row wins for everything but the countries: they are the same
+    /// item, and which of its three types is named first is not worth a rule. The countries are
+    /// gathered from every row, because the modern one and the one of the time are two rows.
     /// </summary>
     private static IEnumerable<Item> Items(string path, string timeColumn, string? untilColumn = null)
     {
-        var seen = new HashSet<string>(StringComparer.Ordinal);
         var invented = Invented(path);
+        var first = new Dictionary<string, Dictionary<string, string>>(StringComparer.Ordinal);
+        var order = new List<string>();
+        var countries = new Dictionary<string, List<Country>>(StringComparer.Ordinal);
+        var lifetimes = false;
 
         foreach (var row in Csv.Read(path))
         {
@@ -342,21 +427,63 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                 continue;
             }
 
-            if (NotEvents.Contains(type) || invented.Contains(uri) || Miskeyed.ContainsKey(uri)
-                || !seen.Add(uri))
+            if (NotEvents.Contains(type) || invented.Contains(uri) || Miskeyed.ContainsKey(uri))
             {
                 continue;
             }
 
+            if (first.TryAdd(uri, row))
+            {
+                order.Add(uri);
+                countries[uri] = [];
+            }
+
+            lifetimes |= row.ContainsKey(CountryStart);
+            if (Blank(row.GetValueOrDefault("whereLabel")) is { } where)
+            {
+                countries[uri].Add(new Country(
+                    where,
+                    Year(row.GetValueOrDefault(CountryStart)),
+                    Year(row.GetValueOrDefault(CountryEnd)),
+                    string.Equals(row.GetValueOrDefault(CountryHistorical), "true", StringComparison.OrdinalIgnoreCase)));
+            }
+        }
+
+        foreach (var uri in order)
+        {
+            var row = first[uri];
             yield return new Item(
                 uri,
-                label,
+                row.GetValueOrDefault("eLabel", string.Empty).Trim(),
                 row.GetValueOrDefault(timeColumn, string.Empty),
                 untilColumn is null ? string.Empty : row.GetValueOrDefault(untilColumn, string.Empty),
-                type,
-                Blank(row.GetValueOrDefault("whereLabel", string.Empty)));
+                row.GetValueOrDefault("kindLabel", string.Empty).Trim(),
+                Gathered(countries[uri]),
+                lifetimes);
         }
     }
+
+    private const string CountryStart = "whereStart";
+
+    private const string CountryEnd = "whereEnd";
+
+    private const string CountryHistorical = "whereHistorical";
+
+    /// <summary>
+    /// One entry per country, in the order the file first names them. A country with two founding
+    /// dates comes back on two rows; it is given the widest span they allow between them, and it
+    /// has ended if any row says when.
+    /// </summary>
+    internal static List<Country> Gathered(IEnumerable<Country> rows) =>
+    [
+        .. rows
+            .GroupBy(r => r.Label, StringComparer.Ordinal)
+            .Select(g => new Country(
+                g.Key,
+                g.Min(r => r.Start),
+                g.Max(r => r.End),
+                g.Any(r => r.Historical))),
+    ];
 
     /// <summary>
     /// Everything Wikidata marks as made up, by item rather than by row.
@@ -460,14 +587,29 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
     /// <summary>
     /// What the row says about itself, in a sentence, because the source sends no prose at all.
     /// Better an honest label than an empty description that reads as missing data.
+    ///
+    /// The country stays out of it. It is a field to filter by, and today's border in a sentence
+    /// about the past reads as a claim about who held the ground: a stele "in the Khedivate of
+    /// Egypt" is three thousand years older than the Khedivate.
     /// </summary>
-    private static string Described(string type, string? where, bool inception)
-    {
-        var what = inception
-            ? $"{Capitalised(type)}, dated by its inception"
-            : Capitalised(type);
+    internal static string Described(string type, bool inception) =>
+        inception
+            ? $"{Capitalised(type)}, dated by its inception{FromWikidata}"
+            : $"{Capitalised(type)}{FromWikidata}";
 
-        return where is null ? $"{what}. From Wikidata." : $"{what}, in {where}. From Wikidata.";
+    private const string FromWikidata = ". From Wikidata.";
+
+    /// <summary>
+    /// A description an earlier load wrote with the country in it, without the country. Anything
+    /// else comes back as it was.
+    /// </summary>
+    internal static string? WithoutTheCountry(string? description, string? region)
+    {
+        var inCountry = $", in {region}{FromWikidata}";
+        return description is not null && region is not null
+               && description.EndsWith(inCountry, StringComparison.Ordinal)
+            ? string.Concat(description.AsSpan(0, description.Length - inCountry.Length), FromWikidata)
+            : description;
     }
 
     private static string Capitalised(string value) =>

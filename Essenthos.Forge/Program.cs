@@ -113,6 +113,7 @@ builder.Services.AddScoped<UnionStrongLinkLoader>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<UssherAnnalsLoader>();
+builder.Services.AddScoped<EventRestatementLoader>();
 builder.Services.AddScoped<OpenBiblePlaceLoader>();
 builder.Services.AddScoped<OpenBibleLocationLoader>();
 builder.Services.AddScoped<EntityImageLoader>();

@@ -86,6 +86,20 @@ public class EventDate
     /// <summary>Years from that chronology's own creation.</summary>
     public int? Year { get; set; }
 
+    /// <summary>
+    /// The year as the work itself writes it against the common era, where it writes one: negative
+    /// before the turn and positive after it, with no year zero, so 4004 BC is <c>-4004</c>.
+    ///
+    /// <para>
+    /// Not derivable from <see cref="Year"/>, which is why it is a column. A reckoning whose year
+    /// opens in the autumn straddles two Julian years, and which of the two an event falls in
+    /// depends on its season: Ussher's creation is year 1 and 4004 BC, his Exodus year 2513 and
+    /// 1491 BC, and no single zero turns both into what he printed. Where this is set it is the
+    /// answer and the subtraction is not; where it is null the subtraction is all there is.
+    /// </para>
+    /// </summary>
+    public int? StatedYear { get; set; }
+
     /// <summary>The bounds, where the reckoning gives a range instead of a year.</summary>
     public int? EarliestYear { get; set; }
 

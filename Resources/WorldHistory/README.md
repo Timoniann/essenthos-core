@@ -46,3 +46,17 @@ This is not Wikidata's internal convention, which has no year zero and writes Ma
 difference is one year, it is invisible on a six-thousand-year axis, and it would be wrong in every
 citation — so it was checked against Marathon, Thermopylae, Gaugamela and Actium rather than read
 off the documentation.
+
+## The country, today and at the time
+
+`country` in Wikidata is the current or last-known state, so on its own it files the Battle of
+Himera under Italy and puts a stele of about 1200 BCE in the Khedivate of Egypt, a state of
+1867-1914. The queries therefore ask for every non-deprecated `country` statement rather than the
+best-ranked one only, and for the years each existed: the statement's own start and end time where
+it has them, else the country's inception and dissolution, and whether it is a *historical country*.
+The loader keeps the one that has not ended as today's country and the one whose years contain the
+event's as the country of the time, and states neither where nothing qualifies.
+
+**The CSVs above predate that change.** Until they are fetched again with the queries as they now
+stand, they carry the one best-ranked country per row and no years, and the loader reads the first
+country an item names as today's or the last known, with no country of the time.

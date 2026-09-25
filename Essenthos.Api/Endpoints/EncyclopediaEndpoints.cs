@@ -663,7 +663,7 @@ internal static class EncyclopediaEndpoints
             var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
                 .ToListAsync(cancellationToken);
-            var placesNamed = await PlacesNamed(db, events.Select(row => row.Event.Location), cancellationToken);
+            var placesNamed = await PlacesNamed(db, events.Select(row => EventLocation.Of(row.Event)), cancellationToken);
 
             // Who says the text names this entity where it does — which is not always whoever
             // supplied the entity. A place can come from one dataset and be referenced by another,
@@ -913,7 +913,7 @@ internal static class EncyclopediaEndpoints
                 .Select(Rows)
                 .ToListAsync(cancellationToken);
 
-            var places = await PlacesNamed(db, page.Select(row => row.Event.Location), cancellationToken);
+            var places = await PlacesNamed(db, page.Select(row => EventLocation.Of(row.Event)), cancellationToken);
 
             return Results.Ok(new EventListResponse(total, [.. page.Select(row => Event(row, places))]));
         });
@@ -943,7 +943,7 @@ internal static class EncyclopediaEndpoints
                 return Results.NotFound();
             }
 
-            var places = await PlacesNamed(db, [row.Event.Location], cancellationToken);
+            var places = await PlacesNamed(db, [EventLocation.Of(row.Event)], cancellationToken);
             return Results.Ok(Event(row, places));
         });
 
@@ -1050,9 +1050,10 @@ internal static class EncyclopediaEndpoints
                     e.Kind,
                     e.Realm,
                     e.Region,
+                    e.RegionAtTheTime,
                     e.Uri,
                     e.SequenceInYear,
-                    e.Location,
+                    Location = EventLocation.Of(e.Location, e.LocationBook, e.LocationChapter, e.LocationVerse),
                     EntitySlug = e.Entity == null ? null : e.Entity.Slug,
                 })
                 .ToListAsync(cancellationToken);
@@ -1083,6 +1084,7 @@ internal static class EncyclopediaEndpoints
                         years.GetValueOrDefault(e.Id) ?? [])
                     {
                         Picture = pictures.ForEvent(e.EntitySlug, e.Location),
+                        RegionAtTheTime = e.RegionAtTheTime,
                     }),
                 ],
                 [.. periods.Select(p => p with { Picture = pictures.ForPeriod(p.EntitySlug) })]));
@@ -1098,16 +1100,28 @@ internal static class EncyclopediaEndpoints
                 c.Slug, c.Name, c.Authority, c.Basis, c.Source, c.LastYearBeforeTheCommonEra, c.IsDefault)),
     ];
 
-    /// <summary>The year each chronology gives each of these dates' events, keyed by chronology slug.</summary>
+    /// <summary>
+    /// Where each chronology puts each of these dates' events on its own axis, keyed by chronology
+    /// slug: its year from creation, except where the reckoning states its year of the common era,
+    /// which places the event instead.
+    ///
+    /// The two differ by a year wherever a reckoning's year opens mid-way through the Julian one.
+    /// Ussher's creation is his year 1 and, in his own words, 4004 BC; the axis turns a year into an
+    /// era by the chronology's zero, which makes year 1 into 4003, so it is given the position that
+    /// reads back as what he printed. And a date that states only its year of the common era —
+    /// Ussher's passion narrative, whose anno mundi column is ten years out — is placed by that,
+    /// where it would otherwise not be placed at all.
+    /// </summary>
     internal static async Task<Dictionary<int, Dictionary<string, int>>> EventYears(
         AppDbContext db,
         IQueryable<EventDate> dates,
         CancellationToken cancellationToken)
     {
-        var reckoning = await db.Chronologies.ToDictionaryAsync(c => c.Id, c => c.Slug, cancellationToken);
+        var reckoning = await db.Chronologies.ToDictionaryAsync(
+            c => c.Id, c => (c.Slug, Zero: c.LastYearBeforeTheCommonEra), cancellationToken);
         var rows = await dates
-            .Where(d => d.Year != null)
-            .Select(d => new { d.EventId, d.ChronologyId, Year = d.Year!.Value })
+            .Where(d => d.Year != null || d.StatedYear != null)
+            .Select(d => new { d.EventId, d.ChronologyId, d.Year, d.StatedYear })
             .ToListAsync(cancellationToken);
 
         var years = new Dictionary<int, Dictionary<string, int>>();
@@ -1119,11 +1133,24 @@ internal static class EncyclopediaEndpoints
                 years[date.EventId] = byChronology;
             }
 
-            byChronology[reckoning[date.ChronologyId]] = date.Year;
+            var (slug, zero) = reckoning[date.ChronologyId];
+            byChronology[slug] = Placed(date.Year, date.StatedYear, zero);
         }
 
         return years;
     }
+
+    /// <summary>
+    /// A date's position on its chronology's axis. A stated year of the common era has no year zero,
+    /// so 4004 BC is the axis year that reads back as 4004 BC: <paramref name="zero"/> less 4,003.
+    /// </summary>
+    internal static int Placed(int? year, int? statedYear, int zero) =>
+        statedYear switch
+        {
+            < 0 => zero + statedYear.Value + 1,
+            > 0 => zero + statedYear.Value,
+            _ => year!.Value,
+        };
 
     internal static async Task<IList<TimelinePeriodResponse>> Periods(
         AppDbContext db,
@@ -1310,60 +1337,96 @@ internal static class EncyclopediaEndpoints
                     d.Chronology!.Slug,
                     d.Chronology.Name,
                     d.Year,
-                    d.Year == null
-                        ? null
-                        : d.Year <= d.Chronology.LastYearBeforeTheCommonEra
-                            ? d.Chronology.LastYearBeforeTheCommonEra - d.Year.Value + 1
-                            : d.Year.Value - d.Chronology.LastYearBeforeTheCommonEra,
-                    d.Year != null && d.Year > d.Chronology.LastYearBeforeTheCommonEra
-                        ? CommonEra
-                        : BeforeTheCommonEra,
+                    d.StatedYear != null
+                        ? d.StatedYear < 0 ? -d.StatedYear.Value : d.StatedYear.Value
+                        : d.Year == null
+                            ? null
+                            : d.Year <= d.Chronology.LastYearBeforeTheCommonEra
+                                ? d.Chronology.LastYearBeforeTheCommonEra - d.Year.Value + 1
+                                : d.Year.Value - d.Chronology.LastYearBeforeTheCommonEra,
+                    d.StatedYear != null
+                        ? d.StatedYear > 0 ? CommonEra : BeforeTheCommonEra
+                        : d.Year != null && d.Year > d.Chronology.LastYearBeforeTheCommonEra
+                            ? CommonEra
+                            : BeforeTheCommonEra,
                     d.EarliestYear,
                     d.LatestYear,
                     d.Calculation,
                     d.Citation,
-                    d.Notes))
+                    d.Notes)
+                {
+                    Stated = d.StatedYear != null,
+                })
                 .ToList());
 
-    internal static EventResponse Event(EventRow row, IReadOnlyDictionary<string, string> places) =>
+    internal static EventResponse Event(EventRow row, IReadOnlyDictionary<EventLocation, string> places) =>
         Event(row.Event, row.EntitySlug, row.EntityName, row.DefaultChronology, row.Dates, places);
 
     /// <summary>
-    /// The place each of these locations names, where the corpus holds exactly one place under
-    /// that name.
+    /// The place each of these locations names: the one place of that name the corpus records at
+    /// the verse the source names it at, or failing that the only place of that name there is.
     ///
     /// An event's location is free text — <em>Gerar</em>, <em>West of Eden</em> — and the
     /// encyclopedia holds places as records with pages of their own, so the one screen that names
     /// a place was the one screen that could not open it. Resolved here rather than by a client
-    /// matching on the words, and only where the name is unambiguous: 27 of the 159 locations name
-    /// a word two places answer to, and a link that picks one of two Samarias is worse than none.
-    /// The words stay as the source wrote them either way.
+    /// matching on the words. 27 of the 159 locations name a word two places answer to, and the
+    /// verse is what tells them apart: the Samaria a reign of Israel begins in is the one recorded
+    /// at 2 Kings 13:1, and that is the corpus's own answer rather than an inference about
+    /// spelling. Where the verse does not settle it either, nothing is linked — a link that picks
+    /// one of two Samarias is worse than none. The words stay as the source wrote them either way.
     /// </summary>
-    internal static async Task<Dictionary<string, string>> PlacesNamed(
+    internal static async Task<Dictionary<EventLocation, string>> PlacesNamed(
         AppDbContext db,
-        IEnumerable<string?> locations,
+        IEnumerable<EventLocation?> locations,
         CancellationToken cancellationToken)
     {
-        var named = locations
-            .Where(location => !string.IsNullOrWhiteSpace(location))
-            .Select(location => location!.ToLowerInvariant())
-            .Distinct()
-            .ToList();
-
-        if (named.Count == 0)
+        var asked = locations.OfType<EventLocation>().Distinct().ToList();
+        if (asked.Count == 0)
         {
             return [];
         }
 
+        var named = asked.Select(location => location.Name).Distinct().ToList();
         var places = await db.Entities
             .Where(e => e.Kind == EntityKind.Place && named.Contains(e.Name.ToLower()))
-            .Select(e => new { e.Slug, e.Name })
+            .Select(e => new { e.Id, e.Slug, Name = e.Name.ToLower() })
             .ToListAsync(cancellationToken);
+        var byName = places.ToLookup(place => place.Name);
 
-        return places
-            .GroupBy(place => place.Name.ToLowerInvariant())
-            .Where(group => group.Count() == 1)
-            .ToDictionary(group => group.Key, group => group.First().Slug);
+        var shared = places.GroupBy(place => place.Name).Where(group => group.Count() > 1)
+            .SelectMany(group => group.Select(place => place.Id))
+            .ToList();
+        var books = asked.Where(location => location.Book != null).Select(location => location.Book!.Value)
+            .Distinct().ToList();
+        var recorded = shared.Count == 0 || books.Count == 0
+            ? []
+            : (await db.EntityVerses
+                .Where(v => shared.Contains(v.EntityId) && books.Contains(v.CanonicalBook))
+                .Select(v => new { v.EntityId, v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .Select(v => (v.EntityId, v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse))
+            .ToHashSet();
+
+        var resolved = new Dictionary<EventLocation, string>();
+        foreach (var location in asked)
+        {
+            var candidates = byName[location.Name].ToList();
+            var atTheVerse = location.Book is { } book && location.Chapter is { } chapter && location.Verse is { } verse
+                ? candidates.Where(place => recorded.Contains((place.Id, book, chapter, verse))).ToList()
+                : [];
+
+            if (atTheVerse.Count == 1)
+            {
+                resolved[location] = atTheVerse[0].Slug;
+            }
+            else if (candidates.Count == 1)
+            {
+                resolved[location] = candidates[0].Slug;
+            }
+        }
+
+        return resolved;
     }
 
     /// <summary>
@@ -1383,7 +1446,7 @@ internal static class EncyclopediaEndpoints
         string? entityName,
         string? defaultChronology,
         IList<EventDateResponse> dates,
-        IReadOnlyDictionary<string, string> places)
+        IReadOnlyDictionary<EventLocation, string> places)
     {
         var reckoning = dates.FirstOrDefault(d => d.Chronology == defaultChronology);
 
@@ -1410,9 +1473,8 @@ internal static class EncyclopediaEndpoints
             dates)
         {
             Sequenced = e.SequenceInYear is not null,
-            LocationSlug = e.Location is { Length: > 0 } location
-                ? places.GetValueOrDefault(location.ToLowerInvariant())
-                : null,
+            LocationSlug = EventLocation.Of(e) is { } location ? places.GetValueOrDefault(location) : null,
+            RegionAtTheTime = e.RegionAtTheTime,
             // Only where no reckoning states this event at all does the base zero point stand in;
             // it is the same number the default chronology holds.
             Era = reckoning?.Era
@@ -1841,6 +1903,12 @@ internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResp
 /// so the distinction is the difference between quoting a chronologer and putting words in his
 /// mouth.
 /// </param>
+/// <param name="Region">
+/// Where in the world, for the world layer: today's country, or the last known, as Wikidata states
+/// it — not the polity of the time, which is <see cref="EventResponse.RegionAtTheTime"/>. The
+/// Battle of Himera is in Italy here, and that is a place to find it by rather than a claim about
+/// who held Sicily in 480 BCE.
+/// </param>
 internal record EventResponse(
     string Slug,
     string Name,
@@ -1864,11 +1932,18 @@ internal record EventResponse(
     IList<EventDateResponse> Dates)
 {
     /// <summary>
-    /// The place <see cref="Location"/> names, where the corpus holds exactly one place under that
-    /// name; null where it holds none or more than one. The words are the source's and stand
-    /// whatever this says.
+    /// The place <see cref="Location"/> names: the one place of that name recorded at the verse the
+    /// source names it at, or else the only place of that name; null where neither settles it. The
+    /// words are the source's and stand whatever this says.
     /// </summary>
     public string? LocationSlug { get; init; }
+
+    /// <summary>
+    /// The country of the time, where the source states one whose own years contain the event's —
+    /// beside <c>Region</c>, which is today's country or the last known and never the polity of the
+    /// time. Null for everything outside the world layer and for most of it.
+    /// </summary>
+    public string? RegionAtTheTime { get; init; }
 
     /// <summary>
     /// Whether a source states where this falls inside its year, or whether the year is the whole
@@ -1894,6 +1969,17 @@ internal record EventResponse(
 /// <param name="Calculation">
 /// The arithmetic that produced this reckoning's year, where the reckoning shows its working.
 /// </param>
+/// <param name="BceYear">
+/// The year as a reader writes it, with <paramref name="Era"/> saying which side of the turn: the
+/// reckoning's own figure where it states one, and otherwise worked out from
+/// <paramref name="Year"/> and the reckoning's zero. <see cref="EventDateResponse.Stated"/> says
+/// which. Null where the reckoning gives neither.
+/// </param>
+/// <param name="Year">
+/// Years from the reckoning's own creation. Null where the reckoning states only its year of the
+/// common era, which Ussher's Annals do for the paragraphs whose anno mundi column contradicts
+/// their other two.
+/// </param>
 internal record EventDateResponse(
     string Chronology,
     string Name,
@@ -1904,7 +1990,31 @@ internal record EventDateResponse(
     int? LatestYear,
     string? Calculation,
     string? Citation,
-    string? Notes);
+    string? Notes)
+{
+    /// <summary>
+    /// Whether <see cref="BceYear"/> is the figure the reckoning's source printed, rather than one
+    /// worked out from the year from creation. They differ by a year wherever the reckoning's year
+    /// opens in the autumn — Ussher's creation is 4004 BC in his words and 4003 by the subtraction —
+    /// and a reader is owed which one is in front of them.
+    /// </summary>
+    public bool Stated { get; init; }
+}
+
+/// <summary>
+/// Where the source says an event happened: its words, lower-cased to be matched on, and the verse
+/// at which it names them, where it names one.
+/// </summary>
+internal readonly record struct EventLocation(string Name, int? Book, int? Chapter, int? Verse)
+{
+    public static EventLocation? Of(string? location, int? book, int? chapter, int? verse) =>
+        string.IsNullOrWhiteSpace(location)
+            ? null
+            : new EventLocation(location.ToLowerInvariant(), book, chapter, verse);
+
+    public static EventLocation? Of(Database.Entities.Event e) =>
+        Of(e.Location, e.LocationBook, e.LocationChapter, e.LocationVerse);
+}
 
 internal record EventListResponse(int Total, IList<EventResponse> Items);
 
@@ -1973,9 +2083,11 @@ internal record ChronologyListResponse(
 internal sealed class TimelinePictures
 {
     private readonly Dictionary<string, EntityThumbnailResponse> _leading;
-    private readonly Dictionary<string, string> _places;
+    private readonly Dictionary<EventLocation, string> _places;
 
-    private TimelinePictures(Dictionary<string, EntityThumbnailResponse> leading, Dictionary<string, string> places)
+    private TimelinePictures(
+        Dictionary<string, EntityThumbnailResponse> leading,
+        Dictionary<EventLocation, string> places)
     {
         _leading = leading;
         _places = places;
@@ -1983,7 +2095,7 @@ internal sealed class TimelinePictures
 
     public static async Task<TimelinePictures> Of(
         AppDbContext db,
-        IReadOnlyCollection<(string? Entity, string? Location)> events,
+        IReadOnlyCollection<(string? Entity, EventLocation? Location)> events,
         IEnumerable<string?> periodEntities,
         bool generated,
         CancellationToken cancellationToken)
@@ -1999,8 +2111,8 @@ internal sealed class TimelinePictures
         return new TimelinePictures(await ImageEndpoints.Leading(db, slugs, cancellationToken, generated), places);
     }
 
-    public EntityThumbnailResponse? ForEvent(string? entity, string? location) =>
-        Leading(entity) ?? Leading(location is null ? null : _places.GetValueOrDefault(location.ToLowerInvariant()));
+    public EntityThumbnailResponse? ForEvent(string? entity, EventLocation? location) =>
+        Leading(entity) ?? Leading(location is { } at ? _places.GetValueOrDefault(at) : null);
 
     public EntityThumbnailResponse? ForPeriod(string? entity) => Leading(entity);
 
@@ -2061,6 +2173,12 @@ internal record TimelineEventResponse(
     /// most, which the encyclopedia has no picture for. Sent only by the timeline.
     /// </summary>
     public EntityThumbnailResponse? Picture { get; init; }
+
+    /// <summary>
+    /// The country of the time, where the source states one; <c>Region</c> is today's country or the
+    /// last known. See <see cref="EventResponse.RegionAtTheTime"/>.
+    /// </summary>
+    public string? RegionAtTheTime { get; init; }
 }
 
 /// <param name="Level">

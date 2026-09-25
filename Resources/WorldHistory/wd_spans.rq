@@ -1,4 +1,4 @@
-SELECT ?e ?eLabel ?start ?end ?sprec ?kindLabel ?sitelinks ?whereLabel WHERE {
+SELECT ?e ?eLabel ?start ?end ?sprec ?kindLabel ?sitelinks ?whereLabel ?whereStart ?whereEnd ?whereHistorical WHERE {
   ?e wikibase:sitelinks ?sitelinks .
   FILTER(?sitelinks >= 18)
   ?e p:P580/psv:P580 [ wikibase:timeValue ?start ; wikibase:timePrecision ?sprec ] .
@@ -6,6 +6,17 @@ SELECT ?e ?eLabel ?start ?end ?sprec ?kindLabel ?sitelinks ?whereLabel WHERE {
   FILTER(?sprec >= 9)
   FILTER(?start >= "-3500-01-01T00:00:00Z"^^xsd:dateTime && ?start <= "0110-01-01T00:00:00Z"^^xsd:dateTime)
   ?e wdt:P31 ?kind .
-  OPTIONAL { ?e wdt:P17 ?where . }
+  OPTIONAL {
+    ?e p:P17 ?stated .
+    ?stated ps:P17 ?where .
+    FILTER NOT EXISTS { ?stated wikibase:rank wikibase:DeprecatedRank . }
+    OPTIONAL { ?stated pq:P580 ?statedStart . }
+    OPTIONAL { ?stated pq:P582 ?statedEnd . }
+    OPTIONAL { ?where wdt:P571 ?founded . }
+    OPTIONAL { ?where wdt:P576 ?dissolved . }
+    BIND(EXISTS { ?where wdt:P31 wd:Q3024240 . } AS ?whereHistorical)
+  }
+  BIND(COALESCE(?statedStart, ?founded) AS ?whereStart)
+  BIND(COALESCE(?statedEnd, ?dissolved) AS ?whereEnd)
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }

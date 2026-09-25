@@ -633,11 +633,9 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         var bySlug = events.ToDictionary(e => e.Slug, e => e.Id);
         var reckoning = chronologies.ToDictionary(c => c.Slug, c => c.Id);
         var dates = new List<EventDate>(1_500);
-        var slugs = new HashSet<string>(StringComparer.Ordinal);
 
-        foreach (var row in Csv.Read(Path.Combine(folder, "BibleData-Event.csv")))
+        foreach (var (slug, row) in EventRows(folder))
         {
-            var slug = Unique(Slugs.Of(row["event_id"]), slugs);
             if (!bySlug.TryGetValue(slug, out var eventId))
             {
                 continue;
@@ -646,12 +644,51 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             Add(dates, eventId, reckoning["bibledata"], Number(row["event_year_ah"]),
                 Blank(row["event_year_calculation"]), null, Blank(row["event_notes"]));
             Add(dates, eventId, reckoning["ussher"], Number(row["ussher_am_year"]),
-                null, Blank(row["ussher_paragraph_number"]) is { } paragraph ? $"¶{paragraph}" : null, null);
+                null, Blank(row["ussher_paragraph_number"]) is { } paragraph ? $"¶{paragraph}" : null, null,
+                UssherStatedYear(row));
             Add(dates, eventId, reckoning["shulman"], Number(row["shulman_am_year"]), null, null, null);
         }
 
         return dates;
     }
+
+    /// <summary>
+    /// The events' rows with the slug each was loaded under, in the order that decides the slugs.
+    /// A pass that reads the file again to fill in what an earlier load left unread has to arrive
+    /// at the same slugs, and the order is the only thing that settles which duplicate is which.
+    /// </summary>
+    internal static IEnumerable<(string Slug, Dictionary<string, string> Row)> EventRows(string folder)
+    {
+        var slugs = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var row in Csv.Read(Path.Combine(folder, "BibleData-Event.csv")))
+        {
+            yield return (Unique(Slugs.Of(row["event_id"]), slugs), row);
+        }
+    }
+
+    /// <summary>
+    /// Ussher's own BC year for the event, as the source transcribes it beside his anno mundi year.
+    ///
+    /// Read rather than worked out, because it cannot be: his year opens in the autumn, so 338 of
+    /// the source's 419 pairs sit on a zero of 4003 and 79 on 4004 — the creation among them, which
+    /// he dates to 4004 BC and the subtraction to 4003. Two pairs sit on neither, and are carried as
+    /// the source has them, since a figure repaired here would be indistinguishable afterwards from
+    /// the one he printed.
+    /// </summary>
+    internal static int? UssherStatedYear(IReadOnlyDictionary<string, string> row) =>
+        Number(row["ussher_bce_year"]) is { } bce and > 0 ? -bce : null;
+
+    /// <summary>
+    /// The verse at which the source names the event's location. It sometimes lists two, and the
+    /// first is taken: both name the same place, and one verse is all a place record needs to be
+    /// told apart from its namesakes.
+    /// </summary>
+    internal static (int Book, int Chapter, int Verse)? LocationVerse(
+        IReadOnlyDictionary<string, string> row,
+        ReferenceTable frame) =>
+        Blank(row["event_location_reference_id"]) is { } references
+            ? frame.Resolve(references.Split(',')[0].Trim())
+            : null;
 
     private static void Add(
         List<EventDate> dates,
@@ -660,7 +697,8 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         int? year,
         string? calculation,
         string? citation,
-        string? notes)
+        string? notes,
+        int? statedYear = null)
     {
         if (year is null)
         {
@@ -672,6 +710,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             EventId = eventId,
             ChronologyId = chronologyId,
             Year = year,
+            StatedYear = statedYear,
             Calculation = calculation,
             Citation = citation,
             Notes = notes,
@@ -1034,18 +1073,18 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         ReferenceTable frame)
     {
         var events = new List<Event>(600);
-        var slugs = new HashSet<string>(StringComparer.Ordinal);
 
-        foreach (var row in Csv.Read(Path.Combine(folder, "BibleData-Event.csv")))
+        foreach (var (slug, row) in EventRows(folder))
         {
             var reference = frame.Resolve(row["event_reference_id"]);
+            var located = LocationVerse(row, frame);
             var renamed = Misnamed.GetValueOrDefault(row["event_id"]) is { } renaming
                           && renaming.Was == row["event_name"]
                 ? renaming
                 : null;
             events.Add(new Event
             {
-                Slug = Unique(Slugs.Of(row["event_id"]), slugs),
+                Slug = slug,
                 Name = renamed?.Name ?? row["event_name"],
                 NameSource = renamed is null ? EventNames.FromTheSource : EventNames.Generated,
                 Description = Blank(row["event_description"]),
@@ -1059,6 +1098,9 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 CanonicalChapter = reference?.Chapter,
                 CanonicalVerse = reference?.Verse,
                 Location = Blank(row["event_location"]),
+                LocationBook = located?.Book,
+                LocationChapter = located?.Chapter,
+                LocationVerse = located?.Verse,
                 Notes = Sentences(renamed?.Why, Blank(row["event_notes"])),
                 Source = Source,
             });

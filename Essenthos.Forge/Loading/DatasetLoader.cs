@@ -1015,6 +1015,16 @@ internal sealed class DatasetLoader(
         using var greek = services.CreateScope();
         var septuagint = greek.ServiceProvider.GetRequiredService<SeptuagintReckoningLoader>();
         status.Record(await septuagint.Load(resources, cancellationToken));
+
+        // What the event files state that an encyclopedia loaded before it was read does not hold:
+        // the verse each location is named at, the year Ussher printed, and the world layer's
+        // descriptions without today's country in them. Nothing, on a load that just read it all.
+        using var restating = services.CreateScope();
+        var restatement = restating.ServiceProvider.GetRequiredService<EventRestatementLoader>();
+        status.Record(await restatement.Load(
+            bibleData,
+            Path.Combine(AppContext.BaseDirectory, "Resources", "WorldHistory"),
+            cancellationToken));
     }
 
     /// <summary>
