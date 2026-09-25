@@ -195,6 +195,14 @@ internal record EntityRefResponse(string Type, string Slug, string Name)
     /// the word it was carried from, or the sentence a reading gave for its answer.
     /// </summary>
     public string? Note { get; init; }
+
+    /// <summary>
+    /// The name this word names the record under, where it is not the one the record heads with:
+    /// <em>Abraham</em> over a record headed <em>Abram</em>, <em>Paul</em> over <em>Saul</em>. Read
+    /// from the Strong number the naming went through, which the record's names each carry. Null
+    /// where the word bears the heading's name or the number does not settle which.
+    /// </summary>
+    public string? NamedAs { get; init; }
 }
 
 /// <param name="OriginalWordIds">
