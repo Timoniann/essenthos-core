@@ -19,6 +19,11 @@
     "files": 3,
     "sha256": "17855b13b48a2a3a4b9bf238d29d14b6fe3bce227b94a95a60818e81475f3287"
   },
+  "BetaMasaheft": {
+    "bytes": 14314581,
+    "files": 81,
+    "sha256": "08781f7a3ed49d657776b564a7957b39bbfc3398b1d435390bb8eadb98aeda92"
+  },
   "BibleData": {
     "bytes": 13188940,
     "files": 6,

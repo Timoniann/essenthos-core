@@ -51,6 +51,12 @@ internal sealed record VerseLinkOutcome(
     };
 }
 
+/// <param name="Without">
+/// Books of <paramref name="From"/>, by canonical ordinal, that are left out: divided in a way no
+/// mapping to another text's verses has been established for, so a shared address would be a guess.
+/// </param>
+internal sealed record DeclaredVersePair(string From, string To, IReadOnlySet<int> Without);
+
 /// <summary>
 /// Which verse of one text is which verse of another — the statement one level above a word link,
 /// and the one that has to exist first.
@@ -107,6 +113,13 @@ internal sealed record VerseLinkOutcome(
 internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> logger)
 {
     private const string Source = "the canonical frame: the addresses the two texts share";
+
+    /// <summary>
+    /// Pairs that are joined verse by verse before any word of them is. A text that arrives with no
+    /// word link to anything — the Ethiopic, until it is aligned — would otherwise stand beside
+    /// nothing, although the frame already says which of its verses stands where another text's does.
+    /// </summary>
+    internal static IReadOnlyList<DeclaredVersePair> DeclaredPairs => GeezTextSource.VersePairs;
 
     private const string LinkImport =
         """
@@ -201,10 +214,16 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     {
         var started = Stopwatch.StartNew();
 
-        var wanted = await db.Links
+        var linked = await db.Links
             .Select(link => new { link.FromTextId, link.ToTextId })
             .Distinct()
             .ToListAsync(cancellationToken);
+
+        var declared = await Declared(cancellationToken);
+        var wanted = linked
+            .Select(pair => (pair.FromTextId, pair.ToTextId))
+            .Union(declared.Keys)
+            .ToList();
 
         var already = await db.VerseLinks
             .Select(link => new { link.FromTextId, link.ToTextId })
@@ -233,6 +252,13 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         foreach (var pair in todo)
         {
             var here = await Addressed(addresses, pair.FromTextId, cancellationToken);
+            if (declared.TryGetValue(pair, out var without) && without.Count > 0)
+            {
+                here = here
+                    .Where(address => !without.Contains(address.Key.Item1))
+                    .ToDictionary(address => address.Key, address => address.Value);
+            }
+
             var there = await Addressed(addresses, pair.ToTextId, cancellationToken);
             var components = Components(here, there, ref alone);
 
@@ -248,6 +274,24 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             await Stated(cancellationToken), started.Elapsed);
         logger.LogInformation("Verse links: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The pairs joined verse by verse whether or not any word of them is linked yet, by the texts'
+    /// ids, with the books of the first text left out of each. Only pairs whose two texts are both
+    /// loaded; a declaration about a text this corpus does not hold says nothing.
+    /// </summary>
+    private async Task<Dictionary<(int FromTextId, int ToTextId), IReadOnlySet<int>>> Declared(
+        CancellationToken cancellationToken)
+    {
+        var slugs = DeclaredPairs.SelectMany(pair => new[] { pair.From, pair.To }).Distinct().ToList();
+        var ids = await db.Texts
+            .Where(text => slugs.Contains(text.Slug))
+            .ToDictionaryAsync(text => text.Slug, text => text.Id, cancellationToken);
+
+        return DeclaredPairs
+            .Where(pair => ids.ContainsKey(pair.From) && ids.ContainsKey(pair.To))
+            .ToDictionary(pair => (ids[pair.From], ids[pair.To]), pair => pair.Without);
     }
 
     /// <summary>

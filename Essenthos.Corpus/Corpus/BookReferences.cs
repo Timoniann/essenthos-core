@@ -23,7 +23,7 @@ internal static class BookReferences
     /// reference to Tobit resolves; whether any text has Tobit is a separate question, answered
     /// by the data rather than by the frame.
     /// </summary>
-    public const int LastOrdinal = 84;
+    public const int LastOrdinal = 92;
 
     public const string OldTestament = "old";
 
