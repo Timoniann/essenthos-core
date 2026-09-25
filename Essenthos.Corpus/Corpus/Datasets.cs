@@ -268,11 +268,26 @@ public static class Datasets
             "Which Ukrainian word renders which Greek or Hebrew word, stated by people. Small "
             + "beside the Old Testament mapping, and for a long time the only stated word-level "
             + "correspondence any Slavic text had — so it is what every model here is calibrated on.",
-            "unfoldingWord", Links: true,
+            "unfoldingWord's Ukrainian", Links: true,
             Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the "
                 + "corpus's own form of these links is offered under CC BY-SA 4.0 in turn. "
                 + "unfoldingWord's terms add that a derivative work must remove the unfoldingWord® "
                 + "trademark, so the mark is not carried on them."),
+
+        // The same publisher, the same format and the same terms as the entry above, and a different
+        // work: an English translation aligned by unfoldingWord's own team rather than a Ukrainian one
+        // aligned by volunteers, so a reader asking whose a link is gets the right name.
+        new("unfoldingword-ult", "unfoldingWord Literal Text alignment", "unfoldingWord", "CC BY-SA 4.0",
+            "https://creativecommons.org/licenses/by-sa/4.0/",
+            "https://git.door43.org/unfoldingWord/en_ult",
+            "Which English word of the unfoldingWord Literal Text renders which Hebrew or Greek word, stated "
+            + "by the translators who made it, in 56 books. unfoldingWord aligned it to its own Hebrew Bible "
+            + "and Greek New Testament, not to BHSA and Nestle 1904, so a tie is carried over only where the "
+            + "same word stands in the same verse of ours and cannot be mistaken for another.",
+            "unfoldingWord Literal Text", Links: true,
+            Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the corpus's own "
+                + "form of these links is offered under CC BY-SA 4.0 in turn, with the credit \"The original "
+                + "work by unfoldingWord is available from unfoldingword.org/ult\"."),
 
         // The same format and the same ecosystem as the entry above, and deliberately not folded
         // into it: the three Synodal books are dedicated to the public domain by whoever aligned

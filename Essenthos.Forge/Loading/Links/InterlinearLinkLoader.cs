@@ -101,10 +101,20 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         Bible4uTextSource.Synodal => ("ru_rsb",
             "Door43 Russian Synodal alignment of Titus, Philemon and 2 John, made in "
             + "translationCore and published at git.door43.org under CC0 1.0"),
+        UnfoldingWordTextSource.Slug => (UnfoldingWordTextSource.Folder, UnfoldingWordSource),
         _ => throw new ArgumentException(
-            $"Door43 interlinears exist for {Bible4uTextSource.Ohienko} and {Bible4uTextSource.Synodal}; " +
-            $"{slug} has none. Name one of those two as the source, or score against stored links instead."),
+            $"Door43 interlinears exist for {Bible4uTextSource.Ohienko}, {Bible4uTextSource.Synodal} and " +
+            $"{UnfoldingWordTextSource.Slug}; {slug} has none. Name one of those as the source, or score against " +
+            "stored links instead."),
     };
+
+    /// <summary>
+    /// What the links drawn from the unfoldingWord Literal Text's alignment say about themselves. It
+    /// names the release, because the alignment is revised from one release to the next.
+    /// </summary>
+    public const string UnfoldingWordSource =
+        "unfoldingWord Literal Text alignment to unfoldingWord's Hebrew Bible and Greek New Testament, "
+        + "release 90, git.door43.org/unfoldingWord/en_ult, CC BY-SA 4.0";
 
     private const string LinkImport =
         """
@@ -287,7 +297,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
                     $"{name} {verse.Chapter}:{verse.Number}",
                     verse,
                     here.GetValueOrDefault(address) ?? [],
-                    there.GetValueOrDefault(address) ?? [],
+                    Witness(there, address),
                     pairs,
                     account);
             }
@@ -299,6 +309,19 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
 
         return new InterlinearJoinResult(drafts, books, total);
     }
+
+    /// <summary>
+    /// The witness words a verse of the interlinear is joined against. A psalm's first verse is printed
+    /// with its title at its head, and the witness numbers the title as a verse of its own, so the two
+    /// are read as one: a title word the verse repeats then counts twice and is refused rather than
+    /// guessed.
+    /// </summary>
+    private static List<InterlinearWord> Witness(
+        Dictionary<(int, int), List<InterlinearWord>> there,
+        (int Chapter, int Number) address) =>
+        address.Number == 1 && there.TryGetValue((address.Chapter, 0), out var title)
+            ? [.. title, .. there.GetValueOrDefault(address) ?? []]
+            : there.GetValueOrDefault(address) ?? [];
 
     /// <summary>The book a file is for, from a name like <c>17-EST.usfm</c>.</summary>
     private static int? Ordinal(string fileName)
@@ -324,6 +347,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
                 w.Position,
                 w.NormalisedText,
                 Written = w.Surface,
+                w.StrongNumber,
                 Language = w.Text!.Language,
             }))
             .ToListAsync(cancellationToken);
@@ -333,7 +357,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             .ToDictionary(
                 group => group.Key,
                 group => group.OrderBy(r => r.Position)
-                    .Select(r => new InterlinearWord(r.Id, r.NormalisedText ?? string.Empty, r.Language, r.Written))
+                    .Select(r => new InterlinearWord(r.Id, r.NormalisedText ?? string.Empty, r.Language, r.Written, r.StrongNumber))
                     .ToList());
     }
 

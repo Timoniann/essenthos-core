@@ -78,6 +78,12 @@ internal static class EbibleTextSource
     public const string IrvHindi = "IRV2019";
 
     /// <summary>
+    /// Biblica's Open New Ukrainian Translation of 2022, the New Testament and the Psalms: the only
+    /// Ukrainian translation of this century anybody may take. John 1:1 reads "На початку було Слово".
+    /// </summary>
+    public const string BiblicaUkrainian = "NPU2022";
+
+    /// <summary>
     /// Each text's folder under <c>Resources</c> and the definition it loads with, so the download
     /// and the identifier we publish can differ without either being guessed from the other. The
     /// fetch script names the folder; eBible's own identifier is on the row, in the source URL.
@@ -279,6 +285,48 @@ internal static class EbibleTextSource
                 "इंडियन रिवाइज्ड वर्जन (IRV) हिंदी - 2019, © 2017, 2018, 2019 Bridge Connectivity "
                 + "Solutions, CC BY-SA 4.0, in the digital edition eBible.org publishes as hin2017.",
         },
+
+        ["BiblicaUkrainian2022"] = Definition(
+            BiblicaUkrainian, "ukronpu", "Biblica® Open New Ukrainian Translation",
+            "Бібліка® Відкрита Новий Переклад Українською", "ukr", 2022, "Alexandrian") with
+        {
+            Versification = Versification.Original,
+            RightsHolder = "Biblica, Inc.",
+            Licence = "CC-BY-SA-4.0",
+            LicenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/",
+            Redistribution = Redistribution.ShareAlike,
+            Translators = "Biblica's Ukrainian translation team",
+            Edition = "The New Testament and Psalms of 2022",
+            About =
+                "A new translation into present-day Ukrainian, made by Biblica and published in 2022 as the New "
+                + "Testament and the Psalms; the Old Testament apart from the Psalms has not been published. Its "
+                + "Greek is a critical text: the heavenly witnesses of 1 John 5:7 appear only in a footnote, and "
+                + "Acts 8:37 and the doxology of the Lord's Prayer are printed with a note that early manuscripts "
+                + "lack them. Its Psalms are numbered as the Hebrew numbers them, a psalm's title being its first "
+                + "verse.",
+            RightsNote =
+                "Copyright 2022 Biblica, Inc., under Creative Commons Attribution-ShareAlike 4.0, stated in all "
+                + "three of eBible's places and on Biblica's own open.bible. ShareAlike binds an adaptation of this "
+                + "text, such as its searchable form, and not the texts it is read beside. The text is served "
+                + "unchanged and under Biblica's name and mark, as its terms ask of an unmodified copy; the section "
+                + "headings of this edition are its editors' and are not loaded. \"Biblica\" is a trademark "
+                + "registered in the United States Patent and Trademark Office by Biblica, Inc., used with "
+                + "permission.",
+            Citation =
+                "Новий Завіт і Книга Псалмів, Бібліка® Відкрита Новий Переклад Українською™ © 2022 Biblica, Inc. "
+                + "New Testament and Psalms, Biblica® Open New Ukrainian Translation™ Copyright © 2022 by Biblica, "
+                + "Inc., CC BY-SA 4.0, in the digital edition eBible.org publishes as ukronpu. The original work by "
+                + "Biblica, Inc. is available for free at www.biblica.com and open.bible.",
+        },
+    };
+
+    /// <summary>
+    /// The books an edition holds where it is not a whole Bible, by canonical ordinal. Biblica has
+    /// published the Psalms and the New Testament of its Ukrainian and nothing else.
+    /// </summary>
+    private static readonly Dictionary<string, int[]> Holds = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["BiblicaUkrainian2022"] = [19, .. Enumerable.Range(40, 27)],
     };
 
     /// <summary>
@@ -286,7 +334,7 @@ internal static class EbibleTextSource
     /// printed over the text; they are dropped rather than read as words of the verse beside them.
     /// </summary>
     private static readonly HashSet<string> HeadingsAreTheEditors =
-        new(["Segond1910", "VanDyck1865", "IrvHindi2019"], StringComparer.OrdinalIgnoreCase);
+        new(["Segond1910", "VanDyck1865", "IrvHindi2019", "BiblicaUkrainian2022"], StringComparer.OrdinalIgnoreCase);
 
     /// <summary>Every text this reader knows, by the folder its files are fetched into.</summary>
     public static IReadOnlyDictionary<string, TextDefinition> Definitions => Known;
@@ -369,22 +417,23 @@ internal static class EbibleTextSource
         // Whose the numbers are is one question and whether they are word-level another; a layer
         // has to pass both.
         var tagged = !TaggingIsNotOursToTake.Contains(name) && StrongTagging.IsWordLevel(books.Values);
-        var drafts = new List<BookDraft>(Canon.Length);
+        var holds = Holds.GetValueOrDefault(name) ?? [.. Enumerable.Range(1, Canon.Length)];
+        var drafts = new List<BookDraft>(holds.Length);
 
-        for (var ordinal = 1; ordinal <= Canon.Length; ordinal++)
+        foreach (var ordinal in holds)
         {
             var code = Canon[ordinal - 1];
             if (!books.TryGetValue(code, out var book))
             {
                 throw new InvalidOperationException(
-                    $"{definition.Slug} is missing {code}, and this is a complete Bible: the fetch was "
-                    + "partial, or the folder holds a different edition. Run scripts/fetch-ebible.ps1 rather "
+                    $"{definition.Slug} is missing {code}, and this edition holds {holds.Length} books: the fetch "
+                    + "was partial, or the folder holds a different edition. Run scripts/fetch-ebible.ps1 rather "
                     + "than loading part of a text as though it were the whole of one.");
             }
 
             drafts.Add(new BookDraft(
                 CanonicalOrdinal: ordinal,
-                Position: ordinal,
+                Position: drafts.Count + 1,
                 Name: BookReferences.Name(ordinal),
                 Slug: BookReferences.Slug(ordinal),
                 Chapters: [.. book.Chapters.Select(chapter => Chapter(chapter, tagged))],
@@ -395,7 +444,7 @@ internal static class EbibleTextSource
         return new TextSource(definition, drafts);
     }
 
-    private static ChapterDraft Chapter(UsfmChapter chapter, bool tagged) => new(
+    internal static ChapterDraft Chapter(UsfmChapter chapter, bool tagged) => new(
         chapter.Number,
         [.. chapter.Verses.Select(verse => new VerseDraft(
             verse.Number,

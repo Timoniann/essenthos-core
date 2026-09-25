@@ -49,7 +49,7 @@ with the archive's extracted data.
 | French LSG | SBLGNT, WLCM | 2 | CC BY 4.0 | one `manual`, one process unstated | loaded against `LSG1910`, renumbered; see below |
 | Hausa OHCB | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | candidate |
 | Hindi IRVHin | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | loaded against `IRV2019` (2026-09-25) |
-| Portuguese JFA11 | SBLGNT | 1 | CC BY 4.0 | **transfer from Spanish RVR09** | retained; never call it manual |
+| Portuguese JFA11 | SBLGNT | 1 | CC BY 4.0 | **transfer from Spanish RVR09** | loaded against `ALM1911` (2026-09-25), every link saying it is a transfer, not made by hand |
 | Russian RUSSYN | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | blocked by token mismatch; see below |
 | Spanish RV09 | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | candidate |
 | `legacy` | sample config only | 1 | CC BY 4.0 | manual | format reference, not an alignment set |

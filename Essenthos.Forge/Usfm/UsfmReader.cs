@@ -133,6 +133,11 @@ internal static partial class UsfmReader
     [
         "p", "m", "nb", "b", "q", "q1", "q2", "q3", "qc", "pi", "pi1", "mi", "d", "s", "s1", "s2",
         "ms", "ms1", "sp", "li", "li1",
+
+        // An embedded letter or speech set as its own paragraph — its opening, body and closing —
+        // which the unfoldingWord Literal Text uses in Deuteronomy; a centred paragraph, a deeper
+        // item of a list and the lines of an embedded poem, which Biblica's Ukrainian uses.
+        "pm", "pmo", "pmc", "pc", "li4", "qm1", "qm2",
     ];
 
     /// <summary>
@@ -141,7 +146,7 @@ internal static partial class UsfmReader
     /// </summary>
     private static readonly HashSet<string> Matter =
     [
-        "toc2", "toc3", "mt", "mt1", "mt2", "mt3", "is", "is1", "ip", "imt", "rem", "cl", "ide",
+        "toc2", "toc3", "mt", "mt1", "mt2", "mt3", "is", "is1", "ip", "imt", "rem", "cl", "ide", "usfm",
 
         // A book's introduction, its outline and the tables in it, which some editions print before
         // the first chapter: the Segond has a page of it before every book.
@@ -175,6 +180,13 @@ internal static partial class UsfmReader
         ["pi"] = TextBreak.Paragraph,
         ["pi1"] = TextBreak.Paragraph,
         ["mi"] = TextBreak.Paragraph,
+        ["pm"] = TextBreak.Paragraph,
+        ["pmo"] = TextBreak.Paragraph,
+        ["pmc"] = TextBreak.Paragraph,
+        ["pc"] = TextBreak.Paragraph,
+        ["li4"] = TextBreak.Line,
+        ["qm1"] = TextBreak.Line,
+        ["qm2"] = TextBreak.Line,
         ["b"] = TextBreak.Paragraph,
         ["q"] = TextBreak.Line,
         ["q1"] = TextBreak.Line,
@@ -333,7 +345,10 @@ internal static partial class UsfmReader
 
                     if (Passage.Contains(name))
                     {
-                        superscribed |= name == Superscription && verse == 0 && rest.Length > 0;
+                        // Before the first verse, or at its very start: the unfoldingWord Literal Text
+                        // opens verse 1 and then its title in fifty psalms.
+                        superscribed |= name == Superscription && rest.Length > 0
+                                        && (verse == 0 || (verse == 1 && words.Count == 0));
                         if (Breaks.TryGetValue(name, out var opening))
                         {
                             pending = pending == TextBreak.Paragraph ? pending : opening;
@@ -858,8 +873,9 @@ internal static partial class UsfmReader
     ///
     /// <c>\it</c>, <c>\k</c> and <c>\tl</c> are italics, a keyword and a transliteration, which the
     /// Indian Revised Version sets over words of its own verses, and <c>\ord</c> the raised letters
-    /// of an ordinal: typography again, over letters that are the text's.
+    /// of an ordinal: typography again, over letters that are the text's. <c>\sc</c> is small
+    /// capitals, which Biblica's Ukrainian sets the inscription over the cross in.
     /// </summary>
-    [GeneratedRegex(@"\\\+?(?:wj|qs|bk|nd|it|k|tl|ord)\*?")]
+    [GeneratedRegex(@"\\\+?(?:wj|qs|bk|nd|it|k|tl|ord|sc)\*?")]
     private static partial Regex Marked();
 }

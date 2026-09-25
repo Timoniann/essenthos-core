@@ -8,7 +8,8 @@ namespace Essenthos.Core.Loading.Links;
 /// A word of a corpus verse: its id, the folded form a source's spelling is matched by, and the form
 /// the corpus prints, which is what a source's occurrence count is a count of.
 /// </summary>
-internal sealed record InterlinearWord(long Id, string Folded, string Language, string Written = "");
+/// <param name="Strong">The Strong number the corpus gives the word, where it gives one.</param>
+internal sealed record InterlinearWord(long Id, string Folded, string Language, string Written = "", string? Strong = null);
 
 /// <summary>One stated span that found its words on both sides.</summary>
 internal sealed record InterlinearPair(List<long> From, List<long> To);
@@ -62,6 +63,7 @@ internal sealed class InterlinearJoinAccount
     public int SpansInMissingVerses { get; set; }
     public Dictionary<InterlinearSpanFailure, int> SpanFailures { get; } = [];
     public int SpansJoinedOnTheLooseFold { get; set; }
+    public int SpansJoinedByNumber { get; set; }
     public int SpansSharingAnOriginal { get; set; }
     public int TranslatedFragments { get; set; }
     public int TranslatedWords { get; set; }
@@ -102,6 +104,7 @@ internal sealed class InterlinearJoinAccount
         }
 
         SpansJoinedOnTheLooseFold += other.SpansJoinedOnTheLooseFold;
+        SpansJoinedByNumber += other.SpansJoinedByNumber;
         SpansSharingAnOriginal += other.SpansSharingAnOriginal;
         TranslatedFragments += other.TranslatedFragments;
         TranslatedWords += other.TranslatedWords;
@@ -130,6 +133,7 @@ internal sealed class InterlinearJoinAccount
             .AppendLine($"{VersesWithNoSpanJoined:N0} with no span joined")
             .Append($"spans: {SpansJoined:N0}/{Spans:N0} joined ({Share(SpansJoined, Spans)}), ")
             .Append($"{SpansJoinedOnTheLooseFold:N0} of them told apart only by the bare letters, ")
+            .Append($"{SpansJoinedByNumber:N0} by a Strong number the verse holds once on each side, ")
             .Append($"{SpansSharingAnOriginal:N0} on an original word another span also stands on; ")
             .Append($"{SpansInMissingVerses:N0} in a verse missing on one side; ")
             .AppendLine(string.Join("; ", Enum.GetValues<InterlinearSpanFailure>()
@@ -224,9 +228,15 @@ internal static class InterlinearJoin
             var (ours, afterOurs, fragments, failure) = FindTranslated(translated, span.Words, translated[0].Language, here);
             var theirs = new List<int>();
             var loose = false;
+            var byNumber = false;
             if (failure == InterlinearSpanFailure.None)
             {
                 (theirs, loose, failure) = FindOriginal(original, span, language);
+                if (failure != InterlinearSpanFailure.None
+                    && ByNumber(original, span, verse.Originals, language) is { Count: > 0 } numbered)
+                {
+                    (theirs, failure, byNumber) = (numbered, InterlinearSpanFailure.None, true);
+                }
             }
 
             if (failure != InterlinearSpanFailure.None)
@@ -259,6 +269,13 @@ internal static class InterlinearJoin
             if (loose)
             {
                 account.SpansJoinedOnTheLooseFold++;
+            }
+
+            if (byNumber)
+            {
+                account.SpansJoinedByNumber++;
+                account.Example("joined by number", $"{where} {string.Join(' ', span.Words)} = {span.Content} ({span.Strong}) "
+                    + $"on {string.Join(' ', theirs.Select(index => original[index].Written))}");
             }
         }
 
@@ -311,6 +328,90 @@ internal static class InterlinearJoin
             ? ([], false, InterlinearSpanFailure.OriginalOccurrenceUnresolved)
             : (places[occurrence - 1], loose, InterlinearSpanFailure.None);
     }
+
+    /// <summary>
+    /// The witness words a span stands on, found by its Strong number where its spelling did not find
+    /// them: unfoldingWord's Hebrew and Greek are not BHSA and Nestle, and the same word can be
+    /// accented, divided or spelled differently in the two. The number is taken only where it cannot be
+    /// mistaken — the source verse names that lemma once, the witness verse holds it once — and a
+    /// prefix the source cuts off (<c>b:</c>, <c>c:</c>, <c>d:</c>) has to be spelled by the witness words
+    /// standing right before it, or nothing is joined.
+    /// </summary>
+    private static List<int> ByNumber(
+        IReadOnlyList<InterlinearWord> words,
+        AlignmentSpan span,
+        IReadOnlyList<(string Strong, string Content, int Occurrence)>? originals,
+        string language)
+    {
+        var number = Lemma(span.Strong);
+        if (number is null || originals is null
+            || originals.Count(original => Lemma(original.Strong) == number) != 1)
+        {
+            return [];
+        }
+
+        var at = -1;
+        for (var i = 0; i < words.Count; i++)
+        {
+            if (words[i].Strong != number)
+            {
+                continue;
+            }
+
+            if (at >= 0)
+            {
+                return [];
+            }
+
+            at = i;
+        }
+
+        if (at < 0)
+        {
+            return [];
+        }
+
+        var prefixes = span.Strong.Count(character => character == ':');
+        var morphemes = span.Morphemes;
+        if (prefixes == 0)
+        {
+            return [at];
+        }
+
+        if (morphemes.Length <= prefixes)
+        {
+            return [];
+        }
+
+        var spelled = string.Concat(morphemes.Take(prefixes).Select(morpheme => WordFolding.Fold(morpheme, language)));
+        var used = new List<int>(prefixes + 1) { at };
+        var before = string.Empty;
+        for (var i = at - 1; i >= 0 && before.Length < spelled.Length; i--)
+        {
+            before = words[i].Folded + before;
+            used.Insert(0, i);
+        }
+
+        return before == spelled ? used : [];
+    }
+
+    /// <summary>
+    /// The lemma a Strong code names, as the corpus writes it: unfoldingWord's <c>c:d:H0776</c> is H776
+    /// with two prefixes, its <c>H1254a</c> is H1254 told apart from a homonym, and its Greek
+    /// <c>G17220</c> is G1722 with a fifth digit of its own.
+    /// </summary>
+    internal static string? Lemma(string strong)
+    {
+        var main = strong[(strong.LastIndexOf(':') + 1)..].TrimEnd(Letters);
+        if (main.Length == 6 && main[0] == 'G')
+        {
+            main = main[..^1];
+        }
+
+        return Essenthos.Core.Strong.StrongNumbers.Normalize(main);
+    }
+
+    private static readonly char[] Letters = [.. "abcdefghijklmnopqrstuvwxyz"];
 
     /// <summary>
     /// Every run of consecutive witness words that spells the morphemes in order, each word one or
@@ -509,7 +610,14 @@ internal static class InterlinearJoin
     private static string[] Pieces(InterlinearWord word) =>
         word.Written.ToLowerInvariant().Split(Apostrophes, StringSplitOptions.RemoveEmptyEntries);
 
-    private static string Apostrophe(string word) => word.Replace('’', '\'').Replace('ʼ', '\'');
+    /// <summary>
+    /// A word with its apostrophes made one, and without the quotation mark or bracket a corpus word
+    /// can open with: the corpus keeps <c>“Let</c> as one word where the source names <c>Let</c>.
+    /// </summary>
+    private static string Apostrophe(string word) =>
+        word.TrimStart(Opening).Replace('’', '\'').Replace('ʼ', '\'');
+
+    private static readonly char[] Opening = ['“', '‘', '"', '«', '„', '‚', '(', '[', '{'];
 
     private static readonly char[] Apostrophes = ['\'', '’', 'ʼ'];
 }
