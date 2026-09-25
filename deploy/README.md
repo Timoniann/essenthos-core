@@ -107,16 +107,84 @@ the script existed, run it once by hand:
 The corpus needs none: it is an artefact, rebuilt from sources this machine keeps. `essenthos_app` —
 accounts, and later what readers write — is the only thing on the server that cannot be rebuilt.
 
-- The `backup` service dumps it every night into `/srv/essenthos/backups`, keeping 14 days, and the
-  droplet's own daily backup covers that folder.
-- **Not yet done:** a copy off the droplet. A backup on the machine it protects does not survive losing
-  the machine.
-- **A restore has to be run once on the server before the backup is believed.** Into a scratch
-  database, never over the live one, from the `backup` service, which has the files and the password:
+- The `backup` service dumps it every night into `/srv/essenthos/backups` and keeps each dump **14 days**
+  (`BACKUP_KEEP_DAYS`), not a day more. The droplet's own daily backup covers that folder.
+- **Every dump is encrypted as it is written**, with gpg, to a public key in `/srv/essenthos/backup-key/`.
+  No dump is ever on the disk in the clear, so neither the droplet's backups nor a stolen disk yield a
+  reader's email or reading history. The private key is never on the server. Until a key is there the
+  service keeps writing plain dumps and says so in its log on every run; once one is, the next run
+  encrypts and removes the plain dumps it replaces.
+- **Off the droplet**, optionally: the `backup-offsite` service copies the encrypted dumps to an rclone
+  remote every hour and removes the copies there once they are 14 days old, so the off-site copy is kept
+  exactly as long as the dump here. Only `*.dump.gpg` files are sent. It runs only when `.env` turns it on.
+- A change to `backup.sh` or `backup-offsite.sh` reaches a running container only when it restarts:
+  `docker compose up -d --force-recreate backup backup-offsite` after a deploy that changed either.
 
-        docker compose exec backup sh -c 'createdb -h db restore_test &&
-          pg_restore -h db -d restore_test /backups/essenthos_app-<stamp>.dump &&
-          psql -h db -d restore_test -c "\dt" && dropdb -h db restore_test'
+### Once: the key
 
-  Run on the rehearsal on 2026-09-18: a row written to `essenthos_app`, backed up, restored into
-  `restore_test` and read back.
+On your own machine, never on the server, make a key pair that exists only for these backups:
+
+    gpg --quick-generate-key "Essenthos backups" rsa4096 encr never
+    gpg --armor --export "Essenthos backups" > essenthos-backups.asc
+    gpg --armor --export-secret-keys "Essenthos backups" > essenthos-backups-SECRET.asc
+
+Keep `essenthos-backups-SECRET.asc` and its passphrase where the rest of what cannot be rebuilt is kept —
+E:, and one more place that is not this PC. Without it no backup can be read, by anyone, including you.
+Then put the **public** half on the server and restart the service:
+
+    ssh deploy@<droplet> 'mkdir -p /srv/essenthos/backup-key'
+    scp essenthos-backups.asc deploy@<droplet>:/srv/essenthos/backup-key/
+    ssh deploy@<droplet> 'cd /srv/essenthos/deploy && docker compose up -d --force-recreate backup &&
+      docker compose logs --tail 5 backup'
+
+The log says `encrypted` beside each dump. Only one `.asc` file belongs in that folder.
+
+### Once, if the dumps are to leave the droplet: the off-site copy
+
+Anything rclone can write to works: an S3-compatible bucket (DigitalOcean Spaces, Backblaze B2,
+Cloudflare R2) or a host reached over ssh. Make a bucket or a folder that holds nothing else, and a key
+for it that can write, list and delete there and nowhere else. Then write the remote into
+`/srv/essenthos/rclone/rclone.conf` on the server, `chmod 600` it, and name it in `.env`:
+
+    # /srv/essenthos/rclone/rclone.conf — a bucket (provider: DigitalOcean, Cloudflare, Other; B2 speaks S3 too)
+    [offsite]
+    type = s3
+    provider = DigitalOcean
+    endpoint = fra1.digitaloceanspaces.com
+    access_key_id = <key>
+    secret_access_key = <secret>
+
+    # …or a host over ssh, with a key made for this and nothing else
+    [offsite]
+    type = sftp
+    host = <host>
+    user = <user>
+    key_file = /config/rclone/id_ed25519
+
+    # .env
+    COMPOSE_PROFILES=offsite
+    BACKUP_OFFSITE=offsite:<bucket or folder>/essenthos
+
+    docker compose up -d backup-offsite && docker compose logs --tail 5 backup-offsite
+
+Give the bucket a lifecycle rule deleting objects after 15 days as well, so a copy expires even if the
+service stops. **The privacy page says the backups are copied nowhere else: change it in the same step,**
+naming where they go and that they are kept 14 days there.
+
+### Restoring
+
+**A restore has to be run once on the server before the backup is believed.** Into a scratch database,
+never over the live one. Only the private key can open a dump, so it is decrypted on your machine and
+streamed back into `pg_restore`, and the dump is never on the server in the clear:
+
+    scp deploy@<droplet>:/srv/essenthos/backups/essenthos_app-<stamp>.dump.gpg .
+    gpg --import essenthos-backups-SECRET.asc        # once, on the machine that restores
+    gpg --decrypt essenthos_app-<stamp>.dump.gpg | ssh deploy@<droplet> 'cd /srv/essenthos/deploy &&
+      docker compose exec -T backup sh -c "createdb -h db restore_test && pg_restore -h db -d restore_test &&
+        psql -h db -d restore_test -c \"\dt\" && dropdb -h db restore_test"'
+
+A dump written through gpg was written to a pipe, so `pg_restore` reads it front to back: one table can
+still be restored out of it with `-t`, but not in parallel with `-j`.
+
+The unencrypted procedure was run on the rehearsal on 2026-09-18: a row written to `essenthos_app`,
+backed up, restored into `restore_test` and read back. The encrypted one has not been run yet.

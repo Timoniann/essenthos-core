@@ -232,8 +232,9 @@ services:
 
   backup:
     # The accounts databases are the only thing on this box that cannot be rebuilt. The corpus is an
-    # artefact and needs no backup; the droplet's own daily backup covers the disk this writes to, and
-    # a copy off the droplet is still to be arranged.
+    # artefact and needs no backup. Each dump is encrypted to the public key in backup-key/ as it is
+    # written; the droplet's own daily backup covers the folder, and backup-offsite copies it off the
+    # droplet where the owner has named a place.
     image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
     restart: unless-stopped
     logging: *logging
@@ -248,9 +249,28 @@ services:
     volumes:
       - ./backup.sh:/backup.sh:ro
       - ${HOST_DATA_ROOT}/backups:/backups
+      # The public key only. The private key that opens the dumps is never on this machine.
+      - ${HOST_DATA_ROOT}/backup-key:/backup-key:ro
     depends_on:
       db:
         condition: service_healthy
+
+  # The encrypted dumps copied off the droplet, and the copies there kept as long as the dumps are here.
+  # Off unless COMPOSE_PROFILES in .env names it, because where the copy goes is the owner's to choose and
+  # to pay for; the remote is defined in rclone.conf beside the data, never in this file.
+  backup-offsite:
+    profiles: ["offsite"]
+    image: rclone/rclone:1.68.2
+    restart: unless-stopped
+    logging: *logging
+    entrypoint: ["/bin/sh", "/backup-offsite.sh"]
+    environment:
+      BACKUP_OFFSITE: ${BACKUP_OFFSITE:-}
+      BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
+    volumes:
+      - ./backup-offsite.sh:/backup-offsite.sh:ro
+      - ${HOST_DATA_ROOT}/backups:/backups:ro
+      - ${HOST_DATA_ROOT}/rclone:/config/rclone:ro
 
 # One network, with the proxy at a fixed address the APIs are told to believe and every other container
 # given one from the upper half. The API is published on no port, so the proxy is the only thing that

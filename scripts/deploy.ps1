@@ -52,7 +52,7 @@ catch {
 }
 
 # Only what the commit tracks goes: .env and the rehearsal's files stay where they are.
-$shipped = @('deploy/compose.yaml', 'deploy/Caddyfile', 'deploy/backup.sh', 'deploy/initdb')
+$shipped = @('deploy/compose.yaml', 'deploy/Caddyfile', 'deploy/backup.sh', 'deploy/backup-offsite.sh', 'deploy/initdb')
 $files = @(git -C $repository ls-tree -r --name-only --full-tree $Commit -- @shipped |
     ForEach-Object { $_.Substring('deploy/'.Length) })
 
