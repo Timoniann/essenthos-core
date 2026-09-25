@@ -126,6 +126,25 @@ public sealed class StrongLexiconTests : IDisposable
         _db.SaveChanges();
     }
 
+    /// <summary>A lexicon loaded while a cross-reference was a bare number is corrected in place.</summary>
+    [Fact]
+    public async Task ABareCrossReferenceLoadedEarlierIsCorrectedInPlace()
+    {
+        _db.StrongEntries.Add(new StrongEntry
+        {
+            StrongNumber = "G2705", Lemma = "καταφιλέω", Derivation = "from 2596 and 5368;", Definition = "to kiss earnestly",
+        });
+        _db.SaveChanges();
+
+        var outcome = await _loader.Load(
+            TestResources.Path("Strong", "StrongHebrew.xml"), TestResources.Path("Strong", "StrongGreek.xml"));
+
+        outcome.AlreadyLoaded.Should().BeTrue();
+        var entry = await _db.StrongEntries.AsNoTracking().SingleAsync(e => e.StrongNumber == "G2705");
+        entry.Derivation.Should().Be("from G2596 and G5368;");
+        entry.SeeAlso.Should().Contain("G2596").And.Contain("G5368");
+    }
+
     private void Entry(string strong)
     {
         _db.StrongEntries.Add(new StrongEntry { StrongNumber = strong, Lemma = strong, Definition = "a gloss" });

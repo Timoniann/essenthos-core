@@ -53,6 +53,7 @@ internal sealed class StrongLexiconLoader(AppDbContext db, ILogger<StrongLexicon
     {
         if (await db.StrongEntries.AnyAsync(cancellationToken))
         {
+            await ReferWhatWasLoadedBare(greekPath, cancellationToken);
             logger.LogInformation("The Strong lexicon is already loaded; nothing to do");
             return new LexiconOutcome(true, 0, 0, 0, TimeSpan.Zero);
         }
@@ -76,6 +77,45 @@ internal sealed class StrongLexiconLoader(AppDbContext db, ILogger<StrongLexicon
         var outcome = new LexiconOutcome(false, byNumber.Count, unresolved, unused, started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The Greek entries loaded before <see cref="StrongXmlParser.Refer"/> wrote their bare
+    /// cross-references as references, corrected in place from the file, so a warm database reaches
+    /// what a cold load writes without the lexicon and everything keyed on it being reloaded.
+    /// </summary>
+    private async Task ReferWhatWasLoadedBare(string greekPath, CancellationToken cancellationToken)
+    {
+        var named = StrongXmlParser.BareReferences.Keys.ToArray();
+        var stale = await db.StrongEntries
+            .Where(e => named.Contains(e.StrongNumber)
+                        || (e.StrongNumber.StartsWith("G") && (e.Definition!.StartsWith(",") || e.Derivation!.StartsWith(","))))
+            .ToListAsync(cancellationToken);
+        if (stale.Count == 0 || !File.Exists(greekPath))
+        {
+            return;
+        }
+
+        var parsed = new StrongXmlParser().ParseGreek(await File.ReadAllTextAsync(greekPath, cancellationToken))
+            .ToDictionary(e => e.StrongNumber);
+        var corrected = 0;
+        foreach (var entry in stale)
+        {
+            if (!parsed.TryGetValue(entry.StrongNumber, out var read)
+                || (entry.Definition == read.Definition && entry.Derivation == read.Derivation && entry.SeeAlso == read.SeeAlso))
+            {
+                continue;
+            }
+
+            (entry.Definition, entry.Derivation, entry.SeeAlso) = (read.Definition, read.Derivation, read.SeeAlso);
+            corrected++;
+        }
+
+        if (corrected > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+            logger.LogInformation("{Corrected} Greek entries had their bare cross-references written as references", corrected);
+        }
     }
 
     /// <summary>
