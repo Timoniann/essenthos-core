@@ -40,7 +40,7 @@ public sealed class EntityCoverageTests : IDisposable
         _db.SaveChanges();
 
         Naming(person, 1, 1, 1);
-        Naming(person, 1, 1, 1);
+        Naming(person, 1, 1, 1, "second test source");
         Naming(person, 66, 22, 21);
         Naming(place, 1, 45, 10);
         Naming(place, 2, 8, 22);
@@ -65,8 +65,9 @@ public sealed class EntityCoverageTests : IDisposable
     }
 
     /// <summary>
-    /// The two numbers a page shows are different questions: Genesis 1:1 naming Moses twice is one
-    /// verse and two mentions, and reporting either under the other's name is the whole defect.
+    /// The two numbers a page shows are different questions: Genesis 1:1 cited for Moses by two
+    /// sources is one verse and two mentions, and reporting either under the other's name is the
+    /// whole defect. One source lists a verse once.
     /// </summary>
     [Fact]
     public async Task AVerseNamedTwiceIsOneReferenceAndTwoMentions()
@@ -116,7 +117,7 @@ public sealed class EntityCoverageTests : IDisposable
         return entity;
     }
 
-    private void Naming(Entity entity, int book, int chapter, int verse) =>
+    private void Naming(Entity entity, int book, int chapter, int verse, string source = "test") =>
         _db.EntityVerses.Add(new EntityVerse
         {
             EntityId = entity.Id,
@@ -125,6 +126,6 @@ public sealed class EntityCoverageTests : IDisposable
             CanonicalVerse = verse,
             Label = entity.Name,
             Disputed = false,
-            Source = "test",
+            Source = source,
         });
 }
