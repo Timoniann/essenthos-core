@@ -134,8 +134,11 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         """,
         Move("word_entity", "entity_id"),
 
-        // The verse list: a verse both records cite from the same source is cited once.
-        Move("entity_verse", "entity_id"),
+        // The verse list: a verse both records cite from the same source is cited once, and the list
+        // is keyed on the record, the verse and the source, so the kept record's row is the one kept.
+        MoveUnlessHeld("entity_verse",
+            "c.canonical_book = o.canonical_book AND c.canonical_chapter = o.canonical_chapter "
+            + "AND c.canonical_verse = o.canonical_verse AND c.source = o.source"),
         """
         WITH gone AS (
             DELETE FROM entity_verse v USING entity_verse w
@@ -430,7 +433,6 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
              WHERE v.entity_id = @from AND {string.Format(InParting, "v")}
                AND EXISTS (SELECT 1 FROM entity_verse o
                            WHERE o.entity_id = @to AND o.source = v.source
-                             AND o.label IS NOT DISTINCT FROM v.label AND o.disputed = v.disputed
                              AND (o.canonical_book, o.canonical_chapter, o.canonical_verse)
                                  = (v.canonical_book, v.canonical_chapter, v.canonical_verse))
              RETURNING 1)
