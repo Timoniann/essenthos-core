@@ -178,7 +178,8 @@ public class GeezAlignmentScopeTests
 {
     [Theory]
     [InlineData("SWETE", 1, 1, true)]
-    [InlineData("SWETE", 75, 16, false)]
+    [InlineData("SWETE", 75, 16, true)]
+    [InlineData("SWETE", 72, 32, false)]
     [InlineData("GRCBRENT", 75, 16, true)]
     [InlineData("SWETE", 76, 1, false)]
     [InlineData("SWETE", 17, 4, false)]

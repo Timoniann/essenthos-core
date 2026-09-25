@@ -44,6 +44,7 @@ internal sealed class DatasetLoader(
     private static readonly Dictionary<string, Func<string, TextSource>> Reloadable = new()
     {
         [GeezTextSource.Slug] = resources => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder)),
+        [SweteTextSource.Slug] = resources => SweteTextSource.Read(Path.Combine(resources, "Swete")),
     };
 
     public async Task Reload(string slug, CancellationToken cancellationToken)

@@ -202,6 +202,46 @@ internal static class SweteTextSource
         public const int LastEzraChapter = 10;
     }
 
+    /// <summary>
+    /// Where the transcription numbers a chapter or a verse as Swete does not, so a verse stands at
+    /// an address nothing else holds and the address it belongs at stands empty.
+    ///
+    /// Wisdom has no chapter 15 in the files: what they number 16 opens <em>Σὺ δὲ ὁ θεὸς ἡμῶν
+    /// χρηστὸς</em>, which is 15:1 in Swete as in every edition, and so on to the end, where the
+    /// files' chapter 20 is his 19. Three verses of Chronicles carry a digit doubled or transposed,
+    /// each the only verse of its chapter past the chapter's end and each where the verse it reads
+    /// as is missing.
+    /// </summary>
+    private static class Misnumbered
+    {
+        private const string Wisdom = "33.Sapientia_Salomonis";
+
+        /// <summary>The last chapter of Wisdom the files number as Swete does.</summary>
+        private const int LastWisdomChapterAsPrinted = 14;
+
+        private static readonly Dictionary<(string File, int Chapter, int Verse), int> Verses = new()
+        {
+            [("15.Paralipomenon_I", 16, 93)] = 39,
+            [("16.Paralipomenon_II", 4, 220)] = 20,
+            [("16.Paralipomenon_II", 17, 111)] = 11,
+        };
+
+        public static IEnumerable<SweteChapter> Renumber(string file, IEnumerable<SweteChapter> chapters) =>
+            chapters.Select(chapter => chapter with
+            {
+                Number = file == Wisdom && chapter.Number > LastWisdomChapterAsPrinted
+                    ? chapter.Number - 1
+                    : chapter.Number,
+                Verses = chapter.Verses.Any(verse => Verses.ContainsKey((file, chapter.Number, verse.Number)))
+                    ? [.. chapter.Verses
+                        .Select(verse => Verses.TryGetValue((file, chapter.Number, verse.Number), out var number)
+                            ? verse with { Number = number }
+                            : verse)
+                        .OrderBy(verse => verse.Number)]
+                    : chapter.Verses,
+            });
+    }
+
     /// <param name="restored">
     /// False for the edition as the transcription reads it, without <see cref="SweteRestorations"/>:
     /// what a corpus loaded before them holds.
@@ -227,7 +267,7 @@ internal static class SweteTextSource
             var read = SweteReader.Read(file == Isaiah
                 ? SweteIsaiah.Lines(folder)
                 : restored ? SweteRestorations.Apply(file, File.ReadLines(path)) : File.ReadLines(path));
-            var chapters = read.Chapters.Select(Chapter).ToList();
+            var chapters = Misnumbered.Renumber(file, read.Chapters).Select(Chapter).ToList();
 
             if (file == SecondEsdras.File)
             {

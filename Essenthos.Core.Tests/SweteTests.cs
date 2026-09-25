@@ -353,3 +353,30 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
         }
     }
 }
+
+/// <summary>The chapters and verses the transcription numbers as Swete does not.</summary>
+public class SweteNumberingTests
+{
+    private static readonly IReadOnlyList<BookDraft> Books = SweteTextSource.Read(TestResources.SweteFolder).Books;
+
+    [Fact]
+    public void WisdomRunsFromOneToNineteenWithTheLordIsKindAtFifteen()
+    {
+        var wisdom = Books.Single(book => book.CanonicalOrdinal == 75);
+
+        wisdom.Chapters.Select(chapter => chapter.Number).Should().Equal(Enumerable.Range(1, 19));
+        wisdom.Chapters.Single(chapter => chapter.Number == 15).Verses[0].Words[0].Surface.Should().Be("Σὺ");
+    }
+
+    [Theory]
+    [InlineData(13, 16, 39)]
+    [InlineData(14, 4, 20)]
+    [InlineData(14, 17, 11)]
+    public void AVerseWithADigitDoubledStandsAtTheNumberItReadsAs(int book, int chapter, int verse)
+    {
+        var numbers = Books.Single(b => b.CanonicalOrdinal == book).Chapters
+            .Single(c => c.Number == chapter).Verses.Select(v => v.Number).ToList();
+
+        numbers.Should().Contain(verse).And.BeInAscendingOrder().And.OnlyContain(n => n < 100);
+    }
+}
