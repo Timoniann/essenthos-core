@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using Essenthos.Core.BetaMasaheft;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -88,11 +89,15 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     private const string LinkWordImport =
         "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
 
+    /// <param name="minimumConfidence">
+    /// The threshold, or null for the one measured for the source's language, and
+    /// <see cref="DefaultMinimumConfidence"/> where none was.
+    /// </param>
     public async Task<AlignmentOutcome> Run(
         string fromSlug,
         string toSlug,
         string workspace,
-        double minimumConfidence,
+        double? minimumConfidence,
         string modelType,
         bool replace = false,
         CancellationToken cancellationToken = default)
@@ -112,9 +117,13 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var started = Stopwatch.StartNew();
         Directory.CreateDirectory(workspace);
 
+        var measured = Measured.GetValueOrDefault(from.Language ?? string.Empty);
+        var threshold = minimumConfidence ?? measured?.Minimum ?? DefaultMinimumConfidence;
+        var pool = Pool(fromSlug, toSlug);
         var source = await Words(fromSlug, word => Reduce(word), cancellationToken);
-        var target = await Words(toSlug, word => Comparable(word), cancellationToken);
-        var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
+        var target = await Words(
+            toSlug, pool is null ? word => Comparable(word) : Pooled, cancellationToken, primaryOnly: pool is not null);
+        var addresses = Shared(fromSlug, toSlug, source, target);
         if (addresses.Count == 0)
         {
             throw new InvalidOperationException(
@@ -122,15 +131,23 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 "loaded and placed before they can be aligned.");
         }
 
-        var alignmentFile = await Align(
-            fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
+        var alignmentFile = pool is null
+            ? await Align(fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken)
+            : await AlignPooled(fromSlug, pool, workspace, modelType, addresses, source, target, cancellationToken);
 
         var prior = await Syntax(to.Id, cancellationToken);
 
         var (drafts, proposed, collapsed, below) = Read(
-            alignmentFile, addresses, source, target, minimumConfidence, Selection.BestPerSource, prior);
+            alignmentFile, addresses, source, target, threshold, Selection.BestPerSource, prior,
+            MarksNoNames(from.Language));
 
-        await Store(from.Id, to.Id, modelType, prior.Known, drafts, replace, cancellationToken);
+        var note = pool is null ? null : $"one model over {string.Join(", ", pool)}";
+        if (measured is not null && threshold == measured.Minimum)
+        {
+            note = note is null ? measured.Note : $"{note}; {measured.Note}";
+        }
+
+        await Store(from.Id, to.Id, modelType, prior.Known, drafts, replace, cancellationToken, note);
 
         var outcome = new AlignmentOutcome(
             fromSlug, toSlug, addresses.Count, proposed, collapsed, below, drafts.Count, started.Elapsed);
@@ -248,6 +265,180 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     }
 
     /// <summary>
+    /// The texts a source is aligned against with one model, where it has such a set, and null where
+    /// each pair trains its own. The Ge'ez was translated from the Greek in both testaments, so its
+    /// Old Testament against the two Septuagints and its New against the two Greek New Testaments
+    /// are one language pair four times over, and a word the Octateuch teaches is known in the
+    /// Gospels.
+    /// </summary>
+    private static IReadOnlyList<string>? Pool(string fromSlug, string toSlug) =>
+        fromSlug == GeezTextSource.Slug && GeezTextSource.AlignedWith.Contains(toSlug)
+            ? GeezTextSource.AlignedWith
+            : null;
+
+    /// <summary>
+    /// The addresses both texts hold words at, in order, less the ones the source says not to align
+    /// against this target.
+    /// </summary>
+    private static List<(int, int, int)> Shared(
+        string fromSlug,
+        string toSlug,
+        Dictionary<(int, int, int), List<Word>> source,
+        Dictionary<(int, int, int), List<Word>> target) =>
+        [
+            .. source.Keys.Intersect(target.Keys)
+                .Where(address => fromSlug != GeezTextSource.Slug
+                                  || GeezTextSource.Aligns(toSlug, address.Item1, address.Item2))
+                .OrderBy(address => address),
+        ];
+
+    /// <summary>
+    /// A Greek word as every text of a pool can spell it. Nestle and Brenton carry lemmas and Swete
+    /// and the Byzantine text carry none, and a model that met λόγος in one half of its data and
+    /// λογ in the other would split what it learned of one word between two; so the whole pool reads
+    /// the stem.
+    /// </summary>
+    private static string Pooled(WordForms word) => GreekStemmer.Stem(word.Surface);
+
+    /// <summary>
+    /// Aligns one pair of a pool with the model the whole pool trains, training it first unless the
+    /// pool's inputs are the ones it was trained on. The pair's own answer is reused on the same
+    /// terms as <see cref="Align"/>'s, and also only while the model it came from is still the one
+    /// standing.
+    /// </summary>
+    private async Task<string> AlignPooled(
+        string fromSlug,
+        IReadOnlyList<string> pool,
+        string workspace,
+        string modelType,
+        List<(int, int, int)> addresses,
+        Dictionary<(int, int, int), List<Word>> source,
+        Dictionary<(int, int, int), List<Word>> target,
+        CancellationToken cancellationToken)
+    {
+        var (modelPrefix, stamp) = await PoolModel(fromSlug, pool, modelType, source, cancellationToken);
+
+        var sourceFile = Path.Combine(workspace, "source.txt");
+        var targetFile = Path.Combine(workspace, "target.txt");
+        var stampFile = Path.Combine(workspace, "model.txt");
+        var alignmentFile = Path.Combine(workspace, "alignment", "pharaoh.txt");
+        var inputs = new List<(string Path, string[] Lines)>
+        {
+            (sourceFile, Lines(addresses, source)),
+            (targetFile, Lines(addresses, target)),
+            (stampFile, [stamp]),
+        };
+
+        if (File.Exists(alignmentFile) && Unchanged(inputs))
+        {
+            logger.LogInformation("Reusing the alignment already in {Workspace}", workspace);
+            return alignmentFile;
+        }
+
+        Directory.CreateDirectory(workspace);
+        foreach (var (path, lines) in inputs)
+        {
+            File.WriteAllLines(path, lines);
+        }
+
+        Directory.CreateDirectory(Path.GetDirectoryName(alignmentFile)!);
+        logger.LogInformation("Aligning {Verses} verse pairs with the model {Pool} trained", addresses.Count,
+            string.Join(", ", pool));
+        await Machine(
+            ["align", "-mt", modelType, "-sh", "och", "-s", modelPrefix, sourceFile, targetFile, alignmentFile],
+            cancellationToken);
+        return alignmentFile;
+    }
+
+    /// <summary>
+    /// The model a pool trains over every verse its source shares with any text of it, and the
+    /// stamp that names this training of it.
+    /// </summary>
+    private async Task<(string Prefix, string Stamp)> PoolModel(
+        string fromSlug,
+        IReadOnlyList<string> pool,
+        string modelType,
+        Dictionary<(int, int, int), List<Word>> source,
+        CancellationToken cancellationToken)
+    {
+        var workspace = Path.Combine(Path.GetTempPath(), "essenthos-align", $"{fromSlug}-{string.Join('-', pool)}");
+        var sourceFile = Path.Combine(workspace, "source.txt");
+        var targetFile = Path.Combine(workspace, "target.txt");
+        var stampFile = Path.Combine(workspace, "trained.txt");
+        var modelPrefix = Path.Combine(workspace, "model", fromSlug);
+
+        var sourceLines = new List<string>();
+        var targetLines = new List<string>();
+        foreach (var partner in pool)
+        {
+            var target = await Words(partner, Pooled, cancellationToken, primaryOnly: true);
+            var addresses = Shared(fromSlug, partner, source, target);
+            sourceLines.AddRange(Lines(addresses, source));
+            targetLines.AddRange(Lines(addresses, target));
+        }
+
+        var inputs = new List<(string Path, string[] Lines)>
+        {
+            (sourceFile, [.. sourceLines]),
+            (targetFile, [.. targetLines]),
+        };
+
+        if (File.Exists(stampFile) && Unchanged(inputs))
+        {
+            logger.LogInformation("Reusing the model already in {Workspace}", workspace);
+            return (modelPrefix, File.ReadAllText(stampFile).Trim());
+        }
+
+        if (Directory.Exists(workspace))
+        {
+            Directory.Delete(workspace, recursive: true);
+        }
+
+        Directory.CreateDirectory(Path.GetDirectoryName(modelPrefix)!);
+        foreach (var (path, lines) in inputs)
+        {
+            File.WriteAllLines(path, lines);
+        }
+
+        logger.LogInformation("Training {Model} over {Verses} verse pairs of {From} against {Pool}",
+            modelType, sourceLines.Count, fromSlug, string.Join(", ", pool));
+        await Machine(["train", "alignment-model", "-mt", modelType, modelPrefix, sourceFile, targetFile],
+            cancellationToken);
+
+        var stamp = Guid.NewGuid().ToString("N");
+        await File.WriteAllTextAsync(stampFile, stamp, cancellationToken);
+        return (modelPrefix, stamp);
+    }
+
+    /// <summary>
+    /// The threshold measured for a source language that has no stated correspondences to measure
+    /// against, and what the link's source says about how it was measured.
+    /// </summary>
+    private sealed record MeasuredThreshold(double Minimum, string Note);
+
+    private static readonly Dictionary<string, MeasuredThreshold> Measured = new()
+    {
+        // Hand-scored by Claude on a random sample of 200 of the Ge'ez-Greek pairs, 40 per band of
+        // confidence, against Brenton and Nestle (2026-09-25), with the three books the Ge'ez divides
+        // within chapters left out: right 66% from 0.10, 68% from 0.25, 89% from 0.40, 95% from 0.60
+        // and 97% from 0.80. There is no stated Ge'ez-Greek correspondence to score against.
+        ["gez"] = new(0.4, "threshold 0.40 from a hand-scored sample, about 90% right above it"),
+    };
+
+    /// <summary>A script with no capital letters, whose words never say that they are names.</summary>
+    private static bool MarksNoNames(string? language) => language is "gez";
+
+    /// <summary>
+    /// What a text reads as its placement where the frame's is not the one to align by: the Ge'ez
+    /// books the church divides its own way stand at their own numbers in the frame, which are the
+    /// Greek's numbers for other passages.
+    /// </summary>
+    private static (IReadOnlySet<int> Books,
+        IReadOnlyDictionary<(int Book, int Chapter, int Verse), IReadOnlyList<(int Book, int Chapter, int Verse)>> Addresses)?
+        VerseMap(string slug) =>
+        slug == GeezTextSource.Slug ? (GeezVerseMap.Books, GeezVerseMap.Addresses) : null;
+
+    /// <summary>
     /// What the model proposes, without storing anything.
     ///
     /// Composition needs this rather than the links already stored, and the difference matters: a
@@ -271,18 +462,24 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         // Only the source is read as written. The target's own reduction is not a hedge — BHSA's
         // consonantal text and Nestle's lemmas are the forms those texts themselves carry, and both
         // were measured as plainly better than the pointing and the inflection they replace.
+        // A trial over a few books trains a model of its own rather than reading the pool's.
+        var pool = asWritten || books is not null ? null : Pool(fromSlug, toSlug);
         var source = await Words(
             fromSlug, asWritten ? Written : word => Reduce(word), cancellationToken, books);
-        var target = await Words(toSlug, word => Comparable(word), cancellationToken, books);
-        var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
+        var target = await Words(
+            toSlug, pool is null ? word => Comparable(word) : Pooled, cancellationToken, books, pool is not null);
+        var addresses = Shared(fromSlug, toSlug, source, target);
 
         Directory.CreateDirectory(workspace);
-        var alignmentFile = await Align(
-            fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken);
+        var alignmentFile = pool is null
+            ? await Align(fromSlug, toSlug, workspace, modelType, addresses, source, target, cancellationToken)
+            : await AlignPooled(fromSlug, pool, workspace, modelType, addresses, source, target, cancellationToken);
 
         var prior = await Syntax((await Text(toSlug, cancellationToken)).Id, cancellationToken);
+        var from = await Text(fromSlug, cancellationToken);
 
-        var (drafts, _, _, _) = Read(alignmentFile, addresses, source, target, floor, selection, prior);
+        var (drafts, _, _, _) = Read(
+            alignmentFile, addresses, source, target, floor, selection, prior, MarksNoNames(from.Language));
         return [.. drafts.Select(d => (d.SourceWordId, d.TargetWordId, d.Translation))];
     }
 
@@ -805,7 +1002,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         Dictionary<(int, int, int), List<Word>> target,
         double minimumConfidence,
         Selection selection = Selection.All,
-        SyntaxPrior? prior = null)
+        SyntaxPrior? prior = null,
+        bool namesUnmarked = false)
     {
         var drafts = new List<AlignedDraft>(300_000);
 
@@ -823,10 +1021,13 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         foreach (var (sourceWords, targetWords, raw) in Parse(path, addresses, source, target))
         {
             proposed += raw.Count;
+            IReadOnlyList<string?> targetNames = [.. targetWords.Select(word => word.Name)];
             List<Candidate> verse = NameLists.Settle(
                 prior is null ? raw : prior.Rescore(raw, [.. targetWords.Select(word => word.Id)]),
-                [.. sourceWords.Select(word => word.Name)],
-                [.. targetWords.Select(word => word.Name)],
+                namesUnmarked
+                    ? NameLists.Unmarked([.. sourceWords.Select(word => word.Letters)], targetNames)
+                    : [.. sourceWords.Select(word => word.Name)],
+                targetNames,
                 [.. targetWords.Select(word => word.Letters)]);
 
             var crowded = verse
@@ -902,7 +1103,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         bool syntax,
         List<AlignedDraft> drafts,
         bool replace,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? note = null)
     {
         if (drafts.Count == 0)
         {
@@ -950,7 +1152,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     (syntax ? ", rescored on ETCBC phrase and clause structure" : string.Empty) +
                     (double.IsNaN(drafts[i].Position)
                         ? ", the names of the verse paired by spelling and order"
-                        : $", position {drafts[i].Position:F4}"),
+                        : $", position {drafts[i].Position:F4}") +
+                    (note is null ? string.Empty : $"; {note}"),
                     NpgsqlDbType.Text, cancellationToken);
             }
 
@@ -1143,11 +1346,17 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// The canonical books to read, or all of them. A trial on a few books trains on those books
     /// alone, which is weaker than the whole text and never stronger.
     /// </param>
+    /// <param name="primaryOnly">
+    /// Every word at the one address its verse stands at primarily. A pool's Greek is read so, as its
+    /// source is: the Ge'ez and the Greek it was made from stand at the same primary rows, and the
+    /// further row a verse of either covers is where the frame parks the Hebrew's counterpart.
+    /// </param>
     private async Task<Dictionary<(int, int, int), List<Word>>> Words(
         string slug,
         Func<WordForms, string> form,
         CancellationToken cancellationToken,
-        IReadOnlySet<int>? books = null)
+        IReadOnlySet<int>? books = null,
+        bool primaryOnly = false)
     {
         var within = books?.ToList();
         var rows = await db.VerseReferences
@@ -1158,6 +1367,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 r.CanonicalBook,
                 r.CanonicalChapter,
                 r.CanonicalVerse,
+                r.IsPrimary,
+                r.VerseId,
+                OwnBook = r.Verse.Book!.CanonicalOrdinal,
+                r.Verse.ChapterNumber,
+                r.Verse.Number,
                 w.Position,
                 w.Id,
                 w.Surface,
@@ -1177,11 +1391,28 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             .Select(r => r.Surface.ToLowerInvariant())
             .ToHashSet();
 
-        return rows
-            .GroupBy(r => (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse))
+        // A text with a map of its own is read where it stands primarily, and a mapped verse where the
+        // map reads it and nowhere else; one the map has no line for stands nowhere, since its own
+        // number is some other passage's address. The Ge'ez numbers as the Greek it was made from
+        // does, and the further rows the frame gives its verses are where it parks the Hebrew's
+        // counterpart, which it may give the Greek one row apart. Where several verses meet at one
+        // address they keep their order, verse by verse.
+        var map = VerseMap(slug);
+        var placed = map is not { } mapped
+            ? rows.Where(r => r.IsPrimary || !primaryOnly)
+                .Select(r => (Address: (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), Order: 0, Row: r))
+            : rows.Where(r => r.IsPrimary).SelectMany(r => !mapped.Books.Contains(r.OwnBook)
+                ? [(Address: (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), Order: 0, Row: r)]
+                : mapped.Addresses.TryGetValue((r.OwnBook, r.ChapterNumber, r.Number), out var to)
+                    ? to.Select(address => (Address: address, Order: r.VerseId, Row: r))
+                    : []);
+
+        return placed
+            .GroupBy(p => p.Address)
             .ToDictionary(
                 group => group.Key,
-                group => group.OrderBy(r => r.Position)
+                group => group.OrderBy(p => p.Order).ThenBy(p => p.Row.Position)
+                    .Select(p => p.Row)
                     .Select(r =>
                     {
                         var forms = new WordForms(
@@ -1225,6 +1456,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         "grc" => GreekStemmer.Stem(word.Surface),
         "deu" => GermanStemmer.Stem(word.Surface),
         "spa" => SpanishStemmer.Stem(word.Surface),
+        "gez" => GeezStemmer.Stem(word.Surface),
         _ => word.Surface.ToLowerInvariant(),
     };
 
@@ -1262,7 +1494,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// them often enough; using the consonants instead raised precision by a quarter.
     /// </summary>
     private static string Comparable(WordForms word, bool suppletion = false) =>
-        word.Language is "rus" or "ukr" or "eng" or "deu" or "spa" ? Reduce(word, suppletion)
+        word.Language is "rus" or "ukr" or "eng" or "deu" or "spa" or "gez" ? Reduce(word, suppletion)
         // A Greek witness with a lemma keeps it, and a word without one is reduced like any other
         // heavily inflected language rather than counted as eight words for one. Brenton had none
         // at all until GLAUx; it now has one on 97.1% of its words, so this is per word rather than

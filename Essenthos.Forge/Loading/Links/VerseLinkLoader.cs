@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Essenthos.Core.BetaMasaheft;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -235,15 +236,18 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             .OrderBy(pair => pair.FromTextId).ThenBy(pair => pair.ToTextId)
             .ToList();
 
+        var mapped = await Mapped(declared, cancellationToken);
+
         if (todo.Count == 0)
         {
             var only = await Cover(cancellationToken);
             var alreadyStated = await Stated(cancellationToken);
             logger.LogInformation(
                 "Every linked pair already has its verse links; {Covered} memberships added for the " +
-                "addresses a verse covers, {Stated} verse pairs a source states through its word links",
-                only, alreadyStated);
-            return new VerseLinkOutcome(true, 0, 0, 0, 0, 0, only, alreadyStated, started.Elapsed);
+                "addresses a verse covers, {Stated} verse pairs a source states through its word links, " +
+                "{Mapped} read from a verse map",
+                only, alreadyStated, mapped);
+            return new VerseLinkOutcome(true, 0, mapped, 0, 0, 0, only, alreadyStated, started.Elapsed);
         }
 
         var addresses = new Dictionary<int, Dictionary<(int, int, int), List<int>>>();
@@ -269,12 +273,81 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             await Write(pair.FromTextId, pair.ToTextId, components, cancellationToken);
         }
 
+        written += mapped;
+
         var outcome = new VerseLinkOutcome(
             false, todo.Count, written, straight, divided, alone, await Cover(cancellationToken),
             await Stated(cancellationToken), started.Elapsed);
         logger.LogInformation("Verse links: {Outcome}", outcome);
         return outcome;
     }
+
+    /// <summary>
+    /// The verse links a verse map reads for the books the frame places at their own numbers, for
+    /// every declared pair of the mapped text that has none yet: each line of the map joins its
+    /// verses to whatever the other text holds at the rows the line names. They are written as the
+    /// reading they are, with the line's confidence, and not as the frame's statement.
+    /// </summary>
+    private async Task<int> Mapped(
+        Dictionary<(int FromTextId, int ToTextId), IReadOnlySet<int>> declared,
+        CancellationToken cancellationToken)
+    {
+        var geez = await db.Texts.Where(text => text.Slug == GeezTextSource.Slug)
+            .Select(text => (int?)text.Id).SingleOrDefaultAsync(cancellationToken);
+        var pairs = declared.Keys.Where(pair => pair.FromTextId == geez).ToList();
+        if (geez is null || pairs.Count == 0 || GeezVerseMap.Lines.Count == 0)
+        {
+            return 0;
+        }
+
+        var own = (await db.Verses
+                .Where(verse => verse.TextId == geez)
+                .Select(verse => new { Book = verse.Book!.CanonicalOrdinal, verse.ChapterNumber, verse.Number, verse.Id })
+                .ToListAsync(cancellationToken))
+            .ToDictionary(verse => (verse.Book, verse.ChapterNumber, verse.Number), verse => verse.Id);
+        var slugs = await db.Texts.ToDictionaryAsync(text => text.Id, text => text.Slug, cancellationToken);
+        var addresses = new Dictionary<int, Dictionary<(int, int, int), List<int>>>();
+        var written = 0;
+
+        foreach (var pair in pairs)
+        {
+            if (await db.VerseLinks.AnyAsync(
+                    link => link.FromTextId == pair.FromTextId && link.ToTextId == pair.ToTextId
+                            && link.Method == LinkMethod.ModelReading,
+                    cancellationToken))
+            {
+                continue;
+            }
+
+            var there = await Addressed(addresses, pair.ToTextId, cancellationToken);
+            var components = new List<(Component Verses, double Confidence)>();
+            foreach (var line in GeezVerseMap.Lines)
+            {
+                var from = line.From
+                    .Select(verse => own.GetValueOrDefault((line.Book, verse.Chapter, verse.Verse)))
+                    .Where(id => id != 0)
+                    .ToList();
+                var to = line.To
+                    .Where(address => GeezTextSource.Aligns(slugs[pair.ToTextId], address.Book, address.Chapter))
+                    .SelectMany(address => there.GetValueOrDefault(address) ?? [])
+                    .Distinct()
+                    .ToList();
+                if (from.Count > 0 && to.Count > 0)
+                {
+                    components.Add((new Component(from, to), line.Confidence));
+                }
+            }
+
+            await Write(pair.FromTextId, pair.ToTextId, [.. components.Select(c => c.Verses)], cancellationToken,
+                new MappedVerses([.. components.Select(c => c.Confidence)], GeezVerseMap.Source));
+            written += components.Count;
+        }
+
+        return written;
+    }
+
+    /// <summary>How a set of verse links was established, where it is not the frame's statement.</summary>
+    private sealed record MappedVerses(IReadOnlyList<double> Confidences, string Source);
 
     /// <summary>
     /// The pairs joined verse by verse whether or not any word of them is linked yet, by the texts'
@@ -520,11 +593,13 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         return addressed;
     }
 
+    /// <param name="mapped">What a verse map read, where these are not the frame's statement.</param>
     private async Task Write(
         int fromTextId,
         int toTextId,
         List<Component> components,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        MappedVerses? mapped = null)
     {
         if (components.Count == 0)
         {
@@ -536,7 +611,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
         var firstId = await ReserveIds(connection, components.Count, cancellationToken);
         var relation = EnumSpelling.Of(LinkRelation.Equals);
-        var method = EnumSpelling.Of(LinkMethod.StatedBySource);
+        var method = EnumSpelling.Of(mapped is null ? LinkMethod.StatedBySource : LinkMethod.ModelReading);
 
         await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
         {
@@ -548,8 +623,16 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                 await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(relation, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteNullAsync(cancellationToken);
-                await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
+                if (mapped is null)
+                {
+                    await writer.WriteNullAsync(cancellationToken);
+                }
+                else
+                {
+                    await writer.WriteAsync(mapped.Confidences[i], NpgsqlDbType.Double, cancellationToken);
+                }
+
+                await writer.WriteAsync(mapped?.Source ?? Source, NpgsqlDbType.Text, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);

@@ -1,3 +1,6 @@
+using System.Globalization;
+using System.Text.RegularExpressions;
+
 namespace Essenthos.Core.BetaMasaheft;
 
 /// <param name="Number">The verse as it is read, which is the file's number wherever that is legible.</param>
@@ -83,10 +86,52 @@ internal static class GeezVerses
         }
 
         return new GeezSequence(
-            [.. verses.Select(verse => new GeezVerse(verse.Number, string.Concat(verse.Parts)))],
+            RunIn([.. verses.Select(verse => new GeezVerse(verse.Number, string.Concat(verse.Parts)))]),
             joined,
             renumbered);
     }
+
+    /// <summary>
+    /// A standalone Arabic number inside a verse that is the number of a verse the chapter lacks,
+    /// between this verse and the next, is where that verse begins: HaCohen's 1 Kings 4:30 runs on
+    /// into <em>31</em>, <em>32</em> and <em>33</em>, and the church's Job 2:5 into <em>6</em> and
+    /// <em>7</em> — typed <c>10፡</c> — each with no line of its own. A number that goes back — the <em>2</em> to
+    /// <em>11</em> of the list in 1 Kings 16:28 — or that the chapter already has is left as a word.
+    /// </summary>
+    private static List<GeezVerse> RunIn(List<GeezVerse> verses)
+    {
+        var numbers = verses.Select(verse => verse.Number).ToHashSet();
+        var split = new List<GeezVerse>(verses.Count);
+        for (var i = 0; i < verses.Count; i++)
+        {
+            var next = i + 1 < verses.Count ? verses[i + 1].Number : int.MaxValue;
+            var number = verses[i].Number;
+            var text = verses[i].Text;
+            var from = 0;
+            var parts = new List<GeezVerse>();
+            foreach (Match match in RunInNumber.Matches(text))
+            {
+                var inline = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                if (inline <= number || inline >= next || numbers.Contains(inline))
+                {
+                    continue;
+                }
+
+                parts.Add(new GeezVerse(number, text[from..match.Index].Trim()));
+                number = inline;
+                numbers.Add(inline);
+                from = match.Index + match.Length;
+            }
+
+            parts.Add(new GeezVerse(number, text[from..].TrimStart()));
+            split.AddRange(parts.Where(part => HasWords(part.Text)));
+        }
+
+        return split;
+    }
+
+    /// <summary>The number standing as a word, and the wordspace the church's typists set after it.</summary>
+    private static readonly Regex RunInNumber = new(@"(?<=^|[\s፡።])(\d{1,3})(?:፡|(?=\s|$))", RegexOptions.CultureInvariant);
 
     /// <summary>
     /// Whether a line holds anything to read. Luke 21 opens with an empty line numbered 21, and 1

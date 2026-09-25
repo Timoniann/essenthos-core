@@ -173,6 +173,66 @@ public class GeezVerseSequenceTests
     }
 }
 
+/// <summary>Which rows of the Ge'ez are aligned against which Greek, and which against none.</summary>
+public class GeezAlignmentScopeTests
+{
+    [Theory]
+    [InlineData("SWETE", 1, 1, true)]
+    [InlineData("SWETE", 75, 16, false)]
+    [InlineData("GRCBRENT", 75, 16, true)]
+    [InlineData("SWETE", 76, 1, false)]
+    [InlineData("SWETE", 17, 4, false)]
+    [InlineData("GRCBRENT", 17, 4, true)]
+    [InlineData("GRCBRENT", 19, 23, false)]
+    [InlineData("NESTLE1904", 40, 1, true)]
+    public void SweteAnswersOnlyWhereItStandsOnTheFramesRowsAndThePsalterNowhere(
+        string greek, int book, int chapter, bool aligned)
+    {
+        GeezTextSource.Aligns(greek, book, chapter).Should().Be(aligned);
+    }
+
+    /// <summary>Every verse of the books the church divides its own way is read, and read once.</summary>
+    [Fact]
+    public void EveryVerseOfAMappedBookHasOneLineAndEveryLineAConfidence()
+    {
+        var geez = GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder));
+        var verses = geez.Books
+            .Where(book => GeezVerseMap.Books.Contains(book.CanonicalOrdinal))
+            .SelectMany(book => book.Chapters.SelectMany(chapter =>
+                chapter.Verses.Select(verse => (book.CanonicalOrdinal, chapter.Number, verse.Number))))
+            .ToList();
+        var mapped = GeezVerseMap.Lines.SelectMany(line => line.From.Select(verse => (line.Book, verse.Chapter, verse.Verse))).ToList();
+
+        mapped.Should().OnlyHaveUniqueItems().And.BeEquivalentTo(verses);
+        GeezVerseMap.Lines.Should().OnlyContain(line => line.Confidence > 0 && line.Confidence < 1);
+    }
+}
+
+/// <summary>A verse the typist ran on into the next, with the next one's number as a word between them.</summary>
+public class GeezRunInTests
+{
+    [Fact]
+    public void ANumberTheChapterLacksBeginsThatVerse()
+    {
+        var verses = GeezVerses.Sequence(
+            [new GeezLine(1, "ሀ ፡ ለ ] 2 ሐ ፡ መ 3 ሠ"), new GeezLine(4, "ረ")],
+            unnumberedContinues: false).Verses;
+
+        verses.Should().Equal(
+            new GeezVerse(1, "ሀ ፡ ለ ]"), new GeezVerse(2, "ሐ ፡ መ"), new GeezVerse(3, "ሠ"), new GeezVerse(4, "ረ"));
+    }
+
+    /// <summary>1 Kings 16:28 carries a numbered list of its own, and a number the chapter has is a word.</summary>
+    [Fact]
+    public void ANumberThatGoesBackOrIsTakenIsAWord()
+    {
+        GeezVerses.Sequence(
+                [new GeezLine(27, "ሀ"), new GeezLine(28, "ለ 2 ሐ 3 መ 27 ሠ"), new GeezLine(29, "ረ")],
+                unnumberedContinues: false).Verses
+            .Select(verse => verse.Number).Should().Equal(27, 28, 29);
+    }
+}
+
 /// <summary>Words, divided the same way whichever way the source sets its wordspace.</summary>
 public class GeezWordTests
 {
@@ -193,6 +253,58 @@ public class GeezWordTests
     {
         GeezWords.Words("ሐመልማለ፡ወዕፀወ").Select(word => (word.Surface, word.Trailer))
             .Should().Equal(("ሐመልማለ", "፡"), ("ወዕፀወ", ""));
+    }
+
+    /// <summary>
+    /// Dillmann's round brackets mark what the Ethiopic adds to the Greek, and a bracket can open
+    /// inside a word: of <c>ለ(ሱራፌል ፡ ወለ)ኪሩቤል</c> the first word is an addition and the second
+    /// is the Greek's own word with "and to" added in front.
+    /// </summary>
+    [Fact]
+    public void AWordMostlyInsideRoundBracketsIsAnAddition()
+    {
+        var words = GeezWords.Words("ወአዘዞሙ ፡ ለ(ሱራፌል ፡ ወለ)ኪሩቤል ፡ በሰይፈ ፡", marksBrackets: true);
+
+        words.Select(word => (word.Surface, word.SuppliedSpan))
+            .Should().Equal(("ወአዘዞሙ", null), ("ለሱራፌል", 1), ("ወለኪሩቤል", null), ("በሰይፈ", null));
+        words.Should().OnlyContain(word => word.RestoredSpan == null);
+    }
+
+    /// <summary>
+    /// Square brackets mark what his base manuscript lacks and he took from later ones, a span of
+    /// its own; a bracket standing alone after a wordspace is no word, and a letter restored inside
+    /// a word does not make the word restored.
+    /// </summary>
+    [Fact]
+    public void SquareBracketsAreARestorationAndNeverAWord()
+    {
+        var words = GeezWords.Words("[ወይሰቅያ ፡ ለየብስ ፡] ወነገ[ሮ]ሙ ፡ [ቃለ ]", marksBrackets: true);
+
+        words.Select(word => (word.Surface, word.RestoredSpan))
+            .Should().Equal(("ወይሰቅያ", 1), ("ለየብስ", 1), ("ወነገሮሙ", null), ("ቃለ", 3));
+        words.Should().OnlyContain(word => !word.Surface.Contains('[') && !word.Surface.Contains(']'));
+    }
+
+    /// <summary>A source whose brackets nobody has explained keeps them as they are typed.</summary>
+    [Fact]
+    public void BracketsMeanNothingWhereTheSourceIsNotDillmanns()
+    {
+        GeezWords.Words("ኅሩያኒ[ሁ] ወእሙንቱሰ").Select(word => word.Surface).Should().Equal("ኅሩያኒ[ሁ]", "ወእሙንቱሰ");
+    }
+
+    [Fact]
+    public void ARunOfDotsIsAMarkAfterAWordAndNotAWord()
+    {
+        var words = GeezWords.Words("ወይቤ ፡ …. ሎቱ");
+
+        words.Select(word => word.Surface).Should().Equal("ወይቤ", "ሎቱ");
+        string.Concat(words.Select(word => word.Surface + word.Trailer)).Should().Be("ወይቤ ፡ …. ሎቱ");
+    }
+
+    [Fact]
+    public void AnEthiopicNumeralIsAWord()
+    {
+        GeezWords.Words("፲ወ፪ ፡ ፲").Select(word => word.Surface).Should().Equal("፲ወ፪", "፲");
     }
 }
 
@@ -218,17 +330,17 @@ public class GeezTextTests
     }
 
     /// <summary>
-    /// Chapters and verses per book, read from the pinned files: 38,484 verses and 506,545 words in all. A change here
+    /// Chapters and verses per book, read from the pinned files: 38,537 verses and 505,888 words in all. A change here
     /// is a change to the source or to how it is read, and either is worth seeing.
     /// </summary>
     public static TheoryData<int, int, int> Counts => new()
     {
         { 1, 50, 1526 }, { 2, 40, 1170 }, { 3, 27, 858 }, { 4, 36, 1287 }, { 5, 34, 956 },
         { 6, 24, 652 }, { 7, 21, 617 }, { 8, 4, 85 }, { 9, 31, 804 }, { 10, 24, 692 },
-        { 11, 22, 739 }, { 12, 25, 719 }, { 13, 29, 950 }, { 14, 36, 854 }, { 86, 50, 1292 },
+        { 11, 22, 743 }, { 12, 25, 719 }, { 13, 29, 952 }, { 14, 36, 854 }, { 86, 50, 1292 },
         { 85, 108, 1058 }, { 15, 10, 272 }, { 16, 13, 408 }, { 68, 9, 448 }, { 69, 12, 637 },
         { 70, 14, 242 }, { 71, 16, 343 }, { 17, 13, 252 }, { 87, 36, 753 }, { 88, 21, 424 },
-        { 89, 10, 208 }, { 18, 42, 973 }, { 19, 151, 2620 }, { 91, 26, 766 }, { 92, 6, 161 },
+        { 89, 10, 208 }, { 18, 42, 1020 }, { 19, 151, 2620 }, { 91, 26, 766 }, { 92, 6, 161 },
         { 75, 19, 321 }, { 21, 12, 226 }, { 22, 8, 130 }, { 72, 51, 1360 }, { 23, 66, 1289 },
         { 24, 52, 1346 }, { 67, 5, 141 }, { 25, 5, 154 }, { 76, 1, 43 }, { 90, 9, 9 },
         { 26, 48, 1272 }, { 27, 14, 437 }, { 28, 14, 197 }, { 30, 9, 147 }, { 33, 7, 105 },
@@ -256,9 +368,9 @@ public class GeezTextTests
     public void EveryBookIsCountedOnce()
     {
         Counts.Select(row => (int)row[0]).Should().BeEquivalentTo(Text.Value.Books.Select(book => book.CanonicalOrdinal));
-        Counts.Sum(row => (int)row[2]).Should().Be(38484);
+        Counts.Sum(row => (int)row[2]).Should().Be(38537);
         Text.Value.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)))
-            .Should().Be(506545);
+            .Should().Be(505888);
     }
 
     /// <summary>

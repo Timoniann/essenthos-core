@@ -14,9 +14,11 @@ refuses a file whose header no longer states the licence below. Nothing else fro
 taken: it holds some six thousand other works, and it has no licence file at its root — the licence
 is stated in each file.
 
-**81 files, 14.3 MB. The corpus reads them as 81 books, 1,557 chapters, 38,484 verses, 506,545
-words** (the text `GEEZ81`). No annotation of any kind: no lemmas, no morphology, no alignment to
-anything. Research and sources: DOC-0208, §7.
+**81 files, 14.3 MB. The corpus reads them as 81 books, 1,557 chapters, 38,537 verses, 505,888
+words** (the text `GEEZ81`). No lemmas and no morphology. Dillmann's round and square brackets are
+read as marks on the words, not as letters of them. Its words are linked to the Greek by a
+statistical aligner and nothing else; no source states a Ge'ez-Greek correspondence. Research and
+sources: DOC-0208, §7.
 
 ## The licence
 

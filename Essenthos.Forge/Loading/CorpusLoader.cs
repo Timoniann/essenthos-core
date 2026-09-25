@@ -131,7 +131,8 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         var verses = await WriteStructure(text, source.Books, cancellationToken);
         var words = await WriteWords(text, verses, cancellationToken);
         await VerifyRoundTrip(text, verses, whole: true, cancellationToken);
-        await WriteSupplied(text, verses, cancellationToken);
+        await WriteSpans(text, verses, WordGroupKind.Supplied, word => word.SuppliedSpan, cancellationToken);
+        await WriteSpans(text, verses, WordGroupKind.Restored, word => word.RestoredSpan, cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);
 
@@ -191,7 +192,8 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         var verses = await WriteStructure(text, missing, cancellationToken);
         var words = await WriteWords(text, verses, cancellationToken);
         await VerifyRoundTrip(text, verses, whole: false, cancellationToken);
-        await WriteSupplied(text, verses, cancellationToken);
+        await WriteSpans(text, verses, WordGroupKind.Supplied, word => word.SuppliedSpan, cancellationToken);
+        await WriteSpans(text, verses, WordGroupKind.Restored, word => word.RestoredSpan, cancellationToken);
 
         if (source.Definition.RightsNote is { } note && text.RightsNote != note)
         {
@@ -340,7 +342,8 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     }
 
     /// <summary>
-    /// The spans the edition marks as words it supplies, as word groups of their own.
+    /// The spans the edition marks as words it supplies, or as words it restored from other
+    /// manuscripts, as word groups of their own.
     ///
     /// They are groups rather than a flag on the word because the mark is over a span and the
     /// spans abut: the Synodal writes "[для] [управления]" 79 times, two brackets and two claims,
@@ -349,9 +352,12 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     /// make this edition's mark on its own page into an assertion about a counterpart the edition
     /// never named, for 884 New Testament spans among others.
     /// </summary>
-    private async Task WriteSupplied(
+    /// <param name="spanOf">Which span of the verse a word stands in, for the kind being written.</param>
+    private async Task WriteSpans(
         Text text,
         List<LoadedVerse> verses,
+        WordGroupKind kind,
+        Func<WordDraft, int?> spanOf,
         CancellationToken cancellationToken)
     {
         var verseIds = new List<int>();
@@ -364,7 +370,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
             var size = 0;
             for (var i = 0; i < loaded.Draft.Words.Count; i++)
             {
-                if (loaded.Draft.Words[i].SuppliedSpan is not { } number)
+                if (spanOf(loaded.Draft.Words[i]) is not { } number)
                 {
                     continue;
                 }
@@ -401,7 +407,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         if (words.Count != positions.Count)
         {
             throw new InvalidOperationException(
-                $"The load of {text.Slug} marked {positions.Count} supplied words but only {words.Count} of " +
+                $"The load of {text.Slug} marked {positions.Count} {EnumSpelling.Of(kind)} words but only {words.Count} of " +
                 "them came back from the word table. The spans are addressed by verse and position, so a " +
                 "position that does not exist means the words were written from a different draft than the " +
                 "one the spans were read from.");
@@ -417,7 +423,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
                 await writer.WriteAsync(firstGroup + i, NpgsqlDbType.Bigint, cancellationToken);
                 await writer.WriteAsync(text.Id, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(
-                    EnumSpelling.Of(WordGroupKind.Supplied), NpgsqlDbType.Text, cancellationToken);
+                    EnumSpelling.Of(kind), NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(i + 1, NpgsqlDbType.Integer, cancellationToken);
             }
 
@@ -442,8 +448,8 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         }
 
         logger.LogInformation(
-            "{Slug}: {Spans} spans the edition marks as supplied, over {Words} words",
-            text.Slug, sizes.Count, words.Count);
+            "{Slug}: {Spans} spans the edition marks as {Kind}, over {Words} words",
+            text.Slug, sizes.Count, EnumSpelling.Of(kind), words.Count);
     }
 
     private async Task<List<long>> SuppliedWords(

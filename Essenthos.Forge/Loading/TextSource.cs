@@ -121,7 +121,15 @@ internal sealed record WordDraft(
     string? Morphology = null,
     bool Elided = false,
     int? SuppliedSpan = null,
-    TextBreak? Break = null);
+    TextBreak? Break = null)
+{
+    /// <summary>
+    /// Which of its verse's restored spans this word stands in, counting from one, where the editor
+    /// marks words his base manuscript lacks and he took from others. Null everywhere else, which is
+    /// silence, as for <see cref="SuppliedSpan"/>.
+    /// </summary>
+    public int? RestoredSpan { get; init; }
+}
 
 /// <param name="Chapter">The chapter of the edition's own numbering, which need not be the row's.</param>
 /// <param name="Number">The verse of it.</param>

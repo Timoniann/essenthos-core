@@ -33,6 +33,50 @@ internal sealed class DatasetLoader(
     ICanonIndex canon,
     ILogger<DatasetLoader> logger)
 {
+    /// <summary>
+    /// The texts that can be read again on their own, after a change to how their source is read,
+    /// without the whole load: the text is deleted with everything that hangs on it, loaded afresh,
+    /// placed, folded and joined verse by verse again. Its word links go with it and have to be
+    /// aligned again.
+    /// </summary>
+    private static readonly Dictionary<string, Func<string, TextSource>> Reloadable = new()
+    {
+        [GeezTextSource.Slug] = resources => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder)),
+    };
+
+    public async Task Reload(string slug, CancellationToken cancellationToken)
+    {
+        if (!Reloadable.TryGetValue(slug, out var read))
+        {
+            throw new InvalidOperationException(
+                $"\"{slug}\" cannot be reloaded on its own; the texts that can are {string.Join(", ", Reloadable.Keys)}. " +
+                "Run the whole load for any other.");
+        }
+
+        var resources = ResourcePaths.Read(configuration, environment.ContentRootPath);
+        using (var scope = services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            db.Database.SetCommandTimeout(TimeSpan.FromMinutes(30));
+            var deleted = await db.Texts.Where(text => text.Slug == slug).ExecuteDeleteAsync(cancellationToken);
+            logger.LogInformation("Deleted {Count} text {Slug} with its words, verses and links", deleted, slug);
+        }
+
+        await Load(slug, () => read(resources), cancellationToken);
+
+        var rules = TvtmsReader.Read(ResourcePaths.File(resources, "Versification", "TVTMS.txt"));
+        using (var scope = services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var text = await db.Texts.SingleAsync(t => t.Slug == slug, cancellationToken);
+            status.Record(await scope.ServiceProvider.GetRequiredService<CanonicalFrameLoader>()
+                .Place(text, rules, cancellationToken));
+        }
+
+        await GiveEveryWordASearchableForm(cancellationToken);
+        await JoinTheVerses(cancellationToken);
+    }
+
     public async Task Run(CancellationToken stoppingToken)
     {
         try
