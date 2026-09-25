@@ -96,6 +96,8 @@ builder.Services.AddScoped<StrongLexiconLoader>();
 builder.Services.AddScoped<StrongGentilicLoader>();
 builder.Services.AddScoped<StrongTranslationLoader>();
 builder.Services.AddScoped<GreekGlossLoader>();
+builder.Services.AddScoped<GeezLexiconLoader>();
+builder.Services.AddScoped<GeezLexiconMeasure>();
 builder.Services.AddScoped<SyntaxLoader>();
 builder.Services.AddScoped<PrintedEditionLinkLoader>();
 builder.Services.AddScoped<GreekWitnessLinkLoader>();
@@ -775,6 +777,26 @@ if (args is ["locate", ..])
     return 0;
 }
 
+// Dillmann's lexicon of Ge'ez, for a corpus loaded before it was. The load does the same beside the
+// Greek glosses; this is that step alone.
+if (args is ["dillmann", ..])
+{
+    using var dillmannScope = app.Services.CreateScope();
+    Console.WriteLine(await dillmannScope.ServiceProvider.GetRequiredService<GeezLexiconLoader>()
+        .Load(Path.Combine(resources, "Dillmann")));
+    return 0;
+}
+
+// How many Ge'ez words reach Dillmann's lexicon, read from its files against the loaded corpus;
+// --sample <file> writes a hundred random matches out to be read by hand. Reads only.
+if (args is ["dillmann-measure", ..])
+{
+    using var measureScope = app.Services.CreateScope();
+    Console.WriteLine(await measureScope.ServiceProvider.GetRequiredService<GeezLexiconMeasure>()
+        .Measure(Path.Combine(resources, "Dillmann"), Option(args, "--sample"), 100, CancellationToken.None));
+    return 0;
+}
+
 // The pictures of people and places, drawn again from the images folder and its manifests in an
 // already loaded corpus. The load does the same as its last encyclopedia step; this is that step
 // alone, so a new portrait or a corrected credit arrives without reading the corpus again.
@@ -1028,6 +1050,6 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 logger.LogError(
     "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, marks, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
-    + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images and the evidentia family",
+    + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images, dillmann and the evidentia family",
     args[0]);
 return 1;

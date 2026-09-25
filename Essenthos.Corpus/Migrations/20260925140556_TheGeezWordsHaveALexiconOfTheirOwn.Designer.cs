@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260925140556_TheGeezWordsHaveALexiconOfTheirOwn")]
+    partial class TheGeezWordsHaveALexiconOfTheirOwn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1193,10 +1196,6 @@ namespace Essenthos.Core.Migrations
 
                     b.HasIndex("CanonicalBook", "CanonicalChapter", "CanonicalVerse")
                         .HasDatabaseName("ix_entity_verse_canonical_book_canonical_chapter_canonical_ver");
-
-                    b.HasIndex("EntityId", "CanonicalBook", "CanonicalChapter", "CanonicalVerse", "Source")
-                        .IsUnique()
-                        .HasDatabaseName("ix_entity_verse_entity_id_canonical_book_canonical_chapter_can");
 
                     b.ToTable("entity_verse", (string)null);
                 });
@@ -3118,10 +3117,6 @@ namespace Essenthos.Core.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("integer")
                         .HasColumnName("number");
-
-                    b.Property<int>("Sequence")
-                        .HasColumnType("integer")
-                        .HasColumnName("sequence");
 
                     b.Property<int>("TextId")
                         .HasColumnType("integer")

@@ -219,6 +219,7 @@ internal sealed class DatasetLoader(
             await RestoreWhatSwetesTranscriptionLost(resources, stoppingToken);
             await LemmatiseTheSeptuagint(resources, stoppingToken);
             await GlossTheGreek(resources, stoppingToken);
+            await GlossTheGeez(resources, stoppingToken);
             await ParseTheGreekASecondTime(resources, stoppingToken);
             await AnnotateTheGreek(resources, stoppingToken);
             await LinkTheOldTestament(resources, stoppingToken);
@@ -888,6 +889,20 @@ internal sealed class DatasetLoader(
         var loader = scope.ServiceProvider.GetRequiredService<GreekGlossLoader>();
         status.Record(await loader.Load(
             ResourcePaths.File(resources, "STEPBibleLexicons", "TBESG.txt"), cancellationToken));
+    }
+
+    /// <summary>
+    /// Dillmann's lexicon of Ge'ez, which the Ethiopic Bible's words reach by their letters when
+    /// they are read. It needs no text and no link, so its place in the load is only beside the
+    /// other lexicons.
+    /// </summary>
+    private async Task GlossTheGeez(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Ge'ez lexicon");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<GeezLexiconLoader>();
+        status.Record(await loader.Load(Path.Combine(resources, "Dillmann"), cancellationToken));
     }
 
     /// <summary>

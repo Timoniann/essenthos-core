@@ -107,10 +107,12 @@ public static class DatasetEndpoints
                 ? await db.StrongEntries.CountAsync(cancellationToken)
                 : dataset.Glossary
                     ? await db.LexiconGlosses
-                        .Where(gloss => gloss.Source.StartsWith(dataset.Prefix))
-                        .Select(gloss => gloss.Entry)
-                        .Distinct()
-                        .CountAsync(cancellationToken)
+                          .Where(gloss => gloss.Source.StartsWith(dataset.Prefix))
+                          .Select(gloss => gloss.Entry)
+                          .Distinct()
+                          .CountAsync(cancellationToken)
+                      + await db.GeezLexiconEntries
+                          .CountAsync(entry => entry.Source.StartsWith(dataset.Prefix), cancellationToken)
                     : 0;
 
             var counts = new DatasetCounts(

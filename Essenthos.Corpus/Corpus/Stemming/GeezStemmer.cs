@@ -187,13 +187,13 @@ internal static class GeezStemmer
     }
 
     /// <summary>The syllables of a word, without whatever else a typist put into it.</summary>
-    private static string Bare(string word) => new([.. word.Where(IsSyllable)]);
+    internal static string Bare(string word) => new([.. word.Where(IsSyllable)]);
 
-    private static bool IsSyllable(char letter) => letter is >= (char)FirstSyllable and <= (char)LastSyllable;
+    internal static bool IsSyllable(char letter) => letter is >= (char)FirstSyllable and <= (char)LastSyllable;
 
     private static int Row(char letter) => (letter - FirstSyllable) >> 3;
 
-    private static int Order(char letter) => (letter - FirstSyllable) & 7;
+    internal static int Order(char letter) => (letter - FirstSyllable) & 7;
 
     private static int Unrounded(int row) => Labiovelars.TryGetValue(row, out var plain) ? plain : row;
 

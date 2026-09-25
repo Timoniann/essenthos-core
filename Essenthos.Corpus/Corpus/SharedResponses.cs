@@ -275,6 +275,16 @@ internal record TextWordResponse(
     public LexiconGlossResponse? LexiconGloss { get; init; }
 
     /// <summary>
+    /// For a word of a text no lexicon of its own language glosses, what the Greek word it is aligned
+    /// to means — which is a statement about the Greek and the alignment, never about this word, and
+    /// says so by carrying the Greek word and the link's method and confidence with it.
+    /// </summary>
+    public ThroughGreekResponse? ThroughGreek { get; init; }
+
+    /// <summary>The entry of the Ge'ez lexicon this word is a form of, where that could be said without choosing.</summary>
+    public GeezEntryResponse? GeezEntry { get; init; }
+
+    /// <summary>
     /// The edition starts a new paragraph (<c>paragraph</c>) or a new line (<c>line</c>) before this
     /// word. Null where it marks nothing, which for most texts is everywhere: silence, not a claim
     /// that the text runs on.
@@ -294,6 +304,27 @@ internal record TextWordResponse(
 /// corpus proposed from its form. In that order the claim grows weaker, and a reader is told which.
 /// </param>
 internal record LexiconGlossResponse(string[] Glosses, string Via);
+
+/// <param name="Corpus">The Greek text the aligned word is in.</param>
+/// <param name="Word">The Greek word as that text prints it.</param>
+/// <param name="Glosses">What it means, as its edition glosses it or as the Greek lexicon does.</param>
+/// <param name="Method">What made the link, spelled as a link's method is: <c>aligner</c>.</param>
+internal record ThroughGreekResponse(
+    string Corpus,
+    string Word,
+    string? Lemma,
+    string[] Glosses,
+    string Method,
+    double? Confidence);
+
+/// <param name="Latin">Dillmann's first Latin glosses, in his order and untranslated.</param>
+/// <param name="Greek">The Greek Dillmann gives for it, the short equivalents first.</param>
+/// <param name="Via">
+/// <c>form</c> where the word is spelt as this headword and no other once what is written onto it
+/// is taken off; <c>greek</c> where several headwords could be meant and the Greek it is aligned to
+/// is Dillmann's Greek for this one.
+/// </param>
+internal record GeezEntryResponse(string Headword, string[] Latin, string[] Greek, string Via);
 
 /// <param name="Method">What produced the number, spelled as a link's method is: <c>lexical</c>.</param>
 /// <param name="Confidence">How sure, between 0 and 1; null only where a source stated it.</param>
