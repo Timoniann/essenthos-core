@@ -55,7 +55,7 @@ internal static class Recipe
         + "here when it finishes; the load replays them after its own linking steps, skipping what the corpus already holds.";
 
     private static readonly HashSet<string> Recorded =
-        ["align", "compose", "names", "possessives", "strong", "synodal-strong", "union-strong", "interlinear-join", "correct", "reload"];
+        ["align", "compose", "names", "possessives", "unshare", "strong", "synodal-strong", "union-strong", "interlinear-join", "correct", "reload"];
 
     private static readonly JsonSerializerOptions Json = new()
     {
@@ -84,7 +84,7 @@ internal static class Recipe
         && Recorded.Contains(args[0])
         && Environment.GetEnvironmentVariable(Replaying) is null
         && !args.Contains("--dry-run")
-        && (args[0] is not ("names" or "possessives") || args.Contains("--apply"))
+        && (args[0] is not ("names" or "possessives" or "unshare") || args.Contains("--apply"))
         && (args[0] != "interlinear-join" || args.Contains("--replace"));
 
     public static void Record(string resources, string[] args, DateTimeOffset at)

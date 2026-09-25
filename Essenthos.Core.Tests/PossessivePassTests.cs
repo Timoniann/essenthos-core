@@ -27,7 +27,7 @@ public sealed class PossessivePassTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM text");
 
         _russian = Corpus.Add(_db, "RUSV", TextKind.Translation, "rus",
-            (4, 8, ["и", "восстал", "Каин", "на", "Авеля", "брата", "своего", "и", "мой", "его"]));
+            (4, 8, ["и", "восстал", "Каин", "на", "Авеля", "брата", "своего", "и", "мой", "его", "и", "ты"]));
         _hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
             (4, 8, ["וַ", "יָּקָם", "קַיִן", "אֶל", "הֶבֶל", "אָחִיו", "וַ", "יַּהַרְגֵהוּ"]));
         _db.SaveChanges();
@@ -78,6 +78,28 @@ public sealed class PossessivePassTests : IDisposable
         var report = await new PossessivePass(_db, NullLogger<PossessivePass>.Instance).Run("RUSV", "BHSA", apply: false);
 
         report.Should().StartWith("RUSV to BHSA: 0 possessives");
+    }
+
+    /// <summary>
+    /// своего beside брата shares אָחִיו rightly, and so does его four words away, since it agrees
+    /// with the suffix; и is not a pronoun; ты on the same word agrees with nothing on it and goes.
+    /// </summary>
+    [Fact]
+    public async Task APronounApartFromTheWordThatRendersTheSameHebrewAndDisagreeingWithItIsWithdrawn()
+    {
+        Link(6, 6); // брата → אָחִיו
+        Link(7, 6); // своего → אָחִיו, beside it
+        Link(10, 6); // его → אָחִיו, apart but agreeing
+        Link(12, 6); // ты → אָחִיו, apart and second person
+        Link(1, 6); // и → אָחִיו, not a pronoun
+
+        var report = await new SharedWordPass(_db, NullLogger<SharedWordPass>.Instance).Run("RUSV", "BHSA", apply: true);
+
+        report.Should().StartWith("RUSV to BHSA: 1 aligner links");
+        var left = await _db.Links.AsNoTracking()
+            .Select(link => link.Words.Single(word => word.Side == LinkSide.From).Word!.Position)
+            .ToListAsync();
+        left.Should().BeEquivalentTo([1, 6, 7, 10]);
     }
 
     private static JsonDocument Suffix(string person, string number, string gender) =>
