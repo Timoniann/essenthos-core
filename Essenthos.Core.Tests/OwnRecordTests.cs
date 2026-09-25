@@ -286,8 +286,9 @@ public sealed class OwnRecordTests : IDisposable
             var name = written.Names.Should().ContainSingle().Which;
             name.Label.Should().Be(ruling.Create!.Name);
             name.Kind.Should().Be("proper name");
-            name.HebrewStrongNumber.Should().Be(ruling.StrongNumber);
-            name.GreekStrongNumber.Should().BeNull();
+            var greek = ruling.StrongNumber.StartsWith('G');
+            name.HebrewStrongNumber.Should().Be(greek ? null : ruling.StrongNumber);
+            name.GreekStrongNumber.Should().Be(greek ? ruling.StrongNumber : null);
         }
     }
 

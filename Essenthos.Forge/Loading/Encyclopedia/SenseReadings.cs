@@ -248,6 +248,8 @@ internal static class SenseReadingFiles
 
     private const string GenealogyResource = "Essenthos.Core.Loading.Encyclopedia.GenealogyRecords.json";
 
+    private const string SeveralPeopleResource = "Essenthos.Core.Loading.Encyclopedia.SeveralPeopleRecords.json";
+
     private static readonly JsonSerializerOptions Shape = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -388,9 +390,18 @@ internal static class SenseReadingFiles
     /// </summary>
     public static OwnRecordRulings GenealogyRulings() => Embedded<OwnRecordRulings>(GenealogyResource);
 
+    /// <summary>
+    /// The occurrences of records that held several people, given to the one the verse names, and the
+    /// descriptions the verse contradicts, corrected.
+    /// </summary>
+    public static OwnRecordRulings SeveralPeopleRulings() => Embedded<OwnRecordRulings>(SeveralPeopleResource);
+
     /// <summary>Every rulings file, in the order they were decided.</summary>
     public static IReadOnlyList<OwnRecordRulings> AllRulings() =>
-        [Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings()];
+    [
+        Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings(),
+        SeveralPeopleRulings(),
+    ];
 
     private static T Embedded<T>(string name)
     {

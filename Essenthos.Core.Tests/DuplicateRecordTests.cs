@@ -345,6 +345,26 @@ public sealed class DuplicateRecordTests : IDisposable
     }
 
     /// <summary>
+    /// Two records that both hold the name, the dataset's verses on the wrong one: the verses and the
+    /// words move and each record keeps its own name.
+    /// </summary>
+    [Fact]
+    public async Task ASplitWithoutANameMovesTheVersesAndLeavesTheNames()
+    {
+        Names(_folded, LinkMethod.Lexical, 0.9, "the lexicon");
+        Labels(_folded, 1, 9, 11, "Helkiah", BibleData);
+        _db.EntityNames.Add(new EntityName { Entity = _folded, Label = "Helkiah", HebrewStrongNumber = "H2518" });
+        await _db.SaveChangesAsync();
+
+        var parted = await _loader.Split([Helkiah with { Name = null }]);
+
+        parted.Should().Be(2);
+        (await _db.WordEntities.AsNoTracking().SingleAsync()).EntityId.Should().Be(_meshullam.Id);
+        (await _db.EntityVerses.AsNoTracking().SingleAsync()).EntityId.Should().Be(_meshullam.Id);
+        (await _db.EntityNames.AsNoTracking().SingleAsync()).EntityId.Should().Be(_folded.Id);
+    }
+
+    /// <summary>
     /// His own record already names the word, by the owner's ruling: the dataset's annotation is not
     /// kept beside it, and what it said stays as the ruling's claim.
     /// </summary>

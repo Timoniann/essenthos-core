@@ -1,0 +1,135 @@
+{
+  "decidedBy": "Essenthos, 2026-09-25, on the report that some person records hold several people and some say the wrong thing about the one they hold, each occurrence read against its verse by claude-opus-5-5",
+  "policy": "A record is one person. Where a record held the verses of another man or woman of the same name, the occurrences the verse itself settles are given to the person it names, and a person the encyclopedia did not hold is written here with who else it might be. An identification the text leaves open is not ruled here; a description the verse contradicts is corrected, with the verse.",
+  "method": "manual",
+  "source": "Essenthos, on the report of records holding several people, each occurrence read against its verse by claude-opus-5-5, 2026-09-25",
+  "rulings": [
+    {
+      "wordId": 6927343,
+      "reference": "Luke 6:16",
+      "strongNumber": "G2455",
+      "create": {
+        "slug": "judas-of-james",
+        "kind": "person",
+        "name": "Judas",
+        "distinguisher": "of James, one of the Twelve in Luke's list (LUK 6:16; ACT 1:13), 'not Iscariot' (JHN 14:22)",
+        "notes": "Luke 6:16 lists two men called Judas among the Twelve, Judas of James and Judas Iscariot, and Acts 1:13 lists Judas of James again after the betrayer's death. John 14:22 says of the Judas who asks the Lord a question that he is 'not Iscariot'."
+      },
+      "alternatives": [
+        {
+          "slug": "thaddaeus",
+          "reason": "Matthew 10:3 and Mark 3:18 list Thaddaeus where Luke lists Judas of James, and the harmonies take the two for one man. The text does not say so."
+        }
+      ],
+      "why": "Luke 6:16 names 'Judas of James, and Judas Iscariot, which also was the traitor': the first Judas of the verse is not the betrayer, and the encyclopedia held no record of him."
+    },
+    {
+      "wordId": 6842531,
+      "reference": "Daniel 9:1",
+      "strongNumber": "H325",
+      "create": {
+        "slug": "ahasuerus-father-of-darius",
+        "kind": "person",
+        "name": "Ahasuerus",
+        "distinguisher": "father of Darius the Mede (DAN 9:1)",
+        "notes": "Daniel 9:1 names him only as the father of Darius, 'of the seed of the Medes', who took the kingdom when Babylon fell (DAN 5:31) and before the reign of Cyrus (DAN 6:28)."
+      },
+      "alternatives": [
+        {
+          "slug": "ahasuerus",
+          "reason": "The encyclopedia holds one Ahasuerus for Ezra 4:6, Esther and this verse. Ezra 4:5-7 places its Ahasuerus after Cyrus, and this one's son was already sixty-two when Babylon fell before Cyrus reigned, so the text does not let them be one king; which king of the Medes he was it does not say."
+        }
+      ],
+      "why": "Daniel 9:1 dates the vision to 'the first year of Darius the son of Ahasuerus, of the seed of the Medes'. The king of Esther and of Ezra 4:6 reigns after Cyrus; the father of the Mede who received the kingdom at Babylon's fall is another man."
+    },
+    {
+      "wordId": 6486681,
+      "reference": "Genesis 36:24",
+      "strongNumber": "H6034",
+      "create": {
+        "slug": "anah-son-of-zibeon",
+        "kind": "person",
+        "name": "Anah",
+        "distinguisher": "son of Zibeon (GEN 36:24), father of Aholibamah, Esau's wife (GEN 36:25)",
+        "notes": "Genesis 36:24 names 'the children of Zibeon; both Ajah, and Anah: this was that Anah that found the mules in the wilderness', and 36:25 his children, Dishon and Aholibamah the daughter of Anah, whom Esau took to wife (36:2). Genesis 36:20 counts another Anah among the sons of Seir, Zibeon's brother."
+      },
+      "alternatives": [
+        {
+          "slug": "beeri",
+          "reason": "The encyclopedia held him as Beeri the Hittite, the father of Esau's wife Judith (GEN 26:34), taking Esau's wives of 26:34 and 36:2 for the same women under other names. The text does not say so, and 36:2 calls Anah's line Hivite."
+        },
+        {
+          "slug": "anah",
+          "reason": "Genesis 36:20 and 1 Chronicles 1:38 count an Anah among the sons of Seir, and 1 Chronicles 1:41's 'sons of Anah; Dishon' could be read as his; Genesis 36:24 makes the father of Aholibamah Zibeon's son, the nephew of that Anah."
+        }
+      ],
+      "why": "Genesis 36:24 names this Anah as the son of Zibeon, the one who found the mules in the wilderness. The encyclopedia held him on its record of Beeri the Hittite, and his uncle of the same name, the son of Seir, on another."
+    },
+    {
+      "wordId": 6883035,
+      "reference": "2 Chronicles 20:14",
+      "strongNumber": "H4983",
+      "existing": "mattaniah-11",
+      "why": "2 Chronicles 20:14 traces Jahaziel, who prophesied to Jehoshaphat, to 'Mattaniah, a Levite of the sons of Asaph': an ancestor in Jehoshaphat's day, centuries before the Mattaniah son of Micha of Nehemiah 11:17."
+    },
+    {
+      "wordId": 6550635,
+      "reference": "Numbers 22:4",
+      "strongNumber": "H1111",
+      "existing": "balak",
+      "says": {
+        "distinguisher": "king of Moab (NUM 22:4), son of Zippor (NUM 22:2)"
+      },
+      "why": "'Balak the son of Zippor was king of the Moabites at that time.' The record called him a Midianite prophet; he is the king of Moab who hired the prophet Balaam, and the Midianites are his allies in the verse, not his people."
+    },
+    {
+      "wordId": 6911145,
+      "reference": "Matthew 27:56",
+      "strongNumber": "G3137",
+      "existing": "mary-2",
+      "why": "Matthew 27:56 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
+    },
+    {
+      "wordId": 6911228,
+      "reference": "Matthew 27:61",
+      "strongNumber": "G3137",
+      "existing": "mary-2",
+      "why": "Matthew 27:61 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
+    },
+    {
+      "wordId": 6911332,
+      "reference": "Matthew 28:1",
+      "strongNumber": "G3137",
+      "existing": "mary-2",
+      "why": "Matthew 28:1 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
+    },
+    {
+      "wordId": 6922457,
+      "reference": "Mark 15:40",
+      "strongNumber": "G3137",
+      "existing": "mary-2",
+      "why": "Mark 15:40 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
+    },
+    {
+      "wordId": 6922581,
+      "reference": "Mark 15:47",
+      "strongNumber": "G3137",
+      "existing": "mary-2",
+      "why": "Mark 15:47 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
+    },
+    {
+      "wordId": 6922595,
+      "reference": "Mark 16:1",
+      "strongNumber": "G3137",
+      "existing": "mary-2",
+      "why": "Mark 16:1 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
+    },
+    {
+      "wordId": 6941692,
+      "reference": "Luke 24:10",
+      "strongNumber": "G3137",
+      "existing": "mary-2",
+      "why": "Luke 24:10 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
+    }
+  ]
+}
