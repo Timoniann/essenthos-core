@@ -325,6 +325,14 @@ internal sealed record IntegrityCheck(string Breaks, int Found);
 internal sealed record SharedAddresses(string Text, bool Labelled, int Addresses, int Verses);
 
 /// <summary>
+/// A book of a text that has a counterpart in a witness the text is linked to, and not one word of
+/// it linked: alignment work not yet done there, rather than alignment that lost something.
+/// </summary>
+/// <param name="Book">The book's name as the text prints it.</param>
+/// <param name="Words">Its words that had a counterpart to reach, all of them silent.</param>
+internal sealed record Unaligned(string Text, int Ordinal, string Book, int Words);
+
+/// <summary>
 /// What one load produced. Every field is a query, and the point of storing it is that the next
 /// load can be compared with it.
 /// </summary>
@@ -338,7 +346,8 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<Agreement> Agreement,
     IReadOnlyList<Vote> Vote,
     IReadOnlyList<IntegrityCheck> Integrity,
-    IReadOnlyList<SharedAddresses> Shared)
+    IReadOnlyList<SharedAddresses> Shared,
+    IReadOnlyList<Unaligned> Unaligned)
 {
     /// <summary>
     /// The share of links more than one method claims. It is the number the corpus could not
@@ -369,6 +378,20 @@ internal sealed record CorpusMeasures(
     public double Rendered => Words is > 0
         ? (double)(RenderedWords + AbsentWords) / Words
         : 0;
+
+    /// <summary>
+    /// <see cref="Rendered"/> over the books alignment has reached: the books in
+    /// <see cref="Unaligned"/> leave the denominator, and nothing leaves the numerator, since not
+    /// one of their words is linked. This is the share the floor holds, because a book nobody has
+    /// aligned yet is work still to do and not something a load lost; the books it sets aside are
+    /// named in the report, so nothing unaligned is hidden by it.
+    /// </summary>
+    public double Aligned => Words - UnalignedWords is var reached and > 0
+        ? (double)(RenderedWords + AbsentWords) / reached
+        : 0;
+
+    /// <summary>Words in the books of <see cref="Unaligned"/>, all inside <see cref="Words"/>.</summary>
+    public int UnalignedWords => (Unaligned ?? []).Sum(u => u.Words);
 
     /// <summary>
     /// The two numbers <see cref="Rendered"/> is the ratio of, published beside it.
@@ -432,6 +455,13 @@ internal sealed record CorpusMeasures(
 
         report.AppendLine($"  {RenderedWords} of {Words} words had a counterpart to reach and reached it, and {AbsentWords} are shown to have none; " +
                           $"{UnpairedWords} more have none in this corpus and are outside the share");
+
+        report.AppendLine($"  {Aligned:P1} over the books alignment has reached; {UnalignedWords} words in {(Unaligned ?? []).Count} books " +
+                          "of a linked text are not aligned yet and are outside that share");
+        foreach (var text in (Unaligned ?? []).GroupBy(u => u.Text))
+        {
+            report.AppendLine($"    {text.Key}: " + string.Join(", ", text.Select(u => $"{u.Book} {u.Words}")));
+        }
 
         report.AppendLine("reach         lexical    reached   share, then what reached them");
         foreach (var r in Reach)

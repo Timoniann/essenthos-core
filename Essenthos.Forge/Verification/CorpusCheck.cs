@@ -125,6 +125,54 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         """;
 
     /// <summary>
+    /// The books of each text <see cref="CoverageSql"/> counts where some words had a counterpart to
+    /// reach and not one word reaches or is shown absent from a witness: a text loaded whose
+    /// alignment has not reached that book yet. Counted over the same words as coverage's
+    /// denominator, so subtracting them from it is exact.
+    /// </summary>
+    private const string UnalignedSql =
+        """
+        WITH witness AS (
+            SELECT DISTINCT l.from_text_id, l.to_text_id
+            FROM link l
+            JOIN text other ON other.id = l.to_text_id AND other.kind <> 'translation'
+        ),
+        placed AS (
+            SELECT v.id AS verse_id, v.text_id, v.book_id, r.canonical_book AS book,
+                   r.canonical_chapter AS chapter, r.canonical_verse AS verse
+            FROM verse v
+            JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+        ),
+        paired AS (
+            SELECT DISTINCT here.verse_id
+            FROM placed here
+            JOIN witness w ON w.from_text_id = here.text_id
+            JOIN placed there ON there.text_id = w.to_text_id
+                AND (there.book, there.chapter, there.verse) = (here.book, here.chapter, here.verse)
+        ),
+        claimed AS (
+            SELECT DISTINCT lw.word_id
+            FROM link_word lw
+            JOIN link l ON l.id = lw.link_id
+            JOIN text other ON other.id = l.to_text_id AND other.kind <> 'translation'
+            WHERE lw.side = 'from'
+        )
+        SELECT t.slug, b.canonical_ordinal, b.name,
+               count(*) FILTER (WHERE pv.verse_id IS NOT NULL)
+        FROM word w
+        JOIN text t ON t.id = w.text_id
+        JOIN placed p ON p.verse_id = w.verse_id
+        JOIN book b ON b.id = p.book_id
+        LEFT JOIN claimed c ON c.word_id = w.id
+        LEFT JOIN paired pv ON pv.verse_id = w.verse_id
+        WHERE t.kind = 'translation'
+           OR EXISTS (SELECT 1 FROM witness x WHERE x.from_text_id = w.text_id)
+        GROUP BY t.slug, b.canonical_ordinal, b.name
+        HAVING count(c.word_id) = 0 AND count(*) FILTER (WHERE pv.verse_id IS NOT NULL) > 0
+        ORDER BY t.slug, b.canonical_ordinal
+        """;
+
+    /// <summary>
     /// A verse pair whose links are all faint, which is what a wrong pairing looks like from
     /// underneath. The links themselves are individually unremarkable and the verse as a whole is
     /// not: Leviticus 11:15 in Brenton is Masoretic 11:16, so every link in it names the wrong
@@ -728,8 +776,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             await restore.ExecuteNonQueryAsync(cancellationToken);
         }
 
+        var unaligned = await Read(connection, UnalignedSql, cancellationToken, reader => new Unaligned(
+            reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3)));
+
         return new CorpusMeasures(
-            coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity, shared);
+            coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity, shared, unaligned);
     }
 
     /// <summary>The edition Nestle voted, and the two of his three voters the corpus holds.</summary>

@@ -98,6 +98,39 @@ public sealed class CorpusCheckTests : IDisposable
     }
 
     /// <summary>
+    /// A book of a linked text that no link has reached yet is work to do, not a loss: it is named,
+    /// and the floor's share is taken without it, while the published share still counts it.
+    /// </summary>
+    [Fact]
+    public async Task ABookNotAlignedYetIsNamedAndLeftOutOfTheFloorsShare()
+    {
+        _db.AddBook(_hebrew, 2, "Exodus", (2, 1, ["וְ", "אֵלֶּה"]));
+        _db.AddBook(_english, 2, "Exodus", (2, 1, ["Now", "these"]));
+        _db.SaveChanges();
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+        Link(LinkRelation.Renders, english: 2, hebrew: 2);
+
+        var measures = await _check.Measure();
+
+        measures.Unaligned.Should().ContainSingle()
+            .Which.Should().Be(new Unaligned("KJV", 2, "Exodus", 2));
+        measures.Rendered.Should().BeApproximately(2d / 5, 1e-12);
+        measures.Aligned.Should().BeApproximately(2d / 3, 1e-12);
+        measures.Describe().Should().Contain("KJV: Exodus 2");
+    }
+
+    [Fact]
+    public async Task ABookWithOneLinkedWordIsAlignedWorkAndCountsInTheFloor()
+    {
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+
+        var measures = await _check.Measure();
+
+        measures.Unaligned.Should().BeEmpty();
+        measures.Aligned.Should().Be(measures.Rendered);
+    }
+
+    /// <summary>
     /// The direction the forward count hides. Here the English is fully rendered and half the
     /// Hebrew is untouched, and only this measure says so.
     /// </summary>
