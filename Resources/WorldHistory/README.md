@@ -10,13 +10,13 @@ share-alike condition on the world layer would reach the corpus it sits beside. 
 carries a condition at all. Attribution is still recorded on every row, because a date a reader
 cannot check is not worth drawing.
 
-Fetched **2 September 2026** from `https://query.wikidata.org/sparql`.
+Fetched **25 September 2026** from (first fetched 2 September 2026) `https://query.wikidata.org/sparql`.
 
 | File | Query | Rows | What it is |
 |---|---|---|---|
-| `wikidata-events.csv` | `wd_events.rq` | 1,497 | Things with a *point in time* — mostly battles, sieges, treaties, eruptions |
-| `wikidata-inception.csv` | `wd_inception.rq` | 1,293 | Things with an *inception* — cities founded, dynasties begun, works written |
-| `wikidata-spans.csv` | `wd_spans.rq` | 349 | Things with a *start* and an *end* — wars, empires, dynasties, archaeological ages |
+| `wikidata-events.csv` | `wd_events.rq` | 1,684 | Things with a *point in time* — mostly battles, sieges, treaties, eruptions |
+| `wikidata-inception.csv` | `wd_inception.rq` | 2,708 | Things with an *inception* — cities founded, dynasties begun, works written |
+| `wikidata-spans.csv` | `wd_spans.rq` | 440 | Things with a *start* and an *end* — wars, empires, dynasties, archaeological ages |
 
 Rows outnumber items: an item with three `instance of` values and two countries comes back six
 times. The loader keeps the first of each and counts the rest as nothing.
@@ -57,6 +57,5 @@ it has them, else the country's inception and dissolution, and whether it is a *
 The loader keeps the one that has not ended as today's country and the one whose years contain the
 event's as the country of the time, and states neither where nothing qualifies.
 
-**The CSVs above predate that change.** Until they are fetched again with the queries as they now
-stand, they carry the one best-ranked country per row and no years, and the loader reads the first
-country an item names as today's or the last known, with no country of the time.
+The CSVs were fetched again on 25 September 2026 with the queries as they now stand, so an item can
+appear on several rows, one per country statement; row counts above are rows, not items.
