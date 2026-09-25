@@ -97,6 +97,57 @@ public sealed class SamaritanLinkLoadTests : IDisposable
     }
 
     /// <summary>
+    /// The altar of incense in small: a passage the Masoretic numbers as a verse of its own and the
+    /// Samaritan writes inside a verse further up. It is one passage in two places, so it is
+    /// written as <c>transposes</c> against the verse where the Masoretic has it, and not as a plus
+    /// in one place and nothing in the other.
+    /// </summary>
+    [Fact]
+    public async Task APassageWrittenElsewhereIsTransposedNotAddedAndSilent()
+    {
+        var links = await Reload(
+            [(1, 1, ["ברא", "אלהים"]), (1, 2, ["ארץ", "מזבח", "קטרת", "עצי", "שטים"]), (1, 3, ["אור"])],
+            [(1, 1, ["ברא", "אלהים"]), (1, 2, ["ארץ"]), (1, 3, ["אור"]), (1, 4, ["מזבח", "קטרת", "עצי", "שטים"])]);
+
+        var moved = links.Where(l => l.Relation == LinkRelation.Transposes).ToList();
+        moved.Should().HaveCount(4);
+        moved.SelectMany(l => _db.Side(l.Id, LinkSide.To)).Should().OnlyContain(w => _db.Verses.Single(v => v.Id == w.VerseId).Number == 4);
+        moved.SelectMany(l => _db.Side(l.Id, LinkSide.From)).Should().OnlyContain(w => _db.Verses.Single(v => v.Id == w.VerseId).Number == 2);
+        links.Should().NotContain(l => l.Relation == LinkRelation.Expands || l.Relation == LinkRelation.Omits);
+    }
+
+    /// <summary>
+    /// Deuteronomy 34:2-3, which the Samaritan writes inside 34:1: the same words in the same place,
+    /// only numbered as one verse, so they correspond as they are rather than as a move.
+    /// </summary>
+    [Fact]
+    public async Task VersesWrittenInsideTheVerseBeforeCorrespondInPlace()
+    {
+        var links = await Reload(
+            [(1, 1, ["ברא", "אלהים", "מזבח", "קטרת"]), (1, 3, ["אור"])],
+            [(1, 1, ["ברא", "אלהים"]), (1, 2, ["מזבח", "קטרת"]), (1, 3, ["אור"])]);
+
+        links.Should().OnlyContain(l => l.Relation == LinkRelation.Equals);
+        links.Should().HaveCount(5);
+    }
+
+    private async Task<List<Link>> Reload(
+        (int, int, string[])[] samaritan,
+        (int, int, string[])[] masoretic)
+    {
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
+        _db.ChangeTracker.Clear();
+        var from = Corpus.Add(_db, "SP", TextKind.ManuscriptTradition, "hbo", samaritan);
+        var to = Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo", masoretic);
+        from.Versification = Versification.Original;
+        to.Versification = Versification.Original;
+        await _db.SaveChangesAsync();
+
+        await _loader.Load(from.Slug, to.Slug);
+        return await _db.Links.Where(l => l.FromTextId == from.Id && l.ToTextId == to.Id).ToListAsync();
+    }
+
+    /// <summary>
     /// Nobody states these correspondences, so every one of them is an inference and has to look
     /// like one: a method that is not <c>stated-by-source</c>, and a confidence. A check constraint
     /// holds the two apart, so an inference cannot be stored looking like scholarship.

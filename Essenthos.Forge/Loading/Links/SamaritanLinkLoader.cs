@@ -32,13 +32,21 @@ internal sealed record SamaritanLinkOutcome(
     IReadOnlyList<(string Book, int Expanded, int Omitted)> ByBook,
     TimeSpan Elapsed)
 {
+    /// <summary>
+    /// Words the Samaritan writes somewhere other than where the Masoretic does, paired with the
+    /// Masoretic words where they stand there — the altar of incense, which is Exodus 30:1-10 in one
+    /// and part of 26:35 in the other.
+    /// </summary>
+    public int Transposed { get; init; }
+
     public override string ToString() =>
         AlreadyLoaded
             ? "the Samaritan Pentateuch is already linked to BHSA"
             : $"{Links} links over {Verses} verses in {Elapsed}: {Identical} where the two witnesses write the " +
               $"same consonants, {Differing} where they write the same word differently, {Expanded} the " +
               $"Samaritan has and the Masoretic has not, {Omitted} the Masoretic has and the Samaritan has " +
-              $"not, over {Unpaired} verses one numbers and the other does not. Plus and minus per book: " +
+              $"not, {Transposed} it writes elsewhere, over {Unpaired} verses one numbers and the other does " +
+              "not. Plus and minus per book: " +
               string.Join("; ", ByBook.Select(b => $"{b.Book} +{b.Expanded} -{b.Omitted}"));
 }
 
@@ -112,6 +120,7 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
         var byBook = new SortedDictionary<int, (int Expanded, int Omitted)>();
         var verses = 0;
         var unpaired = 0;
+        var expandedAt = new Dictionary<(int Book, int Chapter, int Verse), List<HebrewDraft>>();
 
         foreach (var (address, left) in here.OrderBy(entry => entry.Key.Book)
                      .ThenBy(entry => entry.Key.Chapter).ThenBy(entry => entry.Key.Verse))
@@ -125,6 +134,11 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
             verses++;
             var before = drafts.Count;
             Pair(left, right, drafts);
+            var added = drafts.Skip(before).Where(d => d.Relation == LinkRelation.Expands).ToList();
+            if (added.Count > 0)
+            {
+                expandedAt[address] = added;
+            }
 
             var expanded = 0;
             var omitted = 0;
@@ -139,6 +153,13 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
         }
 
         unpaired += there.Keys.Count(address => !here.ContainsKey(address));
+        var (placed, moved, changed) = Relocate(here, there, expandedAt, drafts);
+        unpaired -= placed;
+        foreach (var (book, expanded, omitted) in changed)
+        {
+            var counted = byBook.GetValueOrDefault(book);
+            byBook[book] = (counted.Expanded + expanded, counted.Omitted + omitted);
+        }
 
         await Write(from.Id, to.Id, drafts, cancellationToken);
 
@@ -155,10 +176,102 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
                 BibleBookAbbreviation.GetByOrdinal(entry.Key)?.FullName.Full ?? entry.Key.ToString(),
                 entry.Value.Expanded,
                 entry.Value.Omitted))],
-            started.Elapsed);
+            started.Elapsed)
+        {
+            Transposed = moved,
+        };
 
         logger.LogInformation("Linked {From} to {To}: {Outcome}", fromSlug, toSlug, outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// Verses the Masoretic numbers and the Samaritan does not, looked for among the words the
+    /// Samaritan has and the Masoretic has not in the same book. Where one verse's surplus holds
+    /// most of such a run, the surplus is aligned against the run instead of standing as a plus with
+    /// no matching minus: in place where it is the verse just before the run — Deuteronomy 34:1,
+    /// which the Samaritan writes with 34:2-3 inside it — and as <c>transposes</c> where it is
+    /// anywhere else, which is Exodus 26:35 holding the altar of incense.
+    /// </summary>
+    private static (int Placed, int Moved, List<(int Book, int Expanded, int Omitted)> Changed) Relocate(
+        Dictionary<(int Book, int Chapter, int Verse), List<HebrewWord>> here,
+        Dictionary<(int Book, int Chapter, int Verse), List<HebrewWord>> there,
+        Dictionary<(int Book, int Chapter, int Verse), List<HebrewDraft>> expandedAt,
+        List<HebrewDraft> drafts)
+    {
+        var changed = new List<(int Book, int Expanded, int Omitted)>();
+        var placed = 0;
+        var moved = 0;
+        var replaced = new HashSet<HebrewDraft>(ReferenceEqualityComparer.Instance);
+
+        foreach (var run in Runs(there.Keys.Where(address => !here.ContainsKey(address))))
+        {
+            var runWords = run.SelectMany(address => there[address]).ToList();
+            ((int Book, int Chapter, int Verse) Host, List<HebrewDraft> Pairs, int Matched)? best = null;
+
+            foreach (var (host, surplus) in expandedAt.Where(entry => entry.Key.Book == run[0].Book))
+            {
+                var ids = surplus.SelectMany(d => d.From).ToHashSet();
+                var trial = new List<HebrewDraft>();
+                Pair([.. here[host].Where(w => ids.Contains(w.Id))], runWords, trial);
+                var matched = trial
+                    .Where(d => d.Relation is LinkRelation.Equals or LinkRelation.Renders)
+                    .Sum(d => d.To.Count);
+                if (best is null || matched > best.Value.Matched)
+                {
+                    best = (host, trial, matched);
+                }
+            }
+
+            if (best is not { } found || found.Matched * MostOfTheRun < runWords.Count)
+            {
+                continue;
+            }
+
+            var inPlace = found.Host.Chapter == run[0].Chapter && found.Host.Verse == run[0].Verse - 1;
+            var surplusDrafts = expandedAt[found.Host];
+            replaced.UnionWith(surplusDrafts);
+            expandedAt.Remove(found.Host);
+
+            foreach (var draft in found.Pairs)
+            {
+                var corresponds = draft.Relation is LinkRelation.Equals or LinkRelation.Renders;
+                drafts.Add(corresponds && !inPlace ? draft with { Relation = LinkRelation.Transposes } : draft);
+                moved += corresponds && !inPlace ? draft.From.Count : 0;
+            }
+
+            placed += run.Count;
+            changed.Add((
+                run[0].Book,
+                found.Pairs.Count(d => d.Relation == LinkRelation.Expands) - surplusDrafts.Count,
+                found.Pairs.Count(d => d.Relation == LinkRelation.Omits)));
+        }
+
+        drafts.RemoveAll(replaced.Contains);
+        return (placed, moved, changed);
+    }
+
+    /// <summary>A match on at least half the run's words, so a stray plus elsewhere never claims it.</summary>
+    private const int MostOfTheRun = 2;
+
+    private static List<List<(int Book, int Chapter, int Verse)>> Runs(
+        IEnumerable<(int Book, int Chapter, int Verse)> addresses)
+    {
+        var runs = new List<List<(int Book, int Chapter, int Verse)>>();
+        foreach (var address in addresses.Order())
+        {
+            if (runs.Count > 0 && runs[^1][^1] is var last
+                && last.Book == address.Book && last.Chapter == address.Chapter && last.Verse + 1 == address.Verse)
+            {
+                runs[^1].Add(address);
+            }
+            else
+            {
+                runs.Add([address]);
+            }
+        }
+
+        return runs;
     }
 
     /// <summary>

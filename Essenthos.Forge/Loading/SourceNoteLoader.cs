@@ -255,9 +255,29 @@ internal sealed class SourceNoteLoader(AppDbContext db, ILogger<SourceNoteLoader
         foreach (var (verse, address) in added)
         {
             verses[address] = verse.Id;
+            await db.Database.ExecuteSqlInterpolatedAsync(SlotByNumber(verse.Id), cancellationToken);
         }
         logger.LogInformation(
             "{Slug}: added {Verses} note-only verse slots missing from the earlier corpus load",
             text.Slug, missing.Count);
     }
+
+    /// <summary>
+    /// A slot added after the load has no place in the edition's order of its own, so it takes the
+    /// one its number gives it: straight after the verse numbered before it, with every verse the
+    /// edition writes later moved one along.
+    /// </summary>
+    private static FormattableString SlotByNumber(int verseId) => $"""
+        WITH slot AS (
+            SELECT v.id, v.chapter_id,
+                   coalesce((SELECT max(o.sequence) FROM verse o
+                             WHERE o.chapter_id = v.chapter_id AND o.id <> v.id
+                               AND (o.number, o.label) < (v.number, v.label)), 0) + 1 AS sequence
+            FROM verse v WHERE v.id = {verseId}),
+        moved AS (
+            UPDATE verse o SET sequence = o.sequence + 1
+            FROM slot
+            WHERE o.chapter_id = slot.chapter_id AND o.id <> slot.id AND o.sequence >= slot.sequence)
+        UPDATE verse v SET sequence = slot.sequence FROM slot WHERE v.id = slot.id
+        """;
 }

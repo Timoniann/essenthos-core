@@ -589,6 +589,61 @@ public sealed class CorpusCheckTests : IDisposable
             .Which.Now.Should().Be(fewer);
     }
 
+    /// <summary>
+    /// Two verses of one text at one canonical address is counted, and kept apart from the
+    /// lettered kind the Septuagint prints on purpose.
+    /// </summary>
+    [Fact]
+    public async Task VersesSharingAnAddressAreCountedWithAndWithoutALetter()
+    {
+        var first = _db.VerseAt(_english, 1, 1);
+        var extra = new Verse
+        {
+            TextId = _english.Id, BookId = first.BookId, ChapterId = first.ChapterId,
+            ChapterNumber = 1, Number = 2,
+        };
+        var lettered = new Verse
+        {
+            TextId = _hebrew.Id, BookId = _db.VerseAt(_hebrew, 1, 1).BookId,
+            ChapterId = _db.VerseAt(_hebrew, 1, 1).ChapterId, ChapterNumber = 1, Number = 1, Label = "a",
+        };
+        foreach (var verse in (Verse[])[extra, lettered])
+        {
+            _db.Verses.Add(verse);
+            _db.VerseReferences.Add(new VerseReference
+            {
+                Verse = verse, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 1, IsPrimary = true,
+            });
+        }
+        await _db.SaveChangesAsync();
+
+        var shared = (await _check.Measure()).Shared;
+
+        shared.Should().BeEquivalentTo([
+            new SharedAddresses("BHSA", Labelled: true, Addresses: 1, Verses: 2),
+            new SharedAddresses("KJV", Labelled: false, Addresses: 1, Verses: 2),
+        ]);
+    }
+
+    [Fact]
+    public void OnlyMoreUnletteredSharingIsReported()
+    {
+        List<SharedAddresses> before =
+        [
+            new("BHSA", false, 8, 16),
+            new("SWETE", true, 112, 326),
+        ];
+        List<SharedAddresses> now =
+        [
+            new("BHSA", false, 9, 18),
+            new("SWETE", true, 140, 400),
+            new("NEW", false, 3, 6),
+        ];
+
+        CorpusCheck.Crowded(before, now).Select(s => s.Text).Should().Equal("BHSA");
+        CorpusCheck.Crowded(null, now).Should().BeEmpty();
+    }
+
     /// <summary>The coverage a run stored is the coverage the next run compares against.</summary>
     [Fact]
     public async Task TheStoredCoverageReadsBackAsItWasMeasured()

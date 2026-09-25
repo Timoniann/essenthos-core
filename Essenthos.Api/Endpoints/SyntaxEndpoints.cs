@@ -81,6 +81,7 @@ internal static class SyntaxEndpoints
                 .Where(m => m.WordGroupId == id)
                 .OrderBy(m => m.Word!.Verse!.Book!.Position)
                 .ThenBy(m => m.Word!.Verse!.ChapterNumber)
+                .ThenBy(m => m.Word!.Verse!.Sequence)
                 .ThenBy(m => m.Word!.Verse!.Number)
                 .ThenBy(m => m.Word!.Position)
                 .Select(m => new SyntaxWordResponse(
@@ -211,6 +212,7 @@ internal static class SyntaxEndpoints
                 .Where(m => ids.Contains(m.WordGroupId))
                 .OrderBy(m => m.Word!.Verse!.Book!.Position)
                 .ThenBy(m => m.Word!.Verse!.ChapterNumber)
+                .ThenBy(m => m.Word!.Verse!.Sequence)
                 .ThenBy(m => m.Word!.Verse!.Number)
                 .ThenBy(m => m.Word!.Position)
                 .Select(m => new

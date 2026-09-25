@@ -467,4 +467,18 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
 
     private static string Text(VerseDraft verse) =>
         string.Concat(verse.Words.Select(word => word.Surface + word.Trailer)).Trim();
+    /// <summary>
+    /// The title the USFM writes as a <c>\d</c> line is handed to verse 1, and the verse says so,
+    /// which is what lets the frame place it at the title address as well as its own.
+    /// </summary>
+    [Fact]
+    public void APsalmTitleHeldInVerseOneIsMarkedAsOne()
+    {
+        var psalms = english.AmericanStandard.Books.Single(book => book.CanonicalOrdinal == 19);
+        var first = psalms.Chapters.ToDictionary(chapter => chapter.Number, chapter => chapter.Verses[0]);
+
+        first[3].MarksASuperscription.Should().BeTrue();
+        first[51].MarksASuperscription.Should().BeTrue();
+        first[1].MarksASuperscription.Should().BeFalse();
+    }
 }

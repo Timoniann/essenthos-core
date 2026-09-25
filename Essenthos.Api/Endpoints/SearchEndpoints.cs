@@ -174,7 +174,7 @@ internal static class SearchEndpoints
             var page = await db.Verses
                 .Where(v => verses!.Contains(v.Id))
                 .OrderBy(v => v.Book!.CanonicalOrdinal).ThenBy(v => v.ChapterNumber)
-                .ThenBy(v => v.Number).ThenBy(v => v.Label)
+                .ThenBy(v => v.Sequence).ThenBy(v => v.Number).ThenBy(v => v.Label)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 20, 1, MostPerPage))
                 .Select(v => new

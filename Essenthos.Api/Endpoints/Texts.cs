@@ -99,7 +99,7 @@ internal static class Texts
             .Where(verse => verse.TextId == textId
                             && verse.Book!.CanonicalOrdinal == bookOrdinal
                             && verse.ChapterNumber == chapter)
-            .OrderBy(verse => verse.Number).ThenBy(verse => verse.Label)
+            .OrderBy(verse => verse.Sequence).ThenBy(verse => verse.Number).ThenBy(verse => verse.Label)
             .Select(verse => new VerseRow(verse.Number, verse.Label))
             .ToListAsync(cancellationToken);
 
@@ -448,7 +448,7 @@ internal static class Texts
                         && r.CanonicalBook == canonicalBook
                         && r.CanonicalChapter == canonicalChapter)
             .SelectMany(r => r.Verse!.Words.Select(w => new CanonicalWordRow(
-                r.CanonicalVerse, r.Verse.Number, r.Verse.Label, w.Position, w.Id, w.Surface, w.Trailer, w.Gloss,
+                r.CanonicalVerse, r.Verse.Sequence, r.Verse.Number, r.Verse.Label, w.Position, w.Id, w.Surface, w.Trailer, w.Gloss,
                 w.Lemma, w.StrongNumber, w.Morphology, w.Elided, w.Break, w.NormalisedText)))
             .ToListAsync(cancellationToken);
 
@@ -465,11 +465,12 @@ internal static class Texts
             .GroupBy(r => r.CanonicalVerse)
             .ToDictionary(
                 group => group.Key,
-                // The letter orders too. Two verses of this text can sit at one canonical address
-                // — the Septuagint's 50 and 50a both answer to Genesis 31:50 — and ordering by
-                // position alone shuffles their words together.
+                // Two verses of this text can sit at one canonical address — the Septuagint's 50 and
+                // 50a both answer to Genesis 31:50 — and ordering by word position alone shuffles
+                // their words together, so the verses go in the edition's own order first.
                 group => group
-                    .OrderBy(r => r.VerseNumber).ThenBy(r => r.Label).ThenBy(r => r.Position)
+                    .OrderBy(r => r.VerseSequence).ThenBy(r => r.VerseNumber).ThenBy(r => r.Label)
+                    .ThenBy(r => r.Position)
                     .Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
                         r.Elided, r.Break, counterparts))
                     .ToList());
@@ -591,7 +592,7 @@ internal static class Texts
         string? Anchor);
 
     private sealed record CanonicalWordRow(
-        int CanonicalVerse, int VerseNumber, string Label, int Position, long Id, string Text, string Trailer,
+        int CanonicalVerse, int VerseSequence, int VerseNumber, string Label, int Position, long Id, string Text, string Trailer,
         string? Gloss, string? Lemma, string? StrongNumber, JsonDocument? Morphology, bool Elided, TextBreak? Break,
         string? NormalisedText);
 }

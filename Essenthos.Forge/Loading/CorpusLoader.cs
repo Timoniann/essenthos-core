@@ -285,7 +285,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
                 var chapter = new Chapter { TextId = text.Id, Book = book, Number = chapterDraft.Number };
                 db.Chapters.Add(chapter);
 
-                foreach (var verseDraft in chapterDraft.Verses)
+                foreach (var (index, verseDraft) in chapterDraft.Verses.Index())
                 {
                     var verse = new Verse
                     {
@@ -295,6 +295,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
                         ChapterNumber = chapterDraft.Number,
                         Number = verseDraft.Number,
                         Label = verseDraft.Label,
+                        Sequence = index + 1,
                     };
                     db.Verses.Add(verse);
                     verses.Add(new LoadedVerse(verse, verseDraft,
