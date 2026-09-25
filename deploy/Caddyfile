@@ -27,24 +27,58 @@
 	}
 }
 
+# The Content-Security-Policy: everything the reader loads, and where from. Scripts come from the site
+# alone; styles from the site, the fonts' stylesheet and the inline style elements its dialogs write;
+# pictures from the site, from data and blob addresses the family tree and the model viewer draw, and
+# from the photo Google or GitHub hands back at sign-in. Nothing is fetched from anywhere but the site,
+# no page is framed anywhere, and a form posts only to the site or to a sign-in provider. A browser
+# reports each violation to the API, which logs the directive and the blocked address.
+(csp-policy) {
+	header ?{args[0]} "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.googleusercontent.com https://avatars.githubusercontent.com; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self' https://accounts.google.com https://github.com; frame-ancestors 'none'; report-uri /v1/csp-reports; report-to csp"
+	header ?Reporting-Endpoints `csp="/v1/csp-reports"`
+}
+
+# One of these per environment, named by SITE_CSP and DEV_CSP. "off" sends only the part of a policy
+# that cannot break a page: no framing, no plugins, no other base address. "report-only" sends that,
+# and the whole policy for the browser to report against without blocking anything. "enforce" sends
+# the whole policy and blocks what breaks it. Any other value stops Caddy at startup.
+(csp-off) {
+	header ?Content-Security-Policy "frame-ancestors 'none'; object-src 'none'; base-uri 'self'"
+}
+
+(csp-report-only) {
+	import csp-off
+	import csp-policy Content-Security-Policy-Report-Only
+}
+
+(csp-enforce) {
+	import csp-policy Content-Security-Policy
+}
+
 (site) {
 	encode zstd gzip
 
 	# No page of the site is meant to be shown inside another site's frame, where a click on it can be
-	# steered from outside — the admin area least of all. The policy is only a default: a response
-	# that brings its own, as an uploaded photo does, keeps it.
+	# steered from outside — the admin area least of all. A policy is only a default: a response that
+	# brings its own, as an uploaded photo does, keeps it.
 	header {
 		Strict-Transport-Security "max-age=31536000"
 		X-Content-Type-Options nosniff
 		Referrer-Policy strict-origin-when-cross-origin
 		X-Frame-Options DENY
-		?Content-Security-Policy "frame-ancestors 'none'; object-src 'none'; base-uri 'self'"
 		-Server
+	}
+	import csp-{args[0]}
+
+	# The reader is built without source maps, and one that reaches a container anyway is not served.
+	@sourcemaps path *.map
+	handle @sourcemaps {
+		respond 404
 	}
 }
 
 {$SITE_DOMAIN} {
-	import site
+	import site {$SITE_CSP:off}
 	handle /v1/* {
 		import api api
 	}
@@ -54,16 +88,19 @@
 }
 
 {$API_DOMAIN} {
-	import site
+	import site off
 	import api api
 }
 
 # Dev is the rehearsal of a publication, not a second public site, so it asks for a password — and
 # tells search engines to stay away in case the password is ever shared.
+#
+# A browser sends its policy reports without the password, so they alone pass without it.
 {$DEV_DOMAIN} {
-	import site
+	import site {$DEV_CSP:report-only}
 	header X-Robots-Tag "noindex, nofollow"
-	basic_auth {
+	@guarded not path /v1/csp-reports
+	basic_auth @guarded {
 		{$DEV_USER} {$DEV_PASSWORD_HASH}
 	}
 	handle /v1/* {
@@ -75,7 +112,7 @@
 }
 
 {$DEV_API_DOMAIN} {
-	import site
+	import site off
 	header X-Robots-Tag "noindex, nofollow"
 	basic_auth {
 		{$DEV_USER} {$DEV_PASSWORD_HASH}

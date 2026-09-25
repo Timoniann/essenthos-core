@@ -1,6 +1,7 @@
 using System.Net;
 using Essenthos.Core.Accounts;
 using Essenthos.Core.Configuration;
+using Essenthos.Core.Endpoints;
 using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -107,6 +108,24 @@ public sealed class RateLimitTests
     }
 
     [Fact]
+    public async Task PolicyReportsHaveAnAllowanceOfTheirOwnAndDrawOnNoOther()
+    {
+        await using var server = await Server.Start(Limits(
+            reading: new RateLimit(60, 2), writing: new RateLimit(60, 2), reports: new RateLimit(60, 3)));
+
+        for (var i = 0; i < 3; i++)
+        {
+            (await server.Http.PostAsync("/v1" + CspReportEndpoints.Route, null)).StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        (await server.Http.PostAsync("/v1" + CspReportEndpoints.Route, null)).StatusCode.Should().Be(HttpStatusCode.TooManyRequests);
+        (await server.Http.GetAsync("/v1/text")).StatusCode.Should().Be(HttpStatusCode.OK,
+            "a page that breaks the policy many times over does not use up its reader's reading");
+        (await server.Post("/v1/me/bookmarks", SessionTokens.New())).StatusCode.Should().Be(HttpStatusCode.OK,
+            "nor their saving");
+    }
+
+    [Fact]
     public async Task NothingIsLimitedWhenTheLimitsAreOff()
     {
         await using var server = await Server.Start(Limits(reading: new RateLimit(1, 1), expensive: new RateLimit(1, 1)) with
@@ -125,7 +144,7 @@ public sealed class RateLimitTests
     {
         var defaults = RateLimits.Read(new ConfigurationBuilder().Build());
         defaults.Should().Be(new RateLimitSettings(true, RateLimits.DefaultReading, RateLimits.DefaultExpensive,
-            RateLimits.DefaultSignIn, RateLimits.DefaultWriting));
+            RateLimits.DefaultSignIn, RateLimits.DefaultWriting, RateLimits.DefaultReports));
 
         var configured = Configuration(new() { ["RateLimits:Expensive:PerMinute"] = "12" });
         RateLimits.Read(configured).Expensive.Should().Be(new RateLimit(12, RateLimits.DefaultExpensive.Burst));
@@ -191,8 +210,9 @@ public sealed class RateLimitTests
     }
 
     private static RateLimitSettings Limits(
-        RateLimit? reading = null, RateLimit? expensive = null, RateLimit? signIn = null, RateLimit? writing = null) =>
-        new(true, reading ?? Plenty, expensive ?? Plenty, signIn ?? Plenty, writing ?? Plenty);
+        RateLimit? reading = null, RateLimit? expensive = null, RateLimit? signIn = null, RateLimit? writing = null,
+        RateLimit? reports = null) =>
+        new(true, reading ?? Plenty, expensive ?? Plenty, signIn ?? Plenty, writing ?? Plenty, reports ?? Plenty);
 
     private static IConfiguration Configuration(Dictionary<string, string?> values) =>
         new ConfigurationBuilder().AddInMemoryCollection(values).Build();
@@ -240,6 +260,7 @@ public sealed class RateLimitTests
             app.MapGet("/v1/auth/google/login", () => "to google");
             app.MapGet("/v1/auth/google/callback", () => "back");
             app.MapPost("/v1/me/bookmarks", () => "kept");
+            app.MapPost("/v1" + CspReportEndpoints.Route, () => "logged").RequireRateLimiting(RateLimits.Reports);
 
             await app.StartAsync();
             return new Server(app);

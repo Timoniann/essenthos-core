@@ -156,6 +156,7 @@ v1.MapDevices();
 v1.MapBookmarks();
 v1.MapSuggestions();
 v1.MapAdmin();
+v1.MapCspReports();
 
 // Every chapter's context is weighed against counts over the whole Bible; counting them as the
 // process starts spares the first reader to open the panel the wait.
