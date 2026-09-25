@@ -53,12 +53,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
 
     public Task DisposeAsync() => Clear();
 
-    private async Task Clear()
-    {
-        await using var db = database.NewContext();
-        db.Database.SetCommandTimeout(LongEnoughForAWholeCorpus);
-        await db.Database.ExecuteSqlRawAsync("TRUNCATE text, strong_entry CASCADE");
-    }
+    private Task Clear() => database.Empty(LongEnoughForAWholeCorpus);
 
     /// <summary>King James New Testament words reached by at least one of the named witnesses.</summary>
     private const string ReachedSql =
@@ -215,6 +210,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
 
         await using var command = connection.CreateCommand();
         command.CommandText = ReachedSql;
+        command.CommandTimeout = (int)LongEnoughForAWholeCorpus.TotalSeconds;
         command.Parameters.AddWithValue("english", Bible4uTextSource.KingJames);
         command.Parameters.AddWithValue("witnesses", witnesses);
 

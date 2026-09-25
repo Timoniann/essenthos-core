@@ -52,7 +52,12 @@ public sealed class EvidentiaReviewTests : IDisposable
         _db.SaveChanges();
     }
 
-    public void Dispose() => _db.Dispose();
+    /// <summary>The next class in the collection may count every text there is, so none of these stay behind.</summary>
+    public void Dispose()
+    {
+        _db.Database.ExecuteSqlRaw("TRUNCATE text CASCADE");
+        _db.Dispose();
+    }
 
     [Fact]
     public async Task NothingReachesTheCorpusWithoutAVerdict()

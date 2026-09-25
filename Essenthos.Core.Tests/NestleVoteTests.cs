@@ -44,12 +44,7 @@ public sealed class NestleVoteTests(WitnessDatabase database, ITestOutputHelper 
 
     public Task DisposeAsync() => Clear();
 
-    private async Task Clear()
-    {
-        await using var db = database.NewContext();
-        db.Database.SetCommandTimeout(LongEnoughForAWholeCorpus);
-        await db.Database.ExecuteSqlRawAsync("TRUNCATE text, strong_entry CASCADE");
-    }
+    private Task Clear() => database.Empty(LongEnoughForAWholeCorpus);
 
     [Fact]
     public async Task NestleAgreesWithBothVotersFarMoreOftenThanWithEitherAlone()

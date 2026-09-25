@@ -162,5 +162,9 @@ public sealed class EvidentiaLexicalKeyTests : IDisposable
         _db.ChangeTracker.Clear();
     }
 
-    public void Dispose() => _db.Dispose();
+    public void Dispose()
+    {
+        Clear();
+        _db.Dispose();
+    }
 }

@@ -177,6 +177,7 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
 
     public void Dispose()
     {
+        Clear();
         _db.Dispose();
         Directory.Delete(_resources, recursive: true);
     }
