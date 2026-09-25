@@ -38,6 +38,7 @@ internal static class WordFolding
         "hbo" or "arc" => Unpointed(surface),
         "grc" => GreekLetters.Bare(surface),
         "arb" => Unvowelled(surface),
+        "gez" => Loading.Links.GeezStemmer.Fold(surface),
         _ => surface.ToLowerInvariant(),
     };
 

@@ -47,4 +47,12 @@ public enum WordGroupKind
     /// prints those with the same mark, so this cannot separate them and does not pretend to.
     /// </summary>
     Supplied,
+
+    /// <summary>
+    /// Words the edition's base manuscript lacks and its editor took from other manuscripts: the
+    /// square brackets of Dillmann's Ethiopic Octateuch and Books of Kingdoms. It is not
+    /// <see cref="Supplied"/> — the words are the text's own, only not in the one copy the editor
+    /// printed from — and it says nothing about whether the Greek has them.
+    /// </summary>
+    Restored,
 }

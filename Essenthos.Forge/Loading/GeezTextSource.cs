@@ -178,8 +178,53 @@ internal static class GeezTextSource
         .. new[]
         {
             BhsaTextSource.Slug, SeptuagintTextSource.Slug, SweteTextSource.Slug, NestleTextSource.Slug,
+            ByzantineTextSource.Slug,
         }.Select(to => new DeclaredVersePair(Slug, to, UnlinkedBooks)),
     ];
+
+    /// <summary>
+    /// The Greek its words are aligned against, as one model: the two Septuagints for the Old
+    /// Testament it was translated from, and the critical and the Byzantine New Testament, because
+    /// which Greek the Ge'ez agrees with is what it witnesses to. Not BHSA — the Ge'ez reaches the
+    /// Hebrew only through the Greek it was made from.
+    /// </summary>
+    public static IReadOnlyList<string> AlignedWith { get; } =
+    [
+        SweteTextSource.Slug, SeptuagintTextSource.Slug, NestleTextSource.Slug, ByzantineTextSource.Slug,
+    ];
+
+    /// <summary>
+    /// The chapters where Swete stands at other rows of the frame than Brenton does, so that the
+    /// Greek at a Ge'ez verse's row in Swete is some other passage: Wisdom from chapter 15 and the
+    /// Letter of Jeremiah are a row or a chapter out, and Sirach 31-35 is in Swete's other order.
+    /// Found by comparing the two Septuagints row by row, where they share under a third of their
+    /// words. Esther is out whole: Swete letters its additions as verses of the chapter they stand
+    /// in, and the frame puts them at those verses' rows rather than at the verse they follow.
+    /// Brenton answers for these chapters alone until Swete is placed as the frame places it.
+    /// </summary>
+    private static readonly HashSet<(int Book, int Chapter)> SweteOffTheFrame =
+    [
+        (2, 39), (11, 6), (19, 92), (68, 1), (68, 2), (68, 6), (70, 6),
+        (72, 31), (72, 32), (72, 33), (72, 34), (72, 35),
+        (Wisdom, 15), (Wisdom, 16), (Wisdom, 17), (Wisdom, 18), (Wisdom, 19),
+        (LetterOfJeremiah, 1), (81, 8),
+        .. Enumerable.Range(1, 10).Select(chapter => (Esther, chapter)),
+    ];
+
+    /// <summary>
+    /// The books whose verses the church's text or Ludolf's Psalter divide otherwise than the Greek
+    /// inside the chapter, so that a row of the frame holds the Greek of the verse before or after:
+    /// Ludolf gives a psalm's title and first verse as one and splits others, and Job and the Song
+    /// drift the same way. Aligned by row, fewer than a third of their words reach the Greek at 0.4
+    /// against half elsewhere, and the pairs that do are mostly the wrong verse's. Left out until
+    /// they are mapped as Esther and Wisdom are.
+    /// </summary>
+    private static readonly HashSet<int> DividedWithinChapters = [18, 19, 22];
+
+    /// <summary>Whether a Ge'ez verse at this row of the frame is aligned against this text.</summary>
+    public static bool Aligns(string to, int book, int chapter) =>
+        !DividedWithinChapters.Contains(book)
+        && (to != SweteTextSource.Slug || !SweteOffTheFrame.Contains((book, chapter)));
 
     /// <summary>The books placed at their own numbers and joined to nothing verse by verse.</summary>
     public static IReadOnlySet<int> UnlinkedBooks { get; } =
@@ -328,7 +373,8 @@ internal static class GeezTextSource
                 var text = index == 0 && chapter.Title is { } title
                     ? title + GeezReader.LineBreak + verse.Text
                     : verse.Text;
-                return new VerseDraft(verse.Number + fromZero, GeezWords.Words(text))
+                return new VerseDraft(
+                    verse.Number + fromZero, GeezWords.Words(text, book.Origin == Origin.DillmannByHaCohen))
                 {
                     Stated = renumbered ? [new StatedNumberDraft(chapter.Number, verse.Number)] : [],
                     MarksASuperscription = index == 0 && chapter.Title is not null,

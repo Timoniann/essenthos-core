@@ -220,7 +220,8 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
                 ? composeBooks.Split(',').Select(int.Parse).ToHashSet()
                 : null,
             composePrecision,
-            Option(args, "--explain")));
+            Option(args, "--explain"),
+            args.Contains("--daughter")));
         return 0;
     }
 
@@ -228,9 +229,10 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
         Identifier(composeFrom),
         composeVias,
         Identifier(composeTo),
-        composeMinimum,
+        least >= 0 ? composeMinimum : null,
         composePrecision,
-        args.Contains("--unmeasured")));
+        args.Contains("--unmeasured"),
+        args.Contains("--daughter")));
     await Replay(composeScope, (from, to) => Between(from, to, Identifier(composeFrom), Identifier(composeTo)));
     return 0;
 }
@@ -934,6 +936,16 @@ if (args is ["names", var namesFrom, var namesTo, ..])
     return 0;
 }
 
+// One text read again from its source after a change to how it is read, without the whole load.
+// Its word links are deleted with it; align and compose it again afterwards.
+if (args is ["reload", var reloadSlug])
+{
+    using var reloadScope = app.Services.CreateScope();
+    await reloadScope.ServiceProvider.GetRequiredService<DatasetLoader>()
+        .Reload(Identifier(reloadSlug), CancellationToken.None);
+    return 0;
+}
+
 if (args is ["align", var alignFrom, var alignTo, ..])
 {
     using var alignScope = app.Services.CreateScope();
@@ -947,7 +959,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
         Path.Combine(Path.GetTempPath(), "essenthos-align", $"{alignOne}-{alignTwo}"),
         confidence >= 0 && confidence + 1 < args.Length
             ? double.Parse(args[confidence + 1], System.Globalization.CultureInfo.InvariantCulture)
-            : AlignmentPipeline.DefaultMinimumConfidence,
+            : null,
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
         replace: args.Contains("--replace")));
     await Replay(alignScope, (from, to) => Between(from, to, alignOne, alignTwo));
@@ -956,7 +968,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 
 logger.LogError(
-    "Nothing is known to do with \"{Verb}\". The verbs are load, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
+    "Nothing is known to do with \"{Verb}\". The verbs are load, reload, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
     + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images and the evidentia family",
     args[0]);
 return 1;

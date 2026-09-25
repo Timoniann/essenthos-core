@@ -90,26 +90,40 @@ internal sealed class CompositionPipeline(
     /// Write every answer from the threshold where nothing, in this pair or in another text of its
     /// language, states the target to measure against. Otherwise such a run is refused.
     /// </param>
+    /// <param name="daughter">
+    /// The source was translated from the middle texts and not from the target, so it reaches the
+    /// target through them alone. No model aligns it to the target directly — the Ge'ez against
+    /// BHSA would be a claim that it renders the Hebrew — and the middle texts' own links to the
+    /// target count however they were made, since a daughter of the Septuagint reaches the Hebrew
+    /// only as far as the Septuagint does.
+    /// </param>
+    /// <param name="minimumConfidence">
+    /// The threshold, or null for the one measured for a daughter version of the source's language,
+    /// and <see cref="AlignmentPipeline.DefaultMinimumConfidence"/> where none was.
+    /// </param>
     public async Task<CompositionOutcome> Run(
         string fromSlug,
         IReadOnlyList<string> viaSlugs,
         string toSlug,
-        double minimumConfidence,
+        double? minimumConfidence,
         double precision = Admission.DefaultPrecision,
         bool unmeasured = false,
+        bool daughter = false,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
+        var measured = daughter ? MeasuredThrough.GetValueOrDefault(from.Language ?? string.Empty) : null;
+        var threshold = minimumConfidence ?? measured?.Minimum ?? AlignmentPipeline.DefaultMinimumConfidence;
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, false, null, cancellationToken);
+        var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, false, null, cancellationToken, daughter);
         var statements = await Key(connection, from.Id, to.Id, cancellationToken);
         var (admission, _) = await Admit(
-            connection, from, viaSlugs, to, proposed, statements, minimumConfidence, precision, false, null,
+            connection, from, viaSlugs, to, proposed, statements, threshold, precision, false, null,
             cancellationToken);
         if (admission.Floors.Count == 0 && !unmeasured)
         {
@@ -120,7 +134,9 @@ internal sealed class CompositionPipeline(
         }
 
         var merged = Merge(proposed, admission);
-        var (fresh, corroborated) = await Write(connection, from, to, [.. viaSlugs], merged, cancellationToken);
+        var (fresh, corroborated) = await Write(
+            connection, from, to, [.. viaSlugs], merged, cancellationToken,
+            measured is not null && threshold == measured.Minimum ? measured.Note : null);
 
         var outcome = new CompositionOutcome(
             fromSlug, string.Join(" and ", viaSlugs), toSlug,
@@ -155,6 +171,7 @@ internal sealed class CompositionPipeline(
         IReadOnlySet<int>? books,
         double precision = Admission.DefaultPrecision,
         string? explain = null,
+        bool daughter = false,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -164,7 +181,7 @@ internal sealed class CompositionPipeline(
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, true, books, cancellationToken);
+        var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, true, books, cancellationToken, daughter);
         var trained = started.Elapsed;
         var statements = await Key(connection, from.Id, to.Id, cancellationToken);
         var scope = await CompositionTrial.Scope(connection, from.Id, to.Id, statements, books, cancellationToken);
@@ -238,6 +255,7 @@ internal sealed class CompositionPipeline(
         IReadOnlyList<(long From, long To, double Confidence)> Reduced,
         IReadOnlyList<IReadOnlyList<(long From, long To, double Confidence)>> Composed);
 
+    /// <param name="daughter">See <see cref="Run"/>.</param>
     private async Task<Proposed> Propose(
         NpgsqlConnection connection,
         string fromSlug,
@@ -245,18 +263,23 @@ internal sealed class CompositionPipeline(
         string toSlug,
         bool trial,
         IReadOnlySet<int>? books,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool daughter = false)
     {
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
         var joins = await VerseJoins.Load(connection, from.Id, to.Id, cancellationToken);
 
-        var reduced = await aligner.Proposals(
-            fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books), AgreementFloor,
-            books: books, cancellationToken: cancellationToken);
-        var written = await aligner.Proposals(
-            fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books) + "-written", AgreementFloor, asWritten: true,
-            books: books, cancellationToken: cancellationToken);
+        IReadOnlyList<(long From, long To, double Confidence)> reduced = daughter
+            ? []
+            : await aligner.Proposals(
+                fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books), AgreementFloor,
+                books: books, cancellationToken: cancellationToken);
+        IReadOnlyList<(long From, long To, double Confidence)> written = daughter
+            ? []
+            : await aligner.Proposals(
+                fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books) + "-written", AgreementFloor,
+                asWritten: true, books: books, cancellationToken: cancellationToken);
         var composed = new List<IReadOnlyList<(long From, long To, double Confidence)>>(viaSlugs.Count);
         foreach (var viaSlug in viaSlugs)
         {
@@ -264,7 +287,7 @@ internal sealed class CompositionPipeline(
             var first = await aligner.Proposals(
                 fromSlug, viaSlug, Workspace(fromSlug, viaSlug, trial, books), AgreementFloor,
                 books: books, cancellationToken: cancellationToken);
-            composed.Add(Compose(first, await Carried(connection, via.Id, to.Id, cancellationToken), joins));
+            composed.Add(Compose(first, await Carried(connection, via.Id, to.Id, daughter, cancellationToken), joins));
         }
 
         return new Proposed(written, reduced, composed);
@@ -450,14 +473,33 @@ internal sealed class CompositionPipeline(
     }
 
     /// <summary>
+    /// The threshold measured for a daughter version composed through the text it was translated
+    /// from, where nothing states the target for it, and what the link's source says about it.
+    /// </summary>
+    internal sealed record MeasuredComposition(double Minimum, string Note);
+
+    // Hand-scored by Claude on 60 of the Ge'ez-BHSA pairs composed through Brenton, 20 per band
+    // (2026-09-25): right 60% from 0.10, 75% from 0.25 and 90% from 0.40.
+    private static readonly Dictionary<string, MeasuredComposition> MeasuredThrough = new()
+    {
+        ["gez"] = new(0.4, "threshold 0.40 from a hand-scored sample, about 90% right above it"),
+    };
+
+    /// <summary>
     /// What the middle text's words carry to the target. A null confidence is a link somebody
     /// stated, which adds no doubt of its own and passes the first hop's through unchanged -- which
     /// is the whole reason this route is worth walking.
     /// </summary>
+    /// <param name="aligned">
+    /// Whether the middle text's own aligner links count, at their confidence. For a daughter
+    /// version they are the only way its mother reaches the target: Brenton's links to BHSA are
+    /// all the aligner's.
+    /// </param>
     private static async Task<ILookup<long, (long To, double Confidence)>> Carried(
         NpgsqlConnection connection,
         int viaTextId,
         int toTextId,
+        bool aligned,
         CancellationToken cancellationToken)
     {
         await using var command = new NpgsqlCommand(
@@ -467,10 +509,12 @@ internal sealed class CompositionPipeline(
             FROM link l
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
             JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
-            WHERE l.from_text_id = @via AND l.to_text_id = @to AND l.method <> 'aligner'
+            WHERE l.from_text_id = @via AND l.to_text_id = @to AND (l.method <> 'aligner' OR @aligned)
             """, connection);
         command.Parameters.AddWithValue("via", viaTextId);
         command.Parameters.AddWithValue("to", toTextId);
+        command.Parameters.AddWithValue("aligned", aligned);
+        command.CommandTimeout = 600;
 
         var rows = new List<(long Bridge, long To, double Confidence)>(400_000);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -555,7 +599,8 @@ internal sealed class CompositionPipeline(
         Database.Entities.Text to,
         string[] viaSlugs,
         IReadOnlyList<RoutedLink> merged,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? note = null)
     {
         var renders = EnumSpelling.Of(LinkRelation.Renders);
         var stated = await Stated(connection, from.Id, to.Id, renders, cancellationToken);
@@ -602,7 +647,8 @@ internal sealed class CompositionPipeline(
                 await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(Routes.Written(fresh[i].Confidence), NpgsqlDbType.Double, cancellationToken);
                 await writer.WriteAsync(
-                    Routes.Describe(fresh[i].Route, viaSlugs), NpgsqlDbType.Text, cancellationToken);
+                    Routes.Describe(fresh[i].Route, viaSlugs) + (note is null ? string.Empty : $"; {note}"),
+                    NpgsqlDbType.Text, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);

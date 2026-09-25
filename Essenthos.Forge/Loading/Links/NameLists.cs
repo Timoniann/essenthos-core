@@ -79,6 +79,12 @@ internal static class NameLists
             written = SlavicStemmer.Stem(written, isName: true);
         }
 
+        // Ethiopic letters are syllables, so a name is compared by the consonants it writes in Latin.
+        if (language is "gez" && !string.IsNullOrEmpty(written))
+        {
+            written = GeezStemmer.Transliterated(written);
+        }
+
         if (string.IsNullOrWhiteSpace(written))
         {
             return string.Empty;
@@ -310,6 +316,29 @@ internal static class NameLists
 
         return recognised ?? targetNames;
     }
+
+    /// <summary>
+    /// The names of a verse in a script that marks none. Ethiopic has no capitals, so no Ge'ez word
+    /// says it is a name; one is taken for a name only where it spells, consonant for consonant, a
+    /// name the Greek of the same verse marks. That is stricter than <see cref="LeastLikeness"/> on
+    /// purpose, because nothing else vouches for the word: three consonants must all agree, and a
+    /// word of fewer is never a name here.
+    /// </summary>
+    public static IReadOnlyList<string?> Unmarked(IReadOnlyList<string> sourceLetters, IReadOnlyList<string?> targetNames)
+    {
+        var named = targetNames.Where(name => name is { Length: >= UnmarkedLength }).ToList();
+        return
+        [
+            .. sourceLetters.Select(letters => letters.Length >= UnmarkedLength
+                                               && named.Any(name => Alike(letters, name!) >= UnmarkedLikeness)
+                ? letters
+                : null),
+        ];
+    }
+
+    private const int UnmarkedLength = 3;
+
+    private const double UnmarkedLikeness = 0.8;
 
     private static HashSet<int> Positions(IReadOnlyList<string?> skeletons) =>
         [.. Enumerable.Range(0, skeletons.Count).Where(at => !string.IsNullOrEmpty(skeletons[at]))];

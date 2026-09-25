@@ -93,6 +93,9 @@
         <EmbeddedResource Include="Swete\SweteCorrections.json" />
         <Content Remove="Swete\SwetePage.json" />
         <EmbeddedResource Include="Swete\SwetePage.json" />
+
+        <!-- Which Greek verse each verse of the Ge'ez books the church divides its own way answers. -->
+        <EmbeddedResource Include="BetaMasaheft\GeezVerseMap.tsv" />
     </ItemGroup>
 
     <!-- An EVIDENTIA run records the build that made it, and a version number that never changes

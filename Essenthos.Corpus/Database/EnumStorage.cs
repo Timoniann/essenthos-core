@@ -62,6 +62,7 @@ internal static class EnumSpelling
         WordGroupKind.Subphrase => "subphrase",
         WordGroupKind.HalfVerse => "half-verse",
         WordGroupKind.Supplied => "supplied",
+        WordGroupKind.Restored => "restored",
         _ => throw Unmapped(value),
     };
 
@@ -76,6 +77,7 @@ internal static class EnumSpelling
         "subphrase" => WordGroupKind.Subphrase,
         "half-verse" => WordGroupKind.HalfVerse,
         "supplied" => WordGroupKind.Supplied,
+        "restored" => WordGroupKind.Restored,
         _ => throw Unreadable<WordGroupKind>(stored),
     };
 
