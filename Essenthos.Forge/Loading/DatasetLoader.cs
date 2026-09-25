@@ -1,4 +1,4 @@
-﻿using Essenthos.Core.Bhsa;
+using Essenthos.Core.Bhsa;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -45,6 +45,7 @@ internal sealed class DatasetLoader(
     {
         [GeezTextSource.Slug] = resources => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder)),
         [SweteTextSource.Slug] = resources => SweteTextSource.Read(Path.Combine(resources, "Swete")),
+        [AlexandrinusTextSource.Slug] = AlexandrinusTextSource.Read,
     };
 
     public async Task Reload(string slug, CancellationToken cancellationToken)
@@ -130,6 +131,11 @@ internal sealed class DatasetLoader(
             // diplomatic text of a different manuscript from the Vaticanus Swete prints.
             await Load("Ottley's Isaiah", () => OttleyTextSource.Read(
                 Path.Combine(resources, "Swete")), stoppingToken);
+
+            // The same manuscript as one witness of both Testaments: INTF's transcription of its New
+            // Testament, and the Old Testament where a printing gives its own text.
+            await Load(AlexandrinusTextSource.Definition.Name, () => AlexandrinusTextSource.Read(resources),
+                stoppingToken);
 
             // The Torah as the Samaritan community transmitted it, which is the first text here
             // that disagrees with BHSA about the Hebrew rather than about a translation of it.
