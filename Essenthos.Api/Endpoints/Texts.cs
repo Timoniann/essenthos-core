@@ -71,6 +71,9 @@ internal static class Texts
         Aliases = TextAliases.Of(text.Slug) is { Count: > 0 } aliases ? aliases : null,
         Form = EnumSpelling.Of(text.Kind),
         Script = text.Script,
+        PartSources = TextPartSources.Of(text) is { Count: > 0 } parts
+            ? [.. parts.Select(p => new PartSourceResponse(p.Name, p.Author, p.Licence, p.LicenceUrl, p.Url, p.Covers))]
+            : null,
     };
 
     /// <summary>

@@ -101,6 +101,13 @@ public class Text
     /// </summary>
     public string? RightsNote { get; set; }
 
+    /// <summary>
+    /// The sources some of its words come from beside <see cref="SourceUrl"/>, as a JSON array of
+    /// <see cref="TextPartSource"/> — read through <see cref="TextPartSources"/>. Null where every
+    /// word comes from the one source.
+    /// </summary>
+    public string? PartSources { get; set; }
+
     /// <summary>Where this text was obtained, so a reader can go back to what we loaded.</summary>
     public string? SourceUrl { get; set; }
 

@@ -2,6 +2,7 @@
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Loading.Links;
@@ -399,24 +400,26 @@ internal sealed class DatasetLoader(
     {
         status.Starting("the psalm openings their editions print");
 
-        var sources = new (string Slug, IReadOnlyList<PsalmOpening> Openings, string Folder, string Note)[]
+        var sources = new (string Slug, IReadOnlyList<PsalmOpening> Openings, string Folder, string Note, TextPartSource Source)[]
         {
             (Bible4uTextSource.KingJames,
                 LostPsalmOpenings.KingJamesSuperscriptions(
                     Path.Combine(resources, LostPsalmOpenings.KingJamesFolder)),
                 LostPsalmOpenings.KingJamesFolder,
                 "The 116 psalm superscriptions bible4u's file prints nowhere are taken from eBible's "
-                + "eng-kjv2006, the standardised 1769 text, which states Public Domain."),
+                + "eng-kjv2006, the standardised 1769 text, which states Public Domain.",
+                LostPsalmOpenings.KingJamesSource),
 
             (Bible4uTextSource.Ohienko,
                 LostPsalmOpenings.OhienkoLostLine(Path.Combine(resources, LostPsalmOpenings.OhienkoFolder)),
                 LostPsalmOpenings.OhienkoFolder,
                 "Modified: the first line of Psalm 7, which this digitisation dropped and Ohienko printed, "
                 + "is restored from the transcription of the 1988 printing on Ukrainian Wikisource, "
-                + "CC BY-SA 4.0, with its stress marks removed."),
+                + "CC BY-SA 4.0, with its stress marks removed.",
+                LostPsalmOpenings.OhienkoSource),
         };
 
-        foreach (var (slug, openings, folder, note) in sources)
+        foreach (var (slug, openings, folder, note, source) in sources)
         {
             if (openings.Count == 0)
             {
@@ -430,7 +433,7 @@ internal sealed class DatasetLoader(
 
             using var scope = services.CreateScope();
             var loader = scope.ServiceProvider.GetRequiredService<PsalmOpeningLoader>();
-            var outcome = await loader.Load(slug, openings, note, cancellationToken);
+            var outcome = await loader.Load(slug, openings, note, source, cancellationToken);
             if (outcome.Psalms > 0 || outcome.Placed > 0)
             {
                 status.Record(outcome.ToString());
@@ -462,7 +465,7 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<VerseEndingLoader>();
         var outcome = await loader.Load(
-            Bible4uTextSource.Ohienko, endings, LostVerseEndings.OhienkoNote, cancellationToken);
+            Bible4uTextSource.Ohienko, endings, LostVerseEndings.OhienkoNote, LostVerseEndings.OhienkoPart, cancellationToken);
         if (outcome.Verses > 0)
         {
             status.Record(outcome.ToString());

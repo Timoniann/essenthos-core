@@ -108,6 +108,7 @@ internal sealed class PsalmOpeningLoader(AppDbContext db, ILogger<PsalmOpeningLo
         string slug,
         IReadOnlyList<PsalmOpening> openings,
         string rightsNote,
+        TextPartSource? source = null,
         CancellationToken cancellationToken = default)
     {
         if (openings.Count == 0)
@@ -173,7 +174,7 @@ internal sealed class PsalmOpeningLoader(AppDbContext db, ILogger<PsalmOpeningLo
 
         if (done > 0 || placed > 0)
         {
-            await Attribute(text, rightsNote, cancellationToken);
+            await Attribute(text, rightsNote, source, cancellationToken);
         }
 
         await transaction.CommitAsync(cancellationToken);
@@ -336,17 +337,22 @@ internal sealed class PsalmOpeningLoader(AppDbContext db, ILogger<PsalmOpeningLo
     /// <summary>
     /// Says on the text's own row that some of its words came from somewhere else. RUL-0181 asks
     /// for it whatever the licence says, and Ohienko's licence asks for it in as many words: CC
-    /// BY-SA 4.0 requires that a modification be indicated by whoever passes the text on.
+    /// BY-SA 4.0 requires that a modification be indicated by whoever passes the text on, and that
+    /// the source be named and linked, which the source's own entry on the row does.
     /// </summary>
-    private async Task Attribute(Text text, string note, CancellationToken cancellationToken)
+    private async Task Attribute(Text text, string note, TextPartSource? source, CancellationToken cancellationToken)
     {
-        if (note.Length == 0 || text.RightsNote?.Contains(note, StringComparison.Ordinal) == true)
+        var changed = source is not null && TextPartSources.Add(text, source);
+        if (note.Length > 0 && text.RightsNote?.Contains(note, StringComparison.Ordinal) != true)
         {
-            return;
+            text.RightsNote = text.RightsNote is { Length: > 0 } existing ? $"{existing} {note}" : note;
+            changed = true;
         }
 
-        text.RightsNote = text.RightsNote is { Length: > 0 } existing ? $"{existing} {note}" : note;
-        await db.SaveChangesAsync(cancellationToken);
+        if (changed)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+        }
     }
 
     private async Task Execute(string sql, int verseId, int? written, CancellationToken cancellationToken)

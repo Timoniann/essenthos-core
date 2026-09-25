@@ -24,6 +24,9 @@ internal record CoverageResponse(int FirstBook, int LastBook, IReadOnlyList<int>
 /// linked, so a page that prints only <c>CC-BY-NC-4.0</c> is not attribution — it is the name of
 /// the obligation with the obligation unmet. The columns held all of this and nothing sent it.
 /// </param>
+/// <param name="Covers">Which words of the text are this source's.</param>
+internal record PartSourceResponse(string Name, string Author, string Licence, string? LicenceUrl, string Url, string Covers);
+
 internal record CorpusResponse(
     string Id,
     string Name,
@@ -113,6 +116,13 @@ internal record CorpusResponse(
     /// (<c>zh-Hant</c>), which is what picks a traditional or a simplified typeface. Null otherwise.
     /// </summary>
     public string? Script { get; init; }
+
+    /// <summary>
+    /// The sources some of its words come from beside <see cref="SourceUrl"/> — a verse a
+    /// digitisation lost, restored from another copy — each with its own author, terms and address,
+    /// and which words are its. Null where every word comes from the one source.
+    /// </summary>
+    public IReadOnlyList<PartSourceResponse>? PartSources { get; init; }
 
     /// <summary>
     /// What the text is, in a sentence or two, keyed by interface language — <c>en</c>, <c>uk</c>,

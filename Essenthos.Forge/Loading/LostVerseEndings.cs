@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Usfm;
 
 namespace Essenthos.Core.Loading;
@@ -57,6 +58,16 @@ internal static partial class LostVerseEndings
             "and their horsemen shall spread themselves, and their horsemen shall come from far; they "
             + "shall fly as the eagle that hasteth to eat."),
     ];
+
+    /// <summary>The transcription the seven endings come from, credited on the text beside bible4u.</summary>
+    public static readonly TextPartSource OhienkoPart = new(
+        "Біблія (Огієнко)",
+        "The contributors to Ukrainian Wikisource, transcribing the 1988 printing",
+        "CC BY-SA 4.0",
+        "https://creativecommons.org/licenses/by-sa/4.0/",
+        OhienkoSource,
+        "The ends of Genesis 22:19, 44:26 and 50:11, 2 Samuel 17:20, Job 2:2, Isaiah 50:9 and Habakkuk 1:8, "
+        + "which the file the text is loaded from cuts short; without stress marks, quotation marks and dashes.");
 
     /// <summary>What the text's row says about these words once they are written.</summary>
     public const string OhienkoNote =
