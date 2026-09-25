@@ -34,6 +34,17 @@ internal static class Texts
     /// <summary>The language whose words the Greek lexicon glosses.</summary>
     private const string Greek = "grc";
 
+    /// <summary>The language Dillmann's lexicon glosses, and whose words are given the aligned Greek's meaning.</summary>
+    private const string Geez = "gez";
+
+    /// <summary>How many of Dillmann's glosses and Greek equivalents a word carries; his articles run to dozens.</summary>
+    private const int LatinShown = 5;
+
+    private const int GreekShown = 4;
+
+    /// <summary>A Greek equivalent longer than this is a phrase quoted from a verse, not a gloss.</summary>
+    private const int GreekShownWords = 3;
+
     /// <summary>How a gloss was reached, as <see cref="LexiconGlossResponse.Via"/> spells it.</summary>
     private const string ByStatedNumber = "strong";
     private const string ByLemma = "lemma";
@@ -115,6 +126,7 @@ internal static class Texts
                 [.. rows.Select(r => new GlossWanted(r.Id, r.Text, r.NormalisedText, r.Gloss, r.Lemma, r.StrongNumber))],
                 counterparts.Proposed, cancellationToken),
         };
+        counterparts = await Meant(db, textId, [.. rows.Select(r => (r.Id, r.Text))], counterparts, cancellationToken);
         var notes = await db.VerseNotes
             .Where(note => note.Verse!.TextId == textId
                            && note.Verse.Book!.CanonicalOrdinal == bookOrdinal
@@ -284,6 +296,12 @@ internal static class Texts
     {
         /// <summary>The lexicon's gloss for each Greek word its edition does not gloss, and how it was reached.</summary>
         public Dictionary<long, LexiconGlossResponse> Glossed { get; init; } = [];
+
+        /// <summary>For each Ge'ez word, the meaning of the Greek word it is aligned to.</summary>
+        public Dictionary<long, ThroughGreekResponse> ThroughGreek { get; init; } = [];
+
+        /// <summary>For each Ge'ez word, the entry of Dillmann's lexicon it is a form of.</summary>
+        public Dictionary<long, GeezEntryResponse> GeezEntries { get; init; } = [];
     }
 
     private sealed record GlossWanted(
@@ -426,6 +444,136 @@ internal static class Texts
         return glossed;
     }
 
+    private sealed record AlignedGreek(
+        long WordId, string Corpus, string Surface, string? Lemma, string? StrongNumber, string? Gloss,
+        LinkMethod Method, double? Confidence);
+
+    /// <summary>
+    /// What a Ge'ez word means, two ways, for a text in Ge'ez and nothing else.
+    ///
+    /// Through the Greek: the meaning of the Greek word the aligner put beside it — its edition's
+    /// gloss, or the Greek lexicon's by the number its edition prints or its dictionary form — from
+    /// the surest link that reaches a Greek word with a meaning. It is carried with the Greek word
+    /// and the link, because it says what the Greek means and that the aligner paired the two, and
+    /// nothing about the Ge'ez itself.
+    ///
+    /// From Dillmann: the entry the word is a form of, where <see cref="GeezLexicon"/> can say so
+    /// without choosing, the aligned Greek words' forms serving as the evidence where several
+    /// headwords could be meant.
+    ///
+    /// Four queries for a chapter, and one for a text in another language.
+    /// </summary>
+    private static async Task<Reached> Meant(
+        AppDbContext db,
+        int textId,
+        IReadOnlyList<(long Id, string Surface)> words,
+        Reached counterparts,
+        CancellationToken cancellationToken)
+    {
+        if (words.Count == 0
+            || await db.Texts.Where(text => text.Id == textId).Select(text => text.Language)
+                .SingleAsync(cancellationToken) != Geez)
+        {
+            return counterparts;
+        }
+
+        var ids = words.Select(word => word.Id).ToList();
+        var aligned = await db.LinkWords
+            .Where(side => ids.Contains(side.WordId)
+                           && side.Link!.Relation != LinkRelation.Expands
+                           && side.Link.Relation != LinkRelation.Omits)
+            .SelectMany(side => db.LinkWords
+                .Where(other => other.LinkId == side.LinkId
+                                && other.Side != side.Side
+                                && other.Word!.Text!.Language == Greek)
+                .Select(other => new AlignedGreek(
+                    side.WordId, other.Word!.Text!.Slug, other.Word.Surface, other.Word.Lemma,
+                    other.Word.StrongNumber, other.Word.Gloss, side.Link!.Method, side.Link.Confidence)))
+            .ToListAsync(cancellationToken);
+
+        var lemmas = aligned.Select(greek => greek.Lemma).OfType<string>().Distinct().ToList();
+        var numbers = aligned.Select(greek => greek.StrongNumber).OfType<string>().Distinct().ToList();
+        var entries = lemmas.Count == 0 && numbers.Count == 0
+            ? []
+            : await db.LexiconGlosses
+                .Where(gloss => lemmas.Contains(gloss.Lemma) || numbers.Contains(gloss.StrongNumber))
+                .OrderBy(gloss => gloss.Id)
+                .Select(gloss => new { gloss.Lemma, gloss.StrongNumber, gloss.Gloss })
+                .ToListAsync(cancellationToken);
+        var byLemma = entries.ToLookup(entry => entry.Lemma, entry => entry.Gloss, StringComparer.Ordinal);
+        var byNumber = entries.ToLookup(entry => entry.StrongNumber, StringComparer.Ordinal);
+
+        // The edition's own gloss first; then the entries under the number it prints, narrowed by its
+        // dictionary form where that names one of them; then its dictionary form alone.
+        string[] MeaningOf(AlignedGreek greek)
+        {
+            if (greek.Gloss is { Length: > 0 } own)
+            {
+                return [own];
+            }
+
+            var stated = greek.StrongNumber is { } number ? byNumber[number].ToList() : [];
+            var narrowed = stated.Where(entry => entry.Lemma == greek.Lemma).ToList();
+            return
+            [
+                .. (narrowed.Count > 0 ? narrowed : stated).Select(entry => entry.Gloss)
+                    .Concat(stated.Count == 0 && greek.Lemma is { } lemma ? byLemma[lemma] : [])
+                    .Distinct(StringComparer.Ordinal),
+            ];
+        }
+
+        var byWord = aligned.ToLookup(greek => greek.WordId);
+        var throughGreek = new Dictionary<long, ThroughGreekResponse>();
+        foreach (var id in ids)
+        {
+            var surest = byWord[id]
+                .OrderByDescending(greek => greek.Confidence is null)
+                .ThenByDescending(greek => greek.Confidence)
+                .ThenBy(greek => greek.Corpus, StringComparer.Ordinal)
+                .Select(greek => (Greek: greek, Glosses: MeaningOf(greek)))
+                .FirstOrDefault(found => found.Glosses.Length > 0);
+            if (surest.Greek is { } link)
+            {
+                throughGreek[id] = new ThroughGreekResponse(
+                    link.Corpus, link.Surface, link.Lemma, surest.Glosses, EnumSpelling.Of(link.Method), link.Confidence);
+            }
+        }
+
+        var keys = words.SelectMany(word => GeezLexicon.KeysOf(word.Surface)).Distinct().ToList();
+        var headwords = keys.Count == 0
+            ? []
+            : await db.GeezLexiconEntries
+                .Where(entry => entry.Consonants.Any(consonants => keys.Contains(consonants)))
+                .ToListAsync(cancellationToken);
+        var geezEntries = new Dictionary<long, GeezEntryResponse>();
+        if (headwords.Count > 0)
+        {
+            var lexicon = new GeezLexicon(headwords.Select(entry => new GeezHeadword(entry.Entry, entry.Forms, entry.Greek)));
+            var byEntry = headwords.ToDictionary(entry => entry.Entry, StringComparer.Ordinal);
+            foreach (var (id, surface) in words)
+            {
+                var greek = byWord[id].SelectMany(link => new[] { link.Lemma, link.Surface }).OfType<string>().ToList();
+                if (lexicon.Match(surface, greek) is not { } match)
+                {
+                    continue;
+                }
+
+                var entry = byEntry[match.Entry];
+                geezEntries[id] = new GeezEntryResponse(
+                    entry.Headword,
+                    [.. entry.Latin.Take(LatinShown)],
+                    [
+                        .. entry.Greek
+                            .Where(equivalent => equivalent.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length <= GreekShownWords)
+                            .Take(GreekShown),
+                    ],
+                    match.Via);
+            }
+        }
+
+        return counterparts with { ThroughGreek = throughGreek, GeezEntries = geezEntries };
+    }
+
     /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>
     public static async Task<Dictionary<int, List<TextWordResponse>>> ReadByCanonicalVerse(
         AppDbContext db,
@@ -452,6 +600,7 @@ internal static class Texts
                 [.. rows.Select(r => new GlossWanted(r.Id, r.Text, r.NormalisedText, r.Gloss, r.Lemma, r.StrongNumber))],
                 counterparts.Proposed, cancellationToken),
         };
+        counterparts = await Meant(db, textId, [.. rows.Select(r => (r.Id, r.Text))], counterparts, cancellationToken);
 
         return rows
             .GroupBy(r => r.CanonicalVerse)
@@ -530,6 +679,8 @@ internal static class Texts
             Supplied = counterparts.Supplied.Contains(id),
             StrongCandidate = strongNumber is null ? counterparts.Proposed.GetValueOrDefault(id) : null,
             LexiconGloss = counterparts.Glossed.GetValueOrDefault(id),
+            ThroughGreek = counterparts.ThroughGreek.GetValueOrDefault(id),
+            GeezEntry = counterparts.GeezEntries.GetValueOrDefault(id),
             Break = opening is { } kind ? EnumSpelling.Of(kind) : null,
         };
     }

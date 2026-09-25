@@ -77,6 +77,7 @@ public class AppDbContext : DbContext
     /// A lexicon's short glosses, keyed by the dictionary form and the number it files each under.
     /// </summary>
     public DbSet<LexiconGloss> LexiconGlosses { get; set; } = null!;
+    public DbSet<GeezLexiconEntry> GeezLexiconEntries { get; set; } = null!;
 
     /// <summary>
     /// Strong numbers proposed for a word, with what proposed them. Separate from
@@ -454,6 +455,25 @@ public class AppDbContext : DbContext
                     + "candidate set to be sure between, and what a reader checks it against is the "
                     + "English on strong_entry, not a number nobody measured.");
             });
+        });
+
+        modelBuilder.Entity<GeezLexiconEntry>(entity =>
+        {
+            entity.ToTable("geez_lexicon_entry", table =>
+            {
+                table.HasCheckConstraint(
+                    "ck_geez_lexicon_entry_source_not_empty",
+                    "length(btrim(\"source\")) > 0");
+
+                table.HasComment(
+                    "Dillmann's Lexicon Linguae Aethiopicae as Beta maṣāḥǝft digitised it: each entry's "
+                    + "headword, the spellings filed under it, its Latin and its Greek. Which Ge'ez word "
+                    + "is a form of which entry is not stored: a reading concludes it and says how.");
+            });
+
+            // A chapter's words are looked up by every set of consonants they could be read as at
+            // once, which is an overlap against the array and nothing a b-tree answers.
+            entity.HasIndex(e => e.Consonants).HasMethod("gin");
         });
 
         modelBuilder.Entity<LexiconGloss>(entity =>

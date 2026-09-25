@@ -528,6 +528,27 @@ public static class Datasets
                 + "on as a copy but that others be referred to github.com/STEPBible, so a download of "
                 + "the corpus should point there rather than carry the glosses."),
 
+        // The Ge'ez words' own meanings. Dillmann's book is long out of copyright; the digital
+        // edition is not, and its ShareAlike binds what is derived from it here, which the owner
+        // accepted for this one layer.
+        new("dillmann", "Lexicon Linguae Aethiopicae (Dillmann 1865), digital edition",
+            "August Dillmann; digitised by Beta maṣāḥǝft and the TraCES project, Hiob-Ludolf-Zentrum für "
+            + "Äthiopistik, Universität Hamburg (ed. Alessandro Bausi)",
+            "CC BY-NC-SA 4.0",
+            "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "https://github.com/BetaMasaheft/DillmannData",
+            "What a word of the Ethiopic Bible means, in Dillmann's Latin, with the Greek he gives for it. "
+            + "A word is matched to an entry only where its letters, with the particles and endings "
+            + "written onto it taken off, fit one headword and no other, or where several fit and the "
+            + "Greek word it is aligned to is among the Greek Dillmann gives for exactly one of them; "
+            + "the reader is told which. Nothing of the Latin is translated.",
+            Sources.DillmannLexiconPrefix, Glossary: true,
+            Citation: "Dillmann, August. Lexicon linguae aethiopicae, cum indice latino. Lipsiae: T. O. Weigel, "
+                + "1865. Online Lexicon Linguae Aethiopicae, Beta maṣāḥǝft, Hamburg.",
+            Obliges: "Attribution, non-commercial use only, and ShareAlike: which Ge'ez word is taken as a "
+                + "form of which entry, and anything made from the entries, is shared under CC BY-NC-SA 4.0 "
+                + "too."),
+
         // What this project asserts itself, and it belongs in the list precisely because it is
         // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly
         // all of it — correspondences nobody states, which read exactly like an undeclared third

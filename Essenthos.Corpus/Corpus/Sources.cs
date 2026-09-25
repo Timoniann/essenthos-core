@@ -97,6 +97,17 @@ internal static class Sources
 
     public const string BriefGreekLexiconPrefix = "STEPBible TBESG";
 
+    /// <summary>
+    /// What every row of the Ge'ez lexicon carries: whose lexicon, whose digitisation, which commit
+    /// of it, and on what terms.
+    /// </summary>
+    public const string DillmannLexicon =
+        DillmannLexiconPrefix + " (August Dillmann, Leipzig 1865), digitised by Beta maṣāḥǝft and the TraCES "
+        + "project, Hiob-Ludolf-Zentrum für Äthiopistik, Universität Hamburg, CC BY-NC-SA 4.0, read from "
+        + "BetaMasaheft/DillmannData at 44f2da8";
+
+    public const string DillmannLexiconPrefix = "Lexicon Linguae Aethiopicae";
+
     /// <summary>The King James, the Russian Synodal and the Ohienko Ukrainian, as bible4u spells them.</summary>
     public const string KingJamesSlug = "KJV";
 
