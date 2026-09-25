@@ -218,6 +218,12 @@ internal sealed class PeopleLoader(
         var writing = await Write(file, cancellationToken);
         var peoples = writing.Records;
 
+        var descended = await ReferenceTheDescent(cancellationToken);
+        if (descended > 0)
+        {
+            logger.LogInformation("{Descended} verses stating a people's descent were added to its list", descended);
+        }
+
         if (peoples.Count == 0 && writing.Joined.Count == 0)
         {
             logger.LogInformation("The peoples are already there; nothing to do");
@@ -854,6 +860,65 @@ internal sealed class PeopleLoader(
     /// than beside them so that nothing in this run can be corroborated by a list this run derived
     /// from it.
     /// </summary>
+    /// <summary>Where the verse stating a people's descent comes from.</summary>
+    internal const string FromTheStatedDescent =
+        "Essenthos, from the verse that calls the people's ancestor the father of it";
+
+    /// <summary>
+    /// The verse that states where a people comes from, which its own words never reach.
+    ///
+    /// <em>He is the father of the Moabites unto this day</em> writes the people with the ancestor's
+    /// own name — אֲבִי מוֹאָב, <em>father of Moab</em> — so the gentilic the people's list is built
+    /// from is not in it, and the man's word is annotated to the man. What marks the people there is
+    /// the construct: the name standing as what somebody is <em>father of</em>, directly or as
+    /// <em>father of the sons of</em>, as Genesis 19:38 writes the Ammonites. A verse whose BHSA text
+    /// has one of the people's own numbers, or its ancestor's name, in that position is listed on
+    /// the people, which is the citation a <em>descendants of</em> relation needs.
+    /// </summary>
+    internal const string StatedDescent =
+        """
+        WITH numbers AS (
+            SELECT DISTINCT p.id AS entity_id, n.hebrew_strong_number AS number
+            FROM entity p
+            JOIN entity_name n ON n.entity_id IN (p.id, p.origin_entity_id)
+            WHERE p.kind = 'people' AND p.origin_entity_id IS NOT NULL
+              AND n.hebrew_strong_number IS NOT NULL AND position(',' IN n.hebrew_strong_number) = 0),
+        stated AS (
+            SELECT DISTINCT n.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
+            FROM numbers n
+            JOIN word w ON w.strong_number = n.number
+            JOIN text t ON t.id = w.text_id AND t.slug = @witness
+            JOIN word father ON father.text_id = w.text_id AND father.verse_id = w.verse_id
+                 AND father.strong_number = 'H1' AND father.morphology->>'state' = 'c'
+            LEFT JOIN word sons ON sons.text_id = w.text_id AND sons.verse_id = w.verse_id
+                 AND sons.position = w.position - 1
+            JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+            WHERE father.position = w.position - 1
+               OR (father.position = w.position - 2 AND sons.strong_number = 'H1121'
+                   AND sons.morphology->>'state' = 'c'))
+        INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
+                                  label, disputed, source)
+        SELECT s.entity_id, s.canonical_book, s.canonical_chapter, s.canonical_verse, NULL, FALSE, @source
+        FROM stated s
+        WHERE NOT EXISTS (
+            SELECT 1 FROM entity_verse cited
+            WHERE cited.entity_id = s.entity_id AND cited.source = @source
+              AND (cited.canonical_book, cited.canonical_chapter, cited.canonical_verse)
+                  = (s.canonical_book, s.canonical_chapter, s.canonical_verse))
+        """;
+
+    private async Task<int> ReferenceTheDescent(CancellationToken cancellationToken)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        await using var command = new NpgsqlCommand(StatedDescent, connection);
+        command.Parameters.AddWithValue("source", FromTheStatedDescent);
+        command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
+        command.CommandTimeout = Annotating.Patient;
+        return await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
     private async Task<int> Reference(int[] peoples, CancellationToken cancellationToken)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);

@@ -503,6 +503,24 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// The Greek numbers the lexicon writes as a name and the encyclopedia answers with exactly one
     /// entity. Takes <c>@witnesses</c>.
     /// </summary>
+    /// <summary>
+    /// A Greek lexicon entry that is a name: its lemma is written with a capital, and it is neither
+    /// a gentilic nor a title. The capital cannot tell <em>Galilee</em> from <em>a Galilean</em>, nor a
+    /// name from <em>the Baptist</em>, and Nestle tags both as nouns, so the entry's own definition
+    /// is asked — <em>a Sidonian, i.e. inhabitant of Sidon</em> — unless it goes on to give a
+    /// person's name (<em>a Persian woman; Persis, a Christian female</em>) or opens with one
+    /// (<em>Herodias, a woman of the Herodian family</em>). Being a Galilean is not being Galilee.
+    /// Reads <c>lexicon</c>.
+    /// </summary>
+    internal const string GreekName =
+        """
+        lower(left(lexicon.lemma, 1)) <> left(lexicon.lemma, 1)
+        AND lexicon.strong_number NOT IN ('G5', 'G910', 'G2959', 'G4436')
+        AND NOT (coalesce(lexicon.definition, '') ~* '(inhabitant|native|descendant|follower|adherent|woman) of|belonging to|^an? [[:upper:]][[:alpha:]]+(an|ite|ene|ine|ian)\M'
+                 AND coalesce(lexicon.definition, '') !~ ';'
+                 AND coalesce(lexicon.definition, '') !~ '^[[:upper:]][[:alpha:]]+, ')
+        """;
+
     private static readonly string GreekResolvable =
         $"""
          SELECT number, min(entity_id) AS entity_id
@@ -510,7 +528,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          WHERE EXISTS (
              SELECT 1 FROM strong_entry lexicon
              WHERE lexicon.strong_number = named.number
-               AND lower(left(lexicon.lemma, 1)) <> left(lexicon.lemma, 1))
+               AND {GreekName})
          GROUP BY 1 HAVING count(*) = 1
          """;
 
@@ -1018,7 +1036,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          FROM word w
          JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
          JOIN strong_entry lexicon ON lexicon.strong_number = w.strong_number
-              AND lower(left(lexicon.lemma, 1)) <> left(lexicon.lemma, 1)
+              AND {GreekName}
          WHERE {GreekNoun}
          """;
 

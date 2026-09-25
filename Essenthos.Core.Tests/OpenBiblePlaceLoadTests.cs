@@ -156,4 +156,24 @@ public sealed class OpenBiblePlaceLoadTests : IDisposable
         again.AlreadyLoaded.Should().BeTrue();
         (await _db.EntityVerses.CountAsync()).Should().Be(before);
     }
+
+    /// <summary>The King James's Tyrus and Zidon reach Tyre and Sidon, credited to the source that gives them.</summary>
+    [Fact]
+    public async Task TheSpellingsTheTranslationsPrintAreNamesOfThePlace()
+    {
+        var spelt = await _db.EntityNames
+            .Where(n => n.Kind == OpenBiblePlaceLoader.SpellingKind && (n.Label == "Tyrus" || n.Label == "Zidon"))
+            .Select(n => new { n.Entity!.Name, n.Source })
+            .ToListAsync();
+
+        spelt.Select(n => n.Name).Should().Contain(["Tyre", "Sidon"]);
+        spelt.Should().OnlyContain(n => n.Source == OpenBible);
+        (await _db.EntityNames.AnyAsync(n => n.Kind == OpenBiblePlaceLoader.SpellingKind && n.Label == "Judah"))
+            .Should().BeFalse("Judah is another record's name");
+    }
+
+    [Fact]
+    public void ASpellingIsANameOfThePlaceAndAGentilicIsNot() =>
+        OpenBiblePlaceLoader.Spellings(["Tyre", "Tyrus", "Tyrians", "Tyrian", "Palestine", " "], "Tyre")
+            .Should().Equal("Tyrus", "Palestine");
 }

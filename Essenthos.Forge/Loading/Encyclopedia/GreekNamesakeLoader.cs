@@ -125,8 +125,8 @@ internal sealed class GreekNamesakeLoader(AppDbContext db, ILogger<GreekNamesake
 
     /// <summary>
     /// Every unnamed word bearing one of those names, with how many of its bearers the encyclopedia
-    /// names in the word's verse. The gate is the resolution's own: a noun whose lexicon lemma is
-    /// written with a capital.
+    /// names in the word's verse. The gate is the resolution's own: a noun whose lexicon entry is
+    /// a name, not a gentilic or a title.
     /// </summary>
     private static readonly string Occurrences =
         $"""
@@ -135,7 +135,7 @@ internal sealed class GreekNamesakeLoader(AppDbContext db, ILogger<GreekNamesake
          FROM word w
          JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
          JOIN strong_entry lexicon ON lexicon.strong_number = w.strong_number
-              AND lower(left(lexicon.lemma, 1)) <> left(lexicon.lemma, 1)
+              AND {EntityAnnotationLoader.GreekName}
          JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
          CROSS JOIN LATERAL (
              SELECT count(*) AS bearers FROM namesake n WHERE n.number = w.strong_number) bearing

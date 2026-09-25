@@ -149,12 +149,13 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
             return new PlacesOutcome(true, 0, 0, 0, 0, 0, started.Elapsed);
         }
 
+        var places = Read(file);
+
         if (await db.EntityVerses.AnyAsync(v => v.Source == Source, cancellationToken))
         {
+            await Spell(places, cancellationToken);
             return new PlacesOutcome(true, 0, 0, 0, 0, 0, started.Elapsed);
         }
-
-        var places = Read(file);
 
         var byOpenBibleId = await db.Entities
             .Where(e => e.Kind == EntityKind.Place && e.OpenBibleId != null)
@@ -233,6 +234,7 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
 
         db.EntityVerses.AddRange(references);
         await db.SaveChangesAsync(cancellationToken);
+        await Spell(places, cancellationToken);
 
         if (unaddressed > 0)
         {
@@ -255,6 +257,84 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
         return outcome;
     }
 
+    /// <summary>What a name row this source adds is: a spelling some English translation prints.</summary>
+    internal const string SpellingKind = "spelling";
+
+    /// <summary>
+    /// Every spelling of each place an English translation prints, as a name of the place credited
+    /// to this source: the King James writes <em>Tyrus</em>, <em>Zidon</em> and <em>Charchemish</em>,
+    /// and a reader searching for the word on the page has to find the place. A spelling the place
+    /// already answers to is not written again, and neither is a gentilic — <em>Tyrians</em> is the
+    /// people of Tyre, not a name of the city — nor a word that is the name of another record: where
+    /// a translation prints <em>Judah</em> or <em>Zion</em> for Jerusalem it is naming something
+    /// else in its place, and a search for Judah has to find Judah. Written on every load, and only
+    /// what is missing.
+    /// </summary>
+    private async Task<int> Spell(List<Place> places, CancellationToken cancellationToken)
+    {
+        var byOpenBibleId = await db.Entities
+            .Where(e => e.Kind == EntityKind.Place && e.OpenBibleId != null)
+            .Select(e => new { e.Id, e.Name, OpenBibleId = e.OpenBibleId! })
+            .ToDictionaryAsync(e => e.OpenBibleId, cancellationToken);
+        var held = (await db.EntityNames
+                .Where(n => n.Entity!.Kind == EntityKind.Place)
+                .Select(n => new { n.EntityId, n.Label })
+                .ToListAsync(cancellationToken))
+            .Select(n => (n.EntityId, n.Label.ToLowerInvariant()))
+            .ToHashSet();
+        var named = (await db.Entities.Select(e => new { e.Id, e.Name }).ToListAsync(cancellationToken))
+            .Select(e => (e.Id, Name: e.Name.ToLowerInvariant()))
+            .Concat((await db.EntityNames.Where(n => n.Kind != SpellingKind).Select(n => new { n.EntityId, n.Label })
+                    .ToListAsync(cancellationToken))
+                .Select(n => (Id: n.EntityId, Name: n.Label.ToLowerInvariant())))
+            .ToLookup(e => e.Name, e => e.Id);
+
+        var written = new List<EntityName>();
+        foreach (var place in places)
+        {
+            if (!byOpenBibleId.TryGetValue(place.Id, out var entity))
+            {
+                continue;
+            }
+
+            foreach (var spelling in Spellings(place.Spellings, entity.Name))
+            {
+                var lower = spelling.ToLowerInvariant();
+                if (named[lower].Any(id => id != entity.Id))
+                {
+                    continue;
+                }
+
+                if (held.Add((entity.Id, lower)))
+                {
+                    written.Add(new EntityName
+                    {
+                        EntityId = entity.Id, Label = spelling, Kind = SpellingKind, Source = Source,
+                    });
+                }
+            }
+        }
+
+        if (written.Count > 0)
+        {
+            db.EntityNames.AddRange(written);
+            await db.SaveChangesAsync(cancellationToken);
+            logger.LogInformation("{Spellings} spellings the translations print were added to the places", written.Count);
+        }
+
+        return written.Count;
+    }
+
+    /// <summary>The spellings worth a name row: not the place's own name, and not a gentilic.</summary>
+    internal static IEnumerable<string> Spellings(IEnumerable<string> printed, string name) =>
+        printed
+            .Select(s => s.Trim())
+            .Where(s => s.Length > 0 && !string.Equals(s, name, StringComparison.OrdinalIgnoreCase))
+            .Where(s => !Gentilic().IsMatch(s));
+
+    [GeneratedRegex(@"(ites|ians|eans|ines|ite|ian)$")]
+    private static partial Regex Gentilic();
+
     /// <param name="Verses">
     /// Where the place is named, as the source addresses it. Its own frame is the ESV's, and every
     /// one of its citations lands on a verse this corpus already holds; the two it knows the King
@@ -266,7 +346,11 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
         string Name,
         string? Identification,
         string? Kind,
-        IReadOnlyList<string> Verses);
+        IReadOnlyList<string> Verses)
+    {
+        /// <summary>What the English translations print for the place, from <c>translation_name_counts</c>.</summary>
+        public IReadOnlyList<string> Spellings { get; init; } = [];
+    }
 
     internal static List<Place> Read(string file)
     {
@@ -294,7 +378,13 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
                 TrailingIndex().Replace(friendly, string.Empty),
                 Identification(root),
                 Kinds(root),
-                [.. Citations(root)]));
+                [.. Citations(root)])
+            {
+                Spellings = root.TryGetProperty("translation_name_counts", out var counts)
+                            && counts.ValueKind == JsonValueKind.Object
+                    ? [.. counts.EnumerateObject().Select(c => c.Name)]
+                    : [],
+            });
         }
 
         return places;

@@ -167,6 +167,39 @@ public class StrongXmlParserTests
     }
 
     [Fact]
+    public void ParseGreek_BareCrossReferenceIsWrittenAsAReference()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="02705">
+                   <strongs>2705</strongs>
+                   <greek unicode="καταφιλέω" translit="kataphiléō"/>
+                   <strongs_derivation>from 2596 and 5368;</strongs_derivation>
+                   <strongs_def>to kiss earnestly</strongs_def>
+                   <kjv_def>:--kiss.</kjv_def>
+                  </entry>
+                  <entry strongs="05516">
+                   <strongs>5516</strongs>
+                   <greek unicode="χξϛ" translit="chi xi stigma"/>
+                   <strongs_def>666 as a numeral</strongs_def>
+                   <kjv_def>:--six hundred threescore and six.</kjv_def>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+
+        entries[0].Derivation.Should().Be("from G2596 and G5368;");
+        entries[0].SeeAlso.Should().Be("G2596,G5368");
+        entries[1].Definition.Should().Be("666 as a numeral", "the number is the entry, not a reference");
+        entries[1].SeeAlso.Should().BeNull();
+    }
+
+    [Fact]
     public void ParseGreek_StrongNumberParsesLeadingZeros()
     {
         var xml = """

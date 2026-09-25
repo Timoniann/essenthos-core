@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260925142845_AListedVerseSaysWhetherItNamesItsEntity")]
+    partial class AListedVerseSaysWhetherItNamesItsEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -841,10 +844,6 @@ namespace Essenthos.Core.Migrations
                     b.Property<string>("Meaning")
                         .HasColumnType("text")
                         .HasColumnName("meaning");
-
-                    b.Property<string>("Source")
-                        .HasColumnType("text")
-                        .HasColumnName("source");
 
                     b.HasKey("Id")
                         .HasName("pk_entity_name");

@@ -368,6 +368,14 @@ public class EntityName
 
     public Entity? AspectOf { get; set; }
 
+    /// <summary>
+    /// Which dataset gives this name, where it is not the dataset the entity came from. Null means
+    /// the entity's own source says it — every row written before names were credited one by one.
+    /// OpenBible's spellings sit on places BibleData created, and a label on somebody else's record
+    /// has to say whose it is.
+    /// </summary>
+    public string? Source { get; set; }
+
     public override string ToString() => $"EntityName({Label})";
 }
 
@@ -520,6 +528,16 @@ public class EntityVerse
     /// claim neither source makes. So the provenance is per row, at the grain the claim is made.
     /// </summary>
     public required string Source { get; set; }
+
+    /// <summary>
+    /// Whether a word of this verse is annotated to the entity — the verse <em>names</em> it — or
+    /// the source lists the verse without any word of it saying who: the entity is the subject
+    /// under a pronoun, or somebody recalls him, as 2 Kings 9 recalls Zimri through a coup that is
+    /// Jehu's. Both are real relations and neither is deleted; a reader following a reference is
+    /// owed which one it is. Derived after every pass that annotates a word, from
+    /// <see cref="WordEntity"/>, and false until then.
+    /// </summary>
+    public bool Names { get; set; }
 
     public override string ToString() =>
         $"EntityVerse({EntityId} at {CanonicalBook} {CanonicalChapter}:{CanonicalVerse})";

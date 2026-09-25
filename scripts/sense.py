@@ -421,14 +421,32 @@ def witness_answers(word_ids):
     What the encyclopedia's verse lists say about these occurrences: the candidates it attests in
     the very verse the word stands in. This is never shown to the model -- it is read at scoring
     time, from the database, against answers already written.
+
+    A verse list answers for a verse and not for a word, so two cases are kept out of it. Where the
+    verse writes the same Strong number twice -- Dan the city and Dan their father at Judges 18:29 --
+    one attestation cannot say which word it is about, and the word is marked `repeated` so the
+    score leaves it out either way; so is a word beside another of the same candidate's names, since
+    Bethlehem attested at 1 Chronicles 4:4 may be attested for Bethlehem or for the Ephratah beside
+    it. And a candidate is not offered for a word when the label the list attests it by in that
+    verse carries a different Strong number.
     """
     ids = ', '.join(str(int(i)) for i in word_ids)
     return psql(f"""
         {NAMED}
-        SELECT coalesce(json_object_agg(a.word_id, a.entities), '{{}}')
+        SELECT coalesce(json_object_agg(a.word_id, json_build_object(
+                   'entities', a.entities, 'repeated', a.repeated)), '{{}}')
         FROM (
             SELECT w.id AS word_id,
-                   coalesce(json_agg(DISTINCT e.slug) FILTER (WHERE e.slug IS NOT NULL), '[]') AS entities
+                   coalesce(json_agg(DISTINCT e.slug) FILTER (WHERE e.slug IS NOT NULL), '[]') AS entities,
+                   EXISTS (SELECT 1 FROM word o
+                           WHERE o.verse_id = w.verse_id AND o.text_id = w.text_id AND o.id <> w.id
+                             AND o.strong_number = w.strong_number)
+                   OR coalesce(bool_or(EXISTS (
+                           SELECT 1 FROM word o
+                           JOIN entity_name x ON x.entity_id = ev.entity_id
+                                AND x.hebrew_strong_number = o.strong_number
+                           WHERE o.verse_id = w.verse_id AND o.text_id = w.text_id
+                             AND o.strong_number <> w.strong_number)), FALSE) AS repeated
             FROM word w
             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
             LEFT JOIN named n ON n.number = w.strong_number
@@ -436,9 +454,19 @@ def witness_answers(word_ids):
                  AND ev.canonical_book = r.canonical_book
                  AND ev.canonical_chapter = r.canonical_chapter
                  AND ev.canonical_verse = r.canonical_verse
+                 AND NOT EXISTS (
+                     SELECT 1 FROM entity_name other
+                     WHERE other.entity_id = ev.entity_id AND other.label = ev.label
+                       AND other.hebrew_strong_number IS NOT NULL
+                       AND position(',' IN other.hebrew_strong_number) = 0
+                       AND other.hebrew_strong_number <> w.strong_number
+                       AND NOT EXISTS (
+                           SELECT 1 FROM entity_name same
+                           WHERE same.entity_id = ev.entity_id AND same.label = ev.label
+                             AND same.hebrew_strong_number = w.strong_number))
             LEFT JOIN entity e ON e.id = ev.entity_id
             WHERE w.id IN ({ids})
-            GROUP BY 1
+            GROUP BY w.id, w.verse_id, w.text_id, w.strong_number
         ) a
     """)
 
@@ -814,11 +842,16 @@ def score(args):
     overall, by_band, by_bucket = tally(), {}, {}
     unwitnessed = {'model_unlisted': 0, 'model_named': 0, 'model_unclear': 0}
     contested_witness = 0
+    repeated = 0
     disagreements = []
 
     for row in rows:
-        named = witness.get(str(row['word_id'])) or witness.get(row['word_id']) or []
+        said = witness.get(str(row['word_id'])) or witness.get(row['word_id']) or {}
+        named = said.get('entities') or []
         answer = row['referent']
+        if said.get('repeated'):
+            repeated += 1
+            continue
         if len(named) > 1:
             contested_witness += 1
             continue
@@ -861,7 +894,8 @@ def score(args):
     scorable = sum(overall.values())
     write(f'{scorable} occurrences the witness answers with exactly one candidate; '
           f'{sum(unwitnessed.values())} it answers with none and '
-          f'{contested_witness} with more than one.')
+          f'{contested_witness} with more than one; {repeated} stand in a verse that writes the '
+          f'same number twice, which a verse list cannot answer for one word, and are not scored.')
     write('')
     write('## Overall, where the witness decides')
     write('')
