@@ -195,8 +195,8 @@ internal static class GeezTextSource
 
     /// <summary>
     /// The chapters where Swete stands at other rows of the frame than Brenton does, so that the
-    /// Greek at a Ge'ez verse's row in Swete is some other passage: Wisdom from chapter 15 and the
-    /// Letter of Jeremiah are a row or a chapter out, and Sirach 31-35 is in Swete's other order.
+    /// Greek at a Ge'ez verse's row in Swete is some other passage: the Letter of Jeremiah is a row
+    /// out, and Sirach 31-35 is in Swete's other order.
     /// Found by comparing the two Septuagints row by row, where they share under a third of their
     /// words. Esther is out whole: Swete letters its additions as verses of the chapter they stand
     /// in, and the frame puts them at those verses' rows rather than at the verse they follow.
@@ -206,7 +206,6 @@ internal static class GeezTextSource
     [
         (2, 39), (11, 6), (19, 92), (68, 1), (68, 2), (68, 6), (70, 6),
         (72, 31), (72, 32), (72, 33), (72, 34), (72, 35),
-        (Wisdom, 15), (Wisdom, 16), (Wisdom, 17), (Wisdom, 18), (Wisdom, 19),
         (LetterOfJeremiah, 1), (81, 8),
         .. Enumerable.Range(1, 10).Select(chapter => (Esther, chapter)),
     ];

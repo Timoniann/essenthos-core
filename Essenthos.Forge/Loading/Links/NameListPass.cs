@@ -90,8 +90,8 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
         var started = Stopwatch.StartNew();
         var from = await db.Texts.SingleAsync(t => t.Slug == fromSlug, cancellationToken);
         var to = await db.Texts.SingleAsync(t => t.Slug == toSlug, cancellationToken);
-        var source = await aligner.Named(fromSlug, books, cancellationToken);
-        var target = await aligner.Named(toSlug, books, cancellationToken);
+        var source = await aligner.Named(fromSlug, toSlug, books, cancellationToken);
+        var target = await aligner.Named(toSlug, fromSlug, books, cancellationToken);
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         try

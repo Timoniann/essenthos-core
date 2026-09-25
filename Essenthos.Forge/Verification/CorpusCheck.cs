@@ -61,7 +61,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// Whether a word was ever promised anything is asked of its verse and not of its text. The
     /// Septuagint's deuterocanon has no Hebrew counterpart at all and its Daniel 3 has sixty-five
     /// verses BHSA does not hold, and counting those as words the corpus failed to reach would
-    /// report the shape of the canon as a defect in the alignment.
+    /// report the shape of the canon as a defect in the alignment. A lettered verse is Septuagint
+    /// material the frame parks beside a numbered verse, so it is paired only with a witness numbered
+    /// in the same tradition, as the aligner pairs it.
     ///
     /// Every text linked to a witness is counted, and every translation whether or not it is —
     /// unfinished alignment work is a fact worth reporting, and it is the <c>unpaired</c> column
@@ -76,8 +78,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         ),
         placed AS (
             SELECT v.id AS verse_id, v.text_id, r.canonical_book AS book,
-                   r.canonical_chapter AS chapter, r.canonical_verse AS verse
+                   r.canonical_chapter AS chapter, r.canonical_verse AS verse,
+                   v.label <> '' AS lettered, t.versification
             FROM verse v
+            JOIN text t ON t.id = v.text_id
             JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
         ),
         paired AS (
@@ -86,6 +90,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             JOIN witness w ON w.from_text_id = here.text_id
             JOIN placed there ON there.text_id = w.to_text_id
                 AND (there.book, there.chapter, there.verse) = (here.book, here.chapter, here.verse)
+            WHERE NOT here.lettered OR here.versification = there.versification
         ),
         claimed AS (
             SELECT lw.word_id,

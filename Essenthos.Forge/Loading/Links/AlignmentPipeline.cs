@@ -120,9 +120,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var measured = Measured.GetValueOrDefault(from.Language ?? string.Empty);
         var threshold = minimumConfidence ?? measured?.Minimum ?? DefaultMinimumConfidence;
         var pool = Pool(fromSlug, toSlug);
-        var source = await Words(fromSlug, word => Reduce(word), cancellationToken);
+        var lettered = await PrintTheSameVerses(fromSlug, toSlug, cancellationToken);
+        var source = await Words(fromSlug, word => Reduce(word), cancellationToken, lettered: lettered);
         var target = await Words(
-            toSlug, pool is null ? word => Comparable(word) : Pooled, cancellationToken, primaryOnly: pool is not null);
+            toSlug, pool is null ? word => Comparable(word) : Pooled, cancellationToken, primaryOnly: pool is not null,
+            lettered: lettered);
         var addresses = Shared(fromSlug, toSlug, source, target);
         if (addresses.Count == 0)
         {
@@ -464,10 +466,12 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         // were measured as plainly better than the pointing and the inflection they replace.
         // A trial over a few books trains a model of its own rather than reading the pool's.
         var pool = asWritten || books is not null ? null : Pool(fromSlug, toSlug);
+        var lettered = await PrintTheSameVerses(fromSlug, toSlug, cancellationToken);
         var source = await Words(
-            fromSlug, asWritten ? Written : word => Reduce(word), cancellationToken, books);
+            fromSlug, asWritten ? Written : word => Reduce(word), cancellationToken, books, lettered: lettered);
         var target = await Words(
-            toSlug, pool is null ? word => Comparable(word) : Pooled, cancellationToken, books, pool is not null);
+            toSlug, pool is null ? word => Comparable(word) : Pooled, cancellationToken, books, pool is not null,
+            lettered);
         var addresses = Shared(fromSlug, toSlug, source, target);
 
         Directory.CreateDirectory(workspace);
@@ -507,10 +511,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     {
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
+        var lettered = await PrintTheSameVerses(fromSlug, toSlug, cancellationToken);
         var source = await Words(
-            fromSlug, targetSurface ? Written : word => Reduce(word, suppletion), cancellationToken);
+            fromSlug, targetSurface ? Written : word => Reduce(word, suppletion), cancellationToken, lettered: lettered);
         var target = await Words(
-            toSlug, targetSurface ? Written : word => Comparable(word, suppletion), cancellationToken);
+            toSlug, targetSurface ? Written : word => Comparable(word, suppletion), cancellationToken, lettered: lettered);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
 
         Directory.CreateDirectory(workspace);
@@ -583,8 +588,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     {
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
-        var source = await Words(fromSlug, word => Reduce(word), cancellationToken);
-        var target = await Words(toSlug, word => Comparable(word), cancellationToken);
+        var lettered = await PrintTheSameVerses(fromSlug, toSlug, cancellationToken);
+        var source = await Words(fromSlug, word => Reduce(word), cancellationToken, lettered: lettered);
+        var target = await Words(toSlug, word => Comparable(word), cancellationToken, lettered: lettered);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(address => address).ToList();
         var (gold, _) = await Stated(from.Id, to.Id, statedOnly: true, cancellationToken);
         var stated = await StatedAnchors(from.Id, to.Id, cancellationToken);
@@ -869,8 +875,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     {
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
-        var source = await Words(fromSlug, word => Reduce(word), cancellationToken);
-        var target = await Words(toSlug, word => Comparable(word), cancellationToken);
+        var lettered = await PrintTheSameVerses(fromSlug, toSlug, cancellationToken);
+        var source = await Words(fromSlug, word => Reduce(word), cancellationToken, lettered: lettered);
+        var target = await Words(toSlug, word => Comparable(word), cancellationToken, lettered: lettered);
         var addresses = source.Keys.Intersect(target.Keys).OrderBy(a => a).ToList();
 
         Directory.CreateDirectory(workspace);
@@ -1346,6 +1353,10 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// The canonical books to read, or all of them. A trial on a few books trains on those books
     /// alone, which is weaker than the whole text and never stronger.
     /// </param>
+    /// <param name="lettered">
+    /// False to leave out the verses the text prints with a letter, which <see cref="PrintTheSameVerses"/>
+    /// explains.
+    /// </param>
     /// <param name="primaryOnly">
     /// Every word at the one address its verse stands at primarily. A pool's Greek is read so, as its
     /// source is: the Ge'ez and the Greek it was made from stand at the same primary rows, and the
@@ -1356,12 +1367,14 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         Func<WordForms, string> form,
         CancellationToken cancellationToken,
         IReadOnlySet<int>? books = null,
-        bool primaryOnly = false)
+        bool primaryOnly = false,
+        bool lettered = true)
     {
         var within = books?.ToList();
         var rows = await db.VerseReferences
             .Where(r => r.Verse!.Text!.Slug == slug)
             .Where(r => within == null || within.Contains(r.CanonicalBook))
+            .Where(r => lettered || r.Verse!.Label == "")
             .SelectMany(r => r.Verse!.Words.Select(w => new
             {
                 r.CanonicalBook,
@@ -1430,12 +1443,33 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     .ToList());
     }
 
+    /// <summary>
+    /// Whether the verses one text prints with a letter may be paired with the other text at all.
+    ///
+    /// A lettered verse — Esther 1:1a to 1:1s, 3 Kingdoms 12:24a to 12:24z — is text the address
+    /// system cannot name, and the frame stands it at the numbered verse beside it. Paired by that
+    /// address with a text numbered as the Hebrew, it is handed to the aligner against a verse that
+    /// does not contain it, and the aligner links what it is given: Addition D's overseer came out
+    /// as the Hebrew's "she put on" at 0.965. So a lettered verse is paired only between two texts
+    /// numbered in one tradition — the two Greek editions, Brenton's English and the Ge'ez made from
+    /// the Greek; the Clementine and the Douay — which print the same material in the same places.
+    /// Against any other it stands unpaired, which is what it is.
+    /// </summary>
+    private async Task<bool> PrintTheSameVerses(string fromSlug, string toSlug, CancellationToken cancellationToken) =>
+        await db.Texts
+            .Where(t => t.Slug == fromSlug || t.Slug == toSlug)
+            .Select(t => t.Versification)
+            .Distinct()
+            .CountAsync(cancellationToken) == 1;
+
     /// <summary>Every word of a text by address as it is written, with the consonants of its names.</summary>
-    internal Task<Dictionary<(int, int, int), List<Word>>> Named(
+    internal async Task<Dictionary<(int, int, int), List<Word>>> Named(
         string slug,
+        string partner,
         IReadOnlySet<int>? books,
         CancellationToken cancellationToken) =>
-        Words(slug, Written, cancellationToken, books);
+        await Words(slug, Written, cancellationToken, books,
+            lettered: await PrintTheSameVerses(slug, partner, cancellationToken));
 
     /// <summary>
     /// The word as the text writes it, except where the language inflects so heavily that writing
