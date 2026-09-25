@@ -378,7 +378,7 @@ internal static class EvidentiaAttachedWords
                 found = onTheVerb;
             }
 
-            if (found is not { } result)
+            if (found is not { } result || EvidentiaTenseAgreement.Disagrees(words[index], result.Placement))
             {
                 continue;
             }
