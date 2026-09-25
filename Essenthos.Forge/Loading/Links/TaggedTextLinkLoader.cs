@@ -196,11 +196,18 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     /// Numbers a separate edition puts on the translation's words, held for this run and never
     /// written to them; null reads the numbers the words carry themselves.
     /// </param>
+    /// <param name="only">
+    /// Translation words written after the pair was linked, and the only ones whose matches are
+    /// written: every verse is matched as it always is, so a word is matched against the same
+    /// neighbours as before, and a link of these numbers already naming another word of such a
+    /// match gives way to it. Null matches the whole pair, once.
+    /// </param>
     public async Task<TaggedTextLinkOutcome> Load(
         string fromSlug,
         string toSlug,
         EditionNumbers? edition,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        IReadOnlySet<long>? only = null)
     {
         var from = await db.Texts.SingleOrDefaultAsync(t => t.Slug == fromSlug, cancellationToken);
         var to = await db.Texts.SingleOrDefaultAsync(t => t.Slug == toSlug, cancellationToken);
@@ -224,7 +231,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
 
         // Only this loader's own links, from these numbers: a pair the aligner already reached is
         // not a pair the numbers have spoken about.
-        if (await db.Links.AnyAsync(
+        if (only is null && await db.Links.AnyAsync(
                 l => l.FromTextId == from.Id && l.ToTextId == to.Id
                      && l.Method == LinkMethod.StrongNumber && written.Contains(l.Source),
                 cancellationToken))
@@ -292,6 +299,11 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             }
         }
 
+        if (only is not null)
+        {
+            drafts = [.. drafts.Where(draft => draft.From.Any(only.Contains))];
+        }
+
         var testimony = await Drawn(from.Id, to.Id, LinkMethod.StatedBySource, cancellationToken);
         testimony.AddRange(await Drawn(from.Id, to.Id, LinkMethod.Manual, cancellationToken));
         var (kept, corroborations) = YieldToTestimony(drafts, testimony, source);
@@ -301,7 +313,8 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             [.. kept.Select(d => ((IReadOnlyList<long>)d.From, (IReadOnlyList<long>)d.To))],
             guesses);
 
-        await Write(from.Id, to.Id, source, kept, corroborations, settled, cancellationToken);
+        long[] superseded = only is null ? [] : await Superseded(from.Id, to.Id, written, kept, cancellationToken);
+        await Write(from.Id, to.Id, source, kept, corroborations, settled, cancellationToken, superseded);
 
         var outcome = new TaggedTextLinkOutcome(
             false,
@@ -543,6 +556,31 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         ];
     }
 
+    /// <summary>
+    /// This loader's own links from these numbers that already name a translation word a new match
+    /// names: the match is drawn over the same unit of the edition, and two links saying one word
+    /// renders something would be the word named twice.
+    /// </summary>
+    private async Task<long[]> Superseded(
+        int fromTextId,
+        int toTextId,
+        List<string> written,
+        List<Draft> drafts,
+        CancellationToken cancellationToken)
+    {
+        var words = drafts.SelectMany(draft => draft.From).Distinct().ToList();
+        return
+        [
+            .. await db.LinkWords
+                .Where(lw => lw.Side == LinkSide.From && words.Contains(lw.WordId)
+                             && lw.Link!.FromTextId == fromTextId && lw.Link.ToTextId == toTextId
+                             && lw.Link.Method == LinkMethod.StrongNumber && written.Contains(lw.Link.Source))
+                .Select(lw => lw.LinkId)
+                .Distinct()
+                .ToListAsync(cancellationToken),
+        ];
+    }
+
     private async Task Write(
         int fromTextId,
         int toTextId,
@@ -550,7 +588,8 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         List<Draft> drafts,
         List<(long Link, double Confidence, string Source)> corroborations,
         List<Settled> settled,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        long[]? superseded = null)
     {
         if (drafts.Count == 0 && corroborations.Count == 0)
         {
@@ -560,6 +599,13 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        if (superseded is { Length: > 0 })
+        {
+            await using var give = new NpgsqlCommand(RemoveSettled, connection);
+            give.Parameters.AddWithValue("ids", superseded);
+            await give.ExecuteNonQueryAsync(cancellationToken);
+        }
 
         var firstId = drafts.Count == 0 ? 0 : await ReserveLinkIds(connection, drafts.Count, cancellationToken);
         if (drafts.Count > 0)

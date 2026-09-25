@@ -44,6 +44,24 @@ contradiction beside the file rather than in a folder three directories away.
 bible4u's line covers. **RUSV**, the Russian Synodal Version of 1876, is likewise out of
 copyright in its text.
 
+## What the corpus corrects in them, and why that is within the line
+
+The line permits modifying the file so long as the Biblical content is unchanged, and the corrections
+the corpus makes restore the content rather than change it. Each is a word the file prints that no
+printing of the translation has, put back as a second witness to the same text prints it:
+
+- **KJV.xml** against eBible's standardised 1769 text (Resources/KingJames2006): the capitals of the
+  divine name and of the inscriptions, which the file lowercases, and its possessive, which it prints
+  apart as *Lord 's*; 27 garbled readings; and the fourteen epistle subscriptions, which it omits.
+- **RUSV.xml** against the Strong-tagged digitisation of the same 1876 translation
+  (Resources/SynodalStrong): 209 tokens — words run together in Joshua 4, 1 Kings 7, Esther 6 and
+  Isaiah 28 and 51 and once in Mark 10:28, a dash or hyphen written as the letter *г*, six misspelt
+  words and four names in lower case. The list is `Essenthos.Forge/Loading/SynodalCorrections.json`,
+  drawn by `scripts/synodal-corrections.py`. Only letters and spaces are taken from that edition;
+  its Strong numbering is used for the links alone, as before, and stored nowhere.
+
+Each text's row says so in its rights note, and the King James names the edition the corrections come from.
+
 ## Why it is attributed anyway
 
 Public domain removes the obligation, not the reason. A reader has to be able to tell

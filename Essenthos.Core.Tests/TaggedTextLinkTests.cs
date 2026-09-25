@@ -140,6 +140,35 @@ public sealed class TaggedTextLinkTests : IDisposable
     }
 
     /// <summary>
+    /// A word written into a pair already linked — a corrected verse's — is matched on its own, and
+    /// the words linked before keep their links and gain no second one.
+    /// </summary>
+    [Fact]
+    public async Task AWordWrittenAfterThePairWasLinkedIsLinkedAloneLater()
+    {
+        var heaven = _db.WordAt(_german, 1, 1, 5);
+        _db.Words.Remove(heaven);
+        _db.SaveChanges();
+        await _loader.Load(_german.Slug, _hebrew.Slug);
+        var before = await Links();
+
+        var written = new Word
+        {
+            TextId = _german.Id, VerseId = heaven.VerseId, Position = 5, Surface = "Himmel", Trailer = " ",
+            StrongNumber = "H8064",
+        };
+        _db.Words.Add(written);
+        _db.SaveChanges();
+        var outcome = await _loader.Load(_german.Slug, _hebrew.Slug, null, default, new HashSet<long> { written.Id });
+
+        outcome.AlreadyLoaded.Should().BeFalse();
+        var after = await Links();
+        after.Select(l => l.Id).Should().Contain(before.Select(l => l.Id));
+        after.Should().HaveCount(before.Count + 1);
+        after.Single(l => l.Words.Any(w => w.WordId == written.Id)).Words.Should().HaveCount(2);
+    }
+
+    /// <summary>
     /// A Greek number in a German word never reaches a Hebrew witness, whatever digits it shares
     /// with one. The series is read from the witness's language rather than from the tag, because a
     /// number read out of the wrong half is a valid Strong number for the wrong word.

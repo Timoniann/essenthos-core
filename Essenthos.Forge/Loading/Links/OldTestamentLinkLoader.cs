@@ -287,6 +287,67 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     }
 
     /// <summary>
+    /// The links of verses the King James came to read as the file does after its words were loaded:
+    /// a verse the loaded text garbled was refused its links, and once it is corrected it joins. Only
+    /// verses none of whose words is linked to BHSA yet are drawn, so no verse is linked twice, and
+    /// the Hebrew numbers are not written again — the Hebrew join held for them the first time.
+    /// </summary>
+    /// <param name="verses">The King James verses, by address, whose words changed.</param>
+    public async Task<int> Relink(
+        IReadOnlyList<MappingRecord> records,
+        TahotSegmentation? segmentation,
+        IReadOnlyCollection<(int Book, int Chapter, int Verse)> verses,
+        CancellationToken cancellationToken = default)
+    {
+        var english = await db.Texts.SingleOrDefaultAsync(t => t.Slug == Bible4uTextSource.KingJames, cancellationToken);
+        var hebrew = await db.Texts.SingleOrDefaultAsync(t => t.Slug == BhsaTextSource.Slug, cancellationToken);
+        if (english is null || hebrew is null || verses.Count == 0)
+        {
+            return 0;
+        }
+
+        var englishVerses = await VerseWords(english.Id, cancellationToken);
+        var wanted = verses.Where(englishVerses.ContainsKey).ToHashSet();
+        var words = wanted.SelectMany(address => englishVerses[address].Select(word => word.Id)).ToList();
+        var linked = (await db.LinkWords
+                .Where(lw => words.Contains(lw.WordId)
+                             && lw.Link!.FromTextId == english.Id && lw.Link.ToTextId == hebrew.Id)
+                .Select(lw => lw.WordId)
+                .ToListAsync(cancellationToken))
+            .ToHashSet();
+        wanted.RemoveWhere(address => englishVerses[address].Any(word => linked.Contains(word.Id)));
+        if (wanted.Count == 0)
+        {
+            return 0;
+        }
+
+        var hebrewVerses = await VerseWords(hebrew.Id, cancellationToken);
+        var pairs = new List<LinkDraft>();
+        var joined = 0;
+        foreach (var record in records.Where(r => wanted.Contains((r.Book, r.Chapter, r.Verse))))
+        {
+            if (JoinHebrew(record, hebrewVerses, out _) is not { } bhsaWords
+                || Build(
+                    record,
+                    englishVerses[(record.Book, record.Chapter, record.Verse)],
+                    bhsaWords,
+                    segmentation?.Align(record.Book, record.Chapter, record.Verse, record.Hebrew)) is not { } drafts)
+            {
+                continue;
+            }
+
+            pairs.AddRange(drafts);
+            joined++;
+        }
+
+        await Write(english.Id, hebrew.Id, pairs, [], cancellationToken);
+        logger.LogInformation(
+            "Linked {Verses} of {Wanted} corrected King James verses to BHSA from the mapping file: {Links} links",
+            joined, wanted.Count, pairs.Count);
+        return pairs.Count;
+    }
+
+    /// <summary>
     /// The BHSA words the file's Hebrew for this verse lines up with, or null where it does not.
     ///
     /// The join is positional within the verse and checked against the glosses BHSA carries, so a

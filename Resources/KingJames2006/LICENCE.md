@@ -16,13 +16,22 @@ used here at all: it is verse for verse the scheme the corpus is already aligned
 
 ## What is taken from it, and what is not
 
-**Only the 116 psalm superscriptions.** The King James the corpus serves comes from bible4u, whose
+**The 116 psalm superscriptions.** The King James the corpus serves comes from bible4u, whose
 Zefania XML has no element for a superscription and therefore prints none — *Psalm 51:1* there is
 *Have mercy upon me*, with *To the chief Musician, A Psalm of David, when Nathan the prophet came
 unto him* nowhere in the file. This edition writes all 116 of them as USFM `\d` lines, 1,034 words,
 each word tagged with the Hebrew word it renders. Those lines, and nothing else, are read into the
 head of the psalm's first verse, which is where the six other English texts here already carry
 theirs.
+
+**And what bible4u's file gets wrong against it, word by word in place**
+(`Essenthos.Forge/Loading/KingJamesRepairs.cs`): the capitals this edition prints — the divine name
+in small capitals and the inscriptions — which bible4u lowercases, 6,949 words in 5,830 verses, and
+the possessive *Lord 's* it prints apart 98 times; the 27 readings below; and the fourteen epistle
+subscriptions, which close the epistle's last verse. Its spelling, its hyphens in names and its
+pilcrows are not taken: they are this edition's conventions, not faults of the other file. The loaded
+words keep their rows and their links; only a word one edition has and the other has not is removed or
+written.
 
 **No text of its own is loaded.** The corpus holds one King James, under the slug `KJV`, with
 789,806 words, 2,348,651 links, 123,762 Strong tags and 33,184 entity annotations hanging off them.
@@ -52,8 +61,9 @@ not a textual difference at all. Fourteen are the subscriptions the 1769 prints 
 *Written to the Romans from Corinthus, and sent by Phebe servant of the church at Cenchrea* — which
 bible4u omits.
 
-**The remaining twenty-eight are errors in the file the corpus serves.** They were read one by one
-and in every one this edition carries the 1769 reading:
+**The remaining twenty-eight are errors in the file the corpus serves** — twenty-seven, once Psalm
+103:17 is set aside, where the two differ only in the apostrophe of *children's*. They were read one
+by one and in every one this edition carries the 1769 reading, which the Zefania `KJV+` copy reads too:
 
 > *Am I am not an apostle?* for *Am I not an apostle?* (1 Corinthians 9:1)
 > *Bezaleel the son Uri* for *the son of Uri* (Exodus 38:22)
@@ -62,9 +72,9 @@ and in every one this edition carries the 1769 reading:
 > *And I set my tabernacle among you* for *And I will set* (Leviticus 26:11)
 > *a tumultuous city, joyous city* for *a joyous city* (Isaiah 22:2)
 
-That is a finding about the loaded text, not about this one, and it is recorded on the board rather
-than acted on here: swapping the edition is a decision about two and a half million links, and this
-file is what a decision like that would be made from.
+They are corrected in the loaded text rather than by swapping the edition, which would cost its two
+and a half million links; each reading is written out in `KingJamesRepairs.Readings`, and the reader
+refuses to correct one this edition does not print.
 
 ## The licence, and there are three statements of it that agree
 

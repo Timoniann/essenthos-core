@@ -134,7 +134,11 @@ internal static class Bible4uTextSource
     /// <summary>Every translation this reader knows, by the identifier its file carries.</summary>
     public static IReadOnlyDictionary<string, TextDefinition> Definitions => Known;
 
-    public static TextSource Read(string path, string identifier)
+    /// <param name="resources">
+    /// Where the witnesses the file is corrected against are, or null to read the file exactly as it
+    /// is printed — which is what the passes re-reading it for its markup want.
+    /// </param>
+    public static TextSource Read(string path, string identifier, string? resources = null)
     {
         if (!Known.TryGetValue(identifier, out var definition))
         {
@@ -144,10 +148,15 @@ internal static class Bible4uTextSource
                 nameof(identifier));
         }
 
-        return Build(new XmlBibleParser().Parse(File.ReadAllText(path)), definition);
+        var bible = new XmlBibleParser().Parse(File.ReadAllText(path));
+        return Build(bible, definition, resources is null ? null : Bible4uRepairs.For(identifier, bible, resources));
     }
 
-    public static TextSource Build(XmlBible.XmlBible bible, TextDefinition definition)
+    /// <summary>The file's corrections, read beside it, for a pass that makes them on a text already loaded.</summary>
+    public static TextRepairs Repairs(string path, string identifier, string resources) =>
+        Bible4uRepairs.For(identifier, new XmlBibleParser().Parse(File.ReadAllText(path)), resources);
+
+    public static TextSource Build(XmlBible.XmlBible bible, TextDefinition definition, TextRepairs? repairs = null)
     {
         var books = new List<BookDraft>(bible.Books.Count);
         var position = 0;
@@ -155,12 +164,8 @@ internal static class Bible4uTextSource
         foreach (var book in bible.Books)
         {
             position++;
-            var canonical = BibleBookAbbreviation.GetAbbreviation(book.BsName)
-                            ?? BibleBookAbbreviation.GetByOrdinal(book.BNumber)
-                            ?? throw new InvalidOperationException(
-                                $"{definition.Slug} names a book \"{book.BsName}\" at number {book.BNumber} that " +
-                                $"has no canonical ordinal. Add it to {nameof(BibleBookAbbreviation)} — until then " +
-                                "this text cannot be placed beside any other.");
+            var ordinal = Canonical(book, definition.Slug);
+            var canonical = BibleBookAbbreviation.GetByOrdinal(ordinal)!;
 
             books.Add(new BookDraft(
                 CanonicalOrdinal: canonical.Ordinal,
@@ -170,7 +175,11 @@ internal static class Bible4uTextSource
                 Chapters: book.Chapters
                     .Select(chapter => new ChapterDraft(
                         chapter.CNumber,
-                        chapter.Verses.Select(Draft).ToList()))
+                        chapter.Verses
+                            .Select(verse => Draft(
+                                verse.VNumber,
+                                repairs?.Text(ordinal, chapter.CNumber, verse.VNumber, verse.Text) ?? verse.Text))
+                            .ToList()))
                     .ToList(),
                 NameNative: book.BName,
                 Abbreviation: canonical.StandardAbbreviation.Full));
@@ -178,6 +187,14 @@ internal static class Bible4uTextSource
 
         return new TextSource(definition, books);
     }
+
+    /// <summary>The canonical ordinal of a book of the file, by its short name and failing that its number.</summary>
+    public static int Canonical(XmlBibleBook book, string slug) =>
+        (BibleBookAbbreviation.GetAbbreviation(book.BsName) ?? BibleBookAbbreviation.GetByOrdinal(book.BNumber))?.Ordinal
+        ?? throw new InvalidOperationException(
+            $"{slug} names a book \"{book.BsName}\" at number {book.BNumber} that " +
+            $"has no canonical ordinal. Add it to {nameof(BibleBookAbbreviation)} — until then " +
+            "this text cannot be placed beside any other.");
 
     /// <summary>
     /// The editorial markup goes before tokenising, once, so that the loader and anything reading
@@ -196,8 +213,8 @@ internal static class Bible4uTextSource
     /// both of them to the King James — so it becomes the verse's stated address, and a pane of the
     /// Synodal can then say its Psalm 119 is printed as 118 the way Brenton's pane already does.
     /// </summary>
-    private static VerseDraft Draft(XmlBibleVerse verse) =>
-        new(verse.VNumber, VerseWords.Parse(verse.Text)
+    private static VerseDraft Draft(int number, string text) =>
+        new(number, VerseWords.Parse(text)
             .Select(word => new WordDraft(
                 word.Word,
                 word.Trailer,
@@ -207,11 +224,11 @@ internal static class Bible4uTextSource
         {
             Stated =
             [
-                .. VerseWords.StatedAddresses(verse.Text)
+                .. VerseWords.StatedAddresses(text)
                     .Select(address => new StatedNumberDraft(address.Chapter, address.Number)),
             ],
-            MarksASuperscription = VerseWords.MarksASuperscription(verse.Text),
-            OpensBeforeItsStatedAddress = VerseWords.OpensBeforeItsStatedAddress(verse.Text),
+            MarksASuperscription = VerseWords.MarksASuperscription(text),
+            OpensBeforeItsStatedAddress = VerseWords.OpensBeforeItsStatedAddress(text),
         };
 
     /// <param name="file">
