@@ -1,0 +1,789 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:1	1	The				expands	supplied-article	safe	0.665	approved	0				article the original does not write; rests on 'Song' → 'שִׁ֥יר'
+1:1	2	Song		1	שִׁ֥יר		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+1:1	3	of		3	שִּׁירִ֖ים		attached-word	safe	0.525	approved	0				Genitive of 'songs'
+1:1	4	songs		3	שִּׁירִ֖ים		global-review-known-rendering	safe	0.625	approved	0				global known-rendering assignment; lexical score 0.48
+1:1	5	which		4	אֲשֶׁ֥ר		global-review-known-rendering	safe	0.6687	approved	0				global known-rendering assignment; lexical score 0.52
+1:2	3	kiss		1	יִשָּׁקֵ֨נִי֙		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:2	8	of		4	פִּ֔יהוּ		attached-word	safe	0.5144	approved	0				Genitive of 'his'
+1:2	9	his		4	פִּ֔יהוּ		attached-word	safe	0.6144	approved	0				PossessivePronoun of 'mouth'
+1:2	10	mouth		4	פִּ֔יהוּ		global-review-known-rendering	safe	0.7144	approved	0				global known-rendering assignment; lexical score 0.56
+1:2	15	better		6	טֹובִ֥ים		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60
+1:2	16	than		8	מִ		global-review-known-rendering	safe	0.585	approved	0				global known-rendering assignment; lexical score 0.43
+1:2	17	wine		9	יָּֽיִן		global-review-known-rendering	safe	0.6531	approved	0				global known-rendering assignment; lexical score 0.50
+1:3	1	Your		3	שְׁמָנֶ֣יךָ		attached-word	safe	0.6235	approved	0				PossessivePronoun of 'oils'
+1:3	2	oils		3	שְׁמָנֶ֣יךָ		global-review-known-rendering	safe	0.7235	approved	0				global known-rendering assignment; lexical score 0.57
+1:3	7	Your		7	שְׁמֶ֑ךָ		attached-word	safe	0.6895	approved	0				PossessivePronoun of 'name'
+1:3	8	name		7	שְׁמֶ֑ךָ		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
+1:3	10	oil		5	שֶׁ֖מֶן		global-review-known-rendering	safe	0.7227	approved	0				global known-rendering assignment; lexical score 0.57
+1:3	16	love		11	אֲהֵבֽוּךָ		global-review-known-rendering	safe	0.5884	approved	0				global known-rendering assignment; lexical score 0.44
+1:4	8	The		5	הַ		attached-word	safe	0.6531	approved	0				Article of 'king'
+1:4	9	king		6	מֶּ֜לֶךְ		global-review-known-rendering	safe	0.7531	approved	0				global known-rendering assignment; lexical score 0.60
+1:4	20	glad		10	נִשְׂמְחָה֙		global-review-known-rendering	safe	0.6091	approved	0				global known-rendering assignment; lexical score 0.46
+1:4	28	your		17	אֲהֵבֽוּךָ		attached-word	safe	0.4884	approved	0				PossessivePronoun of 'love'
+1:4	29	love		17	אֲהֵבֽוּךָ		global-review-known-rendering	safe	0.5884	approved	0				global known-rendering assignment; lexical score 0.44
+1:4	31	than		14	מִ		global-review-known-rendering	safe	0.585	approved	0				global known-rendering assignment; lexical score 0.43
+1:4	32	wine		15	יַּ֔יִן		global-review-known-rendering	safe	0.6531	approved	0				global known-rendering assignment; lexical score 0.50
+1:4	33	Beloved		13	דֹדֶ֨יךָ֙		global-review-known-rendering	safe	0.6372	approved	0				global known-rendering assignment; lexical score 0.49
+1:5	7	daughters		5	בְּנֹ֖ות		global-review-known-rendering	safe	0.7589	approved	0				global known-rendering assignment; lexical score 0.61
+1:5	8	of		6	יְרוּשָׁלִָ֑ם		attached-word	safe	0.66	approved	0				Genitive of 'Jerusalem'
+1:5	9	Jerusalem		6	יְרוּשָׁלִָ֑ם		global-review-known-rendering	safe	0.76	approved	0				global known-rendering assignment; lexical score 0.61
+1:5	12	tents		8	אָהֳלֵ֣י		global-review-known-rendering	safe	0.6911	approved	0				global known-rendering assignment; lexical score 0.54
+1:5	15	curtains		11	ירִיעֹ֖ות		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:6				16	אֶת	omits	unrendered-object-marker	safe	0.8	approved	0				object marker; rests on 'vineyards' → 'כְּרָמִ֔ים'
+1:6	10	the		8	הַ		attached-word	safe	0.6634	approved	0				Article of 'sun'
+1:6	11	sun		9	שָּׁ֑מֶשׁ		global-review-known-rendering	safe	0.7634	approved	0				global known-rendering assignment; lexical score 0.61
+1:6	17	sons		10	בְּנֵ֧י		global-review-known-rendering	safe	0.7674	approved	0				global known-rendering assignment; lexical score 0.62
+1:6	27	the		17	הַ		attached-word	safe	0.7	approved	0				Article of 'vineyards'
+1:6	28	vineyards		18	כְּרָמִ֔ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:6	34	vineyard		19	כַּרְמִ֥י		global-review-known-rendering	safe	0.7898	approved	0				global known-rendering assignment; lexical score 0.64
+1:7	1	Tell		1	הַגִּ֣ידָה		global-review-known-rendering	safe	0.5612	approved	0				global known-rendering assignment; lexical score 0.41
+1:7	5	my		5	נַפְשִׁ֔י		attached-word	safe	0.6921	approved	0				PossessivePronoun of 'soul'
+1:7	6	soul		5	נַפְשִׁ֔י		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+1:7	18	noon		12	צָּהֳרָ֑יִם		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:7	20	why		14	לָּמָ֤ה		global-review-known-rendering	safe	0.6611	approved	0				global known-rendering assignment; lexical score 0.51
+1:8	1	If		1	אִם		global-review-known-rendering	safe	0.6405	approved	0				global known-rendering assignment; lexical score 0.49
+1:8	4	know		3	תֵדְעִי֙		global-review-known-rendering	safe	0.7472	approved	0				global known-rendering assignment; lexical score 0.60
+1:8	8	women		9	נָּשִׁ֑ים		global-review-known-rendering	safe	0.68	approved	0				global known-rendering assignment; lexical score 0.53
+1:8	12	of		15	צֹּ֗אן		attached-word	safe	0.5939	approved	0				Genitive of 'sheep'
+1:8	13	the		14	הַ		attached-word	safe	0.5939	approved	0				Article of 'sheep'
+1:8	14	sheep		15	צֹּ֗אן		global-review-known-rendering	safe	0.6939	approved	0				global known-rendering assignment; lexical score 0.54
+1:8	20	the		22	הָ		attached-word	safe	0.6743	approved	0				Article of 'shepherds'
+1:8	21	shepherds		23	רֹעִֽים		global-review-known-rendering	safe	0.7743	approved	0				global known-rendering assignment; lexical score 0.62
+1:9	12	chariots		4	רִכְבֵ֣י		global-review-known-rendering	safe	0.6971	approved	0				global known-rendering assignment; lexical score 0.55
+1:10	1	Your		2	לְחָיַ֨יִךְ֙		attached-word	safe	0.7	approved	0				PossessivePronoun of 'cheeks'
+1:10	2	cheeks		2	לְחָיַ֨יִךְ֙		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:10	7	your		6	צַוָּארֵ֖ךְ		attached-word	safe	0.4868	approved	0				PossessivePronoun of 'neck'
+1:10	8	neck		6	צַוָּארֵ֖ךְ		global-review-known-rendering	safe	0.5868	approved	0				global known-rendering assignment; lexical score 0.44
+1:11				7	הַ	omits	unrendered-article	safe	0.7715	approved	0				article no the of the verse renders; rests on 'silver' → 'כָּֽסֶף'
+1:11	7	gold		2	זָהָב֙		global-review-known-rendering	safe	0.7406	approved	0				global known-rendering assignment; lexical score 0.59
+1:11	10	of		8	כָּֽסֶף		attached-word	safe	0.6715	approved	0				Genitive of 'silver'
+1:11	11	silver		8	כָּֽסֶף		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+1:12	2	the		3	הַ		attached-word	safe	0.6531	approved	0				Article of 'king'
+1:12	3	king		4	מֶּ֨לֶךְ֙		global-review-known-rendering	safe	0.7531	approved	0				global known-rendering assignment; lexical score 0.60
+1:13				2	הַ	omits	unrendered-article	safe	0.7308	approved	0				article no the of the verse renders; rests on 'myrrh' → 'מֹּ֤ר'
+1:13	1	My		4	דֹּודִי֙		attached-word	safe	0.5372	approved	0				PossessivePronoun of 'beloved'
+1:13	2	beloved		4	דֹּודִי֙		global-review-known-rendering	safe	0.6372	approved	0				global known-rendering assignment; lexical score 0.49
+1:13	9	myrrh		3	מֹּ֤ר		global-review-known-rendering	safe	0.7308	approved	0				global known-rendering assignment; lexical score 0.58
+1:13	12	between		6	בֵּ֥ין		global-review-known-rendering	safe	0.741	approved	0				global known-rendering assignment; lexical score 0.59
+1:13	13	my		7	שָׁדַ֖י		attached-word	safe	0.5615	approved	0				PossessivePronoun of 'breasts'
+1:13	14	breasts		7	שָׁדַ֖י		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
+1:14	1	My		4	דֹּודִי֙		attached-word	safe	0.5372	approved	0				PossessivePronoun of 'beloved'
+1:14	2	beloved		4	דֹּודִי֙		global-review-known-rendering	safe	0.6372	approved	0				global known-rendering assignment; lexical score 0.49
+1:14	6	a				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'cluster' → 'אֶשְׁכֹּ֨ל'
+1:14	7	cluster		1	אֶשְׁכֹּ֨ל		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:14	12	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'vineyards' → 'כַרְמֵ֖י'
+1:14	13	vineyards		7	כַרְמֵ֖י		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:15	11	Your		6	עֵינַ֥יִךְ		attached-word	safe	0.6839	approved	0				PossessivePronoun of 'eyes'
+1:15	12	eyes		6	עֵינַ֥יִךְ		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+1:15	15	doves		7	יֹונִֽים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:16	5	my		3	דֹודִי֙		attached-word	safe	0.5372	approved	0				PossessivePronoun of 'beloved'
+1:16	6	beloved		3	דֹודִי֙		global-review-known-rendering	safe	0.6372	approved	0				global known-rendering assignment; lexical score 0.49
+1:16	10	our		7	עַרְשֵׂ֖נוּ		attached-word	safe	0.475	approved	0				PossessivePronoun of 'couch'
+1:16	11	couch		7	עַרְשֵׂ֖נוּ		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
+1:17	3	of		2	בָּתֵּ֨ינוּ֙		attached-word	safe	0.5635	approved	0				Genitive of 'our'
+1:17	4	our		2	בָּתֵּ֨ינוּ֙		attached-word	safe	0.6635	approved	0				PossessivePronoun of 'house'
+1:17	5	house		2	בָּתֵּ֨ינוּ֙		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+1:17	7	cedars		3	אֲרָזִ֔ים		global-review-known-rendering	safe	0.7609	approved	0				global known-rendering assignment; lexical score 0.61
+2:1				3	הַ	omits	unrendered-article	safe	0.8	approved	0				article no the of the verse renders; rests on 'Sharon' → 'שָּׁרֹ֔ון'
+2:1	6	of		4	שָּׁרֹ֔ון		attached-word	safe	0.7	approved	0				Genitive of 'Sharon'
+2:1	7	Sharon		4	שָּׁרֹ֔ון		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:2	6	so		6	כֵּ֥ן		global-review-known-rendering	safe	0.596	approved	0				global known-rendering assignment; lexical score 0.45
+2:2	11	the		9	הַ		attached-word	safe	0.6588	approved	0				Article of 'daughters'
+2:2	12	daughters		10	בָּנֹֽות		global-review-known-rendering	safe	0.7588	approved	0				global known-rendering assignment; lexical score 0.61
+2:3				15	וְ	omits	unrendered-conjunction	safe	0.7899	approved	0				conjunction no word of the verse renders; rests on 'sat' → 'יָשַׁ֔בְתִּי'
+2:3				17	וּ	omits	unrendered-conjunction	safe	0.662	approved	0				conjunction no word of the verse renders; rests on 'fruit' → 'פִרְיֹ֖ו'
+2:3	9	the				expands	supplied-article	safe	0.7023	approved	0				article the original does not write; rests on 'wood' → 'עֲצֵ֣י'
+2:3	10	wood		4	עֲצֵ֣י		global-review-known-rendering	safe	0.7023	approved	0				global known-rendering assignment; lexical score 0.55
+2:3	11	so		7	כֵּ֥ן		global-review-known-rendering	safe	0.596	approved	0				global known-rendering assignment; lexical score 0.45
+2:3	13	my		8	דֹּודִ֖י		attached-word	safe	0.5221	approved	0				PossessivePronoun of 'beloved'
+2:3	14	beloved		8	דֹּודִ֖י		global-review-known-rendering	safe	0.6221	approved	0				global known-rendering assignment; lexical score 0.47
+2:3	16	the		10	הַ		attached-word	safe	0.6674	approved	0				Article of 'sons'
+2:3	17	sons		11	בָּנִ֑ים		global-review-known-rendering	safe	0.7674	approved	0				global known-rendering assignment; lexical score 0.62
+2:3	19	sat		16	יָשַׁ֔בְתִּי		global-review-known-rendering	safe	0.7899	approved	0				global known-rendering assignment; lexical score 0.64
+2:3	22	his		13	צִלֹּו֙		attached-word	safe	0.5476	approved	0				PossessivePronoun of 'shadow'
+2:3	23	shadow		13	צִלֹּו֙		global-review-known-rendering	safe	0.6476	approved	0				global known-rendering assignment; lexical score 0.50
+2:3	27	his		18	פִרְיֹ֖ו		attached-word	safe	0.562	approved	0				PossessivePronoun of 'fruit'
+2:3	28	fruit		18	פִרְיֹ֖ו		global-review-known-rendering	safe	0.662	approved	0				global known-rendering assignment; lexical score 0.51
+2:4	10	over		8	עָלַ֖י		global-review-known-rendering	safe	0.5663	approved	0				global known-rendering assignment; lexical score 0.42
+2:6	5	under		2	תַּ֣חַת		global-review-known-rendering	safe	0.6602	approved	0				global known-rendering assignment; lexical score 0.51
+2:6	6	my		4	רֹאשִׁ֔י		attached-word	safe	0.6402	approved	0				PossessivePronoun of 'head'
+2:6	7	head		4	רֹאשִׁ֔י		global-review-known-rendering	safe	0.7402	approved	0				global known-rendering assignment; lexical score 0.59
+2:6	11	embraces		7	תְּחַבְּקֵֽנִי		global-review-known-rendering	safe	0.7625	approved	0				global known-rendering assignment; lexical score 0.61
+2:7	4	daughters		3	בְּנֹ֤ות		global-review-known-rendering	safe	0.7588	approved	0				global known-rendering assignment; lexical score 0.61
+2:7	5	of		4	יְרוּשָׁלִַ֨ם֙		attached-word	safe	0.66	approved	0				Genitive of 'Jerusalem'
+2:7	6	Jerusalem		4	יְרוּשָׁלִַ֨ם֙		global-review-known-rendering	safe	0.76	approved	0				global known-rendering assignment; lexical score 0.61
+2:7	12	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'hinds' → 'אַיְלֹ֣ות'
+2:7	13	hinds		9	אַיְלֹ֣ות		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:7	14	of		11	שָּׂדֶ֑ה		attached-word	safe	0.6596	approved	0				Genitive of 'field'
+2:7	15	the		10	הַ		attached-word	safe	0.6596	approved	0				Article of 'field'
+2:7	16	field		11	שָּׂדֶ֑ה		global-review-known-rendering	safe	0.7596	approved	0				global known-rendering assignment; lexical score 0.61
+2:7	20	stir		16	תְּעֹֽורְר֛וּ		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+2:7	25	until		20	עַ֥ד		global-review-known-rendering	safe	0.7305	approved	0				global known-rendering assignment; lexical score 0.58
+2:8	1	The				expands	supplied-article	safe	0.7857	approved	0				article the original does not write; rests on 'voice' → 'קֹ֣ול'
+2:8	2	voice		1	קֹ֣ול		global-review-known-rendering	safe	0.7857	approved	0				global known-rendering assignment; lexical score 0.64
+2:8	3	of		2	דֹּודִ֔י		attached-word	safe	0.4221	approved	0				Genitive of 'my'
+2:8	4	my		2	דֹּודִ֔י		attached-word	safe	0.5221	approved	0				PossessivePronoun of 'beloved'
+2:8	5	beloved		2	דֹּודִ֔י		global-review-known-rendering	safe	0.6221	approved	0				global known-rendering assignment; lexical score 0.47
+2:8	6	Behold		3	הִנֵּה		global-review-known-rendering	safe	0.6463	approved	0				global known-rendering assignment; lexical score 0.50
+2:8	8	comes		5	בָּ֑א		global-review-known-rendering	safe	0.5793	approved	0				global known-rendering assignment; lexical score 0.43
+2:8	11	the		8	הֶ֣		attached-word	safe	0.6693	approved	0				Article of 'mountains'
+2:8	12	mountains		9	הָרִ֔ים		global-review-known-rendering	safe	0.7693	approved	0				global known-rendering assignment; lexical score 0.62
+2:9	1	My		2	דֹודִי֙		attached-word	safe	0.5221	approved	0				PossessivePronoun of 'beloved'
+2:9	2	beloved		2	דֹודִי֙		global-review-known-rendering	safe	0.6221	approved	0				global known-rendering assignment; lexical score 0.47
+2:9	5	a				expands	supplied-indefinite-article	safe	0.71	approved	0				indefinite article; rests on 'roe' → 'צְבִ֔י'
+2:9	6	roe		4	צְבִ֔י		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+2:9	11	Behold		10	הִנֵּה		global-review-known-rendering	safe	0.6463	approved	0				global known-rendering assignment; lexical score 0.50
+2:9	13	stands		12	עֹומֵד֙		global-review-known-rendering	safe	0.6359	approved	0				global known-rendering assignment; lexical score 0.49
+2:9	14	behind		13	אַחַ֣ר		global-review-known-rendering	safe	0.6415	approved	0				global known-rendering assignment; lexical score 0.49
+2:9	21	the		17	הַֽ		attached-word	safe	0.5138	approved	0				Article of 'windows'
+2:9	22	windows		18	חֲלֹּנֹ֔ות		global-review-known-rendering	safe	0.6138	approved	0				global known-rendering assignment; lexical score 0.46
+2:10	1	My		2	דֹודִ֖י		attached-word	safe	0.5221	approved	0				PossessivePronoun of 'beloved'
+2:10	2	beloved		2	דֹודִ֖י		global-review-known-rendering	safe	0.6221	approved	0				global known-rendering assignment; lexical score 0.47
+2:10	5	said		4	אָ֣מַר		global-review-known-rendering	safe	0.777	approved	0				global known-rendering assignment; lexical score 0.63
+2:11	2	behold		2	הִנֵּ֥ה		global-review-known-rendering	safe	0.6463	approved	0				global known-rendering assignment; lexical score 0.50
+2:12	3	appear		3	נִרְא֣וּ		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
+2:12	5	the		5			attached-word	safe	0.6436	approved	0				Article of 'earth'
+2:12	6	earth		6	אָ֔רֶץ		global-review-known-rendering	safe	0.7436	approved	0				global known-rendering assignment; lexical score 0.59
+2:12	7	The				expands	supplied-article	safe	0.5706	approved	0				article the original does not write; rests on 'time' → 'עֵ֥ת'
+2:12	8	time		7	עֵ֥ת		global-review-known-rendering	safe	0.5706	approved	0				global known-rendering assignment; lexical score 0.42
+2:12	15	the				expands	supplied-article	safe	0.7857	approved	0				article the original does not write; rests on 'voice' → 'קֹ֥ול'
+2:12	16	voice		12	קֹ֥ול		global-review-known-rendering	safe	0.7857	approved	0				global known-rendering assignment; lexical score 0.64
+2:12	21	heard		15	נִשְׁמַ֥ע		global-review-known-rendering	safe	0.7382	approved	0				global known-rendering assignment; lexical score 0.59
+2:12	23	our		17	אַרְצֵֽנוּ		attached-word	safe	0.6252	approved	0				PossessivePronoun of 'land'
+2:12	24	land		17	אַרְצֵֽנוּ		global-review-known-rendering	safe	0.7252	approved	0				global known-rendering assignment; lexical score 0.58
+2:13	1	The		1	הַ		attached-word	safe	0.6812	approved	0				Article of 'fig'
+2:13	2	fig		2	תְּאֵנָה֙		global-review-known-rendering	safe	0.7812	approved	0				global known-rendering assignment; lexical score 0.63
+2:13	8	The		6	הַ		attached-word	safe	0.65	approved	0				Article of 'vines'
+2:13	9	vines		7	גְּפָנִ֥ים		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60
+2:13	14	give		9	נָ֣תְנוּ		global-review-known-rendering	safe	0.6513	approved	0				global known-rendering assignment; lexical score 0.50
+2:13	18	Arise		11	ק֥וּמִי		global-review-known-rendering	safe	0.7413	approved	0				global known-rendering assignment; lexical score 0.59
+2:14				14	אֶת	omits	unrendered-object-marker	safe	0.7857	approved	0				object marker; rests on 'voice' → 'קֹולֵ֑ךְ'
+2:14	1	My		1	יֹונָתִ֞י		attached-word	safe	0.7	approved	0				PossessivePronoun of 'dove'
+2:14	2	dove		1	יֹונָתִ֞י		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:14	4	the				expands	supplied-article	safe	0.575	approved	0				article the original does not write; rests on 'clefts' → 'חַגְוֵ֣י'
+2:14	5	clefts		3	חַגְוֵ֣י		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
+2:14	10	the				expands	supplied-article	safe	0.575	approved	0				article the original does not write; rests on 'hiding' → 'סֵ֨תֶר֙'
+2:14	11	hiding		7	סֵ֨תֶר֙		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
+2:14	18	see		10	הַרְאִ֨ינִי֙		global-review-known-rendering	safe	0.7077	approved	0				global known-rendering assignment; lexical score 0.56
+2:14	23	hear		13	הַשְׁמִיעִ֖ינִי		global-review-known-rendering	safe	0.7198	approved	0				global known-rendering assignment; lexical score 0.57
+2:14	24	your		15	קֹולֵ֑ךְ		attached-word	safe	0.6857	approved	0				PossessivePronoun of 'voice'
+2:14	25	voice		15	קֹולֵ֑ךְ		global-review-known-rendering	safe	0.7857	approved	0				global known-rendering assignment; lexical score 0.64
+2:14	27	your		17	קֹולֵ֥ךְ		attached-word	safe	0.6857	approved	0				PossessivePronoun of 'voice'
+2:14	28	voice		17	קֹולֵ֥ךְ		global-review-known-rendering	safe	0.7857	approved	0				global known-rendering assignment; lexical score 0.64
+2:15				8	וּ	omits	unrendered-conjunction	safe	0.8	approved	0				conjunction no word of the verse renders; rests on 'vineyards' → 'כְרָמֵ֖ינוּ'
+2:15	4	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'foxes' → 'שֽׁוּעָלִ֔ים'
+2:15	5	foxes		3	שֽׁוּעָלִ֔ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:15	8	foxes		4	שֽׁוּעָלִ֥ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:15	11	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'vineyards' → 'כְּרָמִ֑ים'
+2:15	12	vineyards		7	כְּרָמִ֑ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:15	14	our		9	כְרָמֵ֖ינוּ		attached-word	safe	0.7	approved	0				PossessivePronoun of 'vineyards'
+2:15	15	vineyards		9	כְרָמֵ֖ינוּ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:16	1	My		1	דֹּודִ֥י		attached-word	safe	0.5221	approved	0				PossessivePronoun of 'beloved'
+2:16	2	beloved		1	דֹּודִ֥י		global-review-known-rendering	safe	0.6221	approved	0				global known-rendering assignment; lexical score 0.47
+2:16	12	the		9			attached-word	safe	0.7	approved	0				Article of 'lilies'
+2:16	13	lilies		10	שֹּׁושַׁנִּֽים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:17	1	Until		1	עַ֤ד		global-review-known-rendering	safe	0.7305	approved	0				global known-rendering assignment; lexical score 0.58
+2:17	2	the		4	הַ		attached-word	safe	0.6663	approved	0				Article of 'day'
+2:17	3	day		5	יֹּ֔ום		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
+2:17	9	flee		7	נָ֖סוּ		global-review-known-rendering	safe	0.6607	approved	0				global known-rendering assignment; lexical score 0.51
+2:17	12	my		13	דֹודִ֜י		attached-word	safe	0.5221	approved	0				PossessivePronoun of 'beloved'
+2:17	13	beloved		13	דֹודִ֜י		global-review-known-rendering	safe	0.6221	approved	0				global known-rendering assignment; lexical score 0.47
+2:17	17	a				expands	supplied-indefinite-article	safe	0.71	approved	0				indefinite article; rests on 'roe' → 'צְבִ֗י'
+2:17	18	roe		15	צְבִ֗י		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+2:17	24	the				expands	supplied-article	safe	0.7693	approved	0				article the original does not write; rests on 'mountains' → 'הָ֥רֵי'
+2:17	25	mountains		22	הָ֥רֵי		global-review-known-rendering	safe	0.7693	approved	0				global known-rendering assignment; lexical score 0.62
+3:1				4		omits	unrendered-article	safe	0.7346	approved	0				article no the of the verse renders; rests on 'night' → 'לֵּילֹ֔ות'
+3:1	2	night		5	לֵּילֹ֔ות		global-review-known-rendering	safe	0.7346	approved	0				global known-rendering assignment; lexical score 0.58
+3:1	7	sought		6	בִּקַּ֕שְׁתִּי		global-review-known-rendering	safe	0.5888	approved	0				global known-rendering assignment; lexical score 0.44
+3:1	10	my		10	נַפְשִׁ֑י		attached-word	safe	0.692	approved	0				PossessivePronoun of 'soul'
+3:1	11	soul		10	נַפְשִׁ֑י		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64
+3:1	14	sought		11	בִּקַּשְׁתִּ֖יו		global-review-known-rendering	safe	0.5888	approved	0				global known-rendering assignment; lexical score 0.44
+3:1	19	find		14	מְצָאתִֽיו		global-review-known-rendering	safe	0.7579	approved	0				global known-rendering assignment; lexical score 0.61
+3:2	9	the		6			attached-word	safe	0.6521	approved	0				Article of 'city'
+3:2	10	city		7	עִ֗יר		global-review-known-rendering	safe	0.7521	approved	0				global known-rendering assignment; lexical score 0.60
+3:2	23	my		19	נַפְשִׁ֑י		attached-word	safe	0.692	approved	0				PossessivePronoun of 'soul'
+3:2	24	soul		19	נַפְשִׁ֑י		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64
+3:2	27	sought		20	בִּקַּשְׁתִּ֖יו		global-review-known-rendering	safe	0.5888	approved	0				global known-rendering assignment; lexical score 0.44
+3:2	32	find		23	מְצָאתִֽיו		global-review-known-rendering	safe	0.7579	approved	0				global known-rendering assignment; lexical score 0.61
+3:3	6	the		7			attached-word	safe	0.6521	approved	0				Article of 'city'
+3:3	7	city		8	עִ֑יר		global-review-known-rendering	safe	0.7521	approved	0				global known-rendering assignment; lexical score 0.60
+3:3	8	found		1	מְצָא֨וּנִי֙		global-review-known-rendering	safe	0.755	approved	0				global known-rendering assignment; lexical score 0.60
+3:3	12	seen		13	רְאִיתֶֽם		global-review-known-rendering	safe	0.7109	approved	0				global known-rendering assignment; lexical score 0.56
+3:3	15	my		12	נַפְשִׁ֖י		attached-word	safe	0.692	approved	0				PossessivePronoun of 'soul'
+3:3	16	soul		12	נַפְשִׁ֖י		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64
+3:4	4	passed		4	עָבַ֣רְתִּי		global-review-known-rendering	safe	0.7284	approved	0				global known-rendering assignment; lexical score 0.58
+3:4	9	found		8	מָּצָ֔אתִי		global-review-known-rendering	safe	0.755	approved	0				global known-rendering assignment; lexical score 0.60
+3:4	12	my		12	נַפְשִׁ֑י		attached-word	safe	0.692	approved	0				PossessivePronoun of 'soul'
+3:4	13	soul		12	נַפְשִׁ֑י		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64
+3:4	20	not		15	לֹ֣א		global-review-known-rendering	safe	0.6789	approved	0				global known-rendering assignment; lexical score 0.53
+3:4	24	until		17	עַד		global-review-known-rendering	safe	0.7305	approved	0				global known-rendering assignment; lexical score 0.58
+3:4	32	house		21	בֵּ֣ית		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:4	39	conceived		26	הֹורָתִֽי		global-review-known-rendering	safe	0.7171	approved	0				global known-rendering assignment; lexical score 0.57
+3:5	4	daughters		3	בְּנֹ֤ות		global-review-known-rendering	safe	0.7586	approved	0				global known-rendering assignment; lexical score 0.61
+3:5	5	of		4	יְרוּשָׁלִַ֨ם֙		attached-word	safe	0.66	approved	0				Genitive of 'Jerusalem'
+3:5	6	Jerusalem		4	יְרוּשָׁלִַ֨ם֙		global-review-known-rendering	safe	0.76	approved	0				global known-rendering assignment; lexical score 0.61
+3:5	12	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'hinds' → 'אַיְלֹ֣ות'
+3:5	13	hinds		9	אַיְלֹ֣ות		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:5	14	of		11	שָּׂדֶ֑ה		attached-word	safe	0.6596	approved	0				Genitive of 'field'
+3:5	15	the		10	הַ		attached-word	safe	0.6596	approved	0				Article of 'field'
+3:5	16	field		11	שָּׂדֶ֑ה		global-review-known-rendering	safe	0.7596	approved	0				global known-rendering assignment; lexical score 0.61
+3:5	20	stir		16	תְּעֹֽורְר֛וּ		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+3:5	25	until		20	עַ֥ד		global-review-known-rendering	safe	0.7305	approved	0				global known-rendering assignment; lexical score 0.58
+3:6	1	Who		1	מִ֣י		global-review-known-rendering	safe	0.5983	approved	0				global known-rendering assignment; lexical score 0.45
+3:6	8	the		5	הַ		attached-word	safe	0.6527	approved	0				Article of 'wilderness'
+3:6	9	wilderness		6	מִּדְבָּ֔ר		global-review-known-rendering	safe	0.7527	approved	0				global known-rendering assignment; lexical score 0.60
+3:6	13	smoke		9	עָשָׁ֑ן		global-review-known-rendering	safe	0.695	approved	0				global known-rendering assignment; lexical score 0.55
+3:6	16	myrrh		11	מֹור֙		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
+3:6	18	frankincense		13	לְבֹונָ֔ה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:6	20	all		15	כֹּ֖ל		global-review-known-rendering	safe	0.7584	approved	0				global known-rendering assignment; lexical score 0.61
+3:7	1	Behold		1	הִנֵּ֗ה		global-review-known-rendering	safe	0.6467	approved	0				global known-rendering assignment; lexical score 0.50
+3:7	6	Sixty		6	שִׁשִּׁ֥ים		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+3:7	7	mighty		7	גִּבֹּרִ֖ים		global-review-known-rendering	safe	0.5971	approved	0				global known-rendering assignment; lexical score 0.45
+3:7	13	the				expands	supplied-article	safe	0.5971	approved	0				article the original does not write; rests on 'mighty' → 'גִּבֹּרֵ֖י'
+3:7	14	mighty		11	גִּבֹּרֵ֖י		global-review-known-rendering	safe	0.5971	approved	0				global known-rendering assignment; lexical score 0.45
+3:7	17	Israel		12	יִשְׂרָאֵֽל		global-review-known-rendering	safe	0.7859	approved	0				global known-rendering assignment; lexical score 0.64
+3:8	2	all		1	כֻּלָּם֙		global-review-known-rendering	safe	0.7584	approved	0				global known-rendering assignment; lexical score 0.61
+3:8	4	the				expands	supplied-article	safe	0.7804	approved	0				article the original does not write; rests on 'sword' → 'חֶ֔רֶב'
+3:8	5	sword		3	חֶ֔רֶב		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63
+3:8	10	war		5	מִלְחָמָ֑ה		global-review-known-rendering	safe	0.6708	approved	0				global known-rendering assignment; lexical score 0.52
+3:8	12	man		6	אִ֤ישׁ		global-review-known-rendering	safe	0.6006	approved	0				global known-rendering assignment; lexical score 0.45
+3:8	14	his		7	חַרְבֹּו֙		attached-word	safe	0.6804	approved	0				PossessivePronoun of 'sword'
+3:8	15	sword		7	חַרְבֹּו֙		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63
+3:8	17	his		9	יְרֵכֹ֔ו		attached-word	safe	0.6763	approved	0				PossessivePronoun of 'thigh'
+3:8	18	thigh		9	יְרֵכֹ֔ו		global-review-known-rendering	safe	0.7763	approved	0				global known-rendering assignment; lexical score 0.63
+3:8	23	the		13			attached-word	safe	0.6346	approved	0				Article of 'night'
+3:8	24	night		14	לֵּילֹֽות		global-review-known-rendering	safe	0.7346	approved	0				global known-rendering assignment; lexical score 0.58
+3:9	1	King		5	מֶּ֣לֶךְ		global-review-known-rendering	safe	0.7531	approved	0				global known-rendering assignment; lexical score 0.60
+3:9	2	Solomon		6	שְׁלֹמֹ֔ה		global-review-known-rendering	safe	0.7932	approved	0				global known-rendering assignment; lexical score 0.64
+3:9	8	the				expands	supplied-article	safe	0.7016	approved	0				article the original does not write; rests on 'wood' → 'עֲצֵ֖י'
+3:9	9	wood		8	עֲצֵ֖י		global-review-known-rendering	safe	0.7016	approved	0				global known-rendering assignment; lexical score 0.55
+3:9	10	of		10	לְּבָנֹֽון		attached-word	safe	0.6753	approved	0				Genitive of 'Lebanon'
+3:9	11	Lebanon		10	לְּבָנֹֽון		global-review-known-rendering	safe	0.7753	approved	0				global known-rendering assignment; lexical score 0.63
+3:10	3	its		1	עַמּוּדָיו֙		attached-word	safe	0.6732	approved	0				PossessivePronoun of 'pillars'
+3:10	4	pillars		1	עַמּוּדָיו֙		global-review-known-rendering	safe	0.7732	approved	0				global known-rendering assignment; lexical score 0.62
+3:10	6	silver		3	כֶ֔סֶף		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+3:10	10	gold		5	זָהָ֔ב		global-review-known-rendering	safe	0.7406	approved	0				global known-rendering assignment; lexical score 0.59
+3:10	14	purple		7	אַרְגָּמָ֑ן		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:10	24	the				expands	supplied-article	safe	0.7586	approved	0				article the original does not write; rests on 'daughters' → 'בְּנֹ֖ות'
+3:10	25	daughters		12	בְּנֹ֖ות		global-review-known-rendering	safe	0.7586	approved	0				global known-rendering assignment; lexical score 0.61
+3:10	26	of		13	יְרוּשָׁלִָֽם		attached-word	safe	0.66	approved	0				Genitive of 'Jerusalem'
+3:10	27	Jerusalem		13	יְרוּשָׁלִָֽם		global-review-known-rendering	safe	0.76	approved	0				global known-rendering assignment; lexical score 0.61
+3:11	4	daughters		4	בְּנֹ֥ות		global-review-known-rendering	safe	0.7586	approved	0				global known-rendering assignment; lexical score 0.61
+3:11	5	of		5	צִיֹּ֖ון		attached-word	safe	0.6525	approved	0				Genitive of 'Zion'
+3:11	6	Zion		5	צִיֹּ֖ון		global-review-known-rendering	safe	0.7525	approved	0				global known-rendering assignment; lexical score 0.60
+3:11	8	see		3	רְאֶ֛ינָה		global-review-known-rendering	safe	0.7071	approved	0				global known-rendering assignment; lexical score 0.56
+3:11	9	King		8	מֶּ֣לֶךְ		global-review-known-rendering	safe	0.7531	approved	0				global known-rendering assignment; lexical score 0.60
+3:11	10	Solomon		9	שְׁלֹמֹ֑ה		global-review-known-rendering	safe	0.7932	approved	0				global known-rendering assignment; lexical score 0.64
+3:11	16	his		16	אִמֹּו֙		attached-word	safe	0.6596	approved	0				PossessivePronoun of 'mother'
+3:11	17	mother		16	אִמֹּו֙		global-review-known-rendering	safe	0.7596	approved	0				global known-rendering assignment; lexical score 0.61
+3:11	22	the				expands	supplied-article	safe	0.7663	approved	0				article the original does not write; rests on 'day' → 'יֹ֣ום'
+3:11	23	day		18	יֹ֣ום		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
+3:11	28	the				expands	supplied-article	safe	0.7663	approved	0				article the original does not write; rests on 'day' → 'יֹ֖ום'
+3:11	29	day		22	יֹ֖ום		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
+3:11	30	of		23	שִׂמְחַ֥ת		attached-word	safe	0.6077	approved	0				Genitive of 'gladness'
+3:11	31	the				expands	supplied-article	safe	0.7077	approved	0				article the original does not write; rests on 'gladness' → 'שִׂמְחַ֥ת'
+3:11	32	gladness		23	שִׂמְחַ֥ת		global-review-known-rendering	safe	0.7077	approved	0				global known-rendering assignment; lexical score 0.56
+3:11	33	of		24	לִבֹּֽו		attached-word	safe	0.4437	approved	0				Genitive of 'his'
+3:11	34	his		24	לִבֹּֽו		attached-word	safe	0.5437	approved	0				PossessivePronoun of 'heart'
+3:11	35	heart		24	לִבֹּֽו		global-review-known-rendering	safe	0.6437	approved	0				global known-rendering assignment; lexical score 0.49
+4:1				15	הָֽ	omits	unrendered-article	safe	0.6092	approved	0				article no the of the verse renders; rests on 'goats' → 'עִזִּ֔ים'
+4:1	12	Your		6	עֵינַ֣יִךְ		attached-word	safe	0.6849	approved	0				PossessivePronoun of 'eyes'
+4:1	13	eyes		6	עֵינַ֣יִךְ		global-review-known-rendering	safe	0.7849	approved	0				global known-rendering assignment; lexical score 0.63
+4:1	16	doves		7	יֹונִ֔ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:1	20	Your		12	שַׂעְרֵךְ֙		attached-word	safe	0.4857	approved	0				PossessivePronoun of 'hair'
+4:1	21	hair		12	שַׂעְרֵךְ֙		global-review-known-rendering	safe	0.5857	approved	0				global known-rendering assignment; lexical score 0.44
+4:1	26	of		16	עִזִּ֔ים		attached-word	safe	0.5092	approved	0				Genitive of 'goats'
+4:1	27	goats		16	עִזִּ֔ים		global-review-known-rendering	safe	0.6092	approved	0				global known-rendering assignment; lexical score 0.46
+4:1	31	Mount		20	הַ֥ר		global-review-known-rendering	safe	0.7424	approved	0				global known-rendering assignment; lexical score 0.59
+4:1	32	Gilead		21	גִּלְעָֽד		global-review-known-rendering	safe	0.7866	approved	0				global known-rendering assignment; lexical score 0.64
+4:2	1	Your		1	שִׁנַּ֨יִךְ֙		attached-word	safe	0.6027	approved	0				PossessivePronoun of 'teeth'
+4:2	2	teeth		1	שִׁנַּ֨יִךְ֙		global-review-known-rendering	safe	0.7027	approved	0				global known-rendering assignment; lexical score 0.55
+4:3				11	הָֽ	omits	unrendered-article	safe	0.8	approved	0				article no the of the verse renders; rests on 'pomegranate' → 'רִמֹּון֙'
+4:3	1	Your		5	שִׂפְתֹתַ֔יִךְ		attached-word	safe	0.6838	approved	0				PossessivePronoun of 'lips'
+4:3	2	lips		5	שִׂפְתֹתַ֔יִךְ		global-review-known-rendering	safe	0.7838	approved	0				global known-rendering assignment; lexical score 0.63
+4:3	11	Your		13	רַקָּתֵ֔ךְ		attached-word	safe	0.55	approved	0				PossessivePronoun of 'temples'
+4:3	12	temples		13	רַקָּתֵ֔ךְ		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
+4:3	17	of		12	רִמֹּון֙		attached-word	safe	0.7	approved	0				Genitive of 'pomegranate'
+4:3	18	a				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'pomegranate' → 'רִמֹּון֙'
+4:3	19	pomegranate		12	רִמֹּון֙		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:4	1	Your		4	צַוָּארֵ֔ךְ		attached-word	safe	0.4873	approved	0				PossessivePronoun of 'neck'
+4:4	2	neck		4	צַוָּארֵ֔ךְ		global-review-known-rendering	safe	0.5873	approved	0				global known-rendering assignment; lexical score 0.44
+4:4	6	tower		2	מִגְדַּ֤ל		global-review-known-rendering	safe	0.6714	approved	0				global known-rendering assignment; lexical score 0.52
+4:4	7	built		5	בָּנ֖וּי		global-review-known-rendering	safe	0.7491	approved	0				global known-rendering assignment; lexical score 0.60
+4:4	13	a				expands	supplied-indefinite-article	safe	0.773	approved	0				indefinite article; rests on 'thousand' → 'אֶ֤לֶף'
+4:4	14	thousand		8	אֶ֤לֶף		global-review-known-rendering	safe	0.773	approved	0				global known-rendering assignment; lexical score 0.62
+4:4	15	shields		10	מָּגֵן֙		global-review-known-rendering	safe	0.6568	approved	0				global known-rendering assignment; lexical score 0.51
+4:4	17	all		13	כֹּ֖ל		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61
+4:4	20	of		16	גִּבֹּורִֽים		attached-word	safe	0.4963	approved	0				Genitive of 'mighty'
+4:4	21	the		15	הַ		attached-word	safe	0.4963	approved	0				Article of 'mighty'
+4:4	22	mighty		16	גִּבֹּורִֽים		global-review-known-rendering	safe	0.5963	approved	0				global known-rendering assignment; lexical score 0.45
+4:5				8	הָ	omits	unrendered-article	safe	0.6463	approved	0				article no the of the verse renders; rests on 'feed' → 'רֹועִ֖ים'
+4:5	1	Your		2	שָׁדַ֛יִךְ		attached-word	safe	0.556	approved	0				PossessivePronoun of 'breasts'
+4:5	2	two		1	שְׁנֵ֥י		global-review-known-rendering	safe	0.6877	approved	0				global known-rendering assignment; lexical score 0.54
+4:5	3	breasts		2	שָׁדַ֛יִךְ		global-review-known-rendering	safe	0.656	approved	0				global known-rendering assignment; lexical score 0.51
+4:5	6	two		4	שְׁנֵ֥י		global-review-known-rendering	safe	0.6877	approved	0				global known-rendering assignment; lexical score 0.54
+4:5	10	twins		6	תְּאֹומֵ֣י		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+4:5	15	feed		9	רֹועִ֖ים		global-review-known-rendering	safe	0.6463	approved	0				global known-rendering assignment; lexical score 0.50
+4:5	17	the		11			attached-word	safe	0.7	approved	0				Article of 'lilies'
+4:5	18	lilies		12	שֹּׁושַׁנִּֽים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:6	1	Until		1	עַ֤ד		global-review-known-rendering	safe	0.7305	approved	0				global known-rendering assignment; lexical score 0.58
+4:6	2	the		4	הַ		attached-word	safe	0.6663	approved	0				Article of 'day'
+4:6	3	day		5	יֹּ֔ום		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
+4:6	9	flee		7	נָ֖סוּ		global-review-known-rendering	safe	0.6607	approved	0				global known-rendering assignment; lexical score 0.51
+4:6	15	the				expands	supplied-article	safe	0.7657	approved	0				article the original does not write; rests on 'mountain' → 'הַ֣ר'
+4:6	16	mountain		13	הַ֣ר		global-review-known-rendering	safe	0.7657	approved	0				global known-rendering assignment; lexical score 0.62
+4:6	17	of		15	מֹּ֔ור		attached-word	safe	0.6182	approved	0				Genitive of 'myrrh'
+4:6	18	myrrh		15	מֹּ֔ור		global-review-known-rendering	safe	0.7182	approved	0				global known-rendering assignment; lexical score 0.57
+4:6	22	of		20	לְּבֹונָֽה		attached-word	safe	0.7	approved	0				Genitive of 'frankincense'
+4:6	23	frankincense		20	לְּבֹונָֽה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:7	3	all		1	כֻּלָּ֤ךְ		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61
+4:8	1	Come		8	תָּבֹ֑ואִי		global-review-known-rendering	safe	0.5717	approved	0				global known-rendering assignment; lexical score 0.42
+4:8	5	Lebanon		3	לְּבָנֹון֙		global-review-known-rendering	safe	0.7868	approved	0				global known-rendering assignment; lexical score 0.64
+4:8	7	bride		4	כַּלָּ֔ה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:8	11	Lebanon		7	לְּבָנֹ֣ון		global-review-known-rendering	safe	0.7868	approved	0				global known-rendering assignment; lexical score 0.64
+4:8	14	the				expands	supplied-article	safe	0.6635	approved	0				article the original does not write; rests on 'top' → 'רֹ֣אשׁ'
+4:8	15	top		11	רֹ֣אשׁ		global-review-known-rendering	safe	0.6635	approved	0				global known-rendering assignment; lexical score 0.51
+4:8	19	the				expands	supplied-article	safe	0.6635	approved	0				article the original does not write; rests on 'top' → 'רֹ֤אשׁ'
+4:8	20	top		14	רֹ֤אשׁ		global-review-known-rendering	safe	0.6635	approved	0				global known-rendering assignment; lexical score 0.51
+4:8	24	Hermon		17	חֶרְמֹ֔ון		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:8	28	dens		19	מְּעֹנֹ֣ות		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
+4:9	6	my		2	אֲחֹתִ֣י		attached-word	safe	0.6848	approved	0				PossessivePronoun of 'sister'
+4:9	7	sister		2	אֲחֹתִ֣י		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+4:9	9	bride		3	כַלָּ֑ה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:9	16	one		6	אחד		global-review-known-rendering	safe	0.5903	approved	0				global known-rendering assignment; lexical score 0.44
+4:9	18	your		8	עֵינַ֔יִךְ		attached-word	safe	0.6849	approved	0				PossessivePronoun of 'eyes'
+4:9	19	eyes		8	עֵינַ֔יִךְ		global-review-known-rendering	safe	0.7849	approved	0				global known-rendering assignment; lexical score 0.63
+4:9	21	one		10	אַחַ֥ד		global-review-known-rendering	safe	0.5903	approved	0				global known-rendering assignment; lexical score 0.44
+4:9	24	your		13	צַּוְּרֹנָֽיִךְ		attached-word	safe	0.4873	approved	0				PossessivePronoun of 'neck'
+4:9	25	neck		13	צַּוְּרֹנָֽיִךְ		global-review-known-rendering	safe	0.5873	approved	0				global known-rendering assignment; lexical score 0.44
+4:10	6	my		4	אֲחֹתִ֣י		attached-word	safe	0.6848	approved	0				PossessivePronoun of 'sister'
+4:10	7	sister		4	אֲחֹתִ֣י		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+4:10	9	bride		5	כַלָּ֑ה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:10	16	than		9	מִ		global-review-known-rendering	safe	0.585	approved	0				global known-rendering assignment; lexical score 0.43
+4:10	17	wine		10	יַּ֔יִן		global-review-known-rendering	safe	0.6523	approved	0				global known-rendering assignment; lexical score 0.50
+4:10	23	than		14	מִ		global-review-known-rendering	safe	0.585	approved	0				global known-rendering assignment; lexical score 0.43
+4:10	24	all		15	כָּל		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61
+4:10	27	spices		16	בְּשָׂמִֽים		global-review-known-rendering	safe	0.7217	approved	0				global known-rendering assignment; lexical score 0.57
+4:11	1	Your		3	שִׂפְתֹותַ֖יִךְ		attached-word	safe	0.6838	approved	0				PossessivePronoun of 'lips'
+4:11	2	lips		3	שִׂפְתֹותַ֖יִךְ		global-review-known-rendering	safe	0.7838	approved	0				global known-rendering assignment; lexical score 0.63
+4:11	4	bride		4	כַּלָּ֑ה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:11	7	the				expands	supplied-article	safe	0.55	approved	0				article the original does not write; rests on 'honeycomb' → 'נֹ֛פֶת'
+4:11	8	honeycomb		1	נֹ֛פֶת		global-review-known-rendering	safe	0.55	approved	0				global known-rendering assignment; lexical score 0.40
+4:11	9	Honey		5	דְּבַ֤שׁ		global-review-known-rendering	safe	0.775	approved	0				global known-rendering assignment; lexical score 0.62
+4:11	11	milk		7	חָלָב֙		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
+4:11	13	under		8	תַּ֣חַת		global-review-known-rendering	safe	0.6593	approved	0				global known-rendering assignment; lexical score 0.51
+4:11	14	your		9	לְשֹׁונֵ֔ךְ		attached-word	safe	0.6613	approved	0				PossessivePronoun of 'tongue'
+4:11	15	tongue		9	לְשֹׁונֵ֔ךְ		global-review-known-rendering	safe	0.7613	approved	0				global known-rendering assignment; lexical score 0.61
+4:11	25	of		15	לְבָנֹֽון		attached-word	safe	0.6868	approved	0				Genitive of 'Lebanon'
+4:11	26	Lebanon		15	לְבָנֹֽון		global-review-known-rendering	safe	0.7868	approved	0				global known-rendering assignment; lexical score 0.64
+4:12	1	My		3	אֲחֹתִ֣י		attached-word	safe	0.6848	approved	0				PossessivePronoun of 'sister'
+4:12	2	sister		3	אֲחֹתִ֣י		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+4:12	4	bride		4	כַלָּ֑ה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:12	6	a				expands	supplied-indefinite-article	safe	0.7122	approved	0				indefinite article; rests on 'garden' → 'גַּ֥ן'
+4:12	9	garden		1	גַּ֥ן		global-review-known-rendering	safe	0.7122	approved	0				global known-rendering assignment; lexical score 0.56
+4:12	15	sealed		8	חָתֽוּם		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62
+4:13	6	of		3	רִמֹּונִ֔ים		attached-word	safe	0.7	approved	0				Genitive of 'pomegranates'
+4:13	7	pomegranates		3	רִמֹּונִ֔ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:14	12	tree		9	עֲצֵ֣י		global-review-known-rendering	safe	0.5912	approved	0				global known-rendering assignment; lexical score 0.44
+4:14	13	myrrh		11	מֹ֚ר		global-review-known-rendering	safe	0.7182	approved	0				global known-rendering assignment; lexical score 0.57
+4:14	17	all		15	כָּל		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61
+4:14	20	spices		17	בְשָׂמִֽים		global-review-known-rendering	safe	0.7217	approved	0				global known-rendering assignment; lexical score 0.57
+4:15	8	living		5	חַיִּ֑ים		global-review-known-rendering	safe	0.7657	approved	0				global known-rendering assignment; lexical score 0.62
+4:15	9	waters		4	מַ֣יִם		global-review-known-rendering	safe	0.7785	approved	0				global known-rendering assignment; lexical score 0.63
+4:15	13	Lebanon		9	לְבָנֹֽון		global-review-known-rendering	safe	0.7868	approved	0				global known-rendering assignment; lexical score 0.64
+4:16	1	Awake		1	ע֤וּרִי		global-review-known-rendering	safe	0.6586	approved	0				global known-rendering assignment; lexical score 0.51
+4:16	2	north		2	צָפֹון֙		global-review-known-rendering	safe	0.6981	approved	0				global known-rendering assignment; lexical score 0.55
+4:16	5	come		4	בֹ֣ואִי		global-review-known-rendering	safe	0.5717	approved	0				global known-rendering assignment; lexical score 0.42
+4:16	10	my		7	גַנִּ֖י		attached-word	safe	0.6122	approved	0				PossessivePronoun of 'garden'
+4:16	11	garden		7	גַנִּ֖י		global-review-known-rendering	safe	0.7122	approved	0				global known-rendering assignment; lexical score 0.56
+4:16	13	its		9	בְשָׂמָ֑יו		attached-word	safe	0.6217	approved	0				PossessivePronoun of 'spices'
+4:16	14	spices		9	בְשָׂמָ֑יו		global-review-known-rendering	safe	0.7217	approved	0				global known-rendering assignment; lexical score 0.57
+4:16	19	my		11	דֹודִי֙		attached-word	safe	0.5406	approved	0				PossessivePronoun of 'beloved'
+4:16	20	beloved		11	דֹודִי֙		global-review-known-rendering	safe	0.6406	approved	0				global known-rendering assignment; lexical score 0.49
+4:16	21	come		10	יָבֹ֤א		global-review-known-rendering	safe	0.5717	approved	0				global known-rendering assignment; lexical score 0.42
+4:16	23	his		13	גַנֹּ֔ו		attached-word	safe	0.6122	approved	0				PossessivePronoun of 'garden'
+4:16	24	garden		13	גַנֹּ֔ו		global-review-known-rendering	safe	0.7122	approved	0				global known-rendering assignment; lexical score 0.56
+5:1	4	come		1	בָּ֣אתִי		global-review-known-rendering	safe	0.572	approved	0				global known-rendering assignment; lexical score 0.42
+5:1	6	my		3	גַנִּי֮		attached-word	safe	0.6163	approved	0				PossessivePronoun of 'garden'
+5:1	7	garden		3	גַנִּי֮		global-review-known-rendering	safe	0.7163	approved	0				global known-rendering assignment; lexical score 0.57
+5:1	8	my		4	אֲחֹתִ֣י		attached-word	safe	0.685	approved	0				PossessivePronoun of 'sister'
+5:1	9	sister		4	אֲחֹתִ֣י		global-review-known-rendering	safe	0.785	approved	0				global known-rendering assignment; lexical score 0.64
+5:1	11	bride		5	כַלָּה֒		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:1	15	my		7	מֹורִי֙		attached-word	safe	0.6	approved	0				PossessivePronoun of 'myrrh'
+5:1	16	myrrh		7	מֹורִי֙		global-review-known-rendering	safe	0.7	approved	0				global known-rendering assignment; lexical score 0.55
+5:1	18	my		9	בְּשָׂמִ֔י		attached-word	safe	0.475	approved	0				PossessivePronoun of 'spice'
+5:1	19	spice		9	בְּשָׂמִ֔י		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
+5:1	22	eaten		10	אָכַ֤לְתִּי		global-review-known-rendering	safe	0.7287	approved	0				global known-rendering assignment; lexical score 0.58
+5:1	26	my		13	דִּבְשִׁ֔י		attached-word	safe	0.675	approved	0				PossessivePronoun of 'honey'
+5:1	27	honey		13	דִּבְשִׁ֔י		global-review-known-rendering	safe	0.775	approved	0				global known-rendering assignment; lexical score 0.62
+5:1	30	drunk		14	שָׁתִ֥יתִי		global-review-known-rendering	safe	0.6435	approved	0				global known-rendering assignment; lexical score 0.49
+5:1	31	my		15	יֵינִ֖י		attached-word	safe	0.5508	approved	0				PossessivePronoun of 'wine'
+5:1	32	wine		15	יֵינִ֖י		global-review-known-rendering	safe	0.6508	approved	0				global known-rendering assignment; lexical score 0.50
+5:1	34	my		17	חֲלָבִ֑י		attached-word	safe	0.6571	approved	0				PossessivePronoun of 'milk'
+5:1	35	milk		17	חֲלָבִ֑י		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
+5:1	37	Eat		18	אִכְל֣וּ		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61
+5:1	39	Drink		20	שְׁת֥וּ		global-review-known-rendering	safe	0.5891	approved	0				global known-rendering assignment; lexical score 0.44
+5:1	43	beloved		23	דֹּודִֽים		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:2	5	my		4	לִבִּ֣י		attached-word	safe	0.5437	approved	0				PossessivePronoun of 'heart'
+5:2	6	heart		4	לִבִּ֣י		global-review-known-rendering	safe	0.6437	approved	0				global known-rendering assignment; lexical score 0.49
+5:2	8	awake		5	עֵ֑ר		global-review-known-rendering	safe	0.6625	approved	0				global known-rendering assignment; lexical score 0.51
+5:2	11	the				expands	supplied-article	safe	0.7858	approved	0				article the original does not write; rests on 'voice' → 'קֹ֣ול'
+5:2	12	voice		6	קֹ֣ול		global-review-known-rendering	safe	0.7858	approved	0				global known-rendering assignment; lexical score 0.64
+5:2	13	of		7	דֹּודִ֣י		attached-word	safe	0.4015	approved	0				Genitive of 'my'
+5:2	14	my		7	דֹּודִ֣י		attached-word	safe	0.5015	approved	0				PossessivePronoun of 'beloved'
+5:2	15	beloved		7	דֹּודִ֣י		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:2	21	my		11	אֲחֹתִ֤י		attached-word	safe	0.685	approved	0				PossessivePronoun of 'sister'
+5:2	22	sister		11	אֲחֹתִ֤י		global-review-known-rendering	safe	0.785	approved	0				global known-rendering assignment; lexical score 0.64
+5:2	25	my		13	יֹונָתִ֣י		attached-word	safe	0.7	approved	0				PossessivePronoun of 'dove'
+5:2	26	dove		13	יֹונָתִ֣י		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:2	30	my		16	רֹּאשִׁי֙		attached-word	safe	0.64	approved	0				PossessivePronoun of 'head'
+5:2	31	head		16	רֹּאשִׁי֙		global-review-known-rendering	safe	0.74	approved	0				global known-rendering assignment; lexical score 0.59
+5:2	33	filled		17	נִמְלָא		global-review-known-rendering	safe	0.6338	approved	0				global known-rendering assignment; lexical score 0.48
+5:2	35	dew		18	טָ֔ל		global-review-known-rendering	safe	0.6793	approved	0				global known-rendering assignment; lexical score 0.53
+5:2	43	the				expands	supplied-article	safe	0.7349	approved	0				article the original does not write; rests on 'night' → 'לָֽיְלָה'
+5:2	44	night		21	לָֽיְלָה		global-review-known-rendering	safe	0.7349	approved	0				global known-rendering assignment; lexical score 0.58
+5:3				7	אֶת	omits	unrendered-object-marker	safe	0.7365	approved	0				object marker; rests on 'feet' → 'רַגְלַ֖י'
+5:3	15	washed		6	רָחַ֥צְתִּי		global-review-known-rendering	safe	0.5911	approved	0				global known-rendering assignment; lexical score 0.44
+5:3	16	my		8	רַגְלַ֖י		attached-word	safe	0.6365	approved	0				PossessivePronoun of 'feet'
+5:3	17	feet		8	רַגְלַ֖י		global-review-known-rendering	safe	0.7365	approved	0				global known-rendering assignment; lexical score 0.59
+5:4	2	beloved		1	דֹּודִ֗י		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:4	4	his		3	יָדֹו֙		attached-word	safe	0.5686	approved	0				PossessivePronoun of 'hand'
+5:4	5	hand		3	יָדֹו֙		global-review-known-rendering	safe	0.6686	approved	0				global known-rendering assignment; lexical score 0.52
+5:5				7	וְ	omits	unrendered-conjunction	safe	0.6735	approved	0				conjunction no word of the verse renders; rests on 'hands' → 'יָדַ֣י'
+5:5				11	וְ	omits	unrendered-conjunction	safe	0.755	approved	0				conjunction no word of the verse renders; rests on 'fingers' → 'אֶצְבְּעֹתַי֙'
+5:5	2	rose		1	קַ֥מְתִּֽי		global-review-known-rendering	safe	0.636	approved	0				global known-rendering assignment; lexical score 0.49
+5:5	5	open		4	פְתֹּ֣חַ		global-review-known-rendering	safe	0.5636	approved	0				global known-rendering assignment; lexical score 0.41
+5:5	7	my		6	דֹודִ֑י		attached-word	safe	0.5015	approved	0				PossessivePronoun of 'beloved'
+5:5	8	beloved		6	דֹודִ֑י		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:5	9	My		8	יָדַ֣י		attached-word	safe	0.5735	approved	0				PossessivePronoun of 'hands'
+5:5	10	hands		8	יָדַ֣י		global-review-known-rendering	safe	0.6735	approved	0				global known-rendering assignment; lexical score 0.52
+5:5	13	myrrh		10	מֹ֗ור		global-review-known-rendering	safe	0.7	approved	0				global known-rendering assignment; lexical score 0.55
+5:5	14	my		12	אֶצְבְּעֹתַי֙		attached-word	safe	0.655	approved	0				PossessivePronoun of 'fingers'
+5:5	15	fingers		12	אֶצְבְּעֹתַי֙		global-review-known-rendering	safe	0.755	approved	0				global known-rendering assignment; lexical score 0.60
+5:5	18	myrrh		13	מֹ֣ור		global-review-known-rendering	safe	0.7	approved	0				global known-rendering assignment; lexical score 0.55
+5:6	2	opened		1	פָּתַ֤חְתִּֽי		global-review-known-rendering	safe	0.6064	approved	0				global known-rendering assignment; lexical score 0.46
+5:6	4	my		4	דֹודִ֔י		attached-word	safe	0.5015	approved	0				PossessivePronoun of 'beloved'
+5:6	5	beloved		4	דֹודִ֔י		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:6	7	my		6	דֹודִ֖י		attached-word	safe	0.5015	approved	0				PossessivePronoun of 'beloved'
+5:6	8	beloved		6	דֹודִ֖י		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:6	28	find		16	מְצָאתִ֔יהוּ		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
+5:6	31	called		17	קְרָאתִ֖יו		global-review-known-rendering	safe	0.7534	approved	0				global known-rendering assignment; lexical score 0.60
+5:6	36	answer		20	עָנָֽנִי		global-review-known-rendering	safe	0.592	approved	0				global known-rendering assignment; lexical score 0.44
+5:7	6	the		7			attached-word	safe	0.6522	approved	0				Article of 'city'
+5:7	7	city		8	עִ֖יר		global-review-known-rendering	safe	0.7522	approved	0				global known-rendering assignment; lexical score 0.60
+5:7	8	found		1	מְצָאֻ֧נִי		global-review-known-rendering	safe	0.7527	approved	0				global known-rendering assignment; lexical score 0.60
+5:7	16	The				expands	supplied-article	safe	0.7437	approved	0				article the original does not write; rests on 'keepers' → 'שֹׁמְרֵ֖י'
+5:7	17	keepers		16	שֹׁמְרֵ֖י		global-review-known-rendering	safe	0.7437	approved	0				global known-rendering assignment; lexical score 0.59
+5:7	18	of		18	חֹמֹֽות		attached-word	safe	0.5275	approved	0				Genitive of 'walls'
+5:7	19	the		17	הַ		attached-word	safe	0.5275	approved	0				Article of 'walls'
+5:7	20	walls		18	חֹמֹֽות		global-review-known-rendering	safe	0.6275	approved	0				global known-rendering assignment; lexical score 0.48
+5:8				7	אֶת	omits	unrendered-object-marker	safe	0.6015	approved	0				object marker; rests on 'beloved' → 'דֹּודִ֔י'
+5:8	4	daughters		3	בְּנֹ֣ות		global-review-known-rendering	safe	0.7588	approved	0				global known-rendering assignment; lexical score 0.61
+5:8	5	of		4	יְרוּשָׁלִָ֑ם		attached-word	safe	0.66	approved	0				Genitive of 'Jerusalem'
+5:8	6	Jerusalem		4	יְרוּשָׁלִָ֑ם		global-review-known-rendering	safe	0.76	approved	0				global known-rendering assignment; lexical score 0.61
+5:8	7	If		5	אִֽם		global-review-known-rendering	safe	0.6405	approved	0				global known-rendering assignment; lexical score 0.49
+5:8	9	find		6	תִּמְצְאוּ֙		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
+5:8	10	my		8	דֹּודִ֔י		attached-word	safe	0.5015	approved	0				PossessivePronoun of 'beloved'
+5:8	11	beloved		8	דֹּודִ֔י		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:8	14	tell		10	תַּגִּ֣ידוּ		global-review-known-rendering	safe	0.5612	approved	0				global known-rendering assignment; lexical score 0.41
+5:9				8		omits	unrendered-article	safe	0.68	approved	0				article no the of the verse renders; rests on 'women' → 'נָּשִׁ֑ים'
+5:9	4	beloved		2	דֹּודֵ֣ךְ		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:9	6	than		3	מִ		global-review-known-rendering	safe	0.585	approved	0				global known-rendering assignment; lexical score 0.43
+5:9	8	beloved		4	דֹּ֔וד		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:9	12	women		9	נָּשִׁ֑ים		global-review-known-rendering	safe	0.68	approved	0				global known-rendering assignment; lexical score 0.53
+5:9	16	beloved		11	דֹּודֵ֣ךְ		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:9	18	than		12	מִ		global-review-known-rendering	safe	0.585	approved	0				global known-rendering assignment; lexical score 0.43
+5:9	20	beloved		13	דֹּ֔וד		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:10	1	My		1	דֹּודִ֥י		attached-word	safe	0.5015	approved	0				PossessivePronoun of 'beloved'
+5:10	2	beloved		1	דֹּודִ֥י		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:11	1	His		1	רֹאשֹׁ֖ו		attached-word	safe	0.64	approved	0				PossessivePronoun of 'head'
+5:11	2	head		1	רֹאשֹׁ֖ו		global-review-known-rendering	safe	0.74	approved	0				global known-rendering assignment; lexical score 0.59
+5:11	14	a				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'raven' → 'עֹורֵֽב'
+5:11	15	raven		9	עֹורֵֽב		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:12	1	His		1	עֵינָ֕יו		attached-word	safe	0.6839	approved	0				PossessivePronoun of 'eyes'
+5:12	2	eyes		1	עֵינָ֕יו		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+5:12	5	doves		3	יֹונִ֖ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:12	7	the				expands	supplied-article	safe	0.7771	approved	0				article the original does not write; rests on 'water' → 'מָ֑יִם'
+5:12	8	water		6	מָ֑יִם		global-review-known-rendering	safe	0.7771	approved	0				global known-rendering assignment; lexical score 0.63
+5:12	10	washed		7	רֹֽחֲצֹות֙		global-review-known-rendering	safe	0.5911	approved	0				global known-rendering assignment; lexical score 0.44
+5:12	12	milk		10	חָלָ֔ב		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
+5:13				4	הַ	omits	unrendered-article	safe	0.728	approved	0				article no the of the verse renders; rests on 'spices' → 'בֹּ֔שֶׂם'
+5:13	1	His		1	לְחָיָו֙		attached-word	safe	0.7	approved	0				PossessivePronoun of 'cheeks'
+5:13	2	cheeks		1	לְחָיָו֙		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:13	7	of		5	בֹּ֔שֶׂם		attached-word	safe	0.628	approved	0				Genitive of 'spices'
+5:13	8	spices		5	בֹּ֔שֶׂם		global-review-known-rendering	safe	0.728	approved	0				global known-rendering assignment; lexical score 0.58
+5:13	10	towers		6	מִגְדְּלֹ֖ות		global-review-known-rendering	safe	0.6941	approved	0				global known-rendering assignment; lexical score 0.54
+5:13	13	His		8	שִׂפְתֹותָיו֙		attached-word	safe	0.6839	approved	0				PossessivePronoun of 'lips'
+5:13	14	lips		8	שִׂפְתֹותָיו֙		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+5:13	17	lilies		9	שֹֽׁושַׁנִּ֔ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:13	20	myrrh		11	מֹ֥ור		global-review-known-rendering	safe	0.7	approved	0				global known-rendering assignment; lexical score 0.55
+5:14				6		omits	unrendered-article	safe	0.8	approved	0				article no the of the verse renders; rests on 'beryl' → 'תַּרְשִׁ֑ישׁ'
+5:14	1	His		1	יָדָיו֙		attached-word	safe	0.5735	approved	0				PossessivePronoun of 'hands'
+5:14	2	hands		1	יָדָיו֙		global-review-known-rendering	safe	0.6735	approved	0				global known-rendering assignment; lexical score 0.52
+5:14	6	of		3	זָהָ֔ב		attached-word	safe	0.6426	approved	0				Genitive of 'gold'
+5:14	7	gold		3	זָהָ֔ב		global-review-known-rendering	safe	0.7426	approved	0				global known-rendering assignment; lexical score 0.59
+5:14	10	beryl		7	תַּרְשִׁ֑ישׁ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:14	15	ivory		10	שֵׁ֔ן		global-review-known-rendering	safe	0.7182	approved	0				global known-rendering assignment; lexical score 0.57
+5:15				10		omits	unrendered-article	safe	0.7753	approved	0				article no the of the verse renders; rests on 'Lebanon' → 'לְּבָנֹ֔ון'
+5:15	5	pillars		2	עַמּ֣וּדֵי		global-review-known-rendering	safe	0.7682	approved	0				global known-rendering assignment; lexical score 0.62
+5:15	10	sockets		6	אַדְנֵי		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:15	14	His		8	מַרְאֵ֨הוּ֙		attached-word	safe	0.6514	approved	0				PossessivePronoun of 'appearance'
+5:15	15	appearance		8	מַרְאֵ֨הוּ֙		global-review-known-rendering	safe	0.7514	approved	0				global known-rendering assignment; lexical score 0.60
+5:15	18	Lebanon		11	לְּבָנֹ֔ון		global-review-known-rendering	safe	0.7753	approved	0				global known-rendering assignment; lexical score 0.63
+5:15	21	the		14			attached-word	safe	0.6591	approved	0				Article of 'cedars'
+5:15	22	cedars		15	אֲרָזִֽים		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+5:16	12	my		7	דֹודִי֙		attached-word	safe	0.5015	approved	0				PossessivePronoun of 'beloved'
+5:16	13	beloved		7	דֹודִי֙		global-review-known-rendering	safe	0.6015	approved	0				global known-rendering assignment; lexical score 0.45
+5:16	17	my		10	רֵעִ֔י		attached-word	safe	0.5662	approved	0				PossessivePronoun of 'friend'
+5:16	18	friend		10	רֵעִ֔י		global-review-known-rendering	safe	0.6662	approved	0				global known-rendering assignment; lexical score 0.52
+5:16	19	daughters		11	בְּנֹ֖ות		global-review-known-rendering	safe	0.7588	approved	0				global known-rendering assignment; lexical score 0.61
+5:16	20	of		12	יְרוּשָׁלִָֽם		attached-word	safe	0.66	approved	0				Genitive of 'Jerusalem'
+5:16	21	Jerusalem		12	יְרוּשָׁלִָֽם		global-review-known-rendering	safe	0.76	approved	0				global known-rendering assignment; lexical score 0.61
+6:1				7		omits	unrendered-article	safe	0.68	approved	0				article no the of the verse renders; rests on 'women' → 'נָּשִׁ֑ים'
+6:1	4	your		3	דֹּודֵ֔ךְ		attached-word	safe	0.53	approved	0				PossessivePronoun of 'beloved'
+6:1	5	beloved		3	דֹּודֵ֔ךְ		global-review-known-rendering	safe	0.63	approved	0				global known-rendering assignment; lexical score 0.48
+6:1	10	women		8	נָּשִׁ֑ים		global-review-known-rendering	safe	0.68	approved	0				global known-rendering assignment; lexical score 0.53
+6:1	14	beloved		11	דֹודֵ֔ךְ		global-review-known-rendering	safe	0.63	approved	0				global known-rendering assignment; lexical score 0.48
+6:2	1	My		1	דֹּודִי֙		attached-word	safe	0.53	approved	0				PossessivePronoun of 'beloved'
+6:2	2	beloved		1	דֹּודִי֙		global-review-known-rendering	safe	0.63	approved	0				global known-rendering assignment; lexical score 0.48
+6:2	7	his		4	גַנֹּ֔ו		attached-word	safe	0.625	approved	0				PossessivePronoun of 'garden'
+6:2	8	garden		4	גַנֹּ֔ו		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
+6:2	12	of		8	בֹּ֑שֶׂם		attached-word	safe	0.628	approved	0				Genitive of 'spices'
+6:2	13	spices		8	בֹּ֑שֶׂם		global-review-known-rendering	safe	0.728	approved	0				global known-rendering assignment; lexical score 0.58
+6:2	24	lilies		17	שֹֽׁושַׁנִּֽים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:3	6	my		5	דֹודִ֣י		attached-word	safe	0.53	approved	0				PossessivePronoun of 'beloved'
+6:3	7	beloved		5	דֹודִ֣י		global-review-known-rendering	safe	0.63	approved	0				global known-rendering assignment; lexical score 0.48
+6:3	13	the		10			attached-word	safe	0.7	approved	0				Article of 'lilies'
+6:3	14	lilies		11	שֹּׁושַׁנִּֽים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:4	7	Tirzah		5	תִרְצָ֔ה		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60
+6:4	10	Jerusalem		8	ירוּשָׁלִָ֑ם		global-review-known-rendering	safe	0.76	approved	0				global known-rendering assignment; lexical score 0.61
+6:5	3	your		2	עֵינַ֨יִךְ֙		attached-word	safe	0.6839	approved	0				PossessivePronoun of 'eyes'
+6:5	4	eyes		2	עֵינַ֨יִךְ֙		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+6:5	12	Your		8	שַׂעְרֵךְ֙		attached-word	safe	0.4857	approved	0				PossessivePronoun of 'hair'
+6:5	13	hair		8	שַׂעְרֵךְ֙		global-review-known-rendering	safe	0.5857	approved	0				global known-rendering assignment; lexical score 0.44
+6:5	18	of		12	עִזִּ֔ים		attached-word	safe	0.5092	approved	0				Genitive of 'goats'
+6:5	19	goats		12	עִזִּ֔ים		global-review-known-rendering	safe	0.6092	approved	0				global known-rendering assignment; lexical score 0.46
+6:5	26	Gilead		17	גִּלְעָֽד		global-review-known-rendering	safe	0.7866	approved	0				global known-rendering assignment; lexical score 0.64
+6:6	1	Your		1	שִׁנַּ֨יִךְ֙		attached-word	safe	0.6027	approved	0				PossessivePronoun of 'teeth'
+6:6	2	teeth		1	שִׁנַּ֨יִךְ֙		global-review-known-rendering	safe	0.7027	approved	0				global known-rendering assignment; lexical score 0.55
+6:7				3	הָ	omits	unrendered-article	safe	0.8	approved	0				article no the of the verse renders; rests on 'pomegranate' → 'רִמֹּון֙'
+6:7	1	Your		5	רַקָּתֵ֔ךְ		attached-word	safe	0.55	approved	0				PossessivePronoun of 'temples'
+6:7	2	temples		5	רַקָּתֵ֔ךְ		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
+6:7	7	of		4	רִמֹּון֙		attached-word	safe	0.7	approved	0				Genitive of 'pomegranate'
+6:7	8	a				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'pomegranate' → 'רִמֹּון֙'
+6:7	9	pomegranate		4	רִמֹּון֙		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:8	3	sixty		1	שִׁשִּׁ֥ים		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+6:8	4	queens		3	מְּלָכֹ֔ות		global-review-known-rendering	safe	0.6324	approved	0				global known-rendering assignment; lexical score 0.48
+6:8	6	concubines		6	פִּֽילַגְשִׁ֑ים		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+6:8	10	number		10	מִסְפָּֽר		global-review-known-rendering	safe	0.6443	approved	0				global known-rendering assignment; lexical score 0.49
+6:9	1	My		3	יֹונָתִ֣י		attached-word	safe	0.7	approved	0				PossessivePronoun of 'dove'
+6:9	2	dove		3	יֹונָתִ֣י		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:9	5	one		1	אַחַ֥ת		global-review-known-rendering	safe	0.5905	approved	0				global known-rendering assignment; lexical score 0.44
+6:9	13	daughter		14	בָנֹות֙		global-review-known-rendering	safe	0.7735	approved	0				global known-rendering assignment; lexical score 0.62
+6:9	18	one		5	אַחַ֥ת		global-review-known-rendering	safe	0.5905	approved	0				global known-rendering assignment; lexical score 0.44
+6:9	26	saw		13	רָא֤וּהָ		global-review-known-rendering	safe	0.7191	approved	0				global known-rendering assignment; lexical score 0.57
+6:9	32	The				expands	supplied-article	safe	0.6324	approved	0				article the original does not write; rests on 'queens' → 'מְלָכֹ֥ות'
+6:9	33	queens		17	מְלָכֹ֥ות		global-review-known-rendering	safe	0.6324	approved	0				global known-rendering assignment; lexical score 0.48
+6:9	35	the				expands	supplied-article	safe	0.71	approved	0				article the original does not write; rests on 'concubines' → 'פִֽילַגְשִׁ֖ים'
+6:9	36	concubines		19	פִֽילַגְשִׁ֖ים		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+6:9	41	praised		21	יְהַלְלֽוּהָ		global-review-known-rendering	safe	0.663	approved	0				global known-rendering assignment; lexical score 0.51
+6:10	1	Who		1	מִי		global-review-known-rendering	safe	0.5983	approved	0				global known-rendering assignment; lexical score 0.45
+6:11	10	see		6	רְאֹ֖ות		global-review-known-rendering	safe	0.7075	approved	0				global known-rendering assignment; lexical score 0.56
+6:11	18	see		12	רְאֹות֙		global-review-known-rendering	safe	0.7075	approved	0				global known-rendering assignment; lexical score 0.56
+6:11	20	the		15	הַ		attached-word	safe	0.6083	approved	0				Article of 'vine'
+6:11	21	vine		16	גֶּ֔פֶן		global-review-known-rendering	safe	0.7083	approved	0				global known-rendering assignment; lexical score 0.56
+6:11	24	the		18	הָ		attached-word	safe	0.7	approved	0				Article of 'pomegranates'
+6:11	25	pomegranates		19	רִמֹּנִֽים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:13	1	Return		1	שׁ֤וּבִי		global-review-known-rendering	safe	0.7853	approved	0				global known-rendering assignment; lexical score 0.64
+6:13	2	return		2	שׁ֨וּבִי֙		global-review-known-rendering	safe	0.7853	approved	0				global known-rendering assignment; lexical score 0.64
+6:13	4	Return		5	שׁ֥וּבִי		global-review-known-rendering	safe	0.7853	approved	0				global known-rendering assignment; lexical score 0.64
+6:13	5	return		6	שׁ֖וּבִי		global-review-known-rendering	safe	0.7853	approved	0				global known-rendering assignment; lexical score 0.64
+6:13	13	Why		10	מַֽה		global-review-known-rendering	safe	0.6602	approved	0				global known-rendering assignment; lexical score 0.51
+7:1	9	daughter		7	בַּת		global-review-known-rendering	safe	0.7734	approved	0				global known-rendering assignment; lexical score 0.62
+7:1	18	of		14	יְדֵ֥י		attached-word	safe	0.5739	approved	0				Genitive of 'hands'
+7:1	19	the				expands	supplied-article	safe	0.6739	approved	0				article the original does not write; rests on 'hands' → 'יְדֵ֥י'
+7:1	20	hands		14	יְדֵ֥י		global-review-known-rendering	safe	0.6739	approved	0				global known-rendering assignment; lexical score 0.52
+7:2				14		omits	unrendered-article	safe	0.8	approved	0				article no the of the verse renders; rests on 'lilies' → 'שֹּׁושַׁנִּֽים'
+7:2	19	of		11	חִטִּ֔ים		attached-word	safe	0.5905	approved	0				Genitive of 'wheat'
+7:2	20	wheat		11	חִטִּ֔ים		global-review-known-rendering	safe	0.6905	approved	0				global known-rendering assignment; lexical score 0.54
+7:2	24	lilies		15	שֹּׁושַׁנִּֽים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+7:3	1	Your		2	שָׁדַ֛יִךְ		attached-word	safe	0.5435	approved	0				PossessivePronoun of 'breasts'
+7:3	2	two		1	שְׁנֵ֥י		global-review-known-rendering	safe	0.6877	approved	0				global known-rendering assignment; lexical score 0.54
+7:3	3	breasts		2	שָׁדַ֛יִךְ		global-review-known-rendering	safe	0.6435	approved	0				global known-rendering assignment; lexical score 0.49
+7:3	6	two		4	שְׁנֵ֥י		global-review-known-rendering	safe	0.6877	approved	0				global known-rendering assignment; lexical score 0.54
+7:4	1	Your		1	צַוָּארֵ֖ךְ		attached-word	safe	0.4868	approved	0				PossessivePronoun of 'neck'
+7:4	2	neck		1	צַוָּארֵ֖ךְ		global-review-known-rendering	safe	0.5868	approved	0				global known-rendering assignment; lexical score 0.44
+7:4	5	an				expands	supplied-indefinite-article	safe	0.7182	approved	0				indefinite article; rests on 'ivory' → 'שֵּׁ֑ן'
+7:4	6	ivory		5	שֵּׁ֑ן		global-review-known-rendering	safe	0.7182	approved	0				global known-rendering assignment; lexical score 0.57
+7:4	7	tower		3	מִגְדַּ֣ל		global-review-known-rendering	safe	0.6683	approved	0				global known-rendering assignment; lexical score 0.52
+7:4	8	Your		6	עֵינַ֜יִךְ		attached-word	safe	0.6839	approved	0				PossessivePronoun of 'eyes'
+7:4	9	eyes		6	עֵינַ֜יִךְ		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+7:4	15	Heshbon		9	חֶשְׁבֹּ֗ון		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62
+7:4	17	the				expands	supplied-article	safe	0.7769	approved	0				article the original does not write; rests on 'gate' → 'שַׁ֨עַר֙'
+7:4	18	gate		11	שַׁ֨עַר֙		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63
+7:4	21	Your		13	אַפֵּךְ֙		attached-word	safe	0.655	approved	0				PossessivePronoun of 'nose'
+7:4	22	nose		13	אַפֵּךְ֙		global-review-known-rendering	safe	0.755	approved	0				global known-rendering assignment; lexical score 0.60
+7:4	25	the				expands	supplied-article	safe	0.6683	approved	0				article the original does not write; rests on 'tower' → 'מִגְדַּ֣ל'
+7:4	26	tower		15	מִגְדַּ֣ל		global-review-known-rendering	safe	0.6683	approved	0				global known-rendering assignment; lexical score 0.52
+7:4	27	of		17	לְּבָנֹ֔ון		attached-word	safe	0.6753	approved	0				Genitive of 'Lebanon'
+7:4	28	Lebanon		17	לְּבָנֹ֔ון		global-review-known-rendering	safe	0.7753	approved	0				global known-rendering assignment; lexical score 0.63
+7:4	32	Damascus		20	דַמָּֽשֶׂק		global-review-known-rendering	safe	0.7511	approved	0				global known-rendering assignment; lexical score 0.60
+7:5	1	Your		1	רֹאשֵׁ֤ךְ		attached-word	safe	0.64	approved	0				PossessivePronoun of 'head'
+7:5	2	head		1	רֹאשֵׁ֤ךְ		global-review-known-rendering	safe	0.74	approved	0				global known-rendering assignment; lexical score 0.59
+7:5	7	Carmel		5	כַּרְמֶ֔ל		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61
+7:5	11	your		8	רֹאשֵׁ֖ךְ		attached-word	safe	0.64	approved	0				PossessivePronoun of 'head'
+7:5	12	head		8	רֹאשֵׁ֖ךְ		global-review-known-rendering	safe	0.74	approved	0				global known-rendering assignment; lexical score 0.59
+7:5	14	purple		11	אַרְגָּמָ֑ן		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+7:5	15	The				expands	supplied-article	safe	0.7531	approved	0				article the original does not write; rests on 'king' → 'מֶ֖לֶךְ'
+7:5	16	king		12	מֶ֖לֶךְ		global-review-known-rendering	safe	0.7531	approved	0				global known-rendering assignment; lexical score 0.60
+7:7				6	וְ	omits	unrendered-conjunction	safe	0.6435	approved	0				conjunction no word of the verse renders; rests on 'breasts' → 'שָׁדַ֖יִךְ'
+7:7	9	your		7	שָׁדַ֖יִךְ		attached-word	safe	0.5435	approved	0				PossessivePronoun of 'breasts'
+7:7	10	breasts		7	שָׁדַ֖יִךְ		global-review-known-rendering	safe	0.6435	approved	0				global known-rendering assignment; lexical score 0.49
+7:8	2	said		1	אָמַ֨רְתִּי֙		global-review-known-rendering	safe	0.777	approved	0				global known-rendering assignment; lexical score 0.63
+7:8	5	climb		2	אֶעֱלֶ֣ה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+7:8	19	your		11	שָׁדַ֨יִךְ֙		attached-word	safe	0.5435	approved	0				PossessivePronoun of 'breasts'
+7:8	20	breasts		11	שָׁדַ֨יִךְ֙		global-review-known-rendering	safe	0.6435	approved	0				global known-rendering assignment; lexical score 0.49
+7:8	24	of		15	גֶּ֔פֶן		attached-word	safe	0.6066	approved	0				Genitive of 'vine'
+7:8	25	the		14	הַ		attached-word	safe	0.6066	approved	0				Article of 'vine'
+7:8	26	vine		15	גֶּ֔פֶן		global-review-known-rendering	safe	0.7066	approved	0				global known-rendering assignment; lexical score 0.56
+7:9	7	wine		4	יֵ֥ין		global-review-known-rendering	safe	0.6508	approved	0				global known-rendering assignment; lexical score 0.50
+7:9	13	my		9	דֹודִ֖י		attached-word	safe	0.5337	approved	0				PossessivePronoun of 'beloved'
+7:9	14	beloved		9	דֹודִ֖י		global-review-known-rendering	safe	0.6337	approved	0				global known-rendering assignment; lexical score 0.48
+7:9	17	the				expands	supplied-article	safe	0.7839	approved	0				article the original does not write; rests on 'lips' → 'שִׂפְתֵ֥י'
+7:9	18	lips		13	שִׂפְתֵ֥י		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+7:11	2	my		2	דֹודִי֙		attached-word	safe	0.5337	approved	0				PossessivePronoun of 'beloved'
+7:11	3	beloved		2	דֹודִי֙		global-review-known-rendering	safe	0.6337	approved	0				global known-rendering assignment; lexical score 0.48
+7:11	8	the		4	הַ		attached-word	safe	0.6596	approved	0				Article of 'field'
+7:11	9	field		5	שָּׂדֶ֔ה		global-review-known-rendering	safe	0.7596	approved	0				global known-rendering assignment; lexical score 0.61
+7:11	11	lodge		6	נָלִ֖ינָה		global-review-known-rendering	safe	0.7795	approved	0				global known-rendering assignment; lexical score 0.63
+7:12	3	early		1	נַשְׁכִּ֨ימָה֙		global-review-known-rendering	safe	0.7199	approved	0				global known-rendering assignment; lexical score 0.57
+7:12	6	the		3			attached-word	safe	0.7	approved	0				Article of 'vineyards'
+7:12	7	vineyards		4	כְּרָמִ֔ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+7:12	9	see		5	נִרְאֶ֞ה		global-review-known-rendering	safe	0.7069	approved	0				global known-rendering assignment; lexical score 0.56
+7:12	11	the		8	הַ		attached-word	safe	0.6066	approved	0				Article of 'vine'
+7:12	12	vine		9	גֶּ֨פֶן֙		global-review-known-rendering	safe	0.7066	approved	0				global known-rendering assignment; lexical score 0.56
+7:12	14	budded		7	פָּֽרְחָ֤ה		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+7:12	18	open		10	פִּתַּ֣ח		global-review-known-rendering	safe	0.5683	approved	0				global known-rendering assignment; lexical score 0.42
+7:12	20	the		14	הָ		attached-word	safe	0.7	approved	0				Article of 'pomegranates'
+7:12	21	pomegranates		15	רִמֹּונִ֑ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+7:12	28	give		17	אֶתֵּ֥ן		global-review-known-rendering	safe	0.651	approved	0				global known-rendering assignment; lexical score 0.50
+7:13	1	The		1	הַֽ		attached-word	safe	0.625	approved	0				Article of 'mandrakes'
+7:13	2	mandrakes		2	דּוּדָאִ֣ים		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
+7:13	9	all		8	כָּל		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61
+7:13	14	new		10	חֲדָשִׁ֖ים		global-review-known-rendering	safe	0.6071	approved	0				global known-rendering assignment; lexical score 0.46
+7:13	24	my		13	דֹּודִ֖י		attached-word	safe	0.5337	approved	0				PossessivePronoun of 'beloved'
+7:13	25	beloved		13	דֹּודִ֖י		global-review-known-rendering	safe	0.6337	approved	0				global known-rendering assignment; lexical score 0.48
+8:1	7	brother		4	אָ֣ח		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+8:1	8	who		1	מִ֤י		global-review-known-rendering	safe	0.5983	approved	0				global known-rendering assignment; lexical score 0.45
+8:1	11	the				expands	supplied-article	safe	0.6435	approved	0				article the original does not write; rests on 'breasts' → 'שְׁדֵ֣י'
+8:1	12	breasts		7	שְׁדֵ֣י		global-review-known-rendering	safe	0.6435	approved	0				global known-rendering assignment; lexical score 0.49
+8:1	13	of		8	אִמִּ֑י		attached-word	safe	0.5594	approved	0				Genitive of 'my'
+8:1	14	my		8	אִמִּ֑י		attached-word	safe	0.6594	approved	0				PossessivePronoun of 'mother'
+8:1	15	mother		8	אִמִּ֑י		global-review-known-rendering	safe	0.7594	approved	0				global known-rendering assignment; lexical score 0.61
+8:1	18	found		9	אֶֽמְצָאֲךָ֤		global-review-known-rendering	safe	0.7527	approved	0				global known-rendering assignment; lexical score 0.60
+8:1	23	kiss		13	אֶשָּׁ֣קְךָ֔		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+8:2	8	the				expands	supplied-article	safe	0.7634	approved	0				article the original does not write; rests on 'house' → 'בֵּ֥ית'
+8:2	9	house		4	בֵּ֥ית		global-review-known-rendering	safe	0.7634	approved	0				global known-rendering assignment; lexical score 0.61
+8:2	10	of		5	אִמִּ֖י		attached-word	safe	0.5594	approved	0				Genitive of 'my'
+8:2	11	my		5	אִמִּ֖י		attached-word	safe	0.6594	approved	0				PossessivePronoun of 'mother'
+8:2	12	mother		5	אִמִּ֖י		global-review-known-rendering	safe	0.7594	approved	0				global known-rendering assignment; lexical score 0.61
+8:2	23	wine		9	יַּ֣יִן		global-review-known-rendering	safe	0.6523	approved	0				global known-rendering assignment; lexical score 0.50
+8:2	27	of		14	רִמֹּנִֽי		attached-word	safe	0.6	approved	0				Genitive of 'my'
+8:2	28	my		14	רִמֹּנִֽי		attached-word	safe	0.7	approved	0				PossessivePronoun of 'pomegranate'
+8:2	29	pomegranate		14	רִמֹּנִֽי		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+8:3	6	under		2	תַּ֣חַת		global-review-known-rendering	safe	0.6589	approved	0				global known-rendering assignment; lexical score 0.51
+8:3	7	my		3	רֹאשִׁ֔י		attached-word	safe	0.6402	approved	0				PossessivePronoun of 'head'
+8:3	8	head		3	רֹאשִׁ֔י		global-review-known-rendering	safe	0.7402	approved	0				global known-rendering assignment; lexical score 0.59
+8:3	13	embrace		6	תְּחַבְּקֵֽנִי		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+8:4	4	daughters		3	בְּנֹ֣ות		global-review-known-rendering	safe	0.7589	approved	0				global known-rendering assignment; lexical score 0.61
+8:4	5	of		4	יְרוּשָׁלִָ֑ם		attached-word	safe	0.66	approved	0				Genitive of 'Jerusalem'
+8:4	6	Jerusalem		4	יְרוּשָׁלִָ֑ם		global-review-known-rendering	safe	0.76	approved	0				global known-rendering assignment; lexical score 0.61
+8:4	10	stir		9	תְּעֹֽרְר֛וּ		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+8:4	15	until		13	עַ֥ד		global-review-known-rendering	safe	0.7305	approved	0				global known-rendering assignment; lexical score 0.58
+8:5	1	Who		1	מִ֣י		global-review-known-rendering	safe	0.5983	approved	0				global known-rendering assignment; lexical score 0.45
+8:5	8	the		5	הַ		attached-word	safe	0.6527	approved	0				Article of 'wilderness'
+8:5	9	wilderness		6	מִּדְבָּ֔ר		global-review-known-rendering	safe	0.7527	approved	0				global known-rendering assignment; lexical score 0.60
+8:5	12	her		9	דֹּודָ֑הּ		attached-word	safe	0.5372	approved	0				PossessivePronoun of 'beloved'
+8:5	13	beloved		9	דֹּודָ֑הּ		global-review-known-rendering	safe	0.6372	approved	0				global known-rendering assignment; lexical score 0.49
+8:5	15	Under		10	תַּ֤חַת		global-review-known-rendering	safe	0.6589	approved	0				global known-rendering assignment; lexical score 0.51
+8:5	23	your		16	אִמֶּ֔ךָ		attached-word	safe	0.6594	approved	0				PossessivePronoun of 'mother'
+8:5	24	mother		16	אִמֶּ֔ךָ		global-review-known-rendering	safe	0.7594	approved	0				global known-rendering assignment; lexical score 0.61
+8:6	7	your		6	לִבֶּ֗ךָ		attached-word	safe	0.5437	approved	0				PossessivePronoun of 'heart'
+8:6	8	heart		6	לִבֶּ֗ךָ		global-review-known-rendering	safe	0.6437	approved	0				global known-rendering assignment; lexical score 0.49
+8:6	13	your		11	זְרֹועֶ֔ךָ		attached-word	safe	0.6631	approved	0				PossessivePronoun of 'arm'
+8:6	14	arm		11	זְרֹועֶ֔ךָ		global-review-known-rendering	safe	0.7631	approved	0				global known-rendering assignment; lexical score 0.61
+8:6	21	Jealousy		21	קִנְאָ֑ה		global-review-known-rendering	safe	0.6914	approved	0				global known-rendering assignment; lexical score 0.54
+8:6	32	fire		24	אֵ֖שׁ		global-review-known-rendering	safe	0.6971	approved	0				global known-rendering assignment; lexical score 0.55
+8:7				10	וּ	omits	unrendered-conjunction	safe	0.6031	approved	0				conjunction no word of the verse renders; rests on 'floods' → 'נְהָרֹ֖ות'
+8:7				17	אֶת	omits	unrendered-object-marker	safe	0.7583	approved	0				object marker; rests on 'all' → 'כָּל'
+8:7	1	Many		2	רַבִּ֗ים		global-review-known-rendering	safe	0.6658	approved	0				global known-rendering assignment; lexical score 0.52
+8:7	2	waters		1	מַ֣יִם		global-review-known-rendering	safe	0.7785	approved	0				global known-rendering assignment; lexical score 0.63
+8:7	4	quench		6	כַבֹּ֣ות		global-review-known-rendering	safe	0.7	approved	0				global known-rendering assignment; lexical score 0.55
+8:7	6	neither		3	לֹ֤א		global-review-known-rendering	safe	0.6852	approved	0				global known-rendering assignment; lexical score 0.54
+8:7	8	floods		11	נְהָרֹ֖ות		global-review-known-rendering	safe	0.6031	approved	0				global known-rendering assignment; lexical score 0.45
+8:7	11	If		14	אִם		global-review-known-rendering	safe	0.6401	approved	0				global known-rendering assignment; lexical score 0.49
+8:7	12	a				expands	supplied-indefinite-article	safe	0.6006	approved	0				indefinite article; rests on 'man' → 'אִ֜ישׁ'
+8:7	13	man		16	אִ֜ישׁ		global-review-known-rendering	safe	0.6006	approved	0				global known-rendering assignment; lexical score 0.45
+8:7	15	give		15	יִתֵּ֨ן		global-review-known-rendering	safe	0.6513	approved	0				global known-rendering assignment; lexical score 0.50
+8:7	16	all		18	כָּל		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61
+8:7	19	of		20	בֵּיתֹו֙		attached-word	safe	0.5634	approved	0				Genitive of 'his'
+8:7	20	his		20	בֵּיתֹו֙		attached-word	safe	0.6634	approved	0				PossessivePronoun of 'house'
+8:7	21	house		20	בֵּיתֹו֙		global-review-known-rendering	safe	0.7634	approved	0				global known-rendering assignment; lexical score 0.61
+8:8				4	וְ	omits	unrendered-conjunction	safe	0.6435	approved	0				conjunction no word of the verse renders; rests on 'breasts' → 'שָׁדַ֖יִם'
+8:8	5	sister		1	אָחֹ֥ות		global-review-known-rendering	safe	0.785	approved	0				global known-rendering assignment; lexical score 0.64
+8:8	9	breasts		5	שָׁדַ֖יִם		global-review-known-rendering	safe	0.6435	approved	0				global known-rendering assignment; lexical score 0.49
+8:8	10	What		8	מַֽה		global-review-known-rendering	safe	0.6689	approved	0				global known-rendering assignment; lexical score 0.52
+8:8	13	do		9	נַּעֲשֶׂה֙		global-review-known-rendering	safe	0.6284	approved	0				global known-rendering assignment; lexical score 0.48
+8:8	15	our		11	אֲחֹתֵ֔נוּ		attached-word	safe	0.685	approved	0				PossessivePronoun of 'sister'
+8:8	16	sister		11	אֲחֹתֵ֔נוּ		global-review-known-rendering	safe	0.785	approved	0				global known-rendering assignment; lexical score 0.64
+8:8	18	the		13			attached-word	safe	0.6663	approved	0				Article of 'day'
+8:8	19	day		14	יֹּ֖ום		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
+8:8	25	spoken		16	יְּדֻבַּר		global-review-known-rendering	safe	0.7508	approved	0				global known-rendering assignment; lexical score 0.60
+8:9				8	וְ	omits	unrendered-conjunction	safe	0.6401	approved	0				conjunction no word of the verse renders; rests on 'If' → 'אִם'
+8:9	1	If		1	אִם		global-review-known-rendering	safe	0.6401	approved	0				global known-rendering assignment; lexical score 0.49
+8:9	8	build		4	נִבְנֶ֥ה		global-review-known-rendering	safe	0.7474	approved	0				global known-rendering assignment; lexical score 0.60
+8:9	14	silver		7	כָּ֑סֶף		global-review-known-rendering	safe	0.7714	approved	0				global known-rendering assignment; lexical score 0.62
+8:9	15	If		9	אִם		global-review-known-rendering	safe	0.6401	approved	0				global known-rendering assignment; lexical score 0.49
+8:9	26	of		15	אָֽרֶז		attached-word	safe	0.6719	approved	0				Genitive of 'cedar'
+8:9	27	cedar		15	אָֽרֶז		global-review-known-rendering	safe	0.7719	approved	0				global known-rendering assignment; lexical score 0.62
+8:10				6		omits	unrendered-article	safe	0.6875	approved	0				article no the of the verse renders; rests on 'towers' → 'מִּגְדָּלֹ֑ות'
+8:10	6	my		4	שָׁדַ֖י		attached-word	safe	0.5435	approved	0				PossessivePronoun of 'breasts'
+8:10	7	breasts		4	שָׁדַ֖י		global-review-known-rendering	safe	0.6435	approved	0				global known-rendering assignment; lexical score 0.49
+8:10	9	towers		7	מִּגְדָּלֹ֑ות		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+8:10	14	his		11	עֵינָ֖יו		attached-word	safe	0.6839	approved	0				PossessivePronoun of 'eyes'
+8:10	15	eyes		11	עֵינָ֖יו		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+8:10	19	found		13	מֹוצְאֵ֥ת		global-review-known-rendering	safe	0.7527	approved	0				global known-rendering assignment; lexical score 0.60
+8:10	20	peace		14	שָׁלֹֽום		global-review-known-rendering	safe	0.597	approved	0				global known-rendering assignment; lexical score 0.45
+8:11				8	אֶת	omits	unrendered-object-marker	safe	0.7893	approved	0				object marker; rests on 'vineyard' → 'כֶּ֖רֶם'
+8:11	1	Solomon		4	שְׁלֹמֹה֙		global-review-known-rendering	safe	0.7932	approved	0				global known-rendering assignment; lexical score 0.64
+8:11	3	a				expands	supplied-indefinite-article	safe	0.7893	approved	0				indefinite article; rests on 'vineyard' → 'כֶּ֣רֶם'
+8:11	4	vineyard		1	כֶּ֣רֶם		global-review-known-rendering	safe	0.7893	approved	0				global known-rendering assignment; lexical score 0.64
+8:11	11	the		9	הַ		attached-word	safe	0.6893	approved	0				Article of 'vineyard'
+8:11	12	vineyard		10	כֶּ֖רֶם		global-review-known-rendering	safe	0.7893	approved	0				global known-rendering assignment; lexical score 0.64
+8:11	19	a				expands	supplied-indefinite-article	safe	0.773	approved	0				indefinite article; rests on 'thousand' → 'אֶ֥לֶף'
+8:11	20	thousand		18	אֶ֥לֶף		global-review-known-rendering	safe	0.773	approved	0				global known-rendering assignment; lexical score 0.62
+8:11	23	silver		19	כָּֽסֶף		global-review-known-rendering	safe	0.7714	approved	0				global known-rendering assignment; lexical score 0.62
+8:11	25	its		17	פִרְיֹ֖ו		attached-word	safe	0.5611	approved	0				PossessivePronoun of 'fruit'
+8:11	26	fruit		17	פִרְיֹ֖ו		global-review-known-rendering	safe	0.6611	approved	0				global known-rendering assignment; lexical score 0.51
+8:12				10	וּ	omits	unrendered-conjunction	safe	0.7877	approved	0				conjunction no word of the verse renders; rests on 'hundred' → 'מָאתַ֖יִם'
+8:12				14	אֶת	omits	unrendered-object-marker	safe	0.6611	approved	0				object marker; rests on 'fruit' → 'פִּרְיֹֽו'
+8:12	3	vineyard		1	כַּרְמִ֥י		global-review-known-rendering	safe	0.7893	approved	0				global known-rendering assignment; lexical score 0.64
+8:12	5	before		5	פָנָ֑י		global-review-known-rendering	safe	0.6583	approved	0				global known-rendering assignment; lexical score 0.51
+8:12	7	The		6	הָ		attached-word	safe	0.673	approved	0				Article of 'thousand'
+8:12	8	thousand		7	אֶ֤לֶף		global-review-known-rendering	safe	0.773	approved	0				global known-rendering assignment; lexical score 0.62
+8:12	12	Solomon		9	שְׁלֹמֹ֔ה		global-review-known-rendering	safe	0.7932	approved	0				global known-rendering assignment; lexical score 0.64
+8:12	14	hundred		11	מָאתַ֖יִם		global-review-known-rendering	safe	0.7877	approved	0				global known-rendering assignment; lexical score 0.64
+8:12	19	its		15	פִּרְיֹֽו		attached-word	safe	0.5611	approved	0				PossessivePronoun of 'fruit'
+8:12	20	fruit		15	פִּרְיֹֽו		global-review-known-rendering	safe	0.6611	approved	0				global known-rendering assignment; lexical score 0.51
+8:13				1	הַ	omits	unrendered-article	safe	0.6551	approved	0				article no the of the verse renders; rests on 'dwell' → 'יֹּושֶׁ֣בֶת'
+8:13	3	dwell		2	יֹּושֶׁ֣בֶת		global-review-known-rendering	safe	0.6551	approved	0				global known-rendering assignment; lexical score 0.51
+8:13	13	hear		10	הַשְׁמִיעִֽינִי		global-review-known-rendering	safe	0.7189	approved	0				global known-rendering assignment; lexical score 0.57
+8:13	14	your		9	קֹולֵ֖ךְ		attached-word	safe	0.6858	approved	0				PossessivePronoun of 'voice'
+8:13	15	voice		9	קֹולֵ֖ךְ		global-review-known-rendering	safe	0.7858	approved	0				global known-rendering assignment; lexical score 0.64
+8:14	3	my		2	דֹּודִ֗י		attached-word	safe	0.5372	approved	0				PossessivePronoun of 'beloved'
+8:14	4	beloved		2	דֹּודִ֗י		global-review-known-rendering	safe	0.6372	approved	0				global known-rendering assignment; lexical score 0.49
+8:14	14	the				expands	supplied-article	safe	0.7694	approved	0				article the original does not write; rests on 'mountains' → 'הָרֵ֥י'
+8:14	15	mountains		14	הָרֵ֥י		global-review-known-rendering	safe	0.7694	approved	0				global known-rendering assignment; lexical score 0.62
+8:14	16	of		15	בְשָׂמִֽים		attached-word	safe	0.628	approved	0				Genitive of 'spices'
+8:14	17	spices		15	בְשָׂמִֽים		global-review-known-rendering	safe	0.728	approved	0				global known-rendering assignment; lexical score 0.58

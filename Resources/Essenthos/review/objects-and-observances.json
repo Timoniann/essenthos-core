@@ -27,7 +27,13 @@
       "options": [
         "sabbath",
         "none"
-      ]
+      ],
+      "decision": {
+        "answer": "none",
+        "note": "",
+        "decidedAt": "2026-09-24T19:30:16.658Z",
+        "applied": "nothing"
+      }
     },
     {
       "record": "day-of-atonement",
