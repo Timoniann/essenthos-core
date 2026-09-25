@@ -554,6 +554,8 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 r.CanonicalBook,
                 r.CanonicalChapter,
                 r.CanonicalVerse,
+                r.Verse.Sequence,
+                r.Verse.Number,
                 w.Position,
                 w.Id,
                 w.Surface,
@@ -565,7 +567,12 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             .GroupBy(r => (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse))
             .ToDictionary(
                 group => group.Key,
-                group => group.OrderBy(r => r.Position).Select(r => new Word(r.Id, r.Surface, r.Gloss)).ToList());
+                // Two verses can stand at one address — the Hebrew numbers Psalm 51's title as two —
+                // and their words are one run only in the order the verses are written.
+                group => group
+                    .OrderBy(r => r.Sequence).ThenBy(r => r.Number).ThenBy(r => r.Position)
+                    .Select(r => new Word(r.Id, r.Surface, r.Gloss))
+                    .ToList());
     }
 
     private async Task Write(
