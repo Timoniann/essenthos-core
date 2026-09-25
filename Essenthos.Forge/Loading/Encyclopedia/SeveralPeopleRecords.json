@@ -130,6 +130,20 @@
       "strongNumber": "G3137",
       "existing": "mary-2",
       "why": "Luke 24:10 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
+    },
+    {
+      "wordId": 6966161,
+      "reference": "Acts 13:7",
+      "strongNumber": "G3972",
+      "existing": "sergius",
+      "why": "Acts 13:7 names 'the deputy of the country, Sergius Paulus, a prudent man': Paulus is the proconsul's second name, and Saul is first called Paul two verses later (13:9). The Strong number is the apostle's, and the man is not."
+    },
+    {
+      "wordId": 6966160,
+      "reference": "Acts 13:7",
+      "strongNumber": "G4588",
+      "existing": "sergius",
+      "why": "Acts 13:7 names 'the deputy of the country, Sergius Paulus': the proconsul of Cyprus, whom the encyclopedia holds."
     }
   ]
 }
