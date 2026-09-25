@@ -93,6 +93,7 @@ builder.Services.AddScoped<EvidentiaKnownRenderingIndex>();
 builder.Services.AddSingleton<IEvidentiaEvidenceSource, StrongNumberEvidenceSource>();
 builder.Services.AddScoped<CompositionPipeline>();
 builder.Services.AddScoped<NameListPass>();
+builder.Services.AddScoped<PossessivePass>();
 builder.Services.AddScoped<CorpusCheck>();
 builder.Services.AddScoped<StrongLexiconLoader>();
 builder.Services.AddScoped<StrongGentilicLoader>();
@@ -969,6 +970,17 @@ if (args is ["names", var namesFrom, var namesTo, ..])
     return 0;
 }
 
+// The possessive a Slavic translation writes beside the word that renders a Hebrew word with a
+// pronominal suffix, linked to the same Hebrew word by a rule. Reports and writes nothing without --apply.
+if (args is ["possessives", var possessiveFrom, var possessiveTo, ..])
+{
+    using var possessiveScope = app.Services.CreateScope();
+    logger.LogInformation("\n{Report}", await possessiveScope.ServiceProvider.GetRequiredService<PossessivePass>().Run(
+        Identifier(possessiveFrom), Identifier(possessiveTo), args.Contains("--apply")));
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
+    return 0;
+}
+
 // One text read again from its source after a change to how it is read, without the whole load.
 // Its word links are deleted with it; align and compose it again afterwards.
 if (args is ["reload", var reloadSlug])
@@ -1052,7 +1064,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 
 logger.LogError(
-    "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, marks, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
+    "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, marks, verify, release, publish, rollback, releases, align, names, possessives, score, score-anchors, syntax, "
     + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images, dillmann and the evidentia family",
     args[0]);
 return 1;
