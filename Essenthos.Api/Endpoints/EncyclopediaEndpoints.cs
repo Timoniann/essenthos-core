@@ -167,6 +167,18 @@ internal static class EncyclopediaEndpoints
     }
 
     /// <summary>The addresses of a set of namings, each address once.</summary>
+    /// <summary>
+    /// The addresses of an entity's verses, those that name it first and those that only concern it
+    /// after, each in canonical order.
+    /// </summary>
+    internal static IQueryable<int> NamingFirst(IQueryable<EntityVerse> namings) =>
+        namings
+            .GroupBy(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride) + v.CanonicalVerse)
+            .Select(g => new { Address = g.Key, Names = g.Max(v => v.Names ? 1 : 0) })
+            .OrderByDescending(a => a.Names)
+            .ThenBy(a => a.Address)
+            .Select(a => a.Address);
+
     internal static IQueryable<int> Addresses(IQueryable<EntityVerse> namings) =>
         namings
             .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride) + v.CanonicalVerse)
@@ -830,11 +842,9 @@ internal static class EncyclopediaEndpoints
             // list showed the same address twice wherever the text names him twice in it — a verse
             // repeated in a list of verses, with nothing on the page saying why.
             var references = db.EntityVerses.Where(v => v.EntityId == entity);
-            var addresses = Addresses(references);
 
-            var total = await addresses.CountAsync(cancellationToken);
-            var wanted = await addresses
-                .OrderBy(address => address)
+            var total = await Addresses(references).CountAsync(cancellationToken);
+            var wanted = await NamingFirst(references)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
                 .ToListAsync(cancellationToken);
@@ -844,7 +854,7 @@ internal static class EncyclopediaEndpoints
                                             + v.CanonicalVerse))
                 .Select(v => new
                 {
-                    v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse, v.Label, v.Disputed, v.Source,
+                    v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse, v.Label, v.Disputed, v.Source, v.Names,
                 })
                 .ToListAsync(cancellationToken);
 
@@ -867,7 +877,8 @@ internal static class EncyclopediaEndpoints
                             at[0].CanonicalChapter,
                             at[0].CanonicalVerse,
                             [.. at.Select(v => new EntityNamingResponse(v.Label, v.Disputed, Datasets.Of(v.Source)))],
-                            at.Any(v => v.Disputed));
+                            at.Any(v => v.Disputed),
+                            at.Any(v => v.Names));
                     }),
                 ]));
         });
@@ -1862,12 +1873,17 @@ internal record EntityNamingResponse(string? Label, bool Disputed, string? Datas
 /// Every name the entity is given in this verse. Matthew 20:30 calls Jesus by name and by *Son of
 /// David*, and both are here rather than the verse appearing twice.
 /// </param>
+/// <param name="Names">
+/// True where a word of the verse names the entity, false where a source lists the verse as
+/// concerning it without any word of it saying who. The list gives the first kind first.
+/// </param>
 internal record EntityReferenceResponse(
     BookRefResponse Book,
     int Chapter,
     int Verse,
     IList<EntityNamingResponse> Namings,
-    bool Disputed);
+    bool Disputed,
+    bool Names);
 
 internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResponse> Items);
 

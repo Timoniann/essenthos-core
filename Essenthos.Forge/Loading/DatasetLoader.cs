@@ -278,6 +278,7 @@ internal sealed class DatasetLoader(
             await PutThePlacesOnTheMap(resources, stoppingToken);
             await CountTheCommandments(stoppingToken);
             await FileTheVersesUnderNavesTopics(resources, stoppingToken);
+            await TellTheVersesThatNameFromThoseThatConcern(stoppingToken);
             await PictureThePeopleAndPlaces(resources, stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
@@ -1712,6 +1713,40 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<NaveTopicLoader>();
         status.Record(await loader.Load(Path.Combine(resources, "BibleData2026"), cancellationToken));
+    }
+
+    /// <summary>
+    /// Which listed verses name their entity — a word in them is annotated to it, in any text — and
+    /// which only concern it. Last, because every pass before it may annotate a word or list a verse.
+    /// </summary>
+    internal const string NamingVerses =
+        """
+        WITH named AS (
+            SELECT DISTINCT a.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
+            FROM word_entity a
+            JOIN word w ON w.id = a.word_id
+            JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary)
+        UPDATE entity_verse v
+        SET names = n.entity_id IS NOT NULL
+        FROM entity_verse o
+        LEFT JOIN named n ON n.entity_id = o.entity_id
+             AND (n.canonical_book, n.canonical_chapter, n.canonical_verse)
+                 = (o.canonical_book, o.canonical_chapter, o.canonical_verse)
+        WHERE o.id = v.id AND v.names IS DISTINCT FROM (n.entity_id IS NOT NULL)
+        """;
+
+    private async Task TellTheVersesThatNameFromThoseThatConcern(CancellationToken cancellationToken)
+    {
+        status.Starting("the verses that name an entity and those that concern it");
+
+        using var scope = services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        db.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
+        var changed = await db.Database.ExecuteSqlRawAsync(NamingVerses, cancellationToken);
+        var naming = await db.EntityVerses.CountAsync(v => v.Names, cancellationToken);
+        var all = await db.EntityVerses.CountAsync(cancellationToken);
+        logger.LogInformation(
+            "{Naming} of {All} listed verses name their entity; {Changed} rows changed", naming, all, changed);
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)
