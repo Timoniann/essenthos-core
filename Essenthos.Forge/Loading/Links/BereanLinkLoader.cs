@@ -424,35 +424,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         ref int absent,
         ref int moved)
     {
-        var claimed = new List<long>[rows.Count];
-        var at = 0;
-
-        // The file's English order, kept as indices into the verse's own rows, so a row's rendering
-        // and the Greek word it renders never have to be looked up by value.
-        var byEnglish = Enumerable.Range(0, rows.Count)
-            .OrderBy(index => rows[index].EnglishOrder)
-            .ToList();
-
-        foreach (var index in byEnglish)
-        {
-            var rendering = BereanWords.Rendering(rows[index].English);
-            var mine = new List<long>(rendering.Count);
-
-            foreach (var word in rendering)
-            {
-                if (at >= ours.Count || !BereanWords.Same(ours[at].Surface, word))
-                {
-                    return false;
-                }
-
-                mine.Add(ours[at].Id);
-                at++;
-            }
-
-            claimed[index] = mine;
-        }
-
-        if (at != ours.Count)
+        if (Claims(rows, ours) is not { } claimed)
         {
             return false;
         }
@@ -497,6 +469,48 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// For each of the verse's rows, the words of our verse its English phrase is; null where the
+    /// phrases and the words part.
+    /// </summary>
+    internal static List<long>[]? Claims(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> ours)
+    {
+        var claimed = new List<long>[rows.Count];
+        var at = 0;
+
+        // The file's English order, kept as indices into the verse's own rows, so a row's rendering
+        // and the Greek word it renders never have to be looked up by value.
+        var byEnglish = Enumerable.Range(0, rows.Count)
+            .OrderBy(index => rows[index].EnglishOrder)
+            .ToList();
+
+        foreach (var index in byEnglish)
+        {
+            var rendering = BereanWords.Rendering(rows[index].English);
+            var mine = new List<long>(rendering.Count);
+
+            foreach (var word in rendering)
+            {
+                if (at >= ours.Count || !BereanWords.Same(ours[at].Surface, word))
+                {
+                    return null;
+                }
+
+                mine.Add(ours[at].Id);
+                at++;
+            }
+
+            claimed[index] = mine;
+        }
+
+        if (at != ours.Count)
+        {
+            return null;
+        }
+
+        return claimed;
     }
 
     private Task<Dictionary<(int, int, int), List<Word>>> Words(

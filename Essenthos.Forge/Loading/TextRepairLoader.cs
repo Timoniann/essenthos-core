@@ -149,7 +149,13 @@ internal sealed class TextRepairLoader(AppDbContext db, ILogger<TextRepairLoader
                     "another file; load it again from this one before correcting anything in it. Nothing was changed.");
             }
 
-            var plan = Plan(words.Skip(at).Take(before.Count).ToList(), after);
+            var segment = words.Skip(at).Take(before.Count).ToList();
+            if (after.Count > 0 && Following(segment[^1].Trailer, before[^1].Trailer) is { Length: > 0 } following)
+            {
+                after[^1] = after[^1] with { Trailer = after[^1].Trailer + following };
+            }
+
+            var plan = Plan(segment, after);
             verses++;
             removed += plan.Removed.Count;
             moved += plan.Moved;
@@ -323,6 +329,16 @@ internal sealed class TextRepairLoader(AppDbContext db, ILogger<TextRepairLoader
             [.. gone.Select(w => w.Id)],
             moved);
     }
+
+    /// <summary>
+    /// The space a pass that wrote words after the file's verse added to its last trailer — Ohienko's
+    /// Psalm 7 title, followed by the line restored after it — which the correction keeps.
+    /// </summary>
+    private static string Following(string stored, string printed) =>
+        stored.Length > printed.Length && stored.StartsWith(printed, StringComparison.Ordinal)
+        && string.IsNullOrWhiteSpace(stored[printed.Length..])
+            ? stored[printed.Length..]
+            : string.Empty;
 
     private static string Key(string word) => word.ToLowerInvariant();
 

@@ -89,6 +89,7 @@ internal sealed class DatasetLoader(
 
             var bhsa = BhsaProject.Load(Path.Combine(resources, "etcbc"));
             await Load("BHSA", () => BhsaTextSource.Build(bhsa), stoppingToken);
+            await LemmatiseTheHebrewByItsHeadwords(stoppingToken);
             await Load("Nestle 1904", () => NestleTextSource.Read(
                 ResourcePaths.File(resources, "Nestle1904", "Nestle1904.xml"),
                 ResourcePaths.File(resources, "Nestle1904", "berean-interlinear-glosses.xml")), stoppingToken);
@@ -408,6 +409,8 @@ internal sealed class DatasetLoader(
     public async Task Correct(CancellationToken cancellationToken)
     {
         var resources = ResourcePaths.Read(configuration, environment.ContentRootPath);
+        await LemmatiseTheHebrewByItsHeadwords(cancellationToken);
+        await NumberTheBereanAsItsTablesDo(resources, cancellationToken);
         if (!await CorrectWhatTheirFilesMisprint(resources, cancellationToken))
         {
             return;
@@ -419,7 +422,19 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The words bible4u's King James and Synodal print wrong, put right in a corpus that loaded them
+    /// BHSA's headword in the lemma column of a corpus that loaded the occurrence's spelling there.
+    /// A cold load reads it so and this finds nothing to do.
+    /// </summary>
+    private async Task LemmatiseTheHebrewByItsHeadwords(CancellationToken cancellationToken)
+    {
+        status.Starting("BHSA's headwords");
+
+        using var scope = services.CreateScope();
+        status.Record(await scope.ServiceProvider.GetRequiredService<BhsaLemmaLoader>().Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The words bible4u's King James, Synodal and Ohienko print wrong, put right in a corpus that loaded them
     /// before the reader did it. A cold load reads the corrected words from the reader, and this finds
     /// nothing to do. Before the psalm openings and the links, so that on a cold corpus they meet the
     /// corrected verses; on a warm one the links already stand, and the corrected words are linked
@@ -432,10 +447,15 @@ internal sealed class DatasetLoader(
         status.Starting("the words the bible4u files print wrong");
 
         var relinked = false;
-        foreach (var translation in (string[])["KJV", "RUSV"])
+        foreach (var translation in (string[])["KJV", "RUSV", "UKR"])
         {
             var repairs = Bible4uTextSource.Repairs(
                 ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation, resources);
+            if (repairs.Verses.Count == 0 && translation != "KJV")
+            {
+                continue;
+            }
+
             if (repairs.Verses.Count == 0)
             {
                 logger.LogWarning(
@@ -952,6 +972,17 @@ internal sealed class DatasetLoader(
         // The same file's Hebrew half, which joins on the letters rather than on the order or the
         // number, because BHSA and the Westminster edition tokenise the same text differently.
         status.Record(await loader.Load(tables, BhsaTextSource.Slug, cancellationToken));
+        await NumberTheBereanAsItsTablesDo(resources, cancellationToken);
+    }
+
+    /// <summary>The Strong numbers the Berean's tables state, on the English words that render each one.</summary>
+    private async Task NumberTheBereanAsItsTablesDo(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Berean's Strong numbers");
+
+        using var scope = services.CreateScope();
+        status.Record(await scope.ServiceProvider.GetRequiredService<Links.BereanNumberLoader>()
+            .Load(Path.Combine(resources, "Berean", "bsb_tables.tsv"), cancellationToken));
     }
 
     /// <summary>

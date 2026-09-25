@@ -231,6 +231,45 @@ public sealed class TextRepairTests : IDisposable
         (await _loader.Load(Only(SynodalRepairs(), books))).Verses.Should().Be(0);
     }
 
+    /// <summary>
+    /// Ohienko's Psalm 7 title is spelled as the printing its restored line comes from spells it, and
+    /// the three words spelled otherwise keep their rows, the restored line after them untouched.
+    /// </summary>
+    [Fact]
+    public async Task OhienkosPsalm7TitleIsSpelledAsThePrintingItsLostLineComesFrom()
+    {
+        if (!File.Exists(TestResources.Bible4u("UKR")) || !Directory.Exists(TestResources.OhienkoWikisourceFolder))
+        {
+            return;
+        }
+
+        var repairs = Bible4uTextSource.Repairs(TestResources.Bible4u("UKR"), "UKR", TestResources.Folder("."));
+        var repair = repairs.Verses.Should().ContainSingle().Subject;
+        repair.Printed.Should().Be("Жалобна пісня Давидова, яку він співав Господеві в справі веніяминівця Куша.");
+        repair.After.Select(t => t.Word).Except(repair.Before.Select(t => t.Word))
+            .Should().Equal("Жалобна", "веніяминівця", "Куша");
+
+        var text = Corpus.Add(_db, Bible4uTextSource.Ohienko, TextKind.Translation, "ukr",
+            (7, 1, repair.Before.Select(t => t.Word).Concat(["Господи", "Боже"]).ToArray()));
+        _db.SaveChanges();
+        _db.In(text, repair.Book);
+        var stored = _db.Words.Where(w => w.TextId == text.Id).OrderBy(w => w.Position).ToList();
+        for (var at = 0; at < repair.Before.Count; at++)
+        {
+            stored[at].Trailer = repair.Before[at].Trailer + (at == repair.Before.Count - 1 ? " " : string.Empty);
+        }
+
+        _db.SaveChanges();
+        var ids = Words(19, 7, 1).Select(w => w.Id).ToList();
+
+        var outcome = await _loader.Load(repairs);
+
+        outcome.Rewritten.Should().Be(3);
+        Words(19, 7, 1).Select(w => w.Id).Should().Equal(ids);
+        Verse(19, 7, 1).Should().Be(repair.Printed + " Господи Боже");
+        (await _loader.Load(repairs)).Verses.Should().Be(0);
+    }
+
     private static TextRepairs KingJamesRepairs() =>
         Bible4uTextSource.Repairs(TestResources.Bible4u("KJV"), "KJV", TestResources.Folder("."));
 
