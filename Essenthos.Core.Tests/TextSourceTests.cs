@@ -139,6 +139,7 @@ public class TextSourceTests(ParsedWitnesses witnesses) : IClassFixture<ParsedWi
 
         Carrying(words, "consonantal").Should().Be(420_102);
         Carrying(words, "vocalizedLexeme").Should().Be(426_590);
+        Carrying(words, "realisedLexeme").Should().Be(420_102);
         Carrying(words, "phono").Should().Be(420_166);
         Carrying(words, "qere").Should().Be(1_867);
     }
@@ -193,6 +194,20 @@ public class TextSourceTests(ParsedWitnesses witnesses) : IClassFixture<ParsedWi
     {
         var document = System.Text.Json.JsonDocument.Parse(word.Morphology!);
         return document.RootElement.TryGetProperty(name, out var value) ? value.GetString()! : string.Empty;
+    }
+
+    /// <summary>
+    /// The lemma is the headword a dictionary lists, as every other witness's lemma is, and not the
+    /// lexeme as the occurrence spells it: Elohim's is אֱלֹהִים, never the truncated אֱלֹה.
+    /// </summary>
+    [Fact]
+    public void BhsaLemmasAreHeadwords()
+    {
+        var words = BhsaWords();
+
+        words.Count(w => w.Lemma is not null).Should().Be(426_590);
+        words.Should().NotContain(w => w.Lemma == "אֱלֹה");
+        words.Count(w => w.Lemma == "אֱלֹהִים").Should().BeGreaterThan(2_500);
     }
 
     private List<WordDraft> BhsaWords() =>

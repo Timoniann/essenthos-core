@@ -44,7 +44,8 @@ internal sealed record TextRepairs(
 /// The repairs each bible4u file needs, read where the evidence for them is. The King James's
 /// come from the standardised 1769 text eBible publishes, and there are none without it; the
 /// Synodal's are a list this project keeps, checked against the Strong-tagged digitisation of the
-/// same translation when it was drawn up.
+/// same translation when it was drawn up; Ohienko's one title comes from the transcription of the
+/// printing its lost line is restored from.
 /// </summary>
 internal static class Bible4uRepairs
 {
@@ -52,6 +53,7 @@ internal static class Bible4uRepairs
     {
         "KJV" => KingJamesRepairs.Read(bible, Path.Combine(resources, LostPsalmOpenings.KingJamesFolder)),
         "RUSV" => SynodalCorrections.Read(bible),
+        "UKR" => OhienkoCorrections.Read(bible, Path.Combine(resources, LostPsalmOpenings.OhienkoFolder)),
         _ => TextRepairs.None(Bible4uTextSource.Definitions[identifier].Slug),
     };
 }

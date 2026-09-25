@@ -124,7 +124,7 @@ internal static class BhsaTextSource
     private static WordDraft Draft(Bhsa.Core.Word word) => new(
         Surface: word.TextUtf8,
         Trailer: word.Trailer,
-        Lemma: Empty(word.LexemeUtf8),
+        Lemma: Empty(word.VocalizedLexemeUtf8),
         StrongNumber: null,
         Gloss: Empty(word.Gloss),
         Morphology: Morphology(word),
@@ -149,9 +149,12 @@ internal static class BhsaTextSource
 
         // The same word written other ways. "consonantal" is what a search over unpointed Hebrew has
         // to match, and "phono" with "phonoTrailer" rebuilds a verse in transcription exactly as
-        // text and trailer rebuild it in Hebrew — so they are stored as a pair or not at all.
+        // text and trailer rebuild it in Hebrew — so they are stored as a pair or not at all. The
+        // lemma is the headword; "realisedLexeme" is the lexeme as this occurrence spells it, אֱלֹה
+        // where the headword is אֱלֹהִים.
         Add(features, "consonantal", word.ConsonantalUtf8);
         Add(features, "vocalizedLexeme", word.VocalizedLexemeUtf8);
+        Add(features, "realisedLexeme", word.LexemeUtf8);
         AddPair(features, "phono", word.PhonologicalTranscription, "phonoTrailer", word.PhonologicalTrailer);
         AddPair(features, "qere", word.Qere, "qereTrailer", word.QereTrailer);
 
