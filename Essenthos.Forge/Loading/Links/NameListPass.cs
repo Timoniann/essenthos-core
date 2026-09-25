@@ -63,7 +63,7 @@ internal sealed record NameListOutcome(
 /// </summary>
 internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, ILogger<NameListPass> logger)
 {
-    private const string Source = "the names of the verse, paired by spelling and order";
+    internal const string Source = "the names of the verse, paired by spelling and order";
 
     private const string LinkImport =
         """

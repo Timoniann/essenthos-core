@@ -233,6 +233,7 @@ internal sealed class DatasetLoader(
             await JoinTheWordsThatArePrintedTogether(stoppingToken);
             await LinkFromTheInterlinear(resources, stoppingToken);
             await CoverThePsalmTitles(resources, stoppingToken);
+            await FollowTheRecipe(resources, stoppingToken);
             await JoinTheVerses(stoppingToken);
             await ReplayTheVerdictsOnEvidentia(resources, stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
@@ -1069,6 +1070,53 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var ledger = scope.ServiceProvider.GetRequiredService<EvidentiaLedger>();
         status.Record((await ledger.Replay(resources, cancellationToken: cancellationToken)).ToString());
+    }
+
+    /// <summary>
+    /// The Forge runs recorded in <see cref="Recipe"/>, each as its own process, in the order they
+    /// last ran, skipping what the corpus already holds. After every link the load writes itself, since
+    /// the compositions go through the stated links, and before the verses are joined and EVIDENTIA's
+    /// verdicts replayed, since both settle against the links these write. A step that fails stops the
+    /// load: every later step was run on top of it.
+    /// </summary>
+    public async Task FollowTheRecipe(string resources, CancellationToken cancellationToken)
+    {
+        var steps = Recipe.Read(resources);
+        status.Starting($"the {steps.Count} recorded Forge runs");
+        var connectionString = DatabaseConnection.Read(configuration);
+        int ran = 0, skipped = 0;
+
+        foreach (var step in steps)
+        {
+            using (var scope = services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                await db.Database.OpenConnectionAsync(cancellationToken);
+                var already = await Recipe.AlreadyThere(
+                    (Npgsql.NpgsqlConnection)db.Database.GetDbConnection(), step, cancellationToken);
+                if (already is not null)
+                {
+                    logger.LogInformation("Recipe: not running `{Step}`: {Reason}", step, already);
+                    skipped++;
+                    continue;
+                }
+            }
+
+            logger.LogInformation("Recipe: running `{Step}`", step);
+            using var process = System.Diagnostics.Process.Start(Recipe.Process(step, connectionString, resources))
+                                ?? throw new InvalidOperationException($"The Forge could not be started for `{step}`.");
+            await process.WaitForExitAsync(cancellationToken);
+            if (process.ExitCode != 0)
+            {
+                throw new InvalidOperationException(
+                    $"The recorded run `{step}` exited with {process.ExitCode}. Run it by hand to see why, fix it, " +
+                    "and run the load again: the steps before it are skipped as already there.");
+            }
+
+            ran++;
+        }
+
+        status.Record($"The recipe: {ran} Forge runs replayed, {skipped} already in the corpus");
     }
 
     /// <summary>
