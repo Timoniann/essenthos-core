@@ -652,8 +652,29 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OldTestamentLinkLoader>();
-        status.Record(await loader.Load(records, Tahot(resources), cancellationToken));
+        var segmentation = Tahot(resources);
+        status.Record(await loader.Load(records, segmentation, cancellationToken));
+
+        // The mapping file holds each psalm's title inside verse 1, and the King James verse 1 holds
+        // it only once the psalm openings are written, which on a loaded corpus is after its links
+        // were: the two disagreed, and the whole verse was refused. Relinking draws only a verse
+        // none of whose words is linked yet, so on a cold load, where they already agreed, it is
+        // one query.
+        var psalmOpenings = Enumerable.Range(1, PsalmCount)
+            .Select(psalm => (PsalmsOrdinal, psalm, FirstVerse))
+            .ToList();
+        var relinked = await loader.Relink(records, segmentation, psalmOpenings, cancellationToken);
+        if (relinked > 0)
+        {
+            status.Record($"{relinked} links from the King James psalm openings, titles included, to BHSA");
+        }
     }
+
+    private const int PsalmsOrdinal = 19;
+
+    private const int PsalmCount = 150;
+
+    private const int FirstVerse = 1;
 
     /// <summary>
     /// STEPBible's morpheme segmentation, which says which of the mapping file's morphemes are
