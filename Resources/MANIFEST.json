@@ -39,6 +39,11 @@
     "files": 30,
     "sha256": "c4f75235471b502fc34eb61c942defa524aed3df0625c1adae0e0adf9f023391"
   },
+  "BrentonEnglish": {
+    "bytes": 4467523,
+    "files": 54,
+    "sha256": "740baa91e47934e895f118ec594ea06b92408125e2f5b83ba3c816ef000df790"
+  },
   "Byzantine": {
     "bytes": 6173042,
     "files": 56,
@@ -58,6 +63,11 @@
     "bytes": 81489931,
     "files": 80,
     "sha256": "996b4316ef0a9e718767c8adca7ab1ec1822a8fa851c8e1193b59df05c466fe1"
+  },
+  "DouayRheims1899": {
+    "bytes": 18465797,
+    "files": 74,
+    "sha256": "cf7f95ed634b93e35c6031f9507ceedfde3c72f119d9a200b281f1174e91e721"
   },
   "Elberfelder1905": {
     "bytes": 4596093,
@@ -88,6 +98,11 @@
     "bytes": 12514444,
     "files": 67,
     "sha256": "6c02edfb49aa435821f987055767067957c02174f5fd59b9d3a7510abbb27643"
+  },
+  "KingJamesApocrypha": {
+    "bytes": 13345277,
+    "files": 81,
+    "sha256": "40d9c9019dfaefa5024e797d021752686f9c9c29b3266ab1891f83a94a4e0cce"
   },
   "KoreanRevised1961": {
     "bytes": 1802943,
@@ -204,6 +219,11 @@
     "files": 2,
     "sha256": "e8efed60ac029763ea0152cff79556d2954afcb304c57659a7cd78f1117fde1b"
   },
+  "SynodalWikisource": {
+    "bytes": 1165966,
+    "files": 11,
+    "sha256": "acddfb99ec4f329939cbcd7f392c99a1baed87f7e5148da1471d950e1b3bdbd0"
+  },
   "TextusReceptus": {
     "bytes": 4011481,
     "files": 55,
@@ -239,6 +259,11 @@
     "files": 1,
     "sha256": "24704247b91c44728f58c4fdeba9072308ee5b714b4bbfea568ce8bb7fe55ca9"
   },
+  "VulgataClementina": {
+    "bytes": 9885358,
+    "files": 74,
+    "sha256": "b8afcfd30268d2b2d3be1315f86ae39643efbde2ead1b6ed3818c702b5d5e712"
+  },
   "WestcottHort": {
     "bytes": 3883476,
     "files": 56,
@@ -253,6 +278,11 @@
     "bytes": 19025507,
     "files": 67,
     "sha256": "23e31cbe6e83a4416d44f088dc7d0168fbda4f6b20ce897b75ca48331b1b98f6"
+  },
+  "WorldEnglishClassic": {
+    "bytes": 19936808,
+    "files": 82,
+    "sha256": "b9c534f1f943d1e227b82beadc89ab8315531c4df94c64df577024d272479d1c"
   },
   "Young1898": {
     "bytes": 4435509,

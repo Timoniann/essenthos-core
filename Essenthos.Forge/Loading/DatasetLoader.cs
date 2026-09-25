@@ -146,10 +146,13 @@ internal sealed class DatasetLoader(
                 ResourcePaths.File(resources, "Berean", "bsb.txt"),
                 ResourcePaths.File(resources, "Berean", "bsb_tables.tsv")), stoppingToken);
 
+            // The Synodal's non-canonical books and the King James's Apocrypha are not in bible4u's
+            // files; they come from their own sources and are written into the same texts.
             foreach (var translation in Bible4uTranslations)
             {
-                await Load(translation, () => Bible4uTextSource.Read(
-                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation), stoppingToken);
+                await Load(translation, () => DeuterocanonTextSource.Extend(Bible4uTextSource.Read(
+                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation), resources),
+                    stoppingToken);
             }
 
             // The first complete Ukrainian Bible, and the only Ukrainian text the corpus holds that
@@ -185,7 +188,15 @@ internal sealed class DatasetLoader(
             // another consumer of it.
             foreach (var (folder, definition) in EnglishTextSource.Definitions)
             {
-                await Load(definition.Name, () => EnglishTextSource.Read(
+                await Load(definition.Name, () => DeuterocanonTextSource.Extend(EnglishTextSource.Read(
+                    Path.Combine(resources, folder)), resources), stoppingToken);
+            }
+
+            // The texts that hold the deuterocanon as a matter of course: Brenton's English beside his
+            // Greek, and the Vulgate with the Douay-Rheims translated from it, in the Latin numbering.
+            foreach (var (folder, definition) in DeuterocanonTextSource.Texts)
+            {
+                await Load(definition.Name, () => DeuterocanonTextSource.Read(
                     Path.Combine(resources, folder)), stoppingToken);
             }
 

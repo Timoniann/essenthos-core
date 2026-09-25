@@ -40,6 +40,7 @@ internal static class TextCorpus
         .. EbibleTextSource.Definitions.Values,
         .. SwordTextSource.Definitions.Values,
         .. EnglishTextSource.Definitions.Values,
+        .. DeuterocanonTextSource.Texts.Select(text => text.Definition),
         UnfoldingWordTextSource.Definition,
         AlmeidaTextSource.Definition,
     ];

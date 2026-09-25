@@ -4,8 +4,8 @@
     holds, from eBible.org.
 
 .DESCRIPTION
-    Fifteen texts, one publisher, one format and one set of checks, so they are one script rather
-    than fourteen copies of the same hundred lines. The Kulish Bible arrives the same way and has its
+    Twenty texts, one publisher, one format and one set of checks, so they are one script rather
+    than twenty copies of the same hundred lines. The Kulish Bible arrives the same way and has its
     own script; that one is left where it is.
 
         Luther1912             deu1912     Lutherbibel 1912, Strong-tagged
@@ -23,8 +23,18 @@
         VanDyck1865            arb-vd      the Smith-Van Dyck Arabic Bible
         IrvHindi2019           hin2017     the Indian Revised Version, Hindi, 2019
         BiblicaUkrainian2022   ukronpu     Biblica's Open New Ukrainian Translation, New Testament and Psalms
+        WorldEnglishClassic    eng-web     the World English Bible, Classic edition, with the deuterocanon
+        BrentonEnglish         eng-Brenton Brenton's English Septuagint, 1844 and 1851
+        KingJamesApocrypha     eng-kjv     the King James with its Apocrypha
+        DouayRheims1899        engDRA      the Douay-Rheims, Challoner's revision as printed in 1899
+        VulgataClementina      latVUC      the Clementine Vulgate
 
-    The last of them is not loaded as a text of its own. The corpus already serves a King James, from
+    Of the World English Bible Classic only the fifteen deuterocanonical books are read: the sixty-six
+    are the Classic's, which is not the edition the corpus serves as WEB. The King James with its
+    Apocrypha is fetched whole for the same reason as the 2006 edition below: its sixty-six are the
+    evidence of which King James its Apocrypha belongs to.
+
+    The King James 2006 edition is not loaded as a text of its own. The corpus already serves a King James, from
     bible4u, and that file prints no psalm superscription anywhere; this edition prints all 116 of
     them, as the USFM the rest of the field writes them in. What is taken from it is those 116 lines
     and nothing else, so that the 789,806 words already loaded and everything hanging off them stay
@@ -91,10 +101,12 @@ $IrvCatalogueLicence = 'Copyright © 2017, 2018, 2019 Bridge Connectivity Soluti
 $BiblicaLicence = 'Creative Commons Attribution Share-Alike license 4.0'
 $BiblicaCatalogueLicence = 'Copyright © 2022 Biblica, Inc.'
 
-# The codes eBible gives the files that are not scripture: a title page, a preface and a glossary.
-# They are matched on the \id line rather than on the file name, which carries eBible's own book
-# numbering and says nothing about what the file holds.
-$NotScripture = @('FRT', 'INT', 'GLO', 'BAK')
+# The codes eBible gives the files that are not scripture: a title page, a preface and a glossary,
+# and in Brenton's English the Apocrypha's preface (OTH), his table of Jeremiah's chapters, his
+# preface of 1844 and eBible's list of errata (XXA to XXC). They are matched on the \id line rather
+# than on the file name, which carries eBible's own book numbering and says nothing about what the
+# file holds.
+$NotScripture = @('FRT', 'INT', 'GLO', 'BAK', 'OTH', 'XXA', 'XXB', 'XXC')
 
 # The folder each text is written to, eBible's identifier for it, and the book and verse counts the
 # catalogue states. Books and verses are checked after unpacking: a short archive is a partial
@@ -120,6 +132,11 @@ $Texts = @(
                        Licence = $IrvLicence; CatalogueLicence = $IrvCatalogueLicence }
     [pscustomobject]@{ Folder = 'BiblicaUkrainian2022'; Id = 'ukronpu';   Books = 28; Verses = 2526 + 7957; Strongs = 0
                        Licence = $BiblicaLicence; CatalogueLicence = $BiblicaCatalogueLicence }
+    [pscustomobject]@{ Folder = 'WorldEnglishClassic';  Id = 'eng-web';     Books = 81; Verses = 23145 + 7958 + 6955; Strongs = 677690 }
+    [pscustomobject]@{ Folder = 'BrentonEnglish';       Id = 'eng-Brenton'; Books = 53; Verses = 22971 + 6034;        Strongs = 0 }
+    [pscustomobject]@{ Folder = 'KingJamesApocrypha';   Id = 'eng-kjv';     Books = 80; Verses = 23145 + 7957 + 5720; Strongs = 349308 }
+    [pscustomobject]@{ Folder = 'DouayRheims1899';      Id = 'engDRA';      Books = 73; Verses = 23487 + 7951 + 4373; Strongs = 644946 }
+    [pscustomobject]@{ Folder = 'VulgataClementina';    Id = 'latVUC';      Books = 73; Verses = 23483 + 7951 + 4375; Strongs = 0 }
 )
 
 if ($Only) {

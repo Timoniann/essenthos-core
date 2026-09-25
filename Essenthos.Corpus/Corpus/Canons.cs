@@ -55,7 +55,11 @@ internal static class Canons
             ]),
         ]);
 
-    /// <summary>The Protestant canon with the seven books and the additions Rome receives.</summary>
+    /// <summary>
+    /// The Protestant canon with the seven books and the additions Rome receives. Susanna and Bel stand
+    /// after Daniel, whose thirteenth and fourteenth chapters the Vulgate prints them as, and the Letter
+    /// of Jeremiah after Lamentations, where Baruch's sixth chapter would be.
+    /// </summary>
     private static readonly CanonDefinition Catholic = new(
         "catholic",
         "Catholic",
@@ -64,7 +68,7 @@ internal static class Canons
         [
             new CanonSection("old-testament", "Old Testament", [
                 .. Range(1, 17), 70, 71, .. Range(18, 22), 75, 72, .. Range(23, 24), 25, 67, 76,
-                .. Range(26, 39), 73, 74,
+                26, 27, 77, 78, .. Range(28, 39), 73, 74,
             ]),
             new CanonSection("new-testament", "New Testament", [.. Range(40, 66)]),
         ]);
@@ -142,7 +146,42 @@ internal static class Canons
             new CanonSection("new-testament", "New Testament", [.. Range(40, 66)]),
         ]);
 
-    private static readonly CanonDefinition[] All = [Protestant, Tanakh, Catholic, Orthodox, Septuagint, Ethiopian];
+    public const string Synodal = "synodal";
+
+    /// <summary>
+    /// The Russian Synodal Bible in the order the Russian Orthodox Church prints it, with the eleven
+    /// books it prints and marks as non-canonical standing where it prints them: 2 Ezra, Tobit and
+    /// Judith after Nehemiah, Wisdom and Sirach after the Song, the Letter of Jeremiah and Baruch after
+    /// Lamentations, and the three Maccabees and 3 Ezra after Malachi. A run of them is a section of
+    /// its own, so the marking is where the book is. Its 2 Ezra is the Greek 1 Esdras and its 3 Ezra
+    /// the Latin 4 Ezra. The New Testament is in its order too: the Catholic epistles before Paul's.
+    /// </summary>
+    private static readonly CanonDefinition RussianSynodal = new(
+        Synodal,
+        "Russian Synodal",
+        "Bible",
+        "The Synodal Bible in the order the Russian Orthodox Church prints it, with the eleven books it marks " +
+        "as non-canonical standing where it prints them, and the Catholic epistles before Paul's.",
+        [
+            new CanonSection("old-testament", "Old Testament", [.. Range(1, 16)]),
+            new CanonSection(NonCanonical, NonCanonicalName, [68, 70, 71]),
+            new CanonSection("old-testament", "Old Testament", [.. Range(17, 22)]),
+            new CanonSection(NonCanonical, NonCanonicalName, [75, 72]),
+            new CanonSection("old-testament", "Old Testament", [.. Range(23, 25)]),
+            new CanonSection(NonCanonical, NonCanonicalName, [76, 67]),
+            new CanonSection("old-testament", "Old Testament", [.. Range(26, 39)]),
+            new CanonSection(NonCanonical, NonCanonicalName, [73, 74, 80, 69]),
+            new CanonSection("new-testament", "New Testament", [
+                .. Range(40, 44), .. Range(59, 65), .. Range(45, 58), 66,
+            ]),
+        ]);
+
+    private const string NonCanonical = "non-canonical";
+
+    private const string NonCanonicalName = "Non-canonical books";
+
+    private static readonly CanonDefinition[] All =
+        [Protestant, Tanakh, Catholic, Orthodox, Septuagint, Ethiopian, RussianSynodal];
 
     public static IReadOnlyList<CanonDefinition> List => All;
 
