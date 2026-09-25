@@ -368,6 +368,14 @@ public class EntityName
 
     public Entity? AspectOf { get; set; }
 
+    /// <summary>
+    /// Which dataset gives this name, where it is not the dataset the entity came from. Null means
+    /// the entity's own source says it — every row written before names were credited one by one.
+    /// OpenBible's spellings sit on places BibleData created, and a label on somebody else's record
+    /// has to say whose it is.
+    /// </summary>
+    public string? Source { get; set; }
+
     public override string ToString() => $"EntityName({Label})";
 }
 
