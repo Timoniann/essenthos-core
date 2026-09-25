@@ -463,12 +463,13 @@ internal sealed record CorpusMeasures(
             report.AppendLine($"    {text.Key}: " + string.Join(", ", text.Select(u => $"{u.Book} {u.Words}")));
         }
 
-        report.AppendLine("reach         lexical    reached   share, then what reached them");
+        report.AppendLine("reach         lexical    reached   share   stated  attested  inferred, then what reached them");
         foreach (var r in Reach)
         {
             var by = string.Join(" ", r.ByMethod.OrderByDescending(m => m.Value)
                 .Select(m => $"{m.Key} {m.Value}"));
-            report.AppendLine($"  {r.Witness} from {r.From,-6} {r.Lexical,7} {r.Reached,10}   {r.Share,7:P1}   {by}");
+            report.AppendLine($"  {r.Witness} from {r.From,-6} {r.Lexical,7} {r.Reached,10}   {r.Share,7:P1}   " +
+                              $"{r.Testimony,6:P0} {r.Attested,9:P0} {r.Inferred,9:P0}   {by}");
         }
 
         report.AppendLine("contention    words one source claims twice, the worst one, words two sources dispute, and words two sources agree on");
