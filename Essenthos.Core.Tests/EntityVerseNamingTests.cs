@@ -111,6 +111,29 @@ public sealed class EntityVerseNamingTests : IDisposable
         (await _db.EntityVerses.AnyAsync(v => v.EntityId == moab.Id)).Should().BeFalse();
     }
 
+    /// <summary>Galilee is a name; a Galilean, and a Sidonian are not, and Persis and Herodias are.</summary>
+    [Fact]
+    public async Task TheGreekGateRefusesGentilicsAndTitles()
+    {
+        _db.StrongEntries.AddRange(
+            Entry("G9056", "Γαλιλαία", "Galilæa (i.e. the heathen circle), a region of Palestine"),
+            Entry("G9057", "Γαλιλαῖος", "Galilean or belonging to Galilea"),
+            Entry("G9606", "Σιδώνιος", "a Sidonian, i.e. inhabitant of Sidon"),
+            Entry("G9069", "Περσίς", "a Persian woman; Persis, a Christian female"),
+            Entry("G9266", "Ἡρωδιάς", "Herodias, a woman of the Heodian family"),
+            Entry("G9999", "ἄνθρωπος", "a human being"));
+        await _db.SaveChangesAsync();
+
+        var names = await _db.Database
+            .SqlQueryRaw<string>($"""SELECT strong_number AS "Value" FROM strong_entry lexicon WHERE strong_number IN ('G9056','G9057','G9606','G9069','G9266','G9999') AND {EntityAnnotationLoader.GreekName}""")
+            .ToListAsync();
+
+        names.Should().BeEquivalentTo("G9056", "G9069", "G9266");
+    }
+
+    private static StrongEntry Entry(string number, string lemma, string definition) =>
+        new() { StrongNumber = number, Lemma = lemma, Definition = definition };
+
     private void Word(Text text, int chapter, int verse, int position, string number, string state)
     {
         var word = _db.WordAt(text, chapter, verse, position);
