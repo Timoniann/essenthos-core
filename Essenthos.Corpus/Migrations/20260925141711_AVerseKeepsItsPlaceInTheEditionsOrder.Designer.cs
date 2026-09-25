@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260925141007_AVerseKeepsItsPlaceInTheEditionsOrder")]
+    [Migration("20260925141711_AVerseKeepsItsPlaceInTheEditionsOrder")]
     partial class AVerseKeepsItsPlaceInTheEditionsOrder
     {
         /// <inheritdoc />
@@ -1196,6 +1196,10 @@ namespace Essenthos.Core.Migrations
 
                     b.HasIndex("CanonicalBook", "CanonicalChapter", "CanonicalVerse")
                         .HasDatabaseName("ix_entity_verse_canonical_book_canonical_chapter_canonical_ver");
+
+                    b.HasIndex("EntityId", "CanonicalBook", "CanonicalChapter", "CanonicalVerse", "Source")
+                        .IsUnique()
+                        .HasDatabaseName("ix_entity_verse_entity_id_canonical_book_canonical_chapter_can");
 
                     b.ToTable("entity_verse", (string)null);
                 });
