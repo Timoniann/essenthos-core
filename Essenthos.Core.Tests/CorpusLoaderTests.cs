@@ -157,6 +157,38 @@ public sealed class CorpusLoaderTests : IDisposable
         ]);
     }
 
+    /// <summary>
+    /// A text that gains a book after its notes were written gets that book's notes on the next
+    /// pass, and the notes it had are not written again.
+    /// </summary>
+    [Fact]
+    public async Task ABookATextGainsGetsItsNotes()
+    {
+        static BookDraft Noted(int ordinal, int position, string note) => new(
+            ordinal, position, BookReferences.Name(ordinal), BookReferences.Slug(ordinal), [
+                new ChapterDraft(1, [
+                    new VerseDraft(1, [new WordDraft("In", "")])
+                    {
+                        Notes = [new VerseNoteDraft(VerseNoteKind.Footnote, note, 1)],
+                    },
+                ]),
+            ]);
+
+        var first = Sample() with { Books = [Noted(8, 1, "Ruth's note.")] };
+        await Loader().Load(first);
+        await new SourceNoteLoader(_db, NullLogger<SourceNoteLoader>.Instance).Load(first);
+
+        var gained = first with { Books = [Noted(8, 1, "Ruth's note."), Noted(73, 2, "The Maccabees' note.")] };
+        await Loader().AddMissingBooks(gained);
+        var outcome = await new SourceNoteLoader(_db, NullLogger<SourceNoteLoader>.Instance).Load(gained);
+
+        outcome.Notes.Should().Be(1);
+        (await _db.VerseNotes.Select(note => note.Content).ToListAsync())
+            .Should().BeEquivalentTo(["Ruth's note.", "The Maccabees' note."]);
+        (await new SourceNoteLoader(_db, NullLogger<SourceNoteLoader>.Instance).Load(gained)).AlreadyLoaded
+            .Should().BeTrue();
+    }
+
     [Fact]
     public async Task ANoteOnARepeatedSpellingNamesTheWordItWasPrintedAfter()
     {

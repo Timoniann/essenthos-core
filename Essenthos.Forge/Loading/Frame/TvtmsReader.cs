@@ -41,6 +41,13 @@ internal static class TvtmsReader
 
     private const char CommentMarker = '\'';
 
+    /// <summary>
+    /// A mark the data leaves after a scheme's name on a few rows: the Latin rules for 1 Maccabees 1,
+    /// 12 and 13 are written for <c>Latin=</c>, which no other row names, and read as they stand they
+    /// belong to no scheme and are never applied.
+    /// </summary>
+    private const char StraySchemeMark = '=';
+
     private const string HeadingRow = "SourceType";
 
     private const int TestsColumn = 8;
@@ -135,7 +142,8 @@ internal static class TvtmsReader
             [
                 .. sourceTypes.Split(
                     TraditionSeparator,
-                    StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries),
+                    StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+                    .Select(scheme => scheme.TrimEnd(StraySchemeMark)),
             ],
             sources,
             standards,

@@ -125,6 +125,11 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
 
         var text = NewText(source.Definition);
+        foreach (var part in source.Definition.PartSources)
+        {
+            TextPartSources.Add(text, part);
+        }
+
         db.Texts.Add(text);
         await db.SaveChangesAsync(cancellationToken);
 
@@ -194,6 +199,11 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         await VerifyRoundTrip(text, verses, whole: false, cancellationToken);
         await WriteSpans(text, verses, WordGroupKind.Supplied, word => word.SuppliedSpan, cancellationToken);
         await WriteSpans(text, verses, WordGroupKind.Restored, word => word.RestoredSpan, cancellationToken);
+
+        foreach (var part in source.Definition.PartSources)
+        {
+            TextPartSources.Add(text, part);
+        }
 
         if (source.Definition.RightsNote is { } note && text.RightsNote != note)
         {

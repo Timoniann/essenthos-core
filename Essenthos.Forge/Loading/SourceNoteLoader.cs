@@ -41,14 +41,25 @@ internal sealed class SourceNoteLoader(AppDbContext db, ILogger<SourceNoteLoader
                 "the corpus loader, which writes the verses notes hang on.");
         }
 
-        if (await db.VerseNotes.AnyAsync(note => note.Verse!.TextId == text.Id, cancellationToken))
+        // Guarded book by book, so the books a loaded text gains get their notes too.
+        var annotated = (await db.VerseNotes
+                .Where(note => note.Verse!.TextId == text.Id)
+                .Select(note => note.Verse!.Book!.CanonicalOrdinal)
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .ToHashSet();
+        if (annotated.Count > 0)
         {
             var backfilled = await BackfillAnchors(text, notes, cancellationToken);
-            logger.LogInformation(
-                "Text {Slug} already has its source notes; {Anchors} source-marker anchors backfilled",
-                text.Slug,
-                backfilled);
-            return new SourceNoteOutcome(text.Slug, AlreadyLoaded: true, 0, 0, TimeSpan.Zero);
+            notes = [.. notes.Where(note => !annotated.Contains(note.CanonicalOrdinal))];
+            if (notes.Count == 0)
+            {
+                logger.LogInformation(
+                    "Text {Slug} already has its source notes; {Anchors} source-marker anchors backfilled",
+                    text.Slug,
+                    backfilled);
+                return new SourceNoteOutcome(text.Slug, AlreadyLoaded: true, 0, 0, TimeSpan.Zero);
+            }
         }
 
         var started = Stopwatch.StartNew();

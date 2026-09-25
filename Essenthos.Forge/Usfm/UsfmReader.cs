@@ -157,6 +157,10 @@ internal static partial class UsfmReader
         // alphabet heading a stanza of Psalm 119, and a heading over a group of chapters. None is a
         // word of the verse it stands beside.
         "r", "mr", "qa", "ms2",
+
+        // The number a chapter is printed under where it is not the one it is filed under: the World
+        // English Bible's Psalm 151 is one chapter printed as 151.
+        "cp",
     ];
 
     /// <summary>

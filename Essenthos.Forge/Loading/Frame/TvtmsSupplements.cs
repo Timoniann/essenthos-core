@@ -86,6 +86,12 @@ internal sealed record TvtmsSupplement(
 /// every verse it covers. And it closes Ecclesiastes 11 at verse 8, opening chapter 12 with
 /// "Rejoice, O young man".
 /// </para>
+/// <para>
+/// Brenton's English, as eBible publishes it, numbers Nehemiah 4 as the English Bibles do where his
+/// Greek numbers it as the Hebrew, and like the Greek it has no verse 6. The data measures that very
+/// verse to tell its schemes apart, so none of them answers and the edition fell back to the Greek
+/// scheme, a chapter's worth of verses six places out.
+/// </para>
 /// </summary>
 internal static class TvtmsSupplements
 {
@@ -100,6 +106,8 @@ internal static class TvtmsSupplements
     private const string Synodal = "Synodal1876";
 
     private const string Segond = "Segond1910";
+
+    private const string BrentonEnglish = "BrentonEnglish";
 
     private const string BrentonJeremiah = "Jer.30:33=Last & Jer.25:20=Last";
 
@@ -133,6 +141,7 @@ internal static class TvtmsSupplements
         [Kulish] = Versification.English,
         [Synodal] = Versification.English,
         [Segond] = Versification.Original,
+        [BrentonEnglish] = Versification.Septuagint,
     };
 
     public static IReadOnlyList<TvtmsSupplement> All { get; } =
@@ -191,6 +200,10 @@ internal static class TvtmsSupplements
         .. KulishPassages,
         .. SynodalPassages,
         .. SegondPassages,
+        Passage(BrentonEnglish, "Neh.4:1", "Neh.3:32=Last & Neh.4:23=Last & Neh.4:6=NotExist",
+            ("Neh.3:32", "Neh.3:32"),
+            ("Neh.4:1-5", "Neh.4:1-5"),
+            ("Neh.4:7-23", "Neh.4:7-23")),
     ];
 
     private static IEnumerable<TvtmsSupplement> ReinaValeraPassages =>

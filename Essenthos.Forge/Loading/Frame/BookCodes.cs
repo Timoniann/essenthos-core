@@ -10,7 +10,8 @@
 ///
 /// Unmapped is not the same as absent. Brenton holds fourteen of these as books of its own, at
 /// canonical ordinals 67 to 81; what they lack is a place in the frame, so nothing reversifies them
-/// and nothing can be laid against them.
+/// and each stands at its own numbers. The two books of Maccabees are the exception: the data numbers
+/// them only for the Latin, so they are placed and nothing but a Vulgate moves.
 /// </summary>
 internal static class BookCodes
 {
@@ -30,6 +31,10 @@ internal static class BookCodes
         ["2Ti"] = 55, ["Tit"] = 56, ["Phm"] = 57, ["Heb"] = 58, ["Jas"] = 59,
         ["1Pe"] = 60, ["2Pe"] = 61, ["1Jn"] = 62, ["2Jn"] = 63, ["3Jn"] = 64,
         ["Jud"] = 65, ["Rev"] = 66,
+
+        // The two books of Maccabees, where the data's only rules are the Latin's and every Greek and
+        // English edition stands at its own numbers, so placing them moves nothing but the Vulgate.
+        ["1Ma"] = 73, ["2Ma"] = 74,
     };
 
     /// <summary>
@@ -38,11 +43,19 @@ internal static class BookCodes
     /// </summary>
     private static readonly HashSet<string> BeyondTheCanon = new(StringComparer.OrdinalIgnoreCase)
     {
-        "Ade", "Bar", "Bel", "Es", "Esg", "1Es", "2Es", "Jdt", "Lje", "Ma", "1Ma", "2Ma",
+        "Ade", "Bar", "Bel", "Es", "Esg", "1Es", "2Es", "Jdt", "Lje", "Ma",
         "Man", "Oda", "Sir", "Sus", "Tob", "Wis",
     };
 
     public static bool TryGetOrdinal(string code, out int ordinal) => Canonical.TryGetValue(code, out ordinal);
 
     public static bool IsBeyondTheCanon(string code) => BeyondTheCanon.Contains(code);
+
+    /// <summary>
+    /// Whether the frame has rules for this book at all. A book it has none for stands at its own
+    /// numbers in every text, and a shared address there is only as good as the two texts' agreement.
+    /// </summary>
+    public static bool Places(int ordinal) => Placed.Contains(ordinal);
+
+    private static readonly HashSet<int> Placed = [.. Canonical.Values];
 }

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Essenthos.Core.BetaMasaheft;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Frame;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
@@ -56,7 +57,15 @@ internal sealed record VerseLinkOutcome(
 /// Books of <paramref name="From"/>, by canonical ordinal, that are left out: divided in a way no
 /// mapping to another text's verses has been established for, so a shared address would be a guess.
 /// </param>
-internal sealed record DeclaredVersePair(string From, string To, IReadOnlySet<int> Without);
+internal sealed record DeclaredVersePair(string From, string To, IReadOnlySet<int> Without)
+{
+    /// <summary>
+    /// In a book the frame has no rules for, join only the chapters where both texts print the same
+    /// verses. There the shared address is all there is to go on, and a chapter one edition divides
+    /// otherwise would pair every verse after the first difference with the wrong one.
+    /// </summary>
+    public bool AgreeingChaptersOnly { get; init; }
+}
 
 /// <summary>
 /// Which verse of one text is which verse of another — the statement one level above a word link,
@@ -120,7 +129,8 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// word link to anything — the Ethiopic, until it is aligned — would otherwise stand beside
     /// nothing, although the frame already says which of its verses stands where another text's does.
     /// </summary>
-    internal static IReadOnlyList<DeclaredVersePair> DeclaredPairs => GeezTextSource.VersePairs;
+    internal static IReadOnlyList<DeclaredVersePair> DeclaredPairs =>
+        [.. GeezTextSource.VersePairs, .. DeuterocanonTextSource.VersePairs];
 
     private const string LinkImport =
         """
@@ -226,19 +236,66 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             .Union(declared.Keys)
             .ToList();
 
-        var already = await db.VerseLinks
-            .Select(link => new { link.FromTextId, link.ToTextId })
-            .Distinct()
-            .ToListAsync(cancellationToken);
+        var already = (await db.VerseLinks
+                .Select(link => new { link.FromTextId, link.ToTextId })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .Select(pair => (pair.FromTextId, pair.ToTextId))
+            .ToHashSet();
 
-        var todo = wanted
-            .Where(pair => !already.Any(had => had.FromTextId == pair.FromTextId && had.ToTextId == pair.ToTextId))
-            .OrderBy(pair => pair.FromTextId).ThenBy(pair => pair.ToTextId)
-            .ToList();
+        // A declared pair already joined is joined again in the books it has not been, which is how
+        // the books a loaded text gains reach the texts it is declared against.
+        var todo = new List<((int FromTextId, int ToTextId) Pair, IReadOnlySet<int> Joined)>();
+        foreach (var pair in wanted.OrderBy(pair => pair.Item1).ThenBy(pair => pair.Item2))
+        {
+            if (!already.Contains(pair))
+            {
+                todo.Add((pair, new HashSet<int>()));
+            }
+            else if (declared.TryGetValue(pair, out var declaration))
+            {
+                var joined = await Joined(pair, cancellationToken);
+                if (await Unjoined(pair, declaration.Without, joined, cancellationToken))
+                {
+                    todo.Add((pair, joined));
+                }
+            }
+        }
 
         var mapped = await Mapped(declared, cancellationToken);
 
-        if (todo.Count == 0)
+        var addresses = new Dictionary<int, Dictionary<(int, int, int), List<int>>>();
+        int pairs = 0, straight = 0, divided = 0, alone = 0, written = 0;
+
+        foreach (var (pair, joined) in todo)
+        {
+            var here = await Addressed(addresses, pair.FromTextId, cancellationToken);
+            var there = await Addressed(addresses, pair.ToTextId, cancellationToken);
+            if (declared.TryGetValue(pair, out var declaration))
+            {
+                var left = declaration.Without.Union(joined).ToHashSet();
+                here = here
+                    .Where(address => !left.Contains(address.Key.Item1))
+                    .ToDictionary(address => address.Key, address => address.Value);
+                if (declaration.AgreeingChaptersOnly)
+                {
+                    (here, there) = Agreeing(here, there);
+                }
+            }
+
+            var components = Components(here, there, ref alone);
+
+            straight += components.Count(c => c.From.Count == 1 && c.To.Count == 1);
+            divided += components.Count(c => c.From.Count != 1 || c.To.Count != 1);
+            written += components.Count;
+            pairs += components.Count > 0 ? 1 : 0;
+
+            await Write(pair.FromTextId, pair.ToTextId, components, cancellationToken);
+        }
+
+        // A declared book no chapter of which the two print alike is asked about again on every load
+        // and answers nothing, which is a pair already joined as far as it can be.
+        if (pairs == 0)
         {
             var only = await Cover(cancellationToken);
             var alreadyStated = await Stated(cancellationToken);
@@ -250,36 +307,71 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             return new VerseLinkOutcome(true, 0, mapped, 0, 0, 0, only, alreadyStated, started.Elapsed);
         }
 
-        var addresses = new Dictionary<int, Dictionary<(int, int, int), List<int>>>();
-        int straight = 0, divided = 0, alone = 0, written = 0;
-
-        foreach (var pair in todo)
-        {
-            var here = await Addressed(addresses, pair.FromTextId, cancellationToken);
-            if (declared.TryGetValue(pair, out var without) && without.Count > 0)
-            {
-                here = here
-                    .Where(address => !without.Contains(address.Key.Item1))
-                    .ToDictionary(address => address.Key, address => address.Value);
-            }
-
-            var there = await Addressed(addresses, pair.ToTextId, cancellationToken);
-            var components = Components(here, there, ref alone);
-
-            straight += components.Count(c => c.From.Count == 1 && c.To.Count == 1);
-            divided += components.Count(c => c.From.Count != 1 || c.To.Count != 1);
-            written += components.Count;
-
-            await Write(pair.FromTextId, pair.ToTextId, components, cancellationToken);
-        }
-
         written += mapped;
 
         var outcome = new VerseLinkOutcome(
-            false, todo.Count, written, straight, divided, alone, await Cover(cancellationToken),
+            false, pairs, written, straight, divided, alone, await Cover(cancellationToken),
             await Stated(cancellationToken), started.Elapsed);
         logger.LogInformation("Verse links: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The two texts' addresses without the chapters, in books the frame has no rules for, that the
+    /// two do not print alike. Everything else is kept as it was.
+    /// </summary>
+    internal static (Dictionary<(int, int, int), List<int>> Here, Dictionary<(int, int, int), List<int>> There)
+        Agreeing(Dictionary<(int, int, int), List<int>> here, Dictionary<(int, int, int), List<int>> there)
+    {
+        static Dictionary<(int, int), HashSet<int>> Chapters(Dictionary<(int, int, int), List<int>> addresses) =>
+            addresses.Keys
+                .Where(address => !BookCodes.Places(address.Item1))
+                .GroupBy(address => (address.Item1, address.Item2))
+                .ToDictionary(chapter => chapter.Key, chapter => chapter.Select(address => address.Item3).ToHashSet());
+
+        var mine = Chapters(here);
+        var theirs = Chapters(there);
+        var differing = mine.Keys
+            .Where(chapter => !theirs.TryGetValue(chapter, out var verses) || !verses.SetEquals(mine[chapter]))
+            .ToHashSet();
+
+        Dictionary<(int, int, int), List<int>> Without(Dictionary<(int, int, int), List<int>> addresses) =>
+            addresses
+                .Where(address => !differing.Contains((address.Key.Item1, address.Key.Item2)))
+                .ToDictionary(address => address.Key, address => address.Value);
+
+        return (Without(here), Without(there));
+    }
+
+    /// <summary>The books of the first text a pair's verse links already reach.</summary>
+    private async Task<IReadOnlySet<int>> Joined(
+        (int FromTextId, int ToTextId) pair,
+        CancellationToken cancellationToken) =>
+        (await db.VerseLinkVerses
+            .Where(member => member.Side == LinkSide.From
+                             && member.VerseLink!.FromTextId == pair.FromTextId
+                             && member.VerseLink.ToTextId == pair.ToTextId)
+            .Select(member => member.Verse!.Book!.CanonicalOrdinal)
+            .Distinct()
+            .ToListAsync(cancellationToken))
+        .ToHashSet();
+
+    /// <summary>
+    /// Whether both texts hold a book the pair is declared for and not yet joined in. A book only the
+    /// first holds has nothing to be joined to, and would otherwise be asked about on every load.
+    /// </summary>
+    private async Task<bool> Unjoined(
+        (int FromTextId, int ToTextId) pair,
+        IReadOnlySet<int> without,
+        IReadOnlySet<int> joined,
+        CancellationToken cancellationToken)
+    {
+        var books = await db.Books
+            .Where(book => book.TextId == pair.FromTextId)
+            .Select(book => book.CanonicalOrdinal)
+            .Intersect(db.Books.Where(book => book.TextId == pair.ToTextId).Select(book => book.CanonicalOrdinal))
+            .ToListAsync(cancellationToken);
+        return books.Any(book => !without.Contains(book) && !joined.Contains(book));
     }
 
     /// <summary>
@@ -289,7 +381,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// reading they are, with the line's confidence, and not as the frame's statement.
     /// </summary>
     private async Task<int> Mapped(
-        Dictionary<(int FromTextId, int ToTextId), IReadOnlySet<int>> declared,
+        Dictionary<(int FromTextId, int ToTextId), DeclaredVersePair> declared,
         CancellationToken cancellationToken)
     {
         var geez = await db.Texts.Where(text => text.Slug == GeezTextSource.Slug)
@@ -354,7 +446,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// ids, with the books of the first text left out of each. Only pairs whose two texts are both
     /// loaded; a declaration about a text this corpus does not hold says nothing.
     /// </summary>
-    private async Task<Dictionary<(int FromTextId, int ToTextId), IReadOnlySet<int>>> Declared(
+    private async Task<Dictionary<(int FromTextId, int ToTextId), DeclaredVersePair>> Declared(
         CancellationToken cancellationToken)
     {
         var slugs = DeclaredPairs.SelectMany(pair => new[] { pair.From, pair.To }).Distinct().ToList();
@@ -364,7 +456,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
         return DeclaredPairs
             .Where(pair => ids.ContainsKey(pair.From) && ids.ContainsKey(pair.To))
-            .ToDictionary(pair => (ids[pair.From], ids[pair.To]), pair => pair.Without);
+            .ToDictionary(pair => (ids[pair.From], ids[pair.To]));
     }
 
     /// <summary>
