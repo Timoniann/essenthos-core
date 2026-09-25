@@ -63,6 +63,7 @@ builder.Services.AddScoped<SuperscriptionFrameLoader>();
 builder.Services.AddScoped<PsalmOpeningLoader>();
 builder.Services.AddScoped<VerseEndingLoader>();
 builder.Services.AddScoped<SweteRestorationLoader>();
+builder.Services.AddScoped<TextRepairLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.NewTestamentLinkLoader>();
 builder.Services.AddScoped<AlignmentPipeline>();
@@ -947,6 +948,16 @@ if (args is ["reload", var reloadSlug])
     return 0;
 }
 
+// The words bible4u's King James and Synodal print wrong, corrected in a corpus that loaded them
+// before the reader did it: word rows kept wherever the word is the same, the corrected verses linked
+// again by the sources that state what their words render, then the verse links and the carry.
+if (args is ["correct", ..])
+{
+    using var correctScope = app.Services.CreateScope();
+    await correctScope.ServiceProvider.GetRequiredService<DatasetLoader>().Correct(CancellationToken.None);
+    return 0;
+}
+
 if (args is ["align", var alignFrom, var alignTo, ..])
 {
     using var alignScope = app.Services.CreateScope();
@@ -969,7 +980,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 
 logger.LogError(
-    "Nothing is known to do with \"{Verb}\". The verbs are load, reload, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
+    "Nothing is known to do with \"{Verb}\". The verbs are load, reload, correct, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
     + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images and the evidentia family",
     args[0]);
 return 1;

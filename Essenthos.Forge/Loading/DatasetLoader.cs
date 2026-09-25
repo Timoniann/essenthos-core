@@ -3,6 +3,7 @@ using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Loading.Links;
@@ -151,7 +152,7 @@ internal sealed class DatasetLoader(
             foreach (var translation in Bible4uTranslations)
             {
                 await Load(translation, () => DeuterocanonTextSource.Extend(Bible4uTextSource.Read(
-                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation), resources),
+                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation, resources), resources),
                     stoppingToken);
             }
 
@@ -212,6 +213,7 @@ internal sealed class DatasetLoader(
             await TranslateTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
             await PlaceInTheFrame(resources, stoppingToken);
+            await CorrectWhatTheirFilesMisprint(resources, stoppingToken);
             await OpenThePsalmsTheirEditionsOpenWith(resources, stoppingToken);
             await FinishTheVersesOhienkosFileCutShort(resources, stoppingToken);
             await RestoreWhatSwetesTranscriptionLost(resources, stoppingToken);
@@ -391,6 +393,102 @@ internal sealed class DatasetLoader(
         {
             status.Record(outcome.ToString());
         }
+    }
+
+    /// <summary>
+    /// The corrections to the King James and the Synodal their files need, on a corpus that loaded
+    /// them before the corrections were made, and the links the corrected words can have drawn again,
+    /// then the verse links and the carried annotations brought up to them. The command for a corpus
+    /// already loaded; the load itself does the same as one of its steps.
+    /// </summary>
+    public async Task Correct(CancellationToken cancellationToken)
+    {
+        var resources = ResourcePaths.Read(configuration, environment.ContentRootPath);
+        if (!await CorrectWhatTheirFilesMisprint(resources, cancellationToken))
+        {
+            return;
+        }
+
+        using var scope = services.CreateScope();
+        logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load(cancellationToken));
+        await scope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry(cancellationToken);
+    }
+
+    /// <summary>
+    /// The words bible4u's King James and Synodal print wrong, put right in a corpus that loaded them
+    /// before the reader did it. A cold load reads the corrected words from the reader, and this finds
+    /// nothing to do. Before the psalm openings and the links, so that on a cold corpus they meet the
+    /// corrected verses; on a warm one the links already stand, and the corrected words are linked
+    /// here by the sources that state what they render: the mapping file for the King James verses
+    /// it refused while they were garbled, and the Synodal's Strong numbering for the words that were
+    /// run together. Returns whether anything was linked.
+    /// </summary>
+    private async Task<bool> CorrectWhatTheirFilesMisprint(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the words the bible4u files print wrong");
+
+        var relinked = false;
+        foreach (var translation in (string[])["KJV", "RUSV"])
+        {
+            var repairs = Bible4uTextSource.Repairs(
+                ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation, resources);
+            if (repairs.Verses.Count == 0)
+            {
+                logger.LogWarning(
+                    "The King James is corrected against the 1769 text, which is not in {Folder}, so it stays as its "
+                    + "file prints it. Run scripts/fetch-ebible.ps1 -Only KingJames2006",
+                    Path.Combine(resources, LostPsalmOpenings.KingJamesFolder));
+                continue;
+            }
+
+            TextRepairOutcome outcome;
+            using (var scope = services.CreateScope())
+            {
+                outcome = await scope.ServiceProvider.GetRequiredService<TextRepairLoader>().Load(repairs, cancellationToken);
+            }
+
+            if (outcome.Verses > 0)
+            {
+                status.Record(outcome.ToString());
+            }
+
+            if (translation == "KJV" && outcome.Reshaped.Count > 0)
+            {
+                using var scope = services.CreateScope();
+                var records = KjvBhsMapping.Read(
+                    ResourcePaths.File(resources, "mapping", "KJV-OT-mapped-to-BHS-full-mapping.csv"));
+                var links = await scope.ServiceProvider.GetRequiredService<OldTestamentLinkLoader>()
+                    .Relink(records, Tahot(resources), outcome.Reshaped, cancellationToken);
+                relinked |= links > 0;
+            }
+
+            if (translation == "RUSV" && outcome.AddedWords.Count > 0)
+            {
+                using var scope = services.CreateScope();
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                var synodal = await db.Texts.SingleAsync(t => t.Slug == Bible4uTextSource.Synodal, cancellationToken);
+                if (!await db.Links.AnyAsync(
+                        l => l.FromTextId == synodal.Id && l.Method == LinkMethod.StrongNumber
+                             && l.Source.StartsWith(SynodalStrongLinkLoader.Credit),
+                        cancellationToken))
+                {
+                    continue;
+                }
+
+                foreach (var written in await scope.ServiceProvider.GetRequiredService<SynodalStrongLinkLoader>().Load(
+                             ResourcePaths.File(resources, SynodalStrongLinkLoader.EditionFile),
+                             SynodalStrongLinkLoader.Witnesses,
+                             cancellationToken,
+                             outcome.AddedWords.ToHashSet()))
+                {
+                    status.Record(written.ToString());
+                }
+
+                relinked = true;
+            }
+        }
+
+        return relinked;
     }
 
     /// <summary>

@@ -56,10 +56,15 @@ internal sealed class SynodalStrongLinkLoader(
         NestleTextSource.Slug,
     ];
 
+    /// <param name="only">
+    /// Synodal words written after the numbering was laid, the only ones whose links are drawn;
+    /// null draws the whole of each pair not yet drawn.
+    /// </param>
     public async Task<IReadOnlyList<TaggedTextLinkOutcome>> Load(
         string editionPath,
         IReadOnlyList<string> witnesses,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        IReadOnlySet<long>? only = null)
     {
         var synodal = await db.Texts.SingleOrDefaultAsync(t => t.Slug == Bible4uTextSource.Synodal, cancellationToken)
                       ?? throw new InvalidOperationException(
@@ -74,7 +79,7 @@ internal sealed class SynodalStrongLinkLoader(
         var outcomes = new List<TaggedTextLinkOutcome>(witnesses.Count);
         foreach (var witness in witnesses)
         {
-            outcomes.Add(await tagged.Load(synodal.Slug, witness, numbers, cancellationToken));
+            outcomes.Add(await tagged.Load(synodal.Slug, witness, numbers, cancellationToken, only));
         }
 
         return outcomes;

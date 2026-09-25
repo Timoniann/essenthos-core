@@ -94,6 +94,10 @@
         <Content Remove="Swete\SwetePage.json" />
         <EmbeddedResource Include="Swete\SwetePage.json" />
 
+        <!-- The same for bible4u's Synodal, which scripts/synodal-corrections.py writes out. -->
+        <Content Remove="Loading\SynodalCorrections.json" />
+        <EmbeddedResource Include="Loading\SynodalCorrections.json" />
+
         <!-- Which Greek verse each verse of the Ge'ez books the church divides its own way answers. -->
         <EmbeddedResource Include="BetaMasaheft\GeezVerseMap.tsv" />
     </ItemGroup>
