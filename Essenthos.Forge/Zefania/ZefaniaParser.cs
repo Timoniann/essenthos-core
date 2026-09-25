@@ -89,8 +89,25 @@ public class ZefaniaParser
                         throw new InvalidOperationException($"Unexpected STYLE css '{css}' in verse.");
                     }
 
+                    // And the punctuation that opens one — "me (I am the LORD)" — belongs to the word before it.
+                    if (result.Count > 0 && TryGetBeginTrailer(element.Value) is { } opening
+                                         && !string.IsNullOrWhiteSpace(opening))
+                    {
+                        result[^1].Trailer = result[^1].Trailer.TrimEnd() + opening;
+                    }
+
                     var childResult = ParseVerseWords(element, italic || newItalic, red || newRed);
                     result.AddRange(childResult);
+
+                    // The punctuation after a styled span belongs to its last word, as it does after
+                    // a Strong-tagged one; the text that follows would otherwise skip it as not a word.
+                    var following = (element.NextNode as XText)?.Value ?? (element.NextNode as XElement)?.Value;
+                    if (childResult.Count > 0 && following is not null && TryGetBeginTrailer(following) is { } leading
+                        && !string.IsNullOrWhiteSpace(leading))
+                    {
+                        childResult[^1].Trailer = leading;
+                    }
+
                     break;
                 }
                 case XElement element:
