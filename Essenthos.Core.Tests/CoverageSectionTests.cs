@@ -121,6 +121,38 @@ public sealed class CoverageSectionTests : IDisposable
         measures.Words.Should().Be(measures.Coverage.Sum(c => c.Words) - 3);
     }
 
+    /// <summary>
+    /// A lettered verse is Greek the frame parks beside the numbered verse, and a witness numbered as
+    /// the Hebrew does not hold it — Addition A of Esther stands at 1:1 beside a Masoretic 1:1 that has
+    /// none of it. Its words have nothing to reach there, so they are unpaired, not silent.
+    /// </summary>
+    [Fact]
+    public async Task ALetteredVerseIsUnpairedAgainstAWitnessNumberedOtherwise()
+    {
+        _septuagint.Versification = Versification.Septuagint;
+        _hebrew.Versification = Versification.Original;
+        var book = _db.Books.Single(b => b.TextId == _septuagint.Id);
+        var chapter = _db.Chapters.Single(c => c.TextId == _septuagint.Id && c.Number == 1);
+        var verse = new Verse
+        {
+            TextId = _septuagint.Id, BookId = book.Id, ChapterId = chapter.Id, ChapterNumber = 1, Number = 1,
+            Label = "a",
+        };
+        _db.Verses.Add(verse);
+        _db.VerseReferences.Add(new VerseReference
+        {
+            Verse = verse, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 1, IsPrimary = true,
+        });
+        _db.Words.Add(new Word { TextId = _septuagint.Id, Verse = verse, Position = 1, Surface = "ἐπόπτην", Trailer = " " });
+        _db.Words.Add(new Word { TextId = _septuagint.Id, Verse = verse, Position = 2, Surface = "θεόν", Trailer = "" });
+        _db.SaveChanges();
+
+        var coverage = (await Coverage()).Single(c => c.Text == "GRCBRENT");
+
+        coverage.Silent.Should().Be(1);
+        coverage.Unpaired.Should().Be(5);
+    }
+
     private async Task<IReadOnlyList<Coverage>> Coverage() => (await _check.Measure()).Coverage;
 
     /// <summary>The first word of each text's first verse, which is enough to pair the two.</summary>
