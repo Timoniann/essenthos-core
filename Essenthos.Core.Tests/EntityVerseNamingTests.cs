@@ -2,7 +2,10 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
+using System.Text.Json;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Encyclopedia;
+using Npgsql;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -61,5 +64,67 @@ public sealed class EntityVerseNamingTests : IDisposable
         var order = await EncyclopediaEndpoints.NamingFirst(_db.EntityVerses.Where(v => v.EntityId == zimri.Id)).ToListAsync();
         order.Should().HaveCount(2);
         order[0].Should().BeGreaterThan(order[1], "the verse naming him comes before the earlier verse that only concerns him");
+    }
+
+    /// <summary>
+    /// <em>He is the father of Moab</em> lists the verse on the Moabites; <em>his father's</em>
+    /// sheep at a place of the same name does not, because the father there is not in construct.
+    /// </summary>
+    [Fact]
+    public async Task APeoplesListCitesTheVerseThatStatesItsDescent()
+    {
+        var bhsa = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
+            (19, 37, ["שמו", "מואב", "הוא", "אבי", "מואב"]),
+            (19, 38, ["הוא", "אבי", "בני", "עמון"]),
+            (20, 1, ["צאן", "אביו", "מואב"]));
+        await _db.SaveChangesAsync();
+        Word(bhsa, 19, 37, 2, "H4124", "a");
+        Word(bhsa, 19, 37, 4, "H1", "c");
+        Word(bhsa, 19, 37, 5, "H4124", "a");
+        Word(bhsa, 19, 38, 2, "H1", "c");
+        Word(bhsa, 19, 38, 3, "H1121", "c");
+        Word(bhsa, 19, 38, 4, "H5983", "a");
+        Word(bhsa, 20, 1, 2, "H1", "a");
+        Word(bhsa, 20, 1, 3, "H4124", "a");
+        var moab = Record("moab", EntityKind.Person, null);
+        var benammi = Record("benammi", EntityKind.Person, null);
+        await _db.SaveChangesAsync();
+        var moabites = Record("moabites", EntityKind.People, moab.Id);
+        var ammonites = Record("ammonites", EntityKind.People, benammi.Id);
+        await _db.SaveChangesAsync();
+        _db.EntityNames.AddRange(
+            new EntityName { EntityId = moab.Id, Label = "Moab", HebrewStrongNumber = "H4124" },
+            new EntityName { EntityId = ammonites.Id, Label = "Ammon", HebrewStrongNumber = "H5983" });
+        await _db.SaveChangesAsync();
+
+        var connection = (NpgsqlConnection)_db.Database.GetDbConnection();
+        await using var command = new NpgsqlCommand(PeopleLoader.StatedDescent, connection);
+        command.Parameters.AddWithValue("source", PeopleLoader.FromTheStatedDescent);
+        command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
+        (await command.ExecuteNonQueryAsync()).Should().Be(2);
+        (await command.ExecuteNonQueryAsync()).Should().Be(0, "a second run adds nothing");
+
+        (await _db.EntityVerses.Where(v => v.EntityId == moabites.Id).Select(v => v.CanonicalChapter).ToListAsync())
+            .Should().Equal(19);
+        (await _db.EntityVerses.Where(v => v.EntityId == ammonites.Id).Select(v => v.CanonicalVerse).ToListAsync())
+            .Should().Equal(38);
+        (await _db.EntityVerses.AnyAsync(v => v.EntityId == moab.Id)).Should().BeFalse();
+    }
+
+    private void Word(Text text, int chapter, int verse, int position, string number, string state)
+    {
+        var word = _db.WordAt(text, chapter, verse, position);
+        word.StrongNumber = number;
+        word.Morphology = JsonDocument.Parse($$"""{"pos": "subs", "state": "{{state}}"}""");
+    }
+
+    private Entity Record(string slug, EntityKind kind, int? origin)
+    {
+        var entity = new Entity
+        {
+            Kind = kind, Slug = slug, Name = slug, SourceId = $"test:{slug}", Source = "test", OriginEntityId = origin,
+        };
+        _db.Entities.Add(entity);
+        return entity;
     }
 }
