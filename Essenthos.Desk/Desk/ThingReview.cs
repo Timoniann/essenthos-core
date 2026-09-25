@@ -99,6 +99,15 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
 
     public const string ObservancesFile = "ObservanceRecords.json";
 
+    /// <summary>The persons and places a story turns on that no dataset holds: the serpent, the cherubim.</summary>
+    public const string NarrativesFile = "NarrativeRecords.json";
+
+    /// <summary>What each of <see cref="RecordFiles"/> is called to the console, in the same order.</summary>
+    private static readonly string[] FileKeys = ["objects", "observances", "narratives"];
+
+    /// <summary>The same, as the owner's log writes one record of the file: <c>object/tabernacle</c>.</summary>
+    private static readonly string[] LogKinds = ["object", "observance", "narrative"];
+
     public const string All = "all";
 
     public const string RecordOnly = "record";
@@ -179,13 +188,24 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
 
     private static string ListOf(string path) => Path.GetFileNameWithoutExtension(path);
 
-    private string[] RecordFiles => [Path.Combine(paths.Records, ObjectsFile), Path.Combine(paths.Records, ObservancesFile)];
+    private string[] RecordFiles =>
+    [
+        Path.Combine(paths.Records, ObjectsFile), Path.Combine(paths.Records, ObservancesFile),
+        Path.Combine(paths.Records, NarrativesFile),
+    ];
+
+    /// <summary>
+    /// One record file, or none where a checkout does not have it yet: the narrative list came after
+    /// the other two, and a console that stopped answering until it arrived would be the worse outcome.
+    /// </summary>
+    private static JsonNode ReadRecords(string path) =>
+        File.Exists(path) ? JsonFiles.Read(path) : new JsonObject { ["records"] = new JsonArray() };
 
     public bool Exists => QuestionLists.Any();
 
     public ThingQuestionsResponse ReadQuestions()
     {
-        var records = Records(RecordFiles.Select(JsonFiles.Read).ToArray());
+        var records = Records(RecordFiles.Select(ReadRecords).ToArray());
         var lists = new List<ThingList>();
         var entries = new List<ThingQuestion>();
         foreach (var path in QuestionLists)
@@ -206,7 +226,7 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
 
     public ThingRecordsResponse ReadRecords()
     {
-        var files = RecordFiles.Select(JsonFiles.Read).ToArray();
+        var files = RecordFiles.Select(ReadRecords).ToArray();
         var entries = new List<ThingRecordEntry>();
         for (var index = 0; index < files.Length; index++)
         {
@@ -214,7 +234,7 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
             {
                 var rules = (record["occurrences"]?.AsArray() ?? []).OfType<JsonObject>().ToList();
                 entries.Add(new ThingRecordEntry(
-                    index == 0 ? "objects" : "observances",
+                    FileKeys[index],
                     Scope(record),
                     rules.Count,
                     rules.Count(rule => rule["reviewed"] is not null),
@@ -253,7 +273,7 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
 
             var name = ListOf(list!);
             before = entry["decision"]?.DeepClone();
-            var files = RecordFiles.Select(JsonFiles.Read).ToArray();
+            var files = RecordFiles.Select(ReadRecords).ToArray();
             var records = Records(files);
             var strong = entry["strong"]?.GetValue<string>() ?? string.Empty;
             var references = References(entry);
@@ -348,7 +368,7 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
         string? before;
         try
         {
-            var files = RecordFiles.Select(JsonFiles.Read).ToArray();
+            var files = RecordFiles.Select(ReadRecords).ToArray();
             if (!Records(files).TryGetValue(slug, out var found))
             {
                 return null;
@@ -381,7 +401,7 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
 
             JsonFiles.Write(RecordFiles[found.File], files[found.File]);
             reviewed = new ThingRecordEntry(
-                found.File == 0 ? "objects" : "observances",
+                FileKeys[found.File],
                 Scope(record),
                 rules.Count,
                 rules.Count(rule => rule["reviewed"] is not null),
@@ -393,7 +413,7 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
         }
 
         await log.Append(RecordsSection, "review",
-            $"{(reviewed.File == "objects" ? "object" : "observance")}/{slug}",
+            $"{LogKinds[Array.IndexOf(FileKeys, reviewed.File)]}/{slug}",
             before is null ? null : JsonValue.Create(before), reviewed.Scope is null ? null : JsonValue.Create(reviewed.Scope),
             null, "load", reviewed.Record["names"]?["ukr"]?.GetValue<string>() ?? reviewed.Record["name"]?.GetValue<string>());
         return reviewed;
