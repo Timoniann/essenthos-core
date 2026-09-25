@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260925141813_AListedVerseSaysWhetherItNamesItsEntity")]
+    [Migration("20260925142845_AListedVerseSaysWhetherItNamesItsEntity")]
     partial class AListedVerseSaysWhetherItNamesItsEntity
     {
         /// <inheritdoc />
@@ -1808,6 +1808,70 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.GeezLexiconEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.PrimitiveCollection<string[]>("Consonants")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("consonants");
+
+                    b.Property<string>("Entry")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("entry");
+
+                    b.PrimitiveCollection<string[]>("Forms")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("forms");
+
+                    b.PrimitiveCollection<string[]>("Greek")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("greek");
+
+                    b.Property<string>("Headword")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("headword");
+
+                    b.PrimitiveCollection<string[]>("Latin")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("latin");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.HasKey("Id")
+                        .HasName("pk_geez_lexicon_entry");
+
+                    b.HasIndex("Consonants")
+                        .HasDatabaseName("ix_geez_lexicon_entry_consonants");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Consonants"), "gin");
+
+                    b.HasIndex("Entry")
+                        .IsUnique()
+                        .HasDatabaseName("ix_geez_lexicon_entry_entry");
+
+                    b.ToTable("geez_lexicon_entry", null, t =>
+                        {
+                            t.HasComment("Dillmann's Lexicon Linguae Aethiopicae as Beta maṣāḥǝft digitised it: each entry's headword, the spellings filed under it, its Latin and its Greek. Which Ge'ez word is a form of which entry is not stored: a reading concludes it and says how.");
+
+                            t.HasCheckConstraint("ck_geez_lexicon_entry_source_not_empty", "length(btrim(\"source\")) > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.LexiconGloss", b =>
                 {
                     b.Property<int>("Id")
@@ -3061,6 +3125,10 @@ namespace Essenthos.Core.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("integer")
                         .HasColumnName("number");
+
+                    b.Property<int>("Sequence")
+                        .HasColumnType("integer")
+                        .HasColumnName("sequence");
 
                     b.Property<int>("TextId")
                         .HasColumnType("integer")
