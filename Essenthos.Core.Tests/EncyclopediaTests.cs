@@ -135,6 +135,38 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
             .And.OnlyContain(n => n.HebrewStrongNumber == "H4428,H3063");
     }
 
+    [Fact]
+    public void APlaceIsNumberedByItsNameAndNotByTheWordsOfItsPhrase()
+    {
+        var garden = new EntityName
+        {
+            EntityId = 1, Label = "Garden of the LORD", Kind = BibleDataLoader.LabelKind,
+            HebrewStrongNumber = "H1588,H3068", GreekStrongNumber = "G3588,G2316,G3857",
+        };
+        var siddim = new EntityName
+        {
+            EntityId = 2, Label = "Valley of Siddim", Kind = BibleDataLoader.LabelKind,
+            HebrewStrongNumber = "H6009,H7708", GreekStrongNumber = "G5327,G3588",
+        };
+        var king = new EntityName
+        {
+            EntityId = 3, Label = "King of Judah", Kind = BibleDataLoader.LabelKind, HebrewStrongNumber = "H4428,H3063",
+        };
+        HashSet<string> placeNames = ["H7708", "H3063", "H3068", "G2446"];
+
+        var taken = BibleDataLoader.NumberPlacesOnlyByTheirNames([garden, siddim, king], new HashSet<int> { 1, 2 }, placeNames);
+
+        taken.Should().Be(8);
+        garden.HebrewStrongNumber.Should().BeNull("the divine name is nobody's place");
+        garden.GreekStrongNumber.Should().BeNull();
+        siddim.HebrewStrongNumber.Should().Be("H7708");
+        siddim.GreekStrongNumber.Should().BeNull();
+        king.HebrewStrongNumber.Should().Be("H4428,H3063", "a title keeps the number of every word of it");
+
+        BibleDataLoader.NumberPlacesOnlyByTheirNames([siddim], new HashSet<int> { 2 }, new HashSet<string>())
+            .Should().Be(0, "nothing is taken off before the lexicon is loaded");
+    }
+
     [Theory]
     [InlineData("H1328A", 'H', "H1328")]
     [InlineData("H0911", 'H', "H911")]

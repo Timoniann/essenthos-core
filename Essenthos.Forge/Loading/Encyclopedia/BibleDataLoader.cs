@@ -258,6 +258,18 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     {
         if (await db.Entities.AnyAsync(cancellationToken))
         {
+            var loaded = await db.EntityNames
+                .Where(n => n.Kind == LabelKind && n.Entity!.Kind == EntityKind.Place
+                            && (n.HebrewStrongNumber != null || n.GreekStrongNumber != null))
+                .ToListAsync(cancellationToken);
+            var places = loaded.Select(n => n.EntityId).ToHashSet();
+            if (NumberPlacesOnlyByTheirNames(loaded, places, await PlaceNameNumbers(cancellationToken)) is > 0 and var taken)
+            {
+                await db.SaveChangesAsync(cancellationToken);
+                logger.LogInformation(
+                    "{Taken} Strong numbers on loaded place names were words of a phrase and were taken off", taken);
+            }
+
             logger.LogInformation("The encyclopedia is already loaded; nothing to do");
             return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
@@ -291,6 +303,17 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         // After the references, because a label of the divine name is a name of whichever entity
         // its namings turned out to be about.
         var names = Names(folder, entities, divided);
+        var unnumbered = NumberPlacesOnlyByTheirNames(
+            names.Where(n => n.Kind == LabelKind),
+            entities.Values.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id).ToHashSet(),
+            await PlaceNameNumbers(cancellationToken));
+        if (unnumbered > 0)
+        {
+            logger.LogInformation(
+                "{Unnumbered} Strong numbers on place names are words of a phrase, not the place's name, and were not kept",
+                unnumbered);
+        }
+
         var events = Events(folder, entities, frame);
         var chronologies = Reckon();
 
@@ -821,7 +844,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             Greek = "Σαούλ",
             GreekTransliterated = "Saoúl",
             GreekStrongNumber = CalledSaoul,
-            Kind = "proper name",
+            Kind = LabelKind,
         };
 
     /// <summary>
@@ -849,8 +872,86 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             HebrewTransliterated = "y-h-v-h",
             Meaning = "[the proper name of the one true G-d, pointed with the vowels of Elohim]",
             HebrewStrongNumber = PointedAsElohim,
-            Kind = "proper name",
+            Kind = LabelKind,
         };
+
+    /// <summary>What the dataset's label files call a name, as against a title or a description.</summary>
+    internal const string LabelKind = "proper name";
+
+    /// <summary>
+    /// The divine name and the words for God. A place called <em>the garden of the LORD</em> or
+    /// <em>The LORD will provide</em> is not named by the name of God, and a place record carrying
+    /// H3068 would be offered every one of its 6,000 words.
+    /// </summary>
+    internal static readonly HashSet<string> DivineNumbers =
+        new(["H3068", "H3069", "H3050", "H410", "H430", "H433", "G2316", "G2962"], StringComparer.Ordinal);
+
+    /// <summary>
+    /// The Strong numbers that can be the name of a place: a Hebrew entry the lexicon parses as a
+    /// proper noun other than a man's or a woman's, or one whose words BHSA marks as a place name —
+    /// which is what keeps <em>ye'or</em>, the Nile, a noun to Strong and a place to BHSA — and a
+    /// Greek entry whose lemma the lexicon writes with a capital, the same gate the word annotation
+    /// asks of the Greek.
+    /// </summary>
+    private const string PlaceNameNumbersSql =
+        """
+        SELECT strong_number AS "Value" FROM strong_entry
+        WHERE strong_number LIKE 'H%'
+          AND (split_part(coalesce(morphology, ''), ' ', 1) IN ('n-pr', 'n-pr-loc') OR morphology LIKE '%n-pr-loc%')
+        UNION
+        SELECT strong_number FROM strong_entry
+        WHERE strong_number LIKE 'G%' AND lower(left(lemma, 1)) <> left(lemma, 1)
+        UNION
+        SELECT DISTINCT w.strong_number FROM word w JOIN text t ON t.id = w.text_id AND t.slug = 'BHSA'
+        WHERE w.strong_number IS NOT NULL AND w.morphology->>'nameType' LIKE '%topo%'
+        """;
+
+    private async Task<HashSet<string>> PlaceNameNumbers(CancellationToken cancellationToken) =>
+        (await db.Database.SqlQueryRaw<string>(PlaceNameNumbersSql).ToListAsync(cancellationToken))
+        .ToHashSet(StringComparer.Ordinal);
+
+    /// <summary>
+    /// Keeps on a place's names only the Strong numbers that are a place's name, and says how many
+    /// it took off.
+    ///
+    /// The dataset numbers a place label the way it numbers a title, with every word of the phrase
+    /// it tags: <em>The Garden</em> carried the article, God and the Tetragrammaton, <em>the Salt
+    /// Sea</em> the words for salt and sea. A title is the words it is made of, and keeps them; a
+    /// place is named by its name, and a number on it is read as that name everywhere the encyclopedia
+    /// joins a record to the lexicon. A description — <em>a land flowing with milk and honey</em> —
+    /// is a phrase and keeps its words. An empty lexicon is no evidence either way, so nothing is
+    /// taken off before it is loaded.
+    /// </summary>
+    internal static int NumberPlacesOnlyByTheirNames(
+        IEnumerable<EntityName> names, IReadOnlySet<int> places, IReadOnlySet<string> placeNumbers)
+    {
+        if (placeNumbers.Count == 0)
+        {
+            return 0;
+        }
+
+        var removed = 0;
+        foreach (var name in names.Where(n => places.Contains(n.EntityId)))
+        {
+            name.HebrewStrongNumber = Keep(name.HebrewStrongNumber);
+            name.GreekStrongNumber = Keep(name.GreekStrongNumber);
+        }
+
+        return removed;
+
+        string? Keep(string? numbers)
+        {
+            if (numbers is null)
+            {
+                return null;
+            }
+
+            var all = numbers.Split(',');
+            var kept = all.Where(n => placeNumbers.Contains(n) && !DivineNumbers.Contains(n)).ToList();
+            removed += all.Length - kept.Count;
+            return kept.Count > 0 ? string.Join(",", kept) : null;
+        }
+    }
 
     private static readonly (string File, string Key, string Label, EntityKind Kind)[] LabelFiles =
     [
