@@ -643,6 +643,16 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
+        // Planned against what the load just wrote, not against whatever autovacuum last sampled
+        // before it. Statistics saying link words are nearly all on the 'from' side — true of an
+        // earlier, smaller state of the table — make the contention sweep nest a loop over every
+        // link; it then does not finish in fifteen minutes, where with fresh statistics it takes a
+        // second.
+        await using (var analyze = new NpgsqlCommand("ANALYZE", connection) { CommandTimeout = SweepSeconds })
+        {
+            await analyze.ExecuteNonQueryAsync(cancellationToken);
+        }
+
         var coverage = await Read(connection, CoverageSql, cancellationToken, reader => new Coverage(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), (int)reader.GetInt64(6)));

@@ -59,6 +59,45 @@ public sealed class WitnessDatabase : IAsyncLifetime
         await using var context = NewContext();
         await context.Database.EnsureDeletedAsync();
         await context.Database.MigrateAsync();
+        await context.Database.ExecuteSqlRawAsync(NoAutovacuumSql);
+    }
+
+    /// <summary>
+    /// Statistics here change only when a test gathers them. Left to autovacuum they described
+    /// whatever the table held on its last visit — the previous class's few dozen links, or part of
+    /// this load — and a planner told that link words are nearly all on one side nests a loop over
+    /// half a million links in a query that takes a second. That is why the whole-corpus classes
+    /// failed one full run in four and never alone: a lone run finishes before autovacuum has
+    /// visited a database that new.
+    /// </summary>
+    private const string NoAutovacuumSql =
+        """
+        DO $$
+        DECLARE t record;
+        BEGIN
+            FOR t IN SELECT schemaname, tablename FROM pg_tables WHERE schemaname = 'public' LOOP
+                EXECUTE format('ALTER TABLE %I.%I SET (autovacuum_enabled = false)', t.schemaname, t.tablename);
+            END LOOP;
+        END $$
+        """;
+
+    /// <summary>
+    /// Empties the corpus and forgets what the planner knew about it, for the classes that load
+    /// whole texts, either side of their test. <c>TRUNCATE</c> keeps every column's statistics, so
+    /// without the second statement the next class plans against the texts and ids of this one.
+    /// </summary>
+    public async Task Empty(TimeSpan timeout)
+    {
+        await using var connection = NewConnection();
+        await connection.OpenAsync();
+        await using var command = new NpgsqlCommand(
+            """
+            TRUNCATE text, strong_entry CASCADE;
+            SELECT count(pg_clear_attribute_stats(schemaname, tablename, attname, inherited))
+            FROM pg_stats WHERE schemaname = 'public';
+            """,
+            connection) { CommandTimeout = (int)timeout.TotalSeconds };
+        await command.ExecuteNonQueryAsync();
     }
 
     /// <summary>

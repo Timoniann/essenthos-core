@@ -42,12 +42,7 @@ public sealed class SamaritanCorpusTests(WitnessDatabase database, ITestOutputHe
     /// thousand words and as many links, which does not finish inside the command timeout, and a
     /// cleanup that gives up half way leaves the corpus behind for the next class.
     /// </summary>
-    private async Task Clear()
-    {
-        await using var db = database.NewContext();
-        db.Database.SetCommandTimeout(LongEnoughForTwoWitnesses);
-        await db.Database.ExecuteSqlRawAsync("TRUNCATE text, strong_entry CASCADE");
-    }
+    private Task Clear() => database.Empty(LongEnoughForTwoWitnesses);
 
     private static TextSource Genesis(TextSource source) => source with { Books = [source.Books[0]] };
 
