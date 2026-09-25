@@ -40,7 +40,8 @@ internal sealed record RateLimitSettings(
     RateLimit Reading,
     RateLimit Expensive,
     RateLimit SignIn,
-    RateLimit Writing);
+    RateLimit Writing,
+    RateLimit Reports);
 
 /// <summary>
 /// How much one client may ask of the API. Everything is counted per address — the reader's own, as
@@ -51,7 +52,9 @@ internal sealed record RateLimitSettings(
 /// Four allowances, and a request can draw on more than one: every request on <c>Reading</c>; a search,
 /// a concordance or a lexicon query on <c>Expensive</c> as well, because those are the queries that
 /// cost the database a second where a chapter costs it a tenth; sign-in on <c>SignIn</c>; and anything
-/// that changes an account on <c>Writing</c>. Suggestions keep their daily caps on top.
+/// that changes an account on <c>Writing</c>. Suggestions keep their daily caps on top. A browser's
+/// report of what the Content-Security-Policy blocked draws on <c>Reports</c> and on nothing else, so a
+/// page that breaks the policy many times over cannot use up its reader's allowance for reading or saving.
 /// </summary>
 internal static class RateLimits
 {
@@ -59,6 +62,9 @@ internal static class RateLimits
 
     /// <summary>The endpoint policy for the queries that cost seconds rather than milliseconds.</summary>
     public const string Expensive = "expensive";
+
+    /// <summary>The endpoint policy for a browser's Content-Security-Policy reports.</summary>
+    public const string Reports = "reports";
 
     public static readonly RateLimit DefaultReading = new(300, 200);
 
@@ -68,6 +74,8 @@ internal static class RateLimits
 
     public static readonly RateLimit DefaultWriting = new(60, 30);
 
+    public static readonly RateLimit DefaultReports = new(60, 30);
+
     private const string SignInPrefix = "/v1/auth/";
 
     /// <summary>Asked by every page for which buttons to draw; it signs nobody in.</summary>
@@ -75,6 +83,8 @@ internal static class RateLimits
 
     /// <summary>Probes answer the proxy and the container runtime, which must never be told to wait.</summary>
     private const string HealthPrefix = "/v1/health/";
+
+    private const string CspReports = "/v1" + Endpoints.CspReportEndpoints.Route;
 
     /// <summary>
     /// An IPv6 client is given a whole /64 by its provider and can take a new address from it for
@@ -94,7 +104,8 @@ internal static class RateLimits
             Limit(section, "Reading", DefaultReading),
             Limit(section, "Expensive", DefaultExpensive),
             Limit(section, "SignIn", DefaultSignIn),
-            Limit(section, "Writing", DefaultWriting));
+            Limit(section, "Writing", DefaultWriting),
+            Limit(section, "Reports", DefaultReports));
     }
 
     public static IServiceCollection AddRateLimits(this IServiceCollection services, RateLimitSettings settings)
@@ -111,7 +122,7 @@ internal static class RateLimits
 
             options.GlobalLimiter = PartitionedRateLimiter.CreateChained(
                 PartitionedRateLimiter.Create<HttpContext, string>(context =>
-                    context.Request.Path.StartsWithSegments(HealthPrefix.TrimEnd('/'))
+                    context.Request.Path.StartsWithSegments(HealthPrefix.TrimEnd('/')) || IsCspReport(context.Request)
                         ? RateLimitPartition.GetNoLimiter("")
                         : Bucket(Client(context), settings.Reading)),
                 PartitionedRateLimiter.Create<HttpContext, string>(context =>
@@ -119,11 +130,12 @@ internal static class RateLimits
                         ? Bucket(Client(context), settings.SignIn)
                         : RateLimitPartition.GetNoLimiter("")),
                 PartitionedRateLimiter.Create<HttpContext, string>(context =>
-                    IsWrite(context.Request) && !IsSignIn(context.Request)
+                    IsWrite(context.Request) && !IsSignIn(context.Request) && !IsCspReport(context.Request)
                         ? Bucket(Session(context.Request) ?? Client(context), settings.Writing)
                         : RateLimitPartition.GetNoLimiter("")));
 
             options.AddPolicy(Expensive, context => Bucket(Client(context), settings.Expensive));
+            options.AddPolicy(Reports, context => Bucket(Client(context), settings.Reports));
         });
     }
 
@@ -182,6 +194,8 @@ internal static class RateLimits
     private static bool IsSignIn(HttpRequest request) =>
         request.Path.StartsWithSegments(SignInPrefix.TrimEnd('/')) &&
         !request.Path.StartsWithSegments(SignInProviders);
+
+    private static bool IsCspReport(HttpRequest request) => request.Path.StartsWithSegments(CspReports);
 
     private static bool IsWrite(HttpRequest request) =>
         !(HttpMethods.IsGet(request.Method) || HttpMethods.IsHead(request.Method) || HttpMethods.IsOptions(request.Method));

@@ -207,6 +207,9 @@ services:
       API_DOMAIN: ${API_DOMAIN:?set API_DOMAIN}
       DEV_DOMAIN: ${DEV_DOMAIN}
       DEV_API_DOMAIN: ${DEV_API_DOMAIN:?set DEV_API_DOMAIN}
+      # Each environment's Content-Security-Policy: off, report-only or enforce. See the Caddyfile.
+      SITE_CSP: ${SITE_CSP:-off}
+      DEV_CSP: ${DEV_CSP:-report-only}
       ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL, the address Let's Encrypt writes to about expiring certificates}
       DEV_USER: ${DEV_USER:?set DEV_USER}
       DEV_PASSWORD_HASH: ${DEV_PASSWORD_HASH:?set DEV_PASSWORD_HASH with `docker run --rm caddy:2.10-alpine caddy hash-password`}
