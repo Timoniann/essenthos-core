@@ -102,8 +102,11 @@ verse anchors and the footnotes are Wikisource contributors', not Ohienko's.
 
 - **Attribution and a licence notice.** Naming Ivan Ohienko, saying CC BY-SA 4.0 and linking it.
   The corpus does this on the text's own row and the interface renders it, so this is discharged for
-  the translation. It is **not** discharged for the transcribers of the one restored verse: nothing
-  on screen names Ukrainian Wikisource. Filed rather than fixed here.
+  the translation. For the transcribers of the restored words it is discharged by the text's
+  `part_sources`: the loader credits this transcription there — by name, as the contributors to
+  Ukrainian Wikisource, under CC BY-SA 4.0 with the licence linked, with the page linked and the
+  words that are its named — and the sources page and the text's own page render it beside the
+  text's own source.
 - **Indicating a modification.** 4.0 requires that whoever passes the material on says it was
   changed. Our copy now is bible4u's file with one verse and the ends of seven restored from this one, so the loader
   writes that sentence onto the text's `rights_note`, where the interface shows it beside the

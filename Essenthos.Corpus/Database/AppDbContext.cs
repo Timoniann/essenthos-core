@@ -477,6 +477,7 @@ public class AppDbContext : DbContext
             entity.Property(t => t.Direction).HasConversion(EnumStorage.TextDirection);
             entity.Property(t => t.Versification).HasConversion(EnumStorage.Versification);
             entity.Property(t => t.Redistribution).HasConversion(EnumStorage.Redistribution);
+            entity.Property(t => t.PartSources).HasColumnType("jsonb");
         });
 
         modelBuilder.Entity<TextRelation>(entity =>

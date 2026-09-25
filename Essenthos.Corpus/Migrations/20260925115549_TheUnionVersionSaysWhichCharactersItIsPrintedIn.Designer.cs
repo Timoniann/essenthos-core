@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260925115549_TheUnionVersionSaysWhichCharactersItIsPrintedIn")]
+    partial class TheUnionVersionSaysWhichCharactersItIsPrintedIn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2724,10 +2727,6 @@ namespace Essenthos.Core.Migrations
                     b.Property<string>("NameNative")
                         .HasColumnType("text")
                         .HasColumnName("name_native");
-
-                    b.Property<string>("PartSources")
-                        .HasColumnType("jsonb")
-                        .HasColumnName("part_sources");
 
                     b.Property<int?>("PublishedYear")
                         .HasColumnType("integer")

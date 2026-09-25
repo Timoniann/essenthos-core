@@ -41,6 +41,13 @@ public class Text
     /// <summary>ISO 639-3: <c>hbo</c>, <c>arc</c>, <c>grc</c>, <c>eng</c>, <c>rus</c>, <c>ukr</c>.</summary>
     public required string Language { get; set; }
 
+    /// <summary>
+    /// ISO 15924, where the language is written in more than one script and the text is printed in
+    /// one of them: <c>Hant</c> for the Union Version's traditional characters, <c>Hans</c> for its
+    /// simplified ones. Null where the language settles it.
+    /// </summary>
+    public string? Script { get; set; }
+
     public TextDirection Direction { get; set; } = TextDirection.LeftToRight;
 
     /// <summary>Which frame this text's own chapter and verse numbers follow.</summary>
@@ -93,6 +100,13 @@ public class Text
     /// contested public-domain claim is worse than an unchecked one when it is not shown.
     /// </summary>
     public string? RightsNote { get; set; }
+
+    /// <summary>
+    /// The sources some of its words come from beside <see cref="SourceUrl"/>, as a JSON array of
+    /// <see cref="TextPartSource"/> — read through <see cref="TextPartSources"/>. Null where every
+    /// word comes from the one source.
+    /// </summary>
+    public string? PartSources { get; set; }
 
     /// <summary>Where this text was obtained, so a reader can go back to what we loaded.</summary>
     public string? SourceUrl { get; set; }

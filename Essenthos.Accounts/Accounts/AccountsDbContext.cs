@@ -243,8 +243,17 @@ public static class Limits
     /// <summary>A bookmark's comment: several pages of writing, which is a margin and not a book.</summary>
     public const int BookmarkComment = 20_000;
 
-    /// <summary>How many bookmarks one account keeps; far past any reader, short of a bulk store.</summary>
-    public const int BookmarksPerAccount = 50_000;
+    /// <summary>How many bookmarks one account keeps: a third of the Bible's verses, short of a bulk store.</summary>
+    public const int BookmarksPerAccount = 10_000;
+
+    /// <summary>
+    /// The characters one account's comments hold between them — a thousand pages of margin — so the
+    /// accounts database, which shares its disk with the corpus, grows by megabytes an account at most.
+    /// </summary>
+    public const int BookmarkCommentsPerAccount = 2_000_000;
+
+    /// <summary>How many bookmarks one account may make in a day: more than anyone marks by hand.</summary>
+    public const int BookmarksPerDay = 500;
 
     /// <summary>A suggestion's main text: a long letter, not a manuscript.</summary>
     public const int SuggestionBody = 10_000;

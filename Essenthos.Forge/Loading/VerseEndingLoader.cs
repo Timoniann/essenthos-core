@@ -53,6 +53,7 @@ internal sealed class VerseEndingLoader(AppDbContext db, ILogger<VerseEndingLoad
         string slug,
         IReadOnlyList<VerseEnding> endings,
         string rightsNote,
+        TextPartSource? source = null,
         CancellationToken cancellationToken = default)
     {
         if (endings.Count == 0)
@@ -135,6 +136,11 @@ internal sealed class VerseEndingLoader(AppDbContext db, ILogger<VerseEndingLoad
         if (verses > 0 && rightsNote.Length > 0 && text.RightsNote?.Contains(rightsNote, StringComparison.Ordinal) != true)
         {
             text.RightsNote = text.RightsNote is { Length: > 0 } existing ? $"{existing} {rightsNote}" : rightsNote;
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        if (verses > 0 && source is not null && TextPartSources.Add(text, source))
+        {
             await db.SaveChangesAsync(cancellationToken);
         }
 

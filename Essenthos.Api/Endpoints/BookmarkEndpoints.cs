@@ -18,7 +18,9 @@ namespace Essenthos.Core.Endpoints;
 /// A bookmark is addressed canonically — book, chapter, verse in the shared frame — and never by a
 /// corpus row id, which every rebuild renumbers, so a corpus release cannot move it. The address is
 /// checked against the corpus when the bookmark is made, so one can only be put on a verse that
-/// exists.
+/// exists. An account keeps <see cref="Limits.BookmarksPerAccount"/> bookmarks, makes
+/// <see cref="Limits.BookmarksPerDay"/> a day, and its comments hold
+/// <see cref="Limits.BookmarkCommentsPerAccount"/> characters between them.
 /// </summary>
 internal static class BookmarkEndpoints
 {
@@ -68,9 +70,9 @@ internal static class BookmarkEndpoints
             }
 
             var account = context.User.AccountId();
-            if (await db.Bookmarks.CountAsync(b => b.AccountId == account, context.RequestAborted) >= Limits.BookmarksPerAccount)
+            if (await Refusal(db, account, null, comment?.Length ?? 0, DateTimeOffset.UtcNow, context.RequestAborted) is { } refused)
             {
-                return Results.BadRequest(new ProblemResponse($"An account keeps at most {Limits.BookmarksPerAccount:N0} bookmarks."));
+                return Refuse(refused);
             }
 
             var bookmark = new Bookmark
@@ -118,6 +120,12 @@ internal static class BookmarkEndpoints
                     return Results.BadRequest(new ProblemResponse(CommentRule));
                 }
 
+                if ((comment?.Length ?? 0) > (bookmark.Comment?.Length ?? 0) &&
+                    await Refusal(db, account, bookmark.Id, comment!.Length, null, context.RequestAborted) is { } refused)
+                {
+                    return Refuse(refused);
+                }
+
                 bookmark.Comment = comment;
             }
 
@@ -148,6 +156,59 @@ internal static class BookmarkEndpoints
             return removed == 0 ? Results.NotFound(new ProblemResponse("There is no such bookmark.")) : Results.NoContent();
         });
     }
+
+    private static readonly TimeSpan Day = TimeSpan.FromDays(1);
+
+    /// <summary>Why an account cannot take the bookmark or the comment asked for, and with what status.</summary>
+    internal sealed record Refused(int Status, string Problem);
+
+    /// <summary>
+    /// Whether the account has room: for a new bookmark (<paramref name="made"/> is its time), under the
+    /// count it keeps and the count it may make in a day; for a comment of <paramref name="comment"/>
+    /// characters, under the characters its comments hold, not counting the one it replaces. A full
+    /// account is a conflict with what it holds; a busy day is too many requests, to be tried tomorrow.
+    /// </summary>
+    internal static async Task<Refused?> Refusal(
+        AccountsDbContext db,
+        Guid account,
+        Guid? replacing,
+        int comment,
+        DateTimeOffset? made,
+        CancellationToken cancellationToken)
+    {
+        var mine = db.Bookmarks.Where(b => b.AccountId == account);
+        if (made is { } now)
+        {
+            if (await mine.CountAsync(cancellationToken) >= Limits.BookmarksPerAccount)
+            {
+                return new Refused(StatusCodes.Status409Conflict,
+                    $"An account keeps at most {Limits.BookmarksPerAccount:N0} bookmarks. Remove some to make room.");
+            }
+
+            if (await mine.CountAsync(b => b.CreatedAt > now - Day, cancellationToken) >= Limits.BookmarksPerDay)
+            {
+                return new Refused(StatusCodes.Status429TooManyRequests,
+                    $"An account makes at most {Limits.BookmarksPerDay:N0} bookmarks a day.");
+            }
+        }
+
+        if (comment > 0)
+        {
+            var others = await mine
+                .Where(b => b.Id != replacing && b.Comment != null)
+                .SumAsync(b => (long)b.Comment!.Length, cancellationToken);
+            if (others + comment > Limits.BookmarkCommentsPerAccount)
+            {
+                return new Refused(StatusCodes.Status409Conflict,
+                    $"An account's comments hold at most {Limits.BookmarkCommentsPerAccount:N0} characters between them. Shorten or remove some to make room.");
+            }
+        }
+
+        return null;
+    }
+
+    private static IResult Refuse(Refused refused) =>
+        Results.Json(new ProblemResponse(refused.Problem), statusCode: refused.Status);
 
     private static readonly string ColorRule = $"A bookmark is one of {string.Join(", ", Bookmark.Colors)}.";
 

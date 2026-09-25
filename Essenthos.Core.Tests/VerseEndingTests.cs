@@ -78,12 +78,14 @@ public sealed class VerseEndingTests : IDisposable
     {
         Ukrainian();
 
-        await _loader.Load("UBIO", [Ending(22, 19, Whole)], "From Wikisource, CC BY-SA 4.0.");
-        var again = await _loader.Load("UBIO", [Ending(22, 19, Whole)], "From Wikisource, CC BY-SA 4.0.");
+        await _loader.Load("UBIO", [Ending(22, 19, Whole)], "From Wikisource, CC BY-SA 4.0.", LostVerseEndings.OhienkoPart);
+        var again = await _loader.Load("UBIO", [Ending(22, 19, Whole)], "From Wikisource, CC BY-SA 4.0.", LostVerseEndings.OhienkoPart);
 
         again.Verses.Should().Be(0);
         Verse(22, 19).Should().Be(Whole);
-        _db.Texts.AsNoTracking().Single(t => t.Slug == "UBIO").RightsNote.Should().Be("From Wikisource, CC BY-SA 4.0.");
+        var text = _db.Texts.AsNoTracking().Single(t => t.Slug == "UBIO");
+        text.RightsNote.Should().Be("From Wikisource, CC BY-SA 4.0.");
+        TextPartSources.Of(text).Should().Equal(LostVerseEndings.OhienkoPart);
     }
 
     /// <summary>

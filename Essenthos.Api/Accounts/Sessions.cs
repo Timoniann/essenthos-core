@@ -43,7 +43,7 @@ internal static class SessionTokens
         HttpOnly = true,
         Secure = request.IsHttps,
         // Lax: sent when a reader follows a link to the site, withheld from a form another site posts
-        // here — which is the whole of the CSRF defence a same-origin JSON API needs.
+        // here. A sibling subdomain is the same site, which is what ChangeHeader answers.
         SameSite = SameSiteMode.Lax,
         Path = "/",
         Expires = expires,

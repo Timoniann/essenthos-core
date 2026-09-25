@@ -226,6 +226,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         NameNative = definition.NameNative,
         Kind = definition.Kind,
         Language = definition.Language,
+        Script = definition.Script,
         Direction = definition.Direction,
         Versification = definition.Versification,
         Translators = definition.Translators,

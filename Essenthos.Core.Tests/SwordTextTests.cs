@@ -80,6 +80,14 @@ public partial class SwordTextTests
         UnionStrongNumbers.Read(lemma).Should().Equal(expected);
 
     [Fact]
+    public void TheUnionVersionSaysWhichCharactersItIsPrintedIn()
+    {
+        SwordTextSource.Definitions["ChiUn"].Script.Should().Be("Hant");
+        SwordTextSource.Definitions["ChiUns"].Script.Should().Be("Hans");
+        SwordTextSource.Definitions["KorRV"].Script.Should().BeNull();
+    }
+
+    [Fact]
     public void AKoreanWordIsWhatTheEditionPrintsBetweenSpaces()
     {
         var words = Words(

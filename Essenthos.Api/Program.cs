@@ -118,6 +118,7 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
 // CORS ahead of the limits, so a browser on another origin is told it was refused rather than
 // seeing a request that failed without a reason; a preflight is answered here and never counted.
 app.UseCors();
+app.UseChangeHeader();
 app.UseRateLimits(rateLimits);
 app.UseAuthentication();
 app.UseAuthorization();

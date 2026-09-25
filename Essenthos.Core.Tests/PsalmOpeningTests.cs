@@ -141,11 +141,12 @@ public sealed class PsalmOpeningTests : IDisposable
         Translation("KJV", (3, 1, ["Lord,", "how"]));
         Hebrew();
 
-        await _loader.Load("KJV", [Title(3, "A", "Psalm")], "Taken from the 1769 text.");
-        await _loader.Load("KJV", [Title(3, "A", "Psalm")], "Taken from the 1769 text.");
+        await _loader.Load("KJV", [Title(3, "A", "Psalm")], "Taken from the 1769 text.", LostPsalmOpenings.KingJamesSource);
+        await _loader.Load("KJV", [Title(3, "A", "Psalm")], "Taken from the 1769 text.", LostPsalmOpenings.KingJamesSource);
 
-        _db.Texts.Single(t => t.Slug == "KJV").RightsNote
-            .Should().Be("Taken from the 1769 text.");
+        var text = _db.Texts.Single(t => t.Slug == "KJV");
+        text.RightsNote.Should().Be("Taken from the 1769 text.");
+        TextPartSources.Of(text).Should().Equal(LostPsalmOpenings.KingJamesSource);
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Usfm;
 
 namespace Essenthos.Core.Loading;
@@ -19,6 +20,24 @@ internal static class LostPsalmOpenings
     public const string KingJamesFolder = "KingJames2006";
 
     public const string OhienkoFolder = "OhienkoWikisource";
+
+    /// <summary>Where the King James superscriptions come from, credited on the text beside bible4u.</summary>
+    public static readonly TextPartSource KingJamesSource = new(
+        "King James Version (eng-kjv2006)",
+        "eBible.org, from the standardised 1769 text",
+        "Public Domain",
+        "https://ebible.org/eng-kjv2006/copyright.htm",
+        "https://ebible.org/find/details.php?id=eng-kjv2006",
+        "The superscriptions of 116 psalms, which the file the text is loaded from does not print.");
+
+    /// <summary>Where Psalm 7's lost line comes from: a transcription with authors of its own and terms of its own.</summary>
+    public static readonly TextPartSource OhienkoSource = new(
+        "Біблія (Огієнко)",
+        "The contributors to Ukrainian Wikisource, transcribing the 1988 printing",
+        "CC BY-SA 4.0",
+        "https://creativecommons.org/licenses/by-sa/4.0/",
+        LostVerseEndings.OhienkoSource,
+        "The first line of Psalm 7, which the file the text is loaded from lost; its stress marks are removed.");
 
     /// <summary>
     /// The King James superscriptions: 116 of them, 1,034 words, each word tagged with the Hebrew

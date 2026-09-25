@@ -217,6 +217,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(IReadOnlyList<string>))]
 [JsonSerializable(typeof(CorpusListResponse))]
 [JsonSerializable(typeof(CorpusResponse))]
+[JsonSerializable(typeof(PartSourceResponse))]
+[JsonSerializable(typeof(IReadOnlyList<PartSourceResponse>))]
 [JsonSerializable(typeof(IList<CorpusResponse>))]
 [JsonSerializable(typeof(List<CorpusResponse>))]
 [JsonSerializable(typeof(TextDetailResponse))]
