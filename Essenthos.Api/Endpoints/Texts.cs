@@ -70,6 +70,7 @@ internal static class Texts
         RightsNote = text.RightsNote,
         Aliases = TextAliases.Of(text.Slug) is { Count: > 0 } aliases ? aliases : null,
         Form = EnumSpelling.Of(text.Kind),
+        Script = text.Script,
     };
 
     /// <summary>

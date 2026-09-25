@@ -108,6 +108,13 @@ internal record CorpusResponse(
     public string? Form { get; init; }
 
     /// <summary>
+    /// The ISO 15924 script the text is printed in, where <see cref="Language"/> does not settle it:
+    /// <c>Hant</c> or <c>Hans</c> for Chinese. A client joins the two into a language tag
+    /// (<c>zh-Hant</c>), which is what picks a traditional or a simplified typeface. Null otherwise.
+    /// </summary>
+    public string? Script { get; init; }
+
+    /// <summary>
     /// What the text is, in a sentence or two, keyed by interface language — <c>en</c>, <c>uk</c>,
     /// <c>de</c>, <c>es</c>. It restates <see cref="About"/>, which stays the record. Sent by the
     /// text listings and nowhere else; null for a text nobody has described.

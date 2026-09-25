@@ -95,6 +95,11 @@ internal static class SwordTextSource
     /// <summary>개역한글, the Korean Revised Version of 1961.</summary>
     public const string KoreanRevised = "KRV";
 
+    /// <summary>ISO 15924 for the two ways Chinese is printed.</summary>
+    public const string TraditionalChinese = "Hant";
+
+    public const string SimplifiedChinese = "Hans";
+
     private const string NrsvVersification = "NRSV";
     private const int Psalms = 19;
     private const char OpeningParenthesis = '（';
@@ -112,10 +117,10 @@ internal static class SwordTextSource
     private static readonly Dictionary<string, SwordText> Known = new(StringComparer.OrdinalIgnoreCase)
     {
         ["ChiUn"] = new(Path.Combine("ChineseUnion1919", "ChiUn"), SwordSegmentation.Tagged, ChineseUnionDefinition(
-            ChineseUnion, "和合本", "ChiUn", "traditional characters, as the 1919 edition was printed")),
+            ChineseUnion, "和合本", "ChiUn", TraditionalChinese, "traditional characters, as the 1919 edition was printed")),
 
         ["ChiUns"] = new(Path.Combine("ChineseUnion1919", "ChiUns"), SwordSegmentation.Tagged, ChineseUnionDefinition(
-            ChineseUnionSimplified, "和合本（简体字）", "ChiUns",
+            ChineseUnionSimplified, "和合本（简体字）", "ChiUns", SimplifiedChinese,
             "simplified characters, FHL's conversion of the same text")),
 
         ["KorRV"] = new(Path.Combine("KoreanRevised1961", "KorRV"), SwordSegmentation.Spaced, new TextDefinition(
@@ -435,7 +440,7 @@ internal static class SwordTextSource
     private static string WithoutMarkupSpaces(string run) =>
         string.Concat(run.Where(c => c is not (' ' or '\t' or '\r' or '\n')));
 
-    private static TextDefinition ChineseUnionDefinition(string slug, string nameNative, string module, string script) =>
+    private static TextDefinition ChineseUnionDefinition(string slug, string nameNative, string module, string scriptCode, string script) =>
         new(
             Slug: slug,
             Name: slug == ChineseUnion ? "Chinese Union Version" : "Chinese Union Version (simplified)",
@@ -456,6 +461,7 @@ internal static class SwordTextSource
                 "The Union Version committees of the missionary societies in China, among them Calvin Wilson "
                 + "Mateer, Chauncey Goodrich and Frederick W. Baller, with their Chinese colleagues",
             Editors = "The Faith Hope Love foundation (信望愛), who typed it in 1995 and punctuated it",
+            Script = scriptCode,
             Edition = $"The 1919 text in FHL's transcription, in {script}",
             About =
                 "The Bible Chinese Protestants read: the missionary societies agreed in 1890 to make one "

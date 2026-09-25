@@ -41,6 +41,13 @@ public class Text
     /// <summary>ISO 639-3: <c>hbo</c>, <c>arc</c>, <c>grc</c>, <c>eng</c>, <c>rus</c>, <c>ukr</c>.</summary>
     public required string Language { get; set; }
 
+    /// <summary>
+    /// ISO 15924, where the language is written in more than one script and the text is printed in
+    /// one of them: <c>Hant</c> for the Union Version's traditional characters, <c>Hans</c> for its
+    /// simplified ones. Null where the language settles it.
+    /// </summary>
+    public string? Script { get; set; }
+
     public TextDirection Direction { get; set; } = TextDirection.LeftToRight;
 
     /// <summary>Which frame this text's own chapter and verse numbers follow.</summary>

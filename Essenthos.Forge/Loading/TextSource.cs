@@ -50,6 +50,9 @@ internal sealed record TextDefinition(
     /// <summary>What is unsettled or additional about the rights, beside the licence stated.</summary>
     public string? RightsNote { get; init; }
 
+    /// <summary>The ISO 15924 script, where the language does not settle which one the text is printed in.</summary>
+    public string? Script { get; init; }
+
 
     public void Validate()
     {
