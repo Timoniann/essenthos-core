@@ -63,6 +63,8 @@ internal static class EnumSpelling
         WordGroupKind.HalfVerse => "half-verse",
         WordGroupKind.Supplied => "supplied",
         WordGroupKind.Restored => "restored",
+        WordGroupKind.Doubtful => "doubtful",
+        WordGroupKind.Subscription => "subscription",
         _ => throw Unmapped(value),
     };
 
@@ -78,6 +80,8 @@ internal static class EnumSpelling
         "half-verse" => WordGroupKind.HalfVerse,
         "supplied" => WordGroupKind.Supplied,
         "restored" => WordGroupKind.Restored,
+        "doubtful" => WordGroupKind.Doubtful,
+        "subscription" => WordGroupKind.Subscription,
         _ => throw Unreadable<WordGroupKind>(stored),
     };
 

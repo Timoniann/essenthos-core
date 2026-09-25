@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using System.Globalization;
 using System.Text.Json;
 using Essenthos.Core.Database;
@@ -19,6 +19,12 @@ namespace Essenthos.Core.Endpoints;
 /// </summary>
 internal static class Texts
 {
+    /// <summary>The group kinds that are an edition's statement about its own words rather than an analysis of them.</summary>
+    private static readonly WordGroupKind[] EditionMarks =
+    [
+        WordGroupKind.Supplied, WordGroupKind.Restored, WordGroupKind.Doubtful, WordGroupKind.Subscription,
+    ];
+
     private const string OriginalKind = "original";
     private const string TranslationKind = "translation";
 
@@ -198,16 +204,18 @@ internal static class Texts
         // Asked of the group table rather than tested per word: a chapter is a thousand words, and
         // BHSA's are each in seven groups, so an EXISTS per word would walk seven rows a thousand
         // times to answer no.
-        var supplied = await db.WordGroupWords
-            .Where(m => ids.Contains(m.WordId) && m.WordGroup!.Kind == WordGroupKind.Supplied)
-            .Select(m => m.WordId)
+        var marked = await db.WordGroupWords
+            .Where(m => ids.Contains(m.WordId) && EditionMarks.Contains(m.WordGroup!.Kind))
+            .Select(m => new { m.WordId, m.WordGroup!.Kind })
             .ToListAsync(cancellationToken);
 
         return new Reached(
             own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached),
             strongest,
             absent,
-            supplied.ToHashSet(),
+            marked
+                .GroupBy(m => m.WordId)
+                .ToDictionary(group => group.Key, group => group.Min(m => m.Kind)),
             await Annotations.Of(db, ids, cancellationToken),
             await Proposed(db, ids, cancellationToken));
     }
@@ -262,8 +270,8 @@ internal static class Texts
     /// Where a link records an absence rather than a correspondence: <c>expands</c> for a word this
     /// text supplies and the other does not have, <c>omits</c> for the reverse.
     /// </param>
-    /// <param name="Supplied">
-    /// The words the edition itself marks as its own. It is not <paramref name="Absent"/> read
+    /// <param name="Marks">
+    /// What the edition itself prints about each word it marks: supplied, doubtful, a subscription. It is not <paramref name="Absent"/> read
     /// twice: that is what an alignment found, and this is what the edition printed, which is a
     /// first-hand claim about one text and names no counterpart for it.
     /// </param>
@@ -278,7 +286,7 @@ internal static class Texts
         ILookup<long, long> Witnesses,
         Dictionary<long, string> Provenance,
         Dictionary<long, string> Absent,
-        HashSet<long> Supplied,
+        Dictionary<long, WordGroupKind> Marks,
         Dictionary<long, EntityRefResponse> Named,
         Dictionary<long, StrongCandidateResponse> Proposed)
     {
@@ -527,7 +535,8 @@ internal static class Texts
             Feature(features, Language))
         {
             Elided = elided,
-            Supplied = counterparts.Supplied.Contains(id),
+            Supplied = counterparts.Marks.TryGetValue(id, out var mark) && mark == WordGroupKind.Supplied,
+            Mark = counterparts.Marks.ContainsKey(id) ? EnumSpelling.Of(mark) : null,
             StrongCandidate = strongNumber is null ? counterparts.Proposed.GetValueOrDefault(id) : null,
             LexiconGloss = counterparts.Glossed.GetValueOrDefault(id),
             Break = opening is { } kind ? EnumSpelling.Of(kind) : null,

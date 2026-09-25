@@ -107,6 +107,7 @@ builder.Services.AddScoped<Essenthos.Core.Glaux.GlauxLemmaLoader>();
 builder.Services.AddScoped<Essenthos.Core.Glaux.SeptuagintStrongLoader>();
 builder.Services.AddScoped<InterlinearLinkLoader>();
 builder.Services.AddScoped<BereanLinkLoader>();
+builder.Services.AddScoped<EditionMarkLoader>();
 builder.Services.AddScoped<ClearBibleLinkLoader>();
 builder.Services.AddScoped<TaggedTextLinkLoader>();
 builder.Services.AddScoped<SynodalStrongLinkLoader>();
@@ -994,6 +995,15 @@ if (args is ["recipe", ..])
     return 0;
 }
 
+// What the editions print about their own words — supplied, doubtful, a subscription — written as
+// word groups in place, over a corpus whose words and links are already there.
+if (args is ["marks", ..])
+{
+    using var marksScope = app.Services.CreateScope();
+    await marksScope.ServiceProvider.GetRequiredService<DatasetLoader>().Marks(CancellationToken.None);
+    return 0;
+}
+
 if (args is ["align", var alignFrom, var alignTo, ..])
 {
     using var alignScope = app.Services.CreateScope();
@@ -1017,7 +1027,7 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 
 logger.LogError(
-    "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
+    "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, marks, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
     + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images and the evidentia family",
     args[0]);
 return 1;

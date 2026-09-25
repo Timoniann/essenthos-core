@@ -55,4 +55,20 @@ public enum WordGroupKind
     /// printed from — and it says nothing about whether the Greek has them.
     /// </summary>
     Restored,
+
+    /// <summary>
+    /// Words the edition prints but its editors doubt belong to the text: Nestle's double brackets
+    /// round what they judge a later addition — the long ending of Mark, the Western
+    /// non-interpolations of Luke 24 — and its single brackets round a weaker doubt. The degree is in
+    /// the features. It is the opposite claim from <see cref="Supplied"/>: supplied says the text
+    /// being translated has no counterpart, doubtful says these words may not be the text at all.
+    /// </summary>
+    Doubtful,
+
+    /// <summary>
+    /// A scribe's note printed after the text, not the text: the subscriptions of the Textus Receptus
+    /// naming where each epistle was written from and carried by. The words are kept so they can be
+    /// read and searched, and this says they are not scripture.
+    /// </summary>
+    Subscription,
 }
