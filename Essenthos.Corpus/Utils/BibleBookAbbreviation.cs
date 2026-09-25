@@ -104,6 +104,19 @@ public class BibleBookAbbreviation
         new(82, "Psalm 151", "Ps 151", "Ps151", ["PS2", "Psalm151"]),
         new(83, "Odes", "Ode", "Ode", ["ODA", "ODES"]),
         new(84, "Psalms of Solomon", "Ps Sol", "PsS", ["PSS", "PssSol"]),
+
+        // The books only the Ethiopian canon holds, numbered past the Greek ones for the same reason:
+        // an ordinal is an identity. The alternatives are their USFM 3.0 codes. Proverbs is one book
+        // everywhere else and two in the Ethiopian Bible, Messale and Tägsas, which have ordinals of
+        // their own because they are counted as books and do not divide Proverbs where it divides.
+        new(85, "1 Enoch", "1 En", "1En", ["Enoch", "ENO"]),
+        new(86, "Jubilees", "Jub", "Jub", ["JUB"]),
+        new(87, "1 Meqabyan", "1 Meq", "1Mq", ["1MQ"]),
+        new(88, "2 Meqabyan", "2 Meq", "2Mq", ["2MQ"]),
+        new(89, "3 Meqabyan", "3 Meq", "3Mq", ["3MQ"]),
+        new(90, "4 Baruch", "4 Bar", "4Ba", ["4BA", "Paralipomena of Jeremiah"]),
+        new(91, "Messale", "Msl", "Msl", ["Proverbs of Solomon (Messale)"]),
+        new(92, "Tagsas", "Tgs", "Tgs", ["Tägsas", "Tegsas"]),
     ];
 
     private static readonly Dictionary<string, BookAbbreviation> AbbreviationMap;

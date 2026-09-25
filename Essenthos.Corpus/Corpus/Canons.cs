@@ -117,7 +117,32 @@ internal static class Canons
             new CanonSection("appendix", "Appendix", [84]),
         ]);
 
-    private static readonly CanonDefinition[] All = [Protestant, Tanakh, Catholic, Orthodox, Septuagint];
+    /// <summary>
+    /// The eighty-one books of the Ethiopian Orthodox Tewahedo Church, as its printed Bibles count and
+    /// order them: the narrow canon, fifty-four books of the Old Testament and twenty-seven of the New.
+    ///
+    /// Several of the Greek books are divided or replaced. Ezra and Nehemiah are two books, 3 Ezra is
+    /// the Greek 1 Esdras and Ezra Sutuel the apocalypse the Latin calls 4 Ezra; Proverbs is two books,
+    /// Messale and Tägsas; the Maccabees are not received and the three books of Meqabyan, which are a
+    /// different work, stand in their place. The Prayer of Manasseh is inside 2 Chronicles and Psalm
+    /// 151 inside the Psalter, so neither is a book here. The broader reckoning, which adds eight books
+    /// of church order to the New Testament, is a list no printed Bible follows.
+    /// </summary>
+    private static readonly CanonDefinition Ethiopian = new(
+        "ethiopian",
+        "Ethiopian Orthodox",
+        "Bible",
+        "The eighty-one books of the Ethiopian Orthodox Tewahedo Church, with Enoch, Jubilees, the three " +
+        "books of Meqabyan and 4 Baruch, and Proverbs as two books, Messale and Tägsas.",
+        [
+            new CanonSection("old-testament", "Old Testament", [
+                .. Range(1, 14), 86, 85, 15, 16, 68, 69, 70, 71, 17, 87, 88, 89, 18, 19, 91, 92, 75, 21, 22,
+                72, 23, 24, 67, 25, 76, 90, 26, 27, 28, 30, 33, 29, 31, 32, .. Range(34, 39),
+            ]),
+            new CanonSection("new-testament", "New Testament", [.. Range(40, 66)]),
+        ]);
+
+    private static readonly CanonDefinition[] All = [Protestant, Tanakh, Catholic, Orthodox, Septuagint, Ethiopian];
 
     public static IReadOnlyList<CanonDefinition> List => All;
 

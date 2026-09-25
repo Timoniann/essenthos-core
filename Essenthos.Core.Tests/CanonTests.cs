@@ -60,6 +60,7 @@ public class CanonTests
     [InlineData("catholic")]
     [InlineData("orthodox")]
     [InlineData("septuagint")]
+    [InlineData("ethiopian")]
     public void NoCanonListsABookTwice(string slug)
     {
         var canon = Canons.Find(slug)!;
@@ -73,6 +74,7 @@ public class CanonTests
     [InlineData("catholic")]
     [InlineData("orthodox")]
     [InlineData("septuagint")]
+    [InlineData("ethiopian")]
     public void EveryOrdinalACanonNamesIsABookThatExists(string slug)
     {
         var canon = Canons.Find(slug)!;
@@ -131,6 +133,24 @@ public class CanonTests
         Canons.Find("protestant")!.Collection.Should().Be("Bible");
         Canons.Find("catholic")!.Collection.Should().Be("Bible");
         Canons.Find("orthodox")!.Collection.Should().Be("Bible");
+        Canons.Find("ethiopian")!.Collection.Should().Be("Bible");
+    }
+
+    /// <summary>
+    /// The Ethiopian canon is eighty-one books, and the count is the point: the church counts
+    /// Proverbs as two books and the Maccabees not at all, so a list that reached eighty-one by
+    /// another road would name different books.
+    /// </summary>
+    [Fact]
+    public void TheEthiopianCanonIsFiftyFourAndTwentySeven()
+    {
+        var ethiopian = Canons.Find("ethiopian")!;
+
+        ethiopian.BookCount.Should().Be(81);
+        ethiopian.Sections.Select(section => section.Ordinals.Count).Should().Equal(54, 27);
+        ethiopian.Ordinals.Should().Contain([85, 86, 87, 88, 89, 90, 91, 92]);
+        ethiopian.Ordinals.Should().NotContain([20, 73, 74, 79, 82], "Proverbs is Messale and Tagsas, "
+            + "Meqabyan stands where the Maccabees would, and Manasseh and Psalm 151 are inside other books");
     }
 
     [Fact]
@@ -146,6 +166,11 @@ public class CanonTests
     [InlineData(77, "Susanna")]
     [InlineData(80, "3 Maccabees")]
     [InlineData(84, "Psalms of Solomon")]
+    [InlineData(85, "1 Enoch")]
+    [InlineData(86, "Jubilees")]
+    [InlineData(89, "3 Meqabyan")]
+    [InlineData(90, "4 Baruch")]
+    [InlineData(92, "Tagsas")]
     public void TheDeuterocanonResolvesByItsOwnSlug(int ordinal, string name)
     {
         BookReferences.Name(ordinal).Should().Be(name);
@@ -161,6 +186,10 @@ public class CanonTests
     [InlineData("4MA", 81)]
     [InlineData("TOB", 70)]
     [InlineData("WIS", 75)]
+    [InlineData("ENO", 85)]
+    [InlineData("JUB", 86)]
+    [InlineData("1MQ", 87)]
+    [InlineData("4BA", 90)]
     public void TheSeptuagintFileNamesResolve(string code, int ordinal)
     {
         // What Brenton's USFM files are called. The Septuagint loads by these, so a code that

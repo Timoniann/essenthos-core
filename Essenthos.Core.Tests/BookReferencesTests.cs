@@ -38,7 +38,7 @@ public class BookReferencesTests
     [InlineData("   ")]
     [InlineData(null)]
     [InlineData("0")]
-    [InlineData("85")]
+    [InlineData("93")]
     [InlineData("-1")]
     [InlineData("nope")]
     [InlineData("The Shepherd of Hermas")]

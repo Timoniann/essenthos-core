@@ -88,6 +88,12 @@ internal sealed class DatasetLoader(
             await Load("the Samaritan Pentateuch", () => SamaritanTextSource.Read(
                 Path.Combine(resources, "SamaritanPentateuch")), stoppingToken);
 
+            // The Ethiopic Bible, the first daughter version of the Septuagint here and the only text
+            // of Enoch and Jubilees: the church's printed Bible, with Dillmann's and Ludolf's editions
+            // where the files hold them in verses.
+            await Load(GeezTextSource.Definition.Name, () => GeezTextSource.Read(
+                Path.Combine(resources, GeezTextSource.Folder)), stoppingToken);
+
             // The Berean's own edition, because rebuilding it from the tables is right nine verses
             // in ten and a text that is right nine times in ten is not a text. The tables then say
             // which of its words renders which Greek word.

@@ -33,6 +33,7 @@ internal static class TextCorpus
         TextusReceptusTextSource.Definition(Edition.Stephanus1550),
         ByzantineTextSource.Definition,
         SamaritanTextSource.Definition,
+        GeezTextSource.Definition,
         BereanTextSource.Definition,
         .. Bible4uTextSource.Definitions.Values,
         KulishTextSource.Definition,

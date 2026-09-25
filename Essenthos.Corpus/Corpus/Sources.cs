@@ -30,6 +30,12 @@ internal static class Sources
     /// <summary>Ottley's Isaiah, Codex Alexandrinus as it stands.</summary>
     public const string OttleySlug = "OTTLEY";
 
+    /// <summary>
+    /// The Ethiopic Bible in Ge'ez, all eighty-one books. CrossWire's <c>Geez</c> is sixteen of them,
+    /// HaCohen's Octateuch and Psalter, and is another text.
+    /// </summary>
+    public const string GeezSlug = "GEEZ81";
+
     /// <summary>The Robinson-Pierpont Byzantine Textform, 2018, as its own repository spells it.</summary>
     public const string ByzantineSlug = "RP2018";
 
