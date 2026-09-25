@@ -26,14 +26,24 @@ internal static class Corpus
             Language = language,
         };
         db.Texts.Add(text);
+        return db.AddBook(text, 1, "Genesis", verses);
+    }
 
+    /// <summary>A further book of a text <see cref="Add"/> made, at its own place in the canon.</summary>
+    public static Text AddBook(
+        this AppDbContext db,
+        Text text,
+        int canonicalBook,
+        string name,
+        params (int Chapter, int Verse, string[] Words)[] verses)
+    {
         var book = new Book
         {
             Text = text,
-            CanonicalOrdinal = 1,
-            Position = 1,
-            Name = "Genesis",
-            Slug = "gen",
+            CanonicalOrdinal = canonicalBook,
+            Position = canonicalBook,
+            Name = name,
+            Slug = name.ToLowerInvariant()[..3],
         };
         db.Books.Add(book);
 
@@ -56,7 +66,7 @@ internal static class Corpus
                 db.VerseReferences.Add(new VerseReference
                 {
                     Verse = verse,
-                    CanonicalBook = 1,
+                    CanonicalBook = canonicalBook,
                     CanonicalChapter = chapterNumber,
                     CanonicalVerse = verseNumber,
                     IsPrimary = true,

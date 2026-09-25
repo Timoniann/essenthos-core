@@ -90,6 +90,18 @@ internal static class HebrewPrefixes
     private static readonly HashSet<string> Conjunctions =
         new(["and", "but", "now", "then", "so"], StringComparer.OrdinalIgnoreCase);
 
+    /// <summary>
+    /// בֵּין … לְ, "between … and": the second member takes a lamed, and where English divides one
+    /// thing <em>from</em> another — "divide the waters from the waters", Genesis 1:6 — that lamed
+    /// is what <em>from</em> renders. Nowhere else does a lamed mean "from", so the sense is allowed
+    /// only after a בֵּין in the same verse.
+    /// </summary>
+    private const string Between = "H996";
+
+    private const string Lamed = "H9005";
+
+    private const string Separative = "from";
+
     /// <summary>The object marker אֵת is never rendered, so a prefix search reads straight past it.</summary>
     private const string ObjectMarker = "H853";
 
@@ -119,6 +131,10 @@ internal static class HebrewPrefixes
             }
         }
 
+        var between = hebrew.Where(entry => entry.Strong == Between)
+            .Select(entry => entry.Position)
+            .DefaultIfEmpty(int.MaxValue)
+            .Min();
         var matches = new List<PrefixMatch>();
         var taken = new HashSet<int>();
         var first = 0;
@@ -143,14 +159,16 @@ internal static class HebrewPrefixes
             for (var i = 0; i < segment.Words.Count - 1 && at < prefixes.Count; i++)
             {
                 var word = segment.Words[i].Text;
-                if (!IsFunctionWord(word) && !prefixes.Exists(position => Says(stated, position, word)))
+                if (!IsFunctionWord(word) && !prefixes.Exists(position => Says(stated, position, word))
+                    && !prefixes.Exists(position => Separates(byPosition[position], between, word)))
                 {
                     // The run of function words the phrase opens with has ended. Anything further in
                     // is the phrase's own content, and past it the order stops being parallel.
                     break;
                 }
 
-                var found = prefixes.FindIndex(at, position => Accepts(byPosition[position], stated, word));
+                var found = prefixes.FindIndex(at, position =>
+                    Accepts(byPosition[position], stated, word) || Separates(byPosition[position], between, word));
                 if (found < 0)
                 {
                     // The English supplies a word the Hebrew does not have. It renders nothing, and
@@ -277,6 +295,11 @@ internal static class HebrewPrefixes
         (Renders.TryGetValue(entry.Strong, out var words)
          && words.Contains(word, StringComparer.OrdinalIgnoreCase))
         || Says(stated, entry.Position, word);
+
+    /// <summary>The lamed of בֵּין … לְ, rendered "from" by a translation that divides rather than lists.</summary>
+    private static bool Separates(HebrewEntry entry, int between, string word) =>
+        entry.Strong == Lamed && entry.Position > between
+        && word.Equals(Separative, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Whether any prefix at all can render this word, which is how the run of function words a

@@ -181,6 +181,45 @@ public class HebrewPrefixTests
         HebrewPrefixes.Match(hebrew, english).Should().BeEmpty();
     }
 
+    /// <summary>Genesis 1:6, "divide the waters from the waters" over בֵּין מַיִם לָ־מָיִם.</summary>
+    private static readonly HebrewEntry[] BetweenWaters =
+    [
+        new("H1961", "c1", 1, "be"),
+        new("H914", "c1", 2, "divide"),
+        new("H996", "c1", 3, "between"),
+        new("H4325", "c1", 4, "water"),
+        new("H9005", "c1", 5, "to"),
+        new("H4325", "c1", 6, "water"),
+    ];
+
+    [Fact]
+    public void TheLamedAfterBetweenIsWhatFromRenders()
+    {
+        var matched = Matched(BetweenWaters,
+        [
+            Segment(BetweenWaters, 1, "let", "it"),
+            Segment(BetweenWaters, 2, "divide"),
+            Segment(BetweenWaters, 4, "the", "waters"),
+            Segment(BetweenWaters, 6, "from", "the", "waters"),
+        ]);
+
+        // "from" is the sixth English word, and the lamed the fifth morpheme.
+        matched.Should().Contain(5, 5);
+    }
+
+    [Fact]
+    public void ALamedWithNoBetweenBeforeItIsNeverFrom()
+    {
+        HebrewEntry[] unto =
+        [
+            new("H559", "c1", 1, "say"),
+            new("H9005", "c1", 2, "to"),
+            new("H4872", "c1", 3, "Moses"),
+        ];
+
+        Matched(unto, [Segment(unto, 1, "said"), Segment(unto, 3, "from", "Moses")]).Should().BeEmpty();
+    }
+
     private static EnglishSegment Segment(IReadOnlyList<HebrewEntry> hebrew, int position, params string[] words) =>
         new([.. words.Select(word => new EnglishWord(word, false))],
             hebrew.Single(entry => entry.Position == position));
