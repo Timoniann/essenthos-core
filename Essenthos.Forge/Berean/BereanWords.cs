@@ -122,6 +122,43 @@ internal static partial class BereanWords
         return words;
     }
 
+    /// <summary>
+    /// The same words as <see cref="Rendering"/>, each with the bracket or brace the phrase puts round
+    /// it, if any: which span it sits in, counted within the phrase, and the mark that opened it.
+    /// </summary>
+    public static List<(string Word, int? Span, string? Mark)> Marked(string phrase)
+    {
+        phrase = Markup.Replace(phrase, " ");
+        var words = new List<(string, int?, string?)>(8);
+        var spans = 0;
+        int? span = null;
+        string? mark = null;
+        var at = 0;
+        foreach (var match in Word.EnumerateMatches(phrase))
+        {
+            foreach (var c in phrase.AsSpan(at, match.Index - at))
+            {
+                (span, mark) = c switch
+                {
+                    '[' => (++spans, "[]"),
+                    '{' => (++spans, "{}"),
+                    ']' or '}' => ((int?)null, (string?)null),
+                    _ => (span, mark),
+                };
+            }
+
+            var word = phrase.Substring(match.Index, match.Length);
+            if (!string.Equals(word, "vvv", StringComparison.Ordinal))
+            {
+                words.Add((word, span, mark));
+            }
+
+            at = match.Index + match.Length;
+        }
+
+        return words;
+    }
+
     /// <summary>Two words compared as a reader would: letters and digits only, case set aside.</summary>
     public static bool Same(string left, string right) =>
         string.Equals(Bare(left), Bare(right), StringComparison.Ordinal);

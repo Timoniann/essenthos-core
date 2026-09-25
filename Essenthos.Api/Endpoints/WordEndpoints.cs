@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 ﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -244,27 +244,16 @@ internal static class WordEndpoints
 
     /// <summary>
     /// Whether the edition prints this word as its own, rather than as a rendering of anything in
-    /// the text it translated.
-    ///
-    /// It is asked twice because the corpus records the same fact two ways: an edition that marks
-    /// a span of its own words -- the Synodal's brackets, the Berean's braces -- names it as a
-    /// <see cref="WordGroupKind.Supplied"/> group, while the King James' italics are an
-    /// <see cref="LinkRelation.Expands"/> link with nothing on the far side. A reader asking
-    /// whether a word was supplied is asking one question, so this answers it once whichever table
-    /// the word's own edition happened to use.
+    /// the text it translated: a <see cref="WordGroupKind.Supplied"/> group, which is where every
+    /// edition's mark is kept — the Synodal's and the Berean's brackets and the King James' italics
+    /// alike.
     /// </summary>
     internal static async Task<bool> Supplied(
         AppDbContext db,
         long id,
         CancellationToken cancellationToken) =>
         await db.WordGroupWords
-            .AnyAsync(m => m.WordId == id && m.WordGroup!.Kind == WordGroupKind.Supplied, cancellationToken)
-        || await db.LinkWords
-            .AnyAsync(
-                side => side.WordId == id
-                        && side.Link!.Relation == LinkRelation.Expands
-                        && side.Side == LinkSide.From,
-                cancellationToken);
+            .AnyAsync(m => m.WordId == id && m.WordGroup!.Kind == WordGroupKind.Supplied, cancellationToken);
 
     /// <summary>
     /// The groups this word sits in, smallest first. Each carries its own features, so the reader

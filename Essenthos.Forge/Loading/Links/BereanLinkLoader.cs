@@ -499,7 +499,13 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         return true;
     }
 
-    private async Task<Dictionary<(int, int, int), List<Word>>> Words(
+    private Task<Dictionary<(int, int, int), List<Word>>> Words(
+        int textId,
+        CancellationToken cancellationToken) =>
+        WordsByAddress(db, textId, cancellationToken);
+
+    internal static async Task<Dictionary<(int, int, int), List<Word>>> WordsByAddress(
+        AppDbContext db,
         int textId,
         CancellationToken cancellationToken)
     {

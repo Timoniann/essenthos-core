@@ -224,6 +224,7 @@ internal sealed class DatasetLoader(
             await LinkTheOldTestament(resources, stoppingToken);
             await LinkTheNewTestament(resources, stoppingToken);
             await LinkTheBerean(resources, stoppingToken);
+            await MarkTheEditions(resources, stoppingToken);
             await ReadTheHandMadeAlignments(resources, stoppingToken);
             await LinkThePrintedEditions(resources, stoppingToken);
             await LinkTheGreekWitnesses(stoppingToken);
@@ -936,6 +937,22 @@ internal sealed class DatasetLoader(
         // number, because BHSA and the Westminster edition tokenise the same text differently.
         status.Record(await loader.Load(tables, BhsaTextSource.Slug, cancellationToken));
     }
+
+    /// <summary>
+    /// What the editions print about their own words, as word groups: after the links, because the
+    /// King James' italics are read back from the links its mappings wrote.
+    /// </summary>
+    private async Task MarkTheEditions(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the editions' own marks");
+
+        using var scope = services.CreateScope();
+        await scope.ServiceProvider.GetRequiredService<EditionMarkLoader>()
+            .Mark(Path.Combine(resources, "Berean", "bsb_tables.tsv"), cancellationToken);
+    }
+
+    public Task Marks(CancellationToken cancellationToken) =>
+        MarkTheEditions(ResourcePaths.Read(configuration, environment.ContentRootPath), cancellationToken);
 
     /// <summary>
     /// The alignments Clear Bible's team made by hand, which are two different things here.

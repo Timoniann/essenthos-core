@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Corpus;
+﻿namespace Essenthos.Core.Corpus;
 
 /// <summary>
 /// The records more than one endpoint group answers with. Everything else lives beside the
@@ -237,15 +237,23 @@ internal record TextWordResponse(
 
     /// <summary>
     /// The edition prints this word as one it supplies: the translators put it there and the text
-    /// they were translating has no counterpart for it. The Synodal says so with square brackets,
-    /// 4,247 spans of them, and a renderer should show that — in brackets, in italics, however it
-    /// shows an editorial hand — rather than as ordinary text.
+    /// they were translating has no counterpart for it — the King James' italics, the Synodal's and
+    /// the Berean's brackets — and a renderer should show that however it shows an editorial hand,
+    /// rather than as ordinary text. The same as <see cref="Mark"/> being <c>supplied</c>.
     ///
     /// It is the edition's own statement about its own page, so it is not <see cref="Absence"/>,
     /// which is what an alignment against some other text concluded. A word can carry both, one,
     /// or neither.
     /// </summary>
     public bool Supplied { get; init; }
+
+    /// <summary>
+    /// What the edition itself prints about this word, where it prints anything: <c>supplied</c>,
+    /// <c>doubtful</c> for words its editors doubt belong to the text, <c>subscription</c> for a
+    /// scribe's note that is not the text, <c>restored</c> for words taken from other manuscripts.
+    /// Null for a word the edition prints plainly, which is nearly all of them.
+    /// </summary>
+    public string? Mark { get; init; }
 
     /// <summary>
     /// A Strong number the corpus worked out for this word, where the source states none and the
