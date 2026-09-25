@@ -863,7 +863,7 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
         const string sql =
             """
             WITH listed AS (
-                SELECT e.id AS entity_id, l.book, l.chapter, l.verse, l.label
+                SELECT DISTINCT ON (e.id, l.book, l.chapter, l.verse) e.id AS entity_id, l.book, l.chapter, l.verse, l.label
                 FROM unnest(@records, @books, @chapters, @verses, @labels) AS l(record, book, chapter, verse, label)
                 JOIN entity e ON e.source_id = l.record),
             withdrawn AS (

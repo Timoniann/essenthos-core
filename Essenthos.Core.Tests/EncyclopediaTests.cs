@@ -69,9 +69,9 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _corpus.Relationships.Should().HaveCount(5_446);
         _corpus.Duplicates.Should().Be(2);
         _corpus.Unpaired.Should().Be(7);
-        _corpus.References.Should().HaveCount(30_099);
+        _corpus.References.Should().HaveCount(28_223);
         _corpus.Disputed.Should().Be(1_417);
-        _corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id).Should().Be(1_631);
+        _corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id).Should().Be(1_477);
     }
 
     [Fact]
@@ -133,6 +133,38 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
             .Where(n => n.Label == "King of Judah" && n.HebrewStrongNumber is not null)
             .Should().NotBeEmpty()
             .And.OnlyContain(n => n.HebrewStrongNumber == "H4428,H3063");
+    }
+
+    [Fact]
+    public void APlaceIsNumberedByItsNameAndNotByTheWordsOfItsPhrase()
+    {
+        var garden = new EntityName
+        {
+            EntityId = 1, Label = "Garden of the LORD", Kind = BibleDataLoader.LabelKind,
+            HebrewStrongNumber = "H1588,H3068", GreekStrongNumber = "G3588,G2316,G3857",
+        };
+        var siddim = new EntityName
+        {
+            EntityId = 2, Label = "Valley of Siddim", Kind = BibleDataLoader.LabelKind,
+            HebrewStrongNumber = "H6009,H7708", GreekStrongNumber = "G5327,G3588",
+        };
+        var king = new EntityName
+        {
+            EntityId = 3, Label = "King of Judah", Kind = BibleDataLoader.LabelKind, HebrewStrongNumber = "H4428,H3063",
+        };
+        HashSet<string> placeNames = ["H7708", "H3063", "H3068", "G2446"];
+
+        var taken = BibleDataLoader.NumberPlacesOnlyByTheirNames([garden, siddim, king], new HashSet<int> { 1, 2 }, placeNames);
+
+        taken.Should().Be(8);
+        garden.HebrewStrongNumber.Should().BeNull("the divine name is nobody's place");
+        garden.GreekStrongNumber.Should().BeNull();
+        siddim.HebrewStrongNumber.Should().Be("H7708");
+        siddim.GreekStrongNumber.Should().BeNull();
+        king.HebrewStrongNumber.Should().Be("H4428,H3063", "a title keeps the number of every word of it");
+
+        BibleDataLoader.NumberPlacesOnlyByTheirNames([siddim], new HashSet<int> { 2 }, new HashSet<string>())
+            .Should().Be(0, "nothing is taken off before the lexicon is loaded");
     }
 
     [Theory]
@@ -345,7 +377,7 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         var father = _corpus.Entities["person:YHVH_2"];
         var references = _corpus.References.Where(r => r.EntityId == father.Id).ToList();
 
-        references.Should().HaveCount(352);
+        references.Should().HaveCount(325);
         references.Should().OnlyContain(r => r.CanonicalBook > BookReferences.OldTestamentBookCount);
     }
 
@@ -365,7 +397,7 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
 
         _corpus.References
             .Where(r => r.EntityId == father.Id && r.Label == "Father")
-            .Should().HaveCount(175);
+            .Should().HaveCount(155);
     }
 
     /// <summary>
