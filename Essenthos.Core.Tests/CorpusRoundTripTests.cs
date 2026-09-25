@@ -47,10 +47,7 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
 
     private const int SynodalVersesWithSupplied = 3_708;
 
-    /// <summary>Measured over all 31,102 verses: 925 commas, 401 stops, 243 colons, and the rest.</summary>
-    private const int ZefaniaVersesLosingPunctuation = 1_755;
-
-    private const int ZefaniaPunctuationDropped = 1_906;
+    private const int ZefaniaVersesStillLosingAnOpening = 80;
 
     /// <summary>
     /// Every Greek word carries its own punctuation, so the round trip is per word and exact: the
@@ -200,19 +197,17 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
     }
 
     /// <summary>
-    /// A defect this reader has today, pinned to its measured size so that changing it is a
-    /// decision rather than an accident: punctuation standing between a styled or Strong-tagged
-    /// span and the next word is dropped, because only a Strong-tagged span hands its trailing
-    /// punctuation to the word before it. Nothing stored in the corpus comes from this reader — it
-    /// is the Greek mapping's second view of the King James, matched word by word — so the loss is
-    /// confined to trailers nobody keeps. It has to be repaired before this file ever becomes a
-    /// text of its own.
+    /// Punctuation standing between a styled span — the italics, the red letters — and the next word
+    /// belongs to the span's last word, as it does after a Strong-tagged span, and none of it is lost.
+    /// Before the styled span handed it on, 1,906 marks in 1,755 verses were dropped. What is still
+    /// lost is one opening parenthesis in each of 80 verses, most of them at the head of the verse,
+    /// where there is no word before it to carry it and a word has no field for what precedes it.
     ///
-    /// Nothing is ever gained, and a further 88 verses differ only in spaces the source itself puts
-    /// inside its markup — "is Zoar )" — which this reader collapses and which are not a loss.
+    /// Nothing is ever gained, and 88 verses differ only in spaces the source itself puts inside its
+    /// markup — "is Zoar )" — which this reader collapses and which are not a loss.
     /// </summary>
     [Fact]
-    public void TheZefaniaReaderDropsPunctuationAfterAStyledSpan()
+    public void TheZefaniaReaderKeepsPunctuationAfterAStyledSpan()
     {
         var (parsed, sourceVerses) = ZefaniaKingJames();
 
@@ -231,8 +226,8 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
             dropped += lost;
         }
 
-        affected.Should().Be(ZefaniaVersesLosingPunctuation);
-        dropped.Should().Be(ZefaniaPunctuationDropped);
+        affected.Should().Be(ZefaniaVersesStillLosingAnOpening);
+        dropped.Should().Be(ZefaniaVersesStillLosingAnOpening);
     }
 
     /// <summary>

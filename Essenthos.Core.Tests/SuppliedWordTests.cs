@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -12,11 +12,10 @@ namespace Essenthos.Core.Tests;
 /// <summary>
 /// A word the translators put there, asked for from the endpoint a reader's click reaches.
 ///
-/// The corpus records the same fact two ways and the reader is asking one question. The Synodal
-/// and the Berean mark a span of their own words as a group; the King James' italics are an
-/// absence link written from the English side with nothing on the Hebrew side. Both mean the
-/// edition supplied the word, and the answer has to be the same either way -- otherwise the
-/// inspector marks a bracketed Synodal word and says nothing about an italicised King James one.
+/// The fact has one home: every edition's mark -- the Synodal's and the Berean's brackets, the King
+/// James' italics -- is a supplied group over the words. An expands link is what that means against
+/// one other text, and between two manuscripts it is a plus nobody inserted, so a link alone does not
+/// make a word supplied.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class SuppliedWordTests : IDisposable
@@ -63,16 +62,25 @@ public sealed class SuppliedWordTests : IDisposable
     }
 
     /// <summary>
-    /// The King James' half: an <c>expands</c> link names words on the from side alone, because
-    /// the from text is the one with the extra words. Nothing marks the word itself.
+    /// An <c>expands</c> link says the other text has nothing here, which is a comparison's finding
+    /// and not the edition's own statement; only the group says the translators supplied the word.
     /// </summary>
     [Fact]
-    public async Task AWordNamedByAnExpandsLinkSaysSo()
+    public async Task AnExpandsLinkAloneDoesNotSayTheWordWasSupplied()
     {
         Expands(4);
 
         (await WordEndpoints.Supplied(_db, WordId(4), default))
-            .Should().BeTrue();
+            .Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task AWordTheEditorsDoubtIsNotSupplied()
+    {
+        Supply(WordGroupKind.Doubtful, 4);
+
+        (await WordEndpoints.Supplied(_db, WordId(4), default))
+            .Should().BeFalse();
     }
 
     /// <summary>
@@ -98,12 +106,14 @@ public sealed class SuppliedWordTests : IDisposable
 
     private long WordId(int position) => _db.WordAt(_english, 1, 1, position).Id;
 
-    private void Supply(params int[] positions)
+    private void Supply(params int[] positions) => Supply(WordGroupKind.Supplied, positions);
+
+    private void Supply(WordGroupKind kind, params int[] positions)
     {
         var group = new WordGroup
         {
             TextId = _english.Id,
-            Kind = WordGroupKind.Supplied,
+            Kind = kind,
             Position = 1,
         };
         _db.WordGroups.Add(group);
