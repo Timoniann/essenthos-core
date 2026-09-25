@@ -158,6 +158,53 @@ public sealed class CorpusLoaderTests : IDisposable
     }
 
     /// <summary>
+    /// The Samaritan writes Exodus 29:21 after 29:28. The chapter is read back in the order it was
+    /// written, not the order its numbers would give.
+    /// </summary>
+    [Fact]
+    public async Task AChapterIsReadInTheOrderTheEditionWritesIt()
+    {
+        await Loader().Load(Ruth(
+            new VerseDraft(1, [new WordDraft("First", "")]),
+            new VerseDraft(3, [new WordDraft("Third", "")]),
+            new VerseDraft(2, [new WordDraft("Second", "")])));
+        var text = await _db.Texts.SingleAsync();
+
+        var chapter = await Texts.ReadChapter(_db, text.Id, 8, 1, default);
+
+        chapter.Select(verse => verse.Number).Should().Equal(1, 3, 2);
+        (await _db.Verses.OrderBy(verse => verse.Sequence).Select(verse => verse.Number).ToListAsync())
+            .Should().Equal(1, 3, 2);
+    }
+
+    /// <summary>
+    /// A slot added after the load for a note has no place in the edition's order, so it takes the
+    /// one its number gives it rather than the end of the chapter.
+    /// </summary>
+    [Fact]
+    public async Task ANoteOnlyVerseAddedLaterStandsWhereItsNumberPutsIt()
+    {
+        await Loader().Load(Ruth(
+            new VerseDraft(1, [new WordDraft("First", "")]),
+            new VerseDraft(3, [new WordDraft("Third", "")])));
+        var noted = Ruth(new VerseDraft(2, [])
+        {
+            Notes = [new VerseNoteDraft(VerseNoteKind.Footnote, "Some manuscripts add a verse here.")],
+        });
+
+        await new SourceNoteLoader(_db, NullLogger<SourceNoteLoader>.Instance).Load(noted);
+        var text = await _db.Texts.SingleAsync();
+
+        (await Texts.ReadChapter(_db, text.Id, 8, 1, default)).Select(verse => verse.Number)
+            .Should().Equal(1, 2, 3);
+    }
+
+    private static TextSource Ruth(params VerseDraft[] verses) => Sample() with
+    {
+        Books = [new BookDraft(8, 1, "Ruth", "ruth", [new ChapterDraft(1, verses)])],
+    };
+
+    /// <summary>
     /// A text that gains a book after its notes were written gets that book's notes on the next
     /// pass, and the notes it had are not written again.
     /// </summary>

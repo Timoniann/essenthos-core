@@ -638,6 +638,20 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         ORDER BY claims
         """;
 
+    private const string SharedSql =
+        """
+        SELECT t.slug, s.labelled, count(*), sum(s.verses)::bigint
+        FROM (SELECT v.text_id, bool_or(v.label <> '') AS labelled, count(*) AS verses
+              FROM verse_reference r
+              JOIN verse v ON v.id = r.verse_id
+              WHERE r.is_primary
+              GROUP BY v.text_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
+              HAVING count(*) > 1) s
+        JOIN text t ON t.id = s.text_id
+        GROUP BY t.slug, s.labelled
+        ORDER BY t.slug, s.labelled
+        """;
+
     public async Task<CorpusMeasures> Measure(CancellationToken cancellationToken = default)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
@@ -683,6 +697,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
 
         var vote = await TheVote(connection, cancellationToken);
 
+        var shared = await Read(connection, SharedSql, cancellationToken, reader => new SharedAddresses(
+            reader.GetString(0), reader.GetBoolean(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
+
         // Single-threaded, deliberately. These sweep every link in the corpus, and Postgres
         // parallelises them across workers that share their sort state through /dev/shm — which a
         // container gives 64 MB of by default. The duplicate-link check exhausted it and the whole
@@ -707,7 +724,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         }
 
         return new CorpusMeasures(
-            coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity);
+            coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity, shared);
     }
 
     /// <summary>The edition Nestle voted, and the two of his three voters the corpus holds.</summary>
@@ -796,6 +813,15 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                 current.Broken);
         }
 
+        var crowded = Crowded(SharedOf(previous), SharedOf(current) ?? []);
+        if (crowded.Count > 0)
+        {
+            logger.LogWarning(
+                "More verses of one text now share a canonical address without a letter to say why than last " +
+                "time, which is the frame merging a division it used to keep: {Crowded}",
+                string.Join("; ", crowded.Select(now => $"{now.Text} {now.Addresses} addresses, {now.Verses} verses")));
+        }
+
         if (previous is null)
         {
             logger.LogInformation(
@@ -845,6 +871,36 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             .Select(pair => (pair.Before!, pair.Now))
             .ToList();
     }
+
+    /// <summary>
+    /// The texts whose unlettered shared addresses grew since the previous run. A text new to the
+    /// corpus is compared with nothing and reported by the count alone, which is what a first run
+    /// of this measure also does.
+    /// </summary>
+    public static IReadOnlyList<SharedAddresses> Crowded(
+        IReadOnlyList<SharedAddresses>? previous,
+        IReadOnlyList<SharedAddresses> current)
+    {
+        if (previous is null)
+        {
+            return [];
+        }
+
+        var before = previous.Where(s => !s.Labelled).ToDictionary(s => s.Text, s => s.Addresses);
+        return
+        [
+            .. current.Where(now => !now.Labelled
+                                    && before.TryGetValue(now.Text, out var was)
+                                    && now.Addresses > was),
+        ];
+    }
+
+    /// <summary>Null for a run recorded before the measure existed, so it is compared with nothing.</summary>
+    public static IReadOnlyList<SharedAddresses>? SharedOf(VerificationRun? run) =>
+        run is not null
+        && run.Measures.RootElement.TryGetProperty(nameof(CorpusMeasures.Shared).ToLowerInvariant(), out var shared)
+            ? shared.Deserialize<List<SharedAddresses>>(MeasureJson) ?? []
+            : null;
 
     public static IReadOnlyList<Coverage> CoverageOf(VerificationRun run) =>
         run.Measures.RootElement.TryGetProperty(nameof(CorpusMeasures.Coverage).ToLowerInvariant(), out var coverage)

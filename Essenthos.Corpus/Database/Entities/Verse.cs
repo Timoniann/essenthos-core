@@ -41,6 +41,14 @@ public class Verse
     /// </summary>
     public string Label { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Where the edition writes this verse within its chapter, counted from 1 — which is not always
+    /// where its number would put it: the Samaritan Pentateuch writes Exodus 29:21 after 29:28, and
+    /// Swete prints the Greek additions to Esther where the Greek reads them. Everything that shows a
+    /// chapter in the edition's own order orders by this, and by number only to break a tie.
+    /// </summary>
+    public int Sequence { get; set; }
+
     public ICollection<Word> Words { get; set; } = [];
 
     /// <summary>The edition's own footnotes and cross-references, never words of this verse.</summary>

@@ -307,6 +307,24 @@ internal sealed record Vote(
 internal sealed record IntegrityCheck(string Breaks, int Found);
 
 /// <summary>
+/// Canonical addresses that two or more verses of one text stand at as their primary address.
+///
+/// Not a defect, which is why it is a measure and not an integrity check: the Hebrew numbers the
+/// title of Psalm 51 as two verses where the frame has one address for it, and the Septuagint prints
+/// Genesis 31:50a beside 50. What it is for is noticing when the count moves, because a frame
+/// that starts putting two verses at one address where it did not before has lost a distinction.
+/// </summary>
+/// <param name="Text">The text's slug.</param>
+/// <param name="Labelled">
+/// Whether a verse at the address carries a letter — the edition itself saying the material
+/// extends a verse. Those are expected wherever the Greek has additions; the unlettered ones are a
+/// division the frame does not make, and there should be few.
+/// </param>
+/// <param name="Addresses">Addresses claimed more than once.</param>
+/// <param name="Verses">The verses claiming them.</param>
+internal sealed record SharedAddresses(string Text, bool Labelled, int Addresses, int Verses);
+
+/// <summary>
 /// What one load produced. Every field is a query, and the point of storing it is that the next
 /// load can be compared with it.
 /// </summary>
@@ -319,7 +337,8 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<Pairing> Pairing,
     IReadOnlyList<Agreement> Agreement,
     IReadOnlyList<Vote> Vote,
-    IReadOnlyList<IntegrityCheck> Integrity)
+    IReadOnlyList<IntegrityCheck> Integrity,
+    IReadOnlyList<SharedAddresses> Shared)
 {
     /// <summary>
     /// The share of links more than one method claims. It is the number the corpus could not
