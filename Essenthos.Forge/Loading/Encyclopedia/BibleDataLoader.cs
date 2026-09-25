@@ -1295,9 +1295,33 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             var id = match.Value;
             return names.TryGetValue(id, out var name) ? name
                 : names.TryGetValue(Slugs.Of(id), out var bySlug) ? bySlug
+                : Dangling.TryGetValue(id, out var answered)
+                    ? answered is null ? id[..id.IndexOf('_')] : names.GetValueOrDefault(answered, id)
                 : id;
         });
     }
+
+    /// <summary>
+    /// Identifiers the dataset's prose cites and its person file does not hold, each read against the
+    /// dataset's own rows. Where a row the dataset does hold states that it is the person meant, the
+    /// identifier is that row's; where none does, it is printed as the name it spells and nothing more,
+    /// because the name is what the source wrote and a record would be this corpus's guess.
+    ///
+    /// Not a rule over stems: <c>Heman_3</c> is not taken for a Heman because it spells one, but because
+    /// <c>Heman_2</c>'s own row is "father of fourteen sons and three daughters (1CH 25:5)", the list
+    /// whose sons cite <c>Heman_3</c> at 25:4.
+    /// </summary>
+    private static readonly Dictionary<string, string?> Dangling = new(StringComparer.Ordinal)
+    {
+        // Heman_2's row: "the singer ... father of fourteen sons and three daughter (1CH 25:5)".
+        ["Heman_3"] = "Heman_2",
+        // Seraiah_2's row: the chief priest, "full lineage in 1CH 6:14", the verse where Seraiah
+        // begets Jehozadak, whose row cites Seriah_2.
+        ["Seriah_2"] = "Seraiah_2",
+        // Maacah's father, Uriel of Gibeah (2CH 13:2): no row of the dataset is him, and Uriel_1 is
+        // a Kohathite of David's day. The name only.
+        ["Uriel_2"] = null,
+    };
 
     [GeneratedRegex(@"\b[A-Za-z][A-Za-z0-9-]*(?:_[A-Za-z0-9-]+)+")]
     private static partial Regex Identifier();

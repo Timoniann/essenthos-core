@@ -134,8 +134,11 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         """,
         Move("word_entity", "entity_id"),
 
-        // The verse list: a verse both records cite from the same source is cited once.
-        Move("entity_verse", "entity_id"),
+        // The verse list: a verse both records cite from the same source is cited once, and the list
+        // is keyed on the record, the verse and the source, so the kept record's row is the one kept.
+        MoveUnlessHeld("entity_verse",
+            "c.canonical_book = o.canonical_book AND c.canonical_chapter = o.canonical_chapter "
+            + "AND c.canonical_verse = o.canonical_verse AND c.source = o.source"),
         """
         WITH gone AS (
             DELETE FROM entity_verse v USING entity_verse w
@@ -330,7 +333,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                 logger.LogWarning(
                     "The list of records written wrongly moves {Name} from \"{From}\" to \"{To}\", and the encyclopedia " +
                     "does not hold both. Correct the pair in {Resource}, or load the record it moves to first.",
-                    split.Name, split.From, split.To, Resource);
+                    split.Name ?? split.To, split.From, split.To, Resource);
                 continue;
             }
 
@@ -342,10 +345,12 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                 ("fromVerses", spans.Select(v => v.FromVerse ?? 0).ToArray()),
                 ("toChapters", spans.Select(v => v.ToChapter).ToArray()),
                 ("toVerses", spans.Select(v => v.ToVerse ?? int.MaxValue).ToArray()));
-            foreach (var statement in SplitStatements)
+            // A split without a name moves verses between two records that both hold the name already,
+            // Tamar to Tamar: the name rows are each record's own and neither moves.
+            foreach (var statement in split.Name is null ? SplitStatements[..^NameStatements] : SplitStatements)
             {
                 await Annotating.Run(connection, transaction, statement, cancellationToken,
-                    ("from", from), ("to", to), ("name", split.Name));
+                    ("from", from), ("to", to), ("name", split.Name ?? string.Empty));
             }
 
             var (moved, joined) = await Counted(connection, transaction, cancellationToken);
@@ -353,7 +358,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
             if (moved + joined > 0)
             {
                 logger.LogInformation(
-                    "Moved {Rows} rows of {Name} from {From} to {To}: {Why}", moved + joined, split.Name, split.From,
+                    "Moved {Rows} rows of {Name} from {From} to {To}: {Why}", moved + joined, split.Name ?? split.To, split.From,
                     split.To, split.Why);
             }
 
@@ -362,6 +367,9 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
 
         return parted;
     }
+
+    /// <summary>How many of <see cref="SplitStatements"/>, at its end, move the name.</summary>
+    private const int NameStatements = 2;
 
     /// <summary>The verses a split moves, as the spans the file writes, and the tally of what moved.</summary>
     private const string Parting =
@@ -425,7 +433,6 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
              WHERE v.entity_id = @from AND {string.Format(InParting, "v")}
                AND EXISTS (SELECT 1 FROM entity_verse o
                            WHERE o.entity_id = @to AND o.source = v.source
-                             AND o.label IS NOT DISTINCT FROM v.label AND o.disputed = v.disputed
                              AND (o.canonical_book, o.canonical_chapter, o.canonical_verse)
                                  = (v.canonical_book, v.canonical_chapter, v.canonical_verse))
              RETURNING 1)
@@ -601,10 +608,13 @@ internal sealed record DuplicateRecordList(
 /// <summary>A second man a dataset's record holds, and the verses that are his.</summary>
 /// <param name="From">The dataset's record, by address.</param>
 /// <param name="To">His own record, by address.</param>
-/// <param name="Name">The name the dataset's record holds for him, which moves with him.</param>
+/// <param name="Name">
+/// The name the dataset's record holds for him, which moves with him; null where both records hold the
+/// name already and only the verses move.
+/// </param>
 /// <param name="Verses">The verses that are his, as spans: <c>JHN 1:45-49</c>.</param>
 /// <param name="Why">Who ruled so, and on what.</param>
-internal sealed record DuplicateRecordSplit(string From, string To, string Name, IReadOnlyList<string> Verses, string Why);
+internal sealed record DuplicateRecordSplit(string From, string To, string? Name, IReadOnlyList<string> Verses, string Why);
 
 /// <param name="Keeps">The record that stays, by address.</param>
 /// <param name="Folds">The record folded into it, by address.</param>

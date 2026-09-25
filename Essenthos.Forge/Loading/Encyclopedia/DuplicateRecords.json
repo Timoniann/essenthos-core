@@ -617,6 +617,109 @@
         "JHN 21:2"
       ],
       "why": "The project owner ruled on 2026-09-24 that the man John 1:45-49 and 21:2 name is Nathanael, as the text names him, and that his identification with Bartholomew, which BibleData follows by holding the name on its record of Bartholomew, is a later tradition and not the text's."
+    },
+    {
+      "from": "tamar",
+      "to": "tamar-2",
+      "name": null,
+      "verses": [
+        "2SA 13:1-32",
+        "1CH 3:9"
+      ],
+      "why": "2 Samuel 13 is the story of Tamar the sister of Absalom, David's daughter (13:1), and 1 Chronicles 3:9 names her as the sister of David's sons. The record of Tamar the wife of Er (Genesis 38) held these verses because a reading of the Strong number chose the first record of the name."
+    },
+    {
+      "from": "tamar",
+      "to": "tamar-3",
+      "name": null,
+      "verses": [
+        "2SA 14:27"
+      ],
+      "why": "2 Samuel 14:27 names the daughter born to Absalom, 'whose name was Tamar: she was a woman of a fair countenance' — Absalom's daughter, not Judah's daughter-in-law."
+    },
+    {
+      "from": "jehoram",
+      "to": "jehoram-2",
+      "name": null,
+      "verses": [
+        "2KI 3:7",
+        "2KI 3:9",
+        "2KI 3:14"
+      ],
+      "why": "2 Kings 3 is the campaign of Jehoram son of Ahab, king of Israel (3:1), against Moab: he sends to Jehoshaphat (3:7), goes with the kings of Judah and Edom (3:9), and Elisha answers him only for Jehoshaphat's sake (3:14). The son of Jehoshaphat is not in the chapter."
+    },
+    {
+      "from": "james",
+      "to": "james-3",
+      "name": null,
+      "verses": [
+        "ACT 12:17",
+        "ACT 15:13",
+        "ACT 21:18",
+        "GAL 1:19",
+        "GAL 2:9",
+        "GAL 2:12"
+      ],
+      "why": "Herod killed James the brother of John with the sword in Acts 12:2, so the James to whom Peter sends word in 12:17, who speaks at the council (15:13) and receives Paul (21:18), is another man. Galatians 1:19 names him 'James the Lord's brother', and 2:9 and 2:12 speak of the same James at Jerusalem."
+    },
+    {
+      "from": "philip",
+      "to": "philip-3",
+      "name": null,
+      "verses": [
+        "ACT 8:5-40"
+      ],
+      "why": "Acts 8:1 says all were scattered 'except the apostles', and 8:14 that the apostles at Jerusalem sent Peter and John to Samaria when they heard what had been done there. The Philip who preached in Samaria and baptised the Ethiopian is Philip of the seven (6:5), whom 21:8 calls the evangelist, not the apostle."
+    },
+    {
+      "from": "judas",
+      "to": "judas-of-james",
+      "name": null,
+      "verses": [
+        "JHN 14:22",
+        "ACT 1:13"
+      ],
+      "why": "John 14:22 is 'Judas saith unto him, not Iscariot', and Acts 1:13 lists Judas of James among the eleven after the betrayer's death. Neither verse is about Judas Iscariot."
+    },
+    {
+      "from": "thaddaeus",
+      "to": "judas-of-james",
+      "name": null,
+      "verses": [
+        "ACT 1:13"
+      ],
+      "why": "Acts 1:13 prints 'Judas of James', as Luke 6:16 does; Thaddaeus is the name Matthew and Mark give in his place, and the verse does not print it."
+    },
+    {
+      "from": "ahasuerus",
+      "to": "ahasuerus-father-of-darius",
+      "name": null,
+      "verses": [
+        "DAN 9:1"
+      ],
+      "why": "Daniel 9:1 names Darius 'the son of Ahasuerus, of the seed of the Medes'. The king of Esther and of Ezra 4:6 reigns after Cyrus; the father of the Mede who took the kingdom at Babylon's fall is another man."
+    },
+    {
+      "from": "beeri",
+      "to": "anah-son-of-zibeon",
+      "name": "Anah",
+      "verses": [
+        "GEN 36:2",
+        "GEN 36:14",
+        "GEN 36:18",
+        "GEN 36:24-25",
+        "1CH 1:40-41"
+      ],
+      "why": "Genesis 36:2, 14 and 18 name Aholibamah the daughter of Anah, 36:24-25 name Anah the son of Zibeon and his children, and 1 Chronicles 1:40-41 repeat them. Beeri the Hittite of Genesis 26:34 is the father of another wife of Esau; that the two men are one is a harmonisation the text does not make, so Beeri keeps his verse and Anah's move to his own record."
+    },
+    {
+      "from": "mattaniah-9",
+      "to": "mattaniah-11",
+      "name": null,
+      "verses": [
+        "2CH 20:14"
+      ],
+      "why": "The fold of Mattaniah son of Micha brought 2 Chronicles 20:14 with it, and that verse's Mattaniah is Jahaziel's ancestor in Jehoshaphat's day, not the man of the lists of Nehemiah."
     }
   ]
 }

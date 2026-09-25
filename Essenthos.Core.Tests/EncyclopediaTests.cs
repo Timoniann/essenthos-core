@@ -341,6 +341,21 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         Leaked().Should().OnlyContain(identifier => !known.Contains(identifier));
     }
 
+    /// <summary>
+    /// Three identifiers the dataset cites and does not define: two its own rows answer, and one no
+    /// row does, which is printed as the name it spells.
+    /// </summary>
+    [Fact]
+    public void AnIdentifierTheDatasetDoesNotDefineReadsAsTheRowItsOwnRowsName()
+    {
+        _corpus.Entities.Values.Should().Contain(e => e.Distinguisher == "son of Heman (1CH 25:4)");
+        _corpus.Entities.Values.Select(e => e.Distinguisher)
+            .Should().Contain(d => d != null && d.Contains("daughter of Uriel of Gibeah (2CH 13:2)"));
+        _corpus.Entities.Values.Select(e => e.Distinguisher)
+            .Should().Contain(d => d != null && d.Contains("son of Seraiah"));
+        Leaked().Should().NotContain(["Heman_3", "Uriel_2", "Seriah_2"]);
+    }
+
     [Fact]
     public void ADistinguisherReadsAsAName() =>
         _corpus.Entities["person:Abdeel_1"].Distinguisher.Should().Be("father of Shelemiah (JER 36:26)");

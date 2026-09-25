@@ -442,6 +442,34 @@ public sealed class DeskTests : IAsyncLifetime
         records.Records.Single(r => r.Record["slug"]!.GetValue<string>() == "boaz-pillar").Scope.Should().BeNull();
     }
 
+    /// <summary>
+    /// The narrative records are listed under their own file, and one of them, a person with no
+    /// subtype, can be reviewed like any other; the log names it as a narrative record.
+    /// </summary>
+    [Fact]
+    public async Task TheNarrativeRecordsAreListedAndReviewedUnderTheirOwnFile()
+    {
+        WriteThings();
+        File.WriteAllText(Path.Combine(Records, ThingReview.NarrativesFile),
+            """
+            {
+              "decidedBy": "a test",
+              "records": [
+                { "slug": "serpent", "kind": "person", "name": "The serpent", "distinguisher": "the serpent in the garden",
+                  "occurrences": [{ "strong": "H5175", "only": ["GEN 3:1"] }] }
+              ]
+            }
+            """);
+
+        await Put("/desk-api/review/records/serpent", new { scope = "all" });
+        var records = await Json<ThingRecordsResponse>(await _http.GetAsync("/desk-api/review/records"));
+
+        var serpent = records.Records.Single(r => r.Record["slug"]!.GetValue<string>() == "serpent");
+        serpent.File.Should().Be("narratives");
+        serpent.Scope.Should().Be(ThingReview.All);
+        records.Records.Select(r => r.File).Should().Contain(["objects", "observances"]);
+    }
+
     [Fact]
     public async Task OnlyTheListedOperationsRunAndNeverOneThatStopsTheCore()
     {
@@ -508,6 +536,7 @@ public sealed class DeskTests : IAsyncLifetime
     [Theory]
     [InlineData("Essenthos.Forge/Loading/Encyclopedia/ObjectRecords.json")]
     [InlineData("Essenthos.Forge/Loading/Encyclopedia/ObservanceRecords.json")]
+    [InlineData("Essenthos.Forge/Loading/Encyclopedia/NarrativeRecords.json")]
     [InlineData("Resources/Essenthos/review/objects-and-observances.json")]
     [InlineData("Resources/Essenthos/review/bibledata-relationships.json")]
     [InlineData("Resources/Essenthos/review/eponym-verses.json")]

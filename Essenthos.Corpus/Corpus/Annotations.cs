@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -51,11 +52,110 @@ internal static class Annotations
             .Where(a => ids.Contains(a.WordId))
             .Select(a => new Claimed(
                 a.WordId, a.Method, a.Confidence, a.Source, a.Note,
-                a.Entity!.Kind, a.Entity.Slug, a.Entity.Name))
+                a.Entity!.Kind, a.Entity.Slug, a.Entity.Name) { EntityId = a.EntityId })
             .ToListAsync(cancellationToken);
 
-        return Settle(rows);
+        var settled = Settle(rows);
+        var namedAs = await NamedAs(db, rows, settled, cancellationToken);
+        return namedAs.Count == 0
+            ? settled
+            : settled.ToDictionary(
+                pair => pair.Key,
+                pair => namedAs.TryGetValue(pair.Key, out var label) ? pair.Value with { NamedAs = label } : pair.Value);
     }
+
+    /// <summary>
+    /// The name each word names its record under, where that is not the name the record heads with.
+    ///
+    /// <para>
+    /// A record holds every name its person bears, and heads with one: Abram, Jacob, Simon, Saul. The
+    /// word a reader hovers is often the other — Abraham five chapters after Genesis 17:5 renames him,
+    /// Paul after Acts 13:9 — and a card answering <em>Abram</em> over <em>Abraham</em> reads as a
+    /// wrong annotation where the annotation is right. The name is not guessed from the verse's place
+    /// in the book: the word was annotated through a Strong number, its own or that of the source word
+    /// it was carried from, and the record's names each carry theirs, so the number says which name the
+    /// verse prints. Where the number is the heading's, or more than one other name shares it, nothing
+    /// is said and the card keeps the heading.
+    /// </para>
+    /// </summary>
+    private static async Task<Dictionary<long, string>> NamedAs(
+        AppDbContext db,
+        List<Claimed> rows,
+        Dictionary<long, EntityRefResponse> settled,
+        CancellationToken cancellationToken)
+    {
+        var chosen = rows
+            .Where(row => settled.TryGetValue(row.WordId, out var shown) && shown.Slug == row.Slug)
+            .GroupBy(row => row.WordId)
+            .Select(group => group.First())
+            .ToList();
+        if (chosen.Count == 0)
+        {
+            return [];
+        }
+
+        // The number the annotation went through: the word's own, or the source word's it was carried from.
+        var through = chosen
+            .Select(row => (row, Via: CarriedFrom(row.Note)))
+            .ToList();
+        var asked = through.Select(pair => pair.Via ?? pair.row.WordId).Distinct().ToList();
+        var numbers = await db.Words
+            .Where(w => asked.Contains(w.Id) && w.StrongNumber != null)
+            .Select(w => new { w.Id, w.StrongNumber })
+            .ToDictionaryAsync(w => w.Id, w => w.StrongNumber!, cancellationToken);
+
+        var entityIds = chosen.Select(row => row.EntityId).Distinct().ToList();
+        var names = (await db.EntityNames
+                .Where(n => entityIds.Contains(n.EntityId) && n.Kind == ProperName)
+                .Select(n => new { n.EntityId, n.Label, n.HebrewStrongNumber, n.GreekStrongNumber })
+                .ToListAsync(cancellationToken))
+            .ToLookup(n => n.EntityId);
+
+        var found = new Dictionary<long, string>();
+        foreach (var (row, via) in through)
+        {
+            var number = numbers.GetValueOrDefault(via ?? row.WordId) ?? LeadingNumber(row.Note);
+            if (number is null)
+            {
+                continue;
+            }
+
+            var bearing = names[row.EntityId]
+                .Where(n => n.HebrewStrongNumber == number || n.GreekStrongNumber == number)
+                .Select(n => n.Label)
+                .Distinct(StringComparer.Ordinal)
+                .ToList();
+            if (bearing.Count == 1 && bearing[0] != row.Name)
+            {
+                found[row.WordId] = bearing[0];
+            }
+        }
+
+        return found;
+    }
+
+    /// <summary>The source word an annotation was carried from, as its note writes it.</summary>
+    private static long? CarriedFrom(string? note)
+    {
+        var match = note is null ? null : Carried.Match(note);
+        return match is { Success: true } && long.TryParse(match.Groups[1].ValueSpan, out var id) ? id : null;
+    }
+
+    /// <summary>The number a source-word annotation's note leads with, where the word row carries none.</summary>
+    private static string? LeadingNumber(string? note)
+    {
+        var match = note is null ? null : Leading.Match(note);
+        return match is { Success: true } ? match.Groups[1].Value : null;
+    }
+
+    private static readonly Regex Carried =
+        new(@"\bthrough \S+ word (\d+)", RegexOptions.CultureInvariant);
+
+    private static readonly Regex Leading =
+        new(@"^([HG]\d+),", RegexOptions.CultureInvariant);
+
+    /// <summary>The kind a record's own name has, as against its titles and epithets.</summary>
+    private const string ProperName = "proper name";
 
     /// <summary>
     /// The canonical verses of one chapter where some word, in any text, names each entity as the
@@ -203,5 +303,9 @@ internal static class Annotations
         string? Note,
         EntityKind Kind,
         string Slug,
-        string Name);
+        string Name)
+    {
+        /// <summary>The record's row, read only where the name an occurrence is shown under is asked.</summary>
+        public int EntityId { get; init; }
+    }
 }
