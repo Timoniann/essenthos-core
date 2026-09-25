@@ -10,8 +10,8 @@ and Caddy in front. The design and its reasons are DOC-0205; the publication of 
 
 Two things reach the server, separately:
 
-- **the code** — `scripts/deploy.ps1`, which copies this folder's tracked files and sets the image tags
-  CI pushed for a commit;
+- **the code** — `scripts/deploy.ps1`, which copies this folder's files as that commit holds them,
+  never as they stand on disk, and sets the image tags CI pushed for it;
 - **the corpus** — `forge publish --to dev`, then `--to prod`, from the machine that built it. The
   release carries the rows that name the pictures of people and places; publishing also sends the
   picture files, from this machine's `Resources/Images`, into `/srv/essenthos/images/corpus_dev` or
