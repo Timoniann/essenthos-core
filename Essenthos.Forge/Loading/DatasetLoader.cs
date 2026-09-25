@@ -1007,9 +1007,11 @@ internal sealed class DatasetLoader(
         }
 
         // The unfoldingWord Literal Text and the Almeida print a title before the first verse, as the
-        // English does.
+        // six English texts do.
         foreach (var read in (Func<TextSource>[])
                  [
+                     .. EnglishTextSource.Definitions.Keys.Select(folder =>
+                         (Func<TextSource>)(() => EnglishTextSource.Read(Path.Combine(resources, folder)))),
                      () => UnfoldingWordTextSource.Read(Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder)),
                      () => AlmeidaTextSource.Read(Path.Combine(resources, AlmeidaTextSource.Folder)),
                  ])
