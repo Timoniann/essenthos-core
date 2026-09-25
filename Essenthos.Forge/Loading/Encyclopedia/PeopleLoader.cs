@@ -870,6 +870,11 @@ internal sealed class PeopleLoader(
             JOIN word w ON w.id = a.word_id
             JOIN text t ON t.id = w.text_id AND t.slug = @witness
             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+            WHERE NOT EXISTS (
+                SELECT 1 FROM entity_verse cited
+                WHERE cited.entity_id = a.entity_id AND cited.source = @source
+                  AND (cited.canonical_book, cited.canonical_chapter, cited.canonical_verse)
+                      = (r.canonical_book, r.canonical_chapter, r.canonical_verse))
             """,
             connection);
         command.Parameters.AddWithValue("source", FromOurOwnWords);

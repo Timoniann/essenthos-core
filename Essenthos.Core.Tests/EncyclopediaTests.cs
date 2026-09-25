@@ -69,9 +69,9 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _corpus.Relationships.Should().HaveCount(5_446);
         _corpus.Duplicates.Should().Be(2);
         _corpus.Unpaired.Should().Be(7);
-        _corpus.References.Should().HaveCount(30_099);
+        _corpus.References.Should().HaveCount(28_223);
         _corpus.Disputed.Should().Be(1_417);
-        _corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id).Should().Be(1_631);
+        _corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id).Should().Be(1_477);
     }
 
     [Fact]
@@ -377,7 +377,7 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         var father = _corpus.Entities["person:YHVH_2"];
         var references = _corpus.References.Where(r => r.EntityId == father.Id).ToList();
 
-        references.Should().HaveCount(352);
+        references.Should().HaveCount(325);
         references.Should().OnlyContain(r => r.CanonicalBook > BookReferences.OldTestamentBookCount);
     }
 
@@ -397,7 +397,7 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
 
         _corpus.References
             .Where(r => r.EntityId == father.Id && r.Label == "Father")
-            .Should().HaveCount(175);
+            .Should().HaveCount(155);
     }
 
     /// <summary>

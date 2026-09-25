@@ -479,9 +479,16 @@ public class EntityRelationship
 /// labelled with a word the New Testament uses of both — "G-d", "Lord", "Savior", "Judge". Those
 /// are kept and flagged rather than assigned, because assigning them would be this corpus
 /// asserting a reading of the text.
+///
+/// <para>
+/// A row is a verse, once per entity and per source: the list counts verses, and a verse named
+/// twice in it — once per word or once per label — is the over-count the unique key refuses.
+/// </para>
 /// </remarks>
 [Index(nameof(EntityId))]
 [Index(nameof(CanonicalBook), nameof(CanonicalChapter), nameof(CanonicalVerse))]
+[Index(nameof(EntityId), nameof(CanonicalBook), nameof(CanonicalChapter), nameof(CanonicalVerse), nameof(Source),
+    IsUnique = true)]
 public class EntityVerse
 {
     [Key]

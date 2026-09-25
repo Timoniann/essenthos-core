@@ -126,7 +126,7 @@ public sealed class OpenBiblePlaceLoadTests : IDisposable
         openBible.Books.Books.Should().HaveCount(61);
         openBible.Mentions.Should().Be(8_742);
         bibleData.Books.Books.Should().Equal(1, 2);
-        bibleData.Mentions.Should().Be(692);
+        bibleData.Mentions.Should().Be(674);
     }
 
     /// <summary>

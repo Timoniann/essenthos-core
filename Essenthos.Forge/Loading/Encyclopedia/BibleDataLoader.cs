@@ -1165,8 +1165,20 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             }
         }
 
-        return (references, disputed, divided);
+        return (Once(references), disputed, divided);
     }
+
+    /// <summary>
+    /// One row per entity and verse. The dataset lists a verse once per label it finds there, so
+    /// <em>Jesus</em> and <em>the Lamb</em> in one verse were two references to it; a verse list
+    /// counts verses. The label kept is an undisputed one where there is one, because a verse that
+    /// names the entity undisputedly once is not made doubtful by an epithet beside it.
+    /// </summary>
+    internal static List<EntityVerse> Once(List<EntityVerse> references) =>
+        references
+            .GroupBy(r => (r.EntityId, r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse))
+            .Select(g => g.FirstOrDefault(r => !r.Disputed) ?? g.First())
+            .ToList();
 
     internal static List<Event> Events(
         string folder,

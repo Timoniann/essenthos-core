@@ -201,6 +201,7 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
 
         var references = new List<EntityVerse>(9_000);
         var unaddressed = 0;
+        var cited = new HashSet<(int, int, int, int)>();
 
         foreach (var place in places)
         {
@@ -210,6 +211,11 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
                 if (Reference(citation) is not { } reference)
                 {
                     unaddressed++;
+                    continue;
+                }
+
+                if (!cited.Add((entity.Id, reference.Book, reference.Chapter, reference.Verse)))
+                {
                     continue;
                 }
 
