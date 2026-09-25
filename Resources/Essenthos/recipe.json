@@ -1,0 +1,681 @@
+{
+  "about": "The Forge runs that write links the load does not, in the order they last ran. Each verb records itself here when it finishes; the load replays them after its own linking steps, skipping what the corpus already holds.",
+  "steps": [
+    {
+      "verb": "align",
+      "arguments": [
+        "BSB",
+        "KJV",
+        "--replace"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "--replace"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "UBIO",
+        "KJV",
+        "--replace"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "--replace"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "strong",
+      "arguments": [
+        "LUTH1912",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "strong",
+      "arguments": [
+        "LUTH1912",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "strong",
+      "arguments": [
+        "LUTH1912",
+        "RP2018"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "strong",
+      "arguments": [
+        "LUTH1912",
+        "TR1550"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "strong",
+      "arguments": [
+        "LUTH1912",
+        "TR1894"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "synodal-strong",
+      "arguments": [],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "union-strong",
+      "arguments": [],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "UBIO",
+        "KJV",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "UBIO",
+        "KJV",
+        "TR1894"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "UBIO",
+        "KJV",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "TR1894"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "LUTH1912",
+        "KJV",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "LUTH1912",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "ASV",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "ASV",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "WEB",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "WEB",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "YLT",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "YLT",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GNV1599",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GNV1599",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "JPS1917",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "RV1909",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "RV1909",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "TYN1534",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "ASV",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "ASV",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "BSB",
+        "KJV",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "GNV1599",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "GNV1599",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "GRCBRENT",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "JPS1917",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "LUTH1912",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "LUTH1912",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "TR1894",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RV1909",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "TYN1534",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "UBIO",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "UBIO",
+        "KJV",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "UBIO",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "UBIO",
+        "TR1894",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "WEB",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "WEB",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "YLT",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "YLT",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+    },
+    {
+      "verb": "correct",
+      "arguments": [],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "reload",
+      "arguments": [
+        "GEEZ81"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "SWETE",
+        "--replace"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "NESTLE1904",
+        "--replace"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "RP2018",
+        "--replace"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "BRENTON",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "DRA",
+        "VULGCLEM",
+        "--replace"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GEEZ81",
+        "GRCBRENT",
+        "BHSA",
+        "--daughter",
+        "--unmeasured"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "UKR1871",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "UKR1871",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "NPU2022",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "NPU2022",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "LSG1910",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "LSG1910",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "ELB1905",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "ELB1905",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "BBE",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "BBE",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "ALM1911",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "ALM1911",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "note": "run on essenthos_core on 2026-09-25"
+    }
+  ]
+}

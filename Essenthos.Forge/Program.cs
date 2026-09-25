@@ -236,6 +236,7 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
         args.Contains("--unmeasured"),
         args.Contains("--daughter")));
     await Replay(composeScope, (from, to) => Between(from, to, Identifier(composeFrom), Identifier(composeTo)));
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
 }
 
@@ -347,6 +348,7 @@ if (args is ["interlinear-join", var interlinearText, ..])
         logger.LogInformation("\n{Report}", await interlinearLoader.Measure(interlinearFolder, interlinearSlug));
     }
 
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
 }
 
@@ -711,6 +713,7 @@ if (args is ["strong", var strongFrom, var strongTo, ..])
     // nothing backs, which is an integrity check the corpus keeps at zero.
     logger.LogInformation(
         "{Outcome}", await strongScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
 }
 
@@ -732,6 +735,7 @@ if (args is ["synodal-strong", ..])
     // The links just written and the guesses just removed decide which Synodal words an annotation
     // reaches, and nothing on a restart asks that again.
     await synodalScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
 }
 
@@ -754,6 +758,7 @@ if (args is ["union-strong", ..])
     logger.LogInformation(
         "{Outcome}", await unionScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
     await unionScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
 }
 
@@ -935,6 +940,7 @@ if (args is ["names", var namesFrom, var namesTo, ..])
         await Replay(namesScope, (from, to) => Between(from, to, Identifier(namesFrom), Identifier(namesTo)));
     }
 
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
 }
 
@@ -945,6 +951,7 @@ if (args is ["reload", var reloadSlug])
     using var reloadScope = app.Services.CreateScope();
     await reloadScope.ServiceProvider.GetRequiredService<DatasetLoader>()
         .Reload(Identifier(reloadSlug), CancellationToken.None);
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
 }
 
@@ -955,6 +962,35 @@ if (args is ["correct", ..])
 {
     using var correctScope = app.Services.CreateScope();
     await correctScope.ServiceProvider.GetRequiredService<DatasetLoader>().Correct(CancellationToken.None);
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
+    return 0;
+}
+
+// The recorded runs alone, on a corpus already loaded: `recipe` lists them, `recipe --run` runs what
+// the corpus does not already hold, as the load does after its own linking steps.
+if (args is ["recipe", ..])
+{
+    using var recipeScope = app.Services.CreateScope();
+    if (!args.Contains("--run"))
+    {
+        var recipeDb = recipeScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await recipeDb.Database.OpenConnectionAsync();
+        var listed = new StringBuilder();
+        foreach (var step in Recipe.Read(resources))
+        {
+            var already = await Recipe.AlreadyThere(
+                (Npgsql.NpgsqlConnection)recipeDb.Database.GetDbConnection(), step, CancellationToken.None);
+            listed.AppendLine(already is null ? $"  would run  {step}" : $"  skipped    {step}: {already}");
+        }
+
+        logger.LogInformation("\n{Steps}", listed);
+        return 0;
+    }
+
+    await recipeScope.ServiceProvider.GetRequiredService<DatasetLoader>().FollowTheRecipe(resources, CancellationToken.None);
+    logger.LogInformation(
+        "{Outcome}", await recipeScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    await recipeScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
     return 0;
 }
 
@@ -975,12 +1011,13 @@ if (args is ["align", var alignFrom, var alignTo, ..])
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
         replace: args.Contains("--replace")));
     await Replay(alignScope, (from, to) => Between(from, to, alignOne, alignTwo));
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
 }
 
 
 logger.LogError(
-    "Nothing is known to do with \"{Verb}\". The verbs are load, reload, correct, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
+    "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, verify, release, publish, rollback, releases, align, names, score, score-anchors, syntax, "
     + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images and the evidentia family",
     args[0]);
 return 1;
