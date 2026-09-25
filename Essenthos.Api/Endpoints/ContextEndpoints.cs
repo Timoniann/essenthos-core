@@ -276,7 +276,7 @@ internal static class ContextEndpoints
         routes.Add(route);
     }
 
-    private static readonly IReadOnlyDictionary<string, string> NoPlaces = new Dictionary<string, string>();
+    private static readonly IReadOnlyDictionary<EventLocation, string> NoPlaces = new Dictionary<EventLocation, string>();
 
     /// <summary>
     /// The objects and observances whose passages run through the chapter, where no word of it names

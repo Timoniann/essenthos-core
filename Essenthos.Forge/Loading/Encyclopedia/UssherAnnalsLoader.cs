@@ -22,7 +22,7 @@ internal sealed record AnnalsOutcome(
             ? "the Annals are already loaded"
             : $"{Events} of {Paragraphs} paragraphs anchored to a New Testament verse, {Ranged} of " +
               $"them on the first verse of a range, {Generated} titled other than by quotation and " +
-              $"{Undated} left without a year of Ussher's, in {Elapsed}";
+              $"{Undated} whose anno mundi year contradicts the paragraph's other two columns, in {Elapsed}";
 }
 
 /// <summary>
@@ -72,12 +72,12 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
     internal const string Source =
         "Ussher's Annals of the World, 1658, transcribed in BibleData by Brady Stephenson, CC BY 4.0";
 
-    private const string File = "Ussher-AnnalsOfTheWorld.csv";
+    internal const string File = "Ussher-AnnalsOfTheWorld.csv";
 
     /// <summary>Where a title written for the corpus is read from, when one has been written.</summary>
     private const string TitleFile = "Ussher-Titles.csv";
 
-    private const string Chronology = "ussher";
+    internal const string Chronology = "ussher";
 
     /// <summary>The first book of the New Testament in the shared frame.</summary>
     private const int FirstApostolicBook = 40;
@@ -167,7 +167,7 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
         var undated = 0;
         var generated = 0;
         var unresolved = new Dictionary<string, int>(StringComparer.Ordinal);
-        var annals = new List<(Event One, int? Year, string Number)>(400);
+        var annals = new List<(Event One, int? Year, int? Stated, string Number)>(400);
 
         foreach (var row in Csv.Read(path))
         {
@@ -187,6 +187,7 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
             var (book, chapter, verse, cited) = anchor;
 
             var reckoned = Reckoned(row, year, ussher.LastYearBeforeTheCommonEra);
+            var stated = Stated(row, year, reckoned is not null);
             var isRange = cited.IndexOfAny(RangeMarks) >= 0;
             var number = row["paragraph_nr"];
 
@@ -219,21 +220,22 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
                 CanonicalChapter = chapter,
                 CanonicalVerse = verse,
                 Realm = Realms.Scripture,
-                Notes = Note(cited, isRange, reckoned is null ? row["am_year"] : null, year, madeBy),
+                Notes = Note(cited, isRange, reckoned is null ? row["am_year"] : null, stated, year, madeBy),
                 Source = Source,
-            }, reckoned, number));
+            }, reckoned, stated, number));
         }
 
         db.Events.AddRange(annals.Select(a => a.One));
         await db.SaveChangesAsync(cancellationToken);
 
         db.EventDates.AddRange(annals
-            .Where(a => a.Year is not null)
+            .Where(a => a.Year is not null || a.Stated is not null)
             .Select(a => new EventDate
             {
                 EventId = a.One.Id,
                 ChronologyId = ussher.Id,
                 Year = a.Year,
+                StatedYear = a.Stated,
                 Citation = $"¶{a.Number}",
             }));
         await db.SaveChangesAsync(cancellationToken);
@@ -332,8 +334,8 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
     /// agree: everything the transcription dates AD 33 carries anno mundi 4046 where its own
     /// Gregorian and Julian Period columns both say 4036, a ten-year gap across the whole passion
     /// narrative. Repairing a digit is a guess and writing 4046 is a wrong date, so those
-    /// paragraphs get no year of his at all and say so; they keep their place on the axis, which
-    /// the other two columns establish twice over.
+    /// paragraphs get no anno mundi year and say so; their place on the axis and their year of the
+    /// common era are the ones the other two columns establish twice over — see <see cref="Stated"/>.
     /// </summary>
     internal static int? Reckoned(Dictionary<string, string> row, int year, int zero)
     {
@@ -346,7 +348,53 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
         return anno == opening || anno == opening + 1 ? anno : null;
     }
 
-    private static string Note(string cited, bool isRange, string? contradicted, int year, string? madeBy)
+    /// <summary>
+    /// Ussher's year of the common era, where two of the paragraph's three columns agree on it.
+    ///
+    /// The Gregorian column is the year he printed, and it is taken over the one the anno mundi year
+    /// would give by subtraction, because that subtraction is a year late for every paragraph set
+    /// in the autumn — 185 of the 859 dated AD. It stands only where a second column confirms it:
+    /// the anno mundi year, or failing that the Julian Period, which runs 4,713 years ahead and a
+    /// year more across the same autumn straddle. That is what dates the 118 paragraphs whose anno
+    /// mundi year is ten years out — to the year his other two columns both give — without writing
+    /// a repaired anno mundi figure anywhere.
+    /// </summary>
+    internal static int? Stated(Dictionary<string, string> row, int year, bool reckoned)
+    {
+        if (reckoned)
+        {
+            return year;
+        }
+
+        if (!int.TryParse(row["jp_year"], NumberStyles.Integer, CultureInfo.InvariantCulture, out var julian))
+        {
+            return null;
+        }
+
+        var ahead = julian - year;
+        return ahead == JulianPeriodAhead || ahead == JulianPeriodAhead + 1 ? year : null;
+    }
+
+    /// <summary>How many years the Julian Period runs ahead of the common era: AD 1 is its 4714th.</summary>
+    private const int JulianPeriodAhead = 4713;
+
+    /// <summary>What a paragraph's note says when its anno mundi column contradicts the other two.</summary>
+    internal static string Contradiction(string written, int? stated, int year) =>
+        stated is null
+            ? $" His anno mundi column reads {written} where its own Gregorian column gives AD {year} and the " +
+              "Julian Period column neither, so no year of his reckoning is written here."
+            : $" His anno mundi column reads {written} where its own Gregorian and Julian Period columns both " +
+              $"give AD {year}, so his reckoning is dated AD {year} from those two and no anno mundi year is written.";
+
+    /// <summary>
+    /// The same sentence as a load that read only the anno mundi column wrote it, so a database loaded
+    /// then can be brought to say what it now does.
+    /// </summary>
+    internal static string Unread(string written, int year) =>
+        $" His anno mundi column reads {written} where its own Gregorian and Julian Period columns both give " +
+        $"AD {year}, so no year of his reckoning is written here.";
+
+    private static string Note(string cited, bool isRange, string? contradicted, int? stated, int year, string? madeBy)
     {
         var note = new StringBuilder(220);
         note.Append("Ussher cites ").Append(cited).Append(". ");
@@ -357,9 +405,7 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
 
         if (contradicted is not null)
         {
-            note.Append(" His anno mundi column reads ").Append(contradicted)
-                .Append(" where its own Gregorian and Julian Period columns both give AD ").Append(year)
-                .Append(", so no year of his reckoning is written here.");
+            note.Append(Contradiction(contradicted, stated, year));
         }
 
         if (madeBy is not null)
@@ -473,8 +519,8 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
         {
             logger.LogWarning(
                 "{Rows} paragraphs carry an anno mundi year their own Gregorian and Julian Period columns " +
-                "contradict, and were given no year of Ussher's reckoning. They keep their place on the " +
-                "axis; correcting the figure is upstream work, in BibleData itself.",
+                "contradict, and were given no anno mundi year. Their year of the common era stands where " +
+                "those two agree on it; correcting the figure is upstream work, in BibleData itself.",
                 undated);
         }
     }

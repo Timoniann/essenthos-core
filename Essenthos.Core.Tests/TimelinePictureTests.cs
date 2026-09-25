@@ -24,6 +24,8 @@ public sealed class TimelinePictureTests : IDisposable
         _transaction = _db.Database.BeginTransaction();
     }
 
+    private static EventLocation? At(string location) => EventLocation.Of(location, null, null, null);
+
     public void Dispose()
     {
         _transaction.Rollback();
@@ -44,16 +46,16 @@ public sealed class TimelinePictureTests : IDisposable
 
         var pictures = await TimelinePictures.Of(
             _db,
-            [("abraham-pictured", "Gerar of the test"), ("lot-unpictured", "Gerar of the test"), ("lot-unpictured", null)],
+            [("abraham-pictured", At("Gerar of the test")), ("lot-unpictured", At("Gerar of the test")), ("lot-unpictured", null)],
             ["abraham-pictured", null],
             generated: true,
             default);
 
-        pictures.ForEvent("abraham-pictured", "Gerar of the test")!.Url.Should().StartWith("/v1/images/commons/Abraham.jpg");
-        pictures.ForEvent("lot-unpictured", "Gerar of the test")!.Url.Should().StartWith("/v1/images/openbible/gerar.jpg");
-        pictures.ForEvent(null, "gerar of the test")!.Url.Should().StartWith("/v1/images/openbible/gerar.jpg");
+        pictures.ForEvent("abraham-pictured", At("Gerar of the test"))!.Url.Should().StartWith("/v1/images/commons/Abraham.jpg");
+        pictures.ForEvent("lot-unpictured", At("Gerar of the test"))!.Url.Should().StartWith("/v1/images/openbible/gerar.jpg");
+        pictures.ForEvent(null, At("gerar of the test"))!.Url.Should().StartWith("/v1/images/openbible/gerar.jpg");
         pictures.ForEvent("lot-unpictured", null).Should().BeNull();
-        pictures.ForEvent(null, "West of Gerar of the test").Should().BeNull();
+        pictures.ForEvent(null, At("West of Gerar of the test")).Should().BeNull();
         pictures.ForPeriod("abraham-pictured")!.Kind.Should().Be("public");
         pictures.ForPeriod(null).Should().BeNull();
     }

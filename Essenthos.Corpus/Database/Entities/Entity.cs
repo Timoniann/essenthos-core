@@ -639,6 +639,18 @@ public class Event
     public string? Location { get; set; }
 
     /// <summary>
+    /// The verse at which the source names <see cref="Location"/>, which is often not the event's
+    /// own: Ishmael's birth is dated at Genesis 16:16 and its Canaan is named at 16:3. It is what
+    /// tells two places of one name apart — the Samaria a reign begins in is the one recorded at
+    /// that verse.
+    /// </summary>
+    public int? LocationBook { get; set; }
+
+    public int? LocationChapter { get; set; }
+
+    public int? LocationVerse { get; set; }
+
+    /// <summary>
     /// Which history this belongs to — <c>scripture</c> or <c>world</c>.
     ///
     /// The whole point of putting them on one axis is that they disagree: the Great Pyramid is
@@ -648,8 +660,23 @@ public class Event
     /// </summary>
     public string Realm { get; set; } = Realms.Scripture;
 
-    /// <summary>Where in the world, where the source says. The world layer is filtered by it.</summary>
+    /// <summary>
+    /// Where in the world, where the source says. The world layer is filtered by it.
+    ///
+    /// **Today's country, not the polity of the time.** Wikidata's <c>country</c> is the current or
+    /// last-known administrative entity, so the Battle of Himera is in Italy and a stele cut around
+    /// 1200 BCE can be in a state of 1867. It is a place to filter by and never a claim about who
+    /// held the ground, which is why no sentence the corpus writes interpolates it.
+    /// <see cref="RegionAtTheTime"/> is the other half.
+    /// </summary>
     public string? Region { get; set; }
+
+    /// <summary>
+    /// The country the source states for this item whose own lifetime contains the event's year —
+    /// Ancient Rome beside Italy — and null where it states none that existed then. Never inferred
+    /// from the modern one: a country is only the one of the time if its dates say so.
+    /// </summary>
+    public string? RegionAtTheTime { get; set; }
 
     /// <summary>Where to go and check this one row — a Wikidata item, usually.</summary>
     public string? Uri { get; set; }

@@ -180,10 +180,60 @@ public sealed class EventEraTests : IDisposable
         drawn.Should().Equal("ordering-999", "ordering-1000", "ordering-none");
     }
 
+    /// <summary>
+    /// Ussher's creation, which is his year 1 and — in his words — 4004 BC, where the subtraction his
+    /// zero makes of year 1 is 4003. The year he printed is the answer, and the payload says it is
+    /// his rather than worked out.
+    /// </summary>
+    [Fact]
+    public async Task AYearTheReckoningPrintedIsServedAsPrintedAndSaysSo()
+    {
+        Dated("creation", yearFromCreation: 1, statedBceYear: null, ussherYear: 1, ussherStated: -4004);
+
+        var ussher = (await Response("creation")).Dates.Single(d => d.Chronology == "ussher");
+
+        ussher.BceYear.Should().Be(4004);
+        ussher.Era.Should().Be("BCE");
+        ussher.Stated.Should().BeTrue();
+        (await Response("creation")).Dates.Single(d => d.Chronology == "bibledata").Stated.Should().BeFalse();
+    }
+
+    /// <summary>
+    /// A date that states only its year of the common era — no year from creation at all — is still
+    /// a date, on the page and on the axis.
+    /// </summary>
+    [Fact]
+    public async Task AStatedYearStandsWithoutAYearFromCreation()
+    {
+        Dated("passion", yearFromCreation: BibleDataZeroPoint + 33, statedBceYear: null, ussherYear: null,
+            ussherStated: 33);
+
+        var ussher = (await Response("passion")).Dates.Single(d => d.Chronology == "ussher");
+        ussher.Year.Should().BeNull();
+        ussher.BceYear.Should().Be(33);
+        ussher.Era.Should().Be("CE");
+
+        var years = await EncyclopediaEndpoints.EventYears(
+            _db, _db.EventDates.Where(d => d.Event!.Slug == "passion"), default);
+        years.Values.Single()["ussher"].Should().Be(UssherZeroPoint + 33);
+    }
+
+    /// <summary>
+    /// The axis reads a year back into an era by the chronology's zero, so a printed 4004 BC has to
+    /// sit where that reading gives 4004 BC and not where the year from creation would put it.
+    /// </summary>
+    [Theory]
+    [InlineData(1, -4004, 0)]
+    [InlineData(2513, -1491, 2513)]
+    [InlineData(4036, 33, 4036)]
+    [InlineData(2513, null, 2513)]
+    public void AStatedYearPlacesTheEventOnItsReckoningsAxis(int? year, int? stated, int placed) =>
+        EncyclopediaEndpoints.Placed(year, stated, UssherZeroPoint).Should().Be(placed);
+
     private async Task<EventResponse> Response(string slug)
     {
         var row = await _db.Events.Where(e => e.Slug == slug).Select(EncyclopediaEndpoints.Rows).SingleAsync();
-        var places = await EncyclopediaEndpoints.PlacesNamed(_db, [row.Event.Location], default);
+        var places = await EncyclopediaEndpoints.PlacesNamed(_db, [EventLocation.Of(row.Event)], default);
         return EncyclopediaEndpoints.Event(row, places);
     }
 
@@ -192,7 +242,8 @@ public sealed class EventEraTests : IDisposable
         int yearFromCreation,
         int? statedBceYear,
         int? ussherYear = null,
-        int? sequenceInYear = null)
+        int? sequenceInYear = null,
+        int? ussherStated = null)
     {
         var happened = new Event
         {
@@ -213,13 +264,14 @@ public sealed class EventEraTests : IDisposable
             Year = yearFromCreation,
         });
 
-        if (ussherYear is { } year)
+        if (ussherYear is not null || ussherStated is not null)
         {
             _db.EventDates.Add(new EventDate
             {
                 EventId = happened.Id,
                 ChronologyId = _ussher.Id,
-                Year = year,
+                Year = ussherYear,
+                StatedYear = ussherStated,
             });
         }
 
