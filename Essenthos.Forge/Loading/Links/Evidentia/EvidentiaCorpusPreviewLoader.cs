@@ -44,7 +44,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         CancellationToken cancellationToken = default)
     {
         var sourceAnalysis = await SourceTokens(fromSlug, canonicalBook, canonicalChapter, canonicalVerse, cancellationToken);
-        var source = sourceAnalysis.Tokens;
+        var source = EnglishCompounds.Join(sourceAnalysis.Tokens);
         var target = await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken);
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
         var targetGlossEvidence = TargetGlossEvidenceSource.For(target);
@@ -79,7 +79,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var sourceAnalysis = options.SourceFromFiles
             ? await udpipe.Annotate(fileSources.Tokens(fromSlug, canonicalBook, canonicalChapter, null), cancellationToken)
             : await SourceTokens(fromSlug, canonicalBook, canonicalChapter, null, cancellationToken);
-        var source = sourceAnalysis.Tokens;
+        var source = EnglishCompounds.Join(sourceAnalysis.Tokens);
         var target = await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken);
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
         var targetGlossEvidence = TargetGlossEvidenceSource.For(target);
@@ -104,23 +104,25 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var globalKnownRenderingResolution = knownRenderingProposalResolver.ResolveGlobally(
             candidates, EvidentiaKnownRenderingProposalResolver.Safe);
         var globalReviewKnownRenderingResolution = knownRenderingProposalResolver.ResolveGlobally(candidates);
-        var dictionaryReviewResolution = dictionaryProposalResolver.ResolveAdditional(candidates, globalReviewKnownRenderingResolution.Proposals);
-        var targetGlossOnlyResolution = targetGlossProposalResolver.ResolveAdditional(
-            candidates, globalReviewKnownRenderingResolution.Proposals.Concat(dictionaryReviewResolution.Proposals));
+        List<EvidentiaAnalysis> sourceAnalyses = [.. source.Select(Analyse).OfType<EvidentiaAnalysis>()];
+        List<EvidentiaAnalysis> targetAnalyses = [.. target.Select(Analyse).OfType<EvidentiaAnalysis>()];
+        var frame = EvidentiaVerseFrame.Of(sourceAnalyses, targetAnalyses, globalReviewKnownRenderingResolution.Proposals);
+        var dictionaryReviewResolution = frame.Near(
+            dictionaryProposalResolver.ResolveAdditional(candidates, globalReviewKnownRenderingResolution.Proposals));
+        var targetGlossOnlyResolution = frame.Near(targetGlossProposalResolver.ResolveAdditional(
+            candidates, globalReviewKnownRenderingResolution.Proposals.Concat(dictionaryReviewResolution.Proposals)));
         var targetSyntax = await Syntax(toSlug, cancellationToken);
         var syntaxEligibleTargetGloss = syntaxReviewGate.ClauseCohesiveTargetGlossCandidates(
             candidates, globalKnownRenderingResolution.Proposals, targetSyntax);
-        var syntaxTargetGlossOnlyResolution = targetGlossProposalResolver.ResolveAdditional(
-            candidates, globalReviewKnownRenderingResolution.Proposals.Concat(dictionaryReviewResolution.Proposals), syntaxEligibleTargetGloss);
+        var syntaxTargetGlossOnlyResolution = frame.Near(targetGlossProposalResolver.ResolveAdditional(
+            candidates, globalReviewKnownRenderingResolution.Proposals.Concat(dictionaryReviewResolution.Proposals), syntaxEligibleTargetGloss));
         var targetGlossReviewResolution = new EvidentiaResolution(
             dictionaryReviewResolution.Proposals.Concat(targetGlossOnlyResolution.Proposals).ToList(), 0);
-        var residualKnownRenderingResolution = knownRenderingProposalResolver.ResolveResidual(
+        var residualKnownRenderingResolution = frame.Near(knownRenderingProposalResolver.ResolveResidual(
             candidates,
             globalReviewKnownRenderingResolution.Proposals
                 .Concat(dictionaryReviewResolution.Proposals)
-                .Concat(syntaxTargetGlossOnlyResolution.Proposals));
-        List<EvidentiaAnalysis> sourceAnalyses = [.. source.Select(Analyse).OfType<EvidentiaAnalysis>()];
-        List<EvidentiaAnalysis> targetAnalyses = [.. target.Select(Analyse).OfType<EvidentiaAnalysis>()];
+                .Concat(syntaxTargetGlossOnlyResolution.Proposals)));
         var anchoredGapResolution = EvidentiaAnchoredGap.Resolve(
             sourceAnalyses,
             targetAnalyses,
@@ -131,7 +133,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 .. syntaxTargetGlossOnlyResolution.Proposals,
                 .. residualKnownRenderingResolution.Proposals,
             ]);
-        var classMatchedTargetGlossResolution = targetGlossProposalResolver.ResolveAdditional(
+        var classMatchedTargetGlossResolution = frame.Near(targetGlossProposalResolver.ResolveAdditional(
             candidates,
             [
                 .. globalReviewKnownRenderingResolution.Proposals,
@@ -143,7 +145,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             candidates
                 .Where(candidate => EvidentiaMorphologyLabels.AreCounterparts(candidate.Source, candidate.Target))
                 .Select(candidate => (candidate.Source.Token.Id, candidate.Target.Token.Id))
-                .ToHashSet());
+                .ToHashSet()));
         var repeatedRenderingResolution = EvidentiaRepeatedRendering.Resolve(
             targetAnalyses,
             candidates,
@@ -168,7 +170,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 .. classMatchedTargetGlossResolution.Proposals,
                 .. repeatedRenderingResolution.Proposals,
             ]);
-        var dictionaryAndGlossProposals = EvidentiaCounterparts.DictionaryAndGloss(
+        var dictionaryAndGlossProposals = frame.Near(EvidentiaCounterparts.DictionaryAndGloss(
             candidates,
             [
                 .. globalReviewKnownRenderingResolution.Proposals,
@@ -179,7 +181,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 .. classMatchedTargetGlossResolution.Proposals,
                 .. repeatedRenderingResolution.Proposals,
                 .. contextGlossProposals,
-            ]);
+            ]));
         var syntaxTargetGlossReviewResolution = new EvidentiaResolution(
             dictionaryReviewResolution.Proposals
                 .Concat(syntaxTargetGlossOnlyResolution.Proposals)
@@ -218,7 +220,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             targetAnalyses,
             lexicalProposals);
         List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
-        finalProposals.AddRange(EvidentiaCounterparts.Resolve(sourceAnalyses, targetAnalyses, finalProposals));
+        finalProposals.AddRange(frame.Near(EvidentiaCounterparts.Resolve(sourceAnalyses, targetAnalyses, finalProposals)));
 
         var absences = EvidentiaAbsences.Resolve(sourceAnalyses, targetAnalyses, finalProposals);
         var byWord = EvidentiaWordScore.Of(sourceAnalyses, targetAnalyses, finalProposals, absences, goldAnnotation, out var absenceVerdicts);
@@ -1182,7 +1184,8 @@ internal sealed record EvidentiaChapterMeasurement(
 /// learned from one pair and the answer key taken from another.
 /// </summary>
 /// <param name="LearnRenderingsFrom">
-/// The text whose stated renderings feed the learned index, when it is not the measured source.
+/// The text whose stated renderings feed the learned index, when it is not the measured source; several,
+/// comma-separated, are read as one corpus (<c>KJV,BSB</c> for a text neither of them is).
 /// </param>
 /// <param name="LearnedRenderingMethods">
 /// Which link methods the learned index may read. The default is source-stated only; naming

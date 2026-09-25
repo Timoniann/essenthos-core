@@ -72,6 +72,8 @@ internal sealed class EvidentiaKnownRenderingIndex(
 {
     private const int MinimumObservations = EvidentiaDefaults.MinimumRenderingObservations;
 
+    private const string EnglishLanguage = "eng";
+
     /// <summary>
     /// What a translation's own edition states. It is the only evidence that is not itself an
     /// inference, so it is what a learned index reads unless a caller deliberately widens it.
@@ -83,7 +85,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
         new(StringComparer.Ordinal);
     private readonly Dictionary<(string Surface, string? Lemma, string Language), IReadOnlyList<RenderingKey>> keysByForm = [];
 
-    /// <param name="fromSlug">The text whose links teach the index.</param>
+    /// <param name="fromSlug">The text whose links teach the index, or several, comma-separated, read as one.</param>
     /// <param name="sourceSlug">
     /// The text being measured, when it is not <paramref name="fromSlug"/>; named in the refusal.
     /// </param>
@@ -109,14 +111,21 @@ internal sealed class EvidentiaKnownRenderingIndex(
             return null;
         }
 
-        var corpus = await Observations(fromSlug, toSlug, methods, cancellationToken);
-        if (!acrossLanguages && !corpus.Language.Equals(language[0], StringComparison.OrdinalIgnoreCase))
+        var teachers = fromSlug.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var corpora = new List<(string Slug, RenderingCorpus Corpus)>();
+        foreach (var teacher in teachers)
         {
-            throw new InvalidOperationException(
-                $"The rendering index for {sourceSlug ?? "the measured text"} ({language[0]}) was asked to learn " +
-                $"from {fromSlug} ({corpus.Language}). A rendering index is a statement about one language, so " +
-                "every form of the other would be keyed as if it were this one. Learn from a text in " +
-                $"{language[0]}, or say the transfer is meant with --learn-across-languages.");
+            var corpus = await Observations(teacher, toSlug, methods, cancellationToken);
+            if (!acrossLanguages && !corpus.Language.Equals(language[0], StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException(
+                    $"The rendering index for {sourceSlug ?? "the measured text"} ({language[0]}) was asked to learn " +
+                    $"from {teacher} ({corpus.Language}). A rendering index is a statement about one language, so " +
+                    "every form of the other would be keyed as if it were this one. Learn from a text in " +
+                    $"{language[0]}, or say the transfer is meant with --learn-across-languages.");
+            }
+
+            corpora.Add((teacher, corpus));
         }
 
         // Only the content words: they are the only ones a lookup asks about, so an entry for
@@ -131,10 +140,27 @@ internal sealed class EvidentiaKnownRenderingIndex(
             return null;
         }
 
-        var heldOut = await HeldOutVerses(fromSlug, excludedBook, excludedChapter, cancellationToken);
-        var distributions = RenderingDistributions.Build(
-            corpus.Observations, heldOut, wanted,
-            observation => Keys(observation, corpus.Language), MinimumObservations);
+        // Several teachers are asked in turn, not pooled: a word takes its renderings from the first teacher
+        // that knows any form of it, and a later one only fills in the words the earlier ones never wrote.
+        // Pooled, two editions' conventions for one word split its share between them, and the words the
+        // first alone knew fell below the floors it used to meet.
+        var distributions = new Dictionary<RenderingKey, RenderingDistribution>();
+        foreach (var (teacher, corpus) in corpora)
+        {
+            var heldOut = await HeldOutVerses(teacher, excludedBook, excludedChapter, cancellationToken);
+            var taught = RenderingDistributions.Build(
+                corpus.Observations, heldOut, wanted,
+                observation => Keys(observation, corpus.Language), MinimumObservations);
+            var unknown = keysByToken.Select(item => item.Keys).Where(keys => !keys.Any(distributions.ContainsKey)).ToList();
+            foreach (var keys in unknown)
+            {
+                foreach (var key in keys.Where(taught.ContainsKey))
+                {
+                    distributions[key] = taught[key];
+                }
+            }
+        }
+
         if (distributions.Count == 0)
         {
             return null;
@@ -212,7 +238,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
                     || (link.FromTextId == targetText.Id && link.ToTextId == sourceText.Id
                         && sourceMembership.Side == LinkSide.To && targetMembership.Side == LinkSide.From))
             select new RenderingObservation(
-                sourceWord.VerseId, sourceWord.Surface, sourceWord.Lemma, targetWord.StrongNumber!, link.Id))
+                sourceWord.VerseId, sourceWord.Surface, sourceWord.Lemma, targetWord.StrongNumber!, link.Id, sourceWord.Position))
             .ToListAsync(cancellationToken))
             .GroupBy(observation => observation.LinkId)
             .SelectMany(StemsOnly)
@@ -220,9 +246,38 @@ internal sealed class EvidentiaKnownRenderingIndex(
             .ThenBy(observation => observation.SourceSurface, StringComparer.Ordinal)
             .ThenBy(observation => observation.TargetStrongNumber, StringComparer.Ordinal)
             .ToList();
+        if (sourceText.Language.Equals(EnglishLanguage, StringComparison.OrdinalIgnoreCase))
+        {
+            observations = await Compounds(sourceText.Id, observations, cancellationToken);
+        }
+
         var corpus = new RenderingCorpus(sourceText.Language, observations);
         observationsByTextPair.Add(key, corpus);
         return corpus;
+    }
+
+    /// <summary>
+    /// The observations of a word that completes a compound its edition prints as two words, read as the
+    /// compound (<see cref="EnglishCompounds"/>): the King James's <em>day</em> of <em>to day</em> teaches
+    /// <em>today</em>.
+    /// </summary>
+    private async Task<List<RenderingObservation>> Compounds(
+        int textId, List<RenderingObservation> observations, CancellationToken cancellationToken)
+    {
+        var halves = EnglishCompounds.FirstHalves.ToList();
+        var firsts = (await db.Words.AsNoTracking()
+                .Where(word => word.TextId == textId && halves.Contains(word.Surface.ToLower()))
+                .Select(word => new { word.VerseId, word.Position, word.Surface, word.Trailer })
+                .ToListAsync(cancellationToken))
+            .ToDictionary(word => (word.VerseId, word.Position));
+        return
+        [
+            .. observations.Select(observation =>
+                firsts.TryGetValue((observation.VerseId, observation.SourcePosition - 1), out var first)
+                && EnglishCompounds.Compound(first.Surface, first.Trailer, observation.SourceSurface) is { } compound
+                    ? observation with { SourceSurface = compound, SourceLemma = compound }
+                    : observation),
+        ];
     }
 
     /// <summary>
@@ -283,7 +338,8 @@ internal sealed record RenderingObservation(
     string SourceSurface,
     string? SourceLemma,
     string TargetStrongNumber,
-    long LinkId = 0);
+    long LinkId = 0,
+    int SourcePosition = 0);
 
 /// <summary>
 /// Turns rendering observations into a distribution per key. It is a pure function of what was

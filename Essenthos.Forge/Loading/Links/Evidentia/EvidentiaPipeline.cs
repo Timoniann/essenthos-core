@@ -104,6 +104,11 @@ internal sealed class EvidentiaPipeline(
         {
             foreach (var to in target)
             {
+                if (EvidentiaTenseAgreement.Disagrees(from, to))
+                {
+                    continue;
+                }
+
                 var evidence = StructuralEvidence(from, to, maximumDistance);
                 if (from.IsContentWord && !to.IsFunctionWord && from.Normalised == to.Normalised)
                 {
