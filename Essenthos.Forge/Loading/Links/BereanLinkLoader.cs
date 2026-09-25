@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Essenthos.Core.Berean;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -88,6 +89,9 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     /// not to hold the file to a standard of lexicography.
     /// </summary>
     private const double Agreeing = 0.5;
+
+    /// <summary>The verse a psalm's title stands inside where the tables print one.</summary>
+    private const int FirstVerse = 1;
 
     private const string Source =
         "Berean Standard Bible translation tables, bereanbible.com, public domain";
@@ -197,6 +201,17 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
                          [.. witness.Select(word => HebrewLetters.Of(word.Surface))]) is { } matched)
             {
                 run = [.. matched.Select(words => words.Select(at => witness[at].Id).ToList())];
+            }
+            // The tables print a psalm's title inside verse 1 and the Hebrew numbers it apart, so
+            // the verse's letters are the title's and verse 1's together.
+            else if (number == FirstVerse
+                     && greek.TryGetValue((book, chapter, CanonicalReference.TitleVerse), out var title)
+                     && (List<Word>)[.. title, .. witness] is var titled
+                     && Letters(
+                         [.. rows.Select(row => HebrewLetters.Of(row.Original))],
+                         [.. titled.Select(word => HebrewLetters.Of(word.Surface))]) is { } withTitle)
+            {
+                run = [.. withTitle.Select(words => words.Select(at => titled[at].Id).ToList())];
             }
             else
             {
