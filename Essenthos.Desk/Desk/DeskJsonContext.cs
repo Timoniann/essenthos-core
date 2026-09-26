@@ -18,6 +18,7 @@ namespace Essenthos.Core.Desk;
 [JsonSerializable(typeof(BriefFieldRequest))]
 [JsonSerializable(typeof(PortraitStatusRequest))]
 [JsonSerializable(typeof(PortraitReviewRequest))]
+[JsonSerializable(typeof(PortraitAnswerRequest))]
 [JsonSerializable(typeof(PicturedResponse))]
 [JsonSerializable(typeof(PictureSet))]
 [JsonSerializable(typeof(PictureChoiceRequest))]
