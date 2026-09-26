@@ -90,6 +90,11 @@
         <Content Remove="Loading\Encyclopedia\PublicImages.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PublicImages.json" />
 
+        <!-- Where the face is in each picture of a person, which scripts/find-faces.ps1 measures and
+             the loader turns into the head and shoulders a small rendering shows. -->
+        <Content Remove="Loading\Encyclopedia\PortraitFaces.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\PortraitFaces.json" />
+
         <!-- The corrections scripts/swete-corrections.py writes out, one per token, for the reader and
              the warm pass to make alike. -->
         <Content Remove="Swete\SweteCorrections.json" />

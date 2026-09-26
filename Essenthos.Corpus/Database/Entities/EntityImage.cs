@@ -82,5 +82,19 @@ public class EntityImage
 
     public double? FocusY { get; set; }
 
+    /// <summary>
+    /// A person's head and shoulders, as fractions of the picture's width and height from the top
+    /// left: the square every small rendering shows, so that a list of portraits is a list of faces
+    /// rather than of whole figures in the same colours. Null where no face was found in it, and on
+    /// every picture of a place or a thing, which is shown whole.
+    /// </summary>
+    public double? BustX { get; set; }
+
+    public double? BustY { get; set; }
+
+    public double? BustWidth { get; set; }
+
+    public double? BustHeight { get; set; }
+
     public override string ToString() => $"EntityImage({Kind} {Role} {File} of entity {EntityId})";
 }
