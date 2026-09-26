@@ -5,6 +5,12 @@
   "source": "Essenthos: BibleData's same-name records compared pair by pair by claude-opus-5 (prompt records-1, 2026-09-06), and each pair it held to be one person read again against its verses by claude-opus-5-5, the high pairs on 2026-09-23 and the medium and low ones on 2026-09-24",
   "merges": [
     {
+      "strongNumber": "G2385",
+      "keeps": "james-3",
+      "folds": "james-5",
+      "why": "Both records are the Lord's brother James: the brother named in Matthew 13:55 and Mark 6:3, the James Peter reports to in Acts 12:17, who speaks at the council in Acts 15:13 and receives Paul in Acts 21:18, whom Paul calls 'the Lord's brother' in Galatians 1:19 and a pillar in 2:9, to whom the risen Lord appeared in 1 Corinthians 15:7, and who writes James 1:1 and is named as Jude's brother in Jude 1:1. The second record holds only these verses, all of them also under the first. Folded on the owner's word of 2026-09-25 ('merge them if they are one'). Whether James son of Alphaeus and James the Less, whose verses the first record also holds, are this man the text does not settle; that stays with PRB-0718."
+    },
+    {
       "strongNumber": "H285",
       "keeps": "ahitub-3",
       "folds": "ahitub-4",
