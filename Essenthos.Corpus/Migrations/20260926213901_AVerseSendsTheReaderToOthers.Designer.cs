@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260926213901_AVerseSendsTheReaderToOthers")]
+    partial class AVerseSendsTheReaderToOthers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -745,22 +748,6 @@ namespace Essenthos.Core.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<double?>("BustHeight")
-                        .HasColumnType("double precision")
-                        .HasColumnName("bust_height");
-
-                    b.Property<double?>("BustWidth")
-                        .HasColumnType("double precision")
-                        .HasColumnName("bust_width");
-
-                    b.Property<double?>("BustX")
-                        .HasColumnType("double precision")
-                        .HasColumnName("bust_x");
-
-                    b.Property<double?>("BustY")
-                        .HasColumnType("double precision")
-                        .HasColumnName("bust_y");
 
                     b.Property<string>("Caption")
                         .HasColumnType("text")

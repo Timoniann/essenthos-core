@@ -43,6 +43,12 @@ internal static class SwordModule
 {
     private const string ConfigurationFolder = "mods.d";
     private const string CompressedDriver = "zText";
+
+    /// <summary>
+    /// A commentary stored the same way: one entry per verse slot, the same three files. The
+    /// Treasury of Scripture Knowledge is one.
+    /// </summary>
+    private const string CompressedCommentaryDriver = "zCom";
     private const string ZipCompression = "ZIP";
     private const string KingJames = "KJV";
     private const string Nrsv = "NRSV";
@@ -184,13 +190,13 @@ internal static class SwordModule
     public static Dictionary<(int Book, int Chapter, int Verse), string> Verses(string folder)
     {
         var configuration = Configuration(folder);
-        if (configuration.Value("ModDrv") != CompressedDriver
+        if (configuration.Value("ModDrv") is not (CompressedDriver or CompressedCommentaryDriver)
             || configuration.Values.GetValueOrDefault("CompressType", ZipCompression) != ZipCompression)
         {
             throw new NotSupportedException(
                 $"{configuration.Name} is stored with the {configuration.Value("ModDrv")} driver, and this reader " +
-                $"knows only {CompressedDriver} with {ZipCompression} compression, which is what every module the " +
-                "corpus takes uses.");
+                $"knows only {CompressedDriver} and {CompressedCommentaryDriver} with {ZipCompression} compression, " +
+                "which is what every module the corpus takes uses.");
         }
 
         var chapters = Chapters(configuration);

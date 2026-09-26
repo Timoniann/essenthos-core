@@ -280,6 +280,7 @@ internal sealed class DatasetLoader(
             await CountTheCommandments(stoppingToken);
             await SetTheProphetsInTheirKingsDays(stoppingToken);
             await FileTheVersesUnderNavesTopics(resources, stoppingToken);
+            await SendTheVersesToOneAnother(resources, stoppingToken);
             await TellTheVersesThatNameFromThoseThatConcern(stoppingToken);
             await PictureThePeopleAndPlaces(resources, stoppingToken);
 
@@ -1763,6 +1764,22 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<NaveTopicLoader>();
         status.Record(await loader.Load(Path.Combine(resources, "BibleData2026"), cancellationToken));
+    }
+
+    /// <summary>
+    /// The sets of cross references a reader chooses between, and the parallel passages found in the
+    /// Hebrew and the Greek. After the texts and their lemmas, which the parallels are read from.
+    /// </summary>
+    private async Task SendTheVersesToOneAnother(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the cross references");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<CrossReferences.CrossReferenceLoader>();
+        foreach (var outcome in await loader.Load(resources, cancellationToken))
+        {
+            status.Record(outcome.ToString());
+        }
     }
 
     /// <summary>

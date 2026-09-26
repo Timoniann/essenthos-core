@@ -203,6 +203,9 @@ public class AppDbContext : DbContext
 
     public DbSet<TopicReference> TopicReferences { get; set; } = null!;
 
+    /// <summary>The sets of cross references, and the parallel passages this project detects.</summary>
+    public DbSet<CrossReference> CrossReferences { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         NameTablesInTheSingular(modelBuilder);
