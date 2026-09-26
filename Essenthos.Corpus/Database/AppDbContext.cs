@@ -143,6 +143,12 @@ public class AppDbContext : DbContext
     /// <summary>Where an observance falls in the year, as its verses state it.</summary>
     public DbSet<ObservanceTime> ObservanceTimes { get; set; } = null!;
 
+    /// <summary>The kings and the rulers of the nations, each with the periods the timeline draws him by.</summary>
+    public DbSet<RulerReign> RulerReigns { get; set; } = null!;
+
+    /// <summary>The verses that set a prophet, a foreign ruler or a king in a ruler's days.</summary>
+    public DbSet<ReignStatement> ReignStatements { get; set; } = null!;
+
     /// <summary>
     /// The ordered clauses this corpus says an entity is, out of which its description is rendered
     /// in whatever language a reader asks for.
@@ -393,6 +399,64 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(a => a.AlternativeEntityId)
                 .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        modelBuilder.Entity<RulerReign>(entity =>
+        {
+            entity.HasOne(r => r.Entity)
+                .WithMany()
+                .HasForeignKey(r => r.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.Period)
+                .WithMany()
+                .HasForeignKey(r => r.PeriodId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("ruler_reign", t =>
+            {
+                var realms = string.Join(", ", RulerRealms.All.Select(realm => $"'{realm}'"));
+                t.HasCheckConstraint("ck_ruler_reign_realm", $"realm IN ({realms})");
+                t.HasCheckConstraint(
+                    "ck_ruler_reign_drawn_under", $"drawn_under IS NULL OR drawn_under IN ({realms})");
+                t.HasCheckConstraint("ck_ruler_reign_source_not_empty", "length(btrim(source)) > 0");
+            });
+        });
+
+        // A statement is about both people, and about the son it came through where it came through one.
+        modelBuilder.Entity<ReignStatement>(entity =>
+        {
+            entity.HasOne(s => s.Entity)
+                .WithMany()
+                .HasForeignKey(s => s.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(s => s.Ruler)
+                .WithMany()
+                .HasForeignKey(s => s.RulerEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(s => s.Through)
+                .WithMany()
+                .HasForeignKey(s => s.ThroughEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("reign_statement", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_reign_statement_role",
+                    $"role IN ({string.Join(", ", ReignRoles.All.Select(role => $"'{role}'"))})");
+                t.HasCheckConstraint(
+                    "ck_reign_statement_kind",
+                    $"kind IN ({string.Join(", ", ReignStatementKinds.All.Select(kind => $"'{kind}'"))})");
+                t.HasCheckConstraint(
+                    "ck_reign_statement_counted_from",
+                    $"counted_from IS NULL OR counted_from IN ({string.Join(", ", ReignCounts.All.Select(count => $"'{count}'"))})");
+                t.HasCheckConstraint("ck_reign_statement_year", "year IS NULL OR year >= 1");
+                t.HasCheckConstraint(
+                    "ck_reign_statement_end_verse", "end_verse IS NULL OR end_verse > canonical_verse");
+                t.HasCheckConstraint("ck_reign_statement_source_not_empty", "length(btrim(source)) > 0");
+            });
         });
 
         // Either end going away takes the row with it: a bearer is a statement about both records.

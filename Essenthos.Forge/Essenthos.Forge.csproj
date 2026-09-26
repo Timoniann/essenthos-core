@@ -78,6 +78,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\DuplicateRecords.json" />
         <Content Remove="Loading\Encyclopedia\UssherDatings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\UssherDatings.json" />
+        <Content Remove="Loading\Encyclopedia\ReignRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\ReignRecords.json" />
 
         <!-- The peoples this corpus names, and the two things about them nothing else can supply:
              what to call the nine gentilics whose entry yields no usable English word, and the

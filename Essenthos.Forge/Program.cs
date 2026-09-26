@@ -145,6 +145,7 @@ builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
 builder.Services.AddScoped<TermLoader>();
 builder.Services.AddScoped<TitleLoader>();
+builder.Services.AddScoped<ReignLoader>();
 builder.Services.AddScoped<OwnNameLoader>();
 builder.Services.AddScoped<ThingLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
@@ -846,6 +847,15 @@ if (args is ["lands", ..])
 {
     using var landsScope = app.Services.CreateScope();
     Console.WriteLine(await landsScope.ServiceProvider.GetRequiredService<PeriodOLoader>().Load(resources));
+    return 0;
+}
+
+// The kings, the rulers of the nations and the prophets of their days, for a corpus loaded before
+// they were. The load does this after the chronologies and the folds; this is that step alone.
+if (args is ["reigns", ..])
+{
+    using var reignScope = app.Services.CreateScope();
+    Console.WriteLine(await reignScope.ServiceProvider.GetRequiredService<ReignLoader>().Load());
     return 0;
 }
 
