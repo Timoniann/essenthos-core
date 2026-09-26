@@ -55,8 +55,7 @@ internal static class DeskEndpoints
             try
             {
                 var people = (await portraits.List(cancellationToken)).People;
-                counts.Add(new SummaryCount("portraits",
-                    people.Count(p => p.Tier == 1 && !p.NeverPictured && PortraitsWaiting.Contains(p.Status)), null));
+                counts.Add(new SummaryCount("portraits", people.Count(p => p.Waiting), null));
             }
             catch (Exception exception) when (exception is Npgsql.NpgsqlException or InvalidOperationException)
             {
@@ -68,12 +67,6 @@ internal static class DeskEndpoints
             counts.Add(new SummaryCount("history", changes.Waiting.Values.Sum(), null));
             return new SummaryResponse(counts, changes.Waiting);
         });
-
-    /// <summary>The statuses a first-tier portrait still waits in; the others are the owner's settled word.</summary>
-    private static readonly IReadOnlySet<string> PortraitsWaiting = new HashSet<string>(StringComparer.Ordinal)
-    {
-        PortraitBoard.NotStarted, PortraitBoard.Ready, PortraitBoard.ToGenerate, PortraitBoard.Generated,
-    };
 
     public static void MapHistory(this RouteGroupBuilder routes) =>
         routes.MapGet("/history", (ChangeLog log) => log.Read());
@@ -154,6 +147,10 @@ internal static class DeskEndpoints
         routes.MapPut("/portraits/{slug}/review", async (
                 string slug, PortraitReviewRequest request, PortraitEditor editor, CancellationToken cancellationToken) =>
             Changed(await editor.SetReview(slug, request, cancellationToken)));
+
+        routes.MapPut("/portraits/{slug}/answer", async (
+                string slug, PortraitAnswerRequest request, PortraitEditor editor, CancellationToken cancellationToken) =>
+            Changed(await editor.Answer(slug, request, cancellationToken)));
 
         // The picture as the request's body, so nothing but its bytes crosses: no form, no field names.
         routes.MapPost("/portraits/{slug}/upload", async (

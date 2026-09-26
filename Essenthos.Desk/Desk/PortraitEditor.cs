@@ -13,6 +13,9 @@ internal sealed record PortraitStatusRequest(string Status, string? Note);
 /// <param name="Review"><c>pending</c>, <c>approved</c> or <c>rejected</c>.</param>
 internal sealed record PortraitReviewRequest(string File, string Review, string? Note);
 
+/// <param name="Answer">The owner's answer to the brief's question, in his words or as one of its options.</param>
+internal sealed record PortraitAnswerRequest(string? Answer, string? Note);
+
 /// <param name="Detail">The person as they stand after the change, or null where it was refused.</param>
 /// <param name="Problem">Why it was refused, in a sentence.</param>
 internal sealed record PortraitChange(PortraitDetail? Detail, string? Problem);
@@ -45,6 +48,9 @@ internal sealed partial class PortraitEditor(PortraitBoard board, DeskPaths path
 
     /// <summary>The longest value a brief field takes, which is several pages of prose.</summary>
     private const int LongestField = 40_000;
+
+    /// <summary>The longest answer to a brief's question, which is a few sentences.</summary>
+    private const int LongestAnswer = 2_000;
 
     /// <summary>The fields a brief is found by, which are not the owner's to rename.</summary>
     private static readonly IReadOnlySet<string> Fixed = new HashSet<string>(StringComparer.Ordinal) { "slug" };
@@ -115,12 +121,14 @@ internal sealed partial class PortraitEditor(PortraitBoard board, DeskPaths path
         await ChangeBrief(person, brief => brief["status"] = request.Status);
 
         // Approving or rejecting the portrait is the owner's word on each picture still waiting for it.
-        var reviewed = request.Status is PortraitBoard.Approved or PortraitBoard.Rejected
-                       && await Review(slug, file => file["review"]?.GetValue<string>() == Pending,
-                           request.Status == PortraitBoard.Approved ? Approved : Rejected);
+        var waiting = person.Images.Where(i => i.Kind == PortraitBoard.Generated && i.Review == Pending).Select(i => i.File).ToHashSet();
+        var changed = request.Status is PortraitBoard.Approved or PortraitBoard.Rejected && waiting.Count > 0
+            ? await ReviewFiles(waiting, request.Status == PortraitBoard.Approved ? Approved : Rejected)
+            : [];
 
         await log.Append(Section, "status", $"person/{slug}", JsonValue.Create(before), JsonValue.Create(request.Status),
-            request.Note, reviewed ? "images" : null, NameOf(person));
+            request.Note, changed.Any(c => c.Slug == slug) ? "images" : null, NameOf(person));
+        await Restate(changed.Where(c => c.Slug != slug), request.Note, cancellationToken);
         return await Now(slug, cancellationToken);
     }
 
@@ -138,7 +146,8 @@ internal sealed partial class PortraitEditor(PortraitBoard board, DeskPaths path
 
         var file = request.File.Replace('\\', '/');
         var was = person.Images.FirstOrDefault(i => i.File == file && i.Kind == PortraitBoard.Generated);
-        if (was is null || !await Review(slug, entry => PortraitBoard.File(entry) == file, request.Review))
+        var changed = was is null ? [] : await ReviewFiles(new HashSet<string> { file }, request.Review);
+        if (changed.All(c => c.Slug != slug))
         {
             return Refused("Our manifest lists no such picture of this person.");
         }
@@ -147,8 +156,51 @@ internal sealed partial class PortraitEditor(PortraitBoard board, DeskPaths path
         // one refused among approved ones leaves it approved.
         var status = PortraitBoard.StatusOf(null, PortraitBoard.Listed(JsonFiles.Read(Manifest), slug).ToList());
         await ChangeBrief(person, brief => brief["status"] = status);
-        await log.Append(Section, "review", $"person/{slug} {file}", JsonValue.Create(was.Review), JsonValue.Create(request.Review),
+        await log.Append(Section, "review", $"person/{slug} {file}", JsonValue.Create(was!.Review), JsonValue.Create(request.Review),
             request.Note, "images", NameOf(person));
+        await Restate(changed.Where(c => c.Slug != slug), request.Note, cancellationToken);
+        return await Now(slug, cancellationToken);
+    }
+
+    /// <summary>
+    /// Answers the question the brief asks the owner: the answer joins the brief's record of his
+    /// decisions and the question leaves it, and the log says an agent has the portrait to act on.
+    /// </summary>
+    public async Task<PortraitChange> Answer(string slug, PortraitAnswerRequest request, CancellationToken cancellationToken)
+    {
+        var answer = request.Answer?.Trim();
+        if (string.IsNullOrEmpty(answer))
+        {
+            return Refused("The answer is empty. Choose one of the brief's options or write the answer in a few words.");
+        }
+
+        if (answer.Length > LongestAnswer)
+        {
+            return Refused("The answer is too long; a few sentences at most. Longer thoughts belong in the brief's fields.");
+        }
+
+        if (await board.Detail(slug, cancellationToken) is not { } person)
+        {
+            return Refused("There is no such person in the corpus.");
+        }
+
+        if (person.Person.Question is not { } question)
+        {
+            return Refused("The brief asks nothing of you about this person now.");
+        }
+
+        var decision = $"Owner {JsonFiles.Today()}: {answer}";
+        await ChangeBrief(person, brief =>
+        {
+            brief["owner_decision"] = brief["owner_decision"] is JsonValue earlier && earlier.TryGetValue<string>(out var said)
+                                      && !string.IsNullOrWhiteSpace(said)
+                ? $"{said.TrimEnd()} {decision}"
+                : decision;
+            brief.Remove("owner_decision_needed");
+        });
+
+        await log.Append(Section, "answer", $"person/{slug}", JsonValue.Create(question), JsonValue.Create(answer),
+            request.Note, "agent", NameOf(person));
         return await Now(slug, cancellationToken);
     }
 
@@ -275,25 +327,61 @@ internal sealed partial class PortraitEditor(PortraitBoard board, DeskPaths path
         });
     }
 
-    /// <summary>Sets the review of the person's manifest entries that <paramref name="which"/> picks; whether any was.</summary>
-    private async Task<bool> Review(string slug, Func<JsonNode, bool> which, string review)
+    /// <summary>
+    /// Sets the review of every manifest entry of the files, whoever it is listed for: a picture
+    /// listed on two people's pages is one picture, and the owner's word on it is one word. Each entry
+    /// changed, with the person it is listed for and the review it had.
+    /// </summary>
+    private async Task<List<Reviewed>> ReviewFiles(IReadOnlySet<string> files, string review)
     {
         if (!System.IO.File.Exists(Manifest))
         {
-            return false;
+            return [];
         }
 
         return await JsonFiles.Change(Manifest, node =>
         {
-            var entries = PortraitBoard.Listed(node, slug).Where(which).OfType<JsonObject>().ToList();
+            var entries = (node["images"]?.AsArray() ?? [])
+                .OfType<JsonObject>()
+                .Where(e => e["file"] is not null && e["entity"] is not null && files.Contains(PortraitBoard.File(e)))
+                .ToList();
+            var changed = entries
+                .Select(e => new Reviewed(e["entity"]!.GetValue<string>(), PortraitBoard.File(e), PortraitBoard.Review(e)))
+                .ToList();
             foreach (var entry in entries)
             {
                 entry["review"] = review;
             }
 
-            return (entries.Count > 0, entries.Count > 0);
+            return (entries.Count > 0, changed);
         });
     }
+
+    /// <summary>
+    /// Brings the status of each other person a shared picture is listed for into line with the
+    /// owner's word on it, and logs the word for each of them as his.
+    /// </summary>
+    private async Task Restate(IEnumerable<Reviewed> others, string? note, CancellationToken cancellationToken)
+    {
+        JsonNode? manifest = null;
+        foreach (var other in others)
+        {
+            manifest ??= JsonFiles.Read(Manifest);
+            if (await board.Detail(other.Slug, cancellationToken) is not { } person)
+            {
+                continue;
+            }
+
+            var listed = PortraitBoard.Listed(manifest, other.Slug).ToList();
+            var status = PortraitBoard.StatusOf(null, listed);
+            await ChangeBrief(person, brief => brief["status"] = status);
+            var now = listed.Where(e => PortraitBoard.File(e) == other.File).Select(PortraitBoard.Review).FirstOrDefault();
+            await log.Append(Section, "review", $"person/{other.Slug} {other.File}", JsonValue.Create(other.Before),
+                JsonValue.Create(now), note, "images", NameOf(person));
+        }
+    }
+
+    private sealed record Reviewed(string Slug, string File, string? Before);
 
     private string Free(string slug, string extension)
     {

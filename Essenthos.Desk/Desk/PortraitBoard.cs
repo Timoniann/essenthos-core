@@ -15,6 +15,7 @@ namespace Essenthos.Core.Desk;
 /// <param name="Glory">Whether the manifest lists the picture of the glory, the one kind God's records may have.</param>
 /// <param name="Status">Where the portrait stands: one of <see cref="PortraitBoard.Statuses"/>.</param>
 /// <param name="Question">What the brief says is still the owner's to decide about the portrait, or null.</param>
+/// <param name="Waiting">Whether something here waits on the owner: a picture for his word, or the brief's question while the portrait is unsettled.</param>
 internal sealed record PortraitPerson(
     string Slug,
     string Name,
@@ -30,7 +31,8 @@ internal sealed record PortraitPerson(
     bool NeverPictured,
     bool Glory,
     string Status,
-    string? Question);
+    string? Question,
+    bool Waiting);
 
 /// <param name="Problem">What could not be read beside the corpus — the manifest or the briefs — in a sentence.</param>
 internal sealed record PortraitsResponse(IReadOnlyList<PortraitPerson> People, bool Manifest, bool Briefs, string? Problem);
@@ -40,6 +42,8 @@ internal sealed record PortraitsResponse(IReadOnlyList<PortraitPerson> People, b
 /// <param name="OnDisk">Whether the file is there.</param>
 /// <param name="Review">For one of our own: <c>pending</c>, <c>approved</c>, <c>rejected</c>, or null where nobody wrote one.</param>
 /// <param name="Choice">What the owner chose about it, or null where he chose nothing.</param>
+/// <param name="Option">The brief's option it was drawn from, where the prompt it was drawn from is one of them.</param>
+/// <param name="Shared">The other people whose pages our manifest lists the same picture for.</param>
 internal sealed record PortraitImage(
     string File,
     string Kind,
@@ -52,7 +56,14 @@ internal sealed record PortraitImage(
     bool OnDisk,
     bool Glory,
     string? Review,
-    PictureChoice? Choice);
+    PictureChoice? Choice,
+    PortraitOption? Option,
+    IReadOnlyList<PortraitShare> Shared);
+
+/// <param name="Id">The option's letter in the brief.</param>
+internal sealed record PortraitOption(string Id, string? Label);
+
+internal sealed record PortraitShare(string Slug, string Name, string? LocalName);
 
 /// <param name="Brief">What the briefs file says about the person, as it says it, or null.</param>
 internal sealed record PortraitDetail(PortraitPerson Person, JsonNode? Brief, IReadOnlyList<PortraitImage> Images);
@@ -113,6 +124,12 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
 
     public static readonly IReadOnlyList<string> Statuses = [NotStarted, Ready, ToGenerate, Generated, Approved, Rejected, NoPortrait];
 
+    /// <summary>The statuses a portrait is still on its way in; the others are the owner's settled word.</summary>
+    public static readonly IReadOnlySet<string> Unsettled = new HashSet<string>(StringComparer.Ordinal)
+    {
+        NotStarted, Ready, ToGenerate, Generated,
+    };
+
     private const string Public = "public";
 
     private static readonly JsonDocumentOptions Lenient = new()
@@ -144,10 +161,11 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
             return null;
         }
 
+        var brief = BriefOf(briefs, slug);
         return new PortraitDetail(
             Person(row, manifest, briefs),
-            BriefOf(briefs, slug)?.DeepClone(),
-            await Images(row.Id, slug, manifest, cancellationToken));
+            brief?.DeepClone(),
+            await Images(row.Id, slug, manifest, brief, cancellationToken));
     }
 
     /// <summary>Every person and place with a picture, or with a choice the owner made about one.</summary>
@@ -173,10 +191,10 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
             return null;
         }
 
-        var (manifest, _, _) = Beside();
+        var (manifest, briefs, _) = Beside();
         return new PictureSet(
             Pictured(row, PictureChoices.Read(paths).GetValueOrDefault(slug) ?? []),
-            await Images(row.Id, slug, manifest, cancellationToken));
+            await Images(row.Id, slug, manifest, BriefOf(briefs, slug), cancellationToken));
     }
 
     /// <summary>
@@ -184,10 +202,12 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
     /// hold yet, and those the owner hid, which the corpus no longer holds once the pictures are loaded
     /// again and which he must still be able to bring back.
     /// </summary>
-    private async Task<List<PortraitImage>> Images(int id, string slug, JsonNode? manifest, CancellationToken cancellationToken)
+    private async Task<List<PortraitImage>> Images(
+        int id, string slug, JsonNode? manifest, JsonNode? brief, CancellationToken cancellationToken)
     {
         var choices = (PictureChoices.Read(paths).GetValueOrDefault(slug) ?? []).ToDictionary(c => c.File, StringComparer.Ordinal);
         var listed = Listed(manifest, slug).ToList();
+        var shared = await SharedOf(manifest, slug, cancellationToken);
         var loaded = await db.EntityImages
             .Where(i => i.EntityId == id)
             .OrderBy(i => i.Kind).ThenBy(i => i.Role).ThenBy(i => i.Ordinal)
@@ -199,7 +219,8 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
                 var entry = listed.FirstOrDefault(e => File(e) == i.File);
                 return new PortraitImage(i.File, i.Kind, i.Role, i.Caption, i.Credit, i.Licence, i.Source, true,
                     OnDisk(i.File), entry is not null && Glory(entry), entry is null ? null : Review(entry),
-                    choices.GetValueOrDefault(i.File));
+                    choices.GetValueOrDefault(i.File), entry is null ? null : OptionOf(entry, brief),
+                    shared.GetValueOrDefault(i.File) ?? []);
             })
             .ToList();
         foreach (var entry in listed.Where(e => images.All(i => i.File != File(e))))
@@ -216,16 +237,71 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
                 OnDisk(File(entry)),
                 Glory(entry),
                 Review(entry),
-                choices.GetValueOrDefault(File(entry))));
+                choices.GetValueOrDefault(File(entry)),
+                OptionOf(entry, brief),
+                shared.GetValueOrDefault(File(entry)) ?? []));
         }
 
         foreach (var choice in choices.Values.Where(c => images.All(i => i.File != c.File)))
         {
             images.Add(new PortraitImage(choice.File, Public, "gallery", null, null, null, null, false, OnDisk(choice.File),
-                false, null, choice));
+                false, null, choice, null, []));
         }
 
         return images;
+    }
+
+    /// <summary>For each picture our manifest lists for the person, the other people it lists the same file for.</summary>
+    private async Task<Dictionary<string, List<PortraitShare>>> SharedOf(
+        JsonNode? manifest, string slug, CancellationToken cancellationToken)
+    {
+        var files = Listed(manifest, slug).Select(File).ToHashSet(StringComparer.Ordinal);
+        var others = (manifest?["images"]?.AsArray() ?? [])
+            .OfType<JsonNode>()
+            .Where(e => e["file"] is not null && e["entity"]?.GetValue<string>() is { } entity && entity != slug
+                        && files.Contains(File(e)))
+            .Select(e => (File: File(e), Slug: e["entity"]!.GetValue<string>()))
+            .ToList();
+        if (others.Count == 0)
+        {
+            return [];
+        }
+
+        var slugs = others.Select(o => o.Slug).Distinct().ToList();
+        var names = await db.Entities
+            .Where(e => slugs.Contains(e.Slug))
+            .Select(e => new PortraitShare(
+                e.Slug,
+                e.Name,
+                db.EntityNameForms
+                    .Where(f => f.EntityId == e.Id && f.Language == "ukr" && f.GrammaticalCase == GrammaticalCases.Nominative)
+                    .Select(f => f.Form)
+                    .FirstOrDefault()))
+            .ToDictionaryAsync(s => s.Slug, StringComparer.Ordinal, cancellationToken);
+        return others
+            .GroupBy(o => o.File, StringComparer.Ordinal)
+            .ToDictionary(
+                g => g.Key,
+                g => g.Select(o => names.GetValueOrDefault(o.Slug) ?? new PortraitShare(o.Slug, o.Slug, null))
+                    .DistinctBy(s => s.Slug)
+                    .ToList(),
+                StringComparer.Ordinal);
+    }
+
+    /// <summary>The brief's option whose prompt the picture was drawn from, as its provenance records the prompt.</summary>
+    internal static PortraitOption? OptionOf(JsonNode entry, JsonNode? brief)
+    {
+        if (entry["provenance"]?["brief_prompt"] is not JsonValue drawn || !drawn.TryGetValue<string>(out var prompt)
+            || brief?["options"] is not JsonArray options)
+        {
+            return null;
+        }
+
+        var option = options.OfType<JsonObject>().FirstOrDefault(o =>
+            o["prompt"] is JsonValue value && value.TryGetValue<string>(out var text) && text == prompt);
+        return option?["id"] is JsonValue id && id.TryGetValue<string>(out var letter)
+            ? new PortraitOption(letter, option["label"] is JsonValue label && label.TryGetValue<string>(out var said) ? said : null)
+            : null;
     }
 
     private async Task<List<Row>> People(IQueryable<Entity> entities, CancellationToken cancellationToken) =>
@@ -278,6 +354,11 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
     {
         var listed = Listed(manifest, row.Slug).ToList();
         var brief = BriefOf(briefs, row.Slug);
+        var status = StatusOf(brief, listed);
+        var question = brief?["owner_decision_needed"] is JsonValue asked && asked.TryGetValue<string>(out var text)
+                       && !string.IsNullOrWhiteSpace(text)
+            ? text
+            : null;
         return new PortraitPerson(
             row.Slug,
             row.Name,
@@ -292,9 +373,18 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
             brief is not null,
             row.SourceId.StartsWith(GodSourcePrefix, StringComparison.Ordinal),
             listed.Any(Glory),
-            StatusOf(brief, listed),
-            brief?["owner_decision_needed"] is JsonValue question && question.TryGetValue<string>(out var text) ? text : null);
+            status,
+            question,
+            Waits(listed, question, status));
     }
+
+    /// <summary>
+    /// Whether the portrait waits on the owner: a picture of it waits for his word, or its brief asks
+    /// him something while the portrait is still on its way. A brief still to write or a picture still
+    /// to draw waits on whoever writes and draws them, not on him.
+    /// </summary>
+    public static bool Waits(IReadOnlyCollection<JsonNode> listed, string? question, string status) =>
+        listed.Any(e => Review(e) == PortraitEditor.Pending) || (question is not null && Unsettled.Contains(status));
 
     /// <summary>
     /// Where a portrait stands: as its brief says, where the brief says one of the statuses; else, where
@@ -359,7 +449,7 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
 
     private static bool Glory(JsonNode entry) => entry["glory"]?.GetValueKind() == JsonValueKind.True;
 
-    private static string? Review(JsonNode entry) =>
+    internal static string? Review(JsonNode entry) =>
         entry["review"] is JsonValue value && value.TryGetValue<string>(out var review) ? review : null;
 
     private bool OnDisk(string file) => DeskPaths.Under(paths.Images, file) is { } path && System.IO.File.Exists(path);

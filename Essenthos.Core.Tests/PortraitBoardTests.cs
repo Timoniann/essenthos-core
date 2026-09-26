@@ -212,6 +212,89 @@ public sealed class PortraitBoardTests : IDisposable
     }
 
     [Fact]
+    public async Task APictureListedForTwoPeopleIsOnePictureAndTheOwnersWordOnItReachesBoth()
+    {
+        Person("adam", verses: 18);
+        Person("eve", verses: 19, sex: "female");
+        await _db.SaveChangesAsync();
+        foreach (var file in new[] { "adam.webp", "adam-2.webp", "adam-and-eve.webp", "eve.webp" })
+        {
+            File.WriteAllText(Path.Combine(_paths.Generated, file), "a picture");
+        }
+
+        File.WriteAllText(Path.Combine(_paths.Generated, PortraitBoard.ManifestFile),
+            """
+            { "images": [
+              { "entity": "adam", "file": "generated/adam.webp", "review": "pending", "provenance": { "brief_prompt": "leaving" } },
+              { "entity": "adam", "file": "generated/adam-2.webp", "review": "pending", "provenance": { "brief_prompt": "tilling" } },
+              { "entity": "adam", "file": "generated/adam-and-eve.webp", "review": "pending", "role": "gallery" },
+              { "entity": "eve", "file": "generated/eve.webp", "review": "approved" },
+              { "entity": "eve", "file": "generated/adam-and-eve.webp", "review": "pending", "role": "gallery" }
+            ] }
+            """);
+        File.WriteAllText(Path.Combine(_paths.Generated, PortraitBoard.BriefsFile),
+            """
+            [{ "slug": "adam", "status": "generated", "options": [
+              { "id": "A", "label": "Leaving the garden", "prompt": "leaving" },
+              { "id": "B", "label": "Tilling the ground", "prompt": "tilling" } ] }]
+            """);
+        var board = new PortraitBoard(_db, _paths);
+
+        var adam = (await board.Detail("adam", default))!;
+        adam.Images.Select(i => i.Option?.Id).Should().Equal("A", "B", null);
+        adam.Images[0].Option!.Label.Should().Be("Leaving the garden");
+        adam.Images[2].Shared.Select(s => s.Slug).Should().Equal("eve");
+        adam.Person.Waiting.Should().BeTrue();
+        (await board.Detail("eve", default))!.Person.Waiting.Should().BeTrue("the picture of both waits on her page too");
+
+        var editor = Editor();
+        (await editor.SetReview("adam", new PortraitReviewRequest("generated/adam-and-eve.webp", "approved", null), default))
+            .Problem.Should().BeNull();
+
+        var eve = (await board.Detail("eve", default))!;
+        eve.Images.Select(i => i.Review).Should().OnlyContain(r => r == "approved");
+        (eve.Person.Status, eve.Person.Waiting).Should().Be((PortraitBoard.Approved, false));
+        _log.Read().Entries.Select(e => e.Target).Should().Contain(
+            ["person/adam generated/adam-and-eve.webp", "person/eve generated/adam-and-eve.webp"]);
+
+        await editor.SetReview("adam", new PortraitReviewRequest("generated/adam.webp", "approved", null), default);
+        var chosen = await editor.SetReview("adam", new PortraitReviewRequest("generated/adam-2.webp", "rejected", null), default);
+        (chosen.Detail!.Person.Status, chosen.Detail.Person.Waiting).Should().Be((PortraitBoard.Approved, false));
+    }
+
+    [Fact]
+    public async Task TheBriefsQuestionIsAnsweredOnceAndWaitsOnTheOwnerOnlyWhileThePortraitIsUnsettled()
+    {
+        Person("angel", verses: 73);
+        Person("jesus", verses: 900);
+        await _db.SaveChangesAsync();
+        File.WriteAllText(Path.Combine(_paths.Generated, PortraitBoard.BriefsFile),
+            """
+            [{ "slug": "angel", "status": "needs-owner-decision", "owner_decision": "Owner's call between A and B.",
+               "owner_decision_needed": "which option: A or B" },
+             { "slug": "jesus", "status": "approved", "owner_decision_needed": "non-blocking: whether B is wanted" }]
+            """);
+        var board = new PortraitBoard(_db, _paths);
+        var people = (await board.List(default)).People.ToDictionary(p => p.Slug);
+        (people["angel"].Question, people["angel"].Waiting).Should().Be(("which option: A or B", true));
+        (people["jesus"].Question is not null, people["jesus"].Waiting).Should().Be((true, false),
+            "a question on a settled portrait is shown but does not wait on him");
+
+        var editor = Editor();
+        (await editor.Answer("angel", new PortraitAnswerRequest("  ", null), default)).Problem.Should().NotBeNull();
+        var answered = await editor.Answer("angel", new PortraitAnswerRequest("A — light only", null), default);
+
+        answered.Problem.Should().BeNull();
+        (answered.Detail!.Person.Question, answered.Detail.Person.Waiting).Should().Be((null, false));
+        answered.Detail.Brief!["owner_decision"]!.GetValue<string>().Should()
+            .StartWith("Owner's call between A and B. Owner ").And.EndWith(": A — light only");
+        (await editor.Answer("angel", new PortraitAnswerRequest("B", null), default)).Problem.Should().NotBeNull(
+            "there is nothing left to answer");
+        var logged = _log.Read().Entries.Single();
+        (logged.Action, logged.Needs, logged.Before!.GetValue<string>()).Should().Be(("answer", "agent", "which option: A or B"));
+    }
+
+    [Fact]
     public async Task GodIsGivenOnlyThePictureOfTheGloryAndNobodyElseIsGivenIt()
     {
         Person("yhvh", verses: 70, sourceId: "person:YHVH_1");
