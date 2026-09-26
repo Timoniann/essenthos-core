@@ -1292,8 +1292,9 @@ internal static class EncyclopediaEndpoints
     /// 3,962 less the count, above it the CE year is the count less 3,961.
     ///
     /// <para>
-    /// This is the default chronology's <c>last_year_before_the_common_era</c>, and every event
-    /// with a date row reads it from there instead. It stands alone in two places only: the
+    /// This is the base reckoning's <c>last_year_before_the_common_era</c> — BibleData's, on whose
+    /// count every year from creation stands whichever reckoning is the default — and every event
+    /// with a date row reads its own reckoning's instead. It stands alone in two places only: the
     /// timeline payload, which states it once for a client that has to place a bare year, and an
     /// event no reckoning dates at all.
     /// </para>
@@ -1487,7 +1488,7 @@ internal static class EncyclopediaEndpoints
             LocationSlug = EventLocation.Of(e) is { } location ? places.GetValueOrDefault(location) : null,
             RegionAtTheTime = e.RegionAtTheTime,
             // Only where no reckoning states this event at all does the base zero point stand in;
-            // it is the same number the default chronology holds.
+            // it is the same number the base reckoning holds.
             Era = reckoning?.Era
                   ?? (e.YearFromCreation > LastYearBeforeChrist ? CommonEra : BeforeTheCommonEra),
         };
@@ -2070,12 +2071,12 @@ internal record PeriodResponse(
     public IDictionary<string, int[]> Years { get; init; } = new Dictionary<string, int[]>();
 }
 
-/// <param name="LastAnnoMundiBeforeTheCommonEra">The default reckoning's, as the timeline sends it.</param>
+/// <param name="LastAnnoMundiBeforeTheCommonEra">The base reckoning's, as the timeline sends it.</param>
 internal record PeriodListResponse(
     int LastAnnoMundiBeforeTheCommonEra,
     IList<TimelinePeriodResponse> Items);
 
-/// <param name="LastAnnoMundiBeforeTheCommonEra">The default reckoning's, as the timeline sends it.</param>
+/// <param name="LastAnnoMundiBeforeTheCommonEra">The base reckoning's, as the timeline sends it.</param>
 internal record ChronologyListResponse(
     int LastAnnoMundiBeforeTheCommonEra,
     IList<ChronologyResponse> Chronologies);
@@ -2086,9 +2087,10 @@ internal record ChronologyListResponse(
 /// The dataset counts forward from the creation without a sign, and 3,961 is where its era turns.
 /// </param>
 /// <param name="LastAnnoMundiBeforeTheCommonEra">
-/// The year from creation that is 1 BCE in the default reckoning, so a client can turn a year on
-/// this axis into an astronomical one by subtracting it — and can do so without a <c>Date</c>,
-/// which is the point. Each chronology carries its own; this is the default's.
+/// The year from creation that is 1 BCE in the base reckoning, BibleData's, so a client can turn a
+/// year on this axis into an astronomical one by subtracting it — and can do so without a
+/// <c>Date</c>, which is the point. Each chronology carries its own; this is the base's, which the
+/// years of a period anchored to no event are counted on.
 /// </param>
 /// <summary>
 /// The pictures the timeline shows small beside its events and periods, read from the encyclopedia

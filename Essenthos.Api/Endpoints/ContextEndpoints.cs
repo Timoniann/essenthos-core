@@ -557,7 +557,7 @@ internal record ChapterContextResponse(
     IList<ContextCommandmentResponse> Commandments,
     IList<ContextTopicResponse> Topics);
 
-/// <param name="StartYear">Its first year from creation in the default reckoning, which placed the chapter in it.</param>
+/// <param name="StartYear">Its first year from creation in the base reckoning, which placed the chapter in it.</param>
 /// <param name="Years">
 /// Its span in each reckoning that dates both its bounding events, keyed by the reckoning's slug, as
 /// the timeline carries it; under the empty key for a period with no anchors, whose years belong to

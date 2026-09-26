@@ -37,7 +37,7 @@ internal sealed record AnnalsOutcome(
 /// **He is a second witness and never the timeline.** One seventeenth-century reckoning is what
 /// this is, and with no computed New Testament chronology standing beside it there is nothing to
 /// hold it in place — so every row says it is his, carries the paragraph it came from, and hangs
-/// its year on his own <see cref="Chronology"/> rather than on the default one.
+/// its year on his own <see cref="Chronology"/> rather than on the base one.
 ///
 /// **Public domain, transcribed under CC BY 4.0.** Ussher died in 1656 and Pierce's English is
 /// 1658. What Brady Stephenson contributes is the transcription into 7,000 numbered paragraphs,
@@ -123,11 +123,11 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
     private const string CommonEra = "AD";
 
     /// <summary>
-    /// The year the default reckoning calls 1 BCE, which is the axis every event row is placed on
+    /// The year the base reckoning, BibleData's, calls 1 BCE, which is the axis every event row is placed on
     /// whichever reckoning dated it. Ussher's own figure is a <see cref="EventDate"/> and counts
     /// from his own creation, which is forty-two years earlier.
     /// </summary>
-    private const int DefaultReckoningZero = 3961;
+    private const int BaseReckoningZero = 3961;
 
     public async Task<AnnalsOutcome> Load(string folder, CancellationToken cancellationToken = default)
     {
@@ -214,7 +214,7 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
                 NameSource = provenance,
                 Description = paragraph,
                 Kind = Kind,
-                YearFromCreation = DefaultReckoningZero + year,
+                YearFromCreation = BaseReckoningZero + year,
                 SequenceInYear = Sequence(number),
                 CanonicalBook = book,
                 CanonicalChapter = chapter,
