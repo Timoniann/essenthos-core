@@ -53,19 +53,6 @@
       "label": "Ammon",
       "strong": "H5983",
       "references": [
-        "GEN 19:38"
-      ],
-      "question": "BibleData files these verses under Ben-ammi as 'Ammon', where the name stands in a phrase that elsewhere names the people — the sons of, the house of — but within Ben-ammi's own lifetime, when it can mean his own children. Do they name the man, or the Ammonites?",
-      "options": [
-        "ammonites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "benammi",
-      "label": "Ammon",
-      "strong": "H5983",
-      "references": [
         "JDG 11:33",
         "1CH 19:5"
       ],
@@ -230,7 +217,6 @@
         "GEN 32:32",
         "GEN 36:31",
         "GEN 42:5",
-        "GEN 46:5",
         "GEN 46:8"
       ],
       "question": "BibleData files these verses under Jacob as 'Israel', where the name stands in a phrase that elsewhere names the people — the sons of, the house of — but within Jacob's own lifetime, when it can mean his own children. Do they name the man, or the Israelites?",
@@ -246,7 +232,6 @@
       "references": [
         "GEN 34:27",
         "GEN 35:5",
-        "GEN 35:22",
         "GEN 46:26",
         "GEN 46:27",
         "GEN 49:2"
@@ -273,7 +258,6 @@
         "PSA 105:10",
         "PSA 147:19",
         "ISA 40:27",
-        "ISA 41:8",
         "ISA 43:1",
         "ISA 43:22",
         "ISA 43:28",
@@ -286,14 +270,10 @@
         "ISA 58:14",
         "ISA 59:20",
         "ISA 65:9",
-        "JER 2:3",
         "JER 30:7",
-        "JER 30:10",
         "JER 30:18",
         "JER 31:11",
-        "JER 46:27",
         "LAM 1:17",
-        "LAM 2:3",
         "EZK 39:25",
         "HOS 12:12",
         "JHN 4:6",
@@ -318,35 +298,18 @@
         "NUM 21:6",
         "1KI 18:31",
         "2KI 17:34",
-        "1CH 16:17",
         "1CH 16:40",
-        "PSA 105:10",
         "PSA 136:22",
-        "PSA 147:19",
         "PSA 149:2",
-        "ISA 40:27",
-        "ISA 43:1",
-        "ISA 43:22",
-        "ISA 43:28",
-        "ISA 44:1",
-        "ISA 44:5",
-        "ISA 44:21",
-        "ISA 44:23",
-        "ISA 48:12",
-        "ISA 49:5",
         "ISA 49:6",
         "ISA 63:16",
         "JER 2:3",
-        "JER 2:3",
         "JER 2:14",
-        "JER 30:10",
-        "JER 46:27",
         "LAM 2:1",
         "LAM 2:3",
         "EZK 20:5",
         "HOS 8:14",
         "HOS 10:1",
-        "HOS 12:12",
         "HOS 12:13",
         "MRK 12:29",
         "LUK 1:54",
@@ -365,8 +328,7 @@
       "label": "Jesherun",
       "strong": "H3484",
       "references": [
-        "DEU 32:15",
-        "ISA 44:2"
+        "DEU 32:15"
       ],
       "question": "BibleData files these verses under Jacob as 'Jesherun'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Israelites?",
       "options": [
@@ -430,19 +392,6 @@
         "EZK 28:25"
       ],
       "question": "BibleData files these verses under Jacob as 'My servant Jacob'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Israelites?",
-      "options": [
-        "israelites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "jacob",
-      "label": "Israel My chosen [one]",
-      "strong": "H3478",
-      "references": [
-        "ISA 45:4"
-      ],
-      "question": "BibleData files these verses under Jacob as 'Israel My chosen [one]'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Israelites?",
       "options": [
         "israelites",
         "leave as it is"

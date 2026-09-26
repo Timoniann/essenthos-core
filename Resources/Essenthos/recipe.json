@@ -29,15 +29,6 @@
       "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
     },
     {
-      "verb": "align",
-      "arguments": [
-        "GRCBRENT",
-        "KJV",
-        "--replace"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
       "verb": "strong",
       "arguments": [
         "LUTH1912",
@@ -111,15 +102,6 @@
         "UBIO",
         "KJV",
         "NESTLE1904"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "GRCBRENT",
-        "KJV",
-        "BHSA"
       ],
       "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
     },
@@ -676,6 +658,104 @@
       "verb": "correct",
       "arguments": [],
       "at": "2026-09-25T14:41:54.077339+00:00"
+    },
+    {
+      "verb": "reload",
+      "arguments": [
+        "ALEX"
+      ],
+      "at": "2026-09-25T14:59:23.477169+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "ALEX",
+        "NESTLE1904",
+        "--replace"
+      ],
+      "at": "2026-09-25T14:59:50.9568373+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "ALEX",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "at": "2026-09-25T15:00:13.0966994+00:00"
+    },
+    {
+      "verb": "unshare",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-25T15:00:20.6169676+00:00"
+    },
+    {
+      "verb": "possessives",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-25T15:00:27.6305126+00:00"
+    },
+    {
+      "verb": "unshare",
+      "arguments": [
+        "UBIO",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-25T15:00:34.2227086+00:00"
+    },
+    {
+      "verb": "possessives",
+      "arguments": [
+        "UBIO",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-25T15:00:41.9819616+00:00"
+    },
+    {
+      "verb": "unshare",
+      "arguments": [
+        "UKR1871",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-25T15:00:49.0108995+00:00"
+    },
+    {
+      "verb": "possessives",
+      "arguments": [
+        "UKR1871",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-25T15:00:55.4548936+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "--replace"
+      ],
+      "at": "2026-09-26T18:01:12.4709918+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "BHSA",
+        "--unmeasured"
+      ],
+      "at": "2026-09-26T18:16:27.6408208+00:00"
     }
   ]
 }
