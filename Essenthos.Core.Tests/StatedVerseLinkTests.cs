@@ -53,13 +53,13 @@ public sealed class StatedVerseLinkTests : IDisposable
         _db.Dispose();
     }
 
-    private void Link(LinkMethod method, double? confidence)
+    private void Link(LinkMethod method, double? confidence, LinkRelation relation = LinkRelation.Renders)
     {
         var link = new Link
         {
             FromTextId = _spanish.Id,
             ToTextId = _hebrew.Id,
-            Relation = LinkRelation.Renders,
+            Relation = relation,
             Method = method,
             Confidence = confidence,
             Source = "a test",
@@ -109,6 +109,22 @@ public sealed class StatedVerseLinkTests : IDisposable
 
         (await _loader.Stated()).Should().Be(0);
         (await Stated()).Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// A transposition is the claim that a passage stands elsewhere, whoever drew it, so the verse
+    /// pair it names is written as a transposition with the link's own method and confidence.
+    /// </summary>
+    [Fact]
+    public async Task ATranspositionAcrossTheBoundaryStatesItsVersePair()
+    {
+        Link(LinkMethod.Lexical, 0.8, LinkRelation.Transposes);
+
+        (await _loader.Stated()).Should().Be(1);
+        var link = (await Stated()).Should().ContainSingle().Subject;
+        link.Relation.Should().Be(LinkRelation.Transposes);
+        link.Method.Should().Be(LinkMethod.Lexical);
+        link.Confidence.Should().Be(0.8);
     }
 
     [Fact]

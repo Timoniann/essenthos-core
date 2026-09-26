@@ -186,19 +186,29 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// statement about versification. The source recorded is the one the word links carry, so a
     /// reader is answered with who said it rather than with the fact that it was derived.
     /// </para>
+    ///
+    /// <para>
+    /// A <c>transposes</c> link is the other exception, whatever its method: it exists only to say
+    /// that a passage one text writes here the other writes elsewhere, as the Samaritan writes the
+    /// altar of incense after Exodus 26:35. The verse pair it names is the transposition itself, so
+    /// it is written as one, with the link's own method and its lowest confidence.
+    /// </para>
     /// </summary>
     private const string StatedVerseImport =
         """
         CREATE TEMP TABLE stated_verse_pair ON COMMIT DROP AS
         WITH crossing AS (
             SELECT l.from_text_id, l.to_text_id, fw.verse_id AS from_verse, tw.verse_id AS to_verse,
-                   min(l.source) AS source
+                   min(l.source) AS source,
+                   bool_or(l.relation = 'transposes' AND l.method <> 'stated-by-source') AS transposed,
+                   min(l.method) FILTER (WHERE l.relation = 'transposes') AS transposed_method,
+                   min(l.confidence) FILTER (WHERE l.relation = 'transposes') AS transposed_confidence
             FROM link l
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
             JOIN word fw ON fw.id = f.word_id
             JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
             JOIN word tw ON tw.id = t.word_id
-            WHERE l.method = 'stated-by-source'
+            WHERE l.method = 'stated-by-source' OR l.relation = 'transposes'
             GROUP BY l.from_text_id, l.to_text_id, fw.verse_id, tw.verse_id
         )
         SELECT nextval(pg_get_serial_sequence('verse_link', 'id'))::int AS id, c.*
@@ -209,8 +219,13 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             WHERE a.verse_id = c.from_verse);
 
         INSERT INTO verse_link (id, from_text_id, to_text_id, relation, method, confidence, source, note)
-        SELECT id, from_text_id, to_text_id, 'renders', 'stated-by-source', NULL, source,
-               'the verse this source''s own word links put against that one'
+        SELECT id, from_text_id, to_text_id,
+               CASE WHEN transposed THEN 'transposes' ELSE 'renders' END,
+               CASE WHEN transposed THEN transposed_method ELSE 'stated-by-source' END,
+               CASE WHEN transposed THEN transposed_confidence END,
+               source,
+               CASE WHEN transposed THEN 'the passage these word links find written at another place'
+                    ELSE 'the verse this source''s own word links put against that one' END
         FROM stated_verse_pair;
 
         INSERT INTO verse_link_verse (verse_link_id, verse_id, side)
