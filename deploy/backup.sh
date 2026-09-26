@@ -51,6 +51,16 @@ run() {
 	fi
 
 	for database in $BACKUP_DATABASES; do
+		# A database this server does not have — the page counter's, where it is off — is not a failure.
+		if ! present=$(psql -d postgres -Atc "SELECT 1 FROM pg_database WHERE datname = '$database'"); then
+			echo "backup: $database FAILED, the database server did not answer" >&2
+			continue
+		fi
+		if [ "$present" != 1 ]; then
+			echo "backup: $database is not on this server, skipped"
+			continue
+		fi
+
 		if [ -n "$recipient" ]; then
 			file="/backups/$database-$stamp.dump.gpg"
 			if encrypted "$database" "$file.partial"; then

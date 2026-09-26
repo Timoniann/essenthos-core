@@ -11,6 +11,8 @@
 #   essenthos_app[_dev]      owns the app database — accounts and, later, what readers write — which
 #                            the API migrates and writes.
 #
+# A fifth, essenthos_stats, owns the page counter's database, and exists only where the counter is on.
+#
 # The corpus databases themselves are not created here. They arrive with the first publication.
 set -eu
 
@@ -27,3 +29,16 @@ CREATE DATABASE essenthos_app_dev OWNER essenthos_app_dev;
 REVOKE ALL ON DATABASE essenthos_app FROM PUBLIC;
 REVOKE ALL ON DATABASE essenthos_app_dev FROM PUBLIC;
 SQL
+
+# The page counter's database, only where one is wanted: STATS_PASSWORD set in .env. It holds counts
+# by page, referrer and country and nothing that names a reader, owned by a role that can reach no
+# other database. On a server initialised before it was wanted, deploy/README.md gives the same
+# statements to run by hand.
+if [ -n "${STATS_PASSWORD:-}" ]; then
+	psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres \
+		-v stats="$STATS_PASSWORD" <<'SQL'
+CREATE ROLE essenthos_stats LOGIN PASSWORD :'stats';
+CREATE DATABASE essenthos_stats OWNER essenthos_stats;
+REVOKE ALL ON DATABASE essenthos_stats FROM PUBLIC;
+SQL
+fi

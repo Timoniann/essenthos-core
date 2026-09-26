@@ -1,7 +1,9 @@
 # The server
 
-One DigitalOcean droplet running everything in containers: Postgres, production and dev side by side,
-and Caddy in front. The design and its reasons are DOC-0205; the publication of the corpus is DOC-0203.
+One machine running everything in containers: Postgres, production and dev side by side, Caddy in
+front, and optionally the page counter. The design and its reasons are DOC-0205, except where it put
+the data on the machine's own disk — it now lives on an attached volume, as below; the publication of
+the corpus is DOC-0203; the page counter is DOC-0211.
 
     essenthos.org          the reader, and its API at /v1
     api.essenthos.org      the same API, for the mobile app and other clients
@@ -25,33 +27,102 @@ server:
     docker compose --env-file .env.rehearsal -f compose.yaml -f compose.rehearsal.yaml up -d
     forge publish --to rehearsal-dev ; forge publish --to rehearsal
 
-## Once: the droplet
+## The machine
 
-1. **Create it.** Ubuntu 24.04, Basic, 8 GB / 4 vCPU / 160 GB, in the region nearest the readers.
-   Add your SSH key. Turn on **backups**.
-   Do not attach a Block Storage volume for the data: droplet backups do not include volumes.
-2. **Firewall.** A DigitalOcean cloud firewall on the droplet allowing inbound 22, 80 and 443 (TCP) and
-   443 (UDP), and nothing else. Postgres is bound to the droplet's loopback and is reached through ssh.
-3. **DNS.** A records for `essenthos.org`, `api`, `dev` and `devapi` pointing at the droplet. Caddy
-   obtains the certificates on first start; it needs the names to resolve first.
-4. **Docker**, from Docker's own apt repository (docs.docker.com/engine/install/ubuntu), and a user for
+**Data on a volume, everything else replaceable.** The machine has two disks:
+
+| | What is on it | If it is lost |
+|---|---|---|
+| the machine's own disk | Ubuntu, Docker, the images and containers it pulled | make a new machine; nothing on it is unique |
+| an attached **Block Storage volume**, mounted at `/srv/essenthos` | Postgres's data directory, the releases, the pictures, the backups, the certificates, the rclone and backup-key folders, and `deploy/` with its `.env` | this is the server; it is what the backups below protect |
+
+So the machine can be replaced at any time: create a new one, attach the volume, install Docker, run
+the deploy — the site comes back with its corpus, its accounts, its certificates and its settings
+(**Moving to a new machine**, below). `HOST_DATA_ROOT` in `.env` is the volume's mount point.
+
+**Backups do not come from the provider's machine backups.** DigitalOcean's droplet backups (and
+Hetzner's server backups) copy the machine's own disk and **not an attached volume**, and the machine's
+own disk holds nothing worth restoring. What protects the data:
+
+1. **The encrypted nightly dumps** of the accounts databases (and the page counts, where the counter is
+   on), written to the volume by the `backup` service — **Backups**, below;
+2. **their off-site copy**, by the `backup-offsite` service to an rclone remote of the owner's choosing,
+   which is what survives the volume itself being lost;
+3. optionally, **volume snapshots**, which catch the whole volume at once — the corpus releases and the
+   pictures included, which saves re-publishing them after a disaster. Take one by hand before anything
+   risky, or schedule them; keep them **four weeks at most**, since the privacy page promises that no
+   copy of deleted account data outlives about six weeks.
+
+The corpus itself needs no backup: it is an artefact, re-published from the workstation that built it.
+
+**Size.** A published corpus is about **12–15 GB per copy** in Postgres, and the server holds four:
+production's current release and the previous one a rollback puts back, and dev's pair. A publication
+restores a fifth beside them before the swap, so plan for five copies, 60–75 GB, plus the pictures
+(about 180 MB per environment), the releases uploaded for restore, the backups and the logs.
+
+- **Volume: 100 GB or more.** A volume can be grown later without moving anything (resize it at the
+  provider, then `resize2fs` on the machine); it cannot be shrunk.
+- **Machine: start with a shared-CPU 8 GB / 4 vCPU.** `compose.yaml` sizes Postgres for 8 GB
+  (`shared_buffers=2GB`, `effective_cache_size=5GB`, `maintenance_work_mem=1GB`), and search and the
+  parallel view live on indexes that want to be in memory. A **4 GB / 2 vCPU** machine with the same
+  volume works for a quiet start if the money matters more: halve those three values in `compose.yaml`
+  first, or Postgres will be sized for memory the machine does not have.
+- **Later**, when readers are many or the CPU graph stays high, move to a dedicated-CPU plan: that is a
+  new machine and the same volume, which is exactly the move the layout above makes cheap.
+
+Check current pricing at the provider; nothing here depends on a particular plan.
+
+**Production and dev run on the same machine**, in the same compose project and the same Postgres, as
+separate databases, roles and containers. Dev is behind a password and tells search engines to stay
+away. The cost is honest: a publication to dev competes with production for disk and memory while it
+runs, and restarting Postgres restarts both.
+
+**TLS is automatic.** Caddy obtains a certificate for every hostname from Let's Encrypt on its first
+start and renews it on its own; there is no certificate to buy or to copy. It needs the DNS records to
+point at the machine and ports 80 and 443 to be open when it starts, and `ACME_EMAIL` in `.env` for the
+expiry warnings Let's Encrypt sends if renewal ever fails. The certificates are kept on the volume, so a
+new machine does not ask for them again.
+
+## Once: the machine (DigitalOcean)
+
+1. **The volume.** Create a Block Storage volume of 100 GB or more, in the region nearest the readers,
+   ext4, "manually format and mount" — this step formats it.
+2. **The droplet.** Ubuntu 24.04, Basic, 8 GB / 4 vCPU (see **Size**), in **the same region**, with your
+   SSH key, and attach the volume to it. Droplet backups can stay off: they would not include the volume.
+3. **Mount the volume at `/srv/essenthos`**, by its id so a second volume never takes its place:
+
+        ls /dev/disk/by-id/ | grep DO_Volume          # scsi-0DO_Volume_<name>
+        sudo mkfs.ext4 /dev/disk/by-id/scsi-0DO_Volume_<name>   # a new, empty volume only — never on one with data
+        sudo mkdir -p /srv/essenthos
+        echo '/dev/disk/by-id/scsi-0DO_Volume_<name> /srv/essenthos ext4 defaults,nofail,discard,noatime 0 2' | sudo tee -a /etc/fstab
+        sudo mount -a && df -h /srv/essenthos
+
+   `nofail` lets the machine boot without the volume; Docker then finds `/srv/essenthos` empty, so if
+   the site comes up with no corpus after a reboot, check `df -h /srv/essenthos` first.
+4. **Firewall.** A DigitalOcean cloud firewall on the droplet allowing inbound 22, 80 and 443 (TCP) and
+   443 (UDP), and nothing else. Postgres and the page counter's dashboard are bound to the droplet's
+   loopback and are reached through ssh.
+5. **DNS.** A records (and AAAA, if the droplet has IPv6) for `essenthos.org`, `api`, `dev` and `devapi`
+   pointing at the droplet. Caddy obtains the certificates on first start; it needs the names to
+   resolve first.
+6. **Docker**, from Docker's own apt repository (docs.docker.com/engine/install/ubuntu), and a user for
    deploying:
 
         adduser --disabled-password deploy && usermod -aG docker deploy
         mkdir -p /srv/essenthos/deploy && chown -R deploy /srv/essenthos
         # then put your public key in /home/deploy/.ssh/authorized_keys
 
-5. **The .env.** Copy `env.example` to `/srv/essenthos/deploy/.env` and fill it in. Every password
+7. **The .env.** Copy `env.example` to `/srv/essenthos/deploy/.env` and fill it in. Every password
    fresh: `openssl rand -base64 32 | tr -d '/+='`. The Postgres passwords are read once, when the
    database is first created; changing one later is `ALTER ROLE`, not an edit here.
-6. **On this machine**, the addresses Forge publishes to:
+8. **On this machine**, the addresses Forge publishes to:
 
         dotnet user-secrets set "Publish:Targets:dev:Ssh" "deploy@<droplet>" --project Essenthos.Forge
         dotnet user-secrets set "Publish:Targets:prod:Ssh" "deploy@<droplet>" --project Essenthos.Forge
         dotnet user-secrets set "Publish:Targets:dev:Password" "<POSTGRES_PASSWORD>" --project Essenthos.Forge
         dotnet user-secrets set "Publish:Targets:prod:Password" "<POSTGRES_PASSWORD>" --project Essenthos.Forge
 
-7. **First deploy and first corpus:**
+9. **First deploy and first corpus:**
 
         ./scripts/deploy.ps1 -Server deploy@<droplet> -Environment prod -Commit <core sha> -WebCommit <web sha>
         forge release
@@ -60,6 +131,53 @@ server:
 
    Until the first publication the API answers `/v1/health/ready` with 503: there is no corpus yet.
    The first publication to each environment also sends every picture, about 180 MB.
+
+## Moving to a new machine
+
+A bigger plan, a dedicated CPU, or a machine that died: the volume carries the server.
+
+1. On the old machine, if it still runs: `cd /srv/essenthos/deploy && docker compose down`, then
+   `sudo umount /srv/essenthos`, and detach the volume at the provider.
+2. Create the new machine in the volume's region and attach the volume. Do **not** format it.
+3. Mount it at `/srv/essenthos` exactly as in step 3 above, without the `mkfs` line.
+4. Install Docker and the `deploy` user as in step 6, without `mkdir` and `chown`; the ids match on a
+   fresh Ubuntu, and if they do not, `chown -R deploy /srv/essenthos` — except `postgres/`, which
+   belongs to the container's own user and must be left alone.
+5. Point the DNS records at the new address, update `Publish:Targets:*:Ssh` if the address changed,
+   and run `scripts/deploy.ps1` for prod and for dev. The corpus, the accounts, the pictures and the
+   certificates are already there.
+
+## Optional: Hetzner Cloud instead of DigitalOcean
+
+Hetzner Cloud offers the same shape — a VM, a Volume, a Firewall — usually for less; check current
+pricing and pick the location nearest the readers (its EU locations keep the data in the EU). Only the
+creation steps differ; `compose.yaml`, the Caddyfile, the `.env` and every command after step 5 are the
+same:
+
+- **Volume**: create it in the server's location; Hetzner can format it (ext4) and mount it itself,
+  but mount it at `/srv/essenthos` by hand as in step 3 so the path is the one everything expects —
+  its device is `/dev/disk/by-id/scsi-0HC_Volume_<id>`.
+- **Server**: Ubuntu 24.04, a shared-vCPU plan with 8 GB (or 4 GB, see **Size**), your SSH key. Its
+  own backups, like DigitalOcean's, do not include the volume.
+- **Firewall**: a Hetzner Cloud Firewall with the same rules as step 4, applied to the server.
+- **Snapshots**: Hetzner snapshots servers, not volumes (check whether that has changed). There the
+  nightly dumps and their off-site copy are the whole backup, and after a disaster the corpus is
+  re-published from the workstation.
+
+## Optional: Cloudflare in front
+
+Cloudflare's free plan can sit in front of the machine as DNS and a caching, filtering proxy. It is not
+needed, and it changes three things that have to be done together:
+
+- **Certificates**: set SSL/TLS to **Full (strict)**, and leave "Always Use HTTPS" off — Caddy already
+  redirects, and Let's Encrypt's renewal must reach Caddy over plain HTTP. Create the records grey
+  (DNS only) first, let Caddy obtain its certificates, then turn the proxy on.
+- **Readers' addresses**: with the proxy on, every connection comes from Cloudflare. Before turning it
+  on, Caddy must be told to trust Cloudflare's published address ranges and to take the reader's address
+  from `CF-Connecting-IP` (Caddy's global `servers { trusted_proxies … client_ip_headers … }`) —
+  otherwise the API's per-reader limits treat every reader as one, and the page counter sees one
+  visitor. That change is not in the Caddyfile yet.
+- **The privacy page** must then name Cloudflare, which sees every request.
 
 ## Every time
 
@@ -102,21 +220,74 @@ the script existed, run it once by hand:
 
     docker compose exec db psql -U postgres -d template1 -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm;'
 
+## Page counts
+
+Off until turned on. When on, production's pages are counted by a GoatCounter on this machine — which
+page, the referring site, the country, the kind of browser, system and screen, and the language — with
+no cookie, nothing kept in the reader's browser, and the reader's address never written anywhere. Why
+this and not Attriax, and what was checked, is DOC-0211. Dev is never counted.
+
+It takes four switches, because the reader's bundle, the proxy, the counter and the privacy page must
+agree:
+
+1. **The reader's image**: in the essenthos-web repository's GitHub settings, add the Actions variable
+   `ANALYTICS_ENDPOINT` = `/count`. CI then builds the bundle with it, which starts sending one request
+   per page and makes the privacy page say what is counted. Without it nothing is sent and the privacy
+   page says nothing is counted.
+2. **The counter's settings in `.env`**:
+
+        COMPOSE_PROFILES=analytics          # offsite,analytics if the off-site copy is on too
+        SITE_ANALYTICS=on
+        STATS_PASSWORD=<a fresh password>
+
+3. **Its database.** On a new server `initdb` creates it on the first start from `STATS_PASSWORD`. On a
+   server whose Postgres already exists, once, from `/srv/essenthos/deploy`:
+
+        docker compose exec -T db psql -U postgres -v ON_ERROR_STOP=1 \
+          -v stats="$(grep '^STATS_PASSWORD=' .env | cut -d= -f2-)" <<'SQL'
+        CREATE ROLE essenthos_stats LOGIN PASSWORD :'stats';
+        CREATE DATABASE essenthos_stats OWNER essenthos_stats;
+        REVOKE ALL ON DATABASE essenthos_stats FROM PUBLIC;
+        SQL
+
+   (psql fills in `:'stats'` in what it reads, never in a `-c` command, hence the here-document.)
+   Then `docker compose up -d`.
+
+4. **The counter's settings**, through an ssh tunnel — its dashboard is on the machine's loopback only:
+
+        ssh -L 8081:127.0.0.1:8081 deploy@<droplet>
+        # then open http://localhost:8081 on this machine
+
+   The first visit asks for a site name (`essenthos.org`), an email and a password: that is the owner's
+   sign-in to the dashboard, which never leaves the tunnel. Then, under **Settings**:
+   - **Data retention**: `730` days. The privacy page says counts are kept two years; the default keeps
+     them forever.
+   - **Data collection**: tick **Language** if the readers' languages are wanted (the privacy page says
+     they are counted); leave **Sessions** on, which is what tells one visit from another, in memory.
+
+The nightly backup dumps `essenthos_stats` beside the accounts databases once it exists, and skips it
+while it does not.
+
+To turn counting off: `SITE_ANALYTICS=off` and `docker compose up -d proxy` stops it at once; removing
+the Actions variable stops the next bundle sending anything and takes the section off the privacy page.
+
 ## Backups
 
 The corpus needs none: it is an artefact, rebuilt from sources this machine keeps. `essenthos_app` —
-accounts, and later what readers write — is the only thing on the server that cannot be rebuilt.
+accounts, and later what readers write — is the only thing on the server that cannot be rebuilt; the
+page counts in `essenthos_stats` are backed up beside it where the counter is on.
 
-- The `backup` service dumps it every night into `/srv/essenthos/backups` and keeps each dump **14 days**
-  (`BACKUP_KEEP_DAYS`), not a day more. The droplet's own daily backup covers that folder.
+- The `backup` service dumps them every night into `/srv/essenthos/backups`, on the volume, and keeps
+  each dump **14 days** (`BACKUP_KEEP_DAYS`), not a day more.
 - **Every dump is encrypted as it is written**, with gpg, to a public key in `/srv/essenthos/backup-key/`.
-  No dump is ever on the disk in the clear, so neither the droplet's backups nor a stolen disk yield a
+  No dump is ever on the disk in the clear, so neither a volume snapshot nor a stolen disk yields a
   reader's email or reading history. The private key is never on the server. Until a key is there the
   service keeps writing plain dumps and says so in its log on every run; once one is, the next run
   encrypts and removes the plain dumps it replaces.
-- **Off the droplet**, optionally: the `backup-offsite` service copies the encrypted dumps to an rclone
-  remote every hour and removes the copies there once they are 14 days old, so the off-site copy is kept
-  exactly as long as the dump here. Only `*.dump.gpg` files are sent. It runs only when `.env` turns it on.
+- **Off the machine**: the `backup-offsite` service copies the encrypted dumps to an rclone remote every
+  hour and removes the copies there once they are 14 days old, so the off-site copy is kept exactly as
+  long as the dump here. Only `*.dump.gpg` files are sent. It runs only when `.env` turns it on — and
+  since the volume is the one place the dumps are written, it is what survives losing the volume.
 - A change to `backup.sh` or `backup-offsite.sh` reaches a running container only when it restarts:
   `docker compose up -d --force-recreate backup backup-offsite` after a deploy that changed either.
 
@@ -139,12 +310,12 @@ Then put the **public** half on the server and restart the service:
 
 The log says `encrypted` beside each dump. Only one `.asc` file belongs in that folder.
 
-### Once, if the dumps are to leave the droplet: the off-site copy
+### Once: the off-site copy
 
-Anything rclone can write to works: an S3-compatible bucket (DigitalOcean Spaces, Backblaze B2,
-Cloudflare R2) or a host reached over ssh. Make a bucket or a folder that holds nothing else, and a key
-for it that can write, list and delete there and nowhere else. Then write the remote into
-`/srv/essenthos/rclone/rclone.conf` on the server, `chmod 600` it, and name it in `.env`:
+Anything rclone can write to works: an S3-compatible bucket (DigitalOcean Spaces, Hetzner Object
+Storage, Backblaze B2, Cloudflare R2) or a host reached over ssh. Make a bucket or a folder that holds
+nothing else, and a key for it that can write, list and delete there and nowhere else. Then write the
+remote into `/srv/essenthos/rclone/rclone.conf` on the server, `chmod 600` it, and name it in `.env`:
 
     # /srv/essenthos/rclone/rclone.conf — a bucket (provider: DigitalOcean, Cloudflare, Other; B2 speaks S3 too)
     [offsite]
@@ -162,7 +333,7 @@ for it that can write, list and delete there and nowhere else. Then write the re
     key_file = /config/rclone/id_ed25519
 
     # .env
-    COMPOSE_PROFILES=offsite
+    COMPOSE_PROFILES=offsite                 # offsite,analytics with the page counter
     BACKUP_OFFSITE=offsite:<bucket or folder>/essenthos
 
     docker compose up -d backup-offsite && docker compose logs --tail 5 backup-offsite

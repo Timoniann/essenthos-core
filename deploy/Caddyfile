@@ -38,6 +38,33 @@
 	header ?Reporting-Endpoints `csp="/v1/csp-reports"`
 }
 
+# The page counter, at /count on the reader's own origin, so a page view is a same-origin request
+# the policy's connect-src 'self' already allows and no other origin is ever named. "on" passes it
+# to GoatCounter; "off" answers it with nothing and counts nothing, and is what dev always uses.
+#
+# The counter believes CF-Connecting-IP, Fly-Client-IP, X-Azure-SocketIP and X-Real-IP before the
+# connection, so each is written here from the connection or removed, and a visitor cannot pose as
+# another address. It is told nothing it does not need: no cookie, no credentials, no referring page.
+(analytics-on) {
+	handle /count {
+		reverse_proxy analytics:8080 {
+			header_up X-Real-IP {client_ip}
+			header_up -CF-Connecting-IP
+			header_up -Fly-Client-IP
+			header_up -X-Azure-SocketIP
+			header_up -Cookie
+			header_up -Authorization
+			header_up -Referer
+		}
+	}
+}
+
+(analytics-off) {
+	handle /count {
+		respond 204
+	}
+}
+
 # One of these per environment, named by SITE_CSP and DEV_CSP. "off" sends only the part of a policy
 # that cannot break a page: no framing, no plugins, no other base address. "report-only" sends that,
 # and the whole policy for the browser to report against without blocking anything. "enforce" sends
@@ -79,6 +106,7 @@
 
 {$SITE_DOMAIN} {
 	import site {$SITE_CSP:off}
+	import analytics-{$SITE_ANALYTICS:off}
 	handle /v1/* {
 		import api api
 	}
@@ -99,7 +127,8 @@
 {$DEV_DOMAIN} {
 	import site {$DEV_CSP:report-only}
 	header X-Robots-Tag "noindex, nofollow"
-	@guarded not path /v1/csp-reports
+	import analytics-off
+	@guarded not path /v1/csp-reports /count
 	basic_auth @guarded {
 		{$DEV_USER} {$DEV_PASSWORD_HASH}
 	}
