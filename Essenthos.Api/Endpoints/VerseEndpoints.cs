@@ -1,6 +1,7 @@
 using System.Globalization;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -71,6 +72,9 @@ internal static class VerseEndpoints
     private const int TitleVerse = 0;
 
     private const int FirstVerse = 1;
+
+    /// <summary>How often a text must spell an entity one way for that spelling to mark a verse the annotations missed.</summary>
+    private const int LeastSpelled = 2;
 
     /// <summary>The one book whose chapters have titles the frame numbers apart.</summary>
     private const int Psalms = 19;
@@ -242,6 +246,7 @@ internal static class VerseEndpoints
         var naming = named is null
             ? []
             : await Naming(db, words.Values.SelectMany(list => list.Select(word => word.Id)), named, cancellationToken);
+        var spellings = named is null ? [] : await Spellings(db, textId, named, cancellationToken);
 
         return chosen
             .GroupBy(place => new { place.Key, place.CanonicalBook, place.CanonicalChapter, place.CanonicalVerse })
@@ -280,7 +285,9 @@ internal static class VerseEndpoints
                     Label = label,
                     Marks = named is null
                         ? null
-                        : Marks([.. joined.Select(word => new MarkedWord(word.Surface, word.Trailer, naming.Contains(word.Id)))]),
+                        : Marks(Spelled(
+                            [.. joined.Select(word => new MarkedWord(word.Surface, word.Trailer, naming.Contains(word.Id)))],
+                            spellings)),
                     Printed = printed.Count > 0 ? printed : null,
                 };
             })
@@ -345,16 +352,116 @@ internal static class VerseEndpoints
     /// The words that name the entity, by the same pick the word card makes, so that a word marked
     /// in a list and the same word opened in the chapter never name two different people. A text the
     /// annotations never reached has none, and gets none: nothing here guesses a name from the links.
+    ///
+    /// <para>
+    /// A word for God is the exception, because it is a word and not a person: <em>God</em> in
+    /// Genesis 1:1 is annotated to YHVH, and it is also the word Elohim. Its verses are the ones
+    /// whose original carries its number, so the words marked are those that carry the number
+    /// themselves or render one that does.
+    /// </para>
     /// </summary>
     internal static async Task<HashSet<long>> Naming(
         AppDbContext db,
         IEnumerable<long> wordIds,
         string slug,
-        CancellationToken cancellationToken) =>
-        (await Annotations.Of(db, wordIds, cancellationToken))
+        CancellationToken cancellationToken)
+    {
+        var ids = wordIds.ToList();
+        var numbers = (await db.EntityNames
+                .Where(n => n.Entity!.Slug == slug && n.Entity.Kind == EntityKind.Term)
+                .Select(n => new { n.HebrewStrongNumber, n.GreekStrongNumber })
+                .ToListAsync(cancellationToken))
+            .SelectMany(n => (string?[])[n.HebrewStrongNumber, n.GreekStrongNumber])
+            .OfType<string>()
+            .Distinct()
+            .ToList();
+        if (numbers.Count > 0)
+        {
+            return await Numbered(db, ids, numbers, cancellationToken);
+        }
+
+        return (await Annotations.Of(db, ids, cancellationToken))
             .Where(annotation => annotation.Value.Slug == slug)
             .Select(annotation => annotation.Key)
             .ToHashSet();
+    }
+
+    /// <summary>
+    /// How this text spells the entity where its words are known to name it, folded: the forms the
+    /// corpus counted from the annotated words, each seen more than once.
+    /// </summary>
+    private static async Task<HashSet<string>> Spellings(
+        AppDbContext db,
+        int textId,
+        string slug,
+        CancellationToken cancellationToken) =>
+        [
+            .. await db.EntityRenderings
+                .Where(r => r.TextId == textId && r.Entity!.Slug == slug && r.Occurrences >= LeastSpelled)
+                .Select(r => r.Folded)
+                .ToListAsync(cancellationToken),
+        ];
+
+    /// <summary>
+    /// A listed verse whose words the annotations never reached — a translation that names Joshua's
+    /// Jerusalem with no link to the Hebrew word, a place the translator names where the Hebrew
+    /// says <em>there</em> — is marked where a word is spelled as this text spells the entity
+    /// everywhere else, alone or with the word after it as one name. A verse with any annotated
+    /// word keeps exactly those, so a spelling never adds to or overrules what the corpus says.
+    /// </summary>
+    internal static IReadOnlyList<MarkedWord> Spelled(IReadOnlyList<MarkedWord> words, IReadOnlySet<string> spellings)
+    {
+        if (spellings.Count == 0 || words.Any(word => word.Named))
+        {
+            return words;
+        }
+
+        var spelled = words.ToArray();
+        for (var at = 0; at < spelled.Length; at++)
+        {
+            var one = NameFolding.Fold(spelled[at].Surface);
+            if (one.Length == 0)
+            {
+                continue;
+            }
+
+            if (spellings.Contains(one))
+            {
+                spelled[at] = spelled[at] with { Named = true };
+            }
+            else if (at + 1 < spelled.Length && spellings.Contains(one + NameFolding.Fold(spelled[at + 1].Surface)))
+            {
+                spelled[at] = spelled[at] with { Named = true };
+                spelled[at + 1] = spelled[at + 1] with { Named = true };
+                at++;
+            }
+        }
+
+        return spelled;
+    }
+
+    /// <summary>The words among these that carry one of the numbers, or render or equal a word that does.</summary>
+    private static async Task<HashSet<long>> Numbered(
+        AppDbContext db,
+        IReadOnlyCollection<long> wordIds,
+        IReadOnlyCollection<string> numbers,
+        CancellationToken cancellationToken)
+    {
+        var own = await db.Words
+            .Where(w => wordIds.Contains(w.Id) && w.StrongNumber != null && numbers.Contains(w.StrongNumber))
+            .Select(w => w.Id)
+            .ToListAsync(cancellationToken);
+        var rendering = await db.LinkWords
+            .Where(side => wordIds.Contains(side.WordId)
+                           && (side.Link!.Relation == LinkRelation.Renders || side.Link.Relation == LinkRelation.Equals)
+                           && db.LinkWords.Any(other => other.LinkId == side.LinkId
+                                                        && other.Side != side.Side
+                                                        && other.Word!.StrongNumber != null
+                                                        && numbers.Contains(other.Word.StrongNumber)))
+            .Select(side => side.WordId)
+            .ToListAsync(cancellationToken);
+        return [.. own, .. rendering];
+    }
 
     /// <summary>
     /// Where the marked words sit in the verse as <see cref="VerseTextResponse.Text"/> spells it,
