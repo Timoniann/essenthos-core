@@ -1,0 +1,115 @@
+{
+  "about": "The verdicts given on one EVIDENTIA run, kept so that a rebuild of the corpus gives them back. One file per canonical book, a line per verdict; a word is its canonical address, which of the address's words it is, and its surface as it then read. Written by the Forge whenever a verdict is recorded, and replayed by every load. Do not edit by hand: record verdicts with the evidentia verbs.",
+  "from": "BBE",
+  "to": "NESTLE1904",
+  "startedAt": "2026-09-26T19:29:05.5714390+00:00",
+  "finishedAt": "2026-09-26T19:35:13.3952630+00:00",
+  "ruleVersion": "1.0.0+3bd47c192aff-dirty",
+  "scope": {
+    "books": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48",
+      "49",
+      "50",
+      "51",
+      "52",
+      "53",
+      "54",
+      "55",
+      "56",
+      "57",
+      "58",
+      "59",
+      "60",
+      "61",
+      "62",
+      "63",
+      "64",
+      "65",
+      "66"
+    ],
+    "verses": null
+  },
+  "configuration": {
+    "defaults": {
+      "PhraseWordScore": 0.65,
+      "TargetGlossScore": 0.2,
+      "ExactAddressScore": 0.3,
+      "SafeRenderingLead": 0.1,
+      "SafeRenderingScore": 0.4,
+      "ReviewRenderingLead": 0.05,
+      "DictionarySenseScore": 0.34,
+      "ReviewRenderingScore": 0.3,
+      "InvalidAssignmentCost": 1000000,
+      "NeighbourAddressScore": 0.08,
+      "MinimumContentCoverage": 0.3,
+      "NeighbourVerseDistance": 2,
+      "ResidualRenderingShare": 0.05,
+      "KnownRenderingBaseScore": 0.2,
+      "SafeRenderingSenseRatio": 2,
+      "SupportedCandidateScore": 0.55,
+      "AssignmentEvidenceWeight": 1000,
+      "InferredRenderingCeiling": 0.8,
+      "KnownRenderingShareScore": 0.45,
+      "SafeRenderingObservations": 4,
+      "DictionaryReviewConfidence": 0.4,
+      "MatchingNormalisedFormScore": 0.55,
+      "TargetGlossReviewConfidence": 0.45,
+      "MinimumRenderingObservations": 2
+    },
+    "evidenceSources": {
+      "morphology": [
+        "universal-pos:adj",
+        "universal-pos:adp",
+        "universal-pos:adv",
+        "universal-pos:conj",
+        "universal-pos:det",
+        "universal-pos:intj",
+        "universal-pos:noun",
+        "universal-pos:part",
+        "universal-pos:pron",
+        "universal-pos:verb"
+      ],
+      "target-gloss": [
+        "target-gloss:source"
+      ],
+      "exact-address": [
+        "canonical-frame"
+      ],
+      "known-rendering": [
+        "known-rendering:KJV,BSB→NESTLE1904"
+      ],
+      "dictionary-sense": [
+        "strong-entry:eng"
+      ],
+      "neighbouring-address": [
+        "canonical-frame"
+      ]
+    },
+    "learnRenderingsFrom": "KJV,BSB",
+    "learnedRenderingMethods": [
+      "stated-by-source",
+      "strong-number"
+    ],
+    "allowSourceStrongEvidence": false,
+    "allowKnownRenderingEvidence": true
+  },
+  "reviews": [
+    {
+      "reviewer": "owner-via-claude-code",
+      "reviewedAt": "2026-09-26T19:39:51.5417190+00:00",
+      "examined": false,
+      "note": null
+    }
+  ],
+  "verdicts": {
+    "approved": 45793
+  }
+}

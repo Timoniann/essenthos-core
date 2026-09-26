@@ -64,6 +64,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:17	6	his		5	αὐτοῦ		global-review-known-rendering	safe	0.7888	approved	0				global known-rendering assignment; lexical score 0.64
 1:17	9	the				expands	supplied-article	safe	0.7964	approved	0				article the original does not write; rests on 'spirit' → 'πνεύματι'
 1:17	10	spirit		7	πνεύματι		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+1:17	14	Elijah		10	Ἡλεία		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
 1:17	16	the				expands	supplied-article	safe	0.7542	approved	0				article the original does not write; rests on 'hearts' → 'καρδίας'
 1:17	17	hearts		12	καρδίας		global-review-known-rendering	safe	0.7542	approved	0				global known-rendering assignment; lexical score 0.60
 1:17	19	fathers		13	πατέρων		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60
@@ -86,11 +87,12 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:19	13	God		14	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
 1:19	20	these		23	ταῦτα		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
 1:20	2	see		2	ἰδοὺ		global-review-known-rendering	safe	0.6298	approved	0				global known-rendering assignment; lexical score 0.48
-1:20	11	the				expands	supplied-article	safe	0.6689	approved	0				article the original does not write; rests on 'day' → 'ἡμέρας'
-1:20	12	day		11	ἡμέρας		global-review-known-rendering	safe	0.6689	approved	0				global known-rendering assignment; lexical score 0.52
+1:20	11	the				expands	supplied-article	safe	0.6905	approved	0				article the original does not write; rests on 'day' → 'ἡμέρας'
+1:20	12	day		11	ἡμέρας		global-review-known-rendering	safe	0.6905	approved	0				global known-rendering assignment; lexical score 0.54
 1:20	14	these		13	ταῦτα		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
 1:20	21	not		16	οὐκ		global-review-known-rendering	safe	0.6291	approved	0				global known-rendering assignment; lexical score 0.48
 1:20	24	my		20	μου		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
+1:21	10	surprised		9	ἐθαύμαζον		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
 1:22	8	not		3	οὐκ		global-review-known-rendering	safe	0.6291	approved	0				global known-rendering assignment; lexical score 0.48
 1:22	9	able		4	ἐδύνατο		global-review-known-rendering	safe	0.6408	approved	0				global known-rendering assignment; lexical score 0.49
 1:22	15	saw		11	ἑώρακεν		global-review-known-rendering	safe	0.7483	approved	0				global known-rendering assignment; lexical score 0.60
@@ -259,9 +261,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:58	14	Lord		11	Κύριος		global-review-known-rendering	safe	0.7952	approved	0				global known-rendering assignment; lexical score 0.65
 1:58	20	her		14	αὐτοῦ		global-review-known-rendering	safe	0.7889	approved	0				global known-rendering assignment; lexical score 0.64
 1:58	26	her		16	αὐτῆς		global-review-known-rendering	safe	0.7889	approved	0				global known-rendering assignment; lexical score 0.64
-1:59	3	the		4	τῇ		attached-word	safe	0.5689	approved	0				Article of 'eighth'
+1:59	3	the		4	τῇ		attached-word	safe	0.5905	approved	0				Article of 'eighth'
 1:59	4	eighth		7	ὀγδόῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
-1:59	5	day		5	ἡμέρᾳ		global-review-known-rendering	safe	0.6689	approved	0				global known-rendering assignment; lexical score 0.52
+1:59	5	day		5	ἡμέρᾳ		global-review-known-rendering	safe	0.6905	approved	0				global known-rendering assignment; lexical score 0.54
 1:59	7	came		8	ἦλθον		global-review-known-rendering	safe	0.6025	approved	0				global known-rendering assignment; lexical score 0.45
 1:59	21	him		14	αὐτὸ		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
 1:59	22	the		16	τῷ		attached-word	safe	0.6972	approved	0				Article of 'name'
@@ -284,6 +286,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:63	11	name		8	ὄνομα		global-review-known-rendering	safe	0.7972	approved	0				global known-rendering assignment; lexical score 0.65
 1:63	13	John		6	Ἰωάνης		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 1:63	17	all		12	πάντες		global-review-known-rendering	safe	0.7296	approved	0				global known-rendering assignment; lexical score 0.58
+1:63	18	surprised		11	ἐθαύμασαν		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
 1:64	4	his		5	αὐτοῦ		global-review-known-rendering	safe	0.7888	approved	0				global known-rendering assignment; lexical score 0.64
 1:64	5	mouth		4	στόμα		global-review-known-rendering	safe	0.7866	approved	0				global known-rendering assignment; lexical score 0.64
 1:64	7	open		1	ἀνεῴχθη		global-review-known-rendering	safe	0.728	approved	0				global known-rendering assignment; lexical score 0.58
@@ -372,7 +375,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:79	26	peace		16	εἰρήνης		global-review-known-rendering	safe	0.7068	approved	0				global known-rendering assignment; lexical score 0.56
 1:80	9	spirit		7	πνεύματι		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
 1:80	18	till		13	ἕως		global-review-known-rendering	safe	0.6091	approved	0				global known-rendering assignment; lexical score 0.46
-1:80	20	day		14	ἡμέρας		global-review-known-rendering	safe	0.6689	approved	0				global known-rendering assignment; lexical score 0.52
+1:80	20	day		14	ἡμέρας		global-review-known-rendering	safe	0.6905	approved	0				global known-rendering assignment; lexical score 0.54
 1:80	28	Israel		19	Ἰσραήλ		global-review-known-rendering	safe	0.7674	approved	0				global known-rendering assignment; lexical score 0.62
 2:1	6	those		6	ἐκείναις		global-review-known-rendering	safe	0.5891	approved	0				global known-rendering assignment; lexical score 0.44
 2:1	7	days		5	ἡμέραις		global-review-known-rendering	safe	0.7742	approved	0				global known-rendering assignment; lexical score 0.62
@@ -569,7 +572,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:37	5	widow		3	χήρα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 2:37	8	years		5	ἐτῶν		global-review-known-rendering	safe	0.692	approved	0				global known-rendering assignment; lexical score 0.54
 2:37	24	night		17	νύκτα		global-review-known-rendering	safe	0.7842	approved	0				global known-rendering assignment; lexical score 0.63
-2:37	26	day		19	ἡμέραν		global-review-known-rendering	safe	0.671	approved	0				global known-rendering assignment; lexical score 0.52
+2:37	26	day		19	ἡμέραν		global-review-known-rendering	safe	0.6927	approved	0				global known-rendering assignment; lexical score 0.54
 2:38	11	God		8	Θεῷ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
 2:38	14	him		12	αὐτοῦ		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 2:38	16	all		13	πᾶσιν		global-review-known-rendering	safe	0.729	approved	0				global known-rendering assignment; lexical score 0.58
@@ -661,16 +664,16 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:3	12	baptism		10	βάπτισμα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 3:3	17	forgiveness		13	ἄφεσιν		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
 3:3	19	sin		14	ἁμαρτιῶν		global-review-known-rendering	safe	0.727	approved	0				global known-rendering assignment; lexical score 0.58
+3:4	11	Isaiah		6	Ἡσαΐου		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 3:4	12	the		7	τοῦ		attached-word	safe	0.6723	approved	0				Article of 'prophet'
 3:4	13	prophet		8	προφήτου		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62
 3:4	14	The				expands	supplied-article	safe	0.7846	approved	0				article the original does not write; rests on 'voice' → 'Φωνὴ'
 3:4	15	voice		9	Φωνὴ		global-review-known-rendering	safe	0.7846	approved	0				global known-rendering assignment; lexical score 0.63
-3:4	25	the		15	τὴν		attached-word	safe	0.5119	approved	0				Article of 'way'
-3:4	26	way		16	ὁδὸν		global-review-known-rendering	safe	0.6119	approved	0				global known-rendering assignment; lexical score 0.46
 3:4	28	the				expands	supplied-article	safe	0.7953	approved	0				article the original does not write; rests on 'Lord' → 'Κυρίου'
 3:4	29	Lord		17	Κυρίου		global-review-known-rendering	safe	0.7953	approved	0				global known-rendering assignment; lexical score 0.65
 3:4	30	make		19	ποιεῖτε		global-review-known-rendering	safe	0.6636	approved	0				global known-rendering assignment; lexical score 0.51
 3:4	31	his		22	αὐτοῦ		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
+3:4	32	roads		16	ὁδὸν		global-review-known-rendering	safe	0.7625	approved	0				global known-rendering assignment; lexical score 0.61
 3:4	33	straight		18	εὐθείας		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
 3:5	1	Every		1	πᾶσα		global-review-known-rendering	safe	0.7271	approved	0				global known-rendering assignment; lexical score 0.58
 3:5	8	all		5	πᾶν		global-review-known-rendering	safe	0.7299	approved	0				global known-rendering assignment; lexical score 0.58
@@ -815,6 +818,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:1	18	Spirit		14	Πνεύματι		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
 4:2	2	forty		2	τεσσεράκοντα		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62
 4:2	3	days		1	ἡμέρας		global-review-known-rendering	safe	0.7774	approved	0				global known-rendering assignment; lexical score 0.63
+4:2	5	tested		3	πειραζόμενος		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
 4:2	13	no		8	οὐκ		global-review-known-rendering	safe	0.6049	approved	0				global known-rendering assignment; lexical score 0.45
 4:2	16	those		14	ἐκείναις		global-review-known-rendering	safe	0.5891	approved	0				global known-rendering assignment; lexical score 0.44
 4:2	17	days		13	ἡμέραις		global-review-known-rendering	safe	0.7774	approved	0				global known-rendering assignment; lexical score 0.63
@@ -865,6 +869,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:9	24	the				expands	supplied-article	safe	0.7727	approved	0				article the original does not write; rests on 'Son' → 'Υἱὸς'
 4:9	25	Son		17	Υἱὸς		global-review-known-rendering	safe	0.7727	approved	0				global known-rendering assignment; lexical score 0.62
 4:9	27	God		20	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+4:9	29	yourself		22	σεαυτὸν		global-review-known-rendering	safe	0.6333	approved	0				global known-rendering assignment; lexical score 0.48
 4:10	4	his		6	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
 4:10	5	angels		5	ἀγγέλοις		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
 4:11	4	hands		4	χειρῶν		global-review-known-rendering	safe	0.7153	approved	0				global known-rendering assignment; lexical score 0.57
@@ -903,6 +908,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:17	3	book		4	βιβλίον		global-review-known-rendering	safe	0.6412	approved	0				global known-rendering assignment; lexical score 0.49
 4:17	5	the		5	τοῦ		attached-word	safe	0.6714	approved	0				Article of 'prophet'
 4:17	6	prophet		6	προφήτου		global-review-known-rendering	safe	0.7714	approved	0				global known-rendering assignment; lexical score 0.62
+4:17	7	Isaiah		7	Ἡσαΐου		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 4:17	11	him		3	αὐτῷ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 4:17	13	opening		9	ἀνοίξας		global-review-known-rendering	safe	0.6554	approved	0				global known-rendering assignment; lexical score 0.51
 4:17	14	the		10	τὸ		attached-word	safe	0.5412	approved	0				Article of 'book'
@@ -933,6 +939,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:20	27	him		18	αὐτῷ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 4:21	3	said		3	λέγειν		global-review-known-rendering	safe	0.7694	approved	0				global known-rendering assignment; lexical score 0.62
 4:21	5	them		5	αὐτοὺς		global-review-known-rendering	safe	0.7382	approved	0				global known-rendering assignment; lexical score 0.59
+4:21	6	Today		7	Σήμερον		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
 4:21	7	this		11	αὕτη		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
 4:21	13	your		15	ὑμῶν		global-review-known-rendering	safe	0.7903	approved	0				global known-rendering assignment; lexical score 0.64
 4:22	4	all		2	πάντες		global-review-known-rendering	safe	0.7299	approved	0				global known-rendering assignment; lexical score 0.58
@@ -960,6 +967,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:25	13	Israel		15	Ἰσραήλ		global-review-known-rendering	safe	0.7683	approved	0				global known-rendering assignment; lexical score 0.62
 4:25	15	the		10	ταῖς		attached-word	safe	0.6774	approved	0				Article of 'days'
 4:25	16	days		11	ἡμέραις		global-review-known-rendering	safe	0.7774	approved	0				global known-rendering assignment; lexical score 0.63
+4:25	18	Elijah		12	Ἡλείου		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
 4:25	20	the		18	ὁ		attached-word	safe	0.6891	approved	0				Article of 'heaven'
 4:25	21	heaven		19	οὐρανὸς		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
 4:25	23	shut		17	ἐκλείσθη		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
@@ -969,6 +977,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:25	30	months		24	μῆνας		global-review-known-rendering	safe	0.74	approved	0				global known-rendering assignment; lexical score 0.59
 4:25	37	the		32	τὴν		attached-word	safe	0.633	approved	0				Article of 'land'
 4:25	38	land		33	γῆν		global-review-known-rendering	safe	0.733	approved	0				global known-rendering assignment; lexical score 0.58
+4:26	2	Elijah		6	Ἡλείας		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
 4:26	9	them		4	αὐτῶν		global-review-known-rendering	safe	0.7382	approved	0				global known-rendering assignment; lexical score 0.59
 4:26	20	a				expands	supplied-indefinite-article	safe	0.7644	approved	0				indefinite article; rests on 'woman' → 'γυναῖκα'
 4:26	21	woman		14	γυναῖκα		global-review-known-rendering	safe	0.7644	approved	0				global known-rendering assignment; lexical score 0.61
@@ -1022,6 +1031,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:35	5	him		3	αὐτῷ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 4:35	12	him		11	αὐτοῦ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 4:35	20	him		14	αὐτὸν		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
+4:35	26	the		18	τὸ		attached-word	safe	0.7	approved	0				Article of 'middle'
+4:35	27	middle		19	μέσον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 4:35	34	him		22	αὐτοῦ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 4:35	37	him		25	αὐτόν		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 4:36	6	all		5	πάντας		global-review-known-rendering	safe	0.7299	approved	0				global known-rendering assignment; lexical score 0.58
@@ -1058,7 +1069,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:41	27	not		19	οὐκ		global-review-known-rendering	safe	0.6289	approved	0				global known-rendering assignment; lexical score 0.48
 4:41	39	the		25	τὸν		attached-word	safe	0.7	approved	0				Article of 'Christ'
 4:41	40	Christ		26	Χριστὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
-4:42	5	day		3	ἡμέρας		global-review-known-rendering	safe	0.6705	approved	0				global known-rendering assignment; lexical score 0.52
+4:42	5	day		3	ἡμέρας		global-review-known-rendering	safe	0.6923	approved	0				global known-rendering assignment; lexical score 0.54
 4:42	14	place		8	τόπον		global-review-known-rendering	safe	0.6851	approved	0				global known-rendering assignment; lexical score 0.54
 4:42	20	came		15	ἦλθον		global-review-known-rendering	safe	0.6019	approved	0				global known-rendering assignment; lexical score 0.45
 4:42	23	him		13	αὐτόν		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
@@ -1071,7 +1082,6 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:43	17	God		17	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
 4:44	6	the		5	τὰς		attached-word	safe	0.6786	approved	0				Article of 'Synagogues'
 4:44	7	Synagogues		6	συναγωγὰς		global-review-known-rendering	safe	0.7786	approved	0				global known-rendering assignment; lexical score 0.63
-5:1	14	him		8	αὐτῷ		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 5:1	20	the		11	τὸν		attached-word	safe	0.6272	approved	0				Article of 'word'
 5:1	21	word		12	λόγον		global-review-known-rendering	safe	0.7272	approved	0				global known-rendering assignment; lexical score 0.58
 5:1	23	God		14	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
@@ -1085,7 +1095,6 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 5:3	18	him		11	αὐτὸν		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 5:3	26	the		13	τῆς		attached-word	safe	0.6315	approved	0				Article of 'land'
 5:3	27	land		14	γῆς		global-review-known-rendering	safe	0.7315	approved	0				global known-rendering assignment; lexical score 0.58
-5:3	29	being		8	ἦν		global-review-known-rendering	safe	0.6642	approved	0				global known-rendering assignment; lexical score 0.51
 5:3	35	teaching		22	ἐδίδασκεν		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
 5:4	8	said		5	εἶπεν		global-review-known-rendering	safe	0.769	approved	0				global known-rendering assignment; lexical score 0.62
 5:4	10	Simon		8	Σίμωνα		global-review-known-rendering	safe	0.7931	approved	0				global known-rendering assignment; lexical score 0.64
@@ -1129,6 +1138,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 5:10	34	men		26	ἀνθρώπους		global-review-known-rendering	safe	0.6244	approved	0				global known-rendering assignment; lexical score 0.47
 5:11	9	the		6	τὴν		attached-word	safe	0.6315	approved	0				Article of 'land'
 5:11	10	land		7	γῆν		global-review-known-rendering	safe	0.7315	approved	0				global known-rendering assignment; lexical score 0.58
+5:11	14	everything		9	πάντα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 5:11	18	him		11	αὐτῷ		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 5:12	10	one		8	μιᾷ		global-review-known-rendering	safe	0.6356	approved	0				global known-rendering assignment; lexical score 0.49
 5:12	22	saw		16	ἰδὼν		global-review-known-rendering	safe	0.7498	approved	0				global known-rendering assignment; lexical score 0.60
@@ -1168,6 +1178,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 5:19	28	him		18	αὐτὸν		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 5:19	30	through		14	διὰ		global-review-known-rendering	safe	0.6043	approved	0				global known-rendering assignment; lexical score 0.45
 5:19	36	into		22	εἰς		global-review-known-rendering	safe	0.7718	approved	0				global known-rendering assignment; lexical score 0.62
+5:19	37	the		23	τὸ		attached-word	safe	0.7	approved	0				Article of 'middle'
+5:19	38	middle		24	μέσον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 5:19	42	Jesus		27	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
 5:20	3	their		5	αὐτῶν		global-review-known-rendering	safe	0.7836	approved	0				global known-rendering assignment; lexical score 0.63
 5:20	4	faith		4	πίστιν		global-review-known-rendering	safe	0.7888	approved	0				global known-rendering assignment; lexical score 0.64
@@ -1210,6 +1222,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 5:26	11	God		8	Θεόν		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
 5:26	18	saying		12	λέγοντες		global-review-known-rendering	safe	0.756	approved	0				global known-rendering assignment; lexical score 0.61
 5:26	21	seen		14	Εἴδομεν		global-review-known-rendering	safe	0.6423	approved	0				global known-rendering assignment; lexical score 0.49
+5:26	24	today		16	σήμερον		global-review-known-rendering	safe	0.7763	approved	0				global known-rendering assignment; lexical score 0.63
 5:27	3	these		3	ταῦτα		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
 5:27	22	said		15	εἶπεν		global-review-known-rendering	safe	0.769	approved	0				global known-rendering assignment; lexical score 0.62
 5:27	24	him		16	αὐτῷ		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
@@ -1331,6 +1344,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 6:8	10	said		7	εἶπεν		global-review-known-rendering	safe	0.7691	approved	0				global known-rendering assignment; lexical score 0.62
 6:8	15	hand		15	χεῖρα		global-review-known-rendering	safe	0.585	approved	0				global known-rendering assignment; lexical score 0.44
 6:8	22	into		19	εἰς		global-review-known-rendering	safe	0.7712	approved	0				global known-rendering assignment; lexical score 0.62
+6:8	23	the		20	τὸ		attached-word	safe	0.7	approved	0				Article of 'middle'
+6:8	24	middle		21	μέσον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 6:9	2	Jesus		4	Ἰησοῦς		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
 6:9	3	said		1	εἶπεν		global-review-known-rendering	safe	0.7691	approved	0				global known-rendering assignment; lexical score 0.62
 6:9	17	the		11	τῷ		attached-word	safe	0.6804	approved	0				Article of 'Sabbath'
@@ -1352,8 +1367,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 6:12	14	mountain		11	ὄρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 6:12	23	prayer		18	προσευχῇ		global-review-known-rendering	safe	0.6554	approved	0				global known-rendering assignment; lexical score 0.51
 6:12	25	God		20	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
-6:13	2	the				expands	supplied-article	safe	0.6705	approved	0				article the original does not write; rests on 'day' → 'ἡμέρα'
-6:13	3	day		4	ἡμέρα		global-review-known-rendering	safe	0.6705	approved	0				global known-rendering assignment; lexical score 0.52
+6:13	2	the				expands	supplied-article	safe	0.6923	approved	0				article the original does not write; rests on 'day' → 'ἡμέρα'
+6:13	3	day		4	ἡμέρα		global-review-known-rendering	safe	0.6923	approved	0				global known-rendering assignment; lexical score 0.54
 6:13	8	his		8	αὐτοῦ		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
 6:13	9	disciples		7	μαθητὰς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 6:13	16	them		12	αὐτῶν		global-review-known-rendering	safe	0.74	approved	0				global known-rendering assignment; lexical score 0.59
@@ -1415,7 +1430,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 6:22	32	the		22	τοῦ		attached-word	safe	0.6729	approved	0				Article of 'Son'
 6:22	33	Son		23	Υἱοῦ		global-review-known-rendering	safe	0.7729	approved	0				global known-rendering assignment; lexical score 0.62
 6:23	2	glad		1	χάρητε		global-review-known-rendering	safe	0.5923	approved	0				global known-rendering assignment; lexical score 0.44
-6:23	5	day		5	ἡμέρᾳ		global-review-known-rendering	safe	0.6705	approved	0				global known-rendering assignment; lexical score 0.52
+6:23	5	day		5	ἡμέρᾳ		global-review-known-rendering	safe	0.6923	approved	0				global known-rendering assignment; lexical score 0.54
 6:23	13	your		12	ὑμῶν		global-review-known-rendering	safe	0.7901	approved	0				global known-rendering assignment; lexical score 0.64
 6:23	14	reward		11	μισθὸς		global-review-known-rendering	safe	0.6329	approved	0				global known-rendering assignment; lexical score 0.48
 6:23	16	heaven		16	οὐρανῷ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
@@ -1433,6 +1448,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 6:29	28	your		15	σου		global-review-known-rendering	safe	0.7901	approved	0				global known-rendering assignment; lexical score 0.64
 6:29	29	coat		20	χιτῶνα		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
 6:30	1	Give		4	δίδου		global-review-known-rendering	safe	0.7318	approved	0				global known-rendering assignment; lexical score 0.58
+6:30	3	everyone		1	παντὶ		global-review-known-rendering	safe	0.7016	approved	0				global known-rendering assignment; lexical score 0.55
 6:31	1	Do		5	ποιῶσιν		global-review-known-rendering	safe	0.7274	approved	0				global known-rendering assignment; lexical score 0.58
 6:31	6	would		3	θέλετε		global-review-known-rendering	safe	0.6816	approved	0				global known-rendering assignment; lexical score 0.53
 6:31	8	them		10	αὐτοῖς		global-review-known-rendering	safe	0.74	approved	0				global known-rendering assignment; lexical score 0.59
@@ -1448,7 +1464,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 6:34	27	even		12	καὶ		global-review-known-rendering	safe	0.7158	approved	0				global known-rendering assignment; lexical score 0.57
 6:34	28	sinners		13	ἁμαρτωλοὶ		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
 6:34	32	sinners		14	ἁμαρτωλοῖς		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
-6:35	7	are		13	ἔσται		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
+6:35	7	are		25	ἐστιν		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
 6:35	17	your		5	ὑμῶν		global-review-known-rendering	safe	0.7901	approved	0				global known-rendering assignment; lexical score 0.64
 6:35	24	your		16	ὑμῶν		global-review-known-rendering	safe	0.7901	approved	0				global known-rendering assignment; lexical score 0.64
 6:35	25	reward		15	μισθὸς		global-review-known-rendering	safe	0.6329	approved	0				global known-rendering assignment; lexical score 0.48
@@ -1472,6 +1488,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 6:40	2	disciple		3	μαθητὴς		global-review-known-rendering	safe	0.7534	approved	0				global known-rendering assignment; lexical score 0.60
 6:40	4	not		1	οὐκ		global-review-known-rendering	safe	0.6306	approved	0				global known-rendering assignment; lexical score 0.48
 6:40	8	master		6	διδάσκαλον		global-review-known-rendering	safe	0.6455	approved	0				global known-rendering assignment; lexical score 0.50
+6:40	10	everyone		9	πᾶς		global-review-known-rendering	safe	0.7016	approved	0				global known-rendering assignment; lexical score 0.55
 6:40	18	his		14	αὐτοῦ		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
 6:40	19	master		13	διδάσκαλος		global-review-known-rendering	safe	0.6455	approved	0				global known-rendering assignment; lexical score 0.50
 6:41	2	why		1	Τί		global-review-known-rendering	safe	0.7674	approved	0				global known-rendering assignment; lexical score 0.62
@@ -1515,6 +1532,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 6:46	8	Lord		6	κύριε		global-review-known-rendering	safe	0.7953	approved	0				global known-rendering assignment; lexical score 0.65
 6:46	11	not		8	οὐ		global-review-known-rendering	safe	0.6306	approved	0				global known-rendering assignment; lexical score 0.48
 6:46	16	say		11	λέγω		global-review-known-rendering	safe	0.7339	approved	0				global known-rendering assignment; lexical score 0.58
+6:47	1	Everyone		1	Πᾶς		global-review-known-rendering	safe	0.7016	approved	0				global known-rendering assignment; lexical score 0.55
 6:47	3	comes		3	ἐρχόμενος		global-review-known-rendering	safe	0.6293	approved	0				global known-rendering assignment; lexical score 0.48
 6:47	5	me		5	με		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
 6:47	10	my		8	μου		global-review-known-rendering	safe	0.7667	approved	0				global known-rendering assignment; lexical score 0.62
@@ -1589,6 +1607,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 7:9	3	these		3	ταῦτα		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
 7:9	6	said		14	εἶπεν		global-review-known-rendering	safe	0.7694	approved	0				global known-rendering assignment; lexical score 0.62
 7:9	8	Jesus		5	Ἰησοῦς		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+7:9	11	surprised		6	ἐθαύμασεν		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
 7:9	21	him		12	αὐτῷ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 7:9	22	said		15	Λέγω		global-review-known-rendering	safe	0.7694	approved	0				global known-rendering assignment; lexical score 0.62
 7:9	29	faith		22	πίστιν		global-review-known-rendering	safe	0.7888	approved	0				global known-rendering assignment; lexical score 0.64
@@ -1599,7 +1618,6 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 7:11	19	disciples		15	μαθηταὶ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 7:11	22	him		13	αὐτῷ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 7:12	5	near		3	ἤγγισεν		global-review-known-rendering	safe	0.5868	approved	0				global known-rendering assignment; lexical score 0.44
-7:12	15	being		19	ἦν		global-review-known-rendering	safe	0.6642	approved	0				global known-rendering assignment; lexical score 0.51
 7:12	20	son		13	υἱὸς		global-review-known-rendering	safe	0.7729	approved	0				global known-rendering assignment; lexical score 0.62
 7:12	22	his		16	αὐτοῦ		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
 7:12	23	mother		15	μητρὶ		global-review-known-rendering	safe	0.7704	approved	0				global known-rendering assignment; lexical score 0.62
@@ -1755,6 +1773,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 7:37	12	sinner		9	ἁμαρτωλός		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 7:37	24	the		17	τοῦ		attached-word	safe	0.7	approved	0				Article of 'Pharisee's'
 7:37	25	Pharisee's		18	Φαρισαίου		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+7:37	32	perfume		21	μύρου		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
 7:38	6	her		7	αὐτοῦ		global-review-known-rendering	safe	0.7894	approved	0				global known-rendering assignment; lexical score 0.64
 7:38	15	feet		6	πόδας		global-review-known-rendering	safe	0.7934	approved	0				global known-rendering assignment; lexical score 0.64
 7:38	20	feet		14	πόδας		global-review-known-rendering	safe	0.7934	approved	0				global known-rendering assignment; lexical score 0.64
@@ -1763,6 +1782,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 7:38	32	hair		18	θριξὶν		global-review-known-rendering	safe	0.6714	approved	0				global known-rendering assignment; lexical score 0.52
 7:38	39	his		27	αὐτοῦ		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
 7:38	40	feet		26	πόδας		global-review-known-rendering	safe	0.7934	approved	0				global known-rendering assignment; lexical score 0.64
+7:38	43	the		30	τῷ		attached-word	safe	0.61	approved	0				Article of 'perfume'
+7:38	44	perfume		31	μύρῳ		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
 7:39	3	the		3	ὁ		attached-word	safe	0.7	approved	0				Article of 'Pharisee'
 7:39	4	Pharisee		4	Φαρισαῖος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 7:39	10	saw		1	ἰδὼν		global-review-known-rendering	safe	0.7481	approved	0				global known-rendering assignment; lexical score 0.60
@@ -1825,6 +1846,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 7:46	4	oil		1	ἐλαίῳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 7:46	6	my		4	μου		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
 7:46	7	head		3	κεφαλήν		global-review-known-rendering	safe	0.7918	approved	0				global known-rendering assignment; lexical score 0.64
+7:46	12	perfume		9	μύρῳ		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
 7:46	14	my		13	μου		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
 7:46	15	feet		12	πόδας		global-review-known-rendering	safe	0.7934	approved	0				global known-rendering assignment; lexical score 0.64
 7:47	4	say		3	λέγω		global-review-known-rendering	safe	0.7326	approved	0				global known-rendering assignment; lexical score 0.58
@@ -1890,6 +1912,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 8:11	12	the		9	ὁ		attached-word	safe	0.6239	approved	0				Article of 'word'
 8:11	13	word		10	λόγος		global-review-known-rendering	safe	0.7239	approved	0				global known-rendering assignment; lexical score 0.57
 8:11	15	God		12	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+8:12	6	the		4	τὴν		attached-word	safe	0.6625	approved	0				Article of 'road'
+8:12	7	road		5	ὁδόν		global-review-known-rendering	safe	0.7625	approved	0				global known-rendering assignment; lexical score 0.61
 8:12	8	are		6	εἰσιν		global-review-known-rendering	safe	0.7846	approved	0				global known-rendering assignment; lexical score 0.63
 8:12	18	comes		10	ἔρχεται		global-review-known-rendering	safe	0.63	approved	0				global known-rendering assignment; lexical score 0.48
 8:12	22	the		15	τὸν		attached-word	safe	0.6239	approved	0				Article of 'word'
@@ -2013,6 +2037,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 8:31	19	into		8	εἰς		global-review-known-rendering	safe	0.771	approved	0				global known-rendering assignment; lexical score 0.62
 8:32	2	there		3	ἐκεῖ		global-review-known-rendering	safe	0.6981	approved	0				global known-rendering assignment; lexical score 0.55
 8:32	6	herd		4	ἀγέλη		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+8:32	8	pigs		5	χοίρων		global-review-known-rendering	safe	0.7182	approved	0				global known-rendering assignment; lexical score 0.57
 8:32	15	the		9	τῷ		attached-word	safe	0.7	approved	0				Article of 'mountain'
 8:32	16	mountain		10	ὄρει		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 8:32	25	him		13	αὐτὸν		global-review-known-rendering	safe	0.7819	approved	0				global known-rendering assignment; lexical score 0.63
@@ -2020,6 +2045,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 8:32	32	into		17	εἰς		global-review-known-rendering	safe	0.771	approved	0				global known-rendering assignment; lexical score 0.62
 8:32	38	them		22	αὐτοῖς		global-review-known-rendering	safe	0.7387	approved	0				global known-rendering assignment; lexical score 0.59
 8:33	12	into		9	εἰς		global-review-known-rendering	safe	0.771	approved	0				global known-rendering assignment; lexical score 0.62
+8:33	13	the		10	τοὺς		attached-word	safe	0.6182	approved	0				Article of 'pigs'
+8:33	14	pigs		11	χοίρους		global-review-known-rendering	safe	0.7182	approved	0				global known-rendering assignment; lexical score 0.57
 8:33	16	the		14	ἡ		attached-word	safe	0.7	approved	0				Article of 'herd'
 8:33	17	herd		15	ἀγέλη		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 8:33	24	into		19	εἰς		global-review-known-rendering	safe	0.771	approved	0				global known-rendering assignment; lexical score 0.62
@@ -2163,6 +2190,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 9:7	24	John		17	Ἰωάνης		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:7	29	the				expands	supplied-article	safe	0.6588	approved	0				article the original does not write; rests on 'dead' → 'νεκρῶν'
 9:7	30	dead		20	νεκρῶν		global-review-known-rendering	safe	0.6588	approved	0				global known-rendering assignment; lexical score 0.51
+9:8	5	Elijah		5	Ἡλείας		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:8	10	others		7	ἄλλων		global-review-known-rendering	safe	0.584	approved	0				global known-rendering assignment; lexical score 0.43
 9:8	16	prophets		10	προφήτης		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
 9:9	2	Herod		3	Ἡρῴδης		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
@@ -2184,8 +2212,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 9:11	24	kingdom		14	βασιλείας		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:11	26	God		16	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
 9:11	34	need		19	χρείαν		global-review-known-rendering	safe	0.6282	approved	0				global known-rendering assignment; lexical score 0.48
-9:12	2	the				expands	supplied-article	safe	0.6689	approved	0				article the original does not write; rests on 'day' → 'ἡμέρα'
-9:12	3	day		3	ἡμέρα		global-review-known-rendering	safe	0.6689	approved	0				global known-rendering assignment; lexical score 0.52
+9:12	2	the				expands	supplied-article	safe	0.6905	approved	0				article the original does not write; rests on 'day' → 'ἡμέρα'
+9:12	3	day		3	ἡμέρα		global-review-known-rendering	safe	0.6905	approved	0				global known-rendering assignment; lexical score 0.54
 9:12	7	the		8	οἱ		attached-word	safe	0.7	approved	0				Article of 'twelve'
 9:12	8	twelve		9	δώδεκα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:12	11	him		11	αὐτῷ		global-review-known-rendering	safe	0.7824	approved	0				global known-rendering assignment; lexical score 0.63
@@ -2239,6 +2267,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 9:19	6	the		6	τὸν		attached-word	safe	0.6591	approved	0				Article of 'Baptist'
 9:19	7	Baptist		7	Βαπτιστήν		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
 9:19	9	others		8	ἄλλοι		global-review-known-rendering	safe	0.584	approved	0				global known-rendering assignment; lexical score 0.43
+9:19	11	Elijah		10	Ἡλείαν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:19	13	others		11	ἄλλοι		global-review-known-rendering	safe	0.584	approved	0				global known-rendering assignment; lexical score 0.43
 9:19	19	prophets		14	προφήτης		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
 9:20	3	said		1	εἶπεν		global-review-known-rendering	safe	0.7685	approved	0				global known-rendering assignment; lexical score 0.62
@@ -2258,9 +2287,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 9:22	3	Son		5	Υἱὸν		global-review-known-rendering	safe	0.7724	approved	0				global known-rendering assignment; lexical score 0.62
 9:22	8	much		8	πολλὰ		global-review-known-rendering	safe	0.6663	approved	0				global known-rendering assignment; lexical score 0.52
 9:22	21	priests		16	ἀρχιερέων		global-review-known-rendering	safe	0.7078	approved	0				global known-rendering assignment; lexical score 0.56
-9:22	35	the		22	τῇ		attached-word	safe	0.5689	approved	0				Article of 'third'
+9:22	35	the		22	τῇ		attached-word	safe	0.5905	approved	0				Article of 'third'
 9:22	36	third		23	τρίτῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
-9:22	37	day		24	ἡμέρᾳ		global-review-known-rendering	safe	0.6689	approved	0				global known-rendering assignment; lexical score 0.52
+9:22	37	day		24	ἡμέρᾳ		global-review-known-rendering	safe	0.6905	approved	0				global known-rendering assignment; lexical score 0.54
 9:23	3	said		1	Ἔλεγεν		global-review-known-rendering	safe	0.7685	approved	0				global known-rendering assignment; lexical score 0.62
 9:23	8	any		6	τις		global-review-known-rendering	safe	0.6004	approved	0				global known-rendering assignment; lexical score 0.45
 9:23	14	come		10	ἔρχεσθαι		global-review-known-rendering	safe	0.6101	approved	0				global known-rendering assignment; lexical score 0.46
@@ -2268,7 +2297,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 9:23	25	his		17	αὐτοῦ		global-review-known-rendering	safe	0.7889	approved	0				global known-rendering assignment; lexical score 0.64
 9:23	26	cross		16	σταυρὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:23	27	every		4	πάντας		global-review-known-rendering	safe	0.7312	approved	0				global known-rendering assignment; lexical score 0.58
-9:23	28	day		19	ἡμέραν		global-review-known-rendering	safe	0.6689	approved	0				global known-rendering assignment; lexical score 0.52
+9:23	28	day		19	ἡμέραν		global-review-known-rendering	safe	0.6905	approved	0				global known-rendering assignment; lexical score 0.54
 9:23	32	me		22	μοι		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
 9:24	8	his		7	αὐτοῦ		global-review-known-rendering	safe	0.7889	approved	0				global known-rendering assignment; lexical score 0.64
 9:24	15	him		10	αὐτήν		global-review-known-rendering	safe	0.7824	approved	0				global known-rendering assignment; lexical score 0.63
@@ -2314,6 +2343,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 9:29	15	white		17	λευκὸς		global-review-known-rendering	safe	0.695	approved	0				global known-rendering assignment; lexical score 0.55
 9:30	2	two		4	δύο		global-review-known-rendering	safe	0.7885	approved	0				global known-rendering assignment; lexical score 0.64
 9:30	4	Moses		9	Μωϋσῆς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+9:30	6	Elijah		11	Ἡλείας		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:30	10	him		6	αὐτῷ		global-review-known-rendering	safe	0.7824	approved	0				global known-rendering assignment; lexical score 0.63
 9:31	3	seen		2	ὀφθέντες		global-review-known-rendering	safe	0.6423	approved	0				global known-rendering assignment; lexical score 0.49
 9:31	5	glory		4	δόξῃ		global-review-known-rendering	safe	0.7232	approved	0				global known-rendering assignment; lexical score 0.57
@@ -2337,6 +2367,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 9:33	33	one		28	μίαν		global-review-known-rendering	safe	0.6368	approved	0				global known-rendering assignment; lexical score 0.49
 9:33	35	Moses		29	Μωϋσεῖ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:33	37	one		31	μίαν		global-review-known-rendering	safe	0.6368	approved	0				global known-rendering assignment; lexical score 0.49
+9:33	39	Elijah		32	Ἡλείᾳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:33	47	saying		36	λέγει		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
 9:34	4	said		4	λέγοντος		global-review-known-rendering	safe	0.7685	approved	0				global known-rendering assignment; lexical score 0.62
 9:34	5	these		1	ταῦτα		global-review-known-rendering	safe	0.7894	approved	0				global known-rendering assignment; lexical score 0.64
@@ -2360,7 +2391,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 9:36	8	saw		22	ἑώρακαν		global-review-known-rendering	safe	0.7478	approved	0				global known-rendering assignment; lexical score 0.60
 9:36	10	Jesus		8	Ἰησοῦς		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
 9:36	20	nothing		14	οὐδενὶ		global-review-known-rendering	safe	0.5983	approved	0				global known-rendering assignment; lexical score 0.45
-9:37	4	day		5	ἡμέρᾳ		global-review-known-rendering	safe	0.6689	approved	0				global known-rendering assignment; lexical score 0.52
+9:37	4	day		5	ἡμέρᾳ		global-review-known-rendering	safe	0.6905	approved	0				global known-rendering assignment; lexical score 0.54
 9:37	11	the		9	τοῦ		attached-word	safe	0.7	approved	0				Article of 'mountain'
 9:37	12	mountain		10	ὄρους		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 9:37	20	him		12	αὐτῷ		global-review-known-rendering	safe	0.7824	approved	0				global known-rendering assignment; lexical score 0.63
@@ -2472,6 +2503,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 9:57	9	certain		8	τις		global-review-known-rendering	safe	0.7752	approved	0				global known-rendering assignment; lexical score 0.63
 9:57	11	said		7	εἶπέν		global-review-known-rendering	safe	0.7685	approved	0				global known-rendering assignment; lexical score 0.62
 9:57	13	him		10	αὐτόν		global-review-known-rendering	safe	0.7824	approved	0				global known-rendering assignment; lexical score 0.63
+9:57	19	wherever		13	ὅπου		global-review-known-rendering	safe	0.6579	approved	0				global known-rendering assignment; lexical score 0.51
 9:58	2	Jesus		5	Ἰησοῦς		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
 9:58	3	said		2	εἶπεν		global-review-known-rendering	safe	0.7685	approved	0				global known-rendering assignment; lexical score 0.62
 9:58	5	him		3	αὐτῷ		global-review-known-rendering	safe	0.7824	approved	0				global known-rendering assignment; lexical score 0.63
@@ -2564,7 +2596,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 10:11	29	God		24	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
 10:11	31	near		20	ἤγγικεν		global-review-known-rendering	safe	0.5868	approved	0				global known-rendering assignment; lexical score 0.44
 10:12	2	say		1	λέγω		global-review-known-rendering	safe	0.7337	approved	0				global known-rendering assignment; lexical score 0.58
-10:12	11	day		7	ἡμέρᾳ		global-review-known-rendering	safe	0.6698	approved	0				global known-rendering assignment; lexical score 0.52
+10:12	11	day		7	ἡμέρᾳ		global-review-known-rendering	safe	0.6914	approved	0				global known-rendering assignment; lexical score 0.54
 10:12	13	Sodom		4	Σοδόμοις		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 10:12	14	than		11	ἢ		global-review-known-rendering	safe	0.6138	approved	0				global known-rendering assignment; lexical score 0.46
 10:13	23	Tyre		10	Τύρῳ		global-review-known-rendering	safe	0.755	approved	0				global known-rendering assignment; lexical score 0.60
@@ -2589,9 +2621,11 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 10:18	11	heaven		11	οὐρανοῦ		global-review-known-rendering	safe	0.7889	approved	0				global known-rendering assignment; lexical score 0.64
 10:19	1	See		1	ἰδοὺ		global-review-known-rendering	safe	0.6333	approved	0				global known-rendering assignment; lexical score 0.48
 10:19	4	given		2	δέδωκα		global-review-known-rendering	safe	0.743	approved	0				global known-rendering assignment; lexical score 0.59
+10:19	12	snakes		9	ὄφεων		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 10:19	18	all		14	πᾶσαν		global-review-known-rendering	safe	0.7313	approved	0				global known-rendering assignment; lexical score 0.58
 10:19	28	nothing		20	οὐδὲν		global-review-known-rendering	safe	0.5944	approved	0				global known-rendering assignment; lexical score 0.44
 10:20	4	glad		5	χαίρετε		global-review-known-rendering	safe	0.5923	approved	0				global known-rendering assignment; lexical score 0.44
+10:20	5	however		12	δὲ		global-review-known-rendering	safe	0.6816	approved	0				global known-rendering assignment; lexical score 0.53
 10:20	6	because		6	ὅτι		global-review-known-rendering	safe	0.6762	approved	0				global known-rendering assignment; lexical score 0.53
 10:20	11	spirits		8	πνεύματα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 10:20	13	because		13	ὅτι		global-review-known-rendering	safe	0.6762	approved	0				global known-rendering assignment; lexical score 0.53
@@ -2667,6 +2701,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 10:27	29	your		32	σου		global-review-known-rendering	safe	0.7902	approved	0				global known-rendering assignment; lexical score 0.64
 10:27	33	your		36	σου		global-review-known-rendering	safe	0.7902	approved	0				global known-rendering assignment; lexical score 0.64
 10:27	34	neighbour		35	πλησίον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+10:27	37	yourself		38	σεαυτόν		global-review-known-rendering	safe	0.6333	approved	0				global known-rendering assignment; lexical score 0.48
 10:28	3	said		1	εἶπεν		global-review-known-rendering	safe	0.7689	approved	0				global known-rendering assignment; lexical score 0.62
 10:28	9	answer		5	ἀπεκρίθης		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
 10:28	10	do		7	ποίει		global-review-known-rendering	safe	0.7273	approved	0				global known-rendering assignment; lexical score 0.58
@@ -2771,7 +2806,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 11:2	22	come		12	ἐλθάτω		global-review-known-rendering	safe	0.611	approved	0				global known-rendering assignment; lexical score 0.46
 11:3	1	Give		6	δίδου		global-review-known-rendering	safe	0.7349	approved	0				global known-rendering assignment; lexical score 0.58
 11:3	2	us		7	ἡμῖν		global-review-known-rendering	safe	0.7977	approved	0				global known-rendering assignment; lexical score 0.65
-11:3	4	day		10	ἡμέραν		global-review-known-rendering	safe	0.671	approved	0				global known-rendering assignment; lexical score 0.52
+11:3	4	day		10	ἡμέραν		global-review-known-rendering	safe	0.6927	approved	0				global known-rendering assignment; lexical score 0.54
 11:3	5	bread		2	ἄρτον		global-review-known-rendering	safe	0.758	approved	0				global known-rendering assignment; lexical score 0.61
 11:3	7	our		3	ἡμῶν		global-review-known-rendering	safe	0.7923	approved	0				global known-rendering assignment; lexical score 0.64
 11:4	6	our		6	ἡμῶν		global-review-known-rendering	safe	0.7923	approved	0				global known-rendering assignment; lexical score 0.64
@@ -2814,6 +2849,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 11:9	3	say		3	λέγω		global-review-known-rendering	safe	0.733	approved	0				global known-rendering assignment; lexical score 0.58
 11:9	23	give		6	δοθήσεται		global-review-known-rendering	safe	0.7349	approved	0				global known-rendering assignment; lexical score 0.58
 11:9	30	open		13	ἀνοιγήσεται		global-review-known-rendering	safe	0.728	approved	0				global known-rendering assignment; lexical score 0.58
+11:10	3	everyone		1	πᾶς		global-review-known-rendering	safe	0.7016	approved	0				global known-rendering assignment; lexical score 0.55
 11:10	32	open		13	ἀνοιγήσεται		global-review-known-rendering	safe	0.728	approved	0				global known-rendering assignment; lexical score 0.58
 11:11	6	a				expands	supplied-indefinite-article	safe	0.7986	approved	0				indefinite article; rests on 'father' → 'πατέρα'
 11:11	7	father		6	πατέρα		global-review-known-rendering	safe	0.7986	approved	0				global known-rendering assignment; lexical score 0.65
@@ -2833,6 +2869,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 11:13	34	him		25	αὐτόν		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 11:15	4	them		4	αὐτῶν		global-review-known-rendering	safe	0.7384	approved	0				global known-rendering assignment; lexical score 0.59
 11:15	5	said		5	εἶπαν		global-review-known-rendering	safe	0.769	approved	0				global known-rendering assignment; lexical score 0.62
+11:15	12	Beelzebul		7	Βεελζεβοὺλ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 11:16	8	a				expands	supplied-indefinite-article	safe	0.782	approved	0				indefinite article; rests on 'sign' → 'σημεῖον'
 11:16	9	sign		4	σημεῖον		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 11:16	11	heaven		6	οὐρανοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
@@ -2848,7 +2885,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 11:18	14	kingdom		12	βασιλεία		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 11:18	15	because		14	ὅτι		global-review-known-rendering	safe	0.6787	approved	0				global known-rendering assignment; lexical score 0.53
 11:18	17	say		15	λέγετε		global-review-known-rendering	safe	0.733	approved	0				global known-rendering assignment; lexical score 0.58
+11:18	30	Beelzebul		17	Βεελζεβοὺλ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 11:19	3	I		3	ἐγὼ		global-review-known-rendering	safe	0.7475	approved	0				global known-rendering assignment; lexical score 0.60
+11:19	5	Beelzebul		5	Βεελζεβοὺλ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 11:19	14	your		11	ὑμῶν		global-review-known-rendering	safe	0.7902	approved	0				global known-rendering assignment; lexical score 0.64
 11:19	15	sons		10	υἱοὶ		global-review-known-rendering	safe	0.695	approved	0				global known-rendering assignment; lexical score 0.55
 11:19	21	them		17	αὐτοὶ		global-review-known-rendering	safe	0.7384	approved	0				global known-rendering assignment; lexical score 0.59
@@ -2909,7 +2948,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 11:29	31	given		18	δοθήσεται		global-review-known-rendering	safe	0.7421	approved	0				global known-rendering assignment; lexical score 0.59
 11:29	35	the		22	τὸ		attached-word	safe	0.682	approved	0				Article of 'sign'
 11:29	36	sign		23	σημεῖον		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
+11:29	38	Jonah		24	Ἰωνᾶ		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
 11:30	2	even		10	καὶ		global-review-known-rendering	safe	0.717	approved	0				global known-rendering assignment; lexical score 0.57
+11:30	4	Jonah		4	Ἰωνᾶς		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
 11:30	5	became		3	ἐγένετο		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
 11:30	6	a				expands	supplied-indefinite-article	safe	0.782	approved	0				indefinite article; rests on 'sign' → 'σημεῖον'
 11:30	7	sign		7	σημεῖον		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
@@ -2932,6 +2973,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 11:31	48	here		31	ὧδε		global-review-known-rendering	safe	0.7426	approved	0				global known-rendering assignment; lexical score 0.59
 11:32	18	this		10	ταύτης		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
 11:32	19	generation		9	γενεᾶς		global-review-known-rendering	safe	0.7129	approved	0				global known-rendering assignment; lexical score 0.56
+11:32	32	Jonah		19	Ἰωνᾶ		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
+11:32	38	Jonah		23	Ἰωνᾶ		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
 11:32	40	here		24	ὧδε		global-review-known-rendering	safe	0.7426	approved	0				global known-rendering assignment; lexical score 0.59
 11:33	16	under		8	ὑπὸ		global-review-known-rendering	safe	0.5971	approved	0				global known-rendering assignment; lexical score 0.45
 11:34	4	the		3	τοῦ		attached-word	safe	0.6933	approved	0				Article of 'body'
@@ -2952,6 +2995,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 11:38	3	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'Pharisee' → 'Φαρισαῖος'
 11:38	4	Pharisee		3	Φαρισαῖος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 11:38	5	saw		4	ἰδὼν		global-review-known-rendering	safe	0.7483	approved	0				global known-rendering assignment; lexical score 0.60
+11:38	9	surprised		5	ἐθαύμασεν		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
 11:38	10	because		6	ὅτι		global-review-known-rendering	safe	0.6787	approved	0				global known-rendering assignment; lexical score 0.53
 11:39	2	the		3	ὁ		attached-word	safe	0.6953	approved	0				Article of 'Lord'
 11:39	3	Lord		4	Κύριος		global-review-known-rendering	safe	0.7953	approved	0				global known-rendering assignment; lexical score 0.65
@@ -3075,6 +3119,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 12:7	6	your		7	ὑμῶν		global-review-known-rendering	safe	0.7902	approved	0				global known-rendering assignment; lexical score 0.64
 12:7	7	head		6	κεφαλῆς		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64
 12:8	3	say		1	λέγω		global-review-known-rendering	safe	0.7332	approved	0				global known-rendering assignment; lexical score 0.58
+12:8	8	everyone		4	πᾶς		global-review-known-rendering	safe	0.7005	approved	0				global known-rendering assignment; lexical score 0.55
 12:8	13	me		9	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
 12:8	15	men		12	ἀνθρώπων		global-review-known-rendering	safe	0.6223	approved	0				global known-rendering assignment; lexical score 0.47
 12:8	16	the		14	ὁ		attached-word	safe	0.6726	approved	0				Article of 'Son'
@@ -3098,6 +3143,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 12:10	30	no		20	οὐκ		global-review-known-rendering	safe	0.6043	approved	0				global known-rendering assignment; lexical score 0.45
 12:11	7	the		6	τὰς		attached-word	safe	0.6795	approved	0				Article of 'Synagogues'
 12:11	8	Synagogues		7	συναγωγὰς		global-review-known-rendering	safe	0.7795	approved	0				global known-rendering assignment; lexical score 0.63
+12:11	10	the		12	τὰς		attached-word	safe	0.5269	approved	0				Article of 'authorities'
+12:11	11	authorities		13	ἐξουσίας		global-review-known-rendering	safe	0.6269	approved	0				global known-rendering assignment; lexical score 0.48
 12:11	19	what		18	τί		global-review-known-rendering	safe	0.6814	approved	0				global known-rendering assignment; lexical score 0.53
 12:11	25	what		21	τί		global-review-known-rendering	safe	0.6814	approved	0				global known-rendering assignment; lexical score 0.53
 12:11	28	say		22	εἴπητε		global-review-known-rendering	safe	0.7332	approved	0				global known-rendering assignment; lexical score 0.58
@@ -3179,6 +3226,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 12:28	9	grass		6	χόρτον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 12:28	11	the				expands	supplied-article	safe	0.7386	approved	0				article the original does not write; rests on 'field' → 'ἀγρῷ'
 12:28	12	field		4	ἀγρῷ		global-review-known-rendering	safe	0.7386	approved	0				global known-rendering assignment; lexical score 0.59
+12:28	14	today		8	σήμερον		global-review-known-rendering	safe	0.7763	approved	0				global known-rendering assignment; lexical score 0.63
+12:28	18	tomorrow		10	αὔριον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 12:29	11	drink		9	πίητε		global-review-known-rendering	safe	0.6234	approved	0				global known-rendering assignment; lexical score 0.47
 12:30	2	the		4	τὰ		attached-word	safe	0.7	approved	0				Article of 'nations'
 12:30	3	nations		5	ἔθνη		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
@@ -3300,6 +3349,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 12:50	4	a				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'baptism' → 'βάπτισμα'
 12:50	5	baptism		1	βάπτισμα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 12:50	8	have		3	ἔχω		global-review-known-rendering	safe	0.7338	approved	0				global known-rendering assignment; lexical score 0.58
+12:50	10	undergo		4	βαπτισθῆναι		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
 12:50	12	how		6	πῶς		global-review-known-rendering	safe	0.6511	approved	0				global known-rendering assignment; lexical score 0.50
 12:50	17	till		8	ἕως		global-review-known-rendering	safe	0.6062	approved	0				global known-rendering assignment; lexical score 0.46
 12:51	10	give		5	δοῦναι		global-review-known-rendering	safe	0.731	approved	0				global known-rendering assignment; lexical score 0.58
@@ -3323,6 +3373,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 12:53	19	daughter		11	θυγατέρα		global-review-known-rendering	safe	0.7437	approved	0				global known-rendering assignment; lexical score 0.59
 12:53	21	daughter		13	θυγάτηρ		global-review-known-rendering	safe	0.7437	approved	0				global known-rendering assignment; lexical score 0.59
 12:53	23	mother		16	μητέρα		global-review-known-rendering	safe	0.7704	approved	0				global known-rendering assignment; lexical score 0.62
+12:53	24	mother-in-law		17	πενθερὰ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+12:53	30	mother-in-law		26	πενθεράν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 12:54	3	said		1	Ἔλεγεν		global-review-known-rendering	safe	0.769	approved	0				global known-rendering assignment; lexical score 0.62
 12:54	9	see		7	ἴδητε		global-review-known-rendering	safe	0.6289	approved	0				global known-rendering assignment; lexical score 0.48
 12:54	10	a				expands	supplied-indefinite-article	safe	0.775	approved	0				indefinite article; rests on 'cloud' → 'νεφέλην'
@@ -3359,6 +3411,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 13:1	11	him		9	αὐτῷ		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
 13:1	16	the		14	τὸ		attached-word	safe	0.6908	approved	0				Article of 'blood'
 13:1	17	blood		15	αἷμα		global-review-known-rendering	safe	0.7908	approved	0				global known-rendering assignment; lexical score 0.64
+13:1	23	mixed		17	ἔμιξεν		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
 13:1	25	Pilate		16	Πειλᾶτος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 13:1	27	their		21	αὐτῶν		global-review-known-rendering	safe	0.7838	approved	0				global known-rendering assignment; lexical score 0.63
 13:2	4	answer		2	ἀποκριθεὶς		global-review-known-rendering	safe	0.5652	approved	0				global known-rendering assignment; lexical score 0.42
@@ -3522,7 +3575,6 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 13:28	21	the		22	τῇ		attached-word	safe	0.7	approved	0				Article of 'kingdom'
 13:28	22	kingdom		23	βασιλείᾳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 13:28	24	God		25	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
-13:28	28	are		2	ἔσται		global-review-known-rendering	safe	0.7846	approved	0				global known-rendering assignment; lexical score 0.63
 13:29	6	the				expands	supplied-article	safe	0.71	approved	0				article the original does not write; rests on 'east' → 'ἀνατολῶν'
 13:29	7	east		4	ἀνατολῶν		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
 13:29	10	the				expands	supplied-article	safe	0.65	approved	0				article the original does not write; rests on 'west' → 'δυσμῶν'
@@ -3543,9 +3595,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 13:31	17	Herod's		15	Ἡρῴδης		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 13:32	3	said		2	εἶπεν		global-review-known-rendering	safe	0.7689	approved	0				global known-rendering assignment; lexical score 0.62
 13:32	6	say		5	εἴπατε		global-review-known-rendering	safe	0.7356	approved	0				global known-rendering assignment; lexical score 0.59
+13:32	20	today		15	σήμερον		global-review-known-rendering	safe	0.775	approved	0				global known-rendering assignment; lexical score 0.62
+13:32	22	tomorrow		17	αὔριον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 13:32	25	the		19	τῇ		attached-word	safe	0.7	approved	0				Article of 'third'
 13:32	26	third		20	τρίτῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 13:33	3	have		9	ἐχομένῃ		global-review-known-rendering	safe	0.732	approved	0				global known-rendering assignment; lexical score 0.58
+13:33	9	today		4	σήμερον		global-review-known-rendering	safe	0.775	approved	0				global known-rendering assignment; lexical score 0.62
+13:33	11	tomorrow		6	αὔριον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 13:33	19	not		12	οὐκ		global-review-known-rendering	safe	0.6287	approved	0				global known-rendering assignment; lexical score 0.48
 13:33	22	a				expands	supplied-indefinite-article	safe	0.7723	approved	0				indefinite article; rests on 'prophet' → 'προφήτην'
 13:33	23	prophet		14	προφήτην		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62
@@ -3604,7 +3660,6 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 14:9	18	this		11	τούτῳ		global-review-known-rendering	safe	0.7776	approved	0				global known-rendering assignment; lexical score 0.63
 14:10	19	comes		12	ἔλθῃ		global-review-known-rendering	safe	0.6277	approved	0				global known-rendering assignment; lexical score 0.48
 14:10	39	all		26	πάντων		global-review-known-rendering	safe	0.7296	approved	0				global known-rendering assignment; lexical score 0.58
-14:10	43	are		22	ἔσται		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
 14:11	2	every		2	πᾶς		global-review-known-rendering	safe	0.7286	approved	0				global known-rendering assignment; lexical score 0.58
 14:12	3	said		1	Ἔλεγεν		global-review-known-rendering	safe	0.769	approved	0				global known-rendering assignment; lexical score 0.62
 14:12	19	your		16	σου		global-review-known-rendering	safe	0.7903	approved	0				global known-rendering assignment; lexical score 0.64
@@ -3673,6 +3728,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 14:23	6	the		6	τὸν		attached-word	safe	0.6019	approved	0				Article of 'servant'
 14:23	7	servant		7	δοῦλον		global-review-known-rendering	safe	0.7019	approved	0				global known-rendering assignment; lexical score 0.55
 14:23	10	into		9	εἰς		global-review-known-rendering	safe	0.7712	approved	0				global known-rendering assignment; lexical score 0.62
+14:23	11	the		10	τὰς		attached-word	safe	0.6625	approved	0				Article of 'roads'
+14:23	12	roads		11	ὁδοὺς		global-review-known-rendering	safe	0.7625	approved	0				global known-rendering assignment; lexical score 0.61
 14:23	23	my		19	μου		global-review-known-rendering	safe	0.7665	approved	0				global known-rendering assignment; lexical score 0.62
 14:24	3	say		1	λέγω		global-review-known-rendering	safe	0.7349	approved	0				global known-rendering assignment; lexical score 0.58
 14:24	10	those		8	ἐκείνων		global-review-known-rendering	safe	0.5891	approved	0				global known-rendering assignment; lexical score 0.44
@@ -3749,6 +3806,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 15:4	10	one		12	ἓν		global-review-known-rendering	safe	0.6338	approved	0				global known-rendering assignment; lexical score 0.48
 15:4	12	them		11	αὐτῶν		global-review-known-rendering	safe	0.7386	approved	0				global known-rendering assignment; lexical score 0.59
 15:4	19	not		13	οὐ		global-review-known-rendering	safe	0.6287	approved	0				global known-rendering assignment; lexical score 0.48
+15:4	21	the		15	τὰ		attached-word	safe	0.55	approved	0				Article of 'ninety-nine'
+15:4	22	ninety-nine		16	ἐνενήκοντα		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
 15:4	36	till		26	ἕως		global-review-known-rendering	safe	0.6091	approved	0				global known-rendering assignment; lexical score 0.46
 15:5	12	his		7	αὐτοῦ		global-review-known-rendering	safe	0.7894	approved	0				global known-rendering assignment; lexical score 0.64
 15:6	15	friends		8	φίλους		global-review-known-rendering	safe	0.6125	approved	0				global known-rendering assignment; lexical score 0.46
@@ -3764,6 +3823,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 15:7	16	one		11	ἑνὶ		global-review-known-rendering	safe	0.6338	approved	0				global known-rendering assignment; lexical score 0.48
 15:7	17	sinner		12	ἁμαρτωλῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 15:7	24	than		14	ἢ		global-review-known-rendering	safe	0.6169	approved	0				global known-rendering assignment; lexical score 0.47
+15:7	26	ninety-nine		16	ἐνενήκοντα		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
 15:7	30	have		22	ἔχουσιν		global-review-known-rendering	safe	0.7332	approved	0				global known-rendering assignment; lexical score 0.58
 15:7	31	no		20	οὐ		global-review-known-rendering	safe	0.6031	approved	0				global known-rendering assignment; lexical score 0.45
 15:7	32	need		21	χρείαν		global-review-known-rendering	safe	0.6333	approved	0				global known-rendering assignment; lexical score 0.48
@@ -3802,16 +3862,21 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 15:13	5	the		8	ὁ		attached-word	safe	0.6738	approved	0				Article of 'younger'
 15:13	6	younger		9	νεώτερος		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
 15:13	7	son		10	υἱὸς		global-review-known-rendering	safe	0.7738	approved	0				global known-rendering assignment; lexical score 0.62
+15:13	10	everything		7	πάντα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 15:13	18	into		12	εἰς		global-review-known-rendering	safe	0.7713	approved	0				global known-rendering assignment; lexical score 0.62
 15:13	23	there		16	ἐκεῖ		global-review-known-rendering	safe	0.6981	approved	0				global known-rendering assignment; lexical score 0.55
-15:13	24	all		7	πάντα		global-review-known-rendering	safe	0.7296	approved	0				global known-rendering assignment; lexical score 0.58
 15:13	25	his		20	αὐτοῦ		global-review-known-rendering	safe	0.7894	approved	0				global known-rendering assignment; lexical score 0.64
 15:13	30	living		21	ζῶν		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+15:14	3	everything		4	πάντα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 15:15	11	one		4	ἑνὶ		global-review-known-rendering	safe	0.6338	approved	0				global known-rendering assignment; lexical score 0.48
 15:15	21	him		12	αὐτὸν		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 15:15	22	into		13	εἰς		global-review-known-rendering	safe	0.7713	approved	0				global known-rendering assignment; lexical score 0.62
 15:15	23	his		16	αὐτοῦ		global-review-known-rendering	safe	0.7894	approved	0				global known-rendering assignment; lexical score 0.64
+15:15	27	the				expands	supplied-article	safe	0.6615	approved	0				article the original does not write; rests on 'pigs' → 'χοίρους'
+15:15	28	pigs		18	χοίρους		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
 15:16	5	his		6	αὐτοῦ		global-review-known-rendering	safe	0.7894	approved	0				global known-rendering assignment; lexical score 0.64
+15:16	15	the		12	οἱ		attached-word	safe	0.5615	approved	0				Article of 'pigs'
+15:16	16	pigs		13	χοῖροι		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
 15:16	21	gave		16	ἐδίδου		global-review-known-rendering	safe	0.7365	approved	0				global known-rendering assignment; lexical score 0.59
 15:16	22	him		17	αὐτῷ		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 15:17	4	came		4	ἐλθὼν		global-review-known-rendering	safe	0.5999	approved	0				global known-rendering assignment; lexical score 0.45
@@ -3866,6 +3931,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 15:24	7	dead		6	νεκρὸς		global-review-known-rendering	safe	0.6595	approved	0				global known-rendering assignment; lexical score 0.51
 15:24	16	me		5	μου		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
 15:25	2	the		3	ὁ		attached-word	safe	0.6738	approved	0				Article of 'older'
+15:25	3	older		7	πρεσβύτερος		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
 15:25	4	son		4	υἱὸς		global-review-known-rendering	safe	0.7738	approved	0				global known-rendering assignment; lexical score 0.62
 15:25	8	field		9	ἀγρῷ		global-review-known-rendering	safe	0.7386	approved	0				global known-rendering assignment; lexical score 0.59
 15:25	12	came		12	ἐρχόμενος		global-review-known-rendering	safe	0.5999	approved	0				global known-rendering assignment; lexical score 0.45
@@ -4010,18 +4076,20 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 16:16	15	the		10	ἡ		attached-word	safe	0.7	approved	0				Article of 'kingdom'
 16:16	16	kingdom		11	βασιλεία		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 16:16	18	God		13	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+16:16	20	everyone		16	πᾶς		global-review-known-rendering	safe	0.7021	approved	0				global known-rendering assignment; lexical score 0.55
 16:16	24	into		17	εἰς		global-review-known-rendering	safe	0.7712	approved	0				global known-rendering assignment; lexical score 0.62
 16:16	27	force		18	αὐτὴν		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
 16:17	2	heaven		5	οὐρανὸν		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
 16:17	4	earth		8	γῆν		global-review-known-rendering	safe	0.7906	approved	0				global known-rendering assignment; lexical score 0.64
 16:17	15	the		11	τοῦ		attached-word	safe	0.6338	approved	0				Article of 'law'
 16:17	16	law		12	νόμου		global-review-known-rendering	safe	0.7338	approved	0				global known-rendering assignment; lexical score 0.58
+16:18	1	Everyone		1	Πᾶς		global-review-known-rendering	safe	0.7021	approved	0				global known-rendering assignment; lexical score 0.55
 16:18	6	wife		5	γυναῖκα		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
 16:18	18	married		8	γαμῶν		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
 16:18	26	her		6	αὐτοῦ		global-review-known-rendering	safe	0.7898	approved	0				global known-rendering assignment; lexical score 0.64
 16:18	31	husband		15	ἀνδρὸς		global-review-known-rendering	safe	0.7885	approved	0				global known-rendering assignment; lexical score 0.64
 16:19	5	certain		3	τις		global-review-known-rendering	safe	0.7748	approved	0				global known-rendering assignment; lexical score 0.62
-16:19	27	day		13	ἡμέραν		global-review-known-rendering	safe	0.671	approved	0				global known-rendering assignment; lexical score 0.52
+16:19	27	day		13	ἡμέραν		global-review-known-rendering	safe	0.6927	approved	0				global known-rendering assignment; lexical score 0.54
 16:20	3	certain		3	τις		global-review-known-rendering	safe	0.7748	approved	0				global known-rendering assignment; lexical score 0.62
 16:20	4	poor		1	πτωχὸς		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
 16:20	6	named		4	ὀνόματι		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
@@ -4117,8 +4185,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 17:3	15	him		9	αὐτῷ		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
 17:3	24	let		13	ἄφες		global-review-known-rendering	safe	0.6269	approved	0				global known-rendering assignment; lexical score 0.48
 17:3	25	him		14	αὐτῷ		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
-17:4	10	a				expands	supplied-indefinite-article	safe	0.667	approved	0				indefinite article; rests on 'day' → 'ἡμέρας'
-17:4	11	day		5	ἡμέρας		global-review-known-rendering	safe	0.667	approved	0				global known-rendering assignment; lexical score 0.52
+17:4	10	a				expands	supplied-indefinite-article	safe	0.6888	approved	0				indefinite article; rests on 'day' → 'ἡμέρας'
+17:4	11	day		5	ἡμέρας		global-review-known-rendering	safe	0.6888	approved	0				global known-rendering assignment; lexical score 0.54
 17:4	19	says		14	λέγων		global-review-known-rendering	safe	0.7495	approved	0				global known-rendering assignment; lexical score 0.60
 17:4	28	let		16	ἀφήσεις		global-review-known-rendering	safe	0.6269	approved	0				global known-rendering assignment; lexical score 0.48
 17:4	29	him		17	αὐτῷ		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
@@ -4243,13 +4311,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 17:26	7	days		6	ἡμέραις		global-review-known-rendering	safe	0.7744	approved	0				global known-rendering assignment; lexical score 0.62
 17:26	9	Noah		7	Νῶε		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 17:26	10	so		8	οὕτως		global-review-known-rendering	safe	0.6676	approved	0				global known-rendering assignment; lexical score 0.52
-17:26	15	the		12	ταῖς		attached-word	safe	0.567	approved	0				Article of 'day'
-17:26	16	day		13	ἡμέραις		global-review-known-rendering	safe	0.667	approved	0				global known-rendering assignment; lexical score 0.52
+17:26	15	the		12	ταῖς		attached-word	safe	0.5888	approved	0				Article of 'day'
+17:26	16	day		13	ἡμέραις		global-review-known-rendering	safe	0.6888	approved	0				global known-rendering assignment; lexical score 0.54
 17:26	18	the		14	τοῦ		attached-word	safe	0.6727	approved	0				Article of 'Son'
 17:26	19	Son		15	Υἱοῦ		global-review-known-rendering	safe	0.7727	approved	0				global known-rendering assignment; lexical score 0.62
 17:27	9	married		3	ἐγάμουν		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
-17:27	11	the				expands	supplied-article	safe	0.667	approved	0				article the original does not write; rests on 'day' → 'ἡμέρας'
-17:27	12	day		7	ἡμέρας		global-review-known-rendering	safe	0.667	approved	0				global known-rendering assignment; lexical score 0.52
+17:27	11	the				expands	supplied-article	safe	0.6888	approved	0				article the original does not write; rests on 'day' → 'ἡμέρας'
+17:27	12	day		7	ἡμέρας		global-review-known-rendering	safe	0.6888	approved	0				global known-rendering assignment; lexical score 0.54
 17:27	20	Noah		9	Νῶε		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 17:27	22	into		10	εἰς		global-review-known-rendering	safe	0.7713	approved	0				global known-rendering assignment; lexical score 0.62
 17:27	23	the		11	τὴν		attached-word	safe	0.7	approved	0				Article of 'ark'
@@ -4259,19 +4327,18 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 17:28	6	the		5	ταῖς		attached-word	safe	0.6744	approved	0				Article of 'days'
 17:28	7	days		6	ἡμέραις		global-review-known-rendering	safe	0.7744	approved	0				global known-rendering assignment; lexical score 0.62
 17:28	17	planting		12	ἐφύτευον		global-review-known-rendering	safe	0.755	approved	0				global known-rendering assignment; lexical score 0.60
-17:29	3	the				expands	supplied-article	safe	0.667	approved	0				article the original does not write; rests on 'day' → 'ἡμέρᾳ'
-17:29	4	day		3	ἡμέρᾳ		global-review-known-rendering	safe	0.667	approved	0				global known-rendering assignment; lexical score 0.52
+17:29	3	the				expands	supplied-article	safe	0.6888	approved	0				article the original does not write; rests on 'day' → 'ἡμέρᾳ'
+17:29	4	day		3	ἡμέρᾳ		global-review-known-rendering	safe	0.6888	approved	0				global known-rendering assignment; lexical score 0.54
 17:29	10	Sodom		7	Σοδόμων		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 17:29	11	fire		9	πῦρ		global-review-known-rendering	safe	0.7532	approved	0				global known-rendering assignment; lexical score 0.60
 17:29	15	heaven		13	οὐρανοῦ		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
 17:29	21	all		16	πάντας		global-review-known-rendering	safe	0.7297	approved	0				global known-rendering assignment; lexical score 0.58
-17:30	6	the				expands	supplied-article	safe	0.667	approved	0				article the original does not write; rests on 'day' → 'ἡμέρᾳ'
-17:30	7	day		6	ἡμέρᾳ		global-review-known-rendering	safe	0.667	approved	0				global known-rendering assignment; lexical score 0.52
+17:30	6	the				expands	supplied-article	safe	0.6888	approved	0				article the original does not write; rests on 'day' → 'ἡμέρᾳ'
+17:30	7	day		6	ἡμέρᾳ		global-review-known-rendering	safe	0.6888	approved	0				global known-rendering assignment; lexical score 0.54
 17:30	12	the		7	ὁ		attached-word	safe	0.6727	approved	0				Article of 'Son'
 17:30	13	Son		8	Υἱὸς		global-review-known-rendering	safe	0.7727	approved	0				global known-rendering assignment; lexical score 0.62
-17:31	3	day		4	ἡμέρᾳ		global-review-known-rendering	safe	0.667	approved	0				global known-rendering assignment; lexical score 0.52
+17:31	3	day		4	ἡμέρᾳ		global-review-known-rendering	safe	0.6888	approved	0				global known-rendering assignment; lexical score 0.54
 17:31	14	his		13	αὐτοῦ		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
-17:31	16	are		6	ἔσται		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
 17:31	27	them		20	αὐτά		global-review-known-rendering	safe	0.7387	approved	0				global known-rendering assignment; lexical score 0.59
 17:31	36	field		24	ἀγρῷ		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59
 17:32	5	wife		3	γυναικὸς		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
@@ -4322,7 +4389,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 18:7	4	God		3	Θεὸς		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
 18:7	5	do		6	ποιήσῃ		global-review-known-rendering	safe	0.7276	approved	0				global known-rendering assignment; lexical score 0.58
 18:7	11	his		11	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
-18:7	16	day		15	ἡμέρας		global-review-known-rendering	safe	0.6694	approved	0				global known-rendering assignment; lexical score 0.52
+18:7	16	day		15	ἡμέρας		global-review-known-rendering	safe	0.691	approved	0				global known-rendering assignment; lexical score 0.54
 18:7	18	night		17	νυκτός		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
 18:8	2	say		1	λέγω		global-review-known-rendering	safe	0.734	approved	0				global known-rendering assignment; lexical score 0.58
 18:8	9	do		4	ποιήσει		global-review-known-rendering	safe	0.7276	approved	0				global known-rendering assignment; lexical score 0.58
@@ -4365,6 +4432,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 18:14	2	say		1	λέγω		global-review-known-rendering	safe	0.734	approved	0				global known-rendering assignment; lexical score 0.58
 18:14	5	This		4	οὗτος		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
 18:14	10	his		9	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
+18:14	20	everyone		13	πᾶς		global-review-known-rendering	safe	0.7021	approved	0				global known-rendering assignment; lexical score 0.55
 18:15	4	their		8	αὐτῶν		global-review-known-rendering	safe	0.7838	approved	0				global known-rendering assignment; lexical score 0.63
 18:15	7	him		3	αὐτῷ		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 18:15	19	the		12	οἱ		attached-word	safe	0.7	approved	0				Article of 'disciples'
@@ -4469,9 +4537,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 18:31	34	Son		21	Υἱῷ		global-review-known-rendering	safe	0.7727	approved	0				global known-rendering assignment; lexical score 0.62
 18:32	8	the		3	τοῖς		attached-word	safe	0.671	approved	0				Article of 'Gentiles'
 18:32	9	Gentiles		4	ἔθνεσιν		global-review-known-rendering	safe	0.771	approved	0				global known-rendering assignment; lexical score 0.62
-18:33	14	the		6	τῇ		attached-word	safe	0.5694	approved	0				Article of 'third'
+18:33	14	the		6	τῇ		attached-word	safe	0.591	approved	0				Article of 'third'
 18:33	15	third		9	τρίτῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
-18:33	16	day		7	ἡμέρᾳ		global-review-known-rendering	safe	0.6694	approved	0				global known-rendering assignment; lexical score 0.52
+18:33	16	day		7	ἡμέρᾳ		global-review-known-rendering	safe	0.691	approved	0				global known-rendering assignment; lexical score 0.54
 18:34	12	these		10	τοῦτο		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
 18:34	17	said		18	λεγόμενα		global-review-known-rendering	safe	0.7689	approved	0				global known-rendering assignment; lexical score 0.62
 18:34	22	them		2	αὐτοὶ		global-review-known-rendering	safe	0.7384	approved	0				global known-rendering assignment; lexical score 0.59
@@ -4480,6 +4548,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 18:35	10	Jericho		8	Ἱερειχὼ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 18:35	12	certain		10	τις		global-review-known-rendering	safe	0.7748	approved	0				global known-rendering assignment; lexical score 0.62
 18:35	13	blind		9	τυφλός		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+18:35	21	the		13	τὴν		attached-word	safe	0.6609	approved	0				Article of 'road'
+18:35	22	road		14	ὁδὸν		global-review-known-rendering	safe	0.7609	approved	0				global known-rendering assignment; lexical score 0.61
 18:36	15	What		6	τί		global-review-known-rendering	safe	0.6804	approved	0				global known-rendering assignment; lexical score 0.53
 18:36	17	this		8	τοῦτο		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
 18:37	5	him		3	αὐτῷ		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
@@ -4528,6 +4598,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 19:5	13	him		12	αὐτόν		global-review-known-rendering	safe	0.7823	approved	0				global known-rendering assignment; lexical score 0.63
 19:5	18	come		3	ἦλθεν		global-review-known-rendering	safe	0.6106	approved	0				global known-rendering assignment; lexical score 0.46
 19:5	25	your		21	σου		global-review-known-rendering	safe	0.7903	approved	0				global known-rendering assignment; lexical score 0.64
+19:5	27	today		16	σήμερον		global-review-known-rendering	safe	0.7763	approved	0				global known-rendering assignment; lexical score 0.63
 19:6	8	him		6	αὐτὸν		global-review-known-rendering	safe	0.7823	approved	0				global known-rendering assignment; lexical score 0.63
 19:7	4	saw		2	ἰδόντες		global-review-known-rendering	safe	0.7483	approved	0				global known-rendering assignment; lexical score 0.60
 19:7	8	all		3	πάντες		global-review-known-rendering	safe	0.7301	approved	0				global known-rendering assignment; lexical score 0.58
@@ -4544,9 +4615,11 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 19:8	17	give		17	δίδωμι		global-review-known-rendering	safe	0.7322	approved	0				global known-rendering assignment; lexical score 0.58
 19:8	19	the		15	τοῖς		attached-word	safe	0.6578	approved	0				Article of 'poor'
 19:8	20	poor		16	πτωχοῖς		global-review-known-rendering	safe	0.7578	approved	0				global known-rendering assignment; lexical score 0.61
+19:8	26	anything		20	τινός		global-review-known-rendering	safe	0.6337	approved	0				global known-rendering assignment; lexical score 0.48
 19:9	2	Jesus		6	Ἰησοῦς		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
 19:9	3	said		1	εἶπεν		global-review-known-rendering	safe	0.7689	approved	0				global known-rendering assignment; lexical score 0.62
 19:9	5	him		4	αὐτὸν		global-review-known-rendering	safe	0.7823	approved	0				global known-rendering assignment; lexical score 0.63
+19:9	6	Today		8	Σήμερον		global-review-known-rendering	safe	0.7763	approved	0				global known-rendering assignment; lexical score 0.63
 19:9	7	salvation		9	σωτηρία		global-review-known-rendering	safe	0.7477	approved	0				global known-rendering assignment; lexical score 0.60
 19:9	11	this		12	τούτῳ		global-review-known-rendering	safe	0.7776	approved	0				global known-rendering assignment; lexical score 0.63
 19:9	14	even		15	καὶ		global-review-known-rendering	safe	0.7158	approved	0				global known-rendering assignment; lexical score 0.57
@@ -4637,6 +4710,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 19:25	6	Lord		4	Κύριε		global-review-known-rendering	safe	0.7953	approved	0				global known-rendering assignment; lexical score 0.65
 19:25	9	ten		6	δέκα		global-review-known-rendering	safe	0.7763	approved	0				global known-rendering assignment; lexical score 0.63
 19:26	3	say		1	λέγω		global-review-known-rendering	safe	0.7351	approved	0				global known-rendering assignment; lexical score 0.59
+19:26	8	everyone		4	παντὶ		global-review-known-rendering	safe	0.7039	approved	0				global known-rendering assignment; lexical score 0.55
 19:26	14	given		7	δοθήσεται		global-review-known-rendering	safe	0.7421	approved	0				global known-rendering assignment; lexical score 0.59
 19:26	21	even		13	καὶ		global-review-known-rendering	safe	0.7158	approved	0				global known-rendering assignment; lexical score 0.57
 19:27	8	me		4	μου		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
@@ -4679,7 +4753,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 19:35	10	their		9	αὐτῶν		global-review-known-rendering	safe	0.7838	approved	0				global known-rendering assignment; lexical score 0.63
 19:35	16	Jesus		17	Ἰησοῦν		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
 19:36	6	his		3	αὐτοῦ		global-review-known-rendering	safe	0.7894	approved	0				global known-rendering assignment; lexical score 0.64
-19:36	7	way		10	ὁδῷ		global-review-known-rendering	safe	0.614	approved	0				global known-rendering assignment; lexical score 0.46
+19:36	14	the		9	τῇ		attached-word	safe	0.6795	approved	0				Article of 'road'
+19:36	15	road		10	ὁδῷ		global-review-known-rendering	safe	0.7795	approved	0				global known-rendering assignment; lexical score 0.63
 19:37	5	near		1	ἐγγίζοντος		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
 19:37	9	the		8	τοῦ		attached-word	safe	0.7	approved	0				Article of 'Mountain'
 19:37	10	Mountain		9	ὄρους		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
@@ -4732,7 +4807,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 19:46	7	said		1	λέγων		global-review-known-rendering	safe	0.7689	approved	0				global known-rendering assignment; lexical score 0.62
 19:46	8	My		8	μου		global-review-known-rendering	safe	0.7665	approved	0				global known-rendering assignment; lexical score 0.62
 19:46	16	prayer		10	προσευχῆς		global-review-known-rendering	safe	0.6554	approved	0				global known-rendering assignment; lexical score 0.51
-19:47	3	day		6	ἡμέραν		global-review-known-rendering	safe	0.6721	approved	0				global known-rendering assignment; lexical score 0.52
+19:47	3	day		6	ἡμέραν		global-review-known-rendering	safe	0.6927	approved	0				global known-rendering assignment; lexical score 0.54
 19:47	6	teaching		3	διδάσκων		global-review-known-rendering	safe	0.7609	approved	0				global known-rendering assignment; lexical score 0.61
 19:47	12	chief		21	πρῶτοι		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
 19:47	13	priests		12	ἀρχιερεῖς		global-review-known-rendering	safe	0.7078	approved	0				global known-rendering assignment; lexical score 0.56
@@ -4825,8 +4900,10 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 20:17	16	the		15	οἱ		attached-word	safe	0.7	approved	0				Article of 'builders'
 20:17	17	builders		16	οἰκοδομοῦντες		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 20:17	25	become		18	ἐγενήθη		global-review-known-rendering	safe	0.7827	approved	0				global known-rendering assignment; lexical score 0.63
+20:18	1	Everyone		1	πᾶς		global-review-known-rendering	safe	0.7021	approved	0				global known-rendering assignment; lexical score 0.55
 20:18	5	stone		7	λίθον		global-review-known-rendering	safe	0.6607	approved	0				global known-rendering assignment; lexical score 0.51
 20:18	13	whom		10	ὃν		global-review-known-rendering	safe	0.694	approved	0				global known-rendering assignment; lexical score 0.54
+20:18	20	crushed		14	λικμήσει		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
 20:19	2	the		6	οἱ		attached-word	safe	0.6067	approved	0				Article of 'chief'
 20:19	4	priests		7	ἀρχιερεῖς		global-review-known-rendering	safe	0.7067	approved	0				global known-rendering assignment; lexical score 0.56
 20:19	6	the		3	οἱ		attached-word	safe	0.7	approved	0				Article of 'scribes'
@@ -5017,7 +5094,6 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 21:7	13	what		11	τί		global-review-known-rendering	safe	0.6815	approved	0				global known-rendering assignment; lexical score 0.53
 21:7	14	sign		13	σημεῖον		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
 21:7	19	these		16	ταῦτα		global-review-known-rendering	safe	0.7893	approved	0				global known-rendering assignment; lexical score 0.64
-21:7	21	are		9	ἔσται		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
 21:8	3	said		3	εἶπεν		global-review-known-rendering	safe	0.7692	approved	0				global known-rendering assignment; lexical score 0.62
 21:8	17	come		9	ἐλεύσονται		global-review-known-rendering	safe	0.6106	approved	0				global known-rendering assignment; lexical score 0.46
 21:8	19	my		13	μου		global-review-known-rendering	safe	0.7666	approved	0				global known-rendering assignment; lexical score 0.62
@@ -5075,12 +5151,12 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 21:21	7	Judaea		5	Ἰουδαίᾳ		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
 21:21	12	the		8	τὰ		attached-word	safe	0.7	approved	0				Article of 'mountains'
 21:21	13	mountains		9	ὄρη		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+21:21	20	middle		13	μέσῳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 21:22	2	these		4	αὗταί		global-review-known-rendering	safe	0.7893	approved	0				global known-rendering assignment; lexical score 0.64
 21:22	3	are		5	εἰσιν		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
 21:22	4	the				expands	supplied-article	safe	0.7747	approved	0				article the original does not write; rests on 'days' → 'ἡμέραι'
 21:22	5	days		2	ἡμέραι		global-review-known-rendering	safe	0.7747	approved	0				global known-rendering assignment; lexical score 0.62
 21:22	10	all		8	πάντα		global-review-known-rendering	safe	0.7291	approved	0				global known-rendering assignment; lexical score 0.58
-21:23	8	are		13	ἔσται		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
 21:23	21	those		10	ἐκείναις		global-review-known-rendering	safe	0.5891	approved	0				global known-rendering assignment; lexical score 0.44
 21:23	22	days		12	ἡμέραις		global-review-known-rendering	safe	0.7747	approved	0				global known-rendering assignment; lexical score 0.62
 21:23	24	great		16	μεγάλη		global-review-known-rendering	safe	0.655	approved	0				global known-rendering assignment; lexical score 0.51
@@ -5099,7 +5175,6 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 21:24	31	Gentiles		16	ἐθνῶν		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62
 21:24	36	the				expands	supplied-article	safe	0.7707	approved	0				article the original does not write; rests on 'Gentiles' → 'ἐθνῶν'
 21:24	37	Gentiles		21	ἐθνῶν		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62
-21:24	38	are		13	ἔσται		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
 21:25	5	signs		3	σημεῖα		global-review-known-rendering	safe	0.7786	approved	0				global known-rendering assignment; lexical score 0.63
 21:25	7	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'sun' → 'ἡλίῳ'
 21:25	8	sun		5	ἡλίῳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
@@ -5147,7 +5222,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 21:34	5	yourselves		3	ἑαυτοῖς		global-review-known-rendering	safe	0.5717	approved	0				global known-rendering assignment; lexical score 0.42
 21:34	9	your		7	ὑμῶν		global-review-known-rendering	safe	0.7901	approved	0				global known-rendering assignment; lexical score 0.64
 21:34	10	hearts		9	καρδίαι		global-review-known-rendering	safe	0.755	approved	0				global known-rendering assignment; lexical score 0.60
-21:34	28	day		23	ἡμέρα		global-review-known-rendering	safe	0.6694	approved	0				global known-rendering assignment; lexical score 0.52
+21:34	28	day		23	ἡμέρα		global-review-known-rendering	safe	0.691	approved	0				global known-rendering assignment; lexical score 0.54
 21:35	7	all		6	πάντας		global-review-known-rendering	safe	0.7291	approved	0				global known-rendering assignment; lexical score 0.58
 21:35	13	the				expands	supplied-article	safe	0.7211	approved	0				article the original does not write; rests on 'face' → 'πρόσωπον'
 21:35	14	face		10	πρόσωπον		global-review-known-rendering	safe	0.7211	approved	0				global known-rendering assignment; lexical score 0.57
@@ -5159,7 +5234,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 21:36	19	these		10	ταῦτα		global-review-known-rendering	safe	0.7893	approved	0				global known-rendering assignment; lexical score 0.64
 21:36	26	the		18	τοῦ		attached-word	safe	0.6729	approved	0				Article of 'Son'
 21:36	27	Son		19	Υἱοῦ		global-review-known-rendering	safe	0.7729	approved	0				global known-rendering assignment; lexical score 0.62
-21:37	3	day		4	ἡμέρας		global-review-known-rendering	safe	0.6694	approved	0				global known-rendering assignment; lexical score 0.52
+21:37	3	day		4	ἡμέρας		global-review-known-rendering	safe	0.691	approved	0				global known-rendering assignment; lexical score 0.54
 21:37	6	teaching		8	διδάσκων		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
 21:37	12	night		11	νύκτας		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
 21:37	22	the		15	τὸ		attached-word	safe	0.7	approved	0				Article of 'Mountain'
@@ -5194,8 +5269,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 22:5	10	money		6	ἀργύριον		global-review-known-rendering	safe	0.5643	approved	0				global known-rendering assignment; lexical score 0.41
 22:6	10	him		8	αὐτὸν		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 22:6	13	them		11	αὐτοῖς		global-review-known-rendering	safe	0.7377	approved	0				global known-rendering assignment; lexical score 0.59
-22:7	2	the		3	ἡ		attached-word	safe	0.5705	approved	0				Article of 'day'
-22:7	3	day		4	ἡμέρα		global-review-known-rendering	safe	0.6705	approved	0				global known-rendering assignment; lexical score 0.52
+22:7	2	the		3	ἡ		attached-word	safe	0.5923	approved	0				Article of 'day'
+22:7	3	day		4	ἡμέρα		global-review-known-rendering	safe	0.6923	approved	0				global known-rendering assignment; lexical score 0.54
 22:7	7	came		1	Ἦλθεν		global-review-known-rendering	safe	0.601	approved	0				global known-rendering assignment; lexical score 0.45
 22:7	9	the		10	τὸ		attached-word	safe	0.7	approved	0				Article of 'Passover'
 22:7	10	Passover		11	πάσχα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
@@ -5344,11 +5419,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 22:34	8	Peter		6	Πέτρε		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 22:34	10	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'cock's' → 'ἀλέκτωρ'
 22:34	11	cock's		10	ἀλέκτωρ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+22:34	14	today		9	σήμερον		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
 22:34	23	no		7	οὐ		global-review-known-rendering	safe	0.6041	approved	0				global known-rendering assignment; lexical score 0.45
 22:34	26	me		13	με		global-review-known-rendering	safe	0.7926	approved	0				global known-rendering assignment; lexical score 0.64
 22:35	3	said		2	εἶπεν		global-review-known-rendering	safe	0.7702	approved	0				global known-rendering assignment; lexical score 0.62
 22:35	5	them		3	αὐτοῖς		global-review-known-rendering	safe	0.7377	approved	0				global known-rendering assignment; lexical score 0.59
 22:35	16	shoes		12	ὑποδημάτων		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+22:35	22	anything		14	τινος		global-review-known-rendering	safe	0.63	approved	0				global known-rendering assignment; lexical score 0.48
 22:35	25	said		18	εἶπαν		global-review-known-rendering	safe	0.7702	approved	0				global known-rendering assignment; lexical score 0.62
 22:35	26	Nothing		19	Οὐθενός		global-review-known-rendering	safe	0.5944	approved	0				global known-rendering assignment; lexical score 0.44
 22:36	3	said		1	εἶπεν		global-review-known-rendering	safe	0.7702	approved	0				global known-rendering assignment; lexical score 0.62
@@ -5444,7 +5521,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 22:52	7	priests		9	ἀρχιερεῖς		global-review-known-rendering	safe	0.7044	approved	0				global known-rendering assignment; lexical score 0.55
 22:52	21	him		8	αὐτὸν		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 22:52	31	swords		21	μαχαιρῶν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
-22:53	10	day		2	ἡμέραν		global-review-known-rendering	safe	0.6705	approved	0				global known-rendering assignment; lexical score 0.52
+22:53	10	day		2	ἡμέραν		global-review-known-rendering	safe	0.6923	approved	0				global known-rendering assignment; lexical score 0.54
 22:53	11	your		6	ὑμῶν		global-review-known-rendering	safe	0.7903	approved	0				global known-rendering assignment; lexical score 0.64
 22:53	12	hands		13	χεῖρας		global-review-known-rendering	safe	0.7153	approved	0				global known-rendering assignment; lexical score 0.57
 22:53	14	not		10	οὐκ		global-review-known-rendering	safe	0.6293	approved	0				global known-rendering assignment; lexical score 0.48
@@ -5458,8 +5535,12 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 22:54	15	the		10	τοῦ		attached-word	safe	0.5858	approved	0				Article of 'high'
 22:54	17	priest		11	ἀρχιερέως		global-review-known-rendering	safe	0.6858	approved	0				global known-rendering assignment; lexical score 0.54
 22:54	19	Peter		14	Πέτρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+22:54	24	a				expands	supplied-indefinite-article	safe	0.6043	approved	0				indefinite article; rests on 'distance' → 'μακρόθεν'
+22:54	25	distance		16	μακρόθεν		global-review-known-rendering	safe	0.6043	approved	0				global known-rendering assignment; lexical score 0.45
 22:55	2	a				expands	supplied-indefinite-article	safe	0.7586	approved	0				indefinite article; rests on 'fire' → 'πῦρ'
 22:55	3	fire		3	πῦρ		global-review-known-rendering	safe	0.7586	approved	0				global known-rendering assignment; lexical score 0.61
+22:55	7	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'middle' → 'μέσῳ'
+22:55	8	middle		5	μέσῳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 22:55	19	Peter		12	Πέτρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 22:55	21	among		4	ἐν		global-review-known-rendering	safe	0.6355	approved	0				global known-rendering assignment; lexical score 0.49
 22:55	22	them		14	αὐτῶν		global-review-known-rendering	safe	0.7377	approved	0				global known-rendering assignment; lexical score 0.59
@@ -5510,12 +5591,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 22:64	9	Are		8	ἐστιν		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
 22:65	3	said		5	ἔλεγον		global-review-known-rendering	safe	0.7702	approved	0				global known-rendering assignment; lexical score 0.62
 22:65	11	him		7	αὐτόν		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
-22:66	5	day		4	ἡμέρα		global-review-known-rendering	safe	0.6705	approved	0				global known-rendering assignment; lexical score 0.52
+22:66	5	day		4	ἡμέρα		global-review-known-rendering	safe	0.6923	approved	0				global known-rendering assignment; lexical score 0.54
 22:66	16	priests		10	ἀρχιερεῖς		global-review-known-rendering	safe	0.7044	approved	0				global known-rendering assignment; lexical score 0.55
 22:66	18	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'scribes' → 'γραμματεῖς'
 22:66	19	scribes		13	γραμματεῖς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 22:66	23	him		16	αὐτὸν		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 22:66	25	their		20	αὐτῶν		global-review-known-rendering	safe	0.7838	approved	0				global known-rendering assignment; lexical score 0.63
+22:66	26	Sanhedrin		19	συνέδριον		global-review-known-rendering	safe	0.7022	approved	0				global known-rendering assignment; lexical score 0.55
 22:67	3	are		4	εἶ		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
 22:67	4	the		5	ὁ		attached-word	safe	0.7	approved	0				Article of 'Christ'
 22:67	5	Christ		6	Χριστός		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
@@ -5606,7 +5688,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 23:11	12	him		3	αὐτὸν		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 23:11	26	him		16	αὐτὸν		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 23:11	29	Pilate		18	Πειλάτῳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
-23:12	3	day		13	ἡμέρᾳ		global-review-known-rendering	safe	0.6705	approved	0				global known-rendering assignment; lexical score 0.52
+23:12	3	day		13	ἡμέρᾳ		global-review-known-rendering	safe	0.6923	approved	0				global known-rendering assignment; lexical score 0.54
 23:12	4	Herod		6	Ἡρῴδης		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 23:12	6	Pilate		9	Πειλᾶτος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 23:12	7	became		1	ἐγένοντο		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
@@ -5719,6 +5801,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 23:37	7	King		7	Βασιλεὺς		global-review-known-rendering	safe	0.7841	approved	0				global known-rendering assignment; lexical score 0.63
 23:37	9	the		8	τῶν		attached-word	safe	0.6944	approved	0				Article of 'Jews'
 23:37	10	Jews		9	Ἰουδαίων		global-review-known-rendering	safe	0.7944	approved	0				global known-rendering assignment; lexical score 0.64
+23:37	12	yourself		11	σεαυτόν		global-review-known-rendering	safe	0.6333	approved	0				global known-rendering assignment; lexical score 0.48
 23:38	2	these		11	ΟΥΤΟΣ		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
 23:38	9	him		6	αὐτῷ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 23:38	12	THE		7	Ο		attached-word	safe	0.6841	approved	0				Article of 'KING'
@@ -5730,6 +5813,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 23:39	15	Are		10	εἶ		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
 23:39	18	the		11	ὁ		attached-word	safe	0.7	approved	0				Article of 'Christ'
 23:39	19	Christ		12	Χριστός		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+23:39	21	yourself		14	σεαυτὸν		global-review-known-rendering	safe	0.6333	approved	0				global known-rendering assignment; lexical score 0.48
 23:39	23	us		16	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
 23:40	11	God		12	Θεόν		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
 23:41	5	we		2	ἡμεῖς		global-review-known-rendering	safe	0.7826	approved	0				global known-rendering assignment; lexical score 0.63
@@ -5744,6 +5828,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 23:43	3	said		2	εἶπεν		global-review-known-rendering	safe	0.7694	approved	0				global known-rendering assignment; lexical score 0.62
 23:43	5	him		3	αὐτῷ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 23:43	8	say		6	λέγω		global-review-known-rendering	safe	0.7349	approved	0				global known-rendering assignment; lexical score 0.58
+23:43	11	Today		7	σήμερον		global-review-known-rendering	safe	0.7763	approved	0				global known-rendering assignment; lexical score 0.63
 23:43	16	me		9	ἐμοῦ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
 23:44	6	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'sixth' → 'ἕκτη'
 23:44	7	sixth		6	ἕκτη		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
@@ -5778,6 +5863,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 23:49	7	women		10	γυναῖκες		global-review-known-rendering	safe	0.7125	approved	0				global known-rendering assignment; lexical score 0.56
 23:49	11	him		13	αὐτῷ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 23:49	13	Galilee		16	Γαλιλαίας		global-review-known-rendering	safe	0.7779	approved	0				global known-rendering assignment; lexical score 0.63
+23:49	17	a				expands	supplied-indefinite-article	safe	0.6043	approved	0				indefinite article; rests on 'distance' → 'μακρόθεν'
+23:49	18	distance		8	μακρόθεν		global-review-known-rendering	safe	0.6043	approved	0				global known-rendering assignment; lexical score 0.45
 23:49	20	these		18	ταῦτα		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
 23:50	6	named		4	ὀνόματι		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
 23:50	7	Joseph		5	Ἰωσὴφ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
@@ -5794,8 +5881,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 23:52	12	body		7	σῶμα		global-review-known-rendering	safe	0.7934	approved	0				global known-rendering assignment; lexical score 0.64
 23:52	14	Jesus		9	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
 23:53	28	no		13	οὐκ		global-review-known-rendering	safe	0.6069	approved	0				global known-rendering assignment; lexical score 0.46
-23:54	4	the				expands	supplied-article	safe	0.6705	approved	0				article the original does not write; rests on 'day' → 'ἡμέρα'
-23:54	5	day		2	ἡμέρα		global-review-known-rendering	safe	0.6705	approved	0				global known-rendering assignment; lexical score 0.52
+23:54	4	the				expands	supplied-article	safe	0.6923	approved	0				article the original does not write; rests on 'day' → 'ἡμέρα'
+23:54	5	day		2	ἡμέρα		global-review-known-rendering	safe	0.6923	approved	0				global known-rendering assignment; lexical score 0.54
 23:54	10	the				expands	supplied-article	safe	0.7812	approved	0				article the original does not write; rests on 'Sabbath' → 'σάββατον'
 23:54	11	Sabbath		6	σάββατον		global-review-known-rendering	safe	0.7812	approved	0				global known-rendering assignment; lexical score 0.63
 23:55	2	the		3	αἱ		attached-word	safe	0.6125	approved	0				Article of 'women'
@@ -5804,6 +5891,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 23:55	13	him		11	αὐτῷ		global-review-known-rendering	safe	0.782	approved	0				global known-rendering assignment; lexical score 0.63
 23:55	20	his		20	αὐτοῦ		global-review-known-rendering	safe	0.789	approved	0				global known-rendering assignment; lexical score 0.64
 23:55	21	body		19	σῶμα		global-review-known-rendering	safe	0.7934	approved	0				global known-rendering assignment; lexical score 0.64
+23:56	10	perfumes		6	μύρα		global-review-known-rendering	safe	0.7308	approved	0				global known-rendering assignment; lexical score 0.58
 23:56	13	the				expands	supplied-article	safe	0.7812	approved	0				article the original does not write; rests on 'Sabbath' → 'σάββατον'
 23:56	14	Sabbath		10	σάββατον		global-review-known-rendering	safe	0.7812	approved	0				global known-rendering assignment; lexical score 0.63
 24:1	7	the		4	τῶν		attached-word	safe	0.7	approved	0				Article of 'week'
@@ -5840,9 +5928,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 24:7	9	into		9	εἰς		global-review-known-rendering	safe	0.7713	approved	0				global known-rendering assignment; lexical score 0.62
 24:7	10	the				expands	supplied-article	safe	0.7128	approved	0				article the original does not write; rests on 'hands' → 'χεῖρας'
 24:7	11	hands		10	χεῖρας		global-review-known-rendering	safe	0.7128	approved	0				global known-rendering assignment; lexical score 0.56
-24:7	24	the		16	τῇ		attached-word	safe	0.5679	approved	0				Article of 'third'
+24:7	24	the		16	τῇ		attached-word	safe	0.5897	approved	0				Article of 'third'
 24:7	25	third		17	τρίτῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
-24:7	26	day		18	ἡμέρᾳ		global-review-known-rendering	safe	0.6679	approved	0				global known-rendering assignment; lexical score 0.52
+24:7	26	day		18	ἡμέρᾳ		global-review-known-rendering	safe	0.6897	approved	0				global known-rendering assignment; lexical score 0.54
 24:8	2	his		5	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
 24:9	13	all		8	πάντα		global-review-known-rendering	safe	0.7291	approved	0				global known-rendering assignment; lexical score 0.58
 24:9	14	these		7	ταῦτα		global-review-known-rendering	safe	0.7893	approved	0				global known-rendering assignment; lexical score 0.64
@@ -5864,7 +5952,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 24:12	2	Peter		3	Πέτρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 24:13	3	two		3	δύο		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
 24:13	5	them		5	αὐτῶν		global-review-known-rendering	safe	0.7382	approved	0				global known-rendering assignment; lexical score 0.59
-24:13	9	day		9	ἡμέρᾳ		global-review-known-rendering	safe	0.6679	approved	0				global known-rendering assignment; lexical score 0.52
+24:13	9	day		9	ἡμέρᾳ		global-review-known-rendering	safe	0.6897	approved	0				global known-rendering assignment; lexical score 0.54
 24:13	15	town		13	κώμην		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 24:13	16	named		20	ὄνομα		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
 24:14	7	all		7	πάντων		global-review-known-rendering	safe	0.7291	approved	0				global known-rendering assignment; lexical score 0.58
@@ -5944,8 +6032,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 24:28	6	town		5	κώμην		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 24:29	4	him		3	αὐτὸν		global-review-known-rendering	safe	0.7821	approved	0				global known-rendering assignment; lexical score 0.63
 24:29	6	saying		4	λέγοντες		global-review-known-rendering	safe	0.7562	approved	0				global known-rendering assignment; lexical score 0.61
-24:29	14	the		15	ἡ		attached-word	safe	0.5679	approved	0				Article of 'day'
-24:29	15	day		16	ἡμέρα		global-review-known-rendering	safe	0.6679	approved	0				global known-rendering assignment; lexical score 0.52
+24:29	14	the		15	ἡ		attached-word	safe	0.5897	approved	0				Article of 'day'
+24:29	15	day		16	ἡμέρα		global-review-known-rendering	safe	0.6897	approved	0				global known-rendering assignment; lexical score 0.54
 24:29	24	them		22	αὐτοῖς		global-review-known-rendering	safe	0.7382	approved	0				global known-rendering assignment; lexical score 0.59
 24:30	7	them		8	αὐτῶν		global-review-known-rendering	safe	0.7382	approved	0				global known-rendering assignment; lexical score 0.59
 24:30	11	took		9	λαβὼν		global-review-known-rendering	safe	0.5729	approved	0				global known-rendering assignment; lexical score 0.42
@@ -6035,9 +6123,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 24:46	6	So		2	οὕτως		global-review-known-rendering	safe	0.6682	approved	0				global known-rendering assignment; lexical score 0.52
 24:46	13	the		5	τὸν		attached-word	safe	0.7	approved	0				Article of 'Christ'
 24:46	14	Christ		6	Χριστὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
-24:46	25	the		11	τῇ		attached-word	safe	0.5679	approved	0				Article of 'third'
+24:46	25	the		11	τῇ		attached-word	safe	0.5897	approved	0				Article of 'third'
 24:46	26	third		12	τρίτῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
-24:46	27	day		13	ἡμέρᾳ		global-review-known-rendering	safe	0.6679	approved	0				global known-rendering assignment; lexical score 0.52
+24:46	27	day		13	ἡμέρᾳ		global-review-known-rendering	safe	0.6897	approved	0				global known-rendering assignment; lexical score 0.54
 24:47	10	forgiveness		9	ἄφεσιν		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
 24:47	12	sins		10	ἁμαρτιῶν		global-review-known-rendering	safe	0.7722	approved	0				global known-rendering assignment; lexical score 0.62
 24:47	22	all		12	πάντα		global-review-known-rendering	safe	0.7291	approved	0				global known-rendering assignment; lexical score 0.58

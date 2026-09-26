@@ -1,0 +1,968 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:1	1	Paul		1	Παῦλος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:1	2	an				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'apostle' → 'ἀπόστολος'
+1:1	3	apostle—not		2	ἀπόστολος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:1	5	men		5	ἀνθρώπων		global-review-known-rendering	safe	0.6218	approved	0				global known-rendering assignment; lexical score 0.47
+1:1	7	through		7	δι		global-review-known-rendering	safe	0.6067	approved	0				global known-rendering assignment; lexical score 0.46
+1:1	10	through		10	διὰ		global-review-known-rendering	safe	0.6067	approved	0				global known-rendering assignment; lexical score 0.46
+1:1	11	Jesus		11	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+1:1	12	Christ		12	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:1	14	God		14	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+1:1	15	the				expands	supplied-article	safe	0.7986	approved	0				article the original does not write; rests on 'Father' → 'Πατρὸς'
+1:1	16	Father		15	Πατρὸς		global-review-known-rendering	safe	0.7986	approved	0				global known-rendering assignment; lexical score 0.65
+1:1	18	raised		17	ἐγείραντος		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61
+1:1	19	him		18	αὐτὸν		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
+1:1	21	the				expands	supplied-article	safe	0.6603	approved	0				article the original does not write; rests on 'dead' → 'νεκρῶν'
+1:1	22	dead		20	νεκρῶν		global-review-known-rendering	safe	0.6603	approved	0				global known-rendering assignment; lexical score 0.51
+1:2	2	all		5	πάντες		global-review-known-rendering	safe	0.7297	approved	0				global known-rendering assignment; lexical score 0.58
+1:2	3	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'brothers' → 'ἀδελφοί'
+1:2	4	brothers		6	ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:2	8	me		4	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+1:3	1	Grace		1	χάρις		global-review-known-rendering	safe	0.7966	approved	0				global known-rendering assignment; lexical score 0.65
+1:3	5	peace		4	εἰρήνη		global-review-known-rendering	safe	0.7068	approved	0				global known-rendering assignment; lexical score 0.56
+1:3	7	God		6	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+1:3	8	the				expands	supplied-article	safe	0.7986	approved	0				article the original does not write; rests on 'Father' → 'Πατρὸς'
+1:3	9	Father		7	Πατρὸς		global-review-known-rendering	safe	0.7986	approved	0				global known-rendering assignment; lexical score 0.65
+1:3	11	our		8	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+1:3	12	Lord		10	Κυρίου		global-review-known-rendering	safe	0.7953	approved	0				global known-rendering assignment; lexical score 0.65
+1:3	13	Jesus		11	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+1:3	14	Christ		12	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:4	2	gave		2	δόντος		global-review-known-rendering	safe	0.7365	approved	0				global known-rendering assignment; lexical score 0.59
+1:4	5	our		7	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+1:4	6	sins		6	ἁμαρτιῶν		global-review-known-rendering	safe	0.7722	approved	0				global known-rendering assignment; lexical score 0.62
+1:4	11	us		10	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+1:4	18	according		17	κατὰ		global-review-known-rendering	safe	0.7915	approved	0				global known-rendering assignment; lexical score 0.64
+1:4	23	our		24	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+1:4	24	God		21	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+1:4	26	Father		23	Πατρὸς		global-review-known-rendering	safe	0.7986	approved	0				global known-rendering assignment; lexical score 0.65
+1:5	2	whom		1	ᾧ		global-review-known-rendering	safe	0.6937	approved	0				global known-rendering assignment; lexical score 0.54
+1:5	4	the		2	ἡ		attached-word	safe	0.6241	approved	0				Article of 'glory'
+1:5	5	glory		3	δόξα		global-review-known-rendering	safe	0.7241	approved	0				global known-rendering assignment; lexical score 0.57
+1:5	9	Amen		9	ἀμήν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:6	2	marvel		1	Θαυμάζω		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:6	6	so		3	οὕτως		global-review-known-rendering	safe	0.6697	approved	0				global known-rendering assignment; lexical score 0.52
+1:6	11	called		8	καλέσαντος		global-review-known-rendering	safe	0.5663	approved	0				global known-rendering assignment; lexical score 0.42
+1:6	14	the				expands	supplied-article	safe	0.7966	approved	0				article the original does not write; rests on 'grace' → 'χάριτι'
+1:6	15	grace		11	χάριτι		global-review-known-rendering	safe	0.7966	approved	0				global known-rendering assignment; lexical score 0.65
+1:6	17	Christ		12	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:7	3	isn’t		2	οὐκ		global-review-known-rendering	safe	0.6281	approved	0				global known-rendering assignment; lexical score 0.48
+1:7	9	are		8	εἰσιν		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+1:7	22	Christ		18	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:8	2	even		2	καὶ		global-review-known-rendering	safe	0.717	approved	0				global known-rendering assignment; lexical score 0.57
+1:8	4	we		4	ἡμεῖς		global-review-known-rendering	safe	0.7826	approved	0				global known-rendering assignment; lexical score 0.63
+1:8	6	an				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'angel' → 'ἄγγελος'
+1:8	7	angel		6	ἄγγελος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:8	9	heaven		8	οὐρανοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
+1:8	18	than		5	ἢ		global-review-known-rendering	safe	0.6293	approved	0				global known-rendering assignment; lexical score 0.48
+1:9	4	said		6	λέγω		global-review-known-rendering	safe	0.7693	approved	0				global known-rendering assignment; lexical score 0.62
+1:9	10	again		5	πάλιν		global-review-known-rendering	safe	0.5725	approved	0				global known-rendering assignment; lexical score 0.42
+1:9	12	any		8	τις		global-review-known-rendering	safe	0.6021	approved	0				global known-rendering assignment; lexical score 0.45
+1:10	5	seeking		9	ζητῶ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:10	9	men		3	ἀνθρώπους		global-review-known-rendering	safe	0.6218	approved	0				global known-rendering assignment; lexical score 0.47
+1:10	12	God		7	Θεόν		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+1:10	14	am		20	ἤμην		global-review-known-rendering	safe	0.7904	approved	0				global known-rendering assignment; lexical score 0.64
+1:10	19	men		10	ἀνθρώποις		global-review-known-rendering	safe	0.6218	approved	0				global known-rendering assignment; lexical score 0.47
+1:10	26	men		14	ἀνθρώποις		global-review-known-rendering	safe	0.6218	approved	0				global known-rendering assignment; lexical score 0.47
+1:10	28	wouldn’t		18	οὐκ		global-review-known-rendering	safe	0.6281	approved	0				global known-rendering assignment; lexical score 0.48
+1:10	30	a				expands	supplied-indefinite-article	safe	0.7067	approved	0				indefinite article; rests on 'servant' → 'δοῦλος'
+1:10	31	servant		17	δοῦλος		global-review-known-rendering	safe	0.7067	approved	0				global known-rendering assignment; lexical score 0.56
+1:10	33	Christ		16	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:11	7	brothers		4	ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:11	16	me		10	ἐμοῦ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+1:11	20	not		12	οὐκ		global-review-known-rendering	safe	0.6284	approved	0				global known-rendering assignment; lexical score 0.48
+1:11	21	according		14	κατὰ		global-review-known-rendering	safe	0.7915	approved	0				global known-rendering assignment; lexical score 0.64
+1:12	11	taught		9	ἐδιδάχθην		global-review-known-rendering	safe	0.7082	approved	0				global known-rendering assignment; lexical score 0.56
+1:12	17	me		3	ἐγὼ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+1:12	18	through		11	δι		global-review-known-rendering	safe	0.6067	approved	0				global known-rendering assignment; lexical score 0.46
+1:12	19	revelation		12	ἀποκαλύψεως		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:12	21	Jesus		13	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+1:12	22	Christ		14	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:13	4	heard		1	Ἠκούσατε		global-review-known-rendering	safe	0.7869	approved	0				global known-rendering assignment; lexical score 0.64
+1:13	22	persecuted		13	ἐδίωκον		global-review-known-rendering	safe	0.7625	approved	0				global known-rendering assignment; lexical score 0.61
+1:13	26	God		17	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+1:14	8	many		7	πολλοὺς		global-review-known-rendering	safe	0.7463	approved	0				global known-rendering assignment; lexical score 0.60
+1:14	13	among		9	ἐν		global-review-known-rendering	safe	0.6307	approved	0				global known-rendering assignment; lexical score 0.48
+1:14	14	my		12	μου		global-review-known-rendering	safe	0.7673	approved	0				global known-rendering assignment; lexical score 0.62
+1:14	19	zealous		14	ζηλωτὴς		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+1:14	21	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'traditions' → 'παραδόσεων'
+1:14	22	traditions		19	παραδόσεων		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:14	24	my		18	μου		global-review-known-rendering	safe	0.7673	approved	0				global known-rendering assignment; lexical score 0.62
+1:15	12	me		6	με		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+1:15	15	mother’s		9	μητρός		global-review-known-rendering	safe	0.769	approved	0				global known-rendering assignment; lexical score 0.62
+1:15	16	womb		8	κοιλίας		global-review-known-rendering	safe	0.6962	approved	0				global known-rendering assignment; lexical score 0.55
+1:15	18	called		12	καλέσας		global-review-known-rendering	safe	0.5663	approved	0				global known-rendering assignment; lexical score 0.42
+1:15	19	me		10	μου		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+1:15	20	through		13	διὰ		global-review-known-rendering	safe	0.6067	approved	0				global known-rendering assignment; lexical score 0.46
+1:15	21	his		16	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
+1:15	22	grace		15	χάριτος		global-review-known-rendering	safe	0.7966	approved	0				global known-rendering assignment; lexical score 0.65
+1:16	3	his		4	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
+1:16	4	Son		3	Υἱὸν		global-review-known-rendering	safe	0.7729	approved	0				global known-rendering assignment; lexical score 0.62
+1:16	6	me		6	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+1:16	11	him		9	αὐτὸν		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
+1:16	12	among		10	ἐν		global-review-known-rendering	safe	0.6307	approved	0				global known-rendering assignment; lexical score 0.48
+1:16	13	the		11	τοῖς		attached-word	safe	0.6713	approved	0				Article of 'Gentiles'
+1:16	14	Gentiles		12	ἔθνεσιν		global-review-known-rendering	safe	0.7713	approved	0				global known-rendering assignment; lexical score 0.62
+1:16	16	didn’t		14	οὐ		global-review-known-rendering	safe	0.6281	approved	0				global known-rendering assignment; lexical score 0.48
+1:16	17	immediately		13	εὐθέως		global-review-known-rendering	safe	0.6468	approved	0				global known-rendering assignment; lexical score 0.50
+1:16	20	flesh		16	σαρκὶ		global-review-known-rendering	safe	0.7937	approved	0				global known-rendering assignment; lexical score 0.64
+1:16	22	blood		18	αἵματι		global-review-known-rendering	safe	0.7908	approved	0				global known-rendering assignment; lexical score 0.64
+1:17	12	apostles		9	ἀποστόλους		global-review-known-rendering	safe	0.7918	approved	0				global known-rendering assignment; lexical score 0.64
+1:17	14	me		8	ἐμοῦ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+1:17	19	into		12	εἰς		global-review-known-rendering	safe	0.772	approved	0				global known-rendering assignment; lexical score 0.62
+1:17	23	returned		16	ὑπέστρεψα		global-review-known-rendering	safe	0.7022	approved	0				global known-rendering assignment; lexical score 0.55
+1:17	25	Damascus		18	Δαμασκόν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:18	3	three		3	τρία		global-review-known-rendering	safe	0.7866	approved	0				global known-rendering assignment; lexical score 0.64
+1:18	4	years		4	ἔτη		global-review-known-rendering	safe	0.6941	approved	0				global known-rendering assignment; lexical score 0.54
+1:18	16	him		13	αὐτὸν		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
+1:18	17	fifteen		15	δεκαπέντε		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
+1:18	18	days		14	ἡμέρας		global-review-known-rendering	safe	0.775	approved	0				global known-rendering assignment; lexical score 0.62
+1:19	3	the		3	τῶν		attached-word	safe	0.6918	approved	0				Article of 'other'
+1:19	5	apostles		4	ἀποστόλων		global-review-known-rendering	safe	0.7918	approved	0				global known-rendering assignment; lexical score 0.64
+1:19	7	saw		6	εἶδον		global-review-known-rendering	safe	0.7483	approved	0				global known-rendering assignment; lexical score 0.60
+1:19	8	no		5	οὐκ		global-review-known-rendering	safe	0.6039	approved	0				global known-rendering assignment; lexical score 0.45
+1:19	11	James		9	Ἰάκωβον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:19	12	the		12	τοῦ		attached-word	safe	0.6928	approved	0				Article of 'Lord’s'
+1:19	13	Lord’s		13	Κυρίου		global-review-known-rendering	safe	0.7928	approved	0				global known-rendering assignment; lexical score 0.64
+1:19	14	brother		11	ἀδελφὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:20	7	write		3	γράφω		global-review-known-rendering	safe	0.775	approved	0				global known-rendering assignment; lexical score 0.62
+1:20	10	behold		5	ἰδοὺ		global-review-known-rendering	safe	0.7711	approved	0				global known-rendering assignment; lexical score 0.62
+1:20	12	God		8	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+1:20	14	not		10	οὐ		global-review-known-rendering	safe	0.6284	approved	0				global known-rendering assignment; lexical score 0.48
+1:21	3	came		2	ἦλθον		global-review-known-rendering	safe	0.601	approved	0				global known-rendering assignment; lexical score 0.45
+1:21	8	Syria		7	Συρίας		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:21	10	Cilicia		10	Κιλικίας		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:22	6	face		5	προσώπῳ		global-review-known-rendering	safe	0.7211	approved	0				global known-rendering assignment; lexical score 0.57
+1:22	11	Judea		9	Ἰουδαίας		global-review-known-rendering	safe	0.78	approved	0				global known-rendering assignment; lexical score 0.63
+1:22	15	Christ		12	Χριστῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:23	3	only		1	μόνον		global-review-known-rendering	safe	0.6768	approved	0				global known-rendering assignment; lexical score 0.53
+1:23	4	heard		3	ἀκούοντες		global-review-known-rendering	safe	0.7869	approved	0				global known-rendering assignment; lexical score 0.64
+1:23	8	persecuted		7	διώκων		global-review-known-rendering	safe	0.7625	approved	0				global known-rendering assignment; lexical score 0.61
+1:23	9	us		8	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+1:23	12	the		12	τὴν		attached-word	safe	0.6888	approved	0				Article of 'faith'
+1:23	13	faith		13	πίστιν		global-review-known-rendering	safe	0.7888	approved	0				global known-rendering assignment; lexical score 0.64
+1:24	3	glorified		2	ἐδόξαζον		global-review-known-rendering	safe	0.7735	approved	0				global known-rendering assignment; lexical score 0.62
+1:24	4	God		6	Θεόν		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+1:24	6	me		4	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:1	6	fourteen		3	δεκατεσσάρων		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:1	7	years		4	ἐτῶν		global-review-known-rendering	safe	0.6941	approved	0				global known-rendering assignment; lexical score 0.54
+2:1	11	again		5	πάλιν		global-review-known-rendering	safe	0.5725	approved	0				global known-rendering assignment; lexical score 0.42
+2:1	15	Barnabas		10	Βαρνάβα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:1	17	Titus		13	Τίτον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:1	18	also		12	καὶ		global-review-known-rendering	safe	0.758	approved	0				global known-rendering assignment; lexical score 0.61
+2:2	5	revelation		4	ἀποκάλυψιν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:2	10	them		7	αὐτοῖς		global-review-known-rendering	safe	0.7396	approved	0				global known-rendering assignment; lexical score 0.59
+2:2	16	preach		11	κηρύσσω		global-review-known-rendering	safe	0.6364	approved	0				global known-rendering assignment; lexical score 0.49
+2:2	17	among		12	ἐν		global-review-known-rendering	safe	0.6307	approved	0				global known-rendering assignment; lexical score 0.48
+2:2	18	the		13	τοῖς		attached-word	safe	0.6744	approved	0				Article of 'Gentiles'
+2:2	19	Gentiles		14	ἔθνεσιν		global-review-known-rendering	safe	0.7744	approved	0				global known-rendering assignment; lexical score 0.62
+2:2	38	vain		23	κενὸν		global-review-known-rendering	safe	0.55	approved	0				global known-rendering assignment; lexical score 0.40
+2:3	4	Titus		3	Τίτος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:3	8	me		6	ἐμοί		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:3	9	being		8	ὤν		global-review-known-rendering	safe	0.6676	approved	0				global known-rendering assignment; lexical score 0.52
+2:3	10	a				expands	supplied-indefinite-article	safe	0.62	approved	0				indefinite article; rests on 'Greek' → 'Ἕλλην'
+2:3	11	Greek		7	Ἕλλην		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
+2:3	16	circumcised		10	περιτμηθῆναι		global-review-known-rendering	safe	0.68	approved	0				global known-rendering assignment; lexical score 0.53
+2:4	17	our		11	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+2:4	18	liberty		10	ἐλευθερίαν		global-review-known-rendering	safe	0.6147	approved	0				global known-rendering assignment; lexical score 0.46
+2:4	21	have		13	ἔχομεν		global-review-known-rendering	safe	0.7318	approved	0				global known-rendering assignment; lexical score 0.58
+2:4	23	Christ		15	Χριστῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:4	24	Jesus		16	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+2:4	29	us		18	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+2:5	2	whom		1	οἷς		global-review-known-rendering	safe	0.6937	approved	0				global known-rendering assignment; lexical score 0.54
+2:5	14	an				expands	supplied-indefinite-article	safe	0.7893	approved	0				indefinite article; rests on 'hour' → 'ὥραν'
+2:5	15	hour		4	ὥραν		global-review-known-rendering	safe	0.7893	approved	0				global known-rendering assignment; lexical score 0.64
+2:5	17	the		9	ἡ		attached-word	safe	0.6428	approved	0				Article of 'truth'
+2:5	18	truth		10	ἀλήθεια		global-review-known-rendering	safe	0.7428	approved	0				global known-rendering assignment; lexical score 0.59
+2:6	17	me		11	μοι		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:6	18	God		15	Θεὸς		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+2:6	19	doesn’t		17	οὐ		global-review-known-rendering	safe	0.6284	approved	0				global known-rendering assignment; lexical score 0.48
+2:6	30	nothing		23	οὐδὲν		global-review-known-rendering	safe	0.5926	approved	0				global known-rendering assignment; lexical score 0.44
+2:6	32	me		19	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:7	7	saw		3	ἰδόντες		global-review-known-rendering	safe	0.7481	approved	0				global known-rendering assignment; lexical score 0.60
+2:7	22	Peter		11	Πέτρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:8	6	Peter		4	Πέτρῳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:8	13	also		10	καὶ		global-review-known-rendering	safe	0.758	approved	0				global known-rendering assignment; lexical score 0.61
+2:8	16	me		11	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:8	18	the		13	τὰ		attached-word	safe	0.6744	approved	0				Article of 'Gentiles'
+2:8	19	Gentiles		14	ἔθνη		global-review-known-rendering	safe	0.7744	approved	0				global known-rendering assignment; lexical score 0.62
+2:9	4	perceived		2	γνόντες		global-review-known-rendering	safe	0.5577	approved	0				global known-rendering assignment; lexical score 0.41
+2:9	5	the		3	τὴν		attached-word	safe	0.6967	approved	0				Article of 'grace'
+2:9	6	grace		4	χάριν		global-review-known-rendering	safe	0.7967	approved	0				global known-rendering assignment; lexical score 0.65
+2:9	9	given		6	δοθεῖσάν		global-review-known-rendering	safe	0.7426	approved	0				global known-rendering assignment; lexical score 0.59
+2:9	11	me		7	μοι		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:9	12	James		8	Ἰάκωβος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:9	14	Cephas		10	Κηφᾶς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:9	16	John		12	Ἰωάνης		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:9	24	gave		18	ἔδωκαν		global-review-known-rendering	safe	0.7411	approved	0				global known-rendering assignment; lexical score 0.59
+2:9	26	Barnabas		21	Βαρνάβα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:9	28	me		19	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:9	29	the				expands	supplied-article	safe	0.5955	approved	0				article the original does not write; rests on 'right' → 'δεξιὰς'
+2:9	30	right		17	δεξιὰς		global-review-known-rendering	safe	0.5955	approved	0				global known-rendering assignment; lexical score 0.45
+2:9	33	fellowship		22	κοινωνίας		global-review-known-rendering	safe	0.6714	approved	0				global known-rendering assignment; lexical score 0.52
+2:9	35	we		24	ἡμεῖς		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+2:9	39	the		26	τὰ		attached-word	safe	0.6744	approved	0				Article of 'Gentiles'
+2:9	40	Gentiles		27	ἔθνη		global-review-known-rendering	safe	0.7744	approved	0				global known-rendering assignment; lexical score 0.62
+2:9	44	the		31	τὴν		attached-word	safe	0.7	approved	0				Article of 'circumcision'
+2:9	45	circumcision		32	περιτομήν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:10	2	only		1	μόνον		global-review-known-rendering	safe	0.6768	approved	0				global known-rendering assignment; lexical score 0.53
+2:10	6	remember		5	μνημονεύωμεν		global-review-known-rendering	safe	0.7471	approved	0				global known-rendering assignment; lexical score 0.60
+2:10	7	the		2	τῶν		attached-word	safe	0.6578	approved	0				Article of 'poor'
+2:10	8	poor—which		3	πτωχῶν		global-review-known-rendering	safe	0.7578	approved	0				global known-rendering assignment; lexical score 0.61
+2:10	13	also		7	καὶ		global-review-known-rendering	safe	0.758	approved	0				global known-rendering assignment; lexical score 0.61
+2:10	16	do		11	ποιῆσαι		global-review-known-rendering	safe	0.7279	approved	0				global known-rendering assignment; lexical score 0.58
+2:11	4	came		3	ἦλθεν		global-review-known-rendering	safe	0.601	approved	0				global known-rendering assignment; lexical score 0.45
+2:11	6	Antioch		6	Ἀντιόχειαν		global-review-known-rendering	safe	0.775	approved	0				global known-rendering assignment; lexical score 0.62
+2:11	9	him		9	αὐτῷ		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
+2:11	12	face		8	πρόσωπον		global-review-known-rendering	safe	0.7211	approved	0				global known-rendering assignment; lexical score 0.57
+2:11	13	because		11	ὅτι		global-review-known-rendering	safe	0.6774	approved	0				global known-rendering assignment; lexical score 0.53
+2:12	5	came		4	ἐλθεῖν		global-review-known-rendering	safe	0.601	approved	0				global known-rendering assignment; lexical score 0.45
+2:12	7	James		7	Ἰακώβου		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:12	11	the		9	τῶν		attached-word	safe	0.6744	approved	0				Article of 'Gentiles'
+2:12	12	Gentiles		10	ἐθνῶν		global-review-known-rendering	safe	0.7744	approved	0				global known-rendering assignment; lexical score 0.62
+2:12	16	came		14	ἦλθον		global-review-known-rendering	safe	0.601	approved	0				global known-rendering assignment; lexical score 0.45
+2:12	23	fearing		19	φοβούμενος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:12	29	circumcision		22	περιτομῆς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:13	6	Jews		7	Ἰουδαῖοι		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:13	8	him		3	αὐτῷ		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
+2:13	14	even		9	καὶ		global-review-known-rendering	safe	0.7164	approved	0				global known-rendering assignment; lexical score 0.57
+2:13	15	Barnabas		10	Βαρνάβας		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:13	20	their		12	αὐτῶν		global-review-known-rendering	safe	0.7838	approved	0				global known-rendering assignment; lexical score 0.63
+2:13	21	hypocrisy		14	ὑποκρίσει		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+2:14	4	saw		3	εἶδον		global-review-known-rendering	safe	0.7481	approved	0				global known-rendering assignment; lexical score 0.60
+2:14	7	didn’t		5	οὐκ		global-review-known-rendering	safe	0.6284	approved	0				global known-rendering assignment; lexical score 0.48
+2:14	12	the		8	τὴν		attached-word	safe	0.6428	approved	0				Article of 'truth'
+2:14	13	truth		9	ἀλήθειαν		global-review-known-rendering	safe	0.7428	approved	0				global known-rendering assignment; lexical score 0.59
+2:14	19	said		12	εἶπον		global-review-known-rendering	safe	0.7693	approved	0				global known-rendering assignment; lexical score 0.62
+2:14	24	all		16	πάντων		global-review-known-rendering	safe	0.7297	approved	0				global known-rendering assignment; lexical score 0.58
+2:14	28	a				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'Jew' → 'Ἰουδαῖος'
+2:14	29	Jew		19	Ἰουδαῖος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:14	36	not		23	οὐκ		global-review-known-rendering	safe	0.6286	approved	0				global known-rendering assignment; lexical score 0.48
+2:14	45	the		27	τὰ		attached-word	safe	0.6744	approved	0				Article of 'Gentiles'
+2:14	46	Gentiles		28	ἔθνη		global-review-known-rendering	safe	0.7744	approved	0				global known-rendering assignment; lexical score 0.62
+2:15	1	“We		1	Ἡμεῖς		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+2:15	3	Jews		3	Ἰουδαῖοι		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:15	5	nature		2	φύσει		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62
+2:15	7	not		5	οὐκ		global-review-known-rendering	safe	0.6286	approved	0				global known-rendering assignment; lexical score 0.48
+2:15	9	sinners		8	ἁμαρτωλοί		global-review-known-rendering	safe	0.785	approved	0				global known-rendering assignment; lexical score 0.64
+2:16	2	knowing		1	εἰδότες		global-review-known-rendering	safe	0.6924	approved	0				global known-rendering assignment; lexical score 0.54
+2:16	7	not		4	οὐ		global-review-known-rendering	safe	0.6286	approved	0				global known-rendering assignment; lexical score 0.48
+2:16	8	justified		5	δικαιοῦται		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+2:16	10	the				expands	supplied-article	safe	0.7458	approved	0				article the original does not write; rests on 'works' → 'ἔργων'
+2:16	11	works		8	ἔργων		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60
+2:16	13	the				expands	supplied-article	safe	0.7326	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+2:16	14	law		9	νόμου		global-review-known-rendering	safe	0.7326	approved	0				global known-rendering assignment; lexical score 0.58
+2:16	16	through		12	διὰ		global-review-known-rendering	safe	0.6056	approved	0				global known-rendering assignment; lexical score 0.46
+2:16	17	faith		13	πίστεως		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
+2:16	19	Jesus		15	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+2:16	20	Christ		14	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:16	21	even		16	καὶ		global-review-known-rendering	safe	0.7164	approved	0				global known-rendering assignment; lexical score 0.57
+2:16	22	we		17	ἡμεῖς		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+2:16	23	believed		21	ἐπιστεύσαμεν		global-review-known-rendering	safe	0.7444	approved	0				global known-rendering assignment; lexical score 0.59
+2:16	25	Christ		19	Χριστὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:16	26	Jesus		20	Ἰησοῦν		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+2:16	31	justified		23	δικαιωθῶμεν		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+2:16	33	faith		25	πίστεως		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
+2:16	35	Christ		26	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:16	37	not		28	οὐκ		global-review-known-rendering	safe	0.6286	approved	0				global known-rendering assignment; lexical score 0.48
+2:16	39	the				expands	supplied-article	safe	0.7458	approved	0				article the original does not write; rests on 'works' → 'ἔργων'
+2:16	40	works		30	ἔργων		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60
+2:16	42	the				expands	supplied-article	safe	0.7326	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+2:16	43	law		31	νόμου		global-review-known-rendering	safe	0.7326	approved	0				global known-rendering assignment; lexical score 0.58
+2:16	44	because		32	ὅτι		global-review-known-rendering	safe	0.6774	approved	0				global known-rendering assignment; lexical score 0.53
+2:16	45	no		36	οὐ		global-review-known-rendering	safe	0.6024	approved	0				global known-rendering assignment; lexical score 0.45
+2:16	46	flesh		39	σάρξ		global-review-known-rendering	safe	0.7937	approved	0				global known-rendering assignment; lexical score 0.64
+2:16	49	justified		37	δικαιωθήσεται		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+2:16	51	the				expands	supplied-article	safe	0.7458	approved	0				article the original does not write; rests on 'works' → 'ἔργων'
+2:16	52	works		34	ἔργων		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60
+2:16	54	the				expands	supplied-article	safe	0.7326	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+2:16	55	law		35	νόμου		global-review-known-rendering	safe	0.7326	approved	0				global known-rendering assignment; lexical score 0.58
+2:17	5	sought		3	ζητοῦντες		global-review-known-rendering	safe	0.7864	approved	0				global known-rendering assignment; lexical score 0.64
+2:17	8	justified		4	δικαιωθῆναι		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+2:17	10	Christ		6	Χριστῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:17	13	also		8	καὶ		global-review-known-rendering	safe	0.758	approved	0				global known-rendering assignment; lexical score 0.61
+2:17	15	found		7	εὑρέθημεν		global-review-known-rendering	safe	0.7878	approved	0				global known-rendering assignment; lexical score 0.64
+2:17	16	sinners		10	ἁμαρτωλοί		global-review-known-rendering	safe	0.785	approved	0				global known-rendering assignment; lexical score 0.64
+2:17	18	Christ		12	Χριστὸς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:17	22	sin		13	ἁμαρτίας		global-review-known-rendering	safe	0.7264	approved	0				global known-rendering assignment; lexical score 0.58
+2:18	4	build		7	οἰκοδομῶ		global-review-known-rendering	safe	0.7625	approved	0				global known-rendering assignment; lexical score 0.61
+2:18	6	again		6	πάλιν		global-review-known-rendering	safe	0.5725	approved	0				global known-rendering assignment; lexical score 0.42
+2:19	2	I		1	ἐγὼ		global-review-known-rendering	safe	0.7468	approved	0				global known-rendering assignment; lexical score 0.60
+2:19	3	through		3	διὰ		global-review-known-rendering	safe	0.6056	approved	0				global known-rendering assignment; lexical score 0.46
+2:19	4	the				expands	supplied-article	safe	0.7326	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+2:19	5	law		4	νόμου		global-review-known-rendering	safe	0.7326	approved	0				global known-rendering assignment; lexical score 0.58
+2:19	6	died		6	ἀπέθανον		global-review-known-rendering	safe	0.7486	approved	0				global known-rendering assignment; lexical score 0.60
+2:19	8	the				expands	supplied-article	safe	0.7326	approved	0				article the original does not write; rests on 'law' → 'νόμῳ'
+2:19	9	law		5	νόμῳ		global-review-known-rendering	safe	0.7326	approved	0				global known-rendering assignment; lexical score 0.58
+2:19	13	live		9	ζήσω		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+2:19	15	God		8	Θεῷ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+2:20	1	I		4	ἐγώ		global-review-known-rendering	safe	0.7468	approved	0				global known-rendering assignment; lexical score 0.60
+2:20	14	live		5	ζῇ		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+2:20	16	Christ		9	Χριστός		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:20	19	me		8	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:20	25	live		13	ζῶ		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+2:20	27	the				expands	supplied-article	safe	0.7937	approved	0				article the original does not write; rests on 'flesh' → 'σαρκί'
+2:20	28	flesh		15	σαρκί		global-review-known-rendering	safe	0.7937	approved	0				global known-rendering assignment; lexical score 0.64
+2:20	30	live		18	ζῶ		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+2:20	32	faith		17	πίστει		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
+2:20	34	the		20	τοῦ		attached-word	safe	0.6729	approved	0				Article of 'Son'
+2:20	35	Son		21	Υἱοῦ		global-review-known-rendering	safe	0.7729	approved	0				global known-rendering assignment; lexical score 0.62
+2:20	37	God		23	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+2:20	39	loved		25	ἀγαπήσαντός		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+2:20	40	me		26	με		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:20	46	me		31	ἐμοῦ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+2:21	2	don’t		1	Οὐκ		global-review-known-rendering	safe	0.6284	approved	0				global known-rendering assignment; lexical score 0.48
+2:21	4	the		3	τὴν		attached-word	safe	0.6967	approved	0				Article of 'grace'
+2:21	5	grace		4	χάριν		global-review-known-rendering	safe	0.7967	approved	0				global known-rendering assignment; lexical score 0.65
+2:21	7	God		6	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+2:21	10	righteousness		11	δικαιοσύνη		global-review-known-rendering	safe	0.7722	approved	0				global known-rendering assignment; lexical score 0.62
+2:21	12	through		9	διὰ		global-review-known-rendering	safe	0.6056	approved	0				global known-rendering assignment; lexical score 0.46
+2:21	13	the				expands	supplied-article	safe	0.7326	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+2:21	14	law		10	νόμου		global-review-known-rendering	safe	0.7326	approved	0				global known-rendering assignment; lexical score 0.58
+2:21	16	Christ		13	Χριστὸς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:21	17	died		15	ἀπέθανεν		global-review-known-rendering	safe	0.7486	approved	0				global known-rendering assignment; lexical score 0.60
+3:1	13	whose		7	οἷς		global-review-known-rendering	safe	0.7071	approved	0				global known-rendering assignment; lexical score 0.56
+3:1	14	eyes		9	ὀφθαλμοὺς		global-review-known-rendering	safe	0.7664	approved	0				global known-rendering assignment; lexical score 0.62
+3:1	15	Jesus		10	Ἰησοῦς		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+3:1	16	Christ		11	Χριστὸς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:1	23	crucified		13	ἐσταυρωμένος		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64
+3:2	5	learn		4	μαθεῖν		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62
+3:2	6	this		1	τοῦτο		global-review-known-rendering	safe	0.7776	approved	0				global known-rendering assignment; lexical score 0.63
+3:2	11	receive		12	ἐλάβετε		global-review-known-rendering	safe	0.5731	approved	0				global known-rendering assignment; lexical score 0.42
+3:2	12	the		10	τὸ		attached-word	safe	0.6964	approved	0				Article of 'Spirit'
+3:2	13	Spirit		11	Πνεῦμα		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+3:2	15	the				expands	supplied-article	safe	0.7458	approved	0				article the original does not write; rests on 'works' → 'ἔργων'
+3:2	16	works		8	ἔργων		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60
+3:2	18	the				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+3:2	19	law		9	νόμου		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:2	24	faith		16	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:3	1	Are		3	ἐστε		global-review-known-rendering	safe	0.7844	approved	0				global known-rendering assignment; lexical score 0.63
+3:3	3	so		1	οὕτως		global-review-known-rendering	safe	0.6682	approved	0				global known-rendering assignment; lexical score 0.52
+3:3	8	the				expands	supplied-article	safe	0.7964	approved	0				article the original does not write; rests on 'Spirit' → 'Πνεύματι'
+3:3	9	Spirit		5	Πνεύματι		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+3:3	15	the				expands	supplied-article	safe	0.7937	approved	0				article the original does not write; rests on 'flesh' → 'σαρκὶ'
+3:3	16	flesh		7	σαρκὶ		global-review-known-rendering	safe	0.7937	approved	0				global known-rendering assignment; lexical score 0.64
+3:5	2	therefore		2	οὖν		global-review-known-rendering	safe	0.6241	approved	0				global known-rendering assignment; lexical score 0.47
+3:5	5	the		5	τὸ		attached-word	safe	0.6964	approved	0				Article of 'Spirit'
+3:5	6	Spirit		6	Πνεῦμα		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+3:5	12	among		10	ἐν		global-review-known-rendering	safe	0.6307	approved	0				global known-rendering assignment; lexical score 0.48
+3:5	19	the				expands	supplied-article	safe	0.7458	approved	0				article the original does not write; rests on 'works' → 'ἔργων'
+3:5	20	works		13	ἔργων		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60
+3:5	22	the				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+3:5	23	law		14	νόμου		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:5	28	faith		18	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:6	1	Even		6	καὶ		global-review-known-rendering	safe	0.717	approved	0				global known-rendering assignment; lexical score 0.57
+3:6	3	Abraham		2	Ἀβραὰμ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:6	4	“believed		3	ἐπίστευσεν		global-review-known-rendering	safe	0.7444	approved	0				global known-rendering assignment; lexical score 0.59
+3:6	5	God		5	Θεῷ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+3:6	11	him		8	αὐτῷ		global-review-known-rendering	safe	0.7822	approved	0				global known-rendering assignment; lexical score 0.63
+3:6	13	righteousness		10	δικαιοσύνην		global-review-known-rendering	safe	0.7719	approved	0				global known-rendering assignment; lexical score 0.62
+3:7	8	faith		6	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:7	9	are		9	εἰσιν		global-review-known-rendering	safe	0.7844	approved	0				global known-rendering assignment; lexical score 0.63
+3:7	12	Abraham		10	Ἀβραάμ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:8	1	The		3	ἡ		attached-word	safe	0.7	approved	0				Article of 'Scripture'
+3:8	2	Scripture		4	γραφὴ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:8	5	God		12	Θεὸς		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+3:8	8	the		9	τὰ		attached-word	safe	0.671	approved	0				Article of 'Gentiles'
+3:8	9	Gentiles		10	ἔθνη		global-review-known-rendering	safe	0.771	approved	0				global known-rendering assignment; lexical score 0.62
+3:8	11	faith		7	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:8	18	Abraham		15	Ἀβραὰμ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:8	22	all		20	πάντα		global-review-known-rendering	safe	0.7295	approved	0				global known-rendering assignment; lexical score 0.58
+3:8	23	the		21	τὰ		attached-word	safe	0.7	approved	0				Article of 'nations'
+3:8	24	nations		22	ἔθνη		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:9	7	faith		4	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:9	11	the		7	τῷ		attached-word	safe	0.7	approved	0				Article of 'faithful'
+3:9	12	faithful		8	πιστῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:9	13	Abraham		9	Ἀβραάμ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:10	5	are		6	εἰσὶν		global-review-known-rendering	safe	0.7844	approved	0				global known-rendering assignment; lexical score 0.63
+3:10	7	the				expands	supplied-article	safe	0.7458	approved	0				article the original does not write; rests on 'works' → 'ἔργων'
+3:10	8	works		4	ἔργων		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60
+3:10	10	the				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+3:10	11	law		5	νόμου		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:10	12	are		9	εἰσίν		global-review-known-rendering	safe	0.7844	approved	0				global known-rendering assignment; lexical score 0.63
+3:10	13	under		7	ὑπὸ		global-review-known-rendering	safe	0.5909	approved	0				global known-rendering assignment; lexical score 0.44
+3:10	19	written		10	γέγραπται		global-review-known-rendering	safe	0.7686	approved	0				global known-rendering assignment; lexical score 0.62
+3:10	22	everyone		14	πᾶς		global-review-known-rendering	safe	0.7016	approved	0				global known-rendering assignment; lexical score 0.55
+3:10	24	doesn’t		16	οὐκ		global-review-known-rendering	safe	0.6283	approved	0				global known-rendering assignment; lexical score 0.48
+3:10	27	all		18	πᾶσιν		global-review-known-rendering	safe	0.7295	approved	0				global known-rendering assignment; lexical score 0.58
+3:10	31	written		20	γεγραμμένοις		global-review-known-rendering	safe	0.7686	approved	0				global known-rendering assignment; lexical score 0.62
+3:10	33	the		22	τῷ		attached-word	safe	0.55	approved	0				Article of 'book'
+3:10	34	book		23	βιβλίῳ		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
+3:10	36	the		24	τοῦ		attached-word	safe	0.6298	approved	0				Article of 'law'
+3:10	37	law		25	νόμου		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:10	39	do		27	ποιῆσαι		global-review-known-rendering	safe	0.7279	approved	0				global known-rendering assignment; lexical score 0.58
+3:10	40	them		28	αὐτά		global-review-known-rendering	safe	0.7387	approved	0				global known-rendering assignment; lexical score 0.59
+3:11	6	justified		6	δικαιοῦται		global-review-known-rendering	safe	0.785	approved	0				global known-rendering assignment; lexical score 0.64
+3:11	8	the				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμῳ'
+3:11	9	law		4	νόμῳ		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:11	11	God		9	Θεῷ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+3:11	16	righteous		13	δίκαιος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:11	18	live		16	ζήσεται		global-review-known-rendering	safe	0.7605	approved	0				global known-rendering assignment; lexical score 0.61
+3:11	20	faith		15	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:12	1	The				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμος'
+3:12	2	law		3	νόμος		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:12	4	not		4	οὐκ		global-review-known-rendering	safe	0.6285	approved	0				global known-rendering assignment; lexical score 0.48
+3:12	6	faith		7	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:12	12	them		11	αὐτὰ		global-review-known-rendering	safe	0.7387	approved	0				global known-rendering assignment; lexical score 0.59
+3:12	14	live		12	ζήσεται		global-review-known-rendering	safe	0.7605	approved	0				global known-rendering assignment; lexical score 0.61
+3:12	16	them		14	αὐτοῖς		global-review-known-rendering	safe	0.7387	approved	0				global known-rendering assignment; lexical score 0.59
+3:13	1	Christ		1	Χριστὸς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:13	3	us		2	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+3:13	8	the		7	τοῦ		attached-word	safe	0.6298	approved	0				Article of 'law'
+3:13	9	law		8	νόμου		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:13	11	become		9	γενόμενος		global-review-known-rendering	safe	0.7833	approved	0				global known-rendering assignment; lexical score 0.63
+3:13	15	us		11	ἡμῶν		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+3:13	19	written		14	γέγραπται		global-review-known-rendering	safe	0.7686	approved	0				global known-rendering assignment; lexical score 0.62
+3:13	22	everyone		16	πᾶς		global-review-known-rendering	safe	0.7016	approved	0				global known-rendering assignment; lexical score 0.55
+3:13	24	hangs		18	κρεμάμενος		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
+3:14	2	the		5	ἡ		attached-word	safe	0.5875	approved	0				Article of 'blessing'
+3:14	3	blessing		6	εὐλογία		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+3:14	5	Abraham		8	Ἀβραὰμ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:14	9	the		3	τὰ		attached-word	safe	0.671	approved	0				Article of 'Gentiles'
+3:14	10	Gentiles		4	ἔθνη		global-review-known-rendering	safe	0.771	approved	0				global known-rendering assignment; lexical score 0.62
+3:14	12	Christ		12	Χριστῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:14	13	Jesus		11	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+3:14	17	receive		18	λάβωμεν		global-review-known-rendering	safe	0.5731	approved	0				global known-rendering assignment; lexical score 0.42
+3:14	18	the		14	τὴν		attached-word	safe	0.6635	approved	0				Article of 'promise'
+3:14	19	promise		15	ἐπαγγελίαν		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:14	21	the		16	τοῦ		attached-word	safe	0.6964	approved	0				Article of 'Spirit'
+3:14	22	Spirit		17	Πνεύματος		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+3:14	23	through		19	διὰ		global-review-known-rendering	safe	0.6087	approved	0				global known-rendering assignment; lexical score 0.46
+3:14	24	faith		21	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:15	1	Brothers		1	Ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:15	12	covenant		8	διαθήκην		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:16	2	the		5	αἱ		attached-word	safe	0.6591	approved	0				Article of 'promises'
+3:16	3	promises		6	ἐπαγγελίαι		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+3:16	7	Abraham		3	Ἀβραὰμ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:16	10	his		10	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
+3:16	13	doesn’t		11	οὐ		global-review-known-rendering	safe	0.6283	approved	0				global known-rendering assignment; lexical score 0.48
+3:16	14	say		12	λέγει		global-review-known-rendering	safe	0.7342	approved	0				global known-rendering assignment; lexical score 0.58
+3:16	16	descendants		15	σπέρμασιν		global-review-known-rendering	safe	0.5857	approved	0				global known-rendering assignment; lexical score 0.44
+3:16	19	many		18	πολλῶν		global-review-known-rendering	safe	0.7482	approved	0				global known-rendering assignment; lexical score 0.60
+3:16	23	one		22	ἑνός		global-review-known-rendering	safe	0.6358	approved	0				global known-rendering assignment; lexical score 0.49
+3:16	25	your		26	σου		global-review-known-rendering	safe	0.7903	approved	0				global known-rendering assignment; lexical score 0.64
+3:16	29	Christ		29	Χριστός		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:17	3	say		3	λέγω		global-review-known-rendering	safe	0.7342	approved	0				global known-rendering assignment; lexical score 0.58
+3:17	4	this		1	τοῦτο		global-review-known-rendering	safe	0.7776	approved	0				global known-rendering assignment; lexical score 0.63
+3:17	5	A				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'covenant' → 'διαθήκην'
+3:17	6	covenant		4	διαθήκην		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:17	10	God		8	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+3:17	13	the				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμος'
+3:17	14	law		16	νόμος		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:17	19	thirty		13	τριάκοντα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:17	20	years		14	ἔτη		global-review-known-rendering	safe	0.6941	approved	0				global known-rendering assignment; lexical score 0.54
+3:17	23	not		17	οὐκ		global-review-known-rendering	safe	0.6285	approved	0				global known-rendering assignment; lexical score 0.48
+3:17	29	the		22	τὴν		attached-word	safe	0.6635	approved	0				Article of 'promise'
+3:17	30	promise		23	ἐπαγγελίαν		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:18	3	the		5	ἡ		attached-word	safe	0.6156	approved	0				Article of 'inheritance'
+3:18	4	inheritance		6	κληρονομία		global-review-known-rendering	safe	0.7156	approved	0				global known-rendering assignment; lexical score 0.57
+3:18	7	the				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+3:18	8	law		4	νόμου		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:18	14	promise		9	ἐπαγγελίας		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:18	16	God		17	Θεός		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+3:18	21	Abraham		12	Ἀβραὰμ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:18	23	promise		14	ἐπαγγελίας		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:19	2	why		1	Τί		global-review-known-rendering	safe	0.7688	approved	0				global known-rendering assignment; lexical score 0.62
+3:19	5	the		3	ὁ		attached-word	safe	0.6298	approved	0				Article of 'law'
+3:19	6	law		4	νόμος		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:19	9	added		8	προσετέθη		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60
+3:19	12	transgressions		6	παραβάσεων		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:19	17	come		11	ἔλθῃ		global-review-known-rendering	safe	0.6101	approved	0				global known-rendering assignment; lexical score 0.46
+3:19	19	whom		14	ᾧ		global-review-known-rendering	safe	0.6937	approved	0				global known-rendering assignment; lexical score 0.54
+3:19	28	through		17	δι		global-review-known-rendering	safe	0.6087	approved	0				global known-rendering assignment; lexical score 0.46
+3:19	29	angels		18	ἀγγέλων		global-review-known-rendering	safe	0.7889	approved	0				global known-rendering assignment; lexical score 0.64
+3:19	31	the				expands	supplied-article	safe	0.5891	approved	0				article the original does not write; rests on 'hand' → 'χειρὶ'
+3:19	32	hand		20	χειρὶ		global-review-known-rendering	safe	0.5891	approved	0				global known-rendering assignment; lexical score 0.44
+3:19	34	a				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'mediator' → 'μεσίτου'
+3:19	35	mediator		21	μεσίτου		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:20	2	a				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'mediator' → 'μεσίτης'
+3:20	3	mediator		3	μεσίτης		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:20	5	not		5	οὐκ		global-review-known-rendering	safe	0.6285	approved	0				global known-rendering assignment; lexical score 0.48
+3:20	7	one		4	ἑνὸς		global-review-known-rendering	safe	0.6358	approved	0				global known-rendering assignment; lexical score 0.49
+3:20	9	God		9	Θεὸς		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+3:20	11	one		10	εἷς		global-review-known-rendering	safe	0.6358	approved	0				global known-rendering assignment; lexical score 0.49
+3:21	2	the				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμος'
+3:21	3	law		3	νόμος		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:21	6	the		5	τῶν		attached-word	safe	0.6591	approved	0				Article of 'promises'
+3:21	7	promises		6	ἐπαγγελιῶν		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+3:21	9	God		8	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+3:21	17	a				expands	supplied-indefinite-article	safe	0.7298	approved	0				indefinite article; rests on 'law' → 'νόμος'
+3:21	18	law		14	νόμος		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:21	19	given		13	ἐδόθη		global-review-known-rendering	safe	0.7421	approved	0				global known-rendering assignment; lexical score 0.59
+3:21	21	could		16	δυνάμενος		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
+3:21	26	righteousness		24	δικαιοσύνη		global-review-known-rendering	safe	0.7719	approved	0				global known-rendering assignment; lexical score 0.62
+3:21	31	the				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμου'
+3:21	32	law		20	νόμου		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:22	2	the		3	ἡ		attached-word	safe	0.7	approved	0				Article of 'Scripture'
+3:22	3	Scripture		4	γραφὴ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:22	5	all		6	πάντα		global-review-known-rendering	safe	0.7295	approved	0				global known-rendering assignment; lexical score 0.58
+3:22	7	under		7	ὑπὸ		global-review-known-rendering	safe	0.5909	approved	0				global known-rendering assignment; lexical score 0.44
+3:22	8	sin		8	ἁμαρτίαν		global-review-known-rendering	safe	0.7264	approved	0				global known-rendering assignment; lexical score 0.58
+3:22	10	the		10	ἡ		attached-word	safe	0.6635	approved	0				Article of 'promise'
+3:22	11	promise		11	ἐπαγγελία		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:22	13	faith		13	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:22	15	Jesus		14	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+3:22	16	Christ		15	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:22	19	given		16	δοθῇ		global-review-known-rendering	safe	0.7421	approved	0				global known-rendering assignment; lexical score 0.59
+3:22	23	believe		18	πιστεύουσιν		global-review-known-rendering	safe	0.7773	approved	0				global known-rendering assignment; lexical score 0.63
+3:23	3	faith		6	πίστιν		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:23	4	came		4	ἐλθεῖν		global-review-known-rendering	safe	0.601	approved	0				global known-rendering assignment; lexical score 0.45
+3:23	10	under		7	ὑπὸ		global-review-known-rendering	safe	0.5909	approved	0				global known-rendering assignment; lexical score 0.44
+3:23	11	the				expands	supplied-article	safe	0.7298	approved	0				article the original does not write; rests on 'law' → 'νόμον'
+3:23	12	law		8	νόμον		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:23	15	the				expands	supplied-article	safe	0.7882	approved	0				article the original does not write; rests on 'faith' → 'πίστιν'
+3:23	16	faith		14	πίστιν		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:23	18	should		13	μέλλουσαν		global-review-known-rendering	safe	0.68	approved	0				global known-rendering assignment; lexical score 0.53
+3:23	21	revealed		15	ἀποκαλυφθῆναι		global-review-known-rendering	safe	0.728	approved	0				global known-rendering assignment; lexical score 0.58
+3:24	3	the		2	ὁ		attached-word	safe	0.6298	approved	0				Article of 'law'
+3:24	4	law		3	νόμος		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+3:24	6	become		6	γέγονεν		global-review-known-rendering	safe	0.7833	approved	0				global known-rendering assignment; lexical score 0.63
+3:24	11	us		5	ἡμῶν		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+3:24	13	Christ		8	Χριστόν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:24	18	justified		12	δικαιωθῶμεν		global-review-known-rendering	safe	0.785	approved	0				global known-rendering assignment; lexical score 0.64
+3:24	20	faith		11	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:25	4	faith		4	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:25	6	come		1	ἐλθούσης		global-review-known-rendering	safe	0.6101	approved	0				global known-rendering assignment; lexical score 0.46
+3:25	8	are		8	ἐσμεν		global-review-known-rendering	safe	0.7844	approved	0				global known-rendering assignment; lexical score 0.63
+3:25	11	under		6	ὑπὸ		global-review-known-rendering	safe	0.5909	approved	0				global known-rendering assignment; lexical score 0.44
+3:26	3	are		5	ἐστε		global-review-known-rendering	safe	0.7844	approved	0				global known-rendering assignment; lexical score 0.63
+3:26	4	all		1	Πάντες		global-review-known-rendering	safe	0.7295	approved	0				global known-rendering assignment; lexical score 0.58
+3:26	7	God		4	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+3:26	8	through		6	διὰ		global-review-known-rendering	safe	0.6087	approved	0				global known-rendering assignment; lexical score 0.46
+3:26	9	faith		8	πίστεως		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64
+3:26	11	Christ		10	Χριστῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:26	12	Jesus		11	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+3:27	8	baptized		5	ἐβαπτίσθητε		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+3:27	9	into		3	εἰς		global-review-known-rendering	safe	0.7714	approved	0				global known-rendering assignment; lexical score 0.62
+3:27	10	Christ		4	Χριστὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:27	14	Christ		6	Χριστὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:28	4	Jew		3	Ἰουδαῖος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:28	6	Greek		5	Ἕλλην		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
+3:28	10	slave		8	δοῦλος		global-review-known-rendering	safe	0.5891	approved	0				global known-rendering assignment; lexical score 0.44
+3:28	12	free		10	ἐλεύθερος		global-review-known-rendering	safe	0.6442	approved	0				global known-rendering assignment; lexical score 0.49
+3:28	22	are		20	ἐστε		global-review-known-rendering	safe	0.7844	approved	0				global known-rendering assignment; lexical score 0.63
+3:28	23	all		16	πάντες		global-review-known-rendering	safe	0.7295	approved	0				global known-rendering assignment; lexical score 0.58
+3:28	24	one		19	εἷς		global-review-known-rendering	safe	0.6358	approved	0				global known-rendering assignment; lexical score 0.49
+3:28	26	Christ		22	Χριστῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:28	27	Jesus		23	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+3:29	4	Christ’s		4	Χριστοῦ		global-review-known-rendering	safe	0.7982	approved	0				global known-rendering assignment; lexical score 0.65
+3:29	7	are		9	ἐστέ		global-review-known-rendering	safe	0.7844	approved	0				global known-rendering assignment; lexical score 0.63
+3:29	8	Abraham’s		7	Ἀβραὰμ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+3:29	11	heirs		12	κληρονόμοι		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59
+3:29	12	according		10	κατ		global-review-known-rendering	safe	0.7915	approved	0				global known-rendering assignment; lexical score 0.64
+3:29	14	promise		11	ἐπαγγελίαν		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+4:1	3	say		1	Λέγω		global-review-known-rendering	safe	0.7342	approved	0				global known-rendering assignment; lexical score 0.58
+4:1	8	the		6	ὁ		attached-word	safe	0.7	approved	0				Article of 'heir'
+4:1	9	heir		7	κληρονόμος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:1	23	lord		13	κύριος		global-review-known-rendering	safe	0.7953	approved	0				global known-rendering assignment; lexical score 0.65
+4:1	25	all		14	πάντων		global-review-known-rendering	safe	0.7313	approved	0				global known-rendering assignment; lexical score 0.58
+4:2	3	under		2	ὑπὸ		global-review-known-rendering	safe	0.5888	approved	0				global known-rendering assignment; lexical score 0.44
+4:2	12	the		10	τοῦ		attached-word	safe	0.6987	approved	0				Article of 'father'
+4:2	13	father		11	πατρός		global-review-known-rendering	safe	0.7987	approved	0				global known-rendering assignment; lexical score 0.65
+4:3	1	So		1	οὕτως		global-review-known-rendering	safe	0.6676	approved	0				global known-rendering assignment; lexical score 0.52
+4:3	3	also		2	καὶ		global-review-known-rendering	safe	0.7584	approved	0				global known-rendering assignment; lexical score 0.61
+4:3	5	we		3	ἡμεῖς		global-review-known-rendering	safe	0.7826	approved	0				global known-rendering assignment; lexical score 0.63
+4:3	12	under		7	ὑπὸ		global-review-known-rendering	safe	0.5888	approved	0				global known-rendering assignment; lexical score 0.44
+4:3	17	the		10	τοῦ		attached-word	safe	0.6092	approved	0				Article of 'world'
+4:3	18	world		11	κόσμου		global-review-known-rendering	safe	0.7092	approved	0				global known-rendering assignment; lexical score 0.56
+4:4	3	the		4	τὸ		attached-word	safe	0.6182	approved	0				Article of 'fullness'
+4:4	4	fullness		5	πλήρωμα		global-review-known-rendering	safe	0.7182	approved	0				global known-rendering assignment; lexical score 0.57
+4:4	8	came		3	ἦλθεν		global-review-known-rendering	safe	0.6016	approved	0				global known-rendering assignment; lexical score 0.45
+4:4	9	God		10	Θεὸς		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+4:4	12	his		13	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
+4:4	13	Son		12	Υἱὸν		global-review-known-rendering	safe	0.7724	approved	0				global known-rendering assignment; lexical score 0.62
+4:4	16	a				expands	supplied-indefinite-article	safe	0.7644	approved	0				indefinite article; rests on 'woman' → 'γυναικός'
+4:4	17	woman		16	γυναικός		global-review-known-rendering	safe	0.7644	approved	0				global known-rendering assignment; lexical score 0.61
+4:4	19	under		18	ὑπὸ		global-review-known-rendering	safe	0.5888	approved	0				global known-rendering assignment; lexical score 0.44
+4:4	20	the				expands	supplied-article	safe	0.7332	approved	0				article the original does not write; rests on 'law' → 'νόμον'
+4:4	21	law		19	νόμον		global-review-known-rendering	safe	0.7332	approved	0				global known-rendering assignment; lexical score 0.58
+4:5	8	under		3	ὑπὸ		global-review-known-rendering	safe	0.5888	approved	0				global known-rendering assignment; lexical score 0.44
+4:5	10	law		4	νόμον		global-review-known-rendering	safe	0.7332	approved	0				global known-rendering assignment; lexical score 0.58
+4:6	2	because		1	Ὅτι		global-review-known-rendering	safe	0.6762	approved	0				global known-rendering assignment; lexical score 0.53
+4:6	4	are		3	ἐστε		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
+4:6	6	God		7	Θεὸς		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+4:6	9	the		8	τὸ		attached-word	safe	0.6964	approved	0				Article of 'Spirit'
+4:6	10	Spirit		9	Πνεῦμα		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+4:6	12	his		12	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
+4:6	13	Son		11	Υἱοῦ		global-review-known-rendering	safe	0.7724	approved	0				global known-rendering assignment; lexical score 0.62
+4:6	14	into		13	εἰς		global-review-known-rendering	safe	0.7714	approved	0				global known-rendering assignment; lexical score 0.62
+4:6	16	hearts		15	καρδίας		global-review-known-rendering	safe	0.7557	approved	0				global known-rendering assignment; lexical score 0.61
+4:6	19	Father		20	Πατήρ		global-review-known-rendering	safe	0.7987	approved	0				global known-rendering assignment; lexical score 0.65
+4:7	3	are		3	εἶ		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
+4:7	9	a				expands	supplied-indefinite-article	safe	0.7724	approved	0				indefinite article; rests on 'son' → 'υἱός'
+4:7	10	son		6	υἱός		global-review-known-rendering	safe	0.7724	approved	0				global known-rendering assignment; lexical score 0.62
+4:7	13	a				expands	supplied-indefinite-article	safe	0.7724	approved	0				indefinite article; rests on 'son' → 'υἱός'
+4:7	14	son		9	υἱός		global-review-known-rendering	safe	0.7724	approved	0				global known-rendering assignment; lexical score 0.62
+4:7	16	an				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'heir' → 'κληρονόμος'
+4:7	17	heir		11	κληρονόμος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:7	19	God		13	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+4:7	20	through		12	διὰ		global-review-known-rendering	safe	0.6043	approved	0				global known-rendering assignment; lexical score 0.45
+4:8	5	not		4	οὐκ		global-review-known-rendering	safe	0.6285	approved	0				global known-rendering assignment; lexical score 0.48
+4:8	6	knowing		5	εἰδότες		global-review-known-rendering	safe	0.6947	approved	0				global known-rendering assignment; lexical score 0.54
+4:8	7	God		6	Θεὸν		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+4:8	16	nature		9	φύσει		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62
+4:8	17	are		11	οὖσιν		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
+4:8	19	gods		12	θεοῖς		global-review-known-rendering	safe	0.7437	approved	0				global known-rendering assignment; lexical score 0.59
+4:9	9	God		4	Θεόν		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+4:9	11	rather		5	μᾶλλον		global-review-known-rendering	safe	0.7614	approved	0				global known-rendering assignment; lexical score 0.61
+4:9	14	known		7	γνωσθέντες		global-review-known-rendering	safe	0.5584	approved	0				global known-rendering assignment; lexical score 0.41
+4:9	16	God		9	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+4:9	20	turn		11	ἐπιστρέφετε		global-review-known-rendering	safe	0.5955	approved	0				global known-rendering assignment; lexical score 0.45
+4:9	22	again		12	πάλιν		global-review-known-rendering	safe	0.5725	approved	0				global known-rendering assignment; lexical score 0.42
+4:9	40	again		20	πάλιν		global-review-known-rendering	safe	0.5725	approved	0				global known-rendering assignment; lexical score 0.42
+4:10	3	days		1	ἡμέρας		global-review-known-rendering	safe	0.775	approved	0				global known-rendering assignment; lexical score 0.62
+4:10	4	months		4	μῆνας		global-review-known-rendering	safe	0.74	approved	0				global known-rendering assignment; lexical score 0.59
+4:10	5	seasons		6	καιροὺς		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+4:11	3	afraid		1	φοβοῦμαι		global-review-known-rendering	safe	0.5971	approved	0				global known-rendering assignment; lexical score 0.45
+4:12	1	I		3	ἐγώ		global-review-known-rendering	safe	0.7474	approved	0				global known-rendering assignment; lexical score 0.60
+4:12	4	brothers		8	ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:12	5	become		1	Γίνεσθε		global-review-known-rendering	safe	0.7827	approved	0				global known-rendering assignment; lexical score 0.63
+4:12	19	me		12	με		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+4:12	21	wrong		13	ἠδικήσατε		global-review-known-rendering	safe	0.6412	approved	0				global known-rendering assignment; lexical score 0.49
+4:13	5	because		3	ὅτι		global-review-known-rendering	safe	0.6762	approved	0				global known-rendering assignment; lexical score 0.53
+4:13	7	weakness		5	ἀσθένειαν		global-review-known-rendering	safe	0.6714	approved	0				global known-rendering assignment; lexical score 0.52
+4:13	9	the		6	τῆς		attached-word	safe	0.6936	approved	0				Article of 'flesh'
+4:13	10	flesh		7	σαρκὸς		global-review-known-rendering	safe	0.7936	approved	0				global known-rendering assignment; lexical score 0.64
+4:14	4	a				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'temptation' → 'πειρασμὸν'
+4:14	5	temptation		3	πειρασμὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:14	9	my		8	μου		global-review-known-rendering	safe	0.7664	approved	0				global known-rendering assignment; lexical score 0.62
+4:14	10	flesh		7	σαρκί		global-review-known-rendering	safe	0.7936	approved	0				global known-rendering assignment; lexical score 0.64
+4:14	12	didn’t		9	οὐκ		global-review-known-rendering	safe	0.6282	approved	0				global known-rendering assignment; lexical score 0.48
+4:14	19	me		18	με		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+4:14	21	an				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'angel' → 'ἄγγελον'
+4:14	22	angel		15	ἄγγελον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:14	24	God		16	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+4:14	25	even		1	καὶ		global-review-known-rendering	safe	0.7158	approved	0				global known-rendering assignment; lexical score 0.57
+4:14	27	Christ		20	Χριστὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:14	28	Jesus		21	Ἰησοῦν		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+4:15	9	testify		6	μαρτυρῶ		global-review-known-rendering	safe	0.6071	approved	0				global known-rendering assignment; lexical score 0.46
+4:15	14	possible		11	δυνατὸν		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59
+4:15	20	your		14	ὑμῶν		global-review-known-rendering	safe	0.7903	approved	0				global known-rendering assignment; lexical score 0.64
+4:15	21	eyes		13	ὀφθαλμοὺς		global-review-known-rendering	safe	0.7664	approved	0				global known-rendering assignment; lexical score 0.62
+4:15	23	given		16	ἐδώκατέ		global-review-known-rendering	safe	0.7426	approved	0				global known-rendering assignment; lexical score 0.59
+4:15	26	me		17	μοι		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+4:16	5	become		4	γέγονα		global-review-known-rendering	safe	0.7827	approved	0				global known-rendering assignment; lexical score 0.63
+4:16	6	your		3	ὑμῶν		global-review-known-rendering	safe	0.7903	approved	0				global known-rendering assignment; lexical score 0.64
+4:16	7	enemy		2	ἐχθρὸς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:17	6	no		3	οὐ		global-review-known-rendering	safe	0.6049	approved	0				global known-rendering assignment; lexical score 0.45
+4:17	19	them		10	αὐτοὺς		global-review-known-rendering	safe	0.7391	approved	0				global known-rendering assignment; lexical score 0.59
+4:18	4	always		6	πάντοτε		global-review-known-rendering	safe	0.5833	approved	0				global known-rendering assignment; lexical score 0.43
+4:18	15	only		9	μόνον		global-review-known-rendering	safe	0.6768	approved	0				global known-rendering assignment; lexical score 0.53
+4:19	1	My		2	μου		global-review-known-rendering	safe	0.7664	approved	0				global known-rendering assignment; lexical score 0.62
+4:19	5	whom		3	οὓς		global-review-known-rendering	safe	0.6934	approved	0				global known-rendering assignment; lexical score 0.54
+4:19	8	again		4	πάλιν		global-review-known-rendering	safe	0.5725	approved	0				global known-rendering assignment; lexical score 0.42
+4:19	12	Christ		9	Χριστὸς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:20	14	my		11	μου		global-review-known-rendering	safe	0.7664	approved	0				global known-rendering assignment; lexical score 0.62
+4:21	1	Tell		1	Λέγετέ		global-review-known-rendering	safe	0.6173	approved	0				global known-rendering assignment; lexical score 0.47
+4:21	2	me		2	μοι		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+4:21	8	under		4	ὑπὸ		global-review-known-rendering	safe	0.5888	approved	0				global known-rendering assignment; lexical score 0.44
+4:21	10	law		5	νόμον		global-review-known-rendering	safe	0.7332	approved	0				global known-rendering assignment; lexical score 0.58
+4:21	11	don’t		10	οὐκ		global-review-known-rendering	safe	0.6282	approved	0				global known-rendering assignment; lexical score 0.48
+4:21	13	listen		11	ἀκούετε		global-review-known-rendering	safe	0.6991	approved	0				global known-rendering assignment; lexical score 0.55
+4:21	15	the		8	τὸν		attached-word	safe	0.6332	approved	0				Article of 'law'
+4:21	16	law		9	νόμον		global-review-known-rendering	safe	0.7332	approved	0				global known-rendering assignment; lexical score 0.58
+4:22	4	written		1	γέγραπται		global-review-known-rendering	safe	0.7688	approved	0				global known-rendering assignment; lexical score 0.62
+4:22	6	Abraham		4	Ἀβραὰμ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:22	7	had		7	ἔσχεν		global-review-known-rendering	safe	0.6971	approved	0				global known-rendering assignment; lexical score 0.55
+4:22	8	two		5	δύο		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
+4:22	9	sons		6	υἱοὺς		global-review-known-rendering	safe	0.7036	approved	0				global known-rendering assignment; lexical score 0.55
+4:22	10	one		8	ἕνα		global-review-known-rendering	safe	0.6359	approved	0				global known-rendering assignment; lexical score 0.49
+4:22	15	one		13	ἕνα		global-review-known-rendering	safe	0.6359	approved	0				global known-rendering assignment; lexical score 0.49
+4:22	17	the		15	τῆς		attached-word	safe	0.538	approved	0				Article of 'free'
+4:22	18	free		16	ἐλευθέρας		global-review-known-rendering	safe	0.638	approved	0				global known-rendering assignment; lexical score 0.49
+4:23	1	However		11	δὲ		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+4:23	8	born		9	γεγέννηται		global-review-known-rendering	safe	0.7315	approved	0				global known-rendering assignment; lexical score 0.58
+4:23	9	according		7	κατὰ		global-review-known-rendering	safe	0.7916	approved	0				global known-rendering assignment; lexical score 0.64
+4:23	11	the				expands	supplied-article	safe	0.7936	approved	0				article the original does not write; rests on 'flesh' → 'σάρκα'
+4:23	12	flesh		8	σάρκα		global-review-known-rendering	safe	0.7936	approved	0				global known-rendering assignment; lexical score 0.64
+4:23	18	free		14	ἐλευθέρας		global-review-known-rendering	safe	0.638	approved	0				global known-rendering assignment; lexical score 0.49
+4:23	22	through		15	διὰ		global-review-known-rendering	safe	0.6043	approved	0				global known-rendering assignment; lexical score 0.45
+4:23	23	promise		17	ἐπαγγελίας		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
+4:24	7	these		4	αὗται		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
+4:24	8	are		6	εἰσιν		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
+4:24	9	two		7	δύο		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
+4:24	11	One		9	μία		global-review-known-rendering	safe	0.6359	approved	0				global known-rendering assignment; lexical score 0.49
+4:24	14	Mount		12	ὄρους		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:25	5	Mount		5	ὄρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:25	23	her		20	αὐτῆς		global-review-known-rendering	safe	0.7897	approved	0				global known-rendering assignment; lexical score 0.64
+4:26	8	free		5	ἐλευθέρα		global-review-known-rendering	safe	0.638	approved	0				global known-rendering assignment; lexical score 0.49
+4:26	11	the				expands	supplied-article	safe	0.7708	approved	0				article the original does not write; rests on 'mother' → 'μήτηρ'
+4:26	12	mother		9	μήτηρ		global-review-known-rendering	safe	0.7708	approved	0				global known-rendering assignment; lexical score 0.62
+4:26	14	us		10	ἡμῶν		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+4:27	4	written		1	γέγραπται		global-review-known-rendering	safe	0.7688	approved	0				global known-rendering assignment; lexical score 0.62
+4:27	7	barren		4	στεῖρα		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+4:27	9	don’t		6	οὐ		global-review-known-rendering	safe	0.6282	approved	0				global known-rendering assignment; lexical score 0.48
+4:27	17	don’t		12	οὐκ		global-review-known-rendering	safe	0.6282	approved	0				global known-rendering assignment; lexical score 0.48
+4:27	23	have		23	ἐχούσης		global-review-known-rendering	safe	0.732	approved	0				global known-rendering assignment; lexical score 0.58
+4:27	26	than		21	ἢ		global-review-known-rendering	safe	0.6169	approved	0				global known-rendering assignment; lexical score 0.47
+4:27	30	a				expands	supplied-indefinite-article	safe	0.7885	approved	0				indefinite article; rests on 'husband' → 'ἄνδρα'
+4:27	31	husband		25	ἄνδρα		global-review-known-rendering	safe	0.7885	approved	0				global known-rendering assignment; lexical score 0.64
+4:28	3	brothers		3	ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:28	5	Isaac		5	Ἰσαὰκ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:28	7	are		8	ἐστέ		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
+4:28	10	promise		6	ἐπαγγελίας		global-review-known-rendering	safe	0.7663	approved	0				global known-rendering assignment; lexical score 0.62
+4:29	7	born		7	γεννηθεὶς		global-review-known-rendering	safe	0.7315	approved	0				global known-rendering assignment; lexical score 0.58
+4:29	8	according		5	κατὰ		global-review-known-rendering	safe	0.7916	approved	0				global known-rendering assignment; lexical score 0.64
+4:29	11	flesh		6	σάρκα		global-review-known-rendering	safe	0.7936	approved	0				global known-rendering assignment; lexical score 0.64
+4:29	12	persecuted		8	ἐδίωκεν		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62
+4:29	17	according		10	κατὰ		global-review-known-rendering	safe	0.7916	approved	0				global known-rendering assignment; lexical score 0.64
+4:29	20	Spirit		11	Πνεῦμα		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+4:29	21	so		12	οὕτως		global-review-known-rendering	safe	0.6676	approved	0				global known-rendering assignment; lexical score 0.52
+4:29	22	also		13	καὶ		global-review-known-rendering	safe	0.7584	approved	0				global known-rendering assignment; lexical score 0.61
+4:30	2	what		2	τί		global-review-known-rendering	safe	0.6815	approved	0				global known-rendering assignment; lexical score 0.53
+4:30	4	the		4	ἡ		attached-word	safe	0.7	approved	0				Article of 'Scripture'
+4:30	5	Scripture		5	γραφή		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:30	6	say		3	λέγει		global-review-known-rendering	safe	0.7342	approved	0				global known-rendering assignment; lexical score 0.58
+4:30	12	her		12	αὐτῆς		global-review-known-rendering	safe	0.7897	approved	0				global known-rendering assignment; lexical score 0.64
+4:30	13	son		11	υἱὸν		global-review-known-rendering	safe	0.7724	approved	0				global known-rendering assignment; lexical score 0.62
+4:30	15	the		17	ὁ		attached-word	safe	0.6724	approved	0				Article of 'son'
+4:30	16	son		18	υἱὸς		global-review-known-rendering	safe	0.7724	approved	0				global known-rendering assignment; lexical score 0.62
+4:30	21	not		13	οὐ		global-review-known-rendering	safe	0.6285	approved	0				global known-rendering assignment; lexical score 0.48
+4:30	22	inherit		16	κληρονομήσει		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:30	24	the		22	τοῦ		attached-word	safe	0.6724	approved	0				Article of 'son'
+4:30	25	son		23	υἱοῦ		global-review-known-rendering	safe	0.7724	approved	0				global known-rendering assignment; lexical score 0.62
+4:30	28	free		25	ἐλευθέρας		global-review-known-rendering	safe	0.638	approved	0				global known-rendering assignment; lexical score 0.49
+4:31	3	brothers		2	ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+4:31	5	are		4	ἐσμὲν		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63
+4:31	6	not		3	οὐκ		global-review-known-rendering	safe	0.6285	approved	0				global known-rendering assignment; lexical score 0.48
+4:31	14	free		9	ἐλευθέρας		global-review-known-rendering	safe	0.638	approved	0				global known-rendering assignment; lexical score 0.49
+5:1	3	therefore		7	οὖν		global-review-known-rendering	safe	0.6229	approved	0				global known-rendering assignment; lexical score 0.47
+5:1	5	the		1	Τῇ		attached-word	safe	0.49	approved	0				Article of 'liberty'
+5:1	6	liberty		2	ἐλευθερίᾳ		global-review-known-rendering	safe	0.59	approved	0				global known-rendering assignment; lexical score 0.44
+5:1	9	Christ		4	Χριστὸς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:1	12	us		3	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+5:1	18	again		10	πάλιν		global-review-known-rendering	safe	0.5733	approved	0				global known-rendering assignment; lexical score 0.42
+5:1	20	a				expands	supplied-indefinite-article	safe	0.71	approved	0				indefinite article; rests on 'yoke' → 'ζυγῷ'
+5:1	21	yoke		11	ζυγῷ		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+5:2	1	Behold		1	Ἴδε		global-review-known-rendering	safe	0.7711	approved	0				global known-rendering assignment; lexical score 0.62
+5:2	2	I		2	ἐγὼ		global-review-known-rendering	safe	0.7467	approved	0				global known-rendering assignment; lexical score 0.60
+5:2	3	Paul		3	Παῦλος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:2	4	tell		4	λέγω		global-review-known-rendering	safe	0.6191	approved	0				global known-rendering assignment; lexical score 0.47
+5:2	11	Christ		9	Χριστὸς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:2	15	nothing		11	οὐδὲν		global-review-known-rendering	safe	0.5944	approved	0				global known-rendering assignment; lexical score 0.44
+5:3	4	again		3	πάλιν		global-review-known-rendering	safe	0.5733	approved	0				global known-rendering assignment; lexical score 0.42
+5:3	6	every		4	παντὶ		global-review-known-rendering	safe	0.7281	approved	0				global known-rendering assignment; lexical score 0.58
+5:3	17	do		13	ποιῆσαι		global-review-known-rendering	safe	0.7293	approved	0				global known-rendering assignment; lexical score 0.58
+5:3	18	the		11	τὸν		attached-word	safe	0.6329	approved	0				Article of 'whole'
+5:3	20	law		12	νόμον		global-review-known-rendering	safe	0.7329	approved	0				global known-rendering assignment; lexical score 0.58
+5:4	5	Christ		3	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:4	11	justified		7	δικαιοῦσθε		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64
+5:4	13	the				expands	supplied-article	safe	0.7329	approved	0				article the original does not write; rests on 'law' → 'νόμῳ'
+5:4	14	law		6	νόμῳ		global-review-known-rendering	safe	0.7329	approved	0				global known-rendering assignment; lexical score 0.58
+5:4	20	grace		9	χάριτος		global-review-known-rendering	safe	0.7967	approved	0				global known-rendering assignment; lexical score 0.65
+5:5	2	we		1	ἡμεῖς		global-review-known-rendering	safe	0.7826	approved	0				global known-rendering assignment; lexical score 0.63
+5:5	4	the				expands	supplied-article	safe	0.7963	approved	0				article the original does not write; rests on 'Spirit' → 'Πνεύματι'
+5:5	5	Spirit		3	Πνεύματι		global-review-known-rendering	safe	0.7963	approved	0				global known-rendering assignment; lexical score 0.65
+5:5	7	faith		5	πίστεως		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
+5:5	10	the				expands	supplied-article	safe	0.7619	approved	0				article the original does not write; rests on 'hope' → 'ἐλπίδα'
+5:5	11	hope		6	ἐλπίδα		global-review-known-rendering	safe	0.7619	approved	0				global known-rendering assignment; lexical score 0.61
+5:5	13	righteousness		7	δικαιοσύνης		global-review-known-rendering	safe	0.7722	approved	0				global known-rendering assignment; lexical score 0.62
+5:6	3	Christ		3	Χριστῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:6	4	Jesus		4	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+5:6	6	circumcision		6	περιτομή		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:6	8	uncircumcision		10	ἀκροβυστία		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:6	11	anything		7	τι		global-review-known-rendering	safe	0.63	approved	0				global known-rendering assignment; lexical score 0.48
+5:6	13	faith		12	πίστις		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
+5:6	15	through		13	δι		global-review-known-rendering	safe	0.6083	approved	0				global known-rendering assignment; lexical score 0.46
+5:7	4	well		2	καλῶς		global-review-known-rendering	safe	0.6372	approved	0				global known-rendering assignment; lexical score 0.49
+5:7	14	the				expands	supplied-article	safe	0.7433	approved	0				article the original does not write; rests on 'truth' → 'ἀληθείᾳ'
+5:7	15	truth		6	ἀληθείᾳ		global-review-known-rendering	safe	0.7433	approved	0				global known-rendering assignment; lexical score 0.59
+5:8	4	not		3	οὐκ		global-review-known-rendering	safe	0.6293	approved	0				global known-rendering assignment; lexical score 0.48
+5:9	6	the		4	τὸ		attached-word	safe	0.7	approved	0				Article of 'whole'
+5:9	8	lump		5	φύραμα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:10	1	I		1	ἐγὼ		global-review-known-rendering	safe	0.7467	approved	0				global known-rendering assignment; lexical score 0.60
+5:10	4	toward		3	εἰς		global-review-known-rendering	safe	0.6	approved	0				global known-rendering assignment; lexical score 0.45
+5:10	7	the				expands	supplied-article	safe	0.7953	approved	0				article the original does not write; rests on 'Lord' → 'Κυρίῳ'
+5:10	8	Lord		6	Κυρίῳ		global-review-known-rendering	safe	0.7953	approved	0				global known-rendering assignment; lexical score 0.65
+5:11	2	I		1	Ἐγὼ		global-review-known-rendering	safe	0.7467	approved	0				global known-rendering assignment; lexical score 0.60
+5:11	3	brothers		3	ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:11	7	preach		7	κηρύσσω		global-review-known-rendering	safe	0.6364	approved	0				global known-rendering assignment; lexical score 0.49
+5:11	8	circumcision		5	περιτομὴν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:11	9	why		8	τί		global-review-known-rendering	safe	0.7683	approved	0				global known-rendering assignment; lexical score 0.62
+5:11	13	persecuted		10	διώκομαι		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62
+5:11	19	the		15	τοῦ		attached-word	safe	0.7	approved	0				Article of 'cross'
+5:11	20	cross		16	σταυροῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:13	3	brothers		6	ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:13	5	called		5	ἐκλήθητε		global-review-known-rendering	safe	0.5674	approved	0				global known-rendering assignment; lexical score 0.42
+5:13	7	freedom		4	ἐλευθερίᾳ		global-review-known-rendering	safe	0.6071	approved	0				global known-rendering assignment; lexical score 0.46
+5:13	8	Only		7	μόνον		global-review-known-rendering	safe	0.6768	approved	0				global known-rendering assignment; lexical score 0.53
+5:13	12	freedom		10	ἐλευθερίαν		global-review-known-rendering	safe	0.6071	approved	0				global known-rendering assignment; lexical score 0.46
+5:13	17	the		13	τῇ		attached-word	safe	0.6935	approved	0				Article of 'flesh'
+5:13	18	flesh		14	σαρκί		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+5:13	20	through		16	διὰ		global-review-known-rendering	safe	0.6083	approved	0				global known-rendering assignment; lexical score 0.46
+5:14	4	law		4	νόμος		global-review-known-rendering	safe	0.7329	approved	0				global known-rendering assignment; lexical score 0.58
+5:14	6	fulfilled		8	πεπλήρωται		global-review-known-rendering	safe	0.6981	approved	0				global known-rendering assignment; lexical score 0.55
+5:14	8	one		6	ἑνὶ		global-review-known-rendering	safe	0.6356	approved	0				global known-rendering assignment; lexical score 0.49
+5:14	9	word		7	λόγῳ		global-review-known-rendering	safe	0.7254	approved	0				global known-rendering assignment; lexical score 0.58
+5:14	15	your		14	σου		global-review-known-rendering	safe	0.7903	approved	0				global known-rendering assignment; lexical score 0.64
+5:14	16	neighbor		13	πλησίον		global-review-known-rendering	safe	0.6941	approved	0				global known-rendering assignment; lexical score 0.54
+5:14	18	yourself		16	σεαυτόν		global-review-known-rendering	safe	0.6364	approved	0				global known-rendering assignment; lexical score 0.49
+5:15	6	devour		6	κατεσθίετε		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
+5:16	3	say		1	Λέγω		global-review-known-rendering	safe	0.734	approved	0				global known-rendering assignment; lexical score 0.58
+5:16	4	walk		4	περιπατεῖτε		global-review-known-rendering	safe	0.7367	approved	0				global known-rendering assignment; lexical score 0.59
+5:16	6	the				expands	supplied-article	safe	0.7963	approved	0				article the original does not write; rests on 'Spirit' → 'Πνεύματι'
+5:16	7	Spirit		3	Πνεύματι		global-review-known-rendering	safe	0.7963	approved	0				global known-rendering assignment; lexical score 0.65
+5:16	10	won’t		8	οὐ		global-review-known-rendering	safe	0.6291	approved	0				global known-rendering assignment; lexical score 0.48
+5:16	12	the				expands	supplied-article	safe	0.65	approved	0				article the original does not write; rests on 'lust' → 'ἐπιθυμίαν'
+5:16	13	lust		6	ἐπιθυμίαν		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
+5:16	15	the				expands	supplied-article	safe	0.7935	approved	0				article the original does not write; rests on 'flesh' → 'σαρκὸς'
+5:16	16	flesh		7	σαρκὸς		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+5:17	2	the				expands	supplied-article	safe	0.7935	approved	0				article the original does not write; rests on 'flesh' → 'σὰρξ'
+5:17	3	flesh		3	σὰρξ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+5:17	6	the		6	τοῦ		attached-word	safe	0.6963	approved	0				Article of 'Spirit'
+5:17	7	Spirit		7	Πνεύματος		global-review-known-rendering	safe	0.7963	approved	0				global known-rendering assignment; lexical score 0.65
+5:17	9	the				expands	supplied-article	safe	0.7963	approved	0				article the original does not write; rests on 'Spirit' → 'Πνεῦμα'
+5:17	10	Spirit		10	Πνεῦμα		global-review-known-rendering	safe	0.7963	approved	0				global known-rendering assignment; lexical score 0.65
+5:17	12	the		12	τῆς		attached-word	safe	0.6935	approved	0				Article of 'flesh'
+5:17	13	flesh		13	σαρκός		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+5:17	15	these		14	ταῦτα		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
+5:17	25	do		24	ποιῆτε		global-review-known-rendering	safe	0.7293	approved	0				global known-rendering assignment; lexical score 0.58
+5:18	5	led		4	ἄγεσθε		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+5:18	7	the				expands	supplied-article	safe	0.7963	approved	0				article the original does not write; rests on 'Spirit' → 'Πνεύματι'
+5:18	8	Spirit		3	Πνεύματι		global-review-known-rendering	safe	0.7963	approved	0				global known-rendering assignment; lexical score 0.65
+5:18	10	are		6	ἐστὲ		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
+5:18	11	not		5	οὐκ		global-review-known-rendering	safe	0.6293	approved	0				global known-rendering assignment; lexical score 0.48
+5:18	12	under		7	ὑπὸ		global-review-known-rendering	safe	0.5971	approved	0				global known-rendering assignment; lexical score 0.45
+5:18	13	the				expands	supplied-article	safe	0.7329	approved	0				article the original does not write; rests on 'law' → 'νόμον'
+5:18	14	law		8	νόμον		global-review-known-rendering	safe	0.7329	approved	0				global known-rendering assignment; lexical score 0.58
+5:19	2	the		4	τὰ		attached-word	safe	0.563	approved	0				Article of 'deeds'
+5:19	3	deeds		5	ἔργα		global-review-known-rendering	safe	0.663	approved	0				global known-rendering assignment; lexical score 0.51
+5:19	5	the		6	τῆς		attached-word	safe	0.6935	approved	0				Article of 'flesh'
+5:19	6	flesh		7	σαρκός		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+5:19	7	are		3	ἐστιν		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
+5:19	10	are		9	ἐστιν		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
+5:19	13	immorality		10	πορνεία		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+5:19	14	uncleanness		11	ἀκαθαρσία		global-review-known-rendering	safe	0.755	approved	0				global known-rendering assignment; lexical score 0.60
+5:20	2	sorcery		2	φαρμακεία		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43
+5:21	1	envy		1	φθόνοι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+5:21	8	these		7	τούτοις		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
+5:21	17	also		4	καὶ		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61
+5:21	24	such		16	τοιαῦτα		global-review-known-rendering	safe	0.7063	approved	0				global known-rendering assignment; lexical score 0.56
+5:21	27	not		20	οὐ		global-review-known-rendering	safe	0.6293	approved	0				global known-rendering assignment; lexical score 0.48
+5:21	28	inherit		21	κληρονομήσουσιν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:21	29	God’s		19	Θεοῦ		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64
+5:21	30	Kingdom		18	βασιλείαν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:22	2	the				expands	supplied-article	safe	0.7227	approved	0				article the original does not write; rests on 'fruit' → 'καρπὸς'
+5:22	3	fruit		3	καρπὸς		global-review-known-rendering	safe	0.7227	approved	0				global known-rendering assignment; lexical score 0.57
+5:22	5	the		4	τοῦ		attached-word	safe	0.6963	approved	0				Article of 'Spirit'
+5:22	6	Spirit		5	Πνεύματός		global-review-known-rendering	safe	0.7963	approved	0				global known-rendering assignment; lexical score 0.65
+5:22	9	joy		8	χαρά		global-review-known-rendering	safe	0.7237	approved	0				global known-rendering assignment; lexical score 0.57
+5:22	10	peace		9	εἰρήνη		global-review-known-rendering	safe	0.7068	approved	0				global known-rendering assignment; lexical score 0.56
+5:22	12	kindness		11	χρηστότης		global-review-known-rendering	safe	0.6071	approved	0				global known-rendering assignment; lexical score 0.46
+5:22	14	faith		13	πίστις		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64
+5:23	1	gentleness		1	πραΰτης		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50
+5:23	5	such		5	τοιούτων		global-review-known-rendering	safe	0.7063	approved	0				global known-rendering assignment; lexical score 0.56
+5:23	9	no		6	οὐκ		global-review-known-rendering	safe	0.6031	approved	0				global known-rendering assignment; lexical score 0.45
+5:23	10	law		8	νόμος		global-review-known-rendering	safe	0.7329	approved	0				global known-rendering assignment; lexical score 0.58
+5:24	5	Christ		4	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+5:24	7	crucified		8	ἐσταύρωσαν		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64
+5:24	8	the		6	τὴν		attached-word	safe	0.6935	approved	0				Article of 'flesh'
+5:24	9	flesh		7	σάρκα		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+5:24	14	lusts		14	ἐπιθυμίαις		global-review-known-rendering	safe	0.7609	approved	0				global known-rendering assignment; lexical score 0.61
+5:25	3	live		2	ζῶμεν		global-review-known-rendering	safe	0.7612	approved	0				global known-rendering assignment; lexical score 0.61
+5:25	5	the				expands	supplied-article	safe	0.7963	approved	0				article the original does not write; rests on 'Spirit' → 'Πνεύματι'
+5:25	6	Spirit		3	Πνεύματι		global-review-known-rendering	safe	0.7963	approved	0				global known-rendering assignment; lexical score 0.65
+5:25	8	also		5	καὶ		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61
+5:25	11	the				expands	supplied-article	safe	0.7963	approved	0				article the original does not write; rests on 'Spirit' → 'Πνεύματι'
+5:25	12	Spirit		4	Πνεύματι		global-review-known-rendering	safe	0.7963	approved	0				global known-rendering assignment; lexical score 0.65
+5:26	3	become		2	γινώμεθα		global-review-known-rendering	safe	0.7833	approved	0				global known-rendering assignment; lexical score 0.63
+6:1	1	Brothers		1	Ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:1	2	even		3	καὶ		global-review-known-rendering	safe	0.717	approved	0				global known-rendering assignment; lexical score 0.57
+6:1	14	spiritual		11	πνευματικοὶ		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63
+6:1	17	such		14	τοιοῦτον		global-review-known-rendering	safe	0.701	approved	0				global known-rendering assignment; lexical score 0.55
+6:1	21	a				expands	supplied-indefinite-article	safe	0.7964	approved	0				indefinite article; rests on 'spirit' → 'πνεύματι'
+6:1	22	spirit		16	πνεύματι		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+6:1	27	yourself		19	σεαυτόν		global-review-known-rendering	safe	0.6364	approved	0				global known-rendering assignment; lexical score 0.49
+6:1	31	also		21	καὶ		global-review-known-rendering	safe	0.7582	approved	0				global known-rendering assignment; lexical score 0.61
+6:1	33	tempted		23	πειρασθῇς		global-review-known-rendering	safe	0.7206	approved	0				global known-rendering assignment; lexical score 0.57
+6:2	6	so		6	οὕτως		global-review-known-rendering	safe	0.6682	approved	0				global known-rendering assignment; lexical score 0.52
+6:2	8	the		8	τὸν		attached-word	safe	0.6338	approved	0				Article of 'law'
+6:2	9	law		9	νόμον		global-review-known-rendering	safe	0.7338	approved	0				global known-rendering assignment; lexical score 0.58
+6:2	11	Christ		11	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:3	5	thinks		3	δοκεῖ		global-review-known-rendering	safe	0.5888	approved	0				global known-rendering assignment; lexical score 0.44
+6:3	9	something		6	τι		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:4	8	work		3	ἔργον		global-review-known-rendering	safe	0.6568	approved	0				global known-rendering assignment; lexical score 0.51
+6:4	13	have		14	ἕξει		global-review-known-rendering	safe	0.7316	approved	0				global known-rendering assignment; lexical score 0.58
+6:4	20	not		16	οὐκ		global-review-known-rendering	safe	0.6291	approved	0				global known-rendering assignment; lexical score 0.48
+6:6	8	the		5	τὸν		attached-word	safe	0.6254	approved	0				Article of 'word'
+6:6	9	word		6	λόγον		global-review-known-rendering	safe	0.7254	approved	0				global known-rendering assignment; lexical score 0.58
+6:6	11	all		10	πᾶσιν		global-review-known-rendering	safe	0.7296	approved	0				global known-rendering assignment; lexical score 0.58
+6:7	3	deceived		2	πλανᾶσθε		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54
+6:7	4	God		3	Θεὸς		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+6:7	6	not		4	οὐ		global-review-known-rendering	safe	0.6291	approved	0				global known-rendering assignment; lexical score 0.48
+6:7	12	sows		9	σπείρῃ		global-review-known-rendering	safe	0.7827	approved	0				global known-rendering assignment; lexical score 0.63
+6:7	16	also		12	καὶ		global-review-known-rendering	safe	0.7582	approved	0				global known-rendering assignment; lexical score 0.61
+6:7	17	reap		13	θερίσει		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:8	4	sows		3	σπείρων		global-review-known-rendering	safe	0.7827	approved	0				global known-rendering assignment; lexical score 0.63
+6:8	8	flesh		6	σάρκα		global-review-known-rendering	safe	0.7936	approved	0				global known-rendering assignment; lexical score 0.64
+6:8	11	the		9	τῆς		attached-word	safe	0.6936	approved	0				Article of 'flesh'
+6:8	12	flesh		10	σαρκὸς		global-review-known-rendering	safe	0.7936	approved	0				global known-rendering assignment; lexical score 0.64
+6:8	13	reap		11	θερίσει		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:8	18	sows		15	σπείρων		global-review-known-rendering	safe	0.7827	approved	0				global known-rendering assignment; lexical score 0.63
+6:8	20	the		17	τὸ		attached-word	safe	0.6964	approved	0				Article of 'Spirit'
+6:8	21	Spirit		18	Πνεῦμα		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+6:8	24	the		20	τοῦ		attached-word	safe	0.6964	approved	0				Article of 'Spirit'
+6:8	25	Spirit		21	Πνεύματος		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+6:8	26	reap		22	θερίσει		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:8	27	eternal		24	αἰώνιον		global-review-known-rendering	safe	0.7521	approved	0				global known-rendering assignment; lexical score 0.60
+6:8	28	life		23	ζωὴν		global-review-known-rendering	safe	0.6768	approved	0				global known-rendering assignment; lexical score 0.53
+6:9	11	reap		10	θερίσομεν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:10	5	have		5	ἔχωμεν		global-review-known-rendering	safe	0.7316	approved	0				global known-rendering assignment; lexical score 0.58
+6:10	13	all		10	πάντας		global-review-known-rendering	safe	0.7296	approved	0				global known-rendering assignment; lexical score 0.58
+6:10	25	the		16	τῆς		attached-word	safe	0.6888	approved	0				Article of 'faith'
+6:10	26	faith		17	πίστεως		global-review-known-rendering	safe	0.7888	approved	0				global known-rendering assignment; lexical score 0.64
+6:11	1	See		1	Ἴδετε		global-review-known-rendering	safe	0.6289	approved	0				global known-rendering assignment; lexical score 0.48
+6:11	7	write		5	ἔγραψα		global-review-known-rendering	safe	0.7755	approved	0				global known-rendering assignment; lexical score 0.63
+6:11	13	hand		8	χειρί		global-review-known-rendering	safe	0.5891	approved	0				global known-rendering assignment; lexical score 0.44
+6:12	11	the				expands	supplied-article	safe	0.7936	approved	0				article the original does not write; rests on 'flesh' → 'σαρκί'
+6:12	12	flesh		5	σαρκί		global-review-known-rendering	safe	0.7936	approved	0				global known-rendering assignment; lexical score 0.64
+6:12	17	circumcised		9	περιτέμνεσθαι		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
+6:12	24	persecuted		17	διώκωνται		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62
+6:12	26	the		12	τῷ		attached-word	safe	0.7	approved	0				Article of 'cross'
+6:12	27	cross		13	σταυρῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:12	29	Christ		15	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:13	9	the				expands	supplied-article	safe	0.7338	approved	0				article the original does not write; rests on 'law' → 'νόμον'
+6:13	10	law		6	νόμον		global-review-known-rendering	safe	0.7338	approved	0				global known-rendering assignment; lexical score 0.58
+6:13	18	circumcised		11	περιτέμνεσθαι		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
+6:13	23	boast		17	καυχήσωνται		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+6:13	26	flesh		16	σαρκὶ		global-review-known-rendering	safe	0.7936	approved	0				global known-rendering assignment; lexical score 0.64
+6:14	6	me		1	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+6:14	8	boast		5	καυχᾶσθαι		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+6:14	11	the		9	τῷ		attached-word	safe	0.7	approved	0				Article of 'cross'
+6:14	12	cross		10	σταυρῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:14	14	our		13	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+6:14	15	Lord		12	Κυρίου		global-review-known-rendering	safe	0.7953	approved	0				global known-rendering assignment; lexical score 0.65
+6:14	16	Jesus		14	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+6:14	17	Christ		15	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:14	18	through		16	δι		global-review-known-rendering	safe	0.6067	approved	0				global known-rendering assignment; lexical score 0.46
+6:14	20	the				expands	supplied-article	safe	0.7088	approved	0				article the original does not write; rests on 'world' → 'κόσμος'
+6:14	21	world		19	κόσμος		global-review-known-rendering	safe	0.7088	approved	0				global known-rendering assignment; lexical score 0.56
+6:14	24	crucified		20	ἐσταύρωται		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64
+6:14	26	me		18	ἐμοὶ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+6:14	30	the				expands	supplied-article	safe	0.7088	approved	0				article the original does not write; rests on 'world' → 'κόσμῳ'
+6:14	31	world		22	κόσμῳ		global-review-known-rendering	safe	0.7088	approved	0				global known-rendering assignment; lexical score 0.56
+6:15	7	circumcision		3	περιτομή		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:15	8	anything		4	τί		global-review-known-rendering	safe	0.63	approved	0				global known-rendering assignment; lexical score 0.48
+6:15	10	uncircumcision		7	ἀκροβυστία		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:15	12	a				expands	supplied-indefinite-article	safe	0.6579	approved	0				indefinite article; rests on 'new' → 'καινὴ'
+6:15	13	new		9	καινὴ		global-review-known-rendering	safe	0.6579	approved	0				global known-rendering assignment; lexical score 0.51
+6:15	14	creation		10	κτίσις		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:16	6	this		5	τούτῳ		global-review-known-rendering	safe	0.7776	approved	0				global known-rendering assignment; lexical score 0.63
+6:16	8	peace		7	εἰρήνη		global-review-known-rendering	safe	0.7068	approved	0				global known-rendering assignment; lexical score 0.56
+6:16	13	them		9	αὐτοὺς		global-review-known-rendering	safe	0.7388	approved	0				global known-rendering assignment; lexical score 0.59
+6:16	16	God’s		17	Θεοῦ		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64
+6:16	17	Israel		15	Ἰσραὴλ		global-review-known-rendering	safe	0.7688	approved	0				global known-rendering assignment; lexical score 0.62
+6:17	8	me		4	μοι		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+6:17	12	I		7	ἐγὼ		global-review-known-rendering	safe	0.7475	approved	0				global known-rendering assignment; lexical score 0.60
+6:17	19	Jesus		12	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+6:17	22	my		16	μου		global-review-known-rendering	safe	0.7667	approved	0				global known-rendering assignment; lexical score 0.62
+6:17	23	body		15	σώματί		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64
+6:18	1	The		1	Ἡ		attached-word	safe	0.6967	approved	0				Article of 'grace'
+6:18	2	grace		2	χάρις		global-review-known-rendering	safe	0.7967	approved	0				global known-rendering assignment; lexical score 0.65
+6:18	4	our		5	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+6:18	5	Lord		4	Κυρίου		global-review-known-rendering	safe	0.7953	approved	0				global known-rendering assignment; lexical score 0.65
+6:18	6	Jesus		6	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65
+6:18	7	Christ		7	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:18	10	your		11	ὑμῶν		global-review-known-rendering	safe	0.7915	approved	0				global known-rendering assignment; lexical score 0.64
+6:18	11	spirit		10	πνεύματος		global-review-known-rendering	safe	0.7964	approved	0				global known-rendering assignment; lexical score 0.65
+6:18	12	brothers		12	ἀδελφοί		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+6:18	13	Amen		13	ἀμήν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
