@@ -1199,7 +1199,21 @@ def publish(args):
 
 
 DECIDED_BY = 'the project owner, decided {date}'
+# The owner has an agent decide some facts for him in the console, and its note begins with this. Its
+# decision is its reading of the verse, not the owner's judgement, and is credited as that.
+AGENT_NOTE = 'agent:'
+AGENT = "an agent, on the project owner's instruction"
+AGENT_DECIDED_BY = "an agent reading {reference} on the project owner's instruction, decided {date}"
 REVIEW = os.path.join('Resources', 'Essenthos', 'review')
+
+
+def by_the_agent(body):
+    return (body.get('note') or '').lstrip().startswith(AGENT_NOTE)
+
+
+def decided_here(source):
+    """Whether a relationship row was written from a decision this command applied, the owner's or the agent's."""
+    return DECIDED_BY.split(',')[0] in source or AGENT.split(', ')[1] in source
 
 
 def decision_documents(where):
@@ -1225,16 +1239,22 @@ def decide(args):
 
     A fact confirmed becomes a clause of this corpus that the owner decided: written on the end whose
     verse names it, with no confidence and a `decidedBy`, so the loader stores it as a person's
-    judgement and not as a reading. A fact to re-ask is printed as BibleData row ids for
+    judgement and not as a reading. A fact only the agent he set to it decided is credited to that
+    agent and the verse it read, never to him. A fact to re-ask is printed as BibleData row ids for
     `extract --rows`. A fact removed stays BibleData's and is listed in a review file for the cut-over,
     which is where BibleData's rows leave the page. Only the page's categories asked for are applied,
     so a decision taken on the page is never applied before somebody asks for it.
     """
+    later = sorted(n for n in os.listdir(args.to) if n.endswith('.jsonl') and n > args.prefix + '-')
+    if any(not n.startswith(args.prefix + '-') for n in later):
+        raise SystemExit(f'{later[-1]} sorts after the prefix "{args.prefix}", so the loader would read it last '
+                         'and the decided clauses of every record it holds would be lost. Choose a prefix '
+                         'that sorts later, and delete the files the earlier prefix wrote.')
     corpus = Corpus(args.cache)
     standing = standing_records(args.to, args.prefix)
     # The rows an earlier run of this command put in the corpus are left out of the fold: their clauses
     # live only in the files this command rewrites, so a fact they settled must come back to be written again.
-    rows = [row for row in relationships() if DECIDED_BY.split(',')[0] not in row['source']]
+    rows = [row for row in relationships() if not decided_here(row['source'])]
     _, _, alone = fold(rows, vocabulary())
     corrected = dict(item.split('=', 1) for item in args.reference or [])
     relabelled = dict(item.split('=', 1) for item in args.relation or [])
@@ -1247,7 +1267,7 @@ def decide(args):
         if body.get('subset') in args.subsets and body.get('decision'):
             decisions.append(({int(row) for row in str(body['rows']).split('|')}, body))
 
-    by_entity, report, reask, removed = {}, {}, [], []
+    by_entity, report, reask, removed, taken_back = {}, {}, [], [], []
 
     def count(what):
         report[what] = report.get(what, 0) + 1
@@ -1283,10 +1303,18 @@ def decide(args):
             verdict = 'confirm'
         if verdict == 'reask' and any(str(i) in unsure for i in ids):
             verdict = 'confirm'
+        # A removal the owner has since turned into a confirmation or a re-ask leaves the cut-over list;
+        # one confirmed only because its note named the right word stays, since the dataset's word goes.
+        if verdict != 'remove' and not any(str(i) in relabelled for i in ids):
+            taken_back.append(sorted(ids))
+        # A fact the owner decided himself is his, whatever an agent said about it beside him.
+        agent = all(by_the_agent(body) for body in mine)
+        decided_at = max(b['decidedAt'] for b in mine)
         if verdict == 'remove':
             removed.append({'rows': sorted(ids), 'a': fact['a'], 'relation': fact['relation'] or fact['type'],
-                            'b': fact['b'], 'note': note, 'decidedAt': max(b['decidedAt'] for b in mine)})
-            count('removed: stays BibleData\'s until the cut-over')
+                            'b': fact['b'], 'note': note, 'decidedAt': decided_at,
+                            'decidedBy': AGENT if agent else DECIDED_BY.split(',')[0]})
+            count('removed: stays BibleData\'s until the cut-over' + (', by the agent' if agent else ''))
             continue
         if verdict == 'reask':
             reask.extend(sorted(ids))
@@ -1323,8 +1351,8 @@ def decide(args):
             'claims': list(before.get('claims', [])),
             'names': before.get('names') or {},
             'unresolved': before.get('unresolved') or [],
-            'model': before.get('model') or 'the project owner',
-            'askedAt': before.get('askedAt') or max(b['decidedAt'] for b in mine)[:10],
+            'model': before.get('model') or (AGENT if agent else DECIDED_BY.split(',')[0]),
+            'askedAt': before.get('askedAt') or decided_at[:10],
         })
         if (relation, target) in {(c['relation'], c['target']) for c in record['claims']}:
             count('confirmed, already in the record')
@@ -1333,9 +1361,10 @@ def decide(args):
         record['claims'].append({
             'relation': relation, 'target': target, 'reference': reference, 'confidence': sure,
             'reason': note or 'the verse states it, decided on the review page',
-            'decidedBy': DECIDED_BY.format(date=max(b['decidedAt'] for b in mine)[:10]),
+            'decidedBy': (AGENT_DECIDED_BY.format(reference=reference, date=decided_at[:10]) if agent
+                          else DECIDED_BY.format(date=decided_at[:10])),
         })
-        count('confirmed and written')
+        count('confirmed and written' + (', by the agent' if agent else ''))
 
     for name in os.listdir(args.to):
         if name.startswith(args.prefix + '-') and name.endswith('.jsonl'):
@@ -1352,7 +1381,11 @@ def decide(args):
         kept = []
         if os.path.exists(path):
             with open(path, encoding='utf-8') as handle:
-                kept = [r for r in json.load(handle) if r['rows'] not in [x['rows'] for x in removed]]
+                kept = [r for r in json.load(handle)
+                        if r['rows'] not in [x['rows'] for x in removed] and r['rows'] not in taken_back]
+        # An entry from before the agent decided anything is the owner's.
+        for r in kept:
+            r.setdefault('decidedBy', DECIDED_BY.split(',')[0])
         with open(path, 'w', encoding='utf-8') as handle:
             json.dump(kept + removed, handle, ensure_ascii=False, indent=1)
 
@@ -1403,7 +1436,8 @@ def main():
     decider.add_argument('--unsure', nargs='+',
                          help='ROW_ID=confidence, where the owner accepts the fact but says the verse does not settle it')
     decider.add_argument('--to', default=os.path.join('Resources', 'Essenthos', 'descriptors'))
-    decider.add_argument('--prefix', default='words')
+    decider.add_argument('--prefix', default='zz-words',
+                         help="the decided records' files, which have to sort after every other file")
     decider.set_defaults(run=decide)
 
     for name, run, what in (('ask', ask, 'the first reading'), ('check', check, 'the second reading')):

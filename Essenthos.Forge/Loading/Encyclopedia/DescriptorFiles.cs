@@ -16,10 +16,11 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// to store an inference that looks like testimony — unless a person decided the clause.
 /// </param>
 /// <param name="DecidedBy">
-/// Who decided this clause against the verse, and when — <c>the project owner, decided 2026-09-11</c>.
-/// Present only where a person and not the pass settled it; the clause is then that person's
-/// judgement and says so in its credit, and carries a confidence only where that person said the
-/// verse does not settle it.
+/// Who decided this clause against the verse, and when — <c>the project owner, decided 2026-09-11</c>,
+/// or <c>an agent reading EZR 2:2 on the project owner's instruction, decided 2026-09-26</c> where he
+/// set an agent to decide it. Present only where a decision and not the pass settled it; the clause
+/// is then that decision and says whose in its credit, and carries a confidence only where the
+/// decider said the verse does not settle it.
 /// </param>
 internal sealed record DescriptorClaimRecord(
     string Relation,

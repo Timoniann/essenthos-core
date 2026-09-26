@@ -251,9 +251,10 @@ internal sealed class EntityDescriptorLoader(
                     targetId = namesake;
                 }
 
-                // A person's decision is not a model's reading: it is stored as manual, credited to
-                // whoever decided it, and outranks a dataset's row. It carries a confidence only
-                // where the person said the verse does not settle it.
+                // A decision is not a pass's reading: it is stored as manual, credited to whoever
+                // decided it -- the owner, or an agent he set to it, named as such -- and outranks a
+                // dataset's row. It carries a confidence only where the decider said the verse does
+                // not settle it.
                 var decided = !string.IsNullOrWhiteSpace(claim.DecidedBy);
                 double? confidence = claim.Confidence;
                 if (!decided && (confidence is null or < 0 or > 1))
