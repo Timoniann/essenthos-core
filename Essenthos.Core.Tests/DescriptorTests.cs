@@ -226,6 +226,22 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
+    /// The owner sets an agent to decide some facts for him. Its decision is its reading of the verse,
+    /// and the credit says so: an agent on his instruction, never the owner himself.
+    /// </summary>
+    [Fact]
+    public async Task AClauseAnAgentDecidedIsCreditedToTheAgentAndNotToTheOwner()
+    {
+        (await Load("decided-by-agent")).Clauses.Should().Be(1);
+
+        var clause = await _db.EntityDescriptors.SingleAsync(d => d.Entity!.Slug == "hobab-1");
+        clause.Method.Should().Be(LinkMethod.Manual);
+        clause.Source.Should().Be(EntityDescriptorLoader.SourcePrefix +
+                                  " an agent reading NUM 10:29 on the project owner's instruction, decided 2026-09-26");
+        clause.Source.Should().NotContain("the project owner, decided");
+    }
+
+    /// <summary>
     /// The owner can accept a fact while saying the verse does not settle it. That is still their
     /// judgement, so it stays manual, but the doubt is kept as the confidence they gave.
     /// </summary>

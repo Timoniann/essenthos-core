@@ -1,49 +1,6 @@
 [
  {
   "rows": [
-   70935,
-   70936
-  ],
-  "a": "elishah-2",
-  "relation": "son-of",
-  "b": "japheth",
-  "note": "",
-  "decidedAt": "2026-09-12T19:27:44.307Z"
- },
- {
-  "rows": [
-   71103,
-   71104
-  ],
-  "a": "abram",
-  "relation": "inherited-by",
-  "b": "eliezer",
-  "note": "",
-  "decidedAt": "2026-09-13T09:20:04.165Z"
- },
- {
-  "rows": [
-   71135
-  ],
-  "a": "abimelech",
-  "relation": "king-of",
-  "b": "phicol",
-  "note": "",
-  "decidedAt": "2026-09-12T20:13:38.568Z"
- },
- {
-  "rows": [
-   71193,
-   71194
-  ],
-  "a": "zohar",
-  "relation": "descendant-of",
-  "b": "heth",
-  "note": "",
-  "decidedAt": "2026-09-12T20:17:51.148Z"
- },
- {
-  "rows": [
    71539,
    71540
   ],
@@ -51,83 +8,8 @@
   "relation": "son-of",
   "b": "basemath",
   "note": "The mapping is wrong here. It should be Adah, not Eliphaz",
-  "decidedAt": "2026-09-12T20:27:53.512Z"
- },
- {
-  "rows": [
-   71633,
-   71634
-  ],
-  "a": "jucam",
-  "relation": "son-of",
-  "b": "ezer",
-  "note": "",
-  "decidedAt": "2026-09-12T20:29:22.771Z"
- },
- {
-  "rows": [
-   71643,
-   71644
-  ],
-  "a": "husham",
-  "relation": "descendant-of",
-  "b": "esau",
-  "note": "",
-  "decidedAt": "2026-09-12T20:31:39.020Z"
- },
- {
-  "rows": [
-   71647,
-   71648
-  ],
-  "a": "samlah",
-  "relation": "descendant-of",
-  "b": "esau",
-  "note": "",
-  "decidedAt": "2026-09-12T20:31:57.248Z"
- },
- {
-  "rows": [
-   71649,
-   71650
-  ],
-  "a": "shaul",
-  "relation": "descendant-of",
-  "b": "esau",
-  "note": "",
-  "decidedAt": "2026-09-12T20:32:40.474Z"
- },
- {
-  "rows": [
-   71691,
-   71692
-  ],
-  "a": "tamar",
-  "relation": "concubine-of",
-  "b": "judah",
-  "note": "Не наложниця Тут це не зовсім concubinator Тут це не зовсім concubine-of",
-  "decidedAt": "2026-09-13T09:20:46.560Z"
- },
- {
-  "rows": [
-   72053,
-   72054
-  ],
-  "a": "sihon",
-  "relation": "descendant-of",
-  "b": "amor",
-  "note": "",
-  "decidedAt": "2026-09-12T20:48:17.574Z"
- },
- {
-  "rows": [
-   72147
-  ],
-  "a": "yhvh",
-  "relation": "king-of",
-  "b": "thecaptainofthehostofthelord",
-  "note": "",
-  "decidedAt": "2026-09-13T09:25:51.070Z"
+  "decidedAt": "2026-09-12T20:27:53.512Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -138,312 +20,8 @@
   "relation": "grandson-of",
   "b": "ram",
   "note": "Тут Aram породив Amminadab",
-  "decidedAt": "2026-09-13T09:47:16.433Z"
- },
- {
-  "rows": [
-   72323,
-   72324
-  ],
-  "a": "saul",
-  "relation": "nephew-of",
-  "b": "abner",
-  "note": "1 Сам. 14:51 Тут Саул племінник Ніра, а не Авеніра. Але є проблематика з іншими текстами, тому нам треба описати це в описі. Треба такий опис додати до Саула і мабуть інших сутностей які тут зустрічаються. Типу ми беремо основний варіант загальний, з книги Самуїла, але є інший варіант:\nThere is a genealogical difficulty in the biblical texts concerning the relationship between **Saul**, his father **Kish**, **Ner**, and **Abner**.\n\nThe main and probably strongest reconstruction is:\n\n**Abiel → Kish → Saul**\n**Abiel → Ner → Abner**\n\nIn this reconstruction, **Kish and Ner were brothers**, **Ner was Saul’s uncle**, and Ner’s son **Abner was Saul’s first cousin**.\n\nThis is the most natural reading of **1 Samuel 14:50–51**. In verse 50, Abner is called “the son of Ner, Saul’s uncle,” which most naturally identifies **Ner** as Saul’s uncle. The following verse connects Kish, the father of Saul, and Ner, the father of Abner, with **Abiel**. This also fits **1 Samuel 9:1**, where Kish is explicitly called the son of Abiel. Josephus understood the relationship in the same way: he states that **Ner and Kish were brothers**, making Abner the son of Saul’s uncle and therefore Saul’s cousin.\n\nHowever, **1 Chronicles 8:33** and **1 Chronicles 9:39** preserve a different genealogy:\n\n**Ner → Kish → Saul**\n\nTaken literally, these passages make **Ner the father of Kish and therefore the grandfather of Saul**. If this Ner is the same Ner who was the father of Abner, then **Abner would be Kish’s brother and Saul’s uncle**, rather than Saul’s cousin.\n\nThis alternative cannot simply be dismissed as a late scribal mistake, because the same genealogy appears twice in Chronicles and is also reflected in the ancient Greek tradition. Various attempts have been made to harmonize the passages. Some have proposed omitted generations, which are not unusual in biblical genealogies; others suggest that there may have been more than one person named **Kish** or **Ner**. Some older interpretations even identify Ner and Abiel in some way or assume textual corruption. None of these solutions, however, can be demonstrated with certainty.\n\nFor this reason, the preferred reconstruction is the one suggested by **1 Samuel** and supported by **Josephus**: **Ner was the brother of Kish and the uncle of Saul, while Abner was Saul’s first cousin**. At the same time, it should be noted that **Chronicles preserves an alternative genealogical tradition**, which, if read literally, would make Ner Saul’s grandfather and Abner potentially Saul’s uncle. The exact origin of this discrepancy cannot be established with certainty.",
-  "decidedAt": "2026-09-13T11:53:46.586Z"
- },
- {
-  "rows": [
-   72327,
-   72328
-  ],
-  "a": "agag-2",
-  "relation": "descendant-of",
-  "b": "amalek",
-  "note": "Ні, ставимо лише шо він їх цар, але не виводимо шо він нащадок",
-  "decidedAt": "2026-09-13T11:57:28.803Z"
- },
- {
-  "rows": [
-   72509,
-   72510
-  ],
-  "a": "amasa",
-  "relation": "half-brother-of",
-  "b": "joab",
-  "note": "",
-  "decidedAt": "2026-09-13T13:09:29.926Z"
- },
- {
-  "rows": [
-   72519,
-   72520
-  ],
-  "a": "ira",
-  "relation": "descendant-of",
-  "b": "levi",
-  "note": "",
-  "decidedAt": "2026-09-13T13:21:19.431Z"
- },
- {
-  "rows": [
-   72629,
-   72630
-  ],
-  "a": "nebat",
-  "relation": "descendant-of",
-  "b": "ephraim",
-  "note": "inference, не explicit genealogy\nJeroboam → descendant/member of Ephraim: explicit\nNebat → descendant of Ephraim: very probable, but inferred through Jeroboam; not explicitly stated",
-  "decidedAt": "2026-09-13T13:55:01.280Z"
- },
- {
-  "rows": [
-   72703
-  ],
-  "a": "naaman-2",
-  "relation": "commander-of",
-  "b": "benhadad",
-  "note": "probable / traditional reconstruction",
-  "decidedAt": "2026-09-13T13:57:46.367Z"
- },
- {
-  "rows": [
-   72704
-  ],
-  "a": "benhadad",
-  "relation": "king-of",
-  "b": "naaman-2",
-  "note": "",
-  "decidedAt": "2026-09-13T13:57:53.506Z"
- },
- {
-  "rows": [
-   72717
-  ],
-  "a": "jehu-2",
-  "relation": "king-of",
-  "b": "bidkar",
-  "note": "",
-  "decidedAt": "2026-09-13T13:58:06.705Z"
- },
- {
-  "rows": [
-   72731,
-   72732
-  ],
-  "a": "jehoiada-2",
-  "relation": "descendant-of",
-  "b": "levi",
-  "note": "Не каже точно. А то шо священник тут не варто брати до уваги, бо це не 100% явно",
-  "decidedAt": "2026-09-13T14:24:33.477Z"
- },
- {
-  "rows": [
-   72831,
-   72832
-  ],
-  "a": "hilkiah-2",
-  "relation": "descendant-of",
-  "b": "aaron",
-  "note": "Те шо він первосвященник доказує його родство від Аарона, але тут про це явно не пише, тому ми можемо лише написати шо ми так думаєш і все сходиться до цього, а не стверджувати на 100%",
-  "decidedAt": "2026-09-13T14:25:40.893Z"
- },
- {
-  "rows": [
-   72865,
-   72866
-  ],
-  "a": "seraiah-2",
-  "relation": "descendant-of",
-  "b": "aaron",
-  "note": "Так як первосвященники були від Аарона, то це так, але тут про це прямо не пише, тому не пишемо і ми",
-  "decidedAt": "2026-09-13T14:26:38.332Z"
- },
- {
-  "rows": [
-   72867,
-   72868
-  ],
-  "a": "zephaniah",
-  "relation": "descendant-of",
-  "b": "aaron",
-  "note": "Так як первосвященники були від Аарона, то це так, але тут про це прямо не пише, тому не пишемо і ми",
-  "decidedAt": "2026-09-13T14:26:44.109Z"
- },
- {
-  "rows": [
-   72921,
-   72922
-  ],
-  "a": "abijah-3",
-  "relation": "daughter-of",
-  "b": "machir",
-  "note": "МИ тут не певні, тому можна це в описі написати, бо ми не можемо стверджувати",
-  "decidedAt": "2026-09-13T15:18:43.518Z"
- },
- {
-  "rows": [
-   73023,
-   73024
-  ],
-  "a": "mareshah",
-  "relation": "son-of",
-  "b": "ziph",
-  "note": "Ні, Марешаг це інший син Калеба",
-  "decidedAt": "2026-09-13T15:24:20.599Z"
- },
- {
-  "rows": [
-   73029,
-   73030
-  ],
-  "a": "tappuah",
-  "relation": "son-of",
-  "b": "korah-4",
-  "note": "Ні, він син Хеврона, а не Корея",
-  "decidedAt": "2026-09-13T15:25:45.258Z"
- },
- {
-  "rows": [
-   73031,
-   73032
-  ],
-  "a": "rekem-2",
-  "relation": "son-of",
-  "b": "korah-4",
-  "note": "Ні, він син Хеврона  не Корея",
-  "decidedAt": "2026-09-13T15:26:03.110Z"
- },
- {
-  "rows": [
-   73033,
-   73034
-  ],
-  "a": "shema",
-  "relation": "son-of",
-  "b": "korah-4",
-  "note": "Ні, він син Хеврона  не Корея",
-  "decidedAt": "2026-09-13T15:26:08.743Z"
- },
- {
-  "rows": [
-   73099,
-   73100
-  ],
-  "a": "shobal-2",
-  "relation": "son-of",
-  "b": "hur",
-  "note": "Ні, він син Халева",
-  "decidedAt": "2026-09-13T15:27:58.456Z"
- },
- {
-  "rows": [
-   73101,
-   73102
-  ],
-  "a": "salma",
-  "relation": "son-of",
-  "b": "hur",
-  "note": "Ні, він син Халева",
-  "decidedAt": "2026-09-13T15:28:15.821Z"
- },
- {
-  "rows": [
-   73103,
-   73104
-  ],
-  "a": "hareph",
-  "relation": "son-of",
-  "b": "hur",
-  "note": "Ні, він син Халева",
-  "decidedAt": "2026-09-13T15:28:37.686Z"
- },
- {
-  "rows": [
-   73145,
-   73146
-  ],
-  "a": "hashubah",
-  "relation": "son-of",
-  "b": "meshullam-2",
-  "note": "Ні, він син Зоровавеля, а не Мешуллама",
-  "decidedAt": "2026-09-13T15:30:16.134Z"
- },
- {
-  "rows": [
-   73147,
-   73148
-  ],
-  "a": "ohel",
-  "relation": "son-of",
-  "b": "meshullam-2",
-  "note": "Ні, він син Зоровавеля, а не Мешуллама",
-  "decidedAt": "2026-09-13T15:30:24.379Z"
- },
- {
-  "rows": [
-   73149,
-   73150
-  ],
-  "a": "berechiah",
-  "relation": "son-of",
-  "b": "meshullam-2",
-  "note": "Ні, він син Зоровавеля, а не Мешуллама",
-  "decidedAt": "2026-09-13T15:30:26.424Z"
- },
- {
-  "rows": [
-   73151,
-   73152
-  ],
-  "a": "hasadiah",
-  "relation": "son-of",
-  "b": "meshullam-2",
-  "note": "Ні, він син Зоровавеля, а не Мешуллама",
-  "decidedAt": "2026-09-13T15:30:30.860Z"
- },
- {
-  "rows": [
-   73153,
-   73154
-  ],
-  "a": "jushabhesed",
-  "relation": "son-of",
-  "b": "meshullam-2",
-  "note": "Ні, він син Зоровавеля, а не Мешуллама",
-  "decidedAt": "2026-09-13T15:30:35.554Z"
- },
- {
-  "rows": [
-   73259,
-   73260
-  ],
-  "a": "harum",
-  "relation": "son-of",
-  "b": "koz",
-  "note": "",
-  "decidedAt": "2026-09-13T21:46:03.400Z"
- },
- {
-  "rows": [
-   73263,
-   73264
-  ],
-  "a": "jabez",
-  "relation": "descendant-of",
-  "b": "judah",
-  "note": "Це не випливає точно. Потім розгляну детальніше, якшо нагадаєш",
-  "decidedAt": "2026-09-13T21:51:55.828Z"
- },
- {
-  "rows": [
-   73343,
-   73344
-  ],
-  "a": "keilah",
-  "relation": "grandson-of",
-  "b": "hodiah",
-  "note": "",
-  "decidedAt": "2026-09-13T22:07:14.407Z"
+  "decidedAt": "2026-09-13T09:47:16.433Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -454,7 +32,1395 @@
   "relation": "daughter-of",
   "b": "jairus",
   "note": "Тут проблема в тому шо Таліфа це може значити не ім'я, а просто \"дівчина\"",
-  "decidedAt": "2026-09-11T16:24:38.120Z"
+  "decidedAt": "2026-09-11T16:24:38.120Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   70935,
+   70936
+  ],
+  "a": "elishah-2",
+  "relation": "son-of",
+  "b": "japheth",
+  "note": "",
+  "decidedAt": "2026-09-12T19:27:44.307Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   71103,
+   71104
+  ],
+  "a": "abram",
+  "relation": "inherited-by",
+  "b": "eliezer",
+  "note": "",
+  "decidedAt": "2026-09-13T09:20:04.165Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   71135
+  ],
+  "a": "abimelech",
+  "relation": "king-of",
+  "b": "phicol",
+  "note": "",
+  "decidedAt": "2026-09-12T20:13:38.568Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   71193,
+   71194
+  ],
+  "a": "zohar",
+  "relation": "descendant-of",
+  "b": "heth",
+  "note": "",
+  "decidedAt": "2026-09-12T20:17:51.148Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   71633,
+   71634
+  ],
+  "a": "jucam",
+  "relation": "son-of",
+  "b": "ezer",
+  "note": "",
+  "decidedAt": "2026-09-12T20:29:22.771Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   71643,
+   71644
+  ],
+  "a": "husham",
+  "relation": "descendant-of",
+  "b": "esau",
+  "note": "",
+  "decidedAt": "2026-09-12T20:31:39.020Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   71647,
+   71648
+  ],
+  "a": "samlah",
+  "relation": "descendant-of",
+  "b": "esau",
+  "note": "",
+  "decidedAt": "2026-09-12T20:31:57.248Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   71649,
+   71650
+  ],
+  "a": "shaul",
+  "relation": "descendant-of",
+  "b": "esau",
+  "note": "",
+  "decidedAt": "2026-09-12T20:32:40.474Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   71691,
+   71692
+  ],
+  "a": "tamar",
+  "relation": "concubine-of",
+  "b": "judah",
+  "note": "Не наложниця Тут це не зовсім concubinator Тут це не зовсім concubine-of",
+  "decidedAt": "2026-09-13T09:20:46.560Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72053,
+   72054
+  ],
+  "a": "sihon",
+  "relation": "descendant-of",
+  "b": "amor",
+  "note": "",
+  "decidedAt": "2026-09-12T20:48:17.574Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72147
+  ],
+  "a": "yhvh",
+  "relation": "king-of",
+  "b": "thecaptainofthehostofthelord",
+  "note": "",
+  "decidedAt": "2026-09-13T09:25:51.070Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72323,
+   72324
+  ],
+  "a": "saul",
+  "relation": "nephew-of",
+  "b": "abner",
+  "note": "1 Сам. 14:51 Тут Саул племінник Ніра, а не Авеніра. Але є проблематика з іншими текстами, тому нам треба описати це в описі. Треба такий опис додати до Саула і мабуть інших сутностей які тут зустрічаються. Типу ми беремо основний варіант загальний, з книги Самуїла, але є інший варіант:\nThere is a genealogical difficulty in the biblical texts concerning the relationship between **Saul**, his father **Kish**, **Ner**, and **Abner**.\n\nThe main and probably strongest reconstruction is:\n\n**Abiel → Kish → Saul**\n**Abiel → Ner → Abner**\n\nIn this reconstruction, **Kish and Ner were brothers**, **Ner was Saul’s uncle**, and Ner’s son **Abner was Saul’s first cousin**.\n\nThis is the most natural reading of **1 Samuel 14:50–51**. In verse 50, Abner is called “the son of Ner, Saul’s uncle,” which most naturally identifies **Ner** as Saul’s uncle. The following verse connects Kish, the father of Saul, and Ner, the father of Abner, with **Abiel**. This also fits **1 Samuel 9:1**, where Kish is explicitly called the son of Abiel. Josephus understood the relationship in the same way: he states that **Ner and Kish were brothers**, making Abner the son of Saul’s uncle and therefore Saul’s cousin.\n\nHowever, **1 Chronicles 8:33** and **1 Chronicles 9:39** preserve a different genealogy:\n\n**Ner → Kish → Saul**\n\nTaken literally, these passages make **Ner the father of Kish and therefore the grandfather of Saul**. If this Ner is the same Ner who was the father of Abner, then **Abner would be Kish’s brother and Saul’s uncle**, rather than Saul’s cousin.\n\nThis alternative cannot simply be dismissed as a late scribal mistake, because the same genealogy appears twice in Chronicles and is also reflected in the ancient Greek tradition. Various attempts have been made to harmonize the passages. Some have proposed omitted generations, which are not unusual in biblical genealogies; others suggest that there may have been more than one person named **Kish** or **Ner**. Some older interpretations even identify Ner and Abiel in some way or assume textual corruption. None of these solutions, however, can be demonstrated with certainty.\n\nFor this reason, the preferred reconstruction is the one suggested by **1 Samuel** and supported by **Josephus**: **Ner was the brother of Kish and the uncle of Saul, while Abner was Saul’s first cousin**. At the same time, it should be noted that **Chronicles preserves an alternative genealogical tradition**, which, if read literally, would make Ner Saul’s grandfather and Abner potentially Saul’s uncle. The exact origin of this discrepancy cannot be established with certainty.",
+  "decidedAt": "2026-09-13T11:53:46.586Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72327,
+   72328
+  ],
+  "a": "agag-2",
+  "relation": "descendant-of",
+  "b": "amalek",
+  "note": "Ні, ставимо лише шо він їх цар, але не виводимо шо він нащадок",
+  "decidedAt": "2026-09-13T11:57:28.803Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72509,
+   72510
+  ],
+  "a": "amasa",
+  "relation": "half-brother-of",
+  "b": "joab",
+  "note": "",
+  "decidedAt": "2026-09-13T13:09:29.926Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72519,
+   72520
+  ],
+  "a": "ira",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-13T13:21:19.431Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72629,
+   72630
+  ],
+  "a": "nebat",
+  "relation": "descendant-of",
+  "b": "ephraim",
+  "note": "inference, не explicit genealogy\nJeroboam → descendant/member of Ephraim: explicit\nNebat → descendant of Ephraim: very probable, but inferred through Jeroboam; not explicitly stated",
+  "decidedAt": "2026-09-13T13:55:01.280Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72703
+  ],
+  "a": "naaman-2",
+  "relation": "commander-of",
+  "b": "benhadad",
+  "note": "probable / traditional reconstruction",
+  "decidedAt": "2026-09-13T13:57:46.367Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72704
+  ],
+  "a": "benhadad",
+  "relation": "king-of",
+  "b": "naaman-2",
+  "note": "",
+  "decidedAt": "2026-09-13T13:57:53.506Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72709,
+   72710
+  ],
+  "a": "athaliah",
+  "relation": "daughter-of",
+  "b": "ahab",
+  "note": "Мабуть daughter of Omri, а нащадок Ахаба",
+  "decidedAt": "2026-09-26T21:28:26.829Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72717
+  ],
+  "a": "jehu-2",
+  "relation": "king-of",
+  "b": "bidkar",
+  "note": "",
+  "decidedAt": "2026-09-13T13:58:06.705Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72731,
+   72732
+  ],
+  "a": "jehoiada-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "Не каже точно. А то шо священник тут не варто брати до уваги, бо це не 100% явно",
+  "decidedAt": "2026-09-13T14:24:33.477Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72831,
+   72832
+  ],
+  "a": "hilkiah-2",
+  "relation": "descendant-of",
+  "b": "aaron",
+  "note": "Те шо він первосвященник доказує його родство від Аарона, але тут про це явно не пише, тому ми можемо лише написати шо ми так думаєш і все сходиться до цього, а не стверджувати на 100%",
+  "decidedAt": "2026-09-13T14:25:40.893Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72865,
+   72866
+  ],
+  "a": "seraiah-2",
+  "relation": "descendant-of",
+  "b": "aaron",
+  "note": "Так як первосвященники були від Аарона, то це так, але тут про це прямо не пише, тому не пишемо і ми",
+  "decidedAt": "2026-09-13T14:26:38.332Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72867,
+   72868
+  ],
+  "a": "zephaniah-2",
+  "relation": "descendant-of",
+  "b": "aaron",
+  "note": "Так як первосвященники були від Аарона, то це так, але тут про це прямо не пише, тому не пишемо і ми",
+  "decidedAt": "2026-09-13T14:26:44.109Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72921,
+   72922
+  ],
+  "a": "abijah-3",
+  "relation": "daughter-of",
+  "b": "machir",
+  "note": "МИ тут не певні, тому можна це в описі написати, бо ми не можемо стверджувати",
+  "decidedAt": "2026-09-13T15:18:43.518Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73023,
+   73024
+  ],
+  "a": "mareshah",
+  "relation": "son-of",
+  "b": "ziph",
+  "note": "Ні, Марешаг це інший син Калеба",
+  "decidedAt": "2026-09-13T15:24:20.599Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73029,
+   73030
+  ],
+  "a": "tappuah",
+  "relation": "son-of",
+  "b": "korah-4",
+  "note": "Ні, він син Хеврона, а не Корея",
+  "decidedAt": "2026-09-13T15:25:45.258Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73031,
+   73032
+  ],
+  "a": "rekem-2",
+  "relation": "son-of",
+  "b": "korah-4",
+  "note": "Ні, він син Хеврона  не Корея",
+  "decidedAt": "2026-09-13T15:26:03.110Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73033,
+   73034
+  ],
+  "a": "shema",
+  "relation": "son-of",
+  "b": "korah-4",
+  "note": "Ні, він син Хеврона  не Корея",
+  "decidedAt": "2026-09-13T15:26:08.743Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73099,
+   73100
+  ],
+  "a": "shobal-2",
+  "relation": "son-of",
+  "b": "hur",
+  "note": "Ні, він син Халева",
+  "decidedAt": "2026-09-13T15:27:58.456Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73101,
+   73102
+  ],
+  "a": "salma",
+  "relation": "son-of",
+  "b": "hur",
+  "note": "Ні, він син Халева",
+  "decidedAt": "2026-09-13T15:28:15.821Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73103,
+   73104
+  ],
+  "a": "hareph",
+  "relation": "son-of",
+  "b": "hur",
+  "note": "Ні, він син Халева",
+  "decidedAt": "2026-09-13T15:28:37.686Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73145,
+   73146
+  ],
+  "a": "hashubah",
+  "relation": "son-of",
+  "b": "meshullam-2",
+  "note": "Ні, він син Зоровавеля, а не Мешуллама",
+  "decidedAt": "2026-09-13T15:30:16.134Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73147,
+   73148
+  ],
+  "a": "ohel",
+  "relation": "son-of",
+  "b": "meshullam-2",
+  "note": "Ні, він син Зоровавеля, а не Мешуллама",
+  "decidedAt": "2026-09-13T15:30:24.379Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73149,
+   73150
+  ],
+  "a": "berechiah",
+  "relation": "son-of",
+  "b": "meshullam-2",
+  "note": "Ні, він син Зоровавеля, а не Мешуллама",
+  "decidedAt": "2026-09-13T15:30:26.424Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73151,
+   73152
+  ],
+  "a": "hasadiah",
+  "relation": "son-of",
+  "b": "meshullam-2",
+  "note": "Ні, він син Зоровавеля, а не Мешуллама",
+  "decidedAt": "2026-09-13T15:30:30.860Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73153,
+   73154
+  ],
+  "a": "jushabhesed",
+  "relation": "son-of",
+  "b": "meshullam-2",
+  "note": "Ні, він син Зоровавеля, а не Мешуллама",
+  "decidedAt": "2026-09-13T15:30:35.554Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73259,
+   73260
+  ],
+  "a": "harum",
+  "relation": "son-of",
+  "b": "koz",
+  "note": "",
+  "decidedAt": "2026-09-13T21:46:03.400Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73263,
+   73264
+  ],
+  "a": "jabez",
+  "relation": "descendant-of",
+  "b": "judah",
+  "note": "Це не випливає точно. Потім розгляну детальніше, якшо нагадаєш",
+  "decidedAt": "2026-09-13T21:51:55.828Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73343,
+   73344
+  ],
+  "a": "keilah",
+  "relation": "grandson-of",
+  "b": "hodiah",
+  "note": "",
+  "decidedAt": "2026-09-13T22:07:14.407Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73345,
+   73346
+  ],
+  "a": "eshtemoa-2",
+  "relation": "grandson-of",
+  "b": "hodiah",
+  "note": "",
+  "decidedAt": "2026-09-26T21:30:32.096Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73449,
+   73450
+  ],
+  "a": "jeiel",
+  "relation": "son-of",
+  "b": "zechariah-3",
+  "note": "agent: 1CH 5:7 lists Jeiel and Zechariah side by side as chiefs of Reuben's kin; no verse makes Jeiel Zechariah's son.",
+  "decidedAt": "2026-09-26T22:40:18.986Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   73451,
+   73452
+  ],
+  "a": "zechariah-3",
+  "relation": "son-of",
+  "b": "bela-3",
+  "note": "agent: 1CH 5:7-8 lists Zechariah beside Bela, who is 'the son of Azaz'; nothing makes Zechariah Bela's son.",
+  "decidedAt": "2026-09-26T22:40:19.001Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   73539,
+   73540
+  ],
+  "a": "zadok-3",
+  "relation": "grandson-of",
+  "b": "ahitub-3",
+  "note": "Zadok — grandson — Ahitub — 1CH 9:11: YES in this verse, but conflicts with 1CH 6 / EZR 7; identity/text uncertain.",
+  "decidedAt": "2026-09-26T21:33:57.446Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73731,
+   73732
+  ],
+  "a": "zelophehad",
+  "relation": "wife-of",
+  "b": "machir",
+  "note": "",
+  "decidedAt": "2026-09-26T21:14:38.593Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74213,
+   74214
+  ],
+  "a": "hanan-3",
+  "relation": "son-of",
+  "b": "joshaphat",
+  "note": "",
+  "decidedAt": "2026-09-26T21:51:08.539Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74597,
+   74598
+  ],
+  "a": "shelomoth-2",
+  "relation": "son-of",
+  "b": "joram-2",
+  "note": "",
+  "decidedAt": "2026-09-26T21:51:22.477Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74607,
+   74608
+  ],
+  "a": "heldai",
+  "relation": "descendant-of",
+  "b": "ephraim",
+  "note": "agent: wrong man: 1CH 27:10 names Helez the Pelonite 'of the children of Ephraim'; Heldai is 'the Netophathite, of Othniel' (27:15), of Judah.",
+  "decidedAt": "2026-09-26T22:40:26.488Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74859,
+   74860
+  ],
+  "a": "miniamin",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-26T21:51:53.471Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74861,
+   74862
+  ],
+  "a": "jeshua-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-26T21:51:56.031Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74863,
+   74864
+  ],
+  "a": "shemaiah-12",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-26T21:51:57.826Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74865,
+   74866
+  ],
+  "a": "amariah-4",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-26T21:51:59.323Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74867,
+   74868
+  ],
+  "a": "shecaniah-3",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-26T21:52:00.931Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74967,
+   74968
+  ],
+  "a": "ziha",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Ziha among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:30.887Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74969,
+   74970
+  ],
+  "a": "hasupha",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Hasupha among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:30.902Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74971,
+   74972
+  ],
+  "a": "tabbaoth",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Tabbaoth among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:30.917Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74973,
+   74974
+  ],
+  "a": "keros",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Keros among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:30.932Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74975,
+   74976
+  ],
+  "a": "siaha",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Siaha among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:30.977Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74977,
+   74978
+  ],
+  "a": "padon",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Padon among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:30.992Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74979,
+   74980
+  ],
+  "a": "lebanah",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Lebanah among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.008Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74981,
+   74982
+  ],
+  "a": "hagabah",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Hagabah among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.022Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74983,
+   74984
+  ],
+  "a": "akkub-3",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Akkub among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.037Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74985,
+   74986
+  ],
+  "a": "hagab",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Hagab among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.052Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74987,
+   74988
+  ],
+  "a": "shalmai",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Shalmai among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.070Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74989,
+   74990
+  ],
+  "a": "hanan-4",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Hanan among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.089Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74991,
+   74992
+  ],
+  "a": "giddel",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Giddel among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.104Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74993,
+   74994
+  ],
+  "a": "gahar",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Gahar among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.119Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74995,
+   74996
+  ],
+  "a": "reaiah-3",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Reaiah among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.134Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74997,
+   74998
+  ],
+  "a": "rezin-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Rezin among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.149Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   74999,
+   75000
+  ],
+  "a": "nekoda",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Nekoda among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.165Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75001,
+   75002
+  ],
+  "a": "gazzam",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Gazzam among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.180Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75003,
+   75004
+  ],
+  "a": "uzza-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Uzza among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.198Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75005,
+   75006
+  ],
+  "a": "paseah-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Paseah among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.232Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75007,
+   75008
+  ],
+  "a": "besai",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Besai among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.247Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75009,
+   75010
+  ],
+  "a": "asnah",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Asnah among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.262Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75011,
+   75012
+  ],
+  "a": "meunim",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Meunim among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.277Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75013,
+   75014
+  ],
+  "a": "nephisim",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Nephisim among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.292Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75015,
+   75016
+  ],
+  "a": "bakbuk",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Bakbuk among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.307Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75017,
+   75018
+  ],
+  "a": "hakupha",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Hakupha among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.322Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75019,
+   75020
+  ],
+  "a": "harhur",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Harhur among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.339Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75021,
+   75022
+  ],
+  "a": "bazluth",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Bazluth among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.370Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75023,
+   75024
+  ],
+  "a": "mehida",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Mehida among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.385Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75025,
+   75026
+  ],
+  "a": "harsha",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Harsha among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.400Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75027,
+   75028
+  ],
+  "a": "barkos",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Barkos among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.415Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75029,
+   75030
+  ],
+  "a": "sisera-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Sisera among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.430Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75031,
+   75032
+  ],
+  "a": "temah",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Temah among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.445Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75033,
+   75034
+  ],
+  "a": "neziah",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Neziah among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.460Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75035,
+   75036
+  ],
+  "a": "hatipha",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 2:43-54 lists the children of Hatipha among the Nethinims, a class the text keeps apart from the Levites (EZR 2:40-43, 2:70; NEH 10:28) and gave 'for the service of the Levites' (EZR 8:20); no verse makes them descendants of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.480Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75043,
+   75044
+  ],
+  "a": "shealtiel-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: wrong tribe: Shealtiel, father of Zerubbabel (EZR 3:2), is the son of Jeconiah (1CH 3:17; MAT 1:12), of David's line in Judah, not of Levi.",
+  "decidedAt": "2026-09-26T22:40:31.514Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75057,
+   75058
+  ],
+  "a": "zechariah-16",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: EZR 8:3 places Zechariah 'of the sons of Pharosh' - a lay family of the people of Israel (EZR 2:3), not Levites.",
+  "decidedAt": "2026-09-26T22:40:31.529Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75145,
+   75146
+  ],
+  "a": "jehiel-6",
+  "relation": "son-of",
+  "b": "elam-4",
+  "note": "",
+  "decidedAt": "2026-09-26T21:52:51.332Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75451,
+   75452
+  ],
+  "a": "jehohanan-3",
+  "relation": "son-of",
+  "b": "shecaniah-7",
+  "note": "У Nehemiah є кілька Jehohanan/Johanan і Shecaniah. Наприклад, Neh 6:18 має:\nShecaniah son of Arah\nі окремо:\nJehohanan = son of Tobiah.\nТобто це точно не дає Jehohanan → Shecaniah.",
+  "decidedAt": "2026-09-26T21:53:28.544Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75473,
+   75474
+  ],
+  "a": "hashum",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "agent: this Hashum is the lay family head of EZR 2:19 and NEH 10:18 ('the chief of the people'), not a Levite; NEH 8:4 does not call those beside Ezra Levites.",
+  "decidedAt": "2026-09-26T22:40:31.988Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75681,
+   75682
+  ],
+  "a": "levi",
+  "relation": "descendant-of",
+  "b": "bakbukiah",
+  "note": "agent: reversed and wrong: Levi is Jacob's son (GEN 29:34); NEH 11:17 only names Bakbukiah 'the second among his brethren'.",
+  "decidedAt": "2026-09-26T22:40:32.765Z",
+  "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75721,
+   75722
+  ],
+  "a": "meraiah",
+  "relation": "son-of",
+  "b": "seraiah-6",
+  "note": "",
+  "decidedAt": "2026-09-26T21:41:12.400Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75723,
+   75724
+  ],
+  "a": "hananiah-9",
+  "relation": "son-of",
+  "b": "jeremiah-7",
+  "note": "",
+  "decidedAt": "2026-09-26T21:41:24.770Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75725,
+   75726
+  ],
+  "a": "meshullam-16",
+  "relation": "son-of",
+  "b": "ezra",
+  "note": "",
+  "decidedAt": "2026-09-26T21:43:20.157Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75727,
+   75728
+  ],
+  "a": "jehohanan-4",
+  "relation": "son-of",
+  "b": "amariah-6",
+  "note": "",
+  "decidedAt": "2026-09-26T21:43:33.001Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75729,
+   75730
+  ],
+  "a": "jonathan-11",
+  "relation": "son-of",
+  "b": "malluch-4",
+  "note": "",
+  "decidedAt": "2026-09-26T21:43:41.725Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75731,
+   75732
+  ],
+  "a": "joseph-5",
+  "relation": "son-of",
+  "b": "shebaniah-3",
+  "note": "",
+  "decidedAt": "2026-09-26T21:43:51.135Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75733,
+   75734
+  ],
+  "a": "adna-2",
+  "relation": "son-of",
+  "b": "harim-2",
+  "note": "",
+  "decidedAt": "2026-09-26T21:43:59.994Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75735,
+   75736
+  ],
+  "a": "helkai",
+  "relation": "son-of",
+  "b": "meraioth-2",
+  "note": "",
+  "decidedAt": "2026-09-26T21:44:06.119Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75737,
+   75738
+  ],
+  "a": "zechariah-13",
+  "relation": "grandson-of",
+  "b": "iddo-6",
+  "note": "",
+  "decidedAt": "2026-09-26T21:34:47.159Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75739,
+   75740
+  ],
+  "a": "meshullam-13",
+  "relation": "son-of",
+  "b": "ginnethon",
+  "note": "",
+  "decidedAt": "2026-09-26T21:44:11.258Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75741,
+   75742
+  ],
+  "a": "zichri-12",
+  "relation": "son-of",
+  "b": "abijah-6",
+  "note": "",
+  "decidedAt": "2026-09-26T21:44:19.770Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75747,
+   75748
+  ],
+  "a": "piltai",
+  "relation": "son-of",
+  "b": "miniamin-2",
+  "note": "",
+  "decidedAt": "2026-09-26T21:44:24.532Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75751,
+   75752
+  ],
+  "a": "jehonathan-2",
+  "relation": "son-of",
+  "b": "shemaiah-19",
+  "note": "",
+  "decidedAt": "2026-09-26T21:44:37.074Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75753,
+   75754
+  ],
+  "a": "mattenai-3",
+  "relation": "son-of",
+  "b": "joiarib-3",
+  "note": "",
+  "decidedAt": "2026-09-26T21:44:48.855Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75755,
+   75756
+  ],
+  "a": "uzzi-6",
+  "relation": "son-of",
+  "b": "jedaiah-2",
+  "note": "",
+  "decidedAt": "2026-09-26T21:44:55.750Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75759,
+   75760
+  ],
+  "a": "kallai",
+  "relation": "son-of",
+  "b": "sallai-2",
+  "note": "",
+  "decidedAt": "2026-09-26T21:45:05.454Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75761,
+   75762
+  ],
+  "a": "eber-5",
+  "relation": "son-of",
+  "b": "amok",
+  "note": "",
+  "decidedAt": "2026-09-26T21:45:13.085Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75763,
+   75764
+  ],
+  "a": "hashabiah-8",
+  "relation": "son-of",
+  "b": "hilkiah-3",
+  "note": "",
+  "decidedAt": "2026-09-26T21:45:27.051Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75765,
+   75766
+  ],
+  "a": "nethanel-7",
+  "relation": "son-of",
+  "b": "jedaiah-5",
+  "note": "",
+  "decidedAt": "2026-09-26T21:45:33.236Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75807,
+   75808
+  ],
+  "a": "mattaniah-10",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-26T21:46:05.750Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75825,
+   75826
+  ],
+  "a": "hadassah",
+  "relation": "daughter-of",
+  "b": "mordecai-2",
+  "note": "",
+  "decidedAt": "2026-09-26T21:27:19.051Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75909,
+   75910
+  ],
+  "a": "shemaiah-21",
+  "relation": "descendant-of",
+  "b": "aaron",
+  "note": "agent: misread: JER 29:25-26 is Shemaiah's letter to 'Zephaniah the son of Maaseiah the priest' - 'The LORD hath made thee priest in the stead of Jehoiada' is said of Zephaniah; nothing makes Shemaiah the Nehelamite a priest.",
+  "decidedAt": "2026-09-26T22:40:32.932Z",
+  "decidedBy": "an agent, on the project owner's instruction"
  },
  {
   "rows": [
@@ -465,7 +1431,8 @@
   "relation": "son-of",
   "b": "james-4",
   "note": "",
-  "decidedAt": "2026-09-11T16:30:12.408Z"
+  "decidedAt": "2026-09-11T16:30:12.408Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -476,7 +1443,8 @@
   "relation": "son-of",
   "b": "john-3",
   "note": "",
-  "decidedAt": "2026-09-11T16:26:44.177Z"
+  "decidedAt": "2026-09-11T16:26:44.177Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -487,7 +1455,8 @@
   "relation": "descendant-of",
   "b": "aaron",
   "note": "",
-  "decidedAt": "2026-09-11T16:26:56.375Z"
+  "decidedAt": "2026-09-11T16:26:56.375Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -498,7 +1467,8 @@
   "relation": "descendant-of",
   "b": "aaron",
   "note": "",
-  "decidedAt": "2026-09-11T16:27:09.531Z"
+  "decidedAt": "2026-09-11T16:27:09.531Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -509,7 +1479,8 @@
   "relation": "servant-of",
   "b": "mary-5",
   "note": "",
-  "decidedAt": "2026-09-11T16:28:56.529Z"
+  "decidedAt": "2026-09-11T16:28:56.529Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -519,7 +1490,8 @@
   "relation": "king-of",
   "b": "blastus",
   "note": "",
-  "decidedAt": "2026-09-11T16:29:11.892Z"
+  "decidedAt": "2026-09-11T16:29:11.892Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -530,6 +1502,7 @@
   "relation": "descendant-of",
   "b": "elisheba",
   "note": "",
-  "decidedAt": "2026-09-11T16:29:43.194Z"
+  "decidedAt": "2026-09-11T16:29:43.194Z",
+  "decidedBy": "the project owner"
  }
 ]
