@@ -130,6 +130,13 @@ internal record CorpusResponse(
     /// text listings and nowhere else; null for a text nobody has described.
     /// </summary>
     public IReadOnlyDictionary<string, string>? Summary { get; init; }
+
+    /// <summary>
+    /// What the text is in one short sentence, keyed as <see cref="Summary"/> is: the line a list of
+    /// texts shows beside the facts it compares. Sent by the list of texts only; null for a text
+    /// nobody has described.
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Tagline { get; init; }
 }
 
 /// <summary>

@@ -143,7 +143,11 @@ internal static class ReadEndpoints
                 .Join(entries, t => t.Id, e => e.Id, (text, entry) => Texts.Corpus(
                     text,
                     new CoverageResponse(entry.FirstBook, entry.LastBook, entry.Books),
-                    entry.HasWordMapping) with { Summary = TextSummaries.For(text.Slug) })
+                    entry.HasWordMapping) with
+                {
+                    Summary = TextSummaries.For(text.Slug),
+                    Tagline = TextTaglines.For(text.Slug),
+                })
                 .ToList();
 
             return Results.Ok(new CorpusListResponse(items));
