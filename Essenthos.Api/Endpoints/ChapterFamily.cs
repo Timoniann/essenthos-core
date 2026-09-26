@@ -17,6 +17,12 @@ namespace Essenthos.Core.Endpoints;
 /// </para>
 ///
 /// <para>
+/// A straight line of descent reaches further, to <see cref="MostGenerations"/>: a genealogy may
+/// pass over generations — Matthew's <em>Joram begat Ozias</em> leaves out Ahaziah, Joash and
+/// Amaziah — and it is still one line, with the kings it passes over drawn standing back.
+/// </para>
+///
+/// <para>
 /// Everything the paths need is two rings of ties out from the chapter's people: a path of three
 /// steps between two of them runs through a neighbour of each, and the tie between those neighbours
 /// is on the second ring.
@@ -27,13 +33,19 @@ internal static class ChapterFamily
     /// <summary>How many family ties apart two of the chapter's people may be and still share a tree.</summary>
     public const int MostSteps = 3;
 
+    /// <summary>
+    /// How many generations apart a forebear and a descendant of the chapter may be and still share
+    /// a tree. Two rings of ties out from each end are what the endpoint reads, which is four.
+    /// </summary>
+    public const int MostGenerations = 4;
+
     /// <summary>Ties naming the other person as a parent, read from the row's first person.</summary>
     private static readonly HashSet<string> ParentTypes =
-        new(["son-of", "daughter-of", "son", "daughter", "bearer", "born by"], StringComparer.Ordinal);
+        new(["son-of", "daughter-of", "son", "daughter", "born by"], StringComparer.Ordinal);
 
     /// <summary>Ties naming the other person as a child, read from the row's first person.</summary>
     private static readonly HashSet<string> ChildTypes =
-        new(["father-of", "mother-of", "father", "mother"], StringComparer.Ordinal);
+        new(["father-of", "mother-of", "father", "mother", "bearer"], StringComparer.Ordinal);
 
     private static readonly HashSet<string> SideTypes = new(
     [
@@ -148,6 +160,7 @@ internal static class ChapterFamily
     {
         var next = new Dictionary<int, HashSet<int>>();
         var parents = new Dictionary<int, HashSet<int>>();
+        var children = new Dictionary<int, HashSet<int>>();
         foreach (var tie in ties)
         {
             if (tie.A == tie.B)
@@ -161,6 +174,7 @@ internal static class ChapterFamily
             {
                 var (parent, child) = tie.Descent > 0 ? (tie.A, tie.B) : (tie.B, tie.A);
                 Neighbours(parents, child).Add(parent);
+                Neighbours(children, parent).Add(child);
             }
         }
 
@@ -178,7 +192,24 @@ internal static class ChapterFamily
         var joining = new List<(int From, int Through)>();
         foreach (var from in chapter.Order())
         {
-            var (distance, before) = Paths(next, from);
+            var (generations, above) = Paths(children, from, MostGenerations);
+            foreach (var (to, steps) in generations)
+            {
+                if (steps <= MostSteps || !chapter.Contains(to))
+                {
+                    continue;
+                }
+
+                var (a, b) = (Find(from), Find(to));
+                if (a != b)
+                {
+                    root[Math.Max(a, b)] = Math.Min(a, b);
+                }
+
+                joining.AddRange(OnTheWay(above, from, to).Select(through => (from, through)));
+            }
+
+            var (distance, before) = Paths(next, from, MostSteps);
             foreach (var (to, steps) in distance)
             {
                 if (to == from || steps == 0 || !chapter.Contains(to))
@@ -252,15 +283,16 @@ internal static class ChapterFamily
         return found;
     }
 
-    /// <summary>How many ties from one person everybody within <see cref="MostSteps"/> is, and who comes just before them on each shortest way.</summary>
+    /// <summary>How many ties from one person everybody within <paramref name="most"/> is, and who comes just before them on each shortest way.</summary>
     private static (Dictionary<int, int> Distance, Dictionary<int, List<int>> Before) Paths(
         Dictionary<int, HashSet<int>> next,
-        int from)
+        int from,
+        int most)
     {
         var distance = new Dictionary<int, int> { [from] = 0 };
         var before = new Dictionary<int, List<int>>();
         var ring = new List<int> { from };
-        for (var steps = 1; steps <= MostSteps && ring.Count > 0; steps++)
+        for (var steps = 1; steps <= most && ring.Count > 0; steps++)
         {
             var outer = new List<int>();
             foreach (var at in ring)
