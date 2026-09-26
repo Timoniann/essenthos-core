@@ -165,6 +165,7 @@ internal sealed record OwnRecordRulings(
 /// own. Absent for a record that was a person and is held as a title now.
 /// </param>
 /// <param name="Bearers">Who the text gives the title to, each at the verse where it does.</param>
+/// <param name="Words">Which words of the witnesses are the title, wherever the text uses it.</param>
 internal sealed record TitleRecord(
     string Slug,
     string Name,
@@ -175,7 +176,35 @@ internal sealed record TitleRecord(
     IReadOnlyList<OwnAlternative>? Alternatives,
     string? Source = null,
     IReadOnlyList<TitleName>? Names = null,
-    IReadOnlyList<TitleBearerRecord>? Bearers = null);
+    IReadOnlyList<TitleBearerRecord>? Bearers = null,
+    IReadOnlyList<TitleWord>? Words = null);
+
+/// <summary>
+/// The occurrences of one Strong number that are the title: every one the witnesses number with
+/// it, or those <see cref="Except"/> leaves, where <see cref="With"/> stands beside it when that is
+/// given, and only the singular where <see cref="Singular"/> says so.
+/// </summary>
+/// <param name="Except">
+/// Verses where the word is not this title, written as <c>MAT 2:6</c>: <em>hegemon</em> of the
+/// princes of Judah, <em>pechah</em> of Solomon's or Nebuchadnezzar's officers.
+/// </param>
+/// <param name="With">
+/// Another Strong number that has to stand within <see cref="ThingLoader.Reach"/> words in the same
+/// verse: <em>the priest</em> beside <em>great</em>.
+/// </param>
+/// <param name="Singular">
+/// Only the singular, where the plural of the word is something else: <em>archiereus</em> is the
+/// high priest, and <em>archiereis</em> the chief priests as a body.
+/// </param>
+internal sealed record TitleWord(
+    string Strong,
+    IReadOnlyList<string>? Except = null,
+    string? With = null,
+    bool Singular = false)
+{
+    public bool Admits(int book, int chapter, int verse, int nth) =>
+        Except is null || !Except.Any(span => ScriptureSpan.Parse(span).Holds(book, chapter, verse, nth));
+}
 
 /// <summary>
 /// One name of a title written here. A Strong number is given only where the word already names

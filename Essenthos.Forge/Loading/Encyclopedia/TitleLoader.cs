@@ -4,6 +4,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
@@ -15,6 +16,8 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// Titles or bearers whose record the encyclopedia does not hold, which is a corpus not yet loaded
 /// or a slug the file has to follow.
 /// </param>
+/// <param name="Words">Witness words the file gives a title, before the links carry them anywhere.</param>
+/// <param name="ByText">Words naming a title by those rules afterwards, per text, the carried ones included.</param>
 internal sealed record TitleOutcome(
     bool AlreadyLoaded,
     int Retitled,
@@ -22,15 +25,18 @@ internal sealed record TitleOutcome(
     int Retired,
     int Bearers,
     int Missing,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int Words = 0,
+    IReadOnlyList<(string Text, int Words)>? ByText = null)
 {
     public override string ToString() =>
         AlreadyLoaded
-            ? "the names the owner ruled titles are already held as titles"
+            ? "the names the owner ruled titles are already held as titles, with the words that give them"
             : $"{Retitled} records held as titles rather than as one person, {Written} titles written, " +
               $"{Bearers} bearers joined to their titles and {Retired} records for a single bearer of one " +
-              $"withdrawn, in {Elapsed}" +
-              (Missing > 0 ? $"; {Missing} titles or bearers name a record the encyclopedia does not hold" : "");
+              $"withdrawn, and {Words} witness words give a title, in {Elapsed}" +
+              (Missing > 0 ? $"; {Missing} titles or bearers name a record the encyclopedia does not hold" : "") +
+              (ByText is { Count: > 0 } ? ". Per text: " + string.Join(", ", ByText.Select(t => $"{t.Text} {t.Words}")) : "");
 }
 
 /// <summary>
@@ -73,6 +79,16 @@ internal sealed record TitleOutcome(
 /// high priest</em>, <em>Tiberius Caesar</em>: the person and the title stand in one verse, and that
 /// verse is kept with the row. Where the text gives the title and nobody's name, as with the
 /// Rabshakeh at the wall or the Candace whose treasurer Philip met, the title stands with no bearer.
+/// </para>
+///
+/// <para>
+/// **A title is named at every word the text uses it.** The file says, per title, which Strong
+/// numbers are the title and where one is not (<see cref="TitleWord"/>); the words of the Hebrew and
+/// Greek witnesses those rules reach are annotated to the title and carried along the links like
+/// every other annotation, so the verse list is read off the words and every translation marks the
+/// word. None of these words is marked as a name in BHSA, so nothing else resolves them, and a word
+/// something else already names is left to it: a title joins the words nobody holds and takes no
+/// word from a person.
 /// </para>
 ///
 /// <para>
@@ -188,14 +204,18 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
 
         await db.SaveChangesAsync(cancellationToken);
 
+        var (seed, byText) = await NameTheWords(decision.Titles, cancellationToken);
+
         var outcome = new TitleOutcome(
-            retitled == 0 && written == 0 && retired == 0 && bearers == 0 && missing == 0,
+            retitled == 0 && written == 0 && retired == 0 && bearers == 0 && missing == 0 && byText is null,
             retitled,
             written,
             retired,
             bearers,
             missing,
-            started.Elapsed);
+            started.Elapsed,
+            seed,
+            byText);
         logger.LogInformation("The titles: {Outcome}", outcome);
         return outcome;
     }
@@ -231,6 +251,165 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         };
 
     private const string OwnSourceId = "essenthos:title:";
+
+    /// <summary>What every annotation the word rules write says about itself.</summary>
+    public const string WordSource =
+        "Essenthos, the words each title is written with, found by the Strong number the Hebrew and Greek " +
+        "witnesses state on them, on the project owner's decision that the titles the text gives are collected as titles";
+
+    /// <summary>
+    /// How sure a word the rules reach is. The number is the witness's own and the rule says the number
+    /// is the title, so what is left open is only a rule that reads one occurrence wrongly: the
+    /// standing a resolved name has where the encyclopedia's own list agrees with it.
+    /// </summary>
+    internal const double ByTheNumber = 0.99;
+
+    /// <summary>A Greek noun's code in the singular, as both editions write it: N-GSM.</summary>
+    private const string SingularNoun = "^N-.S";
+
+    /// <summary>
+    /// Every occurrence of one number in the witnesses that nothing else names, where it stands and
+    /// which of its number it is in its verse, kept where the second word stands close enough when one
+    /// is asked for and where it is singular when that is asked for.
+    /// </summary>
+    private const string Occurrences =
+        """
+        SELECT o.id, o.book, o.chapter, o.verse, o.nth
+        FROM (
+            SELECT w.id, w.verse_id, w.position, w.morphology, r.canonical_book AS book,
+                   r.canonical_chapter AS chapter, r.canonical_verse AS verse,
+                   row_number() OVER (PARTITION BY w.verse_id ORDER BY w.position)::int AS nth
+            FROM word w
+            JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
+            JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+            WHERE w.strong_number = @strong) o
+        WHERE (@with = ''
+               OR EXISTS (SELECT 1 FROM word beside
+                          WHERE beside.verse_id = o.verse_id AND beside.strong_number = @with
+                            AND abs(beside.position - o.position) <= @reach))
+          AND (NOT @singular
+               OR coalesce(o.morphology ->> 'form', o.morphology ->> 'robinson') ~ @singularNoun)
+          AND NOT EXISTS (SELECT 1 FROM word_entity named
+                          WHERE named.word_id = o.id AND named.source <> @source)
+        """;
+
+    /// <summary>The words these rules seeded last time, which is what decides whether to write again.</summary>
+    private const string Seeded =
+        "SELECT word_id, entity_id FROM word_entity WHERE source = @source AND coalesce(note, '') NOT LIKE @carried";
+
+    /// <summary>
+    /// The witness words each title's rules reach, annotated to it and carried along the links, unless
+    /// they are exactly the words seeded last time. A word two titles' rules both reach is given to
+    /// neither. Returns how many witness words the rules reach, and per text what was written, which is
+    /// null where nothing had to be.
+    /// </summary>
+    internal async Task<(int Seed, IReadOnlyList<(string Text, int Words)>? ByText)> NameTheWords(
+        IReadOnlyList<TitleRecord> titles,
+        CancellationToken cancellationToken)
+    {
+        var slugs = titles.Where(t => t.Words is { Count: > 0 }).Select(t => t.Slug).ToList();
+        var held = await db.Entities
+            .Where(e => slugs.Contains(e.Slug) && e.Kind == EntityKind.Title)
+            .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
+
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        var claimed = new Dictionary<long, (int Entity, string Note)>();
+        var disputed = new HashSet<long>();
+        foreach (var title in titles.Where(t => held.ContainsKey(t.Slug)))
+        {
+            foreach (var rule in title.Words!)
+            {
+                foreach (var (wordId, reference) in await Words(connection, rule, cancellationToken))
+                {
+                    if (claimed.TryGetValue(wordId, out var first) && first.Entity != held[title.Slug])
+                    {
+                        disputed.Add(wordId);
+                        logger.LogWarning(
+                            "Two titles' rules reach the word {Number} at {Reference}; it is given to neither",
+                            rule.Strong, reference);
+                        continue;
+                    }
+
+                    claimed[wordId] = (held[title.Slug], $"{rule.Strong} at {reference}, the word for {title.Name}");
+                }
+            }
+        }
+
+        foreach (var word in disputed)
+        {
+            claimed.Remove(word);
+        }
+
+        var before = new HashSet<(long, int)>();
+        await using (var command = new NpgsqlCommand(Seeded, connection))
+        {
+            command.Parameters.AddWithValue("source", WordSource);
+            command.Parameters.AddWithValue("carried", Annotating.CarriedNote);
+            command.CommandTimeout = Annotating.Patient;
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                before.Add((reader.GetInt64(0), reader.GetInt32(1)));
+            }
+        }
+
+        if (before.SetEquals(claimed.Select(c => (c.Key, c.Value.Entity))))
+        {
+            return (claimed.Count, null);
+        }
+
+        var method = EnumSpelling.Of(LinkMethod.StrongNumber);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await Annotating.Run(connection, transaction, "DELETE FROM word_entity WHERE source = @source",
+            cancellationToken, ("source", WordSource));
+        await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
+        await Annotating.Seed(
+            connection,
+            claimed.Select(c => (c.Key, c.Value.Entity, (double?)ByTheNumber, false, c.Value.Note)),
+            cancellationToken);
+        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
+        await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
+            ("method", method), ("source", WordSource));
+        await Annotating.Run(connection, transaction, Annotating.Claim, cancellationToken,
+            ("method", method), ("source", WordSource));
+        await Annotating.Run(connection, transaction, "DROP TABLE pending_annotation", cancellationToken);
+        var byText = await Annotating.ByText(connection, transaction, WordSource, cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+
+        return (claimed.Count, byText);
+    }
+
+    private static async Task<List<(long WordId, string Reference)>> Words(
+        NpgsqlConnection connection,
+        TitleWord rule,
+        CancellationToken cancellationToken)
+    {
+        var witnesses = rule.Strong.StartsWith('H') ? [EntityCandidates.Witness] : EntityCandidates.GreekWitnesses;
+        await using var command = new NpgsqlCommand(Occurrences, connection);
+        command.Parameters.AddWithValue("witnesses", witnesses);
+        command.Parameters.AddWithValue("strong", rule.Strong);
+        command.Parameters.AddWithValue("with", rule.With ?? string.Empty);
+        command.Parameters.AddWithValue("reach", ThingLoader.Reach);
+        command.Parameters.AddWithValue("singular", rule.Singular);
+        command.Parameters.AddWithValue("singularNoun", SingularNoun);
+        command.Parameters.AddWithValue("source", WordSource);
+        command.CommandTimeout = Annotating.Patient;
+
+        var words = new List<(long, string)>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            var (book, chapter, verse, nth) = (reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4));
+            if (rule.Admits(book, chapter, verse, nth))
+            {
+                words.Add((reader.GetInt64(0), $"{BookReferences.Name(book)} {chapter}:{verse}"));
+            }
+        }
+
+        return words;
+    }
 
     /// <summary>The kind of label every name of a written title is, as the dataset spells it.</summary>
     private const string TitleName = "title";

@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -152,10 +153,10 @@ public sealed class WordRenderingsTests : IDisposable
     [Fact]
     public async Task TheCriticalEditionComesFirstAndTranslationsNotAtAll()
     {
-        var originals = await RenderingEndpoints.Originals(_db, _english.Id, default);
+        var originals = await LinkedOriginals.Of(_db, _english.Id, default);
 
         originals.Select(original => original.Slug).Should().Equal("NESTLE", "TR");
-        RenderingEndpoints.Primary(originals).Select(original => original.Slug).Should().Equal("NESTLE");
+        LinkedOriginals.Primary(originals).Select(original => original.Slug).Should().Equal("NESTLE");
     }
 
     private void Tag(Text text, int chapter, int verse, int position, string number) =>

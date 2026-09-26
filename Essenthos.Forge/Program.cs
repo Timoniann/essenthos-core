@@ -155,6 +155,7 @@ builder.Services.AddScoped<CommandmentLoader>();
 builder.Services.AddScoped<NaveTopicLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();
 builder.Services.AddScoped<EntityRenderingLoader>();
+builder.Services.AddScoped<StrongRenderingLoader>();
 builder.Services.AddScoped<OwnRelationshipLoader>();
 builder.Services.AddScoped<DuplicateRecordLoader>();
 builder.Services.AddScoped<RefiledTieLoader>();
@@ -817,6 +818,15 @@ if (args is ["spell", ..])
 {
     using var spellScope = app.Services.CreateScope();
     Console.WriteLine(await spellScope.ServiceProvider.GetRequiredService<EntityRenderingLoader>().Load());
+    return 0;
+}
+
+// The phrases the lexicon quotes under each entry, counted again from the links, in an already
+// loaded corpus. The load does this after its naming steps; this is that step alone.
+if (args is ["cards", ..])
+{
+    using var cardsScope = app.Services.CreateScope();
+    Console.WriteLine(await cardsScope.ServiceProvider.GetRequiredService<StrongRenderingLoader>().Load());
     return 0;
 }
 
