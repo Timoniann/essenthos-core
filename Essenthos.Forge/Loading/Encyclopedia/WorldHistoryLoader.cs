@@ -47,10 +47,10 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
     internal const string Source = "Wikidata, query.wikidata.org, CC0";
 
     /// <summary>
-    /// The year the default reckoning calls 1 BCE. Every reckoning gets its own answer in
+    /// The year the base reckoning, BibleData's, calls 1 BCE. Every reckoning gets its own answer in
     /// <see cref="EventDate"/>; the event row itself still has to carry one, and this is whose.
     /// </summary>
-    private const int DefaultReckoningZero = 3961;
+    private const int BaseReckoningZero = 3961;
 
     /// <summary>
     /// Wikidata has an item for the year 500 BC, and that item has a point in time. Two thirds of
@@ -224,7 +224,7 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                     Region = today,
                     RegionAtTheTime = then,
                     Uri = item.Uri,
-                    YearFromCreation = DefaultReckoningZero + year,
+                    YearFromCreation = BaseReckoningZero + year,
                     Source = Source,
                 };
 
@@ -304,8 +304,8 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
                     : "span",
                 // The second band. Level 0 is this corpus's own eras and stays that way.
                 Level = 1,
-                StartYear = DefaultReckoningZero + from,
-                EndYear = DefaultReckoningZero + to,
+                StartYear = BaseReckoningZero + from,
+                EndYear = BaseReckoningZero + to,
                 Realm = Realms.World,
                 Region = Regions(item.Countries, from, item.Lifetimes).Today,
                 Uri = item.Uri,
@@ -573,7 +573,7 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
     /// </summary>
     private static string Disagreeing(Event scripture, Item item, int year)
     {
-        var held = (scripture.YearFromCreation ?? DefaultReckoningZero) - DefaultReckoningZero;
+        var held = (scripture.YearFromCreation ?? BaseReckoningZero) - BaseReckoningZero;
         var said =
             $"Wikidata has this event as \"{item.Label}\" at {Era(year)} ({item.Uri}), where this " +
             $"row holds {Era(held)}. One event under two datasets, {Math.Abs(year - held)} years " +

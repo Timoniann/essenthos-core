@@ -1,0 +1,28 @@
+{
+  "about": "Events that bound a period, which BibleData dates in its own reckoning and leaves undated in Ussher's although his Annals date them. Each names the paragraph that does, and the years are read from that paragraph, so this file holds no figure of its own. Only the event Ussher himself dates is listed: where he dates a neighbouring event that BibleData's own rule ties it to, or dates nothing, the period stays without his years.",
+  "source": "Essenthos: the periods /v1/timeline dated by BibleData and not by Ussher, each bounding event read against the Annals by claude-opus-5-5, 2026-09-27",
+  "events": [
+    { "event": "end400yearsofoppression", "paragraph": 192, "says": "the Exodus, which ¶88 says closes the four hundred years" },
+    { "event": "endsevenyearsfamineegypt", "paragraph": 144, "says": "the seventh and last year of the famine" },
+    { "event": "beginjephthahs300years", "paragraph": 279, "says": "Sihon's land taken, from which Jephthah counts" },
+    { "event": "endjoshuarule", "paragraph": 341, "says": "Joshua dies at a hundred and ten" },
+    { "event": "beginjoshuatojudges", "paragraph": 341, "says": "Joshua dies at a hundred and ten" },
+    { "event": "endjoshuatojudges", "paragraph": 343, "says": "Othniel raised up to judge" },
+    { "event": "enddeborahjudge", "paragraph": 355, "says": "Israel sins again after the rest under Deborah and is given to Midian" },
+    { "event": "endmidianoppression", "paragraph": 357, "says": "Gideon chosen to deliver Israel" },
+    { "event": "endjairjudge", "paragraph": 371, "says": "Jair dies" },
+    { "event": "endjeroboam2coreignwithjehoash", "paragraph": 551, "says": "Joash dies and Jeroboam reigns alone" },
+    { "event": "birthjotham2", "paragraph": 565, "says": "Uzziah's son Jotham" },
+    { "event": "beginmicah4prophesying", "paragraph": 586, "says": "Micah the Morasthite prophesies under Jotham" },
+    { "event": "endjotham2solereign", "paragraph": 598, "says": "Ahaz succeeds Jotham" },
+    { "event": "endahaz1reign", "paragraph": 620, "says": "Ahaz dies" },
+    { "event": "deathahaz1", "paragraph": 620, "says": "Ahaz dies" },
+    { "event": "beginhezekiah1reign", "paragraph": 621, "says": "Hezekiah's first year" },
+    { "event": "endhezekiah1reign", "paragraph": 683, "says": "Hezekiah buried, Manasseh after him" },
+    { "event": "endhaggai1prophesying", "paragraph": 1020, "says": "Haggai's last two prophecies" },
+    { "event": "endzechariah13prophesying", "paragraph": 1031, "says": "the fourth year of Darius, Zechariah 7:1" },
+    { "event": "enddarius1reign", "paragraph": 1100, "says": "Darius dies and Xerxes reigns" },
+    { "event": "beginartaxerxes1reign", "paragraph": 1178, "says": "Artaxerxes becomes king" },
+    { "event": "endartaxerxes1reign", "paragraph": 1291, "says": "Artaxerxes dies" }
+  ]
+}

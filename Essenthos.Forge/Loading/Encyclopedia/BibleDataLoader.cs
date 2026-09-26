@@ -78,19 +78,23 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// They disagree constantly — Ussher differs from the base in 406 of 419 shared events, by up
     /// to 278 years — and that disagreement is the thing worth showing. A reader wants to see that
     /// the Exodus is 1447 on one reckoning and 1491 on another, and which text each rests on.
+    ///
+    /// Ussher's is the one a reader meets first: it dates more events than any other, and its years
+    /// are the ones printed in the margins of the Bibles most readers have held. BibleData's stays
+    /// the base — the axis every event's year from the creation is counted on.
     /// </summary>
-    private static readonly (string Slug, string Name, string? Authority, string Basis, string? Source,
+    internal static readonly (string Slug, string Name, string? Authority, string Basis, string? Source,
         int Zero, bool Default, int Position)[] Reckonings =
     [
         ("bibledata", "BibleData", "Brady Stephenson",
             "Computed from the genealogies and reign lengths of the Masoretic text, with each year " +
             "derived from a verse and the arithmetic recorded. Anchored on a 1447 BCE Exodus and a " +
             "931 BCE division of the kingdom.",
-            "github.com/BradyStephenson/bible-data", 3961, true, 1),
+            "github.com/BradyStephenson/bible-data", 3961, false, 2),
         ("ussher", "Ussher", "James Ussher, 1650",
             "The Annals of the World. Creation at 4004 BCE, the Exodus at 1491 BCE. Still the " +
             "reckoning printed in the margins of many English Bibles.",
-            "Annales Veteris Testamenti, 1650", 4003, false, 2),
+            "Annales Veteris Testamenti, 1650", 4003, true, 1),
         ("shulman", "Seder Olam", "Eliezer Shulman",
             "The Sequence of Events in the Old Testament, following Seder Olam Rabbah — the " +
             "rabbinic reckoning, which compresses the Persian period and so runs several " +
@@ -655,6 +659,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     {
         var bySlug = events.ToDictionary(e => e.Slug, e => e.Id);
         var reckoning = chronologies.ToDictionary(c => c.Slug, c => c.Id);
+        var annals = UssherDatings.Read(folder);
         var dates = new List<EventDate>(1_500);
 
         foreach (var (slug, row) in EventRows(folder))
@@ -666,9 +671,16 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
 
             Add(dates, eventId, reckoning["bibledata"], Number(row["event_year_ah"]),
                 Blank(row["event_year_calculation"]), null, Blank(row["event_notes"]));
-            Add(dates, eventId, reckoning["ussher"], Number(row["ussher_am_year"]),
-                null, Blank(row["ussher_paragraph_number"]) is { } paragraph ? $"¶{paragraph}" : null, null,
-                UssherStatedYear(row));
+            if (Number(row["ussher_am_year"]) is null && annals.TryGetValue(slug, out var dating))
+            {
+                Add(dates, eventId, reckoning["ussher"], dating.Year, null, dating.Citation, null, dating.StatedYear);
+            }
+            else
+            {
+                Add(dates, eventId, reckoning["ussher"], Number(row["ussher_am_year"]),
+                    null, Blank(row["ussher_paragraph_number"]) is { } paragraph ? $"¶{paragraph}" : null, null,
+                    UssherStatedYear(row));
+            }
             Add(dates, eventId, reckoning["shulman"], Number(row["shulman_am_year"]), null, null, null);
         }
 

@@ -46,15 +46,17 @@ public sealed class EventStatementTests : IDisposable
     /// <summary>
     /// The creation is 4004 BC in Ussher's words and 4003 by the subtraction his zero makes of his
     /// year 1 — and so are 80 more of the 419 events BibleData dates by him, which the corpus served
-    /// a year late while the figure he printed sat unread in the file it loaded.
+    /// a year late while the figure he printed sat unread in the file it loaded. The 22 his Annals
+    /// date where BibleData's column is blank are read the same way, and five of them fall in the
+    /// autumn half of his year.
     /// </summary>
     [Fact]
     public async Task UssherIsServedTheYearHePrinted()
     {
         var dates = await UssherDates(BibleDataLoader.Source);
 
-        dates.Should().HaveCount(419).And.OnlyContain(d => d.StatedYear < 0);
-        dates.Count(d => -d.StatedYear != UssherZeroPoint - d.Year + 1).Should().Be(81);
+        dates.Should().HaveCount(419 + 22).And.OnlyContain(d => d.StatedYear < 0);
+        dates.Count(d => -d.StatedYear != UssherZeroPoint - d.Year + 1).Should().Be(81 + 5);
 
         var creation = await _db.Events.Where(e => e.Slug == "creation").Select(EncyclopediaEndpoints.Rows).SingleAsync();
         var ussher = creation.Dates.Single(d => d.Chronology == UssherAnnalsLoader.Chronology);
@@ -89,6 +91,36 @@ public sealed class EventStatementTests : IDisposable
     }
 
     /// <summary>
+    /// A reign BibleData dates and leaves blank in Ussher's column is his all the same where his
+    /// Annals date both its ends: Artaxerxes comes to the throne in ¶1178 and dies in ¶1291.
+    /// </summary>
+    [Fact]
+    public async Task TheAnnalsDateWhatBibleDataLeavesBlankInHisColumn()
+    {
+        var reign = await _db.EventDates
+            .Where(d => d.Chronology!.Slug == UssherAnnalsLoader.Chronology
+                        && (d.Event!.Slug == "beginartaxerxes1reign" || d.Event.Slug == "endartaxerxes1reign"))
+            .OrderBy(d => d.Year)
+            .Select(d => new { d.Year, d.StatedYear, d.Citation })
+            .ToListAsync();
+
+        reign.Should().Equal(
+            new { Year = (int?)3531, StatedYear = (int?)-473, Citation = (string?)"¶1178" },
+            new { Year = (int?)3579, StatedYear = (int?)-425, Citation = (string?)"¶1291" });
+    }
+
+    /// <summary>Ussher's is the reckoning a reader meets first; BibleData's is second and the base.</summary>
+    [Fact]
+    public async Task UssherIsTheReckoningAReaderMeetsFirst()
+    {
+        var reckonings = await _db.Chronologies.OrderBy(c => c.Position).Select(c => new { c.Slug, c.IsDefault }).ToListAsync();
+
+        reckonings[0].Should().Be(new { Slug = "ussher", IsDefault = true });
+        reckonings.Should().ContainSingle(c => c.IsDefault);
+        reckonings[1].Slug.Should().Be("bibledata");
+    }
+
+    /// <summary>
     /// Ishmael's birth is dated at Genesis 16:16 and the source names its Canaan at 16:3; the second
     /// verse is the one that says which Canaan.
     /// </summary>
@@ -117,15 +149,18 @@ public sealed class EventStatementTests : IDisposable
         var restated = await Restate();
 
         restated.Located.Should().Be(fresh.Located.Count);
-        restated.Stated.Should().Be(fresh.Stated.Count - fresh.Dated.Count);
+        restated.Stated.Should().Be(fresh.Stated.Count - fresh.Dated.Count - restated.Filled);
+        restated.Filled.Should().Be(22);
         restated.Dated.Should().Be(fresh.Dated.Count);
+        restated.Ordered.Should().Be(2, "the older load had BibleData first and the default");
         restated.Described.Should().Be(1);
         (await Snapshot()).Should().BeEquivalentTo(fresh);
         (await _db.Events.SingleAsync(e => e.Id == world.Id)).Description
             .Should().Be("Stele, dated by its inception. From Wikidata.");
 
         var again = await Restate();
-        (again.Located + again.Stated + again.Dated + again.Described + again.Placed).Should().Be(0);
+        (again.Located + again.Stated + again.Filled + again.Dated + again.Described + again.Placed + again.Ordered)
+            .Should().Be(0);
     }
 
     private async Task<List<EventDate>> UssherDates(string source) =>
@@ -152,9 +187,21 @@ public sealed class EventStatementTests : IDisposable
         return new State(located, stated, dated, notes);
     }
 
-    /// <summary>What a load before this one wrote: none of the three, and the old sentence on the notes.</summary>
+    /// <summary>
+    /// What a load before this one wrote: none of the three, no date from the Annals where BibleData's
+    /// column is blank, BibleData's reckoning first and the default, and the old sentence on the notes.
+    /// </summary>
     private async Task Forget()
     {
+        var listed = UssherDatings.Read(_folder).Keys.ToList();
+        _db.EventDates.RemoveRange(await _db.EventDates
+            .Where(d => d.Chronology!.Slug == UssherAnnalsLoader.Chronology && listed.Contains(d.Event!.Slug))
+            .ToListAsync());
+        await _db.Chronologies.Where(c => c.Slug == "bibledata")
+            .ExecuteUpdateAsync(c => c.SetProperty(x => x.IsDefault, true).SetProperty(x => x.Position, 1));
+        await _db.Chronologies.Where(c => c.Slug == UssherAnnalsLoader.Chronology)
+            .ExecuteUpdateAsync(c => c.SetProperty(x => x.IsDefault, false).SetProperty(x => x.Position, 2));
+
         var undated = await _db.EventDates.Where(d => d.StatedYear != null && d.Year == null).ToListAsync();
         var ids = undated.Select(d => d.EventId).ToList();
         foreach (var annal in await _db.Events.Where(e => ids.Contains(e.Id)).ToListAsync())
