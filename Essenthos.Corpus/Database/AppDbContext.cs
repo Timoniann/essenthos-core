@@ -158,6 +158,9 @@ public class AppDbContext : DbContext
     /// <summary>Each text's spellings of an entity's name, counted from the words that name it.</summary>
     public DbSet<EntityRendering> EntityRenderings { get; set; } = null!;
 
+    /// <summary>A translation's commonest phrases for each Strong number, counted from the links once per load.</summary>
+    public DbSet<StrongRendering> StrongRenderings { get; set; } = null!;
+
     /// <summary>
     /// Which word names which person, place or people. The encyclopedia says a verse names
     /// somebody; this says which word of it does, which is what a reader hovering a word is asking.
@@ -906,6 +909,24 @@ public class AppDbContext : DbContext
                     "How one text spells an entity's name, counted from the words word_entity says "
                     + "name it there. Derived and rebuilt with those annotations; it asserts nothing "
                     + "they do not.");
+            });
+        });
+
+        modelBuilder.Entity<StrongRendering>(entity =>
+        {
+            entity.HasOne(r => r.Text)
+                .WithMany()
+                .HasForeignKey(r => r.TextId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("strong_rendering", t =>
+            {
+                t.HasCheckConstraint("ck_strong_rendering_uses", "uses > 0");
+                t.HasCheckConstraint("ck_strong_rendering_rank", "rank > 0");
+                t.HasComment(
+                    "A translation's commonest phrases for one Strong number, counted from the links by "
+                    + "the statement the entry page counts with. Derived and rebuilt on every load; it "
+                    + "asserts nothing the links do not.");
             });
         });
     }

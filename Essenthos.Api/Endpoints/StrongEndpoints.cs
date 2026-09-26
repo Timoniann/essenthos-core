@@ -1,12 +1,10 @@
 using Essenthos.Core.Corpus;
-﻿using System.Data;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Strong;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace Essenthos.Core.Endpoints;
 
@@ -69,7 +67,7 @@ internal static class StrongEndpoints
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
         {
-            var rendering = corpus is { Length: > 0 } ? corpus : CardTranslation;
+            var rendering = corpus is { Length: > 0 } ? corpus : StrongRenderingCounts.CardTranslation;
             if (await canon.Text(rendering, cancellationToken) is not { } text)
             {
                 return Results.NotFound(new ProblemResponse(
@@ -108,7 +106,7 @@ internal static class StrongEndpoints
 
             var numbers = page.Select(e => e.StrongNumber).ToList();
             var occurrences = await Occurrences(db, numbers, cancellationToken);
-            var renderings = await Renderings(db, numbers, text.Id, CardRenderings, cancellationToken);
+            var renderings = await Renderings(db, numbers, text.Id, StrongRenderingCounts.CardRenderings, cancellationToken);
 
             return Results.Ok(new StrongListResponse(
                 total,
@@ -277,7 +275,7 @@ internal static class StrongEndpoints
             // G26 stands 116 times in each of the Greek editions the King James is linked to, and
             // counting across them reported every rendering three times over; counting the
             // translation's own tagged words as well reported more places reached than exist.
-            var witness = RenderingEndpoints.Primary(await RenderingEndpoints.Originals(db, text.Id, cancellationToken))
+            var witness = LinkedOriginals.Primary(await LinkedOriginals.Of(db, text.Id, cancellationToken))
                 .FirstOrDefault(original => WritesNumber(original.Language, canonical));
             var witnessId = witness?.Id ?? 0;
 
@@ -334,28 +332,6 @@ internal static class StrongEndpoints
         number.StartsWith('G') ? language == "grc" : language is "hbo" or "arc";
 
     /// <summary>
-    /// The translation a lexicon card quotes when nobody names one: the English the Strong numbers
-    /// were written against.
-    /// </summary>
-    private const string CardTranslation = "KJV";
-
-    /// <summary>How many renderings a lexicon card quotes — the commonest few, not the list.</summary>
-    private const int CardRenderings = 3;
-
-    /// <summary>
-    /// The texts this one is linked to by anything at all, asked as one existence probe per text
-    /// on the index that leads with both ends of a link. The distinct over the link table it
-    /// replaces read every one of the King James's 2.3 million links to learn eight numbers.
-    /// </summary>
-    internal static Task<List<int>> Neighbours(AppDbContext db, int textId, CancellationToken cancellationToken) =>
-        db.Texts
-            .Where(t => t.Id != textId
-                        && (db.Links.Any(l => l.FromTextId == textId && l.ToTextId == t.Id)
-                            || db.Links.Any(l => l.FromTextId == t.Id && l.ToTextId == textId)))
-            .Select(t => t.Id)
-            .ToListAsync(cancellationToken);
-
-    /// <summary>
     /// How many words of the corpus carry each of these numbers, in every witness that tags it —
     /// the count the entry page's own list of occurrences totals to. A number no word carries is
     /// absent, and reads as zero.
@@ -371,29 +347,10 @@ internal static class StrongEndpoints
             .ToDictionaryAsync(row => row.Number, row => row.Count, cancellationToken);
 
     /// <summary>
-    /// The whole phrase each link renders, not each word of it separately, and the commonest
-    /// <paramref name="take"/> of them for each number — for one number on the entry page and for a
-    /// page of them on the lexicon's cards, in one query either way.
-    ///
-    /// Counting words alone reports אֱלֹהֶיךָ as <em>god</em> 2,284 times and <em>thy</em> 342, which
-    /// reads as noise and is not: a Hebrew word carries its pronoun and its construct relation
-    /// inside itself, so <em>thy God</em> is one rendering of one word and splitting it in two
-    /// destroys the very thing the link recorded. Grouped by link it reads as what it is —
-    /// <em>god</em> 684, <em>thy god</em> 319, <em>of god</em> 317.
-    ///
-    /// <para>
-    /// A link counts for a number when a word carrying it stands on the side facing this text's
-    /// words, in the one edition of each original language the text is most fully joined to. A
-    /// translation linked to three Greek editions renders each Greek word three times over, once
-    /// per edition, and counting all three reported every phrase three times; a translation's own
-    /// tagged words, facing another translation, are not an original at all.
-    /// </para>
-    ///
-    /// <para>
-    /// Written as SQL because the aggregation is one <c>string_agg</c> over an ordered group inside
-    /// a grouped, ranked outer query, which EF will not translate; doing it in memory would pull
-    /// every word of every link for a number like the conjunction.
-    /// </para>
+    /// The commonest <paramref name="take"/> phrases for each number (<see cref="StrongRenderingCounts"/>).
+    /// A text the load has counted ahead is read from what it counted, which is forty rows off one
+    /// index where counting them reads every link of every occurrence; any other text, or a deeper
+    /// list than the load keeps, is counted as it is asked.
     /// </summary>
     internal static async Task<Dictionary<string, IList<StrongRenderingResponse>>> Renderings(
         AppDbContext db,
@@ -407,69 +364,21 @@ internal static class StrongEndpoints
             return [];
         }
 
-        const string sql =
-            """
-            WITH pairs AS (
-                SELECT DISTINCT s.link_id, sw.strong_number AS number, s.side
-                FROM word sw
-                JOIN link_word s ON s.word_id = sw.id
-                JOIN link l ON l.id = s.link_id
-                WHERE sw.strong_number = ANY(@numbers)
-                  AND sw.text_id = ANY(@witnesses)
-                  AND (l.from_text_id = @text OR l.to_text_id = @text)
-                  AND l.relation IN ('renders', 'equals')
-            ),
-            rendered AS (
-                SELECT p.number, string_agg(lower(w.text), ' ' ORDER BY v.number, w.position) AS phrase
-                FROM pairs p
-                JOIN link_word o ON o.link_id = p.link_id AND o.side <> p.side
-                JOIN word w ON w.id = o.word_id AND w.text_id = @text
-                JOIN verse v ON v.id = w.verse_id
-                GROUP BY p.number, p.link_id
-            )
-            SELECT number, phrase, uses
-            FROM (
-                SELECT number, phrase, count(*) AS uses,
-                       row_number() OVER (PARTITION BY number ORDER BY count(*) DESC, phrase) AS rank
-                FROM rendered
-                WHERE phrase IS NOT NULL
-                GROUP BY number, phrase
-            ) ranked
-            WHERE rank <= @take
-            ORDER BY number, rank
-            """;
+        var counted = take <= StrongRenderingCounts.CardRenderings
+                      && await db.StrongRenderings.AnyAsync(r => r.TextId == textId, cancellationToken)
+            ? await db.StrongRenderings
+                .Where(r => r.TextId == textId && numbers.Contains(r.StrongNumber) && r.Rank <= take)
+                .OrderBy(r => r.StrongNumber).ThenBy(r => r.Rank)
+                .Select(r => new StrongRenderingCount(r.StrongNumber, r.Rank, r.Phrase, r.Uses))
+                .ToListAsync(cancellationToken)
+            : await StrongRenderingCounts.Count(db, textId, numbers, take, cancellationToken);
 
-        var witnesses = RenderingEndpoints.Primary(await RenderingEndpoints.Originals(db, textId, cancellationToken))
-            .Select(original => original.Id)
-            .ToArray();
-
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-        if (connection.State != ConnectionState.Open)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
-
-        await using var command = new NpgsqlCommand(sql, connection);
-        command.Parameters.AddWithValue("text", textId);
-        command.Parameters.AddWithValue("numbers", numbers.ToArray());
-        command.Parameters.AddWithValue("witnesses", witnesses);
-        command.Parameters.AddWithValue("take", take);
-
-        var rows = new Dictionary<string, IList<StrongRenderingResponse>>();
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            var number = reader.GetString(0);
-            if (!rows.TryGetValue(number, out var phrases))
-            {
-                phrases = [];
-                rows[number] = phrases;
-            }
-
-            phrases.Add(new StrongRenderingResponse(reader.GetString(1), (int)reader.GetInt64(2)));
-        }
-
-        return rows;
+        return counted
+            .GroupBy(row => row.Number)
+            .ToDictionary(
+                group => group.Key,
+                IList<StrongRenderingResponse> (group) =>
+                    [.. group.OrderBy(row => row.Rank).Select(row => new StrongRenderingResponse(row.Phrase, row.Uses))]);
     }
 
     /// <summary>

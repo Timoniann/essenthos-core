@@ -275,6 +275,7 @@ internal sealed class DatasetLoader(
             await MoveWhatWasReadOffTheMisfiledVerses(stoppingToken);
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
             await CountHowEachTextSpellsEachName(stoppingToken);
+            await CountTheLexiconsPhrases(stoppingToken);
             await PutThePlacesOnTheMap(resources, stoppingToken);
             await CountTheCommandments(stoppingToken);
             await FileTheVersesUnderNavesTopics(resources, stoppingToken);
@@ -1681,6 +1682,19 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityRenderingLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The phrases the lexicon quotes under each entry, counted from the links. After every step that
+    /// writes or withdraws a link, because it counts what they settled on, and rebuilt whole each time.
+    /// </summary>
+    private async Task CountTheLexiconsPhrases(CancellationToken cancellationToken)
+    {
+        status.Starting("the lexicon's phrases");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<StrongRenderingLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

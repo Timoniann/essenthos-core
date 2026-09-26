@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -125,12 +126,46 @@ public sealed class StrongCardTests : IDisposable
         occurrences.Should().NotContainKey(Love);
     }
 
+    /// <summary>
+    /// The load counts every number at once, from the links rather than from the words, and each
+    /// number comes out as a page of them would count it.
+    /// </summary>
+    [Fact]
+    public async Task CountingEveryNumberAnswersAsCountingAPage()
+    {
+        var every = await StrongRenderingCounts.Count(_db, _english.Id, null, 3, default);
+        var page = await StrongRenderingCounts.Count(_db, _english.Id, [God, Create, Love], 3, default);
+
+        every.Should().Equal(page);
+    }
+
+    /// <summary>
+    /// A text the load has counted is read from what it counted, and a list deeper than the load
+    /// keeps is still counted as it is asked.
+    /// </summary>
+    [Fact]
+    public async Task ACountedTextIsReadFromWhatTheLoadCounted()
+    {
+        _db.StrongRenderings.Add(new StrongRendering
+        {
+            StrongNumber = God, TextId = _english.Id, Rank = 1, Phrase = "as the load counted it", Uses = 9,
+        });
+        await _db.SaveChangesAsync();
+
+        var kept = await StrongEndpoints.Renderings(_db, [God, Create], _english.Id, StrongRenderingCounts.CardRenderings, default);
+        kept[God].Should().Equal(new StrongRenderingResponse("as the load counted it", 9));
+        kept.Should().NotContainKey(Create);
+
+        var deeper = await StrongEndpoints.Renderings(_db, [God], _english.Id, StrongRenderingCounts.CardRenderings + 1, default);
+        deeper[God][0].Should().Be(new StrongRenderingResponse("god", 2));
+    }
+
     [Fact]
     public async Task ATextsNeighboursAreTheTextsLinkedToItEitherWay()
     {
-        (await StrongEndpoints.Neighbours(_db, _english.Id, default)).Should().Equal(_hebrew.Id);
-        (await StrongEndpoints.Neighbours(_db, _hebrew.Id, default)).Should().Equal(_english.Id);
-        (await StrongEndpoints.Neighbours(_db, _greek.Id, default)).Should().BeEmpty();
+        (await LinkedOriginals.Neighbours(_db, _english.Id, default)).Should().Equal(_hebrew.Id);
+        (await LinkedOriginals.Neighbours(_db, _hebrew.Id, default)).Should().Equal(_english.Id);
+        (await LinkedOriginals.Neighbours(_db, _greek.Id, default)).Should().BeEmpty();
     }
 
     private void Tag(Text text, int chapter, int verse, int position, string number) =>

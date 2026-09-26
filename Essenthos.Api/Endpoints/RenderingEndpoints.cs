@@ -106,7 +106,7 @@ internal static class RenderingEndpoints
         IReadOnlyCollection<string> spellings,
         CancellationToken cancellationToken)
     {
-        var originals = await Originals(db, textId, cancellationToken);
+        var originals = await LinkedOriginals.Of(db, textId, cancellationToken);
         if (originals.Count == 0)
         {
             return [];
@@ -195,43 +195,6 @@ internal static class RenderingEndpoints
             })
             .Where(witness => witness.Reached > 0)];
     }
-
-    /// <summary>
-    /// The originals a text is linked to, in the order a reader is likeliest to mean them: the
-    /// critical editions first, then whichever the text is most fully joined to. The first of each
-    /// language is the one a single count is made against, so that the Strong page's renderings and
-    /// this page's first answer are counted over the same edition.
-    /// </summary>
-    internal static async Task<List<LinkedOriginal>> Originals(
-        AppDbContext db,
-        int textId,
-        CancellationToken cancellationToken)
-    {
-        var neighbours = await StrongEndpoints.Neighbours(db, textId, cancellationToken);
-        var originals = await db.Texts
-            .Where(t => neighbours.Contains(t.Id) && t.Kind != TextKind.Translation)
-            .Select(t => new LinkedOriginal(
-                t.Id,
-                t.Slug,
-                t.Name,
-                t.Language,
-                t.Kind,
-                db.Links.Count(l => l.FromTextId == textId && l.ToTextId == t.Id)
-                + db.Links.Count(l => l.FromTextId == t.Id && l.ToTextId == textId)))
-            .ToListAsync(cancellationToken);
-
-        return
-        [
-            .. originals
-                .OrderBy(original => original.Kind == TextKind.CriticalEdition ? 0 : 1)
-                .ThenByDescending(original => original.Links)
-                .ThenBy(original => original.Slug, StringComparer.Ordinal),
-        ];
-    }
-
-    /// <summary>The first of each language in <see cref="Originals"/>.</summary>
-    internal static List<LinkedOriginal> Primary(IEnumerable<LinkedOriginal> originals) =>
-        [.. originals.GroupBy(original => original.Language).Select(language => language.First())];
 
     private static IList<TextLinkMethodResponse> Methods(IEnumerable<LinkedRow> rows) =>
     [
@@ -329,8 +292,6 @@ internal static class RenderingEndpoints
 
         return rows;
     }
-
-    internal sealed record LinkedOriginal(int Id, string Slug, string Name, string Language, TextKind Kind, int Links);
 
     private sealed record LinkedRow(
         long Hit,
