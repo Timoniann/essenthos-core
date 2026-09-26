@@ -1267,7 +1267,7 @@ def decide(args):
         if body.get('subset') in args.subsets and body.get('decision'):
             decisions.append(({int(row) for row in str(body['rows']).split('|')}, body))
 
-    by_entity, report, reask, removed = {}, {}, [], []
+    by_entity, report, reask, removed, taken_back = {}, {}, [], [], []
 
     def count(what):
         report[what] = report.get(what, 0) + 1
@@ -1303,6 +1303,10 @@ def decide(args):
             verdict = 'confirm'
         if verdict == 'reask' and any(str(i) in unsure for i in ids):
             verdict = 'confirm'
+        # A removal the owner has since turned into a confirmation or a re-ask leaves the cut-over list;
+        # one confirmed only because its note named the right word stays, since the dataset's word goes.
+        if verdict != 'remove' and not any(str(i) in relabelled for i in ids):
+            taken_back.append(sorted(ids))
         # A fact the owner decided himself is his, whatever an agent said about it beside him.
         agent = all(by_the_agent(body) for body in mine)
         decided_at = max(b['decidedAt'] for b in mine)
@@ -1377,7 +1381,8 @@ def decide(args):
         kept = []
         if os.path.exists(path):
             with open(path, encoding='utf-8') as handle:
-                kept = [r for r in json.load(handle) if r['rows'] not in [x['rows'] for x in removed]]
+                kept = [r for r in json.load(handle)
+                        if r['rows'] not in [x['rows'] for x in removed] and r['rows'] not in taken_back]
         # An entry from before the agent decided anything is the owner's.
         for r in kept:
             r.setdefault('decidedBy', DECIDED_BY.split(',')[0])
