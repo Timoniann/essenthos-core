@@ -859,6 +859,18 @@ if (args is ["reigns", ..])
     return 0;
 }
 
+// Which listed verses name their entity and which only concern it, told apart again in an already
+// loaded corpus. The load does this as its last naming step; this is that step alone.
+if (args is ["naming", ..])
+{
+    using var namingScope = app.Services.CreateScope();
+    var namingDb = namingScope.ServiceProvider.GetRequiredService<AppDbContext>();
+    namingDb.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
+    var namingChanged = await namingDb.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+    Console.WriteLine($"{namingChanged} listed verses changed between naming their entity and only concerning it");
+    return 0;
+}
+
 if (args is ["topics", ..])
 {
     using var topicScope = app.Services.CreateScope();

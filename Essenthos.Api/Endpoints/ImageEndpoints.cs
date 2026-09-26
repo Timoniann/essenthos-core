@@ -110,7 +110,7 @@ internal static class ImageEndpoints
             .Select(i => new
             {
                 i.File, i.Digest, i.Kind, i.Role, i.Width, i.Height, i.Caption, i.Credit, i.CreditUrl,
-                i.Licence, i.LicenceUrl, i.Source, i.FocusX, i.FocusY,
+                i.Licence, i.LicenceUrl, i.Source, i.FocusX, i.FocusY, i.BustX, i.BustY, i.BustWidth, i.BustHeight,
                 Local = i.Captions.Where(c => c.Language == language).Select(c => c.Caption).FirstOrDefault(),
             })
             .ToListAsync(cancellationToken);
@@ -121,11 +121,15 @@ internal static class ImageEndpoints
                 ? new EntityImageResponse(
                     Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, null, null, null, null, null, null,
                     i.FocusX, i.FocusY)
+                {
+                    Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight),
+                }
                 : new EntityImageResponse(
                     Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, i.Local ?? i.Caption, i.Credit,
                     i.CreditUrl, i.Licence, i.LicenceUrl, i.Source, i.FocusX, i.FocusY)
                 {
                     CaptionLanguage = i.Local is null ? null : language,
+                    Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight),
                 }),
         ];
     }
@@ -139,7 +143,11 @@ internal static class ImageEndpoints
     {
         var primaries = await db.EntityImages
             .Where(i => i.Role == Primary && slugs.Contains(i.Entity!.Slug) && (generated || i.Kind != Generated))
-            .Select(i => new { i.Entity!.Slug, i.File, i.Digest, i.Kind, i.FocusX, i.FocusY })
+            .Select(i => new
+            {
+                i.Entity!.Slug, i.File, i.Digest, i.Kind, i.FocusX, i.FocusY, i.BustX, i.BustY, i.BustWidth,
+                i.BustHeight,
+            })
             .ToListAsync(cancellationToken);
 
         return primaries
@@ -147,7 +155,10 @@ internal static class ImageEndpoints
             .ToDictionary(
                 group => group.Key,
                 group => group.OrderBy(i => i.Kind == Generated ? 0 : 1)
-                    .Select(i => new EntityThumbnailResponse(Url(i.File, i.Digest), i.Kind, i.FocusX, i.FocusY))
+                    .Select(i => new EntityThumbnailResponse(Url(i.File, i.Digest), i.Kind, i.FocusX, i.FocusY)
+                    {
+                        Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight),
+                    })
                     .First(),
                 StringComparer.Ordinal);
     }
@@ -187,7 +198,26 @@ internal sealed record EntityImageResponse(
     /// its source or its list states.
     /// </summary>
     public string? CaptionLanguage { get; init; }
+
+    /// <summary>A person's head and shoulders, for any rendering smaller than the picture; null on a place or a thing.</summary>
+    public PictureBustResponse? Bust { get; init; }
 }
 
 /// <summary>The picture an entity leads with, as small as a list needs it: where it is and what kind.</summary>
-internal sealed record EntityThumbnailResponse(string Url, string Kind, double? FocusX, double? FocusY);
+internal sealed record EntityThumbnailResponse(string Url, string Kind, double? FocusX, double? FocusY)
+{
+    /// <summary>A person's head and shoulders, which is what a thumbnail shows; null on a place or a thing.</summary>
+    public PictureBustResponse? Bust { get; init; }
+}
+
+/// <summary>
+/// The square of a picture that holds a person's head and shoulders, as fractions of its width and
+/// height from the top left.
+/// </summary>
+internal sealed record PictureBustResponse(double X, double Y, double Width, double Height)
+{
+    public static PictureBustResponse? Of(double? x, double? y, double? width, double? height) =>
+        x is { } left && y is { } top && width is { } across && height is { } down
+            ? new PictureBustResponse(left, top, across, down)
+            : null;
+}

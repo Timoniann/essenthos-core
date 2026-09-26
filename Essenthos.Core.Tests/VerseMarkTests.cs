@@ -153,6 +153,71 @@ public sealed class VerseMarkTests : IDisposable
         (await VerseEndpoints.Naming(_db, Words(), "lotan", default)).Should().BeEmpty();
     }
 
+    /// <summary>
+    /// Joshua 10:1 names Jerusalem in the King James with no link to the Hebrew, so no annotation
+    /// reaches the word; it is spelled as the text spells Jerusalem everywhere else, and is marked.
+    /// </summary>
+    [Fact]
+    public void MarksAVerseTheAnnotationsMissedWhereTheTextSpellsTheName()
+    {
+        var spelled = VerseEndpoints.Spelled(
+            [new("king", " ", false), new("of", " ", false), new("Jerusalem", " ", false), new("had", ".", false)],
+            new HashSet<string> { "jerusalem" });
+
+        VerseEndpoints.Marks(spelled).Should().Equal(new VerseMarkResponse(8, 17));
+    }
+
+    [Fact]
+    public void MarksATwoWordNameSpelledAsOne()
+    {
+        var spelled = VerseEndpoints.Spelled(
+            [new("to", " ", false), new("Beth", "-", false), new("el", ".", false)],
+            new HashSet<string> { "bethel" });
+
+        VerseEndpoints.Marks(spelled).Should().Equal(new VerseMarkResponse(3, 10));
+    }
+
+    /// <summary>A verse the corpus marked keeps its marks and gets none by spelling beside them.</summary>
+    [Fact]
+    public void SpellingNeverAddsToWhatTheAnnotationsSay()
+    {
+        var spelled = VerseEndpoints.Spelled(
+            [new("Abram", " ", true), new("and", " ", false), new("Abram", ".", false)],
+            new HashSet<string> { "abram" });
+
+        VerseEndpoints.Marks(spelled).Should().Equal(new VerseMarkResponse(0, 5));
+    }
+
+    /// <summary>
+    /// <em>God</em> in Genesis 1:1 is annotated to YHVH and is also the word Elohim, which no word
+    /// is annotated to: the list of Elohim marks the word that renders the Hebrew carrying its number.
+    /// </summary>
+    [Fact]
+    public async Task MarksAWordForGodByTheNumberItRenders()
+    {
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo", (1, 1, ["בְּרֵאשִׁית", "בָּרָא", "אֱלֹהִים"]));
+        var english = Corpus.Add(_db, "test-english", TextKind.Translation, "eng", (1, 1, ["In", "beginning", "God", "created"]));
+        _db.SaveChanges();
+        _db.WordAt(hebrew, 1, 1, 3).StrongNumber = "H430";
+        var elohim = new Entity { Kind = EntityKind.Term, Slug = "elohim", Name = "Elohim", SourceId = "elohim", Source = "a test" };
+        elohim.Names.Add(new EntityName { Label = "Elohim", HebrewStrongNumber = "H430" });
+        _db.Entities.Add(elohim);
+        var god = _db.WordAt(english, 1, 1, 3);
+        var link = new Link
+        {
+            FromTextId = english.Id, ToTextId = hebrew.Id, Relation = LinkRelation.Renders,
+            Method = LinkMethod.StrongNumber, Confidence = 0.9, Source = "a test",
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = god, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 3), Side = LinkSide.To });
+        _db.SaveChanges();
+
+        var words = _db.Words.Where(w => w.TextId == english.Id || w.TextId == hebrew.Id).Select(w => w.Id).ToList();
+        (await VerseEndpoints.Naming(_db, words, "elohim", default)).Should()
+            .BeEquivalentTo([god.Id, _db.WordAt(hebrew, 1, 1, 3).Id]);
+    }
+
     [Fact]
     public void SendsMarksOnlyWhereTheyWereAskedFor()
     {

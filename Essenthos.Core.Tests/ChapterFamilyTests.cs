@@ -37,7 +37,31 @@ public sealed class ChapterFamilyTreesTests
     public void FourStepsApartIsNoTreeAtAll()
     {
         var trees = ChapterFamily.Trees(
-            new HashSet<int> { 1, 5 }, [Parent(1, 2), Parent(2, 3), Parent(3, 4), Parent(4, 5)]);
+            new HashSet<int> { 1, 5 }, [Parent(1, 2), Side(2, 3), Parent(3, 4), Parent(4, 5)]);
+
+        trees.Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// Matthew's <em>Joram begat Ozias</em> passes over three kings, and the two are still one line:
+    /// a forebear and his descendant four generations down share a tree, with the three between.
+    /// </summary>
+    [Fact]
+    public void AGenealogyThatPassesOverGenerationsIsStillOneLine()
+    {
+        var trees = ChapterFamily.Trees(
+            new HashSet<int> { 1, 5 }, [Parent(1, 2), Child(3, 2), Parent(3, 4), Parent(4, 5)]);
+
+        trees.Should().ContainSingle();
+        trees[0].Named.Should().Equal(1, 5);
+        trees[0].Between.Should().Equal(2, 3, 4);
+    }
+
+    [Fact]
+    public void FiveGenerationsApartIsNoTreeAtAll()
+    {
+        var trees = ChapterFamily.Trees(
+            new HashSet<int> { 1, 6 }, [Parent(1, 2), Parent(2, 3), Parent(3, 4), Parent(4, 5), Parent(5, 6)]);
 
         trees.Should().BeEmpty();
     }
@@ -164,6 +188,31 @@ public sealed class ChapterFamilyEndpointTests : IDisposable
             ("king-of", "babel"),
         ]);
         family.People.Single(p => p.Slug == "gomer").Ties.Should().NotContain(t => t.Type == "descendant-of");
+    }
+
+    /// <summary>
+    /// Mary is recorded as the one who bore Jesus and as the mother of Simon, and the chapter names
+    /// the two brothers: she is their mother, drawn over them — not, read the wrong way round, a
+    /// daughter of Jesus.
+    /// </summary>
+    [Fact]
+    public async Task SheWhoBoreAChildIsHisMother()
+    {
+        var mary = Person("mary");
+        var jesus = Person("jesus");
+        var simon = Person("simon");
+        await _db.SaveChangesAsync();
+        Tie(mary, "bearer", jesus);
+        Tie(mary, "mother", simon);
+        Tie(simon, "brother", jesus);
+        NamedAt(jesus, 13, 55);
+        NamedAt(simon, 13, 55);
+        await _db.SaveChangesAsync();
+
+        var family = await ChapterFamily.Of(_db, Genesis, 13, null, default);
+
+        family.Trees.Should().ContainSingle();
+        family.Trees[0].Between.Should().Equal("mary");
     }
 
     private Entity Person(string slug)

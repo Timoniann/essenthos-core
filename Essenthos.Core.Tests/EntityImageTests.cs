@@ -457,6 +457,75 @@ public sealed class EntityImageTests : IDisposable
     public void TheConsoleKnowsGodByTheSameRecordsTheLoaderDoes() =>
         Essenthos.Core.Desk.PortraitBoard.GodSourcePrefix.Should().Be(EntityImageLoader.GodSourcePrefix);
 
+    /// <summary>
+    /// Aaron's face stands a fifth of the way across a tall portrait: the bust is the square around
+    /// it, a little headroom above and the shoulders below, and never runs off the picture.
+    /// </summary>
+    [Fact]
+    public void ABustIsTheSquareAroundTheFaceKeptInsideThePicture()
+    {
+        var (x, y, width, height) = PortraitFaces.Bust([0.4043, 0.0918, 0.2109, 0.1875], 1024, 1536)!.Value;
+
+        (width * 1024).Should().BeApproximately(height * 1536, 0.01, "a bust is square");
+        (width * 1024).Should().BeApproximately(0.1875 * 1536 * PortraitFaces.BustPerFaceHeight, 0.5);
+        (x + width / 2).Should().BeApproximately(0.4043 + 0.2109 / 2, 0.0001);
+        y.Should().BeLessThan(0.0918);
+
+        var corner = PortraitFaces.Bust([0.9, 0.9, 0.1, 0.1], 1000, 1000)!.Value;
+        (corner.X + corner.Width).Should().BeApproximately(1, 1e-9);
+        (corner.Y + corner.Height).Should().BeApproximately(1, 1e-9);
+
+        PortraitFaces.Bust([0.5, 0.5, 0.8, 0.1], 100, 100).Should().BeNull("a face cannot run off the picture");
+    }
+
+    [Fact]
+    public void EveryMeasuredFaceSaysWhichFileItWasMeasuredOn()
+    {
+        var faces = PortraitFaces.Read();
+
+        faces.Should().NotBeEmpty();
+        faces.Values.Should().OnlyContain(f => f.Digest.Length == 12 && f.Digest.All(char.IsAsciiHexDigitLower));
+        faces.Values.Where(f => f.Face != null).Should().OnlyContain(f =>
+            f.Face!.Length == 4 && f.Face.All(v => v >= 0 && v <= 1) && f.Face[0] + f.Face[2] <= 1.0001
+            && f.Face[1] + f.Face[3] <= 1.0001);
+    }
+
+    /// <summary>
+    /// A person's picture is given the bust around the face measured on that very file, and its focus
+    /// there; a picture of a place is shown whole, and a face measured on a file since replaced frames
+    /// nothing.
+    /// </summary>
+    [Fact]
+    public void OnlyAPersonsPictureMeasuredOnThisFileIsGivenABust()
+    {
+        var root = Path.Combine(_resources, "Images");
+        WriteJpeg(Path.Combine(root, "generated", "moses.jpg"));
+        WriteJpeg(Path.Combine(root, "generated", "aaron.jpg"));
+        WriteJpeg(Path.Combine(root, "commons", "hebron.jpg"));
+        var digest = ImageFiles.Read(Path.Combine(root, "generated", "moses.jpg")).Digest;
+        var faces = new Dictionary<string, PortraitFaces.Measured>
+        {
+            ["generated/moses.jpg"] = new(digest, [0.4, 0.1, 0.1, 0.15]),
+            ["generated/aaron.jpg"] = new("000000000000", [0.4, 0.1, 0.1, 0.15]),
+            ["commons/hebron.jpg"] = new(digest, [0.4, 0.1, 0.1, 0.15]),
+        };
+        EntityImageLoader.Candidate Candidate(int entity, string file) => new(
+            entity, file, "generated", "primary", file, null, "Credit", null, "Licence", null, "Source", null, false);
+
+        var (rows, _) = new EntityImageLoader(_db, NullLogger<EntityImageLoader>.Instance).Rows(
+            root,
+            [Candidate(1, "generated/moses.jpg"), Candidate(2, "generated/aaron.jpg"), Candidate(3, "commons/hebron.jpg")],
+            faces,
+            new HashSet<int> { 1, 2 });
+
+        var moses = rows.Single(r => r.EntityId == 1);
+        moses.BustX.Should().NotBeNull();
+        (moses.BustWidth!.Value * 512).Should().BeApproximately(moses.BustHeight!.Value * 384, 0.01);
+        moses.FocusX.Should().BeApproximately(moses.BustX!.Value + moses.BustWidth.Value / 2, 1e-9);
+        rows.Single(r => r.EntityId == 2).BustX.Should().BeNull("the face was measured on another file");
+        rows.Single(r => r.EntityId == 3).BustX.Should().BeNull("a place is shown whole");
+    }
+
     [Fact]
     public void TheCuratedListCreditsAndLicensesEveryWork()
     {

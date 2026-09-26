@@ -1768,6 +1768,8 @@ internal sealed class DatasetLoader(
     /// <summary>
     /// Which listed verses name their entity — a word in them is annotated to it, in any text — and
     /// which only concern it. Last, because every pass before it may annotate a word or list a verse.
+    /// A word for God is a word rather than a person, and no word is annotated to it: a verse names
+    /// it where a word of the verse carries its number.
     /// </summary>
     internal const string NamingVerses =
         """
@@ -1775,6 +1777,12 @@ internal sealed class DatasetLoader(
             SELECT DISTINCT a.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
             FROM word_entity a
             JOIN word w ON w.id = a.word_id
+            JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+            UNION
+            SELECT DISTINCT n.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
+            FROM entity_name n
+            JOIN entity e ON e.id = n.entity_id AND e.kind = 'term'
+            JOIN word w ON w.strong_number IN (n.hebrew_strong_number, n.greek_strong_number)
             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary)
         UPDATE entity_verse v
         SET names = n.entity_id IS NOT NULL

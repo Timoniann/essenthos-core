@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260926213345_APortraitKnowsWhereItsHeadAndShouldersAre")]
+    partial class APortraitKnowsWhereItsHeadAndShouldersAre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2534,157 +2537,6 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.ReignStatement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CanonicalBook")
-                        .HasColumnType("integer")
-                        .HasColumnName("canonical_book");
-
-                    b.Property<int>("CanonicalChapter")
-                        .HasColumnType("integer")
-                        .HasColumnName("canonical_chapter");
-
-                    b.Property<int>("CanonicalVerse")
-                        .HasColumnType("integer")
-                        .HasColumnName("canonical_verse");
-
-                    b.Property<string>("CountedFrom")
-                        .HasColumnType("text")
-                        .HasColumnName("counted_from");
-
-                    b.Property<int?>("EndVerse")
-                        .HasColumnType("integer")
-                        .HasColumnName("end_verse");
-
-                    b.Property<int>("EntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("entity_id");
-
-                    b.Property<string>("Kind")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("kind");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("role");
-
-                    b.Property<int>("RulerEntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("ruler_entity_id");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.Property<int?>("ThroughEntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("through_entity_id");
-
-                    b.Property<int?>("Year")
-                        .HasColumnType("integer")
-                        .HasColumnName("year");
-
-                    b.HasKey("Id")
-                        .HasName("pk_reign_statement");
-
-                    b.HasIndex("EntityId")
-                        .HasDatabaseName("ix_reign_statement_entity_id");
-
-                    b.HasIndex("RulerEntityId")
-                        .HasDatabaseName("ix_reign_statement_ruler_entity_id");
-
-                    b.HasIndex("ThroughEntityId")
-                        .HasDatabaseName("ix_reign_statement_through_entity_id");
-
-                    b.ToTable("reign_statement", null, t =>
-                        {
-                            t.HasCheckConstraint("ck_reign_statement_counted_from", "counted_from IS NULL OR counted_from IN ('reign', 'captivity', 'death')");
-
-                            t.HasCheckConstraint("ck_reign_statement_end_verse", "end_verse IS NULL OR end_verse > canonical_verse");
-
-                            t.HasCheckConstraint("ck_reign_statement_kind", "kind IN ('superscription', 'dated', 'narrative', 'record', 'concerning')");
-
-                            t.HasCheckConstraint("ck_reign_statement_role", "role IN ('prophet', 'nation', 'accession')");
-
-                            t.HasCheckConstraint("ck_reign_statement_source_not_empty", "length(btrim(source)) > 0");
-
-                            t.HasCheckConstraint("ck_reign_statement_year", "year IS NULL OR year >= 1");
-                        });
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.RulerReign", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("DrawnUnder")
-                        .HasColumnType("text")
-                        .HasColumnName("drawn_under");
-
-                    b.Property<int>("EntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("entity_id");
-
-                    b.Property<bool>("Fallback")
-                        .HasColumnType("boolean")
-                        .HasColumnName("fallback");
-
-                    b.Property<int?>("PeriodId")
-                        .HasColumnType("integer")
-                        .HasColumnName("period_id");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("integer")
-                        .HasColumnName("position");
-
-                    b.Property<string>("Realm")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("realm");
-
-                    b.Property<bool>("Shared")
-                        .HasColumnType("boolean")
-                        .HasColumnName("shared");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.HasKey("Id")
-                        .HasName("pk_ruler_reign");
-
-                    b.HasIndex("PeriodId")
-                        .HasDatabaseName("ix_ruler_reign_period_id");
-
-                    b.HasIndex("EntityId", "PeriodId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_ruler_reign_entity_id_period_id");
-
-                    b.ToTable("ruler_reign", null, t =>
-                        {
-                            t.HasCheckConstraint("ck_ruler_reign_drawn_under", "drawn_under IS NULL OR drawn_under IN ('united', 'israel', 'judah', 'egypt', 'cush', 'aram', 'assyria', 'babylon', 'persia')");
-
-                            t.HasCheckConstraint("ck_ruler_reign_realm", "realm IN ('united', 'israel', 'judah', 'egypt', 'cush', 'aram', 'assyria', 'babylon', 'persia')");
-
-                            t.HasCheckConstraint("ck_ruler_reign_source_not_empty", "length(btrim(source)) > 0");
-                        });
-                });
-
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StatedVerseNumber", b =>
                 {
                     b.Property<int>("Id")
@@ -4461,55 +4313,6 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_place_location_entity_entity_id");
 
                     b.Navigation("Entity");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.ReignStatement", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
-                        .WithMany()
-                        .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_reign_statement_entity_entity_id");
-
-                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Ruler")
-                        .WithMany()
-                        .HasForeignKey("RulerEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_reign_statement_entity_ruler_entity_id");
-
-                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Through")
-                        .WithMany()
-                        .HasForeignKey("ThroughEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .HasConstraintName("fk_reign_statement_entity_through_entity_id");
-
-                    b.Navigation("Entity");
-
-                    b.Navigation("Ruler");
-
-                    b.Navigation("Through");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.RulerReign", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
-                        .WithMany()
-                        .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_ruler_reign_entity_entity_id");
-
-                    b.HasOne("Essenthos.Core.Database.Entities.Period", "Period")
-                        .WithMany()
-                        .HasForeignKey("PeriodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .HasConstraintName("fk_ruler_reign_period_period_id");
-
-                    b.Navigation("Entity");
-
-                    b.Navigation("Period");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StatedVerseNumber", b =>

@@ -263,7 +263,8 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                 refused);
         }
 
-        var (rows, missing) = Rows(root, candidates);
+        var people = entities.Where(e => e.Kind == EntityKind.Person).Select(e => e.Id).ToHashSet();
+        var (rows, missing) = Rows(root, candidates, PortraitFaces.Read(), people);
 
         // Its own transaction unless the caller already holds one, which is then the caller's to commit.
         await using var transaction = db.Database.CurrentTransaction is null
@@ -311,12 +312,19 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
     /// <summary>
     /// The rows the candidates make, in the order they were listed: the first primary of each kind an
     /// entity is given stays primary and any after it joins the gallery, and a candidate whose file is
-    /// absent or unreadable is counted and left out.
+    /// absent or unreadable is counted and left out. A person's picture whose face was measured
+    /// on this very file is given its head and shoulders, and its focus there where its list states
+    /// none; a picture of the glory has no face to frame.
     /// </summary>
-    internal (List<EntityImage> Rows, int Missing) Rows(string root, IEnumerable<Candidate> candidates)
+    internal (List<EntityImage> Rows, int Missing) Rows(
+        string root,
+        IEnumerable<Candidate> candidates,
+        IReadOnlyDictionary<string, PortraitFaces.Measured>? faces = null,
+        IReadOnlySet<int>? people = null)
     {
         var rows = new List<EntityImage>();
         var missing = 0;
+        var unmeasured = 0;
         var files = new Dictionary<string, ((int Width, int Height)? Size, string Digest)?>(StringComparer.Ordinal);
         var taken = new HashSet<(int, string)>();
         var primaries = new HashSet<(int, string)>();
@@ -354,6 +362,19 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
             var ordinal = ordinals.GetValueOrDefault(key);
             ordinals[key] = ordinal + 1;
 
+            var portrait = people?.Contains(candidate.EntityId) == true && !candidate.Glory;
+            var measured = faces?.GetValueOrDefault(candidate.File);
+            if (portrait && measured?.Digest != read.Digest)
+            {
+                unmeasured++;
+            }
+
+            var bust = portrait && measured is { Face: { } face } && measured.Digest == read.Digest
+                ? PortraitFaces.Bust(face, size.Width, size.Height)
+                : null;
+            var focus = candidate.Focus
+                        ?? (bust is var (x, y, across, down) ? (x + across / 2, y + down / 2) : null);
+
             rows.Add(new EntityImage
             {
                 EntityId = candidate.EntityId,
@@ -375,8 +396,12 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                 Licence = candidate.Licence,
                 LicenceUrl = candidate.LicenceUrl,
                 Source = candidate.Source,
-                FocusX = candidate.Focus?.X,
-                FocusY = candidate.Focus?.Y,
+                FocusX = focus?.X,
+                FocusY = focus?.Y,
+                BustX = bust?.X,
+                BustY = bust?.Y,
+                BustWidth = bust?.Width,
+                BustHeight = bust?.Height,
             });
         }
 
@@ -386,6 +411,14 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                 "{Missing} listed pictures have no readable file under {Root}. Run scripts/fetch-images.ps1, or " +
                 "put the file where its manifest entry says.",
                 missing, root);
+        }
+
+        if (unmeasured > 0 && faces is not null)
+        {
+            logger.LogWarning(
+                "{Unmeasured} pictures of people have no face measured on the file as it is now, and are shown " +
+                "small as whole figures. Run scripts/find-faces.ps1 under Windows PowerShell and rebuild.",
+                unmeasured);
         }
 
         return (rows, missing);

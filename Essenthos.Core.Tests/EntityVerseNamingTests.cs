@@ -66,6 +66,32 @@ public sealed class EntityVerseNamingTests : IDisposable
         order[0].Should().BeGreaterThan(order[1], "the verse naming him comes before the earlier verse that only concerns him");
     }
 
+    /// <summary>A word for God is named where a word of the verse carries its number, though no word is annotated to it.</summary>
+    [Fact]
+    public async Task AWordForGodIsNamedWhereItsNumberStands()
+    {
+        var hebrew = Corpus.Add(_db, "test-hebrew", TextKind.CriticalEdition, "hbo",
+            (1, 1, ["בָּרָא", "אֱלֹהִים"]),
+            (1, 2, ["וְהָאָרֶץ", "הָיְתָה"]));
+        await _db.SaveChangesAsync();
+        _db.WordAt(hebrew, 1, 1, 2).StrongNumber = "H430";
+        var elohim = new Entity { Kind = EntityKind.Term, Slug = "elohim", Name = "Elohim", SourceId = "test:elohim", Source = "test" };
+        elohim.Names.Add(new EntityName { Label = "Elohim", HebrewStrongNumber = "H430" });
+        _db.Entities.Add(elohim);
+        await _db.SaveChangesAsync();
+        _db.EntityVerses.AddRange(
+            new EntityVerse { EntityId = elohim.Id, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 1, Source = "test" },
+            new EntityVerse { EntityId = elohim.Id, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 2, Source = "test" });
+        await _db.SaveChangesAsync();
+
+        await _db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        _db.ChangeTracker.Clear();
+
+        (await _db.EntityVerses.Where(v => v.EntityId == elohim.Id).OrderBy(v => v.CanonicalVerse)
+                .Select(v => v.Names).ToListAsync())
+            .Should().Equal(true, false);
+    }
+
     /// <summary>
     /// <em>He is the father of Moab</em> lists the verse on the Moabites; <em>his father's</em>
     /// sheep at a place of the same name does not, because the father there is not in construct.
