@@ -278,6 +278,7 @@ internal sealed class DatasetLoader(
             await CountTheLexiconsPhrases(stoppingToken);
             await PutThePlacesOnTheMap(resources, stoppingToken);
             await CountTheCommandments(stoppingToken);
+            await SetTheProphetsInTheirKingsDays(stoppingToken);
             await FileTheVersesUnderNavesTopics(resources, stoppingToken);
             await TellTheVersesThatNameFromThoseThatConcern(stoppingToken);
             await PictureThePeopleAndPlaces(resources, stoppingToken);
@@ -1490,6 +1491,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<TitleLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The kings of Israel and Judah, the rulers of the nations the text brings into their reigns and
+    /// the prophets it places in their days. After the chronologies, whose periods the reigns are, and
+    /// after the folds, which can retire a record the file names.
+    /// </summary>
+    private async Task SetTheProphetsInTheirKingsDays(CancellationToken cancellationToken)
+    {
+        status.Starting("the kings and the prophets of their days");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<ReignLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 
