@@ -252,6 +252,14 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
 
     private const string OwnSourceId = "essenthos:title:";
 
+    /// <summary>
+    /// A rule chose these words, not the number alone. Pharaoh's number is also on the names of the
+    /// Pharaohs the text tells apart, and Caesar's on Augustus and Tiberius, so an annotation that
+    /// called itself a reading of the number would be a resolution of a name several records bear,
+    /// which the corpus check refuses.
+    /// </summary>
+    private static readonly string Method = EnumSpelling.Of(LinkMethod.RuleBased);
+
     /// <summary>What every annotation the word rules write says about itself.</summary>
     public const string WordSource =
         "Essenthos, the words each title is written with, found by the Strong number the Hebrew and Greek " +
@@ -295,7 +303,8 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
 
     /// <summary>The words these rules seeded last time, which is what decides whether to write again.</summary>
     private const string Seeded =
-        "SELECT word_id, entity_id FROM word_entity WHERE source = @source AND coalesce(note, '') NOT LIKE @carried";
+        "SELECT word_id, entity_id FROM word_entity WHERE source = @source AND method = @method " +
+        "AND coalesce(note, '') NOT LIKE @carried";
 
     /// <summary>
     /// The witness words each title's rules reach, annotated to it and carried along the links, unless
@@ -346,6 +355,7 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         await using (var command = new NpgsqlCommand(Seeded, connection))
         {
             command.Parameters.AddWithValue("source", WordSource);
+            command.Parameters.AddWithValue("method", Method);
             command.Parameters.AddWithValue("carried", Annotating.CarriedNote);
             command.CommandTimeout = Annotating.Patient;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -360,7 +370,7 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
             return (claimed.Count, null);
         }
 
-        var method = EnumSpelling.Of(LinkMethod.StrongNumber);
+        var method = Method;
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await Annotating.Run(connection, transaction, "DELETE FROM word_entity WHERE source = @source",
             cancellationToken, ("source", WordSource));

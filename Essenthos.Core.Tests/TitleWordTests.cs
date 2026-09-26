@@ -132,7 +132,7 @@ public sealed class TitleWordTests : IDisposable
         var word = _db.WordAt(_hebrew, 12, 15, 1);
         (await Named())[word.Id].Should().Be("pharaoh-title");
         var row = await _db.WordEntities.SingleAsync(a => a.WordId == word.Id);
-        row.Method.Should().Be(LinkMethod.StrongNumber);
+        row.Method.Should().Be(LinkMethod.RuleBased);
         row.Confidence.Should().Be(TitleLoader.ByTheNumber);
         (await _db.WordEntityClaims.CountAsync(c => c.WordEntityId == row.Id)).Should().Be(1);
         seed.Should().Be(6);
