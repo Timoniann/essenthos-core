@@ -155,6 +155,7 @@ v1.MapAuth(providers);
 v1.MapMe();
 v1.MapDevices();
 v1.MapBookmarks();
+v1.MapChapterBookmarks();
 v1.MapSuggestions();
 v1.MapAdmin();
 v1.MapCspReports();

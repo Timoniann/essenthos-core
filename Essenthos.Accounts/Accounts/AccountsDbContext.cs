@@ -30,6 +30,8 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
 
     public DbSet<Bookmark> Bookmarks => Set<Bookmark>();
 
+    public DbSet<ChapterBookmark> ChapterBookmarks => Set<ChapterBookmark>();
+
     public DbSet<Suggestion> Suggestions => Set<Suggestion>();
 
     public DbSet<SuggestionMessage> SuggestionMessages => Set<SuggestionMessage>();
@@ -131,6 +133,16 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             bookmark.Property(b => b.Comment).HasMaxLength(Limits.BookmarkComment);
             // What the reader opens a chapter by: every bookmark of theirs that starts in this book.
             bookmark.HasIndex(b => new { b.AccountId, b.Book, b.Chapter });
+            bookmark.HasIndex(b => b.Revision);
+            bookmark.HasOne<Account>().WithMany().HasForeignKey(b => b.AccountId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        model.Entity<ChapterBookmark>(bookmark =>
+        {
+            bookmark.ToTable("chapter_bookmark");
+            bookmark.Property(b => b.Id).ValueGeneratedNever();
+            bookmark.Property(b => b.Color).HasMaxLength(16);
+            bookmark.HasIndex(b => new { b.AccountId, b.Book, b.Chapter }).IsUnique();
             bookmark.HasIndex(b => b.Revision);
             bookmark.HasOne<Account>().WithMany().HasForeignKey(b => b.AccountId).OnDelete(DeleteBehavior.Cascade);
         });
@@ -254,6 +266,12 @@ public static class Limits
 
     /// <summary>How many bookmarks one account may make in a day: more than anyone marks by hand.</summary>
     public const int BookmarksPerDay = 500;
+
+    /// <summary>How many chapters one account keeps as places it is reading: more than a reader moves between.</summary>
+    public const int ChapterBookmarksPerAccount = 2_000;
+
+    /// <summary>The texts one chapter bookmark remembers as open: more panes than a screen holds.</summary>
+    public const int ChapterBookmarkTexts = 12;
 
     /// <summary>A suggestion's main text: a long letter, not a manuscript.</summary>
     public const int SuggestionBody = 10_000;
