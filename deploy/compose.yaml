@@ -59,6 +59,8 @@ services:
       READER_DEV_PASSWORD: ${READER_DEV_PASSWORD:?set READER_DEV_PASSWORD}
       APP_PASSWORD: ${APP_PASSWORD:?set APP_PASSWORD}
       APP_DEV_PASSWORD: ${APP_DEV_PASSWORD:?set APP_DEV_PASSWORD}
+      # The page counter's role and database, created only when this is set.
+      STATS_PASSWORD: ${STATS_PASSWORD:-}
     # Sized for the deployment droplet's 8 GB, holding production's corpus and its rollback, dev's pair
     # and the app databases in one shared_buffers pool.
     command:
@@ -81,8 +83,9 @@ services:
     # publication runs peaked at 1,085 MB on the workstation with twice this work_mem.
     shm_size: 2gb
     volumes:
-      # The droplet's own disk, never an attached volume: DigitalOcean's droplet backups do not
-      # include attached volumes, and this is the one path the daily backup has to cover.
+      # On the attached Block Storage volume, with everything else under HOST_DATA_ROOT, so a new
+      # machine takes over the data by having the volume attached. Droplet backups do not include
+      # a volume: what protects this is the nightly dumps below and their off-site copy.
       - ${POSTGRES_DATA:-${HOST_DATA_ROOT:?set HOST_DATA_ROOT}/postgres}:/var/lib/postgresql
       - ./initdb:/docker-entrypoint-initdb.d:ro
       # Where `forge publish` uploads a release; pg_restore reads it from here.
@@ -210,6 +213,8 @@ services:
       # Each environment's Content-Security-Policy: off, report-only or enforce. See the Caddyfile.
       SITE_CSP: ${SITE_CSP:-off}
       DEV_CSP: ${DEV_CSP:-report-only}
+      # Whether production's /count reaches the page counter (on) or is answered and dropped (off).
+      SITE_ANALYTICS: ${SITE_ANALYTICS:-off}
       ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL, the address Let's Encrypt writes to about expiring certificates}
       DEV_USER: ${DEV_USER:?set DEV_USER}
       DEV_PASSWORD_HASH: ${DEV_PASSWORD_HASH:?set DEV_PASSWORD_HASH with `docker run --rm caddy:2.10-alpine caddy hash-password`}
@@ -231,10 +236,10 @@ services:
       - web-dev
 
   backup:
-    # The accounts databases are the only thing on this box that cannot be rebuilt. The corpus is an
-    # artefact and needs no backup. Each dump is encrypted to the public key in backup-key/ as it is
-    # written; the droplet's own daily backup covers the folder, and backup-offsite copies it off the
-    # droplet where the owner has named a place.
+    # The accounts databases are the only thing on this box that cannot be rebuilt, with the page
+    # counts beside them where the counter is on. The corpus is an artefact and needs no backup. Each
+    # dump is encrypted to the public key in backup-key/ as it is written, and backup-offsite copies
+    # the folder off the machine where the owner has named a place.
     image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
     restart: unless-stopped
     logging: *logging
@@ -243,7 +248,8 @@ services:
       PGHOST: db
       PGUSER: postgres
       PGPASSWORD: ${POSTGRES_PASSWORD}
-      BACKUP_DATABASES: essenthos_app essenthos_app_dev
+      # A database the server does not have is skipped, so the counter's is named whether it is on or not.
+      BACKUP_DATABASES: essenthos_app essenthos_app_dev essenthos_stats
       BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
       BACKUP_HOUR_UTC: ${BACKUP_HOUR_UTC:-3}
     volumes:
@@ -251,6 +257,37 @@ services:
       - ${HOST_DATA_ROOT}/backups:/backups
       # The public key only. The private key that opens the dumps is never on this machine.
       - ${HOST_DATA_ROOT}/backup-key:/backup-key:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # The page counter: GoatCounter, counting production's pages by path, referrer, country, browser,
+  # system, screen class and language, with no cookie and nothing kept in the browser. It tells one
+  # visit from the next by the address and browser, in memory for at most eight hours, and never
+  # writes either. Off unless COMPOSE_PROFILES names it and SITE_ANALYTICS=on sends it production's
+  # /count; its counts live in essenthos_stats on the same Postgres and are backed up with the rest.
+  #
+  # The only public way in is /count, through the proxy. Its dashboard is bound to the machine's
+  # loopback and reached through an ssh tunnel, so the owner's sign-in never faces the internet.
+  # Pinned by digest; re-pin with
+  #   docker buildx imagetools inspect arp242/goatcounter:<version> --format '{{.Manifest.Digest}}'
+  analytics:
+    profiles: ["analytics"]
+    image: arp242/goatcounter:2.7.0@sha256:791df3317bf5ce379511181a4802aaf29127a318b372d4fe39ec59e1c5af44be
+    restart: unless-stopped
+    logging: *logging
+    mem_limit: 256m
+    # lib/pq reads the password from PGPASSWORD, so it is in neither the command line nor a log line.
+    command:
+      - serve
+      - -automigrate
+      - -listen=:8080
+      - -tls=http
+      - -db=postgresql+host=db port=5432 dbname=essenthos_stats user=essenthos_stats sslmode=disable
+    environment:
+      PGPASSWORD: ${STATS_PASSWORD:-}
+    ports:
+      - "127.0.0.1:${ANALYTICS_HOST_PORT:-8081}:8080"
     depends_on:
       db:
         condition: service_healthy
