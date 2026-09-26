@@ -81,6 +81,7 @@ public static class DatasetEndpoints
         var parsings = await Counted(db.WordParsings.Select(parsing => parsing.Source), cancellationToken);
         var commandments = await Counted(db.Commandments.Select(c => c.Source), cancellationToken);
         var topics = await Counted(db.Topics.Select(t => t.Source), cancellationToken);
+        var crossReferences = await Counted(db.CrossReferences.Select(r => r.Source), cancellationToken);
 
         var counted = new List<(Datasets.Dataset Dataset, DatasetCounts Counts)>();
         foreach (var dataset in Datasets.All)
@@ -125,12 +126,13 @@ public static class DatasetEndpoints
                 dataset.Links ? Of(links, dataset) : 0,
                 dataset.Parsings ? Of(parsings, dataset) : 0,
                 Of(commandments, dataset),
-                Of(topics, dataset));
+                Of(topics, dataset),
+                Of(crossReferences, dataset));
 
             if (counts is
                 {
                     Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Glosses: 0, Lexicon: 0, Links: 0, Parsings: 0,
-                    Commandments: 0, Topics: 0,
+                    Commandments: 0, Topics: 0, CrossReferences: 0,
                 })
             {
                 continue;
@@ -147,6 +149,7 @@ public static class DatasetEndpoints
             .Concat(Undeclared(parsings))
             .Concat(Undeclared(commandments))
             .Concat(Undeclared(topics))
+            .Concat(Undeclared(crossReferences))
             .GroupBy(row => row.Source, StringComparer.Ordinal)
             .Select(group => new UndeclaredResponse(group.Key, group.Sum(row => row.Rows)))
             .OrderByDescending(row => row.Rows)
@@ -223,6 +226,7 @@ public record WorkResponse(
 /// <param name="Parsings">Words given a second analysis by this dataset, beside the edition's own.</param>
 /// <param name="Commandments">Commandments of the Torah, as a count of them numbers them.</param>
 /// <param name="Topics">Subjects of a topical index, each with the verses filed under it.</param>
+/// <param name="CrossReferences">Verses sent to other verses, or detected parallels between verses.</param>
 public record DatasetCounts(
     int Entities,
     int Events,
@@ -233,7 +237,8 @@ public record DatasetCounts(
     int Links,
     int Parsings,
     int Commandments,
-    int Topics);
+    int Topics,
+    int CrossReferences);
 
 /// <param name="Source">
 /// The source string as the rows carry it. A dataset that reaches the database without being

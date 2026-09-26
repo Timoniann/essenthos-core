@@ -164,6 +164,11 @@
     "files": 4,
     "sha256": "dd3e31041750708cf4a70ded443fb3fc254118f2f80882dd86c9b67d701e19af"
   },
+  "OpenBibleCrossReferences": {
+    "bytes": 8316252,
+    "files": 2,
+    "sha256": "dff3905b7feda5f3d70180989758c10452b1decde22847cdd51eb9c08a7ac485"
+  },
   "PanLexSwadesh": {
     "bytes": 7279818,
     "files": 2891,
@@ -248,6 +253,11 @@
     "bytes": 9935139,
     "files": 31,
     "sha256": "5399d995478f1d3c6d1a599cda2a5ba7fcf09a2c668470b31777dd965cfdefc6"
+  },
+  "TreasuryOfScriptureKnowledge": {
+    "bytes": 2869668,
+    "files": 7,
+    "sha256": "173a3d1cc6963b5ddfa78052ebe470f8d853ad78b8162660f3297de61638620e"
   },
   "Tyndale1534": {
     "bytes": 1023063,

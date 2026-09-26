@@ -229,6 +229,28 @@ public static class Datasets
             + "Stephenson's work.",
             Sources.NavesPrefix),
 
+        // Off in the reader until the reader turns it on, and then the set it opens on. The page
+        // offering the file says CC BY and so does the file's own first line; neither names a
+        // version, and every version asks only for this credit.
+        new("openbible-cross-references", "OpenBible.info Cross References", "Stephen Smith",
+            "CC BY",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://www.openbible.info/labs/cross-references/",
+            "Some 345,000 pairs of verses a reader might turn to from one another, drawn mostly from "
+            + "the Treasury of Scripture Knowledge and ranked by the votes of the site's readers, "
+            + "which the reader shows beside a verse, the most voted first.",
+            CrossReferenceSets.OpenBibleSource),
+
+        // Public domain by age, and the module says so in its own configuration.
+        new("tsk", "The Treasury of Scripture Knowledge",
+            "Canne, Browne, Blayney, Scott and others, about 1880, from CrossWire's SWORD module",
+            "Public Domain",
+            "https://en.wikipedia.org/wiki/Public_domain",
+            "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=TSK",
+            "The classic set of cross references: every verse's references filed under the word of "
+            + "the verse they bear on, in the order the Treasury prints them.",
+            CrossReferenceSets.TreasurySource),
+
         new("wikidata", "Wikidata", "the Wikidata contributors", "CC0",
             "https://creativecommons.org/publicdomain/zero/1.0/",
             "https://query.wikidata.org",
@@ -562,7 +584,9 @@ public static class Datasets
             + "numbers both of them tag, the two Hebrew witnesses and the two Septuagints joined on "
             + "the letters each pair writes alike, and the English function words the tagging "
             + "skips, recovered from the morphology the Greek states. Every one of them carries a "
-            + "confidence, which is how it is told apart from testimony.",
+            + "confidence, which is how it is told apart from testimony. And the parallel passages — "
+            + "Samuel and Kings beside Chronicles, the psalms written twice, the first three gospels — "
+            + "found where two passages share a long run of the same words in the Hebrew or the Greek.",
             "Essenthos", Links: true, Methods:
             [
                 "the Strong numbers both editions carry",
@@ -588,6 +612,10 @@ public static class Datasets
                 // them. The row names the model and the day it was asked, so the pass is
                 // identifiable and removable, and the string is what it begins with.
                 Sources.DescriptorReadingPrefix,
+
+                // Passages that tell the same thing in the same words, found by the dictionary
+                // forms the two share; the row says which words those are.
+                CrossReferenceSets.ParallelsSource,
             ]),
     ];
 

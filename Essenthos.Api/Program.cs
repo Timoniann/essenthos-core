@@ -151,6 +151,7 @@ v1.MapBookAbout();
 v1.MapImages(images);
 v1.MapSettings();
 v1.MapCommandments();
+v1.MapCrossReferences();
 v1.MapDatasets();
 v1.MapAuth(providers);
 v1.MapMe();

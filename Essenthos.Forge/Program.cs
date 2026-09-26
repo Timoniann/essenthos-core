@@ -154,6 +154,7 @@ builder.Services.AddScoped<MisfiledVerseLoader>();
 builder.Services.AddScoped<EntityDescriptorLoader>();
 builder.Services.AddScoped<CommandmentLoader>();
 builder.Services.AddScoped<NaveTopicLoader>();
+builder.Services.AddScoped<Essenthos.Core.Loading.CrossReferences.CrossReferenceLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();
 builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<StrongRenderingLoader>();
@@ -859,6 +860,32 @@ if (args is ["reigns", ..])
     return 0;
 }
 
+// The cross references and the detected parallels, for a corpus loaded before they were. The load
+// does the same as one of its last steps; this is that step alone. --measure prints the parallel
+// passages the originals give, and writes nothing.
+if (args is ["cross-references", ..])
+{
+    using var referenceScope = app.Services.CreateScope();
+    var references = referenceScope.ServiceProvider
+        .GetRequiredService<Essenthos.Core.Loading.CrossReferences.CrossReferenceLoader>();
+    if (args.Contains("--measure"))
+    {
+        foreach (var line in await references.MeasureParallels())
+        {
+            Console.WriteLine(line);
+        }
+
+        return 0;
+    }
+
+    foreach (var outcome in await references.Load(resources))
+    {
+        Console.WriteLine(outcome);
+    }
+
+    return 0;
+}
+
 if (args is ["topics", ..])
 {
     using var topicScope = app.Services.CreateScope();
@@ -1097,6 +1124,6 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 logger.LogError(
     "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, marks, verify, release, publish, rollback, releases, align, names, possessives, unshare, score, score-anchors, syntax, "
-    + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images, dillmann and the evidentia family",
+    + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images, dillmann, cross-references and the evidentia family",
     args[0]);
 return 1;
