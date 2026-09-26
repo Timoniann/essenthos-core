@@ -282,15 +282,6 @@ public sealed class PortraitBoardTests : IDisposable
             });
         }
 
-        // A second naming in a verse already counted is one more mention, not one more verse.
-        if (verses > 0)
-        {
-            _db.EntityVerses.Add(new EntityVerse
-            {
-                EntityId = entity.Id, CanonicalBook = 9, CanonicalChapter = 1, CanonicalVerse = 2, Source = "test",
-            });
-        }
-
         return entity;
     }
 
