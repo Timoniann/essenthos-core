@@ -29151,15 +29151,15 @@
       "decidedAt": "2026-09-26T21:23:32.275Z"
     },
     "75917-75918": {
-      "decision": "confirm",
-      "note": "",
+      "decision": "remove",
+      "note": "owner in chat 2026-09-27: Hanamel is ben-dodi, son of my uncle — Shallum is Jeremiah's uncle, Hanamel his cousin",
       "subset": "inferred",
       "why": "not-asked",
       "a": "jeremiah-6",
       "relation": "cousin-of",
       "b": "shallum-13",
       "rows": "75917|75918",
-      "decidedAt": "2026-09-26T21:23:44.926Z"
+      "decidedAt": "2026-09-27T14:22:45.460Z"
     },
     "74677-74678": {
       "decision": "confirm",
