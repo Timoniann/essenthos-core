@@ -121,8 +121,7 @@ internal static partial class Periods
     {
         foreach (var period in periods.Where(p => p.Level > 0))
         {
-            period.Parent = eras.FirstOrDefault(
-                era => era.StartYear <= period.StartYear && period.StartYear <= era.EndYear);
+            period.Parent = EraOf(period, eras);
 
             if (period.Parent is { EndYear: { } closes } era && period.EndYear > closes)
             {
@@ -148,33 +147,58 @@ internal static partial class Periods
         var made = new List<Period>();
         var unpaired = 0;
 
+        var bySlug = events.ToDictionary(e => e.Slug, e => e, StringComparer.Ordinal);
+
         foreach (var opens in events.Where(e => e.Kind == "Begin"))
         {
-            if (!closes.TryGetValue(Key(opens), out var closed))
+            if (!closes.TryGetValue(Key(opens), out var closed)
+                && !(ClosedElsewhere.TryGetValue(opens.Slug, out var elsewhere)
+                     && bySlug.TryGetValue(elsewhere, out closed)))
             {
                 unpaired++;
                 continue;
             }
 
-            var kind = KindOf(opens.Slug, opens.Name);
-            made.Add(new Period
-            {
-                Slug = $"period-{Key(opens)}",
-                Name = Title(opens.Name),
-                Kind = kind,
-                Level = LevelOf(kind),
-                EntityId = opens.EntityId,
-                StartEventId = opens.Id,
-                EndEventId = closed.Id,
-                StartYear = opens.YearFromCreation,
-                EndYear = closed.YearFromCreation,
-                Notes = opens.Name.Contains('*') ? Inferred : null,
-                Source = source,
-            });
+            made.Add(Span(opens, closed, source));
         }
 
         return (made, unpaired);
     }
+
+    /// <summary>
+    /// Openings the dataset closes under another event's name, keyed by the opening's slug.
+    /// Pekah's sole reign opens as such and is never closed as such; the text closes it when Hoshea
+    /// smote him and reigned in his stead (2KI 15:30), which is the opening of Hoshea's reign.
+    /// </summary>
+    internal static readonly IReadOnlyDictionary<string, string> ClosedElsewhere =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["beginpekah1solereign"] = "beginhoshea1reign",
+        };
+
+    /// <summary>The band between an opening and its close.</summary>
+    internal static Period Span(Event opens, Event closed, string source)
+    {
+        var kind = KindOf(opens.Slug, opens.Name);
+        return new Period
+        {
+            Slug = $"period-{Key(opens)}",
+            Name = Title(opens.Name),
+            Kind = kind,
+            Level = LevelOf(kind),
+            EntityId = opens.EntityId,
+            StartEventId = opens.Id,
+            EndEventId = closed.Id,
+            StartYear = opens.YearFromCreation,
+            EndYear = closed.YearFromCreation,
+            Notes = opens.Name.Contains('*') ? Inferred : null,
+            Source = source,
+        };
+    }
+
+    /// <summary>The era a band opens in, for a band written after the eras were.</summary>
+    internal static Period? EraOf(Period period, IEnumerable<Period> eras) =>
+        eras.FirstOrDefault(era => era.StartYear <= period.StartYear && period.StartYear <= era.EndYear);
 
     /// <summary>
     /// A birth and a death are a period written in another vocabulary. Fifty-seven people have

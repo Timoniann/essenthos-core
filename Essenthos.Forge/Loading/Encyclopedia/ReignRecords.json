@@ -26,7 +26,7 @@
     {"slug": "shallum", "realm": "israel", "reigns": [{"period": "period-shallum1reign"}]},
     {"slug": "menachem", "realm": "israel", "reigns": [{"period": "period-menachem1reign"}]},
     {"slug": "pekahiah", "realm": "israel", "reigns": [{"period": "period-pekahiah1reign"}]},
-    {"slug": "pekah", "realm": "israel", "reigns": [{"period": "period-pekah1rivalreignwmenachem", "shared": true}, {"period": "period-pekah1rivalreignwpekahiah", "shared": true}]},
+    {"slug": "pekah", "realm": "israel", "reigns": [{"period": "period-pekah1rivalreignwmenachem", "shared": true}, {"period": "period-pekah1rivalreignwpekahiah", "shared": true}, {"period": "period-pekah1solereign"}]},
     {"slug": "hoshea", "realm": "israel", "reigns": [{"period": "period-hoshea1reign"}]},
     {"slug": "rehoboam", "realm": "judah", "reigns": [{"period": "period-rehoboam1reign"}]},
     {"slug": "abijam", "realm": "judah", "reigns": [{"period": "period-abijam1reign"}]},

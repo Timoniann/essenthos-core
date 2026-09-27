@@ -55,6 +55,7 @@ internal sealed partial class ReignLoader(AppDbContext db, ILogger<ReignLoader> 
     {
         var started = Stopwatch.StartNew();
         var decision = Records();
+        await CloseWhatTheDatasetLeftOpen(cancellationToken);
 
         var slugs = decision.Rulers.Select(r => r.Slug)
             .Concat(decision.Statements.SelectMany(s => new[] { s.Person, s.Ruler, s.Through }))
@@ -198,6 +199,40 @@ internal sealed partial class ReignLoader(AppDbContext db, ILogger<ReignLoader> 
 
     [GeneratedRegex(@"^(?<book>\S+) (?<chapter>\d+):(?<verse>\d+)(?:-(?<end>\d+))?$")]
     private static partial Regex Reference();
+
+    /// <summary>
+    /// The reigns <see cref="Periods.ClosedElsewhere"/> closes, for a corpus whose chronology was
+    /// loaded before it closed them. A reign the chronology already holds is left as it is.
+    /// </summary>
+    private async Task CloseWhatTheDatasetLeftOpen(CancellationToken cancellationToken)
+    {
+        var anchors = Periods.ClosedElsewhere.SelectMany(pair => new[] { pair.Key, pair.Value }).ToList();
+        var events = await db.Events
+            .Where(e => anchors.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug, StringComparer.Ordinal, cancellationToken);
+        var eras = await db.Periods
+            .Where(p => p.Kind == "era" && p.Realm == Realms.Scripture)
+            .ToListAsync(cancellationToken);
+
+        foreach (var (opening, closing) in Periods.ClosedElsewhere)
+        {
+            if (!events.TryGetValue(opening, out var opens) || !events.TryGetValue(closing, out var closed))
+            {
+                continue;
+            }
+
+            var period = Periods.Span(opens, closed, BibleDataLoader.Source);
+            if (await db.Periods.AnyAsync(p => p.Slug == period.Slug, cancellationToken))
+            {
+                continue;
+            }
+
+            period.Parent = Periods.EraOf(period, eras);
+            db.Periods.Add(period);
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+    }
 
     private static RulerReign Reign(
         RulerRecord ruler, int position, int entityId, ReignRecord? reign, int? periodId, string source) =>

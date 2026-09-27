@@ -137,6 +137,8 @@ public class AppDbContext : DbContext
 
     public DbSet<EntityImageCaption> EntityImageCaptions { get; set; } = null!;
 
+    public DbSet<EntityDistinguisher> EntityDistinguishers { get; set; } = null!;
+
     /// <summary>The passages an object's or an observance's page sends a reader to.</summary>
     public DbSet<EntityPassage> EntityPassages { get; set; } = null!;
 
@@ -348,6 +350,17 @@ public class AppDbContext : DbContext
 
             entity.ToTable("entity_image_caption", t =>
                 t.HasCheckConstraint("ck_entity_image_caption_text", "length(caption) > 0"));
+        });
+
+        modelBuilder.Entity<EntityDistinguisher>(entity =>
+        {
+            entity.HasOne(d => d.Entity)
+                .WithMany()
+                .HasForeignKey(d => d.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("entity_distinguisher", t =>
+                t.HasCheckConstraint("ck_entity_distinguisher_text", "length(text) > 0 AND length(source) > 0"));
         });
 
         modelBuilder.Entity<EntityPassage>(entity =>

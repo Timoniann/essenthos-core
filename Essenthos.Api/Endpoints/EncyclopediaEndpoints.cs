@@ -539,7 +539,7 @@ internal static class EncyclopediaEndpoints
             var named = await Ordered(db, localised, sort, q, language)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 40, 1, MostPerPage))
-                .Select(l => new { l.Entity.Slug, l.LocalName })
+                .Select(l => new { l.Entity.Id, l.Entity.Slug, l.LocalName })
                 .ToListAsync(cancellationToken);
 
             // The summaries in a second read, by slug: the projection is an expression the provider
@@ -549,7 +549,14 @@ internal static class EncyclopediaEndpoints
                 .Where(e => slugs.Contains(e.Slug))
                 .Select(Summary)
                 .ToDictionaryAsync(row => row.Slug, cancellationToken);
-            var page = named.Select(row => summaries[row.Slug] with { LocalName = row.LocalName }).ToList();
+            var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], language, cancellationToken);
+            var page = named
+                .Select(row => summaries[row.Slug] with
+                {
+                    LocalName = row.LocalName,
+                    LocalDistinguisher = lines.GetValueOrDefault(row.Id),
+                })
+                .ToList();
 
             var described = await Descriptors.Of(
                 db, page.Select(e => e.Slug), language, cancellationToken);
@@ -787,6 +794,8 @@ internal static class EncyclopediaEndpoints
                     db, entity.Slug, language, cancellationToken),
                 Location = entity.Location,
                 LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
+                    .GetValueOrDefault(entity.Id),
+                LocalDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], language, cancellationToken))
                     .GetValueOrDefault(entity.Id),
                 Renderings = await Renderings(db, entity.Id, cancellationToken),
                 Images = await ImageEndpoints.Of(
@@ -1523,6 +1532,13 @@ internal record EntitySummaryResponse(
     /// </summary>
     public string? LocalName { get; init; }
 
+    /// <summary>
+    /// The line under the name in the language asked for, where this corpus wrote the English line
+    /// and has rendered it; null otherwise, and a client shows <see cref="Distinguisher"/> as the
+    /// source's words.
+    /// </summary>
+    public string? LocalDistinguisher { get; init; }
+
     /// <summary>The picture the entity's page leads with, to show small; null where it has none.</summary>
     public EntityThumbnailResponse? Thumbnail { get; init; }
 
@@ -1698,6 +1714,9 @@ internal record EntityResponse(
 
     /// <summary>The name in the language asked for, as on the index; null where there is none.</summary>
     public string? LocalName { get; init; }
+
+    /// <summary>The line under the name in the language asked for, as on the index; null where there is none.</summary>
+    public string? LocalDistinguisher { get; init; }
 
     /// <summary>
     /// How each text prints the name, counted from the words that name this entity there: one entry

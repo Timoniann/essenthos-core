@@ -148,6 +148,7 @@ builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<ReignLoader>();
 builder.Services.AddScoped<OwnNameLoader>();
 builder.Services.AddScoped<ThingLoader>();
+builder.Services.AddScoped<DistinguisherLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddSingleton(_ => ReviewLists.Read(builder.Configuration));
 builder.Services.AddScoped<MisfiledVerseLoader>();
@@ -857,6 +858,15 @@ if (args is ["reigns", ..])
 {
     using var reignScope = app.Services.CreateScope();
     Console.WriteLine(await reignScope.ServiceProvider.GetRequiredService<ReignLoader>().Load());
+    return 0;
+}
+
+// The lines this corpus wrote under its own records, in every reader's language, for a corpus
+// loaded before they were. The load does this after the records; this is that step alone.
+if (args is ["distinguishers", ..])
+{
+    using var distinguisherScope = app.Services.CreateScope();
+    Console.WriteLine(await distinguisherScope.ServiceProvider.GetRequiredService<DistinguisherLoader>().Load());
     return 0;
 }
 

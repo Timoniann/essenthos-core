@@ -1,0 +1,880 @@
+{
+  "source": "Essenthos, its own lines rendered into Ukrainian, German and Spanish by a language model on 2026-09-27",
+  "records": [
+    {
+      "slug": "tabernacle",
+      "english": "the portable tent-sanctuary Israel made at Sinai and carried through the wilderness (EXO 25:8-9)",
+      "ukr": "переносна святиня-намет, яку Ізраїль зробив біля Синаю і носив із собою пустинею (EXO 25:8-9)",
+      "deu": "das tragbare Zeltheiligtum, das Israel am Sinai anfertigte und durch die Wüste mit sich trug (EXO 25:8-9)",
+      "spa": "el santuario portátil en forma de tienda que Israel hizo en el Sinaí y llevó por el desierto (EXO 25:8-9)"
+    },
+    {
+      "slug": "menorah",
+      "english": "the seven-lamp lampstand of beaten gold that stood in the tabernacle's holy place (EXO 25:31-40)",
+      "ukr": "свічник на сім лампад із кованого золота, що стояв у святині скинії (EXO 25:31-40)",
+      "deu": "der Leuchter mit sieben Lampen aus getriebenem Gold, der im Heiligen der Stiftshütte stand (EXO 25:31-40)",
+      "spa": "el candelero de siete lámparas, de oro labrado a martillo, que estaba en el lugar santo del tabernáculo (EXO 25:31-40)"
+    },
+    {
+      "slug": "table-of-showbread",
+      "english": "the gold-overlaid acacia table in the holy place on which the bread of the presence was set (EXO 25:23-30)",
+      "ukr": "стіл з акаційового дерева, обкладений золотом, що стояв у святині і на який клали хліби показні (EXO 25:23-30)",
+      "deu": "der mit Gold überzogene Tisch aus Akazienholz im Heiligen, auf den die Schaubrote gelegt wurden (EXO 25:23-30)",
+      "spa": "la mesa de madera de acacia cubierta de oro, en el lugar santo, sobre la que se ponían los panes de la proposición (EXO 25:23-30)"
+    },
+    {
+      "slug": "altar-of-incense",
+      "english": "the small gold-overlaid acacia altar before the veil on which incense was burned (EXO 30:1-10)",
+      "ukr": "невеликий жертівник з акаційового дерева, обкладений золотом, що стояв перед завісою і на якому палили кадило (EXO 30:1-10)",
+      "deu": "der kleine, mit Gold überzogene Altar aus Akazienholz vor dem Vorhang, auf dem Räucherwerk verbrannt wurde (EXO 30:1-10)",
+      "spa": "el pequeño altar de madera de acacia cubierto de oro, delante del velo, sobre el que se quemaba el incienso (EXO 30:1-10)"
+    },
+    {
+      "slug": "ark-of-the-covenant",
+      "english": "the gold-overlaid chest of acacia wood made at Sinai to hold the tablets of the testimony (EXO 25:10-22)",
+      "ukr": "обкладена золотом скриня з акаційового дерева, зроблена біля Синаю, щоб зберігати в ній таблиці свідоцтва (EXO 25:10-22)",
+      "deu": "der mit Gold überzogene Kasten aus Akazienholz, am Sinai angefertigt, um die Tafeln des Zeugnisses aufzunehmen (EXO 25:10-22)",
+      "spa": "el cofre de madera de acacia cubierto de oro, hecho en el Sinaí para guardar las tablas del testimonio (EXO 25:10-22)"
+    },
+    {
+      "slug": "jar-of-manna",
+      "english": "the jar holding an omer of manna laid up before the LORD for Israel's generations (EXO 16:32-34)",
+      "ukr": "посудина з омером манни, поставлена перед Господом на зберігання для Ізраїлевих поколінь (EXO 16:32-34)",
+      "deu": "der Krug mit einem Gomer Manna, vor dem HERRN aufbewahrt für die Geschlechter Israels (EXO 16:32-34)",
+      "spa": "la vasija con un gomer de maná, guardada delante del SEÑOR para las generaciones de Israel (EXO 16:32-34)"
+    },
+    {
+      "slug": "aarons-rod",
+      "english": "the rod of Aaron that became a serpent before Pharaoh and budded before the testimony (NUM 17:8)",
+      "ukr": "Ааронова палиця, що обернулася на змія перед фараоном і зацвіла перед свідоцтвом (NUM 17:8)",
+      "deu": "der Stab Aarons, der vor dem Pharao zur Schlange wurde und vor dem Zeugnis sprosste (NUM 17:8)",
+      "spa": "la vara de Aarón que se convirtió en culebra delante de Faraón y reverdeció delante del testimonio (NUM 17:8)"
+    },
+    {
+      "slug": "tablets-of-the-covenant",
+      "english": "the two tablets of stone, written by the finger of God, on which the ten commandments were given (EXO 31:18)",
+      "ukr": "дві кам'яні таблиці, написані Божим пальцем, на яких було дано десять заповідей (EXO 31:18)",
+      "deu": "die zwei steinernen Tafeln, beschrieben mit dem Finger Gottes, auf denen die Zehn Gebote gegeben wurden (EXO 31:18)",
+      "spa": "las dos tablas de piedra, escritas con el dedo de Dios, en las que se dieron los diez mandamientos (EXO 31:18)"
+    },
+    {
+      "slug": "mercy-seat",
+      "english": "the slab of pure gold with two cherubim that lay upon the ark of the covenant (EXO 25:17-22)",
+      "ukr": "плита з чистого золота з двома херувимами, що лежала на ковчезі заповіту (EXO 25:17-22)",
+      "deu": "die Platte aus reinem Gold mit zwei Cherubim, die auf der Bundeslade lag (EXO 25:17-22)",
+      "spa": "la plancha de oro puro con dos querubines que descansaba sobre el arca del pacto (EXO 25:17-22)"
+    },
+    {
+      "slug": "veil-of-the-sanctuary",
+      "english": "the woven curtain that divided the holy place from the most holy place in the tabernacle (EXO 26:31-33)",
+      "ukr": "виткана завіса, що відділяла у скинії святиню від Святого Святих (EXO 26:31-33)",
+      "deu": "der gewebte Vorhang, der in der Stiftshütte das Heilige vom Allerheiligsten trennte (EXO 26:31-33)",
+      "spa": "la cortina tejida que separaba el lugar santo del lugar santísimo en el tabernáculo (EXO 26:31-33)"
+    },
+    {
+      "slug": "bronze-altar",
+      "english": "the bronze-overlaid acacia altar of burnt offering that stood before the door of the tabernacle (EXO 27:1-8)",
+      "ukr": "обкладений міддю жертівник цілопалення з акаційового дерева, що стояв перед входом до скинії (EXO 27:1-8)",
+      "deu": "der mit Bronze überzogene Brandopferaltar aus Akazienholz, der vor dem Eingang der Stiftshütte stand (EXO 27:1-8)",
+      "spa": "el altar del holocausto, de madera de acacia cubierto de bronce, que estaba delante de la puerta del tabernáculo (EXO 27:1-8)"
+    },
+    {
+      "slug": "bronze-laver",
+      "english": "the bronze basin on a bronze base between the tent of meeting and the altar, where the priests washed (EXO 30:17-21)",
+      "ukr": "мідяна умивальниця на мідяній підставі між скинією заповіту та жертівником, де милися священики (EXO 30:17-21)",
+      "deu": "das bronzene Becken auf bronzenem Gestell zwischen dem Zelt der Begegnung und dem Altar, an dem sich die Priester wuschen (EXO 30:17-21)",
+      "spa": "la fuente de bronce con su base de bronce, entre el tabernáculo de reunión y el altar, donde se lavaban los sacerdotes (EXO 30:17-21)"
+    },
+    {
+      "slug": "noahs-ark",
+      "english": "the vessel of gopher wood that Noah built at God's command to come through the flood (GEN 6:14-16)",
+      "ukr": "судно з дерева ґофер, яке Ной збудував з Божого наказу, щоб уціліти в потопі (GEN 6:14-16)",
+      "deu": "das Schiff aus Goferholz, das Noah auf Gottes Befehl baute, um durch die Flut zu kommen (GEN 6:14-16)",
+      "spa": "la embarcación de madera de gofer que Noé construyó por mandato de Dios para atravesar el diluvio (GEN 6:14-16)"
+    },
+    {
+      "slug": "jachin-pillar",
+      "english": "the bronze pillar Solomon set up on the right of the temple porch (1KI 7:21)",
+      "ukr": "мідяний стовп, який Соломон поставив праворуч від притвору храму (1KI 7:21)",
+      "deu": "die bronzene Säule, die Salomo rechts an der Vorhalle des Tempels aufrichtete (1KI 7:21)",
+      "spa": "la columna de bronce que Salomón erigió a la derecha del pórtico del templo (1KI 7:21)"
+    },
+    {
+      "slug": "boaz-pillar",
+      "english": "the bronze pillar Solomon set up on the left of the temple porch (1KI 7:21)",
+      "ukr": "мідяний стовп, який Соломон поставив ліворуч від притвору храму (1KI 7:21)",
+      "deu": "die bronzene Säule, die Salomo links an der Vorhalle des Tempels aufrichtete (1KI 7:21)",
+      "spa": "la columna de bronce que Salomón erigió a la izquierda del pórtico del templo (1KI 7:21)"
+    },
+    {
+      "slug": "solomons-temple",
+      "english": "the house of the LORD that Solomon built in Jerusalem and the Babylonians burnt (1KI 6:37)",
+      "ukr": "дім Господній, що його Соломон збудував у Єрусалимі і який спалили вавилоняни (1KI 6:37)",
+      "deu": "das Haus des HERRN, das Salomo in Jerusalem baute und die Babylonier verbrannten (1KI 6:37)",
+      "spa": "la casa del SEÑOR que Salomón edificó en Jerusalén y que los babilonios quemaron (1KI 6:37)"
+    },
+    {
+      "slug": "second-temple",
+      "english": "the house of God rebuilt at Jerusalem after the exile and finished in the sixth year of Darius (EZR 6:15)",
+      "ukr": "Божий дім, відбудований в Єрусалимі після полону і закінчений шостого року Дарія (EZR 6:15)",
+      "deu": "das Haus Gottes, nach dem Exil in Jerusalem wieder aufgebaut und im sechsten Jahr des Darius vollendet (EZR 6:15)",
+      "spa": "la casa de Dios reedificada en Jerusalén después del exilio y terminada en el sexto año de Darío (EZR 6:15)"
+    },
+    {
+      "slug": "herods-temple",
+      "english": "the temple standing in Jerusalem in the Gospels and Acts, forty-six years in building (JHN 2:20)",
+      "ukr": "храм, що стоїть в Єрусалимі в Євангеліях і Діях, будований сорок шість років (JHN 2:20)",
+      "deu": "der Tempel in Jerusalem zur Zeit der Evangelien und der Apostelgeschichte, an dem sechsundvierzig Jahre gebaut wurde (JHN 2:20)",
+      "spa": "el templo de Jerusalén en tiempos de los Evangelios y de Hechos, cuya edificación duró cuarenta y seis años (JHN 2:20)"
+    },
+    {
+      "slug": "ezekiels-temple",
+      "english": "the temple Ezekiel was shown and measured in a vision (EZK 41:1)",
+      "ukr": "храм, який Єзекіїлеві було показано й виміряно у видінні (EZK 41:1)",
+      "deu": "der Tempel, der Hesekiel in einer Vision gezeigt und vermessen wurde (EZK 41:1)",
+      "spa": "el templo que le fue mostrado a Ezequiel y medido en una visión (EZK 41:1)"
+    },
+    {
+      "slug": "heavenly-sanctuary",
+      "english": "the temple of God in heaven that John saw opened (REV 11:19)",
+      "ukr": "Божий храм на небі, який Іван бачив відчиненим (REV 11:19)",
+      "deu": "der Tempel Gottes im Himmel, den Johannes geöffnet sah (REV 11:19)",
+      "spa": "el templo de Dios en el cielo que Juan vio abierto (REV 11:19)"
+    },
+    {
+      "slug": "holy-of-holies",
+      "english": "the innermost room of the tabernacle and the temple, behind the veil, where the ark stood (1KI 6:16)",
+      "ukr": "найглибша частина скинії та храму, за завісою, де стояв ковчег (1KI 6:16)",
+      "deu": "der innerste Raum der Stiftshütte und des Tempels, hinter dem Vorhang, wo die Lade stand (1KI 6:16)",
+      "spa": "el recinto más interior del tabernáculo y del templo, detrás del velo, donde estaba el arca (1KI 6:16)"
+    },
+    {
+      "slug": "bronze-sea",
+      "english": "the great cast bronze basin on twelve oxen in Solomon's temple (1KI 7:23; 2KI 25:13)",
+      "ukr": "велика лита мідяна чаша на дванадцятьох волах у Соломоновому храмі (1KI 7:23; 2KI 25:13)",
+      "deu": "das große gegossene Bronzebecken auf zwölf Rindern in Salomos Tempel (1KI 7:23; 2KI 25:13)",
+      "spa": "la gran fuente de bronce fundido sobre doce bueyes en el templo de Salomón (1KI 7:23; 2KI 25:13)"
+    },
+    {
+      "slug": "tower-of-babel",
+      "english": "the tower begun with the city in the plain of Shinar (GEN 11:4)",
+      "ukr": "башта, яку почали будувати разом із містом у долині в краю Шінеар (GEN 11:4)",
+      "deu": "der Turm, der zusammen mit der Stadt in der Ebene von Schinar begonnen wurde (GEN 11:4)",
+      "spa": "la torre comenzada junto con la ciudad en la llanura de Sinar (GEN 11:4)"
+    },
+    {
+      "slug": "solomons-palace",
+      "english": "the king's house Solomon built for himself in thirteen years (1KI 7:1; 9:1)",
+      "ukr": "царський дім, який Соломон будував собі тринадцять років (1KI 7:1; 9:1)",
+      "deu": "das Königshaus, das Salomo sich in dreizehn Jahren baute (1KI 7:1; 9:1)",
+      "spa": "la casa real que Salomón se edificó en trece años (1KI 7:1; 9:1)"
+    },
+    {
+      "slug": "tower-of-siloam",
+      "english": "the tower in Siloam whose fall killed eighteen people (LUK 13:4)",
+      "ukr": "башта в Сілоамі, що завалилася й побила вісімнадцятьох людей (LUK 13:4)",
+      "deu": "der Turm in Siloah, dessen Einsturz achtzehn Menschen tötete (LUK 13:4)",
+      "spa": "la torre de Siloé cuya caída mató a dieciocho personas (LUK 13:4)"
+    },
+    {
+      "slug": "hezekiahs-tunnel",
+      "english": "the conduit by which Hezekiah brought water into Jerusalem (2KI 20:20)",
+      "ukr": "водотяг, яким Єзекія провів воду до Єрусалиму (2KI 20:20)",
+      "deu": "die Wasserleitung, durch die Hiskia Wasser nach Jerusalem leitete (2KI 20:20)",
+      "spa": "el conducto por el que Ezequías llevó agua a Jerusalén (2KI 20:20)"
+    },
+    {
+      "slug": "tent-of-meeting-outside-the-camp",
+      "english": "the tent Moses pitched outside the camp, far off, before the tabernacle was made (EXO 33:7)",
+      "ukr": "намет, який Мойсей розбив поза табором, далеко від табору, ще до того, як було зроблено скинію (EXO 33:7)",
+      "deu": "das Zelt, das Mose außerhalb des Lagers, fern vom Lager, aufschlug, bevor die Stiftshütte gemacht wurde (EXO 33:7)",
+      "spa": "la tienda que Moisés levantó fuera del campamento, lejos, antes de que se hiciera el tabernáculo (EXO 33:7)"
+    },
+    {
+      "slug": "davids-tent-for-the-ark",
+      "english": "the tent David pitched in the city of David for the ark of God (2SA 6:17)",
+      "ukr": "намет, який Давид розбив у Давидовому місті для Божого ковчега (2SA 6:17)",
+      "deu": "das Zelt, das David in der Stadt Davids für die Lade Gottes aufschlug (2SA 6:17)",
+      "spa": "la tienda que David levantó en la ciudad de David para el arca de Dios (2SA 6:17)"
+    },
+    {
+      "slug": "nehushtan",
+      "english": "the serpent of bronze Moses set on a pole in the wilderness, later broken by Hezekiah (NUM 21:9)",
+      "ukr": "мідяний змій, якого Мойсей поставив на жердину в пустині і якого згодом розбив Єзекія (NUM 21:9)",
+      "deu": "die Schlange aus Bronze, die Mose in der Wüste auf einer Stange aufrichtete und die Hiskia später zerschlug (NUM 21:9)",
+      "spa": "la serpiente de bronce que Moisés puso sobre un asta en el desierto, hecha pedazos más tarde por Ezequías (NUM 21:9)"
+    },
+    {
+      "slug": "high-priests-ephod",
+      "english": "the gold, blue, purple and scarlet shoulder garment made for Aaron, bearing two onyx stones (EXO 28:6-14)",
+      "ukr": "наплічне вбрання із золота, блакиті, пурпуру й червені, зроблене для Аарона, з двома оніксовими каменями (EXO 28:6-14)",
+      "deu": "das Schulterkleid aus Gold, blauem und rotem Purpur und Scharlach, für Aaron angefertigt, mit zwei Onyxsteinen (EXO 28:6-14)",
+      "spa": "la vestidura de hombros de oro, azul, púrpura y carmesí hecha para Aarón, con dos piedras de ónice (EXO 28:6-14)"
+    },
+    {
+      "slug": "breastpiece-of-judgment",
+      "english": "the square folded breastpiece set with twelve stones for the tribes, fastened to the high priest's ephod (EXO 28:15-30)",
+      "ukr": "квадратний, складений удвоє нагрудник із дванадцятьма каменями за племенами, прикріплений до ефода первосвященика (EXO 28:15-30)",
+      "deu": "die viereckige, doppelt gelegte Brusttasche mit zwölf Steinen für die Stämme, am Ephod des Hohenpriesters befestigt (EXO 28:15-30)",
+      "spa": "el pectoral cuadrado y doble, engastado con doce piedras por las tribus, sujeto al efod del sumo sacerdote (EXO 28:15-30)"
+    },
+    {
+      "slug": "urim-and-thummim",
+      "english": "the means of judgment put in the high priest's breastpiece (EXO 28:30)",
+      "ukr": "засіб суду, покладений у нагрудник первосвященика (EXO 28:30)",
+      "deu": "das Mittel des Rechtsspruchs, in die Brusttasche des Hohenpriesters gelegt (EXO 28:30)",
+      "spa": "el medio de juicio puesto en el pectoral del sumo sacerdote (EXO 28:30)"
+    },
+    {
+      "slug": "holy-crown",
+      "english": "the plate of pure gold engraved 'Holiness to the LORD' on the front of the high priest's mitre (EXO 28:36-38)",
+      "ukr": "пластинка з чистого золота з вирізьбленим написом «Святість для Господа» спереду на завої первосвященика (EXO 28:36-38)",
+      "deu": "das Stirnblatt aus reinem Gold mit der Gravur „Heilig dem HERRN“ vorn am Kopfbund des Hohenpriesters (EXO 28:36-38)",
+      "spa": "la lámina de oro puro grabada con «Santidad al SEÑOR» en la parte delantera de la mitra del sumo sacerdote (EXO 28:36-38)"
+    },
+    {
+      "slug": "silver-trumpets",
+      "english": "the pair of hammered silver trumpets made in the wilderness to call the assembly and move the camps (NUM 10:2)",
+      "ukr": "дві сурми з кованого срібла, зроблені в пустині, щоб скликати громаду й рушати таборами (NUM 10:2)",
+      "deu": "die zwei Trompeten aus getriebenem Silber, in der Wüste angefertigt, um die Gemeinde zusammenzurufen und die Lager aufbrechen zu lassen (NUM 10:2)",
+      "spa": "las dos trompetas de plata labrada a martillo, hechas en el desierto para convocar a la congregación y mover los campamentos (NUM 10:2)"
+    },
+    {
+      "slug": "golden-calf",
+      "english": "the molten calf Aaron made from the people's gold at Sinai (EXO 32:4)",
+      "ukr": "лите теля, яке Аарон зробив біля Синаю із золота народу (EXO 32:4)",
+      "deu": "das gegossene Kalb, das Aaron am Sinai aus dem Gold des Volkes machte (EXO 32:4)",
+      "spa": "el becerro de fundición que Aarón hizo con el oro del pueblo en el Sinaí (EXO 32:4)"
+    },
+    {
+      "slug": "jeroboams-golden-calves",
+      "english": "the two calves of gold Jeroboam set up at Bethel and Dan (1KI 12:28-29)",
+      "ukr": "двоє золотих тельців, яких Єровоам поставив у Бет-Елі та в Дані (1KI 12:28-29)",
+      "deu": "die zwei goldenen Kälber, die Jerobeam in Bethel und Dan aufstellte (1KI 12:28-29)",
+      "spa": "los dos becerros de oro que Jeroboam puso en Bet-el y en Dan (1KI 12:28-29)"
+    },
+    {
+      "slug": "nebuchadnezzars-image",
+      "english": "the image of gold sixty cubits high set up in the plain of Dura (DAN 3:1)",
+      "ukr": "золотий бовван заввишки шістдесят ліктів, поставлений у долині Дура (DAN 3:1)",
+      "deu": "das goldene Bild, sechzig Ellen hoch, das in der Ebene Dura aufgestellt wurde (DAN 3:1)",
+      "spa": "la estatua de oro de sesenta codos de altura levantada en el campo de Dura (DAN 3:1)"
+    },
+    {
+      "slug": "nebuchadnezzars-dream-image",
+      "english": "the great image of gold, silver, brass, iron and clay that Nebuchadnezzar saw in his dream (DAN 2:31-35)",
+      "ukr": "великий бовван із золота, срібла, міді, заліза й глини, якого Навуходоносор бачив уві сні (DAN 2:31-35)",
+      "deu": "das große Bild aus Gold, Silber, Erz, Eisen und Ton, das Nebukadnezar in seinem Traum sah (DAN 2:31-35)",
+      "spa": "la gran imagen de oro, plata, bronce, hierro y barro que Nabucodonosor vio en su sueño (DAN 2:31-35)"
+    },
+    {
+      "slug": "goliaths-sword",
+      "english": "the Philistine's sword with which David beheaded him, later kept at Nob (1SA 21:9)",
+      "ukr": "меч филистимлянина, яким Давид відтяв йому голову, що згодом зберігався в Нові (1SA 21:9)",
+      "deu": "das Schwert des Philisters, mit dem David ihm den Kopf abschlug, später in Nob aufbewahrt (1SA 21:9)",
+      "spa": "la espada del filisteo con la que David le cortó la cabeza, guardada después en Nob (1SA 21:9)"
+    },
+    {
+      "slug": "moses-staff",
+      "english": "the rod in Moses' hand at the bush, called the rod of God, with which he did the signs (EXO 4:2-20)",
+      "ukr": "палиця в руці Мойсея біля куща, названа Божою палицею, якою він чинив ознаки (EXO 4:2-20)",
+      "deu": "der Stab in der Hand des Mose am Dornbusch, Stab Gottes genannt, mit dem er die Zeichen tat (EXO 4:2-20)",
+      "spa": "la vara en la mano de Moisés junto a la zarza, llamada la vara de Dios, con la que hizo las señales (EXO 4:2-20)"
+    },
+    {
+      "slug": "jacobs-pillar",
+      "english": "the stone Jacob slept on, set up as a pillar and anointed at Bethel (GEN 28:18)",
+      "ukr": "камінь, на якому спав Яків і який він поставив як пам'ятник і помазав у Бет-Елі (GEN 28:18)",
+      "deu": "der Stein, auf dem Jakob schlief, in Bethel als Steinmal aufgerichtet und gesalbt (GEN 28:18)",
+      "spa": "la piedra sobre la que durmió Jacob, alzada por señal y ungida en Bet-el (GEN 28:18)"
+    },
+    {
+      "slug": "altar-of-witness",
+      "english": "the great altar the eastern tribes built by the Jordan as a witness, not for sacrifice (JOS 22:10-34)",
+      "ukr": "великий жертівник, який східні племена збудували біля Йордану на свідчення, а не для жертв (JOS 22:10-34)",
+      "deu": "der große Altar, den die östlichen Stämme am Jordan als Zeugen bauten, nicht zum Opfern (JOS 22:10-34)",
+      "spa": "el gran altar que las tribus del oriente edificaron junto al Jordán como testimonio, no para sacrificios (JOS 22:10-34)"
+    },
+    {
+      "slug": "jordan-memorial-stones",
+      "english": "the twelve stones taken from the bed of the Jordan and set up at Gilgal as a memorial of the crossing (JOS 4:20)",
+      "ukr": "дванадцять каменів, узятих із дна Йордану й поставлених у Ґілґалі на пам'ять про перехід (JOS 4:20)",
+      "deu": "die zwölf Steine, aus dem Flussbett des Jordan genommen und in Gilgal zur Erinnerung an den Durchzug aufgerichtet (JOS 4:20)",
+      "spa": "las doce piedras tomadas del cauce del Jordán y erigidas en Gilgal en memoria del paso (JOS 4:20)"
+    },
+    {
+      "slug": "ogs-bed",
+      "english": "the iron bedstead of Og king of Bashan, kept in Rabbah of the Ammonites (DEU 3:11)",
+      "ukr": "залізне ложе Оґа, царя Башану, що зберігалося в Раббі аммонітян (DEU 3:11)",
+      "deu": "das eiserne Bett Ogs, des Königs von Baschan, in Rabba der Ammoniter aufbewahrt (DEU 3:11)",
+      "spa": "la cama de hierro de Og, rey de Basán, guardada en Rabá de los amonitas (DEU 3:11)"
+    },
+    {
+      "slug": "gideons-ephod",
+      "english": "the ephod Gideon made from the Midianite gold and set up in Ophrah (JDG 8:27)",
+      "ukr": "ефод, який Гедеон зробив із мідіянського золота й поставив в Офрі (JDG 8:27)",
+      "deu": "das Ephod, das Gideon aus dem Gold der Midianiter machte und in Ofra aufstellte (JDG 8:27)",
+      "spa": "el efod que Gedeón hizo con el oro de los madianitas y puso en Ofra (JDG 8:27)"
+    },
+    {
+      "slug": "altar-the-lord-is-my-banner",
+      "english": "the altar Moses built and named after the victory over Amalek (EXO 17:15)",
+      "ukr": "жертівник, який Мойсей збудував і назвав після перемоги над Амаликом (EXO 17:15)",
+      "deu": "der Altar, den Mose nach dem Sieg über Amalek baute und benannte (EXO 17:15)",
+      "spa": "el altar que Moisés edificó y al que dio nombre tras la victoria sobre Amalec (EXO 17:15)"
+    },
+    {
+      "slug": "altar-the-lord-is-peace",
+      "english": "the altar Gideon built at Ophrah where the angel of the LORD appeared to him (JDG 6:24)",
+      "ukr": "жертівник, який Гедеон збудував в Офрі, де йому з'явився Ангел Господній (JDG 6:24)",
+      "deu": "der Altar, den Gideon in Ofra baute, wo ihm der Engel des HERRN erschien (JDG 6:24)",
+      "spa": "el altar que Gedeón edificó en Ofra, donde se le apareció el ángel del SEÑOR (JDG 6:24)"
+    },
+    {
+      "slug": "altar-el-elohe-israel",
+      "english": "the altar Jacob erected on the ground he bought before Shechem (GEN 33:20)",
+      "ukr": "жертівник, який Яків поставив на ділянці землі, купленій ним перед Шехемом (GEN 33:20)",
+      "deu": "der Altar, den Jakob auf dem Grundstück errichtete, das er vor Sichem gekauft hatte (GEN 33:20)",
+      "spa": "el altar que Jacob erigió en la parte del campo que compró delante de Siquem (GEN 33:20)"
+    },
+    {
+      "slug": "cross-of-christ",
+      "english": "the cross on which Jesus was crucified at Golgotha (JHN 19:17)",
+      "ukr": "хрест, на якому розіп'яли Ісуса на Голгофі (JHN 19:17)",
+      "deu": "das Kreuz, an dem Jesus auf Golgatha gekreuzigt wurde (JHN 19:17)",
+      "spa": "la cruz en la que Jesús fue crucificado en el Gólgota (JHN 19:17)"
+    },
+    {
+      "slug": "crown-of-thorns",
+      "english": "the crown the soldiers plaited of thorns and put on Jesus' head (MAT 27:29)",
+      "ukr": "вінок, який вояки сплели з терну й поклали Ісусові на голову (MAT 27:29)",
+      "deu": "die Krone, die die Soldaten aus Dornen flochten und Jesus aufs Haupt setzten (MAT 27:29)",
+      "spa": "la corona que los soldados tejieron de espinas y pusieron sobre la cabeza de Jesús (MAT 27:29)"
+    },
+    {
+      "slug": "inscription-on-the-cross",
+      "english": "the title Pilate wrote, 'The King of the Jews', and set on the cross (JHN 19:19)",
+      "ukr": "напис «Цар Юдейський», що його Пилат написав і прибив на хресті (JHN 19:19)",
+      "deu": "die Aufschrift „Der König der Juden“, die Pilatus schrieb und am Kreuz anbrachte (JHN 19:19)",
+      "spa": "el título que escribió Pilato, «El Rey de los judíos», y que puso sobre la cruz (JHN 19:19)"
+    },
+    {
+      "slug": "thirty-pieces-of-silver",
+      "english": "the price the chief priests paid Judas to deliver Jesus, which bought the potter's field (MAT 26:15)",
+      "ukr": "ціна, яку первосвященики заплатили Юді, щоб видав Ісуса, і за яку купили ганчареве поле (MAT 26:15)",
+      "deu": "der Preis, den die Hohenpriester Judas zahlten, damit er Jesus auslieferte, und mit dem der Töpferacker gekauft wurde (MAT 26:15)",
+      "spa": "el precio que los principales sacerdotes pagaron a Judas por entregar a Jesús, con el que se compró el campo del alfarero (MAT 26:15)"
+    },
+    {
+      "slug": "seamless-tunic",
+      "english": "Jesus' coat woven in one piece, for which the soldiers cast lots (JHN 19:23)",
+      "ukr": "Ісусів хітон, витканий цілим, за який вояки кидали жереб (JHN 19:23)",
+      "deu": "der Rock Jesu, in einem Stück gewebt, um den die Soldaten das Los warfen (JHN 19:23)",
+      "spa": "la túnica de Jesús, tejida de una sola pieza, sobre la cual los soldados echaron suertes (JHN 19:23)"
+    },
+    {
+      "slug": "josephs-tunic",
+      "english": "the coat Israel made for Joseph, which his brothers dipped in blood (GEN 37:3)",
+      "ukr": "вбрання, яке Ізраїль зробив Йосипові і яке його брати вмочили в кров (GEN 37:3)",
+      "deu": "der Rock, den Israel für Josef machte und den seine Brüder in Blut tauchten (GEN 37:3)",
+      "spa": "la túnica que Israel hizo para José y que sus hermanos tiñeron con sangre (GEN 37:3)"
+    },
+    {
+      "slug": "elijahs-mantle",
+      "english": "the mantle Elijah cast on Elisha and with which both divided the Jordan (1KI 19:19)",
+      "ukr": "плащ, який Ілля кинув на Єлисея і яким обидва розділили Йордан (1KI 19:19)",
+      "deu": "der Mantel, den Elia auf Elisa warf und mit dem beide den Jordan teilten (1KI 19:19)",
+      "spa": "el manto que Elías echó sobre Eliseo y con el que ambos dividieron el Jordán (1KI 19:19)"
+    },
+    {
+      "slug": "ark-of-bulrushes",
+      "english": "the pitched papyrus basket in which the infant Moses was laid by the river (EXO 2:3)",
+      "ukr": "обмазана смолою папірусова скринька, у яку поклали немовля Мойсея при річці (EXO 2:3)",
+      "deu": "der mit Pech abgedichtete Papyruskorb, in den das Kind Mose am Fluss gelegt wurde (EXO 2:3)",
+      "spa": "la arquilla de papiro calafateada con brea en la que el niño Moisés fue puesto junto al río (EXO 2:3)"
+    },
+    {
+      "slug": "solomons-throne",
+      "english": "the great throne of ivory overlaid with gold, with six steps and twelve lions (1KI 10:18)",
+      "ukr": "великий трон зі слонової кости, обкладений золотом, із шістьма ступенями й дванадцятьма левами (1KI 10:18)",
+      "deu": "der große Thron aus Elfenbein, mit Gold überzogen, mit sechs Stufen und zwölf Löwen (1KI 10:18)",
+      "spa": "el gran trono de marfil cubierto de oro, con seis gradas y doce leones (1KI 10:18)"
+    },
+    {
+      "slug": "solomons-golden-shields",
+      "english": "the two hundred large and three hundred small shields of beaten gold Solomon kept in the House of the Forest of Lebanon (1KI 10:16-17)",
+      "ukr": "двісті великих і триста малих щитів із кованого золота, які Соломон тримав у домі Ливанського лісу (1KI 10:16-17)",
+      "deu": "die zweihundert großen und dreihundert kleinen Schilde aus getriebenem Gold, die Salomo im Libanonwaldhaus aufbewahrte (1KI 10:16-17)",
+      "spa": "los doscientos escudos grandes y trescientos pequeños de oro batido que Salomón guardaba en la casa del bosque del Líbano (1KI 10:16-17)"
+    },
+    {
+      "slug": "steps-of-ahaz",
+      "english": "the steps (the King James 'dial') on which the shadow went back ten degrees as a sign to Hezekiah (2KI 20:11)",
+      "ukr": "ступені (у Біблії короля Якова — «dial»), по яких тінь вернулася назад на десять ступенів на знак Єзекії (2KI 20:11)",
+      "deu": "die Stufen (in der King-James-Bibel das „dial“), an denen der Schatten als Zeichen für Hiskia zehn Stufen zurückging (2KI 20:11)",
+      "spa": "las gradas (el «dial» de la King James) en las que la sombra retrocedió diez grados como señal para Ezequías (2KI 20:11)"
+    },
+    {
+      "slug": "micahs-image",
+      "english": "the carved image made from Micah's mother's silver, taken by the Danites and set up at Dan (JDG 18:30-31)",
+      "ukr": "різьблений бовван зі срібла Михиної матері, якого забрали даніти й поставили в Дані (JDG 18:30-31)",
+      "deu": "das geschnitzte Bild aus dem Silber der Mutter Michas, von den Danitern weggenommen und in Dan aufgestellt (JDG 18:30-31)",
+      "spa": "la imagen tallada hecha con la plata de la madre de Micaía, tomada por los danitas y puesta en Dan (JDG 18:30-31)"
+    },
+    {
+      "slug": "sauls-spear",
+      "english": "the spear Saul kept at hand, threw at David and Jonathan, and which David took from his bolster (1SA 26:7-12)",
+      "ukr": "спис, який Саул тримав під рукою, кидав у Давида та Йонатана і який Давид забрав від його узголів'я (1SA 26:7-12)",
+      "deu": "der Speer, den Saul stets zur Hand hatte, nach David und Jonatan warf und den David ihm vom Kopfende wegnahm (1SA 26:7-12)",
+      "spa": "la lanza que Saúl tenía siempre a mano, que arrojó contra David y Jonatán, y que David le quitó de la cabecera (1SA 26:7-12)"
+    },
+    {
+      "slug": "rahabs-scarlet-cord",
+      "english": "the line of scarlet thread Rahab bound in her window at Jericho as the sign agreed with the spies (JOS 2:18)",
+      "ukr": "шнурок із червоної нитки, який Рахава прив'язала у своєму вікні в Єрихоні як знак, умовлений із вивідувачами (JOS 2:18)",
+      "deu": "die Schnur aus scharlachrotem Faden, die Rahab in Jericho an ihr Fenster band, als mit den Kundschaftern vereinbartes Zeichen (JOS 2:18)",
+      "spa": "el cordón de hilo de grana que Rahab ató a su ventana en Jericó como señal convenida con los espías (JOS 2:18)"
+    },
+    {
+      "slug": "moses-veil",
+      "english": "the veil Moses put over his shining face after speaking with the LORD (EXO 34:33)",
+      "ukr": "покривало, яке Мойсей клав на своє сяюче обличчя після розмови з Господом (EXO 34:33)",
+      "deu": "die Decke, die Mose über sein strahlendes Gesicht legte, nachdem er mit dem HERRN geredet hatte (EXO 34:33)",
+      "spa": "el velo que Moisés puso sobre su rostro resplandeciente después de hablar con el SEÑOR (EXO 34:33)"
+    },
+    {
+      "slug": "book-of-jashar",
+      "english": "a lost writing the text cites for the sun standing still over Gibeon and for David's lament over Saul and Jonathan (JOS 10:13; 2SA 1:18)",
+      "ukr": "втрачений твір, на який посилається текст, розповідаючи про сонце, що спинилося над Ґів'оном, і про Давидів плач над Саулом та Йонатаном (JOS 10:13; 2SA 1:18)",
+      "deu": "eine verlorene Schrift, die der Text für den Stillstand der Sonne über Gibeon und für Davids Klagelied über Saul und Jonatan anführt (JOS 10:13; 2SA 1:18)",
+      "spa": "un escrito perdido que el texto cita para el sol detenido sobre Gabaón y para el lamento de David por Saúl y Jonatán (JOS 10:13; 2SA 1:18)"
+    },
+    {
+      "slug": "tree-of-life",
+      "english": "the tree in the midst of the garden of Eden (GEN 2:9) and beside the river of the city John saw (REV 22:2)",
+      "ukr": "дерево посеред саду в Едені (GEN 2:9) і обабіч ріки міста, яке бачив Іван (REV 22:2)",
+      "deu": "der Baum mitten im Garten Eden (GEN 2:9) und am Strom der Stadt, die Johannes sah (REV 22:2)",
+      "spa": "el árbol en medio del huerto de Edén (GEN 2:9) y junto al río de la ciudad que vio Juan (REV 22:2)"
+    },
+    {
+      "slug": "tree-of-knowledge-of-good-and-evil",
+      "english": "the tree in the midst of the garden of Eden whose fruit the man was commanded not to eat (GEN 2:17)",
+      "ukr": "дерево посеред саду в Едені, плоду якого людині було заповідано не їсти (GEN 2:17)",
+      "deu": "der Baum mitten im Garten Eden, von dessen Frucht zu essen dem Menschen verboten wurde (GEN 2:17)",
+      "spa": "el árbol en medio del huerto de Edén de cuyo fruto se le mandó al hombre no comer (GEN 2:17)"
+    },
+    {
+      "slug": "flaming-sword",
+      "english": "the flaming sword which turned every way, placed with the cherubim at the east of Eden (GEN 3:24)",
+      "ukr": "полум'яний меч, що обертався на всі боки, поставлений разом із херувимами на схід від Едену (GEN 3:24)",
+      "deu": "das flammende Schwert, das sich nach allen Seiten wandte, mit den Cherubim östlich von Eden aufgestellt (GEN 3:24)",
+      "spa": "la espada encendida que se revolvía por todos lados, puesta con los querubines al oriente de Edén (GEN 3:24)"
+    },
+    {
+      "slug": "sabbath",
+      "english": "the seventh day of every week, kept holy as a day of rest from all work (EXO 20:8-11)",
+      "ukr": "сьомий день кожного тижня, що його святять як день відпочинку від усякої праці (EXO 20:8-11)",
+      "deu": "der siebte Tag jeder Woche, heilig gehalten als Tag der Ruhe von aller Arbeit (EXO 20:8-11)",
+      "spa": "el séptimo día de cada semana, santificado como día de reposo de todo trabajo (EXO 20:8-11)"
+    },
+    {
+      "slug": "new-moon",
+      "english": "the first day of each month, marked with trumpets and burnt offerings (NUM 28:11)",
+      "ukr": "перший день кожного місяця, який відзначали сурмами й цілопаленнями (NUM 28:11)",
+      "deu": "der erste Tag jedes Monats, begangen mit Trompeten und Brandopfern (NUM 28:11)",
+      "spa": "el primer día de cada mes, señalado con trompetas y holocaustos (NUM 28:11)"
+    },
+    {
+      "slug": "passover",
+      "english": "the LORD's passover, kept at evening on the fourteenth day of the first month with a slain lamb (LEV 23:5)",
+      "ukr": "Пасха Господня, яку справляли ввечері чотирнадцятого дня першого місяця із заколеним ягням (LEV 23:5)",
+      "deu": "das Passa des HERRN, am Abend des vierzehnten Tages des ersten Monats mit einem geschlachteten Lamm gehalten (LEV 23:5)",
+      "spa": "la Pascua del SEÑOR, celebrada al atardecer del día catorce del mes primero con un cordero sacrificado (LEV 23:5)"
+    },
+    {
+      "slug": "feast-of-unleavened-bread",
+      "english": "the seven days from the fifteenth of the first month on which only unleavened bread was eaten (LEV 23:6)",
+      "ukr": "сім днів від п'ятнадцятого числа першого місяця, коли їли тільки опрісноки (LEV 23:6)",
+      "deu": "die sieben Tage ab dem fünfzehnten des ersten Monats, an denen nur ungesäuertes Brot gegessen wurde (LEV 23:6)",
+      "spa": "los siete días desde el quince del mes primero en los que solo se comía pan sin levadura (LEV 23:6)"
+    },
+    {
+      "slug": "firstfruits",
+      "english": "the first sheaf of the harvest waved before the LORD on the morrow after the sabbath (LEV 23:10-11)",
+      "ukr": "перший сніп жнив, який колихали перед Господом назавтра по суботі (LEV 23:10-11)",
+      "deu": "die erste Garbe der Ernte, am Tag nach dem Sabbat vor dem HERRN geschwungen (LEV 23:10-11)",
+      "spa": "la primera gavilla de la cosecha, mecida delante del SEÑOR el día siguiente del día de reposo (LEV 23:10-11)"
+    },
+    {
+      "slug": "feast-of-weeks",
+      "english": "the harvest feast kept fifty days after the wave sheaf, called Pentecost in the New Testament (DEU 16:10)",
+      "ukr": "свято жнив, що його справляли через п'ятдесят днів після снопа первоплоду, у Новому Завіті зване П'ятдесятницею (DEU 16:10)",
+      "deu": "das Erntefest, fünfzig Tage nach der Erstlingsgarbe gehalten, im Neuen Testament Pfingsten genannt (DEU 16:10)",
+      "spa": "la fiesta de la cosecha celebrada cincuenta días después de la gavilla mecida, llamada Pentecostés en el Nuevo Testamento (DEU 16:10)"
+    },
+    {
+      "slug": "day-of-trumpets",
+      "english": "the first day of the seventh month, a holy convocation marked by the blowing of trumpets (NUM 29:1)",
+      "ukr": "перший день сьомого місяця, святі збори, позначені сурмленням (NUM 29:1)",
+      "deu": "der erste Tag des siebten Monats, eine heilige Versammlung, begangen mit dem Blasen der Posaunen (NUM 29:1)",
+      "spa": "el primer día del mes séptimo, santa convocación señalada con el toque de trompetas (NUM 29:1)"
+    },
+    {
+      "slug": "day-of-atonement",
+      "english": "the tenth day of the seventh month, when the high priest entered the holy of holies to make atonement and the people afflicted their souls (LEV 23:27)",
+      "ukr": "десятий день сьомого місяця, коли первосвященик входив до Святого Святих, щоб учинити очищення, а народ упокорював свої душі (LEV 23:27)",
+      "deu": "der zehnte Tag des siebten Monats, an dem der Hohepriester ins Allerheiligste ging, um Sühnung zu erwirken, und das Volk seine Seele demütigte (LEV 23:27)",
+      "spa": "el día diez del mes séptimo, cuando el sumo sacerdote entraba en el lugar santísimo para hacer expiación y el pueblo afligía sus almas (LEV 23:27)"
+    },
+    {
+      "slug": "feast-of-booths",
+      "english": "the seven-day autumn feast from the fifteenth of the seventh month, when Israel lived in booths (LEV 23:34)",
+      "ukr": "семиденне осіннє свято від п'ятнадцятого числа сьомого місяця, коли Ізраїль жив у кучках (LEV 23:34)",
+      "deu": "das siebentägige Herbstfest ab dem fünfzehnten des siebten Monats, an dem Israel in Laubhütten wohnte (LEV 23:34)",
+      "spa": "la fiesta otoñal de siete días desde el quince del mes séptimo, en la que Israel habitaba en tabernáculos (LEV 23:34)"
+    },
+    {
+      "slug": "eighth-day-assembly",
+      "english": "the solemn assembly on the day after the seven days of Booths (LEV 23:36)",
+      "ukr": "урочисте зібрання наступного дня після семи днів свята Кучок (LEV 23:36)",
+      "deu": "die Festversammlung am Tag nach den sieben Tagen des Laubhüttenfestes (LEV 23:36)",
+      "spa": "la asamblea solemne del día siguiente a los siete días de la fiesta de los tabernáculos (LEV 23:36)"
+    },
+    {
+      "slug": "sabbatical-year",
+      "english": "every seventh year, when the land lay fallow and debts were released (LEV 25:4; DEU 15:1)",
+      "ukr": "кожен сьомий рік, коли земля лежала облогом, а борги відпускалися (LEV 25:4; DEU 15:1)",
+      "deu": "jedes siebte Jahr, in dem das Land brach lag und Schulden erlassen wurden (LEV 25:4; DEU 15:1)",
+      "spa": "cada séptimo año, en que la tierra quedaba en barbecho y se remitían las deudas (LEV 25:4; DEU 15:1)"
+    },
+    {
+      "slug": "jubilee",
+      "english": "the fiftieth year, proclaimed by trumpet, when land returned to its families and liberty was proclaimed (LEV 25:10)",
+      "ukr": "п'ятдесятий рік, оголошуваний сурмою, коли земля поверталася до своїх родин і проголошувалася воля (LEV 25:10)",
+      "deu": "das fünfzigste Jahr, durch Posaunenschall angekündigt, in dem das Land an seine Sippen zurückfiel und Freiheit ausgerufen wurde (LEV 25:10)",
+      "spa": "el año cincuenta, anunciado con trompeta, en que la tierra volvía a sus familias y se pregonaba libertad (LEV 25:10)"
+    },
+    {
+      "slug": "purim",
+      "english": "the days of the fourteenth and fifteenth of Adar that Esther and Mordecai established to remember the Jews' deliverance (EST 9:26)",
+      "ukr": "дні чотирнадцятого й п'ятнадцятого Адара, які Естер і Мордехай установили на пам'ять про визволення юдеїв (EST 9:26)",
+      "deu": "die Tage des vierzehnten und fünfzehnten Adar, die Ester und Mordechai zur Erinnerung an die Rettung der Juden einsetzten (EST 9:26)",
+      "spa": "los días catorce y quince de Adar que Ester y Mardoqueo establecieron para recordar la liberación de los judíos (EST 9:26)"
+    },
+    {
+      "slug": "feast-of-dedication",
+      "english": "the winter feast at Jerusalem during which Jesus walked in Solomon's porch (JHN 10:22)",
+      "ukr": "зимове свято в Єрусалимі, під час якого Ісус проходжувався в Соломоновому притворі (JHN 10:22)",
+      "deu": "das winterliche Fest in Jerusalem, während dessen Jesus in der Halle Salomos umherging (JHN 10:22)",
+      "spa": "la fiesta de invierno en Jerusalén durante la cual Jesús andaba en el pórtico de Salomón (JHN 10:22)"
+    },
+    {
+      "slug": "fasts-of-the-exile",
+      "english": "the fasts kept during the exile which Zechariah says will become feasts of joy (ZEC 8:19)",
+      "ukr": "пости, яких дотримувалися під час полону і які, як каже Захарія, стануть радісними святами (ZEC 8:19)",
+      "deu": "die während des Exils gehaltenen Fasten, von denen Sacharja sagt, dass sie zu Freudenfesten werden (ZEC 8:19)",
+      "spa": "los ayunos guardados durante el exilio que, según Zacarías, se convertirán en fiestas de gozo (ZEC 8:19)"
+    },
+    {
+      "slug": "second-passover",
+      "english": "the Passover kept on the fourteenth of the second month by those unclean or far away at the first (NUM 9:11)",
+      "ukr": "Пасха, яку справляли чотирнадцятого числа другого місяця ті, хто на першу був нечистий або далеко (NUM 9:11)",
+      "deu": "das Passa am vierzehnten des zweiten Monats, gehalten von denen, die beim ersten unrein oder weit entfernt waren (NUM 9:11)",
+      "spa": "la Pascua celebrada el catorce del mes segundo por quienes en la primera estaban inmundos o lejos (NUM 9:11)"
+    },
+    {
+      "slug": "jeroboams-feast",
+      "english": "the feast Jeroboam set up at Bethel on the fifteenth of the eighth month, in imitation of the feast in Judah (1KI 12:32)",
+      "ukr": "свято, яке Єровоам установив у Бет-Елі п'ятнадцятого числа восьмого місяця на зразок свята в Юді (1KI 12:32)",
+      "deu": "das Fest, das Jerobeam in Bethel auf den fünfzehnten des achten Monats ansetzte, dem Fest in Juda nachgebildet (1KI 12:32)",
+      "spa": "la fiesta que Jeroboam instituyó en Bet-el el quince del mes octavo, a imitación de la fiesta de Judá (1KI 12:32)"
+    },
+    {
+      "slug": "wood-offering",
+      "english": "the wood for the altar brought by lot, family by family, at appointed times each year (NEH 10:34)",
+      "ukr": "дрова для жертівника, які за жеребом, родина за родиною, приносили щороку в означені часи (NEH 10:34)",
+      "deu": "das Holz für den Altar, nach dem Los Familie um Familie zu festgesetzten Zeiten jedes Jahr gebracht (NEH 10:34)",
+      "spa": "la leña para el altar, traída por sorteo, familia por familia, en tiempos señalados cada año (NEH 10:34)"
+    },
+    {
+      "slug": "lords-supper",
+      "english": "the bread and cup Jesus gave his disciples the night he was betrayed, kept by the church in remembrance of him (1CO 11:20-26)",
+      "ukr": "хліб і чаша, які Ісус дав своїм учням тієї ночі, коли його було видано, і які церква споживає на спомин про нього (1CO 11:20-26)",
+      "deu": "das Brot und der Kelch, die Jesus seinen Jüngern in der Nacht gab, in der er verraten wurde, von der Gemeinde zu seinem Gedächtnis begangen (1CO 11:20-26)",
+      "spa": "el pan y la copa que Jesús dio a sus discípulos la noche en que fue entregado, que la iglesia guarda en memoria de él (1CO 11:20-26)"
+    },
+    {
+      "slug": "lords-day",
+      "english": "the day on which John, in Patmos, was in the Spirit and received the Revelation (REV 1:10)",
+      "ukr": "день, коли Іван на Патмосі був у Дусі й отримав Об'явлення (REV 1:10)",
+      "deu": "der Tag, an dem Johannes auf Patmos im Geist war und die Offenbarung empfing (REV 1:10)",
+      "spa": "el día en que Juan, en Patmos, estaba en el Espíritu y recibió el Apocalipsis (REV 1:10)"
+    },
+    {
+      "slug": "appointed-times",
+      "english": "the LORD's set feasts proclaimed as holy convocations, listed together in LEV 23 (LEV 23:2)",
+      "ukr": "означені Господні свята, що їх проголошували святими зборами, перелічені разом у LEV 23 (LEV 23:2)",
+      "deu": "die Feste des HERRN, als heilige Versammlungen ausgerufen, zusammen aufgeführt in LEV 23 (LEV 23:2)",
+      "spa": "las fiestas solemnes del SEÑOR, proclamadas como santas convocaciones, enumeradas juntas en LEV 23 (LEV 23:2)"
+    },
+    {
+      "slug": "serpent-of-eden",
+      "english": "the serpent that spoke to the woman in the garden of Eden (GEN 3:1)",
+      "ukr": "змій, що говорив до жінки в саду в Едені (GEN 3:1)",
+      "deu": "die Schlange, die im Garten Eden zu der Frau sprach (GEN 3:1)",
+      "spa": "la serpiente que habló a la mujer en el huerto de Edén (GEN 3:1)"
+    },
+    {
+      "slug": "cherubim",
+      "english": "the living beings God placed at the east of the garden of Eden (GEN 3:24), whose form Ezekiel saw (EZK 10:20)",
+      "ukr": "живі істоти, яких Бог поставив на схід від саду в Едені (GEN 3:24) і чию подобу бачив Єзекіїль (EZK 10:20)",
+      "deu": "die Lebewesen, die Gott östlich des Gartens Eden hinstellte (GEN 3:24) und deren Gestalt Hesekiel sah (EZK 10:20)",
+      "spa": "los seres vivientes que Dios puso al oriente del huerto de Edén (GEN 3:24), cuya forma vio Ezequiel (EZK 10:20)"
+    },
+    {
+      "slug": "holy-spirit",
+      "english": "whom the text calls the Holy Spirit and the Spirit of God (MAT 28:19; 1CO 3:16)",
+      "ukr": "той, кого текст називає Святим Духом і Духом Божим (MAT 28:19; 1CO 3:16)",
+      "deu": "den der Text den Heiligen Geist und den Geist Gottes nennt (MAT 28:19; 1CO 3:16)",
+      "spa": "a quien el texto llama el Espíritu Santo y el Espíritu de Dios (MAT 28:19; 1CO 3:16)"
+    },
+    {
+      "slug": "new-jerusalem",
+      "english": "the holy city John saw coming down from God out of heaven (REV 21:2)",
+      "ukr": "святе місто, що, як бачив Іван, сходило з неба від Бога (REV 21:2)",
+      "deu": "die heilige Stadt, die Johannes von Gott aus dem Himmel herabkommen sah (REV 21:2)",
+      "spa": "la santa ciudad que Juan vio descender del cielo, de Dios (REV 21:2)"
+    },
+    {
+      "slug": "nathanael",
+      "english": "of Cana in Galilee, whom Philip brought to Jesus (JHN 1:45; 21:2)",
+      "ukr": "з Кани Галілейської, якого Пилип привів до Ісуса (JHN 1:45; 21:2)",
+      "deu": "aus Kana in Galiläa, den Philippus zu Jesus brachte (JHN 1:45; 21:2)",
+      "spa": "de Caná de Galilea, a quien Felipe llevó a Jesús (JHN 1:45; 21:2)"
+    },
+    {
+      "slug": "abimelech",
+      "english": "the name or title of the king of Gerar in the days of Abraham (GEN 20-21) and of Isaac (GEN 26), and of the Philistine king of the title of PSA 34; not certainly one man",
+      "ukr": "ім'я або титул царя Ґерару за днів Авраама (GEN 20-21) та Ісака (GEN 26), а також филистимського царя з надпису до PSA 34; не напевно одна й та сама людина",
+      "deu": "der Name oder Titel des Königs von Gerar zur Zeit Abrahams (GEN 20-21) und Isaaks (GEN 26) sowie des Philisterkönigs in der Überschrift von PSA 34; nicht sicher ein und derselbe Mann",
+      "spa": "el nombre o título del rey de Gerar en tiempos de Abraham (GEN 20-21) y de Isaac (GEN 26), y del rey filisteo del título de PSA 34; no es seguro que sea un solo hombre"
+    },
+    {
+      "slug": "phicol",
+      "english": "named as the commander of the army of Abimelech of Gerar under Abraham (GEN 21:22, 32) and under Isaac (GEN 26:26); possibly a title rather than one man's name",
+      "ukr": "названий провідником війська Авімелеха ґерарського за Авраама (GEN 21:22, 32) і за Ісака (GEN 26:26); можливо, це титул, а не ім'я однієї людини",
+      "deu": "genannt als Feldhauptmann Abimelechs von Gerar zur Zeit Abrahams (GEN 21:22, 32) und Isaaks (GEN 26:26); möglicherweise eher ein Titel als der Name eines einzelnen Mannes",
+      "spa": "nombrado como jefe del ejército de Abimelec de Gerar en tiempos de Abraham (GEN 21:22, 32) y de Isaac (GEN 26:26); posiblemente un título más que el nombre de un solo hombre"
+    },
+    {
+      "slug": "ahuzzath",
+      "english": "named as the friend who came with Abimelech to Isaac (GEN 26:26), and in the Septuagint also beside Abimelech in Abraham's day (GEN 21:22, 32); possibly a title rather than one man's name",
+      "ukr": "названий другом, що прийшов з Авімелехом до Ісака (GEN 26:26), а в Септуагінті також поруч з Авімелехом за днів Авраама (GEN 21:22, 32); можливо, це титул, а не ім'я однієї людини",
+      "deu": "genannt als der Freund, der mit Abimelech zu Isaak kam (GEN 26:26), in der Septuaginta auch neben Abimelech zur Zeit Abrahams (GEN 21:22, 32); möglicherweise eher ein Titel als der Name eines einzelnen Mannes",
+      "spa": "nombrado como el amigo que vino con Abimelec a Isaac (GEN 26:26), y en la Septuaginta también junto a Abimelec en tiempos de Abraham (GEN 21:22, 32); posiblemente un título más que el nombre de un solo hombre"
+    },
+    {
+      "slug": "pharaoh-title",
+      "english": "the title of the kings of Egypt, which the text uses for eight kings it does not name and for Necho, whom it does",
+      "ukr": "титул єгипетських царів; текст уживає його для восьми царів, чиїх імен не подає, і для Нехо, чиє ім'я подає",
+      "deu": "der Titel der Könige Ägyptens, den der Text für acht Könige gebraucht, die er nicht nennt, und für Necho, den er nennt",
+      "spa": "el título de los reyes de Egipto, que el texto usa para ocho reyes a los que no nombra y para Necao, a quien sí nombra"
+    },
+    {
+      "slug": "caesar-title",
+      "english": "the title of the Roman emperors, from the family name of Julius Caesar",
+      "ukr": "титул римських імператорів, від родового імені Юлія Цезаря",
+      "deu": "der Titel der römischen Kaiser, nach dem Familiennamen des Julius Caesar",
+      "spa": "el título de los emperadores romanos, tomado del apellido de Julio César"
+    },
+    {
+      "slug": "high-priest",
+      "english": "the chief of the priests, the one who alone entered the most holy place on the Day of Atonement",
+      "ukr": "старший над священиками, єдиний, хто входив до Святого Святих у День Очищення",
+      "deu": "der Oberste der Priester, der als Einziger am Versöhnungstag das Allerheiligste betrat",
+      "spa": "el principal de los sacerdotes, el único que entraba en el lugar santísimo el día de la expiación"
+    },
+    {
+      "slug": "governor",
+      "english": "a province's governor under the Persian kings (pechah) and under Rome (hegemon)",
+      "ukr": "намісник провінції за перських царів (pechah) і під владою Риму (hegemon)",
+      "deu": "ein Provinzstatthalter unter den persischen Königen (pechah) und unter Rom (hegemon)",
+      "spa": "un gobernador de provincia bajo los reyes persas (pechah) y bajo Roma (hegemon)"
+    },
+    {
+      "slug": "tetrarch",
+      "english": "a Roman client ruler of a part of a kingdom, below a king",
+      "ukr": "підвладний Римові правитель частини царства, нижчий за царя",
+      "deu": "ein römischer Klientelherrscher über einen Teil eines Königreichs, im Rang unter einem König",
+      "spa": "un gobernante cliente de Roma sobre una parte de un reino, por debajo de un rey"
+    },
+    {
+      "slug": "proconsul",
+      "english": "the governor of a Roman senatorial province, which the King James calls a deputy",
+      "ukr": "намісник римської сенатської провінції, якого Біблія короля Якова називає «deputy»",
+      "deu": "der Statthalter einer römischen Senatsprovinz, den die King-James-Bibel „deputy“ nennt",
+      "spa": "el gobernador de una provincia senatorial romana, al que la King James llama «deputy»"
+    },
+    {
+      "slug": "tirshatha",
+      "english": "a Persian title of the governor of Judah after the return, which the King James leaves untranslated",
+      "ukr": "перський титул намісника Юдеї після повернення, який Біблія короля Якова залишає неперекладеним",
+      "deu": "ein persischer Titel des Statthalters von Juda nach der Rückkehr, den die King-James-Bibel unübersetzt lässt",
+      "spa": "un título persa del gobernador de Judá después del regreso, que la King James deja sin traducir"
+    },
+    {
+      "slug": "rab-mag",
+      "english": "a title of a high Babylonian official, given with Nergal-sharezer's name when Jerusalem fell",
+      "ukr": "титул високого вавилонського сановника, поданий з іменем Нерґал-Сар'ецера, коли впав Єрусалим",
+      "deu": "ein Titel eines hohen babylonischen Beamten, der beim Fall Jerusalems neben dem Namen Nergal-Sarezers genannt wird",
+      "spa": "un título de un alto funcionario babilonio, dado junto al nombre de Nergal-sarezer cuando cayó Jerusalén"
+    },
+    {
+      "slug": "rabshakeh",
+      "english": "the title of a high Assyrian officer, whom Sennacherib sent to Jerusalem (2KI 18:17); the text gives no name",
+      "ukr": "титул високого асирійського урядовця, якого Санхерів послав до Єрусалиму (2KI 18:17); імені його текст не подає",
+      "deu": "der Titel eines hohen assyrischen Offiziers, den Sanherib nach Jerusalem sandte (2KI 18:17); der Text nennt keinen Namen",
+      "spa": "el título de un alto oficial asirio, a quien Senaquerib envió a Jerusalén (2KI 18:17); el texto no da su nombre"
+    },
+    {
+      "slug": "tartan",
+      "english": "the title of the Assyrian commander-in-chief, sent by Sennacherib (2KI 18:17) and by Sargon (ISA 20:1); the text gives no name",
+      "ukr": "титул асирійського головнокомандувача, якого посилали Санхерів (2KI 18:17) і Саргон (ISA 20:1); імені його текст не подає",
+      "deu": "der Titel des assyrischen Oberbefehlshabers, gesandt von Sanherib (2KI 18:17) und von Sargon (ISA 20:1); der Text nennt keinen Namen",
+      "spa": "el título del comandante en jefe asirio, enviado por Senaquerib (2KI 18:17) y por Sargón (ISA 20:1); el texto no da su nombre"
+    },
+    {
+      "slug": "rabsaris",
+      "english": "the title of a chief officer of the Assyrian and Babylonian courts; the text gives it to Sennacherib's envoy (2KI 18:17) and to Sarsechim and Nebushasban (JER 39:3, 13)",
+      "ukr": "титул старшого сановника асирійського та вавилонського дворів; текст дає його посланцеві Санхеріва (2KI 18:17), а також Сар-Сехімові й Невушазбанові (JER 39:3, 13)",
+      "deu": "der Titel eines obersten Beamten am assyrischen und babylonischen Hof; der Text legt ihn dem Gesandten Sanheribs (2KI 18:17) sowie Sarsechim und Nebusasban bei (JER 39:3, 13)",
+      "spa": "el título de un alto funcionario de las cortes asiria y babilónica; el texto se lo da al enviado de Senaquerib (2KI 18:17) y a Sarsequim y Nabusazbán (JER 39:3, 13)"
+    },
+    {
+      "slug": "candace",
+      "english": "the title of the queens of Meroë, whom Acts calls the queen of the Ethiopians (ACT 8:27); the text gives no name",
+      "ukr": "титул цариць Мерое, одну з яких Дії називають царицею етіопською (ACT 8:27); її імені текст не подає",
+      "deu": "der Titel der Königinnen von Meroë, die die Apostelgeschichte die Königin der Äthiopier nennt (ACT 8:27); der Text nennt keinen Namen",
+      "spa": "el título de las reinas de Meroë, a quienes Hechos llama la reina de los etíopes (ACT 8:27); el texto no da su nombre"
+    },
+    {
+      "slug": "israelites",
+      "english": "the people descended from Jacob, whom the text also calls Israel",
+      "ukr": "народ, що походить від Якова; текст називає його також Ізраїлем",
+      "deu": "das von Jakob abstammende Volk, das der Text auch Israel nennt",
+      "spa": "el pueblo descendiente de Jacob, al que el texto también llama Israel"
+    },
+    {
+      "slug": "reubenites",
+      "english": "the tribe descended from Reuben, Jacob's firstborn",
+      "ukr": "плем'я, що походить від Рувима, Якового первістка",
+      "deu": "der Stamm, der von Ruben, dem Erstgeborenen Jakobs, abstammt",
+      "spa": "la tribu descendiente de Rubén, primogénito de Jacob"
+    },
+    {
+      "slug": "simeonites",
+      "english": "the tribe descended from Simeon, Jacob's second son",
+      "ukr": "плем'я, що походить від Симеона, другого сина Якова",
+      "deu": "der Stamm, der von Simeon, dem zweiten Sohn Jakobs, abstammt",
+      "spa": "la tribu descendiente de Simeón, segundo hijo de Jacob"
+    },
+    {
+      "slug": "levites",
+      "english": "the tribe descended from Levi, Jacob's third son, set apart to the sanctuary",
+      "ukr": "плем'я, що походить від Левія, третього сина Якова, відділене для служби при святині",
+      "deu": "der Stamm, der von Levi, dem dritten Sohn Jakobs, abstammt, für das Heiligtum ausgesondert",
+      "spa": "la tribu descendiente de Leví, tercer hijo de Jacob, apartada para el santuario"
+    },
+    {
+      "slug": "judahites",
+      "english": "the tribe descended from Judah, Jacob's fourth son, and the people of the kingdom that kept his name",
+      "ukr": "плем'я, що походить від Юди, четвертого сина Якова, і народ царства, яке зберегло його ім'я",
+      "deu": "der Stamm, der von Juda, dem vierten Sohn Jakobs, abstammt, und das Volk des Königreichs, das seinen Namen behielt",
+      "spa": "la tribu descendiente de Judá, cuarto hijo de Jacob, y el pueblo del reino que conservó su nombre"
+    },
+    {
+      "slug": "danites",
+      "english": "the tribe descended from Dan, Jacob's fifth son",
+      "ukr": "плем'я, що походить від Дана, п'ятого сина Якова",
+      "deu": "der Stamm, der von Dan, dem fünften Sohn Jakobs, abstammt",
+      "spa": "la tribu descendiente de Dan, quinto hijo de Jacob"
+    },
+    {
+      "slug": "naphtalites",
+      "english": "the tribe descended from Naphtali, Jacob's sixth son",
+      "ukr": "плем'я, що походить від Нефталима, шостого сина Якова",
+      "deu": "der Stamm, der von Naftali, dem sechsten Sohn Jakobs, abstammt",
+      "spa": "la tribu descendiente de Neftalí, sexto hijo de Jacob"
+    },
+    {
+      "slug": "gadites",
+      "english": "the tribe descended from Gad, Jacob's seventh son",
+      "ukr": "плем'я, що походить від Ґада, сьомого сина Якова",
+      "deu": "der Stamm, der von Gad, dem siebten Sohn Jakobs, abstammt",
+      "spa": "la tribu descendiente de Gad, séptimo hijo de Jacob"
+    },
+    {
+      "slug": "asherites",
+      "english": "the tribe descended from Asher, Jacob's eighth son",
+      "ukr": "плем'я, що походить від Асира, восьмого сина Якова",
+      "deu": "der Stamm, der von Asser, dem achten Sohn Jakobs, abstammt",
+      "spa": "la tribu descendiente de Aser, octavo hijo de Jacob"
+    },
+    {
+      "slug": "issacharites",
+      "english": "the tribe descended from Issachar, Jacob's ninth son",
+      "ukr": "плем'я, що походить від Іссахара, дев'ятого сина Якова",
+      "deu": "der Stamm, der von Issaschar, dem neunten Sohn Jakobs, abstammt",
+      "spa": "la tribu descendiente de Isacar, noveno hijo de Jacob"
+    },
+    {
+      "slug": "zebulonites",
+      "english": "the tribe descended from Zebulun, Jacob's tenth son",
+      "ukr": "плем'я, що походить від Завулона, десятого сина Якова",
+      "deu": "der Stamm, der von Sebulon, dem zehnten Sohn Jakobs, abstammt",
+      "spa": "la tribu descendiente de Zabulón, décimo hijo de Jacob"
+    },
+    {
+      "slug": "ephraimites",
+      "english": "the tribe descended from Ephraim, Joseph's second son",
+      "ukr": "плем'я, що походить від Єфрема, другого сина Йосипа",
+      "deu": "der Stamm, der von Ephraim, dem zweiten Sohn Josefs, abstammt",
+      "spa": "la tribu descendiente de Efraín, segundo hijo de José"
+    },
+    {
+      "slug": "manassites",
+      "english": "the tribe descended from Manasseh, Joseph's firstborn",
+      "ukr": "плем'я, що походить від Манасії, первістка Йосипа",
+      "deu": "der Stamm, der von Manasse, dem Erstgeborenen Josefs, abstammt",
+      "spa": "la tribu descendiente de Manasés, primogénito de José"
+    },
+    {
+      "slug": "benjaminites",
+      "english": "the tribe descended from Benjamin, Jacob's twelfth son",
+      "ukr": "плем'я, що походить від Веніямина, дванадцятого сина Якова",
+      "deu": "der Stamm, der von Benjamin, dem zwölften Sohn Jakobs, abstammt",
+      "spa": "la tribu descendiente de Benjamín, duodécimo hijo de Jacob"
+    },
+    {
+      "slug": "elohim",
+      "english": "a word for God, plural in form: most often said of YHVH, but not always — also of gods (GEN 35:2) and of judges (EXO 22:8)",
+      "ukr": "слово на означення Бога, множинне за формою: найчастіше вживане щодо YHVH, але не завжди — також щодо богів (GEN 35:2) і щодо суддів (EXO 22:8)",
+      "deu": "ein Wort für Gott, der Form nach Plural: meist auf YHVH bezogen, aber nicht immer — auch auf Götter (GEN 35:2) und auf Richter (EXO 22:8)",
+      "spa": "una palabra para Dios, de forma plural: aplicada la mayoría de las veces a YHVH, pero no siempre — también a dioses (GEN 35:2) y a jueces (EXO 22:8)"
+    },
+    {
+      "slug": "el",
+      "english": "a word for God, singular: most often said of YHVH, but not always — also of other gods (PSA 81:9), and of might",
+      "ukr": "слово на означення Бога, в однині: найчастіше вживане щодо YHVH, але не завжди — також щодо інших богів (PSA 81:9) і на означення сили",
+      "deu": "ein Wort für Gott, Singular: meist auf YHVH bezogen, aber nicht immer — auch auf andere Götter (PSA 81:9) und auf Macht",
+      "spa": "una palabra para Dios, singular: aplicada la mayoría de las veces a YHVH, pero no siempre — también a otros dioses (PSA 81:9), y al poder"
+    },
+    {
+      "slug": "eloah",
+      "english": "a word for God, singular: most often said of YHVH, but not always — also of the god of another nation (2CH 32:15) and of a strange god (DAN 11:39)",
+      "ukr": "слово на означення Бога, в однині: найчастіше вживане щодо YHVH, але не завжди — також щодо бога іншого народу (2CH 32:15) і щодо чужого бога (DAN 11:39)",
+      "deu": "ein Wort für Gott, Singular: meist auf YHVH bezogen, aber nicht immer — auch auf den Gott eines anderen Volkes (2CH 32:15) und auf einen fremden Gott (DAN 11:39)",
+      "spa": "una palabra para Dios, singular: aplicada la mayoría de las veces a YHVH, pero no siempre — también al dios de otra nación (2CH 32:15) y a un dios extraño (DAN 11:39)"
+    }
+  ]
+}

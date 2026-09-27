@@ -58,6 +58,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\RefusedReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SupersededReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OwnRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\Distinguishers.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReviewRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReportRecords.json" />
         <Content Remove="Loading\Encyclopedia\OwnNames.json" />
