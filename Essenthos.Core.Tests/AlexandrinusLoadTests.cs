@@ -13,6 +13,7 @@ using Xunit.Abstractions;
 namespace Essenthos.Core.Tests;
 
 /// <summary>Codex Alexandrinus loaded whole and placed in the frame.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class AlexandrinusLoadTests : IDisposable
 {

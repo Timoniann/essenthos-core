@@ -16,6 +16,7 @@ namespace Essenthos.Core.Tests;
 /// 119 because that is how the King James numbers it, every printed Synodal numbers it 118, and the
 /// file opens the verse with "(118-1)" to say so.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class StatedNumberTests(ITestOutputHelper output)
 {
     /// <summary>
@@ -162,6 +163,7 @@ public class StatedNumberTests(ITestOutputHelper output)
 /// <summary>
 /// The filler that writes those addresses beside verses already loaded, against a real database.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class StatedNumberLoadTests : IDisposable
 {

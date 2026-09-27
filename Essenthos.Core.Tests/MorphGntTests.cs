@@ -18,6 +18,7 @@ namespace Essenthos.Core.Tests;
 /// all 137,779 Nestle words and all 137,554 MorphGNT words, and they are here so that a change to
 /// the fold or to the gap rule says what it cost.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class MorphGntTests(ITestOutputHelper output)
 {
     private const int Books = 27;

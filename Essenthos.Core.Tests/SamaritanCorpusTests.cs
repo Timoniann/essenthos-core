@@ -20,6 +20,7 @@ namespace Essenthos.Core.Tests;
 /// The counts over all five books are measured in <see cref="SamaritanLinkTests"/>, which needs no
 /// database.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class SamaritanCorpusTests(WitnessDatabase database, ITestOutputHelper output)
     : IAsyncLifetime

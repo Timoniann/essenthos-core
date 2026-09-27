@@ -17,6 +17,7 @@ public sealed class VersificationFrames
     internal VersificationFrame Greek => Rules.Frame(Versification.Septuagint);
 }
 
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class CanonicalReferenceTests
 {
     [Theory]
@@ -91,6 +92,7 @@ public class CanonicalReferenceTests
 /// opens two texts to compare, and they are the only places where getting this wrong is visible —
 /// which is why a frame worked out from the texts themselves would have passed every other test.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class CanonicalFrameTests(VersificationFrames frames) : IClassFixture<VersificationFrames>
 {
     /// <summary>
@@ -176,6 +178,7 @@ public class CanonicalFrameTests(VersificationFrames frames) : IClassFixture<Ver
 /// have. A rule written for the address they share describes the undivided complex, and an edition
 /// that prints them apart must not have it applied to each piece.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class LetteredVerseFrameTests(VersificationFrames frames) : IClassFixture<VersificationFrames>
 {
     private const int FirstKings = 11;
@@ -245,6 +248,7 @@ public class LetteredVerseFrameTests(VersificationFrames frames) : IClassFixture
 /// The Greek editions letter the additions to Esther each in a way of their own, and each lettered
 /// verse stands where the Latin and English Bibles print the verse of the addition it holds.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class LetteredEditionFrameTests
 {
     private const int Esther = 17;

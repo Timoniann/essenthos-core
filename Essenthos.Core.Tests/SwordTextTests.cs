@@ -13,6 +13,7 @@ namespace Essenthos.Core.Tests;
 /// that every verse lands at its address, that the words are the edition's characters and nothing
 /// else, and that FHL's numbers are read in the series the corpus's Hebrew and Greek write.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public partial class SwordTextTests
 {
     private static string Module(string name) =>

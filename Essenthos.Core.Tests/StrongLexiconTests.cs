@@ -15,6 +15,7 @@ namespace Essenthos.Core.Tests;
 /// to say how much of the corpus it explains is the part that was missing, and it is the measure
 /// everything leaning on Strong numbers rests on.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class StrongLexiconTests : IDisposable
 {

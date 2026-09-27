@@ -13,6 +13,7 @@ using Xunit.Abstractions;
 namespace Essenthos.Core.Tests;
 
 /// <summary>The words Swete printed and the transcription lost, put back where the witnesses agree.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
 {
     private const int Genesis = 1;
@@ -93,6 +94,7 @@ public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
 }
 
 /// <summary>The same words written into a Swete loaded before they were restored.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class SweteRestorationLoadTests : IDisposable
 {
@@ -265,6 +267,7 @@ public sealed class SweteRestorationLoadTests : IDisposable
 /// The corrections a rule settles in every book: a Latin letter for the Greek one it looks like, the
 /// margin number run into a verse's first word, two words run together.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteCorrectionTests(Swete swete) : IClassFixture<Swete>
 {
     [Theory]
@@ -320,6 +323,7 @@ public class SweteCorrectionTests(Swete swete) : IClassFixture<Swete>
 /// The words read back off the printed page: what the page prints where the transcription has none,
 /// and nothing where the page prints the verse as the transcription does.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SwetePageTests(Swete swete) : IClassFixture<Swete>
 {
     private const int Genesis = 1;
@@ -362,6 +366,7 @@ public class SwetePageTests(Swete swete) : IClassFixture<Swete>
 /// Every restoration and correction written into a whole Swete loaded before them, as the corpus
 /// this machine holds was: each verse must come out as a cold load reads it.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class SweteCorrectionLoadTests : IDisposable
 {

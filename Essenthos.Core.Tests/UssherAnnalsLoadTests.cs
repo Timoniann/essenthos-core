@@ -16,6 +16,7 @@ namespace Essenthos.Core.Tests;
 /// meet: the chronology the years hang on is declared by the other loader, and the slug space and
 /// the event table are shared.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class UssherAnnalsLoadTests : IDisposable
 {

@@ -715,15 +715,19 @@ if (args is ["strong", var strongFrom, var strongTo, ..])
 {
     using var strongScope = app.Services.CreateScope();
     var tagged = strongScope.ServiceProvider.GetRequiredService<TaggedTextLinkLoader>();
-    logger.LogInformation(
-        "{Outcome}", await tagged.Load(Identifier(strongFrom), Identifier(strongTo)));
+    var strongOutcome = await tagged.Load(Identifier(strongFrom), Identifier(strongTo));
+    logger.LogInformation("{Outcome}", strongOutcome);
 
     // The verse links for the pair just written. The startup pipeline does this for pairs the
     // alignment commands leave behind, and a command that cannot be followed by a restart has to
     // do it itself: without them every word link of a new pair reads as crossing a verse boundary
-    // nothing backs, which is an integrity check the corpus keeps at zero.
-    logger.LogInformation(
-        "{Outcome}", await strongScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    // nothing backs, which is an integrity check the corpus keeps at zero. A pair already linked
+    // had its verse links written by the run that linked it, and asking again costs half a minute.
+    if (!strongOutcome.AlreadyLoaded)
+    {
+        logger.LogInformation(
+            "{Outcome}", await strongScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    }
     Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
 }

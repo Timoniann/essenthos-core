@@ -20,6 +20,7 @@ namespace Essenthos.Core.Tests;
 /// real files are checked against their own credits, and a handful of hand-written rows pin each
 /// clause of the rule down on its own.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class OpenBibleLocationTests : IDisposable
 {

@@ -13,6 +13,7 @@ namespace Essenthos.Core.Tests;
 /// A rule nobody can verify after the fact is how a reading nobody printed ends up in a corpus that
 /// claims citability. These run over all 27 books, so they take a moment and are worth it.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class ScrivenerExtractionTests
 {
     /// <summary>

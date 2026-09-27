@@ -15,6 +15,7 @@ namespace Essenthos.Core.Tests;
 /// single Unicode presentation forms, which render correctly, match nothing, and are dropped
 /// altogether by the consonantal folding the links are made on.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class SamaritanTests
 {
     private static readonly Lazy<SamaritanProject> Project =

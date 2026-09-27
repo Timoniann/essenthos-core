@@ -17,6 +17,7 @@ namespace Essenthos.Core.Tests;
 /// true of is visible in it — the words landing before what was already there, the verse coming to
 /// stand at the title address as well as its own, and a second run costing nothing.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class PsalmOpeningTests : IDisposable
 {

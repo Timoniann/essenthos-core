@@ -17,6 +17,7 @@ namespace Essenthos.Core.Tests;
 /// <c>\wj</c> encloses words of the text, and dropping what it encloses would take most of what
 /// Jesus says out of the Gospels.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class UsfmNoteTests
 {
     private const string WithANote =
@@ -114,6 +115,7 @@ public sealed class Kulish
 /// to reconcile with anybody's numbering. It is the plainest text in the corpus, which is worth
 /// checking rather than assuming — a load that quietly dropped a book would look exactly like this.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class KulishCorpusTests(Kulish kulish) : IClassFixture<Kulish>
 {
     /// <summary>

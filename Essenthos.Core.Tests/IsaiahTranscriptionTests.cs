@@ -8,6 +8,7 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>A First1KGreek TEI edition read into the one-token-per-line form, on an edition made up here.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class First1KGreekReaderTests
 {
     private static List<string> Read(string body)
@@ -89,6 +90,7 @@ public class First1KGreekReaderTests
              """).Should().Equal("48.7.3 ὁ", "48.7.3 <", "48.7.3 υἱός>", "48.7.3 σου");
 }
 
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class EditionRepairTests
 {
     private static readonly string[] Lines =
@@ -133,6 +135,7 @@ public class EditionRepairTests
 }
 
 /// <summary>Swete's Isaiah as the corpus reads it, from the transcription of his own volume.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteIsaiahTests(Swete swete) : IClassFixture<Swete>
 {
     private const int Isaiah = 23;
@@ -224,6 +227,7 @@ public class SweteIsaiahTests(Swete swete) : IClassFixture<Swete>
 }
 
 /// <summary>Ottley's Isaiah, Codex Alexandrinus, a witness of its own.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class OttleyTests
 {
     private const int Isaiah = 23;

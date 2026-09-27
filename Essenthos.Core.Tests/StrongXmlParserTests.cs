@@ -9,6 +9,7 @@ namespace Essenthos.Core.Tests;
 /// ensuring all fields (including cross-references, derivation with inline refs, etc.)
 /// are correctly extracted.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class StrongXmlParserTests
 {
     private readonly StrongXmlParser _parser = new();

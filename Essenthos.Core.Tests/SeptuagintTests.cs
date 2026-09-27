@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Essenthos.Core.Tests;
 
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class UsfmReaderTests
 {
     private const string Genesis =
@@ -104,6 +105,7 @@ public class UsfmReaderTests
     }
 }
 
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SeptuagintCanonTests
 {
     [Theory]
@@ -152,6 +154,7 @@ public sealed class Brenton
 /// verses sat at Ezra 11:1 to 23:47, chapters no versification has, and a request for Nehemiah in
 /// this text was a 404 over Greek that was loaded and complete.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SeptuagintSecondEsdrasTests(Brenton brenton) : IClassFixture<Brenton>
 {
     private const int Ezra = 15;
@@ -205,6 +208,7 @@ public class SeptuagintSecondEsdrasTests(Brenton brenton) : IClassFixture<Brento
 /// The lettered verses, which are how the Greek numbers material the Hebrew does not have. The
 /// reader keeps them apart; what follows is that the frame has to as well.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SeptuagintLetteredVerseTests(Brenton brenton) : IClassFixture<Brenton>
 {
     [Fact]

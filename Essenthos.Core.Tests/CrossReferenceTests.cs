@@ -14,6 +14,7 @@ namespace Essenthos.Core.Tests;
 /// OpenBible's pairs and the Treasury's entries read as verses of the shared frame: ranges, ranges
 /// into the next book, the Treasury's carried book and chapter, its catchwords and its remarks.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class CrossReferenceReadingTests
 {
     private const int Genesis = 1;
@@ -129,6 +130,7 @@ public sealed class CrossReferenceReadingTests
 /// one passage with its verses paired word by word, and neither a formula every chapter repeats nor
 /// a repetition within one chapter is a parallel.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class ParallelDetectorTests
 {
     private static readonly ParallelSettings Settings = new(4, 4, 12);
@@ -217,6 +219,7 @@ public sealed class ParallelDetectorTests
         CrossReferenceLoader.Words([(1, 1), (2, 3), (4, 5)]).Should().Be("1-1 2-3 4-5");
 }
 
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class CrossReferenceLoadTests : IDisposable
 {

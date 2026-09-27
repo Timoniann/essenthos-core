@@ -30,6 +30,7 @@ namespace Essenthos.Core.Tests;
 /// Nestle far more often than either does alone, that each of them wins somewhere, and that the
 /// unexplained remainder is small and not zero.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class NestleVoteTests(WitnessDatabase database, ITestOutputHelper output) : IAsyncLifetime
 {

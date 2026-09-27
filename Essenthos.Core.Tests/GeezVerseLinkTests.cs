@@ -17,6 +17,7 @@ namespace Essenthos.Core.Tests;
 /// is read beside wherever the frame puts two verses at one address — except in the books it divides
 /// in its own way, where a shared address would be a guess.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class GeezVerseLinkTests : IDisposable
 {

@@ -11,6 +11,7 @@ namespace Essenthos.Core.Tests;
 /// checked on chapter files written here in its shape, with words of this test's own, because the
 /// edition's text may not be copied into a repository; the owner's copy is read whole where it is.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class NewWorldTextSourceTests
 {
     private const string Psalm =

@@ -13,6 +13,7 @@ namespace Essenthos.Core.Tests;
 /// The snippets are the file's own markup, cut down. The last two tests read the whole file and lay
 /// it onto bible4u's Synodal, and are skipped where the fetch script has not been run.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class SynodalStrongEditionTests(ITestOutputHelper output)
 {
     private const int Psalms = 19;

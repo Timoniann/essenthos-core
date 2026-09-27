@@ -16,6 +16,7 @@ namespace Essenthos.Core.Tests;
 /// The pictures of people and places: which picture a place is given, that none is ever kept
 /// without a credit and a licence, that God is never pictured, and what a page receives.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class EntityImageTests : IDisposable
 {

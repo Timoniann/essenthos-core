@@ -24,6 +24,7 @@ namespace Essenthos.Core.Tests;
 /// quietly losing its title.
 /// </para>
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SuperscriptionTests
 {
     private const int Psalms = 19;

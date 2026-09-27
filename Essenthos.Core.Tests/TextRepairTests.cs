@@ -14,6 +14,7 @@ namespace Essenthos.Core.Tests;
 /// Correcting what bible4u's King James and Synodal print wrong: read from the files and the
 /// witnesses on this disk, made by the reader on a cold load and in place on a warm one.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class TextRepairTests : IDisposable
 {

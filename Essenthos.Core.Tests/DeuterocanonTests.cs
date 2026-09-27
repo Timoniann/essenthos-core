@@ -55,6 +55,7 @@ public sealed class Deuterocanon
 /// ordinal, and that nothing the editions print as apparatus or as somebody else's work is read as
 /// scripture.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuterocanon>
 {
     private const int FirstEsdras = 68;
@@ -237,6 +238,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
 /// The frame places the two books of Maccabees from the Latin's rules alone: an edition numbered as
 /// the Vulgate moves to the shared numbers, and the Greek and English editions stay at their own.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class MaccabeesFrameTests(Deuterocanon read) : IClassFixture<Deuterocanon>
 {
     private const int FirstMaccabees = 73;
@@ -311,6 +313,7 @@ public class MaccabeesFrameTests(Deuterocanon read) : IClassFixture<Deuterocanon
 /// A book the frame has no rules for is joined only in the chapters two texts print alike, and the
 /// books a text gains after it was joined are joined on the next load.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class DeuterocanonVerseLinkTests : IDisposable
 {

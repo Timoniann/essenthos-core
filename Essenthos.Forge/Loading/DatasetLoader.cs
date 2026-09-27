@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Essenthos.Core.Bhsa;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
@@ -67,6 +68,7 @@ internal sealed class DatasetLoader(
         }
 
         await Load(slug, () => read(resources), cancellationToken);
+        await RefreshTheStatistics(cancellationToken);
 
         var rules = TvtmsReader.Read(ResourcePaths.File(resources, "Versification", "TVTMS.txt"));
         using (var scope = services.CreateScope())
@@ -216,6 +218,10 @@ internal sealed class DatasetLoader(
                 Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder)), stoppingToken);
             await Load(AlmeidaTextSource.Definition.Name, () => AlmeidaTextSource.Read(
                 Path.Combine(resources, AlmeidaTextSource.Folder)), stoppingToken);
+            if (_wroteWords)
+            {
+                await RefreshTheStatistics(stoppingToken);
+            }
 
             await LoadTheLexicon(resources, stoppingToken);
             await TranslateTheLexicon(resources, stoppingToken);
@@ -1145,6 +1151,33 @@ internal sealed class DatasetLoader(
     /// covers a second address to what stands there, which is what makes a word link crossing a
     /// verse boundary a correspondence the frame backs rather than a fault.
     /// </summary>
+    /// <summary>
+    /// Whether this run wrote a text or a book of one, and so left the planner's statistics behind.
+    /// </summary>
+    private bool _wroteWords;
+
+    /// <summary>
+    /// Brings the planner's statistics up to the words just written. A text is a few percent of a
+    /// corpus of twenty million words, too small a share for autovacuum to analyse the table again,
+    /// so without this every pass after a load or a reload plans against statistics that do not know
+    /// the text is there, and a lookup by verse can become a scan of the whole text.
+    /// </summary>
+    private async Task RefreshTheStatistics(CancellationToken cancellationToken)
+    {
+        status.Starting("the planner's statistics");
+
+        using var scope = services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        db.Database.SetCommandTimeout(StatisticsTimeout);
+        var started = Stopwatch.StartNew();
+        await db.Database.ExecuteSqlRawAsync(AnalyseTheTexts, cancellationToken);
+        status.Record($"The texts' tables analysed again in {started.Elapsed}");
+    }
+
+    private const string AnalyseTheTexts = "ANALYZE text, book, chapter, verse, word";
+
+    private static readonly TimeSpan StatisticsTimeout = TimeSpan.FromMinutes(10);
+
     private async Task JoinTheVerses(CancellationToken cancellationToken)
     {
         status.Starting("the verse links");
@@ -1847,6 +1880,7 @@ internal sealed class DatasetLoader(
         var loader = scope.ServiceProvider.GetRequiredService<CorpusLoader>();
         var loaded = await loader.Load(source, cancellationToken);
         status.Record(loaded);
+        _wroteWords |= !loaded.AlreadyLoaded;
 
         // A book the source gained after the text was loaded — Swete's Isaiah, which could not be
         // read until its own transcription was — goes into the text already there rather than
@@ -1857,6 +1891,7 @@ internal sealed class DatasetLoader(
             if (added.Books.Count > 0)
             {
                 status.Record(added);
+                _wroteWords = true;
             }
         }
 

@@ -18,6 +18,7 @@ namespace Essenthos.Core.Tests;
 /// the two divide differently — Spanish Numbers 13:19, which is the Hebrew 13:18, has its words
 /// linked to the Hebrew 13:19 — while the token file beside it says 13:18, and so does the frame.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IClassFixture<Ebible>
 {
     private static readonly Dictionary<int, HashSet<int>> Identity = [];
@@ -177,6 +178,7 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
 /// The loader over a database: a record pairing verses by number is refused and the one beside it
 /// written, and withdrawing a set takes the verse links its word links stated with it.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class ClearBibleAstrayLoadTests : IDisposable
 {

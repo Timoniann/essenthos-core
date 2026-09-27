@@ -17,6 +17,7 @@ namespace Essenthos.Core.Tests;
 /// that is wrong in every verse and looks like Greek. The answer key is the maintainers' own output
 /// from the same source files, so the check is over all 140,149 words rather than over a sample.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class ByzantineTextformTests
 {
     /// <summary>Every verse address the file writes, including the four it writes empty.</summary>

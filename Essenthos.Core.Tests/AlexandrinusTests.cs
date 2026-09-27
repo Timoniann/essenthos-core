@@ -8,6 +8,7 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>Codex Alexandrinus as one witness: INTF's New Testament and the printings of its Old.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class AlexandrinusTests
 {
     private const int Genesis = 1;

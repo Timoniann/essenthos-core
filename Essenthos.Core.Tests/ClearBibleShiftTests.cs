@@ -14,6 +14,7 @@ namespace Essenthos.Core.Tests;
 /// The Reina-Valera records that put a Hebrew or Greek word on the Spanish <em>y</em> before the word
 /// that renders it, read from the files themselves.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class ClearBibleShiftTests(ITestOutputHelper output)
 {
     private static readonly string Folder = Path.Combine(TestResources.ClearBibleFolder, "data");
@@ -98,6 +99,7 @@ public class ClearBibleShiftTests(ITestOutputHelper output)
 /// The loader over a database: a record naming a Hebrew prefix is stored against the prefix, which
 /// BHSA writes as a word of its own, and a record on the <em>y</em> before its word is refused.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class ClearBibleMorphemeLoadTests : IDisposable
 {

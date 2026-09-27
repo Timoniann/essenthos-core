@@ -19,6 +19,7 @@ namespace Essenthos.Core.Tests;
 /// asserted exactly, because the point of loading a second source is a coverage claim and a
 /// coverage claim that drifts silently is the defect this whole layer exists to answer.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class OpenBiblePlaceLoadTests : IDisposable
 {
