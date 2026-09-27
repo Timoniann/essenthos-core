@@ -74,19 +74,21 @@ internal sealed class EvidentiaFileSourceTexts
                 .Where(verse => verse.Words.Count > 0)
                 .Select(verse => (Book: book.CanonicalOrdinal, Chapter: chapter.Number, Verse: verse))))
             .ToList();
-        var frame = rules().Frame(source.Definition.Versification, EditionShape.Of(verses.Select(verse =>
-            (verse.Book, verse.Chapter, verse.Verse.Number, verse.Verse.Label,
-                verse.Verse.Words.Sum(word => word.Surface.Length)))));
-        var lettered = verses
-            .Where(verse => verse.Verse.Label.Length > 0)
-            .Select(verse => new CanonicalReference(verse.Book, verse.Chapter, verse.Verse.Number))
-            .ToHashSet();
+        var primary = CanonicalFrameLoader.Expected(
+                rules(),
+                source.Definition.Versification,
+                [
+                    .. verses.Select((verse, index) => new PlacedVerse(index, verse.Book, verse.Chapter,
+                        verse.Verse.Number, verse.Verse.Label, verse.Verse.Words.Sum(word => word.Surface.Length))),
+                ],
+                BookTraditions.For(slug))
+            .Where(reference => reference.IsPrimary)
+            .ToDictionary(reference => reference.VerseId);
 
         var tokens = new List<EvidentiaToken>();
-        foreach (var (book, chapter, verse) in verses)
+        foreach (var (index, (_, _, verse)) in verses.Index())
         {
-            var placed = frame.Resolve(book, chapter, verse.Number,
-                lettered.Contains(new CanonicalReference(book, chapter, verse.Number)))[0];
+            var placed = primary[index];
             var address = new EvidentiaAddress(placed.Book, placed.Chapter, placed.Verse);
             tokens.AddRange(verse.Words.Select((word, index) => new EvidentiaToken(
                 Id: nextId--,

@@ -38,6 +38,33 @@ public class NewTextsThreeTests(ThirdBatchTexts texts) : IClassFixture<ThirdBatc
         verses.Sum(verse => verse.Verse.Words.Count).Should().Be(ALMEIDA_WORDS);
     }
 
+    /// <summary>
+    /// The Open New Ukrainian Translation numbers the Psalms as the Greek does, so each psalm stands at
+    /// the Hebrew psalm it is: its Psalm 22 is the Shepherd Psalm, and its Psalm 9 holds the Hebrew's 9
+    /// and 10.
+    /// </summary>
+    [Theory]
+    [InlineData(22, 1, 23, 1)]
+    [InlineData(9, 22, 10, 1)]
+    [InlineData(51, 1, 52, 0)]
+    [InlineData(113, 9, 115, 1)]
+    [InlineData(150, 1, 150, 1)]
+    public void TheUkrainianPsalmsStandAtTheHebrewPsalmTheyAre(int psalm, int verse, int toPsalm, int toVerse)
+    {
+        var verses = texts.Ukrainian.Books.SelectMany(book => book.Chapters.SelectMany(chapter => chapter.Verses
+                .Select(printed => (Book: book.CanonicalOrdinal, Chapter: chapter.Number, Verse: printed))))
+            .Select((printed, index) => new PlacedVerse(index, printed.Book, printed.Chapter, printed.Verse.Number,
+                printed.Verse.Label, printed.Verse.Words.Sum(word => word.Surface.Length)))
+            .ToList();
+        var id = verses.Single(v => v.Book == 19 && v.Chapter == psalm && v.Number == verse).Id;
+
+        CanonicalFrameLoader.Expected(
+                TvtmsReader.Read(TestResources.Tvtms), texts.Ukrainian.Definition.Versification, verses,
+                BookTraditions.For(EbibleTextSource.BiblicaUkrainian))
+            .Single(reference => reference.VerseId == id && reference.IsPrimary)
+            .Should().Be(new ReferenceDraft(id, 19, toPsalm, toVerse, true));
+    }
+
     [Fact]
     public void TheAlmeidaReadsAsPrinted()
     {

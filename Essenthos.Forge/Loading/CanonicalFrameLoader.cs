@@ -85,7 +85,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
 
         var expected = Expected(rules, text.Versification, [
             .. verses.Select(v => new PlacedVerse(v.Id, v.Book, v.ChapterNumber, v.Number, v.Label, v.Length)),
-        ]);
+        ], BookTraditions.For(text.Slug));
 
         var versesById = verses.ToDictionary(verse => verse.Id);
 
@@ -151,13 +151,20 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     /// Which scheme of its tradition the edition follows is a question only the edition can answer,
     /// and the versification data states the tests that ask it.
     /// </summary>
+    /// <param name="books">Books the edition numbers in another tradition, placed by that tradition's rules.</param>
     public static List<ReferenceDraft> Expected(
         VersificationRules rules,
         Versification tradition,
-        IReadOnlyList<PlacedVerse> verses)
+        IReadOnlyList<PlacedVerse> verses,
+        IReadOnlyDictionary<int, Versification>? books = null)
     {
-        var frame = rules.Frame(tradition, EditionShape.Of(verses.Select(v =>
-            (v.Book, v.Chapter, v.Number, v.Label, v.Length))));
+        books ??= new Dictionary<int, Versification>();
+        Versification TraditionOf(PlacedVerse verse) => books.GetValueOrDefault(verse.Book, tradition);
+
+        var frames = verses
+            .GroupBy(TraditionOf)
+            .ToDictionary(group => group.Key, group => rules.Frame(group.Key, EditionShape.Of(group.Select(v =>
+                (v.Book, v.Chapter, v.Number, v.Label, v.Length)))));
 
         // The addresses this text prints as lettered verses, which the frame resolves differently.
         var lettered = verses
@@ -166,7 +173,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             .ToHashSet();
 
         return verses
-            .SelectMany(verse => AtBothNames(verse.Book, frame.Resolve(
+            .SelectMany(verse => AtBothNames(verse.Book, frames[TraditionOf(verse)].Resolve(
                     verse.Book,
                     verse.Chapter,
                     verse.Number,
