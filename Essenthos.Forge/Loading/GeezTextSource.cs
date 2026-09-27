@@ -82,6 +82,8 @@ internal static class GeezTextSource
 
     private const int LetterOfJeremiah = 76;
 
+    private const int Sirach = 72;
+
     /// <summary>The eighty-one, in the order the church's Bible prints them.</summary>
     public static IReadOnlyList<GeezBook> Books { get; } =
     [
@@ -196,7 +198,7 @@ internal static class GeezTextSource
     /// <summary>
     /// The chapters where Swete stands at other rows of the frame than Brenton does, so that the
     /// Greek at a Ge'ez verse's row in Swete is some other passage: the Letter of Jeremiah is a row
-    /// out, and Sirach 31-35 is in Swete's other order.
+    /// out.
     /// Found by comparing the two Septuagints row by row, where they share under a third of their
     /// words. Esther is out whole: Swete letters its additions as verses of the chapter they stand
     /// in, and the frame puts them at those verses' rows rather than at the verse they follow.
@@ -205,10 +207,19 @@ internal static class GeezTextSource
     private static readonly HashSet<(int Book, int Chapter)> SweteOffTheFrame =
     [
         (2, 39), (11, 6), (19, 92), (68, 1), (68, 2), (68, 6), (70, 6),
-        (72, 31), (72, 32), (72, 33), (72, 34), (72, 35),
         (LetterOfJeremiah, 1), (81, 8),
         .. Enumerable.Range(1, 10).Select(chapter => (Esther, chapter)),
     ];
+
+    /// <summary>
+    /// Sirach 30:25 to the end of 36, which the church's text prints in the order of the Greek
+    /// manuscripts, as Brenton does, while the frame stands both Greek editions in the standard's
+    /// order there. The Ge'ez also divides those verses otherwise than either edition, and no reading
+    /// of it is written down, so a row there holds another passage in every other text. Neither aligned
+    /// nor joined verse by verse until it is.
+    /// </summary>
+    public static bool InTheManuscriptsOrder(int book, int chapter, int verse) =>
+        book == Sirach && (chapter, verse) is ( > 30 and <= 36, _) or (30, >= 25);
 
     /// <summary>
     /// The books whose verses the church's text or Ludolf's Psalter divide otherwise than the Greek
@@ -221,8 +232,9 @@ internal static class GeezTextSource
     private static readonly HashSet<int> DividedWithinChapters = [18, 19, 22];
 
     /// <summary>Whether a Ge'ez verse at this row of the frame is aligned against this text.</summary>
-    public static bool Aligns(string to, int book, int chapter) =>
+    public static bool Aligns(string to, int book, int chapter, int verse) =>
         !DividedWithinChapters.Contains(book)
+        && !InTheManuscriptsOrder(book, chapter, verse)
         && (to != SweteTextSource.Slug || !SweteOffTheFrame.Contains((book, chapter)));
 
     /// <summary>The books placed at their own numbers and joined to nothing verse by verse.</summary>

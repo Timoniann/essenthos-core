@@ -290,7 +290,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         [
             .. source.Keys.Intersect(target.Keys)
                 .Where(address => fromSlug != GeezTextSource.Slug
-                                  || GeezTextSource.Aligns(toSlug, address.Item1, address.Item2))
+                                  || GeezTextSource.Aligns(toSlug, address.Item1, address.Item2, address.Item3))
                 .OrderBy(address => address),
         ];
 

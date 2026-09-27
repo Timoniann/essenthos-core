@@ -278,6 +278,8 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         }
 
         var mapped = await Mapped(declared, cancellationToken);
+        var geez = await db.Texts.Where(text => text.Slug == GeezTextSource.Slug)
+            .Select(text => (int?)text.Id).SingleOrDefaultAsync(cancellationToken);
 
         var addresses = new Dictionary<int, Dictionary<(int, int, int), List<int>>>();
         int pairs = 0, straight = 0, divided = 0, alone = 0, written = 0;
@@ -296,6 +298,16 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                 {
                     (here, there) = Agreeing(here, there);
                 }
+            }
+
+            // The church's Ge'ez stands at its own numbers where it keeps the Greek manuscripts' order,
+            // and the rows there hold other passages of every other text.
+            if (pair.FromTextId == geez)
+            {
+                here = here
+                    .Where(address => !GeezTextSource.InTheManuscriptsOrder(
+                        address.Key.Item1, address.Key.Item2, address.Key.Item3))
+                    .ToDictionary(address => address.Key, address => address.Value);
             }
 
             var components = Components(here, there, ref alone);
@@ -435,7 +447,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                     .Where(id => id != 0)
                     .ToList();
                 var to = line.To
-                    .Where(address => GeezTextSource.Aligns(slugs[pair.ToTextId], address.Book, address.Chapter))
+                    .Where(address => GeezTextSource.Aligns(slugs[pair.ToTextId], address.Book, address.Chapter, address.Verse))
                     .SelectMany(address => there.GetValueOrDefault(address) ?? [])
                     .Distinct()
                     .ToList();
