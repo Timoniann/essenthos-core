@@ -223,6 +223,7 @@ internal sealed class DatasetLoader(
                 await RefreshTheStatistics(stoppingToken);
             }
 
+            await RelateTheTexts(stoppingToken);
             await LoadTheLexicon(resources, stoppingToken);
             await TranslateTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
@@ -354,6 +355,18 @@ internal sealed class DatasetLoader(
         ByzantineTextSource.Slug,
         NestleTextSource.Slug,
     ];
+
+    /// <summary>
+    /// What each text was translated from, revised from or shares a tradition with. It names texts by
+    /// slug and needs nothing but their rows, so it follows the texts directly.
+    /// </summary>
+    private async Task RelateTheTexts(CancellationToken cancellationToken)
+    {
+        status.Starting("the relations between texts");
+
+        using var scope = services.CreateScope();
+        status.Record(await scope.ServiceProvider.GetRequiredService<TextRelationLoader>().Load(cancellationToken));
+    }
 
     /// <summary>
     /// BHSA's clauses, phrases and sentences. It reads the same parse the text was loaded from
