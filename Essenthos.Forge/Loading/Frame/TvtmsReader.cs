@@ -155,7 +155,9 @@ internal static class TvtmsReader
         }
 
         var sources = CanonicalReference.ParseAll(columns[1].Trim());
-        var standards = CanonicalReference.ParseAll(columns[2].Trim());
+        var standards = SongOfTheThree.TryParseAll(columns[2], out var song)
+            ? song
+            : CanonicalReference.ParseAll(columns[2].Trim());
 
         row = new TvtmsRow(
             [

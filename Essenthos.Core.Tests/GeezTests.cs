@@ -180,19 +180,33 @@ public class GeezVerseSequenceTests
 public class GeezAlignmentScopeTests
 {
     [Theory]
-    [InlineData("SWETE", 1, 1, true)]
-    [InlineData("SWETE", 75, 16, true)]
-    [InlineData("SWETE", 72, 32, false)]
-    [InlineData("GRCBRENT", 75, 16, true)]
-    [InlineData("SWETE", 76, 1, false)]
-    [InlineData("SWETE", 17, 4, false)]
-    [InlineData("GRCBRENT", 17, 4, true)]
-    [InlineData("GRCBRENT", 19, 23, false)]
-    [InlineData("NESTLE1904", 40, 1, true)]
+    [InlineData("SWETE", 1, 1, 1, true)]
+    [InlineData("SWETE", 75, 16, 1, true)]
+    [InlineData("GRCBRENT", 75, 16, 1, true)]
+    [InlineData("SWETE", 76, 1, 1, false)]
+    [InlineData("SWETE", 17, 4, 1, false)]
+    [InlineData("GRCBRENT", 17, 4, 1, true)]
+    [InlineData("GRCBRENT", 19, 23, 1, false)]
+    [InlineData("NESTLE1904", 40, 1, 1, true)]
     public void SweteAnswersOnlyWhereItStandsOnTheFramesRowsAndThePsalterNowhere(
-        string greek, int book, int chapter, bool aligned)
+        string greek, int book, int chapter, int verse, bool aligned)
     {
-        GeezTextSource.Aligns(greek, book, chapter).Should().Be(aligned);
+        GeezTextSource.Aligns(greek, book, chapter, verse).Should().Be(aligned);
+    }
+
+    /// <summary>
+    /// The church's Sirach 30:25-36 is in the Greek manuscripts' order, where both Greek editions stand
+    /// in the standard's, so neither answers for it.
+    /// </summary>
+    [Theory]
+    [InlineData("GRCBRENT", 30, 24, true)]
+    [InlineData("GRCBRENT", 30, 25, false)]
+    [InlineData("SWETE", 32, 1, false)]
+    [InlineData("GRCBRENT", 36, 31, false)]
+    [InlineData("SWETE", 37, 1, true)]
+    public void NeitherGreekAnswersForSirachInTheManuscriptsOrder(string greek, int chapter, int verse, bool aligned)
+    {
+        GeezTextSource.Aligns(greek, 72, chapter, verse).Should().Be(aligned);
     }
 
     /// <summary>Every verse of the books the church divides its own way is read, and read once.</summary>

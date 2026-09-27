@@ -36,6 +36,13 @@ internal sealed record TvtmsCorrection(
 /// ends at 30:16, which no edition can satisfy, so the scheme failed for the one edition it was
 /// written for and Swete's Ammon stood beside the Hebrew of Jeremiah 30.
 /// </para>
+/// <para>
+/// In the Song of the Three the data's Greek and Latin columns place Daniel 3:77 at the seas and 3:78
+/// at the springs, and its Greek column 3:80 at the beasts and 3:81 at the birds, where its Latin
+/// column has them the other way round. Swete, the Clementine, the Douay and the Ge'ez print the
+/// springs before the seas, and every edition here, Brenton's included, the birds before the beasts,
+/// which is the order the standard's own verses have.
+/// </para>
 /// </summary>
 internal static class TvtmsCorrections
 {
@@ -55,6 +62,13 @@ internal static class TvtmsCorrections
             $"Jer.30:{verse}",
             $"Jer.49:{verse}",
             JeremiahGreekTests)),
+        .. new[] { "Greek", "Latin" }.SelectMany(scheme => new[]
+        {
+            Correction(scheme, "Dan.3:77", "S3Y.1:56", "S3Y.1:55"),
+            Correction(scheme, "Dan.3:78", "S3Y.1:55", "S3Y.1:56"),
+        }),
+        Correction("Greek", "Dan.3:80", "S3Y.1:59", "S3Y.1:58"),
+        Correction("Greek", "Dan.3:81", "S3Y.1:58", "S3Y.1:59"),
     ];
 
     /// <summary>
@@ -93,7 +107,8 @@ internal static class TvtmsCorrections
             string.Format(tests, printed));
 
     private static CanonicalReference Reference(string value) =>
-        CanonicalReference.TryParse(value, out var reference)
+        SongOfTheThree.TryParseAll(value, out var song) && song is [var verse] ? verse
+        : CanonicalReference.TryParse(value, out var reference)
             ? reference
             : throw new InvalidOperationException(
                 $"The correction reference \"{value}\" is not one the versification data could hold. Write it " +

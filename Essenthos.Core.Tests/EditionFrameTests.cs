@@ -168,7 +168,11 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
 
     private const int Jeremiah = 24;
 
+    private const int Daniel = 27;
+
     private const int Malachi = 39;
+
+    private const int Sirach = 72;
 
     /// <summary>
     /// Brenton's Exodus 21 runs to verse 37, which is the condition the data writes against the
@@ -382,6 +386,23 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
         Placed(brenton.Edition, Leviticus, 11, 17).Should().Be(new CanonicalReference(Leviticus, 11, 17));
     }
 
+    /// <summary>
+    /// Brenton's Greek is recognised as his, and stands its Sirach and its song where the words are:
+    /// his Sirach 34 is the standard's 31, his 33:7 spans the standard's 36:6 and 36:7, and his 3:72a
+    /// is the song's forty-fifth verse, after the thirty of Daniel 3.
+    /// </summary>
+    [Fact]
+    public void BrentonsSirachAndSongStandWhereTheirWordsAre()
+    {
+        brenton.Edition.Resolve(Sirach, 34, 1, lettered: false, string.Empty).Should()
+            .Equal(new CanonicalReference(Sirach, 31, 1));
+        brenton.Edition.Resolve(Sirach, 33, 7, lettered: false, string.Empty).Should()
+            .Equal(new CanonicalReference(Sirach, 36, 7), new CanonicalReference(Sirach, 36, 6));
+        brenton.Edition.Resolve(Daniel, 3, 72, lettered: true, "a").Should()
+            .Equal(new CanonicalReference(Daniel, 3, 75));
+        Placed(brenton.Edition, Daniel, 3, 91).Should().Be(new CanonicalReference(Daniel, 3, 24));
+    }
+
     private static CanonicalReference Placed(VersificationFrame frame, int book, int chapter, int verse) =>
         frame.Resolve(book, chapter, verse)[0];
 }
@@ -492,6 +513,8 @@ public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
 
     private const int Daniel = 27;
 
+    private const int Sirach = 72;
+
     /// <summary>
     /// The data writes the undivided form of a scheme as the rows that differ from the divided one,
     /// so an edition that prints Exodus 38:27 whole answers to three rows about that verse and to the
@@ -574,6 +597,28 @@ public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
     {
         swete.Edition.Resolve(book, chapter, verse).Should()
             .Equal(new CanonicalReference(book, standardChapter, standardVerse));
+    }
+
+    /// <summary>
+    /// Swete's song stands after the thirty verses of Daniel 3 by the verse of it each prints, and his
+    /// Sirach 33-36 at the standard's verses.
+    /// </summary>
+    [Theory]
+    [InlineData(Daniel, 3, 24, 3, 31)]
+    [InlineData(Daniel, 3, 69, 3, 75)]
+    [InlineData(Daniel, 3, 91, 3, 24)]
+    [InlineData(Sirach, 33, 25, 33, 16)]
+    [InlineData(Sirach, 34, 11, 34, 10)]
+    [InlineData(Sirach, 36, 31, 36, 26)]
+    public void SwetesSongAndSirachStandWhereTheirWordsAre(
+        int book,
+        int chapter,
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        swete.Edition.Resolve(book, chapter, verse, lettered: false, string.Empty)[0]
+            .Should().Be(new CanonicalReference(book, standardChapter, standardVerse));
     }
 
     /// <summary>Swete prints no raven, so nothing of it stands beside the Hebrew's.</summary>

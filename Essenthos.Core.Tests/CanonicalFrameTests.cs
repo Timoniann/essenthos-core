@@ -253,6 +253,12 @@ public class LetteredEditionFrameTests
 {
     private const int Esther = 17;
 
+    private const int Sirach = 72;
+
+    private const int Daniel = 27;
+
+    private const int FirstSamuel = 9;
+
     private static readonly VersificationRules Rules = TvtmsReader.Read(TestResources.Tvtms);
 
     private static readonly VersificationFrame Brenton = Rules.Frame(Versification.Septuagint, EditionShape.Of(
@@ -364,6 +370,212 @@ public class LetteredEditionFrameTests
         other.Resolve(Esther, 1, 1, lettered: true, "b").Should().Equal(new CanonicalReference(Esther, 1, 1));
     }
 
+    /// <summary>
+    /// Brenton prints Sirach 30:25-36:16 in the Greek manuscripts' order under his own chapter
+    /// numbers, and each of those verses stands at the standard verse it prints.
+    /// </summary>
+    [Theory]
+    [InlineData(30, 24, "", 30, 24)]
+    [InlineData(30, 13, "a", 30, 11)]
+    [InlineData(30, 25, "", 33, 16)]
+    [InlineData(30, 40, "", 33, 31)]
+    [InlineData(31, 1, "", 34, 1)]
+    [InlineData(32, 20, "", 35, 20)]
+    [InlineData(33, 11, "", 36, 11)]
+    [InlineData(33, 12, "", 30, 25)]
+    [InlineData(34, 1, "", 31, 1)]
+    [InlineData(35, 24, "", 32, 24)]
+    [InlineData(36, 15, "", 33, 15)]
+    [InlineData(36, 17, "", 36, 12)]
+    [InlineData(36, 31, "", 36, 26)]
+    [InlineData(37, 1, "", 37, 1)]
+    public void BrentonsSirachStandsAtTheStandardVerseItPrints(
+        int chapter, int verse, string label, int toChapter, int toVerse)
+    {
+        Brenton.Resolve(Sirach, chapter, verse, label.Length > 0, label)[0]
+            .Should().Be(new CanonicalReference(Sirach, toChapter, toVerse));
+    }
+
+    /// <summary>
+    /// A verse at a seam of the misplaced quires prints the end of one standard verse and the start of
+    /// another, and stands at both, the one it prints most of first.
+    /// </summary>
+    [Fact]
+    public void BrentonsSeamVersesStandAtBothHalves()
+    {
+        Brenton.Resolve(Sirach, 36, 16, lettered: false, string.Empty)
+            .Should().Equal(new CanonicalReference(Sirach, 36, 11), new CanonicalReference(Sirach, 33, 16));
+        Brenton.Resolve(Sirach, 30, 26, lettered: false, string.Empty)
+            .Should().Equal(new CanonicalReference(Sirach, 33, 17), new CanonicalReference(Sirach, 33, 16));
+    }
+
+    /// <summary>Brenton's Greek runs the end of the standard's 36:6 into his 33:7; his English does not.</summary>
+    [Fact]
+    public void BrentonsGreekAndEnglishDivideSirach33Apart()
+    {
+        var greek = Rules.Frame(Versification.Septuagint, EditionShape.Of(
+        [
+            .. Pieces(1, 1, "bcdefghiklmnopqrs"),
+            .. Pieces(4, 17, "abcdefghiklmnopqrstuwxyz"),
+            .. Pieces(10, 3, "abcdefghikl"),
+            (FirstSamuel, 17, 11, string.Empty, 40),
+        ]));
+
+        greek.Resolve(Sirach, 33, 7, lettered: false, string.Empty)
+            .Should().Equal(new CanonicalReference(Sirach, 36, 7), new CanonicalReference(Sirach, 36, 6));
+        greek.Resolve(Sirach, 34, 1, lettered: false, string.Empty)
+            .Should().Equal(new CanonicalReference(Sirach, 31, 1));
+        Brenton.Resolve(Sirach, 33, 7, lettered: false, string.Empty)
+            .Should().Equal(new CanonicalReference(Sirach, 36, 7));
+    }
+
+    /// <summary>
+    /// Swete prints Sirach in the standard's order, numbering 34-36 as the NRSV does and 33:16-31 with
+    /// the Greek manuscripts' verse numbers.
+    /// </summary>
+    [Theory]
+    [InlineData(30, 13, "b", 30, 25)]
+    [InlineData(31, 31, "", 31, 31)]
+    [InlineData(33, 15, "", 33, 15)]
+    [InlineData(33, 16, "a", 33, 16)]
+    [InlineData(33, 25, "", 33, 16)]
+    [InlineData(33, 40, "", 33, 31)]
+    [InlineData(34, 9, "", 34, 9)]
+    [InlineData(34, 11, "", 34, 10)]
+    [InlineData(34, 31, "", 34, 26)]
+    [InlineData(35, 26, "", 35, 20)]
+    [InlineData(36, 13, "a", 36, 11)]
+    [InlineData(36, 16, "b", 36, 11)]
+    [InlineData(36, 31, "", 36, 26)]
+    public void SwetesSirachStandsAtTheStandardVerseItPrints(
+        int chapter, int verse, string label, int toChapter, int toVerse)
+    {
+        Swete.Resolve(Sirach, chapter, verse, label.Length > 0, label)[0]
+            .Should().Be(new CanonicalReference(Sirach, toChapter, toVerse));
+    }
+
+    /// <summary>
+    /// Both Greek editions print the song in Vaticanus's order, which the versification data's columns
+    /// do not number, so each of their verses stands at the verse of the song it prints.
+    /// </summary>
+    [Theory]
+    [InlineData("Brenton", 54, "", 32)]
+    [InlineData("Brenton", 55, "", 33)]
+    [InlineData("Brenton", 58, "", 36)]
+    [InlineData("Brenton", 72, "a", 45)]
+    [InlineData("Brenton", 72, "b", 50)]
+    [InlineData("Brenton", 77, "", 56)]
+    [InlineData("Swete", 77, "", 55)]
+    [InlineData("Swete", 80, "", 58)]
+    [InlineData("Swete", 67, "", 47)]
+    [InlineData("Swete", 69, "", 45)]
+    [InlineData("Swete", 70, "", 50)]
+    public void TheGreekEditionsSongStandsAtTheVerseItPrints(string edition, int verse, string label, int standard)
+    {
+        (edition == "Brenton" ? Brenton : Swete).Resolve(Daniel, 3, verse, label.Length > 0, label)
+            .Should().Equal(new CanonicalReference(Daniel, 3, 30 + standard));
+    }
+
     private static IEnumerable<(int, int, int, string, int)> Pieces(int chapter, int verse, string letters) =>
         [(Esther, chapter, verse, string.Empty, 40), .. letters.Select(letter => (Esther, chapter, verse, letter.ToString(), 40))];
+}
+
+/// <summary>
+/// The Greek and the Latin print the Prayer of Azariah and the Song of the Three inside Daniel 3, and
+/// number the Hebrew's 3:24-30 after it; the song stands after the chapter's thirty verses rather
+/// than on them.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public class SongOfTheThreeFrameTests(VersificationFrames frames) : IClassFixture<VersificationFrames>
+{
+    private const int Daniel = 27;
+
+    [Fact]
+    public void TheStandardsSongVersesAreReadIntoDaniel3()
+    {
+        SongOfTheThree.TryParseAll("S3Y.1:29-30", out var joined).Should().BeTrue();
+        joined.Should().Equal(new CanonicalReference(Daniel, 3, 59), new CanonicalReference(Daniel, 3, 60));
+        SongOfTheThree.TryParseAll("Dan.3:24", out _).Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData(23, 23)]
+    [InlineData(24, 31)]
+    [InlineData(54, 63)]
+    [InlineData(55, 62)]
+    [InlineData(80, 88)]
+    [InlineData(90, 98)]
+    [InlineData(91, 24)]
+    [InlineData(97, 30)]
+    public void AGreekEditionsSongStandsAfterTheChapter(int verse, int standard)
+    {
+        Greek().Resolve(Daniel, 3, verse, lettered: false)[0]
+            .Should().Be(new CanonicalReference(Daniel, 3, standard));
+    }
+
+    [Theory]
+    [InlineData(24, 3, 31)]
+    [InlineData(77, 3, 85)]
+    [InlineData(80, 3, 88)]
+    [InlineData(91, 3, 24)]
+    [InlineData(98, 4, 1)]
+    public void TheLatinsSongStandsAfterTheChapterAndItsEndInChapter4(int verse, int chapter, int standard)
+    {
+        frames.Rules.Frame(Versification.Vulgate, Daniel3(100)).Resolve(Daniel, 3, verse, lettered: false)[0]
+            .Should().Be(new CanonicalReference(Daniel, chapter, standard));
+    }
+
+    /// <summary>
+    /// The Ge'ez has the depths and the heavens first, as Vaticanus has them, and the Latin's six lines
+    /// of weather in an order of its own.
+    /// </summary>
+    [Theory]
+    [InlineData(54, 62)]
+    [InlineData(59, 67)]
+    [InlineData(67, 77)]
+    [InlineData(68, 76)]
+    [InlineData(71, 75)]
+    [InlineData(72, 80)]
+    [InlineData(81, 89)]
+    public void TheGeezSongStandsAtTheVerseItPrints(int verse, int standard)
+    {
+        var geez = frames.Rules.Frame(Versification.Septuagint, EditionShape.Of(
+        [
+            .. Enumerable.Range(1, 100).Select(number => (Daniel, 3, number, string.Empty, 60)),
+            (Daniel, 13, 1, string.Empty, 60),
+        ]));
+
+        geez.Resolve(Daniel, 3, verse, lettered: false, string.Empty)
+            .Should().Equal(new CanonicalReference(Daniel, 3, standard));
+    }
+
+    /// <summary>The verse the standard divides in two stands at both halves.</summary>
+    [Fact]
+    public void Verse52StandsAtBothVersesTheStandardMakesOfIt()
+    {
+        Greek().Resolve(Daniel, 3, 52, lettered: false)
+            .Should().Equal(new CanonicalReference(Daniel, 3, 59), new CanonicalReference(Daniel, 3, 60));
+    }
+
+    [Fact]
+    public void NoVerseOfTheChapterSharesARowWithAnother()
+    {
+        var frame = Greek();
+        var rows = Enumerable.Range(1, 97).Select(verse => frame.Resolve(Daniel, 3, verse, lettered: false)[0]).ToList();
+
+        rows.Should().OnlyHaveUniqueItems();
+        rows.Count(row => row.Verse is >= 24 and <= 30).Should().Be(7);
+    }
+
+    /// <summary>An English Daniel 3, which has no song, is placed exactly as before.</summary>
+    [Fact]
+    public void TheEnglishChapterIsUnaffected()
+    {
+        frames.English.Resolve(Daniel, 3, 24, lettered: false).Should().Equal(new CanonicalReference(Daniel, 3, 24));
+    }
+
+    private VersificationFrame Greek() => frames.Rules.Frame(Versification.Septuagint, Daniel3(97));
+
+    private static EditionShape Daniel3(int last) =>
+        EditionShape.Of(Enumerable.Range(1, last).Select(verse => (Daniel, 3, verse, string.Empty, 60)));
 }
