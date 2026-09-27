@@ -123,6 +123,16 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
             .ToListAsync(cancellationToken))
         .ToDictionary(row => (row.TextId, row.CanonicalBook), row => row.Chapters);
 
+    /// <summary>
+    /// The books a text holds, and the books the frame places some of its verses in under another
+    /// name: the King James's Baruch 6 is the Letter of Jeremiah too, so a reader of the letter finds it.
+    /// </summary>
+    public static IReadOnlyList<int> Covered(
+        int textId,
+        IEnumerable<int> books,
+        IReadOnlyDictionary<(int Text, int Book), int> frameChapterCounts) =>
+        [.. books.Union(frameChapterCounts.Keys.Where(key => key.Text == textId).Select(key => key.Book)).Order()];
+
     public async Task<int> ChapterCountIn(int textId, int canonicalBook, CancellationToken cancellationToken)
     {
         await Ensure(cancellationToken);
@@ -193,7 +203,7 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
                 .ToDictionary(row => (row.TextId, row.CanonicalOrdinal), row => row.Chapters);
 
             _texts = texts
-                .Select(t => new TextEntry(t.Id, t.Slug, t.Books, t.Linked))
+                .Select(t => new TextEntry(t.Id, t.Slug, Covered(t.Id, t.Books, _frameChapterCounts), t.Linked))
                 .ToList();
         }
         finally

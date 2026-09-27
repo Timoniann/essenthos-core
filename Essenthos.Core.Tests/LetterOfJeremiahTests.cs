@@ -160,4 +160,20 @@ public sealed class LetterOfJeremiahReadingTests : IDisposable
         (await ParallelEndpoints.Held(_db, english.Id, LetterOfJeremiah.Baruch, 5, default))
             .Should().Be((LetterOfJeremiah.Baruch, 5));
     }
+
+    /// <summary>A text that prints the letter as Baruch 6 is offered for the letter too, once the frame says so.</summary>
+    [Fact]
+    public void ATextCoversTheBookItsVersesStandInUnderAnotherName()
+    {
+        var frame = new Dictionary<(int Text, int Book), int>
+        {
+            [(1, LetterOfJeremiah.Baruch)] = 6,
+            [(1, LetterOfJeremiah.Book)] = 1,
+            [(2, 1)] = 50,
+        };
+
+        CanonIndex.Covered(1, [1, LetterOfJeremiah.Baruch], frame).Should()
+            .Equal(1, LetterOfJeremiah.Baruch, LetterOfJeremiah.Book);
+        CanonIndex.Covered(2, [1], frame).Should().Equal(1);
+    }
 }

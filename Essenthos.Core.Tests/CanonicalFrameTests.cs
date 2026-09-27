@@ -82,8 +82,8 @@ public class CanonicalReferenceTests
     [Fact]
     public void ABookOutsideTheCanonDoesNotParse()
     {
-        CanonicalReference.TryParse("Tob.4:1", out _).Should().BeFalse();
-        BookCodes.IsBeyondTheCanon("Tob").Should().BeTrue();
+        CanonicalReference.TryParse("Oda.4:1", out _).Should().BeFalse();
+        BookCodes.IsBeyondTheCanon("Oda").Should().BeTrue();
     }
 }
 
