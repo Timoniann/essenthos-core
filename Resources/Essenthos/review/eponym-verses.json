@@ -211,22 +211,6 @@
     },
     {
       "record": "jacob",
-      "label": "Israel",
-      "strong": "H3478",
-      "references": [
-        "GEN 32:32",
-        "GEN 36:31",
-        "GEN 42:5",
-        "GEN 46:8"
-      ],
-      "question": "BibleData files these verses under Jacob as 'Israel', where the name stands in a phrase that elsewhere names the people — the sons of, the house of — but within Jacob's own lifetime, when it can mean his own children. Do they name the man, or the Israelites?",
-      "options": [
-        "israelites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "jacob",
       "label": "Jacob",
       "strong": "H3290",
       "references": [
