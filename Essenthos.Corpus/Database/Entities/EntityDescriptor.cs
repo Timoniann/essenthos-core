@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -455,5 +455,93 @@ public static class PlacingRelations
         DescriptorRelations.GateOf,
         DescriptorRelations.Near,
     };
+}
+
+/// <summary>
+/// What kind of record a clause's own subject has to be for the relation to be said of it.
+///
+/// <para>
+/// The vocabulary is closed and the kinds were not: nothing asked whether a place can be anyone's
+/// companion, and a pass reading <em>David ... came to the brook Besor</em> (1SA 30:9) filed the
+/// brook among David's men. A relation of kin, office or company is said of someone — a person, or
+/// a person known by a title; descent, a killing, a tribe and a home are said of a people as well;
+/// a league, an exile and an inheritance of a place taken as its city or its land; a place's own
+/// relations only of a place. <see cref="PlacingRelations"/> asks the same of the clause's other
+/// end.
+/// </para>
+///
+/// <para>
+/// Every relation of <see cref="DescriptorRelations.All"/> is in exactly one row. The generation
+/// harness reads this table out of the file, so it is written as a plain list of rows.
+/// </para>
+/// </summary>
+public static class DescriptorSubjects
+{
+    private static readonly (EntityKind[] Kinds, string[] Relations)[] Table =
+    [
+        ([EntityKind.Person, EntityKind.Title],
+        [
+            DescriptorRelations.SonOf, DescriptorRelations.DaughterOf, DescriptorRelations.FatherOf,
+            DescriptorRelations.MotherOf, DescriptorRelations.BrotherOf, DescriptorRelations.SisterOf,
+            DescriptorRelations.HusbandOf, DescriptorRelations.WifeOf, DescriptorRelations.HalfBrotherOf,
+            DescriptorRelations.HalfSisterOf, DescriptorRelations.GrandfatherOf, DescriptorRelations.GrandmotherOf,
+            DescriptorRelations.GrandsonOf, DescriptorRelations.GranddaughterOf, DescriptorRelations.UncleOf,
+            DescriptorRelations.AuntOf, DescriptorRelations.NephewOf, DescriptorRelations.NieceOf,
+            DescriptorRelations.FatherInLawOf, DescriptorRelations.MotherInLawOf, DescriptorRelations.SonInLawOf,
+            DescriptorRelations.DaughterInLawOf, DescriptorRelations.BrotherInLawOf,
+            DescriptorRelations.SisterInLawOf, DescriptorRelations.ConcubineOf, DescriptorRelations.CousinOf,
+            DescriptorRelations.KingOf, DescriptorRelations.QueenOf, DescriptorRelations.ProphetTo,
+            DescriptorRelations.PriestOf, DescriptorRelations.JudgeOf, DescriptorRelations.HighPriestOf,
+            DescriptorRelations.CommanderOf, DescriptorRelations.GovernorOf, DescriptorRelations.TetrarchOf,
+            DescriptorRelations.MasterOf, DescriptorRelations.DiscipleOf, DescriptorRelations.ApostleOf,
+            DescriptorRelations.ScribeOf, DescriptorRelations.CompanionOf, DescriptorRelations.TeacherOf,
+            DescriptorRelations.RapedBy, DescriptorRelations.RaperOf, DescriptorRelations.CreatorOf,
+            DescriptorRelations.AngelOf,
+        ]),
+        ([EntityKind.Person, EntityKind.Title, EntityKind.People],
+        [
+            DescriptorRelations.AncestorOf, DescriptorRelations.DescendantOf, DescriptorRelations.ServantOf,
+            DescriptorRelations.KilledBy, DescriptorRelations.KillerOf, DescriptorRelations.HeirOf,
+            DescriptorRelations.OfTribe, DescriptorRelations.OfPeople, DescriptorRelations.FromPlace,
+            DescriptorRelations.LivedIn, DescriptorRelations.BuriedIn,
+        ]),
+        ([EntityKind.Person, EntityKind.Title, EntityKind.People, EntityKind.Place],
+        [
+            DescriptorRelations.AllyOf, DescriptorRelations.SupporterOf, DescriptorRelations.SupportedBy,
+            DescriptorRelations.ExilerOf, DescriptorRelations.ExiledBy, DescriptorRelations.InheritedBy,
+        ]),
+        ([EntityKind.People],
+        [
+            DescriptorRelations.DescendantsOf,
+        ]),
+        ([EntityKind.Place, EntityKind.People],
+        [
+            DescriptorRelations.Near,
+        ]),
+        ([EntityKind.Place],
+        [
+            DescriptorRelations.CityIn, DescriptorRelations.RegionOf, DescriptorRelations.RiverOf,
+            DescriptorRelations.MountainIn, DescriptorRelations.GateOf,
+        ]),
+        ([EntityKind.Person, EntityKind.Title, EntityKind.People, EntityKind.Place, EntityKind.Object,
+          EntityKind.Observance, EntityKind.Term],
+        [
+            DescriptorRelations.CreatedBy,
+        ]),
+    ];
+
+    private static readonly IReadOnlyDictionary<string, IReadOnlySet<EntityKind>> ByRelation =
+        Table.SelectMany(row => row.Relations.Select(relation => (relation, row.Kinds)))
+            .ToDictionary(
+                pair => pair.relation,
+                pair => (IReadOnlySet<EntityKind>)pair.Kinds.ToHashSet(),
+                StringComparer.Ordinal);
+
+    /// <summary>The kinds of record the relation may be said of; none for a relation outside the vocabulary.</summary>
+    public static IReadOnlySet<EntityKind> Of(string relation) =>
+        ByRelation.TryGetValue(relation, out var kinds) ? kinds : new HashSet<EntityKind>();
+
+    /// <summary>Whether a record of this kind can hold the relation.</summary>
+    public static bool Admits(string relation, EntityKind subject) => Of(relation).Contains(subject);
 }
 

@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 ﻿using Essenthos.Core.Loading;
 using System.Data.Common;
 using System.Diagnostics;
@@ -370,6 +370,44 @@ public sealed class DescriptorTests : IDisposable
         outcome.Refused.Unaccompanied.Should().Be(1, "Shallum, Amariah, and Joseph is a list");
         (await _db.EntityDescriptors.CountAsync(d => d.Relation == DescriptorRelations.CompanionOf))
             .Should().Be(1, "my brother and companion in labour speaks of company");
+    }
+
+    /// <summary>
+    /// A brook is nobody's companion: <em>David ... came to the brook Besor</em> (1SA 30:9) names a
+    /// place where he was, and a relation of company is said of someone. The man beside him at the
+    /// same verse is kept.
+    /// </summary>
+    [Fact]
+    public async Task ARelationItsSubjectCannotHoldIsRefused()
+    {
+        Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",
+            (5, 1, ["David", "and", "the", "men", "that", "were", "with", "him", "came", "to", "Besor"]));
+        Add("besor-1", EntityKind.Place, "Besor", null, (1, 5, 1));
+        Add("abiathar-1", EntityKind.Person, "Abiathar", null, (1, 5, 1));
+        Add("david-1", EntityKind.Person, "David", null, (1, 5, 1));
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load("kinds");
+
+        outcome.Refused.Inadmissible.Should().Be(1, "a brook is not anybody's companion");
+        (await _db.EntityDescriptors.Select(d => d.Entity!.Slug).ToListAsync()).Should().Equal("abiathar-1");
+    }
+
+    /// <summary>
+    /// Every relation of the vocabulary says what it can be said of, once. A relation missing from
+    /// the table would be refused of everything, and one in two rows would be read two ways.
+    /// </summary>
+    [Fact]
+    public void EveryRelationNamesTheKindsItCanBeSaidOf()
+    {
+        foreach (var relation in DescriptorRelations.All)
+        {
+            DescriptorSubjects.Of(relation).Should().NotBeEmpty($"{relation} has to be said of something");
+        }
+
+        DescriptorSubjects.Admits(DescriptorRelations.CompanionOf, EntityKind.Place).Should().BeFalse();
+        DescriptorSubjects.Admits(DescriptorRelations.CityIn, EntityKind.Place).Should().BeTrue();
+        DescriptorSubjects.Admits(DescriptorRelations.DescendantsOf, EntityKind.Person).Should().BeFalse();
     }
 
     [Fact]
