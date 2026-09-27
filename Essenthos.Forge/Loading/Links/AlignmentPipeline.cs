@@ -515,6 +515,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// marked wrong for it. The second figure drops the pairs whose Hebrew word is a prefix or the
     /// object marker, and is the closer answer to "when it says two words correspond, is it right".
     /// </summary>
+    /// <param name="pairsFile">
+    /// Where to write the pairs an alignment run would store, one per line (source word, target
+    /// word, translation and position probability), so another method can be scored against the
+    /// same answer key word for word, or given the aligner as its fallback.
+    /// </param>
     public async Task<string> Measure(
         string fromSlug,
         string toSlug,
@@ -524,6 +529,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         bool targetSurface = false,
         bool statedOnly = false,
         bool suppletion = false,
+        string? pairsFile = null,
         CancellationToken cancellationToken = default)
     {
         var from = await Text(fromSlug, cancellationToken);
@@ -582,6 +588,20 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                         $"  {decided.Precision,9:P1}, {decided.Hit} of {decided.Proposed}");
                 }
             }
+        }
+
+        if (pairsFile is not null)
+        {
+            var (stored, _, _, _) = Read(
+                alignmentFile, addresses, source, target, DefaultMinimumConfidence, Selection.BestPerSource, prior,
+                MarksNoNames(from.Language), BothMarkTheirNames(from.Language, to.Language));
+            await File.WriteAllLinesAsync(
+                pairsFile,
+                stored.Select(draft => string.Join('\t', draft.SourceWordId, draft.TargetWordId,
+                    draft.Translation.ToString("0.####", System.Globalization.CultureInfo.InvariantCulture),
+                    draft.Position.ToString("0.####", System.Globalization.CultureInfo.InvariantCulture))),
+                cancellationToken);
+            report.AppendLine($"{stored.Count:N0} pairs as an alignment run would store them written to {pairsFile}");
         }
 
         return report.ToString();

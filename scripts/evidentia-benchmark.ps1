@@ -7,6 +7,9 @@ param(
     # ind: BSB against the Berean and Clear Bible gold (Genesis 1-10, Ruth, Jonah, Mark 1-4);
     # val: the passages no rule was chosen on (1 Samuel 17, Psalms 1-23, John 1-3);
     # val2: three more of other kinds, law, prophet and epistle (Exodus 21-23, Isaiah 40-42, Romans 5-8);
+    # held: nine chapters drawn at random (seed 20260928) from outside every passage measured before,
+    # which no rule was chosen or kept on: val and val2 have since been used to keep rules, so held is
+    # the one figure still free of that. Measure on it, never tune on it.
     # self: the King James against its own stated links; selfstrong: the same with source Strong allowed.
     # kjv, kjvval: the King James against its own links with the index learned from the Berean instead,
     # so nothing the King James states teaches it (the passages of ind, and of val and val2).
@@ -29,7 +32,7 @@ if (-not (Test-Path -LiteralPath $snapshot)) {
     & dotnet build (Join-Path $repository 'Essenthos.Forge') -p:BaseOutputPath=bin/benchmark/ -v q -nologo
     if ($LASTEXITCODE -ne 0) { throw "The Forge build failed ($LASTEXITCODE); fix it before measuring." }
     New-Item -ItemType Directory -Force -Path $directory | Out-Null
-    Copy-Item -Recurse (Join-Path $repository 'Essenthos.Forge\bin\benchmark\Debug\net9.0') $snapshot
+    Copy-Item -Recurse (Join-Path $repository 'Essenthos.Forge\bin\benchmark\Debug\net10.0') $snapshot
 }
 
 # A worktree holds only the licences of the corpus; the main checkout's is the one the database was
@@ -55,6 +58,16 @@ $passages = @{
         @('val-1sa', 'BSB', 'BHSA', 9, 17, 17, $independent),
         @('val-ps', 'BSB', 'BHSA', 19, 1, 23, $independent),
         @('val-john', 'BSB', 'NESTLE1904', 43, 1, 3, ($independent + '--learn-from-strong-numbers')))
+    held       = @(
+        @('held-num', 'BSB', 'BHSA', 4, 33, 33, $independent),
+        @('held-1chr', 'BSB', 'BHSA', 13, 7, 7, $independent),
+        @('held-ezra', 'BSB', 'BHSA', 15, 9, 9, $independent),
+        @('held-isa', 'BSB', 'BHSA', 23, 34, 34, $independent),
+        @('held-dan10', 'BSB', 'BHSA', 27, 10, 10, $independent),
+        @('held-dan12', 'BSB', 'BHSA', 27, 12, 12, $independent),
+        @('held-matt', 'BSB', 'NESTLE1904', 40, 25, 25, ($independent + '--learn-from-strong-numbers')),
+        @('held-heb', 'BSB', 'NESTLE1904', 58, 10, 10, ($independent + '--learn-from-strong-numbers')),
+        @('held-rev', 'BSB', 'NESTLE1904', 66, 17, 17, ($independent + '--learn-from-strong-numbers')))
     val2       = @(
         @('val2-exo', 'BSB', 'BHSA', 2, 21, 23, $independent),
         @('val2-isa', 'BSB', 'BHSA', 23, 40, 42, $independent),
@@ -153,7 +166,7 @@ function ByWord([string] $name, $c) {
 Push-Location $snapshot
 try {
     foreach ($set in $Runs -split ',') {
-        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, kjv, kjvval, self, selfstrong, bbe or nwt." }
+        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, kjv, kjvval, self, selfstrong, bbe or nwt." }
         $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0 }
         $words = @{}
         $routes = [ordered]@{}
