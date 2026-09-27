@@ -485,24 +485,6 @@
       "verb": "align",
       "arguments": [
         "GEEZ81",
-        "SWETE",
-        "--replace"
-      ],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "GEEZ81",
-        "GRCBRENT",
-        "--replace"
-      ],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "GEEZ81",
         "NESTLE1904",
         "--replace"
       ],
@@ -513,15 +495,6 @@
       "arguments": [
         "GEEZ81",
         "RP2018",
-        "--replace"
-      ],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "BRENTON",
-        "GRCBRENT",
         "--replace"
       ],
       "note": "run on essenthos_core on 2026-09-25"
@@ -756,6 +729,33 @@
         "--unmeasured"
       ],
       "at": "2026-09-26T18:16:27.6408208+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "BRENTON",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "at": "2026-09-27T12:09:31.4228638+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "at": "2026-09-27T12:12:48.9162994+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "SWETE",
+        "--replace"
+      ],
+      "at": "2026-09-27T12:13:17.4663944+00:00"
     }
   ]
 }
