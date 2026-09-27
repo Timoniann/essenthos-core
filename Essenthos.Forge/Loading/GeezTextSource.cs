@@ -82,8 +82,6 @@ internal static class GeezTextSource
 
     private const int LetterOfJeremiah = 76;
 
-    private const int Sirach = 72;
-
     /// <summary>The eighty-one, in the order the church's Bible prints them.</summary>
     public static IReadOnlyList<GeezBook> Books { get; } =
     [
@@ -212,16 +210,6 @@ internal static class GeezTextSource
     ];
 
     /// <summary>
-    /// Sirach 30:25 to the end of 36, which the church's text prints in the order of the Greek
-    /// manuscripts, as Brenton does, while the frame stands both Greek editions in the standard's
-    /// order there. The Ge'ez also divides those verses otherwise than either edition, and no reading
-    /// of it is written down, so a row there holds another passage in every other text. Neither aligned
-    /// nor joined verse by verse until it is.
-    /// </summary>
-    public static bool InTheManuscriptsOrder(int book, int chapter, int verse) =>
-        book == Sirach && (chapter, verse) is ( > 30 and <= 36, _) or (30, >= 25);
-
-    /// <summary>
     /// The books whose verses the church's text or Ludolf's Psalter divide otherwise than the Greek
     /// inside the chapter, so that a row of the frame holds the Greek of the verse before or after:
     /// Ludolf gives a psalm's title and first verse as one and splits others, and Job and the Song
@@ -234,7 +222,6 @@ internal static class GeezTextSource
     /// <summary>Whether a Ge'ez verse at this row of the frame is aligned against this text.</summary>
     public static bool Aligns(string to, int book, int chapter, int verse) =>
         !DividedWithinChapters.Contains(book)
-        && !InTheManuscriptsOrder(book, chapter, verse)
         && (to != SweteTextSource.Slug || !SweteOffTheFrame.Contains((book, chapter)));
 
     /// <summary>The books placed at their own numbers and joined to nothing verse by verse.</summary>

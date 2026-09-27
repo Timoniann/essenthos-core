@@ -87,12 +87,12 @@ public sealed class IsaiahLoadTests : IDisposable
 
         added.Books.Should().Equal("Isaiah");
         added.Verses.Should().Be(1289);
-        added.Words.Should().Be(26971);
+        added.Words.Should().Be(26970);
 
         var books = await _db.Books.OrderBy(b => b.Position)
             .Select(b => new { b.CanonicalOrdinal, b.Position }).ToListAsync();
         books.Select(b => (b.CanonicalOrdinal, b.Position))
-            .Should().Equal((Genesis, 1), (Isaiah, 44), (Jeremiah, 45));
+            .Should().Equal((Genesis, 1), (Isaiah, 45), (Jeremiah, 46));
 
         (await _db.Words.Where(w => w.Verse!.Book!.CanonicalOrdinal == Genesis)
                 .Select(w => w.Id).OrderBy(id => id).ToListAsync())

@@ -195,18 +195,31 @@ public class GeezAlignmentScopeTests
     }
 
     /// <summary>
-    /// The church's Sirach 30:25-36 is in the Greek manuscripts' order, where both Greek editions stand
-    /// in the standard's, so neither answers for it.
+    /// The church's Sirach 30:25-36 keeps the Greek manuscripts' order and Swete's division, and each
+    /// verse stands where Swete's verse it prints stands, so both Greek editions answer for it there.
     /// </summary>
     [Theory]
-    [InlineData("GRCBRENT", 30, 24, true)]
-    [InlineData("GRCBRENT", 30, 25, false)]
-    [InlineData("SWETE", 32, 1, false)]
-    [InlineData("GRCBRENT", 36, 31, false)]
-    [InlineData("SWETE", 37, 1, true)]
-    public void NeitherGreekAnswersForSirachInTheManuscriptsOrder(string greek, int chapter, int verse, bool aligned)
+    [InlineData(30, 24, 30, 24)]
+    [InlineData(30, 25, 33, 16)]
+    [InlineData(31, 1, 34, 1)]
+    [InlineData(31, 10, 34, 10)]
+    [InlineData(33, 13, 36, 11)]
+    [InlineData(34, 5, 31, 5)]
+    [InlineData(36, 16, 33, 16)]
+    [InlineData(36, 17, 36, 12)]
+    [InlineData(37, 1, 37, 1)]
+    public void SirachInTheManuscriptsOrderStandsWhereItsSweteVerseStands(
+        int chapter, int verse, int toChapter, int toVerse)
     {
-        GeezTextSource.Aligns(greek, 72, chapter, verse).Should().Be(aligned);
+        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.Septuagint, EditionShape.Of(
+        [
+            (27, 3, 100, string.Empty, 10), (27, 13, 1, string.Empty, 10),
+            (72, chapter, verse, string.Empty, 10),
+        ]));
+
+        frame.Resolve(72, chapter, verse, lettered: false, string.Empty)[0]
+            .Should().Be(new CanonicalReference(72, toChapter, toVerse));
+        GeezTextSource.Aligns("GRCBRENT", 72, toChapter, toVerse).Should().BeTrue();
     }
 
     /// <summary>Every verse of the books the church divides its own way is read, and read once.</summary>

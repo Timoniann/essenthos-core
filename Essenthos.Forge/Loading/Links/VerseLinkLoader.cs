@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Essenthos.Core.BetaMasaheft;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Frame;
@@ -298,16 +299,6 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                 {
                     (here, there) = Agreeing(here, there);
                 }
-            }
-
-            // The church's Ge'ez stands at its own numbers where it keeps the Greek manuscripts' order,
-            // and the rows there hold other passages of every other text.
-            if (pair.FromTextId == geez)
-            {
-                here = here
-                    .Where(address => !GeezTextSource.InTheManuscriptsOrder(
-                        address.Key.Item1, address.Key.Item2, address.Key.Item3))
-                    .ToDictionary(address => address.Key, address => address.Value);
             }
 
             var components = Components(here, there, ref alone);
@@ -704,8 +695,10 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             })
             .ToListAsync(cancellationToken);
 
+        // A passage printed under two names is joined under one, so that an edition printing the Letter
+        // of Jeremiah as Baruch 6 meets one printing it as a book of its own.
         var addressed = rows
-            .GroupBy(row => (row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse))
+            .GroupBy(row => TwinPassages.Joined((row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse)))
             .ToDictionary(group => group.Key, group => group.Select(row => row.VerseId).Distinct().ToList());
 
         cache[textId] = addressed;

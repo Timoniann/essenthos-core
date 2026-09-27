@@ -1,0 +1,244 @@
+{
+  "relations": [
+    {
+      "from": "KJV",
+      "to": "BHSA",
+      "relation": "same-family-as",
+      "scope": "1-39",
+      "note": "Translated from the printed Hebrew Bibles of 1604-1611, every one of them a Masoretic text; BHSA is the Masoretic Text as the Leningrad Codex preserves it.",
+      "source": "The Translators to the Reader (1611); Emanuel Tov, Textual Criticism of the Hebrew Bible, 3rd ed. (2012)"
+    },
+    {
+      "from": "KJV",
+      "to": "TR1894",
+      "relation": "translated-from",
+      "scope": "40-66",
+      "note": "The translators published no Greek of their own; Scrivener reconstructed it reading by reading from the editions of Erasmus, Stephanus and Beza they followed.",
+      "source": "F. H. A. Scrivener, The New Testament in the Original Greek according to the Text followed in the Authorised Version (1881)"
+    },
+    {
+      "from": "KJV",
+      "to": "TYN1534",
+      "relation": "collated-against",
+      "scope": "40-66",
+      "note": "The translators revised the Bishops' Bible and were to use Tyndale's, among other English versions, where it agreed better with the original.",
+      "source": "The rules given to the translators (1604), rule 14"
+    },
+    {
+      "from": "KJV",
+      "to": "GNV1599",
+      "relation": "collated-against",
+      "scope": null,
+      "note": "The translators revised the Bishops' Bible and were to use the Geneva, among other English versions, where it agreed better with the original.",
+      "source": "The rules given to the translators (1604), rule 14"
+    },
+    {
+      "from": "TR1894",
+      "to": "TR1550",
+      "relation": "same-family-as",
+      "scope": null,
+      "note": "Both are the Received Text. Scrivener chose at each place among the readings of Erasmus, Stephanus and Beza the one the Authorised Version followed.",
+      "source": "F. H. A. Scrivener, The New Testament in the Original Greek according to the Text followed in the Authorised Version (1881)"
+    },
+    {
+      "from": "TYN1534",
+      "to": "TR1550",
+      "relation": "same-family-as",
+      "scope": null,
+      "note": "Tyndale translated from Erasmus's Greek, from which the Received Text descends.",
+      "source": "The readings it prints: Acts 8:37, Matthew 17:21, John 5:4, 1 John 5:7 and the doxology of the Lord's Prayer"
+    },
+    {
+      "from": "ASV",
+      "to": "KJV",
+      "relation": "revised-from",
+      "scope": null,
+      "note": "The American recension of the Revised Version of 1881-1885, which revised the Authorised Version against the manuscripts found since.",
+      "source": "Title page of the American Standard Version (1901): \"being the version set forth A.D. 1611, compared with the most ancient authorities and revised\""
+    },
+    {
+      "from": "WEB",
+      "to": "ASV",
+      "relation": "revised-from",
+      "scope": null,
+      "note": "An update of the American Standard Version of 1901.",
+      "source": "Preface to the World English Bible"
+    },
+    {
+      "from": "WEB",
+      "to": "RP2018",
+      "relation": "same-family-as",
+      "scope": "40-66",
+      "note": "The New Testament was conformed in places to the Byzantine Majority Text of Robinson and Pierpont and of Hodges and Farstad; the edition of Robinson and Pierpont held here is the later one of 2018.",
+      "source": "Preface to the World English Bible"
+    },
+    {
+      "from": "ULT",
+      "to": "ASV",
+      "relation": "revised-from",
+      "scope": null,
+      "note": "An open-licensed update of the American Standard Version of 1901.",
+      "source": "unfoldingWord Literal Text, manifest of release 90 (2026)"
+    },
+    {
+      "from": "BRENTON",
+      "to": "GRCBRENT",
+      "relation": "translated-from",
+      "scope": "1-39",
+      "note": "Brenton translated the Vatican text in Valpy's reprint of the Sixtine edition of 1587, the Greek printed facing his English.",
+      "source": "L. C. L. Brenton, preface to The Septuagint Version of the Old Testament (1844)"
+    },
+    {
+      "from": "BRENTON",
+      "to": "KJV",
+      "relation": "revised-from",
+      "scope": "67-79",
+      "note": "For the Apocrypha added in 1851 Brenton adapted the Authorised Version rather than translating afresh; 3 and 4 Maccabees, which it lacks, were translated for that edition.",
+      "source": "Preface to Brenton's edition with the Apocrypha (Samuel Bagster and Sons, 1851)"
+    },
+    {
+      "from": "GRCBRENT",
+      "to": "SWETE",
+      "relation": "same-family-as",
+      "scope": null,
+      "note": "The Sixtine edition follows Codex Vaticanus and fills its gaps from other manuscripts; Swete prints the codex as it stands.",
+      "source": "H. B. Swete, An Introduction to the Old Testament in Greek (1900)"
+    },
+    {
+      "from": "DRA",
+      "to": "VULGCLEM",
+      "relation": "translated-from",
+      "scope": null,
+      "note": "Translated from the Latin Vulgate; Challoner's revision follows the Clementine text.",
+      "source": "Title page of the Douay-Rheims Bible, American edition of 1899: \"translated from the Latin Vulgate\""
+    },
+    {
+      "from": "GEEZ81",
+      "to": "GRCBRENT",
+      "relation": "same-family-as",
+      "scope": "1-39",
+      "note": "The Ge'ez Old Testament was translated from the Greek Septuagint between the fourth and the sixth century.",
+      "source": "Michael A. Knibb, Translating the Bible: The Ethiopic Version of the Old Testament (1999)"
+    },
+    {
+      "from": "RUSV",
+      "to": "BHSA",
+      "relation": "same-family-as",
+      "scope": "1-39",
+      "note": "The Synod approved translating the Old Testament from the Masoretic Text in 1862; where the Septuagint has words the Hebrew does not, the edition prints them in square brackets.",
+      "source": "I. A. Chistovich, История перевода Библии на русский язык (1899)"
+    },
+    {
+      "from": "JPS1917",
+      "to": "BHSA",
+      "relation": "same-family-as",
+      "scope": null,
+      "note": "Translated from the Masoretic Text.",
+      "source": "Title page: The Holy Scriptures according to the Masoretic Text (Jewish Publication Society, 1917)"
+    },
+    {
+      "from": "LUTH1912",
+      "to": "BHSA",
+      "relation": "same-family-as",
+      "scope": "1-39",
+      "note": "Luther translated the Old Testament from the printed Hebrew of his day, a Masoretic text.",
+      "source": "Emanuel Tov, Textual Criticism of the Hebrew Bible, 3rd ed. (2012)"
+    },
+    {
+      "from": "LUTH1912",
+      "to": "TR1550",
+      "relation": "same-family-as",
+      "scope": "40-66",
+      "note": "Luther translated from Erasmus's Greek, from which the Received Text descends, and the 1912 revision keeps its readings.",
+      "source": "The readings it prints: Acts 8:37, Matthew 17:21 and 18:11, Luke 17:36, John 5:4 and the doxology of the Lord's Prayer"
+    },
+    {
+      "from": "RV1909",
+      "to": "TR1550",
+      "relation": "same-family-as",
+      "scope": "40-66",
+      "note": "Its Greek is the Received Text throughout.",
+      "source": "The readings it prints: 1 John 5:7, Acts 8:37, Matthew 17:21 and 18:11, Luke 17:36, John 5:4 and the doxology of the Lord's Prayer"
+    },
+    {
+      "from": "YLT",
+      "to": "TR1550",
+      "relation": "same-family-as",
+      "scope": "40-66",
+      "note": "Young's Greek is the Received Text.",
+      "source": "The readings it prints: Acts 8:37, Matthew 17:21, John 5:4 and 1 John 5:7"
+    },
+    {
+      "from": "ALM1911",
+      "to": "TR1550",
+      "relation": "same-family-as",
+      "scope": "40-66",
+      "note": "Almeida translated the New Testament from the Greek of the Received Text.",
+      "source": "The readings it prints: 1 John 5:7, Acts 8:37 and the doxology of the Lord's Prayer"
+    },
+    {
+      "from": "GNV1599",
+      "to": "BHSA",
+      "relation": "same-family-as",
+      "scope": "1-39",
+      "note": "Translated from the printed Hebrew of its day, a Masoretic text.",
+      "source": "Emanuel Tov, Textual Criticism of the Hebrew Bible, 3rd ed. (2012)"
+    },
+    {
+      "from": "LSG1910",
+      "to": "BHSA",
+      "relation": "same-family-as",
+      "scope": "1-39",
+      "note": "Segond translated the Old Testament from the Hebrew, a Masoretic text, and numbers it as the Hebrew does.",
+      "source": "Emanuel Tov, Textual Criticism of the Hebrew Bible, 3rd ed. (2012)"
+    },
+    {
+      "from": "UBIO",
+      "to": "BHSA",
+      "relation": "same-family-as",
+      "scope": "1-39",
+      "note": "Ohienko translated the Old Testament from the Hebrew, a Masoretic text.",
+      "source": "Emanuel Tov, Textual Criticism of the Hebrew Bible, 3rd ed. (2012)"
+    },
+    {
+      "from": "BBE",
+      "to": "BHSA",
+      "relation": "same-family-as",
+      "scope": "1-39",
+      "note": "Hooke's committee translated the Old Testament from the Hebrew, a Masoretic text.",
+      "source": "Emanuel Tov, Textual Criticism of the Hebrew Bible, 3rd ed. (2012)"
+    },
+    {
+      "from": "NESTLE1904",
+      "to": "TISCH",
+      "relation": "collated-against",
+      "scope": null,
+      "note": "Nestle printed at each place the reading on which two of his three editions agreed: Tischendorf's eighth, Westcott and Hort, and Weymouth, replaced by Weiss from 1901.",
+      "source": "Eberhard Nestle, preface to Novum Testamentum Graece (1898)"
+    },
+    {
+      "from": "NESTLE1904",
+      "to": "WH1881",
+      "relation": "collated-against",
+      "scope": null,
+      "note": "Nestle printed at each place the reading on which two of his three editions agreed: Tischendorf's eighth, Westcott and Hort, and Weymouth, replaced by Weiss from 1901.",
+      "source": "Eberhard Nestle, preface to Novum Testamentum Graece (1898)"
+    },
+    {
+      "from": "CUV",
+      "to": "ASV",
+      "relation": "same-family-as",
+      "scope": "40-66",
+      "note": "Its New Testament was made from the Greek behind the Revised Version of 1881, which is the Greek the American Standard Version renders.",
+      "source": "Jost Oliver Zetzsche, The Bible in China: The History of the Union Version (1999)"
+    },
+    {
+      "from": "CUVS",
+      "to": "ASV",
+      "relation": "same-family-as",
+      "scope": "40-66",
+      "note": "Its New Testament was made from the Greek behind the Revised Version of 1881, which is the Greek the American Standard Version renders.",
+      "source": "Jost Oliver Zetzsche, The Bible in China: The History of the Union Version (1999)"
+    }
+  ]
+}

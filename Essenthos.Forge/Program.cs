@@ -55,6 +55,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 builder.Services.AddScoped<CorpusLoader>();
 builder.Services.AddScoped<StatedNumberLoader>();
 builder.Services.AddScoped<SourceNoteLoader>();
+builder.Services.AddScoped<TextRelationLoader>();
 builder.Services.AddScoped<ParagraphMarkLoader>();
 builder.Services.AddScoped<MorphGntParsingLoader>();
 builder.Services.AddScoped<MaculaAnnotationLoader>();
@@ -1136,6 +1137,15 @@ if (args is ["recipe", ..])
     logger.LogInformation(
         "{Outcome}", await recipeScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
     await recipeScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    return 0;
+}
+
+// What each text was translated from, revised from or shares a tradition with, made to match the
+// list kept by hand. The load does this once the texts are in; this is that step alone.
+if (args is ["relations", ..])
+{
+    using var relationScope = app.Services.CreateScope();
+    Console.WriteLine(await relationScope.ServiceProvider.GetRequiredService<TextRelationLoader>().Load());
     return 0;
 }
 

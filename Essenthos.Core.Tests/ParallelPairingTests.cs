@@ -232,13 +232,38 @@ public sealed class ParallelPairingTests : IDisposable
         stated.Should().NotContainKey(3);
     }
 
-    private void State(Text text, int chapter, int verse, int position, int statedChapter, int statedVerse)
+    /// <summary>
+    /// Swete numbers the Song of the Vineyard as Ode 4a, and the corpus holds it at Rahlfs's 10: the
+    /// letter is part of the address his page prints.
+    /// </summary>
+    [Fact]
+    public async Task AChapterTheEditionLettersKeepsItsLetter()
+    {
+        var swete = Corpus.Add(_db, "SWETE", TextKind.CriticalEdition, "grc", (1, 1, ["ᾍσω", "δέ"]));
+        _db.SaveChanges();
+        State(swete, 1, 1, position: 1, 4, 1, "a");
+        _db.SaveChanges();
+
+        var stated = await ParallelEndpoints.StatedVerses(_db, swete.Id, 1, 1, default);
+
+        stated[1].Should().Equal("4a:1");
+    }
+
+    private void State(
+        Text text,
+        int chapter,
+        int verse,
+        int position,
+        int statedChapter,
+        int statedVerse,
+        string statedLabel = "")
     {
         _db.StatedVerseNumbers.Add(new StatedVerseNumber
         {
             VerseId = _db.VerseAt(text, chapter, verse).Id,
             Position = position,
             ChapterNumber = statedChapter,
+            ChapterLabel = statedLabel,
             Number = statedVerse,
         });
     }

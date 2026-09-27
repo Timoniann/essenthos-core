@@ -16,11 +16,15 @@ namespace Essenthos.Core.Loading;
 /// Three of the six are books a text already loaded gains, not texts of their own. The Synodal, the
 /// King James and the World English Bible are each the edition the corpus already serves, and their
 /// deuterocanonical books are written into that text rather than beside it — see
-/// <see cref="Extend"/> for what established that each is the same edition. Where the edition prints
-/// an addition inside a book the corpus already holds from another file — the Greek Esther, the
-/// Song of the Three inside Daniel 3, the Prayer of Manasseh at the end of 2 Chronicles — it is not
-/// taken: the book is there already, numbered as its own file numbers it, and a book cannot be
-/// written twice.
+/// <see cref="Extend"/> for what established that each is the same edition. The King James's Rest of
+/// Esther is written into its Esther at the chapters and verses it prints, 10:4 to 16:24, which are
+/// the standard's, and its Song of the Three is a book of its own, as it prints it, which the frame
+/// also stands inside Daniel 3. The Synodal's additions come from the pages of the canonical books it
+/// prints them inside: the Song of the Three and Susanna and Bel from Daniel, each a book of its own
+/// here with the verse number it is printed under as its stated address, as the Vulgate's Susanna and
+/// Bel are; the additions it sets in brackets inside six verses of Esther, each as the lettered piece
+/// of the verse it stands in; and the Prayer of Manasseh after 2 Chronicles 36. The World English
+/// Bible's Greek Esther and Daniel, whole books in a numbering of their own, are not taken.
 ///
 /// Which Ezra is which is the trap in all of them, and it is settled by content, not by name. The
 /// Greek 1 Esdras is ordinal 68 wherever it stands: the Synodal calls it the second book of Ezra, the
@@ -71,14 +75,15 @@ internal static class DeuterocanonTextSource
     {
         ["TOB"] = 70, ["JDT"] = 71, ["ESG"] = 17, ["WIS"] = 75, ["SIR"] = 72, ["BAR"] = 67, ["LJE"] = 76,
         ["SUS"] = 77, ["BEL"] = 78, ["1MA"] = 73, ["2MA"] = 74, ["1ES"] = 68, ["2ES"] = 69, ["MAN"] = 79,
-        ["3MA"] = 80, ["4MA"] = 81, ["PS2"] = 82, ["DAG"] = 27,
+        ["3MA"] = 80, ["4MA"] = 81, ["PS2"] = 82, ["DAG"] = 27, ["S3Y"] = 93,
     };
 
     /// <summary>
     /// The books each loaded text gains, by USFM code, in the order its edition prints them.
     ///
     /// The King James's Apocrypha stands between the Testaments as the 1611 printed it. Its Rest of
-    /// Esther and its Song of the Three are the additions to Esther and Daniel, and are not taken.
+    /// Esther goes into its Esther (<see cref="Continued"/>); its Song of the Three is a book of its own,
+    /// as it prints it. The Synodal's Susanna, Bel and Song come from its Daniel (<see cref="Divided"/>).
     /// The World English Bible's Greek Esther and Greek Daniel are whole books that repeat the
     /// Hebrew ones the corpus already serves from the updated edition, and are not taken either.
     /// Baruch keeps the sixth chapter the King James and the World English Bible print as the
@@ -87,12 +92,36 @@ internal static class DeuterocanonTextSource
     private static readonly Dictionary<string, string[]> Gained = new(StringComparer.OrdinalIgnoreCase)
     {
         [Sources.KingJamesSlug] =
-            ["1ES", "2ES", "TOB", "JDT", "WIS", "SIR", "BAR", "SUS", "BEL", "MAN", "1MA", "2MA"],
+            ["1ES", "2ES", "TOB", "JDT", "WIS", "SIR", "BAR", "S3Y", "SUS", "BEL", "MAN", "1MA", "2MA"],
         [Sources.SynodalSlug] =
-            ["1ES", "TOB", "JDT", "WIS", "SIR", "LJE", "BAR", "1MA", "2MA", "3MA", "2ES"],
+            ["1ES", "TOB", "JDT", "WIS", "SIR", "LJE", "BAR", "1MA", "2MA", "3MA", "2ES", "MAN"],
         [EnglishTextSource.WorldEnglish] =
             ["TOB", "JDT", "WIS", "SIR", "BAR", "1MA", "2MA", "1ES", "MAN", "PS2", "3MA", "2ES", "4MA"],
     };
+
+    /// <summary>
+    /// The books each loaded text continues with another file's verses, by USFM code: the King James
+    /// prints the additions to Esther as the Rest of Esther, numbered on from the Hebrew's last verse.
+    /// </summary>
+    private static readonly Dictionary<string, string[]> Continued = new(StringComparer.OrdinalIgnoreCase)
+    {
+        [Sources.KingJamesSlug] = ["ESG"],
+        [Sources.SynodalSlug] = ["ESG"],
+    };
+
+    /// <summary>
+    /// The books a loaded text gains out of another file's chapters: the Synodal's Daniel page gives the
+    /// Song of the Three from 3:24-90, and Susanna and Bel from chapters 13 and 14.
+    /// </summary>
+    private static readonly Dictionary<string, string[]> Divided = new(StringComparer.OrdinalIgnoreCase)
+    {
+        [Sources.SynodalSlug] = ["DAG"],
+    };
+
+    private const int SongOfTheThree = 93;
+
+    /// <summary>The books the Synodal's Daniel page is divided into, by canonical ordinal.</summary>
+    private static readonly int[] DividedDaniel = [SongOfTheThree, 77, 78];
 
     /// <summary>
     /// What the Synodal calls each of its non-canonical books in its running heads, in the short form
@@ -103,14 +132,18 @@ internal static class DeuterocanonTextSource
         [68] = "2-я Ездры", [70] = "Товит", [71] = "Иудифь", [75] = "Премудрость Соломона",
         [72] = "Премудрость Иисуса, сына Сирахова", [76] = "Послание Иеремии", [67] = "Варух",
         [73] = "1-я Маккавейская", [74] = "2-я Маккавейская", [80] = "3-я Маккавейская", [69] = "3-я Ездры",
+        [79] = "Молитва Манассии", [93] = "Песнь трех отроков", [77] = "Сусанна", [78] = "Вил и дракон",
     };
 
     /// <summary>
-    /// The books a text gains past the sixty-six, by canonical ordinal. Empty for a text that gains
-    /// none.
+    /// The books a text gains past the sixty-six, and the books it continues, by canonical ordinal.
+    /// Empty for a text that gains none.
     /// </summary>
     public static IReadOnlySet<int> BooksGainedBy(string slug) =>
-        Gained.TryGetValue(slug, out var codes) ? codes.Select(code => Ordinals[code]).ToHashSet() : [];
+        (Gained.GetValueOrDefault(slug) ?? []).Concat(Continued.GetValueOrDefault(slug) ?? [])
+        .Select(code => Ordinals[code])
+        .Concat(Divided.ContainsKey(slug) ? DividedDaniel : [])
+        .ToHashSet();
 
     /// <summary>
     /// The text with the books its edition prints and its file lacks. The loaded text and its source
@@ -144,7 +177,9 @@ internal static class DeuterocanonTextSource
             _ => (WorldEnglishFolder, WorldEnglishSource),
         };
 
-        var files = Books(Path.Combine(resources, folder), codes);
+        var continued = Continued.GetValueOrDefault(slug) ?? [];
+        var divided = Divided.GetValueOrDefault(slug) ?? [];
+        var files = Books(Path.Combine(resources, folder), [.. codes, .. continued, .. divided]);
         var bible4u = slug is Sources.SynodalSlug or Sources.KingJamesSlug;
         var gained = codes.Select(code =>
         {
@@ -164,14 +199,95 @@ internal static class DeuterocanonTextSource
                 },
                 Abbreviation: bible4u ? names.StandardAbbreviation.Full : BookReferences.Abbreviation(ordinal));
         }).ToList();
+        gained.AddRange(divided.SelectMany(code => SynodalDaniel(files[code].Book)));
 
         var order = PrintedOrder(slug, gained.Select(book => book.CanonicalOrdinal));
-        var books = source.Books.Concat(gained)
+        // The headings the file sets over the additions say where the Greek places each of them, which
+        // is the editor's note and not the text.
+        var longer = continued.ToDictionary(
+            code => Ordinals[code],
+            code => UsfmReader.Read(File.ReadAllText(files[code].File), editorialHeadings: true).Chapters);
+        var books = source.Books
+            .Select(book => longer.TryGetValue(book.CanonicalOrdinal, out var more) ? Continue(book, more) : book)
+            .Concat(gained)
             .OrderBy(book => order.IndexOf(book.CanonicalOrdinal))
             .Select((book, index) => book with { Position = index + 1 })
             .ToList();
 
-        return new TextSource(source.Definition with { PartSources = [.. source.Definition.PartSources, part] }, books);
+        TextPartSource[] parts = slug switch
+        {
+            Sources.KingJamesSlug => [part, KingJamesEstherSource],
+            Sources.SynodalSlug => [part, SynodalAdditionsSource],
+            _ => [part],
+        };
+        return new TextSource(
+            source.Definition with { PartSources = [.. source.Definition.PartSources, .. parts] }, books);
+    }
+
+    /// <summary>
+    /// The Synodal's Daniel page as the books it gives: the Song of the Three, which it prints as Daniel
+    /// 3:24-90, and Susanna and Bel, its chapters 13 and 14. Each verse keeps the address it is printed
+    /// under as its stated one. Susanna and Bel are numbered as they are printed; the song is numbered as
+    /// the King James's book of it is, which is the standard's, read against it verse by verse: the
+    /// Synodal's 3:52 holds the song's 29 and 30, it prints the angels before the heavens, and every other
+    /// verse is the next in order.
+    /// </summary>
+    private static IEnumerable<BookDraft> SynodalDaniel(UsfmBook daniel)
+    {
+        foreach (var ordinal in DividedDaniel)
+        {
+            var printed = ordinal switch { SongOfTheThree => 3, 77 => 13, _ => 14 };
+            var names = BibleBookAbbreviation.GetByOrdinal(ordinal)!;
+            var verses = Chapter(daniel.Chapters.Single(chapter => chapter.Number == printed), notes: true).Verses
+                .Select(verse => Moved(verse, printed, ordinal == SongOfTheThree ? SongVerse(verse.Number) : verse.Number));
+            yield return new BookDraft(ordinal, 0, names.FullName.Full, Slugs.Of(names.StandardAbbreviation.Full),
+                [new ChapterDraft(1, [.. verses])], SynodalNames[ordinal], names.StandardAbbreviation.Full);
+        }
+    }
+
+    /// <summary>The verse of the song the Synodal's Daniel 3:24-90 prints, in the standard numbering.</summary>
+    private static int SongVerse(int printed) => printed switch
+    {
+        < 24 or > 90 => throw new InvalidOperationException(
+            $"The Synodal's Daniel 3:{printed} is not a verse of the song, which is 3:24-90; the page was read wrongly."),
+        <= 51 => printed - 23,
+        52 => 29,
+        58 => 37,
+        59 => 36,
+        _ => printed - 22,
+    };
+
+    /// <summary>
+    /// A book with the verses another file of its edition prints after it: into the chapter of the
+    /// same number after the verses it has, and as chapters of their own after that.
+    /// </summary>
+    private static BookDraft Continue(BookDraft book, IReadOnlyList<UsfmChapter> more)
+    {
+        var added = more.Select(chapter => Chapter(chapter, notes: true)).ToDictionary(chapter => chapter.Number);
+        var clash = book.Chapters
+            .Where(chapter => added.ContainsKey(chapter.Number))
+            .SelectMany(chapter => chapter.Verses.Select(verse => (chapter.Number, verse.Number, verse.Label)))
+            .Intersect(added.Values.SelectMany(chapter =>
+                chapter.Verses.Select(verse => (chapter.Number, verse.Number, verse.Label))))
+            .FirstOrDefault();
+        if (clash != default)
+        {
+            throw new InvalidOperationException(
+                $"{book.Name} {clash.Item1}:{clash.Item2}{clash.Item3} is printed in both files of the edition, so " +
+                "one of them is not the continuation of the other. Check that the folder holds the edition the " +
+                "text was loaded from.");
+        }
+
+        return book with
+        {
+            Chapters =
+            [
+                .. book.Chapters.Select(chapter => added.TryGetValue(chapter.Number, out var tail)
+                    ? chapter with { Verses = [.. chapter.Verses, .. tail.Verses] }
+                    : chapter),
+                .. added.Values.Where(chapter => book.Chapters.All(own => own.Number != chapter.Number)),
+            ],
+        };
     }
 
     /// <summary>
@@ -199,6 +315,18 @@ internal static class DeuterocanonTextSource
         + "Wisdom of Solomon, Sirach, the Letter of Jeremiah, Baruch and 1, 2 and 3 Maccabees — which the file "
         + "the text is loaded from does not hold, each page at a fixed revision and in the Synodal's own numbering.");
 
+    /// <summary>
+    /// The Greek additions the Synodal prints inside three canonical books, from the same transcription
+    /// as its non-canonical books.
+    /// </summary>
+    public static readonly TextPartSource SynodalAdditionsSource = SynodalSource with
+    {
+        Covers = "The Greek additions the Synodal prints inside three canonical books and sets in brackets: the "
+                 + "Song of the Three and Susanna and Bel from Daniel (3:24-90, 13 and 14), the additions to Esther "
+                 + "and the Prayer of Manasseh after 2 Chronicles 36, which the file the text is loaded from leaves "
+                 + "out.",
+    };
+
     public static readonly TextPartSource KingJamesSource = new(
         "King James Version + Apocrypha (eng-kjv)",
         "eBible.org, from the standardised 1769 text",
@@ -207,6 +335,12 @@ internal static class DeuterocanonTextSource
         "https://ebible.org/find/details.php?id=eng-kjv",
         "The Apocrypha — 1 and 2 Esdras, Tobit, Judith, Wisdom, Sirach, Baruch, Susanna, Bel and the Dragon, "
         + "the Prayer of Manasses and 1 and 2 Maccabees — which the file the text is loaded from does not hold.");
+
+    /// <summary>The Rest of Esther, from the same edition, which continues Esther rather than adding a book.</summary>
+    public static readonly TextPartSource KingJamesEstherSource = KingJamesSource with
+    {
+        Covers = "The Rest of Esther, the additions to Esther the Apocrypha prints as Esther 10:4 to 16:24.",
+    };
 
     /// <summary>
     /// The World English Bible's deuterocanon, from the Classic edition. The updated edition with the
@@ -585,8 +719,16 @@ internal static class DeuterocanonTextSource
     private static DeclaredVersePair Whole(string from, string to) =>
         new(from, to, new HashSet<int>()) { AgreeingChaptersOnly = true };
 
+    /// <summary>
+    /// A pair joined only in the books the first text gains. A passage printed under two names is
+    /// joined under one (<see cref="TwinPassages"/>), so a text that gains Baruch with the Letter of
+    /// Jeremiah as its sixth chapter gains the letter.
+    /// </summary>
     private static DeclaredVersePair Only(string from, string to, IReadOnlySet<int> books) =>
-        new(from, to, Enumerable.Range(1, BookReferences.LastOrdinal).Where(book => !books.Contains(book)).ToHashSet())
+        new(from, to, Enumerable.Range(1, BookReferences.LastOrdinal)
+            .Where(book => !books.Contains(book)
+                           && !books.Any(gained => TwinPassages.JoinedBook(gained) == book))
+            .ToHashSet())
         {
             AgreeingChaptersOnly = true,
         };

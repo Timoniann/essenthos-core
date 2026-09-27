@@ -93,7 +93,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
 
         Deuterocanon.Verses(book).Should().Be(verses);
         book.NameNative.Should().Be(name);
-        read.Synodal.Books.Should().HaveCount(66 + 11);
+        read.Synodal.Books.Should().HaveCount(66 + 11 + 4);
         Deuterocanon.Text(read.Synodal, FirstEsdras, 1, 1).Should().StartWith("И совершил Иосия");
         Deuterocanon.Text(read.Synodal, SecondEsdras, 1, 1).Should().StartWith("Вторая книга Ездры пророка");
         Deuterocanon.Text(read.Synodal, FirstMaccabees, 1, 1).Should().StartWith("После того как Александр");
@@ -108,7 +108,8 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
     {
         read.Synodal.Books.OrderBy(book => book.Position).Select(book => book.CanonicalOrdinal)
             .Should().Equal(Canons.Find(Canons.Synodal)!.Ordinals);
-        read.Synodal.Definition.PartSources.Should().Equal(DeuterocanonTextSource.SynodalSource);
+        read.Synodal.Definition.PartSources.Should()
+            .Equal(DeuterocanonTextSource.SynodalSource, DeuterocanonTextSource.SynodalAdditionsSource);
 
         var supplied = Deuterocanon.Book(read.Synodal, FirstMaccabees).Chapters.Single(chapter => chapter.Number == 16)
             .Verses.Single(verse => verse.Number == 21).Words.Where(word => word.SuppliedSpan is not null);
@@ -129,14 +130,126 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
     [Fact]
     public void TheKingJamesGainsItsApocryphaBetweenTheTestaments()
     {
-        read.KingJames.Books.Should().HaveCount(66 + 12);
+        read.KingJames.Books.Should().HaveCount(66 + 13);
         read.KingJames.Books.Select(book => book.CanonicalOrdinal).Should()
-            .Contain([FirstEsdras, SecondEsdras, 70, 71, 72, 67, 75, 77, 78, 79, FirstMaccabees, SecondMaccabees]);
+            .Contain([FirstEsdras, SecondEsdras, 70, 71, 72, 67, 75, 93, 77, 78, 79, FirstMaccabees, SecondMaccabees]);
+        Deuterocanon.Verses(Deuterocanon.Book(read.KingJames, 93)).Should().Be(68);
         Deuterocanon.Book(read.KingJames, FirstEsdras).Position.Should().Be(40, "the Apocrypha follows Malachi");
-        Deuterocanon.Book(read.KingJames, 40).Position.Should().Be(52);
+        Deuterocanon.Book(read.KingJames, 40).Position.Should().Be(53);
         Deuterocanon.Text(read.KingJames, SecondEsdras, 1, 1).Should().StartWith("The second book of the prophet Esdras");
         Deuterocanon.Verses(Deuterocanon.Book(read.KingJames, FirstMaccabees)).Should().Be(924);
         Deuterocanon.Book(read.KingJames, 67).Chapters.Should().HaveCount(6, "Baruch keeps the letter it prints as its sixth chapter");
+    }
+
+    /// <summary>
+    /// The Greek additions the Synodal prints inside canonical books: the song, Susanna and Bel as books
+    /// of their own with the Daniel address each verse is printed under, the Prayer of Manasseh, and the
+    /// additions to Esther as the lettered pieces of the verses they stand in.
+    /// </summary>
+    [Fact]
+    public void TheSynodalGainsTheAdditionsItPrintsInsideCanonicalBooks()
+    {
+        var song = Deuterocanon.Book(read.Synodal, 93).Chapters.Single().Verses;
+        song.Should().HaveCount(67);
+        song.First().Number.Should().Be(1);
+        song.First().Stated.Should().Equal(new StatedNumberDraft(3, 24));
+        song.Select(verse => verse.Number).Should().OnlyHaveUniqueItems().And.NotContain(30);
+        song.Single(verse => verse.Stated.Single().Number == 58).Number.Should().Be(37, "the Synodal prints the angels first");
+        Deuterocanon.Verses(Deuterocanon.Book(read.Synodal, 77)).Should().Be(64);
+        Deuterocanon.Verses(Deuterocanon.Book(read.Synodal, 78)).Should().Be(42);
+        Deuterocanon.Text(read.Synodal, 78, 1, 1).Should().StartWith("Царь Астиаг");
+        Deuterocanon.Verses(Deuterocanon.Book(read.Synodal, 79)).Should().Be(12);
+
+        var esther = Deuterocanon.Book(read.Synodal, 17);
+        esther.Chapters.SelectMany(chapter => chapter.Verses.Where(verse => verse.Label == "a")
+                .Select(verse => $"{chapter.Number}:{verse.Number}"))
+            .Should().BeEquivalentTo(["1:1", "3:13", "4:17", "5:1", "5:2", "8:12", "10:3"]);
+        esther.Chapters.Single(chapter => chapter.Number == 1).Verses.Single(verse => verse.Label == "a")
+            .Words.Should().OnlyContain(word => word.SuppliedSpan != null);
+
+        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var extended = Deuterocanon.Frame(read.Synodal, rules);
+        extended.Resolve(17, 1, 1, lettered: true, "a")[0].Should().Be(new CanonicalReference(17, 11, 2));
+        extended.Resolve(17, 5, 2, lettered: true, "a")[0].Should().Be(new CanonicalReference(17, 15, 12));
+        extended.Resolve(79, 1, 11, lettered: false, string.Empty)[0].Should().Be(new CanonicalReference(79, 1, 13));
+        extended.Resolve(93, 1, 29, lettered: false, string.Empty).Should()
+            .Equal(new CanonicalReference(93, 1, 29), new CanonicalReference(93, 1, 30));
+
+        var hebrewOnly = Deuterocanon.Frame(Bible4uTextSource.Read(TestResources.Bible4u("RUSV"), "RUSV"), rules);
+        foreach (var chapter in esther.Chapters)
+        {
+            foreach (var verse in chapter.Verses.Where(verse => verse.Label.Length == 0))
+            {
+                extended.Resolve(17, chapter.Number, verse.Number)[0].Should()
+                    .Be(hebrewOnly.Resolve(17, chapter.Number, verse.Number)[0]);
+            }
+        }
+    }
+
+    /// <summary>
+    /// The Rest of Esther continues the King James's Esther at the chapters and verses it prints them
+    /// under, which are the standard's, so each verse stands at its own address and the Hebrew's verses
+    /// stay where they were.
+    /// </summary>
+    [Fact]
+    public void TheRestOfEstherContinuesTheKingJamessEsther()
+    {
+        var esther = Deuterocanon.Book(read.KingJames, 17);
+        esther.Chapters.Select(chapter => chapter.Number).Should().Equal(Enumerable.Range(1, 16));
+        esther.Chapters.Single(chapter => chapter.Number == 10).Verses.Select(verse => verse.Number)
+            .Should().Equal(Enumerable.Range(1, 13));
+        Deuterocanon.Verses(esther).Should().Be(167 + 105);
+        Deuterocanon.Text(read.KingJames, 17, 11, 2).Should().StartWith("In the second year of the reign");
+        Deuterocanon.Text(read.KingJames, 17, 10, 4).Should().StartWith("Then Mardocheus said");
+        read.KingJames.Definition.PartSources.Should()
+            .Equal(DeuterocanonTextSource.KingJamesSource, DeuterocanonTextSource.KingJamesEstherSource);
+
+        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var extended = Deuterocanon.Frame(read.KingJames, rules);
+        var hebrewOnly = Deuterocanon.Frame(
+            Bible4uTextSource.Read(TestResources.Bible4u("KJV"), "KJV"), rules);
+        foreach (var chapter in esther.Chapters)
+        {
+            foreach (var verse in chapter.Verses)
+            {
+                var placed = extended.Resolve(17, chapter.Number, verse.Number)[0];
+                if (chapter.Number < 10 || (chapter.Number == 10 && verse.Number <= 3))
+                {
+                    placed.Should().Be(hebrewOnly.Resolve(17, chapter.Number, verse.Number)[0]);
+                }
+                else
+                {
+                    placed.Should().Be(new CanonicalReference(17, chapter.Number, verse.Number));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// The books beyond the canon are placed by the data's rules for the Latin and English editions:
+    /// the Douay's Wisdom 5:15, "the hope of the wicked", is the King James's 5:14. Brenton's Greek
+    /// numbering and the Synodal's own stand as they are printed, since the data describes neither.
+    /// </summary>
+    [Fact]
+    public void TheBooksBeyondTheCanonArePlacedForTheEditionsTheDataDescribes()
+    {
+        var rules = TvtmsReader.Read(TestResources.Tvtms);
+
+        Deuterocanon.Frame(read.DouayRheims, rules).Resolve(75, 5, 15)[0].Should().Be(new CanonicalReference(75, 5, 14));
+        Deuterocanon.Frame(read.Vulgate, rules).Resolve(75, 5, 15)[0].Should().Be(new CanonicalReference(75, 5, 14));
+        Deuterocanon.Frame(read.Brenton, rules).Resolve(70, 13, 11)[0].Should().Be(new CanonicalReference(70, 13, 11));
+
+        var synodal = read.Synodal.Books
+            .SelectMany(book => book.Chapters.SelectMany(chapter => chapter.Verses
+                .Select(verse => (Book: book.CanonicalOrdinal, Chapter: chapter.Number, Verse: verse))))
+            .Select((printed, index) => new PlacedVerse(index, printed.Book, printed.Chapter, printed.Verse.Number,
+                printed.Verse.Label, printed.Verse.Words.Sum(word => word.Surface.Length)))
+            .ToList();
+        var wisdom = synodal.Single(verse => verse is { Book: 75, Chapter: 5, Number: 14 });
+        CanonicalFrameLoader.Expected(rules, read.Synodal.Definition.Versification, synodal,
+                BookTraditions.For(Sources.SynodalSlug))
+            .Single(reference => reference.VerseId == wisdom.Id)
+            .Should().Be(new ReferenceDraft(wisdom.Id, 75, 5, 14, true));
     }
 
     [Fact]
@@ -417,6 +530,68 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
         (await loader.Load()).AlreadyLoaded.Should().BeFalse();
         (await Joined()).Should().BeEquivalentTo([FirstMaccabees, Tobit]);
         (await loader.Load()).AlreadyLoaded.Should().BeTrue("Wisdom has nothing left to join");
+    }
+
+    /// <summary>
+    /// The King James prints the Letter of Jeremiah as Baruch 6 and the Septuagint as a book of its
+    /// own, and each of its verses is joined to the same verse under the other name.
+    /// </summary>
+    [Fact]
+    public async Task TheLetterOfJeremiahIsJoinedUnderEitherName()
+    {
+        await Load(Tiny(Bible4uTextSource.Definitions["KJV"], (LetterOfJeremiah.Baruch, LetterOfJeremiah.InBaruch, 73)));
+        await Load(Tiny(SeptuagintTextSource.Definition(), (LetterOfJeremiah.Book, LetterOfJeremiah.Chapter, 73)));
+        await Place();
+
+        await new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance).Load();
+
+        var pairs = await _db.VerseLinkVerses
+            .Where(member => member.Side == LinkSide.From && member.Verse!.Text!.Slug == Sources.KingJamesSlug
+                             && member.VerseLink!.ToText!.Slug == Sources.BrentonSeptuagintSlug)
+            .Select(member => new
+            {
+                English = member.Verse!.Number,
+                Greek = member.VerseLink!.Verses
+                    .Where(other => other.Side == LinkSide.To)
+                    .Select(other => other.Verse!.Number)
+                    .Single(),
+            })
+            .ToListAsync();
+
+        pairs.Should().HaveCount(73);
+        pairs.Should().OnlyContain(pair => pair.English == pair.Greek);
+    }
+
+    /// <summary>
+    /// A book the text holds gains the verses its source now prints after it, in the chapter it has
+    /// and in new ones, and keeps every verse it had.
+    /// </summary>
+    [Fact]
+    public async Task ABookHeldGainsTheVersesItsSourceNowPrints()
+    {
+        var kingJames = Bible4uTextSource.Definitions["KJV"];
+        await Load(Tiny(kingJames, (17, 10, 3)));
+        var before = await _db.Verses.Select(verse => verse.Id).ToListAsync();
+
+        var outcome = await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance).AddMissingBooks(new TextSource(
+            kingJames,
+            [
+                new BookDraft(17, 1, "Esther", "esther",
+                [
+                    new ChapterDraft(10, [.. Enumerable.Range(1, 13).Select(number => new VerseDraft(number, [new WordDraft("word", "")]))]),
+                    new ChapterDraft(11, [.. Enumerable.Range(1, 12).Select(number => new VerseDraft(number, [new WordDraft("word", "")]))]),
+                ]),
+            ]));
+
+        outcome.Verses.Should().Be(10 + 12);
+        (await _db.Verses.Where(verse => before.Contains(verse.Id)).CountAsync()).Should().Be(3);
+        (await _db.Books.CountAsync()).Should().Be(1);
+        (await _db.Chapters.Select(chapter => chapter.Number).ToListAsync()).Should().BeEquivalentTo([10, 11]);
+        (await _db.Verses.Where(verse => verse.ChapterNumber == 10).OrderBy(verse => verse.Sequence)
+                .Select(verse => verse.Number).ToListAsync())
+            .Should().Equal(Enumerable.Range(1, 13));
+        (await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance).AddMissingBooks(Tiny(kingJames, (17, 10, 13))))
+            .Verses.Should().Be(0);
     }
 
     /// <summary>

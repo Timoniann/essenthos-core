@@ -237,6 +237,38 @@ internal static class NameLists
         Math.Abs(word - match) == 1 && !matchedOnItsSide.ContainsKey(word);
 
     /// <summary>
+    /// Whether a proposed pair puts a name already matched to its name against some other word of the
+    /// verse that is not a name and does not stand beside the match. Between two texts that mark
+    /// every name they print, such a pair is a stray: in Genesis 21:22 פִיכֹל is Φιχὸλ, and the
+    /// νυμφαγωγὸς three words before it renders the Septuagint's own addition, not Phicol. The word
+    /// beside the match is kept, because Greek puts its article there and a name is sometimes a
+    /// phrase — πόλις beside Καριαθσεφέρ renders the קִרְיַת of קִרְיַת־סֵפֶר.
+    ///
+    /// <para>
+    /// Only for a pair of texts that both mark their names. A translation writes <em>of</em> and
+    /// <em>his</em> away from the name they belong to, and the name's own marking cannot say which of
+    /// its words is the name.
+    /// </para>
+    /// </summary>
+    public static bool Strays(
+        int source,
+        int target,
+        IReadOnlyDictionary<int, int> matched,
+        IReadOnlyDictionary<int, int> matchedBack,
+        IReadOnlySet<int> sourceNames,
+        IReadOnlySet<int> targetNames)
+    {
+        if (matched.TryGetValue(source, out var named) && named != target && !targetNames.Contains(target)
+            && Math.Abs(target - named) > 1)
+        {
+            return true;
+        }
+
+        return matchedBack.TryGetValue(target, out var namer) && namer != source && !sourceNames.Contains(source)
+            && Math.Abs(source - namer) > 1;
+    }
+
+    /// <summary>
     /// One verse's proposals with the names settled: contradicting pairs removed, and every pair the
     /// names settled either kept at no less than <see cref="Settled"/> or added at it. An added pair has
     /// no position score, because the model never proposed it.
@@ -244,11 +276,13 @@ internal static class NameLists
     /// <param name="sourceNames">Skeletons by source position; null where the word is not a name.</param>
     /// <param name="targetLetters">The skeleton of every target word, name or not.</param>
     /// <param name="targetNames">The same for the target.</param>
+    /// <param name="refuseStrays">Both texts mark their names, so a <see cref="Strays"/> pair is refused too.</param>
     public static List<(int Source, int Target, double Confidence, double Position)> Settle(
         IReadOnlyList<(int Source, int Target, double Confidence, double Position)> verse,
         IReadOnlyList<string?> sourceNames,
         IReadOnlyList<string?> targetNames,
-        IReadOnlyList<string> targetLetters)
+        IReadOnlyList<string> targetLetters,
+        bool refuseStrays = false)
     {
         var proposals = verse.Select(pair => (pair.Source, pair.Target)).ToHashSet();
         targetNames = Recognised(sourceNames, targetNames, targetLetters, proposals);
@@ -266,7 +300,8 @@ internal static class NameLists
 
         foreach (var pair in verse)
         {
-            if (Contradicts(pair.Source, pair.Target, matched, matchedBack, sources, targets))
+            if (Contradicts(pair.Source, pair.Target, matched, matchedBack, sources, targets)
+                || (refuseStrays && Strays(pair.Source, pair.Target, matched, matchedBack, sources, targets)))
             {
                 continue;
             }

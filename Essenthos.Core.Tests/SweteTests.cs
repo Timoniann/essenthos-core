@@ -1,4 +1,6 @@
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Swete;
 using FluentAssertions;
 using Xunit;
@@ -154,15 +156,15 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void TheWholeEditionIsRead()
     {
-        swete.Source.Books.Should().HaveCount(52);
-        swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1107);
+        swete.Source.Books.Should().HaveCount(53);
+        swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1121);
         swete.Source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count))
-            .Should().Be(28533);
+            .Should().Be(28789);
         swete.Source.Books
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(571934);
+            .Should().Be(576049);
     }
 
     /// <summary>
@@ -173,10 +175,10 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void EveryBookKeepsTheEditionOwnOrderAndTheSharedOrdinal()
     {
-        swete.Source.Books.Select(book => book.Position).Should().Equal(Enumerable.Range(1, 52));
+        swete.Source.Books.Select(book => book.Position).Should().Equal(Enumerable.Range(1, 53));
         swete.Source.Books.Select(book => book.CanonicalOrdinal).Should().OnlyHaveUniqueItems();
-        swete.Book(30).Position.Should().Be(33, "Amos stands second among the Twelve here");
-        swete.Book(29).Position.Should().Be(35, "and Joel fourth");
+        swete.Book(30).Position.Should().Be(34, "Amos stands second among the Twelve here");
+        swete.Book(29).Position.Should().Be(36, "and Joel fourth");
     }
 
     /// <summary>
@@ -382,4 +384,258 @@ public class SweteNumberingTests
 
         numbers.Should().Contain(verse).And.BeInAscendingOrder().And.OnlyContain(n => n < 100);
     }
+}
+
+/// <summary>
+/// The verse numbers Swete prints in figures, which the transcription let into the text: taken out of
+/// the words they were glued to, and where they name a verse the file ran into the one before, that
+/// verse opened again.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public class SweteFigureTests(Swete swete) : IClassFixture<Swete>
+{
+    private const int Genesis = 1;
+
+    private const int FirstChronicles = 13;
+
+    private const int Psalms = 19;
+
+    private const int Daniel = 27;
+
+    private const int Sirach = 72;
+
+    private const string Figures = "0123456789⁰¹²³⁴⁵⁶⁷⁸⁹";
+
+    /// <summary>
+    /// Of the 699 words a Swete loaded before this held with a figure in them, eight are left: a
+    /// word whose letters the figure took where nothing beside it shows which, or one with a Latin
+    /// letter in it besides.
+    /// </summary>
+    [Fact]
+    public void AlmostNoWordCarriesAFigure()
+    {
+        var left = swete.Source.Books
+            .SelectMany(book => book.Chapters.SelectMany(chapter => chapter.Verses.SelectMany(verse =>
+                verse.Words.Where(word => word.Surface.Any(Figures.Contains))
+                    .Select(word => $"{book.CanonicalOrdinal} {chapter.Number}:{verse.Number} {word.Surface}"))))
+            .ToList();
+
+        left.Should().HaveCount(8, string.Join("; ", left));
+    }
+
+    [Theory]
+    [InlineData(Daniel, 3, 65, "εὐλογεῖτε,")]
+    [InlineData(Daniel, 3, 78, "εὐλογεῖτε,")]
+    [InlineData(Daniel, 3, 80, "εὐλογεῖτε,")]
+    [InlineData(Sirach, 33, 25, "ἐν")]
+    [InlineData(Sirach, 39, 7, "αὐτὸς")]
+    public void TheFigureIsTakenOutAndTheWordKept(int book, int chapter, int verse, string word) =>
+        Swete.Text(swete.Verse(book, chapter, verse)).Split(' ').Should().Contain(word)
+            .And.NotContain(token => token.Any(Figures.Contains));
+
+    [Fact]
+    public void AFigureStandingAloneGoes() =>
+        Swete.Text(swete.Verse(Daniel, 3, 59)).Should().StartWith("εὐλογεῖτε, ἄγγελοι Κυρίου,");
+
+    [Fact]
+    public void AVerseTheTranscriptionRanIntoTheOneBeforeOpensAtItsFigure()
+    {
+        Swete.Text(swete.Verse(FirstChronicles, 12, 7)).Should().EndWith("οἱ τοῦ Γεδώρ.");
+        Swete.Text(swete.Verse(FirstChronicles, 12, 8)).Should().StartWith("καὶ ἀπὸ τοῦ Γεδδεὶ ἐχωρίσθησαν");
+    }
+
+    /// <summary>Read off the page, vol. 1 p. 24, and against Brenton's Greek of the same verses.</summary>
+    [Fact]
+    public void Genesis15EndsWithTheTenNationsInThreeVersesOfTheirOwn()
+    {
+        Swete.Text(swete.Verse(Genesis, 15, 18)).Should().EndWith("ἕως τοῦ ποταμοῦ τοῦ μεγάλου Εὐφμάτου·");
+        Swete.Text(swete.Verse(Genesis, 15, 19)).Should().Be("τούς Κεναίους καὶ τοὺς ενεζαίους καὶ τοὺς Κελμωναίους");
+        Swete.Text(swete.Verse(Genesis, 15, 20)).Should().Be("καὶ τοὺς Χετταίους καὶ τοὺς Φερεζαίους καὶ τοὺς Ῥαφαεὶν");
+        Swete.Text(swete.Verse(Genesis, 15, 21)).Should().Be(
+            "καὶ τοὺς Ἀμορραίους καὶ τοὺς Χαναναίους καὶ τοὺς Εὑοίους καὶ τοὺς Γεργεσαίους καὶ τοὺς Ἰεβουσαίους.");
+    }
+
+    /// <summary>Read off the page, vol. 2 p. 337: the psalm's last verse is its sixteenth, as in Brenton.</summary>
+    [Fact]
+    public void Psalm91EndsAtItsSixteenthVerse()
+    {
+        Swete.Text(swete.Verse(Psalms, 91, 15)).Should().EndWith("καὶ εὐπαθοῦντες ἔσονται·");
+        Swete.Text(swete.Verse(Psalms, 91, 16)).Should().StartWith("τοῦ ἀναγγεῖλαι ὅτι εὐθὴς Κύριος");
+        swete.Book(Psalms).Chapters.Single(c => c.Number == 91).Verses[^1].Number.Should().Be(16);
+    }
+}
+
+/// <summary>
+/// The Old Greek of Susanna, Daniel and Bel, which Swete prints beside Theodotion's: a text of its own,
+/// read by the same reader and placed by the frame where each verse's words are.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public class SweteOldGreekTests
+{
+    private const int Daniel = 27;
+
+    private const int Susanna = 77;
+
+    private const int Bel = 78;
+
+    private static readonly TextSource Source = SweteOldGreekTextSource.Read(TestResources.SweteFolder);
+
+    private static readonly Lazy<VersificationFrame> Frame = new(() => TvtmsReader.Read(TestResources.Tvtms).Frame(
+        Versification.Septuagint,
+        EditionShape.Of(
+        [
+            .. from book in Source.Books
+               from chapter in book.Chapters
+               from verse in chapter.Verses
+               select (book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label,
+                   verse.Words.Sum(word => word.Surface.Length)),
+        ])));
+
+    [Fact]
+    public void ItIsAWitnessOfItsOwnInSwetesOrder()
+    {
+        SweteOldGreekTextSource.Definition.Slug.Should().Be("SWETEOG");
+        SweteOldGreekTextSource.Definition.TextualFamily.Should().Be("Septuagint");
+        Source.Books.Select(book => book.CanonicalOrdinal).Should().Equal(Susanna, Daniel, Bel);
+        Source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count)).Should().Be(497);
+    }
+
+    /// <summary>Theodotion opens Ἐν ἔτει τρίτῳ; the Old Greek opens with the king and then the year.</summary>
+    [Fact]
+    public void ItsDanielIsTheOldGreekRatherThanTheodotions() =>
+        Swete.Text(Verse(Daniel, 1, 1)).Should().Contain("βασιλέως Ἰωακεὶμ τῆς Ἰουδαίας ἔτους τρίτου");
+
+    [Fact]
+    public void TheFiguresAreTakenOutOfTheSong()
+    {
+        Swete.Text(Verse(Daniel, 3, 64)).Should().StartWith("εὐλογεῖτε, πᾶς ὄμβρος καὶ δρόσος,");
+        Swete.Text(Verse(Daniel, 3, 78)).Should().StartWith("εὐλογεῖτε, θάλασσαι καὶ ποταμοί,");
+    }
+
+    /// <summary>
+    /// Its song keeps the order the standard numbering has, the throne before the depths and the
+    /// angels before the heavens, so each line stands at the verse of the song it prints with no
+    /// placement of its own: Theodotion's in Vaticanus needs one.
+    /// </summary>
+    [Theory]
+    [InlineData(3, 24, 3, 31)]
+    [InlineData(3, 54, 3, 63)]
+    [InlineData(3, 55, 3, 62)]
+    [InlineData(3, 58, 3, 67)]
+    [InlineData(3, 59, 3, 66)]
+    [InlineData(3, 71, 3, 77)]
+    [InlineData(3, 91, 3, 24)]
+    [InlineData(3, 98, 4, 1)]
+    [InlineData(4, 1, 4, 4)]
+    public void EachVerseOfDanielStandsWhereItsWordsAre(int chapter, int verse, int standardChapter, int standardVerse) =>
+        Frame.Value.Resolve(Daniel, chapter, verse)[0].Should().Be(new CanonicalReference(Daniel, standardChapter, standardVerse));
+
+    private static VerseDraft Verse(int canonical, int chapter, int verse) =>
+        Source.Books.Single(book => book.CanonicalOrdinal == canonical)
+            .Chapters.Single(c => c.Number == chapter).Verses.First(v => v.Number == verse);
+}
+
+/// <summary>
+/// The Odes, read into the chapters Rahlfs numbers them by from a file that numbers them as Swete
+/// does, with Swete's number kept beside every verse of an Ode whose number differs.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public class SweteOdesTests(Swete swete) : IClassFixture<Swete>
+{
+    private const int Odes = 83;
+
+    [Fact]
+    public void TheyAreOneBookAfterThePsalmsInRahlfssFourteenChapters()
+    {
+        var book = swete.Book(Odes);
+        book.Position.Should().Be(swete.Book(19).Position + 1);
+        book.Chapters.Select(chapter => chapter.Number).Should().Equal(Enumerable.Range(1, 14));
+        book.Chapters.SelectMany(chapter => chapter.Verses).Should().NotContain(verse => verse.Number == 0);
+    }
+
+    /// <summary>
+    /// Each Ode at Rahlfs's chapter, running over the verses Swete's margin gives for the passage it
+    /// is taken from, and stating his own number where it is not Rahlfs's: the Song of the Vineyard
+    /// is his 4a and Rahlfs's 10, the Prayer of Isaiah his 4b and Rahlfs's 5.
+    /// </summary>
+    [Theory]
+    [InlineData(1, 1, 19, 0, "")]
+    [InlineData(2, 1, 43, 0, "")]
+    [InlineData(3, 1, 10, 0, "")]
+    [InlineData(4, 2, 19, 6, "")]
+    [InlineData(5, 9, 20, 4, "b")]
+    [InlineData(6, 3, 10, 5, "")]
+    [InlineData(7, 26, 45, 9, "")]
+    [InlineData(8, 52, 88, 10, "")]
+    [InlineData(10, 1, 9, 4, "a")]
+    [InlineData(11, 10, 20, 7, "")]
+    [InlineData(12, 1, 15, 8, "")]
+    [InlineData(13, 29, 32, 12, "")]
+    [InlineData(14, 1, 1, 0, "")]
+    public void EachOdeStandsAtRahlfssNumberAndStatesSwetes(int chapter, int first, int last, int printed, string letter)
+    {
+        var verses = Chapter(chapter).Verses;
+        verses[0].Number.Should().Be(first);
+        verses[^1].Number.Should().Be(last);
+
+        StatedNumberDraft[] stated = printed == 0 ? [] : [new StatedNumberDraft(printed, first, letter)];
+        verses[0].Stated.Should().Equal(stated);
+        verses.Should().OnlyContain(verse => verse.Stated.Count == stated.Length);
+    }
+
+    /// <summary>
+    /// Rahlfs's ninth Ode is two of Swete's, the Magnificat and the Benedictus, whose verses keep
+    /// Luke's numbers and so do not meet: 46 to 55, then 68 to 79.
+    /// </summary>
+    [Fact]
+    public void TheMagnificatAndTheBenedictusAreOneOdeAtLukesNumbers()
+    {
+        var verses = Chapter(9).Verses;
+
+        verses.Select(verse => verse.Number).Should().OnlyHaveUniqueItems();
+        verses.Where(verse => verse.Number <= 55).Should().HaveCount(10)
+            .And.OnlyContain(verse => verse.Stated.Single() == new StatedNumberDraft(11, verse.Number, ""));
+        verses.Where(verse => verse.Number >= 68).Should()
+            .OnlyContain(verse => verse.Stated.Single() == new StatedNumberDraft(13, verse.Number, ""));
+        Swete.Text(verses[0]).Should().StartWith("ΙΙροσευχὴ Μαρίας τῆς θεοτόκου. Μεγαλύνει");
+    }
+
+    /// <summary>
+    /// An Ode's heading opens its first verse, as a psalm's title does, including the two the
+    /// encoding numbers as verses where Swete's margin gives the Ode as 2—19 and 52—88. The numeral
+    /// over the Prayer of Isaiah, which the transcription let into the text, is taken out.
+    /// </summary>
+    [Theory]
+    [InlineData(1, 1, "ᾨδὴ Μωυσέως ἐν τῇ Ἐξόδῳ ΑΣΩΜΕΝ τῷ κυρίῳ,")]
+    [InlineData(2, 1, "ᾨδὴ Μωυσέως ἐν τῷ Δευτερονομίῳ. Πρόσεχε,")]
+    [InlineData(4, 2, "Προσευχὴ Ἀμβακούμ. Κύριε, εἰσακήκοα")]
+    [InlineData(5, 9, "Προσευχὴ Ἠσαίοι. Ἐκ νυκτὸς")]
+    [InlineData(7, 26, "Προσευχὴ Ἀζαρίου Εὐλογητὸς")]
+    [InlineData(8, 52, "Ὕμνος τῶν πατέρων ὴμῶν. Εὺλογητὸς")]
+    [InlineData(9, 68, "Προσευχὴ Ζαχαρίου. Εὐλογητὸς Κύριος")]
+    [InlineData(14, 1, "Ὕμνος ἑωθινός. Δόξα ἐν ὑψίστοις θεῷ,")]
+    public void AnOdeHeadingOpensItsFirstVerse(int chapter, int verse, string opens) =>
+        Swete.Text(swete.Verse(Odes, chapter, verse)).Should().StartWith(opens);
+
+    /// <summary>
+    /// The file's own chapter keys, which are not all numbers, never reach the reader: each Ode is
+    /// keyed by its place in the file, and a heading standing alone under another verse's number
+    /// is keyed as the head of the verse it opens.
+    /// </summary>
+    [Fact]
+    public void TheLetteredOdesAreReadByTheirPlace()
+    {
+        var book = SweteReader.Read(SweteOdes.Lines([
+            "28.1.0 ᾨδὴ", "28.1.1 ᾌσωμεν",
+            "28.2.1 Πρόσεχε",
+            "28.3.1 Ἐστερεώθη",
+            "28.iva.1 ᾍσω", "28.iva.9 σαβαώθ.",
+            "28.ivb.9 Δ΄", "28.ivb.9 (β)", "28.ivb.9 Προσευχὴ", "28.ivb.9 Ἐκ", "28.ivb.10 πέπαυται",
+        ]));
+
+        book.Chapters.Select(chapter => chapter.Number).Should().Equal(1, 2, 3, 4, 5);
+        book.Chapters[4].Verses[0].Words.Select(word => word.Surface).Should().Equal("Προσευχὴ", "Ἐκ");
+    }
+
+    private ChapterDraft Chapter(int number) => swete.Book(Odes).Chapters.Single(chapter => chapter.Number == number);
 }

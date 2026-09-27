@@ -333,6 +333,25 @@ internal sealed record SharedAddresses(string Text, bool Labelled, int Addresses
 internal sealed record Unaligned(string Text, int Ordinal, string Book, int Words);
 
 /// <summary>
+/// Words of a text that no link joins to a witness, whose Strong number the witness prints in the
+/// verse next door and not in their own, where the witness's word is silent too. A link may name
+/// words in two verses, but a pairing that only looks inside one canonical address can never make
+/// it, so these are the words a verse boundary strands: a psalm's title printed inside its first
+/// verse where the frame numbers it as a verse of its own, a clause a translator carried across.
+///
+/// <para>
+/// Only where both sides carry Strong numbers, because the number is what says the counterpart is
+/// there rather than merely that something next door went unlinked. It is a floor and not a count
+/// of every stranded word: a text without numbers strands words the same way and nothing here can
+/// see them.
+/// </para>
+/// </summary>
+/// <param name="Text">The text holding the silent words.</param>
+/// <param name="Witness">The text whose next verse holds their number.</param>
+/// <param name="Chapters">The chapters holding the most of them, as the text names its books.</param>
+internal sealed record Stranded(string Text, string Witness, int Words, IReadOnlyList<string> Chapters);
+
+/// <summary>
 /// What one load produced. Every field is a query, and the point of storing it is that the next
 /// load can be compared with it.
 /// </summary>
@@ -347,7 +366,8 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<Vote> Vote,
     IReadOnlyList<IntegrityCheck> Integrity,
     IReadOnlyList<SharedAddresses> Shared,
-    IReadOnlyList<Unaligned> Unaligned)
+    IReadOnlyList<Unaligned> Unaligned,
+    IReadOnlyList<Stranded>? Stranded = null)
 {
     /// <summary>
     /// The share of links more than one method claims. It is the number the corpus could not
@@ -506,6 +526,12 @@ internal sealed record CorpusMeasures(
         {
             report.AppendLine($"  {p.Text} to {p.Against,-14} {p.Chapters,6} {p.Divided,7} {p.Verses,8} {p.Suspect,7}" +
                               (p.Worst.Count == 0 ? string.Empty : $"   {string.Join(", ", p.Worst)}"));
+        }
+
+        report.AppendLine("stranded      words no link joins whose number the witness prints only in the verse next door");
+        foreach (var s in Stranded ?? [])
+        {
+            report.AppendLine($"  {s.Text} to {s.Witness,-14} {s.Words,7}   {string.Join(", ", s.Chapters)}");
         }
 
         report.AppendLine("integrity     every one of these should be zero");

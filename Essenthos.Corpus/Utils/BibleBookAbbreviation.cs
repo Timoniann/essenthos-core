@@ -117,6 +117,11 @@ public class BibleBookAbbreviation
         new(90, "4 Baruch", "4 Bar", "4Ba", ["4BA", "Paralipomena of Jeremiah"]),
         new(91, "Messale", "Msl", "Msl", ["Proverbs of Solomon (Messale)"]),
         new(92, "Tagsas", "Tgs", "Tgs", ["Tägsas", "Tegsas"]),
+
+        // The Song of the Three, which the Greek and Latin print inside Daniel 3 and the King James as a
+        // book of its own; the corpus holds it under both names.
+        new(93, "Song of the Three", "Sg Three", "S3Y",
+            ["S3Y", "AZA", "Song of the Three Holy Children", "Song of the Three Young Men", "Prayer of Azariah"]),
     ];
 
     private static readonly Dictionary<string, BookAbbreviation> AbbreviationMap;

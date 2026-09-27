@@ -266,6 +266,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(IList<TextLinkMethodResponse>))]
 [JsonSerializable(typeof(TextCreditResponse))]
 [JsonSerializable(typeof(IList<TextCreditResponse>))]
+[JsonSerializable(typeof(TextRelationResponse))]
+[JsonSerializable(typeof(IList<TextRelationResponse>))]
 [JsonSerializable(typeof(IReadOnlyDictionary<string, string>))]
 [JsonSerializable(typeof(CoverageResponse))]
 [JsonSerializable(typeof(BookListResponse))]

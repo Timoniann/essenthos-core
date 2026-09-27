@@ -1,4 +1,5 @@
 using System.Globalization;
+using Essenthos.Core.Corpus;
 
 namespace Essenthos.Core.Loading.Frame;
 
@@ -62,7 +63,9 @@ internal readonly record struct AdditionVerse(int Book, char Section, int Verse)
 /// Swete prints the Letter of Jeremiah in seventy-two verses where the standard numbering, which
 /// Brenton and the English Bibles follow in Baruch 6, has seventy-three: his first verse is the
 /// title and the letter's opening, and he runs 15-16 into one verse, 43 into 42 and 50-51 into one,
-/// which leaves most of his verses one behind the standard's.
+/// which leaves most of his verses one behind the standard's. The Synodal and the Vulgate print
+/// seventy-two as well, each divided in a way of its own that the data's Latin and Greek columns do
+/// not describe, and each was read verse against verse in the same way.
 /// </para>
 /// <para>
 /// In the Song of the Three both follow the order of Vaticanus, which is not the order the data's
@@ -87,6 +90,10 @@ internal static class LetteredEditions
     private const int Esther = 17;
 
     private const int LetterOfJeremiah = 76;
+
+    private const int Baruch = 67;
+
+    private const int PrayerOfManasseh = 79;
 
     private const int Sirach = 72;
 
@@ -225,9 +232,89 @@ internal static class LetteredEditions
         [
             Song(54, 32), Song(55, 33), Song(58, 36), Song(59, 37), Song(67, 47), Song(70, 48), Song(71, 45),
             Song(72, 50),
+            .. GeezSirach(),
         ]);
 
-    private static readonly Edition[] All = [Brenton, BrentonsGreek, Swete, Geez];
+    /// <summary>
+    /// The Ge'ez Sirach 30:25-36:31, which keeps the Greek manuscripts' order of the chapters, as
+    /// Brenton prints them, and divides every one of them verse for verse as Swete does: its 30:25-40
+    /// are Swete's 33:25-40, its 31, 32 and 33 Swete's 34, 35 and 36:1-13, its 34 and 35 Swete's 31
+    /// and 32, and its 36 Swete's 33:1-16 and 36:17-31. Each chapter counts exactly as Swete's does,
+    /// and the lengths of its verses follow Swete's there as closely as in the chapters both print
+    /// in one order, and not at all at the rows its own numbers name. Each verse stands where the
+    /// verse of Swete's it prints stands.
+    /// </summary>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> GeezSirach()
+    {
+        var swete = (Swete.Elsewhere ?? [])
+            .Where(read => read.Verse.Address.Book == Sirach)
+            .ToDictionary(read => read.Verse, read => read.Prints);
+
+        (int Geez, int Swete, int First, int Last)[] chapters =
+        [
+            (30, 33, 25, 40), (31, 34, 1, 31), (32, 35, 1, 26), (33, 36, 1, 13), (34, 31, 1, 31),
+            (35, 32, 1, 24), (36, 33, 1, 16), (36, 36, 17, 31),
+        ];
+
+        foreach (var (geez, printed, first, last) in chapters)
+        {
+            for (var verse = first; verse <= last; verse++)
+            {
+                var own = new PrintedAddress(new CanonicalReference(Sirach, printed, verse), string.Empty);
+                var lettered = new PrintedAddress(own.Address, "a");
+                var standard = swete.TryGetValue(own, out var read) ? read
+                    : swete.TryGetValue(lettered, out var half) ? half
+                    : [own.Address];
+                yield return (new PrintedAddress(new CanonicalReference(Sirach, geez, verse), string.Empty), standard);
+            }
+        }
+    }
+
+    /// <summary>
+    /// The Synodal as Russian Wikisource transcribes its non-canonical books and the Greek additions it
+    /// prints inside canonical ones: the Letter of Jeremiah in seventy-two verses of its own division;
+    /// the additions to Esther it sets in brackets inside six verses, each the lettered piece of its
+    /// verse and each the whole of an addition, the audience divided between 5:1 and 5:2 as Brenton
+    /// divides it; its 3:52, which holds the song's 29 and 30; and the Prayer of Manasseh in twelve
+    /// verses, read against the King James's fifteen. Its Esther prints 5:1, which tells it from Swete's.
+    /// </summary>
+    private static readonly Edition Synodal = new(
+        "Synodal",
+        "LJe.1:72=Last & Est.5:1=Exist",
+        [
+            Whole(1, 1, 'A', 1, 17),
+            Whole(3, 13, 'B', 1, 7),
+            Whole(4, 17, 'C', 1, 30),
+            Whole(5, 1, 'D', 1, 11),
+            Whole(5, 2, 'D', 12, 16),
+            Whole(8, 12, 'E', 1, 24),
+            Whole(10, 3, 'F', 1, 11),
+        ],
+        [
+            .. SynodalLetterOfJeremiah(),
+            Printed(SongOfTheThreeBook.Book, 1, 29, (1, 29), (1, 30)),
+            Printed(PrayerOfManasseh, 1, 1, (1, 1)),
+            Printed(PrayerOfManasseh, 1, 2, (1, 3), (1, 2), (1, 4), (1, 5)),
+            Printed(PrayerOfManasseh, 1, 3, (1, 5)),
+            Printed(PrayerOfManasseh, 1, 4, (1, 6)),
+            Printed(PrayerOfManasseh, 1, 5, (1, 7)),
+            Printed(PrayerOfManasseh, 1, 6, (1, 7), (1, 8)),
+            Printed(PrayerOfManasseh, 1, 7, (1, 8), (1, 9)),
+            Printed(PrayerOfManasseh, 1, 8, (1, 9), (1, 10)),
+            Printed(PrayerOfManasseh, 1, 9, (1, 10)),
+            Printed(PrayerOfManasseh, 1, 10, (1, 10), (1, 11)),
+            Printed(PrayerOfManasseh, 1, 11, (1, 13), (1, 12), (1, 14), (1, 15)),
+            Printed(PrayerOfManasseh, 1, 12, (1, 15)),
+        ]);
+
+    /// <summary>The Clementine Vulgate and the Douay-Rheims made from it, which print the letter as Baruch 6.</summary>
+    private static readonly Edition Vulgate = new(
+        "Vulgate",
+        "Bar.6:72=Last",
+        [],
+        [.. VulgateLetterOfJeremiah()]);
+
+    private static readonly Edition[] All = [Brenton, BrentonsGreek, Swete, Geez, Synodal, Vulgate];
 
     /// <summary>
     /// The places of the lettered verses of whichever of these editions this one is, or nothing.
@@ -287,10 +374,8 @@ internal static class LetteredEditions
     /// Swete's Letter of Jeremiah against the standard's verses, which is where he stands one behind:
     /// read against Brenton's Greek, which is numbered as the standard is.
     /// </summary>
-    private static IEnumerable<(PrintedAddress, CanonicalReference[])> SweteLetterOfJeremiah()
-    {
-        const int Verses = 72;
-        var joined = new Dictionary<int, int[]>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> SweteLetterOfJeremiah() =>
+        LetterRead(LetterOfJeremiah, 1, verses: 72, onStandard: verse => verse is >= 44 and <= 49, new()
         {
             [1] = [1, 2],
             [14] = [15, 16],
@@ -299,15 +384,77 @@ internal static class LetteredEditions
             [42] = [43],
             [43] = [43],
             [50] = [50, 51],
-        };
+        });
 
-        for (var verse = 1; verse <= Verses; verse++)
+    /// <summary>
+    /// The Synodal's Letter of Jeremiah, read against Brenton's English, which is numbered as the
+    /// standard is: the Synodal runs 5-6, 15-16 and 50-51 into one verse each and divides 17 and 43,
+    /// and carries a clause over a verse's end at 25, 39-40, 46-47 and 53-54.
+    /// </summary>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> SynodalLetterOfJeremiah() =>
+        LetterRead(LetterOfJeremiah, 1, verses: 72, onStandard: verse => verse is <= 4 or (>= 44 and <= 49), new()
         {
-            var standard = joined.TryGetValue(verse, out var listed) ? listed
-                : verse is >= 44 and <= 49 ? [verse]
+            [5] = [5, 6],
+            [14] = [15, 16],
+            [15] = [17],
+            [16] = [17],
+            [25] = [26, 27],
+            [39] = [40],
+            [40] = [41, 40],
+            [42] = [43],
+            [43] = [43],
+            [46] = [46],
+            [47] = [47, 46],
+            [50] = [50, 51],
+            [53] = [54],
+            [54] = [55, 54],
+        });
+
+    /// <summary>
+    /// The Vulgate's Baruch 6, in the Clementine and the Douay-Rheims alike, read against the King
+    /// James: it prints the letter's title as a heading and not as a verse, so its first verse is the
+    /// standard's second, and it divides the verses around 9, 12, 14-19, 25 and 40-43 otherwise.
+    /// </summary>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> VulgateLetterOfJeremiah() =>
+        LetterRead(Baruch, 6, verses: 72, onStandard: verse => verse is >= 44 and <= 49, new()
+        {
+            [5] = [6, 5],
+            [9] = [10, 9],
+            [12] = [13, 12],
+            [14] = [15, 16],
+            [15] = [17, 16],
+            [16] = [17],
+            [18] = [19, 20],
+            [19] = [20],
+            [25] = [26, 27],
+            [39] = [40],
+            [40] = [41, 40],
+            [41] = [42, 41],
+            [42] = [43],
+            [43] = [43],
+            [50] = [50, 51],
+            [56] = [57, 58],
+        });
+
+    /// <summary>
+    /// An edition's Letter of Jeremiah against the standard's seventy-three verses: each verse listed
+    /// prints those, the one it prints most of first, and every other verse prints the standard's
+    /// next, or its own number where <paramref name="onStandard"/> says the edition is level there.
+    /// </summary>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> LetterRead(
+        int book,
+        int chapter,
+        int verses,
+        Func<int, bool> onStandard,
+        Dictionary<int, int[]> listed)
+    {
+        for (var verse = 1; verse <= verses; verse++)
+        {
+            var standard = listed.TryGetValue(verse, out var read) ? read
+                : onStandard(verse) ? [verse]
                 : [verse + 1];
-            yield return (new PrintedAddress(new CanonicalReference(LetterOfJeremiah, 1, verse), string.Empty),
-                [.. standard.Select(number => new CanonicalReference(LetterOfJeremiah, 1, number))]);
+            yield return (new PrintedAddress(new CanonicalReference(book, chapter, verse), string.Empty),
+                [.. standard.Select(number => new CanonicalReference(book, chapter, number))]);
         }
     }
 
@@ -320,6 +467,10 @@ internal static class LetteredEditions
         int first) =>
         letters.Select((letter, index) =>
             (chapter, verse, letter.ToString(), new[] { $"{section}:{first + index}" }));
+
+    /// <summary>A lettered piece of a verse of Esther holding the whole of one addition's verses.</summary>
+    private static (int, int, string, string[]) Whole(int chapter, int verse, char section, int first, int last) =>
+        (chapter, verse, "a", [.. Enumerable.Range(first, last - first + 1).Select(number => $"{section}:{number}")]);
 
     /// <summary>An addition numbered from one under a chapter of the book and marked by a letter.</summary>
     private static IEnumerable<(int Chapter, int Verse, string Label, string[] Prints)> Numbered(

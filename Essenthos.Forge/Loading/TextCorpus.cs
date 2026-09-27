@@ -26,6 +26,7 @@ internal static class TextCorpus
         NestleTextSource.Definition,
         SeptuagintTextSource.Definition(),
         SweteTextSource.Definition,
+        SweteOldGreekTextSource.Definition,
         OttleyTextSource.Definition,
         AlexandrinusTextSource.Definition,
         TischendorfTextSource.Definition,

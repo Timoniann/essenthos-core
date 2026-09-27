@@ -40,6 +40,7 @@ internal sealed class TextProblems(Avioniq avioniq, ILogger<TextProblems> logger
         ["TR1550"] = ["Stephanus"],
         ["GRCBRENT"] = ["Brenton"],
         ["SWETE"] = ["Swete"],
+        ["SWETEOG"] = ["Old Greek Daniel"],
         ["OTTLEY"] = ["Ottley"],
         ["ALEX"] = ["Alexandrinus"],
         ["GEEZ81"] = ["Ge'ez", "Ethiopic"],

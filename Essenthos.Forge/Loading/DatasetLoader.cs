@@ -46,6 +46,7 @@ internal sealed class DatasetLoader(
     {
         [GeezTextSource.Slug] = resources => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder)),
         [SweteTextSource.Slug] = resources => SweteTextSource.Read(Path.Combine(resources, "Swete")),
+        [SweteOldGreekTextSource.Slug] = resources => SweteOldGreekTextSource.Read(Path.Combine(resources, "Swete")),
         [AlexandrinusTextSource.Slug] = AlexandrinusTextSource.Read,
     };
 
@@ -127,6 +128,11 @@ internal sealed class DatasetLoader(
             // where Brenton is a text printed to be translated from. They disagree about the verse
             // division of most of the books they share, which is the whole reason to hold both.
             await Load("Swete's Septuagint", () => SweteTextSource.Read(
+                Path.Combine(resources, "Swete")), stoppingToken);
+
+            // The Old Greek of Susanna, Daniel and Bel, which Swete prints beside Theodotion's: another
+            // translation of the same books, so a text of its own beside his.
+            await Load("Swete's Old Greek Daniel", () => SweteOldGreekTextSource.Read(
                 Path.Combine(resources, "Swete")), stoppingToken);
 
             // Codex Alexandrinus, in the one book it is printed whole here: Ottley's Isaiah, a
@@ -223,6 +229,7 @@ internal sealed class DatasetLoader(
                 await RefreshTheStatistics(stoppingToken);
             }
 
+            await RelateTheTexts(stoppingToken);
             await LoadTheLexicon(resources, stoppingToken);
             await TranslateTheLexicon(resources, stoppingToken);
             await LoadTheSyntax(bhsa, stoppingToken);
@@ -354,6 +361,18 @@ internal sealed class DatasetLoader(
         ByzantineTextSource.Slug,
         NestleTextSource.Slug,
     ];
+
+    /// <summary>
+    /// What each text was translated from, revised from or shares a tradition with. It names texts by
+    /// slug and needs nothing but their rows, so it follows the texts directly.
+    /// </summary>
+    private async Task RelateTheTexts(CancellationToken cancellationToken)
+    {
+        status.Starting("the relations between texts");
+
+        using var scope = services.CreateScope();
+        status.Record(await scope.ServiceProvider.GetRequiredService<TextRelationLoader>().Load(cancellationToken));
+    }
 
     /// <summary>
     /// BHSA's clauses, phrases and sentences. It reads the same parse the text was loaded from
@@ -848,6 +867,12 @@ internal sealed class DatasetLoader(
         // Alexandrinus against Vaticanus, the two Cambridge diplomatic texts, in Isaiah.
         status.Record(await loader.Load(
             OttleyTextSource.Slug, SweteTextSource.Slug, cancellationToken));
+
+        // The Old Greek of Daniel against Theodotion's, in both editions that print his.
+        status.Record(await loader.Load(
+            SweteOldGreekTextSource.Slug, SweteTextSource.Slug, cancellationToken));
+        status.Record(await loader.Load(
+            SweteOldGreekTextSource.Slug, SeptuagintTextSource.Slug, cancellationToken));
     }
 
     /// <summary>

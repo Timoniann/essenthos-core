@@ -39,6 +39,9 @@ namespace Essenthos.Core.Endpoints;
 /// More than one where the edition divides what this corpus holds as one verse: the Synodal counts
 /// Psalm 12's superscription as its own verse, so our 12:1 is its 11:1 and 11:2 both.
 ///
+/// A chapter the edition numbers with a letter keeps it: Swete's Song of the Vineyard is Ode
+/// <c>4a</c> on his page and Ode 10 in the corpus, so its verses are stated as <c>4a:1</c> and on.
+///
 /// It is not <see cref="Verses"/>, and the difference matters: those are verses this text actually
 /// holds, and can be asked for. An address here is a statement about a printed page, and no verse
 /// of this corpus answers to it.
@@ -152,15 +155,30 @@ internal static class ParallelEndpoints
             var reference = requested[0];
             foreach (var entry in requested)
             {
-                byText[entry.Slug] = await Texts.ReadByCanonicalVerse(
-                    db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                references[entry.Slug] = await OwnReferences(db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                own[entry.Slug] = await OwnVerses(db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                stated[entry.Slug] = await StatedVerses(db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                notes[entry.Slug] = await SourceNotes(db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                strength[entry.Slug] = entry.Id == reference.Id
-                    ? []
-                    : await Strengths(db, entry.Id, reference.Id, ordinal.Value, chapter, cancellationToken);
+                byText[entry.Slug] = [];
+                references[entry.Slug] = [];
+                own[entry.Slug] = [];
+                stated[entry.Slug] = [];
+                notes[entry.Slug] = [];
+                strength[entry.Slug] = [];
+                foreach (var (heldBook, heldChapter, first, last, shift) in Held(ordinal.Value, chapter))
+                {
+                    Merge(byText[entry.Slug], await Texts.ReadByCanonicalVerse(
+                        db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    Merge(references[entry.Slug],
+                        await OwnReferences(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    Merge(own[entry.Slug],
+                        await OwnVerses(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    Merge(stated[entry.Slug],
+                        await StatedVerses(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    Merge(notes[entry.Slug],
+                        await SourceNotes(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    if (entry.Id != reference.Id)
+                    {
+                        Merge(strength[entry.Slug], await Strengths(
+                            db, entry.Id, reference.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    }
+                }
             }
 
             var numbers = byText.Values
@@ -191,6 +209,32 @@ internal static class ParallelEndpoints
                 corpusRows,
                 rows));
         });
+    }
+
+    /// <summary>
+    /// The chapters a chapter's rows are read from: itself, and each chapter holding a passage of it
+    /// under another name (<see cref="TwinPassages"/>) — the Letter of Jeremiah, which is Baruch 6 in the
+    /// Latin and English Bibles and a book of its own in the Greek, and the Song of the Three, which is
+    /// inside Daniel 3 in the Greek and Latin and a book of its own in the King James. A text is read
+    /// under whichever name it prints the passage, with the verses of that passage and at the rows they
+    /// have here, so either name opens it in every text that has it.
+    /// </summary>
+    internal static IEnumerable<(int Book, int Chapter, int First, int Last, int Shift)> Held(int book, int chapter) =>
+        [(book, chapter, int.MinValue, int.MaxValue, 0), .. TwinPassages.NamedElsewhere(book, chapter)];
+
+    /// <summary>
+    /// Rows read under another name, at the rows they have here; a row the chapter already holds for the
+    /// text keeps what it has, since a verse stands primarily under one name only.
+    /// </summary>
+    internal static void Merge<T>(Dictionary<int, T> into, Dictionary<int, T> read, int first, int last, int shift)
+    {
+        foreach (var (verse, value) in read)
+        {
+            if (verse >= first && verse <= last)
+            {
+                into.TryAdd(verse + shift, value);
+            }
+        }
     }
 
     /// <summary>
@@ -358,6 +402,7 @@ internal static class ParallelEndpoints
                 Holder = n.Verse.Number,
                 n.Position,
                 Chapter = n.ChapterNumber,
+                n.ChapterLabel,
                 Verse = n.Number,
             })
             .ToListAsync(cancellationToken);
@@ -368,7 +413,7 @@ internal static class ParallelEndpoints
                 group => group.Key,
                 group => group
                     .OrderBy(row => row.Holder).ThenBy(row => row.Position)
-                    .Select(row => $"{row.Chapter}:{row.Verse}")
+                    .Select(row => $"{row.Chapter}{row.ChapterLabel}:{row.Verse}")
             .ToList());
     }
 

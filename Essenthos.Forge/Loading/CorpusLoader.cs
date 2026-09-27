@@ -28,6 +28,7 @@ internal sealed record LoadOutcome(
             : $"{Slug}: {Books} books, {Chapters} chapters, {Verses} verses, {Words} words in {Elapsed}";
 }
 
+/// <param name="Books">The books added, and each book already held that gained verses, by name.</param>
 internal sealed record BookAdditionOutcome(
     string Slug,
     IReadOnlyList<string> Books,
@@ -37,7 +38,7 @@ internal sealed record BookAdditionOutcome(
 {
     public override string ToString() =>
         Books.Count == 0
-            ? $"{Slug} holds every book its source does"
+            ? $"{Slug} holds every book and verse its source does"
             : $"{string.Join(", ", Books)} to {Slug}: {Verses} verses, {Words} words in {Elapsed}";
 }
 
@@ -160,6 +161,12 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     /// stands where the edition prints it.
     ///
     /// <para>
+    /// A book already there gains the verses its source now holds and it does not, in chapters it
+    /// holds or new ones: the additions to Esther the King James prints after the Hebrew's last
+    /// verse, at the chapters and verses it numbers them. A verse already there is never rewritten.
+    /// </para>
+    ///
+    /// <para>
     /// A book already there whose name the source now spells otherwise — a misprint corrected where
     /// the source is read — takes the new name, which is the only thing about it that changes.
     /// </para>
@@ -202,7 +209,8 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
 
         var ordinals = held.Select(b => b.CanonicalOrdinal).ToHashSet();
         var missing = source.Books.Where(b => !ordinals.Contains(b.CanonicalOrdinal)).ToList();
-        if (missing.Count == 0)
+        var lengthened = await Lengthened(text, held, source, cancellationToken);
+        if (missing.Count == 0 && lengthened.Count == 0)
         {
             return new BookAdditionOutcome(text.Slug, [], 0, 0, TimeSpan.Zero);
         }
@@ -217,6 +225,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         }
 
         var verses = await WriteStructure(text, missing, cancellationToken);
+        verses.AddRange(await WriteGainedVerses(text, lengthened, cancellationToken));
         var words = await WriteWords(text, verses, cancellationToken);
         await VerifyRoundTrip(text, verses, whole: false, cancellationToken);
         await WriteSpans(text, verses, WordGroupKind.Supplied, word => word.SuppliedSpan, cancellationToken);
@@ -246,9 +255,109 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         await transaction.CommitAsync(cancellationToken);
 
         var outcome = new BookAdditionOutcome(
-            text.Slug, [.. missing.Select(b => b.Name)], verses.Count, words, started.Elapsed);
+            text.Slug, [.. missing.Select(b => b.Name), .. lengthened.Select(gain => gain.Book.Name)], verses.Count,
+            words, started.Elapsed);
         logger.LogInformation("Added {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>A book the text holds and the verses of its source it does not, by chapter.</summary>
+    private sealed record GainedVerses(Book Book, IReadOnlyList<ChapterDraft> Chapters);
+
+    /// <summary>
+    /// The verses each book already held lacks, by chapter and in the source's order. A verse is the
+    /// same verse when its chapter, number and letter are.
+    /// </summary>
+    private async Task<List<GainedVerses>> Lengthened(
+        Text text,
+        IReadOnlyList<Book> held,
+        TextSource source,
+        CancellationToken cancellationToken)
+    {
+        var addresses = (await db.Verses
+                .Where(v => v.TextId == text.Id)
+                .Select(v => new { v.BookId, v.ChapterNumber, v.Number, v.Label })
+                .ToListAsync(cancellationToken))
+            .Select(v => (v.BookId, v.ChapterNumber, v.Number, v.Label))
+            .ToHashSet();
+
+        var gained = new List<GainedVerses>();
+        foreach (var book in held)
+        {
+            if (source.Books.FirstOrDefault(b => b.CanonicalOrdinal == book.CanonicalOrdinal) is not { } draft)
+            {
+                continue;
+            }
+
+            List<ChapterDraft> chapters =
+            [
+                .. draft.Chapters
+                    .Select(chapter => chapter with
+                    {
+                        Verses = [.. chapter.Verses.Where(verse =>
+                            !addresses.Contains((book.Id, chapter.Number, verse.Number, verse.Label)))],
+                    })
+                    .Where(chapter => chapter.Verses.Count > 0),
+            ];
+            if (chapters.Count > 0)
+            {
+                gained.Add(new GainedVerses(book, chapters));
+            }
+        }
+
+        return gained;
+    }
+
+    /// <summary>
+    /// Verses written into books already held: into the chapter of that number where there is one,
+    /// after the verses it has, and into a new chapter where there is not.
+    /// </summary>
+    private async Task<List<LoadedVerse>> WriteGainedVerses(
+        Text text,
+        IReadOnlyList<GainedVerses> gained,
+        CancellationToken cancellationToken)
+    {
+        var verses = new List<LoadedVerse>();
+        foreach (var (book, chapters) in gained)
+        {
+            var existing = await db.Chapters.Where(c => c.BookId == book.Id).ToListAsync(cancellationToken);
+            var sequences = await db.Verses
+                .Where(v => v.BookId == book.Id)
+                .GroupBy(v => v.ChapterNumber)
+                .Select(g => new { Chapter = g.Key, Last = g.Max(v => v.Sequence) })
+                .ToDictionaryAsync(g => g.Chapter, g => g.Last, cancellationToken);
+
+            foreach (var chapterDraft in chapters)
+            {
+                var chapter = existing.FirstOrDefault(c => c.Number == chapterDraft.Number);
+                if (chapter is null)
+                {
+                    chapter = new Chapter { TextId = text.Id, Book = book, Number = chapterDraft.Number };
+                    db.Chapters.Add(chapter);
+                }
+
+                var last = sequences.GetValueOrDefault(chapterDraft.Number);
+                foreach (var (index, verseDraft) in chapterDraft.Verses.Index())
+                {
+                    var verse = new Verse
+                    {
+                        TextId = text.Id,
+                        Book = book,
+                        Chapter = chapter,
+                        ChapterNumber = chapterDraft.Number,
+                        Number = verseDraft.Number,
+                        Label = verseDraft.Label,
+                        Sequence = last + index + 1,
+                    };
+                    db.Verses.Add(verse);
+                    verses.Add(new LoadedVerse(verse, verseDraft,
+                        $"{text.Slug} {book.Name} {chapterDraft.Number}:{verseDraft.Number}{verseDraft.Label}"));
+                }
+            }
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        return verses;
     }
 
     private static Text NewText(TextDefinition definition) => new()

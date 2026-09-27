@@ -23,9 +23,12 @@
     beside a verse are the transcribers' furniture and are dropped. Sirach's prologue has no verse
     number, and stands before the first verse of chapter 1 as the King James sets its own.
 
-    The additions inside Esther and Daniel and the Prayer of Manasseh are not taken: they are inside
-    books the corpus already holds from bible4u, numbered there as the King James numbers them. See
-    Resources/SynodalWikisource/LICENCE.md.
+    The Greek additions the Synodal prints inside three canonical books are taken as well, from those
+    books' pages, and only they: the Song of the Three in Daniel 3:24-90 and Susanna and Bel as Daniel
+    13 and 14 (27-DAG), the additions to Esther it sets in brackets inside six verses (17-ESG, each
+    written as the verse's lettered piece), and the Prayer of Manasseh after 2 Chronicles 36, whose
+    twelve verses the page letters а to м (79-MAN, numbered 1 to 12). The rest of those books the
+    corpus holds from bible4u. See Resources/SynodalWikisource/LICENCE.md.
 
     The text is public domain: the translators are long dead, and ru.wikisource states it under
     article 1281 of the Civil Code of the Russian Federation on the Synodal's own page. That statement
@@ -73,6 +76,21 @@ $Books = @(
     [pscustomobject]@{ Ordinal = 80; Code = '3MA'; Page = 'Третья книга Маккавейская';               Revision = 3680028; Verses = 180 }
     [pscustomobject]@{ Ordinal = 69; Code = '2ES'; Page = 'Третья книга Ездры';                      Revision = 3826850; Verses = 875 }
 )
+
+# The canonical books the Synodal prints Greek additions inside, each at the revision it was read at,
+# and what it held.
+$Additions = @(
+    [pscustomobject]@{ Key = 'DAN'; Page = 'Книга пророка Даниила';      Revision = 3679983; Verses = 530 }
+    [pscustomobject]@{ Key = 'EST'; Page = 'Книга Есфири';               Revision = 3679964; Verses = 168 }
+    [pscustomobject]@{ Key = '2CH'; Page = 'Вторая книга Паралипоменон'; Revision = 4588701; Verses = 834 }
+)
+
+# The verses of Esther inside which the Synodal sets the additions, in brackets: Mordecai's dream as a
+# verse of its own before 1:1, the king's two letters, the two prayers and Esther's audience.
+$EstherAdditions = @('1:1', '3:13', '4:17', '5:1', '5:2', '8:12', '10:3')
+
+# The letters the page numbers the Prayer of Manasseh's verses by, in order.
+$ManassehLetters = 'а', 'б', 'в', 'г', 'д', 'е', 'ж', 'з', 'и', 'к', 'л', 'м'
 
 $PrologueTitle = 'Предисловие'
 
@@ -168,6 +186,50 @@ function Read-Book {
     return [pscustomobject]@{ Prologue = (Convert-Line $prologue); Verses = $verses }
 }
 
+# The verses of a canonical book's page, each with the raw text between its template and the next.
+# The Prayer of Manasseh's verses are numbered by a letter in brackets, stih=[а].
+function Read-Page {
+    param([string] $Wikitext)
+
+    $body = $Wikitext
+    $end = $body.LastIndexOf('</div>')
+    if ($end -ge 0) { $body = $body.Substring(0, $end) }
+
+    $body = Remove-Template -Text $body -Name 'bible parallels'
+    $body = Remove-Template -Text $body -Name 'heading'
+    $body = $body -replace '(?m)^==[^=].*?==\s*$', ''
+    $body = $body -replace '\{\{глава\|\d+\}\}', ''
+    $body = $body -replace '<ref[^>]*>.*?</ref>', ''
+
+    $found = [regex]::Matches($body, '\{\{стих\|глава=(?<chapter>\d+)\|стих=(?<verse>[^}]+)\}\}')
+    $verses = [Collections.Generic.List[object]]::new()
+    for ($i = 0; $i -lt $found.Count; $i++) {
+        $from = $found[$i].Index + $found[$i].Length
+        $to = if ($i + 1 -lt $found.Count) { $found[$i + 1].Index } else { $body.Length }
+        $verses.Add([pscustomobject]@{
+            Chapter = [int]$found[$i].Groups['chapter'].Value
+            Verse = $found[$i].Groups['verse'].Value.Trim('[', ']')
+            Raw = $body.Substring($from, $to - $from)
+        })
+    }
+
+    return $verses
+}
+
+# What the Synodal sets in brackets inside a verse, joined: the words it translates from the Greek.
+function Get-Bracketed {
+    param([string] $Raw)
+
+    return (([regex]::Matches($Raw, '\[([^\[\]]+)\]') | ForEach-Object { $_.Groups[1].Value }) -join ' ')
+}
+
+# A line every word of which the Synodal sets in brackets, as one supplied span.
+function Add-Whole {
+    param([string] $Line)
+
+    return "\add $((($Line -replace '\\add\*?', ' ') -replace '\s+', ' ' -replace '\s+([,.;:!?»])', '$1').Trim())\add*"
+}
+
 # The page's inline markup as USFM: italics the translators' supplied words, and a square bracket
 # in Sirach's prologue a word the translators supplied the same way. The stress marks the
 # transcription sets on a few words are an aid to reading aloud, which bible4u's Synodal prints on
@@ -259,8 +321,73 @@ try {
     Get-ChildItem $destination -File -Filter '*.usfm' | Remove-Item -Force
     Copy-Item -Path (Join-Path $staging '*.usfm') -Destination $destination -Force
 
+    foreach ($page in $Additions) {
+        $read = Invoke-Api @{ action = 'parse'; oldid = $page.Revision; prop = 'wikitext' }
+        if ($read.parse.title -ne $page.Page) {
+            throw "Revision $($page.Revision) is of `"$($read.parse.title)`", not `"$($page.Page)`"; nothing was replaced."
+        }
+
+        $verses = Read-Page -Wikitext $read.parse.wikitext
+        if ($verses.Count -ne $page.Verses) {
+            throw "$($page.Page) holds $($verses.Count) verses at revision $($page.Revision) and held " +
+                  "$($page.Verses) when this was written, so the page was read wrongly; nothing was replaced."
+        }
+
+        $lines = [Collections.Generic.List[string]]::new()
+        $rem = "\rem ru.wikisource: $($page.Page), revision $($page.Revision)"
+        switch ($page.Key) {
+            'DAN' {
+                # The song is one bracketed passage over 3:24-90, and every word of it is the Greek's.
+                $lines.Add('\id DAG - Синодальный перевод, ru.wikisource'); $lines.Add($rem)
+                $chapter = 0
+                foreach ($verse in $verses | Where-Object {
+                        ($_.Chapter -eq 3 -and [int]$_.Verse -ge 24 -and [int]$_.Verse -le 90) -or $_.Chapter -ge 13 }) {
+                    if ($verse.Chapter -ne $chapter) { $chapter = $verse.Chapter; $lines.Add("\c $chapter"); $lines.Add('\p') }
+                    $text = Convert-Line ($verse.Raw -replace '[\[\]]', '')
+                    if ($chapter -eq 3) { $text = Add-Whole $text }
+                    $lines.Add("\v $($verse.Verse) $text")
+                }
+            }
+            'EST' {
+                $lines.Add('\id ESG - Синодальный перевод, ru.wikisource'); $lines.Add($rem)
+                $chapter = 0
+                $seen = @{}
+                foreach ($verse in $verses) {
+                    $key = "$($verse.Chapter):$($verse.Verse)"
+                    if ($EstherAdditions -notcontains $key -or $seen[$key]) { continue }
+                    if ($key -eq '1:1' -and ($verse.Raw.Trim() -notmatch '^\[')) { continue }
+                    $seen[$key] = $true
+                    $added = Get-Bracketed $verse.Raw
+                    if (-not $added) { throw "$($page.Page) $key sets nothing in brackets; nothing was replaced." }
+                    if ($verse.Chapter -ne $chapter) { $chapter = $verse.Chapter; $lines.Add("\c $chapter"); $lines.Add('\p') }
+                    $lines.Add("\v $($verse.Verse)a $(Add-Whole (Convert-Line $added))")
+                }
+                if ($seen.Count -ne $EstherAdditions.Count) {
+                    throw "$($page.Page) holds additions in $($seen.Count) of the $($EstherAdditions.Count) verses; nothing was replaced."
+                }
+            }
+            '2CH' {
+                $lines.Add('\id MAN - Синодальный перевод, ru.wikisource'); $lines.Add($rem)
+                $lines.Add('\h Молитва Манассии'); $lines.Add('\c 1'); $lines.Add('\p')
+                $prayer = @($verses | Where-Object { $_.Chapter -eq 36 -and $ManassehLetters -contains $_.Verse })
+                if ($prayer.Count -ne $ManassehLetters.Count) {
+                    throw "$($page.Page) holds $($prayer.Count) lettered verses after 36:23, not $($ManassehLetters.Count); nothing was replaced."
+                }
+                for ($i = 0; $i -lt $prayer.Count; $i++) {
+                    $lines.Add("\v $($i + 1) $(Convert-Line $prayer[$i].Raw)")
+                }
+            }
+        }
+
+        $file = @{ DAN = '27-DAG'; EST = '17-ESG'; '2CH' = '79-MAN' }[$page.Key]
+        [IO.File]::WriteAllLines((Join-Path $destination "$file.usfm"), $lines, [Text.UTF8Encoding]::new($false))
+        Write-Host ("  {0,-4} additions from {1}" -f $page.Key, $page.Page)
+        Start-Sleep -Milliseconds 300
+    }
+
     $size = (Get-ChildItem $destination -File -Filter '*.usfm' | Measure-Object -Property Length -Sum).Sum / 1MB
-    Write-Host ("{0:N0} verses in {1} books, {2:N1} MB in {3}" -f $total, $Books.Count, $size, $destination)
+    Write-Host ("{0:N0} verses in {1} books and the additions of {2} more, {3:N1} MB in {4}" -f $total,
+        $Books.Count, $Additions.Count, $size, $destination)
     Write-Host 'Then run: python scripts/corpus-manifest.py, and commit the manifest.'
 }
 finally {

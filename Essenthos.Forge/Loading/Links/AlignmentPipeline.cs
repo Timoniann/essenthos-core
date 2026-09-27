@@ -141,7 +141,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
         var (drafts, proposed, collapsed, below) = Read(
             alignmentFile, addresses, source, target, threshold, Selection.BestPerSource, prior,
-            MarksNoNames(from.Language));
+            MarksNoNames(from.Language), BothMarkTheirNames(from.Language, to.Language));
 
         var note = pool is null ? null : $"one model over {string.Join(", ", pool)}";
         if (measured is not null && threshold == measured.Minimum)
@@ -431,6 +431,14 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     private static bool MarksNoNames(string? language) => language is "gez";
 
     /// <summary>
+    /// The Hebrew against a Greek edition, which both mark every name they print — BHSA by its part of
+    /// speech, the printed Greek by the capital — so that a word unmarked on either side is not a name.
+    /// Two Greek texts are not: a manuscript transcription writes its names as it writes every word.
+    /// </summary>
+    internal static bool BothMarkTheirNames(string? one, string? other) =>
+        (one, other) is ("hbo", "grc") or ("grc", "hbo");
+
+    /// <summary>
     /// What a text reads as its placement where the frame's is not the one to align by: the Ge'ez
     /// books the church divides its own way stand at their own numbers in the frame, which are the
     /// Greek's numbers for other passages.
@@ -481,9 +489,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
         var prior = await Syntax((await Text(toSlug, cancellationToken)).Id, cancellationToken);
         var from = await Text(fromSlug, cancellationToken);
+        var to = await Text(toSlug, cancellationToken);
 
         var (drafts, _, _, _) = Read(
-            alignmentFile, addresses, source, target, floor, selection, prior, MarksNoNames(from.Language));
+            alignmentFile, addresses, source, target, floor, selection, prior, MarksNoNames(from.Language),
+            BothMarkTheirNames(from.Language, to.Language));
         return [.. drafts.Select(d => (d.SourceWordId, d.TargetWordId, d.Translation))];
     }
 
@@ -1010,7 +1020,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         double minimumConfidence,
         Selection selection = Selection.All,
         SyntaxPrior? prior = null,
-        bool namesUnmarked = false)
+        bool namesUnmarked = false,
+        bool refuseStrays = false)
     {
         var drafts = new List<AlignedDraft>(300_000);
 
@@ -1035,7 +1046,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     ? NameLists.Unmarked([.. sourceWords.Select(word => word.Letters)], targetNames)
                     : [.. sourceWords.Select(word => word.Name)],
                 targetNames,
-                [.. targetWords.Select(word => word.Letters)]);
+                [.. targetWords.Select(word => word.Letters)],
+                refuseStrays);
 
             var crowded = verse
                 .GroupBy(pair => pair.Target)

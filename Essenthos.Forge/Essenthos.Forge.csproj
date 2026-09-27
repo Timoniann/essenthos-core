@@ -107,6 +107,10 @@
         <Content Remove="Swete\SwetePage.json" />
         <EmbeddedResource Include="Swete\SwetePage.json" />
 
+        <!-- What each text was translated from, revised from or shares a tradition with, kept by hand. -->
+        <Content Remove="Loading\TextRelations.json" />
+        <EmbeddedResource Include="Loading\TextRelations.json" />
+
         <!-- The same for bible4u's Synodal, which scripts/synodal-corrections.py writes out. -->
         <Content Remove="Loading\SynodalCorrections.json" />
         <EmbeddedResource Include="Loading\SynodalCorrections.json" />

@@ -677,6 +677,47 @@ public sealed class CorpusCheckTests : IDisposable
         CorpusCheck.Crowded(null, now).Should().BeEmpty();
     }
 
+    /// <summary>
+    /// A word whose counterpart stands in the verse next door, which a pairing inside one canonical
+    /// address can never reach. Once a link crosses the boundary it is no longer stranded.
+    /// </summary>
+    [Fact]
+    public async Task AWordWhoseNumberTheWitnessPrintsOnlyInTheNextVerseIsStranded()
+    {
+        var first = _db.VerseAt(_hebrew, 1, 1);
+        var next = new Verse
+        {
+            TextId = _hebrew.Id, BookId = first.BookId, ChapterId = first.ChapterId, ChapterNumber = 1, Number = 2,
+        };
+        _db.Verses.Add(next);
+        _db.VerseReferences.Add(new VerseReference
+        {
+            Verse = next, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 2, IsPrimary = true,
+        });
+        var god = new Word
+        {
+            Text = _hebrew, Verse = next, Position = 1, Surface = "אֱלֹהִים", Trailer = string.Empty,
+            StrongNumber = "H430",
+        };
+        _db.Words.Add(god);
+        _db.WordAt(_english, 1, 1, 2).StrongNumber = "H7225";
+        _db.WordAt(_english, 1, 1, 3).StrongNumber = "H430";
+        await _db.SaveChangesAsync();
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+
+        var stranded = (await _check.Measure()).Stranded;
+
+        // "beginning" is silent too, but the Hebrew prints its number in its own verse.
+        stranded.Should().ContainSingle().Which.Should().BeEquivalentTo(
+            new Stranded("KJV", "BHSA", 1, ["Genesis 1"]));
+
+        var across = Link(LinkRelation.Renders, english: 3, hebrew: null);
+        _db.LinkWords.Add(new LinkWord { LinkId = across.Id, WordId = god.Id, Side = LinkSide.To });
+        await _db.SaveChangesAsync();
+
+        (await _check.Measure()).Stranded.Should().BeEmpty();
+    }
+
     /// <summary>The coverage a run stored is the coverage the next run compares against.</summary>
     [Fact]
     public async Task TheStoredCoverageReadsBackAsItWasMeasured()

@@ -433,7 +433,7 @@ internal sealed class VersificationRules(
         {
             // A source verse split into parts appears once per part, each part placed separately.
             // The parts together are what the verse spans, so they accumulate rather than replace.
-            foreach (var source in row.Sources)
+            foreach (var source in row.Sources.Where(source => BookCodes.Places(tradition, source.Book)))
             {
                 if (!rules.TryGetValue(source, out var existing))
                 {

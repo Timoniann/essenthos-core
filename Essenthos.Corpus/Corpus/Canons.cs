@@ -152,7 +152,9 @@ internal static class Canons
     /// The Russian Synodal Bible in the order the Russian Orthodox Church prints it, with the eleven
     /// books it prints and marks as non-canonical standing where it prints them: 2 Ezra, Tobit and
     /// Judith after Nehemiah, Wisdom and Sirach after the Song, the Letter of Jeremiah and Baruch after
-    /// Lamentations, and the three Maccabees and 3 Ezra after Malachi. A run of them is a section of
+    /// Lamentations, and the three Maccabees and 3 Ezra after Malachi. The Greek additions it sets in
+    /// brackets inside canonical books stand after the book: the Prayer of Manasseh after 2 Chronicles,
+    /// and the Song of the Three, Susanna and Bel after Daniel. A run of them is a section of
     /// its own, so the marking is where the book is. Its 2 Ezra is the Greek 1 Esdras and its 3 Ezra
     /// the Latin 4 Ezra. The New Testament is in its order too: the Catholic epistles before Paul's.
     /// </summary>
@@ -163,13 +165,17 @@ internal static class Canons
         "The Synodal Bible in the order the Russian Orthodox Church prints it, with the eleven books it marks " +
         "as non-canonical standing where it prints them, and the Catholic epistles before Paul's.",
         [
-            new CanonSection("old-testament", "Old Testament", [.. Range(1, 16)]),
+            new CanonSection("old-testament", "Old Testament", [.. Range(1, 14)]),
+            new CanonSection(NonCanonical, NonCanonicalName, [79]),
+            new CanonSection("old-testament", "Old Testament", [15, 16]),
             new CanonSection(NonCanonical, NonCanonicalName, [68, 70, 71]),
             new CanonSection("old-testament", "Old Testament", [.. Range(17, 22)]),
             new CanonSection(NonCanonical, NonCanonicalName, [75, 72]),
             new CanonSection("old-testament", "Old Testament", [.. Range(23, 25)]),
             new CanonSection(NonCanonical, NonCanonicalName, [76, 67]),
-            new CanonSection("old-testament", "Old Testament", [.. Range(26, 39)]),
+            new CanonSection("old-testament", "Old Testament", [26, 27]),
+            new CanonSection(NonCanonical, NonCanonicalName, [93, 77, 78]),
+            new CanonSection("old-testament", "Old Testament", [.. Range(28, 39)]),
             new CanonSection(NonCanonical, NonCanonicalName, [73, 74, 80, 69]),
             new CanonSection("new-testament", "New Testament", [
                 .. Range(40, 44), .. Range(59, 65), .. Range(45, 58), 66,

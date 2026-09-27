@@ -305,12 +305,14 @@ internal static class VerseEndpoints
         CancellationToken cancellationToken) =>
         (await db.StatedVerseNumbers
             .Where(n => verseIds.Contains(n.VerseId))
-            .Select(n => new { n.VerseId, n.Position, n.ChapterNumber, n.Number })
+            .Select(n => new { n.VerseId, n.Position, n.ChapterNumber, n.ChapterLabel, n.Number })
             .ToListAsync(cancellationToken))
         .GroupBy(n => n.VerseId)
         .ToDictionary(
             group => group.Key,
-            group => group.OrderBy(n => n.Position).Select(n => $"{n.ChapterNumber}{WithinAddress}{n.Number}").ToList());
+            group => group.OrderBy(n => n.Position)
+                .Select(n => $"{n.ChapterNumber}{n.ChapterLabel}{WithinAddress}{n.Number}")
+                .ToList());
 
     /// <summary>
     /// How a text numbers one of its verses: what the edition prints in it where it prints anything,

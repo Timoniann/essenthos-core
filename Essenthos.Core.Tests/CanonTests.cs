@@ -166,7 +166,8 @@ public class CanonTests
 
     /// <summary>
     /// The Synodal's seventy-seven, with the eleven books it marks as non-canonical standing where it
-    /// prints them and marked by the heading they stand under. Its second book of Ezra is the Greek 1
+    /// prints them and marked by the heading they stand under, and the four the corpus holds out of the
+    /// Greek additions it prints inside 2 Chronicles and Daniel after the book they stand in. Its second book of Ezra is the Greek 1
     /// Esdras and its third the Latin 2 Esdras, so both are there and neither is Ezra.
     /// </summary>
     [Fact]
@@ -174,10 +175,10 @@ public class CanonTests
     {
         var synodal = Canons.Find(Canons.Synodal)!;
 
-        synodal.BookCount.Should().Be(77);
+        synodal.BookCount.Should().Be(81);
         synodal.Ordinals.Should().Contain(Enumerable.Range(1, 66)).And.OnlyHaveUniqueItems();
         synodal.Ordinals.Where(ordinal => Canons.SectionOf(synodal, ordinal) == "non-canonical")
-            .Should().Equal(68, 70, 71, 75, 72, 76, 67, 73, 74, 80, 69);
+            .Should().Equal(79, 68, 70, 71, 75, 72, 76, 67, 93, 77, 78, 73, 74, 80, 69);
         synodal.Ordinals.SkipWhile(ordinal => ordinal != 16).Skip(1).First().Should().Be(68, "2 Ezra follows Nehemiah");
         synodal.Ordinals.SkipWhile(ordinal => ordinal != 44).Skip(1).First().Should().Be(59, "James follows Acts");
     }

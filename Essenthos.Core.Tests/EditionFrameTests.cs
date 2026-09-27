@@ -86,7 +86,7 @@ public class VersificationTestTests
 
     /// <summary>A cell with nothing in it this corpus can read says nothing about any edition.</summary>
     [Theory]
-    [InlineData("Sir.1:13=Exist & Sir.1:30=Last")]
+    [InlineData("Oda.1:13=Exist & Oda.1:30=Last")]
     [InlineData("Psa.9:TextBeforeV1=NotExist")]
     [InlineData("")]
     public void ACellThisCorpusCannotReadAtAllIsNotAnswered(string cell)
@@ -293,7 +293,7 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
             brenton.Edition.Resolve(verse.Book, verse.Chapter, verse.Number, verse.Label.Length > 0)[0]);
 
         brenton.Verses.Should().HaveCount(28_597);
-        moved.Should().Be(583);
+        moved.Should().Be(609);
     }
 
     /// <summary>
@@ -515,6 +515,8 @@ public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
 
     private const int Sirach = 72;
 
+    private const int Odes = 83;
+
     /// <summary>
     /// The data writes the undivided form of a scheme as the rows that differ from the divided one,
     /// so an edition that prints Exodus 38:27 whole answers to three rows about that verse and to the
@@ -547,6 +549,19 @@ public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
     {
         Placed(book, chapter, verse).Should().Be(new CanonicalReference(book, standardChapter, standardVerse));
     }
+
+    /// <summary>
+    /// The versification data has no rules for the Odes, so each verse stands at its own address,
+    /// Rahlfs's chapter and the verse of the passage it is taken from, and at no other.
+    /// </summary>
+    [Theory]
+    [InlineData(4, 2)]
+    [InlineData(9, 46)]
+    [InlineData(9, 79)]
+    [InlineData(10, 1)]
+    [InlineData(14, 1)]
+    public void TheOdesStandAtTheirOwnNumbers(int chapter, int verse) =>
+        swete.Edition.Resolve(Odes, chapter, verse).Should().Equal(new CanonicalReference(Odes, chapter, verse));
 
     [Fact]
     public void AmmonIsJeremiahThirtyOneToFive()
@@ -768,6 +783,9 @@ public sealed class Bible4u
 
     internal TextSource KingJames { get; } =
         Bible4uTextSource.Read(TestResources.Bible4u("KJV"), "KJV");
+
+    internal TextSource Ohienko { get; } =
+        Bible4uTextSource.Read(TestResources.Bible4u("UKR"), "UKR");
 }
 
 /// <summary>
@@ -824,6 +842,24 @@ public class SynodalFrameTests(Bible4u bible4u) : IClassFixture<Bible4u>
         edition.Resolve(SongOfSongs, 1, 17).Should().Equal(new CanonicalReference(SongOfSongs, 1, 17));
         edition.Resolve(Psalms, 90, 1).Should().Equal(new CanonicalReference(Psalms, 90, 1));
         edition.Resolve(Psalms, 90, 2).Should().Equal(new CanonicalReference(Psalms, 90, 1));
+    }
+
+    /// <summary>
+    /// Ohienko's Psalm 65 keeps its edition's numbering, the title as verse 1, and each verse stands
+    /// beside the English verse it prints.
+    /// </summary>
+    [Fact]
+    public void OhienkosPsalmSixtyFiveStandsBesideItsWords()
+    {
+        var edition = EnglishEditions.Frame(bible4u.Ohienko);
+
+        edition.Resolve(Psalms, 65, 1).Should().Equal(new CanonicalReference(Psalms, 65, CanonicalReference.TitleVerse));
+        edition.Resolve(Psalms, 65, 2).Should().Equal(new CanonicalReference(Psalms, 65, 1));
+        edition.Resolve(Psalms, 65, 13).Should()
+            .Equal(new CanonicalReference(Psalms, 65, 12), new CanonicalReference(Psalms, 65, 13));
+        edition.Resolve(Psalms, 66, 1).Should().Equal(new CanonicalReference(Psalms, 66, 1));
+        EnglishEditions.Frame(bible4u.Synodal).Resolve(Psalms, 65, 2).Should()
+            .Equal(new CanonicalReference(Psalms, 65, 2));
     }
 
     /// <summary>The King James comes from the same publisher and file format, and nothing here moves it.</summary>

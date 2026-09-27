@@ -77,13 +77,18 @@ internal record CanonListResponse(IList<CanonResponse> Items);
 /// <param name="LemmasFrom">
 /// Whoever supplied this text's lemmas, where that is somebody other than the edition itself.
 /// </param>
+/// <param name="Relations">
+/// What it was translated from, revised from, compared with or shares a tradition with, and which
+/// texts say the same of it. Empty where nobody has stated any.
+/// </param>
 internal record TextDetailResponse(
     CorpusResponse Text,
     TextCountsResponse Counts,
     TextFeaturesResponse Features,
     IList<TextLinkResponse> Links,
     IList<TextCreditResponse> LemmasFrom,
-    IList<BookResponse> Books);
+    IList<BookResponse> Books,
+    IList<TextRelationResponse> Relations);
 
 /// <param name="Words">The words the edition prints; a word it prints no letters for is not one.</param>
 internal record TextCountsResponse(int Chapters, int Verses, int Words)
@@ -200,7 +205,8 @@ internal static class ReadEndpoints
                 tally.Features,
                 tally.Links,
                 lemmasFrom,
-                books));
+                books,
+                await TextRelations.Of(db, entry.Id, cancellationToken)));
         });
 
         // Which canon, in which order, under what headings — and what the collection is called.

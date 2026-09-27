@@ -66,7 +66,9 @@ None of the four is Stephenson's own composition, and their underlying works are
 rather than licensed by him: Hitchcock (1869), Naves (1897) and Strong (1890) are public domain,
 and the Polyglot's ten component texts each carry their own terms — the World English Bible and
 the King James are free, but Brenton, the Leningrad Codex and the JPS 1917 have to be read one by
-one before any of them is served. What CC BY 4.0 covers is his transcription and structuring of
+one before any of them is served. The Polyglot's Greek column labelled Codex Alexandrinus is not
+that manuscript: at Isaiah 7:14 and Judges 1:1 and 5:1 it reads with Rahlfs against A, so it is
+the Rahlfs 1935 edition (or a CATSS copy of it) and is not to be loaded as a manuscript witness. What CC BY 4.0 covers is his transcription and structuring of
 them, which is a real contribution and is what the credit above is for.
 
 ## Ussher's *Annals of the World*, which is loaded and is not Stephenson's work
