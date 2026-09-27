@@ -1233,6 +1233,25 @@ def decision_documents(where):
         yield document.get('data', document)
 
 
+CORRECTIONS = os.path.join(REVIEW, 'bibledata-corrections.json')
+
+
+def corrections(path):
+    """
+    The corrections a decision needs and the review list cannot hold, kept where the next run finds
+    them: the same five as the flags, keyed by a BibleData row id of the fact. A flag given on the
+    command line wins over the file for the same row.
+    """
+    kept = {'reference': {}, 'relation': {}, 'hold': [], 'flip': [], 'unsure': {}}
+    if path and os.path.exists(path):
+        with open(path, encoding='utf-8') as handle:
+            document = json.load(handle)
+        for key, empty in kept.items():
+            value = document.get(key) or type(empty)()
+            kept[key] = [str(row) for row in value] if isinstance(empty, list) else                 {str(row): value[row] for row in value}
+    return kept
+
+
 def decide(args):
     """
     The owner's decisions from the review page, applied to the facts only BibleData states.
@@ -1256,11 +1275,13 @@ def decide(args):
     # live only in the files this command rewrites, so a fact they settled must come back to be written again.
     rows = [row for row in relationships() if not decided_here(row['source'])]
     _, _, alone = fold(rows, vocabulary())
-    corrected = dict(item.split('=', 1) for item in args.reference or [])
-    relabelled = dict(item.split('=', 1) for item in args.relation or [])
-    held = {int(row) for row in args.hold or []}
-    unsure = {row: float(sure) for row, sure in (item.split('=', 1) for item in args.unsure or [])}
-    flipped = {int(row) for row in args.flip or []}
+    kept = corrections(args.corrections)
+    corrected = {**kept['reference'], **dict(item.split('=', 1) for item in args.reference or [])}
+    relabelled = {**kept['relation'], **dict(item.split('=', 1) for item in args.relation or [])}
+    held = {int(row) for row in kept['hold'] + (args.hold or [])}
+    unsure = {**{row: float(sure) for row, sure in kept['unsure'].items()},
+              **{row: float(sure) for row, sure in (item.split('=', 1) for item in args.unsure or [])}}
+    flipped = {int(row) for row in kept['flip'] + (args.flip or [])}
 
     decisions = []
     for body in decision_documents(args.decisions):
@@ -1435,6 +1456,8 @@ def main():
                          help='row ids the owner reads from the other end, so A and B swap before the relation is read')
     decider.add_argument('--unsure', nargs='+',
                          help='ROW_ID=confidence, where the owner accepts the fact but says the verse does not settle it')
+    decider.add_argument('--corrections', default=CORRECTIONS,
+                         help='the corrections kept between runs, in the shape of the five flags; the flags add to it')
     decider.add_argument('--to', default=os.path.join('Resources', 'Essenthos', 'descriptors'))
     decider.add_argument('--prefix', default='zz-words',
                          help="the decided records' files, which have to sort after every other file")
