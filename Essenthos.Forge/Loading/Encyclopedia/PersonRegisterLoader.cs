@@ -169,7 +169,8 @@ internal sealed class PersonRegisterLoader(
             + "Trachonitis; Matthew 14:3 and Mark 6:17 name Herodias's first husband, whom Josephus "
             + "calls Herod and who ruled nothing. The dataset holds both as one man, filed under the "
             + "husband's verses, with the tetrarch's verse, his title and a note calling him the "
-            + "tetrarch."),
+            + "tetrarch.",
+            Labels: ["Tetrarch of Ituraea and Trachonitis"]),
         new("person:Zadok_6", "NEH 13:13", "Zadok#7", NotesToo: false,
             "The dataset's record is Zadok son of Meraioth of Nehemiah 11:11, the same list as 1 Chronicles "
             + "9:11. Nehemiah 13:13 names Zadok the scribe, whom Nehemiah made a treasurer over the "
@@ -563,6 +564,7 @@ internal sealed class PersonRegisterLoader(
 
             var stillUsed = from.Verses.Select(verse => verse.Label).OfType<string>().ToHashSet(StringComparer.Ordinal);
             var labels = verses.Select(verse => verse.Label).OfType<string>()
+                .Concat(misfiled.Labels ?? [])
                 .Where(label => !stillUsed.Contains(label))
                 .ToHashSet(StringComparer.Ordinal);
             foreach (var name in from.Names.Where(name => labels.Contains(name.Label)).ToList())
@@ -1169,6 +1171,10 @@ internal sealed record RegisterRematchOutcome(int Rewritten, int Folded, int Add
 /// The source id of the duplicate an earlier load minted because the verse had not been moved yet;
 /// removed where it is still there.
 /// </param>
+/// <param name="Labels">
+/// Names the dataset gives the namesake at that verse and nowhere else, which go with it. Its verse
+/// list holds a verse once, under one label, so a title it also lists there is on no verse row.
+/// </param>
 internal sealed record Misfiled(
     string Held,
     string Reference,
@@ -1176,4 +1182,5 @@ internal sealed record Misfiled(
     bool NotesToo,
     string Why,
     string? Target = null,
-    string? Obsolete = null);
+    string? Obsolete = null,
+    IReadOnlyList<string>? Labels = null);

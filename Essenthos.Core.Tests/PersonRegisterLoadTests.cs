@@ -284,11 +284,6 @@ public sealed class PersonRegisterLoadTests : IDisposable
                 new EntityVerse { CanonicalBook = 40, CanonicalChapter = 14, CanonicalVerse = 3, Label = "Philip", Source = Dataset },
                 new EntityVerse { CanonicalBook = 41, CanonicalChapter = 6, CanonicalVerse = 17, Label = "Philip", Source = Dataset },
                 new EntityVerse { CanonicalBook = 42, CanonicalChapter = 3, CanonicalVerse = 1, Label = "Philip", Source = Dataset },
-                new EntityVerse
-                {
-                    CanonicalBook = 42, CanonicalChapter = 3, CanonicalVerse = 1,
-                    Label = "Tetrarch of Ituraea and Trachonitis", Source = Dataset,
-                },
             ],
         });
         await _db.SaveChangesAsync();
@@ -316,7 +311,7 @@ public sealed class PersonRegisterLoadTests : IDisposable
             .SingleAsync(e => e.SourceId == "essenthos:philip3");
         tetrarch.Verses.Where(verse => verse.Source == Dataset)
             .Select(verse => verse.Label)
-            .Should().BeEquivalentTo(["Philip", "Tetrarch of Ituraea and Trachonitis"]);
+            .Should().BeEquivalentTo(["Philip"]);
         tetrarch.Names.Should().Contain(name => name.Label == "Tetrarch of Ituraea and Trachonitis");
         tetrarch.Notes.Should().Be("Philip the Tetrarch of Iturea and Trachonitis");
         tetrarch.Claims.Should().Contain(claim =>

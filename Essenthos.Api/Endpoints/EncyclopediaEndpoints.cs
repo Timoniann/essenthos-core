@@ -1509,8 +1509,8 @@ internal sealed record EntityTally(int References, int Mentions, int Disputed);
 
 /// <param name="References">How many verses name this entity.</param>
 /// <param name="Mentions">
-/// How many times they name it, which is the larger number: the source records one row per
-/// naming, and Matthew 20:30 names Jesus three times over.
+/// How many times the datasets name it, which is the larger number: each lists a verse once, and a
+/// verse two of them list is named twice.
 /// </param>
 internal record EntitySummaryResponse(
     string Slug,
