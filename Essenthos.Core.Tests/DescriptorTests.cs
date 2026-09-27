@@ -853,7 +853,7 @@ public sealed class DescriptorTests : IDisposable
         command.CommandText = $"EXPLAIN (ANALYZE, BUFFERS) {sql}";
 
         var wanted = command.CreateParameter();
-        wanted.ParameterName = "__wanted_0";
+        wanted.ParameterName = "wanted";
         wanted.Value = slugs.ToArray();
         command.Parameters.Add(wanted);
 
