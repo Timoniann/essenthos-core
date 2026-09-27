@@ -19,7 +19,7 @@ namespace Essenthos.Core.Tests;
 /// </summary>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class EventStatementTests : IDisposable
+public sealed class EventStatementTests : IClassFixture<UssherAnnalsLoadTests.Annals>, IDisposable
 {
     private const int UssherZeroPoint = 4003;
 
@@ -31,10 +31,7 @@ public sealed class EventStatementTests : IDisposable
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
-
         _folder = Path.GetDirectoryName(TestResources.Path("BibleData2026", "BibleData-Person.csv"))!;
-        new BibleDataLoader(_db, NullLogger<BibleDataLoader>.Instance).Load(_folder).GetAwaiter().GetResult();
-        new UssherAnnalsLoader(_db, NullLogger<UssherAnnalsLoader>.Instance).Load(_folder).GetAwaiter().GetResult();
     }
 
     public void Dispose()

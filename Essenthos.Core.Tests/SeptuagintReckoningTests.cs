@@ -195,24 +195,34 @@ public class SeptuagintSideTests
 /// <summary>The two reckonings written into a database beside the base one and the world layer.</summary>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class SeptuagintReckoningLoadTests : IDisposable
+public sealed class SeptuagintReckoningLoadTests
+    : IClassFixture<SeptuagintReckoningLoadTests.Reckonings>, IDisposable
 {
     private readonly AppDbContext _db;
     private readonly IDbContextTransaction _transaction;
     private readonly SeptuagintOutcome _outcome;
 
-    public SeptuagintReckoningLoadTests(WitnessDatabase database)
+    public SeptuagintReckoningLoadTests(WitnessDatabase database, Reckonings reckonings)
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
+        _outcome = reckonings.Outcome;
+    }
 
-        var resources = Path.GetDirectoryName(TestResources.SeptuagintFolder)!;
-        new BibleDataLoader(_db, NullLogger<BibleDataLoader>.Instance)
-            .Load(Path.Combine(resources, "BibleData2026")).GetAwaiter().GetResult();
-        new WorldHistoryLoader(_db, NullLogger<WorldHistoryLoader>.Instance)
-            .Load(Path.Combine(resources, "WorldHistory")).GetAwaiter().GetResult();
-        _outcome = new SeptuagintReckoningLoader(_db, NullLogger<SeptuagintReckoningLoader>.Instance)
-            .Load(resources).GetAwaiter().GetResult();
+    public sealed class Reckonings(WitnessDatabase database) : SeededDatabase(database)
+    {
+        internal SeptuagintOutcome Outcome { get; private set; } = null!;
+
+        protected override async Task Seed(AppDbContext db)
+        {
+            var resources = Path.GetDirectoryName(TestResources.SeptuagintFolder)!;
+            await new BibleDataLoader(db, NullLogger<BibleDataLoader>.Instance)
+                .Load(Path.Combine(resources, "BibleData2026"));
+            await new WorldHistoryLoader(db, NullLogger<WorldHistoryLoader>.Instance)
+                .Load(Path.Combine(resources, "WorldHistory"));
+            Outcome = await new SeptuagintReckoningLoader(db, NullLogger<SeptuagintReckoningLoader>.Instance)
+                .Load(resources);
+        }
     }
 
     public void Dispose()

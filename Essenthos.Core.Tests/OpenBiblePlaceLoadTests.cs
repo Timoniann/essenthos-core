@@ -21,7 +21,7 @@ namespace Essenthos.Core.Tests;
 /// </summary>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class OpenBiblePlaceLoadTests : IDisposable
+public sealed class OpenBiblePlaceLoadTests : IClassFixture<OpenBiblePlaceLoadTests.Places>, IDisposable
 {
     private const string OpenBible =
         "OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0";
@@ -33,16 +33,25 @@ public sealed class OpenBiblePlaceLoadTests : IDisposable
     private readonly IDbContextTransaction _transaction;
     private readonly PlacesOutcome _outcome;
 
-    public OpenBiblePlaceLoadTests(WitnessDatabase database)
+    public OpenBiblePlaceLoadTests(WitnessDatabase database, Places places)
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
+        _outcome = places.Outcome;
+    }
 
-        var bibleData = Path.GetDirectoryName(TestResources.Path("BibleData2026", "BibleData-Person.csv"))!;
-        new BibleDataLoader(_db, NullLogger<BibleDataLoader>.Instance).Load(bibleData).GetAwaiter().GetResult();
+    public sealed class Places(WitnessDatabase database) : SeededDatabase(database)
+    {
+        internal PlacesOutcome Outcome { get; private set; } = null!;
 
-        _outcome = new OpenBiblePlaceLoader(_db, NullLogger<OpenBiblePlaceLoader>.Instance)
-            .Load(TestResources.OpenBibleFolder).GetAwaiter().GetResult();
+        protected override async Task Seed(AppDbContext db)
+        {
+            var bibleData = Path.GetDirectoryName(TestResources.Path("BibleData2026", "BibleData-Person.csv"))!;
+            await new BibleDataLoader(db, NullLogger<BibleDataLoader>.Instance).Load(bibleData);
+
+            Outcome = await new OpenBiblePlaceLoader(db, NullLogger<OpenBiblePlaceLoader>.Instance)
+                .Load(TestResources.OpenBibleFolder);
+        }
     }
 
     public void Dispose()
