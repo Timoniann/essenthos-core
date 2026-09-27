@@ -925,12 +925,13 @@ internal sealed class PeopleLoader(
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         await using var command = new NpgsqlCommand(
-            """
+            $"""
+            WITH {Annotating.Settled}
             INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
                                       label, disputed, source)
             SELECT DISTINCT a.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
                    e.name, FALSE, @source
-            FROM word_entity a
+            FROM settled a
             JOIN entity e ON e.id = a.entity_id AND e.kind = 'people' AND e.id = ANY(@peoples)
             JOIN word w ON w.id = a.word_id
             JOIN text t ON t.id = w.text_id AND t.slug = @witness

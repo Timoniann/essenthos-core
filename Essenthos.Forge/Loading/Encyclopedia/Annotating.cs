@@ -1,4 +1,6 @@
-﻿using Essenthos.Core.Database;
+﻿using System.Globalization;
+using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
@@ -551,6 +553,59 @@ internal static class Annotating
         WHERE w.corroborated
         ON CONFLICT DO NOTHING
         """;
+
+    /// <summary>
+    /// The entity each word stands named as, as the common table <c>settled (word_id, entity_id)</c>:
+    /// the annotation of highest claim standing and then confidence, and nothing for a word where
+    /// two of equal standing and equal confidence name two entities. Every pass that reads an
+    /// entity's verses off the words reads them through this, so a verse is never listed on a page
+    /// for a word the word panel shows nothing at.
+    /// </summary>
+    public static readonly string Settled =
+        $"""
+         standing AS (
+             SELECT a.word_id,
+                    a.entity_id,
+                    {Standing} AS standing,
+                    coalesce(a.confidence, 1.0) AS confidence
+             FROM word_entity a
+         ),
+         ranked AS (
+             SELECT s.word_id,
+                    s.entity_id,
+                    s.standing,
+                    s.confidence,
+                    row_number() OVER settling AS place,
+                    count(*) OVER (PARTITION BY s.word_id) AS claims,
+                    lead(s.entity_id) OVER settling AS next_entity,
+                    lead(s.standing) OVER settling AS next_standing,
+                    lead(s.confidence) OVER settling AS next_confidence
+             FROM standing s
+             WINDOW settling AS (PARTITION BY s.word_id ORDER BY s.standing DESC, s.confidence DESC)
+         ),
+         settled AS (
+             SELECT word_id, entity_id
+             FROM ranked
+             WHERE place = 1
+               AND (claims = 1
+                    OR NOT (next_entity <> entity_id
+                            AND next_standing = standing
+                            AND next_confidence = confidence))
+         )
+         """;
+
+    /// <summary>
+    /// How much each method knew before it started, written out of <see cref="ClaimStanding"/> so
+    /// that renumbering it moves this statement too. A second copy of those ordinals is a second
+    /// answer to <em>who does this word name</em>, and the whole point of deriving the references
+    /// from the annotations is that a page and a word cannot disagree.
+    /// </summary>
+    private static string Standing =>
+        "CASE a.method "
+        + string.Concat(Enum.GetValues<LinkMethod>().Select(method =>
+            $"WHEN '{EnumSpelling.Of(method)}' THEN "
+            + ClaimStanding.Of(method).ToString(CultureInfo.InvariantCulture) + " "))
+        + "ELSE 0 END";
 
     /// <summary>
     /// Long enough for a pass over four and a half million words and their links, which is what the

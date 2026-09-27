@@ -229,7 +229,7 @@ public class EvidentiaPipelineTests
     }
 
     private static EvidentiaPipeline Pipeline(params IEvidentiaEvidenceSource[] sources) => new(
-        new LanguagePackRegistry([new EnglishLanguagePack(), new SlavicLanguagePack(), new OriginalLanguagePack()]),
+        new LanguagePackRegistry([new EnglishLanguagePack(), new UkrainianLanguagePack(), new RussianLanguagePack(), new OriginalLanguagePack()]),
         sources);
 
     private static EvidentiaToken Token(long id, string text, string language, int verse, string? strong = null) =>

@@ -181,24 +181,14 @@ internal static class EnglishPersonalPronouns
     }
 }
 
-internal sealed class SlavicLanguagePack : ILanguagePack
+/// <summary>
+/// Ukrainian and Russian share a stemmer and nothing else: each has its own function words, because a
+/// word that carries only grammar in one is a content word in the other, and the pack that claims a
+/// language is the one that decides which of its words can anchor a link.
+/// </summary>
+internal abstract class SlavicLanguagePack(string language, IReadOnlySet<string> functionWords) : ILanguagePack
 {
-    private static readonly HashSet<string> FunctionWords = new(StringComparer.OrdinalIgnoreCase)
-    {
-        // Ukrainian: these are grammar/context carriers, not reliable reverse-dictionary anchors.
-        "а", "аби", "або", "але", "без", "б", "би", "бо", "буде", "будеш", "буду", "будуть", "був", "була", "було", "були", "в", "від", "він", "вона",
-        "вони", "ви", "де", "до", "же", "з", "за", "і", "й", "із", "її", "їх", "його", "коли", "лише",
-        "ми", "на", "над", "не", "ні", "о", "по", "під", "після", "при", "про", "та", "те", "то", "у",
-        "усе", "це", "через", "чи", "що", "щоб", "як", "я",
-        // Russian: kept alongside Ukrainian until the packs split into per-language morphology.
-        "без", "бы", "был", "была", "были", "будет", "в", "во", "вы", "для", "его", "ее", "если", "же", "за",
-        "и", "из", "их", "к", "как", "когда", "ли", "лишь", "мы", "на", "не", "о", "он", "она", "они", "от",
-        "по", "с", "то", "у", "через", "что", "чтобы", "это", "я",
-    };
-
-    public bool Supports(string language) =>
-        language.Equals("rus", StringComparison.OrdinalIgnoreCase)
-        || language.Equals("ukr", StringComparison.OrdinalIgnoreCase);
+    public bool Supports(string candidate) => candidate.Equals(language, StringComparison.OrdinalIgnoreCase);
 
     public EvidentiaAnalysis Analyse(EvidentiaToken token)
     {
@@ -208,7 +198,7 @@ internal sealed class SlavicLanguagePack : ILanguagePack
             normalised,
             Normalise(token.Lemma) ?? normalised,
             token.PartOfSpeech,
-            FunctionWords.Contains(token.Surface) ? EvidentiaWordClass.Function : EvidentiaWordClass.Content,
+            functionWords.Contains(token.Surface) ? EvidentiaWordClass.Function : EvidentiaWordClass.Content,
             Capabilities(token));
     }
 
@@ -219,6 +209,28 @@ internal sealed class SlavicLanguagePack : ILanguagePack
         | (string.IsNullOrWhiteSpace(token.Lemma) ? LanguagePackCapability.None : LanguagePackCapability.Lemma)
         | (string.IsNullOrWhiteSpace(token.PartOfSpeech) ? LanguagePackCapability.None : LanguagePackCapability.PartOfSpeech)
         | (token.Morphology is { Count: > 0 } ? LanguagePackCapability.Morphology : LanguagePackCapability.None);
+}
+
+internal sealed class UkrainianLanguagePack() : SlavicLanguagePack("ukr", FunctionWords)
+{
+    // Grammar and context carriers, not reliable reverse-dictionary anchors.
+    internal static readonly IReadOnlySet<string> FunctionWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "а", "аби", "або", "але", "без", "б", "би", "бо", "буде", "будеш", "буду", "будуть", "був", "була", "було", "були", "в", "від", "він", "вона",
+        "вони", "ви", "де", "до", "же", "з", "за", "і", "й", "із", "її", "їх", "його", "коли", "лише",
+        "ми", "на", "над", "не", "ні", "о", "по", "під", "після", "при", "про", "та", "те", "то", "у",
+        "усе", "це", "через", "чи", "що", "щоб", "як", "я",
+    };
+}
+
+internal sealed class RussianLanguagePack() : SlavicLanguagePack("rus", FunctionWords)
+{
+    internal static readonly IReadOnlySet<string> FunctionWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "без", "бы", "был", "была", "были", "будет", "в", "во", "вы", "для", "его", "ее", "если", "же", "за",
+        "и", "из", "их", "к", "как", "когда", "ли", "лишь", "мы", "на", "не", "о", "он", "она", "они", "от",
+        "по", "с", "то", "у", "через", "что", "чтобы", "это", "я",
+    };
 }
 
 /// <summary>

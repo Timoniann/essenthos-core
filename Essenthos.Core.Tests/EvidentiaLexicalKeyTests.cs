@@ -18,7 +18,7 @@ namespace Essenthos.Core.Tests;
 public sealed class EvidentiaLexicalKeyTests : IDisposable
 {
     private static readonly LanguagePackRegistry Packs =
-        new([new EnglishLanguagePack(), new SlavicLanguagePack(), new OriginalLanguagePack()]);
+        new([new EnglishLanguagePack(), new UkrainianLanguagePack(), new RussianLanguagePack(), new OriginalLanguagePack()]);
 
     private readonly AppDbContext _db;
 

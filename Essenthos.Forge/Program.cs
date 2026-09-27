@@ -70,7 +70,8 @@ builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>(
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.NewTestamentLinkLoader>();
 builder.Services.AddScoped<AlignmentPipeline>();
 builder.Services.AddSingleton<ILanguagePack, EnglishLanguagePack>();
-builder.Services.AddSingleton<ILanguagePack, SlavicLanguagePack>();
+builder.Services.AddSingleton<ILanguagePack, UkrainianLanguagePack>();
+builder.Services.AddSingleton<ILanguagePack, RussianLanguagePack>();
 builder.Services.AddSingleton<ILanguagePack, OriginalLanguagePack>();
 builder.Services.AddSingleton<LanguagePackRegistry>();
 builder.Services.AddScoped<EvidentiaPipeline>();

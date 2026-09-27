@@ -1,18 +1,6 @@
 [
  {
   "rows": [
-   71539,
-   71540
-  ],
-  "a": "eliphaz",
-  "relation": "son-of",
-  "b": "basemath",
-  "note": "The mapping is wrong here. It should be Adah, not Eliphaz",
-  "decidedAt": "2026-09-12T20:27:53.512Z",
-  "decidedBy": "the project owner"
- },
- {
-  "rows": [
    72251,
    72252
   ],
@@ -80,6 +68,18 @@
   "b": "heth",
   "note": "",
   "decidedAt": "2026-09-12T20:17:51.148Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   71539,
+   71540
+  ],
+  "a": "eliphaz",
+  "relation": "son-of",
+  "b": "basemath",
+  "note": "The mapping is wrong here. It should be Adah, not Eliphaz",
+  "decidedAt": "2026-09-12T20:27:53.512Z",
   "decidedBy": "the project owner"
  },
  {
@@ -1211,7 +1211,7 @@
    75737,
    75738
   ],
-  "a": "zechariah-13",
+  "a": "zechariah-25",
   "relation": "grandson-of",
   "b": "iddo-6",
   "note": "",

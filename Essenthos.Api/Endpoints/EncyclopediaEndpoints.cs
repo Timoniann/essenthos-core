@@ -743,16 +743,21 @@ internal static class EncyclopediaEndpoints
                 .OrderBy(o => o.Id)
                 .ToListAsync(cancellationToken);
 
-            var alternatives = await db.EntityAlternatives
-                .Where(a => a.EntityId == entity.Id)
+            var alternatives = (await db.EntityAlternatives
+                    .Where(a => a.EntityId == entity.Id)
+                    .Select(a => new
+                    {
+                        Slug = a.Alternative == null ? null : a.Alternative.Slug,
+                        Name = a.Alternative == null ? null : a.Alternative.Name,
+                        Distinguisher = a.Alternative == null ? null : a.Alternative.Distinguisher,
+                        a.Describes,
+                        a.Reason,
+                        a.Source,
+                    })
+                    .ToListAsync(cancellationToken))
                 .Select(a => new EntityAlternativeResponse(
-                    a.Alternative == null ? null : a.Alternative.Slug,
-                    a.Alternative == null ? null : a.Alternative.Name,
-                    a.Alternative == null ? null : a.Alternative.Distinguisher,
-                    a.Describes,
-                    a.Reason,
-                    a.Source))
-                .ToListAsync(cancellationToken);
+                    a.Slug, a.Name, a.Distinguisher, a.Describes, a.Reason, a.Source, Datasets.Of(a.Source)))
+                .ToList();
 
             return Results.Ok(new EntityResponse(
                 entity.Slug,
@@ -1842,13 +1847,19 @@ internal record EntityOriginResponse(string Slug, string Kind, string Name, stri
 /// The alternative's own page, where the encyclopedia holds one. Null where it does not, in which
 /// case <paramref name="Describes"/> is all there is to say.
 /// </param>
+/// <param name="Dataset">
+/// Who proposed it, as a declared dataset id, so a client can credit it the way it credits a claim
+/// rather than print the row's own words. An alternative need not come from whoever supplied the
+/// record it stands on.
+/// </param>
 internal record EntityAlternativeResponse(
     string? Slug,
     string? Name,
     string? Distinguisher,
     string? Describes,
     string Reason,
-    string Source);
+    string Source,
+    string? Dataset);
 
 /// <summary>
 /// Who states that the text names this entity, and how much of the count is theirs.

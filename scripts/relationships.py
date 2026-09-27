@@ -85,6 +85,7 @@ CHECK_VERSION = 'relationships-check-2'
 WITNESS_SOURCE = 'BibleData'
 OUR_SOURCE = 'read from Scripture by'
 STATED_BY_SOURCE = 'stated-by-source'
+MODEL_READING = 'model-reading'
 
 STATED, MOVED, NOT_STATED, DIFFER = 'stated', 'moved', 'not-stated', 'witnesses-differ'
 VERDICTS = (STATED, MOVED, NOT_STATED, DIFFER)
@@ -946,7 +947,16 @@ def standing_records(directory, prefix):
     return records
 
 
-def settle_against_record(clause, refused, standing):
+def read_by_a_model(clause, standing):
+    """The clauses of the subject's record a model read that say exactly what a decision says."""
+    if clause is None:
+        return []
+    subject, relation, target = clause
+    return [c for c in (standing.get(subject) or {}).get('claims', [])
+            if c['relation'] == relation and c['target'] == target and not c.get('decidedBy')]
+
+
+def settle_against_record(clause, refused, standing, ignoring=()):
     """
     A clause against what its subject's record already says about the same person.
 
@@ -961,7 +971,7 @@ def settle_against_record(clause, refused, standing):
         return None, refused, []
     subject, relation, target = clause
     same = [c for c in (standing.get(subject) or {}).get('claims', [])
-            if c['target'] == target and branch(c['relation']) == branch(relation)]
+            if c['target'] == target and branch(c['relation']) == branch(relation) and c not in ignoring]
     if not same:
         return clause, None, []
     if any(c['relation'] == relation for c in same):
@@ -1320,7 +1330,10 @@ def decide(args):
     standing = standing_records(args.to, args.prefix)
     # The rows an earlier run of this command put in the corpus are left out of the fold: their clauses
     # live only in the files this command rewrites, so a fact they settled must come back to be written again.
-    rows = [row for row in relationships() if not decided_here(row['source'])]
+    # So are a model's readings: one saying what the owner confirmed does not answer for him, and his
+    # clause, written beside it with no confidence, is the one the loader ranks first.
+    rows = [row for row in relationships()
+            if not decided_here(row['source']) and row['method'] != MODEL_READING]
     _, _, alone = fold(rows, vocabulary())
 
     decisions = []
@@ -1399,7 +1412,10 @@ def decide(args):
         if relation_as:
             fact = dict(fact, relation=relation_as)
         clause, refused = carrier(fact, reference, corpus)
-        clause, refused, _ = settle_against_record(clause, refused, standing)
+        # A model's reading of the very clause decided gives way to the decision, so the page credits
+        # the tie to whoever decided it rather than to the model at the model's confidence.
+        superseded = read_by_a_model(clause, standing)
+        clause, refused, _ = settle_against_record(clause, refused, standing, ignoring=superseded)
         if not clause:
             count(f'confirmed, not writable: {refused}')
             continue
@@ -1415,6 +1431,9 @@ def decide(args):
             'model': before.get('model') or (AGENT if agent else DECIDED_BY.split(',')[0]),
             'askedAt': before.get('askedAt') or decided_at[:10],
         })
+        if superseded:
+            record['claims'] = [c for c in record['claims'] if c not in superseded]
+            count('confirmed, in place of the same reading by a model')
         if (relation, target) in {(c['relation'], c['target']) for c in record['claims']}:
             count('confirmed, already in the record')
             continue
