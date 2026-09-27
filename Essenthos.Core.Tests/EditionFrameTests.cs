@@ -768,6 +768,9 @@ public sealed class Bible4u
 
     internal TextSource KingJames { get; } =
         Bible4uTextSource.Read(TestResources.Bible4u("KJV"), "KJV");
+
+    internal TextSource Ohienko { get; } =
+        Bible4uTextSource.Read(TestResources.Bible4u("UKR"), "UKR");
 }
 
 /// <summary>
@@ -824,6 +827,24 @@ public class SynodalFrameTests(Bible4u bible4u) : IClassFixture<Bible4u>
         edition.Resolve(SongOfSongs, 1, 17).Should().Equal(new CanonicalReference(SongOfSongs, 1, 17));
         edition.Resolve(Psalms, 90, 1).Should().Equal(new CanonicalReference(Psalms, 90, 1));
         edition.Resolve(Psalms, 90, 2).Should().Equal(new CanonicalReference(Psalms, 90, 1));
+    }
+
+    /// <summary>
+    /// Ohienko's Psalm 65 keeps its edition's numbering, the title as verse 1, and each verse stands
+    /// beside the English verse it prints.
+    /// </summary>
+    [Fact]
+    public void OhienkosPsalmSixtyFiveStandsBesideItsWords()
+    {
+        var edition = EnglishEditions.Frame(bible4u.Ohienko);
+
+        edition.Resolve(Psalms, 65, 1).Should().Equal(new CanonicalReference(Psalms, 65, CanonicalReference.TitleVerse));
+        edition.Resolve(Psalms, 65, 2).Should().Equal(new CanonicalReference(Psalms, 65, 1));
+        edition.Resolve(Psalms, 65, 13).Should()
+            .Equal(new CanonicalReference(Psalms, 65, 12), new CanonicalReference(Psalms, 65, 13));
+        edition.Resolve(Psalms, 66, 1).Should().Equal(new CanonicalReference(Psalms, 66, 1));
+        EnglishEditions.Frame(bible4u.Synodal).Resolve(Psalms, 65, 2).Should()
+            .Equal(new CanonicalReference(Psalms, 65, 2));
     }
 
     /// <summary>The King James comes from the same publisher and file format, and nothing here moves it.</summary>

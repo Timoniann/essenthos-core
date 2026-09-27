@@ -78,6 +78,12 @@ internal sealed record TvtmsSupplement(
 /// does not.
 /// </para>
 /// <para>
+/// Ohienko's Bible, as bible4u publishes it, is renumbered to the English everywhere but Psalm 65,
+/// where it keeps its own edition's numbering: the title is verse 1, printed with the opening words of
+/// Psalm 66 as Ukrainian Wikisource's transcription of the same edition prints them too, and the psalm
+/// runs one verse behind the English until its last verse holds the English 65:12 and 65:13.
+/// </para>
+/// <para>
 /// The Segond of 1910 numbers the Old Testament as the Hebrew does and its psalm titles as their
 /// first verses, except in two places it divides in its own way. At the end of Job it runs Job 38
 /// three verses short, opens chapter 39 with the lion and the raven, closes it with the first five
@@ -104,6 +110,8 @@ internal static class TvtmsSupplements
     private const string Kulish = "Kulish";
 
     private const string Synodal = "Synodal1876";
+
+    private const string Ohienko = "Ohienko1962";
 
     private const string Segond = "Segond1910";
 
@@ -133,6 +141,12 @@ internal static class TvtmsSupplements
     /// </summary>
     private const string SynodalEdition = "Sng.1:16*2<Sng.1:15";
 
+    /// <summary>
+    /// Ohienko's last verse of Psalm 65, which holds the English 65:12 and 65:13 together and is more
+    /// than twice the verse before it, as in no other edition here.
+    /// </summary>
+    private const string OhienkoEdition = "Psa.65:12*2<Psa.65:13";
+
     private static readonly Dictionary<string, Versification> Traditions = new()
     {
         [Brenton] = Versification.Septuagint,
@@ -140,6 +154,7 @@ internal static class TvtmsSupplements
         [ReinaValera] = Versification.English,
         [Kulish] = Versification.English,
         [Synodal] = Versification.English,
+        [Ohienko] = Versification.English,
         [Segond] = Versification.Original,
         [BrentonEnglish] = Versification.Septuagint,
     };
@@ -199,6 +214,10 @@ internal static class TvtmsSupplements
         .. ReinaValeraPassages,
         .. KulishPassages,
         .. SynodalPassages,
+        Passage(Ohienko, "Psa.65:1", OhienkoEdition,
+            ("Psa.65:1", "Psa.65:Title"),
+            ("Psa.65:2-12", "Psa.65:1-11"),
+            ("Psa.65:13", "Psa.65:12-13")),
         .. SegondPassages,
         Passage(BrentonEnglish, "Neh.4:1", "Neh.3:32=Last & Neh.4:23=Last & Neh.4:6=NotExist",
             ("Neh.3:32", "Neh.3:32"),
