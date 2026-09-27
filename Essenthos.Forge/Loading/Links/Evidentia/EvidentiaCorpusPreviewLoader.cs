@@ -30,6 +30,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     private const string InterlinearGoldSource = "Door43 interlinear, joined in memory";
 
     private readonly Dictionary<string, SyntaxPrior> syntaxByTargetText = new(StringComparer.Ordinal);
+    private readonly Dictionary<(string From, string To, int Book), EvidentiaChapterLengths> chapterLengths = [];
     private IReadOnlyDictionary<string, string>? greekGlosses;
     private IReadOnlyList<(IReadOnlyList<long> From, IReadOnlyList<long> To)>? interlinearPairs;
 
@@ -44,16 +45,18 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         CancellationToken cancellationToken = default)
     {
         var sourceAnalysis = await SourceTokens(fromSlug, canonicalBook, canonicalChapter, canonicalVerse, cancellationToken);
-        var source = EnglishCompounds.Join(sourceAnalysis.Tokens);
-        var target = await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken);
+        var lengths = await ChapterLengths(fromSlug, toSlug, canonicalBook, cancellationToken);
+        var source = EnglishCompounds.Join(sourceAnalysis.Tokens).Select(lengths.Place).ToList();
+        var target = (await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken)).Select(lengths.Place).ToList();
+        var window = await Window(toSlug, canonicalBook, canonicalChapter, target, lengths, cancellationToken);
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
-        var targetGlossEvidence = TargetGlossEvidenceSource.For(target);
+        var targetGlossEvidence = TargetGlossEvidenceSource.For(window);
         var knownRenderingEvidence = allowKnownRenderingEvidence
             ? await knownRenderingIndex.For(
                 fromSlug, toSlug, source, canonicalBook, canonicalChapter, null, cancellationToken: cancellationToken)
             : null;
         var preview = pipeline.Preview(
-            new EvidentiaRequest(source, target, AllowSourceStrongEvidence: allowSourceStrongEvidence),
+            new EvidentiaRequest(source, Near(window, canonicalChapter, source), AllowSourceStrongEvidence: allowSourceStrongEvidence),
             Evidence(dictionaryEvidence, knownRenderingEvidence, targetGlossEvidence));
 
         return new EvidentiaCorpusPreview(
@@ -79,10 +82,12 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var sourceAnalysis = options.SourceFromFiles
             ? await udpipe.Annotate(fileSources.Tokens(fromSlug, canonicalBook, canonicalChapter, null), cancellationToken)
             : await SourceTokens(fromSlug, canonicalBook, canonicalChapter, null, cancellationToken);
-        var source = EnglishCompounds.Join(sourceAnalysis.Tokens);
-        var target = await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken);
+        var lengths = await ChapterLengths(fromSlug, toSlug, canonicalBook, cancellationToken);
+        var source = EnglishCompounds.Join(sourceAnalysis.Tokens).Select(lengths.Place).ToList();
+        var target = (await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken)).Select(lengths.Place).ToList();
+        var window = await Window(toSlug, canonicalBook, canonicalChapter, target, lengths, cancellationToken);
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
-        var targetGlossEvidence = TargetGlossEvidenceSource.For(target);
+        var targetGlossEvidence = TargetGlossEvidenceSource.For(window);
         var knownRenderingEvidence = options.AllowKnownRenderingEvidence
             ? await knownRenderingIndex.For(
                 options.LearnRenderingsFrom ?? fromSlug, toSlug, source,
@@ -92,7 +97,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var previews = source.GroupBy(token => token.Address)
             .OrderBy(group => group.Key.Verse)
             .Select(group => pipeline.Preview(
-                new EvidentiaRequest(group.ToList(), target, AllowSourceStrongEvidence: options.AllowSourceStrongEvidence),
+                new EvidentiaRequest(group.ToList(), Near(window, canonicalChapter, group), AllowSourceStrongEvidence: options.AllowSourceStrongEvidence),
                 Evidence(dictionaryEvidence, knownRenderingEvidence, targetGlossEvidence)))
             .ToList();
 
@@ -464,12 +469,68 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             .GroupBy(gloss => gloss.Lemma, StringComparer.Ordinal)
             .ToDictionary(group => group.Key, group => string.Join(" ", group.Select(gloss => gloss.Gloss)), StringComparer.Ordinal);
 
+    /// <summary>
+    /// The chapter's target words, and the words of the neighbouring chapters' edge verses, which
+    /// only the candidate graph sees: they stand in the neighbour window of the chapter's first and
+    /// last verses, and nothing is proposed on a word outside its own verse.
+    /// </summary>
+    private async Task<List<EvidentiaToken>> Window(
+        string slug,
+        int canonicalBook,
+        int canonicalChapter,
+        IReadOnlyList<EvidentiaToken> target,
+        EvidentiaChapterLengths lengths,
+        CancellationToken cancellationToken)
+    {
+        var window = target.ToList();
+        var held = target.Select(token => token.Id).ToHashSet();
+        foreach (var (chapter, verse) in lengths.Edges(canonicalChapter, EvidentiaDefaults.NeighbourVerseDistance))
+        {
+            window.AddRange((await Tokens(slug, canonicalBook, chapter, verse, cancellationToken, required: false))
+                .Where(token => held.Add(token.Id))
+                .Select(lengths.Place));
+        }
+
+        return window;
+    }
+
+    /// <summary>The window as some source verses see it: a neighbouring chapter's words only where they stand near one of them.</summary>
+    private static List<EvidentiaToken> Near(IReadOnlyList<EvidentiaToken> window, int chapter, IEnumerable<EvidentiaToken> source)
+    {
+        var addresses = source.Select(token => token.Address).Distinct().ToList();
+        return
+        [
+            .. window.Where(token => token.Address.Chapter == chapter
+                || addresses.Any(address => address.DistanceTo(token.Address) <= EvidentiaDefaults.NeighbourVerseDistance)),
+        ];
+    }
+
+    private async Task<EvidentiaChapterLengths> ChapterLengths(
+        string fromSlug, string toSlug, int canonicalBook, CancellationToken cancellationToken)
+    {
+        if (!chapterLengths.TryGetValue((fromSlug, toSlug, canonicalBook), out var lengths))
+        {
+            var chapters = await db.VerseReferences.AsNoTracking()
+                .Where(reference => (reference.Verse!.Text!.Slug == fromSlug || reference.Verse.Text.Slug == toSlug)
+                    && reference.CanonicalBook == canonicalBook)
+                .GroupBy(reference => reference.CanonicalChapter)
+                .Select(group => new { Chapter = group.Key, LastVerse = group.Max(reference => reference.CanonicalVerse) })
+                .ToListAsync(cancellationToken);
+            chapterLengths[(fromSlug, toSlug, canonicalBook)] = lengths =
+                new EvidentiaChapterLengths(chapters.Select(chapter => (chapter.Chapter, chapter.LastVerse)));
+        }
+
+        return lengths;
+    }
+
+    /// <param name="required">Whether a scope with no words is an error, rather than a verse the text lacks.</param>
     private async Task<List<EvidentiaToken>> Tokens(
         string slug,
         int canonicalBook,
         int canonicalChapter,
         int? canonicalVerse,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool required = true)
     {
         // A verse spanning two canonical verses carries a reference row for each, and reading the
         // words through the references gave every one of its words back once per row - with the
@@ -519,6 +580,11 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 Language = word.Text!.Language,
             })
             .ToListAsync(cancellationToken);
+
+        if (rows.Count == 0 && !required)
+        {
+            return [];
+        }
 
         if (rows.Count == 0)
         {

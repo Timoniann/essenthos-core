@@ -118,6 +118,26 @@ public class EvidentiaPipelineTests
     }
 
     [Fact]
+    public void TheNeighbourWindowCrossesAChapterBoundaryWhereTheChapterLengthsAreKnown()
+    {
+        var lengths = new EvidentiaChapterLengths([(1, 31), (2, 25), (3, 24)]);
+        var opening = lengths.Place(new EvidentiaToken(1, new EvidentiaAddress(40, 3, 1), 1, "faith", "eng"));
+        var closing = lengths.Place(new EvidentiaToken(11, new EvidentiaAddress(40, 2, 25), 1, "faith", "eng"));
+        var further = lengths.Place(new EvidentiaToken(12, new EvidentiaAddress(40, 2, 22), 1, "faith", "eng"));
+
+        var preview = Pipeline().Preview(new EvidentiaRequest([opening], [closing, further]));
+
+        opening.Address.DistanceTo(closing.Address).Should().Be(1);
+        opening.Address.Should().Be(new EvidentiaAddress(40, 3, 1), "where a verse stands in its book is not part of which verse it is");
+        preview.Candidates.Where(candidate => candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.NeighbouringCanonicalAddress))
+            .Should().ContainSingle().Which.Target.Token.Id.Should().Be(11, "3:1 is one verse from 2:25 and four from 2:22");
+        lengths.Edges(2, EvidentiaDefaults.NeighbourVerseDistance).Should().Equal((1, 30), (1, 31), (3, 1), (3, 2));
+        lengths.Edges(3, EvidentiaDefaults.NeighbourVerseDistance).Should().Equal((2, 24), (2, 25));
+        new EvidentiaAddress(40, 3, 1).DistanceTo(new EvidentiaAddress(40, 2, 25)).Should().Be(int.MaxValue,
+            "without the chapter lengths there is no telling how far apart two chapters' verses are");
+    }
+
+    [Fact]
     public void AnUnsupportedLanguageRequestsAFallbackWithoutInventingCandidates()
     {
         var preview = Pipeline().Preview(new EvidentiaRequest(
