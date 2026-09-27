@@ -364,7 +364,7 @@ internal sealed class CompositionPipeline(
     /// <summary>
     /// The other texts in the source's language whose words a source states against the target,
     /// enough of them to measure on, most first. For English against the originals, the King James
-    /// and the Berean.
+    /// and the Berean; not a text EVIDENTIA alone links, whose links are another inference.
     /// </summary>
     private static async Task<List<(int Id, string Slug)>> Proxies(
         NpgsqlConnection connection,
@@ -378,7 +378,7 @@ internal sealed class CompositionPipeline(
             FROM link l
             JOIN text t ON t.id = l.from_text_id
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
-            WHERE l.to_text_id = @to AND l.method <> 'aligner' AND t.language = @language AND t.id <> @from
+            WHERE l.to_text_id = @to AND l.method NOT IN ('aligner', 'rule-based') AND t.language = @language AND t.id <> @from
             GROUP BY t.id, t.slug
             HAVING count(DISTINCT f.word_id) >= @fewest
             ORDER BY count(DISTINCT f.word_id) DESC, t.slug
@@ -491,9 +491,10 @@ internal sealed class CompositionPipeline(
     /// is the whole reason this route is worth walking.
     /// </summary>
     /// <param name="aligned">
-    /// Whether the middle text's own aligner links count, at their confidence. For a daughter
-    /// version they are the only way its mother reaches the target: Brenton's links to BHSA are
-    /// all the aligner's.
+    /// Whether the middle text's own aligner links count, at their confidence, and EVIDENTIA's
+    /// rule-based ones with them. For a daughter version they are the only way its mother reaches
+    /// the target: Brenton's links to BHSA are all the aligner's. Otherwise neither is walked, so
+    /// one inference is never the next one's bridge.
     /// </param>
     private static async Task<ILookup<long, (long To, double Confidence)>> Carried(
         NpgsqlConnection connection,
@@ -509,7 +510,7 @@ internal sealed class CompositionPipeline(
             FROM link l
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
             JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
-            WHERE l.from_text_id = @via AND l.to_text_id = @to AND (l.method <> 'aligner' OR @aligned)
+            WHERE l.from_text_id = @via AND l.to_text_id = @to AND (l.method NOT IN ('aligner', 'rule-based') OR @aligned)
             """, connection);
         command.Parameters.AddWithValue("via", viaTextId);
         command.Parameters.AddWithValue("to", toTextId);
@@ -604,7 +605,7 @@ internal sealed class CompositionPipeline(
     {
         var renders = EnumSpelling.Of(LinkRelation.Renders);
         var stated = await Stated(connection, from.Id, to.Id, renders, cancellationToken);
-        var claimed = (await Statements(connection, from.Id, to.Id, cancellationToken)).Keys.ToHashSet();
+        var claimed = (await Statements(connection, from.Id, to.Id, cancellationToken, rules: true)).Keys.ToHashSet();
         var unrendered = await Unrendered(connection, from.Id, to.Id, cancellationToken);
         var (fresh, agreeing) = Split(
             [.. merged.Where(link => !unrendered.Contains(link.To))], stated, claimed, viaSlugs);
@@ -791,11 +792,17 @@ internal sealed class CompositionPipeline(
     /// words that already have an answer standing on them, and what it is. A source word a source
     /// says renders nothing has an answer too, and it is the empty one.
     /// </summary>
+    /// <param name="rules">
+    /// Whether EVIDENTIA's rule-based links count. They are an answer standing on a word, which a
+    /// composition must not write a guess beside; they are not a statement to measure one against,
+    /// which would score one inference by another.
+    /// </param>
     internal static async Task<Dictionary<long, HashSet<long>>> Statements(
         NpgsqlConnection connection,
         int fromTextId,
         int toTextId,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool rules = false)
     {
         await using var command = new NpgsqlCommand(
             """
@@ -803,10 +810,11 @@ internal sealed class CompositionPipeline(
             FROM link l
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
             LEFT JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
-            WHERE l.from_text_id = @from AND l.to_text_id = @to AND l.method <> 'aligner'
+            WHERE l.from_text_id = @from AND l.to_text_id = @to AND l.method <> 'aligner' AND (l.method <> 'rule-based' OR @rules)
             """, connection);
         command.Parameters.AddWithValue("from", fromTextId);
         command.Parameters.AddWithValue("to", toTextId);
+        command.Parameters.AddWithValue("rules", rules);
         command.CommandTimeout = 600;
 
         var statements = new Dictionary<long, HashSet<long>>(400_000);

@@ -113,6 +113,47 @@ public sealed class EvidentiaLedgerTests : IDisposable
     }
 
     [Fact]
+    public async Task AColdRebuildLetsTheLaterRunsRenderingWinOverAnEarlierAbsence()
+    {
+        await Decide();
+        var later = new EvidentiaRun
+        {
+            FromTextId = _english.Id,
+            ToTextId = _hebrew.Id,
+            StartedAt = _run.StartedAt.AddDays(1),
+            FinishedAt = _run.StartedAt.AddDays(1),
+            RuleVersion = "1.0.1+test",
+            Configuration = JsonDocument.Parse("{}"),
+            Scope = JsonDocument.Parse(_run.Scope.RootElement.GetRawText()),
+        };
+        _db.EvidentiaRuns.Add(later);
+        _db.SaveChanges();
+        Stored(new EvidentiaDecision
+        {
+            RunId = later.Id, SourceWordId = English(2), TargetWordId = Hebrew(1), CanonicalBook = 1, CanonicalChapter = 1,
+            CanonicalVerse = 1, Content = false, Kind = "attached-word", Tier = EvidentiaDecisionRecorder.SafeTier,
+            Rationale = "the article of 'beginning'", Confidence = RuleConfidence, Candidates = 1,
+        });
+        await Queue().AcceptTier(later.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Owner, null);
+        (await Writer().Apply(later.Id, write: true)).Superseded.Should().Be(1);
+        await Ledger().ExportAll(_resources);
+        var before = await Snapshot();
+
+        await Rebuild();
+        var outcome = await Ledger().Replay(_resources);
+
+        outcome.Conflicts.Should().BeEmpty();
+        outcome.Reconstituted.Should().Be(2);
+        (await Snapshot()).Should().Equal(before);
+        before.Should().NotContain(link => link.StartsWith("expands"), "the later run renders 'the', so its absence is not given back");
+
+        var again = await Ledger().Replay(_resources);
+
+        again.Restored.Should().Be(0, "the absence the later run took back is not a verdict the corpus lost");
+        (await Snapshot()).Should().Equal(before);
+    }
+
+    [Fact]
     public async Task AWordThatNoLongerReadsTheSameIsReportedAndNotGuessedAt()
     {
         await Decide();

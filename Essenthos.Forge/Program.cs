@@ -334,7 +334,8 @@ if (args is ["score", var scoreFrom, var scoreTo, ..])
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
         args.Contains("--surface"),
         args.Contains("--stated"),
-        args.Contains("--suppletion")));
+        args.Contains("--suppletion"),
+        args.Contains("--pairs") ? args[Array.IndexOf(args, "--pairs") + 1] : null));
     return 0;
 }
 

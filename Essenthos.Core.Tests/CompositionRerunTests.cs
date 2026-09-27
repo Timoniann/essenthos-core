@@ -91,6 +91,30 @@ public sealed class CompositionRerunTests : IDisposable
             .BeEquivalentTo([LinkMethod.StrongNumber, LinkMethod.StatedBySource]);
     }
 
+    [Fact]
+    public async Task ARuleBasedLinkKeepsItsWordAnsweredAndIsNoAnswerKeyToMeasureAgainst()
+    {
+        Link(1, 1, LinkMethod.RuleBased, 0.8, "EVIDENTIA run 1 (test), global-review-known-rendering");
+        Link(2, 2, LinkMethod.StatedBySource, null, Door43);
+
+        await _db.Database.OpenConnectionAsync();
+        Dictionary<long, HashSet<long>> key;
+        try
+        {
+            key = await CompositionPipeline.Key(
+                (NpgsqlConnection)_db.Database.GetDbConnection(), _ukrainian.Id, _greek.Id, CancellationToken.None);
+        }
+        finally
+        {
+            await _db.Database.CloseConnectionAsync();
+        }
+
+        var written = await Write(new RoutedLink(Ukrainian(1).Id, Greek(3).Id, 0.7, Route.Written));
+
+        key.Keys.Should().BeEquivalentTo([Ukrainian(2).Id], "a rule's answer measured against would score one inference by another");
+        written.Should().Be((0, 0), "the rule already answers the word, and a guess is not written beside it");
+    }
+
     private async Task<(int Fresh, int Corroborated)> Write(params RoutedLink[] merged)
     {
         await _db.Database.OpenConnectionAsync();

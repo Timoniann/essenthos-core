@@ -515,6 +515,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// marked wrong for it. The second figure drops the pairs whose Hebrew word is a prefix or the
     /// object marker, and is the closer answer to "when it says two words correspond, is it right".
     /// </summary>
+    /// <param name="pairsFile">
+    /// Where to write the pairs an alignment run would store, one per line (source word, target
+    /// word, translation and position probability), so another method can be scored against the
+    /// same answer key word for word, or given the aligner as its fallback.
+    /// </param>
     public async Task<string> Measure(
         string fromSlug,
         string toSlug,
@@ -524,6 +529,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         bool targetSurface = false,
         bool statedOnly = false,
         bool suppletion = false,
+        string? pairsFile = null,
         CancellationToken cancellationToken = default)
     {
         var from = await Text(fromSlug, cancellationToken);
@@ -582,6 +588,20 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                         $"  {decided.Precision,9:P1}, {decided.Hit} of {decided.Proposed}");
                 }
             }
+        }
+
+        if (pairsFile is not null)
+        {
+            var (stored, _, _, _) = Read(
+                alignmentFile, addresses, source, target, DefaultMinimumConfidence, Selection.BestPerSource, prior,
+                MarksNoNames(from.Language), BothMarkTheirNames(from.Language, to.Language));
+            await File.WriteAllLinesAsync(
+                pairsFile,
+                stored.Select(draft => string.Join('\t', draft.SourceWordId, draft.TargetWordId,
+                    draft.Translation.ToString("0.####", System.Globalization.CultureInfo.InvariantCulture),
+                    draft.Position.ToString("0.####", System.Globalization.CultureInfo.InvariantCulture))),
+                cancellationToken);
+            report.AppendLine($"{stored.Count:N0} pairs as an alignment run would store them written to {pairsFile}");
         }
 
         return report.ToString();
@@ -772,6 +792,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// also holds the lexical matches, which are themselves inferred, so scoring against them is
     /// partly a measure of agreement with another guess. Both are worth having: the wider one is
     /// what every earlier measurement of this aligner used, and the narrower one is the claim.
+    /// Neither holds EVIDENTIA's rule-based links, which were never part of the wider one.
     /// </param>
     private async Task<(HashSet<(long From, long To)> Gold, HashSet<long> Structural)> Stated(
         int fromTextId,
@@ -790,7 +811,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
             JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
             WHERE l.from_text_id = @from AND l.to_text_id = @to
-              AND (l.method = 'stated-by-source' OR (l.method <> 'aligner' AND NOT @stated))
+              AND (l.method = 'stated-by-source' OR (l.method NOT IN ('aligner', 'rule-based') AND NOT @stated))
             """, connection))
         {
             command.Parameters.AddWithValue("stated", statedOnly);

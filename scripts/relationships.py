@@ -659,7 +659,7 @@ def call(prompt, model, effort, system):
         '--output-format', 'json',
         '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}',
         '--setting-sources', '', '--no-session-persistence', '--disable-slash-commands',
-        '--disallowed-tools', 'Bash Read Write Edit Glob Grep WebFetch WebSearch Task Agent TodoWrite',
+        '--tools', '',
         '--max-turns', '1',
     ] + (['--effort', effort] if effort else [])
     last = None

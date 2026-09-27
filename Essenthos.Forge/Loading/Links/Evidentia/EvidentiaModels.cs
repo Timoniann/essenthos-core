@@ -79,10 +79,73 @@ internal enum LanguagePackCapability
     NamedEntities = 64,
 }
 
+/// <summary>
+/// A canonical address. <see cref="Sequence"/> is the verse's place in its book counted across its
+/// chapters, where the reader knows how long each chapter is: it is what lets a neighbour window
+/// cross a chapter boundary, where a versification shift lands, and it takes no part in equality.
+/// </summary>
 internal readonly record struct EvidentiaAddress(int Book, int Chapter, int Verse)
 {
+    public int? Sequence { get; init; }
+
     public int DistanceTo(EvidentiaAddress other) =>
-        Book == other.Book && Chapter == other.Chapter ? Math.Abs(Verse - other.Verse) : int.MaxValue;
+        Book != other.Book ? int.MaxValue
+        : Chapter == other.Chapter ? Math.Abs(Verse - other.Verse)
+        : Sequence is { } here && other.Sequence is { } there ? Math.Abs(here - there)
+        : int.MaxValue;
+
+    public bool Equals(EvidentiaAddress other) => Book == other.Book && Chapter == other.Chapter && Verse == other.Verse;
+
+    public override int GetHashCode() => HashCode.Combine(Book, Chapter, Verse);
+}
+
+/// <summary>
+/// How long each canonical chapter of one book is, taken as the last canonical verse either text
+/// places in it, so an address can be given its <see cref="EvidentiaAddress.Sequence"/>.
+/// </summary>
+internal sealed class EvidentiaChapterLengths
+{
+    private readonly SortedDictionary<int, int> lengths;
+    private readonly Dictionary<int, int> before = [];
+
+    public EvidentiaChapterLengths(IEnumerable<(int Chapter, int LastVerse)> chapters)
+    {
+        lengths = new SortedDictionary<int, int>(chapters.ToDictionary(chapter => chapter.Chapter, chapter => chapter.LastVerse));
+        var counted = 0;
+        foreach (var (chapter, length) in lengths)
+        {
+            before[chapter] = counted;
+            counted += length;
+        }
+    }
+
+    public EvidentiaToken Place(EvidentiaToken token) =>
+        before.TryGetValue(token.Address.Chapter, out var counted)
+            ? token with { Address = token.Address with { Sequence = counted + token.Address.Verse } }
+            : token;
+
+    /// <summary>
+    /// The verses of the chapters on either side that stand within <paramref name="distance"/> of
+    /// this chapter: the last of the one before, the first of the one after.
+    /// </summary>
+    public IEnumerable<(int Chapter, int Verse)> Edges(int chapter, int distance)
+    {
+        if (lengths.TryGetValue(chapter - 1, out var previous))
+        {
+            for (var verse = Math.Max(1, previous - distance + 1); verse <= previous; verse++)
+            {
+                yield return (chapter - 1, verse);
+            }
+        }
+
+        if (lengths.TryGetValue(chapter + 1, out var next))
+        {
+            for (var verse = 1; verse <= Math.Min(distance, next); verse++)
+            {
+                yield return (chapter + 1, verse);
+            }
+        }
+    }
 }
 
 internal sealed record EvidentiaToken(

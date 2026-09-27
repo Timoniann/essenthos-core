@@ -8,13 +8,15 @@ namespace Essenthos.Core.Database.Entities;
 /// <summary>
 /// A word the aligner had linked, taken out of that link so that an absence EVIDENTIA holds more
 /// surely could be written: a word shown as supplied and as rendered at once is a contradiction,
-/// and where the only thing saying it is rendered is a statistical guess, the guess gives way.
+/// and where the only thing saying it is rendered is a statistical guess, the guess gives way. The
+/// same contradiction the other way round is settled for the later verdict: an absence an earlier
+/// run's rule wrote, and nobody read, is taken back when a later verdict renders its word.
 ///
 /// <para>
 /// **Everything the link said is kept**, so the withdrawal reads back as what it was and can be
 /// undone: its relation, its settled answer, both sides' words as they were, and each claim that
-/// stood on it. Only a link every claim of which is the aligner's is ever withdrawn from, so the
-/// claims need no method of their own. <see cref="LinkId"/> is the link where it still stands with
+/// stood on it. Only a link every claim of which is one method's, the aligner's or an EVIDENTIA
+/// rule's, is ever withdrawn from, so the claims need no method but <see cref="Method"/>. <see cref="LinkId"/> is the link where it still stands with
 /// its other words, and null where the word was the only one on its side and the link went with it.
 /// </para>
 /// </summary>
