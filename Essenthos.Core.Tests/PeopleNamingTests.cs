@@ -138,11 +138,6 @@ public sealed class PeopleFileTests
     }
 
     /// <summary>
-    /// A collective number reaching two peoples would annotate one word to both of them, and a
-    /// gentilic claimed twice would make the resolution ambiguous where its whole warrant is that
-    /// it is not.
-    /// </summary>
-    /// <summary>
     /// The King James half on its own, which is the gate a lexeme BHSA analyses as a gentilic has
     /// to pass. Everything the renderings actually name still comes through.
     /// </summary>
@@ -152,6 +147,7 @@ public sealed class PeopleFileTests
     [InlineData("Chaldean.", "Chaldeans")]
     [InlineData("Horims, Horites.", "Horites")]
     [InlineData("Lubim(-s), Libyans.", "Lubim")]
+    [InlineData("Puhites (as if from פּוּאָה (H6312)).", "Puhites")]
     public void TheRenderingsNameThePeopleWithoutTheDerivation(string kjv, string expected) =>
         GentilicNaming.Renders(kjv).Should().Be(expected);
 
@@ -181,6 +177,11 @@ public sealed class PeopleFileTests
         GentilicNaming.Of("Hagarene, Hagarite, Haggeri.", "a Hagrite or member of an Arabian clan")
             .Should().Be("Hagarites");
 
+    /// <summary>
+    /// A collective number reaching two peoples would annotate one word to both of them, and a
+    /// gentilic claimed twice would make the resolution ambiguous where its whole warrant is that
+    /// it is not.
+    /// </summary>
     [Fact]
     public void NoNumberNamesTwoPeoples()
     {
