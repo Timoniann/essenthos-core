@@ -1376,6 +1376,18 @@
  },
  {
   "rows": [
+   75917,
+   75918
+  ],
+  "a": "jeremiah-6",
+  "relation": "cousin-of",
+  "b": "shallum-13",
+  "note": "owner in chat 2026-09-27: Hanamel is ben-dodi, son of my uncle — Shallum is Jeremiah's uncle, Hanamel his cousin",
+  "decidedAt": "2026-09-27T14:22:45.460Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    76243,
    76244
   ],
