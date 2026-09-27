@@ -264,6 +264,36 @@ internal static class DeskEndpoints
         });
     }
 
+    /// <summary>
+    /// The accounts' backups copied from the server to this machine: what is here, how the last copy
+    /// went, a copy on request, and the owner's settings for the automatic one.
+    /// </summary>
+    public static void MapServerBackups(this RouteGroupBuilder routes)
+    {
+        routes.MapGet("/backups", (ServerBackups backups) => backups.Read(DateTime.UtcNow));
+
+        routes.MapPost("/backups/copies", async (ServerBackups backups, CancellationToken cancellationToken) =>
+            await backups.Copy(automatic: false, cancellationToken) is null
+                ? Results.Conflict(new ProblemResponse("A copy is already under way. Wait for it to finish."))
+                : Results.Ok(backups.Read(DateTime.UtcNow)));
+
+        routes.MapPut("/backups/settings", async (BackupSettingsRequest request, ServerBackups backups) =>
+            await backups.Set(request) is null
+                ? Results.BadRequest(new ProblemResponse($"Keep between 1 and {backups.KeepDays} copies of each database."))
+                : Results.Ok(backups.Read(DateTime.UtcNow)));
+
+        routes.MapPost("/backups/folder", (ServerBackups backups) =>
+        {
+            if (!Directory.Exists(backups.Folder))
+            {
+                return Results.NotFound(new ProblemResponse("The folder is not there yet: it is made by the first copy."));
+            }
+
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("explorer.exe", backups.Folder) { UseShellExecute = true });
+            return Results.NoContent();
+        });
+    }
+
     /// <summary>The section a change made among the texts is logged under.</summary>
     private const string TextsSection = "texts";
 

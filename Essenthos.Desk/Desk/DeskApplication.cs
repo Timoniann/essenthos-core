@@ -54,6 +54,9 @@ internal static class DeskApplication
             builder.Configuration.GetSection("Desk:Operations").Get<string[]>() ?? []));
         builder.Services.AddSingleton<Operations>();
         builder.Services.AddSingleton<Deployment>();
+        builder.Services.AddSingleton<IServerShell, SshShell>();
+        builder.Services.AddSingleton<ServerBackups>();
+        builder.Services.AddHostedService<ServerBackupSchedule>();
 
         var app = builder.Build();
 
@@ -79,6 +82,7 @@ internal static class DeskApplication
         desk.MapOperations();
         desk.MapTexts();
         desk.MapDeployment();
+        desk.MapServerBackups();
 
         return app;
     }
