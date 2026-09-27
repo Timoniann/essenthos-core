@@ -489,6 +489,22 @@
       "confidence": 0.95,
       "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
       "acrossKinds": true
+    },
+    {
+      "strongNumber": "H2354",
+      "keeps": "hur",
+      "folds": "hur-4",
+      "why": "Both records are the Hur who went up with Moses and Aaron to the top of the hill and held up Moses' hands at Rephidim (EXO 17:10-12) and whom Moses left with Aaron over the people (EXO 24:14); the second holds only these verses, all of them under the first.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records the portrait briefs of 2026-09-27 found written twice, each read against its verses by claude-opus-5-5, 2026-09-27"
+    },
+    {
+      "strongNumber": "G2500",
+      "keeps": "joseph-7",
+      "folds": "joseph-13",
+      "why": "Both records are Joses the brother of Jesus, named with James, Simon and Judas in Matthew 13:55 and Mark 6:3; the second holds only these two verses, both of them under the first.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records the portrait briefs of 2026-09-27 found written twice, each read against its verses by claude-opus-5-5, 2026-09-27"
     }
   ],
   "declined": [
@@ -969,6 +985,138 @@
         "1CH 2:18-49"
       ],
       "why": "1 Chronicles 2:18-49 is Caleb 'the son of Hezron' (2:18), 'the brother of Jerahmeel' (2:42), the Chelubai of 2:9, with his wives Azubah and Jerioth and his concubine Maachah. The relationships read from these verses were written onto the record of Caleb the son of Jephunneh."
+    },
+    {
+      "from": "ahijah",
+      "to": "ahijah-7",
+      "name": null,
+      "verses": [
+        "1SA 14:3",
+        "1SA 14:18"
+      ],
+      "why": "1 Samuel 14:3 is 'Ahiah, the son of Ahitub, Ichabod's brother, the son of Phinehas ... the LORD's priest in Shiloh, wearing an ephod', with Saul at Gibeah, and 14:18 is Saul's word to him to bring the ark. The prophet Ahijah the Shilonite of 1 Kings 11-14 speaks to Jeroboam two generations later."
+    },
+    {
+      "from": "amasa",
+      "to": "amasa-3",
+      "name": null,
+      "verses": [
+        "1CH 12:18"
+      ],
+      "why": "1 Chronicles 12:18 is 'Amasai, who was chief of the captains', on whom the spirit came when he pledged himself to David at Ziklag; the verse prints Amasai, not Amasa the son of Ithra whom Absalom set over the army."
+    },
+    {
+      "from": "darius",
+      "to": "darius-3",
+      "name": null,
+      "verses": [
+        "NEH 12:22"
+      ],
+      "why": "Nehemiah 12:22 dates the record of the Levites 'to the reign of Darius the Persian', after the high priest Jaddua; the Darius of Ezra 4-6, Haggai and Zechariah is the king in whose second year the temple was rebuilt, generations earlier."
+    },
+    {
+      "from": "hadadezer",
+      "to": "hadad-3",
+      "name": null,
+      "verses": [
+        "1KI 11:14"
+      ],
+      "why": "1 Kings 11:14 is 'the LORD stirred up an adversary unto Solomon, Hadad the Edomite: he was of the king's seed in Edom'. Hadadezer king of Zobah is the adversary of 11:23, whose servant Rezon fled from him."
+    },
+    {
+      "from": "hilkiah-2",
+      "to": "hilkiah-7",
+      "name": null,
+      "verses": [
+        "JER 1:1"
+      ],
+      "why": "Jeremiah 1:1 names 'Jeremiah the son of Hilkiah, of the priests that were in Anathoth'. Josiah's high priest served in the temple at Jerusalem (2 Kings 22:4), and the verse does not make Jeremiah's father the high priest."
+    },
+    {
+      "from": "hilkiah-3",
+      "to": "hilkiah-2",
+      "name": null,
+      "verses": [
+        "1CH 6:13",
+        "1CH 9:11",
+        "EZR 7:1",
+        "NEH 11:11"
+      ],
+      "why": "1 Chronicles 6:13 'Shallum begat Hilkiah, and Hilkiah begat Azariah' is the high-priestly line, and 1 Chronicles 9:11, Ezra 7:1 and Nehemiah 11:11 trace Azariah and Ezra back through the same Hilkiah: the high priest of Josiah's day."
+    },
+    {
+      "from": "hilkiah-3",
+      "to": "hilkiah-at-ezras-right-hand",
+      "name": null,
+      "verses": [
+        "NEH 8:4"
+      ],
+      "why": "Nehemiah 8:4 names a Hilkiah among the men who stood at Ezra's right hand when he read the law, a century and a half after the high priest of that name."
+    },
+    {
+      "from": "hilkiah-3",
+      "to": "hilkiah-8",
+      "name": null,
+      "verses": [
+        "JER 29:3"
+      ],
+      "why": "Jeremiah 29:3 names 'Gemariah the son of Hilkiah', whom Zedekiah sent to Nebuchadnezzar with Elasah; the verse does not make his father the high priest or the priest of Zerubbabel's day."
+    },
+    {
+      "from": "james-3",
+      "to": "james-2",
+      "name": null,
+      "verses": [
+        "MAT 10:3",
+        "MRK 3:18",
+        "LUK 6:15"
+      ],
+      "why": "The lists of the twelve name 'James the son of Alphaeus' (MAT 10:3, MRK 3:18, LUK 6:15); the Lord's brother is named with his brothers in Matthew 13:55 and Mark 6:3, and the verses do not make him one of the twelve."
+    },
+    {
+      "from": "james-3",
+      "to": "james-4",
+      "name": null,
+      "verses": [
+        "LUK 6:16"
+      ],
+      "why": "Luke 6:16 is 'Judas the brother of James', in the Greek 'Judas of James': the James of that verse is named only as Judas's kinsman, and the encyclopedia holds him apart."
+    },
+    {
+      "from": "jehonadab",
+      "to": "jonadab",
+      "name": null,
+      "verses": [
+        "2SA 13:5"
+      ],
+      "why": "2 Samuel 13:5 is the counsel of 'Jonadab, the son of Shimeah David's brother' (13:3) to Amnon. Jehonadab the son of Rechab of 2 Kings 10 and Jeremiah 35 lived in Jehu's day."
+    },
+    {
+      "from": "titus",
+      "to": "titius",
+      "name": null,
+      "verses": [
+        "ACT 18:7"
+      ],
+      "why": "Acts 18:7 names 'a certain man's house, named Justus', Titius Justus in the critical editions, at Corinth; Titus is Paul's companion of Galatians 2 and 2 Corinthians and is not in the verse."
+    },
+    {
+      "from": "joseph-7",
+      "to": "joshua-5",
+      "name": null,
+      "verses": [
+        "LUK 3:29"
+      ],
+      "why": "Luke 3:29 is 'Jose, which was the son of Eliezer' in Luke's genealogy, printed Ἰησοῦ in the critical editions; the brother of Jesus is not in the verse."
+    },
+    {
+      "from": "joseph-7",
+      "to": "joseph-12",
+      "name": null,
+      "verses": [
+        "ACT 4:36"
+      ],
+      "why": "Acts 4:36 is 'Joses, who by the apostles was surnamed Barnabas, a Levite, and of the country of Cyprus'; the brother of Jesus is not in the verse."
     }
   ]
 }

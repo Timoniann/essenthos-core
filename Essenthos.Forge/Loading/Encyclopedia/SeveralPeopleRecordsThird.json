@@ -75,6 +75,139 @@
       "existing": "jedaiah-5",
       "why": "Nehemiah 12:12-21 names the heads of the priestly houses of 12:1-7 in the same order. 'Of Hilkiah, Hashabiah; of Jedaiah, Nethaneel' follows 12:7, 'Hilkiah, Jedaiah', whose Jedaiah the lexicon enumerates with Nehemiah 11:10. The review of 2026-09-06 argued the same pairing and named the Jedaiah of 12:6.",
       "corrects": "jedaiah-2"
+    },
+    {
+      "wordId": 6901354,
+      "reference": "Matthew 13:55",
+      "strongNumber": "G2385",
+      "existing": "james-3",
+      "says": {
+        "distinguisher": "brother of Jesus (MAT 13:55), 'the Lord's brother' (GAL 1:19)"
+      },
+      "why": "Matthew 13:55 asks 'is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?': they are named as Jesus's brothers, and the verse names Mary as Jesus's mother, not as theirs."
+    },
+    {
+      "wordId": 6901356,
+      "reference": "Matthew 13:55",
+      "strongNumber": "G2501",
+      "existing": "joseph-7",
+      "says": {
+        "distinguisher": "brother of Jesus (MAT 13:55, MRK 6:3)"
+      },
+      "why": "Matthew 13:55 asks 'is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?': they are named as Jesus's brothers, and the verse names Mary as Jesus's mother, not as theirs."
+    },
+    {
+      "wordId": 6901358,
+      "reference": "Matthew 13:55",
+      "strongNumber": "G4613",
+      "existing": "simon-3",
+      "says": {
+        "distinguisher": "brother of Jesus (MAT 13:55, MRK 6:3)"
+      },
+      "why": "Matthew 13:55 asks 'is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?': they are named as Jesus's brothers, and the verse names Mary as Jesus's mother, not as theirs."
+    },
+    {
+      "wordId": 6901360,
+      "reference": "Matthew 13:55",
+      "strongNumber": "G2455",
+      "existing": "judas-2",
+      "says": {
+        "distinguisher": "brother of Jesus (MAT 13:55, MRK 6:3)"
+      },
+      "why": "Matthew 13:55 asks 'is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?': they are named as Jesus's brothers, and the verse names Mary as Jesus's mother, not as theirs."
+    },
+    {
+      "wordId": 6911234,
+      "reference": "Matthew 27:61",
+      "strongNumber": "G3137",
+      "existing": "mary-7",
+      "why": "'And there was Mary Magdalene, and the other Mary, sitting over against the sepulchre': 'Mary Magdalene, and the other Mary' — the mother of James and Joses (MAT 27:56, MRK 15:40), whom the verses name beside Mary Magdalene and never as Jesus's mother."
+    },
+    {
+      "wordId": 6911338,
+      "reference": "Matthew 28:1",
+      "strongNumber": "G3137",
+      "existing": "mary-7",
+      "why": "'came Mary Magdalene and the other Mary to see the sepulchre': 'Mary Magdalene, and the other Mary' — the mother of James and Joses (MAT 27:56, MRK 15:40), whom the verses name beside Mary Magdalene and never as Jesus's mother."
+    },
+    {
+      "wordId": 6922461,
+      "reference": "Mark 15:40",
+      "strongNumber": "G3137",
+      "existing": "mary-7",
+      "why": "'Mary Magdalene, and Mary the mother of James the less and of Joses, and Salome': the second Mary is the mother of James and Joses."
+    },
+    {
+      "wordId": 6922585,
+      "reference": "Mark 15:47",
+      "strongNumber": "G3137",
+      "existing": "mary-7",
+      "why": "'Mary Magdalene and Mary the mother of Joses beheld where he was laid': the second Mary is the mother of Joses."
+    },
+    {
+      "wordId": 6922599,
+      "reference": "Mark 16:1",
+      "strongNumber": "G3137",
+      "existing": "mary-7",
+      "why": "'Mary Magdalene, and Mary the mother of James, and Salome': the second Mary is the mother of James."
+    },
+    {
+      "wordId": 6941696,
+      "reference": "Luke 24:10",
+      "strongNumber": "G3137",
+      "existing": "mary-7",
+      "why": "'Mary Magdalene, and Joanna, and Mary the mother of James': the third woman is the mother of James."
+    },
+    {
+      "wordId": 6956544,
+      "reference": "John 19:25",
+      "strongNumber": "G3137",
+      "existing": "mary-4",
+      "why": "'his mother, and his mother's sister, Mary the wife of Cleophas, and Mary Magdalene': the first Mary named is Mary of Clopas."
+    },
+    {
+      "wordId": 6956549,
+      "reference": "John 19:25",
+      "strongNumber": "G3137",
+      "existing": "mary-2",
+      "why": "'Mary the wife of Cleophas, and Mary Magdalene': the second Mary named is Mary Magdalene."
+    },
+    {
+      "wordId": 6652369,
+      "reference": "1 Kings 11:29",
+      "strongNumber": "H281",
+      "existing": "ahijah",
+      "says": {
+        "distinguisher": "the prophet of Shiloh (1KI 11:29, 14:2)"
+      },
+      "why": "'the prophet Ahijah the Shilonite found him in the way': the prophet of Shiloh, who tore his garment in twelve pieces for Jeroboam. The priest Ahiah son of Ahitub of 1 Samuel 14:3 and 14:18, Saul's day, is another man and has his own record."
+    },
+    {
+      "wordId": 6856571,
+      "reference": "Nehemiah 12:7",
+      "strongNumber": "H2518",
+      "existing": "hilkiah-3",
+      "says": {
+        "distinguisher": "a chief of the priests who came up with Zerubbabel (NEH 12:1, 12:7)"
+      },
+      "why": "'Sallu, Amok, Hilkiah, Jedaiah. These were the chief of the priests' who came up with Zerubbabel (12:1). The high priest of Josiah's day, the Hilkiah beside Ezra and Gemariah's father each have their own record."
+    },
+    {
+      "wordId": 6856696,
+      "reference": "Nehemiah 12:21",
+      "strongNumber": "H2518",
+      "existing": "hilkiah-3",
+      "why": "'Of Hilkiah, Hashabiah': the house of the Hilkiah of 12:7, in the order of the first list."
+    },
+    {
+      "wordId": 6770882,
+      "reference": "Haggai 1:1",
+      "strongNumber": "H1867",
+      "existing": "darius",
+      "says": {
+        "notes": "King of Persia. In his second year Haggai and Zechariah prophesied and the building of the house of God at Jerusalem resumed (Ezra 4:24; Haggai 1:1; Zechariah 1:1); he had Cyrus's decree searched out at Achmetha and confirmed it (Ezra 6:1-12), and the house was finished in his sixth year (Ezra 6:15)."
+      },
+      "why": "'In the second year of Darius the king': the king in whose second year the building of the house of God resumed (EZR 4:24), who searched out Cyrus's decree and confirmed it (EZR 6:1-12), and in whose sixth year the house was finished (EZR 6:15)."
     }
   ]
 }
