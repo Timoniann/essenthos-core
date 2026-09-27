@@ -511,17 +511,6 @@
     {
       "verb": "compose",
       "arguments": [
-        "GEEZ81",
-        "GRCBRENT",
-        "BHSA",
-        "--daughter",
-        "--unmeasured"
-      ],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
         "UKR1871",
         "KJV,BSB",
         "BHSA"
@@ -712,16 +701,6 @@
       "at": "2026-09-25T15:00:55.4548936+00:00"
     },
     {
-      "verb": "compose",
-      "arguments": [
-        "GRCBRENT",
-        "KJV",
-        "BHSA",
-        "--unmeasured"
-      ],
-      "at": "2026-09-26T18:16:27.6408208+00:00"
-    },
-    {
       "verb": "align",
       "arguments": [
         "BRENTON",
@@ -756,6 +735,27 @@
         "--replace"
       ],
       "at": "2026-09-27T14:39:04.1298656+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "BHSA",
+        "--unmeasured"
+      ],
+      "at": "2026-09-27T15:15:43.6191806+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GEEZ81",
+        "GRCBRENT",
+        "BHSA",
+        "--daughter",
+        "--unmeasured"
+      ],
+      "at": "2026-09-27T15:19:25.3706151+00:00"
     }
   ]
 }
