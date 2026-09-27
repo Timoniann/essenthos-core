@@ -229,7 +229,43 @@ internal static class LetteredEditions
         [
             Song(54, 32), Song(55, 33), Song(58, 36), Song(59, 37), Song(67, 47), Song(70, 48), Song(71, 45),
             Song(72, 50),
+            .. GeezSirach(),
         ]);
+
+    /// <summary>
+    /// The Ge'ez Sirach 30:25-36:31, which keeps the Greek manuscripts' order of the chapters, as
+    /// Brenton prints them, and divides every one of them verse for verse as Swete does: its 30:25-40
+    /// are Swete's 33:25-40, its 31, 32 and 33 Swete's 34, 35 and 36:1-13, its 34 and 35 Swete's 31
+    /// and 32, and its 36 Swete's 33:1-16 and 36:17-31. Each chapter counts exactly as Swete's does,
+    /// and the lengths of its verses follow Swete's there as closely as in the chapters both print
+    /// in one order, and not at all at the rows its own numbers name. Each verse stands where the
+    /// verse of Swete's it prints stands.
+    /// </summary>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> GeezSirach()
+    {
+        var swete = (Swete.Elsewhere ?? [])
+            .Where(read => read.Verse.Address.Book == Sirach)
+            .ToDictionary(read => read.Verse, read => read.Prints);
+
+        (int Geez, int Swete, int First, int Last)[] chapters =
+        [
+            (30, 33, 25, 40), (31, 34, 1, 31), (32, 35, 1, 26), (33, 36, 1, 13), (34, 31, 1, 31),
+            (35, 32, 1, 24), (36, 33, 1, 16), (36, 36, 17, 31),
+        ];
+
+        foreach (var (geez, printed, first, last) in chapters)
+        {
+            for (var verse = first; verse <= last; verse++)
+            {
+                var own = new PrintedAddress(new CanonicalReference(Sirach, printed, verse), string.Empty);
+                var lettered = new PrintedAddress(own.Address, "a");
+                var standard = swete.TryGetValue(own, out var read) ? read
+                    : swete.TryGetValue(lettered, out var half) ? half
+                    : [own.Address];
+                yield return (new PrintedAddress(new CanonicalReference(Sirach, geez, verse), string.Empty), standard);
+            }
+        }
+    }
 
     /// <summary>
     /// The Synodal as Russian Wikisource transcribes its non-canonical books: the Letter of Jeremiah in

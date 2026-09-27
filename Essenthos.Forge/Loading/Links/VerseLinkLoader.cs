@@ -301,16 +301,6 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                 }
             }
 
-            // The church's Ge'ez stands at its own numbers where it keeps the Greek manuscripts' order,
-            // and the rows there hold other passages of every other text.
-            if (pair.FromTextId == geez)
-            {
-                here = here
-                    .Where(address => !GeezTextSource.InTheManuscriptsOrder(
-                        address.Key.Item1, address.Key.Item2, address.Key.Item3))
-                    .ToDictionary(address => address.Key, address => address.Value);
-            }
-
             var components = Components(here, there, ref alone);
 
             straight += components.Count(c => c.From.Count == 1 && c.To.Count == 1);
