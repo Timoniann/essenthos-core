@@ -1,4 +1,4 @@
-# *.usfm — the Synodal's eleven non-canonical books, as Russian Wikisource transcribes them
+# *.usfm — the Synodal's eleven non-canonical books, and the Greek additions it prints inside three canonical ones, as Russian Wikisource transcribes them
 
 **Библия, или книги Священного Писания Ветхого и Нового Завета, в русском переводе** — the Russian
 Synodal Bible (1876), the eleven books it prints and marks as non-canonical, transcribed on
@@ -7,7 +7,9 @@ edition of 2000** (*"Синодальный перевод РПЦ МП, реда
 
 Read at the source on **2026-09-25**. `scripts/fetch-synodal-wikisource.ps1` fetches it through the
 MediaWiki API, each page **at the revision read that day**, and re-reads the licence and the
-non-canonical marking below before it replaces anything. **11 books, 5,737 verses, 1.1 MB.**
+non-canonical marking below before it replaces anything. **11 books, 5,737 verses, 1.1 MB.** The
+additions inside Daniel, Esther and 2 Chronicles were read on **2026-09-27**, on the owner's word,
+from those books' pages, each at the revision read that day (see below).
 
 | file | page | revision | chapters | verses | ordinal, and what it is |
 |---|---|---:|---:|---:|---|
@@ -52,15 +54,28 @@ Tobit, Judith, Wisdom, Baruch, the Letter and 1 Esdras differ in one to seven ch
 of 51 and 3 Maccabees in all 7. The corpus joins the Synodal verse by verse to the Greek only in the
 chapters where the two print the same verses.
 
+## The additions inside canonical books
+
+The Synodal prints the Greek additions inside Daniel, Esther and 2 Chronicles, in square brackets
+where they stand inside a verse of the Hebrew; bible4u's Synodal, which is where those books come
+from, leaves all of them out (its Daniel has 12 chapters and 3:30 ends the chapter, its Esther 10
+chapters and 167 verses). They are taken from those books' own pages, and nothing else of the pages:
+
+| file | page | revision | what is taken |
+|---|---|---:|---|
+| 27-DAG | Книга пророка Даниила | 3679983 | 3:24-90, the Prayer of Azariah and the Song of the Three; 13:1-64, Susanna; 14:1-42, Bel |
+| 17-ESG | Книга Есфири | 3679964 | the bracketed words of 1:1 (a verse of its own before the Hebrew's 1:1), 3:13, 4:17, 5:1, 5:2, 8:12 and 10:3, each written as the verse's piece `a` |
+| 79-MAN | Вторая книга Паралипоменон | 4588701 | the Prayer of Manasseh after 36:23, twelve verses the page letters а to м, numbered 1 to 12 |
+
+The song is one bracketed passage and every word of it is marked as the Greek's, as the brackets
+are elsewhere; so are the additions to Esther. The short bracketed phrases the Synodal adds inside
+other verses of Esther are not taken, as bible4u does not print them. Susanna and Bel are Daniel 13
+and 14 in the Synodal and books of their own in the corpus, each verse keeping the address it is
+printed under as its stated one; the song is held as a book of its own the same way, numbered as the
+King James's Song of the Three is, and stands in Daniel 3 as well.
+
 ## What is not taken
 
-- **The Greek additions inside Esther and Daniel, and the Prayer of Manasseh.** The Synodal prints
-  them inside canonical books — Daniel 3:24–90 and chapters 13–14, the additions within Esther's
-  chapters, the Prayer after 2 Chronicles 36 — and bible4u's Synodal, which is where those books come
-  from, has none of them: its Daniel has 12 chapters and 3:30 ends the chapter, its Esther 10 chapters
-  and 167 verses. The pages for Esther, Daniel and 2 Chronicles were read to establish that and were
-  not fetched as data: the books are already loaded under the King James's numbering, and a book
-  cannot be written twice.
 - **Nothing Ukrainian.** No Ukrainian translation of these books is openly licensed; see DOC-0209.
 
 ## The licence

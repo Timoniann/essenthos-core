@@ -193,27 +193,30 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     }
 
     /// <summary>
-    /// A verse of the Letter of Jeremiah under the name its own edition prints it, and then under the
-    /// other: the data places the Greek letter at the standard's Baruch 6, and an edition that prints
-    /// it as a book stands in that book and covers Baruch 6, as one that prints Baruch 6 covers the
-    /// book. Every other verse stands where the frame puts it.
+    /// A verse of a passage printed under two names (<see cref="TwinPassages"/>) under the name its own
+    /// edition prints it, and then under the other: the data places the Greek Letter of Jeremiah at the
+    /// standard's Baruch 6 and the King James's Song of the Three in Daniel 3, and an edition stands in
+    /// the book it prints the passage in and covers it under the other name. Every other verse stands
+    /// where the frame puts it.
     /// </summary>
     private static IReadOnlyList<CanonicalReference> AtBothNames(int book, IReadOnlyList<CanonicalReference> placed)
     {
-        if (book is not (LetterOfJeremiah.Book or LetterOfJeremiah.Baruch) ||
-            !placed.Any(place => LetterOfJeremiah.Twin(place.Book, place.Chapter) is not null))
+        static (int Book, int Chapter, int Verse)? Other(CanonicalReference place) =>
+            TwinPassages.Other((place.Book, place.Chapter, place.Verse));
+
+        if (!TwinPassages.Books.Contains(book) || !placed.Any(place => Other(place) is not null))
         {
             return placed;
         }
 
         var own = placed
-            .Select(place => LetterOfJeremiah.Twin(place.Book, place.Chapter) is { } twin && place.Book != book
-                ? new CanonicalReference(twin.Book, twin.Chapter, place.Verse)
+            .Select(place => Other(place) is { } twin && place.Book != book && twin.Book == book
+                ? new CanonicalReference(twin.Book, twin.Chapter, twin.Verse)
                 : place)
             .ToList();
         var other = own
-            .Select(place => LetterOfJeremiah.Twin(place.Book, place.Chapter) is { } twin
-                ? new CanonicalReference(twin.Book, twin.Chapter, place.Verse)
+            .Select(place => Other(place) is { } twin
+                ? new CanonicalReference(twin.Book, twin.Chapter, twin.Verse)
                 : (CanonicalReference?)null)
             .OfType<CanonicalReference>();
         return [.. own.Concat(other).Distinct()];

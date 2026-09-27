@@ -93,7 +93,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
 
         Deuterocanon.Verses(book).Should().Be(verses);
         book.NameNative.Should().Be(name);
-        read.Synodal.Books.Should().HaveCount(66 + 11);
+        read.Synodal.Books.Should().HaveCount(66 + 11 + 4);
         Deuterocanon.Text(read.Synodal, FirstEsdras, 1, 1).Should().StartWith("И совершил Иосия");
         Deuterocanon.Text(read.Synodal, SecondEsdras, 1, 1).Should().StartWith("Вторая книга Ездры пророка");
         Deuterocanon.Text(read.Synodal, FirstMaccabees, 1, 1).Should().StartWith("После того как Александр");
@@ -108,7 +108,8 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
     {
         read.Synodal.Books.OrderBy(book => book.Position).Select(book => book.CanonicalOrdinal)
             .Should().Equal(Canons.Find(Canons.Synodal)!.Ordinals);
-        read.Synodal.Definition.PartSources.Should().Equal(DeuterocanonTextSource.SynodalSource);
+        read.Synodal.Definition.PartSources.Should()
+            .Equal(DeuterocanonTextSource.SynodalSource, DeuterocanonTextSource.SynodalAdditionsSource);
 
         var supplied = Deuterocanon.Book(read.Synodal, FirstMaccabees).Chapters.Single(chapter => chapter.Number == 16)
             .Verses.Single(verse => verse.Number == 21).Words.Where(word => word.SuppliedSpan is not null);
@@ -129,14 +130,60 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
     [Fact]
     public void TheKingJamesGainsItsApocryphaBetweenTheTestaments()
     {
-        read.KingJames.Books.Should().HaveCount(66 + 12);
+        read.KingJames.Books.Should().HaveCount(66 + 13);
         read.KingJames.Books.Select(book => book.CanonicalOrdinal).Should()
-            .Contain([FirstEsdras, SecondEsdras, 70, 71, 72, 67, 75, 77, 78, 79, FirstMaccabees, SecondMaccabees]);
+            .Contain([FirstEsdras, SecondEsdras, 70, 71, 72, 67, 75, 93, 77, 78, 79, FirstMaccabees, SecondMaccabees]);
+        Deuterocanon.Verses(Deuterocanon.Book(read.KingJames, 93)).Should().Be(68);
         Deuterocanon.Book(read.KingJames, FirstEsdras).Position.Should().Be(40, "the Apocrypha follows Malachi");
-        Deuterocanon.Book(read.KingJames, 40).Position.Should().Be(52);
+        Deuterocanon.Book(read.KingJames, 40).Position.Should().Be(53);
         Deuterocanon.Text(read.KingJames, SecondEsdras, 1, 1).Should().StartWith("The second book of the prophet Esdras");
         Deuterocanon.Verses(Deuterocanon.Book(read.KingJames, FirstMaccabees)).Should().Be(924);
         Deuterocanon.Book(read.KingJames, 67).Chapters.Should().HaveCount(6, "Baruch keeps the letter it prints as its sixth chapter");
+    }
+
+    /// <summary>
+    /// The Greek additions the Synodal prints inside canonical books: the song, Susanna and Bel as books
+    /// of their own with the Daniel address each verse is printed under, the Prayer of Manasseh, and the
+    /// additions to Esther as the lettered pieces of the verses they stand in.
+    /// </summary>
+    [Fact]
+    public void TheSynodalGainsTheAdditionsItPrintsInsideCanonicalBooks()
+    {
+        var song = Deuterocanon.Book(read.Synodal, 93).Chapters.Single().Verses;
+        song.Should().HaveCount(67);
+        song.First().Number.Should().Be(1);
+        song.First().Stated.Should().Equal(new StatedNumberDraft(3, 24));
+        song.Select(verse => verse.Number).Should().OnlyHaveUniqueItems().And.NotContain(30);
+        song.Single(verse => verse.Stated.Single().Number == 58).Number.Should().Be(37, "the Synodal prints the angels first");
+        Deuterocanon.Verses(Deuterocanon.Book(read.Synodal, 77)).Should().Be(64);
+        Deuterocanon.Verses(Deuterocanon.Book(read.Synodal, 78)).Should().Be(42);
+        Deuterocanon.Text(read.Synodal, 78, 1, 1).Should().StartWith("Царь Астиаг");
+        Deuterocanon.Verses(Deuterocanon.Book(read.Synodal, 79)).Should().Be(12);
+
+        var esther = Deuterocanon.Book(read.Synodal, 17);
+        esther.Chapters.SelectMany(chapter => chapter.Verses.Where(verse => verse.Label == "a")
+                .Select(verse => $"{chapter.Number}:{verse.Number}"))
+            .Should().BeEquivalentTo(["1:1", "3:13", "4:17", "5:1", "5:2", "8:12", "10:3"]);
+        esther.Chapters.Single(chapter => chapter.Number == 1).Verses.Single(verse => verse.Label == "a")
+            .Words.Should().OnlyContain(word => word.SuppliedSpan != null);
+
+        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var extended = Deuterocanon.Frame(read.Synodal, rules);
+        extended.Resolve(17, 1, 1, lettered: true, "a")[0].Should().Be(new CanonicalReference(17, 11, 2));
+        extended.Resolve(17, 5, 2, lettered: true, "a")[0].Should().Be(new CanonicalReference(17, 15, 12));
+        extended.Resolve(79, 1, 11, lettered: false, string.Empty)[0].Should().Be(new CanonicalReference(79, 1, 13));
+        extended.Resolve(93, 1, 29, lettered: false, string.Empty).Should()
+            .Equal(new CanonicalReference(93, 1, 29), new CanonicalReference(93, 1, 30));
+
+        var hebrewOnly = Deuterocanon.Frame(Bible4uTextSource.Read(TestResources.Bible4u("RUSV"), "RUSV"), rules);
+        foreach (var chapter in esther.Chapters)
+        {
+            foreach (var verse in chapter.Verses.Where(verse => verse.Label.Length == 0))
+            {
+                extended.Resolve(17, chapter.Number, verse.Number)[0].Should()
+                    .Be(hebrewOnly.Resolve(17, chapter.Number, verse.Number)[0]);
+            }
+        }
     }
 
     /// <summary>

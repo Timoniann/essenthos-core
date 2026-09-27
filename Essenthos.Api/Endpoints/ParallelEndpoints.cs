@@ -152,16 +152,30 @@ internal static class ParallelEndpoints
             var reference = requested[0];
             foreach (var entry in requested)
             {
-                var (heldBook, heldChapter) = await Held(db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                byText[entry.Slug] = await Texts.ReadByCanonicalVerse(
-                    db, entry.Id, heldBook, heldChapter, cancellationToken);
-                references[entry.Slug] = await OwnReferences(db, entry.Id, heldBook, heldChapter, cancellationToken);
-                own[entry.Slug] = await OwnVerses(db, entry.Id, heldBook, heldChapter, cancellationToken);
-                stated[entry.Slug] = await StatedVerses(db, entry.Id, heldBook, heldChapter, cancellationToken);
-                notes[entry.Slug] = await SourceNotes(db, entry.Id, heldBook, heldChapter, cancellationToken);
-                strength[entry.Slug] = entry.Id == reference.Id
-                    ? []
-                    : await Strengths(db, entry.Id, reference.Id, heldBook, heldChapter, cancellationToken);
+                byText[entry.Slug] = [];
+                references[entry.Slug] = [];
+                own[entry.Slug] = [];
+                stated[entry.Slug] = [];
+                notes[entry.Slug] = [];
+                strength[entry.Slug] = [];
+                foreach (var (heldBook, heldChapter, first, last, shift) in Held(ordinal.Value, chapter))
+                {
+                    Merge(byText[entry.Slug], await Texts.ReadByCanonicalVerse(
+                        db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    Merge(references[entry.Slug],
+                        await OwnReferences(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    Merge(own[entry.Slug],
+                        await OwnVerses(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    Merge(stated[entry.Slug],
+                        await StatedVerses(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    Merge(notes[entry.Slug],
+                        await SourceNotes(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    if (entry.Id != reference.Id)
+                    {
+                        Merge(strength[entry.Slug], await Strengths(
+                            db, entry.Id, reference.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    }
+                }
             }
 
             var numbers = byText.Values
@@ -195,28 +209,29 @@ internal static class ParallelEndpoints
     }
 
     /// <summary>
-    /// Where a text holds the chapter asked for. The Letter of Jeremiah is Baruch 6 in the Latin and
-    /// English Bibles and a book of its own in the Greek, and a text is read under whichever name it
-    /// prints it, so that either name opens the letter in every text that has it. The two are numbered
-    /// alike verse for verse, so the rows meet.
+    /// The chapters a chapter's rows are read from: itself, and each chapter holding a passage of it
+    /// under another name (<see cref="TwinPassages"/>) — the Letter of Jeremiah, which is Baruch 6 in the
+    /// Latin and English Bibles and a book of its own in the Greek, and the Song of the Three, which is
+    /// inside Daniel 3 in the Greek and Latin and a book of its own in the King James. A text is read
+    /// under whichever name it prints the passage, with the verses of that passage and at the rows they
+    /// have here, so either name opens it in every text that has it.
     /// </summary>
-    internal static async Task<(int Book, int Chapter)> Held(
-        AppDbContext db,
-        int textId,
-        int canonicalBook,
-        int canonicalChapter,
-        CancellationToken cancellationToken)
-    {
-        if (LetterOfJeremiah.Twin(canonicalBook, canonicalChapter) is not { } twin
-            || await db.VerseReferences.AnyAsync(r => r.IsPrimary
-                                                     && r.Verse!.TextId == textId
-                                                     && r.CanonicalBook == canonicalBook
-                                                     && r.CanonicalChapter == canonicalChapter, cancellationToken))
-        {
-            return (canonicalBook, canonicalChapter);
-        }
+    internal static IEnumerable<(int Book, int Chapter, int First, int Last, int Shift)> Held(int book, int chapter) =>
+        [(book, chapter, int.MinValue, int.MaxValue, 0), .. TwinPassages.NamedElsewhere(book, chapter)];
 
-        return twin;
+    /// <summary>
+    /// Rows read under another name, at the rows they have here; a row the chapter already holds for the
+    /// text keeps what it has, since a verse stands primarily under one name only.
+    /// </summary>
+    internal static void Merge<T>(Dictionary<int, T> into, Dictionary<int, T> read, int first, int last, int shift)
+    {
+        foreach (var (verse, value) in read)
+        {
+            if (verse >= first && verse <= last)
+            {
+                into.TryAdd(verse + shift, value);
+            }
+        }
     }
 
     /// <summary>

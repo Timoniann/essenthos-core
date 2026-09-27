@@ -89,11 +89,15 @@ public class LetterOfJeremiahFrameTests(VersificationFrames frames) : IClassFixt
     [Fact]
     public void OneNameOfTheLetterNamesTheOther()
     {
-        LetterOfJeremiah.Twin(Baruch, 6).Should().Be((Letter, 1));
-        LetterOfJeremiah.Twin(Letter, 1).Should().Be((Baruch, 6));
-        LetterOfJeremiah.Twin(Baruch, 5).Should().BeNull();
-        LetterOfJeremiah.Joined((Baruch, 6, 12)).Should().Be((Letter, 1, 12));
-        LetterOfJeremiah.Joined((Baruch, 5, 9)).Should().Be((Baruch, 5, 9));
+        TwinPassages.Other((Baruch, 6, 12)).Should().Be((Letter, 1, 12));
+        TwinPassages.Other((Letter, 1, 12)).Should().Be((Baruch, 6, 12));
+        TwinPassages.Other((Baruch, 5, 9)).Should().BeNull();
+        TwinPassages.Joined((Baruch, 6, 12)).Should().Be((Letter, 1, 12));
+        TwinPassages.Joined((Baruch, 5, 9)).Should().Be((Baruch, 5, 9));
+        TwinPassages.Other((27, 3, 31)).Should().Be((93, 1, 1));
+        TwinPassages.Other((27, 3, 30)).Should().BeNull();
+        TwinPassages.Other((93, 1, 68)).Should().Be((27, 3, 98));
+        TwinPassages.Joined((27, 3, 98)).Should().Be((93, 1, 68));
     }
 
     private List<string> Placed(
@@ -143,22 +147,38 @@ public sealed class LetterOfJeremiahReadingTests : IDisposable
     }
 
     [Fact]
-    public async Task EachTextIsReadUnderTheNameItPrintsTheLetterUnder()
+    public void EachNameOfAPassageIsReadWithItsOtherName()
     {
-        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (6, 1, ["A", "copy"]));
-        var greek = Corpus.Add(_db, "GRCBRENT", TextKind.ManuscriptTradition, "grc", (1, 1, ["Ἀντίγραφον"]));
-        _db.SaveChanges();
-        _db.In(english, LetterOfJeremiah.Baruch);
-        _db.In(greek, LetterOfJeremiah.Book);
+        ParallelEndpoints.Held(LetterOfJeremiah.Baruch, 6).Should().Equal(
+            (LetterOfJeremiah.Baruch, 6, int.MinValue, int.MaxValue, 0), (LetterOfJeremiah.Book, 1, 1, 73, 0));
+        ParallelEndpoints.Held(LetterOfJeremiah.Book, 1).Should().Equal(
+            (LetterOfJeremiah.Book, 1, int.MinValue, int.MaxValue, 0), (LetterOfJeremiah.Baruch, 6, 1, 73, 0));
+        ParallelEndpoints.Held(SongOfTheThreeBook.Daniel, 3).Should().Equal(
+            (27, 3, int.MinValue, int.MaxValue, 0), (SongOfTheThreeBook.Book, 1, 1, 68, 30));
+        ParallelEndpoints.Held(SongOfTheThreeBook.Book, 1).Should().Equal(
+            (SongOfTheThreeBook.Book, 1, int.MinValue, int.MaxValue, 0), (27, 3, 31, 98, -30));
+        ParallelEndpoints.Held(27, 4).Should().HaveCount(1);
+    }
 
-        (await ParallelEndpoints.Held(_db, greek.Id, LetterOfJeremiah.Baruch, 6, default))
-            .Should().Be((LetterOfJeremiah.Book, 1));
-        (await ParallelEndpoints.Held(_db, english.Id, LetterOfJeremiah.Baruch, 6, default))
-            .Should().Be((LetterOfJeremiah.Baruch, 6));
-        (await ParallelEndpoints.Held(_db, english.Id, LetterOfJeremiah.Book, 1, default))
-            .Should().Be((LetterOfJeremiah.Baruch, 6));
-        (await ParallelEndpoints.Held(_db, english.Id, LetterOfJeremiah.Baruch, 5, default))
-            .Should().Be((LetterOfJeremiah.Baruch, 5));
+    /// <summary>
+    /// The King James's Song of the Three, a book of its own, is read inside Daniel 3 at the rows the
+    /// Greek prints it at, after the chapter's own verses; nothing of the song's book beyond it comes in.
+    /// </summary>
+    [Fact]
+    public void RowsReadUnderAnotherNameComeInAtTheirRowsHere()
+    {
+        var daniel = new Dictionary<int, string> { [1] = "Nebuchadnezzar", [30] = "promoted" };
+
+        ParallelEndpoints.Merge(daniel, new Dictionary<int, string> { [1] = "they walked", [68] = "O all ye" }, 1, 68, 30);
+
+        daniel.Should().Equal(new Dictionary<int, string>
+        {
+            [1] = "Nebuchadnezzar", [30] = "promoted", [31] = "they walked", [98] = "O all ye",
+        });
+
+        var song = new Dictionary<int, string>();
+        ParallelEndpoints.Merge(song, new Dictionary<int, string> { [1] = "x", [30] = "y", [31] = "z", [98] = "w" }, 31, 98, -30);
+        song.Should().Equal(new Dictionary<int, string> { [1] = "z", [68] = "w" });
     }
 
     /// <summary>A text that prints the letter as Baruch 6 is offered for the letter too, once the frame says so.</summary>

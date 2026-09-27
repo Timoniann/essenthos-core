@@ -695,10 +695,10 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             })
             .ToListAsync(cancellationToken);
 
-        // The Letter of Jeremiah is joined under one name, so that an edition printing it as Baruch 6
-        // meets one printing it as a book of its own.
+        // A passage printed under two names is joined under one, so that an edition printing the Letter
+        // of Jeremiah as Baruch 6 meets one printing it as a book of its own.
         var addressed = rows
-            .GroupBy(row => LetterOfJeremiah.Joined((row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse)))
+            .GroupBy(row => TwinPassages.Joined((row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse)))
             .ToDictionary(group => group.Key, group => group.Select(row => row.VerseId).Distinct().ToList());
 
         cache[textId] = addressed;

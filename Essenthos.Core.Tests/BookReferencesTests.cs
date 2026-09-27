@@ -28,6 +28,7 @@ public class BookReferencesTests
     [InlineData("Samuel_I", 9)]
     [InlineData("Judices", 7)]
     [InlineData("Canticum", 22)]
+    [InlineData("Song of the Three Holy Children", 93)]
     public void ResolvesTheNamesTheCorpusFilesUse(string book, int expected)
     {
         BookReferences.ResolveOrdinal(book).Should().Be(expected);
@@ -38,7 +39,7 @@ public class BookReferencesTests
     [InlineData("   ")]
     [InlineData(null)]
     [InlineData("0")]
-    [InlineData("93")]
+    [InlineData("94")]
     [InlineData("-1")]
     [InlineData("nope")]
     [InlineData("The Shepherd of Hermas")]

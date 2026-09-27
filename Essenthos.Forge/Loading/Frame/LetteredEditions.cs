@@ -1,4 +1,5 @@
 using System.Globalization;
+using Essenthos.Core.Corpus;
 
 namespace Essenthos.Core.Loading.Frame;
 
@@ -91,6 +92,8 @@ internal static class LetteredEditions
     private const int LetterOfJeremiah = 76;
 
     private const int Baruch = 67;
+
+    private const int PrayerOfManasseh = 79;
 
     private const int Sirach = 72;
 
@@ -268,14 +271,41 @@ internal static class LetteredEditions
     }
 
     /// <summary>
-    /// The Synodal as Russian Wikisource transcribes its non-canonical books: the Letter of Jeremiah in
-    /// seventy-two verses of its own division. Its Esther prints 5:1, which tells it from Swete's.
+    /// The Synodal as Russian Wikisource transcribes its non-canonical books and the Greek additions it
+    /// prints inside canonical ones: the Letter of Jeremiah in seventy-two verses of its own division;
+    /// the additions to Esther it sets in brackets inside six verses, each the lettered piece of its
+    /// verse and each the whole of an addition, the audience divided between 5:1 and 5:2 as Brenton
+    /// divides it; its 3:52, which holds the song's 29 and 30; and the Prayer of Manasseh in twelve
+    /// verses, read against the King James's fifteen. Its Esther prints 5:1, which tells it from Swete's.
     /// </summary>
     private static readonly Edition Synodal = new(
         "Synodal",
         "LJe.1:72=Last & Est.5:1=Exist",
-        [],
-        [.. SynodalLetterOfJeremiah()]);
+        [
+            Whole(1, 1, 'A', 1, 17),
+            Whole(3, 13, 'B', 1, 7),
+            Whole(4, 17, 'C', 1, 30),
+            Whole(5, 1, 'D', 1, 11),
+            Whole(5, 2, 'D', 12, 16),
+            Whole(8, 12, 'E', 1, 24),
+            Whole(10, 3, 'F', 1, 11),
+        ],
+        [
+            .. SynodalLetterOfJeremiah(),
+            Printed(SongOfTheThreeBook.Book, 1, 29, (1, 29), (1, 30)),
+            Printed(PrayerOfManasseh, 1, 1, (1, 1)),
+            Printed(PrayerOfManasseh, 1, 2, (1, 3), (1, 2), (1, 4), (1, 5)),
+            Printed(PrayerOfManasseh, 1, 3, (1, 5)),
+            Printed(PrayerOfManasseh, 1, 4, (1, 6)),
+            Printed(PrayerOfManasseh, 1, 5, (1, 7)),
+            Printed(PrayerOfManasseh, 1, 6, (1, 7), (1, 8)),
+            Printed(PrayerOfManasseh, 1, 7, (1, 8), (1, 9)),
+            Printed(PrayerOfManasseh, 1, 8, (1, 9), (1, 10)),
+            Printed(PrayerOfManasseh, 1, 9, (1, 10)),
+            Printed(PrayerOfManasseh, 1, 10, (1, 10), (1, 11)),
+            Printed(PrayerOfManasseh, 1, 11, (1, 13), (1, 12), (1, 14), (1, 15)),
+            Printed(PrayerOfManasseh, 1, 12, (1, 15)),
+        ]);
 
     /// <summary>The Clementine Vulgate and the Douay-Rheims made from it, which print the letter as Baruch 6.</summary>
     private static readonly Edition Vulgate = new(
@@ -437,6 +467,10 @@ internal static class LetteredEditions
         int first) =>
         letters.Select((letter, index) =>
             (chapter, verse, letter.ToString(), new[] { $"{section}:{first + index}" }));
+
+    /// <summary>A lettered piece of a verse of Esther holding the whole of one addition's verses.</summary>
+    private static (int, int, string, string[]) Whole(int chapter, int verse, char section, int first, int last) =>
+        (chapter, verse, "a", [.. Enumerable.Range(first, last - first + 1).Select(number => $"{section}:{number}")]);
 
     /// <summary>An addition numbered from one under a chapter of the book and marked by a letter.</summary>
     private static IEnumerable<(int Chapter, int Verse, string Label, string[] Prints)> Numbered(
