@@ -8,6 +8,7 @@ namespace Essenthos.Core.Tests;
 /// How STEPBible's brief Greek lexicon is read: only its entry lines, each form an entry prints, and
 /// the gloss without the punctuation the file leaves after it.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class BriefGreekLexiconTests
 {
     [Fact]

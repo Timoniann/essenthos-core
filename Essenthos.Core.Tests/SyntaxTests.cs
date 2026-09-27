@@ -43,6 +43,7 @@ public sealed class DraftedSyntax
 /// <c>otype.tf</c>, <c>oslots.tf</c> and <c>mother.tf</c> first, so one of these failing means the
 /// loader stopped agreeing with BHSA rather than that BHSA moved.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SyntaxTests(DraftedSyntax syntax) : IClassFixture<DraftedSyntax>
 {
     /// <summary>

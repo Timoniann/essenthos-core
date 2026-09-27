@@ -17,6 +17,7 @@ namespace Essenthos.Core.Tests;
 /// words it has no reason to pair — an aligner that closes every gap reports no differences and
 /// looks excellent — so what is pinned here is both what agrees and what does not.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class SamaritanLinkTests(ITestOutputHelper output)
 {
     private static readonly Lazy<Measurement> Measured = new(Measure);

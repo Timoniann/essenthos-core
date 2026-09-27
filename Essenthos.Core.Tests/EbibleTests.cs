@@ -16,6 +16,7 @@ namespace Essenthos.Core.Tests;
 /// only through this project's own aligner; dropping the second would print the translators'
 /// additions as though the source had them.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class UsfmAnnotationTests
 {
     [Fact]
@@ -159,6 +160,7 @@ public sealed class Ebible
 /// numbering, and two of the three arrive tagged — which is the whole reason these three were the
 /// ones taken, so it is checked rather than assumed.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class EbibleCorpusTests(Ebible ebible) : IClassFixture<Ebible>
 {
     /// <summary>

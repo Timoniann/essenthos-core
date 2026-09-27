@@ -19,6 +19,7 @@ public sealed class ParsedWitnesses
 /// What the two witnesses become before anything is written. The one thing that has to be right
 /// here is that a book's place in this text and its place in the shared order are two numbers.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class TextSourceTests(ParsedWitnesses witnesses) : IClassFixture<ParsedWitnesses>
 {
     [Fact]
@@ -235,6 +236,7 @@ public class TextSourceTests(ParsedWitnesses witnesses) : IClassFixture<ParsedWi
 /// They are kept, because dropping one loses the word a translation's "the" corresponds to. What
 /// was missing is any way for a consumer to tell them from ordinary words.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class ElidedMorphemeTests(ParsedWitnesses witnesses) : IClassFixture<ParsedWitnesses>
 {
     private const int ElidedMorphemes = 6_488;

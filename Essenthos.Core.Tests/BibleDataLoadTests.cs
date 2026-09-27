@@ -18,6 +18,7 @@ namespace Essenthos.Core.Tests;
 /// rewritten after the entities have already been saved, and rides back on change tracking, which
 /// is exactly the kind of thing that works in a list and does nothing in a table.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class BibleDataLoadTests : IDisposable
 {

@@ -18,6 +18,7 @@ namespace Essenthos.Core.Tests;
 /// may do. This runs a whole chapter measurement against a real database and asks the change
 /// tracker.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class EvidentiaReadOnlyTests : IDisposable
 {

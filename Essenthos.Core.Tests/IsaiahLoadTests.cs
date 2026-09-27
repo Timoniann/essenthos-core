@@ -17,6 +17,7 @@ namespace Essenthos.Core.Tests;
 /// the book goes into the text already there, the frame places it, and the letter links reach it
 /// without the books already linked being linked again.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class IsaiahLoadTests : IDisposable
 {

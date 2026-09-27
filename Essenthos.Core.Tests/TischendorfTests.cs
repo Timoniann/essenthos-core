@@ -19,6 +19,7 @@ namespace Essenthos.Core.Tests;
 /// the other — so a file that turned out to be a seventh edition, or somebody's critical text under
 /// Tischendorf's name, fails here rather than loading.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class TischendorfTests
 {
     private const int Words = 137_711;

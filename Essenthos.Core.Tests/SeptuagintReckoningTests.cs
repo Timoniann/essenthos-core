@@ -10,6 +10,7 @@ using Xunit;
 
 namespace Essenthos.Core.Tests;
 
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class GreekNumeralTests
 {
     [Theory]
@@ -71,6 +72,7 @@ public sealed class SeptuagintEditions
     }
 }
 
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SeptuagintReadingTests(SeptuagintEditions editions) : IClassFixture<SeptuagintEditions>
 {
     [Fact]
@@ -143,6 +145,7 @@ public class SeptuagintReadingTests(SeptuagintEditions editions) : IClassFixture
     }
 }
 
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SeptuagintSideTests
 {
     private const int Exodus = 2515;
@@ -190,6 +193,7 @@ public class SeptuagintSideTests
 }
 
 /// <summary>The two reckonings written into a database beside the base one and the world layer.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class SeptuagintReckoningLoadTests : IDisposable
 {

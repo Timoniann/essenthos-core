@@ -10,6 +10,7 @@ namespace Essenthos.Core.Tests;
 /// <summary>
 /// The versification data's tests, on an edition made up here so each one can be asked on its own.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class VersificationTestTests
 {
     private static readonly EditionShape Edition = EditionShape.Of(
@@ -148,6 +149,7 @@ public sealed class BrentonEdition
     internal VersificationFrame Edition => edition.Value;
 }
 
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEdition>
 {
     private const int Genesis = 1;
@@ -388,6 +390,7 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
 /// The same end of Malachi in Swete, who numbers it 4:4 to 4:6 under another of the data's schemes
 /// and prints it in the same order as Brenton.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteMalachiTests
 {
     private const int Malachi = 39;
@@ -468,6 +471,7 @@ public sealed class SweteEdition
 /// Swete, placed passage by passage where its words are. Each of these stood beside a Hebrew verse
 /// that says something else.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
 {
     private const int Exodus = 2;
@@ -588,6 +592,7 @@ public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
 /// The Reina-Valera as eBible publishes it: the Spanish division, numbered to the English count, so
 /// the verse the Spanish moved to the next chapter is left empty and that chapter runs early.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class ReinaValeraFrameTests(Ebible ebible) : IClassFixture<Ebible>
 {
     private const int Numbers = 4;
@@ -654,6 +659,7 @@ public class ReinaValeraFrameTests(Ebible ebible) : IClassFixture<Ebible>
 /// Kulish's Bible, which divides some forty chapters in its own way while declaring the English
 /// numbering. Each of these stood beside an English and a Hebrew verse that says something else.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class KulishFrameTests(Kulish kulish) : IClassFixture<Kulish>
 {
     private const int Genesis = 1;
@@ -724,6 +730,7 @@ public sealed class Bible4u
 /// own division inside a chapter. Each of these stood beside an English and a Hebrew verse that says
 /// something else.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SynodalFrameTests(Bible4u bible4u) : IClassFixture<Bible4u>
 {
     private const int Esther = 17;

@@ -12,6 +12,7 @@ namespace Essenthos.Core.Tests;
 /// chapter, runs across a chapter end, the transcription's own spellings of three books, and the
 /// heading a nested line is filed under.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class NaveEntryTests
 {
     private const int Genesis = 1;
@@ -174,6 +175,7 @@ public sealed class NaveEntryTests
 /// The loader over a small index of its own shape. Asked of Postgres because the references go in
 /// by binary copy, and a copy that got a column's type wrong fails only there.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class NaveTopicLoadTests : IDisposable
 {

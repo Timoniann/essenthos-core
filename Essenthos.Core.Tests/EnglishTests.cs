@@ -54,6 +54,7 @@ public sealed class English
 /// checked is exactly that: which underlying text each follows, which edition of it this file is,
 /// and — for the two that arrive tagged — that the tagging stays out.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class EnglishCorpusTests(English english) : IClassFixture<English>
 {
     [Theory]

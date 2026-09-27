@@ -25,6 +25,7 @@ namespace Essenthos.Core.Tests;
 /// on Ohienko, and what is being asked is whether Kulish is the same kind of text to it.
 /// </para>
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class KulishStemTests(ITestOutputHelper output)
 {
     private static readonly Lazy<Vocabulary> Kulish =

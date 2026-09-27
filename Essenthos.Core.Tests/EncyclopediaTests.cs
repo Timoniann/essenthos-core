@@ -19,6 +19,7 @@ namespace Essenthos.Core.Tests;
 /// fifteen names had a right Strong number while a thousand Greek ones were being discarded, and
 /// the disputed flag was right on the labels anyone thought to look at.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
 {
     private readonly BibleDataCorpus _corpus;

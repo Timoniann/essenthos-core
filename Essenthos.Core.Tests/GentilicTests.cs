@@ -16,6 +16,7 @@ namespace Essenthos.Core.Tests;
 /// and every reader will repeat. So each clause the dictionary phrases loosely is here as its own
 /// case, with the sentence that has to keep being refused.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class GentilicTests
 {
     [Fact]
@@ -163,6 +164,7 @@ public sealed class GentilicTests
 /// ancestry, and a resolution that quietly starts reaching more pages has changed which man a
 /// reader is sent to.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class StatedGentilicCoverageTests : IClassFixture<BibleDataCorpus>
 {
     private readonly BibleDataCorpus _corpus;

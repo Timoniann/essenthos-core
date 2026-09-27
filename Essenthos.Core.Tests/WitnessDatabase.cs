@@ -108,9 +108,34 @@ public sealed class WitnessDatabase : IAsyncLifetime
     /// than honoured. This fixture drops what it is pointed at, and a name somebody typed by hand
     /// is exactly the one they would mind losing.
     /// </summary>
-    private static string Scratch(string connectionString) =>
-        new NpgsqlConnectionStringBuilder(connectionString) { Database = DatabaseName }
-            .ConnectionString;
+    private static string Scratch(string connectionString)
+    {
+        var builder = new NpgsqlConnectionStringBuilder(connectionString) { Database = DatabaseName };
+        builder.Options = string.IsNullOrEmpty(builder.Options)
+            ? ScratchSessionOptions
+            : $"{builder.Options} {ScratchSessionOptions}";
+        return builder.ConnectionString;
+    }
+
+    /// <summary>
+    /// How every session on the scratch database is set up.
+    ///
+    /// <para>
+    /// A test class whose constructor throws is never disposed, so the transaction it opened stays
+    /// open, holding the rows it had written, and the next class to write the same key waits on it
+    /// until its own command times out — and leaves its own transaction open in turn. One duplicate
+    /// key in a constructor became 56 thirty-second timeouts in a row, 28 of a 35-minute run. Ended
+    /// after 20 seconds idle, the abandoned transaction releases its locks before the next one's
+    /// 30-second command timeout, and the chain stops at one.
+    /// </para>
+    ///
+    /// <para>
+    /// Commits are not waited on: a database dropped at the end of the run has nothing a crash could
+    /// lose.
+    /// </para>
+    /// </summary>
+    private const string ScratchSessionOptions =
+        "-c idle_in_transaction_session_timeout=20s -c synchronous_commit=off";
 
     /// <summary>
     /// Drops the run's database. Without this every run would leave one behind, and a machine that

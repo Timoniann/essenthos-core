@@ -18,6 +18,7 @@ namespace Essenthos.Core.Tests;
 /// corruptions that reached the database were both invisible to the unit tests, because a unit test
 /// feeds a parser the input its author thought of.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class CorpusRoundTripTests(ITestOutputHelper output)
 {
     /// <summary>How many failures to name before giving up; a broken parser fails everywhere.</summary>

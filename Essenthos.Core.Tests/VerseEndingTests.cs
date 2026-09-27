@@ -14,6 +14,7 @@ namespace Essenthos.Core.Tests;
 /// Writing the end of a verse onto a text whose file cut it short: Ohienko's Genesis 22:19 in
 /// miniature, and then the seven verses of the real file against the real transcription.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class VerseEndingTests : IDisposable
 {

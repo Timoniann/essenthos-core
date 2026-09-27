@@ -12,6 +12,7 @@ namespace Essenthos.Core.Tests;
 /// that resolves to the wrong testament, a year the source contradicts twice over, and a title that
 /// reads as a dead man's words. None of them throws, and none is visible in a count.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class UssherAnnalsTests
 {
     private static readonly Lazy<BibleDataLoader.ReferenceTable> Frame =

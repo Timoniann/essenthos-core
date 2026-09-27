@@ -28,6 +28,7 @@ namespace Essenthos.Core.Tests;
 /// price of measuring the thing the product exists to claim, and the numbers it prints are the
 /// answer to <c>how far apart are these editions</c>, which no other measure in the corpus gives.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutputHelper output)
     : IAsyncLifetime

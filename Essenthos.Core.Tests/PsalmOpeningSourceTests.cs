@@ -11,6 +11,7 @@ namespace Essenthos.Core.Tests;
 /// superscription on, which the reader that loads a text deliberately folds into the first verse
 /// and which this has to be able to get at separately.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class PsalmSuperscriptionReaderTests
 {
     /// <summary>
@@ -79,6 +80,7 @@ public class PsalmSuperscriptionReaderTests
 /// the premise the loader rests on — that the complete King James prints 116 superscriptions and
 /// that Ohienko's Psalm 7 has the eighteen verses the loaded file is one short of.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class PsalmOpeningSourceTests(ITestOutputHelper output)
 {
     private const int TitledPsalms = 116;

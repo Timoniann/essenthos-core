@@ -17,6 +17,7 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>Joda of Luke 3:26, whom the critical editions tag with the number of the land of Judah.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class GreekWitnessNumberReadingTests
 {
     private const int Luke = 42;
@@ -78,6 +79,7 @@ public class GreekWitnessNumberReadingTests
 }
 
 /// <summary>The same reading made on a corpus that loaded the editions before it.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class GreekWitnessNumberMigrationTests : IDisposable
 {

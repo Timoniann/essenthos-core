@@ -14,6 +14,7 @@ namespace Essenthos.Core.Tests;
 /// Psalms of Solomon, the prologue of Lamentations and the heading of Obadiah all arrive that way,
 /// and left alone every one of them would claim an address that belongs to another verse.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteUnnumberedTests
 {
     [Fact]
@@ -147,6 +148,7 @@ public sealed class Swete
 /// mind — and a text whose word division moved silently is a text whose every future link is built
 /// against something else.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
 {
     [Fact]
@@ -355,6 +357,7 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
 }
 
 /// <summary>The chapters and verses the transcription numbers as Swete does not.</summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteNumberingTests
 {
     private static readonly IReadOnlyList<BookDraft> Books = SweteTextSource.Read(TestResources.SweteFolder).Books;

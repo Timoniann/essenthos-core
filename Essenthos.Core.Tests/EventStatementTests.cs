@@ -17,6 +17,7 @@ namespace Essenthos.Core.Tests;
 /// BibleData names where each event happened. Loaded from the files themselves, because every
 /// figure here is a count of the source's own rows.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class EventStatementTests : IDisposable
 {

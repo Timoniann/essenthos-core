@@ -10,6 +10,7 @@ namespace Essenthos.Core.Tests;
 /// files rather than invented, because the shapes that break a reader are exactly the ones a
 /// description of the format leaves out.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class UtrReaderTests
 {
     private const string Genealogy =
@@ -154,6 +155,7 @@ public class UtrReaderTests
 /// still carries the number, with the words on Scrivener's side of the group and nothing on
 /// Stephanus's — so the edition that does not print the verse must not get a verse.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class TextusReceptusOmissionTests
 {
     private const int Luke = 42;

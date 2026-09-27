@@ -19,6 +19,7 @@ namespace Essenthos.Core.Tests;
 ///
 /// So the check is the text itself. Every verse of both files, word for word.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class ClearBibleSpanishTests(Ebible ebible, ITestOutputHelper output) : IClassFixture<Ebible>
 {
     /// <summary>

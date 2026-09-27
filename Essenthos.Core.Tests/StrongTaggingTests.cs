@@ -10,6 +10,7 @@ namespace Essenthos.Core.Tests;
 /// numbers its verse holds — decided by counting, so a text taken next is judged the way these were
 /// rather than by whether somebody remembered to add it to a list.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class StrongTaggingTests(ITestOutputHelper output)
 {
     private static readonly string[] NotScripture = ["FRT", "INT", "GLO", "BAK"];

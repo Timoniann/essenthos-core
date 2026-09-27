@@ -14,6 +14,7 @@ namespace Essenthos.Core.Tests;
 /// the naming pass had to infer from a capital letter in the lexicon, and what case an indeclinable
 /// numeral has, which the Nestle form-code reader once answered with <em>nominative</em> 476 times.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class MaculaClassTests(ITestOutputHelper output)
 {
     private const int Books = 27;

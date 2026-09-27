@@ -22,6 +22,7 @@ namespace Essenthos.Core.Tests;
 /// <see cref="ScrivenerExtractionTests"/> and for the same reason: the rule is a rule, and this is
 /// what says the rule was right.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class WestcottHortEditionTests(ITestOutputHelper output)
 {
     /// <summary>Every address the parsed file writes, including the four it writes empty.</summary>

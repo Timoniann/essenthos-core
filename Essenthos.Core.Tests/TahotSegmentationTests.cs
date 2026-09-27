@@ -11,6 +11,7 @@ namespace Essenthos.Core.Tests;
 /// The rows are TAHOT's own, copied from the file, because the point of the join is that two
 /// independent sources describe the same words and an invented row cannot disagree with anything.
 /// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class TahotSegmentationTests(ITestOutputHelper output)
 {
     /// <summary>
