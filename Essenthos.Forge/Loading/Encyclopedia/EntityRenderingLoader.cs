@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using NpgsqlTypes;
@@ -43,6 +44,8 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
     /// <summary>
     /// Every named word, and for a translation's word the lemma of an original word it is linked to
     /// that names the same entity — which of the entity's names in the original it translates.
+    /// And how sure the annotation is where an aligner's link carried it, which decides whether the
+    /// spelling it gives is believed.
     /// </summary>
     private const string Named =
         """
@@ -55,7 +58,8 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
                    JOIN text theirs_text ON theirs_text.id = theirs_word.text_id
                         AND theirs_text.language = ANY(@originals)
                    JOIN word_entity same ON same.word_id = theirs_word.id AND same.entity_id = a.entity_id
-                   WHERE mine.word_id = w.id) END AS renders
+                   WHERE mine.word_id = w.id) END AS renders,
+               CASE WHEN a.note LIKE @guessed THEN a.confidence END AS guess
         FROM word_entity a
         JOIN word w ON w.id = a.word_id
         JOIN text t ON t.id = w.text_id
@@ -122,6 +126,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
         var words = new List<NamedWord>();
         await using var command = new NpgsqlCommand(Named, connection);
         command.Parameters.AddWithValue("originals", Renderings.Original.ToArray());
+        command.Parameters.AddWithValue("guessed", $"{Annotating.CarriedNote}, linked by {EnumSpelling.Of(LinkMethod.Aligner)}");
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {
@@ -134,7 +139,8 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
                 reader.GetString(5),
                 reader.IsDBNull(6) ? null : reader.GetString(6),
                 reader.GetString(7),
-                reader.IsDBNull(8) ? null : reader.GetString(8)));
+                reader.IsDBNull(8) ? null : reader.GetString(8),
+                reader.IsDBNull(9) ? null : reader.GetDouble(9)));
         }
 
         return words;

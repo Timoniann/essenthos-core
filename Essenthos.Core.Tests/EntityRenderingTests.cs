@@ -21,8 +21,8 @@ public sealed class RenderingRuleTests
         new Dictionary<(int, string), string>();
 
     private static NamedWord Word(int verse, int position, string surface, string language = "ukr", string? lemma = null,
-        int entity = 1, int text = 1, string trailer = " ", string? renders = null) =>
-        new(entity, text, verse, position, surface, trailer, lemma, language, renders);
+        int entity = 1, int text = 1, string trailer = " ", string? renders = null, double? guess = null) =>
+        new(entity, text, verse, position, surface, trailer, lemma, language, renders, guess);
 
     private static List<Rendering> Of(IReadOnlyDictionary<(int, string), string>? nominatives, params NamedWord[] words) =>
         [.. Renderings.Of(words, nominatives ?? NoNominatives)];
@@ -189,6 +189,55 @@ public sealed class RenderingRuleTests
         renderings.Should().Contain(r => r.EntityId == 2 && r.Form == "Nazareth" && r.Heading);
     }
 
+    /// <summary>
+    /// The Open New Ukrainian Translation prints the mercy seat once, as a word no link reaches, and
+    /// the aligner spread the Greek word over the words beside it; the one of them with a capital is
+    /// the conjunction opening the next sentence. The Ohienko Bible's firm spellings stand.
+    /// </summary>
+    [Fact]
+    public void AWordOnlyAFaintGuessNamesIsNotASpelling()
+    {
+        var renderings = Of(null,
+            Word(1, 9, "примирення", trailer: ". ", guess: 0.435, text: 2), Word(1, 10, "Однак", guess: 0.27, text: 2),
+            Word(2, 1, "Віко", guess: 0.91), Word(3, 1, "Віко", guess: 0.91));
+
+        renderings.Should().NotContain(r => r.TextId == 2);
+        renderings.Select(r => (r.TextId, r.Form)).Should().BeEquivalentTo([(1, "Віко")]);
+    }
+
+    /// <summary>
+    /// A faint spelling stands when another text prints the same name firmly, when the corpus holds
+    /// it as the language's nominative, or when two words print it — and not on its own.
+    /// </summary>
+    [Fact]
+    public void AFaintSpellingStandsWhenSomethingElseSaysItIsTheName()
+    {
+        var held = new Dictionary<(int, string), string> { [(3, "ukr")] = "Соляне море" };
+
+        var renderings = Of(held,
+            Word(1, 1, "Одед", guess: 0.46, text: 1), Word(1, 1, "Одед", "rus", guess: 0.93, text: 2),
+            Word(2, 1, "Соляній", guess: 0.49, entity: 3),
+            Word(3, 1, "Ясон", guess: 0.48, entity: 4), Word(4, 1, "Ясон", guess: 0.48, entity: 4),
+            Word(5, 1, "Юдина", guess: 0.48, entity: 5));
+
+        renderings.Select(r => (r.EntityId, r.TextId, r.Form)).Should().BeEquivalentTo(
+            [(1, 1, "Одед"), (1, 2, "Одед"), (3, 1, "Соляній"), (4, 1, "Ясон")]);
+    }
+
+    /// <summary>
+    /// A faint spelling does not decide which spellings keep company with the commonest: Elberfeld's
+    /// Spain was headed by the word beside it, which tied with the name and was longer.
+    /// </summary>
+    [Fact]
+    public void AFaintGuessNoLongerCrowdsOutTheName()
+    {
+        var renderings = Of(null,
+            Word(1, 1, "Durchreise", "deu", guess: 0.33), Word(2, 1, "Spanien", "deu", guess: 0.33),
+            Word(2, 1, "Spain", "eng", guess: 0.9, text: 2));
+
+        renderings.Where(r => r.TextId == 1).Select(r => (r.Form, r.Heading)).Should().BeEquivalentTo([("Spanien", true)]);
+    }
+
     [Theory]
     [InlineData("Aarón", "aaron")]
     [InlineData("Beth-shemesh", "bethshemesh")]
@@ -294,6 +343,52 @@ public sealed class EntityRenderingTests : IDisposable
             new { Slug = "RV1909", Form = "Aarón", Occurrences = 1, Heading = true },
         });
     }
+
+    /// <summary>
+    /// What an aligner's link carried is read at the annotation's confidence, and only that: the
+    /// same confidence on an annotation a number carried is not a guess.
+    /// </summary>
+    [Fact]
+    public async Task OnlyAnAnnotationAnAlignersLinkCarriedIsReadAsAGuess()
+    {
+        var open = Corpus.Add(_db, "NPU2022", TextKind.Translation, "ukr",
+            (2, 1, ["кришку", "примирення.", "Однак", "зараз"]),
+            (2, 2, ["Ковчег"]));
+        var mercySeat = Thing("mercy-seat", "Mercy Seat");
+        var ark = Thing("ark-of-the-covenant", "Ark of the Covenant");
+        _db.SaveChanges();
+
+        Carry(open, 2, 1, 2, mercySeat, 0.435, "aligner");
+        Carry(open, 2, 1, 3, mercySeat, 0.27, "aligner");
+        Carry(open, 2, 2, 1, ark, 0.27, "strong-number");
+        _db.SaveChanges();
+
+        await Load();
+
+        (await _db.EntityRenderings.AsNoTracking()
+                .Where(r => r.TextId == open.Id)
+                .Select(r => new { r.EntityId, r.Form })
+                .ToListAsync())
+            .Should().BeEquivalentTo(new[] { new { EntityId = ark.Id, Form = "Ковчег" } });
+    }
+
+    private Entity Thing(string slug, string name)
+    {
+        var entity = new Entity { Kind = EntityKind.Object, Slug = slug, Name = name, SourceId = slug, Source = "a test" };
+        _db.Entities.Add(entity);
+        return entity;
+    }
+
+    private void Carry(Text text, int chapter, int verse, int position, Entity entity, double confidence, string linkedBy) =>
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = _db.WordAt(text, chapter, verse, position).Id,
+            EntityId = entity.Id,
+            Method = LinkMethod.ModelReading,
+            Confidence = confidence,
+            Source = "a test",
+            Note = $"through NESTLE1904 word 1, linked by {linkedBy}",
+        });
 
     /// <summary>A second load leaves the same rows, not twice as many.</summary>
     [Fact]
