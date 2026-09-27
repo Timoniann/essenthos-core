@@ -168,6 +168,40 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
             .Should().Be(0, "nothing is taken off before the lexicon is loaded");
     }
 
+    [Fact]
+    public void APersonIsNumberedInGreekByHisNameAndNotByWhatItMeans()
+    {
+        var bendeker = new EntityName { EntityId = 1, Label = "Ben-deker", Kind = BibleDataLoader.LabelKind, GreekStrongNumber = "G5207" };
+        var ichabod = new EntityName { EntityId = 2, Label = "Ichabod", Kind = BibleDataLoader.LabelKind, GreekStrongNumber = "G3759" };
+        var legion = new EntityName { EntityId = 3, Label = "Legion", Kind = BibleDataLoader.LabelKind, GreekStrongNumber = "G3003" };
+        var paul = new EntityName { EntityId = 4, Label = "Paul", Kind = BibleDataLoader.LabelKind, GreekStrongNumber = "G3972" };
+        var lord = new EntityName { EntityId = 5, Label = "LORD", Kind = BibleDataLoader.LabelKind, GreekStrongNumber = "G2316" };
+        var sea = new EntityName { EntityId = 6, Label = "Sea", Kind = BibleDataLoader.LabelKind, GreekStrongNumber = "G2281" };
+        HashSet<string> greekNames = ["G3972"];
+        var definitions = new Dictionary<string, string?>
+        {
+            ["G5207"] = "a \"son\" (sometimes of animals), used very widely",
+            ["G3759"] = "\"woe\"",
+            ["G3003"] = "a \"legion\", i.e. Roman regiment (figuratively)",
+            ["G2316"] = "a deity",
+            ["G2281"] = "the sea",
+        };
+
+        var taken = BibleDataLoader.NumberPeopleOnlyByTheirNames(
+            [bendeker, ichabod, legion, paul, lord, sea], new HashSet<int> { 1, 2, 3, 4, 5 }, greekNames, definitions);
+
+        taken.Should().Be(2);
+        bendeker.GreekStrongNumber.Should().BeNull("υἱός is the word son, not Ben-deker");
+        ichabod.GreekStrongNumber.Should().BeNull();
+        legion.GreekStrongNumber.Should().Be("G3003", "the entry prints the name");
+        paul.GreekStrongNumber.Should().Be("G3972");
+        lord.GreekStrongNumber.Should().Be("G2316", "the words for God are God's");
+        sea.GreekStrongNumber.Should().Be("G2281", "a place keeps its own rule");
+
+        BibleDataLoader.NumberPeopleOnlyByTheirNames([sea], new HashSet<int> { 6 }, new HashSet<string>(), definitions)
+            .Should().Be(0, "nothing is taken off before the lexicon is loaded");
+    }
+
     [Theory]
     [InlineData("H1328A", 'H', "H1328")]
     [InlineData("H0911", 'H', "H911")]
