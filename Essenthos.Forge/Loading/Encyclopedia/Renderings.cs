@@ -7,6 +7,10 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// The lemma of the original word a translation's word is linked to and that names the same entity,
 /// where there is one: which of the entity's names in the original this word translates.
 /// </param>
+/// <param name="Guess">
+/// How sure the annotation naming the word is, where it reached the word across a link the aligner
+/// guessed; null where a source states it or a number, a lexicon or a rule carried it.
+/// </param>
 internal readonly record struct NamedWord(
     int EntityId,
     int TextId,
@@ -16,7 +20,8 @@ internal readonly record struct NamedWord(
     string Trailer,
     string? Lemma,
     string Language,
-    string? Renders = null);
+    string? Renders = null,
+    double? Guess = null);
 
 /// <summary>One spelling of one entity in one text, counted, and whether a list heads with it.</summary>
 internal sealed record Rendering(int EntityId, int TextId, string Form, string Folded, int Occurrences, bool Heading);
@@ -78,6 +83,20 @@ internal static class Renderings
     /// </summary>
     private const int AnotherNameAtLeast = 2;
 
+    /// <summary>
+    /// How sure the annotation on a spelling must be, on at least one of the words that print it,
+    /// for the spelling to stand on that alone. It is the line below which the reader draws a link
+    /// as a guess, and a spelling is only as good as its best link.
+    /// </summary>
+    internal const double TrustedAt = 0.5;
+
+    /// <summary>
+    /// How many words must print a spelling none of whose annotations reaches
+    /// <see cref="TrustedAt"/> for it to stand anyway. A faint link the aligner made once is as
+    /// likely the word beside the name; two of them agreeing on one spelling are a rendering.
+    /// </summary>
+    internal const int AgreeingAt = 2;
+
     /// <summary>The languages whose witnesses carry a lemma, which is the name without its case.</summary>
     internal static readonly HashSet<string> Original = new(StringComparer.Ordinal) { "hbo", "arc", "grc" };
 
@@ -101,9 +120,10 @@ internal static class Renderings
         IEnumerable<NamedWord> words,
         IReadOnlyDictionary<(int Entity, string Language), string> nominatives)
     {
-        var names = new Dictionary<(int Entity, int Text), Dictionary<string, int>>();
-        var byOriginal = new Dictionary<(int Entity, int Text), Dictionary<string, Dictionary<string, int>>>();
+        var names = new Dictionary<(int Entity, int Text), Dictionary<string, Tally>>();
+        var byOriginal = new Dictionary<(int Entity, int Text), Dictionary<string, Dictionary<string, Tally>>>();
         var languages = new Dictionary<int, string>();
+        var trusted = new Dictionary<int, HashSet<string>>();
 
         foreach (var run in Runs(words))
         {
@@ -117,16 +137,27 @@ internal static class Renderings
             }
 
             var key = (first.EntityId, first.TextId);
-            Count(names, key, name);
+            var best = run.Max(word => word.Guess ?? NotGuessed);
+            Count(names, key, name, best);
+
+            if (best >= TrustedAt)
+            {
+                if (!trusted.TryGetValue(first.EntityId, out var forms))
+                {
+                    trusted[first.EntityId] = forms = new HashSet<string>(StringComparer.Ordinal);
+                }
+
+                forms.Add(NameFolding.Fold(name));
+            }
 
             if (OriginalName(run) is { } original)
             {
                 if (!byOriginal.TryGetValue(key, out var groups))
                 {
-                    byOriginal[key] = groups = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);
+                    byOriginal[key] = groups = new Dictionary<string, Dictionary<string, Tally>>(StringComparer.Ordinal);
                 }
 
-                Count(groups, original, name);
+                Count(groups, original, name, best);
             }
         }
 
@@ -137,8 +168,14 @@ internal static class Renderings
             var nominative = nominatives.GetValueOrDefault((entity, languages[text]));
             var groups = byOriginal.TryGetValue((entity, text), out var found)
                 ? found.Values
-                : (IEnumerable<Dictionary<string, int>>)[];
-            foreach (var (rendering, isAnother) in Kept(entity, text, counted, groups, nominative))
+                : (IEnumerable<Dictionary<string, Tally>>)[];
+            var corroborating = trusted.GetValueOrDefault(entity) ?? [];
+            if (nominative is not null)
+            {
+                corroborating = [.. corroborating, NameFolding.Fold(nominative)];
+            }
+
+            foreach (var (rendering, isAnother) in Kept(entity, text, counted, groups, nominative, corroborating))
             {
                 if (isAnother)
                 {
@@ -163,15 +200,22 @@ internal static class Renderings
         }
     }
 
-    private static void Count<TKey>(Dictionary<TKey, Dictionary<string, int>> into, TKey key, string name)
+    /// <summary>How sure an annotation no guess carried is, for comparing it with the ones one did.</summary>
+    private const double NotGuessed = 1.0;
+
+    /// <summary>How often a spelling is printed, and the surest annotation on any word printing it.</summary>
+    private readonly record struct Tally(int Occurrences, double Best);
+
+    private static void Count<TKey>(Dictionary<TKey, Dictionary<string, Tally>> into, TKey key, string name, double best)
         where TKey : notnull
     {
         if (!into.TryGetValue(key, out var counted))
         {
-            into[key] = counted = new Dictionary<string, int>(StringComparer.Ordinal);
+            into[key] = counted = new Dictionary<string, Tally>(StringComparer.Ordinal);
         }
 
-        counted[name] = counted.GetValueOrDefault(name) + 1;
+        var tally = counted.GetValueOrDefault(name);
+        counted[name] = new Tally(tally.Occurrences + 1, Math.Max(tally.Best, best));
     }
 
     /// <summary>
@@ -295,11 +339,12 @@ internal static class Renderings
     private static IEnumerable<(Rendering Rendering, bool Another)> Kept(
         int entity,
         int text,
-        Dictionary<string, int> counted,
-        IEnumerable<Dictionary<string, int>> byOriginal,
-        string? nominative)
+        Dictionary<string, Tally> counted,
+        IEnumerable<Dictionary<string, Tally>> byOriginal,
+        string? nominative,
+        IReadOnlySet<string> corroborating)
     {
-        var spellings = Spellings(counted);
+        var spellings = Spellings(counted, corroborating);
         if (spellings.Count == 0)
         {
             return [];
@@ -310,7 +355,7 @@ internal static class Renderings
 
         var taken = kept.Select(c => c.Folded).ToHashSet(StringComparer.Ordinal);
         var others = byOriginal
-            .Select(Spellings)
+            .Select(group => Spellings(group, corroborating))
             .Where(group => group.Count > 0 && Commonest(group).Occurrences >= AnotherNameAtLeast)
             .SelectMany(Opening)
             .Where(c => taken.Add(c.Folded))
@@ -339,15 +384,32 @@ internal static class Renderings
     /// <summary>
     /// Spellings a search cannot tell apart are one spelling, printed as its commonest member: BHSA
     /// points Jerusalem four ways, and the Berean hyphenates what the King James runs together.
+    ///
+    /// <para>
+    /// Only the spellings the corpus has a reason to believe. An annotation carried across a link
+    /// is as sure as the link, and where the aligner cannot place a word it spreads the original
+    /// over the words beside it: the Open New Ukrainian Translation prints the mercy seat once, as
+    /// <em>кришку</em>, which no link reaches, and the one capitalised word the annotation did reach
+    /// is the <em>Однак</em> opening the next sentence. So a spelling stands when one of its words is
+    /// annotated at <see cref="TrustedAt"/> or better, when <see cref="AgreeingAt"/> words print it,
+    /// or when it opens the way a firm spelling of the entity in any text does, or the nominative
+    /// held for the language: the Ohienko Bible's one faint <em>Одед</em> is the name the Synodal
+    /// prints firmly, and <em>Однак</em> opens like nothing the mercy seat is called anywhere.
+    /// </para>
     /// </summary>
-    private static List<(string Form, string Folded, int Occurrences)> Spellings(Dictionary<string, int> counted) =>
+    private static List<(string Form, string Folded, int Occurrences)> Spellings(
+        Dictionary<string, Tally> counted,
+        IReadOnlySet<string> corroborating) =>
         [.. counted
             .GroupBy(c => NameFolding.Fold(c.Key))
             .Where(g => g.Key.Length > 0)
+            .Where(g => g.Max(c => c.Value.Best) >= TrustedAt
+                        || g.Sum(c => c.Value.Occurrences) >= AgreeingAt
+                        || corroborating.Any(form => OpensLike(g.Key, form)))
             .Select(g => (
-                Form: g.OrderByDescending(c => c.Value).ThenBy(c => c.Key, StringComparer.Ordinal).First().Key,
+                Form: g.OrderByDescending(c => c.Value.Occurrences).ThenBy(c => c.Key, StringComparer.Ordinal).First().Key,
                 Folded: g.Key,
-                Occurrences: g.Sum(c => c.Value)))];
+                Occurrences: g.Sum(c => c.Value.Occurrences)))];
 
     /// <summary>
     /// A tie goes to the longer spelling, which is the name more often than the short word an
