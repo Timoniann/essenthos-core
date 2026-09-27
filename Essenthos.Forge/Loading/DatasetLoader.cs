@@ -272,6 +272,7 @@ internal sealed class DatasetLoader(
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
             await FoldTheRecordsWrittenTwice(stoppingToken);
+            await RenderOurOwnLinesInEveryLanguage(stoppingToken);
             await MoveWhatWasReadOffTheMisfiledVerses(stoppingToken);
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
             await CountHowEachTextSpellsEachName(stoppingToken);
@@ -1519,6 +1520,19 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OwnNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The lines this corpus wrote under its own records, in each reader's language. After every
+    /// step that writes such a record and after the folds, which can retire one.
+    /// </summary>
+    private async Task RenderOurOwnLinesInEveryLanguage(CancellationToken cancellationToken)
+    {
+        status.Starting("our own lines in every language");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<DistinguisherLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

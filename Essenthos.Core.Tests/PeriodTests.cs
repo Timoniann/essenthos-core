@@ -75,6 +75,29 @@ public class PeriodTests
         unpaired.Should().Be(1);
     }
 
+    /// <summary>
+    /// Pekah's sole reign opens under its own name and closes under none: the text ends it when
+    /// Hoshea smote him and reigned in his stead, so it is closed by Hoshea's accession.
+    /// </summary>
+    [Fact]
+    public void ClosesAnOpeningTheDatasetClosesUnderAnotherName()
+    {
+        var (periods, unpaired) = Periods.From(
+            [
+                An(1, "beginpekah1solereign", "Pekah's sole reign as king over Israel begins*", "Begin", 3223),
+                An(2, "endpekah1reign", "Pekah's reign as king over Israel ends*", "End", 3231),
+                An(3, "beginhoshea1reign", "Hoshea's reign as king over Israel begins*", "Begin", 3231),
+            ],
+            "test");
+
+        unpaired.Should().Be(1, "Hoshea's reign has no close among these events");
+        var reign = periods.Should().ContainSingle().Subject;
+        reign.Slug.Should().Be("period-pekah1solereign");
+        reign.StartEventId.Should().Be(1);
+        reign.EndEventId.Should().Be(3);
+        reign.EndYear.Should().Be(3231);
+    }
+
     [Fact]
     public void MakesALifeOutOfABirthAndADeath()
     {
