@@ -11,7 +11,8 @@
 /// Unmapped is not the same as absent. Brenton holds fourteen of these as books of its own, at
 /// canonical ordinals 67 to 81; what they lack is a place in the frame, so nothing reversifies them
 /// and each stands at its own numbers. The two books of Maccabees are the exception: the data numbers
-/// them only for the Latin, so they are placed and nothing but a Vulgate moves.
+/// them only for the Latin, so they are placed and nothing but a Vulgate moves. So are Baruch and the
+/// Letter of Jeremiah, which every edition here prints in one of the data's schemes.
 /// </summary>
 internal static class BookCodes
 {
@@ -35,6 +36,11 @@ internal static class BookCodes
         // The two books of Maccabees, where the data's only rules are the Latin's and every Greek and
         // English edition stands at its own numbers, so placing them moves nothing but the Vulgate.
         ["1Ma"] = 73, ["2Ma"] = 74,
+
+        // Baruch, and the Letter of Jeremiah the Latin and English print as its sixth chapter. The
+        // data numbers the letter as Baruch 6 in its standard column, which the frame places under
+        // both names.
+        ["Bar"] = 67, ["Lje"] = 76,
     };
 
     /// <summary>
@@ -43,7 +49,7 @@ internal static class BookCodes
     /// </summary>
     private static readonly HashSet<string> BeyondTheCanon = new(StringComparer.OrdinalIgnoreCase)
     {
-        "Ade", "Bar", "Bel", "Es", "Esg", "1Es", "2Es", "Jdt", "Lje", "Ma",
+        "Ade", "Bel", "Es", "Esg", "1Es", "2Es", "Jdt", "Ma",
         "Man", "Oda", "Sir", "Sus", "Tob", "Wis",
     };
 

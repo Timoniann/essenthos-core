@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Essenthos.Core.BetaMasaheft;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Frame;
@@ -704,8 +705,10 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             })
             .ToListAsync(cancellationToken);
 
+        // The Letter of Jeremiah is joined under one name, so that an edition printing it as Baruch 6
+        // meets one printing it as a book of its own.
         var addressed = rows
-            .GroupBy(row => (row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse))
+            .GroupBy(row => LetterOfJeremiah.Joined((row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse)))
             .ToDictionary(group => group.Key, group => group.Select(row => row.VerseId).Distinct().ToList());
 
         cache[textId] = addressed;

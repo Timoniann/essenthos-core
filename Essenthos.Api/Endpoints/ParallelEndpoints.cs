@@ -152,15 +152,16 @@ internal static class ParallelEndpoints
             var reference = requested[0];
             foreach (var entry in requested)
             {
+                var (heldBook, heldChapter) = await Held(db, entry.Id, ordinal.Value, chapter, cancellationToken);
                 byText[entry.Slug] = await Texts.ReadByCanonicalVerse(
-                    db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                references[entry.Slug] = await OwnReferences(db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                own[entry.Slug] = await OwnVerses(db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                stated[entry.Slug] = await StatedVerses(db, entry.Id, ordinal.Value, chapter, cancellationToken);
-                notes[entry.Slug] = await SourceNotes(db, entry.Id, ordinal.Value, chapter, cancellationToken);
+                    db, entry.Id, heldBook, heldChapter, cancellationToken);
+                references[entry.Slug] = await OwnReferences(db, entry.Id, heldBook, heldChapter, cancellationToken);
+                own[entry.Slug] = await OwnVerses(db, entry.Id, heldBook, heldChapter, cancellationToken);
+                stated[entry.Slug] = await StatedVerses(db, entry.Id, heldBook, heldChapter, cancellationToken);
+                notes[entry.Slug] = await SourceNotes(db, entry.Id, heldBook, heldChapter, cancellationToken);
                 strength[entry.Slug] = entry.Id == reference.Id
                     ? []
-                    : await Strengths(db, entry.Id, reference.Id, ordinal.Value, chapter, cancellationToken);
+                    : await Strengths(db, entry.Id, reference.Id, heldBook, heldChapter, cancellationToken);
             }
 
             var numbers = byText.Values
@@ -191,6 +192,31 @@ internal static class ParallelEndpoints
                 corpusRows,
                 rows));
         });
+    }
+
+    /// <summary>
+    /// Where a text holds the chapter asked for. The Letter of Jeremiah is Baruch 6 in the Latin and
+    /// English Bibles and a book of its own in the Greek, and a text is read under whichever name it
+    /// prints it, so that either name opens the letter in every text that has it. The two are numbered
+    /// alike verse for verse, so the rows meet.
+    /// </summary>
+    internal static async Task<(int Book, int Chapter)> Held(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        if (LetterOfJeremiah.Twin(canonicalBook, canonicalChapter) is not { } twin
+            || await db.VerseReferences.AnyAsync(r => r.IsPrimary
+                                                     && r.Verse!.TextId == textId
+                                                     && r.CanonicalBook == canonicalBook
+                                                     && r.CanonicalChapter == canonicalChapter, cancellationToken))
+        {
+            return (canonicalBook, canonicalChapter);
+        }
+
+        return twin;
     }
 
     /// <summary>

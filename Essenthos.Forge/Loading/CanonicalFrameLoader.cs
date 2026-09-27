@@ -1,6 +1,8 @@
 using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Frame;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -18,6 +20,9 @@ internal sealed record FrameOutcome(string Slug, bool AlreadyPlaced, int Verses,
 }
 
 internal sealed record ReferenceDraft(int VerseId, int Book, int Chapter, int Verse, bool IsPrimary);
+
+/// <summary>A verse as the frame needs it: its own address, its letter and how much text it holds.</summary>
+internal sealed record PlacedVerse(int Id, int Book, int Chapter, int Number, string Label, int Length);
 
 /// <summary>
 /// Puts every verse of a text into the shared address space, so that a chapter asked for by its
@@ -78,31 +83,9 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
                 reference.IsPrimary))
             .ToListAsync(cancellationToken);
 
-        // Which scheme of its tradition this edition follows is a question only the edition can
-        // answer, and the versification data states the tests that ask it.
-        var frame = rules.Frame(text.Versification, EditionShape.Of(verses.Select(v =>
-            (v.Book, v.ChapterNumber, v.Number, v.Label, v.Length))));
-
-        // The addresses this text prints as lettered verses, which the frame resolves differently.
-        var lettered = verses
-            .Where(v => v.Label.Length > 0)
-            .Select(v => new CanonicalReference(v.Book, v.ChapterNumber, v.Number))
-            .ToHashSet();
-
-        var expected = verses
-            .SelectMany(verse => frame.Resolve(
-                    verse.Book,
-                    verse.ChapterNumber,
-                    verse.Number,
-                    lettered.Contains(new CanonicalReference(verse.Book, verse.ChapterNumber, verse.Number)),
-                    verse.Label)
-                .Select((placement, index) => new ReferenceDraft(
-                    verse.Id,
-                    placement.Book,
-                    placement.Chapter,
-                    placement.Verse,
-                    index == 0)))
-            .ToList();
+        var expected = Expected(rules, text.Versification, [
+            .. verses.Select(v => new PlacedVerse(v.Id, v.Book, v.ChapterNumber, v.Number, v.Label, v.Length)),
+        ]);
 
         var versesById = verses.ToDictionary(verse => verse.Id);
 
@@ -143,5 +126,67 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         var outcome = new FrameOutcome(text.Slug, AlreadyPlaced: false, verses.Count, expected.Count, moved);
         logger.LogInformation("Placed {Outcome} in {Elapsed}", outcome, started.Elapsed);
         return outcome;
+    }
+
+    /// <summary>
+    /// Where each verse of an edition stands, the first reference of a verse its primary place.
+    /// Which scheme of its tradition the edition follows is a question only the edition can answer,
+    /// and the versification data states the tests that ask it.
+    /// </summary>
+    public static List<ReferenceDraft> Expected(
+        VersificationRules rules,
+        Versification tradition,
+        IReadOnlyList<PlacedVerse> verses)
+    {
+        var frame = rules.Frame(tradition, EditionShape.Of(verses.Select(v =>
+            (v.Book, v.Chapter, v.Number, v.Label, v.Length))));
+
+        // The addresses this text prints as lettered verses, which the frame resolves differently.
+        var lettered = verses
+            .Where(v => v.Label.Length > 0)
+            .Select(v => new CanonicalReference(v.Book, v.Chapter, v.Number))
+            .ToHashSet();
+
+        return verses
+            .SelectMany(verse => AtBothNames(verse.Book, frame.Resolve(
+                    verse.Book,
+                    verse.Chapter,
+                    verse.Number,
+                    lettered.Contains(new CanonicalReference(verse.Book, verse.Chapter, verse.Number)),
+                    verse.Label))
+                .Select((placement, index) => new ReferenceDraft(
+                    verse.Id,
+                    placement.Book,
+                    placement.Chapter,
+                    placement.Verse,
+                    index == 0)))
+            .ToList();
+    }
+
+    /// <summary>
+    /// A verse of the Letter of Jeremiah under the name its own edition prints it, and then under the
+    /// other: the data places the Greek letter at the standard's Baruch 6, and an edition that prints
+    /// it as a book stands in that book and covers Baruch 6, as one that prints Baruch 6 covers the
+    /// book. Every other verse stands where the frame puts it.
+    /// </summary>
+    private static IReadOnlyList<CanonicalReference> AtBothNames(int book, IReadOnlyList<CanonicalReference> placed)
+    {
+        if (book is not (LetterOfJeremiah.Book or LetterOfJeremiah.Baruch) ||
+            !placed.Any(place => LetterOfJeremiah.Twin(place.Book, place.Chapter) is not null))
+        {
+            return placed;
+        }
+
+        var own = placed
+            .Select(place => LetterOfJeremiah.Twin(place.Book, place.Chapter) is { } twin && place.Book != book
+                ? new CanonicalReference(twin.Book, twin.Chapter, place.Verse)
+                : place)
+            .ToList();
+        var other = own
+            .Select(place => LetterOfJeremiah.Twin(place.Book, place.Chapter) is { } twin
+                ? new CanonicalReference(twin.Book, twin.Chapter, place.Verse)
+                : (CanonicalReference?)null)
+            .OfType<CanonicalReference>();
+        return [.. own.Concat(other).Distinct()];
     }
 }

@@ -585,8 +585,15 @@ internal static class DeuterocanonTextSource
     private static DeclaredVersePair Whole(string from, string to) =>
         new(from, to, new HashSet<int>()) { AgreeingChaptersOnly = true };
 
+    /// <summary>
+    /// A pair joined only in the books the first text gains. The Letter of Jeremiah is joined under
+    /// its own name, so a text that gains Baruch with the letter as its sixth chapter gains the letter.
+    /// </summary>
     private static DeclaredVersePair Only(string from, string to, IReadOnlySet<int> books) =>
-        new(from, to, Enumerable.Range(1, BookReferences.LastOrdinal).Where(book => !books.Contains(book)).ToHashSet())
+        new(from, to, Enumerable.Range(1, BookReferences.LastOrdinal)
+            .Where(book => !books.Contains(book)
+                           && !(book == LetterOfJeremiah.Book && books.Contains(LetterOfJeremiah.Baruch)))
+            .ToHashSet())
         {
             AgreeingChaptersOnly = true,
         };

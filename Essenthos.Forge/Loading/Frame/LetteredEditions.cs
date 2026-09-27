@@ -62,7 +62,9 @@ internal readonly record struct AdditionVerse(int Book, char Section, int Verse)
 /// Swete prints the Letter of Jeremiah in seventy-two verses where the standard numbering, which
 /// Brenton and the English Bibles follow in Baruch 6, has seventy-three: his first verse is the
 /// title and the letter's opening, and he runs 15-16 into one verse, 43 into 42 and 50-51 into one,
-/// which leaves most of his verses one behind the standard's.
+/// which leaves most of his verses one behind the standard's. The Synodal and the Vulgate print
+/// seventy-two as well, each divided in a way of its own that the data's Latin and Greek columns do
+/// not describe, and each was read verse against verse in the same way.
 /// </para>
 /// <para>
 /// In the Song of the Three both follow the order of Vaticanus, which is not the order the data's
@@ -87,6 +89,8 @@ internal static class LetteredEditions
     private const int Esther = 17;
 
     private const int LetterOfJeremiah = 76;
+
+    private const int Baruch = 67;
 
     private const int Sirach = 72;
 
@@ -227,7 +231,24 @@ internal static class LetteredEditions
             Song(72, 50),
         ]);
 
-    private static readonly Edition[] All = [Brenton, BrentonsGreek, Swete, Geez];
+    /// <summary>
+    /// The Synodal as Russian Wikisource transcribes its non-canonical books: the Letter of Jeremiah in
+    /// seventy-two verses of its own division. Its Esther prints 5:1, which tells it from Swete's.
+    /// </summary>
+    private static readonly Edition Synodal = new(
+        "Synodal",
+        "LJe.1:72=Last & Est.5:1=Exist",
+        [],
+        [.. SynodalLetterOfJeremiah()]);
+
+    /// <summary>The Clementine Vulgate and the Douay-Rheims made from it, which print the letter as Baruch 6.</summary>
+    private static readonly Edition Vulgate = new(
+        "Vulgate",
+        "Bar.6:72=Last",
+        [],
+        [.. VulgateLetterOfJeremiah()]);
+
+    private static readonly Edition[] All = [Brenton, BrentonsGreek, Swete, Geez, Synodal, Vulgate];
 
     /// <summary>
     /// The places of the lettered verses of whichever of these editions this one is, or nothing.
@@ -287,10 +308,8 @@ internal static class LetteredEditions
     /// Swete's Letter of Jeremiah against the standard's verses, which is where he stands one behind:
     /// read against Brenton's Greek, which is numbered as the standard is.
     /// </summary>
-    private static IEnumerable<(PrintedAddress, CanonicalReference[])> SweteLetterOfJeremiah()
-    {
-        const int Verses = 72;
-        var joined = new Dictionary<int, int[]>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> SweteLetterOfJeremiah() =>
+        LetterRead(LetterOfJeremiah, 1, verses: 72, onStandard: verse => verse is >= 44 and <= 49, new()
         {
             [1] = [1, 2],
             [14] = [15, 16],
@@ -299,15 +318,77 @@ internal static class LetteredEditions
             [42] = [43],
             [43] = [43],
             [50] = [50, 51],
-        };
+        });
 
-        for (var verse = 1; verse <= Verses; verse++)
+    /// <summary>
+    /// The Synodal's Letter of Jeremiah, read against Brenton's English, which is numbered as the
+    /// standard is: the Synodal runs 5-6, 15-16 and 50-51 into one verse each and divides 17 and 43,
+    /// and carries a clause over a verse's end at 25, 39-40, 46-47 and 53-54.
+    /// </summary>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> SynodalLetterOfJeremiah() =>
+        LetterRead(LetterOfJeremiah, 1, verses: 72, onStandard: verse => verse is <= 4 or (>= 44 and <= 49), new()
         {
-            var standard = joined.TryGetValue(verse, out var listed) ? listed
-                : verse is >= 44 and <= 49 ? [verse]
+            [5] = [5, 6],
+            [14] = [15, 16],
+            [15] = [17],
+            [16] = [17],
+            [25] = [26, 27],
+            [39] = [40],
+            [40] = [41, 40],
+            [42] = [43],
+            [43] = [43],
+            [46] = [46],
+            [47] = [47, 46],
+            [50] = [50, 51],
+            [53] = [54],
+            [54] = [55, 54],
+        });
+
+    /// <summary>
+    /// The Vulgate's Baruch 6, in the Clementine and the Douay-Rheims alike, read against the King
+    /// James: it prints the letter's title as a heading and not as a verse, so its first verse is the
+    /// standard's second, and it divides the verses around 9, 12, 14-19, 25 and 40-43 otherwise.
+    /// </summary>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> VulgateLetterOfJeremiah() =>
+        LetterRead(Baruch, 6, verses: 72, onStandard: verse => verse is >= 44 and <= 49, new()
+        {
+            [5] = [6, 5],
+            [9] = [10, 9],
+            [12] = [13, 12],
+            [14] = [15, 16],
+            [15] = [17, 16],
+            [16] = [17],
+            [18] = [19, 20],
+            [19] = [20],
+            [25] = [26, 27],
+            [39] = [40],
+            [40] = [41, 40],
+            [41] = [42, 41],
+            [42] = [43],
+            [43] = [43],
+            [50] = [50, 51],
+            [56] = [57, 58],
+        });
+
+    /// <summary>
+    /// An edition's Letter of Jeremiah against the standard's seventy-three verses: each verse listed
+    /// prints those, the one it prints most of first, and every other verse prints the standard's
+    /// next, or its own number where <paramref name="onStandard"/> says the edition is level there.
+    /// </summary>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> LetterRead(
+        int book,
+        int chapter,
+        int verses,
+        Func<int, bool> onStandard,
+        Dictionary<int, int[]> listed)
+    {
+        for (var verse = 1; verse <= verses; verse++)
+        {
+            var standard = listed.TryGetValue(verse, out var read) ? read
+                : onStandard(verse) ? [verse]
                 : [verse + 1];
-            yield return (new PrintedAddress(new CanonicalReference(LetterOfJeremiah, 1, verse), string.Empty),
-                [.. standard.Select(number => new CanonicalReference(LetterOfJeremiah, 1, number))]);
+            yield return (new PrintedAddress(new CanonicalReference(book, chapter, verse), string.Empty),
+                [.. standard.Select(number => new CanonicalReference(book, chapter, number))]);
         }
     }
 

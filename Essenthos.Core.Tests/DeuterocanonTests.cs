@@ -420,6 +420,36 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
     }
 
     /// <summary>
+    /// The King James prints the Letter of Jeremiah as Baruch 6 and the Septuagint as a book of its
+    /// own, and each of its verses is joined to the same verse under the other name.
+    /// </summary>
+    [Fact]
+    public async Task TheLetterOfJeremiahIsJoinedUnderEitherName()
+    {
+        await Load(Tiny(Bible4uTextSource.Definitions["KJV"], (LetterOfJeremiah.Baruch, LetterOfJeremiah.InBaruch, 73)));
+        await Load(Tiny(SeptuagintTextSource.Definition(), (LetterOfJeremiah.Book, LetterOfJeremiah.Chapter, 73)));
+        await Place();
+
+        await new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance).Load();
+
+        var pairs = await _db.VerseLinkVerses
+            .Where(member => member.Side == LinkSide.From && member.Verse!.Text!.Slug == Sources.KingJamesSlug
+                             && member.VerseLink!.ToText!.Slug == Sources.BrentonSeptuagintSlug)
+            .Select(member => new
+            {
+                English = member.Verse!.Number,
+                Greek = member.VerseLink!.Verses
+                    .Where(other => other.Side == LinkSide.To)
+                    .Select(other => other.Verse!.Number)
+                    .Single(),
+            })
+            .ToListAsync();
+
+        pairs.Should().HaveCount(73);
+        pairs.Should().OnlyContain(pair => pair.English == pair.Greek);
+    }
+
+    /// <summary>
     /// The source the gained books come from is credited on the text they join, once, whether the
     /// text is loaded with them or gains them later.
     /// </summary>

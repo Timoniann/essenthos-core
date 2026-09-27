@@ -293,7 +293,7 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
             brenton.Edition.Resolve(verse.Book, verse.Chapter, verse.Number, verse.Label.Length > 0)[0]);
 
         brenton.Verses.Should().HaveCount(28_597);
-        moved.Should().Be(583);
+        moved.Should().Be(609);
     }
 
     /// <summary>
