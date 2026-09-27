@@ -60,8 +60,9 @@ internal sealed record ThingOutcome(
 /// <see cref="LinkMethod.ModelReading"/> at <see cref="ByReading"/> — the record's claim, its
 /// relations, its names in other languages and every word its rules reach. That standing is below a
 /// resolution by number, as every model reading is: the reading can name a word nothing named and
-/// cannot take a name away, so the bronze pillar Boaz of 1 Kings 7:21, which the number resolved onto
-/// Ruth's husband, keeps showing the man until the owner has looked. A rule or a record the owner has
+/// cannot take a name away from a number only one record bears. A name the thing bears itself is
+/// another matter — the bronze pillar Boaz is H1162 as Ruth's husband is, so that number no longer
+/// settles 1 Kings 7:21 on its own (<see cref="NumbersElsewhere"/>). A rule or a record the owner has
 /// reviewed says so in the file (<see cref="OccurrenceRule.Reviewed"/>, <see cref="ThingRecord.Reviewed"/>)
 /// and is written as <see cref="LinkMethod.Manual"/> under <see cref="ReviewedSource"/>, which is the
 /// standing that outranks the number. The rules seed the Hebrew witness and the Greek witnesses, and
@@ -301,11 +302,18 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
     }
 
     /// <summary>
-    /// The Strong numbers a record outside these files is named by. A word's number goes on one of
-    /// these records' name rows only where nobody else is named by it: the pillar Boaz is H1162, and
-    /// so is Ruth's husband, and a second record under that number would make every word of it in
-    /// Ruth a name several records bear, which no resolution may then settle. The pillar keeps its
-    /// Hebrew and its words keep their rulings; only the number is left off its name.
+    /// The Strong numbers a record outside these files is named by, which one of these records'
+    /// name rows may not carry. Satan's title is <em>the serpent</em>, H5175, and a thing named by
+    /// the common noun as well would stand beside him wherever the word does.
+    ///
+    /// <para>
+    /// A number the lexicon heads as a proper name is the exception, because the lexicon itself says
+    /// who bears it: H1162 is <em>Boaz, the ancestor of David; also the name of a pillar in front of
+    /// the temple</em>. The pillar carries it, so the number is borne by a man and a thing, and the
+    /// resolution, which asks it of the kind BHSA marks, still answers the man in Ruth — as a choice
+    /// the marking made between two bearers, which stands below a reading of the verse. So where the
+    /// pillar's rule reads 1 Kings 7:21, the word is the pillar.
+    /// </para>
     /// </summary>
     private async Task<IReadOnlySet<string>> NumbersElsewhere(CancellationToken cancellationToken)
     {
@@ -314,11 +322,20 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
                         && (n.HebrewStrongNumber != null || n.GreekStrongNumber != null))
             .Select(n => new { n.HebrewStrongNumber, n.GreekStrongNumber })
             .ToListAsync(cancellationToken);
-        return named
+        var numbers = named
             .SelectMany(n => $"{n.HebrewStrongNumber},{n.GreekStrongNumber}".Split(',', StringSplitOptions.RemoveEmptyEntries))
             .Select(number => number.Trim())
             .ToHashSet(StringComparer.Ordinal);
+        var proper = await db.StrongEntries
+            .Where(s => numbers.Contains(s.StrongNumber) && s.Morphology != null && s.Morphology.StartsWith(ProperNoun))
+            .Select(s => s.StrongNumber)
+            .ToListAsync(cancellationToken);
+        numbers.ExceptWith(proper);
+        return numbers;
     }
+
+    /// <summary>How the lexicon's morphology opens for a proper noun: <c>n-pr</c>, <c>n-pr-m</c>, <c>n-pr-loc</c>.</summary>
+    private const string ProperNoun = "n-pr";
 
     private static string? OnlyOurs(string? number, IReadOnlySet<string> elsewhere) =>
         number is not null && elsewhere.Contains(number) ? null : number;

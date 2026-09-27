@@ -898,6 +898,31 @@ public sealed class EntityAnnotationTests : IDisposable
     }
 
     /// <summary>
+    /// A thing that comes to bear a man's name — the pillar Boaz beside Ruth's husband — turns the
+    /// man's resolutions into choices the marking made. On the next boot the man's words are his by
+    /// the form of the word, which a reading of the verse outranks, and no longer by a number only
+    /// he bore.
+    /// </summary>
+    [Fact]
+    public async Task ANameAThingComesToBearIsTheMansByTheFormOfTheWord()
+    {
+        Person("palmoni", "Palmoni", "H8888");
+        await _db.SaveChangesAsync();
+        await _loader.Load();
+        (await _db.WordEntities.SingleAsync(a => a.WordId == Hebrew(7).Id)).Method.Should().Be(LinkMethod.StrongNumber);
+
+        Add("palmoni-pillar", "Palmoni", EntityKind.Object, "H8888");
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load();
+
+        outcome.Withdrawn.Should().Be(1);
+        var named = await _db.WordEntities.Include(a => a.Entity).SingleAsync(a => a.WordId == Hebrew(7).Id);
+        named.Entity!.Slug.Should().Be("palmoni");
+        named.Method.Should().Be(LinkMethod.Lexical);
+    }
+
+    /// <summary>
     /// And its name still travels. The carrying step reads what this run seeded, so a record
     /// reached on a later boot has to reach the words that render it on that boot too — otherwise
     /// the new record is named in the Hebrew and nowhere a reader of a translation would see it.
