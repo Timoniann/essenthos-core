@@ -71,7 +71,7 @@ public sealed class AnnotationProvenanceTests
             "The rhetoric is recorded rather than resolved.", null, null,
             "Essenthos, on the project owner's ruling", "essenthos", 1, 1, 0, [], [], [], [],
             [new EntityClaimResponse("manual", null, "Essenthos, on the project owner's ruling", "essenthos", "why")],
-            [new EntityAlternativeResponse("jehu-2", "Jehu", null, null, "she may be addressing him", "Essenthos")],
+            [new EntityAlternativeResponse("jehu-2", "Jehu", null, null, "she may be addressing him", "Essenthos", "essenthos")],
             true);
 
         var wire = JsonSerializer.Serialize(
@@ -79,6 +79,7 @@ public sealed class AnnotationProvenanceTests
 
         wire.Should().Contain("\"unsettled\":true")
             .And.Contain("jehu-2")
+            .And.Contain("\"dataset\":\"essenthos\"")
             .And.Contain("\"method\":\"manual\"");
     }
 }

@@ -135,7 +135,7 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
     private EvidentiaCorpusPreviewLoader Loader(EvidentiaFileSourceTexts? files = null)
     {
         var packs = new LanguagePackRegistry(
-            [new EnglishLanguagePack(), new SlavicLanguagePack(), new OriginalLanguagePack()]);
+            [new EnglishLanguagePack(), new UkrainianLanguagePack(), new RussianLanguagePack(), new OriginalLanguagePack()]);
         return new EvidentiaCorpusPreviewLoader(
             _db,
             new EvidentiaPipeline(packs, [new StrongNumberEvidenceSource()]),
