@@ -1,0 +1,80 @@
+{
+  "decidedBy": "Essenthos, 2026-09-27, on the portrait briefs' report of records holding several people, on the names a mapping crossed in the translations, and on the pairing of the two lists of Nehemiah 12, each occurrence read against its verse by claude-opus-5-5",
+  "policy": "A record is one person, and a word names the one its verse names. Where a translation's word was given the other name of its verse, the word is given its own; where an earlier ruling paired the wrong house of a list, it is corrected and says which ruling it corrects; and where a record held the verses of another man or woman of the name, the occurrences the verse settles are given to the person it names.",
+  "method": "manual",
+  "source": "Essenthos, on the report of records holding several people and of names crossed in the translations, each occurrence read against its verse by claude-opus-5-5, 2026-09-27",
+  "rulings": [
+    {
+      "wordId": 8186152,
+      "reference": "1 Chronicles 7:30",
+      "strongNumber": "H3438",
+      "existing": "ishvah",
+      "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. The King James's Isuah is the second name, Ishvah; its mapping gave the word Ishvi's."
+    },
+    {
+      "wordId": 8186154,
+      "reference": "1 Chronicles 7:30",
+      "strongNumber": "H3440",
+      "existing": "ishvi",
+      "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. The King James's Ishuai is the third name, Ishvi; its mapping gave the word Ishvah's."
+    },
+    {
+      "wordId": 21405495,
+      "reference": "1 Chronicles 7:30",
+      "strongNumber": "H3438",
+      "existing": "ishvah",
+      "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Segond's Jischva is Ishvah."
+    },
+    {
+      "wordId": 21405496,
+      "reference": "1 Chronicles 7:30",
+      "strongNumber": "H3440",
+      "existing": "ishvi",
+      "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Segond's Jischvi is Ishvi."
+    },
+    {
+      "wordId": 14319890,
+      "reference": "1 Chronicles 7:30",
+      "strongNumber": "H3440",
+      "existing": "ishvi",
+      "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. The Reina-Valera's Isui is Ishvi; its Isua beside it is Ishvah."
+    },
+    {
+      "wordId": 11728671,
+      "reference": "1 Chronicles 7:30",
+      "strongNumber": "H3440",
+      "existing": "ishvi",
+      "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Kulish's Ішвій is Ishvi; his Ішва beside it is Ishvah."
+    },
+    {
+      "wordId": 7551535,
+      "reference": "1 Chronicles 7:30",
+      "strongNumber": "H3438",
+      "existing": "ishvah",
+      "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Brenton's Σουΐα stands second, where the Hebrew has Ishvah."
+    },
+    {
+      "wordId": 7551537,
+      "reference": "1 Chronicles 7:30",
+      "strongNumber": "H3440",
+      "existing": "ishvi",
+      "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Brenton's Ἰσουῒ stands third, where the Hebrew has Ishvi."
+    },
+    {
+      "wordId": 6856687,
+      "reference": "Nehemiah 12:19",
+      "strongNumber": "H3048",
+      "existing": "jedaiah-2",
+      "why": "Nehemiah 12:12-21 names the heads of the priestly houses of 12:1-7 in the same order. 'Of Joiarib, Mattenai; of Jedaiah, Uzzi' follows 12:6, 'Joiarib, Jedaiah', whose Jedaiah the lexicon enumerates with 1 Chronicles 9:10 and Nehemiah 7:39. The review of 2026-09-06 argued the same pairing and named the Jedaiah of 12:7.",
+      "corrects": "jedaiah-5"
+    },
+    {
+      "wordId": 6856699,
+      "reference": "Nehemiah 12:21",
+      "strongNumber": "H3048",
+      "existing": "jedaiah-5",
+      "why": "Nehemiah 12:12-21 names the heads of the priestly houses of 12:1-7 in the same order. 'Of Hilkiah, Hashabiah; of Jedaiah, Nethaneel' follows 12:7, 'Hilkiah, Jedaiah', whose Jedaiah the lexicon enumerates with Nehemiah 11:10. The review of 2026-09-06 argued the same pairing and named the Jedaiah of 12:6.",
+      "corrects": "jedaiah-2"
+    }
+  ]
+}
