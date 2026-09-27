@@ -16,11 +16,11 @@ namespace Essenthos.Core.Loading;
 /// Three of the six are books a text already loaded gains, not texts of their own. The Synodal, the
 /// King James and the World English Bible are each the edition the corpus already serves, and their
 /// deuterocanonical books are written into that text rather than beside it — see
-/// <see cref="Extend"/> for what established that each is the same edition. Where the edition prints
-/// an addition inside a book the corpus already holds from another file — the Greek Esther, the
-/// Song of the Three inside Daniel 3, the Prayer of Manasseh at the end of 2 Chronicles — it is not
-/// taken: the book is there already, numbered as its own file numbers it, and a book cannot be
-/// written twice.
+/// <see cref="Extend"/> for what established that each is the same edition. The King James's Rest of
+/// Esther is written into its Esther at the chapters and verses it prints, 10:4 to 16:24, which are
+/// the standard's. Where the edition prints an addition inside a book the corpus already holds from
+/// another file in a numbering of its own — the Greek Esther and Daniel whole, the Song of the Three —
+/// it is not taken yet.
 ///
 /// Which Ezra is which is the trap in all of them, and it is settled by content, not by name. The
 /// Greek 1 Esdras is ordinal 68 wherever it stands: the Synodal calls it the second book of Ezra, the
@@ -78,7 +78,8 @@ internal static class DeuterocanonTextSource
     /// The books each loaded text gains, by USFM code, in the order its edition prints them.
     ///
     /// The King James's Apocrypha stands between the Testaments as the 1611 printed it. Its Rest of
-    /// Esther and its Song of the Three are the additions to Esther and Daniel, and are not taken.
+    /// Esther goes into its Esther (<see cref="Continued"/>); its Song of the Three, the addition to
+    /// Daniel it numbers as a book of its own, is not taken.
     /// The World English Bible's Greek Esther and Greek Daniel are whole books that repeat the
     /// Hebrew ones the corpus already serves from the updated edition, and are not taken either.
     /// Baruch keeps the sixth chapter the King James and the World English Bible print as the
@@ -95,6 +96,15 @@ internal static class DeuterocanonTextSource
     };
 
     /// <summary>
+    /// The books each loaded text continues with another file's verses, by USFM code: the King James
+    /// prints the additions to Esther as the Rest of Esther, numbered on from the Hebrew's last verse.
+    /// </summary>
+    private static readonly Dictionary<string, string[]> Continued = new(StringComparer.OrdinalIgnoreCase)
+    {
+        [Sources.KingJamesSlug] = ["ESG"],
+    };
+
+    /// <summary>
     /// What the Synodal calls each of its non-canonical books in its running heads, in the short form
     /// bible4u gives the books around them — <c>2-я Паралипоменон</c>, <c>Есфирь</c>.
     /// </summary>
@@ -106,11 +116,13 @@ internal static class DeuterocanonTextSource
     };
 
     /// <summary>
-    /// The books a text gains past the sixty-six, by canonical ordinal. Empty for a text that gains
-    /// none.
+    /// The books a text gains past the sixty-six, and the books it continues, by canonical ordinal.
+    /// Empty for a text that gains none.
     /// </summary>
     public static IReadOnlySet<int> BooksGainedBy(string slug) =>
-        Gained.TryGetValue(slug, out var codes) ? codes.Select(code => Ordinals[code]).ToHashSet() : [];
+        (Gained.GetValueOrDefault(slug) ?? []).Concat(Continued.GetValueOrDefault(slug) ?? [])
+        .Select(code => Ordinals[code])
+        .ToHashSet();
 
     /// <summary>
     /// The text with the books its edition prints and its file lacks. The loaded text and its source
@@ -144,7 +156,8 @@ internal static class DeuterocanonTextSource
             _ => (WorldEnglishFolder, WorldEnglishSource),
         };
 
-        var files = Books(Path.Combine(resources, folder), codes);
+        var continued = Continued.GetValueOrDefault(slug) ?? [];
+        var files = Books(Path.Combine(resources, folder), [.. codes, .. continued]);
         var bible4u = slug is Sources.SynodalSlug or Sources.KingJamesSlug;
         var gained = codes.Select(code =>
         {
@@ -166,12 +179,50 @@ internal static class DeuterocanonTextSource
         }).ToList();
 
         var order = PrintedOrder(slug, gained.Select(book => book.CanonicalOrdinal));
-        var books = source.Books.Concat(gained)
+        var longer = continued.ToDictionary(code => Ordinals[code], code => files[code].Chapters);
+        var books = source.Books
+            .Select(book => longer.TryGetValue(book.CanonicalOrdinal, out var more) ? Continue(book, more) : book)
+            .Concat(gained)
             .OrderBy(book => order.IndexOf(book.CanonicalOrdinal))
             .Select((book, index) => book with { Position = index + 1 })
             .ToList();
 
-        return new TextSource(source.Definition with { PartSources = [.. source.Definition.PartSources, part] }, books);
+        TextPartSource[] parts = continued.Length > 0 ? [part, KingJamesEstherSource] : [part];
+        return new TextSource(
+            source.Definition with { PartSources = [.. source.Definition.PartSources, .. parts] }, books);
+    }
+
+    /// <summary>
+    /// A book with the verses another file of its edition prints after it: into the chapter of the
+    /// same number after the verses it has, and as chapters of their own after that.
+    /// </summary>
+    private static BookDraft Continue(BookDraft book, IReadOnlyList<UsfmChapter> more)
+    {
+        var added = more.Select(chapter => Chapter(chapter, notes: true)).ToDictionary(chapter => chapter.Number);
+        var clash = book.Chapters
+            .Where(chapter => added.ContainsKey(chapter.Number))
+            .SelectMany(chapter => chapter.Verses.Select(verse => (chapter.Number, verse.Number, verse.Label)))
+            .Intersect(added.Values.SelectMany(chapter =>
+                chapter.Verses.Select(verse => (chapter.Number, verse.Number, verse.Label))))
+            .FirstOrDefault();
+        if (clash != default)
+        {
+            throw new InvalidOperationException(
+                $"{book.Name} {clash.Item1}:{clash.Item2}{clash.Item3} is printed in both files of the edition, so " +
+                "one of them is not the continuation of the other. Check that the folder holds the edition the " +
+                "text was loaded from.");
+        }
+
+        return book with
+        {
+            Chapters =
+            [
+                .. book.Chapters.Select(chapter => added.TryGetValue(chapter.Number, out var tail)
+                    ? chapter with { Verses = [.. chapter.Verses, .. tail.Verses] }
+                    : chapter),
+                .. added.Values.Where(chapter => book.Chapters.All(own => own.Number != chapter.Number)),
+            ],
+        };
     }
 
     /// <summary>
@@ -207,6 +258,12 @@ internal static class DeuterocanonTextSource
         "https://ebible.org/find/details.php?id=eng-kjv",
         "The Apocrypha — 1 and 2 Esdras, Tobit, Judith, Wisdom, Sirach, Baruch, Susanna, Bel and the Dragon, "
         + "the Prayer of Manasses and 1 and 2 Maccabees — which the file the text is loaded from does not hold.");
+
+    /// <summary>The Rest of Esther, from the same edition, which continues Esther rather than adding a book.</summary>
+    public static readonly TextPartSource KingJamesEstherSource = KingJamesSource with
+    {
+        Covers = "The Rest of Esther, the additions to Esther the Apocrypha prints as Esther 10:4 to 16:24.",
+    };
 
     /// <summary>
     /// The World English Bible's deuterocanon, from the Classic edition. The updated edition with the

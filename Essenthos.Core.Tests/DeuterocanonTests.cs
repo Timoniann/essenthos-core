@@ -139,6 +139,44 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
         Deuterocanon.Book(read.KingJames, 67).Chapters.Should().HaveCount(6, "Baruch keeps the letter it prints as its sixth chapter");
     }
 
+    /// <summary>
+    /// The Rest of Esther continues the King James's Esther at the chapters and verses it prints them
+    /// under, which are the standard's, so each verse stands at its own address and the Hebrew's verses
+    /// stay where they were.
+    /// </summary>
+    [Fact]
+    public void TheRestOfEstherContinuesTheKingJamessEsther()
+    {
+        var esther = Deuterocanon.Book(read.KingJames, 17);
+        esther.Chapters.Select(chapter => chapter.Number).Should().Equal(Enumerable.Range(1, 16));
+        esther.Chapters.Single(chapter => chapter.Number == 10).Verses.Select(verse => verse.Number)
+            .Should().Equal(Enumerable.Range(1, 13));
+        Deuterocanon.Verses(esther).Should().Be(167 + 105);
+        Deuterocanon.Text(read.KingJames, 17, 11, 2).Should().StartWith("In the second year of the reign");
+        read.KingJames.Definition.PartSources.Should()
+            .Equal(DeuterocanonTextSource.KingJamesSource, DeuterocanonTextSource.KingJamesEstherSource);
+
+        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var extended = Deuterocanon.Frame(read.KingJames, rules);
+        var hebrewOnly = Deuterocanon.Frame(
+            Bible4uTextSource.Read(TestResources.Bible4u("KJV"), "KJV"), rules);
+        foreach (var chapter in esther.Chapters)
+        {
+            foreach (var verse in chapter.Verses)
+            {
+                var placed = extended.Resolve(17, chapter.Number, verse.Number)[0];
+                if (chapter.Number < 10 || (chapter.Number == 10 && verse.Number <= 3))
+                {
+                    placed.Should().Be(hebrewOnly.Resolve(17, chapter.Number, verse.Number)[0]);
+                }
+                else
+                {
+                    placed.Should().Be(new CanonicalReference(17, chapter.Number, verse.Number));
+                }
+            }
+        }
+    }
+
     [Fact]
     public void TheWorldEnglishBibleGainsThirteenBooksAndNoneNamesYahweh()
     {
@@ -447,6 +485,38 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
 
         pairs.Should().HaveCount(73);
         pairs.Should().OnlyContain(pair => pair.English == pair.Greek);
+    }
+
+    /// <summary>
+    /// A book the text holds gains the verses its source now prints after it, in the chapter it has
+    /// and in new ones, and keeps every verse it had.
+    /// </summary>
+    [Fact]
+    public async Task ABookHeldGainsTheVersesItsSourceNowPrints()
+    {
+        var kingJames = Bible4uTextSource.Definitions["KJV"];
+        await Load(Tiny(kingJames, (17, 10, 3)));
+        var before = await _db.Verses.Select(verse => verse.Id).ToListAsync();
+
+        var outcome = await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance).AddMissingBooks(new TextSource(
+            kingJames,
+            [
+                new BookDraft(17, 1, "Esther", "esther",
+                [
+                    new ChapterDraft(10, [.. Enumerable.Range(1, 13).Select(number => new VerseDraft(number, [new WordDraft("word", "")]))]),
+                    new ChapterDraft(11, [.. Enumerable.Range(1, 12).Select(number => new VerseDraft(number, [new WordDraft("word", "")]))]),
+                ]),
+            ]));
+
+        outcome.Verses.Should().Be(10 + 12);
+        (await _db.Verses.Where(verse => before.Contains(verse.Id)).CountAsync()).Should().Be(3);
+        (await _db.Books.CountAsync()).Should().Be(1);
+        (await _db.Chapters.Select(chapter => chapter.Number).ToListAsync()).Should().BeEquivalentTo([10, 11]);
+        (await _db.Verses.Where(verse => verse.ChapterNumber == 10).OrderBy(verse => verse.Sequence)
+                .Select(verse => verse.Number).ToListAsync())
+            .Should().Equal(Enumerable.Range(1, 13));
+        (await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance).AddMissingBooks(Tiny(kingJames, (17, 10, 13))))
+            .Verses.Should().Be(0);
     }
 
     /// <summary>
