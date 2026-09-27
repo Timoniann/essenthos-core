@@ -1,18 +1,24 @@
-﻿namespace Essenthos.Core.Loading.Frame;
+﻿using Essenthos.Core.Database.Entities.Enums;
+
+namespace Essenthos.Core.Loading.Frame;
 
 /// <summary>
 /// The three-letter book codes the versification data is written in, mapped to canonical ordinals.
 ///
 /// They are here rather than in <c>BibleBookAbbreviation</c> because they belong to one source, the
-/// way BHSA's Latin book names belong to BHSA's reader. The books beyond the sixty-six are listed
-/// and deliberately unmapped: the frame has no place for them yet, and a rule about Tobit should be
-/// skipped knowingly rather than fail as an unrecognised code.
+/// way BHSA's Latin book names belong to BHSA's reader. The books the data names and the corpus
+/// has no ordinal for are listed and deliberately unmapped, so that a rule about one is skipped
+/// knowingly rather than failing as an unrecognised code.
 ///
-/// Unmapped is not the same as absent. Brenton holds fourteen of these as books of its own, at
-/// canonical ordinals 67 to 81; what they lack is a place in the frame, so nothing reversifies them
-/// and each stands at its own numbers. The two books of Maccabees are the exception: the data numbers
-/// them only for the Latin, so they are placed and nothing but a Vulgate moves. So are Baruch and the
-/// Letter of Jeremiah, which every edition here prints in one of the data's schemes.
+/// The books of the Greek and Latin Bibles beyond the sixty-six are placed by the data's rules, so
+/// that the Vulgate and the Douay, the Synodal, the King James's Apocrypha and the World English
+/// Bible's stand at the standard's verses. The two Greek editions and the Ge'ez are the exception in
+/// Tobit, Judith, Wisdom, Sirach, the two books of Esdras, the Prayer of Manasseh, Susanna and Bel:
+/// the data's Greek columns there describe Rahlfs's text, and measured against the King James and
+/// against each other they put Brenton's Tobit 13 and Sirach 23 and Swete's 1 Esdras 2 and Judith 9
+/// beside other verses, so those editions stand at their own numbers there, as they did, and at the
+/// verses <see cref="LetteredEditions"/> reads for them. Baruch, the Letter of Jeremiah and
+/// Maccabees are placed for every edition.
 /// </summary>
 internal static class BookCodes
 {
@@ -41,7 +47,12 @@ internal static class BookCodes
         // data numbers the letter as Baruch 6 in its standard column, which the frame places under
         // both names.
         ["Bar"] = 67, ["Lje"] = 76,
+        ["Tob"] = 70, ["Jdt"] = 71, ["Wis"] = 75, ["Sir"] = 72, ["1Es"] = 68, ["2Es"] = 69, ["Man"] = 79,
+        ["Sus"] = 77, ["Bel"] = 78,
     };
+
+    /// <summary>The books placed by the data's rules for every edition but the Greek ones.</summary>
+    private static readonly HashSet<int> OutsideTheGreek = [68, 69, 70, 71, 72, 75, 77, 78, 79];
 
     /// <summary>
     /// Books the data carries rules for and the frame has no ordinal for. Named so that a rule
@@ -49,8 +60,7 @@ internal static class BookCodes
     /// </summary>
     private static readonly HashSet<string> BeyondTheCanon = new(StringComparer.OrdinalIgnoreCase)
     {
-        "Ade", "Bel", "Es", "Esg", "1Es", "2Es", "Jdt", "Ma",
-        "Man", "Oda", "Sir", "Sus", "Tob", "Wis",
+        "Ade", "Es", "Esg", "Ma", "Oda",
     };
 
     public static bool TryGetOrdinal(string code, out int ordinal) => Canonical.TryGetValue(code, out ordinal);
@@ -58,10 +68,14 @@ internal static class BookCodes
     public static bool IsBeyondTheCanon(string code) => BeyondTheCanon.Contains(code);
 
     /// <summary>
-    /// Whether the frame has rules for this book at all. A book it has none for stands at its own
-    /// numbers in every text, and a shared address there is only as good as the two texts' agreement.
+    /// Whether the frame places this book in every edition. A book it does not stands at its own
+    /// numbers in some, and a shared address there is only as good as the two texts' agreement.
     /// </summary>
     public static bool Places(int ordinal) => Placed.Contains(ordinal);
 
-    private static readonly HashSet<int> Placed = [.. Canonical.Values];
+    /// <summary>Whether the data's rules for this book are read for an edition of this tradition.</summary>
+    public static bool Places(Versification tradition, int ordinal) =>
+        tradition != Versification.Septuagint || !OutsideTheGreek.Contains(ordinal);
+
+    private static readonly HashSet<int> Placed = [.. Canonical.Values.Where(ordinal => !OutsideTheGreek.Contains(ordinal))];
 }

@@ -86,7 +86,7 @@ public class VersificationTestTests
 
     /// <summary>A cell with nothing in it this corpus can read says nothing about any edition.</summary>
     [Theory]
-    [InlineData("Sir.1:13=Exist & Sir.1:30=Last")]
+    [InlineData("Oda.1:13=Exist & Oda.1:30=Last")]
     [InlineData("Psa.9:TextBeforeV1=NotExist")]
     [InlineData("")]
     public void ACellThisCorpusCannotReadAtAllIsNotAnswered(string cell)

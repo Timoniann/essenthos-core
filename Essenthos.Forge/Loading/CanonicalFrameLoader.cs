@@ -161,8 +161,10 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         books ??= new Dictionary<int, Versification>();
         Versification TraditionOf(PlacedVerse verse) => books.GetValueOrDefault(verse.Book, tradition);
 
+        // A book numbered in no tradition the data describes stands at its own numbers.
         var frames = verses
             .GroupBy(TraditionOf)
+            .Where(group => rules.Covers(group.Key))
             .ToDictionary(group => group.Key, group => rules.Frame(group.Key, EditionShape.Of(group.Select(v =>
                 (v.Book, v.Chapter, v.Number, v.Label, v.Length)))));
 
@@ -173,12 +175,14 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             .ToHashSet();
 
         return verses
-            .SelectMany(verse => AtBothNames(verse.Book, frames[TraditionOf(verse)].Resolve(
-                    verse.Book,
-                    verse.Chapter,
-                    verse.Number,
-                    lettered.Contains(new CanonicalReference(verse.Book, verse.Chapter, verse.Number)),
-                    verse.Label))
+            .SelectMany(verse => AtBothNames(verse.Book, frames.TryGetValue(TraditionOf(verse), out var frame)
+                    ? frame.Resolve(
+                        verse.Book,
+                        verse.Chapter,
+                        verse.Number,
+                        lettered.Contains(new CanonicalReference(verse.Book, verse.Chapter, verse.Number)),
+                        verse.Label)
+                    : [new CanonicalReference(verse.Book, verse.Chapter, verse.Number)])
                 .Select((placement, index) => new ReferenceDraft(
                     verse.Id,
                     placement.Book,

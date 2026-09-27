@@ -177,6 +177,33 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
         }
     }
 
+    /// <summary>
+    /// The books beyond the canon are placed by the data's rules for the Latin and English editions:
+    /// the Douay's Wisdom 5:15, "the hope of the wicked", is the King James's 5:14. Brenton's Greek
+    /// numbering and the Synodal's own stand as they are printed, since the data describes neither.
+    /// </summary>
+    [Fact]
+    public void TheBooksBeyondTheCanonArePlacedForTheEditionsTheDataDescribes()
+    {
+        var rules = TvtmsReader.Read(TestResources.Tvtms);
+
+        Deuterocanon.Frame(read.DouayRheims, rules).Resolve(75, 5, 15)[0].Should().Be(new CanonicalReference(75, 5, 14));
+        Deuterocanon.Frame(read.Vulgate, rules).Resolve(75, 5, 15)[0].Should().Be(new CanonicalReference(75, 5, 14));
+        Deuterocanon.Frame(read.Brenton, rules).Resolve(70, 13, 11)[0].Should().Be(new CanonicalReference(70, 13, 11));
+
+        var synodal = read.Synodal.Books
+            .SelectMany(book => book.Chapters.SelectMany(chapter => chapter.Verses
+                .Select(verse => (Book: book.CanonicalOrdinal, Chapter: chapter.Number, Verse: verse))))
+            .Select((printed, index) => new PlacedVerse(index, printed.Book, printed.Chapter, printed.Verse.Number,
+                printed.Verse.Label, printed.Verse.Words.Sum(word => word.Surface.Length)))
+            .ToList();
+        var wisdom = synodal.Single(verse => verse is { Book: 75, Chapter: 5, Number: 14 });
+        CanonicalFrameLoader.Expected(rules, read.Synodal.Definition.Versification, synodal,
+                BookTraditions.For(Sources.SynodalSlug))
+            .Single(reference => reference.VerseId == wisdom.Id)
+            .Should().Be(new ReferenceDraft(wisdom.Id, 75, 5, 14, true));
+    }
+
     [Fact]
     public void TheWorldEnglishBibleGainsThirteenBooksAndNoneNamesYahweh()
     {
