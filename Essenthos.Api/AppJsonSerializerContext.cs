@@ -1,5 +1,6 @@
 ﻿using Essenthos.Core.Corpus;
-﻿using System.Text.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Essenthos.Core.Endpoints;
 
 namespace Essenthos.Core;
@@ -7,7 +8,12 @@ namespace Essenthos.Core;
 /// <summary>
 /// Every record any endpoint returns is registered here, including its list and array forms. A
 /// record that is missing fails at runtime on first request rather than at compile time.
+///
+/// Generated for the web defaults the endpoints serialize with. Options that differ from the ones
+/// the code was generated for, even only in the naming policy, send every response through the
+/// slower metadata path instead of the generated writer.
 /// </summary>
+[JsonSourceGenerationOptions(JsonSerializerDefaults.Web)]
 [JsonSerializable(typeof(HealthProbeResponse))]
 [JsonSerializable(typeof(HealthResponse))]
 [JsonSerializable(typeof(CorpusReleaseResponse))]

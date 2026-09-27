@@ -77,8 +77,8 @@ public sealed class AnnotationProvenanceTests
         var wire = JsonSerializer.Serialize(
             page, AppJsonSerializerContext.Default.GetTypeInfo(typeof(EntityResponse))!);
 
-        wire.Should().Contain("\"Unsettled\":true")
+        wire.Should().Contain("\"unsettled\":true")
             .And.Contain("jehu-2")
-            .And.Contain("\"Method\":\"manual\"");
+            .And.Contain("\"method\":\"manual\"");
     }
 }

@@ -244,16 +244,16 @@ public sealed class DescriptorVocabularyTests
 
         // The Cyrillic arrives escaped, which is what the serializer does with everything outside
         // ASCII and is JSON a client decodes without noticing.
-        wire.Should().Contain("\"Language\":\"ukr\"")
+        wire.Should().Contain("\"language\":\"ukr\"")
             .And.Contain("\\u0442\\u0435\\u0441\\u0442\\u044C ")
             .And.Contain("moses-1")
             .And.Contain("father-in-law-of")
             .And.Contain("father-in-law (NUM 10:29)", "the imported sentence stays on the wire for now");
 
-        wire.Should().Contain("\"Kind\":\"person\"", "a slug alone cannot be routed to a page")
-            .And.Contain("\"EnglishName\":\"Moses\"")
+        wire.Should().Contain("\"kind\":\"person\"", "a slug alone cannot be routed to a page")
+            .And.Contain("\"englishName\":\"Moses\"")
             .And.Contain("\"genitive\":\"\\u041C\\u043E\\u0439\\u0441\\u0435\\u044F\"")
-            .And.Contain("\"Slug\":\"judges\"", "a client links a verse by book slug, not by JDG");
+            .And.Contain("\"slug\":\"judges\"", "a client links a verse by book slug, not by JDG");
     }
 
     /// <summary>
