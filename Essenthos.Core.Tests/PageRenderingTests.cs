@@ -135,6 +135,7 @@ public sealed class PageRenderingTests
     [InlineData("/es/people/moses", "Record", "/people/moses")]
     [InlineData("/strong/h430", "Strong", "/strong/H430")]
     [InlineData("/timeline/kings", "Section", "/timeline/kings")]
+    [InlineData("/uk/genealogies/jesus", "Section", "/genealogies/jesus")]
     [InlineData("/read/mark/0", "NotFound", "/read/mark/0")]
     [InlineData("/read/nobook/1", "NotFound", "/read/nobook/1")]
     [InlineData("/fr/read/mark/3", "NotFound", "/fr/read/mark/3")]

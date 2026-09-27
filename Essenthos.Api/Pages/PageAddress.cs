@@ -44,6 +44,7 @@ internal static class PageSections
         new(Syntax, "/syntax", Queries: ["on", "feature", "word", "book"]),
         new(Encyclopedia, "/encyclopedia", Queries: ["q"]),
         new(FamilyTree, "/family-tree"),
+        new("genealogyOfJesus", "/genealogies/jesus"),
         new("events", "/events"),
         new("timeline", "/timeline"),
         new("kings", "/timeline/kings"),

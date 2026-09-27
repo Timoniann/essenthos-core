@@ -83,7 +83,9 @@ internal static class ChapterFamily
             var rows = await db.EntityRelationships
                 .Where(r => Types.Contains(r.Type)
                             && (ring.Contains(r.FromEntityId) || ring.Contains(r.ToEntityId))
-                            && r.FromEntityId != r.ToEntityId)
+                            && r.FromEntityId != r.ToEntityId
+                            && !FamilyEndpoints.Deities.Contains(r.From!.Slug)
+                            && !FamilyEndpoints.Deities.Contains(r.To!.Slug))
                 .Select(r => new { r.FromEntityId, r.ToEntityId, r.Type })
                 .ToListAsync(cancellationToken);
             var next = new List<int>();

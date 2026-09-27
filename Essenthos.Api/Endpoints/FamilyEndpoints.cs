@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,13 @@ internal static class FamilyEndpoints
     /// </summary>
     public const int MostPeople = 400;
 
+    /// <summary>
+    /// God, by address. He is nobody's kin on a family tree: "his Son" in 1 Corinthians 1:9 and
+    /// Luke's "Adam, which was the son of God" are not descent, and a tree that read them so would
+    /// stand God the Father beside Joseph as Jesus's other parent.
+    /// </summary>
+    internal static readonly string[] Deities = ["yhvh", "yhvh-2", "holy-spirit"];
+
     internal static async Task<EntityFamilyResponse> Family(
         AppDbContext db,
         IReadOnlyCollection<string> slugs,
@@ -38,8 +46,24 @@ internal static class FamilyEndpoints
         var rows = await db.EntityRelationships
             .Where(r => ids.Contains(r.FromEntityId) || ids.Contains(r.ToEntityId))
             .OrderBy(r => r.Id)
-            .Select(r => new { r.FromEntityId, r.ToEntityId, r.Type, From = r.From!.Slug, To = r.To!.Slug })
+            .Where(r => !ChapterFamily.Types.Contains(r.Type)
+                        || !(Deities.Contains(r.From!.Slug) || Deities.Contains(r.To!.Slug)))
+            .Select(r => new
+            {
+                r.FromEntityId,
+                r.ToEntityId,
+                r.Type,
+                From = r.From!.Slug,
+                To = r.To!.Slug,
+                r.CanonicalBook,
+                r.CanonicalChapter,
+                r.CanonicalVerse,
+            })
             .ToListAsync(cancellationToken);
+        VerseRefResponse? Cited(int? book, int? chapter, int? verse) =>
+            book is { } b && chapter is { } c && verse is { } v
+                ? new VerseRefResponse(b, BookReferences.Name(b), BookReferences.Slug(b), c, v)
+                : null;
 
         var local = await EntityNames.Of(db, ids, language, cancellationToken);
         var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken, generated);
@@ -57,11 +81,18 @@ internal static class FamilyEndpoints
                     p.Sex,
                     [
                         .. rows.Where(r => r.FromEntityId == p.Id)
-                            .Select(r => new FamilyTieResponse(r.Type, false, r.To))
+                            .Select(r => new FamilyTieResponse(r.Type, false, r.To)
+                            {
+                                Reference = Cited(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse),
+                            })
                             .Concat(rows.Where(r => r.ToEntityId == p.Id)
-                                .Select(r => new FamilyTieResponse(r.Type, true, r.From)))
+                                .Select(r => new FamilyTieResponse(r.Type, true, r.From)
+                                {
+                                    Reference = Cited(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse),
+                                }))
                             .Where(tie => tie.Slug != p.Slug)
-                            .Distinct(),
+                            .OrderBy(tie => tie.Reference is null)
+                            .DistinctBy(tie => (tie.Type, tie.Inward, tie.Slug)),
                     ])
                 {
                     Thumbnail = pictured.GetValueOrDefault(p.Slug),
@@ -107,4 +138,8 @@ internal sealed record FamilyMemberResponse(
 /// One relationship as its pair: <c>son-of</c> read inward on Abraham's side is Isaac.
 /// </summary>
 /// <param name="Inward">True where the row names this person second, exactly as on the entity page.</param>
-internal sealed record FamilyTieResponse(string Type, bool Inward, string Slug);
+internal sealed record FamilyTieResponse(string Type, bool Inward, string Slug)
+{
+    /// <summary>The verse the tie was read from, where the row names one; a tree labels a second father by it.</summary>
+    public VerseRefResponse? Reference { get; init; }
+}

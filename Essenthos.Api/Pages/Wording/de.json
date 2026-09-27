@@ -175,6 +175,10 @@
       "title": "Stammbäume der Bibel",
       "description": "Vorfahren und Nachkommen einer Person auf einer Seite, so weit und so breit die Aufzeichnungen reichen."
     },
+    "genealogyOfJesus": {
+      "title": "Der Stammbaum Jesu",
+      "description": "Die Stammbäume Jesu bei Matthäus und Lukas nebeneinander und wie man sie erklärt: die Schwagerehe, die Linie Marias, die rechtliche und die natürliche Linie."
+    },
     "events": {
       "title": "Ereignisse der Bibel",
       "description": "Jedes Ereignis, das die biblische Chronologie datiert, der Reihe nach — mit der Rechnung hinter seinem Jahr."
