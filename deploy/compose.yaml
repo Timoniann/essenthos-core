@@ -148,6 +148,9 @@ services:
       # The pictures the corpus's rows name. The rows arrive in the release; `forge publish` puts the
       # files here beside it, one folder per corpus, before it swaps the release in.
       - ${HOST_DATA_ROOT}/images/corpus:/images:ro
+      # The smaller copies the API makes of them on first request, kept across a restart. Nothing in
+      # it is unique: lost, each copy is made again the next time it is asked for.
+      - image-cache:/image-cache
     depends_on:
       db:
         condition: service_healthy
@@ -194,6 +197,7 @@ services:
       Site__Shell: http://web-dev:8080/index.html
     volumes:
       - ${HOST_DATA_ROOT}/images/corpus_dev:/images:ro
+      - image-cache-dev:/image-cache
     depends_on:
       db:
         condition: service_healthy
@@ -315,6 +319,12 @@ services:
       - ./backup-offsite.sh:/backup-offsite.sh:ro
       - ${HOST_DATA_ROOT}/backups:/backups:ro
       - ${HOST_DATA_ROOT}/rclone:/config/rclone:ro
+
+volumes:
+  # On the machine's own disk rather than the data volume, since they hold nothing that cannot be made
+  # again. A new volume takes the owner of the image's /image-cache, which is the user the API runs as.
+  image-cache:
+  image-cache-dev:
 
 # One network, with the proxy at a fixed address the APIs are told to believe and every other container
 # given one from the upper half. The API is published on no port, so the proxy is the only thing that
