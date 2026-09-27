@@ -1,0 +1,12 @@
+SELECT DISTINCT ?item WHERE {
+  {
+    # Nicephorus, Easton's (the work and its 1897 edition), the ISBE, both Encyclopaedias Biblica
+    VALUES ?work { wd:Q4086271 wd:Q889391 wd:Q48606171 wd:Q2756537 wd:Q5375654 wd:Q5375655 }
+  } UNION {
+  { VALUES ?work { wd:Q1845 wd:Q19786 wd:Q18813 wd:Q83367 } }
+  UNION { VALUES ?class { wd:Q29154430 wd:Q29154515 wd:Q86860 } ?work wdt:P31/wdt:P279* ?class . }
+  UNION { VALUES ?root { wd:Q1845 wd:Q19786 wd:Q18813 wd:Q83367 } ?work wdt:P361+ ?root . }
+  UNION { VALUES ?root { wd:Q1845 wd:Q19786 wd:Q18813 wd:Q83367 } ?work wdt:P629 ?root . }
+  }
+  ?item wdt:P1343 ?work .
+}

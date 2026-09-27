@@ -1,0 +1,7 @@
+SELECT DISTINCT ?item WHERE {
+  { VALUES ?work { wd:Q1845 wd:Q19786 wd:Q18813 wd:Q83367 } }
+  UNION { VALUES ?class { wd:Q29154430 wd:Q29154515 wd:Q86860 } ?work wdt:P31/wdt:P279* ?class . }
+  UNION { VALUES ?root { wd:Q1845 wd:Q19786 wd:Q18813 wd:Q83367 } ?work wdt:P361+ ?root . }
+  UNION { VALUES ?root { wd:Q1845 wd:Q19786 wd:Q18813 wd:Q83367 } ?work wdt:P629 ?root . }
+  ?item wdt:P1441 ?work .
+}

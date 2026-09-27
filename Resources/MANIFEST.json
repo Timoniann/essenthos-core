@@ -289,6 +289,11 @@
     "files": 56,
     "sha256": "ae94531aee7e51caf29f18da6b0cd4b0b33238a654bda142c24af0c3a79b82aa"
   },
+  "Wikidata": {
+    "bytes": 10014207,
+    "files": 3,
+    "sha256": "9493244535ebe7d80d8b52636240ba7dc380dc892b7a082385f3d557050cde25"
+  },
   "WikidataLexemes": {
     "bytes": 468364265,
     "files": 1,

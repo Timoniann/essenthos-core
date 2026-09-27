@@ -1,0 +1,7 @@
+SELECT DISTINCT ?item WHERE {
+  hint:Query hint:optimizer "None" .
+  # human biblical figure, biblical character, biblical place
+  VALUES ?root { wd:Q20643955 wd:Q12405827 wd:Q12404340 }
+  ?class wdt:P279* ?root .
+  ?item wdt:P31 ?class .
+}
