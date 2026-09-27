@@ -440,6 +440,16 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// checked against the words themselves, folded for case because the file writes the divine name
     /// in capitals and bible4u does not.
     /// </summary>
+    /// <summary>
+    /// Whether the file and the loaded text spell one word. The file writes the psalm titles' names
+    /// whole where the King James hyphenates them — <em>Bathsheba</em>, <em>Altaschith</em> — and
+    /// its apostrophe is straight where the text's is curly.
+    /// </summary>
+    private static bool SameWord(string file, string loaded) =>
+        string.Equals(Spelled(file), Spelled(loaded), StringComparison.OrdinalIgnoreCase);
+
+    private static string Spelled(string word) => word.Replace("-", "").Replace('’', '\'');
+
     private static List<LinkDraft>? Build(
         MappingRecord record,
         List<Word> kjv,
@@ -454,7 +464,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
         for (var i = 0; i < fileWords.Count; i++)
         {
-            if (!string.Equals(fileWords[i].Text, kjv[i].Text, StringComparison.OrdinalIgnoreCase))
+            if (!SameWord(fileWords[i].Text, kjv[i].Text))
             {
                 return null;
             }
