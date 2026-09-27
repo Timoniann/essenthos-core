@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Bhsa;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
@@ -272,6 +272,7 @@ internal sealed class DatasetLoader(
             await GiveTheNamesNoDatasetGives(stoppingToken);
             await WriteTheThingsMadeAndTheTimesKept(stoppingToken);
             await WriteWhatTheNarrativesTurnOn(stoppingToken);
+            await NameTheAncestorsTheTribesAreNamedAfter(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
@@ -1717,6 +1718,21 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<TribeNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// Reuben, Asher and Israel where the sentence could be the man or the tribe: the ancestor, on
+    /// the owner's ruling, and the children of Israel the people. After every pass that names a
+    /// Hebrew word, the titles and the things among them, because it answers only where none did,
+    /// and before the verses are cited off the words.
+    /// </summary>
+    private async Task NameTheAncestorsTheTribesAreNamedAfter(CancellationToken cancellationToken)
+    {
+        status.Starting("the ancestors the tribes are named after");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<EponymNameLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 
