@@ -139,6 +139,11 @@ services:
       # over plain http from the proxy, and builds its links and its sign-in callbacks accordingly.
       ForwardedHeaders__KnownProxies: 10.89.0.2
       Images__Path: /images
+      # Each page of the reader written out for search engines and link previews: the address every
+      # absolute link names, and the reader's own index.html, read from the web container so the page
+      # always names the scripts that container serves.
+      Site__Origin: https://${SITE_DOMAIN}
+      Site__Shell: http://web:8080/index.html
     volumes:
       # The pictures the corpus's rows name. The rows arrive in the release; `forge publish` puts the
       # files here beside it, one folder per corpus, before it swaps the release in.
@@ -185,6 +190,8 @@ services:
       Cors__AllowedOrigins__0: https://${DEV_DOMAIN:?set DEV_DOMAIN}
       ForwardedHeaders__KnownProxies: 10.89.0.2
       Images__Path: /images
+      Site__Origin: https://${DEV_DOMAIN}
+      Site__Shell: http://web-dev:8080/index.html
     volumes:
       - ${HOST_DATA_ROOT}/images/corpus_dev:/images:ro
     depends_on:

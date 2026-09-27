@@ -1,0 +1,178 @@
+{
+  "site": "Essenthos",
+  "titled": "{{title}} · Essenthos",
+  "home": {
+    "title": "Essenthos — die Bibel neben dem hebräischen und griechischen Urtext, Wort für Wort",
+    "description": "Lesen Sie die Bibel neben dem hebräischen und griechischen Text, aus dem sie übersetzt wurde, Wort für Wort — mit Lexikon, einer Enzyklopädie der Personen und Orte, Zeitleiste und Karte."
+  },
+  "quoted": "„{{text}}“",
+  "beside": {
+    "hebrew": "Neben dem hebräischen Urtext lesen, Wort für Wort.",
+    "greek": "Neben dem griechischen Urtext lesen, Wort für Wort."
+  },
+  "chapter": {
+    "description": "{{reference}}, {{text}}: {{opening}} {{beside}}",
+    "plain": "{{reference}}. {{beside}}"
+  },
+  "verse": {
+    "description": "{{reference}}, {{text}}: {{quote}} {{beside}}"
+  },
+  "entity": {
+    "verses_one": "Kommt in {{count}} Vers der Bibel vor.",
+    "verses_other": "Kommt in {{count}} Versen der Bibel vor.",
+    "kind": {
+      "person": "eine Person der Bibel",
+      "place": "ein Ort der Bibel",
+      "people": "ein Volk der Bibel",
+      "term": "ein Wort, mit dem die Bibel Gott nennt",
+      "title": "ein Titel in der Bibel",
+      "object": "ein Gegenstand der Bibel",
+      "observance": "ein Fest oder Brauch der Bibel"
+    }
+  },
+  "strong": {
+    "hebrew": "Hebräisches Wort",
+    "greek": "Griechisches Wort",
+    "uses_one": "Kommt {{count}}-mal in der Bibel vor.",
+    "uses_other": "Kommt {{count}}-mal in der Bibel vor."
+  },
+  "event": {
+    "description": "{{name}}: wann es nach jeder biblischen Chronologie geschah, und die Verse, aus denen es gelesen wird."
+  },
+  "period": {
+    "description": "{{name}}: die Jahre nach jeder Chronologie und die Ereignisse, die in diese Zeit fallen."
+  },
+  "text": {
+    "translation": "{{name}} online lesen, Kapitel für Kapitel, neben dem hebräischen und griechischen Urtext.",
+    "original": "{{name}} online lesen, Kapitel für Kapitel, Wort für Wort mit Grammatik und Bedeutung."
+  },
+  "familyTree": {
+    "title": "Stammbaum: {{name}}",
+    "description": "{{name}}: Vorfahren und Nachkommen, wie die Bibel sie verzeichnet."
+  },
+  "syntaxGroup": {
+    "title": "Syntax: {{reference}}",
+    "description": "{{reference}}: ein Satz oder eine Wortgruppe des hebräischen Textes und was die Analyse darüber sagt."
+  },
+  "search": {
+    "query": "„{{query}}“ — in der Bibel suchen"
+  },
+  "textName": {
+    "UBIO": "Ohijenko-Bibel",
+    "UKR1871": "Kulisch-Bibel",
+    "NPU2022": "Neue ukrainische Übersetzung",
+    "LUTH1912": "Lutherbibel 1912",
+    "ELB1905": "Elberfelder Bibel 1905",
+    "RV1909": "Reina-Valera 1909"
+  },
+  "page": {
+    "texts": {
+      "title": "Bibeltexte und Übersetzungen",
+      "description": "Jede Bibel hier — der hebräische und griechische Text, die alten Übersetzungen und die neuen — und was jede von ihnen ist."
+    },
+    "lexicon": {
+      "title": "Lexikon des biblischen Hebräisch und Griechisch",
+      "description": "Strongs Wörterbuch: jedes hebräische und griechische Wort der Bibel, was es bedeutet, und jeder Vers, in dem es vorkommt."
+    },
+    "syntax": {
+      "title": "Syntax der hebräischen Bibel",
+      "description": "Jeder Satz und jede Wortgruppe des hebräischen Textes und was die Analyse über sie sagt."
+    },
+    "encyclopedia": {
+      "title": "Personen und Orte der Bibel",
+      "description": "Alle Personen und Orte, die die Bibel nennt, wie sie sie nennt und wie sie zueinander stehen."
+    },
+    "familyTree": {
+      "title": "Stammbäume der Bibel",
+      "description": "Vorfahren und Nachkommen einer Person auf einer Seite, so weit und so breit die Aufzeichnungen reichen."
+    },
+    "events": {
+      "title": "Ereignisse der Bibel",
+      "description": "Jedes Ereignis, das die biblische Chronologie datiert, der Reihe nach — mit der Rechnung hinter seinem Jahr."
+    },
+    "timeline": {
+      "title": "Zeitleiste der Bibel und der Weltgeschichte",
+      "description": "Die Heilige Schrift und die Weltgeschichte auf einer Achse, nach der Zeitrechnung Ihrer Wahl."
+    },
+    "kings": {
+      "title": "Die Könige Israels und Judas",
+      "description": "Die Könige Israels und Judas nebeneinander, jede Regierung dort, wo die Bibel sie datiert."
+    },
+    "map": {
+      "title": "Karte der biblischen Orte",
+      "description": "Jeder Ort, den die Bibel nennt und der sich verorten lässt, nach Zeit, Buch und Land."
+    },
+    "concordance": {
+      "title": "Konkordanz",
+      "description": "Jeder Vers, in dem ein Wort vorkommt, und das hebräische oder griechische Wort, das es übersetzt."
+    },
+    "parallels": {
+      "title": "Parallelstellen",
+      "description": "Zwei Abschnitte, die dieselben Ereignisse erzählen, nebeneinander."
+    },
+    "search": {
+      "title": "In der Bibel suchen",
+      "description": "Den Text jeder Bibel hier durchsuchen, in jeder ihrer Sprachen."
+    },
+    "about": {
+      "title": "Über Essenthos",
+      "description": "Was Essenthos ist: die Bibel neben dem hebräischen und griechischen Text, aus dem sie übersetzt wurde, Wort für Wort."
+    },
+    "sources": {
+      "title": "Quellen und Lizenzen",
+      "description": "Woher jeder Text und jeder Datensatz hier stammt, wer ihn erstellt hat und zu welchen Bedingungen."
+    },
+    "licence": {
+      "title": "Lizenz",
+      "description": "Was von Essenthos weiterverwendet werden darf und was die Lizenz jeder Quelle verlangt."
+    },
+    "privacy": {
+      "title": "Datenschutz",
+      "description": "Was Essenthos über seine Leser speichert und was nicht."
+    },
+    "terms": {
+      "title": "Nutzungsbedingungen",
+      "description": "Die Bedingungen, unter denen Essenthos genutzt werden kann."
+    },
+    "contact": {
+      "title": "Kontakt",
+      "description": "Wie Sie die Menschen erreichen, die Essenthos machen."
+    },
+    "support": {
+      "title": "Das Projekt unterstützen",
+      "description": "Wie Sie Essenthos unterstützen können und wofür das Geld verwendet wird."
+    },
+    "downloads": {
+      "title": "Downloads",
+      "description": "Ganze Texte und Daten zum Mitnehmen."
+    },
+    "api": {
+      "title": "API",
+      "description": "Wie Sie die Texte, das Lexikon und die Enzyklopädie aus Ihrem eigenen Programm lesen."
+    },
+    "suggestions": {
+      "title": "Vorschläge und Ideen",
+      "description": "Korrekturen und Ideen, die Leser geschickt haben, und was daraus geworden ist."
+    },
+    "newSuggestion": {
+      "title": "Eine Korrektur oder Idee vorschlagen",
+      "description": "Schicken Sie den Menschen, die Essenthos machen, eine Korrektur oder eine Idee."
+    },
+    "account": {
+      "title": "Ihr Konto",
+      "description": "Ihr Profil, Ihre Anmeldungen und Ihre Geräte."
+    },
+    "bookmarks": {
+      "title": "Ihre Lesezeichen",
+      "description": "Jeder Vers und jedes Kapitel, das Sie markiert haben, in der Reihenfolge der Bibel."
+    },
+    "admin": {
+      "title": "Verwaltung",
+      "description": "Vorschläge, Leser und Aktivität."
+    },
+    "notFound": {
+      "title": "Diese Seite gibt es nicht",
+      "description": "Diese Adresse passt zu nichts hier."
+    }
+  }
+}
