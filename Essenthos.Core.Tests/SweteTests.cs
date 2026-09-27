@@ -157,12 +157,12 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
         swete.Source.Books.Should().HaveCount(52);
         swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1107);
         swete.Source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count))
-            .Should().Be(28533);
+            .Should().Be(28558);
         swete.Source.Books
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(571934);
+            .Should().Be(571855);
     }
 
     /// <summary>
@@ -381,5 +381,60 @@ public class SweteNumberingTests
             .Single(c => c.Number == chapter).Verses.Select(v => v.Number).ToList();
 
         numbers.Should().Contain(verse).And.BeInAscendingOrder().And.OnlyContain(n => n < 100);
+    }
+}
+
+/// <summary>
+/// The verse numbers Swete prints in figures, which the transcription let into the text: taken out of
+/// the words they were glued to, and where they name a verse the file ran into the one before, that
+/// verse opened again.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public class SweteFigureTests(Swete swete) : IClassFixture<Swete>
+{
+    private const int FirstChronicles = 13;
+
+    private const int Daniel = 27;
+
+    private const int Sirach = 72;
+
+    private const string Figures = "0123456789⁰¹²³⁴⁵⁶⁷⁸⁹";
+
+    /// <summary>
+    /// Of the 699 words a Swete loaded before this held with a figure in them, eight are left: a
+    /// word whose letters the figure took where nothing beside it shows which, or one with a Latin
+    /// letter in it besides.
+    /// </summary>
+    [Fact]
+    public void AlmostNoWordCarriesAFigure()
+    {
+        var left = swete.Source.Books
+            .SelectMany(book => book.Chapters.SelectMany(chapter => chapter.Verses.SelectMany(verse =>
+                verse.Words.Where(word => word.Surface.Any(Figures.Contains))
+                    .Select(word => $"{book.CanonicalOrdinal} {chapter.Number}:{verse.Number} {word.Surface}"))))
+            .ToList();
+
+        left.Should().HaveCount(8, string.Join("; ", left));
+    }
+
+    [Theory]
+    [InlineData(Daniel, 3, 65, "εὐλογεῖτε,")]
+    [InlineData(Daniel, 3, 78, "εὐλογεῖτε,")]
+    [InlineData(Daniel, 3, 80, "εὐλογεῖτε,")]
+    [InlineData(Sirach, 33, 25, "ἐν")]
+    [InlineData(Sirach, 39, 7, "αὐτὸς")]
+    public void TheFigureIsTakenOutAndTheWordKept(int book, int chapter, int verse, string word) =>
+        Swete.Text(swete.Verse(book, chapter, verse)).Split(' ').Should().Contain(word)
+            .And.NotContain(token => token.Any(Figures.Contains));
+
+    [Fact]
+    public void AFigureStandingAloneGoes() =>
+        Swete.Text(swete.Verse(Daniel, 3, 59)).Should().StartWith("εὐλογεῖτε, ἄγγελοι Κυρίου,");
+
+    [Fact]
+    public void AVerseTheTranscriptionRanIntoTheOneBeforeOpensAtItsFigure()
+    {
+        Swete.Text(swete.Verse(FirstChronicles, 12, 7)).Should().EndWith("οἱ τοῦ Γεδώρ.");
+        Swete.Text(swete.Verse(FirstChronicles, 12, 8)).Should().StartWith("καὶ ἀπὸ τοῦ Γεδδεὶ ἐχωρίσθησαν");
     }
 }

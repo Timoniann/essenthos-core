@@ -41,7 +41,8 @@ internal static class SweteIsaiah
         + "the verse before are divided again by Essenthos — eleven at the verse number Swete prints, which "
         + "the transcription let into the text, two where Brenton and Ottley both begin the verse — two "
         + "misnumbered verses of chapter 38 are renumbered, the end of 31:9 is given back to it, and Latin "
-        + "letters standing for the Greek ones they look like are written as Greek.";
+        + "letters standing for the Greek ones they look like are written as Greek; a verse number standing in "
+        + "the text at 11:16 is taken out, and a figure written for the breathing of Ἀμὼς at 13:1 is the breathing.";
 
     private const string Figure = "Swete's own verse number stands in the text before the word that opens the verse";
 
@@ -61,6 +62,9 @@ internal static class SweteIsaiah
         EditionRepair.Replace(9, "1", "Nεφιθαλείμ,", "Νεφιθαλείμ,", Latin),
         EditionRepair.Divide(9, "9", "10 ΙΙλίνθοι", "ΙΙλίνθοι", "10", Figure),
         EditionRepair.Replace(10, "26", "Aἴγυπτον.", "Αἴγυπτον.", Latin),
+        EditionRepair.Replace(11, "16", "¹6", "", "Swete's own number for the verse, standing in the text before it"),
+        EditionRepair.Replace(13, "1", "¹Αμὼς", "Ἀμὼς",
+            "A figure where the name's breathing stands; the book prints Ἀμὼς five times"),
         EditionRepair.Divide(13, "19", "20oὐ", "οὐ", "20", $"{Figure}, whose omicron is a Latin o"),
         EditionRepair.Replace(19, "1", "Aἴγυπτον,", "Αἴγυπτον,", Latin),
         EditionRepair.Replace(19, "4", "Aἴγυπτον", "Αἴγυπτον", Latin),

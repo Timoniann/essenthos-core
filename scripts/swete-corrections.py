@@ -15,6 +15,21 @@ of fault a rule can settle without the page, because the evidence is in the toke
   fused    two words run together — τῶνβρωμάτων, κύριοςὁ — where Brenton's Greek and GLAUx both read
            the two words at that place, Swete prints each of them elsewhere in this spelling, and
            the run-together token is not a word any of the three prints.
+  number   the verse number Swete prints in the margin, in figures, let into the text: glued to a
+           word (⁶⁵εὐλογεῖτε, (17)ἐν, ἐσπούδασας.5), between two (χρυσᾶς.¹καὶ) or standing as a
+           token of its own ((16), 59). The figure is taken out and the word kept, where the word
+           is one Swete prints elsewhere or the figure is the verse's own number, the next one, or
+           the bracketed second numbering; a figure standing alone goes.
+  overrun  the same, where the figure also took the first letters of a word the verses on either
+           side print whole at the same place — the song of Daniel 3, whose every verse opens
+           εὐλογεῖτε: 7⁸κὐλογεῖτε is εὐλογεῖτε.
+  digit    a figure inside a word, which is the capital iota or the omicron it looks like
+           (’1οθὸρ) or a stray mark (θρό9νου), where the word it leaves is one Swete prints.
+  escape   a character the conversion wrote as its code point, U+03F2 for the lunate sigma.
+
+The verse divisions the transcription lost at a figure are not corrections but repairs of the
+numbering, made before these by Essenthos.Forge/Swete/SweteDivisions.cs; this reads them from there
+and applies them first, and lists every figure that stands for a verse the file does not open.
 
 Everything else is left as the transcription reads it, and anything with a Latin letter the rules do
 not settle is listed rather than guessed. The list is Essenthos.Forge/Swete/SweteCorrections.json,
@@ -59,6 +74,16 @@ GLAUX_LABEL = dict(zip('αβγδεζηθικλ', 'abcdefghikl'))
 LOOK_ALIKE = dict(zip('ABEHIKMNOPTXYZo', 'ΑΒΕΗΙΚΜΝΟΡΤΧΥΖο'))
 BREATHINGS = '’‘᾿ʼ\''
 ROMAN = re.compile(r'^([IVXLC]+)(.+)$')
+
+FIGURES = '0123456789⁰¹²³⁴⁵⁶⁷⁸⁹'
+PLAIN = str.maketrans('⁰¹²³⁴⁵⁶⁷⁸⁹', '0123456789')
+# The number as the transcription lets it in: plain or superscript figures, a verse letter, a range,
+# and the brackets of Swete's second numbering in Sirach and Judith.
+FIGURE = r'[\(⁽]*[0-9⁰¹²³⁴⁵⁶⁷⁸⁹]+(?:[a-zª]|[,\-–][0-9⁰¹²³⁴⁵⁶⁷⁸⁹]+[a-z]?)*°?\)?'
+LEADING = re.compile(r'^[\)*;,–—]*(' + FIGURE + r')(.*)$')
+BETWEEN = re.compile(r'^(.*[^0-9⁰¹²³⁴⁵⁶⁷⁸⁹\s(⁽])((?:[\(⁽][0-9⁰¹²³⁴⁵⁶⁷⁸⁹]+\))|[0-9⁰¹²³⁴⁵⁶⁷⁸⁹]+)([^0-9⁰¹²³⁴⁵⁶⁷⁸⁹].*)$')
+TRAILING = re.compile(r'^(.*[^\w\s])([0-9⁰¹²³⁴⁵⁶⁷⁸⁹]+)$')
+ESCAPED_SIGMA = 'U+03F2'
 
 
 def roman(numeral):
@@ -181,7 +206,8 @@ def main():
     forge = os.path.join(repository, 'Essenthos.Forge')
     excluded = hand_restored(forge)
 
-    runs = {book: swete_runs(sweteFolder, book) for book in books}
+    made = divisions(forge)
+    runs = {book: divide(swete_runs(sweteFolder, book), made.get(book, [])) for book in books}
     witnesses = {book: (glaux(os.path.join(args.resources, 'Glaux', 'xml'), book[:2]),
                         brenton(os.path.join(args.resources, 'Septuagint'), BRENTON.get(book[:2])))
                  for book in books}
@@ -201,6 +227,8 @@ def main():
 
     corrections = []
     unsettled = []
+    figures_left = []
+    by_address = {book: {tuple(ref.split('.')[1:]): tokens for ref, tokens in runs[book]} for book in books}
     for book in books:
         g, b = witnesses[book]
         skip = moved(runs[book])
@@ -210,7 +238,7 @@ def main():
             label = re.sub(r'^\d+', '', verse)
 
             for at, token in enumerate(tokens):
-                if not (any(is_latin(c) for c in token) and any(is_greek(c) for c in token)):
+                if not (any(is_latin(c) for c in token) and any(is_greek(c) for c in token)) or ESCAPED_SIGMA in token:
                     continue
                 printed, kind = settle(token, at, chapter, verse, label, vocabulary,
                                       g.get((chapter, verse), []) + b.get((chapter, verse), []))
@@ -219,10 +247,34 @@ def main():
                     continue
                 corrections.append(entry(book, chapter, verse, tokens, at, token, printed, kind))
 
-            if not addressable or (chapter, verse) not in g or (chapter, verse) not in b:
-                continue
-            for at, first, second in fusions(tokens, g[(chapter, verse)], b[(chapter, verse)], forms, witnessed):
-                corrections.append(entry(book, chapter, verse, tokens, at, tokens[at], f'{first} {second}', 'fused'))
+            if addressable and (chapter, verse) in g and (chapter, verse) in b:
+                for at, first, second in fusions(tokens, g[(chapter, verse)], b[(chapter, verse)], forms, witnessed):
+                    corrections.append(entry(book, chapter, verse, tokens, at, tokens[at], f'{first} {second}', 'fused'))
+
+            # The figures, against the verse as the corrections above leave it, since the reader makes
+            # them in that order.
+            now = list(tokens)
+            for c in corrections:
+                if (c['book'], c['chapter'], c['verse']) == (book, chapter, verse):
+                    now = replaced(now, c['digitised'], c['printed'])
+            number = int(re.match(r'\d*', verse).group() or 0)
+            around = [by_address[book].get((chapter, str(number + step)), []) for step in (-1, 1)]
+            at = 0
+            while at < len(now):
+                token = now[at]
+                if not has_figure(token) or any(is_latin(c) for c in re.sub(FIGURE, '', token.replace(ESCAPED_SIGMA, ''))):
+                    at += 1
+                    continue
+                printed, kind = unnumber(token, at, chapter, verse, vocabulary, around)
+                if printed is None or not addressable:
+                    if any(c.isascii() and c.isdigit() for c in token) or any(is_greek(c) for c in token):
+                        figures_left.append(f'{book} {chapter}:{verse} {token}')
+                    at += 1
+                    continue
+                c = entry(book, chapter, verse, now, at, token, printed, kind)
+                corrections.append(c)
+                now = replaced(now, c['digitised'], c['printed'])
+                at += len([t for t in printed.split(' ') if t])
 
     corrections.sort(key=lambda c: (c['book'], int(c['chapter']), int(re.match(r'\d+', c['verse']).group()), c['verse']))
     out = os.path.join(forge, 'Swete', 'SweteCorrections.json')
@@ -234,6 +286,13 @@ def main():
           + ', '.join(f'{n} {k}' for k, n in kinds.most_common()))
     print(f'{len(unsettled)} tokens with a Latin letter left as the transcription reads them:')
     for line in unsettled:
+        print('  ' + line)
+    print(f'{len(figures_left)} tokens with a figure left as the transcription reads them:')
+    for line in figures_left:
+        print('  ' + line)
+    lost = [line for book in books for line in lost_divisions(book, runs[book])]
+    print(f'{len(lost)} figures naming a verse the file does not open, a division for SweteDivisions.cs:')
+    for line in lost:
         print('  ' + line)
 
     measure(books, runs, witnesses, corrections, excluded, args.gaps)
@@ -274,6 +333,146 @@ def settle(token, at, chapter, verse, label, vocabulary, beside):
     if any(c.isupper() for c in letters[1:]) and not all(c.isupper() for c in letters):
         return None, None
     return printed, 'latin'
+
+
+def has_figure(token):
+    return any(c in FIGURES for c in token) or ESCAPED_SIGMA in token
+
+
+def greek_word(text):
+    """Whether a token's letters are all Greek, so taking a figure out of it leaves a Greek word."""
+    letters = [c for c in text if unicodedata.category(c).startswith('L')]
+    return bool(letters) and all(is_greek(c) for c in letters)
+
+
+def figure_number(figure):
+    digits = re.match(r'\d+', re.sub(r'^[^\d]*', '', figure.translate(PLAIN)))
+    return int(digits.group()) if digits else None
+
+
+def unnumber(token, at, chapter, verse, vocabulary, around):
+    """
+    What a token with a figure in it prints, and why; or None where no rule settles it. The printed
+    form is empty for a figure standing alone and holds a space where the figure stood between two
+    words.
+    """
+    if ESCAPED_SIGMA in token:
+        printed = re.sub(re.escape(ESCAPED_SIGMA) + r'(?![^\W\d_])', 'ς', token).replace(ESCAPED_SIGMA, 'σ')
+        return (printed, 'escape') if not has_figure(printed) else (None, None)
+
+    number = int(re.match(r'\d*', verse).group() or 0)
+    if not any(is_greek(c) for c in token):
+        # The reader already hangs a token with no letter and no plain figure on the word before it.
+        if not any(c.isdigit() and c.isascii() for c in token):
+            return None, None
+        left = re.sub(r'[0-9⁰¹²³⁴⁵⁶⁷⁸⁹()⁽⁾*°a-zª\-–—]', '', token)
+        return left, 'number'
+
+    leading = LEADING.match(token)
+    if leading and any(is_greek(c) for c in leading.group(2)):
+        rest = leading.group(2)
+        if has_figure(rest) or not greek_word(bare(rest)):
+            return None, None
+        whole = overrun(rest, at, around, vocabulary)
+        if whole is not None:
+            return whole, 'overrun'
+        if fold(bare(rest)) in vocabulary:
+            return rest, 'number'
+        figure = leading.group(1)
+        if figure_number(figure) in (number, number + 1) or figure[0] in '(⁽':
+            return rest, 'number'
+        return None, None
+
+    between = BETWEEN.match(token)
+    if between:
+        first, figure, second = between.groups()
+        if (figure[0] in '(⁽' or not unicodedata.category(first[-1]).startswith('L')) \
+                and not has_figure(first + second) and greek_word(bare(first)) and greek_word(bare(second)) \
+                and fold(bare(first)) in vocabulary and fold(bare(second)) in vocabulary:
+            return f'{first} {second}', 'number'
+
+    trailing = TRAILING.match(token)
+    if trailing and not has_figure(trailing.group(1)) and fold(bare(trailing.group(1))) in vocabulary:
+        return trailing.group(1), 'number'
+
+    for printed in (re.sub(r'(?<=[’‘᾿ʼ])1', 'Ι', token), token.replace('0', 'ο'), re.sub(r'[0-9]', '', token)):
+        if printed != token and not has_figure(printed) and greek_word(bare(printed)) \
+                and fold(bare(printed)) in vocabulary:
+            return printed, 'digit'
+    return None, None
+
+
+def overrun(rest, at, around, vocabulary):
+    """
+    The word the verses on either side print at the same place, where what is left of this one is it
+    with its first letters taken by the figure: κὐλογεῖτε or ὐλογεῖτε where they print εὐλογεῖτε.
+    """
+    word = bare(rest)
+    f = fold(word)
+    whole = set()
+    for tokens in around:
+        words = [LEADING.match(t).group(2) if LEADING.match(t) else t for t in tokens]
+        words = [bare(w) for w in words if any(is_greek(c) for c in w)]
+        if at < len(words) and not has_figure(words[at]) and fold(words[at]) in vocabulary:
+            g = fold(words[at])
+            if len(g) >= 5 and len(f) in (len(g) - 1, len(g)) and f.endswith(g[2:]) and f != g:
+                whole.add(words[at])
+    return whole.pop() + rest[len(word):] if len(whole) == 1 else None
+
+
+def divisions(forge):
+    """
+    The repairs Essenthos.Forge/Swete/SweteDivisions.cs makes, by book, as (chapter, verse,
+    digitised, printed, to), with no verse to go to for a word replaced in place: the divisions the
+    transcription lost, which the reader opens again before any correction is made.
+    """
+    path = os.path.join(forge, 'Swete', 'SweteDivisions.cs')
+    made = collections.defaultdict(list)
+    if not os.path.exists(path):
+        return made
+    book = None
+    for line in open(path, encoding='utf-8'):
+        opened = re.match(r'\s*\["([^"]+)"\] =', line)
+        if opened:
+            book = opened.group(1)
+        for m in re.finditer(r'EditionRepair\.(Divide|Replace)\((\d+), "([^"]+)", "([^"]+)", "([^"]*)"(?:, "([^"]+)")?', line):
+            kind, chapter, verse, digitised, printed, to = m.groups()
+            made[book].append((chapter, verse, digitised, printed, to if kind == 'Divide' else None))
+    return made
+
+
+def divide(runs, made):
+    """The runs with the repairs made, the way EditionRepairs makes them."""
+    for chapter, verse, digitised, printed, to in made:
+        at = next(i for i, (ref, _) in enumerate(runs) if ref.split('.')[1:] == [chapter, verse])
+        ref, tokens = runs[at]
+        want = digitised.split(' ')
+        found = [i for i in range(len(tokens)) if tokens[i:i + len(want)] == want]
+        if len(found) != 1:
+            raise SystemExit(f'{ref} holds "{digitised}" {len(found)} times; SweteDivisions.cs no longer reads as the file')
+        i = found[0]
+        printed = printed.split(' ') if printed else []
+        if to is None:
+            runs[at] = (ref, tokens[:i] + printed + tokens[i + len(want):])
+            continue
+        runs[at] = (ref, tokens[:i])
+        runs.insert(at + 1, (f"{ref.split('.')[0]}.{chapter}.{to}", printed + tokens[i + len(want):]))
+    return runs
+
+
+def lost_divisions(book, runs):
+    """Figures naming the next verse where the file opens no such verse: a division it lost."""
+    refs = {ref for ref, _ in runs}
+    for ref, tokens in runs:
+        _, chapter, verse = ref.split('.')
+        number = int(re.match(r'\d*', verse).group() or 0)
+        for at, token in enumerate(tokens):
+            m = LEADING.match(token) or BETWEEN.match(token)
+            if not m or not (any(is_greek(c) for c in token) or token.isascii() and token.isdigit()):
+                continue
+            figure = m.group(1) if m.re is LEADING else m.group(2)
+            if figure[0] not in '(⁽' and figure_number(figure) == number + 1 and f'{ref.rsplit(".", 1)[0]}.{number + 1}' not in refs:
+                yield f'{book} {chapter}:{verse} at {at}: {" ".join(tokens[max(0, at - 2):at + 3])}'
 
 
 def near(word, witness):
@@ -368,8 +567,15 @@ def entry(book, chapter, verse, tokens, at, token, printed, kind):
     return {
         'book': book, 'chapter': chapter, 'verse': verse, 'kind': kind,
         'digitised': ' '.join(digitised),
-        'printed': ' '.join(tokens[lo:at] + [printed] + tokens[at + 1:hi]),
+        'printed': ' '.join(t for t in tokens[lo:at] + [printed] + tokens[at + 1:hi] if t),
     }
+
+
+def replaced(tokens, digitised, printed):
+    """The tokens with a correction made, as SweteRestorations makes it."""
+    want = digitised.split(' ')
+    i = next(i for i in range(len(tokens)) if tokens[i:i + len(want)] == want)
+    return tokens[:i] + [t for t in printed.split(' ') if t] + tokens[i + len(want):]
 
 
 def short_verses(books, runs, witnesses, corrections):

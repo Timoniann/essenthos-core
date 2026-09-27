@@ -78,11 +78,16 @@ internal static class SweteRestorations
 
     /// <summary>
     /// The restorations as earlier passes made them, oldest first: the Genesis words alone, then with
-    /// the letter corrections. A corpus restored by one of them reads as that set and not as the
-    /// transcription, and the pass carries it on to <see cref="All"/> rather than refusing it.
+    /// the letter corrections, then with the words read off the page, before the figures were taken
+    /// out. A corpus restored by one of them reads as that set and not as the transcription, and the
+    /// pass carries it on to <see cref="All"/> rather than refusing it.
     /// </summary>
     public static readonly IReadOnlyList<IReadOnlyList<SweteRestoration>> Earlier =
-        [Lost(), [.. Lost(), .. SweteCorrections.All]];
+    [
+        Lost(),
+        [.. Lost(), .. SweteCorrections.First],
+        [.. Lost(), .. SweteCorrections.First, .. SwetePage.All],
+    ];
 
     private static IReadOnlyList<SweteRestoration> Lost() =>
     [
@@ -253,6 +258,11 @@ internal static class SweteRestorations
                 $"Lengthen the entry in {nameof(SweteRestorations)} until it names one place.");
         }
 
-        return [.. tokens.Take(found[0]), .. restoration.Printed.Split(' '), .. tokens.Skip(found[0] + digitised.Length)];
+        return
+        [
+            .. tokens.Take(found[0]),
+            .. restoration.Printed.Split(' ', StringSplitOptions.RemoveEmptyEntries),
+            .. tokens.Skip(found[0] + digitised.Length),
+        ];
     }
 }

@@ -71,9 +71,9 @@ public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void EveryOtherLinePassesThroughUnchanged()
     {
-        string[] lines = ["41.1.1 καὶ", "41.1.1 ἐγένετο", "41.1.2 ἀνάστηθι"];
+        string[] lines = ["40.1.1 Ὅρασις", "40.1.1 Ἀβδειού.", "40.1.2 ἰδοὺ"];
 
-        SweteRestorations.Apply("41.Jonas", lines).Should().Equal(lines);
+        SweteRestorations.Apply("40.Abdias", lines).Should().Equal(lines);
     }
 
     /// <summary>
@@ -175,7 +175,8 @@ public sealed class SweteRestorationLoadTests : IDisposable
         }
 
         var row = await _db.Texts.AsNoTracking().SingleAsync(t => t.Id == text.Id);
-        row.RightsNote.Should().Be($"CC BY-SA 4.0. {SweteRestorations.Note} {SweteCorrections.Note} {SwetePage.Note}");
+        row.RightsNote.Should().Be(
+            $"CC BY-SA 4.0. {SweteRestorations.Note} {SweteCorrections.Note} {SwetePage.Note} {SweteCorrections.FiguresNote}");
         var restored = await _db.Words.AsNoTracking().SingleAsync(w => w.TextId == text.Id && w.Surface == "πεντήκοντα"
                                                                        && w.Verse!.ChapterNumber == 9);
         restored.NormalisedText.Should().Be("πεντηκοντα", "a word written here is searchable at once");
@@ -386,6 +387,9 @@ public sealed class SweteCorrectionLoadTests : IDisposable
         _db.Dispose();
     }
 
+    /// <summary>How many words the reader makes of tokens: one with neither a letter nor a figure is punctuation.</summary>
+    private static int Words(string tokens) => tokens.Split(' ').Count(token => token.Any(char.IsLetterOrDigit));
+
     [Fact]
     public async Task AWholeSweteLoadedBeforeThemReadsAsACorpusLoadedAfter()
     {
@@ -400,9 +404,7 @@ public sealed class SweteCorrectionLoadTests : IDisposable
 
         var verses = SweteRestorations.All.Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).Distinct().ToList();
         outcome.Verses.Should().Be(verses.Count);
-        outcome.Words.Should().Be(17
-                                  + SweteCorrections.All.Count(c => c.Why.StartsWith("Two words", StringComparison.Ordinal))
-                                  + SwetePage.All.Sum(r => r.Printed.Split(' ').Length - r.Digitised.Split(' ').Length));
+        outcome.Words.Should().Be(17 + SweteCorrections.All.Concat(SwetePage.All).Sum(r => Words(r.Printed) - Words(r.Digitised)));
 
         var cold = SweteTextSource.Read(TestResources.SweteFolder);
         var text = await _db.Texts.SingleAsync(t => t.Slug == SweteTextSource.Slug);

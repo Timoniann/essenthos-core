@@ -164,7 +164,7 @@ public class SweteIsaiahTests(Swete swete) : IClassFixture<Swete>
     {
         Book.Chapters.Should().HaveCount(66);
         Book.Chapters.Sum(chapter => chapter.Verses.Count).Should().Be(1289);
-        Book.Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(26971);
+        Book.Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(26970);
 
         foreach (var chapter in Book.Chapters.Where(chapter => chapter.Number != 38))
         {

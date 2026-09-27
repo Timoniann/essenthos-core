@@ -87,7 +87,7 @@ public sealed class IsaiahLoadTests : IDisposable
 
         added.Books.Should().Equal("Isaiah");
         added.Verses.Should().Be(1289);
-        added.Words.Should().Be(26971);
+        added.Words.Should().Be(26970);
 
         var books = await _db.Books.OrderBy(b => b.Position)
             .Select(b => new { b.CanonicalOrdinal, b.Position }).ToListAsync();

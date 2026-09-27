@@ -117,12 +117,16 @@ internal static class SweteTextSource
 
     /// <summary>
     /// Where a chapter of a file stands in the corpus: its own book and number, except in Esdras B,
-    /// whose chapters after Ezra's are Nehemiah's counted from one.
+    /// whose chapters after Ezra's are Nehemiah's counted from one, and in Wisdom, whose chapters the
+    /// files number one ahead from 15.
     /// </summary>
-    public static (int Canonical, int Chapter) Placed(string file, int chapter) =>
-        file == SecondEsdras.File && chapter > SecondEsdras.LastEzraChapter
-            ? (SecondEsdras.Nehemiah, chapter - SecondEsdras.LastEzraChapter)
-            : (Canonical(file), chapter);
+    public static (int Canonical, int Chapter) Placed(string file, int chapter)
+    {
+        var printed = Misnumbered.Chapter(file, chapter);
+        return file == SecondEsdras.File && printed > SecondEsdras.LastEzraChapter
+            ? (SecondEsdras.Nehemiah, printed - SecondEsdras.LastEzraChapter)
+            : (Canonical(file), printed);
+    }
 
     /// <summary>
     /// The licence is on the transcription and not on the text, and both statements attached to the
@@ -174,7 +178,8 @@ internal static class SweteTextSource
                      + "state Creative Commons Attribution-ShareAlike 4.0. So the obligation is on this "
                      + "digitisation of the edition and not on the edition, and it is an obligation to "
                      + "credit and to share alike anything derived from these files. "
-                     + SweteRestorations.Note + " " + SweteCorrections.Note + " " + SwetePage.Note + " " + SweteIsaiah.Note,
+                     + SweteRestorations.Note + " " + SweteCorrections.Note + " " + SwetePage.Note + " "
+                     + SweteCorrections.FiguresNote + " " + SweteDivisions.Note + " " + SweteIsaiah.Note,
         Citation = "Henry Barclay Swete (ed.), The Old Testament in Greek according to the Septuagint, "
                    + "Cambridge University Press, 1887-1894, in the digital edition of Nathan D. Smith "
                    + "(nathans/lxx-swete) derived from the Open Greek and Latin First1KGreek transcription "
@@ -226,12 +231,13 @@ internal static class SweteTextSource
             [("16.Paralipomenon_II", 17, 111)] = 11,
         };
 
+        public static int Chapter(string file, int chapter) =>
+            file == Wisdom && chapter > LastWisdomChapterAsPrinted ? chapter - 1 : chapter;
+
         public static IEnumerable<SweteChapter> Renumber(string file, IEnumerable<SweteChapter> chapters) =>
             chapters.Select(chapter => chapter with
             {
-                Number = file == Wisdom && chapter.Number > LastWisdomChapterAsPrinted
-                    ? chapter.Number - 1
-                    : chapter.Number,
+                Number = Chapter(file, chapter.Number),
                 Verses = chapter.Verses.Any(verse => Verses.ContainsKey((file, chapter.Number, verse.Number)))
                     ? [.. chapter.Verses
                         .Select(verse => Verses.TryGetValue((file, chapter.Number, verse.Number), out var number)
@@ -244,7 +250,7 @@ internal static class SweteTextSource
 
     /// <param name="restored">
     /// False for the edition as the transcription reads it, without <see cref="SweteRestorations"/>:
-    /// what a corpus loaded before them holds.
+    /// what a corpus loaded before them holds. The verses it ran together are divided either way.
     /// </param>
     public static TextSource Read(string folder, bool restored = true)
     {
@@ -266,7 +272,9 @@ internal static class SweteTextSource
 
             var read = SweteReader.Read(file == Isaiah
                 ? SweteIsaiah.Lines(folder)
-                : restored ? SweteRestorations.Apply(file, File.ReadLines(path)) : File.ReadLines(path));
+                : restored
+                    ? SweteRestorations.Apply(file, SweteDivisions.Lines(file, File.ReadLines(path)))
+                    : SweteDivisions.Lines(file, File.ReadLines(path)));
             var chapters = Misnumbered.Renumber(file, read.Chapters).Select(Chapter).ToList();
 
             if (file == SecondEsdras.File)

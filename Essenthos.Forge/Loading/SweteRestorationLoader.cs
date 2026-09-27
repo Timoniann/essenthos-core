@@ -102,10 +102,10 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         foreach (var book in SweteRestorations.Books)
         {
             var path = Path.Combine(folder, SweteTextSource.FileName(book));
-            var digitised = SweteReader.Read(File.ReadLines(path));
-            var restored = SweteReader.Read(SweteRestorations.Apply(book, File.ReadLines(path)));
+            var digitised = SweteReader.Read(Lines(book, path));
+            var restored = SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path)));
             var earlier = SweteRestorations.Earlier
-                .Select(set => SweteReader.Read(SweteRestorations.Apply(book, File.ReadLines(path), set)))
+                .Select(set => SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path), set)))
                 .ToList();
 
             foreach (var here in SweteRestorations.All
@@ -154,7 +154,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
         if (verses > 0)
         {
-            foreach (var note in new[] { SweteRestorations.Note, SweteCorrections.Note, SwetePage.Note })
+            foreach (var note in new[] { SweteRestorations.Note, SweteCorrections.Note, SwetePage.Note, SweteCorrections.FiguresNote })
             {
                 if (text.RightsNote?.Contains(note, StringComparison.Ordinal) != true)
                 {
@@ -173,6 +173,14 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
     }
 
     private sealed record StoredWord(long Id, int VerseId, int Position, string Surface, string Trailer);
+
+    /// <summary>
+    /// A file's lines with the verses the transcription ran together divided, which a cold load reads
+    /// and every restoration is addressed against. A corpus that holds them run together reads as
+    /// none of its readings at such a verse, and the pass stops there and asks for the text to be
+    /// loaded again.
+    /// </summary>
+    private static IEnumerable<string> Lines(string book, string path) => SweteDivisions.Lines(book, File.ReadLines(path));
 
     private static IReadOnlyList<SweteWord> Words(SweteBook book, int chapter, int verse, string label) =>
         book.Chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse && v.Label == label).Words;
