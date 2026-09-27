@@ -765,7 +765,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// The words carried into the translations go with them. They are the same claim moved one hop
     /// along a link and they carry the same source, so leaving them would keep the King James
     /// saying what the Hebrew beside it no longer says. They are found the way they were made, from
-    /// the seed through <see cref="Annotating.Reached"/>, rather than by reading them back out of a
+    /// the seed through <see cref="Annotating.MayHaveReached"/>, rather than by reading them back out of a
     /// note.
     /// </para>
     ///
@@ -845,7 +845,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
              FROM seed
              JOIN word origin ON origin.id = seed.word_id
              JOIN link_word mine ON mine.word_id = seed.word_id
-             CROSS JOIN LATERAL ({Annotating.Reached}) other
+             CROSS JOIN LATERAL ({Annotating.MayHaveReached}) other
          ),
          gone AS (
              SELECT word_id, entity_id FROM seed

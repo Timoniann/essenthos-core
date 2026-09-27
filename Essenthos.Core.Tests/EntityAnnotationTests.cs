@@ -736,6 +736,37 @@ public sealed class EntityAnnotationTests : IDisposable
     }
 
     /// <summary>
+    /// A set whose one number is two records on the witness's side names nothing. Joshua 19:47
+    /// writes דן four times under one number, for the tribe, the town and the man their father, and
+    /// opposite that, which word renders which is who is named: read as one name written several
+    /// times, the set put the tribe on the Synodal's town and on the father, and its head is the
+    /// father.
+    /// </summary>
+    [Fact]
+    public async Task ASetWhoseWitnessSideNamesTwoEntitiesNamesNothing()
+    {
+        var first = _db.WordAt(_english, 1, 19, 1);
+        var last = _db.WordAt(_english, 1, 19, 3);
+        var other = Person("zipporah", "Zipporah", null);
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = _db.WordAt(_hebrew, 1, 19, 2).Id,
+            Entity = other,
+            Method = LinkMethod.Manual,
+            Source = "a person",
+        });
+        _db.SaveChanges();
+        Set(
+            [_db.WordAt(_hebrew, 1, 19, 1), _db.WordAt(_hebrew, 1, 19, 2)],
+            [first, _db.WordAt(_english, 1, 19, 2), last]);
+
+        await _loader.Load();
+
+        (await _db.WordEntities.AnyAsync(a => a.Word!.TextId == _english.Id && a.Word.Verse!.Number == 19))
+            .Should().BeFalse("which of the two the head renders is as much a choice as any other word");
+    }
+
+    /// <summary>
     /// A possessive closes the name from the other end: the last word of <em>Terah's lifetime</em>
     /// is the thing possessed and the man is the word before it.
     /// </summary>
