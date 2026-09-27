@@ -21,6 +21,9 @@ internal static class KingsEndpoints
 {
     private const string Wikidata = "http://www.wikidata.org/entity/";
 
+    /// <summary>The language the headwords, and so the throne names beside them, are written in.</summary>
+    private const string Headword = "eng";
+
     /// <summary>
     /// The world-history records, from Wikidata, drawn behind each nation's rulers: its dynasties,
     /// its empire and the battles the text's own events stand beside. Chosen by hand for the four
@@ -93,6 +96,33 @@ internal static class KingsEndpoints
             })
             .ToListAsync(cancellationToken);
 
+        var lengths = await db.ReignLengths
+            .ToDictionaryAsync(l => l.EntityId, cancellationToken);
+
+        var local = EntityNames.Local(language);
+        var thrones = (await db.ThroneNames
+                .Where(n => n.Language == Headword || n.Language == local)
+                .ToListAsync(cancellationToken))
+            .GroupBy(n => n.EntityId)
+            .ToDictionary(g => g.Key, g => g.ToList());
+
+        var fields = await db.ProphetFields
+            .OrderBy(f => f.EntityId).ThenBy(f => f.Position)
+            .Select(f => new
+            {
+                f.EntityId,
+                f.Realm,
+                f.Kind,
+                f.PlaceEntityId,
+                Place = f.Place == null ? null : f.Place.Slug,
+                PlaceName = f.Place == null ? null : f.Place.Name,
+                f.CanonicalBook,
+                f.CanonicalChapter,
+                f.CanonicalVerse,
+                f.EndVerse,
+            })
+            .ToListAsync(cancellationToken);
+
         var rulers = reigns.GroupBy(r => r.EntityId).Select(g => g.First()).ToList();
         var ruling = rulers.Select(r => r.EntityId).ToHashSet();
         var people = statements
@@ -105,24 +135,49 @@ internal static class KingsEndpoints
             .DistinctBy(p => p.Id)
             .ToList();
 
-        var local = await EntityNames.Of(
-            db, [.. ruling, .. people.Select(p => p.Id)], language, cancellationToken);
+        var places = fields.Where(f => f.PlaceEntityId is not null).Select(f => f.PlaceEntityId!.Value).Distinct();
+        var names = await EntityNames.Of(
+            db, [.. ruling, .. people.Select(p => p.Id), .. places], language, cancellationToken);
 
         return new KingsTimelineResponse(
             [
                 .. rulers.Select(r => new RulerResponse(
                     r.Slug,
                     r.Name,
-                    local.GetValueOrDefault(r.EntityId),
+                    names.GetValueOrDefault(r.EntityId),
                     r.Realm,
                     [
                         .. reigns
                             .Where(reign => reign.EntityId == r.EntityId && reign.Period is not null)
                             .Select(reign => new RulerPeriodResponse(
                                 reign.Period!, reign.DrawnUnder, reign.Shared, reign.Fallback)),
+                    ],
+                    lengths.TryGetValue(r.EntityId, out var length)
+                        ? new ReignLengthResponse(
+                            length.Years,
+                            length.Months,
+                            length.Days,
+                            BookReferences.At(length.CanonicalBook, length.CanonicalChapter, length.CanonicalVerse)!)
+                        : null,
+                    thrones.TryGetValue(r.EntityId, out var throne) ? Throne(throne, local) : null)),
+            ],
+            [
+                .. people.Select(p => new ReignPersonResponse(
+                    p.Slug,
+                    p.Name,
+                    names.GetValueOrDefault(p.Id),
+                    [
+                        .. fields.Where(f => f.EntityId == p.Id).Select(f => new ProphetFieldResponse(
+                            f.Realm,
+                            f.Kind,
+                            f.Place is null
+                                ? null
+                                : new ReignPlaceResponse(
+                                    f.Place, f.PlaceName!, names.GetValueOrDefault(f.PlaceEntityId!.Value)),
+                            BookReferences.At(f.CanonicalBook, f.CanonicalChapter, f.CanonicalVerse)!,
+                            f.EndVerse)),
                     ])),
             ],
-            [.. people.Select(p => new ReignPersonResponse(p.Slug, p.Name, local.GetValueOrDefault(p.Id)))],
             [
                 .. statements.Select(s => new ReignStatementResponse(
                     s.Person,
@@ -136,6 +191,20 @@ internal static class KingsEndpoints
                     s.EndVerse)),
             ],
             await Lands(db, cancellationToken));
+    }
+
+    private static ThroneNameResponse? Throne(IReadOnlyList<ThroneName> rows, string? local)
+    {
+        var english = rows.FirstOrDefault(n => n.Language == Headword);
+        if (english is null)
+        {
+            return null;
+        }
+
+        return new ThroneNameResponse(
+            english.Name,
+            rows.FirstOrDefault(n => n.Language == local)?.Name,
+            BookReferences.At(english.CanonicalBook, english.CanonicalChapter, english.CanonicalVerse)!);
     }
 
     private static async Task<IList<ReignLandResponse>> Lands(AppDbContext db, CancellationToken cancellationToken)
@@ -186,12 +255,25 @@ internal record KingsTimelineResponse(
 /// <param name="LocalName">The name in the language asked for, where the corpus has one.</param>
 /// <param name="Realm">The kingdom he ruled: <c>united</c>, <c>israel</c>, <c>judah</c>, or a nation.</param>
 /// <param name="Reigns">The periods he is drawn by; empty for a ruler no reckoning dates.</param>
+/// <param name="Reigned">How long the text says he reigned, where it says.</param>
+/// <param name="Throne">
+/// The name he reigned under, where his record is headed by another: Jehoiakim for Eliakim.
+/// </param>
 internal record RulerResponse(
     string Slug,
     string Name,
     string? LocalName,
     string Realm,
-    IList<RulerPeriodResponse> Reigns);
+    IList<RulerPeriodResponse> Reigns,
+    ReignLengthResponse? Reigned,
+    ThroneNameResponse? Throne);
+
+/// <param name="LocalName">The name in the language asked for, where one is held.</param>
+/// <param name="Verse">Where the text gives him the name.</param>
+internal record ThroneNameResponse(string Name, string? LocalName, VerseRefResponse Verse);
+
+/// <summary>The text's length of a reign — years, months or days, as the verse counts it.</summary>
+internal record ReignLengthResponse(int? Years, int? Months, int? Days, VerseRefResponse Verse);
 
 /// <param name="Period">The period's slug, as <c>/v1/timeline</c> sends it.</param>
 /// <param name="Over">The kingdom it is drawn under, where it is not the ruler's own.</param>
@@ -199,7 +281,26 @@ internal record RulerResponse(
 /// <param name="Fallback">Drawn only where a reckoning dates none of the ruler's other periods.</param>
 internal record RulerPeriodResponse(string Period, string? Over, bool Shared, bool Fallback);
 
-internal record ReignPersonResponse(string Slug, string Name, string? LocalName);
+/// <param name="Fields">
+/// For a prophet, where the text says he prophesied, came from and was sent, in the order a reader
+/// meets them; empty for anyone else.
+/// </param>
+internal record ReignPersonResponse(string Slug, string Name, string? LocalName, IList<ProphetFieldResponse> Fields);
+
+/// <param name="Realm">
+/// <c>united</c>, <c>israel</c>, <c>judah</c>, <c>exile</c>, <c>return</c>, or the nation he was sent to.
+/// </param>
+/// <param name="Kind"><c>prophesied</c>, <c>from</c> or <c>sent</c>.</param>
+/// <param name="Place">The town or land the verse names, where it names one.</param>
+/// <param name="EndVerse">The last verse, where it takes more than one to say it.</param>
+internal record ProphetFieldResponse(
+    string Realm,
+    string Kind,
+    ReignPlaceResponse? Place,
+    VerseRefResponse Verse,
+    int? EndVerse);
+
+internal record ReignPlaceResponse(string Slug, string Name, string? LocalName);
 
 /// <param name="Person">Who was in the ruler's days: a prophet, a foreign ruler, or a king who began to reign.</param>
 /// <param name="Role"><c>prophet</c>, <c>nation</c> or <c>accession</c>.</param>

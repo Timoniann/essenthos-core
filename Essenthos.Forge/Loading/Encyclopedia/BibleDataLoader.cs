@@ -671,7 +671,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
 
             Add(dates, eventId, reckoning["bibledata"], Number(row["event_year_ah"]),
                 Blank(row["event_year_calculation"]), null, Blank(row["event_notes"]));
-            if (Number(row["ussher_am_year"]) is null && annals.TryGetValue(slug, out var dating))
+            if (annals.TryGetValue(slug, out var dating) && dating.Supersedes(Number(row["ussher_am_year"])))
             {
                 Add(dates, eventId, reckoning["ussher"], dating.Year, null, dating.Citation, null, dating.StatedYear);
             }

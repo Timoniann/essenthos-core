@@ -76,8 +76,8 @@ public class PeriodTests
     }
 
     /// <summary>
-    /// Pekah's sole reign opens under its own name and closes under none: the text ends it when
-    /// Hoshea smote him and reigned in his stead, so it is closed by Hoshea's accession.
+    /// Pekah's sole reign opens under its own name and closes as his reign: the text ends it when
+    /// Hoshea smote him, which is not Hoshea's accession in every reckoning.
     /// </summary>
     [Fact]
     public void ClosesAnOpeningTheDatasetClosesUnderAnotherName()
@@ -94,7 +94,7 @@ public class PeriodTests
         var reign = periods.Should().ContainSingle().Subject;
         reign.Slug.Should().Be("period-pekah1solereign");
         reign.StartEventId.Should().Be(1);
-        reign.EndEventId.Should().Be(3);
+        reign.EndEventId.Should().Be(2);
         reign.EndYear.Should().Be(3231);
     }
 

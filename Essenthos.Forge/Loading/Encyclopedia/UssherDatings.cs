@@ -6,13 +6,21 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <summary>
 /// Ussher's years for the events BibleData leaves undated in his reckoning although his Annals date
-/// them, read from the paragraphs <c>UssherDatings.json</c> names.
+/// them, or dates with a year that is not his, read from the paragraphs <c>UssherDatings.json</c>
+/// names.
 ///
 /// A period is drawn in a reckoning only where that reckoning dates both the events bounding it, so
 /// one blank cell in BibleData's Ussher column takes a whole reign off his timeline. The list names
 /// the paragraph for each such event, and the years come from the paragraph itself: his year from
 /// the creation and the year before Christ he printed beside it, which have to agree with each
 /// other before either is written.
+///
+/// <para>
+/// A cell that is filled and wrong is listed with the year it holds. Elah's accession carries
+/// Shulman's 3009 in Ussher's column beside the paragraph that dates it 3074, which drew a two-year
+/// reign across sixty-six; the entry replaces that year and no other, so a corrected dataset is
+/// read as it stands.
+/// </para>
 /// </summary>
 internal static class UssherDatings
 {
@@ -26,9 +34,14 @@ internal static class UssherDatings
     private static readonly JsonSerializerOptions Shape = new() { PropertyNameCaseInsensitive = true };
 
     /// <summary>One event's date in Ussher's reckoning, as an <see cref="Database.Entities.EventDate"/> holds it.</summary>
-    internal sealed record Dating(int Year, int StatedYear, string Citation);
+    /// <param name="Replaces">The year the dataset wrote for him that this one takes the place of.</param>
+    internal sealed record Dating(int Year, int StatedYear, string Citation, int? Replaces)
+    {
+        /// <summary>Whether this is the year to write over what the dataset's cell holds.</summary>
+        public bool Supersedes(int? cell) => cell is null || cell == Replaces;
+    }
 
-    private sealed record Listed(string Event, int Paragraph, string? Says);
+    private sealed record Listed(string Event, int Paragraph, string? Says, int? Replaces);
 
     private sealed record ListFile(IReadOnlyList<Listed> Events);
 
@@ -77,7 +90,7 @@ internal static class UssherDatings
                 "paragraph, or take the event off the list.");
         }
 
-        return new Dating(anno, -year, $"¶{one.Paragraph}");
+        return new Dating(anno, -year, $"¶{one.Paragraph}", one.Replaces);
     }
 
     private static IReadOnlyList<Listed> List()

@@ -191,3 +191,155 @@ public class ReignStatement
 
     public override string ToString() => $"ReignStatement({EntityId} {Role} of {RulerEntityId})";
 }
+
+/// <summary>
+/// How long the text says a king reigned, in the verse that says it: Elah two years (1KI 16:8),
+/// Zimri seven days (1KI 16:15), Jehoiachin three months (2KI 24:8).
+///
+/// <para>
+/// The figure is the text's and not a reckoning's. The bars are drawn from the reckonings' own
+/// years, and this is what a reader can hold them to.
+/// </para>
+/// </summary>
+[Index(nameof(EntityId), IsUnique = true)]
+public class ReignLength
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int EntityId { get; set; }
+
+    public Entity? Entity { get; set; }
+
+    public int? Years { get; set; }
+
+    public int? Months { get; set; }
+
+    public int? Days { get; set; }
+
+    public int CanonicalBook { get; set; }
+
+    public int CanonicalChapter { get; set; }
+
+    public int CanonicalVerse { get; set; }
+
+    public required string Source { get; set; }
+
+    public override string ToString() => $"ReignLength({EntityId} {Years}y {Months}m {Days}d)";
+}
+
+/// <summary>Where a prophet's word was spoken, as a <see cref="ProphetField"/> places it.</summary>
+public static class ProphetRealms
+{
+    /// <summary>All Israel under Saul, David and Solomon, before the kingdom divided.</summary>
+    public const string United = RulerRealms.United;
+
+    public const string Israel = RulerRealms.Israel;
+    public const string Judah = RulerRealms.Judah;
+
+    /// <summary>Among the captives in Babylon.</summary>
+    public const string Exile = "exile";
+
+    /// <summary>In Judah and Jerusalem after the return from Babylon.</summary>
+    public const string Return = "return";
+
+    /// <summary>The realms of Judah, Israel and the rest, and the lands of the nations a prophet was sent to.</summary>
+    public static readonly IReadOnlyList<string> All = [United, Israel, Judah, Exile, Return, .. RulerRealms.All.Skip(3)];
+}
+
+/// <summary>What a <see cref="ProphetField"/> says of the land.</summary>
+public static class ProphetFieldKinds
+{
+    /// <summary>He prophesied there, or to its people and its kings.</summary>
+    public const string Prophesied = "prophesied";
+
+    /// <summary>He came from there: Amos from Tekoa, in Judah, though he prophesied at Bethel.</summary>
+    public const string From = "from";
+
+    /// <summary>He was sent there once, or sent his word there: Jonah to Nineveh, Elijah's writing to Jehoram.</summary>
+    public const string Sent = "sent";
+
+    public static readonly IReadOnlyList<string> All = [Prophesied, From, Sent];
+}
+
+/// <summary>
+/// Where a prophet spoke, where he came from, and where he was sent, each in the verse that says so:
+/// Amos from Tekoa (AMO 1:1) prophesying at Bethel (AMO 7:13), Jonah of Gath-hepher (2KI 14:25) sent
+/// to Nineveh (JON 1:2), Ezekiel among the captives by the river of Chebar (EZK 1:1).
+///
+/// <para>
+/// A prophet is Judah's, Israel's or both by where he prophesied, and not by the kings named in
+/// his heading: Hosea's names four kings of Judah and one of Israel, and his word is to Ephraim.
+/// </para>
+/// </summary>
+[Index(nameof(EntityId))]
+public class ProphetField
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int EntityId { get; set; }
+
+    public Entity? Entity { get; set; }
+
+    /// <summary>One of <see cref="ProphetRealms"/>.</summary>
+    public required string Realm { get; set; }
+
+    /// <summary>One of <see cref="ProphetFieldKinds"/>.</summary>
+    public required string Kind { get; set; }
+
+    /// <summary>The town or land the verse names, where it names one.</summary>
+    public int? PlaceEntityId { get; set; }
+
+    public Entity? Place { get; set; }
+
+    public int CanonicalBook { get; set; }
+
+    public int CanonicalChapter { get; set; }
+
+    public int CanonicalVerse { get; set; }
+
+    /// <summary>The last verse, where it takes more than one to say it.</summary>
+    public int? EndVerse { get; set; }
+
+    public int Position { get; set; }
+
+    public required string Source { get; set; }
+
+    public override string ToString() => $"ProphetField({EntityId} {Kind} {Realm})";
+}
+
+/// <summary>
+/// The name a king reigned under where it is not the one his record is headed by: Eliakim, whose
+/// name Pharaoh-nechoh turned to Jehoiakim (2KI 23:34), Mattaniah made Zedekiah (2KI 24:17), and
+/// Azariah, whom the Chronicler calls Uzziah (2CH 26:1). The chart of the kings writes the throne
+/// name, and his page keeps the headword.
+/// </summary>
+/// <remarks>One row per language, in the language's three-letter code as the name forms have it.</remarks>
+[Index(nameof(EntityId), nameof(Language), IsUnique = true)]
+public class ThroneName
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int EntityId { get; set; }
+
+    public Entity? Entity { get; set; }
+
+    public required string Language { get; set; }
+
+    public required string Name { get; set; }
+
+    public int CanonicalBook { get; set; }
+
+    public int CanonicalChapter { get; set; }
+
+    public int CanonicalVerse { get; set; }
+
+    public required string Source { get; set; }
+
+    public override string ToString() => $"ThroneName({EntityId} {Language} {Name})";
+}

@@ -9,6 +9,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Located">Events given the verse their source names their location at.</param>
 /// <param name="Stated">Ussher's dates given the year of the common era he printed.</param>
 /// <param name="Filled">BibleData's events given the date Ussher's Annals give them, where its own column is blank.</param>
+/// <param name="Corrected">BibleData's events given the date Ussher's Annals give them, where its own column holds another's year.</param>
 /// <param name="Dated">Annals given a date of his they had none of, from the two columns that agree.</param>
 /// <param name="Described">World events whose description no longer names today's country.</param>
 /// <param name="Placed">World events whose countries, today's and of the time, were written again.</param>
@@ -17,6 +18,7 @@ internal sealed record EventRestatementOutcome(
     int Located,
     int Stated,
     int Filled,
+    int Corrected,
     int Dated,
     int Described,
     int Placed,
@@ -24,11 +26,12 @@ internal sealed record EventRestatementOutcome(
     TimeSpan Elapsed)
 {
     public override string ToString() =>
-        Located + Stated + Filled + Dated + Described + Placed + Ordered == 0
+        Located + Stated + Filled + Corrected + Dated + Described + Placed + Ordered == 0
             ? "every event already carries what its source states"
             : $"{Located} event locations given the verse their source names them at, {Stated} of Ussher's " +
               $"dates given the year he printed, {Filled} events dated from his Annals where BibleData's column " +
-              $"for him is blank, {Dated} of his Annals dated from the two columns that agree, " +
+              $"for him is blank, {Corrected} where it holds a year that is not his, {Dated} of his Annals " +
+              "dated from the two columns that agree, " +
               $"{Described} world descriptions without today's country, {Placed} world events with their " +
               $"countries written again and {Ordered} reckonings put in the declared order, in {Elapsed}";
 }
@@ -41,8 +44,8 @@ internal sealed record EventRestatementOutcome(
 /// would renumber every record the rest of the corpus names. This reads the same files with the
 /// loaders' own code and writes only what is missing or was written differently: the verse at
 /// which BibleData names each event's location, Ussher's year of the common era as he printed it,
-/// his years for the events BibleData leaves blank in his column and <see cref="UssherDatings"/>
-/// finds in his Annals, the Annals his anno mundi column contradicts dated from the two columns
+/// his years for the events BibleData leaves blank in his column, or fills with a year that is not
+/// his, and <see cref="UssherDatings"/> finds in his Annals, the Annals his anno mundi column contradicts dated from the two columns
 /// that agree, the world layer's descriptions without the modern country in them, and which
 /// reckoning is the default and in what order they are offered. On a fresh load every count is
 /// zero.
@@ -60,8 +63,8 @@ internal sealed class EventRestatementLoader(AppDbContext db, ILogger<EventResta
         var ussher = await db.Chronologies.SingleOrDefaultAsync(
             c => c.Slug == UssherAnnalsLoader.Chronology, cancellationToken);
 
-        var (located, stated, filled) = ussher is null || !Directory.Exists(bibleData)
-            ? (0, 0, 0)
+        var (located, stated, filled, corrected) = ussher is null || !Directory.Exists(bibleData)
+            ? (0, 0, 0, 0)
             : await BibleData(bibleData, ussher, cancellationToken);
         var (restated, dated) = ussher is null || !File.Exists(Path.Combine(bibleData, UssherAnnalsLoader.File))
             ? (0, 0)
@@ -72,12 +75,12 @@ internal sealed class EventRestatementLoader(AppDbContext db, ILogger<EventResta
         await db.SaveChangesAsync(cancellationToken);
 
         var outcome = new EventRestatementOutcome(
-            located, stated + restated, filled, dated, described, placed, ordered, started.Elapsed);
+            located, stated + restated, filled, corrected, dated, described, placed, ordered, started.Elapsed);
         logger.LogInformation("Restated the events: {Outcome}", outcome);
         return outcome;
     }
 
-    private async Task<(int Located, int Stated, int Filled)> BibleData(
+    private async Task<(int Located, int Stated, int Filled, int Corrected)> BibleData(
         string folder,
         Chronology ussher,
         CancellationToken cancellationToken)
@@ -94,6 +97,7 @@ internal sealed class EventRestatementLoader(AppDbContext db, ILogger<EventResta
         var located = 0;
         var stated = 0;
         var filled = 0;
+        var corrected = 0;
 
         foreach (var (slug, row) in BibleDataLoader.EventRows(folder))
         {
@@ -127,9 +131,17 @@ internal sealed class EventRestatementLoader(AppDbContext db, ILogger<EventResta
                 });
                 filled++;
             }
+            else if (date is not null && annals.TryGetValue(slug, out var correction)
+                     && correction.Replaces is { } wrong && date.Year == wrong)
+            {
+                date.Year = correction.Year;
+                date.StatedYear = correction.StatedYear;
+                date.Citation = correction.Citation;
+                corrected++;
+            }
         }
 
-        return (located, stated, filled);
+        return (located, stated, filled, corrected);
     }
 
     /// <summary>The default reckoning, and the order the reckonings are offered in, as the encyclopedia declares them.</summary>

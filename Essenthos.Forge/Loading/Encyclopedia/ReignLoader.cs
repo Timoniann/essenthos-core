@@ -11,23 +11,34 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <param name="Rulers">Rulers written, each with the periods he is drawn by.</param>
 /// <param name="Statements">Verses setting somebody in a ruler's days.</param>
+/// <param name="Lengths">Kings given the length of reign the text states.</param>
+/// <param name="Fields">Verses saying where a prophet spoke, came from or was sent.</param>
 /// <param name="Missing">
 /// Rows naming a record, a period or a verse the corpus does not hold, which is a corpus not yet
 /// loaded or a slug the file has to follow.
 /// </param>
-internal sealed record ReignOutcome(bool AlreadyLoaded, int Rulers, int Statements, int Missing, TimeSpan Elapsed)
+internal sealed record ReignOutcome(
+    bool AlreadyLoaded,
+    int Rulers,
+    int Statements,
+    int Lengths,
+    int Fields,
+    int Missing,
+    TimeSpan Elapsed)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "the kings and the prophets of their days are already there"
-            : $"{Rulers} rulers and {Statements} verses setting somebody in their days, in {Elapsed}"
+            : $"{Rulers} rulers, {Statements} verses setting somebody in their days, {Lengths} lengths of " +
+              $"reign and {Fields} verses placing a prophet, in {Elapsed}"
               + (Missing > 0 ? $"; {Missing} rows name a record, period or verse the corpus does not hold" : "");
 }
 
 /// <summary>
 /// The kings of the united kingdom, of Israel and of Judah, the rulers of the nations the text
 /// brings into their reigns, and the prophets the text places in their days — each placement with
-/// the verse that states it.
+/// the verse that states it — and beside them how long the text says each king reigned, the name he
+/// reigned under where his record is headed by another, and where each prophet spoke.
 ///
 /// <para>
 /// **The years are not here.** Every reign is a period the chronologies already date, and this
@@ -59,6 +70,7 @@ internal sealed partial class ReignLoader(AppDbContext db, ILogger<ReignLoader> 
 
         var slugs = decision.Rulers.Select(r => r.Slug)
             .Concat(decision.Statements.SelectMany(s => new[] { s.Person, s.Ruler, s.Through }))
+            .Concat(decision.Prophets.SelectMany(p => p.Fields.Select(f => f.Place).Prepend(p.Slug)))
             .OfType<string>()
             .Distinct(StringComparer.Ordinal)
             .ToList();
@@ -140,24 +152,124 @@ internal sealed partial class ReignLoader(AppDbContext db, ILogger<ReignLoader> 
             });
         }
 
+        var lengths = new List<ReignLength>();
+        foreach (var ruler in decision.Rulers)
+        {
+            if (ruler.Reigned is not { } reigned || !entities.TryGetValue(ruler.Slug, out var king))
+            {
+                continue;
+            }
+
+            if (Verses(reigned.Verse) is not { } verse)
+            {
+                logger.LogWarning(
+                    "ReignRecords.json gives {Slug} a length of reign at {Verse}, which is not written as 1KI 16:8",
+                    ruler.Slug, reigned.Verse);
+                missing++;
+                continue;
+            }
+
+            lengths.Add(new ReignLength
+            {
+                EntityId = king,
+                Years = reigned.Years,
+                Months = reigned.Months,
+                Days = reigned.Days,
+                CanonicalBook = verse.Book,
+                CanonicalChapter = verse.Chapter,
+                CanonicalVerse = verse.Verse,
+                Source = decision.Source,
+            });
+        }
+
+        var thrones = new List<ThroneName>();
+        foreach (var ruler in decision.Rulers)
+        {
+            if (ruler.Throne is not { } throne || !entities.TryGetValue(ruler.Slug, out var king))
+            {
+                continue;
+            }
+
+            if (Verses(throne.Verse) is not { } verse)
+            {
+                logger.LogWarning(
+                    "ReignRecords.json gives {Slug} a throne name at {Verse}, which is not written as 2KI 23:34",
+                    ruler.Slug, throne.Verse);
+                missing++;
+                continue;
+            }
+
+            thrones.AddRange(throne.Names.Select(name => new ThroneName
+            {
+                EntityId = king,
+                Language = name.Key,
+                Name = name.Value,
+                CanonicalBook = verse.Book,
+                CanonicalChapter = verse.Chapter,
+                CanonicalVerse = verse.Verse,
+                Source = decision.Source,
+            }));
+        }
+
+        var fields = new List<ProphetField>();
+        foreach (var prophet in decision.Prophets)
+        {
+            foreach (var (field, position) in prophet.Fields.Select((field, at) => (field, at)))
+            {
+                if (!entities.TryGetValue(prophet.Slug, out var person)
+                    || Verses(field.Verse) is not { } verse
+                    || (field.Place is { } place && !entities.ContainsKey(place)))
+                {
+                    logger.LogWarning(
+                        "ReignRecords.json places {Prophet} in {Realm} at {Verse}, and either a record is not in " +
+                        "the encyclopedia or the verse is not written as AMO 7:13 or AMO 7:13-15",
+                        prophet.Slug, field.Realm, field.Verse);
+                    missing++;
+                    continue;
+                }
+
+                fields.Add(new ProphetField
+                {
+                    EntityId = person,
+                    Realm = field.Realm,
+                    Kind = field.Kind,
+                    PlaceEntityId = field.Place is { } at ? entities[at] : null,
+                    CanonicalBook = verse.Book,
+                    CanonicalChapter = verse.Chapter,
+                    CanonicalVerse = verse.Verse,
+                    EndVerse = verse.EndVerse,
+                    Position = position,
+                    Source = decision.Source,
+                });
+            }
+        }
+
         var standing = await db.RulerReigns.ToListAsync(cancellationToken);
         var stated = await db.ReignStatements.ToListAsync(cancellationToken);
-        if (standing.Select(Key).ToHashSet().SetEquals(reigns.Select(Key))
-            && stated.Select(Key).ToHashSet().SetEquals(statements.Select(Key))
-            && standing.Count == reigns.Count
-            && stated.Count == statements.Count)
+        var measured = await db.ReignLengths.ToListAsync(cancellationToken);
+        var placed = await db.ProphetFields.ToListAsync(cancellationToken);
+        var named = await db.ThroneNames.ToListAsync(cancellationToken);
+        if (Same(standing, reigns, Key) && Same(stated, statements, Key)
+            && Same(measured, lengths, Key) && Same(placed, fields, Key) && Same(named, thrones, Key))
         {
-            return Finished(new ReignOutcome(true, 0, 0, missing, started.Elapsed));
+            return Finished(new ReignOutcome(true, 0, 0, 0, 0, missing, started.Elapsed));
         }
 
         db.RulerReigns.RemoveRange(standing);
         db.ReignStatements.RemoveRange(stated);
+        db.ReignLengths.RemoveRange(measured);
+        db.ProphetFields.RemoveRange(placed);
+        db.ThroneNames.RemoveRange(named);
         db.RulerReigns.AddRange(reigns);
         db.ReignStatements.AddRange(statements);
+        db.ReignLengths.AddRange(lengths);
+        db.ProphetFields.AddRange(fields);
+        db.ThroneNames.AddRange(thrones);
         await db.SaveChangesAsync(cancellationToken);
 
         return Finished(new ReignOutcome(
-            false, reigns.Select(r => r.EntityId).Distinct().Count(), statements.Count, missing, started.Elapsed));
+            false, reigns.Select(r => r.EntityId).Distinct().Count(), statements.Count, lengths.Count, fields.Count,
+            missing, started.Elapsed));
     }
 
     private ReignOutcome Finished(ReignOutcome outcome)
@@ -202,7 +314,8 @@ internal sealed partial class ReignLoader(AppDbContext db, ILogger<ReignLoader> 
 
     /// <summary>
     /// The reigns <see cref="Periods.ClosedElsewhere"/> closes, for a corpus whose chronology was
-    /// loaded before it closed them. A reign the chronology already holds is left as it is.
+    /// loaded before it closed them. A reign the chronology already holds is closed where the list
+    /// now closes it and otherwise left as it is.
     /// </summary>
     private async Task CloseWhatTheDatasetLeftOpen(CancellationToken cancellationToken)
     {
@@ -222,8 +335,14 @@ internal sealed partial class ReignLoader(AppDbContext db, ILogger<ReignLoader> 
             }
 
             var period = Periods.Span(opens, closed, BibleDataLoader.Source);
-            if (await db.Periods.AnyAsync(p => p.Slug == period.Slug, cancellationToken))
+            if (await db.Periods.SingleOrDefaultAsync(p => p.Slug == period.Slug, cancellationToken) is { } standing)
             {
+                if (standing.EndEventId != closed.Id)
+                {
+                    standing.EndEventId = closed.Id;
+                    standing.EndYear = closed.YearFromCreation;
+                }
+
                 continue;
             }
 
@@ -248,6 +367,19 @@ internal sealed partial class ReignLoader(AppDbContext db, ILogger<ReignLoader> 
             Source = source,
         };
 
+    private static bool Same<T>(IReadOnlyCollection<T> standing, IReadOnlyCollection<T> wanted, Func<T, object> key) =>
+        standing.Count == wanted.Count && standing.Select(key).ToHashSet().SetEquals(wanted.Select(key));
+
+    private static object Key(ReignLength l) =>
+        (l.EntityId, l.Years, l.Months, l.Days, l.CanonicalBook, l.CanonicalChapter, l.CanonicalVerse);
+
+    private static object Key(ThroneName n) =>
+        (n.EntityId, n.Language, n.Name, n.CanonicalBook, n.CanonicalChapter, n.CanonicalVerse);
+
+    private static object Key(ProphetField f) =>
+        (f.EntityId, f.Realm, f.Kind, f.PlaceEntityId, f.CanonicalBook, f.CanonicalChapter, f.CanonicalVerse,
+            f.EndVerse, f.Position);
+
     private static object Key(RulerReign r) =>
         (r.EntityId, r.Realm, r.Position, r.PeriodId, r.DrawnUnder, r.Shared, r.Fallback);
 
@@ -262,7 +394,38 @@ internal sealed partial class ReignLoader(AppDbContext db, ILogger<ReignLoader> 
 internal sealed record ReignRecord(string Period, string? Over, bool Shared, bool Fallback);
 
 /// <param name="Reigns">Empty for a ruler no reckoning dates, who is placed by the reigns he is set in.</param>
-internal sealed record RulerRecord(string Slug, string Realm, IReadOnlyList<ReignRecord> Reigns);
+/// <param name="Reigned">How long the text says he reigned.</param>
+/// <param name="Throne">The name he reigned under, where his record is headed by another.</param>
+/// <param name="Readings">
+/// The reckonings whose bars for him differ from <paramref name="Reigned"/> or from the year of his
+/// accession the text gives, by slug, each with what that reckoning does instead. Nothing loads it:
+/// it is what the test holding the bars to the text accepts, and why.
+/// </param>
+internal sealed record RulerRecord(
+    string Slug,
+    string Realm,
+    IReadOnlyList<ReignRecord> Reigns,
+    LengthRecord? Reigned = null,
+    ThroneRecord? Throne = null,
+    IReadOnlyDictionary<string, string>? Readings = null);
+
+/// <param name="Names">The name in each language, by its three-letter code: <c>eng</c>, <c>ukr</c>.</param>
+/// <param name="Verse">Where the text gives him the name, written as 2KI 23:34.</param>
+internal sealed record ThroneRecord(IReadOnlyDictionary<string, string> Names, string Verse);
+
+/// <param name="Verse">Where the text says it, written as 1KI 16:8.</param>
+internal sealed record LengthRecord(int? Years, int? Months, int? Days, string Verse)
+{
+    /// <summary>The length in years, a month a twelfth of one and a day a 365th.</summary>
+    public double InYears => (Years ?? 0) + (Months ?? 0) / 12.0 + (Days ?? 0) / 365.0;
+}
+
+/// <param name="Realm">One of <see cref="ProphetRealms"/>.</param>
+/// <param name="Kind">One of <see cref="ProphetFieldKinds"/>.</param>
+/// <param name="Place">The town or land the verse names, by its record's slug.</param>
+internal sealed record FieldRecord(string Realm, string Kind, string Verse, string? Place);
+
+internal sealed record ProphetRecord(string Slug, IReadOnlyList<FieldRecord> Fields);
 
 /// <param name="Person">The prophet, the ruler of the nation, or the king who began to reign.</param>
 /// <param name="Year">The ruler's year the verse gives, where it gives one.</param>
@@ -283,4 +446,5 @@ internal sealed record ReignDecision(
     string Method,
     string Source,
     IReadOnlyList<RulerRecord> Rulers,
+    IReadOnlyList<ProphetRecord> Prophets,
     IReadOnlyList<ReignStatementRecord> Statements);

@@ -44,7 +44,7 @@ public sealed class EventStatementTests : IClassFixture<UssherAnnalsLoadTests.An
     /// <summary>
     /// The creation is 4004 BC in Ussher's words and 4003 by the subtraction his zero makes of his
     /// year 1 — and so are 80 more of the 419 events BibleData dates by him, which the corpus served
-    /// a year late while the figure he printed sat unread in the file it loaded. The 22 his Annals
+    /// a year late while the figure he printed sat unread in the file it loaded. The 23 his Annals
     /// date where BibleData's column is blank are read the same way, and five of them fall in the
     /// autumn half of his year.
     /// </summary>
@@ -53,7 +53,7 @@ public sealed class EventStatementTests : IClassFixture<UssherAnnalsLoadTests.An
     {
         var dates = await UssherDates(BibleDataLoader.Source);
 
-        dates.Should().HaveCount(419 + 22).And.OnlyContain(d => d.StatedYear < 0);
+        dates.Should().HaveCount(419 + 23).And.OnlyContain(d => d.StatedYear < 0);
         dates.Count(d => -d.StatedYear != UssherZeroPoint - d.Year + 1).Should().Be(81 + 5);
 
         var creation = await _db.Events.Where(e => e.Slug == "creation").Select(EncyclopediaEndpoints.Rows).SingleAsync();
@@ -148,7 +148,8 @@ public sealed class EventStatementTests : IClassFixture<UssherAnnalsLoadTests.An
 
         restated.Located.Should().Be(fresh.Located.Count);
         restated.Stated.Should().Be(fresh.Stated.Count - fresh.Dated.Count - restated.Filled);
-        restated.Filled.Should().Be(22);
+        restated.Filled.Should().Be(23);
+        restated.Corrected.Should().Be(5, "five cells in Ussher's column hold a year that is not his");
         restated.Dated.Should().Be(fresh.Dated.Count);
         restated.Ordered.Should().Be(2, "the older load had BibleData first and the default");
         restated.Described.Should().Be(1);
@@ -157,7 +158,7 @@ public sealed class EventStatementTests : IClassFixture<UssherAnnalsLoadTests.An
             .Should().Be("Stele, dated by its inception. From Wikidata.");
 
         var again = await Restate();
-        (again.Located + again.Stated + again.Filled + again.Dated + again.Described + again.Placed + again.Ordered)
+        (again.Located + again.Stated + again.Filled + again.Corrected + again.Dated + again.Described + again.Placed + again.Ordered)
             .Should().Be(0);
     }
 
@@ -187,14 +188,22 @@ public sealed class EventStatementTests : IClassFixture<UssherAnnalsLoadTests.An
 
     /// <summary>
     /// What a load before this one wrote: none of the three, no date from the Annals where BibleData's
-    /// column is blank, BibleData's reckoning first and the default, and the old sentence on the notes.
+    /// column is blank and the dataset's year where it holds one that is not his, BibleData's
+    /// reckoning first and the default, and the old sentence on the notes.
     /// </summary>
     private async Task Forget()
     {
-        var listed = UssherDatings.Read(_folder).Keys.ToList();
+        var annals = UssherDatings.Read(_folder);
+        var listed = annals.Where(a => a.Value.Replaces is null).Select(a => a.Key).ToList();
         _db.EventDates.RemoveRange(await _db.EventDates
             .Where(d => d.Chronology!.Slug == UssherAnnalsLoader.Chronology && listed.Contains(d.Event!.Slug))
             .ToListAsync());
+        foreach (var (slug, dating) in annals.Where(a => a.Value.Replaces is not null))
+        {
+            await _db.EventDates
+                .Where(d => d.Chronology!.Slug == UssherAnnalsLoader.Chronology && d.Event!.Slug == slug)
+                .ExecuteUpdateAsync(d => d.SetProperty(x => x.Year, dating.Replaces));
+        }
         await _db.Chronologies.Where(c => c.Slug == "bibledata")
             .ExecuteUpdateAsync(c => c.SetProperty(x => x.IsDefault, true).SetProperty(x => x.Position, 1));
         await _db.Chronologies.Where(c => c.Slug == UssherAnnalsLoader.Chronology)

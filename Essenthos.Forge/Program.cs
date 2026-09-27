@@ -856,6 +856,26 @@ if (args is ["lands", ..])
     return 0;
 }
 
+// What the event files state that a corpus loaded before they were read does not hold, Ussher's
+// years from his Annals among it. The load does this after the chronologies; this is that step alone.
+if (args is ["restate", ..])
+{
+    using var restateScope = app.Services.CreateScope();
+    Console.WriteLine(await restateScope.ServiceProvider.GetRequiredService<EventRestatementLoader>().Load(
+        Path.Combine(resources, "BibleData2026"),
+        Path.Combine(AppContext.BaseDirectory, "Resources", "WorldHistory")));
+    return 0;
+}
+
+// The names a clause puts into a case, from name-form files written after the corpus was loaded.
+// The load does this after the descriptions; this is that step alone.
+if (args is ["name-forms", ..])
+{
+    using var nameFormScope = app.Services.CreateScope();
+    Console.WriteLine(await nameFormScope.ServiceProvider.GetRequiredService<EntityNameFormLoader>().Load(resources));
+    return 0;
+}
+
 // The kings, the rulers of the nations and the prophets of their days, for a corpus loaded before
 // they were. The load does this after the chronologies and the folds; this is that step alone.
 if (args is ["reigns", ..])
