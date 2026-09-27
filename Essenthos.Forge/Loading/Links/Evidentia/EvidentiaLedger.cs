@@ -78,6 +78,8 @@ internal sealed record EvidentiaReplayOutcome(
 /// is written again with the decisions its verdicts are about, and the verdicts are then applied by
 /// <see cref="EvidentiaLinkWriter"/> exactly as they were the first time, against the corpus as it
 /// now stands. A verdict the database holds differently from the ledger is reported and left alone.
+/// Runs are replayed in the order they were started, whatever their texts, so where a later run
+/// renders a word an earlier one marked absent, the later verdict wins again as it did the first time.
 /// </para>
 ///
 /// <para>
@@ -327,20 +329,18 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
     {
         var elapsed = Stopwatch.StartNew();
         var root = Folder(resources);
-        var folders = Directory.Exists(root)
+        var runs = Directory.Exists(root)
             ? Directory.EnumerateDirectories(root).Where(folder => File.Exists(Path.Combine(folder, RunFile)))
-                .Order(StringComparer.Ordinal).ToList()
+                .Select(folder => (Folder: folder, Run: LedgerRun.Read(Path.Combine(folder, RunFile))))
+                .Where(held => pair is null || pair(held.Run.From, held.Run.To))
+                .OrderBy(held => held.Run.StartedAt)
+                .ThenBy(held => held.Folder, StringComparer.Ordinal)
+                .ToList()
             : [];
 
         var tally = new ReplayTally();
-        foreach (var folder in folders)
+        foreach (var (folder, run) in runs)
         {
-            var run = LedgerRun.Read(Path.Combine(folder, RunFile));
-            if (pair is not null && !pair(run.From, run.To))
-            {
-                continue;
-            }
-
             await ReplayRun(folder, run, tally, cancellationToken);
         }
 

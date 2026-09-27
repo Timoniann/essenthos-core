@@ -427,6 +427,66 @@ public sealed class EvidentiaReviewTests : IDisposable
     }
 
     [Fact]
+    public async Task ALaterRunRenderingAWordTakesBackTheAbsenceAnEarlierRunsRuleWrote()
+    {
+        var supplied = Absence(LinkRelation.Expands, English(2), EvidentiaDecisionRecorder.SafeTier);
+        Absence(LinkRelation.Omits, Hebrew(2), EvidentiaDecisionRecorder.SafeTier);
+        await Queue().AcceptTier(_run.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Reviewer, null);
+        await Writer().Apply(_run.Id, write: true);
+        var later = LaterRun();
+        Proposal(English(2), Hebrew(1), EvidentiaDecisionRecorder.SafeTier, later.Id);
+        Proposal(English(5), Hebrew(2), EvidentiaDecisionRecorder.SafeTier, later.Id);
+        await Queue().AcceptTier(later.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Reviewer, null);
+
+        var plan = await Writer().Apply(later.Id, write: false);
+        (await _db.Links.CountAsync(link => link.Relation != LinkRelation.Renders)).Should().Be(2, "a plan takes nothing back");
+        var outcome = await Writer().Apply(later.Id, write: true);
+
+        plan.Superseded.Should().Be(2);
+        outcome.Superseded.Should().Be(2);
+        outcome.NewLinks.Should().Be(2);
+        outcome.Withheld.Should().Be(0);
+        var links = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Claims).ToListAsync();
+        links.Should().OnlyContain(link => link.Relation == LinkRelation.Renders, "a word supplied and rendered at once is a contradiction");
+        links.SelectMany(link => link.Claims).Should().OnlyContain(claim => claim.Note!.Contains("taken back"));
+        var withdrawals = await _db.EvidentiaWithdrawals.AsNoTracking().Include(row => row.Review).ThenInclude(review => review!.Decision)
+            .ToListAsync();
+        withdrawals.Select(row => (row.WordId, row.Relation, row.Method, row.LinkId)).Should().BeEquivalentTo(
+        [
+            (English(2), LinkRelation.Expands, LinkMethod.RuleBased, (long?)null),
+            (Hebrew(2), LinkRelation.Omits, LinkMethod.RuleBased, (long?)null),
+        ]);
+        withdrawals.Should().OnlyContain(row => row.Review!.Decision!.RunId == later.Id, "the verdict that rendered the word is the recorded reason");
+        var earlier = await _db.EvidentiaReviews.AsNoTracking().SingleAsync(review => review.DecisionId == supplied.Id);
+        earlier.LinkId.Should().BeNull();
+        earlier.AppliedAt.Should().NotBeNull();
+        earlier.Withheld.Should().Contain($"run {later.Id} renders this word");
+    }
+
+    [Fact]
+    public async Task AnAbsenceAPersonReadOrASourceStatesKeepsALaterPairOut()
+    {
+        var read = Absence(LinkRelation.Expands, English(2), EvidentiaDecisionRecorder.SafeTier);
+        await Queue().Approve([read.Id], Reviewer, "the original writes no article here");
+        await Writer().Apply(_run.Id, write: true);
+        var stated = ExistingAbsence(LinkRelation.Omits, Hebrew(2));
+        var later = LaterRun();
+        Proposal(English(2), Hebrew(1), EvidentiaDecisionRecorder.SafeTier, later.Id);
+        var created = Proposal(English(5), Hebrew(2), "review", later.Id);
+        await Queue().AcceptTier(later.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Reviewer, null);
+        await Queue().Approve([created.Id], Reviewer, "the verb");
+
+        var outcome = await Writer().Apply(later.Id, write: true);
+
+        outcome.Superseded.Should().Be(0);
+        outcome.Withheld.Should().Be(2, "an absence a person read, or a source states, is corrected at its link, not by a later pair");
+        outcome.NewLinks.Should().Be(0);
+        (await _db.Links.AsNoTracking().AnyAsync(link => link.Id == stated)).Should().BeTrue();
+        (await _db.EvidentiaReviews.AsNoTracking().SingleAsync(review => review.DecisionId == created.Id))
+            .Withheld.Should().Contain("stated-by-source").And.Contain("no counterpart");
+    }
+
+    [Fact]
     public async Task AnUnrenderedWordHasNoTranslationWordToCorrect()
     {
         var omitted = Absence(LinkRelation.Omits, Hebrew(2), EvidentiaDecisionRecorder.SafeTier);
@@ -524,11 +584,29 @@ public sealed class EvidentiaReviewTests : IDisposable
         return link.Id;
     }
 
-    private EvidentiaDecision Proposal(long source, long target, string tier = "review")
+    private EvidentiaRun LaterRun()
+    {
+        var run = new EvidentiaRun
+        {
+            FromTextId = _english.Id,
+            ToTextId = _hebrew.Id,
+            StartedAt = _run.StartedAt.AddDays(1),
+            FinishedAt = _run.StartedAt.AddDays(1),
+            RuleVersion = "test",
+            Configuration = JsonDocument.Parse("{}"),
+            Scope = JsonDocument.Parse("{}"),
+        };
+        _db.EvidentiaRuns.Add(run);
+        _db.SaveChanges();
+        _db.ChangeTracker.Clear();
+        return run;
+    }
+
+    private EvidentiaDecision Proposal(long source, long target, string tier = "review", int? run = null)
     {
         var decision = new EvidentiaDecision
         {
-            RunId = _run.Id,
+            RunId = run ?? _run.Id,
             SourceWordId = source,
             TargetWordId = target,
             CanonicalBook = 1,
