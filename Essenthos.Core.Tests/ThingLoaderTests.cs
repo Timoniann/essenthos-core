@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -30,6 +30,8 @@ public sealed class ThingLoaderTests : IDisposable
     private const string Incense = "H7004";
 
     private const string Boaz = "H1162";
+
+    private const string Serpent = "H5175";
 
     private readonly AppDbContext _db;
     private readonly ThingLoader _loader;
@@ -179,9 +181,9 @@ public sealed class ThingLoaderTests : IDisposable
     }
 
     /// <summary>
-    /// The pillar Boaz of 1 Kings 7:21 had been resolved by its number onto Ruth's husband. A model's
-    /// reading cannot take a name away from a resolution, so until the owner has reviewed the rule the
-    /// reader is still shown the man, and the pillar's reading stands on the word beside it.
+    /// A word its number resolved onto the one record bearing it keeps that record: a model's reading
+    /// cannot take a name away from a resolution that needed nobody, so until the owner has reviewed
+    /// the rule the reader is still shown the man, and the reading stands on the word beside it.
     /// </summary>
     [Fact]
     public async Task AReadingDoesNotOverruleTheNumbersResolution()
@@ -282,12 +284,40 @@ public sealed class ThingLoaderTests : IDisposable
     }
 
     /// <summary>
-    /// A number somebody else is named by stays off these records' names, so the words of it in
-    /// Ruth are still one man's to resolve.
+    /// A common noun somebody else is named by stays off these records' names: Satan's title is
+    /// <em>the serpent</em>, and a thing under the same number would stand beside him at every
+    /// occurrence of the word.
     /// </summary>
     [Fact]
-    public async Task ANumberAPersonIsNamedByStaysHis()
+    public async Task ACommonNounAPersonIsNamedByStaysHis()
     {
+        await Lexicon(Serpent, "n-m");
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person, Slug = "satan", Name = "Satan", SourceId = "person:Satan_1", Source = "a test",
+            Names = [new EntityName { Label = "the serpent", HebrewStrongNumber = Serpent, Kind = "title" }],
+        });
+        await _db.SaveChangesAsync();
+        var serpent = Record("bronze-serpent") with
+        {
+            Called = [new ThingWord("serpent", "נָחָשׁ", "nachash", Serpent, null, null, null, "serpent")],
+        };
+
+        await _loader.Load([serpent], CancellationToken.None);
+
+        var name = await _db.EntityNames.SingleAsync(n => n.Entity!.Slug == "bronze-serpent");
+        name.Hebrew.Should().Be("נָחָשׁ");
+        name.HebrewStrongNumber.Should().BeNull();
+    }
+
+    /// <summary>
+    /// A proper name the lexicon heads for a man and a thing alike is the thing's name too: H1162 is
+    /// Ruth's husband and the pillar, and the pillar's name carries it.
+    /// </summary>
+    [Fact]
+    public async Task AProperNameIsTheThingsAsWellAsTheMans()
+    {
+        await Lexicon(Boaz, "n-pr-m");
         _db.Entities.Add(new Entity
         {
             Kind = EntityKind.Person, Slug = "boaz", Name = "Boaz", SourceId = "person:Boaz_1", Source = "a test",
@@ -296,15 +326,29 @@ public sealed class ThingLoaderTests : IDisposable
         await _db.SaveChangesAsync();
         var pillar = Record("boaz-pillar") with
         {
-            Called = [new ThingWord("Boaz", "בֹּעַז", "boaz", Boaz, null, null, null, "in him is strength")],
+            Called = [new ThingWord("Boaz", "בֹּעַז", "boaz", Boaz, null, null, null, "in it is strength")],
         };
 
         await _loader.Load([pillar], CancellationToken.None);
 
         var name = await _db.EntityNames.SingleAsync(n => n.Entity!.Slug == "boaz-pillar");
-        name.Hebrew.Should().Be("בֹּעַז");
-        name.HebrewStrongNumber.Should().BeNull();
-        (await _db.EntityNames.CountAsync(n => n.HebrewStrongNumber == Boaz)).Should().Be(1);
+        name.HebrewStrongNumber.Should().Be(Boaz);
+        (await _db.EntityNames.CountAsync(n => n.HebrewStrongNumber == Boaz)).Should().Be(2);
+    }
+
+    private async Task Lexicon(string number, string morphology)
+    {
+        var entry = await _db.StrongEntries.SingleOrDefaultAsync(s => s.StrongNumber == number);
+        if (entry is null)
+        {
+            _db.StrongEntries.Add(new StrongEntry { StrongNumber = number, Morphology = morphology });
+        }
+        else
+        {
+            entry.Morphology = morphology;
+        }
+
+        await _db.SaveChangesAsync();
     }
 
     /// <summary>The translations reach the record through the links, as every other annotation does.</summary>

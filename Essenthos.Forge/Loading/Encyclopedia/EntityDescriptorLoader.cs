@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -15,11 +15,12 @@ internal sealed record DescriptorRefusals(
     int UnmatchedReference,
     int WithoutConfidence,
     int Unaccompanied,
-    int Misplaced)
+    int Misplaced,
+    int Inadmissible)
 {
     public int Total =>
         UnknownEntity + UnknownRelation + UnresolvedTarget + UnmatchedReference + WithoutConfidence
-        + Unaccompanied + Misplaced;
+        + Unaccompanied + Misplaced + Inadmissible;
 
     public override string ToString() =>
         $"{UnknownEntity} for an entity the encyclopedia does not hold, " +
@@ -28,7 +29,8 @@ internal sealed record DescriptorRefusals(
         $"{UnmatchedReference} whose reference names no verse that entity is named in, and " +
         $"{WithoutConfidence} carrying no confidence, and " +
         $"{Unaccompanied} reading company out of a verse that speaks of none, and " +
-        $"{Misplaced} placing something somewhere that is not a place";
+        $"{Misplaced} placing something somewhere that is not a place, and " +
+        $"{Inadmissible} saying of a record what its kind cannot be";
 }
 
 internal sealed record DescriptorOutcome(
@@ -175,16 +177,17 @@ internal sealed class EntityDescriptorLoader(
         var refiled = await Refiled(cancellationToken);
         var accompanied = await Accompanied(records, cancellationToken);
 
-        // What kind each target is, so a clause that places something can be asked to point at a
-        // place. Every entity the records name, not only the described ones, because a target is
-        // as often somebody else's entity as it is one of these.
+        // What kind each record is, so a clause can be asked whether its subject can hold the
+        // relation and whether a clause that places something points at a place. Every entity the
+        // records name, not only the described ones, because a target is as often somebody else's
+        // entity as it is one of these.
         var kinds = await db.Entities
             .Where(e => entities.Values.Contains(e.Id))
             .Select(e => new { e.Id, e.Kind })
             .ToDictionaryAsync(e => e.Id, e => e.Kind, cancellationToken);
 
         int unknownEntity = 0, unknownRelation = 0, unresolvedTarget = 0;
-        int unmatchedReference = 0, withoutConfidence = 0, unaccompanied = 0, misplaced = 0;
+        int unmatchedReference = 0, withoutConfidence = 0, unaccompanied = 0, misplaced = 0, inadmissible = 0;
         int skipped = 0, unresolved = 0, clauses = 0, forms = 0, wrote = 0;
 
         foreach (var record in records)
@@ -216,6 +219,16 @@ internal sealed class EntityDescriptorLoader(
                 if (!entities.TryGetValue(claim.Target, out var targetId))
                 {
                     unresolvedTarget++;
+                    continue;
+                }
+
+                // Something the relation cannot be said of: a brook as David's companion, a town as
+                // somebody's son, a land as the king of it. The pass read a place where a person
+                // was, and no verse makes a place anybody's companion. A decision stands as decided.
+                if (string.IsNullOrWhiteSpace(claim.DecidedBy)
+                    && !DescriptorSubjects.Admits(claim.Relation, kinds.GetValueOrDefault(entityId)))
+                {
+                    inadmissible++;
                     continue;
                 }
 
@@ -326,7 +339,7 @@ internal sealed class EntityDescriptorLoader(
 
         var refused = new DescriptorRefusals(
             unknownEntity, unknownRelation, unresolvedTarget, unmatchedReference, withoutConfidence,
-            unaccompanied, misplaced);
+            unaccompanied, misplaced, inadmissible);
 
         if (clauses > 0 || forms > 0)
         {
@@ -366,7 +379,7 @@ internal sealed class EntityDescriptorLoader(
 
     private static DescriptorOutcome Nothing(bool alreadyLoaded) =>
         new(alreadyLoaded, !alreadyLoaded, 0, 0, 0, 0, 0, 0, 0, 0,
-            new DescriptorRefusals(0, 0, 0, 0, 0, 0, 0), TimeSpan.Zero);
+            new DescriptorRefusals(0, 0, 0, 0, 0, 0, 0, 0), TimeSpan.Zero);
 
     /// <summary>
     /// Where the files are. Under the corpus sources by default, in this project's own folder:

@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -296,6 +296,10 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
         new("person:the angel of the LORD_1", "2SA 19:27", "the angel of G-d", null,
             "Mephibosheth tells David 'my lord the king is as an angel of God': a comparison, and no angel " +
             "is there."),
+        new("person:Malchijah_2", "JER 21:1", "Malchijah", null,
+            "Jeremiah 21:1 names Pashur the son of Melchiah, whom Zedekiah sent to the prophet; his father is " +
+            "the Malchiah of Jeremiah 38:1 and 38:6, whom the dataset keeps as a record of his own and whom " +
+            "the words of the verse name, not the priest's ancestor of 1 Chronicles 9:12."),
     ];
 
     /// <summary>

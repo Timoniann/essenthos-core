@@ -267,11 +267,26 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                             && (n.HebrewStrongNumber != null || n.GreekStrongNumber != null))
                 .ToListAsync(cancellationToken);
             var places = loaded.Select(n => n.EntityId).ToHashSet();
-            if (NumberPlacesOnlyByTheirNames(loaded, places, await PlaceNameNumbers(cancellationToken)) is > 0 and var taken)
+            if ((NumberPlacesOnlyByTheirNames(loaded, places, await PlaceNameNumbers(cancellationToken))
+                 + NumberPhrasesOnlyByTheirOwnNames(loaded, places)) is > 0 and var taken)
             {
                 await db.SaveChangesAsync(cancellationToken);
                 logger.LogInformation(
                     "{Taken} Strong numbers on loaded place names were words of a phrase and were taken off", taken);
+            }
+
+            var named = await db.EntityNames
+                .Where(n => n.Kind == LabelKind && n.Entity!.Kind == EntityKind.Person && n.GreekStrongNumber != null)
+                .ToListAsync(cancellationToken);
+            var persons = named.Select(n => n.EntityId).ToHashSet();
+            if (NumberPeopleOnlyByTheirNames(
+                    named, persons, await GreekNameNumbers(cancellationToken),
+                    await Definitions(named, cancellationToken)) is > 0 and var meanings)
+            {
+                await db.SaveChangesAsync(cancellationToken);
+                logger.LogInformation(
+                    "{Taken} Greek numbers on loaded names of people were the words their names mean and were taken off",
+                    meanings);
             }
 
             logger.LogInformation("The encyclopedia is already loaded; nothing to do");
@@ -307,15 +322,28 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         // After the references, because a label of the divine name is a name of whichever entity
         // its namings turned out to be about.
         var names = Names(folder, entities, divided);
+        var placeIds = entities.Values.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id).ToHashSet();
         var unnumbered = NumberPlacesOnlyByTheirNames(
-            names.Where(n => n.Kind == LabelKind),
-            entities.Values.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id).ToHashSet(),
-            await PlaceNameNumbers(cancellationToken));
+            names.Where(n => n.Kind == LabelKind), placeIds, await PlaceNameNumbers(cancellationToken));
+        unnumbered += NumberPhrasesOnlyByTheirOwnNames(names.Where(n => n.Kind == LabelKind).ToList(), placeIds);
         if (unnumbered > 0)
         {
             logger.LogInformation(
                 "{Unnumbered} Strong numbers on place names are words of a phrase, not the place's name, and were not kept",
                 unnumbered);
+        }
+
+        var labels = names.Where(n => n.Kind == LabelKind).ToList();
+        var senses = NumberPeopleOnlyByTheirNames(
+            labels,
+            entities.Values.Where(e => e.Kind == EntityKind.Person).Select(e => e.Id).ToHashSet(),
+            await GreekNameNumbers(cancellationToken),
+            await Definitions(labels, cancellationToken));
+        if (senses > 0)
+        {
+            logger.LogInformation(
+                "{Senses} Greek numbers on names of people are the words the names mean, not the names, and were not kept",
+                senses);
         }
 
         var events = Events(folder, entities, frame);
@@ -964,6 +992,123 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             return kept.Count > 0 ? string.Join(",", kept) : null;
         }
     }
+
+    /// <summary>
+    /// The Greek numbers the lexicon heads as a name: the gate the Greek word annotation asks, a
+    /// capitalised lemma that is neither a gentilic nor a title.
+    /// </summary>
+    private static readonly string GreekNameNumbersSql =
+        $"""
+         SELECT strong_number AS "Value" FROM strong_entry lexicon
+         WHERE strong_number LIKE 'G%' AND {EntityAnnotationLoader.GreekName}
+         """;
+
+    private async Task<HashSet<string>> GreekNameNumbers(CancellationToken cancellationToken) =>
+        (await db.Database.SqlQueryRaw<string>(GreekNameNumbersSql).ToListAsync(cancellationToken))
+        .ToHashSet(StringComparer.Ordinal);
+
+    private async Task<Dictionary<string, string?>> Definitions(
+        IEnumerable<EntityName> names, CancellationToken cancellationToken)
+    {
+        var numbers = names.Select(n => n.GreekStrongNumber).OfType<string>().Distinct().ToList();
+        return await db.StrongEntries
+            .Where(s => numbers.Contains(s.StrongNumber))
+            .ToDictionaryAsync(s => s.StrongNumber, s => s.Definition, StringComparer.Ordinal, cancellationToken);
+    }
+
+    /// <summary>The Greek numbers this project read for the dataset's lettered ones, which are names by that reading.</summary>
+    private static readonly HashSet<string> ReadGreekNumbers =
+        BibleDataGreekNumbers.All.Select(n => n.Strong).OfType<string>().ToHashSet(StringComparer.Ordinal);
+
+    /// <summary>
+    /// Takes off a place's phrase the number that is another place's own name, and says how many.
+    ///
+    /// <para>
+    /// A phrase keeps the number of the name inside it (<see cref="NumberPlacesOnlyByTheirNames"/>),
+    /// and where that name is another place's, the phrase is named after the other place rather than
+    /// by it: <em>the Valley of the Jordan</em> kept H3383, the Jordan's own number, and every one of
+    /// the Jordan's 181 words then named two places and was refused. The word is the river; the
+    /// valley is the phrase around it.
+    /// </para>
+    /// </summary>
+    internal static int NumberPhrasesOnlyByTheirOwnNames(IReadOnlyCollection<EntityName> names, IReadOnlySet<int> places)
+    {
+        var placed = names.Where(n => places.Contains(n.EntityId) && n.AspectOfEntityId is null).ToList();
+        var ownNames = placed
+            .Where(n => !n.Label.Contains(' ') && n.HebrewStrongNumber is { } number && !number.Contains(','))
+            .GroupBy(n => n.HebrewStrongNumber!, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.Select(n => n.EntityId).ToHashSet(), StringComparer.Ordinal);
+
+        var removed = 0;
+        foreach (var phrase in placed.Where(n => n.Label.Contains(' ')))
+        {
+            if (phrase.HebrewStrongNumber is { } number
+                && ownNames.TryGetValue(number, out var bearers)
+                && bearers.Any(bearer => bearer != phrase.EntityId))
+            {
+                phrase.HebrewStrongNumber = null;
+                removed++;
+            }
+        }
+
+        return removed;
+    }
+
+    /// <summary>
+    /// Keeps on a person's names only a Greek number that is a name, and says how many it took off.
+    ///
+    /// <para>
+    /// The dataset's Greek column sometimes holds the Septuagint's rendering of what a name means
+    /// rather than the name: Ben-deker carries υἱός, <em>a son</em>, Ichabod οὐαί, <em>woe</em>,
+    /// Sheresh σορός, <em>a bier</em>, Eve ζωή, <em>life</em>. Filed as the name, one of the commonest
+    /// nouns of the New Testament proposes three men of 1 Kings 4 as its referent wherever it
+    /// stands. A number stays where the lexicon heads it as a name, where its entry prints the name
+    /// — <em>Legion</em>, <em>specially, Satan</em> — where it is one of the words for God, and
+    /// where this project read it for a lettered number of the dataset's. An empty lexicon is no
+    /// evidence either way, so nothing is taken off before it is loaded.
+    /// </para>
+    /// </summary>
+    internal static int NumberPeopleOnlyByTheirNames(
+        IEnumerable<EntityName> names,
+        IReadOnlySet<int> persons,
+        IReadOnlySet<string> greekNames,
+        IReadOnlyDictionary<string, string?> definitions)
+    {
+        if (greekNames.Count == 0)
+        {
+            return 0;
+        }
+
+        var removed = 0;
+        foreach (var name in names.Where(n => persons.Contains(n.EntityId)))
+        {
+            if (name.GreekStrongNumber is not { } number
+                || number.Contains(',')
+                || greekNames.Contains(number)
+                || DivineNumbers.Contains(number)
+                || ReadGreekNumbers.Contains(number)
+                || Prints(definitions.GetValueOrDefault(number), name.Label))
+            {
+                continue;
+            }
+
+            name.GreekStrongNumber = null;
+            removed++;
+        }
+
+        return removed;
+    }
+
+    /// <summary>Whether a lexicon definition spells the name as words of its own, in any case.</summary>
+    private static bool Prints(string? definition, string label)
+    {
+        var name = Words(label);
+        return name.Length > 1 && $" {Words(definition ?? string.Empty)} ".Contains($" {name} ", StringComparison.Ordinal);
+    }
+
+    private static string Words(string text) =>
+        string.Join(' ', text.ToLowerInvariant().Split(text.Where(c => !char.IsLetter(c)).Distinct().ToArray(),
+            StringSplitOptions.RemoveEmptyEntries));
 
     private static readonly (string File, string Key, string Label, EntityKind Kind)[] LabelFiles =
     [

@@ -208,6 +208,32 @@ public sealed class OwnReferenceTests : IDisposable
         (await Referenced(moses)).Should().Equal((1, 1, 1));
     }
 
+    /// <summary>
+    /// A verse cited for a record whose word another record's reading has since outranked is taken
+    /// back, although the word still carries the first record's claim: Boaz of 1 Kings 7:21 is the
+    /// pillar once the number no longer settles it alone, and a cold load would not cite the verse on
+    /// Ruth's husband's page.
+    /// </summary>
+    [Fact]
+    public async Task AVerseWhoseWordIsNowAnotherRecordsLeavesThePage()
+    {
+        var man = Person("boaz");
+        var pillar = Add("boaz-pillar", EntityKind.Object);
+        Annotate(Hebrew(2, 1), man, LinkMethod.StrongNumber, 0.9);
+        (await Load()).Should().Be(1);
+
+        var resolution = await _db.WordEntities.SingleAsync(a => a.EntityId == man.Id);
+        resolution.Method = LinkMethod.Lexical;
+        await _db.SaveChangesAsync();
+        Annotate(Hebrew(2, 1), pillar, LinkMethod.ModelReading, 0.93);
+
+        var again = await _loader.Load();
+
+        again.Withdrawn.Should().Be(1);
+        (await Referenced(man)).Should().BeEmpty();
+        (await Referenced(pillar)).Should().Equal((1, 1, 2));
+    }
+
     private async Task<int> Load()
     {
         var outcome = await _loader.Load();

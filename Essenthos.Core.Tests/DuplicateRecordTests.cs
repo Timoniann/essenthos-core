@@ -300,6 +300,36 @@ public sealed class DuplicateRecordTests : IDisposable
         (await Endpoints.MergedAddresses.Current(_db, "meshullam-15", default)).Should().Be("meshullam-15");
     }
 
+    /// <summary>
+    /// A man the dataset wrote for a people — the Amorite of Genesis 10:16 — folds into the people
+    /// only where the pair says it crosses kinds, and what was read of him as a man does not follow.
+    /// </summary>
+    [Fact]
+    public async Task APersonFoldsIntoAPeopleOnlyWhereThePairSaysSo()
+    {
+        var amorites = new Entity
+        {
+            Kind = EntityKind.People, Slug = "amorites", Name = "Amorites", SourceId = "essenthos:people:H567",
+            Source = "a test",
+        };
+        var amor = Record("amor", "person:Amor_1", "son of Canaan (GEN 10:15)");
+        _db.Entities.Add(amorites);
+        Cites(amor, 1, 10, 16);
+        _db.EntityDescriptors.Add(Clause(amor, 1, "son-of"));
+        await _db.SaveChangesAsync();
+
+        (await _loader.Fold(List(("amorites", "amor")))).Missing.Should().Be(1, "a man is not folded into a people unasked");
+
+        var across = new DuplicateRecordList(LinkMethod.ModelReading, 0.9, "a test",
+            [new DuplicateRecordPair("H567", "amorites", "amor", "the Amorite", AcrossKinds: true)]);
+        (await _loader.Fold(across)).Folded.Should().Be(1);
+
+        (await _db.Entities.AnyAsync(e => e.Slug == "amor")).Should().BeFalse();
+        (await _db.EntityVerses.AsNoTracking().SingleAsync(v => v.CanonicalBook == 1)).EntityId.Should().Be(amorites.Id);
+        (await _db.EntityDescriptors.AnyAsync(d => d.EntityId == amorites.Id)).Should().BeFalse(
+            "the people is not Canaan's son");
+    }
+
     [Fact]
     public async Task APairNamingARecordNotHeldIsLeftAlone()
     {

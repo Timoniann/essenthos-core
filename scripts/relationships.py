@@ -401,7 +401,7 @@ def fold(rows, says):
     BibleData's rows as facts, and which of them no row of ours states from either end.
 
     A row joins a fact when it is the same statement or the same statement read from the other end,
-    which is `INVERSE` in the harness and `Reversed` in the loader. A type the vocabulary has no word
+    which is `Reversed` in the loader and `inverse()` in the harness, read from it. A type the vocabulary has no word
     for folds with nothing and is its own fact, because nothing here can tell what it answers.
     """
     ours_said = set()
@@ -410,7 +410,7 @@ def fold(rows, says):
             continue
         for relation in filter(None, (row['type'], broader().get(row['type']))):
             ours_said.add((row['from'], row['to'], relation))
-            for other in shared.INVERSE.get(relation, ()):
+            for other in shared.inverse().get(relation, ()):
                 ours_said.add((row['to'], row['from'], other))
 
     other_end, either = from_the_other_end(), one_of()
@@ -427,7 +427,7 @@ def fold(rows, says):
         key = (row['from'], row['to'], relation or '?' + row['type'])
         fact = index.get(key)
         if fact is None and relation:
-            for other in shared.INVERSE.get(relation, ()):
+            for other in shared.inverse().get(relation, ()):
                 fact = index.get((row['to'], row['from'], other))
                 if fact is not None:
                     break
@@ -915,7 +915,7 @@ def carrier(fact, reference, corpus):
         return (fact['a'], fact['relation'], fact['b']), None
     if address not in corpus.verses.get(fact['b'], ()):
         return None, 'the verse names neither in this corpus'
-    words = sorted(shared.INVERSE.get(fact['relation'], ()))
+    words = sorted(shared.inverse().get(fact['relation'], ()))
     if not words:
         return None, 'the verse names only the other end, and the relation has no inverse'
     if len(words) > 1:

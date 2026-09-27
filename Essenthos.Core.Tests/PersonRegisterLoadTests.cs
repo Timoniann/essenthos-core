@@ -320,6 +320,28 @@ public sealed class PersonRegisterLoadTests : IDisposable
             && !claim.Note.Contains("person:Philip_2"));
     }
 
+    /// <summary>
+    /// The dataset labelled the Shishak verses it filed under Solomon's father-in-law with Shishak's
+    /// name. Once the verses are Shishak's, the name goes with them and the father-in-law keeps his own.
+    /// </summary>
+    [Fact]
+    public async Task A_name_only_the_moved_verses_used_leaves_with_them()
+    {
+        Held("pharaoh-5", "Pharaoh", "person:Pharaoh_5", ["Pharaoh", "Shishak"], [(11, 3, 1), (11, 14, 25)]);
+        Held("shishak", "Shishak", "person:Shishak_1", ["Shishak"], []);
+        await _db.SaveChangesAsync();
+        await _db.EntityVerses.Where(v => v.CanonicalChapter == 14)
+            .ExecuteUpdateAsync(set => set.SetProperty(v => v.Label, "Shishak"));
+        Register();
+
+        await Load();
+
+        var father = (await Person("pharaoh-5"))!;
+        father.Names.Select(name => name.Label).Should().BeEquivalentTo(["Pharaoh"]);
+        father.Verses.Should().OnlyContain(verse => verse.CanonicalChapter == 3);
+        (await Person("shishak"))!.Names.Select(name => name.Label).Should().BeEquivalentTo(["Shishak"]);
+    }
+
     [Fact]
     public async Task Misfiled_Adah_verses_are_repaired_before_the_register_matches_bearers()
     {

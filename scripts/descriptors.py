@@ -134,27 +134,51 @@ BOOKS = [
     'REV',
 ]
 
-# The contract's vocabulary, closed. The loader refuses anything else, so anything else is dropped
-# here and counted, rather than written out for the loader to refuse one file at a time.
-RELATIONS = [
-    'son-of', 'daughter-of', 'father-of', 'mother-of', 'brother-of', 'sister-of',
-    'husband-of', 'wife-of', 'concubine-of',
-    'half-brother-of', 'half-sister-of',
-    'grandfather-of', 'grandmother-of', 'grandson-of', 'granddaughter-of',
-    'uncle-of', 'aunt-of', 'nephew-of', 'niece-of',
-    'ancestor-of', 'descendant-of',
-    'father-in-law-of', 'mother-in-law-of', 'son-in-law-of', 'daughter-in-law-of',
-    'brother-in-law-of', 'sister-in-law-of', 'cousin-of',
-    'king-of', 'queen-of', 'prophet-to', 'priest-of', 'judge-of', 'high-priest-of',
-    'commander-of', 'governor-of', 'tetrarch-of',
-    'servant-of', 'master-of', 'disciple-of', 'apostle-of', 'scribe-of', 'companion-of',
-    'teacher-of', 'ally-of', 'supporter-of', 'supported-by', 'heir-of', 'inherited-by',
-    'killed-by', 'killer-of', 'raped-by', 'raper-of', 'exiler-of', 'exiled-by', 'angel-of',
-    'creator-of', 'created-by',
-    'of-tribe', 'of-people', 'from-place', 'lived-in', 'buried-in',
-    'descendants-of',
-    'city-in', 'region-of', 'river-of', 'mountain-in', 'gate-of', 'near',
-]
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOADER = os.path.join(ROOT, 'Essenthos.Forge', 'Loading', 'Encyclopedia', 'EntityDescriptorLoader.cs')
+RELATION_CONSTANTS = os.path.join(ROOT, 'Essenthos.Corpus', 'Database', 'Entities', 'EntityDescriptor.cs')
+VOCABULARY = os.path.join(ROOT, 'Essenthos.Corpus', 'Corpus', 'RelationshipVocabulary.cs')
+
+
+def csharp(path):
+    with open(path, encoding='utf-8-sig') as handle:
+        return handle.read()
+
+
+def csharp_block(text, marker, path):
+    """The initialiser that follows a declaration, up to the brace or bracket that closes it."""
+    start = text.find(marker)
+    if start < 0:
+        raise SystemExit(f'"{marker.strip()}" was not found in {path}; if it has moved, point the script '
+                         'at where it is now.')
+    closing = min(at for at in (text.find('};', start), text.find('];', start)) if at >= 0)
+    return text[start:closing]
+
+
+@functools.cache
+def relation_words():
+    """Each relation's C# constant name against the name the contract spells it with."""
+    return dict(re.findall(r'public const string (\w+) = "([^"]+)"', csharp(RELATION_CONSTANTS)))
+
+
+def relation_names(block):
+    return [relation_words()[name] for name in re.findall(r'DescriptorRelations\.(\w+)', block)]
+
+
+@functools.cache
+def contract_relations():
+    """
+    The contract's vocabulary, closed, read out of DescriptorRelations.All so that the harness and
+    the loader cannot disagree about it. The loader refuses anything else, so anything else is
+    dropped here and counted, rather than written out for the loader to refuse one file at a time.
+    """
+    text = csharp(RELATION_CONSTANTS)
+    block = csharp_block(text[text.index('class DescriptorRelations'):], ' All =', RELATION_CONSTANTS)
+    words = relation_words()
+    return [words[name] for name in re.findall(r'\b([A-Z]\w+)\b', block) if name in words]
+
+
+RELATIONS = contract_relations()
 
 # The nineteen the vocabulary gained when it was widened. A re-ask of an entity the first pass
 # already described earns its place by using one of these; anything else it says, the pass before it
@@ -234,10 +258,6 @@ REGISTER_CLAIMS = {
 }
 REGISTER_CLAIMS_KEPT = 1
 COMPANION = 'companion-of'
-
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOADER = os.path.join(ROOT, 'Essenthos.Forge', 'Loading', 'Encyclopedia', 'EntityDescriptorLoader.cs')
-RELATION_CONSTANTS = os.path.join(ROOT, 'Essenthos.Corpus', 'Database', 'Entities', 'EntityDescriptor.cs')
 
 SYSTEM_PROMPT = """\
 You are a Biblical scholar writing the encyclopedia's own description of a person, a place or a
@@ -742,35 +762,44 @@ def answer_key():
     """)
 
 
-# BibleData's type names against the contract's vocabulary, in the same direction. What is absent is
-# absent from the vocabulary, not from the mapping: patron, client, concubinator, exiled, original heir
-# and Creator have no relation to be scored against (cousin, ally, rabbi and lady gained one on
-# 2026-09-10), and `score` counts them so the size of that gap is visible
-# rather than assumed. `victim` is scored as `killed-by` only because the homicides are what the
-# vocabulary took; its rape rows will read as disagreements, which is the honest outcome.
-KEY_RELATIONS = {
-    'son': 'son-of', 'daughter': 'daughter-of', 'father': 'father-of', 'mother': 'mother-of',
-    'brother': 'brother-of', 'sister': 'sister-of',
-    'husband': 'husband-of', 'wife': 'wife-of',
-    'half-brother': 'half-brother-of', 'half-sister': 'half-sister-of',
-    'grandfather': 'grandfather-of', 'grandmother': 'grandmother-of',
-    'grandson': 'grandson-of', 'granddaughter': 'granddaughter-of',
-    'uncle': 'uncle-of', 'aunt': 'aunt-of', 'nephew': 'nephew-of', 'niece': 'niece-of',
-    'ancestor': 'ancestor-of', 'descendant': 'descendant-of',
-    'father-in-law': 'father-in-law-of', 'mother-in-law': 'mother-in-law-of',
-    'son-in-law': 'son-in-law-of', 'daughter-in-law': 'daughter-in-law-of',
-    'brother-in-law': 'brother-in-law-of', 'sister-in-law': 'sister-in-law-of',
-    'concubine': 'concubine-of',
-    'servant': 'servant-of', 'master': 'master-of',
-    'disciple': 'disciple-of', 'apostle': 'apostle-of',
-    'king': 'king-of',
-    'killer': 'killer-of', 'killed by': 'killed-by', 'victim': 'killed-by',
-    'army captain': 'commander-of',
-    'officer': 'servant-of', 'chamberlain': 'servant-of', 'chief official': 'servant-of',
-    'lieutenant': 'servant-of', 'chief': 'master-of', 'lady': 'master-of',
-    'born by': 'son-of', 'bearer': 'mother-of',
-    'cousin': 'cousin-of', 'rabbi': 'teacher-of', 'ally': 'ally-of', 'raper': 'raper-of',
-}
+@functools.cache
+def vocabulary():
+    """
+    BibleData's type names against the contract's vocabulary, and the relations that are the same
+    fact read from the other end, read out of RelationshipVocabulary.cs -- the table the loader
+    stores against, so a pass is scored under exactly the answer it will be stored under.
+
+    Returns (says, reversed, inverse): `says` maps a type to the relations it may mean in the same
+    direction -- one for most, several for a word like `victim` that is either and neither alone;
+    `reversed` maps a type that states a relation of the pair read the other way round
+    (`concubinator`); `inverse` maps a relation to the ones that say it from the other end. A type
+    in none of them is absent from the vocabulary, and `score` counts it.
+    """
+    text = csharp(VOCABULARY)
+
+    def entries(marker, key, value):
+        return re.findall(key + r'\s*=\s*' + value, csharp_block(text, marker, VOCABULARY))
+
+    says = {word: {relation_words()[name]}
+            for word, name in entries(' Says =', r'\["([^"]+)"\]', r'DescriptorRelations\.(\w+)')}
+    for word, names in entries(' SaysOneOf =', r'\["([^"]+)"\]', r'Set\(([^)]*)\)'):
+        says.setdefault(word, set()).update(relation_names(names))
+    reversed_ = {word: {relation_words()[name]}
+                 for word, name in entries(' SaysFromTheOtherEnd =', r'\["([^"]+)"\]',
+                                           r'DescriptorRelations\.(\w+)')}
+    inverse = {relation_words()[name]: set(relation_names(names))
+               for name, names in entries(' Inverse =', r'\[DescriptorRelations\.(\w+)\]', r'Set\(([^)]*)\)')}
+    return says, reversed_, inverse
+
+
+def inverse():
+    """The relations that say each relation from the other end."""
+    return vocabulary()[2]
+
+
+def key_types():
+    says, reversed_, _ = vocabulary()
+    return set(says) | set(reversed_)
 
 
 def cache(directory, name, produce):
@@ -1036,7 +1065,7 @@ def extract(args):
         key = {}
         if args.prefer_scorable:
             for row in answer_key():
-                if row['type'] in KEY_RELATIONS:
+                if row['type'] in key_types():
                     key.setdefault(row['from'], 0)
                     key[row['from']] += 1
         chosen = []
@@ -1212,6 +1241,18 @@ def placing_relations():
 
 
 @functools.cache
+def subject_kinds():
+    """What kind of record each relation can be said of, read out of DescriptorSubjects in the C#."""
+    text = csharp(RELATION_CONSTANTS)
+    block = csharp_block(text[text.index('class DescriptorSubjects'):], ' Table =', RELATION_CONSTANTS)
+    kinds = {}
+    for held, relations in re.findall(r'\(\[([^\]]*)\],\s*\[([^\]]*)\]\)', block):
+        for relation in relation_names(relations):
+            kinds[relation] = {kind.lower() for kind in re.findall(r'EntityKind\.(\w+)', held)}
+    return kinds
+
+
+@functools.cache
 def accompaniment():
     """The words the loader requires a companion-of verse to contain, read out of the C#."""
     with open(LOADER, encoding='utf-8-sig') as handle:
@@ -1225,6 +1266,8 @@ def accompaniment():
 
 def refusal(relation, target_kind, line, question, kind):
     """Why the loader, or the narrower question a register entity was asked, would refuse a claim."""
+    if kind not in subject_kinds().get(relation, ()):
+        return 'saying of a record what its kind cannot be'
     if relation in placing_relations() and target_kind != 'place':
         return 'placing something somewhere that is not a place'
     if relation == COMPANION and line.get('register'):
@@ -1437,59 +1480,9 @@ def descriptors(directory):
     return rows
 
 
-SCORABLE = set(KEY_RELATIONS.values())
-
-# The same fact said from the other end. A descriptor is written from its own subject's side, so
-# BibleData's `bani-4 ancestor-of adaiah-6` -- Bani the head of a clan in Ezra 10 -- is answered by
-# the claim on Adaiah, not on Bani: `adaiah-6 descendant-of bani-4`. Scored one-directionally that
-# reads as twenty-two misses, and every one of them is the encyclopedia saying the thing correctly
-# in the only place a reader would look for it.
-INVERSE = {
-    'son-of': {'father-of', 'mother-of'},
-    'daughter-of': {'father-of', 'mother-of'},
-    'father-of': {'son-of', 'daughter-of'},
-    'mother-of': {'son-of', 'daughter-of'},
-    'brother-of': {'brother-of', 'sister-of'},
-    'sister-of': {'brother-of', 'sister-of'},
-    'husband-of': {'wife-of'},
-    'wife-of': {'husband-of'},
-    'ancestor-of': {'descendant-of'},
-    'descendant-of': {'ancestor-of'},
-    'father-in-law-of': {'son-in-law-of', 'daughter-in-law-of'},
-    'mother-in-law-of': {'son-in-law-of', 'daughter-in-law-of'},
-    'son-in-law-of': {'father-in-law-of', 'mother-in-law-of'},
-    'daughter-in-law-of': {'father-in-law-of', 'mother-in-law-of'},
-    'half-brother-of': {'half-brother-of', 'half-sister-of'},
-    'half-sister-of': {'half-brother-of', 'half-sister-of'},
-    'grandfather-of': {'grandson-of', 'granddaughter-of'},
-    'grandmother-of': {'grandson-of', 'granddaughter-of'},
-    'grandson-of': {'grandfather-of', 'grandmother-of'},
-    'granddaughter-of': {'grandfather-of', 'grandmother-of'},
-    'uncle-of': {'nephew-of', 'niece-of'},
-    'aunt-of': {'nephew-of', 'niece-of'},
-    'nephew-of': {'uncle-of', 'aunt-of'},
-    'niece-of': {'uncle-of', 'aunt-of'},
-    'brother-in-law-of': {'brother-in-law-of', 'sister-in-law-of'},
-    'sister-in-law-of': {'brother-in-law-of', 'sister-in-law-of'},
-    'servant-of': {'master-of'},
-    'master-of': {'servant-of'},
-    'killed-by': {'killer-of'},
-    'killer-of': {'killed-by'},
-    'cousin-of': {'cousin-of'},
-    'disciple-of': {'teacher-of'},
-    'teacher-of': {'disciple-of'},
-    'ally-of': {'ally-of'},
-    'raper-of': {'raped-by'},
-    'raped-by': {'raper-of'},
-    'supporter-of': {'supported-by'},
-    'supported-by': {'supporter-of'},
-    'creator-of': {'created-by'},
-    'created-by': {'creator-of'},
-    'heir-of': {'inherited-by'},
-    'inherited-by': {'heir-of'},
-    'exiler-of': {'exiled-by'},
-    'exiled-by': {'exiler-of'},
-}
+def scorable():
+    says, reversed_, _ = vocabulary()
+    return set().union(*says.values(), *reversed_.values())
 
 
 def score(args):
@@ -1513,7 +1506,7 @@ def score(args):
     for row in rows:
         for claim in row['claims']:
             mine.setdefault((row['entity'], claim['target']), []).append(claim)
-            if claim['relation'] in SCORABLE:
+            if claim['relation'] in scorable():
                 ours.setdefault((row['entity'], claim['target']), []).append(claim)
 
     covered = {row['entity'] for row in rows}
@@ -1521,11 +1514,13 @@ def score(args):
     for entry in answer_key():
         if entry['from'] not in covered:
             continue
-        relation = KEY_RELATIONS.get(entry['type'])
-        if not relation:
+        says, reversed_, _ = vocabulary()
+        if entry['type'] in says:
+            key.setdefault((entry['from'], entry['to']), set()).update(says[entry['type']])
+        elif entry['type'] in reversed_:
+            key.setdefault((entry['to'], entry['from']), set()).update(reversed_[entry['type']])
+        else:
             unmapped[entry['type']] = unmapped.get(entry['type'], 0) + 1
-            continue
-        key.setdefault((entry['from'], entry['to']), set()).add(relation)
 
     agree, inverse_agree, disagree, disagreements = 0, 0, 0, []
     offered_not_taken, not_offered = 0, 0
@@ -1533,7 +1528,7 @@ def score(args):
     for pair, relations in sorted(key.items()):
         wanted = set()
         for relation in relations:
-            wanted |= INVERSE.get(relation, set())
+            wanted |= inverse().get(relation, set())
         claims = ours.get(pair)
         back = ours.get((pair[1], pair[0]))
         if claims and {c['relation'] for c in claims} & relations:

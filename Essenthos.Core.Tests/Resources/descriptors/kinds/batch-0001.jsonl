@@ -1,0 +1,2 @@
+{"entity":"besor-1","kind":"place","claims":[{"relation":"companion-of","target":"david-1","reference":"GEN 5:1","confidence":0.0,"reason":"David came to the brook Besor"}],"names":{"eng":{"nominative":"Besor"}},"model":"claude-sonnet-5","askedAt":"2026-09-10"}
+{"entity":"abiathar-1","kind":"person","claims":[{"relation":"companion-of","target":"david-1","reference":"GEN 5:1","confidence":0.9,"reason":"David and the men with him"}],"names":{"eng":{"nominative":"Abiathar"}},"model":"claude-sonnet-5","askedAt":"2026-09-10"}

@@ -105,6 +105,10 @@ internal sealed record SupersededReadings(
 /// The owner's ruling on one occurrence: whom the word names, and whether that is somebody the
 /// encyclopedia already holds or a record this corpus has to write.
 /// </summary>
+/// <param name="Corrects">
+/// The record an earlier ruling gave this word, where this one corrects it. A ruling does not
+/// overrule another ruling on its own, so the correction says which one it takes back.
+/// </param>
 internal sealed record OwnRecordRuling(
     long WordId,
     string Reference,
@@ -113,7 +117,8 @@ internal sealed record OwnRecordRuling(
     string? Existing,
     RecordSays? Says,
     IReadOnlyList<OwnAlternative>? Alternatives,
-    string Why);
+    string Why,
+    string? Corrects = null);
 
 /// <summary>
 /// What a ruling makes a record say about itself, where the record is one the encyclopedia already
@@ -282,6 +287,9 @@ internal static class SenseReadingFiles
     private const string SeveralPeopleSecondResource =
         "Essenthos.Core.Loading.Encyclopedia.SeveralPeopleRecordsSecond.json";
 
+    private const string SeveralPeopleThirdResource =
+        "Essenthos.Core.Loading.Encyclopedia.SeveralPeopleRecordsThird.json";
+
     private static readonly JsonSerializerOptions Shape = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -435,11 +443,18 @@ internal static class SenseReadingFiles
     public static OwnRecordRulings SeveralPeopleSecondRulings() =>
         Embedded<OwnRecordRulings>(SeveralPeopleSecondResource);
 
+    /// <summary>
+    /// The records the portrait briefs of 2026-09-27 found holding several people, the names a
+    /// mapping crossed in the translations, and the earlier rulings a reading of the lists corrects.
+    /// </summary>
+    public static OwnRecordRulings SeveralPeopleThirdRulings() =>
+        Embedded<OwnRecordRulings>(SeveralPeopleThirdResource);
+
     /// <summary>Every rulings file, in the order they were decided.</summary>
     public static IReadOnlyList<OwnRecordRulings> AllRulings() =>
     [
         Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings(),
-        SeveralPeopleRulings(), SeveralPeopleSecondRulings(),
+        SeveralPeopleRulings(), SeveralPeopleSecondRulings(), SeveralPeopleThirdRulings(),
     ];
 
     private static T Embedded<T>(string name)

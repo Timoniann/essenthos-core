@@ -34,7 +34,8 @@ public sealed class OwnRecordTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
         _rulings = [.. SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)];
 
-        var verses = _rulings
+        var ruled = _rulings.DistinctBy(ruling => ruling.WordId).ToList();
+        var verses = ruled
             .Select((ruling, position) => (Chapter: 1, Verse: position + 1, Words: new[] { ruling.StrongNumber }))
             .ToArray();
 
@@ -43,14 +44,14 @@ public sealed class OwnRecordTests : IDisposable
         _db.SaveChanges();
 
         // The words the rulings are about, at the ids the rulings name.
-        for (var position = 0; position < _rulings.Count; position++)
+        for (var position = 0; position < ruled.Count; position++)
         {
             var word = _db.WordAt(_hebrew, 1, position + 1, 1);
-            word.StrongNumber = _rulings[position].StrongNumber;
+            word.StrongNumber = ruled[position].StrongNumber;
             word.Morphology = JsonDocument.Parse("""{"pos": "subs", "nameType": "pers"}""");
             _db.SaveChanges();
             _db.Database.ExecuteSqlRaw(
-                "UPDATE word SET id = {0} WHERE id = {1}", _rulings[position].WordId, word.Id);
+                "UPDATE word SET id = {0} WHERE id = {1}", ruled[position].WordId, word.Id);
         }
 
         // The records the rulings point at or name as alternatives.
@@ -106,7 +107,7 @@ public sealed class OwnRecordTests : IDisposable
         await Load();
 
         var named = await _db.WordEntities.Include(a => a.Entity).ToListAsync();
-        named.Select(a => a.WordId).Should().BeEquivalentTo(_rulings.Select(r => r.WordId));
+        named.Select(a => a.WordId).Should().BeEquivalentTo(_rulings.Select(r => r.WordId).Distinct());
         named.Should().OnlyContain(a => a.Method == LinkMethod.Manual);
         named.Should().OnlyContain(a => a.Confidence == null);
     }
@@ -373,12 +374,37 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
-    /// A word is ruled on once. Two files ruling on one word would both annotate it, and a reader
-    /// would meet a word naming whichever of two decisions the loader happened to write first.
+    /// A word is ruled on once, unless a later ruling corrects the earlier one and says which answer
+    /// it takes back. Two files ruling on one word otherwise both annotate it, and a reader would
+    /// meet a word naming whichever of two decisions the loader happened to write first.
     /// </summary>
     [Fact]
-    public void NoWordIsRuledOnTwice()
+    public void NoWordIsRuledOnTwiceUnlessTheLaterRulingCorrectsTheEarlier()
     {
-        _rulings.Select(r => r.WordId).Should().OnlyHaveUniqueItems();
+        foreach (var word in _rulings.GroupBy(r => r.WordId).Where(g => g.Count() > 1))
+        {
+            var (earlier, later) = (word.First(), word.Last());
+            word.Count().Should().Be(2, $"word {word.Key} is ruled on once and corrected once at most");
+            later.Corrects.Should().Be(earlier.Existing, $"the ruling on {later.Reference} corrects the earlier one");
+        }
+    }
+
+    /// <summary>
+    /// A correction takes back the answer it names, and the word names the record the correction
+    /// gives it — on a corpus the earlier ruling was already written into as on a cold one.
+    /// </summary>
+    [Fact]
+    public async Task ACorrectionReplacesTheRulingItCorrects()
+    {
+        await Load();
+
+        foreach (var correction in _rulings.Where(r => r.Corrects is not null))
+        {
+            var named = await _db.WordEntities.Include(a => a.Entity)
+                .Where(a => a.WordId == correction.WordId)
+                .Select(a => a.Entity!.Slug)
+                .ToListAsync();
+            named.Should().Equal(correction.Existing);
+        }
     }
 }

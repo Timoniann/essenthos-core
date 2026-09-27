@@ -141,7 +141,8 @@ internal sealed class OwnRecordLoader(
             annotated += settled.Count == 0
                 ? 0
                 : await Annotate(
-                    settled, EnumSpelling.ToLinkMethod(file.Method), file.Source, cancellationToken);
+                    settled, await Corrections(file, cancellationToken), EnumSpelling.ToLinkMethod(file.Method),
+                    file.Source, cancellationToken);
         }
 
         var labelled = await Label(files, cancellationToken);
@@ -483,6 +484,39 @@ internal sealed class OwnRecordLoader(
         """;
 
     /// <summary>
+    /// What a correcting ruling takes back: the earlier ruling's answer at the word, whatever wrote
+    /// it, and the copies it was carried to. Only the record the correction names is taken back.
+    /// </summary>
+    private const string Corrected =
+        """
+        DELETE FROM word_entity a
+        USING unnest(@words, @entities) AS c(word_id, entity_id)
+        WHERE a.entity_id = c.entity_id
+          AND (a.word_id = c.word_id OR a.note LIKE 'through % word ' || c.word_id || ',%')
+        """;
+
+    /// <summary>The word and the record each correcting ruling of a file takes back.</summary>
+    private async Task<IReadOnlyList<(long Word, int Entity)>> Corrections(
+        OwnRecordRulings file,
+        CancellationToken cancellationToken)
+    {
+        var corrects = file.Rulings.Where(r => r.Corrects is not null).ToList();
+        if (corrects.Count == 0)
+        {
+            return [];
+        }
+
+        var slugs = corrects.Select(r => r.Corrects!).Distinct().ToList();
+        var ids = await db.Entities
+            .Where(e => slugs.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
+        return corrects
+            .Where(r => ids.ContainsKey(r.Corrects!))
+            .Select(r => (r.WordId, ids[r.Corrects!]))
+            .ToList();
+    }
+
+    /// <summary>
     /// The annotations the rulings settle, carried into every text the links reach exactly as every
     /// other annotation is. A person decided who is named, so the seed carries no confidence; a
     /// word reached across a link that is itself a guess does carry one, because the reach is what
@@ -490,6 +524,7 @@ internal sealed class OwnRecordLoader(
     /// </summary>
     private async Task<int> Annotate(
         List<(long, int, double?, bool, string)> seed,
+        IReadOnlyList<(long Word, int Entity)> corrected,
         LinkMethod method,
         string source,
         CancellationToken cancellationToken)
@@ -498,6 +533,13 @@ internal sealed class OwnRecordLoader(
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        if (corrected.Count > 0)
+        {
+            await Annotating.Run(connection, transaction, Corrected, cancellationToken,
+                ("words", corrected.Select(c => c.Word).ToArray()),
+                ("entities", corrected.Select(c => c.Entity).ToArray()));
+        }
+
         await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
         await Annotating.Seed(connection, seed, cancellationToken);
         await Annotating.Run(connection, transaction, Overruled, cancellationToken,
@@ -586,7 +628,7 @@ internal sealed class OwnRecordLoader(
 
         if (seed.Count > 0)
         {
-            await Annotate(seed, LinkMethod.ModelReading, ReadingSource, cancellationToken);
+            await Annotate(seed, [], LinkMethod.ModelReading, ReadingSource, cancellationToken);
         }
 
         return 0;

@@ -147,7 +147,7 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
          """;
 
     /// <summary>
-    /// A reference of ours that no annotation of ours stands behind any more.
+    /// A reference of ours that no settled annotation stands behind any more.
     ///
     /// The derivation writes a verse because a word in it names the entity. An annotation can be
     /// taken back — <see cref="EntityAnnotationLoader"/> withdraws a resolution once the
@@ -157,9 +157,11 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     /// one hop further from where a reader could see it.
     ///
     /// <para>
-    /// Only ours, and only where nothing at all is left: an entity still named at a word of that
-    /// verse keeps the reference whichever annotation settles the word, because the derivation only
-    /// ever claimed the verse. The gazetteer's rows and the datasets' say what they always said.
+    /// Only ours, and read off the same settled answers the derivation reads: a word that still
+    /// carries the entity under a claim another record outranks there no longer names it, and a
+    /// cold load would not cite the verse for it. The pillar Boaz of 1 Kings 7:21 is read as the
+    /// pillar, and Ruth's husband keeps a claim on the word and not the verse. The gazetteer's rows
+    /// and the datasets' say what they always said.
     /// </para>
     ///
     /// <para>
@@ -170,18 +172,23 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     /// </para>
     /// </summary>
     private static readonly string Retraction =
-        """
-        DELETE FROM entity_verse cited
-        WHERE cited.source = @source
-          AND NOT EXISTS (
-              SELECT 1 FROM word_entity a
-              JOIN word w ON w.id = a.word_id
-              JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
-              WHERE a.entity_id = cited.entity_id
-                AND r.canonical_book = cited.canonical_book
-                AND r.canonical_chapter = cited.canonical_chapter
-                AND r.canonical_verse = cited.canonical_verse)
-        """;
+        $"""
+         WITH {Annotating.Settled},
+         kept AS MATERIALIZED (
+             SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
+             FROM settled s
+             JOIN word w ON w.id = s.word_id
+             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+         )
+         DELETE FROM entity_verse cited
+         WHERE cited.source = @source
+           AND NOT EXISTS (
+               SELECT 1 FROM kept
+               WHERE kept.entity_id = cited.entity_id
+                 AND kept.canonical_book = cited.canonical_book
+                 AND kept.canonical_chapter = cited.canonical_chapter
+                 AND kept.canonical_verse = cited.canonical_verse)
+         """;
 
     private async Task<int> Run(
         NpgsqlConnection connection,
