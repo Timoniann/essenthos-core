@@ -316,13 +316,6 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
-    /// The companion rule against real verse text, which is what it never had. Every test before this
-    /// one ran with no text loaded, so the only branch ever exercised was "cannot check" — and a rule
-    /// looking for the King James under the wrong name passed all of them while refusing nothing on
-    /// the corpus. The words are seeded without a normalised form on purpose, so the test also
-    /// holds the rule to reading the printed word where there is nothing else.
-    /// </summary>
-    /// <summary>
     /// The pass read Luke 3:1 while the dataset still filed it under Herodias's husband, so its clauses
     /// there name him. The verse is the tetrarch's now: a clause about the husband at it cites a verse
     /// he is not named in, and a clause pointing at him from it points at the tetrarch.
@@ -353,6 +346,13 @@ public sealed class DescriptorTests : IDisposable
         ]);
     }
 
+    /// <summary>
+    /// The companion rule against real verse text, which is what it never had. Every test before this
+    /// one ran with no text loaded, so the only branch ever exercised was "cannot check" — and a rule
+    /// looking for the King James under the wrong name passed all of them while refusing nothing on
+    /// the corpus. The words are seeded without a normalised form on purpose, so the test also
+    /// holds the rule to reading the printed word where there is nothing else.
+    /// </summary>
     [Fact]
     public async Task ACompanionTheVerseDoesNotSpeakOfIsRefusedAndOneItDoesIsKept()
     {
