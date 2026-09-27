@@ -46,8 +46,9 @@ own disk holds nothing worth restoring. What protects the data:
 
 1. **The encrypted nightly dumps** of the accounts databases (and the page counts, where the counter is
    on), written to the volume by the `backup` service — **Backups**, below;
-2. **their off-site copy**, by the `backup-offsite` service to an rclone remote of the owner's choosing,
-   which is what survives the volume itself being lost;
+2. **their off-site copy**: the owner's console copies the newest of them to his own machine every day
+   it runs (**Backups**, below), and the `backup-offsite` service can copy them to an rclone remote as
+   well — either is what survives the volume itself being lost;
 3. optionally, **volume snapshots**, which catch the whole volume at once — the corpus releases and the
    pictures included, which saves re-publishing them after a disaster. Take one by hand before anything
    risky, or schedule them; keep them **four weeks at most**, since the privacy page promises that no
@@ -288,6 +289,14 @@ page counts in `essenthos_stats` are backed up beside it where the counter is on
   hour and removes the copies there once they are 14 days old, so the off-site copy is kept exactly as
   long as the dump here. Only `*.dump.gpg` files are sent. It runs only when `.env` turns it on — and
   since the volume is the one place the dumps are written, it is what survives losing the volume.
+- **To the owner's machine**: the console's Backups section (`Essenthos.Desk`) copies the newest
+  encrypted dump of each database into `E:\Projects\Essenthos\server-backups` on a button, and on its
+  own once a day while the console runs. It connects exactly as the deploy does — `ssh` with the
+  owner's key to the `Publish:Targets:prod:Ssh` address — lists the folder, fetches each file with
+  `cat` and checks it against the server's `sha256sum`. It never fetches a `*.dump`, so nothing in the
+  clear ever leaves the server, and nothing is decrypted on the way. It keeps as many copies of each
+  database as the owner sets, and none but the newest older than 14 days. The folders are
+  `Desk:Backups:Folder` and `Desk:Backups:Remote` in its `appsettings.json`.
 - A change to `backup.sh` or `backup-offsite.sh` reaches a running container only when it restarts:
   `docker compose up -d --force-recreate backup backup-offsite` after a deploy that changed either.
 
@@ -339,8 +348,8 @@ remote into `/srv/essenthos/rclone/rclone.conf` on the server, `chmod 600` it, a
     docker compose up -d backup-offsite && docker compose logs --tail 5 backup-offsite
 
 Give the bucket a lifecycle rule deleting objects after 15 days as well, so a copy expires even if the
-service stops. **The privacy page says the backups are copied nowhere else: change it in the same step,**
-naming where they go and that they are kept 14 days there.
+service stops. The privacy page promises that the backups are encrypted and that deleted data is gone
+from every one of them within six weeks: a copy kept anywhere has to keep to that.
 
 ### Restoring
 
@@ -348,7 +357,7 @@ naming where they go and that they are kept 14 days there.
 never over the live one. Only the private key can open a dump, so it is decrypted on your machine and
 streamed back into `pg_restore`, and the dump is never on the server in the clear:
 
-    scp deploy@<droplet>:/srv/essenthos/backups/essenthos_app-<stamp>.dump.gpg .
+    scp deploy@<droplet>:/srv/essenthos/backups/essenthos_app-<stamp>.dump.gpg .   # or use the console's copy on E:
     gpg --import essenthos-backups-SECRET.asc        # once, on the machine that restores
     gpg --decrypt essenthos_app-<stamp>.dump.gpg | ssh deploy@<droplet> 'cd /srv/essenthos/deploy &&
       docker compose exec -T backup sh -c "createdb -h db restore_test && pg_restore -h db -d restore_test &&
