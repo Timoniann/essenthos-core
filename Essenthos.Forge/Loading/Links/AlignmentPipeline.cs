@@ -1445,6 +1445,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 OwnBook = r.Verse.Book!.CanonicalOrdinal,
                 r.Verse.ChapterNumber,
                 r.Verse.Number,
+                r.Verse.Sequence,
                 w.Position,
                 w.Id,
                 w.Surface,
@@ -1468,8 +1469,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         // map reads it and nowhere else; one the map has no line for stands nowhere, since its own
         // number is some other passage's address. The Ge'ez numbers as the Greek it was made from
         // does, and the further rows the frame gives its verses are where it parks the Hebrew's
-        // counterpart, which it may give the Greek one row apart. Where several verses meet at one
-        // address they keep their order, verse by verse.
+        // counterpart, which it may give the Greek one row apart.
         var map = VerseMap(slug);
         var standing = new Dictionary<int, (int, int, int)>();
         foreach (var row in rows.Where(row => row.IsPrimary))
@@ -1479,19 +1479,27 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
         var placed = map is not { } mapped
             ? rows.Where(r => r.IsPrimary || !primaryOnly)
-                .Select(r => (Address: (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), Order: 0, Row: r))
+                .Select(r => (Address: (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), Row: r))
             : rows.Where(r => r.IsPrimary).SelectMany(r => !mapped.Books.Contains(r.OwnBook)
-                ? [(Address: (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), Order: 0, Row: r)]
+                ? [(Address: (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), Row: r)]
                 : mapped.Addresses.TryGetValue((r.OwnBook, r.ChapterNumber, r.Number), out var to)
-                    ? to.Select(address => (Address: address, Order: r.VerseId, Row: r))
+                    ? to.Select(address => (Address: address, Row: r))
                     : []);
 
+        // Where several verses meet at one address each is read whole, in the order the edition
+        // writes them. Ordered by position alone, the twenty-five verses Swete prints at 3 Kingdoms
+        // 12:24 were read as the first word of each, then the second of each, and a model learns
+        // where a word stands from exactly that order.
         return placed
             .GroupBy(p => p.Address)
             .ToDictionary(
                 group => group.Key,
-                group => group.OrderBy(p => p.Order).ThenBy(p => p.Row.Position)
-                    .Select(p => p.Row)
+                group => group.Select(p => p.Row)
+                    .OrderBy(r => r.OwnBook)
+                    .ThenBy(r => r.ChapterNumber)
+                    .ThenBy(r => r.Sequence)
+                    .ThenBy(r => r.VerseId)
+                    .ThenBy(r => r.Position)
                     .Select(r =>
                     {
                         var forms = new WordForms(

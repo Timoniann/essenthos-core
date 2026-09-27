@@ -236,11 +236,8 @@ internal static class Annotating
     ///
     /// <para>
     /// A number is not a lexeme, which is why <see cref="LinkWorth"/> gives a name crossing such
-    /// a set no more than the link itself is worth. 601 of the corpus's 6,550 witness-side sets
-    /// hold two lexemes under the one number, and Joshua 19:47 writes דן four times under H1835 —
-    /// twice for the tribe, once for the town and once for the man their father. Choosing a pairing
-    /// inside a set like that is choosing who is named, which is exactly what the link's confidence
-    /// is low about.
+    /// a set no more than the link itself is worth, and not an entity, which is why the number is
+    /// not enough on its own: <see cref="NamesOne"/> is asked beside it.
     /// </para>
     ///
     /// <para>
@@ -248,7 +245,10 @@ internal static class Annotating
     /// lexeme, and BHSA leaves 9,949 words unnumbered.
     /// </para>
     /// </summary>
-    private const string OneNameTwice =
+    private const string OneNameTwice = $"{OneNumberTwice} AND {NamesOne}";
+
+    /// <summary>The half of <see cref="OneNameTwice"/> that asks only the words and their numbers.</summary>
+    private const string OneNumberTwice =
         """
         origin.strong_number IS NOT NULL
         AND (SELECT count(*) FROM link_word ours
@@ -260,6 +260,40 @@ internal static class Annotating
             JOIN word said ON said.id = ours.word_id
             WHERE ours.link_id = mine.link_id AND ours.side = mine.side
               AND said.strong_number IS DISTINCT FROM origin.strong_number)
+        """;
+
+    /// <summary>
+    /// Whether every word on the seed's side of the set that names anybody names the seed's entity.
+    ///
+    /// <para>
+    /// One number can cover two records on that side. Joshua 19:47 writes דן four times under
+    /// H1835 — twice for the tribe, once for the town and once for the man their father — and
+    /// Genesis 43:32 writes מִּצְרִים twice and מִצְרָיִם once under H4713, the Egyptians and Egypt.
+    /// Opposite such a set, which word renders which is who is named, and a set read as one name
+    /// written several times put the tribe on the Synodal's town and on its father, and the place on
+    /// Luther's <em>Ägyptern</em>, which already named the people. Its head is no better, being one
+    /// more of the same choice: the father is the Synodal's last <em>Дана</em>. So such a set names
+    /// nothing, and the page says nothing rather than something wrong.
+    /// </para>
+    ///
+    /// <para>
+    /// The seeds a pass has not yet settled are asked as well as the annotations already written,
+    /// because a pass takes its own rows back before it seeds them again.
+    /// </para>
+    /// </summary>
+    private const string NamesOne =
+        """
+        NOT EXISTS (
+            SELECT 1 FROM link_word ours
+            JOIN word_entity named ON named.word_id = ours.word_id
+            WHERE ours.link_id = mine.link_id AND ours.side = mine.side
+              AND named.entity_id <> seed.entity_id)
+        AND NOT EXISTS (
+            SELECT 1 FROM link_word ours
+            JOIN pending_annotation named ON named.word_id = ours.word_id
+            WHERE ours.link_id = mine.link_id AND ours.side = mine.side
+              AND named.through IS NULL
+              AND named.entity_id <> seed.entity_id)
         """;
 
     /// <summary>
@@ -301,27 +335,54 @@ internal static class Annotating
     /// </para>
     ///
     /// <para>
-    /// Written as one expression because the carrying step and the step that takes a carried row
-    /// back both have to ask it, and a withdrawal that found fewer words than the carry wrote would
-    /// leave the King James saying what the Hebrew beside it no longer says.
+    /// The step that takes a carried row back asks <see cref="MayHaveReached"/>, which is never
+    /// fewer words than this: a withdrawal that found fewer words than the carry wrote would leave
+    /// the King James saying what the Hebrew beside it no longer says.
     /// </para>
     /// </summary>
     public const string Reached =
         $"""
          SELECT alone.word_id
          FROM ({Head}) alone
-         WHERE NOT ({OneNameTwice})
+         WHERE NOT ({OneNumberTwice})
          UNION ALL
+         {Together}
+         WHERE {OneNameTwice}
+           AND {SameAsHead}
+         """;
+
+    /// <summary>
+    /// Every word <see cref="Reached"/> can have reached from a seed, whatever the seed's side names
+    /// now, which is what a withdrawal takes back. What that side names changes between a carry and
+    /// the withdrawal of what it wrote, and it only ever takes words away from what the numbers
+    /// alone admit, so those are all the words the carry can have written.
+    /// </summary>
+    public const string MayHaveReached =
+        $"""
+         SELECT alone.word_id
+         FROM ({Head}) alone
+         WHERE NOT ({OneNumberTwice})
+         UNION ALL
+         {Together}
+         WHERE {OneNumberTwice}
+           AND {SameAsHead}
+         """;
+
+    private const string Together =
+        $"""
          SELECT together.id
          FROM ({Head}) alone
          JOIN word foremost ON foremost.id = alone.word_id
          JOIN link_word beside
               ON beside.link_id = mine.link_id AND beside.side <> mine.side
          JOIN word together ON together.id = beside.word_id
-         WHERE {OneNameTwice}
-           AND similarity(
-                   lower(regexp_replace(together.text, '{Ornament}', '', 'g')),
-                   lower(regexp_replace(foremost.text, '{Ornament}', '', 'g'))) >= {SameWord}
+         """;
+
+    private const string SameAsHead =
+        $"""
+         similarity(
+             lower(regexp_replace(together.text, '{Ornament}', '', 'g')),
+             lower(regexp_replace(foremost.text, '{Ornament}', '', 'g'))) >= {SameWord}
          """;
 
     /// <summary>
