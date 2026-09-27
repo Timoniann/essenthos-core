@@ -154,7 +154,8 @@ internal sealed partial class PortraitEditor(PortraitBoard board, DeskPaths path
 
         // The portrait stands where its pictures do together: one still waiting keeps it waiting, and
         // one refused among approved ones leaves it approved.
-        var status = PortraitBoard.StatusOf(null, PortraitBoard.Listed(JsonFiles.Read(Manifest), slug).ToList());
+        var status = PortraitBoard.StatusOf(
+            null, PortraitBoard.Listed(JsonFiles.Read(Manifest), slug).ToList(), person.Person.NeverPictured);
         await ChangeBrief(person, brief => brief["status"] = status);
         await log.Append(Section, "review", $"person/{slug} {file}", JsonValue.Create(was!.Review), JsonValue.Create(request.Review),
             request.Note, "images", NameOf(person));
@@ -219,7 +220,7 @@ internal sealed partial class PortraitEditor(PortraitBoard board, DeskPaths path
 
         if (person.Person.NeverPictured && !glory)
         {
-            return Refused("God is never given a face or a figure. The one picture a record of God may have is ours of the glory as light; mark the upload as that picture, or do not add it.");
+            return Refused("God is never given a face or a figure, nor is the Holy Spirit. The one picture a record of God may have is ours of the glory as light; mark the upload as that picture, or do not add it.");
         }
 
         if (!person.Person.NeverPictured && glory)
@@ -227,7 +228,8 @@ internal sealed partial class PortraitEditor(PortraitBoard board, DeskPaths path
             return Refused("Only a record of God has the picture of the glory.");
         }
 
-        if (person.Person.Status == PortraitBoard.NoPortrait)
+        // The glory is light with no figure in it, not a portrait, so a record of God that has none may still be given it.
+        if (person.Person.Status == PortraitBoard.NoPortrait && !(person.Person.NeverPictured && glory))
         {
             return Refused("This person is marked as not portrayed. Change the status first if that has changed.");
         }
@@ -373,7 +375,7 @@ internal sealed partial class PortraitEditor(PortraitBoard board, DeskPaths path
             }
 
             var listed = PortraitBoard.Listed(manifest, other.Slug).ToList();
-            var status = PortraitBoard.StatusOf(null, listed);
+            var status = PortraitBoard.StatusOf(null, listed, person.Person.NeverPictured);
             await ChangeBrief(person, brief => brief["status"] = status);
             var now = listed.Where(e => PortraitBoard.File(e) == other.File).Select(PortraitBoard.Review).FirstOrDefault();
             await log.Append(Section, "review", $"person/{other.Slug} {other.File}", JsonValue.Create(other.Before),

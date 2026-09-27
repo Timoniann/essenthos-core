@@ -107,9 +107,6 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
 
     public const string Gallery = "gallery";
 
-    /// <summary>BibleData's identifiers for God, as the Father and as the God of Israel.</summary>
-    internal const string GodSourcePrefix = "person:YHVH_";
-
     private static readonly JsonSerializerOptions ManifestJson = new(JsonSerializerDefaults.Web)
     {
         ReadCommentHandling = JsonCommentHandling.Skip,
@@ -295,8 +292,8 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
     }
 
     /// <summary>
-    /// Whether an entity may never be pictured: God, under either of the records the text is read to
-    /// name him by, and every word the text uses of God.
+    /// Whether an entity may never be pictured: God, under every record the text is read to name him
+    /// by, and every word the text uses of God.
     /// </summary>
     internal static bool NeverDepicted(EntityKind kind, string sourceId) => kind == EntityKind.Term || IsGod(sourceId);
 
@@ -307,7 +304,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
     internal static bool Refused(EntityKind kind, string sourceId, string pictureKind, bool glory) =>
         NeverDepicted(kind, sourceId) && !(kind != EntityKind.Term && IsGod(sourceId) && pictureKind == Generated && glory);
 
-    private static bool IsGod(string sourceId) => sourceId.StartsWith(GodSourcePrefix, StringComparison.Ordinal);
+    private static bool IsGod(string sourceId) => DivineRecords.Contains(sourceId);
 
     /// <summary>
     /// The rows the candidates make, in the order they were listed: the first primary of each kind an

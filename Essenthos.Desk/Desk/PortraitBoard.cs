@@ -11,7 +11,7 @@ namespace Essenthos.Core.Desk;
 /// <param name="Tier">1 for the people named in 50 verses or more, 2 for 10 to 49, 3 for the rest.</param>
 /// <param name="GeneratedListed">Whether the generated manifest lists a portrait whose file is there.</param>
 /// <param name="GeneratedLoaded">Whether the corpus already shows a generated portrait.</param>
-/// <param name="NeverPictured">God: never given a face or a figure.</param>
+/// <param name="NeverPictured">God, under any of his records, the Holy Spirit's among them: never given a face or a figure.</param>
 /// <param name="Glory">Whether the manifest lists the picture of the glory, the one kind God's records may have.</param>
 /// <param name="Status">Where the portrait stands: one of <see cref="PortraitBoard.Statuses"/>.</param>
 /// <param name="Question">What the brief says is still the owner's to decide about the portrait, or null.</param>
@@ -102,9 +102,6 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
     public const string ManifestFile = "manifest.json";
 
     public const string BriefsFile = "briefs.json";
-
-    /// <summary>The records the text is read to name God by, which are never given a face or a figure.</summary>
-    public const string GodSourcePrefix = "person:YHVH_";
 
     public const string NotStarted = "not-started";
 
@@ -354,7 +351,8 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
     {
         var listed = Listed(manifest, row.Slug).ToList();
         var brief = BriefOf(briefs, row.Slug);
-        var status = StatusOf(brief, listed);
+        var neverPictured = DivineRecords.Contains(row.SourceId);
+        var status = StatusOf(brief, listed, neverPictured);
         var question = brief?["owner_decision_needed"] is JsonValue asked && asked.TryGetValue<string>(out var text)
                        && !string.IsNullOrWhiteSpace(text)
             ? text
@@ -371,7 +369,7 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
             listed.Any(e => OnDisk(File(e))),
             row.Generated,
             brief is not null,
-            row.SourceId.StartsWith(GodSourcePrefix, StringComparison.Ordinal),
+            neverPictured,
             listed.Any(Glory),
             status,
             question,
@@ -389,9 +387,10 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
     /// <summary>
     /// Where a portrait stands: as its brief says, where the brief says one of the statuses; else, where
     /// our manifest lists a portrait, as the owner reviewed it — one written by hand with no review is
-    /// shown on the site, so it counts as approved; else a brief is ready or nothing is started.
+    /// shown on the site, so it counts as approved; else a brief is ready or nothing is started — except
+    /// for a record of God, which has no portrait to start until the picture of the glory is listed.
     /// </summary>
-    public static string StatusOf(JsonNode? brief, IReadOnlyCollection<JsonNode> listed)
+    public static string StatusOf(JsonNode? brief, IReadOnlyCollection<JsonNode> listed, bool neverPictured = false)
     {
         var said = brief?["status"] is JsonValue value && value.TryGetValue<string>(out var text) ? text : null;
         if (said is not null && Statuses.Contains(said))
@@ -402,6 +401,7 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
         var reviews = listed.Select(Review).ToList();
         return reviews switch
         {
+            [] when neverPictured => NoPortrait,
             [] => brief is null ? NotStarted : Ready,
             _ when reviews.Contains(PortraitEditor.Pending) => Generated,
             _ when reviews.All(r => r == PortraitEditor.Rejected) => Rejected,
