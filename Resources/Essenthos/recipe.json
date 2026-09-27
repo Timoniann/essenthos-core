@@ -99,33 +99,6 @@
     {
       "verb": "compose",
       "arguments": [
-        "RUSV",
-        "KJV",
-        "BHSA"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "RUSV",
-        "KJV",
-        "NESTLE1904"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "RUSV",
-        "KJV",
-        "TR1894"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
         "LUTH1912",
         "KJV",
         "BHSA"
@@ -317,33 +290,6 @@
       "arguments": [
         "LUTH1912",
         "NESTLE1904",
-        "--apply"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "names",
-      "arguments": [
-        "RUSV",
-        "BHSA",
-        "--apply"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "names",
-      "arguments": [
-        "RUSV",
-        "NESTLE1904",
-        "--apply"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "names",
-      "arguments": [
-        "RUSV",
-        "TR1894",
         "--apply"
       ],
       "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
@@ -595,24 +541,6 @@
     {
       "verb": "unshare",
       "arguments": [
-        "RUSV",
-        "BHSA",
-        "--apply"
-      ],
-      "at": "2026-09-25T15:00:20.6169676+00:00"
-    },
-    {
-      "verb": "possessives",
-      "arguments": [
-        "RUSV",
-        "BHSA",
-        "--apply"
-      ],
-      "at": "2026-09-25T15:00:27.6305126+00:00"
-    },
-    {
-      "verb": "unshare",
-      "arguments": [
         "UBIO",
         "BHSA",
         "--apply"
@@ -713,24 +641,6 @@
       "at": "2026-09-27T18:57:28.4316011+00:00"
     },
     {
-      "verb": "align",
-      "arguments": [
-        "RUSV",
-        "KJV",
-        "--replace"
-      ],
-      "at": "2026-09-27T19:00:16.2700254+00:00"
-    },
-    {
-      "verb": "names",
-      "arguments": [
-        "RUSV",
-        "KJV",
-        "--apply"
-      ],
-      "at": "2026-09-27T19:00:28.4000535+00:00"
-    },
-    {
       "verb": "compose",
       "arguments": [
         "NPU2022",
@@ -756,6 +666,96 @@
         "--replace"
       ],
       "at": "2026-09-27T19:44:18.5382058+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "--replace"
+      ],
+      "at": "2026-09-27T20:03:12.8256501+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "--apply"
+      ],
+      "at": "2026-09-27T20:03:28.1403877+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "BHSA"
+      ],
+      "at": "2026-09-27T20:05:49.7011207+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "NESTLE1904"
+      ],
+      "at": "2026-09-27T20:06:39.1271979+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "TR1894"
+      ],
+      "at": "2026-09-27T20:07:27.1376641+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-27T20:07:36.4344018+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-09-27T20:07:44.1336318+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "TR1894",
+        "--apply"
+      ],
+      "at": "2026-09-27T20:07:51.7580688+00:00"
+    },
+    {
+      "verb": "unshare",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-27T20:07:56.3455901+00:00"
+    },
+    {
+      "verb": "possessives",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-27T20:08:01.8184858+00:00"
     }
   ]
 }
