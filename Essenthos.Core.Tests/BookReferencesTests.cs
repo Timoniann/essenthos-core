@@ -88,6 +88,8 @@ public class BookReferencesTests
     [InlineData(39, "old")]
     [InlineData(40, "new")]
     [InlineData(66, "new")]
+    [InlineData(70, "old")]
+    [InlineData(92, "old")]
     public void TestamentSplitsAtMalachi(int ordinal, string testament)
     {
         BookReferences.Testament(ordinal).Should().Be(testament);

@@ -125,7 +125,7 @@ internal static partial class PageViews
 
     public static PageContent Verse(SiteLanguage language, PageWording t, VerseView verse)
     {
-        var reference = $"{verse.BookName} {verse.Chapter}:{verse.Verse}";
+        var reference = t.Reference(verse.BookName, verse.Chapter, verse.Verse);
         var chapter = $"{verse.BookName} {verse.Chapter}";
         var body = Open(language)
             .Open("nav").Link(language.Path("/"), PageContent.SiteName).Text(Crumb)

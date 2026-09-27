@@ -59,6 +59,24 @@ public sealed class PageRenderingTests
     }
 
     [Fact]
+    public void AGermanVerseIsCitedAsAGermanReaderCitesIt()
+    {
+        var german = PageWording.Compiled("de");
+        var html = PageHtml.Render(
+            Shell,
+            PageViews.Verse(SiteLanguage.German, german,
+                new VerseView(41, german.CitedBook(41)!, 3, 3, "Und er sprach zu dem Menschen mit der verdorrten Hand: Tritt hervor!", "Lutherbibel 1912")),
+            SiteLanguage.German,
+            Origin);
+
+        Title(html).Should().StartWith("Markus 3,3 — „Und er sprach");
+        german.CitedBook(1).Should().Be("1. Mose");
+        german.CitedBook(13).Should().Be("1. Chronik");
+        PageWording.Compiled("es").Reference(PageWording.Compiled("es").CitedBook(40)!, 5, 3).Should().Be("Mateo 5:3");
+        PageWording.Compiled("uk").CitedBook(70).Should().Be("Товит", "a book the Ohienko does not hold still has a Ukrainian name");
+    }
+
+    [Fact]
     public void EveryLanguageOfTheVerseIsNamedAndEnglishIsTheDefault()
     {
         var html = VersePage("Стань посередині!");

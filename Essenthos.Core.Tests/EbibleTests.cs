@@ -443,3 +443,15 @@ public class EbibleCorpusTests(Ebible ebible) : IClassFixture<Ebible>
     private static string Text(VerseDraft verse) =>
         string.Concat(verse.Words.Select(word => word.Surface + word.Trailer)).Trim();
 }
+
+/// <summary>What a German reader is shown as the name of Chronicles, whatever the eBible file misprints.</summary>
+public class EbibleBookNameTests
+{
+    [Theory]
+    [InlineData("Das erste Buch der Chonik", "Das erste Buch der Chronik")]
+    [InlineData("1. Chonik", "1. Chronik")]
+    [InlineData("Das Evangelium nach Markus", "Das Evangelium nach Markus")]
+    [InlineData(null, null)]
+    public void AMisprintedBookNameIsReadCorrected(string? printed, string? read) =>
+        EbibleTextSource.Corrected(printed).Should().Be(read);
+}
