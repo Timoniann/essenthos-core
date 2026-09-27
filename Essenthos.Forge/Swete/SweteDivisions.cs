@@ -15,6 +15,15 @@ namespace Essenthos.Core.Swete;
 /// </para>
 ///
 /// <para>
+/// Four verses have no figure left, or one only, and are read off the page itself. In Genesis 15
+/// (vol. 1, 1901, p. 24) Swete prints 19 before τοὺς Κεναίους, 20 before καὶ τοὺς Χετταίους, and 21
+/// before καὶ τοὺς Ἀμορραίους, and the transcription lost the divisions with two of the words — the
+/// καὶ before τοὺς Ἀμορραίους and the τοὺς before Εὐαίους — which the page prints and Brenton reads.
+/// In Psalm 91 (vol. 2, 1896, p. 337) he prints 16 before τοῦ ἀναγγεῖλαι, where Brenton begins it too,
+/// and without it the psalm's last verse is its fifteenth.
+/// </para>
+///
+/// <para>
 /// Made on the file's lines before anything else, so that the words' other corrections are addressed
 /// to the verse the words stand in once it is opened. A corpus loaded before these holds the verses
 /// run together, and has to load the text again to have them.
@@ -24,13 +33,29 @@ internal static class SweteDivisions
 {
     /// <summary>What the text's row says about these divisions.</summary>
     public const string Note =
-        "Modified: twenty-five verse divisions the transcription lost are restored by Essenthos where Swete's "
-        + "own verse number stands in the text before the verse's first word.";
+        "Modified: twenty-nine verse divisions the transcription lost are restored by Essenthos — twenty-five "
+        + "where Swete's own verse number stands in the text before the verse's first word, and Genesis 15:19, "
+        + "20 and 21 and Psalm 91:16 from the printed page, with the two words the transcription lost in Genesis.";
 
     private const string Figure = "Swete's own number for the verse stands in the text before the word that opens it";
 
+    private const string Page = "Swete, vol. 1 (Cambridge, 1901), p. 24";
+
+    private const string PsalterPage = "Swete, vol. 2 (Cambridge, 1896), p. 337";
+
     private static readonly Dictionary<string, IReadOnlyList<EditionRepair>> Repairs = new()
     {
+        ["01.Genesis"] =
+        [
+            EditionRepair.Divide(15, "18", "τούς Κεναίους", "τούς Κεναίους", "19",
+                $"{Page}, prints 19 before these words; Brenton begins 15:19 at them"),
+            EditionRepair.Divide(15, "19", "20 καὶ τοὺς Χετταίους", "καὶ τοὺς Χετταίους", "20",
+                $"{Figure}; {Page}, prints 20 here"),
+            EditionRepair.Divide(15, "20", "τοὺς Ἀμορραίους", "καὶ τοὺς Ἀμορραίους", "21",
+                $"{Page}, prints 21 and καὶ before these words; the transcription lost both, and Brenton reads καὶ"),
+            EditionRepair.Replace(15, "21", "καὶ Εὑοίους", "καὶ τοὺς Εὑοίους",
+                $"{Page}, prints τοὺς before the name, as before every other name of the list; Brenton reads it"),
+        ],
         ["15.Paralipomenon_I"] =
         [
             EditionRepair.Divide(12, "7", "⁸καὶ", "καὶ", "8", Figure),
@@ -74,6 +99,11 @@ internal static class SweteDivisions
         [
             EditionRepair.Divide(1, "16", "¹⁷αὕτη", "αὕτη", "17", Figure),
             EditionRepair.Divide(7, "16", "¹⁷ἴσως", "ἴσως", "17", Figure),
+        ],
+        ["27.Psalmi"] =
+        [
+            EditionRepair.Divide(91, "15", "τοῦ ἀναγγεῖλαι", "τοῦ ἀναγγεῖλαι", "16",
+                $"{PsalterPage}, prints 16 before these words; Brenton begins 91:16 at them"),
         ],
         ["44.Sophonias"] =
         [

@@ -157,12 +157,12 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
         swete.Source.Books.Should().HaveCount(52);
         swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1107);
         swete.Source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count))
-            .Should().Be(28558);
+            .Should().Be(28562);
         swete.Source.Books
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(571855);
+            .Should().Be(571857);
     }
 
     /// <summary>
@@ -392,7 +392,11 @@ public class SweteNumberingTests
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteFigureTests(Swete swete) : IClassFixture<Swete>
 {
+    private const int Genesis = 1;
+
     private const int FirstChronicles = 13;
+
+    private const int Psalms = 19;
 
     private const int Daniel = 27;
 
@@ -436,5 +440,25 @@ public class SweteFigureTests(Swete swete) : IClassFixture<Swete>
     {
         Swete.Text(swete.Verse(FirstChronicles, 12, 7)).Should().EndWith("οἱ τοῦ Γεδώρ.");
         Swete.Text(swete.Verse(FirstChronicles, 12, 8)).Should().StartWith("καὶ ἀπὸ τοῦ Γεδδεὶ ἐχωρίσθησαν");
+    }
+
+    /// <summary>Read off the page, vol. 1 p. 24, and against Brenton's Greek of the same verses.</summary>
+    [Fact]
+    public void Genesis15EndsWithTheTenNationsInThreeVersesOfTheirOwn()
+    {
+        Swete.Text(swete.Verse(Genesis, 15, 18)).Should().EndWith("ἕως τοῦ ποταμοῦ τοῦ μεγάλου Εὐφμάτου·");
+        Swete.Text(swete.Verse(Genesis, 15, 19)).Should().Be("τούς Κεναίους καὶ τοὺς ενεζαίους καὶ τοὺς Κελμωναίους");
+        Swete.Text(swete.Verse(Genesis, 15, 20)).Should().Be("καὶ τοὺς Χετταίους καὶ τοὺς Φερεζαίους καὶ τοὺς Ῥαφαεὶν");
+        Swete.Text(swete.Verse(Genesis, 15, 21)).Should().Be(
+            "καὶ τοὺς Ἀμορραίους καὶ τοὺς Χαναναίους καὶ τοὺς Εὑοίους καὶ τοὺς Γεργεσαίους καὶ τοὺς Ἰεβουσαίους.");
+    }
+
+    /// <summary>Read off the page, vol. 2 p. 337: the psalm's last verse is its sixteenth, as in Brenton.</summary>
+    [Fact]
+    public void Psalm91EndsAtItsSixteenthVerse()
+    {
+        Swete.Text(swete.Verse(Psalms, 91, 15)).Should().EndWith("καὶ εὐπαθοῦντες ἔσονται·");
+        Swete.Text(swete.Verse(Psalms, 91, 16)).Should().StartWith("τοῦ ἀναγγεῖλαι ὅτι εὐθὴς Κύριος");
+        swete.Book(Psalms).Chapters.Single(c => c.Number == 91).Verses[^1].Number.Should().Be(16);
     }
 }
