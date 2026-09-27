@@ -1072,6 +1072,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     continue;
                 }
 
+                if (!Joined(sourceWords[pair.Source], targetWords[pair.Target]))
+                {
+                    continue;
+                }
+
                 standing.Add((pair.Source, pair.Target, pair.Translation, pair.Alignment));
             }
 
@@ -1096,6 +1101,16 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
         return (drafts, proposed, collapsed + unwritten, below);
     }
+
+    /// <summary>
+    /// Whether two words met at an address may be paired there. A verse covering an address beyond
+    /// its own is joined to the verse the other text stands there, and not to another verse that only
+    /// covers it too: Brenton's Sirach 30:26 closes the standard's 33:16 and his 36:16 opens it, so
+    /// the English close met the Greek opening at 33:16, and its "winepress" was paired with
+    /// ἠγρύπνησα across two verses nothing joins.
+    /// </summary>
+    private static bool Joined(Word source, Word target) =>
+        source.Aside is not { } from || target.Aside is not { } to || from == to;
 
     private static double Score(string[] parts, int index) =>
         parts.Length > index && double.TryParse(parts[index], NumberStyles.Float, CultureInfo.InvariantCulture,
@@ -1411,6 +1426,12 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         // counterpart, which it may give the Greek one row apart. Where several verses meet at one
         // address they keep their order, verse by verse.
         var map = VerseMap(slug);
+        var standing = new Dictionary<int, (int, int, int)>();
+        foreach (var row in rows.Where(row => row.IsPrimary))
+        {
+            standing.TryAdd(row.VerseId, (row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse));
+        }
+
         var placed = map is not { } mapped
             ? rows.Where(r => r.IsPrimary || !primaryOnly)
                 .Select(r => (Address: (r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse), Order: 0, Row: r))
@@ -1438,7 +1459,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                             letters,
                             IsNamed(forms, r.Pos, r.Form ?? r.Robinson, uncapitalised) && letters.Length > 0
                                 ? letters
-                                : null);
+                                : null,
+                            r.IsPrimary ? null : standing.GetValueOrDefault(r.VerseId));
                     })
                     .ToList());
     }
@@ -1560,7 +1582,17 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
     /// <param name="Letters">The consonants as <see cref="NameLists"/> compares them.</param>
     /// <param name="Name">The same, where the word is a proper name, and null where it is not.</param>
-    internal sealed record Word(long Id, string Text, string? StrongNumber, string Letters = "", string? Name = null);
+    /// <param name="Aside">
+    /// Where the word's verse stands, when the address it was read at is only a further one the verse
+    /// covers; null at the verse's own address.
+    /// </param>
+    internal sealed record Word(
+        long Id,
+        string Text,
+        string? StrongNumber,
+        string Letters = "",
+        string? Name = null,
+        (int Book, int Chapter, int Verse)? Aside = null);
 
     private sealed record WordPosition((int Book, int Chapter, int Verse) Address, int Position);
 
