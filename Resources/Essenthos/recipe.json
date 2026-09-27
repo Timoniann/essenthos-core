@@ -703,15 +703,6 @@
     {
       "verb": "align",
       "arguments": [
-        "BRENTON",
-        "GRCBRENT",
-        "--replace"
-      ],
-      "at": "2026-09-27T14:30:45.3752476+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
         "GEEZ81",
         "GRCBRENT",
         "--replace"
@@ -756,6 +747,15 @@
         "--unmeasured"
       ],
       "at": "2026-09-27T15:19:25.3706151+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "BRENTON",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "at": "2026-09-27T15:22:53.0157871+00:00"
     }
   ]
 }
