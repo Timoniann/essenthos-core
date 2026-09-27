@@ -304,7 +304,9 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
     /// row by row as a fold moves them, since a father named in the second man's verse is his father;
     /// and the name the record holds for him, which his own record carries instead.
     /// An annotation his record already has for the same word keeps the moved one's testimony as its
-    /// claims, as a fold does. The rest of the record stays as it was.
+    /// claims, as a fold does. The rest of the record stays as it was, except that a word it keeps
+    /// under a name the split has made the other man's too now says the split chose it
+    /// (<see cref="ChosenStatements"/>).
     /// </para>
     ///
     /// <para>
@@ -355,6 +357,14 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                     ("from", from), ("to", to), ("name", split.Name ?? string.Empty));
             }
 
+            foreach (var statement in ChosenStatements)
+            {
+                await Annotating.Run(connection, transaction, statement, cancellationToken,
+                    ("from", from), ("to", to), ("written", EntityAnnotationLoader.Written),
+                    ("carried", Annotating.CarriedNote), ("resolved", EnumSpelling.Of(LinkMethod.StrongNumber)),
+                    ("method", EnumSpelling.Of(LinkMethod.Manual)), ("chose", Chose));
+            }
+
             var (moved, joined) = await Counted(connection, transaction, cancellationToken);
             await transaction.CommitAsync(cancellationToken);
             if (moved + joined > 0)
@@ -372,6 +382,86 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
 
     /// <summary>How many of <see cref="SplitStatements"/>, at its end, move the name.</summary>
     private const int NameStatements = 2;
+
+    /// <summary>
+    /// What the words a split leaves on the dataset's record rest on, once the split has made their
+    /// name the other man's as well: the number still names the record, and the ruling is what says
+    /// the verse is not the other man's.
+    /// </summary>
+    internal const string Chose =
+        "the Strong number the encyclopedia records for the name, and Essenthos's ruling on which verses " +
+        "of the name are another man's";
+
+    /// <summary>
+    /// The words the dataset's record keeps under a name resolution, where the split has given the
+    /// other man that name too.
+    ///
+    /// <para>
+    /// A resolution says the number named one record and nothing had to be chosen. After the split
+    /// the number names two, and what decides that Oded of 2 Chronicles 15:1 is Asa's Oded is the
+    /// ruling that only 28:9 is the prophet of Samaria's. Left as it was, the row asserts a certainty
+    /// the corpus no longer supports, and the next annotation pass withdraws it as a name several
+    /// people bear, so the record the split was made to keep loses every word it kept. So the row
+    /// says what chose: <c>manual</c>, on <see cref="Chose"/>.
+    /// </para>
+    ///
+    /// <para>
+    /// The words the resolution carried into other texts go with their seed, found by the seed word
+    /// their note names, and keep their confidence, which is the seed's crossed with the link, so the
+    /// carrying pass arrives at the same rows again and leaves them. The claims move with the
+    /// conclusion they stand on: the resolution's own becomes the ruling's, and the verse list's
+    /// testimony stays, under the row's method. Only the number the split shares is asked about, so
+    /// a record's words under a name the other man does not bear are left as they are, and only a
+    /// seed that says nothing had to be chosen: one written by the form of the word or by what the
+    /// Greek reaches names its chooser already, and Joram of Matthew 1:8 is the king of Judah because
+    /// the king of Israel is named in no book the Greek holds, not because of any split.
+    /// </para>
+    /// </summary>
+    private static readonly string[] ChosenStatements =
+    [
+        $"""
+         CREATE TEMP TABLE left_to_choose ON COMMIT DROP AS
+         WITH seed AS (
+             SELECT a.id, a.word_id, a.method, a.source
+             FROM word_entity a
+             JOIN word w ON w.id = a.word_id
+             WHERE a.entity_id = @from
+               AND a.source = ANY(@written)
+               AND a.method = @resolved
+               AND coalesce(a.note, '') NOT LIKE @carried
+               AND w.strong_number IS NOT NULL
+               AND EXISTS (SELECT 1 FROM entity_name n
+                           WHERE n.entity_id = @to
+                             AND (n.hebrew_strong_number = w.strong_number
+                               OR n.greek_strong_number = w.strong_number))
+               AND {EntityAnnotationLoader.Distinguished})
+         SELECT id, method, source FROM seed
+         UNION
+         SELECT b.id, b.method, b.source
+         FROM seed
+         JOIN word_entity b ON b.entity_id = @from
+                           AND b.source = ANY(@written)
+                           AND b.method <> @method
+                           AND b.note LIKE ('through % word ' || seed.word_id || ',%')
+         """,
+        """
+        INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
+        SELECT c.word_entity_id, @method, c.confidence,
+               CASE WHEN c.source = l.source THEN @chose ELSE c.source END, c.note
+        FROM left_to_choose l
+        JOIN word_entity_claim c ON c.word_entity_id = l.id AND c.method = l.method
+        ON CONFLICT DO NOTHING
+        """,
+        """
+        DELETE FROM word_entity_claim c
+        USING left_to_choose l
+        WHERE c.word_entity_id = l.id AND c.method = l.method
+        """,
+        """
+        UPDATE word_entity a SET method = @method, source = @chose
+        FROM left_to_choose l WHERE a.id = l.id
+        """,
+    ];
 
     /// <summary>The verses a split moves, as the spans the file writes, and the tally of what moved.</summary>
     private const string Parting =
