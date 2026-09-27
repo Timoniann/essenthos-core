@@ -27,10 +27,12 @@ internal sealed record StatedNumberOutcome(string Slug, bool AlreadyLoaded, int 
 /// </para>
 ///
 /// <para>
-/// Idempotent by those rows: a text that already has one is skipped, so this costs one indexed
-/// existence check per text per boot. It takes the same <see cref="TextSource"/> the corpus loader
-/// took, so the addresses are read by the same reader that read the words and the two cannot come
-/// to disagree about which verse a marker belonged to.
+/// Idempotent by those rows, verse by verse: a verse that already states its addresses is left as
+/// it is, and one that states none yet is given them — a book the text gained after it was loaded
+/// (<see cref="CorpusLoader.AddMissingBooks"/>) brings verses of its own. Where every verse is
+/// already written this costs one count per text per boot. It takes the same
+/// <see cref="TextSource"/> the corpus loader took, so the addresses are read by the same reader
+/// that read the words and the two cannot come to disagree about which verse a marker belonged to.
 /// </para>
 /// </summary>
 internal sealed class StatedNumberLoader(AppDbContext db, ILogger<StatedNumberLoader> logger)
@@ -58,7 +60,8 @@ internal sealed class StatedNumberLoader(AppDbContext db, ILogger<StatedNumberLo
                 $"corpus loader, which is what writes the verses these numbers hang on.");
         }
 
-        if (await db.StatedVerseNumbers.AnyAsync(n => n.Verse!.TextId == text.Id, cancellationToken))
+        var stating = db.StatedVerseNumbers.Where(n => n.Verse!.TextId == text.Id);
+        if (await stating.Select(n => n.VerseId).Distinct().CountAsync(cancellationToken) >= stated.Count)
         {
             logger.LogInformation("Text {Slug} already states its own verse numbers; nothing to do", slug);
             return new StatedNumberOutcome(slug, AlreadyLoaded: true, 0, 0, TimeSpan.Zero);
@@ -66,7 +69,9 @@ internal sealed class StatedNumberLoader(AppDbContext db, ILogger<StatedNumberLo
 
         var started = Stopwatch.StartNew();
         var verses = await VerseIds(text.Id, cancellationToken);
-        var written = 0;
+        var written = (await stating.Select(n => n.VerseId).Distinct().ToListAsync(cancellationToken)).ToHashSet();
+        var numbers = 0;
+        var gained = 0;
 
         foreach (var (ordinal, chapter, draft) in stated)
         {
@@ -78,6 +83,11 @@ internal sealed class StatedNumberLoader(AppDbContext db, ILogger<StatedNumberLo
                     "files, or the text was loaded by a reader that numbers its verses otherwise.");
             }
 
+            if (written.Contains(verseId))
+            {
+                continue;
+            }
+
             for (var position = 0; position < draft.Stated.Count; position++)
             {
                 db.StatedVerseNumbers.Add(new StatedVerseNumber
@@ -85,15 +95,18 @@ internal sealed class StatedNumberLoader(AppDbContext db, ILogger<StatedNumberLo
                     VerseId = verseId,
                     Position = position + 1,
                     ChapterNumber = draft.Stated[position].Chapter,
+                    ChapterLabel = draft.Stated[position].ChapterLabel ?? string.Empty,
                     Number = draft.Stated[position].Number,
                 });
-                written++;
+                numbers++;
             }
+
+            gained++;
         }
 
         await db.SaveChangesAsync(cancellationToken);
 
-        var outcome = new StatedNumberOutcome(slug, AlreadyLoaded: false, stated.Count, written, started.Elapsed);
+        var outcome = new StatedNumberOutcome(slug, AlreadyLoaded: false, gained, numbers, started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
         return outcome;
     }

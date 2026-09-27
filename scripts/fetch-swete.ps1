@@ -21,10 +21,10 @@
     Pinned to the commit Resources/Swete/LICENCE.md quotes. An unpinned fetch of a share-alike
     source is an obligation whose terms could have moved since anybody read them.
 
-    Four of the fifty-five files are not taken and the reader says why: three are the Old Greek of
-    Susanna, Daniel and Bel, which are another manuscript's reading and so another witness rather
-    than another book, and one is the Odes, whose chapters this edition numbers with Roman letters.
-    A fifth, 48.Isaias.txt, is taken and not loaded: it is Ottley's Codex Alexandrinus Isaiah of
+    Three of the fifty-five files are the Old Greek of Susanna, Daniel and Bel, which are another
+    translation and so another witness rather than another book, and are loaded as a text of their
+    own; the Odes, two of which this edition numbers iva and ivb, are read into the chapters Rahlfs
+    numbers them by. 48.Isaias.txt is taken and not loaded: it is Ottley's Codex Alexandrinus Isaiah of
     1904 rather than Swete's, because the upstream build script names its output after the book and
     the one book with two Greek editions was overwritten by the second. It is fetched so that a
     reader can see for themselves what the file holds.

@@ -143,7 +143,11 @@ internal sealed record WordDraft(
 
 /// <param name="Chapter">The chapter of the edition's own numbering, which need not be the row's.</param>
 /// <param name="Number">The verse of it.</param>
-internal readonly record struct StatedNumberDraft(int Chapter, int Number);
+/// <param name="ChapterLabel">
+/// The letter the edition prints after the chapter's number, where it prints one: Swete's Odes
+/// <c>iva</c> and <c>ivb</c> are <c>4</c> with <c>a</c> and <c>b</c>.
+/// </param>
+internal readonly record struct StatedNumberDraft(int Chapter, int Number, string ChapterLabel = "");
 
 /// <param name="Label">
 /// The letter the edition prints after the number, where it prints one. Empty for the other

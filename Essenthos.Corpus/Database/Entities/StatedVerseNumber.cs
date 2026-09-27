@@ -47,8 +47,16 @@ public class StatedVerseNumber
 
     public int ChapterNumber { get; set; }
 
+    /// <summary>
+    /// The letter the edition prints after the chapter's number, where it prints one, and empty
+    /// everywhere else. Swete numbers two of his Odes <c>iva</c> and <c>ivb</c> — the Song of the
+    /// Vineyard and the Prayer of Isaiah — which the corpus holds at the chapters Rahlfs numbers them
+    /// by, 10 and 5; his own address for them is <c>4a</c> and <c>4b</c>.
+    /// </summary>
+    public string ChapterLabel { get; set; } = string.Empty;
+
     public int Number { get; set; }
 
     public override string ToString() =>
-        $"StatedVerseNumber(verse {VerseId}, printed {ChapterNumber}:{Number})";
+        $"StatedVerseNumber(verse {VerseId}, printed {ChapterNumber}{ChapterLabel}:{Number})";
 }

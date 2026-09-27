@@ -52,14 +52,14 @@ internal static class SweteTextSource
     /// Sinaiticus Tobit, and 30 is Ecclesiastes, which is the one book of the Hebrew canon this
     /// edition cannot supply.
     ///
-    /// Four files this folder holds are deliberately not here. Three are the Old Greek of Susanna,
-    /// Daniel and Bel: Swete prints them beside the text he takes from Vaticanus, and Vaticanus
-    /// reads Theodotion in all three, so the Old Greek is another translation of the same books
-    /// rather than another edition of them — a second witness, which the model holds as a text of
-    /// its own, <see cref="SweteOldGreekTextSource"/>, and not as a second book at one ordinal. The
-    /// fourth is the Odes, whose chapters this edition numbers <c>iva</c> and <c>ivb</c> where the
-    /// corpus addresses a chapter by an integer, and whose verses keep the numbering of the passages
-    /// they are taken from.
+    /// Three files this folder holds are deliberately not here: the Old Greek of Susanna, Daniel and
+    /// Bel. Swete prints them beside the text he takes from Vaticanus, and Vaticanus reads Theodotion
+    /// in all three, so the Old Greek is another translation of the same books rather than another
+    /// edition of them — a second witness, which the model holds as a text of its own,
+    /// <see cref="SweteOldGreekTextSource"/>, and not as a second book at one ordinal.
+    ///
+    /// The Odes are read by <see cref="SweteOdes"/>, into the chapters Rahlfs numbers them by: two of
+    /// Swete's are <c>iva</c> and <c>ivb</c>, and a chapter here is an integer.
     ///
     /// Isaiah is read from another file for a different and worse reason, recorded on
     /// <see cref="NotLoaded"/> and <see cref="SweteIsaiah"/>. Swete prints it after the Twelve.
@@ -73,7 +73,7 @@ internal static class SweteTextSource
         ("17.Esdras_A", 68), ("18.Esdras_B", SecondEsdras.Ezra), ("19.Esther", 17),
         ("20.Judith", 71), ("21.Tobias", 70), ("23.Machabaeorum_i", 73),
         ("24.Machabaeorum_ii", 74), ("25.Machabaeorum_iii", 80), ("26.Machabaeorum_iv", 81),
-        ("27.Psalmi", 19), ("29.Proverbia", 20), ("31.Canticum", 22), ("32.Job", 18),
+        ("27.Psalmi", 19), (SweteOdes.File, 83), ("29.Proverbia", 20), ("31.Canticum", 22), ("32.Job", 18),
         ("33.Sapientia_Salomonis", 75), ("34.Ecclesiasticus", 72), ("35.Psalmi_Salomonis", 84),
         ("36.Osee", 28), ("37.Amos", 30), ("38.Michaeas", 33), ("39.Joel", 29),
         ("40.Abdias", 31), ("41.Jonas", 32), ("42.Nahum", 34), ("43.Habacuc", 35),
@@ -99,14 +99,12 @@ internal static class SweteTextSource
     /// First1KGreek's own encoding instead (<see cref="SweteIsaiah"/>), and Ottley's is a text of its
     /// own (<see cref="OttleyTextSource"/>), read from its encoding too.
     ///
-    /// The other four are the Odes, whose chapters this edition numbers with Roman letters, and the
-    /// Old Greek of Susanna, Daniel and Bel, which are a second witness rather than a second book and
-    /// are read as <see cref="SweteOldGreekTextSource"/>.
+    /// The other three are the Old Greek of Susanna, Daniel and Bel, which are a second witness rather
+    /// than a second book and are read as <see cref="SweteOldGreekTextSource"/>.
     /// </summary>
     public static IReadOnlyList<string> NotLoaded =>
     [
         Isaiah,
-        "28.Odae",
         "54.Susanna_translatio_Graeca",
         "56.Daniel_translatio_Graeca",
         "58.Bel_et_Draco_translatio_Graeca",
@@ -115,10 +113,11 @@ internal static class SweteTextSource
     public static string FileName(string book) => book + FileExtension;
 
     /// <summary>
-    /// Whether a file of the folder is one of this text's. The Old Greek files are corrected alike and
-    /// read as <see cref="SweteOldGreekTextSource"/>.
+    /// Whether a file of the folder is one of this text's, read chapter for chapter as the file numbers
+    /// it. The Old Greek files are corrected alike and read as <see cref="SweteOldGreekTextSource"/>;
+    /// the Odes are not numbered as the file numbers them, and are corrected only as they are read.
     /// </summary>
-    public static bool Reads(string file) => Canon.Any(entry => entry.File == file);
+    public static bool Reads(string file) => file != SweteOdes.File && Canon.Any(entry => entry.File == file);
 
     /// <summary>The book of the shared canon a file of this edition is read as.</summary>
     public static int Canonical(string file) => Canon.Single(entry => entry.File == file).Canonical;
@@ -187,7 +186,8 @@ internal static class SweteTextSource
                      + "digitisation of the edition and not on the edition, and it is an obligation to "
                      + "credit and to share alike anything derived from these files. "
                      + SweteRestorations.Note + " " + SweteCorrections.Note + " " + SwetePage.Note + " "
-                     + SweteCorrections.FiguresNote + " " + SweteDivisions.Note + " " + SweteIsaiah.Note,
+                     + SweteCorrections.FiguresNote + " " + SweteDivisions.Note + " " + SweteIsaiah.Note + " "
+                     + SweteOdes.Note,
         Citation = "Henry Barclay Swete (ed.), The Old Testament in Greek according to the Septuagint, "
                    + "Cambridge University Press, 1887-1894, in the digital edition of Nathan D. Smith "
                    + "(nathans/lxx-swete) derived from the Open Greek and Latin First1KGreek transcription "
@@ -278,11 +278,18 @@ internal static class SweteTextSource
                     + "absent from a witness reads as a book the witness does not contain.");
             }
 
-            var read = SweteReader.Read(file == Isaiah
+            var lines = file == Isaiah
                 ? SweteIsaiah.Lines(folder)
                 : restored
                     ? SweteRestorations.Apply(file, SweteDivisions.Lines(file, File.ReadLines(path)))
-                    : SweteDivisions.Lines(file, File.ReadLines(path)));
+                    : SweteDivisions.Lines(file, File.ReadLines(path));
+            if (file == SweteOdes.File)
+            {
+                books.Add(Book(canonical, ++position, SweteOdes.Chapters(SweteReader.Read(SweteOdes.Lines(lines)))));
+                continue;
+            }
+
+            var read = SweteReader.Read(lines);
             var chapters = Misnumbered.Renumber(file, read.Chapters).Select(Chapter).ToList();
 
             if (file == SecondEsdras.File)

@@ -57,7 +57,7 @@ repository = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # The Old Greek of Susanna, Daniel and Bel is read too, as a text of its own; Brenton prints Theodotion's,
 # so no two words of it are divided on his evidence.
-NOT_READ = {'48.Isaias', '28.Odae'}
+NOT_READ = {'48.Isaias'}
 
 BRENTON = {
     '01': 'GEN', '02': 'EXO', '03': 'LEV', '04': 'NUM', '05': 'DEU', '06': 'JOS', '08': 'JDG', '10': 'RUT',

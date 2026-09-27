@@ -152,7 +152,7 @@ public class SweteIsaiahTests(Swete swete) : IClassFixture<Swete>
         var opening = Swete.Text(swete.Verse(Isaiah, 1, 1));
 
         opening.Should().StartWith("ΟΡΑΣΙΣ ἣν").And.Contain("Ὀζείου").And.NotContain("προφήτης");
-        Book.Position.Should().Be(44, "Swete prints Isaiah after the Twelve");
+        Book.Position.Should().Be(45, "Swete prints Isaiah after the Twelve");
     }
 
     /// <summary>

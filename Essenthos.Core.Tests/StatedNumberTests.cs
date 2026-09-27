@@ -228,6 +228,32 @@ public sealed class StatedNumberLoadTests : IDisposable
     }
 
     /// <summary>
+    /// A book the text gains after it was loaded brings verses stating numbers of their own, and
+    /// they are written though the text already states others; the verses already written are
+    /// left as they are. A chapter the edition letters keeps its letter.
+    /// </summary>
+    [Fact]
+    public async Task AVerseTheTextGainsLaterIsGivenItsNumbers()
+    {
+        await Corpus().Load(Sample());
+        await Numbers().Load(Sample());
+
+        var grown = Grown();
+        await Corpus().AddMissingBooks(grown);
+        var outcome = await Numbers().Load(grown);
+
+        outcome.AlreadyLoaded.Should().BeFalse();
+        outcome.Verses.Should().Be(1);
+        outcome.Numbers.Should().Be(1);
+        (await _db.StatedVerseNumbers.CountAsync()).Should().Be(4);
+
+        var odes = await _db.StatedVerseNumbers.SingleAsync(n => n.Verse!.Book!.CanonicalOrdinal == Odes);
+        (odes.ChapterNumber, odes.ChapterLabel, odes.Number).Should().Be((4, "a", 1));
+
+        (await Numbers().Load(grown)).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>
     /// A text that states nothing is not an error and not a text with an empty answer stored: it
     /// writes no rows at all, which is what lets the filler run for every text in the pipeline.
     /// </summary>
@@ -270,6 +296,28 @@ public sealed class StatedNumberLoadTests : IDisposable
                         Stated = [new StatedNumberDraft(117, 1), new StatedNumberDraft(117, 2)],
                     },
                     new VerseDraft(3, [new WordDraft("Selah", "")]),
+                ]),
+            ]),
+    ]);
+
+    private const int Odes = 83;
+
+    /// <summary><see cref="Sample"/> with the Odes, whose tenth Swete numbers 4a.</summary>
+    private static TextSource Grown() => new(Definition("stating"), [
+        .. Sample().Books,
+        new BookDraft(
+            CanonicalOrdinal: Odes,
+            Position: 2,
+            Name: "Odes",
+            Slug: "ode",
+            Chapters:
+            [
+                new ChapterDraft(10,
+                [
+                    new VerseDraft(1, [new WordDraft("Let me sing", "")])
+                    {
+                        Stated = [new StatedNumberDraft(4, 1, "a")],
+                    },
                 ]),
             ]),
     ]);

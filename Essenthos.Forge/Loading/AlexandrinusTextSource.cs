@@ -18,8 +18,8 @@ namespace Essenthos.Core.Loading;
 /// repair made to one is made to both; and Swete's Genesis to 46:28 and 1–4 Maccabees, where Swete
 /// prints Alexandrinus (<see cref="SweteAlexandrinus"/>). Every other book the codex holds survives
 /// typed only as readings in Swete's apparatus, and a text rebuilt from those failed the test against
-/// Ottley's Isaiah, so it is not here. Nor are the Odes, whose chapters Swete numbers in a way the
-/// corpus cannot yet address.
+/// Ottley's Isaiah, so it is not here. Nor, yet, are the Odes, which Swete prints from Alexandrinus
+/// too and which are read into his text as <see cref="SweteOdes"/> reads them.
 /// </para>
 ///
 /// <para>

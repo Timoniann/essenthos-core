@@ -39,6 +39,9 @@ namespace Essenthos.Core.Endpoints;
 /// More than one where the edition divides what this corpus holds as one verse: the Synodal counts
 /// Psalm 12's superscription as its own verse, so our 12:1 is its 11:1 and 11:2 both.
 ///
+/// A chapter the edition numbers with a letter keeps it: Swete's Song of the Vineyard is Ode
+/// <c>4a</c> on his page and Ode 10 in the corpus, so its verses are stated as <c>4a:1</c> and on.
+///
 /// It is not <see cref="Verses"/>, and the difference matters: those are verses this text actually
 /// holds, and can be asked for. An address here is a statement about a printed page, and no verse
 /// of this corpus answers to it.
@@ -399,6 +402,7 @@ internal static class ParallelEndpoints
                 Holder = n.Verse.Number,
                 n.Position,
                 Chapter = n.ChapterNumber,
+                n.ChapterLabel,
                 Verse = n.Number,
             })
             .ToListAsync(cancellationToken);
@@ -409,7 +413,7 @@ internal static class ParallelEndpoints
                 group => group.Key,
                 group => group
                     .OrderBy(row => row.Holder).ThenBy(row => row.Position)
-                    .Select(row => $"{row.Chapter}:{row.Verse}")
+                    .Select(row => $"{row.Chapter}{row.ChapterLabel}:{row.Verse}")
             .ToList());
     }
 

@@ -515,6 +515,8 @@ public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
 
     private const int Sirach = 72;
 
+    private const int Odes = 83;
+
     /// <summary>
     /// The data writes the undivided form of a scheme as the rows that differ from the divided one,
     /// so an edition that prints Exodus 38:27 whole answers to three rows about that verse and to the
@@ -547,6 +549,19 @@ public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
     {
         Placed(book, chapter, verse).Should().Be(new CanonicalReference(book, standardChapter, standardVerse));
     }
+
+    /// <summary>
+    /// The versification data has no rules for the Odes, so each verse stands at its own address,
+    /// Rahlfs's chapter and the verse of the passage it is taken from, and at no other.
+    /// </summary>
+    [Theory]
+    [InlineData(4, 2)]
+    [InlineData(9, 46)]
+    [InlineData(9, 79)]
+    [InlineData(10, 1)]
+    [InlineData(14, 1)]
+    public void TheOdesStandAtTheirOwnNumbers(int chapter, int verse) =>
+        swete.Edition.Resolve(Odes, chapter, verse).Should().Equal(new CanonicalReference(Odes, chapter, verse));
 
     [Fact]
     public void AmmonIsJeremiahThirtyOneToFive()

@@ -467,6 +467,7 @@
   {"book": "27.Psalmi", "chapter": "118", "verse": "73", "kind": "latin", "digitised": "Aἱ", "printed": "Αἱ"},
   {"book": "27.Psalmi", "chapter": "143", "verse": "11", "kind": "number", "digitised": "¹¹ῥῦσαί", "printed": "ῥῦσαί"},
   {"book": "27.Psalmi", "chapter": "145", "verse": "1", "kind": "latin", "digitised": "Aἴνει,", "printed": "Αἴνει,"},
+  {"book": "28.Odae", "chapter": "1", "verse": "1", "kind": "latin", "digitised": "AΣΩΜΕΝ", "printed": "ΑΣΩΜΕΝ"},
   {"book": "29.Proverbia", "chapter": "2", "verse": "8", "kind": "number", "digitised": "⁸τοῦ", "printed": "τοῦ"},
   {"book": "29.Proverbia", "chapter": "3", "verse": "16a", "kind": "number", "digitised": "¹⁶aἐκ", "printed": "ἐκ"},
   {"book": "29.Proverbia", "chapter": "3", "verse": "22a", "kind": "figure", "digitised": "aἔσται", "printed": "ἔσται"},
