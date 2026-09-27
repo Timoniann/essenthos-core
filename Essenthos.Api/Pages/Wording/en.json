@@ -175,6 +175,10 @@
       "title": "Family trees of the Bible",
       "description": "Anyone's ancestors and descendants on one page, as far back and as wide as the records go."
     },
+    "genealogyOfJesus": {
+      "title": "The genealogy of Jesus",
+      "description": "Matthew’s and Luke’s genealogies of Jesus side by side, and how each is read: the levirate marriage, Mary’s line, the legal and the natural line."
+    },
     "events": {
       "title": "Events of the Bible",
       "description": "Every event the Bible's chronology dates, in order, each showing the arithmetic behind its year."

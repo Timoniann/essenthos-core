@@ -177,6 +177,10 @@
       "title": "Árboles genealógicos de la Biblia",
       "description": "Los antepasados y descendientes de cualquiera en una sola página, hasta donde llegan los registros."
     },
+    "genealogyOfJesus": {
+      "title": "La genealogía de Jesús",
+      "description": "Las genealogías de Jesús según Mateo y según Lucas, una junto a otra, y cómo se explican: el matrimonio levirático, la línea de María, la línea legal y la natural."
+    },
     "events": {
       "title": "Acontecimientos de la Biblia",
       "description": "Cada acontecimiento que fecha la cronología bíblica, en orden, con el cálculo que da su año."

@@ -76,6 +76,51 @@ public sealed class FamilyEndpointTests : IDisposable
         family.People.Single().Ties.Should().ContainSingle();
     }
 
+    /// <summary>
+    /// God is nobody's kin on a tree: "his Son" is not descent, and a tree that read it so stood God
+    /// the Father beside Joseph as Jesus's other parent. What else is said of him stays.
+    /// </summary>
+    [Fact]
+    public async Task GodIsNobodysKin()
+    {
+        var father = Person("yhvh-2", "male");
+        var jesus = Person("jesus", "male");
+        var mary = Person("mary", "female");
+        var james = Person("james-3", "male");
+        await _db.SaveChangesAsync();
+        Tie(father, "father-of", jesus);
+        Tie(jesus, "son-of", mary);
+        Tie(james, "servant-of", father);
+        await _db.SaveChangesAsync();
+
+        var family = await FamilyEndpoints.Family(_db, ["jesus", "yhvh-2"], null, default);
+
+        family.People[0].Ties.Should().Equal(new FamilyTieResponse("son-of", false, "mary"));
+        family.People[1].Ties.Should().Equal(new FamilyTieResponse("servant-of", true, "james-3"));
+    }
+
+    /// <summary>
+    /// A tie keeps the verse it was read from, so a tree can say which account gives which father:
+    /// Jacob in Matthew 1:16, Heli in Luke 3:23.
+    /// </summary>
+    [Fact]
+    public async Task ATieCarriesTheVerseItWasReadFrom()
+    {
+        var joseph = Person("joseph-6", "male");
+        var jacob = Person("jacob-2", "male");
+        var heli = Person("eli-2", "male");
+        await _db.SaveChangesAsync();
+        Tie(joseph, "son-of", jacob, verse: (40, 1, 16));
+        Tie(joseph, "son-of", heli, verse: (42, 3, 23));
+        await _db.SaveChangesAsync();
+
+        var ties = (await FamilyEndpoints.Family(_db, ["joseph-6"], null, default)).People.Single().Ties;
+
+        ties.Select(t => (t.Slug, t.Reference?.Slug, t.Reference?.Chapter, t.Reference?.Verse)).Should().Equal(
+            ("jacob-2", "matthew", 1, 16),
+            ("eli-2", "luke", 3, 23));
+    }
+
     [Fact]
     public async Task AnUnknownSlugIsLeftOut()
     {
@@ -118,7 +163,12 @@ public sealed class FamilyEndpointTests : IDisposable
         return entity;
     }
 
-    private void Tie(Entity from, string type, Entity to, string source = "test") =>
+    private void Tie(
+        Entity from,
+        string type,
+        Entity to,
+        string source = "test",
+        (int Book, int Chapter, int Verse)? verse = null) =>
         _db.EntityRelationships.Add(new EntityRelationship
         {
             FromEntityId = from.Id,
@@ -127,5 +177,8 @@ public sealed class FamilyEndpointTests : IDisposable
             Category = "explicit",
             Method = LinkMethod.StatedBySource,
             Source = source,
+            CanonicalBook = verse?.Book,
+            CanonicalChapter = verse?.Chapter,
+            CanonicalVerse = verse?.Verse,
         });
 }
