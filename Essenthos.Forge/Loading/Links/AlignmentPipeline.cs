@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text;
 using Essenthos.Core.BetaMasaheft;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -125,6 +126,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var target = await Words(
             toSlug, pool is null ? word => Comparable(word) : Pooled, cancellationToken, primaryOnly: pool is not null,
             lettered: lettered);
+        var refused = await VerseLinkLoader.Refused(db, fromSlug, toSlug, cancellationToken);
+        source = Unmet(source, refused);
+        target = Unmet(target, refused);
         var addresses = Shared(fromSlug, toSlug, source, target);
         if (addresses.Count == 0)
         {
@@ -480,6 +484,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var target = await Words(
             toSlug, pool is null ? word => Comparable(word) : Pooled, cancellationToken, books, pool is not null,
             lettered);
+        var refused = await VerseLinkLoader.Refused(db, fromSlug, toSlug, cancellationToken);
+        source = Unmet(source, refused);
+        target = Unmet(target, refused);
         var addresses = Shared(fromSlug, toSlug, source, target);
 
         Directory.CreateDirectory(workspace);
@@ -1123,6 +1130,32 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// </summary>
     private static bool Joined(Word source, Word target) =>
         source.Aside is not { } from || target.Aside is not { } to || from == to;
+
+    /// <summary>
+    /// The words read at an address, less those read there only because their verse covers it, where
+    /// the verse stands in a chapter the pair's verse links leave out: nothing joins that verse to the
+    /// one standing at the address. The King James's Tobit 7:15 stands at 7:13 and covers 7:14, where
+    /// the Synodal's 7:14 stands, and the two editions number Tobit 7 otherwise, so the verse links
+    /// join neither verse and the aligner paired their words across them.
+    /// </summary>
+    internal static Dictionary<(int, int, int), List<Word>> Unmet(
+        Dictionary<(int, int, int), List<Word>> words,
+        IReadOnlySet<(int Book, int Chapter)> refused)
+    {
+        if (refused.Count == 0)
+        {
+            return words;
+        }
+
+        bool Met(Word word) =>
+            word.Aside is not { } standing
+            || TwinPassages.Joined(standing) is var (book, chapter, _) && !refused.Contains((book, chapter));
+
+        return words
+            .Select(address => (address.Key, Words: address.Value.Where(Met).ToList()))
+            .Where(address => address.Words.Count > 0)
+            .ToDictionary(address => address.Key, address => address.Words);
+    }
 
     private static double Score(string[] parts, int index) =>
         parts.Length > index && double.TryParse(parts[index], NumberStyles.Float, CultureInfo.InvariantCulture,

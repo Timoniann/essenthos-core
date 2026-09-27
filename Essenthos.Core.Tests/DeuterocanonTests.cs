@@ -1,5 +1,6 @@
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Frame;
@@ -511,6 +512,57 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
             "Genesis is placed by the frame, and a verse it divides otherwise is its business");
     }
 
+    /// <summary>
+    /// The Synodal's Prayer of Manasseh, read against the King James's fifteen verses, stands at ten
+    /// of them and covers the other five, so the two reach the same verses and the chapter is joined.
+    /// </summary>
+    [Fact]
+    public void AChapterOneTextCoversWhereItDoesNotStandIsPrintedAlike()
+    {
+        const int manasseh = 79;
+        var here = new Dictionary<(int, int, int), List<int>>
+        {
+            [(manasseh, 1, 1)] = [1], [(manasseh, 1, 3)] = [2],
+        };
+        var there = new Dictionary<(int, int, int), List<int>>
+        {
+            [(manasseh, 1, 1)] = [11], [(manasseh, 1, 2)] = [12], [(manasseh, 1, 3)] = [13],
+        };
+
+        VerseLinkLoader.Agreeing(here, there).Here.Should().BeEmpty();
+
+        var (mine, theirs) = VerseLinkLoader.Agreeing(here, there, new HashSet<(int, int, int)> { (manasseh, 1, 2) });
+
+        mine.Keys.Should().BeEquivalentTo([(manasseh, 1, 1), (manasseh, 1, 3)]);
+        theirs.Keys.Should().BeEquivalentTo([(manasseh, 1, 1), (manasseh, 1, 2), (manasseh, 1, 3)]);
+    }
+
+    /// <summary>
+    /// The Synodal is declared against the King James for the books it gains, and aligned with it
+    /// word by word in every book. The first time the pair is built it is joined in all of them, and a
+    /// pair joined before its word links existed is joined in the rest once they do.
+    /// </summary>
+    [Fact]
+    public async Task ALinkedPairIsJoinedBeyondTheBooksItIsDeclaredFor()
+    {
+        await Load(Tiny(Bible4uTextSource.Definitions["RUSV"], (1, 1, 3), (FirstMaccabees, 1, 64)));
+        await Load(Tiny(Bible4uTextSource.Definitions["KJV"], (1, 1, 3), (FirstMaccabees, 1, 64)));
+        await Place();
+
+        var loader = new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance);
+        await loader.Load();
+        (await Joined(Sources.SynodalSlug, Sources.KingJamesSlug)).Should().BeEquivalentTo([FirstMaccabees]);
+
+        await Aligned(Sources.SynodalSlug, Sources.KingJamesSlug);
+        (await loader.Load()).AlreadyLoaded.Should().BeFalse();
+        (await Joined(Sources.SynodalSlug, Sources.KingJamesSlug)).Should().BeEquivalentTo([1, FirstMaccabees]);
+
+        await _db.VerseLinks.ExecuteDeleteAsync();
+        await loader.Load();
+        (await Joined(Sources.SynodalSlug, Sources.KingJamesSlug)).Should().BeEquivalentTo([1, FirstMaccabees],
+            "a pair built afresh is joined wherever its word links reach");
+    }
+
     [Fact]
     public async Task TheBooksATextGainsAreJoinedOnTheNextLoad()
     {
@@ -625,6 +677,39 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
         .Select(member => member.Verse!.Book!.CanonicalOrdinal)
         .Distinct()
         .ToListAsync();
+
+    private async Task<List<int>> Joined(string from, string to) => await _db.VerseLinkVerses
+        .Where(member => member.Side == LinkSide.From && member.Verse!.Text!.Slug == from
+                         && member.VerseLink!.ToText!.Slug == to)
+        .Select(member => member.Verse!.Book!.CanonicalOrdinal)
+        .Distinct()
+        .ToListAsync();
+
+    /// <summary>One aligner link between the first words of the two texts' Genesis.</summary>
+    private async Task Aligned(string from, string to)
+    {
+        var words = await _db.Words
+            .Where(word => word.Verse!.Book!.CanonicalOrdinal == 1 && word.Verse.Number == 1)
+            .ToDictionaryAsync(word => word.Text!.Slug, word => word);
+        var link = new Link
+        {
+            FromTextId = words[from].TextId,
+            ToTextId = words[to].TextId,
+            Relation = LinkRelation.Renders,
+            Method = LinkMethod.Aligner,
+            Confidence = 0.9,
+            Source = "a test",
+        };
+        _db.Links.Add(link);
+        await _db.SaveChangesAsync();
+        _db.LinkClaims.Add(new LinkClaim
+        {
+            LinkId = link.Id, Method = link.Method, Confidence = link.Confidence, Source = link.Source,
+        });
+        _db.LinkWords.Add(new LinkWord { LinkId = link.Id, WordId = words[from].Id, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { LinkId = link.Id, WordId = words[to].Id, Side = LinkSide.To });
+        await _db.SaveChangesAsync();
+    }
 
     private async Task Place()
     {

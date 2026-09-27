@@ -247,8 +247,8 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             .ToListAsync(cancellationToken);
 
         var declared = await Declared(cancellationToken);
-        var wanted = linked
-            .Select(pair => (pair.FromTextId, pair.ToTextId))
+        var aligned = linked.Select(pair => (pair.FromTextId, pair.ToTextId)).ToHashSet();
+        var wanted = aligned
             .Union(declared.Keys)
             .ToList();
 
@@ -271,7 +271,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             else if (declared.TryGetValue(pair, out var declaration))
             {
                 var joined = await Joined(pair, cancellationToken);
-                if (await Unjoined(pair, declaration.Without, joined, cancellationToken))
+                if (await Unjoined(pair, Outside(declaration, aligned.Contains(pair)), joined, cancellationToken))
                 {
                     todo.Add((pair, joined));
                 }
@@ -283,6 +283,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             .Select(text => (int?)text.Id).SingleOrDefaultAsync(cancellationToken);
 
         var addresses = new Dictionary<int, Dictionary<(int, int, int), List<int>>>();
+        var covers = new Dictionary<int, IReadOnlySet<(int, int, int)>>();
         int pairs = 0, straight = 0, divided = 0, alone = 0, written = 0;
 
         foreach (var (pair, joined) in todo)
@@ -291,13 +292,18 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             var there = await Addressed(addresses, pair.ToTextId, cancellationToken);
             if (declared.TryGetValue(pair, out var declaration))
             {
-                var left = declaration.Without.Union(joined).ToHashSet();
+                var left = Outside(declaration, aligned.Contains(pair)).Union(joined).ToHashSet();
                 here = here
                     .Where(address => !left.Contains(address.Key.Item1))
                     .ToDictionary(address => address.Key, address => address.Value);
                 if (declaration.AgreeingChaptersOnly)
                 {
-                    (here, there) = Agreeing(here, there);
+                    (here, there) = Agreeing(
+                        here,
+                        there,
+                        await Covered(covers, pair.FromTextId, cancellationToken),
+                        await Covered(covers, pair.ToTextId, cancellationToken),
+                        declaration.Without);
                 }
             }
 
@@ -335,23 +341,34 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     }
 
     /// <summary>
+    /// The books a declared pair leaves out. A pair the aligner or a source has linked word by word is
+    /// joined wherever those links reach, as every linked pair is, and its declaration only adds the
+    /// books it names: the Synodal is declared against the King James for the books it gains, and read
+    /// as the declaration alone its sixty-six were left unjoined the first time the pair was built
+    /// afresh, beneath half a million word links.
+    /// </summary>
+    private static IReadOnlySet<int> Outside(DeclaredVersePair declaration, bool linked) =>
+        linked ? new HashSet<int>() : declaration.Without;
+
+    /// <summary>
     /// The two texts' addresses without the chapters, in books the frame has no rules for, that the
     /// two do not print alike. Everything else is kept as it was.
     /// </summary>
+    /// <param name="hereCovers">
+    /// The further addresses the first text's verses cover, which it prints as much as the ones they
+    /// stand at: the Synodal's Prayer of Manasseh, read against the King James, stands at ten of its
+    /// fifteen verses and covers the other five.
+    /// </param>
+    /// <param name="spared">Books never left out, which the pair is joined in whole.</param>
     internal static (Dictionary<(int, int, int), List<int>> Here, Dictionary<(int, int, int), List<int>> There)
-        Agreeing(Dictionary<(int, int, int), List<int>> here, Dictionary<(int, int, int), List<int>> there)
+        Agreeing(
+            Dictionary<(int, int, int), List<int>> here,
+            Dictionary<(int, int, int), List<int>> there,
+            IReadOnlySet<(int, int, int)>? hereCovers = null,
+            IReadOnlySet<(int, int, int)>? thereCovers = null,
+            IReadOnlySet<int>? spared = null)
     {
-        static Dictionary<(int, int), HashSet<int>> Chapters(Dictionary<(int, int, int), List<int>> addresses) =>
-            addresses.Keys
-                .Where(address => !BookCodes.Places(address.Item1))
-                .GroupBy(address => (address.Item1, address.Item2))
-                .ToDictionary(chapter => chapter.Key, chapter => chapter.Select(address => address.Item3).ToHashSet());
-
-        var mine = Chapters(here);
-        var theirs = Chapters(there);
-        var differing = mine.Keys
-            .Where(chapter => !theirs.TryGetValue(chapter, out var verses) || !verses.SetEquals(mine[chapter]))
-            .ToHashSet();
+        var differing = Differing(here.Keys.Concat(hereCovers ?? Empty), there.Keys.Concat(thereCovers ?? Empty), spared);
 
         Dictionary<(int, int, int), List<int>> Without(Dictionary<(int, int, int), List<int>> addresses) =>
             addresses
@@ -359,6 +376,67 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                 .ToDictionary(address => address.Key, address => address.Value);
 
         return (Without(here), Without(there));
+    }
+
+    private static readonly HashSet<(int, int, int)> Empty = [];
+
+    /// <summary>
+    /// The chapters of the first text, in books the frame has no rules for, where the two do not reach
+    /// the same addresses.
+    /// </summary>
+    internal static HashSet<(int Book, int Chapter)> Differing(
+        IEnumerable<(int, int, int)> here,
+        IEnumerable<(int, int, int)> there,
+        IReadOnlySet<int>? spared = null)
+    {
+        Dictionary<(int, int), HashSet<int>> Chapters(IEnumerable<(int, int, int)> addresses) =>
+            addresses
+                .Where(address => !BookCodes.Places(address.Item1) && spared?.Contains(address.Item1) != true)
+                .GroupBy(address => (address.Item1, address.Item2))
+                .ToDictionary(chapter => chapter.Key, chapter => chapter.Select(address => address.Item3).ToHashSet());
+
+        var mine = Chapters(here);
+        var theirs = Chapters(there);
+        return mine.Keys
+            .Where(chapter => !theirs.TryGetValue(chapter, out var verses) || !verses.SetEquals(mine[chapter]))
+            .ToHashSet();
+    }
+
+    /// <summary>
+    /// The chapters of <paramref name="fromSlug"/> its verse links to <paramref name="toSlug"/> leave
+    /// out, under the name <see cref="TwinPassages"/> joins them at. A verse standing in one of them
+    /// belongs to no verse link of the pair, so nothing joins it to the verse the other text stands at
+    /// an address it only covers, and the aligner does not meet the two there. Empty for a pair joined
+    /// wherever the two share an address.
+    /// </summary>
+    internal static async Task<IReadOnlySet<(int Book, int Chapter)>> Refused(
+        AppDbContext db,
+        string fromSlug,
+        string toSlug,
+        CancellationToken cancellationToken = default)
+    {
+        var declaration = DeclaredPairs.FirstOrDefault(pair => pair.From == fromSlug && pair.To == toSlug);
+        if (declaration is not { AgreeingChaptersOnly: true })
+        {
+            return new HashSet<(int, int)>();
+        }
+
+        async Task<List<(int, int, int)>> Reached(string slug) =>
+            (await db.VerseReferences
+                .Where(reference => reference.Verse!.Text!.Slug == slug)
+                .Select(reference => new
+                {
+                    reference.CanonicalBook,
+                    reference.CanonicalChapter,
+                    reference.CanonicalVerse,
+                })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .Select(reference => TwinPassages.Joined(
+                (reference.CanonicalBook, reference.CanonicalChapter, reference.CanonicalVerse)))
+            .ToList();
+
+        return Differing(await Reached(fromSlug), await Reached(toSlug), declaration.Without);
     }
 
     /// <summary>The books of the first text a pair's verse links already reach.</summary>
@@ -703,6 +781,38 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
         cache[textId] = addressed;
         return addressed;
+    }
+
+    /// <summary>
+    /// The further addresses a text's verses cover beyond the one each stands at, under the name
+    /// <see cref="TwinPassages"/> joins them at.
+    /// </summary>
+    private async Task<IReadOnlySet<(int, int, int)>> Covered(
+        Dictionary<int, IReadOnlySet<(int, int, int)>> cache,
+        int textId,
+        CancellationToken cancellationToken)
+    {
+        if (cache.TryGetValue(textId, out var known))
+        {
+            return known;
+        }
+
+        var covered = (await db.VerseReferences
+                .Where(reference => !reference.IsPrimary && reference.Verse!.TextId == textId)
+                .Select(reference => new
+                {
+                    reference.CanonicalBook,
+                    reference.CanonicalChapter,
+                    reference.CanonicalVerse,
+                })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .Select(reference => TwinPassages.Joined(
+                (reference.CanonicalBook, reference.CanonicalChapter, reference.CanonicalVerse)))
+            .ToHashSet();
+
+        cache[textId] = covered;
+        return covered;
     }
 
     /// <param name="mapped">What a verse map read, where these are not the frame's statement.</param>
