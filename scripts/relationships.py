@@ -471,17 +471,22 @@ def fold(rows, says):
 
 
 class Corpus:
-    """The encyclopedia's entities, which verses each is named in, and the King James text."""
+    """
+    The encyclopedia's entities, which verses each is named in, and the King James text -- kept in
+    `cache_dir` between runs, or read afresh when it is None.
+    """
 
     def __init__(self, cache_dir):
-        held = shared.cache(cache_dir, 'entities', shared.entities)
+        def read(name, produce):
+            return produce() if cache_dir is None else shared.cache(cache_dir, name, produce)
+
+        held = read('entities', shared.entities)
         self.entities = {entity['slug']: entity for entity in held}
         self.verses = {slug: {tuple(v) for v in entity['verses']} for slug, entity in self.entities.items()}
         self.named = {}
-        for book, chapter, verse, slug in shared.cache(cache_dir, 'occupancy', shared.occupancy):
+        for book, chapter, verse, slug in read('occupancy', shared.occupancy):
             self.named.setdefault((book, chapter, verse), set()).add(slug)
-        self.lines = shared.keyed(shared.cache(cache_dir, shared.RENDERING,
-                                               lambda: shared.rendering(shared.RENDERING)))
+        self.lines = shared.keyed(read(shared.RENDERING, lambda: shared.rendering(shared.RENDERING)))
         self.chapters = {}
         for book, chapter, verse in self.lines:
             self.chapters.setdefault((book, chapter), []).append(verse)
@@ -1233,23 +1238,55 @@ def decision_documents(where):
         yield document.get('data', document)
 
 
+DECISIONS = os.path.join(REVIEW, 'bibledata-relationships.json')
 CORRECTIONS = os.path.join(REVIEW, 'bibledata-corrections.json')
+BY_ROW = ('reference', 'relation', 'unsure')
+ROWS = ('hold', 'flip')
 
 
 def corrections(path):
     """
     The corrections a decision needs and the review list cannot hold, kept where the next run finds
-    them: the same five as the flags, keyed by a BibleData row id of the fact. A flag given on the
-    command line wins over the file for the same row.
+    them: the same five as the flags, keyed by a BibleData row id of the fact, beside whatever else
+    the file says about them.
     """
-    kept = {'reference': {}, 'relation': {}, 'hold': [], 'flip': [], 'unsure': {}}
+    document = {}
     if path and os.path.exists(path):
         with open(path, encoding='utf-8') as handle:
             document = json.load(handle)
-        for key, empty in kept.items():
-            value = document.get(key) or type(empty)()
-            kept[key] = [str(row) for row in value] if isinstance(empty, list) else                 {str(row): value[row] for row in value}
-    return kept
+    for key in BY_ROW:
+        document[key] = {str(row): value for row, value in (document.get(key) or {}).items()}
+    for key in ROWS:
+        document[key] = sorted({int(row) for row in document.get(key) or []})
+    document['unsure'] = {row: float(sure) for row, sure in document['unsure'].items()}
+    return document
+
+
+def with_flags(kept, args):
+    """The kept corrections with this run's flags added; a flag wins over the file for the same row."""
+    def pairs(items):
+        return dict(item.split('=', 1) for item in items or [])
+
+    given = dict(kept)
+    for key in BY_ROW:
+        given[key] = {**kept[key], **pairs(getattr(args, key))}
+    for key in ROWS:
+        given[key] = sorted({*kept[key], *(int(row) for row in getattr(args, key) or [])})
+    given['unsure'] = {row: float(sure) for row, sure in given['unsure'].items()}
+    unknown = sorted(set(given['relation'].values()) - set(relation_words().values()))
+    if unknown:
+        raise SystemExit(f'{", ".join(unknown)} is not a relation word of the vocabulary. Use one of the words '
+                         f'DescriptorRelations declares in {RELATION_NAMES}, and correct {args.corrections} '
+                         'if the word came from there.')
+    return given
+
+
+def keep_corrections(path, document):
+    for key in BY_ROW:
+        document[key] = {row: document[key][row] for row in sorted(document[key], key=int)}
+    with open(path, 'w', encoding='utf-8') as handle:
+        json.dump(document, handle, ensure_ascii=False, indent=1)
+        handle.write('\n')
 
 
 def decide(args):
@@ -1261,27 +1298,30 @@ def decide(args):
     judgement and not as a reading. A fact only the agent he set to it decided is credited to that
     agent and the verse it read, never to him. A fact to re-ask is printed as BibleData row ids for
     `extract --rows`. A fact removed stays BibleData's and is listed in a review file for the cut-over,
-    which is where BibleData's rows leave the page. Only the page's categories asked for are applied,
-    so a decision taken on the page is never applied before somebody asks for it.
+    which is where BibleData's rows leave the page.
+
+    Everything a run reads besides the database is kept: the decisions in the review list, and the
+    corrections they need in the file beside it, where a correction given as a flag is written too. So a
+    run with no flags writes the files the last run wrote, unless a decision or the database has moved.
     """
     later = sorted(n for n in os.listdir(args.to) if n.endswith('.jsonl') and n > args.prefix + '-')
     if any(not n.startswith(args.prefix + '-') for n in later):
         raise SystemExit(f'{later[-1]} sorts after the prefix "{args.prefix}", so the loader would read it last '
                          'and the decided clauses of every record it holds would be lost. Choose a prefix '
                          'that sorts later, and delete the files the earlier prefix wrote.')
-    corpus = Corpus(args.cache)
+    kept = corrections(args.corrections)
+    given = with_flags(kept, args)
+    flagged = given != kept
+    corrected, relabelled, unsure = given['reference'], given['relation'], given['unsure']
+    held, flipped = set(given['hold']), set(given['flip'])
+    # Read afresh, as the relationships are: a cached encyclopedia names the verses entities were
+    # named in when it was cached, and a clause refused against it is silently not written.
+    corpus = Corpus(None)
     standing = standing_records(args.to, args.prefix)
     # The rows an earlier run of this command put in the corpus are left out of the fold: their clauses
     # live only in the files this command rewrites, so a fact they settled must come back to be written again.
     rows = [row for row in relationships() if not decided_here(row['source'])]
     _, _, alone = fold(rows, vocabulary())
-    kept = corrections(args.corrections)
-    corrected = {**kept['reference'], **dict(item.split('=', 1) for item in args.reference or [])}
-    relabelled = {**kept['relation'], **dict(item.split('=', 1) for item in args.relation or [])}
-    held = {int(row) for row in kept['hold'] + (args.hold or [])}
-    unsure = {**{row: float(sure) for row, sure in kept['unsure'].items()},
-              **{row: float(sure) for row, sure in (item.split('=', 1) for item in args.unsure or [])}}
-    flipped = {int(row) for row in kept['flip'] + (args.flip or [])}
 
     decisions = []
     for body in decision_documents(args.decisions):
@@ -1410,7 +1450,12 @@ def decide(args):
         with open(path, 'w', encoding='utf-8') as handle:
             json.dump(kept + removed, handle, ensure_ascii=False, indent=1)
 
+    if flagged:
+        keep_corrections(args.corrections, given)
+
     print(f'{len(records)} records -> {args.to} under "{args.prefix}"')
+    if flagged:
+        print(f'the corrections given as flags are kept in {args.corrections} for every later run')
     for what, n in sorted(report.items()):
         print(f'  {n:>4}  {what}')
     if reask:
@@ -1441,10 +1486,10 @@ def main():
     extractor.set_defaults(run=extract)
 
     decider = commands.add_parser('decide', help="apply the owner's decisions from the review page")
-    decider.add_argument('--decisions', required=True,
-                         help='the review list the console keeps (Resources/Essenthos/review/bibledata-relationships.json), '
-                              'or a directory of the decision documents the review page stored, one JSON file each')
-    decider.add_argument('--subsets', nargs='+', default=[UNMAPPED],
+    decider.add_argument('--decisions', default=DECISIONS,
+                         help='the review list the console keeps, or a directory of the decision documents '
+                              'the review page stored, one JSON file each')
+    decider.add_argument('--subsets', nargs='+', default=list(SUBSETS), choices=SUBSETS,
                          help="which of the page's categories to apply; a decision in another is left alone")
     decider.add_argument('--reference', nargs='+',
                          help='ROW_ID=BOOK C:V, where the decision corrects the verse BibleData cites')
@@ -1457,7 +1502,8 @@ def main():
     decider.add_argument('--unsure', nargs='+',
                          help='ROW_ID=confidence, where the owner accepts the fact but says the verse does not settle it')
     decider.add_argument('--corrections', default=CORRECTIONS,
-                         help='the corrections kept between runs, in the shape of the five flags; the flags add to it')
+                         help='the corrections kept between runs, in the shape of the five flags; '
+                              'a flag given is added to it, and wins over it for the same row')
     decider.add_argument('--to', default=os.path.join('Resources', 'Essenthos', 'descriptors'))
     decider.add_argument('--prefix', default='zz-words',
                          help="the decided records' files, which have to sort after every other file")
