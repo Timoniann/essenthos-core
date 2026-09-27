@@ -13,15 +13,6 @@
     {
       "verb": "align",
       "arguments": [
-        "RUSV",
-        "KJV",
-        "--replace"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "align",
-      "arguments": [
         "UBIO",
         "KJV",
         "--replace"
@@ -306,24 +297,6 @@
     {
       "verb": "names",
       "arguments": [
-        "GRCBRENT",
-        "BHSA",
-        "--apply"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "names",
-      "arguments": [
-        "GRCBRENT",
-        "KJV",
-        "--apply"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "names",
-      "arguments": [
         "JPS1917",
         "BHSA",
         "--apply"
@@ -353,15 +326,6 @@
       "arguments": [
         "RUSV",
         "BHSA",
-        "--apply"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "names",
-      "arguments": [
-        "RUSV",
-        "KJV",
         "--apply"
       ],
       "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
@@ -500,15 +464,6 @@
       "note": "run on essenthos_core on 2026-09-25"
     },
     {
-      "verb": "align",
-      "arguments": [
-        "DRA",
-        "VULGCLEM",
-        "--replace"
-      ],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
       "verb": "compose",
       "arguments": [
         "UKR1871",
@@ -523,15 +478,6 @@
         "UKR1871",
         "KJV,BSB",
         "NESTLE1904"
-      ],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "NPU2022",
-        "KJV,BSB",
-        "BHSA"
       ],
       "note": "run on essenthos_core on 2026-09-25"
     },
@@ -701,43 +647,6 @@
       "at": "2026-09-25T15:00:55.4548936+00:00"
     },
     {
-      "verb": "align",
-      "arguments": [
-        "GEEZ81",
-        "GRCBRENT",
-        "--replace"
-      ],
-      "at": "2026-09-27T14:33:35.8279314+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "GEEZ81",
-        "SWETE",
-        "--replace"
-      ],
-      "at": "2026-09-27T14:36:34.1062554+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "GRCBRENT",
-        "KJV",
-        "--replace"
-      ],
-      "at": "2026-09-27T14:39:04.1298656+00:00"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "GRCBRENT",
-        "KJV",
-        "BHSA",
-        "--unmeasured"
-      ],
-      "at": "2026-09-27T15:15:43.6191806+00:00"
-    },
-    {
       "verb": "compose",
       "arguments": [
         "GEEZ81",
@@ -756,6 +665,97 @@
         "--replace"
       ],
       "at": "2026-09-27T15:22:53.0157871+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "at": "2026-09-27T18:53:53.2424126+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "SWETE",
+        "--replace"
+      ],
+      "at": "2026-09-27T18:54:19.5122857+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "--replace"
+      ],
+      "at": "2026-09-27T18:56:43.7127649+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "BHSA",
+        "--unmeasured"
+      ],
+      "at": "2026-09-27T18:57:18.9801393+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "--apply"
+      ],
+      "at": "2026-09-27T18:57:28.4316011+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "--replace"
+      ],
+      "at": "2026-09-27T19:00:16.2700254+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "--apply"
+      ],
+      "at": "2026-09-27T19:00:28.4000535+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "NPU2022",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "at": "2026-09-27T19:11:31.383511+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "GRCBRENT",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-27T19:11:44.4046727+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "DRA",
+        "VULGCLEM",
+        "--replace"
+      ],
+      "at": "2026-09-27T19:44:18.5382058+00:00"
     }
   ]
 }
