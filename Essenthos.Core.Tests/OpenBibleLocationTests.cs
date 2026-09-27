@@ -188,7 +188,7 @@ public sealed class OpenBibleLocationTests : IDisposable
         Place("a2", "Anab");
         _db.SaveChanges();
         Naming(tekoa, 10, 14, 2);
-        Naming(tekoa, 10, 14, 2);
+        Naming(tekoa, 10, 14, 2, "another");
         Naming(tekoa, 30, 1, 1);
         _db.SaveChanges();
 
@@ -267,7 +267,7 @@ public sealed class OpenBibleLocationTests : IDisposable
         return entity;
     }
 
-    private void Naming(Entity entity, int book, int chapter, int verse) =>
+    private void Naming(Entity entity, int book, int chapter, int verse, string source = "test") =>
         _db.EntityVerses.Add(new EntityVerse
         {
             EntityId = entity.Id,
@@ -276,6 +276,6 @@ public sealed class OpenBibleLocationTests : IDisposable
             CanonicalVerse = verse,
             Label = entity.Name,
             Disputed = false,
-            Source = "test",
+            Source = source,
         });
 }

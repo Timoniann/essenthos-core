@@ -13,9 +13,10 @@ namespace Essenthos.Core.Tests;
 /// <summary>
 /// What an entity page means by <em>references</em>.
 ///
-/// The source records one row per naming, and Matthew 20:30 names Jesus three times — so a count
-/// of rows is a count of namings, and the page was reporting it as a count of verses. YHVH's page
-/// said 9,415 where 8,457 verses name him, and Nebuchadnezzar's was a third over.
+/// The rows are namings, not verses: each dataset lists a verse once, and a verse two datasets list
+/// is two rows — so a count of rows is a count of namings, and the page was reporting it as a count
+/// of verses. YHVH's page said 9,415 where 8,457 verses name him, and Nebuchadnezzar's was a third
+/// over.
 ///
 /// Asked of Postgres rather than of a list in memory, because the answer is a <c>DISTINCT</c> over
 /// a composed address and the question is whether the database can be asked it at all.
@@ -43,11 +44,11 @@ public sealed class EntityReferenceCountTests : IDisposable
         _db.Entities.Add(_entity);
         _db.SaveChanges();
 
-        // Matthew 20:30 as the source writes it: three namings, two of them here, in one verse.
-        Naming(40, 20, 30, "Jesus", false);
-        Naming(40, 20, 30, "Son of David", false);
-        Naming(40, 20, 31, "Lord", true);
-        Naming(41, 1, 1, "Christ", false);
+        // Matthew 20:30 listed by two datasets: two namings in one verse.
+        Naming(40, 20, 30, "Jesus", false, "test");
+        Naming(40, 20, 30, "Son of David", false, "another");
+        Naming(40, 20, 31, "Lord", true, "test");
+        Naming(41, 1, 1, "Christ", false, "test");
         _db.SaveChanges();
     }
 
@@ -99,7 +100,7 @@ public sealed class EntityReferenceCountTests : IDisposable
         addresses[0].Should().BeLessThan(addresses[1]);
     }
 
-    private void Naming(int book, int chapter, int verse, string label, bool disputed) =>
+    private void Naming(int book, int chapter, int verse, string label, bool disputed, string source) =>
         _db.EntityVerses.Add(new EntityVerse
         {
             EntityId = _entity.Id,
@@ -108,6 +109,6 @@ public sealed class EntityReferenceCountTests : IDisposable
             CanonicalVerse = verse,
             Label = label,
             Disputed = disputed,
-            Source = "test",
+            Source = source,
         });
 }

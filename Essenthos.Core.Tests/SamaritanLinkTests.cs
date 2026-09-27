@@ -48,9 +48,9 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
     private const int ElidedMasoreticWords = 1_677;
 
     private const int Identical = 103_905;
-    private const int WrittenDifferently = 5_838;
-    private const int SamaritanHasAndMasoreticHasNot = 5_146;
-    private const int MasoreticHasAndSamaritanHasNot = 1_291;
+    private const int WrittenDifferently = 5_921;
+    private const int SamaritanHasAndMasoreticHasNot = 5_063;
+    private const int MasoreticHasAndSamaritanHasNot = 1_208;
 
     /// <summary>
     /// Verses where one tradition has a word the other has not: the count this text was loaded for.
@@ -60,7 +60,7 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
     /// </summary>
     private static readonly (string Book, int Verses)[] DifferingByBook =
     [
-        ("Genesis", 434), ("Exodus", 443), ("Leviticus", 217), ("Numbers", 313), ("Deuteronomy", 325),
+        ("Genesis", 425), ("Exodus", 435), ("Leviticus", 215), ("Numbers", 304), ("Deuteronomy", 312),
     ];
 
     [Fact]

@@ -89,24 +89,33 @@ public sealed class TermLoaderTests : IDisposable
     }
 
     /// <summary>
-    /// The dataset files a verse on YHVH wherever it reads God. Where the verse says el and not the
-    /// name, the row it labels God moves to el's entry, still the dataset's; where the name is in the
-    /// verse, or the label is a title, or the verse says no word for God at all, it stays.
+    /// The dataset files a verse on YHVH wherever it reads God, once per verse under one label. Where
+    /// the verse says el and not the name, the row it labels God moves to el's entry, still the
+    /// dataset's; where the name is in the verse, or the label is a title, or the verse says no word
+    /// for God at all, it stays.
     /// </summary>
     [Fact]
     public async Task TheDatasetsGodIsMovedOffTheNameWhereTheVerseSaysOnlyAWordForGod()
     {
         _db.WordAt(_hebrew, 1, 1, 2).StrongNumber = TermLoader.DivineName[0];
+        _db.AddBook(_hebrew, 2, "Exodus", (2, 1, ["אל"]), (2, 2, ["אל"]));
+        _db.SaveChanges();
+        _db.WordAt(_hebrew, 2, 1, 1).StrongNumber = "H410";
+        _db.WordAt(_hebrew, 2, 2, 1).StrongNumber = "H410";
+
         var yhvh = new Entity
         {
             Kind = EntityKind.Person, Slug = "yhvh", Name = "YHVH", SourceId = BibleDataLoader.DivineName, Source = "a test",
         };
         _db.Entities.Add(yhvh);
-        foreach (var (verse, label) in new[] { (1, "G-d"), (2, "G-d"), (2, "the Most High"), (2, "Lord G-d"), (3, "G-d") })
+        foreach (var (book, chapter, verse, label) in new[]
+                 {
+                     (1, 1, 1, "G-d"), (1, 1, 2, "G-d"), (1, 1, 3, "G-d"), (2, 2, 1, "the Most High"), (2, 2, 2, "Lord G-d"),
+                 })
         {
             _db.EntityVerses.Add(new EntityVerse
             {
-                Entity = yhvh, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = verse, Label = label,
+                Entity = yhvh, CanonicalBook = book, CanonicalChapter = chapter, CanonicalVerse = verse, Label = label,
                 Source = BibleDataLoader.Source,
             });
         }
