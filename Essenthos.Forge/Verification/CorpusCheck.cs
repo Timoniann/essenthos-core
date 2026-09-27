@@ -705,6 +705,71 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         ORDER BY t.slug, s.labelled
         """;
 
+    /// <summary>How many chapters a <see cref="Stranded"/> row names.</summary>
+    private const int StrandedChaptersNamed = 5;
+
+    /// <summary>
+    /// <see cref="Stranded"/>: for every pair of linked texts that both carry Strong numbers, the
+    /// silent words whose number the other text prints, silent too, in the adjacent verse of the same
+    /// chapter and nowhere in their own. Measured on 2026-09-27 in about half a minute.
+    /// </summary>
+    private static readonly string StrandedSql =
+        $"""
+        WITH numbers AS (
+            SELECT w.id, w.text_id, w.verse_id, w.strong_number AS number
+            FROM word w WHERE w.strong_number IS NOT NULL
+            UNION
+            SELECT w.id, w.text_id, w.verse_id, ws.number
+            FROM word_strong ws JOIN word w ON w.id = ws.word_id
+        ),
+        numbered AS (SELECT DISTINCT text_id FROM numbers),
+        pairs AS (
+            SELECT DISTINCT l.from_text_id AS text_id, l.to_text_id AS witness_id
+            FROM link l
+            WHERE l.from_text_id IN (SELECT text_id FROM numbered)
+              AND l.to_text_id IN (SELECT text_id FROM numbered)
+        ),
+        placed AS (
+            SELECT p.text_id, p.witness_id, n.id, n.text_id AS owner, n.number,
+                   r.canonical_book AS book, r.canonical_chapter AS chapter, r.canonical_verse AS verse
+            FROM pairs p
+            JOIN numbers n ON n.text_id IN (p.text_id, p.witness_id)
+            JOIN verse_reference r ON r.verse_id = n.verse_id AND r.is_primary
+        ),
+        silent AS (
+            SELECT pl.* FROM placed pl
+            WHERE NOT EXISTS (
+                SELECT 1 FROM link_word lw JOIN link l ON l.id = lw.link_id
+                WHERE lw.word_id = pl.id
+                  AND ((l.from_text_id = pl.text_id AND l.to_text_id = pl.witness_id)
+                    OR (l.from_text_id = pl.witness_id AND l.to_text_id = pl.text_id)))
+        ),
+        stranded AS (
+            SELECT s.text_id, s.witness_id, s.book, s.chapter, count(DISTINCT s.id) AS words
+            FROM silent s
+            WHERE s.owner = s.text_id
+              AND EXISTS (
+                  SELECT 1 FROM silent o
+                  WHERE o.text_id = s.text_id AND o.witness_id = s.witness_id AND o.owner = s.witness_id
+                    AND o.number = s.number AND o.book = s.book AND o.chapter = s.chapter
+                    AND abs(o.verse - s.verse) = 1)
+              AND NOT EXISTS (
+                  SELECT 1 FROM placed h
+                  WHERE h.text_id = s.text_id AND h.witness_id = s.witness_id AND h.owner = s.witness_id
+                    AND h.number = s.number AND (h.book, h.chapter, h.verse) = (s.book, s.chapter, s.verse))
+            GROUP BY 1, 2, 3, 4
+        )
+        SELECT t.slug, w.slug, sum(s.words)::bigint,
+               (array_agg(coalesce(b.name, s.book::text) || ' ' || s.chapter
+                          ORDER BY s.words DESC, s.book, s.chapter))[1:{StrandedChaptersNamed}]
+        FROM stranded s
+        JOIN text t ON t.id = s.text_id
+        JOIN text w ON w.id = s.witness_id
+        LEFT JOIN book b ON b.text_id = s.text_id AND b.canonical_ordinal = s.book
+        GROUP BY t.slug, w.slug
+        ORDER BY sum(s.words) DESC, t.slug, w.slug
+        """;
+
     public async Task<CorpusMeasures> Measure(CancellationToken cancellationToken = default)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
@@ -779,8 +844,12 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var unaligned = await Read(connection, UnalignedSql, cancellationToken, reader => new Unaligned(
             reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3)));
 
+        var stranded = await Read(connection, StrandedSql, cancellationToken, reader => new Stranded(
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)));
+
         return new CorpusMeasures(
-            coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity, shared, unaligned);
+            coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity, shared, unaligned,
+            stranded);
     }
 
     /// <summary>The edition Nestle voted, and the two of his three voters the corpus holds.</summary>
