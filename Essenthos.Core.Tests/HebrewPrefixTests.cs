@@ -247,6 +247,19 @@ public class HebrewPrefixTests
         words.Where(word => word.Supplied).Select(word => word.Text).Should().Equal("is", "no");
     }
 
+    /// <summary>
+    /// A psalm's title is printed in bold, and the tag is not a word. Read as text, each pair of tags
+    /// added two words the verse does not have, and no title could line up with the King James.
+    /// </summary>
+    [Fact]
+    public void ABoldTitleIsReadAsItsWordsAndTheTagsAsNothing()
+    {
+        var words = KjvBhsMapping.Words("<b>A Psalm</b> <b><i>of</i> David,</b> LORD");
+
+        words.Select(word => word.Text).Should().Equal("A", "Psalm", "of", "David", "LORD");
+        words.Select(word => word.Supplied).Should().Equal(false, false, true, false, false);
+    }
+
     private static Dictionary<int, int> Matched(
         IReadOnlyList<HebrewEntry> hebrew,
         IReadOnlyList<EnglishSegment> english) =>

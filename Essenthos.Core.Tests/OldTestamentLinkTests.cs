@@ -66,6 +66,28 @@ public sealed class OldTestamentLinkTests : IDisposable
     }
 
     /// <summary>
+    /// The file writes a name whole where the King James hyphenates it, and its apostrophe straight
+    /// where the text's is curly: <em>Bathsheba</em> for <em>Bath-sheba</em> at the head of Psalm 51.
+    /// Read as different words, the verse was refused whole.
+    /// </summary>
+    [Fact]
+    public async Task AWordTheFileSpellsWithoutItsHyphenOrWithAStraightApostropheIsTheSameWord()
+    {
+        foreach (var word in _db.Words.Where(w => w.TextId == _kjv.Id && w.Position >= 3))
+        {
+            word.Surface = word.Position == 3 ? "be-ginning" : "creat’d";
+        }
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load(Record(
+            Segment(["In", "the", "beginning"], 2),
+            Segment(["creat'd"], 3)));
+
+        outcome.Refused.Should().Be(0);
+        (await Links()).Should().HaveCount(2);
+    }
+
+    /// <summary>
     /// Two Hebrew words rendered by one English phrase: the second has no English of its own and
     /// stands next to the first, so it joins that link instead of starting one. Isaiah 53:5 is the
     /// case — מן plus פשע are "for our transgressions", and the file can only say it this way.

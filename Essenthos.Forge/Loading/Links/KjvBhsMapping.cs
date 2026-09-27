@@ -163,6 +163,11 @@ internal static partial class KjvBhsMapping
 
         foreach (Match run in Runs().Matches(text))
         {
+            if (run.Groups["tag"].Success)
+            {
+                continue;
+            }
+
             var supplied = run.Groups["italic"].Success;
             var body = supplied ? run.Groups["italic"].Value : run.Value;
             words.AddRange(EnglishWord().Matches(body).Select(word => new EnglishWord(word.Value, supplied)));
@@ -177,8 +182,11 @@ internal static partial class KjvBhsMapping
     [GeneratedRegex(@"〈[^＝〉]*＝([^〉]*)〉")]
     private static partial Regex Marker();
 
-    /// <summary>An italic run, or anything that is not one. The two together cover the text.</summary>
-    [GeneratedRegex(@"<i>(?<italic>.*?)</i>|[^<]+")]
+    /// <summary>
+    /// An italic run, any other tag, or text. The three together cover the text. The only other tag
+    /// is the bold a psalm's title is printed in, which marks no word as anything.
+    /// </summary>
+    [GeneratedRegex(@"<i>(?<italic>.*?)</i>|(?<tag><[^>]*>)|[^<]+")]
     private static partial Regex Runs();
 
     [GeneratedRegex(@"[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*")]
