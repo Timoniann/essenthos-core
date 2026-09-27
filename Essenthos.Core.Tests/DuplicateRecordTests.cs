@@ -2,6 +2,7 @@
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Verification;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -421,6 +422,60 @@ public sealed class DuplicateRecordTests : IDisposable
             .OrderBy(d => d.Ordinal).ToListAsync();
         clauses.Select(d => d.Ordinal).Should().Equal(1, 2);
         clauses[1].TargetEntityId.Should().Be(_kept.Id);
+    }
+
+    /// <summary>
+    /// Hilkiah's verse in Nehemiah stays his, and the split has given Meshullam the name as well: the
+    /// word Hilkiah keeps no longer resolves by the number alone, and it and the word the King James
+    /// was carried from it say the split chose them rather than being withdrawn as a name two men bear.
+    /// </summary>
+    [Fact]
+    public async Task AWordTheSplitLeavesUnderANameItMadeTwoMensSaysTheSplitChoseIt()
+    {
+        _db.AddBook(_hebrew, 16, "Nehemiah", (11, 11, ["חִלְקִיָּה"]));
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "en");
+        _db.AddBook(english, 16, "Nehemiah", (11, 11, ["Hilkiah"]));
+        _db.EntityNames.Add(new EntityName { Entity = _folded, Label = "Hilkiah", HebrewStrongNumber = "H2518" });
+        _db.EntityNames.Add(new EntityName { Entity = _folded, Label = "Helkiah", HebrewStrongNumber = "H2518" });
+        await _db.SaveChangesAsync();
+
+        var hebrew = _db.WordAt(_hebrew, 11, 11, 1);
+        hebrew.StrongNumber = "H2518";
+        var resolution = EntityAnnotationLoader.Written[0];
+        var seed = new WordEntity
+        {
+            Word = hebrew, Entity = _folded, Method = LinkMethod.StrongNumber, Confidence = 0.99,
+            Source = resolution, Note = "H2518, which BHSA marks pers",
+            Claims =
+            [
+                new WordEntityClaim { Method = LinkMethod.StrongNumber, Confidence = 0.9, Source = resolution },
+                new WordEntityClaim { Method = LinkMethod.StrongNumber, Confidence = 0.99, Source = "the verse list" },
+            ],
+        };
+        _db.WordEntities.Add(seed);
+        await _db.SaveChangesAsync();
+        var carried = new WordEntity
+        {
+            Word = _db.WordAt(english, 11, 11, 1), Entity = _folded, Method = LinkMethod.StrongNumber,
+            Confidence = 0.9702, Source = resolution, Note = $"through bhsa word {hebrew.Id}, linked by aligner",
+            Claims = [new WordEntityClaim { Method = LinkMethod.StrongNumber, Confidence = 0.882, Source = resolution }],
+        };
+        _db.WordEntities.Add(carried);
+        await _db.SaveChangesAsync();
+
+        await _loader.Split([Helkiah]);
+
+        var rows = await _db.WordEntities.AsNoTracking().Include(a => a.Claims)
+            .Where(a => a.EntityId == _folded.Id).ToListAsync();
+        rows.Select(a => a.Id).Should().BeEquivalentTo([seed.Id, carried.Id]);
+        rows.Should().OnlyContain(a => a.Method == LinkMethod.Manual && a.Source == DuplicateRecordLoader.Chose);
+        rows.Single(a => a.Id == carried.Id).Confidence.Should().Be(0.9702, "the carrying pass must find it unchanged");
+        rows.Single(a => a.Id == seed.Id).Claims.Select(c => (c.Method, c.Source)).Should().BeEquivalentTo(
+            [(LinkMethod.Manual, DuplicateRecordLoader.Chose), (LinkMethod.Manual, "the verse list")]);
+        var check = new CorpusCheck(_db, NullLogger<CorpusCheck>.Instance);
+        (await check.Measure()).Integrity
+            .Single(i => i.Breaks == "words a name-resolution annotated although the name is several people's")
+            .Found.Should().Be(0);
     }
 
     [Fact]
