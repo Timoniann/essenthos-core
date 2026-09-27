@@ -240,3 +240,126 @@ public class LetteredVerseFrameTests(VersificationFrames frames) : IClassFixture
             .Should().Be(new CanonicalReference(Nehemiah, 4, 1));
     }
 }
+
+/// <summary>
+/// The Greek editions letter the additions to Esther each in a way of their own, and each lettered
+/// verse stands where the Latin and English Bibles print the verse of the addition it holds.
+/// </summary>
+public class LetteredEditionFrameTests
+{
+    private const int Esther = 17;
+
+    private static readonly VersificationRules Rules = TvtmsReader.Read(TestResources.Tvtms);
+
+    private static readonly VersificationFrame Brenton = Rules.Frame(Versification.Septuagint, EditionShape.Of(
+    [
+        .. Pieces(1, 1, "bcdefghiklmnopqrs"),
+        .. Pieces(3, 13, "abcdefg"),
+        .. Pieces(4, 17, "abcdefghiklmnopqrstuwxyz"),
+        .. Pieces(5, 1, "abcdef"),
+        .. Pieces(5, 2, "ab"),
+        .. Pieces(10, 3, "abcdefghikl"),
+    ]));
+
+    private static readonly VersificationFrame Swete = Rules.Frame(Versification.Septuagint, EditionShape.Of(
+    [
+        .. Pieces(1, 17, "a"),
+        (Esther, 4, 1, string.Empty, 10),
+        (Esther, 4, 1, "a", 10),
+        (Esther, 4, 1, "a1", 10),
+        (Esther, 4, 1, "b", 10),
+        .. Pieces(4, 17, string.Empty),
+        .. Enumerable.Range(1, 11).Select(verse => (Esther, 10, verse, string.Empty, 20)),
+        (Esther, 10, 1, "a", 10),
+    ]));
+
+    [Fact]
+    public void AdditionVersesAreReadFromTheLatinRows()
+    {
+        Rules.Additions[new AdditionVerse(Esther, 'A', 1)].Should().Be(new CanonicalReference(Esther, 11, 2));
+        Rules.Additions[new AdditionVerse(Esther, 'F', 11)].Should().Be(new CanonicalReference(Esther, 11, 1));
+        Rules.Additions.Should().HaveCount(17 + 7 + 30 + 16 + 24 + 11);
+    }
+
+    /// <summary>
+    /// Brenton's unlettered 1:1 is the first verse of Mordecai's dream, and his 1:1s the verse the
+    /// Hebrew opens with.
+    /// </summary>
+    [Theory]
+    [InlineData(1, 1, "", 11, 2)]
+    [InlineData(1, 1, "b", 11, 3)]
+    [InlineData(1, 1, "r", 12, 6)]
+    [InlineData(1, 1, "s", 1, 1)]
+    [InlineData(3, 13, "a", 13, 1)]
+    [InlineData(4, 17, "z", 14, 19)]
+    [InlineData(10, 3, "l", 11, 1)]
+    public void BrentonsLetteredEstherStandsAtTheAddressOfTheVerseItPrints(
+        int chapter, int verse, string label, int toChapter, int toVerse)
+    {
+        Brenton.Resolve(Esther, chapter, verse, lettered: true, label)[0]
+            .Should().Be(new CanonicalReference(Esther, toChapter, toVerse));
+    }
+
+    [Fact]
+    public void AVerseBrentonRunsTogetherSpansTheVersesItJoins()
+    {
+        Brenton.Resolve(Esther, 4, 17, lettered: true, "c")
+            .Should().Equal(new CanonicalReference(Esther, 13, 10), new CanonicalReference(Esther, 13, 11));
+        Brenton.Resolve(Esther, 5, 1, lettered: true, string.Empty)
+            .Should().Equal(new CanonicalReference(Esther, 5, 1), new CanonicalReference(Esther, 15, 1));
+    }
+
+    [Fact]
+    public void TheHebrewVerseBesideTheLettersStaysWhereItIs()
+    {
+        Brenton.Resolve(Esther, 4, 17, lettered: true, string.Empty)
+            .Should().Equal(new CanonicalReference(Esther, 4, 17));
+    }
+
+    /// <summary>
+    /// Swete numbers each addition from one under the chapter it follows, so his 1:17a is the
+    /// dream's last verse and not a second Esther 1:17.
+    /// </summary>
+    [Theory]
+    [InlineData(1, 17, "a", 12, 6)]
+    [InlineData(4, 1, "a", 13, 8)]
+    [InlineData(4, 1, "a1", 13, 18)]
+    [InlineData(4, 1, "b", 15, 1)]
+    [InlineData(10, 1, "", 10, 4)]
+    [InlineData(10, 11, "", 11, 1)]
+    [InlineData(10, 1, "a", 10, 1)]
+    public void SwetesAdditionsStandAtTheAddressOfTheVerseTheyPrint(
+        int chapter, int verse, string label, int toChapter, int toVerse)
+    {
+        Swete.Resolve(Esther, chapter, verse, label.Length > 0, label)
+            .Should().Equal(new CanonicalReference(Esther, toChapter, toVerse));
+    }
+
+    /// <summary>
+    /// Swete's Letter of Jeremiah stands on the standard's seventy-three verses, one behind them
+    /// for most of its length.
+    /// </summary>
+    [Theory]
+    [InlineData(1, 1)]
+    [InlineData(2, 3)]
+    [InlineData(44, 44)]
+    [InlineData(72, 73)]
+    public void SwetesLetterOfJeremiahStandsOnTheStandardsVerses(int verse, int standard)
+    {
+        Swete.Resolve(76, 1, verse, lettered: false, string.Empty)[0]
+            .Should().Be(new CanonicalReference(76, 1, standard));
+    }
+
+    /// <summary>An edition lettered like neither is placed exactly as before.</summary>
+    [Fact]
+    public void AnotherEditionIsUnaffected()
+    {
+        var other = Rules.Frame(Versification.Septuagint, EditionShape.Of(
+            [.. Pieces(1, 1, "abcdefghiklmnopqr")]));
+
+        other.Resolve(Esther, 1, 1, lettered: true, "b").Should().Equal(new CanonicalReference(Esther, 1, 1));
+    }
+
+    private static IEnumerable<(int, int, int, string, int)> Pieces(int chapter, int verse, string letters) =>
+        [(Esther, chapter, verse, string.Empty, 40), .. letters.Select(letter => (Esther, chapter, verse, letter.ToString(), 40))];
+}

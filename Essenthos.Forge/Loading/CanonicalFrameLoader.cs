@@ -94,7 +94,8 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
                     verse.Book,
                     verse.ChapterNumber,
                     verse.Number,
-                    lettered.Contains(new CanonicalReference(verse.Book, verse.ChapterNumber, verse.Number)))
+                    lettered.Contains(new CanonicalReference(verse.Book, verse.ChapterNumber, verse.Number)),
+                    verse.Label)
                 .Select((placement, index) => new ReferenceDraft(
                     verse.Id,
                     placement.Book,

@@ -12,7 +12,8 @@ namespace Essenthos.Core.Loading.Frame;
 /// </summary>
 internal sealed class VersificationFrame(
     Versification tradition,
-    IReadOnlyDictionary<CanonicalReference, IReadOnlyList<CanonicalReference>> rules)
+    IReadOnlyDictionary<CanonicalReference, IReadOnlyList<CanonicalReference>> rules,
+    IReadOnlyDictionary<PrintedAddress, IReadOnlyList<CanonicalReference>>? printed = null)
 {
     public Versification Tradition { get; } = tradition;
 
@@ -38,4 +39,22 @@ internal sealed class VersificationFrame(
         var own = new CanonicalReference(book, chapter, verse);
         return rules.TryGetValue(own, out var mapped) && (!lettered || mapped.Count == 1) ? mapped : [own];
     }
+
+    /// <summary>
+    /// Where a verse of this edition sits, knowing its letter. Where the edition's own lettering has
+    /// been read verse by verse (<see cref="LetteredEditions"/>), the letter decides the place and
+    /// nothing else is consulted: Brenton's Esther 1:1b is the second verse of the first addition,
+    /// which stands at 11:3.
+    /// </summary>
+    public IReadOnlyList<CanonicalReference> Resolve(int book, int chapter, int verse, bool lettered, string label) =>
+        printed is not null &&
+        printed.TryGetValue(new PrintedAddress(new CanonicalReference(book, chapter, verse), label), out var read)
+            ? read
+            : Resolve(book, chapter, verse, lettered);
+}
+
+/// <summary>A verse as an edition prints it: its address and its letter, empty for none.</summary>
+internal readonly record struct PrintedAddress(CanonicalReference Address, string Label)
+{
+    public override string ToString() => $"{Address}{Label}";
 }

@@ -57,6 +57,7 @@ internal static class TvtmsReader
         var blocks = new List<IReadOnlyList<TvtmsRow>>(512);
         var passage = new List<TvtmsRow>(64);
         var corrected = new HashSet<TvtmsCorrection>();
+        var additions = new Dictionary<AdditionVerse, CanonicalReference>();
         var inSection = false;
 
         foreach (var line in File.ReadLines(path))
@@ -71,6 +72,8 @@ internal static class TvtmsReader
             {
                 break;
             }
+
+            ReadAddition(line, additions);
 
             if (TryReadRow(line, out var row))
             {
@@ -108,7 +111,23 @@ internal static class TvtmsReader
         }
 
         var supplemented = TvtmsSupplements.Join(blocks);
-        return new VersificationRules(blocks, corrected, supplemented);
+        return new VersificationRules(blocks, corrected, supplemented, additions);
+    }
+
+    /// <summary>
+    /// Where a verse of an addition to Esther stands, from the rows that name it by its lettered
+    /// chapter. Those rows are the Latin's and place no edition here, but what they say about the
+    /// standard numbering is what the Greek editions' lettered verses are placed by.
+    /// </summary>
+    private static void ReadAddition(string line, Dictionary<AdditionVerse, CanonicalReference> additions)
+    {
+        var columns = line.Split('	', 4);
+        if (columns.Length >= 3 &&
+            AdditionVerse.TryParse(columns[1], out var addition) &&
+            CanonicalReference.ParseAll(columns[2]) is [var standard, ..])
+        {
+            additions.TryAdd(addition, standard);
+        }
     }
 
     /// <summary>
@@ -165,7 +184,8 @@ internal static class TvtmsReader
 internal sealed class VersificationRules(
     IReadOnlyList<IReadOnlyList<TvtmsRow>> blocks,
     IReadOnlySet<TvtmsCorrection> corrected,
-    IReadOnlySet<TvtmsSupplement> supplemented)
+    IReadOnlySet<TvtmsSupplement> supplemented,
+    IReadOnlyDictionary<AdditionVerse, CanonicalReference> additions)
 {
     /// <summary>
     /// The names this file gives the numbering schemes of each tradition, the first being the one
@@ -215,13 +235,16 @@ internal sealed class VersificationRules(
     /// </summary>
     public IReadOnlySet<TvtmsSupplement> Competing { get; } = Competitors(blocks, supplemented);
 
+    /// <summary>Where each verse of the additions to Esther stands in the standard numbering.</summary>
+    public IReadOnlyDictionary<AdditionVerse, CanonicalReference> Additions { get; } = additions;
+
     /// <summary>
     /// The frame for a tradition, taking the scheme it is named after everywhere. It is what the
     /// data says about the tradition rather than about any edition of it, which is all there is to
     /// go on when the edition's own shape is not to hand.
     /// </summary>
     public VersificationFrame Frame(Versification tradition) =>
-        Build(tradition, passage => Named(passage, Schemes[tradition][0]));
+        Build(tradition, printed: null, passage => Named(passage, Schemes[tradition][0]));
 
     /// <summary>
     /// The frame for one edition, choosing per passage the scheme whose stated tests this edition
@@ -247,6 +270,9 @@ internal sealed class VersificationRules(
     ///
     /// Where nothing can be decided even so, the tradition's own scheme is used, so a passage the
     /// tests say nothing about is placed exactly as it was before there were any tests to read.
+    ///
+    /// An edition whose lettered verses were read one by one (<see cref="LetteredEditions"/>) has them
+    /// placed as read, ahead of every scheme.
     /// </summary>
     public VersificationFrame Frame(Versification tradition, EditionShape edition)
     {
@@ -254,7 +280,7 @@ internal sealed class VersificationRules(
         var others = Schemes.Where(scheme => scheme.Key != tradition).SelectMany(scheme => scheme.Value).ToArray();
         var supplements = TvtmsSupplements.Schemes(tradition);
 
-        return Build(tradition, passage =>
+        return Build(tradition, LetteredEditions.For(edition, Additions), passage =>
             Chosen(passage, supplements, edition, requireEvidence: true) ??
             Chosen(passage, own, edition, requireEvidence: false) ??
             Chosen(passage, others, edition, requireEvidence: true) ??
@@ -396,6 +422,7 @@ internal sealed class VersificationRules(
 
     private VersificationFrame Build(
         Versification tradition,
+        IReadOnlyDictionary<PrintedAddress, IReadOnlyList<CanonicalReference>>? printed,
         Func<IReadOnlyList<TvtmsRow>, IEnumerable<TvtmsRow>> choose)
     {
         var rules = new Dictionary<CanonicalReference, IReadOnlyList<CanonicalReference>>(6_000);
@@ -418,6 +445,6 @@ internal sealed class VersificationRules(
             }
         }
 
-        return new VersificationFrame(tradition, rules);
+        return new VersificationFrame(tradition, rules, printed);
     }
 }
