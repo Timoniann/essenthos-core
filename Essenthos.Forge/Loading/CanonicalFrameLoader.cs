@@ -89,7 +89,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
 
         var versesById = verses.ToDictionary(verse => verse.Id);
 
-        if (existing.Count == expected.Count && existing.ToHashSet().SetEquals(expected))
+        if (Unchanged(existing, expected))
         {
             logger.LogInformation("Text {Slug} is already placed in the frame", text.Slug);
             return new FrameOutcome(text.Slug, AlreadyPlaced: true, 0, 0, 0);
@@ -126,6 +126,24 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         var outcome = new FrameOutcome(text.Slug, AlreadyPlaced: false, verses.Count, expected.Count, moved);
         logger.LogInformation("Placed {Outcome} in {Elapsed}", outcome, started.Elapsed);
         return outcome;
+    }
+
+    /// <summary>
+    /// Whether the text already stands where the frame puts it. A psalm's first verse that holds its
+    /// title also covers the title's row, and that further row is written after the frame by the passes
+    /// that read the title in (<see cref="PsalmOpeningLoader"/>, <see cref="SuperscriptionFrameLoader"/>);
+    /// it is theirs, so it does not count as a difference, or every load would place those texts again
+    /// only for the passes to write the same rows back.
+    /// </summary>
+    internal static bool Unchanged(IReadOnlyCollection<ReferenceDraft> existing, IReadOnlyCollection<ReferenceDraft> expected)
+    {
+        var wanted = expected.ToHashSet();
+        var framed = existing
+            .Where(reference => wanted.Contains(reference)
+                                || reference.IsPrimary
+                                || reference.Verse != CanonicalReference.TitleVerse)
+            .ToHashSet();
+        return framed.Count == wanted.Count && framed.SetEquals(wanted);
     }
 
     /// <summary>
