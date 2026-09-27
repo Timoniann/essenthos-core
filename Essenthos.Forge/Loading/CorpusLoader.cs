@@ -160,6 +160,11 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     /// stands where the edition prints it.
     ///
     /// <para>
+    /// A book already there whose name the source now spells otherwise — a misprint corrected where
+    /// the source is read — takes the new name, which is the only thing about it that changes.
+    /// </para>
+    ///
+    /// <para>
     /// The text's rights note is brought up to the definition's where the definition only extends
     /// it — a book read from another file usually says so there — and left alone, with a warning,
     /// where a pass has written something of its own into it since.
@@ -178,6 +183,23 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
         }
 
         var held = await db.Books.Where(b => b.TextId == text.Id).ToListAsync(cancellationToken);
+        var renamed = 0;
+        foreach (var book in held)
+        {
+            var named = source.Books.FirstOrDefault(b => b.CanonicalOrdinal == book.CanonicalOrdinal)?.NameNative;
+            if (named is not null && named != book.NameNative)
+            {
+                book.NameNative = named;
+                renamed++;
+            }
+        }
+
+        if (renamed > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+            logger.LogInformation("{Slug}: {Renamed} books take the name the source now gives them", text.Slug, renamed);
+        }
+
         var ordinals = held.Select(b => b.CanonicalOrdinal).ToHashSet();
         var missing = source.Books.Where(b => !ordinals.Contains(b.CanonicalOrdinal)).ToList();
         if (missing.Count == 0)

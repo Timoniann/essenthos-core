@@ -88,9 +88,13 @@ internal static class BookReferences
             ? new VerseRefResponse(ordinal, Name(ordinal), Slug(ordinal), inChapter, atVerse)
             : null;
 
+    /// <summary>
+    /// Which testament a book is in. The table numbers the deuterocanon and the Ethiopian books after
+    /// Revelation, but every one of them is an Old Testament book: Tobit is 70 and stands beside Esther.
+    /// </summary>
     public static string Testament(int ordinal)
     {
-        return ordinal <= OldTestamentBookCount ? OldTestament : NewTestament;
+        return ordinal is > OldTestamentBookCount and <= CanonBookCount ? NewTestament : OldTestament;
     }
 
     public static string FormatHint(string? book)

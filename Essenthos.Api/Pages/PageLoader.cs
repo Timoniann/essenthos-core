@@ -81,15 +81,15 @@ internal sealed class PageLoader(
     /// <summary>The language whose texts print the frame's own book names, so their names are not asked for.</summary>
     private const string HeadwordLanguage = "eng";
 
-    /// <summary>The languages other than English the reader phrases a record's structured line in.</summary>
-    private static readonly HashSet<string> PhrasedLanguages = ["ukr", "rus"];
+    /// <summary>The languages other than English a record's structured line is phrased in for a page.</summary>
+    private static readonly HashSet<string> PhrasedLanguages = ["ukr", "deu", "spa"];
 
     public async Task<PageContent> Load(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
         var language = address.Language;
         return address.Kind switch
         {
-            PageKind.Home => PageViews.Home(language, wording, await Books(language, cancellationToken)),
+            PageKind.Home => PageViews.Home(language, wording, await Books(language, wording, cancellationToken)),
             PageKind.Chapter => await Chapter(address, wording, cancellationToken),
             PageKind.Verse => await Verse(address, wording, cancellationToken),
             PageKind.Record => await Record(address, wording, cancellationToken),
@@ -105,11 +105,19 @@ internal sealed class PageLoader(
     }
 
     /// <summary>
-    /// What a page in this language calls a book: the name the text it quotes the book from prints,
-    /// where that is a translation in a language other than English, and the frame's name otherwise.
+    /// What a page in this language calls a book: the name a reader of the language cites it by, where
+    /// the wording has one — <c>Markus</c> where the Luther Bible prints <c>Das Evangelium nach Markus</c>
+    /// — then the name the text it quotes the book from prints, where that is a translation in a
+    /// language other than English, and the frame's name otherwise.
     /// </summary>
-    public async Task<string> BookName(SiteLanguage language, int book, CancellationToken cancellationToken)
+    public async Task<string> BookName(
+        SiteLanguage language, PageWording wording, int book, CancellationToken cancellationToken)
     {
+        if (wording.CitedBook(book) is { Length: > 0 } cited)
+        {
+            return cited;
+        }
+
         var text = ReaderTexts.ForBook(await Texts(cancellationToken), await Chosen(language, cancellationToken), book)
             .FirstOrDefault();
         if (text is null || text.Kind != TextKind.Translation || text.Language == HeadwordLanguage)
@@ -120,12 +128,13 @@ internal sealed class PageLoader(
         return (await BookNames(text, cancellationToken)).GetValueOrDefault(book) ?? BookReferences.Name(book);
     }
 
-    private async Task<IReadOnlyList<BookLink>> Books(SiteLanguage language, CancellationToken cancellationToken)
+    private async Task<IReadOnlyList<BookLink>> Books(
+        SiteLanguage language, PageWording wording, CancellationToken cancellationToken)
     {
         var books = new List<BookLink>(BookReferences.CanonBookCount);
         foreach (var ordinal in BookReferences.Ordinals)
         {
-            books.Add(new BookLink(ordinal, await BookName(language, ordinal, cancellationToken)));
+            books.Add(new BookLink(ordinal, await BookName(language, wording, ordinal, cancellationToken)));
         }
 
         return books;
@@ -147,7 +156,7 @@ internal sealed class PageLoader(
             {
                 return PageViews.Chapter(language, wording, new ChapterView(
                     address.Book,
-                    await BookName(language, address.Book, cancellationToken),
+                    await BookName(language, wording, address.Book, cancellationToken),
                     address.Chapter,
                     chapterCount,
                     verses,
@@ -178,7 +187,7 @@ internal sealed class PageLoader(
 
             return PageViews.Verse(language, wording, new VerseView(
                 address.Book,
-                await BookName(language, address.Book, cancellationToken),
+                await BookName(language, wording, address.Book, cancellationToken),
                 address.Chapter,
                 address.Verse,
                 said,
@@ -202,8 +211,8 @@ internal sealed class PageLoader(
         var language = address.Language;
         var localDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], language.Corpus, cancellationToken))
             .GetValueOrDefault(entity.Id);
-        // The structured line where the reader phrases it in the page's language — every language on
-        // an English page, Ukrainian on the others — and the source's English line on English pages only.
+        // The structured line where it is phrased in the page's language — every language on an English
+        // page, Ukrainian, German and Spanish on theirs — and the source's English line on English pages only.
         var descriptor = await Descriptors.Of(db, entity.Slug, language.Corpus, cancellationToken);
         if (descriptor is not null && !language.IsEnglish && !PhrasedLanguages.Contains(descriptor.Language))
         {
@@ -229,7 +238,10 @@ internal sealed class PageLoader(
         {
             mentions.Add(new VerseMention(
                 verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse,
-                $"{await BookName(language, verse.CanonicalBook, cancellationToken)} {verse.CanonicalChapter}:{verse.CanonicalVerse}"));
+                wording.Reference(
+                    await BookName(language, wording, verse.CanonicalBook, cancellationToken),
+                    verse.CanonicalChapter,
+                    verse.CanonicalVerse)));
         }
 
         return PageViews.Record(language, wording, new RecordView(
@@ -288,7 +300,7 @@ internal sealed class PageLoader(
         if (found is { CanonicalBook: { } book, CanonicalChapter: { } chapter, CanonicalVerse: { } verse })
         {
             links.Add((PageAddress.VersePath(book, chapter, verse),
-                $"{await BookName(language, book, cancellationToken)} {chapter}:{verse}"));
+                wording.Reference(await BookName(language, wording, book, cancellationToken), chapter, verse)));
         }
 
         // What the dataset says, in its own English, describes an English page; any other is described in its language.
@@ -377,7 +389,7 @@ internal sealed class PageLoader(
         var name = TextName(wording, text);
         var original = text.Kind != TextKind.Translation;
         IEnumerable<(string, string)> opening = text.Books.Count > 0
-            ? [(PageAddress.ChapterPath(text.Books[0], 1), await BookName(language, text.Books[0], cancellationToken))]
+            ? [(PageAddress.ChapterPath(text.Books[0], 1), await BookName(language, wording, text.Books[0], cancellationToken))]
             : [];
         return PageViews.Named(
             language,

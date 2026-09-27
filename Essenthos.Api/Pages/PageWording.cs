@@ -51,6 +51,13 @@ internal sealed partial class PageWording
 
     public string Quoted(string text) => Text("quoted", ("text", text));
 
+    /// <summary>A verse's reference as this language writes one: <c>Markus 3,3</c> in German, <c>Marcos 3:3</c> in Spanish.</summary>
+    public string Reference(string book, int chapter, int verse) =>
+        $"{book} {Text("chapterVerse", ("chapter", chapter.ToString()), ("verse", verse.ToString()))}";
+
+    /// <summary>What a reader of this language calls a book when citing it, where the wording names it.</summary>
+    public string? CitedBook(int ordinal) => Find($"books.{ordinal}");
+
     /// <summary>
     /// The plural category of a whole number, as <c>Intl.PluralRules</c> gives it for each language
     /// the site speaks: Ukrainian has one, few and many; Spanish sets a million and its multiples apart.

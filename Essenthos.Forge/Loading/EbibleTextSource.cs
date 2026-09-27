@@ -330,6 +330,12 @@ internal static class EbibleTextSource
     };
 
     /// <summary>
+    /// Misprints in the names eBible's files give their books, which every page naming the book would
+    /// repeat. Both German editions spell Chronicles <c>Chonik</c> in all four of its headings.
+    /// </summary>
+    private static readonly (string Misprint, string Correction)[] BookNameMisprints = [("Chonik", "Chronik")];
+
+    /// <summary>
     /// Editions whose section headings, book introductions and outlines are their publishers',
     /// printed over the text; they are dropped rather than read as words of the verse beside them.
     /// </summary>
@@ -437,12 +443,17 @@ internal static class EbibleTextSource
                 Name: BookReferences.Name(ordinal),
                 Slug: BookReferences.Slug(ordinal),
                 Chapters: [.. book.Chapters.Select(chapter => Chapter(chapter, tagged))],
-                NameNative: book.Name,
+                NameNative: Corrected(book.Name),
                 Abbreviation: BookReferences.Abbreviation(ordinal)));
         }
 
         return new TextSource(definition, drafts);
     }
+
+    internal static string? Corrected(string? name) =>
+        name is null
+            ? null
+            : BookNameMisprints.Aggregate(name, (named, misprint) => named.Replace(misprint.Misprint, misprint.Correction, StringComparison.Ordinal));
 
     internal static ChapterDraft Chapter(UsfmChapter chapter, bool tagged) => new(
         chapter.Number,
