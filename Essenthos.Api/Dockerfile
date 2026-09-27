@@ -1,4 +1,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+# Where the smaller copies of the pictures are kept, since the pictures themselves are mounted
+# read-only. Owned by the user the API runs as, so an empty volume mounted over it is writable too.
+RUN mkdir /image-cache && chown $APP_UID /image-cache
+ENV Images__CachePath=/image-cache
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080

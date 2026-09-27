@@ -1,5 +1,8 @@
 """
-Makes the smaller copies of the pictures that the API serves to a list, a card or an avatar.
+Makes ahead of time the smaller copies of the pictures that the API serves to a list, a card or an
+avatar. The API makes each copy itself on the first request for it and keeps it, so nothing needs
+this; a copy made here is found beside the pictures and served instead, which spares the first
+reader of each picture the few dozen milliseconds of making it.
 
 A portrait is about a quarter of a megabyte and an avatar draws it twenty-eight pixels across, so
 every picture under Resources/Images is copied at each width in WIDTHS it is wider than, as WebP,
@@ -11,6 +14,8 @@ The digest is the first twelve hex digits of the SHA-256 of the picture it was m
 the corpus's picture rows carry and the API's addresses end in, so a replaced picture never reaches
 a reader through a copy of the old one. A copy already there is left alone, and running it again
 makes only what a new or changed picture needs. `forge publish` sends the copies with the pictures.
+They are made as the API makes its own (ImageEndpoints, PictureCopies): the same widths, the same
+proportions, WebP at the same quality.
 
   python scripts/picture-sizes.py [--resources FOLDER] [--dry]
 

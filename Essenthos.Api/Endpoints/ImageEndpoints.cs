@@ -15,16 +15,24 @@ namespace Essenthos.Core.Endpoints;
 ///
 /// <para>
 /// A list draws a picture a few dozen pixels across, and a portrait is a quarter of a megabyte. So a
-/// <c>w</c> asks for a copy at most that many pixels wide, made once beside the pictures by
-/// <c>scripts/picture-sizes.py</c> and named by the digest of the picture it was made from; the
-/// copy keeps the picture's proportions, so its focus and its bust hold on it as they do on the
-/// original. Where no copy is there yet, or the picture is no wider than the copy would be, the
-/// picture itself is served, and for an hour only, so the copy is taken up once it is made.
+/// <c>w</c> asks for a copy at least that many pixels wide, at the narrowest of <see cref="SizedWidths"/>,
+/// made on the first request for it and kept (<see cref="PictureCopies"/>), and named by the digest of
+/// the picture it was made from; the copy keeps the picture's proportions, so its focus and its bust
+/// hold on it as they do on the original. Where the picture is no wider than the copy would be, it is
+/// its own copy. Where the digest is not the picture's, or no copy could be made, the picture itself
+/// is served, and for an hour only.
 /// </para>
 /// </summary>
 internal static class ImageEndpoints
 {
     public const string ConfigurationKey = "Images:Path";
+
+    /// <summary>
+    /// Where the copies made on request are kept. Unset, they go beside the pictures, where the
+    /// pre-warming script puts them; a server whose pictures are mounted read-only names a folder it
+    /// can write.
+    /// </summary>
+    public const string CacheConfigurationKey = "Images:CachePath";
 
     /// <summary>This checkout's own images folder, one level above the content root.</summary>
     private const string DevelopmentDefault = "../Resources/Images";
@@ -53,7 +61,7 @@ internal static class ImageEndpoints
     /// How a path is compared with the folder it must stay in: as the file system compares names. On
     /// Linux <c>../IMAGES</c> is another folder, and ignoring case there would let a path into it.
     /// </summary>
-    private static readonly StringComparison PathComparison =
+    internal static readonly StringComparison PathComparison =
         OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
     private static readonly Dictionary<string, string> ContentTypes = new(StringComparer.OrdinalIgnoreCase)
@@ -73,11 +81,17 @@ internal static class ImageEndpoints
             contentRootPath,
             configuration[ConfigurationKey] is { Length: > 0 } configured ? configured : DevelopmentDefault));
 
-    public static void MapImages(this IEndpointRouteBuilder routes, string folder)
-    {
-        var root = Root(folder);
+    /// <summary>The folder the copies made on request are kept in, resolved against the content root.</summary>
+    public static string CacheFolder(IConfiguration configuration, string contentRootPath, string folder) =>
+        configuration[CacheConfigurationKey] is { Length: > 0 } configured
+            ? Path.GetFullPath(Path.Combine(contentRootPath, configured))
+            : Path.Combine(folder, SizedFolder);
 
-        routes.MapMethods("/images/{**file}", [HttpMethods.Get, HttpMethods.Head], (string file, string? v, int? w, HttpContext context) =>
+    public static void MapImages(this IEndpointRouteBuilder routes, PictureCopies copies)
+    {
+        var root = Root(copies.Folder);
+
+        routes.MapMethods("/images/{**file}", [HttpMethods.Get, HttpMethods.Head], async (string file, string? v, int? w, HttpContext context) =>
         {
             var path = Path.GetFullPath(Path.Combine(root, file));
             if (!path.StartsWith(root, PathComparison)
@@ -88,10 +102,10 @@ internal static class ImageEndpoints
             }
 
             context.Response.Headers.XContentTypeOptions = "nosniff";
-            if (w is { } width && Sized(folder, file, v, width) is { } copy)
+            if (w is { } width && await copies.Serve(file, path, v, width, context.RequestAborted) is { } copy)
             {
                 context.Response.Headers.CacheControl = Immutable;
-                return Results.File(copy, ContentTypes[SizedExtension]);
+                return Results.File(copy, ContentTypes[Path.GetExtension(copy)]);
             }
 
             context.Response.Headers.CacheControl = v is not null && w is null ? Immutable : Revalidated;
@@ -99,7 +113,7 @@ internal static class ImageEndpoints
         });
     }
 
-    private static string Root(string folder) => Path.TrimEndingDirectorySeparator(folder) + Path.DirectorySeparatorChar;
+    internal static string Root(string folder) => Path.TrimEndingDirectorySeparator(folder) + Path.DirectorySeparatorChar;
 
     /// <summary>The narrowest width a picture is copied at that is at least <paramref name="width"/>; null past the widest.</summary>
     public static int? SizedWidth(int width) => SizedWidths.Where(sized => sized >= width).Cast<int?>().FirstOrDefault();
@@ -108,10 +122,13 @@ internal static class ImageEndpoints
     /// Where the copy of a picture at a width is kept, relative to the pictures' folder: under the
     /// width's own folder, at the picture's path with its digest before a <c>.webp</c> of its own.
     /// </summary>
-    public static string SizedPath(string file, string digest, int width)
+    public static string SizedPath(string file, string digest, int width) => $"{SizedFolder}/{CopyPath(file, digest, width)}";
+
+    /// <summary>The same, relative to the folder the copies are kept in.</summary>
+    public static string CopyPath(string file, string digest, int width)
     {
         var extension = Path.GetExtension(file);
-        return $"{SizedFolder}/{width}/{file[..^extension.Length]}.{digest}{SizedExtension}";
+        return $"{width}/{file[..^extension.Length]}.{digest}{SizedExtension}";
     }
 
     /// <summary>

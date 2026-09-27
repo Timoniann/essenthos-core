@@ -30,6 +30,7 @@ var databaseConnection = StatementTimeout.Apply(DatabaseConnection.Read(builder.
 var rateLimits = RateLimits.Read(builder.Configuration);
 var proxies = Proxies.Read(builder.Configuration);
 var images = ImageEndpoints.Folder(builder.Configuration, builder.Environment.ContentRootPath);
+var pictureCache = ImageEndpoints.CacheFolder(builder.Configuration, builder.Environment.ContentRootPath, images);
 var siteSettings = SiteSettingsFile.Path(builder.Configuration, builder.Environment.ContentRootPath);
 
 builder.Services.AddCors(options =>
@@ -68,6 +69,8 @@ builder.Services.AddSingleton<DatasetCountsCache>();
 builder.Services.AddSingleton<WordForms>();
 builder.Services.AddSingleton(services =>
     new SiteSettingsFile(siteSettings, services.GetRequiredService<ILogger<SiteSettingsFile>>()));
+builder.Services.AddSingleton(services =>
+    new PictureCopies(images, pictureCache, services.GetRequiredService<ILogger<PictureCopies>>()));
 
 // Each page of the reader written out for a search engine or a link preview, which the proxy asks
 // for before it falls back to the plain application.
@@ -156,7 +159,7 @@ v1.MapLandPeriods();
 v1.MapKings();
 v1.MapContext();
 v1.MapBookAbout();
-v1.MapImages(images);
+v1.MapImages(app.Services.GetRequiredService<PictureCopies>());
 v1.MapSettings();
 v1.MapCommandments();
 v1.MapCrossReferences();

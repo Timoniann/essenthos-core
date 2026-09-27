@@ -20,8 +20,9 @@ Two things reach the server, separately:
   `…/corpus`, which the API mounts read-only at `/images`. Only new or changed files travel, nothing
   is ever removed — the previous release, which a rollback puts back, names pictures too — and a
   release naming a picture the server does not have is refused before it is swapped in. The smaller
-  copies a list or an avatar is served travel the same way: make them first with
-  `python scripts/picture-sizes.py`, or those pictures are served whole.
+  copies a list or an avatar is served are made by the API itself, on the first request for each, and
+  kept in the `image-cache` volume; any made ahead with `python scripts/picture-sizes.py` travel with
+  the pictures and are served instead, which only spares their first readers the wait.
 
 Everything below can be rehearsed on a workstation first, and should be before anything changes on the
 server:

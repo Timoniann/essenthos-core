@@ -40,6 +40,10 @@
     <ItemGroup>
       <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="10.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.12" />
+      <!-- The smaller copies of the pictures, made on request (MIT). The Linux build of its native
+           library without dependencies, because the server's image has no fontconfig and draws no text. -->
+      <PackageReference Include="SkiaSharp" Version="4.152.1" />
+      <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="4.152.1" />
     </ItemGroup>
 
 </Project>
