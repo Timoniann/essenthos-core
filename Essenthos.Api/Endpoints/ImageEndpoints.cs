@@ -12,6 +12,15 @@ namespace Essenthos.Core.Endpoints;
 /// the file's digest. The digest is what lets a reader's browser keep a picture for a year: a
 /// replaced portrait arrives under a new address instead of behind a cached old one.
 /// </para>
+///
+/// <para>
+/// A list draws a picture a few dozen pixels across, and a portrait is a quarter of a megabyte. So a
+/// <c>w</c> asks for a copy at most that many pixels wide, made once beside the pictures by
+/// <c>scripts/picture-sizes.py</c> and named by the digest of the picture it was made from; the
+/// copy keeps the picture's proportions, so its focus and its bust hold on it as they do on the
+/// original. Where no copy is there yet, or the picture is no wider than the copy would be, the
+/// picture itself is served, and for an hour only, so the copy is taken up once it is made.
+/// </para>
 /// </summary>
 internal static class ImageEndpoints
 {
@@ -27,6 +36,14 @@ internal static class ImageEndpoints
 
     /// <summary>For an address without a digest, which nothing this API writes ever hands out.</summary>
     private const string Revalidated = "public, max-age=3600";
+
+    /// <summary>The folder under the pictures holding their smaller copies, one folder per width.</summary>
+    public const string SizedFolder = "sized";
+
+    /// <summary>The widths a picture is copied at, narrowest first; a request between two gets the wider.</summary>
+    public static readonly int[] SizedWidths = [128, 256, 512, 1024];
+
+    private const string SizedExtension = ".webp";
 
     public const string Primary = "primary";
 
@@ -58,9 +75,9 @@ internal static class ImageEndpoints
 
     public static void MapImages(this IEndpointRouteBuilder routes, string folder)
     {
-        var root = Path.TrimEndingDirectorySeparator(folder) + Path.DirectorySeparatorChar;
+        var root = Root(folder);
 
-        routes.MapMethods("/images/{**file}", [HttpMethods.Get, HttpMethods.Head], (string file, HttpContext context) =>
+        routes.MapMethods("/images/{**file}", [HttpMethods.Get, HttpMethods.Head], (string file, string? v, int? w, HttpContext context) =>
         {
             var path = Path.GetFullPath(Path.Combine(root, file));
             if (!path.StartsWith(root, PathComparison)
@@ -70,10 +87,49 @@ internal static class ImageEndpoints
                 return Results.NotFound();
             }
 
-            context.Response.Headers.CacheControl = context.Request.Query.ContainsKey("v") ? Immutable : Revalidated;
             context.Response.Headers.XContentTypeOptions = "nosniff";
-            return Results.File(path, contentType);
+            if (w is { } width && Sized(folder, file, v, width) is { } copy)
+            {
+                context.Response.Headers.CacheControl = Immutable;
+                return Results.File(copy, ContentTypes[SizedExtension]);
+            }
+
+            context.Response.Headers.CacheControl = v is not null && w is null ? Immutable : Revalidated;
+            return Results.File(path, contentType, lastModified: File.GetLastWriteTimeUtc(path));
         });
+    }
+
+    private static string Root(string folder) => Path.TrimEndingDirectorySeparator(folder) + Path.DirectorySeparatorChar;
+
+    /// <summary>The narrowest width a picture is copied at that is at least <paramref name="width"/>; null past the widest.</summary>
+    public static int? SizedWidth(int width) => SizedWidths.Where(sized => sized >= width).Cast<int?>().FirstOrDefault();
+
+    /// <summary>
+    /// Where the copy of a picture at a width is kept, relative to the pictures' folder: under the
+    /// width's own folder, at the picture's path with its digest before a <c>.webp</c> of its own.
+    /// </summary>
+    public static string SizedPath(string file, string digest, int width)
+    {
+        var extension = Path.GetExtension(file);
+        return $"{SizedFolder}/{width}/{file[..^extension.Length]}.{digest}{SizedExtension}";
+    }
+
+    /// <summary>
+    /// The copy of a picture at least <paramref name="width"/> pixels wide, made from the bytes the
+    /// digest names, where there is one; null where it is not made, or the address carries no digest
+    /// to know it by.
+    /// </summary>
+    public static string? Sized(string folder, string file, string? digest, int width)
+    {
+        var root = Root(folder);
+        if (digest is not { Length: > 0 and <= 64 } || !digest.All(char.IsAsciiHexDigitLower)
+            || SizedWidth(width) is not { } sized)
+        {
+            return null;
+        }
+
+        var path = Path.GetFullPath(Path.Combine(root, SizedPath(file, digest, sized)));
+        return path.StartsWith(root, PathComparison) && File.Exists(path) ? path : null;
     }
 
     /// <summary>The address a picture is served at, each segment of its path escaped.</summary>

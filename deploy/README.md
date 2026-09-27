@@ -19,7 +19,9 @@ Two things reach the server, separately:
   picture files, from this machine's `Resources/Images`, into `/srv/essenthos/images/corpus_dev` or
   `…/corpus`, which the API mounts read-only at `/images`. Only new or changed files travel, nothing
   is ever removed — the previous release, which a rollback puts back, names pictures too — and a
-  release naming a picture the server does not have is refused before it is swapped in.
+  release naming a picture the server does not have is refused before it is swapped in. The smaller
+  copies a list or an avatar is served travel the same way: make them first with
+  `python scripts/picture-sizes.py`, or those pictures are served whole.
 
 Everything below can be rehearsed on a workstation first, and should be before anything changes on the
 server:
