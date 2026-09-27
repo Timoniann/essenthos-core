@@ -164,7 +164,7 @@ public sealed class RateLimitTests
 
         var options = Proxies.Read(Configuration(new() { [Proxies.ConfigurationKey] = "10.89.0.2, 172.16.0.0/12" }))!;
         options.KnownProxies.Should().Equal(IPAddress.Parse("10.89.0.2"));
-        options.KnownNetworks.Should().ContainSingle().Which.PrefixLength.Should().Be(12);
+        options.KnownIPNetworks.Should().ContainSingle().Which.PrefixLength.Should().Be(12);
 
         FluentActions.Invoking(() => Proxies.Read(Configuration(new() { [Proxies.ConfigurationKey] = "proxy" })))
             .Should().Throw<InvalidOperationException>().WithMessage("*10.89.0.2*");

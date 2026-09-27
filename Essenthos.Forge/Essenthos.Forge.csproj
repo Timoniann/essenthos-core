@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <RootNamespace>Essenthos.Core</RootNamespace>
         <AssemblyName>Essenthos.Forge</AssemblyName>
         <Nullable>enable</Nullable>
@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
         <PackageReference Include="SIL.Machine" Version="3.9.3" />
         <PackageReference Include="SIL.Machine.Translation.Thot" Version="3.9.3" />
     </ItemGroup>

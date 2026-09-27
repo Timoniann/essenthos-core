@@ -1,6 +1,6 @@
 using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
-using IPNetwork = Microsoft.AspNetCore.HttpOverrides.IPNetwork;
+using IPNetwork = System.Net.IPNetwork;
 
 namespace Essenthos.Core;
 
@@ -32,27 +32,23 @@ internal static class Proxies
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
         };
-        options.KnownNetworks.Clear();
+        options.KnownIPNetworks.Clear();
         options.KnownProxies.Clear();
         foreach (var entry in entries)
         {
-            var parts = entry.Split('/');
-            if (!IPAddress.TryParse(parts[0], out var address) ||
-                parts.Length > 2 ||
-                (parts.Length == 2 && !int.TryParse(parts[1], out _)))
+            if (entry.Contains('/') && IPNetwork.TryParse(entry, out var network))
+            {
+                options.KnownIPNetworks.Add(network);
+            }
+            else if (!entry.Contains('/') && IPAddress.TryParse(entry, out var address))
+            {
+                options.KnownProxies.Add(address);
+            }
+            else
             {
                 throw new InvalidOperationException(
                     $"{ConfigurationKey} holds \"{entry}\", which is neither an address nor a network. Write the " +
                     "proxy's address, such as 10.89.0.2, or its network, such as 10.89.0.0/24.");
-            }
-
-            if (parts.Length == 2)
-            {
-                options.KnownNetworks.Add(new IPNetwork(address, int.Parse(parts[1])));
-            }
-            else
-            {
-                options.KnownProxies.Add(address);
             }
         }
 

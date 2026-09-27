@@ -1,3 +1,4 @@
+using System.Data.Common;
 using Npgsql;
 
 namespace Essenthos.Core.Configuration;
@@ -19,6 +20,8 @@ internal static class DatabaseConnection
     public const string AccountsConnectionStringKey = "Accounts:ConnectionString";
     public const string AccountsPasswordKey = "Accounts:Password";
 
+    private static readonly string[] GssEncryptionModeKeywords = ["GSS Encryption Mode", "GssEncryptionMode"];
+
     public static string Read(IConfiguration configuration) =>
         Read(configuration, ConnectionStringKey, PasswordKey);
 
@@ -36,6 +39,16 @@ internal static class DatabaseConnection
         }
 
         var builder = new NpgsqlConnectionStringBuilder(connectionString);
+
+        // Npgsql asks the server for Kerberos session encryption first unless told not to, and on a
+        // Linux image without the Kerberos library that logs a failure to load it. Nothing here uses
+        // Kerberos; a connection string that names the setting keeps its own.
+        var named = new DbConnectionStringBuilder { ConnectionString = connectionString };
+        if (!GssEncryptionModeKeywords.Any(named.ContainsKey))
+        {
+            builder.GssEncryptionMode = GssEncryptionMode.Disable;
+        }
+
         var password = configuration[passwordKey];
         if (!string.IsNullOrEmpty(password))
         {
