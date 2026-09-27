@@ -27,6 +27,9 @@ internal static class Sources
     /// <summary>Swete's Septuagint, Codex Vaticanus as it stands.</summary>
     public const string SweteSlug = "SWETE";
 
+    /// <summary>The Old Greek of Susanna, Daniel and Bel, which Swete prints beside Theodotion's.</summary>
+    public const string SweteOldGreekSlug = "SWETEOG";
+
     /// <summary>Ottley's Isaiah, Codex Alexandrinus as it stands.</summary>
     public const string OttleySlug = "OTTLEY";
 

@@ -1,4 +1,6 @@
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Swete;
 using FluentAssertions;
 using Xunit;
@@ -461,4 +463,74 @@ public class SweteFigureTests(Swete swete) : IClassFixture<Swete>
         Swete.Text(swete.Verse(Psalms, 91, 16)).Should().StartWith("τοῦ ἀναγγεῖλαι ὅτι εὐθὴς Κύριος");
         swete.Book(Psalms).Chapters.Single(c => c.Number == 91).Verses[^1].Number.Should().Be(16);
     }
+}
+
+/// <summary>
+/// The Old Greek of Susanna, Daniel and Bel, which Swete prints beside Theodotion's: a text of its own,
+/// read by the same reader and placed by the frame where each verse's words are.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public class SweteOldGreekTests
+{
+    private const int Daniel = 27;
+
+    private const int Susanna = 77;
+
+    private const int Bel = 78;
+
+    private static readonly TextSource Source = SweteOldGreekTextSource.Read(TestResources.SweteFolder);
+
+    private static readonly Lazy<VersificationFrame> Frame = new(() => TvtmsReader.Read(TestResources.Tvtms).Frame(
+        Versification.Septuagint,
+        EditionShape.Of(
+        [
+            .. from book in Source.Books
+               from chapter in book.Chapters
+               from verse in chapter.Verses
+               select (book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label,
+                   verse.Words.Sum(word => word.Surface.Length)),
+        ])));
+
+    [Fact]
+    public void ItIsAWitnessOfItsOwnInSwetesOrder()
+    {
+        SweteOldGreekTextSource.Definition.Slug.Should().Be("SWETEOG");
+        SweteOldGreekTextSource.Definition.TextualFamily.Should().Be("Septuagint");
+        Source.Books.Select(book => book.CanonicalOrdinal).Should().Equal(Susanna, Daniel, Bel);
+        Source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count)).Should().Be(497);
+    }
+
+    /// <summary>Theodotion opens Ἐν ἔτει τρίτῳ; the Old Greek opens with the king and then the year.</summary>
+    [Fact]
+    public void ItsDanielIsTheOldGreekRatherThanTheodotions() =>
+        Swete.Text(Verse(Daniel, 1, 1)).Should().Contain("βασιλέως Ἰωακεὶμ τῆς Ἰουδαίας ἔτους τρίτου");
+
+    [Fact]
+    public void TheFiguresAreTakenOutOfTheSong()
+    {
+        Swete.Text(Verse(Daniel, 3, 64)).Should().StartWith("εὐλογεῖτε, πᾶς ὄμβρος καὶ δρόσος,");
+        Swete.Text(Verse(Daniel, 3, 78)).Should().StartWith("εὐλογεῖτε, θάλασσαι καὶ ποταμοί,");
+    }
+
+    /// <summary>
+    /// Its song keeps the order the standard numbering has, the throne before the depths and the
+    /// angels before the heavens, so each line stands at the verse of the song it prints with no
+    /// placement of its own: Theodotion's in Vaticanus needs one.
+    /// </summary>
+    [Theory]
+    [InlineData(3, 24, 3, 31)]
+    [InlineData(3, 54, 3, 63)]
+    [InlineData(3, 55, 3, 62)]
+    [InlineData(3, 58, 3, 67)]
+    [InlineData(3, 59, 3, 66)]
+    [InlineData(3, 71, 3, 77)]
+    [InlineData(3, 91, 3, 24)]
+    [InlineData(3, 98, 4, 1)]
+    [InlineData(4, 1, 4, 4)]
+    public void EachVerseOfDanielStandsWhereItsWordsAre(int chapter, int verse, int standardChapter, int standardVerse) =>
+        Frame.Value.Resolve(Daniel, chapter, verse)[0].Should().Be(new CanonicalReference(Daniel, standardChapter, standardVerse));
+
+    private static VerseDraft Verse(int canonical, int chapter, int verse) =>
+        Source.Books.Single(book => book.CanonicalOrdinal == canonical)
+            .Chapters.Single(c => c.Number == chapter).Verses.First(v => v.Number == verse);
 }

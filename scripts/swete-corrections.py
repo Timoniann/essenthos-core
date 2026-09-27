@@ -55,8 +55,9 @@ import xml.etree.ElementTree as ET
 sys.stdout.reconfigure(encoding='utf-8')
 repository = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-NOT_READ = {'48.Isaias', '28.Odae', '54.Susanna_translatio_Graeca', '56.Daniel_translatio_Graeca',
-            '58.Bel_et_Draco_translatio_Graeca'}
+# The Old Greek of Susanna, Daniel and Bel is read too, as a text of its own; Brenton prints Theodotion's,
+# so no two words of it are divided on his evidence.
+NOT_READ = {'48.Isaias', '28.Odae'}
 
 BRENTON = {
     '01': 'GEN', '02': 'EXO', '03': 'LEV', '04': 'NUM', '05': 'DEU', '06': 'JOS', '08': 'JDG', '10': 'RUT',
@@ -84,6 +85,8 @@ LEADING = re.compile(r'^[\)*;,–—]*(' + FIGURE + r')(.*)$')
 BETWEEN = re.compile(r'^(.*[^0-9⁰¹²³⁴⁵⁶⁷⁸⁹\s(⁽])((?:[\(⁽][0-9⁰¹²³⁴⁵⁶⁷⁸⁹]+\))|[0-9⁰¹²³⁴⁵⁶⁷⁸⁹]+)([^0-9⁰¹²³⁴⁵⁶⁷⁸⁹].*)$')
 TRAILING = re.compile(r'^(.*[^\w\s])([0-9⁰¹²³⁴⁵⁶⁷⁸⁹]+)$')
 ESCAPED_SIGMA = 'U+03F2'
+# How many times more often Swete prints the word the verses beside have than what the figure left.
+OVERRUN_EVIDENCE = 10
 
 
 def roman(numeral):
@@ -224,6 +227,9 @@ def main():
         for words in list(g.values()) + list(b.values()):
             witnessed.update(fold(bare(w)) for w in words)
     vocabulary = witnessed | {fold(w) for w in forms}
+    printed_forms = collections.Counter()
+    for w, n in forms.items():
+        printed_forms[fold(w)] += n
 
     corrections = []
     unsettled = []
@@ -265,7 +271,7 @@ def main():
                 if not has_figure(token) or any(is_latin(c) for c in re.sub(FIGURE, '', token.replace(ESCAPED_SIGMA, ''))):
                     at += 1
                     continue
-                printed, kind = unnumber(token, at, chapter, verse, vocabulary, around)
+                printed, kind = unnumber(token, at, chapter, verse, vocabulary, printed_forms, around)
                 if printed is None or not addressable:
                     if any(c.isascii() and c.isdigit() for c in token) or any(is_greek(c) for c in token):
                         figures_left.append(f'{book} {chapter}:{verse} {token}')
@@ -350,7 +356,7 @@ def figure_number(figure):
     return int(digits.group()) if digits else None
 
 
-def unnumber(token, at, chapter, verse, vocabulary, around):
+def unnumber(token, at, chapter, verse, vocabulary, printed, around):
     """
     What a token with a figure in it prints, and why; or None where no rule settles it. The printed
     form is empty for a figure standing alone and holds a space where the figure stood between two
@@ -373,7 +379,7 @@ def unnumber(token, at, chapter, verse, vocabulary, around):
         rest = leading.group(2)
         if has_figure(rest) or not greek_word(bare(rest)):
             return None, None
-        whole = overrun(rest, at, around, vocabulary)
+        whole = overrun(rest, at, around, printed)
         if whole is not None:
             return whole, 'overrun'
         if fold(bare(rest)) in vocabulary:
@@ -402,10 +408,12 @@ def unnumber(token, at, chapter, verse, vocabulary, around):
     return None, None
 
 
-def overrun(rest, at, around, vocabulary):
+def overrun(rest, at, around, printed):
     """
     The word the verses on either side print at the same place, where what is left of this one is it
     with its first letters taken by the figure: κὐλογεῖτε or ὐλογεῖτε where they print εὐλογεῖτε.
+    Only a word Swete prints many times over, against one he prints seldom or never: the verses beside
+    carry the same misreadings, τὐλογεῖτε among them, and one of those is never the word put back.
     """
     word = bare(rest)
     f = fold(word)
@@ -413,9 +421,9 @@ def overrun(rest, at, around, vocabulary):
     for tokens in around:
         words = [LEADING.match(t).group(2) if LEADING.match(t) else t for t in tokens]
         words = [bare(w) for w in words if any(is_greek(c) for c in w)]
-        if at < len(words) and not has_figure(words[at]) and fold(words[at]) in vocabulary:
+        if at < len(words) and not has_figure(words[at]):
             g = fold(words[at])
-            if len(g) >= 5 and len(f) in (len(g) - 1, len(g)) and f.endswith(g[2:]) and f != g:
+            if len(g) >= 5 and len(f) in (len(g) - 1, len(g)) and f.endswith(g[2:]) and f != g                     and printed[g] >= OVERRUN_EVIDENCE * max(1, printed[f]):
                 whole.add(words[at])
     return whole.pop() + rest[len(word):] if len(whole) == 1 else None
 

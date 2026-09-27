@@ -402,9 +402,11 @@ public sealed class SweteCorrectionLoadTests : IDisposable
         var outcome = await loader.Load(TestResources.SweteFolder);
         _output.WriteLine(outcome.ToString());
 
-        var verses = SweteRestorations.All.Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).Distinct().ToList();
+        var verses = SweteRestorations.All.Where(r => SweteTextSource.Reads(r.Book))
+            .Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).Distinct().ToList();
         outcome.Verses.Should().Be(verses.Count);
-        outcome.Words.Should().Be(17 + SweteCorrections.All.Concat(SwetePage.All).Sum(r => Words(r.Printed) - Words(r.Digitised)));
+        outcome.Words.Should().Be(17 + SweteCorrections.All.Concat(SwetePage.All).Where(r => SweteTextSource.Reads(r.Book))
+            .Sum(r => Words(r.Printed) - Words(r.Digitised)));
 
         var cold = SweteTextSource.Read(TestResources.SweteFolder);
         var text = await _db.Texts.SingleAsync(t => t.Slug == SweteTextSource.Slug);

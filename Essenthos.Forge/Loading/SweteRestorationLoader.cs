@@ -99,7 +99,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         var held = (await db.Books.Where(b => b.TextId == text.Id).Select(b => b.CanonicalOrdinal)
             .ToListAsync(cancellationToken)).ToHashSet();
 
-        foreach (var book in SweteRestorations.Books)
+        foreach (var book in SweteRestorations.Books.Where(SweteTextSource.Reads))
         {
             var path = Path.Combine(folder, SweteTextSource.FileName(book));
             var digitised = SweteReader.Read(Lines(book, path));

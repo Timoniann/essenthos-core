@@ -70,6 +70,11 @@ internal static class TextTaglines
                 "Септуагінта за Ватиканським кодексом у кембриджському виданні Світа.",
                 "Die Septuaginta des Codex Vaticanus, wie Swete sie in Cambridge druckte.",
                 "La Septuaginta del Códice Vaticano, tal como Swete la imprimió en Cambridge."),
+            ["SWETEOG"] = Say(
+                "Daniel in the Septuagint's older Greek translation, printed by Swete beside Theodotion's.",
+                "Даниїл у давнішому грецькому перекладі Септуагінти, надрукований Світом поруч із Теодотіоновим.",
+                "Daniel in der älteren griechischen Übersetzung der Septuaginta, von Swete neben der des Theodotion gedruckt.",
+                "Daniel en la traducción griega más antigua de la Septuaginta, impresa por Swete junto a la de Teodoción."),
             ["OTTLEY"] = Say(
                 "Isaiah exactly as Codex Alexandrinus has it, printed by Ottley.",
                 "Книга Ісаї точно так, як її містить Олександрійський кодекс, у виданні Оттлі.",

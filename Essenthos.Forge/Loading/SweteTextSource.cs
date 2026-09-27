@@ -53,12 +53,13 @@ internal static class SweteTextSource
     /// edition cannot supply.
     ///
     /// Four files this folder holds are deliberately not here. Three are the Old Greek of Susanna,
-    /// Daniel and Bel: Swete prints them beneath the text he takes from Vaticanus, and Vaticanus
-    /// reads Theodotion in all three, so the Old Greek is another manuscript's reading of the same
-    /// book rather than another edition of it — a second witness, which the model holds as a text
-    /// of its own and not as a second book at one ordinal. The fourth is the Odes, whose chapters
-    /// this edition numbers <c>iva</c> and <c>ivb</c> where the corpus addresses a chapter by an
-    /// integer, and whose verses keep the numbering of the passages they are taken from.
+    /// Daniel and Bel: Swete prints them beside the text he takes from Vaticanus, and Vaticanus
+    /// reads Theodotion in all three, so the Old Greek is another translation of the same books
+    /// rather than another edition of them — a second witness, which the model holds as a text of
+    /// its own, <see cref="SweteOldGreekTextSource"/>, and not as a second book at one ordinal. The
+    /// fourth is the Odes, whose chapters this edition numbers <c>iva</c> and <c>ivb</c> where the
+    /// corpus addresses a chapter by an integer, and whose verses keep the numbering of the passages
+    /// they are taken from.
     ///
     /// Isaiah is read from another file for a different and worse reason, recorded on
     /// <see cref="NotLoaded"/> and <see cref="SweteIsaiah"/>. Swete prints it after the Twelve.
@@ -99,7 +100,8 @@ internal static class SweteTextSource
     /// own (<see cref="OttleyTextSource"/>), read from its encoding too.
     ///
     /// The other four are the Odes, whose chapters this edition numbers with Roman letters, and the
-    /// Old Greek of Susanna, Daniel and Bel, which are a second witness rather than a second book.
+    /// Old Greek of Susanna, Daniel and Bel, which are a second witness rather than a second book and
+    /// are read as <see cref="SweteOldGreekTextSource"/>.
     /// </summary>
     public static IReadOnlyList<string> NotLoaded =>
     [
@@ -111,6 +113,12 @@ internal static class SweteTextSource
     ];
 
     public static string FileName(string book) => book + FileExtension;
+
+    /// <summary>
+    /// Whether a file of the folder is one of this text's. The Old Greek files are corrected alike and
+    /// read as <see cref="SweteOldGreekTextSource"/>.
+    /// </summary>
+    public static bool Reads(string file) => Canon.Any(entry => entry.File == file);
 
     /// <summary>The book of the shared canon a file of this edition is read as.</summary>
     public static int Canonical(string file) => Canon.Single(entry => entry.File == file).Canonical;
