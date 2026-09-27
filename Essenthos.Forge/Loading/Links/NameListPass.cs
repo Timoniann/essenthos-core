@@ -104,10 +104,11 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
             var within = new Tally();
             var refused = new HashSet<long>();
             var added = new List<(long From, long To)>();
+            var refuseStrays = AlignmentPipeline.BothMarkTheirNames(from.Language, to.Language);
 
             foreach (var address in source.Keys.Intersect(target.Keys).Order())
             {
-                var verse = Settle(source[address], target[address], links, reviewed);
+                var verse = Settle(source[address], target[address], links, reviewed, refuseStrays);
                 whole.Add(verse);
                 if (chapters.Contains((address.Item1, address.Item2)))
                 {
@@ -144,11 +145,13 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
     }
 
     /// <summary>One verse: what the names settle, measured against the links the pair already has.</summary>
+    /// <param name="refuseStrays">Both texts mark their names, so <see cref="NameLists.Strays"/> is refused too.</param>
     internal static VerseNames Settle(
         List<AlignmentPipeline.Word> source,
         List<AlignmentPipeline.Word> target,
         StoredLinks links,
-        IReadOnlySet<long> reviewed)
+        IReadOnlySet<long> reviewed,
+        bool refuseStrays = false)
     {
         var targetIndex = target.Select((word, at) => (word.Id, at)).ToDictionary(pair => pair.Id, pair => pair.at);
         var proposed = source
@@ -178,7 +181,8 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
                 }
 
                 verse.NameLinks.Add(link);
-                if (NameLists.Contradicts(s, t, matched, matchedBack, sourceAt, targetAt))
+                if (NameLists.Contradicts(s, t, matched, matchedBack, sourceAt, targetAt)
+                    || (refuseStrays && NameLists.Strays(s, t, matched, matchedBack, sourceAt, targetAt)))
                 {
                     (reviewed.Contains(link) ? verse.Held : verse.Refused).Add(link);
                     var stated = links.Stated[source[s].Id].ToList();

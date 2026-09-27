@@ -110,6 +110,35 @@ public class NameListTests
         settled.Select(pair => (pair.Source, pair.Target)).Should().BeEquivalentTo([(3, 3), (4, 3)]);
     }
 
+    /// <summary>
+    /// Genesis 21:22, where the Septuagint adds Ochozath the groomsman before Phicol. Once פִיכֹל is
+    /// matched to Φιχὸλ, its pair with νυμφαγωγὸς three words away is a stray between two texts that
+    /// mark their names, and the article beside Φιχὸλ still shares in it.
+    /// </summary>
+    [Fact]
+    public void BetweenTwoTextsThatMarkTheirNamesANameMatchedToItsNameRendersNothingFarFromIt()
+    {
+        string?[] greek = ["Ἐγένετο", "δὲ", "ἐν", "τῷ", "καιρῷ", "ἐκείνῳ", "καὶ", "εἶπεν", "Ἀβιμέλεχ", "καὶ",
+            "Ὀχοζὰθ", "ὁ", "νυμφαγωγὸς", "αὐτοῦ", "καὶ", "Φιχὸλ", "ὁ", "ἀρχιστράτηγος", "τῆς", "δυνάμεως",
+            "αὐτοῦ", "πρὸς", "Ἁβραὰμ", "λέγων"];
+        string[] hebrew = ["ו", "יהי", "ב", "עת", "ה", "הוא", "ו", "יאמר", "אבימלך", "ו", "פיכל", "שר", "צבאו",
+            "אל", "אברהם", "אמר"];
+        (int, int, double, double)[] proposed =
+            [(8, 8, 0.9, 0.5), (12, 10, 0.9, 0.5), (15, 10, 0.9, 0.5), (16, 10, 0.6, 0.5), (17, 11, 0.9, 0.5),
+                (22, 14, 0.9, 0.5)];
+        var greekNames = Names(greek, [.. greek.Select((_, at) => at is 8 or 10 or 15 or 22)]);
+        var hebrewNames = Names(hebrew, [.. hebrew.Select((_, at) => at is 8 or 10 or 14)]);
+        string[] letters = [.. hebrew.Select(word => NameLists.Skeleton(word))];
+
+        var settled = NameLists.Settle(proposed, greekNames, hebrewNames, letters, refuseStrays: true);
+        var translated = NameLists.Settle(proposed, greekNames, hebrewNames, letters);
+
+        settled.Select(pair => (pair.Source, pair.Target)).Should()
+            .BeEquivalentTo([(8, 8), (15, 10), (16, 10), (17, 11), (22, 14)]);
+        translated.Should().Contain(pair => pair.Source == 12 && pair.Target == 10,
+            "a translation's word far from the name is left to the model");
+    }
+
     /// <summary>The Synodal capitalises the pronouns of God; Моему is as much M as the μου it renders.</summary>
     [Fact]
     public void AWordOfOneConsonantIsNeverMadeAName()
