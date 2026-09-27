@@ -113,6 +113,15 @@ public class CanonTests
     }
 
     [Fact]
+    public void TheCatholicCanonPrintsTobitAndJudithBetweenNehemiahAndEsther()
+    {
+        var names = Canons.Find("catholic")!.Ordinals.Select(BookReferences.Name).ToList();
+
+        names.SkipWhile(name => name != "Nehemiah").Take(5).Should()
+            .Equal("Nehemiah", "Tobit", "Judith", "Esther", "Job");
+    }
+
+    [Fact]
     public void RuthSitsInDifferentPlacesInDifferentCanons()
     {
         // The reason a section cannot be a column on a book. Both of these are true at once.

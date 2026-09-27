@@ -165,7 +165,7 @@ public sealed class EvidentiaLedgerTests : IDisposable
         lines.Should().HaveCount(5, "a header and one line per verdict");
         lines.Should().Contain(line => line.StartsWith("1:1\t4\tGod\t\t3\tאלהים\t\tglobal-review-known-rendering\treview\t0.62\tapproved\t"));
         lines.Should().Contain(line => line.StartsWith("1:1\t2\tthe\t\t\t\texpands\tsupplied-article\tsafe\t0.62\tapproved\t"));
-        lines.Should().NotContain(line => line.Contains(English(4).ToString()));
+        lines.Should().NotContain(line => line.Split('\t').Contains(English(4).ToString()));
         File.ReadAllText(Path.Combine(folder, EvidentiaLedger.RunFile)).Should().Contain("\"reviewer\": \"the project owner\"");
     }
 

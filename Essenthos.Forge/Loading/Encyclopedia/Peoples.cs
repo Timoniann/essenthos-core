@@ -142,7 +142,7 @@ internal static partial class GentilicNaming
         }
 
         var words = Separators()
-            .Split(Parenthetical().Replace(kjvDefinition, string.Empty))
+            .Split(WithoutParentheticals(kjvDefinition))
             .Select(part => part.Trim().Trim('-').Trim())
             .Where(part => part.Length > 0 && Latin().IsMatch(part))
             .ToList();
@@ -164,12 +164,29 @@ internal static partial class GentilicNaming
                 ? found.Groups[1].Value
                 : null;
 
+    /// <summary>
+    /// The text with every parenthetical taken out whole, the innermost first, so that a nested one —
+    /// <em>Puhites (as if from פּוּאָה (H6312)).</em> — leaves nothing of itself behind.
+    /// </summary>
+    private static string WithoutParentheticals(string text)
+    {
+        string before;
+        do
+        {
+            before = text;
+            text = Parenthetical().Replace(text, string.Empty);
+        }
+        while (text != before);
+
+        return text;
+    }
+
     private static string? Plural(string? name) =>
         name is null || name.EndsWith('s') || name.EndsWith(HebrewPlural, StringComparison.Ordinal)
             ? name
             : name + 's';
 
-    [GeneratedRegex(@"\(.*?\)")]
+    [GeneratedRegex(@"\([^()]*\)")]
     private static partial Regex Parenthetical();
 
     [GeneratedRegex(@"[,.;]")]

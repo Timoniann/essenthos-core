@@ -54,6 +54,7 @@ public sealed class PortraitBoardTests : IDisposable
         var david = Person("david", verses: 60);
         Person("abishag", verses: 12, sex: "female");
         Person("yhvh", verses: 70, sourceId: "person:YHVH_1");
+        Person("holy-spirit", verses: 120, sourceId: "essenthos:thing:holy-spirit");
         _db.EntityNameForms.Add(new EntityNameForm
         {
             EntityId = david.Id, Language = "ukr", GrammaticalCase = GrammaticalCases.Nominative, Form = "Давид",
@@ -92,6 +93,10 @@ public sealed class PortraitBoardTests : IDisposable
 
         var yhvh = shown.Single(p => p.Slug == "yhvh");
         (yhvh.NeverPictured, yhvh.Glory).Should().Be((true, true));
+
+        var spirit = list.People.Single(p => p.Slug == "holy-spirit");
+        (spirit.NeverPictured, spirit.Status, spirit.Waiting).Should().Be((true, PortraitBoard.NoPortrait, false),
+            "the Holy Spirit is not a person to portray, and nothing of it waits on the owner");
 
         var detail = await new PortraitBoard(_db, _paths).Detail("david", default);
         detail!.Brief!["age"]!.GetValue<string>().Should().Be("about thirty");

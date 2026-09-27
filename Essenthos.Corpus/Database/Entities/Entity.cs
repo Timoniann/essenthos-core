@@ -543,6 +543,22 @@ public class EntityVerse
         $"EntityVerse({EntityId} at {CanonicalBook} {CanonicalChapter}:{CanonicalVerse})";
 }
 
+/// <summary>
+/// The records the text is read to name God by: BibleData's two, as the Father and as the God of
+/// Israel, and the Holy Spirit. None of them is ever given a face or a figure; the one picture they may
+/// have is ours of the glory, light with nothing inside it to see.
+/// </summary>
+public static class DivineRecords
+{
+    public const string GodSourcePrefix = "person:YHVH_";
+
+    public const string HolySpiritSourceId = "essenthos:thing:holy-spirit";
+
+    public static bool Contains(string sourceId) =>
+        sourceId.StartsWith(GodSourcePrefix, StringComparison.Ordinal)
+        || string.Equals(sourceId, HolySpiritSourceId, StringComparison.Ordinal);
+}
+
 /// <summary>The two histories drawn on the one axis.</summary>
 public static class Realms
 {

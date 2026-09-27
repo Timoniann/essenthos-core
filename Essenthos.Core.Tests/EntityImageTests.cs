@@ -284,6 +284,7 @@ public sealed class EntityImageTests : IDisposable
     public void GodAndTheWordsForGodAreNeverDepicted()
     {
         EntityImageLoader.NeverDepicted(EntityKind.Person, "person:YHVH_2").Should().BeTrue();
+        EntityImageLoader.NeverDepicted(EntityKind.Person, "essenthos:thing:holy-spirit").Should().BeTrue();
         EntityImageLoader.NeverDepicted(EntityKind.Term, "essenthos:term:H430").Should().BeTrue();
         EntityImageLoader.NeverDepicted(EntityKind.Person, "person:Moses_1").Should().BeFalse();
     }
@@ -294,6 +295,8 @@ public sealed class EntityImageTests : IDisposable
     [InlineData(EntityKind.Person, "person:YHVH_1", "generated", false, true)]
     [InlineData(EntityKind.Person, "person:YHVH_1", "public", true, true)]
     [InlineData(EntityKind.Person, "person:YHVH_1", "public", false, true)]
+    [InlineData(EntityKind.Person, "essenthos:thing:holy-spirit", "generated", false, true)]
+    [InlineData(EntityKind.Person, "essenthos:thing:holy-spirit", "generated", true, false)]
     [InlineData(EntityKind.Term, "essenthos:term:H430", "generated", true, true)]
     [InlineData(EntityKind.Person, "person:Moses_1", "generated", false, false)]
     [InlineData(EntityKind.Person, "person:Moses_1", "public", false, false)]
@@ -453,10 +456,6 @@ public sealed class EntityImageTests : IDisposable
         (applied[0].Caption, applied[0].Captions).Should().Be(("His own caption", null));
         applied[1].Captions.Should().ContainKey("ukr");
     }
-
-    [Fact]
-    public void TheConsoleKnowsGodByTheSameRecordsTheLoaderDoes() =>
-        Essenthos.Core.Desk.PortraitBoard.GodSourcePrefix.Should().Be(EntityImageLoader.GodSourcePrefix);
 
     /// <summary>
     /// Aaron's face stands a fifth of the way across a tall portrait: the bust is the square around

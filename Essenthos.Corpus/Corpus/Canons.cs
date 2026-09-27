@@ -67,7 +67,7 @@ internal static class Canons
         "The Protestant canon with the deuterocanonical books, placed where the Vulgate places them.",
         [
             new CanonSection("old-testament", "Old Testament", [
-                .. Range(1, 17), 70, 71, .. Range(18, 22), 75, 72, .. Range(23, 24), 25, 67, 76,
+                .. Range(1, 16), 70, 71, 17, .. Range(18, 22), 75, 72, .. Range(23, 24), 25, 67, 76,
                 26, 27, 77, 78, .. Range(28, 39), 73, 74,
             ]),
             new CanonSection("new-testament", "New Testament", [.. Range(40, 66)]),
