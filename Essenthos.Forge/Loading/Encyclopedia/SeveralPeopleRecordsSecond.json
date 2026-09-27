@@ -1,0 +1,176 @@
+{
+  "decidedBy": "Essenthos, 2026-09-27, on the report that some person records hold several people, the ones left after the first reading, each occurrence read against its verse by claude-opus-5-5",
+  "policy": "A record is one person. Where a record held the verses of another man or woman of the same name, the occurrences the verse itself settles are given to the person it names, and a person the encyclopedia did not hold is written here with who else it might be. An identification the text leaves open is not ruled here; a description the verse contradicts is corrected, with the verse.",
+  "method": "manual",
+  "source": "Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27",
+  "rulings": [
+    {
+      "wordId": 6886219,
+      "reference": "2 Chronicles 25:23",
+      "strongNumber": "H3101",
+      "existing": "joash-3",
+      "why": "'Joash the king of Israel took Amaziah king of Judah, the son of Joash, the son of Jehoahaz': the Joash whose son Amaziah is, the son of Jehoahaz whom 2 Chronicles 21:17 and 22:1 also call Ahaziah, is the king of Judah. The Hebrew names him first, before the verb; the king of Israel who took Amaziah is the second Joash."
+    },
+    {
+      "wordId": 8217646,
+      "reference": "2 Chronicles 25:23",
+      "strongNumber": "H3101",
+      "existing": "joash-3",
+      "why": "'Amaziah king of Judah, the son of Joash, the son of Jehoahaz': Amaziah's father is the king of Judah (2 Chronicles 24:27), not the king of Israel who took him."
+    },
+    {
+      "wordId": 8169725,
+      "reference": "2 Kings 14:13",
+      "strongNumber": "H3060",
+      "existing": "joash-4",
+      "why": "'And Jehoash king of Israel took Amaziah king of Judah': the Jehoash who took Amaziah is the king of Israel, the son of Jehoahaz (14:8)."
+    },
+    {
+      "wordId": 8169737,
+      "reference": "2 Kings 14:13",
+      "strongNumber": "H3060",
+      "existing": "joash-3",
+      "why": "'Amaziah king of Judah, the son of Jehoash the son of Ahaziah': Amaziah's father, the son of Ahaziah, is the king of Judah (2 Kings 11:2, 12:21)."
+    },
+    {
+      "wordId": 6887277,
+      "reference": "2 Chronicles 28:9",
+      "strongNumber": "H5752",
+      "create": {
+        "slug": "oded-prophet-in-samaria",
+        "kind": "person",
+        "name": "Oded",
+        "distinguisher": "a prophet of the LORD in Samaria in the days of Pekah and Ahaz (2CH 28:6-9)",
+        "notes": "When Pekah's army brought the captives of Judah to Samaria, Oded went out to meet it and told it to send them back (2 Chronicles 28:8-11), and the captives were returned to Jericho (28:15)."
+      },
+      "why": "2 Chronicles 28:9 names 'a prophet of the LORD, whose name was Oded' at Samaria in the reign of Ahaz, when Pekah fought Judah (28:1, 28:6). The Oded of 2 Chronicles 15:1 and 15:8 is the father of Azariah, who prophesied to Asa in his fifteenth year (15:10); the reigns the text gives between Asa and Ahaz come to well over a century and a half, so they are two men."
+    },
+    {
+      "wordId": 6771769,
+      "reference": "Zechariah 1:1",
+      "strongNumber": "H2148",
+      "existing": "zechariah-13",
+      "says": {
+        "distinguisher": "the prophet, son of Berechiah, son of Iddo (ZEC 1:1), who prophesied with Haggai (EZR 5:1)",
+        "notes": "Ezra 5:1 and 6:14 call him the son of Iddo, Zechariah 1:1 and 1:7 the son of Berechiah the son of Iddo; his first word is dated to the second year of Darius (ZEC 1:1)."
+      },
+      "why": "The record said he was the Zechariah of 2 Chronicles 26:5, of Uzziah's days, and the one who went up with Ezra (Ezra 8:2-3, 'of the sons of Pharosh'). Neither verse is about the prophet of Zechariah 1:1, whose word came in the second year of Darius."
+    },
+    {
+      "wordId": 6854065,
+      "reference": "Nehemiah 8:4",
+      "strongNumber": "H2148",
+      "existing": "zechariah-24",
+      "why": "Nehemiah 8:4 names Zechariah among the men who stood at Ezra's left hand when he read the law, in Nehemiah's day. The verse does not make him the prophet of Darius' second year, and the encyclopedia holds a record of him."
+    },
+    {
+      "wordId": 6856664,
+      "reference": "Nehemiah 12:16",
+      "strongNumber": "H2148",
+      "existing": "zechariah-25",
+      "says": {
+        "distinguisher": "head of the priestly house of Iddo in the days of Joiakim (NEH 12:12, 12:16)",
+        "notes": "Nehemiah 12:12 lists the heads of the priests' houses 'in the days of Joiakim', the son of Jeshua (12:10), and 12:16 names Zechariah for the house of Iddo."
+      },
+      "alternatives": [
+        {
+          "slug": "zechariah-13",
+          "reason": "The prophet Zechariah was of Iddo's line (ZEC 1:1; EZR 5:1) and prophesied a generation before Joiakim, so he could be the head of Iddo's house that Nehemiah 12:16 names. The text does not say so."
+        }
+      ],
+      "why": "Nehemiah 12:16 names the Zechariah who headed the house of Iddo under Joiakim; whether he is the prophet the verse does not say, so he keeps his own record with the prophet as the open alternative."
+    },
+    {
+      "wordId": 6907430,
+      "reference": "Matthew 23:35",
+      "strongNumber": "G2197",
+      "create": {
+        "slug": "zacharias-son-of-barachias",
+        "kind": "person",
+        "name": "Zacharias",
+        "distinguisher": "son of Barachias, slain between the temple and the altar (MAT 23:35; LUK 11:51)",
+        "notes": "Jesus names him as the last of the righteous whose blood was shed, from Abel onward: 'Zacharias son of Barachias, whom ye slew between the temple and the altar' (Matthew 23:35); Luke 11:51 says 'which perished between the altar and the temple'."
+      },
+      "alternatives": [
+        {
+          "slug": "zechariah-12",
+          "reason": "Zechariah the son of Jehoiada the priest was stoned 'in the court of the house of the LORD' (2 Chronicles 24:20-21), which is where Matthew and Luke place this death; the verses name a different father."
+        },
+        {
+          "slug": "zechariah-13",
+          "reason": "The prophet Zechariah is 'the son of Berechiah' (Zechariah 1:1), the father Matthew names; the Old Testament does not say how he died."
+        }
+      ],
+      "why": "Matthew 23:35 and Luke 11:51 name a Zacharias killed between the temple and the altar. The encyclopedia held him on its record of the prophet; the father's name points to the prophet and the manner of death to Zechariah son of Jehoiada, and the text does not settle which, if either."
+    },
+    {
+      "wordId": 6907432,
+      "reference": "Matthew 23:35",
+      "strongNumber": "G914",
+      "create": {
+        "slug": "barachias",
+        "kind": "person",
+        "name": "Barachias",
+        "distinguisher": "father of the Zacharias slain between the temple and the altar (MAT 23:35)",
+        "notes": "Named only as the father of Zacharias in Matthew 23:35."
+      },
+      "alternatives": [
+        {
+          "slug": "berechiah-6",
+          "reason": "The prophet Zechariah's father is Berechiah (Zechariah 1:1), the same name; whether the Zacharias of Matthew 23:35 is the prophet the text does not say."
+        }
+      ],
+      "why": "Matthew 23:35 names Barachias as the father of the Zacharias slain between the temple and the altar. Which Zacharias that is stays open, and so does whether his father is the prophet's."
+    },
+    {
+      "wordId": 6911149,
+      "reference": "Matthew 27:56",
+      "strongNumber": "G3137",
+      "existing": "mary-7",
+      "says": {
+        "distinguisher": "mother of James and Joses (MAT 27:56), 'the other Mary' (MAT 27:61)",
+        "notes": "She watched the crucifixion from afar with Mary Magdalene (Matthew 27:56; Mark 15:40), saw where he was laid (Matthew 27:61; Mark 15:47) and came to the tomb on the first day of the week (Matthew 28:1; Mark 16:1; Luke 24:10). Mark 15:40 calls her son 'James the less'."
+      },
+      "alternatives": [
+        {
+          "slug": "mary",
+          "reason": "Matthew 13:55 names James and Joses among the brothers of Jesus, whose mother is Mary. Matthew calls this Mary 'the other Mary' and the mother of James and Joses, not his mother; the text does not say whether she is."
+        },
+        {
+          "slug": "mary-4",
+          "reason": "John 19:25 names Mary the wife of Cleophas among the women by the cross, where Matthew and Mark name the mother of James and Joses. The harmonies take them for one woman; the text does not say so."
+        }
+      ],
+      "why": "Matthew 27:56 names 'Mary the mother of James and Joses' beside Mary Magdalene. The encyclopedia held her occurrences on its record of Jesus' mother, which the verses do not say she is."
+    },
+    {
+      "wordId": 7021325,
+      "reference": "Revelation 1:1",
+      "strongNumber": "G2491",
+      "create": {
+        "slug": "john-who-saw-the-revelation",
+        "kind": "person",
+        "name": "John",
+        "distinguisher": "servant of Jesus Christ, who saw the Revelation in the isle of Patmos (REV 1:1, 1:9)",
+        "notes": "He writes to the seven churches in Asia (Revelation 1:4), calls himself their brother and companion in tribulation, in Patmos 'for the word of God, and for the testimony of Jesus Christ' (1:9), and 'I John saw these things, and heard them' (22:8)."
+      },
+      "alternatives": [
+        {
+          "slug": "john-2",
+          "reason": "Tradition takes him for John the son of Zebedee, one of the Twelve. The book does not say which John he is."
+        }
+      ],
+      "why": "Revelation 1:1, 1:4, 1:9 and 22:8 name the John who saw the Revelation. The encyclopedia held him on its record of the son of Zebedee, an identification the book does not make."
+    },
+    {
+      "wordId": 6894895,
+      "reference": "Matthew 4:21",
+      "strongNumber": "G2491",
+      "existing": "john-2",
+      "says": {
+        "notes": "A fisherman, mending nets with his father Zebedee and his brother James when he was called (Matthew 4:21), and one of the Twelve (Matthew 10:2)."
+      },
+      "why": "The record called him the author of the book of John, which the Gospel does not say: it names its witness only as the disciple whom Jesus loved (John 21:20, 21:24)."
+    }
+  ]
+}

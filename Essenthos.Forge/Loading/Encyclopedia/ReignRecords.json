@@ -127,7 +127,7 @@
     {"person": "micah-4", "ruler": "ahaz", "role": "prophet", "kind": "superscription", "verse": "MIC 1:1"},
     {"person": "micah-4", "ruler": "hezekiah", "role": "prophet", "kind": "superscription", "verse": "MIC 1:1"},
     {"person": "micah-4", "ruler": "hezekiah", "role": "prophet", "kind": "narrative", "verse": "JER 26:18"},
-    {"person": "oded", "ruler": "pekah", "role": "prophet", "kind": "narrative", "verse": "2CH 28:6-9"},
+    {"person": "oded-prophet-in-samaria", "ruler": "pekah", "role": "prophet", "kind": "narrative", "verse": "2CH 28:6-9"},
     {"person": "huldah", "ruler": "josiah", "role": "prophet", "kind": "narrative", "verse": "2KI 22:14"},
     {"person": "zephaniah-3", "ruler": "josiah", "role": "prophet", "kind": "superscription", "verse": "ZEP 1:1"},
     {"person": "jeremiah-6", "ruler": "josiah", "role": "prophet", "kind": "superscription", "verse": "JER 1:1-2", "year": 13},
