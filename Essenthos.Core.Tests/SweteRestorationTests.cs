@@ -391,6 +391,8 @@ public sealed class SweteCorrectionLoadTests : IDisposable
     {
         await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance)
             .Load(SweteTextSource.Read(TestResources.SweteFolder, restored: false));
+        // As a load does after writing a text: the checks below plan against these statistics.
+        await _db.Database.ExecuteSqlRawAsync("ANALYZE");
         var loader = new SweteRestorationLoader(_db, NullLogger<SweteRestorationLoader>.Instance);
 
         var outcome = await loader.Load(TestResources.SweteFolder);

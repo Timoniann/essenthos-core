@@ -20,7 +20,7 @@ namespace Essenthos.Core.Tests;
 /// </summary>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class BibleDataLoadTests : IDisposable
+public sealed class BibleDataLoadTests : IClassFixture<BibleDataLoadTests.Encyclopedia>, IDisposable
 {
     private readonly AppDbContext _db;
     private readonly IDbContextTransaction _transaction;
@@ -29,9 +29,13 @@ public sealed class BibleDataLoadTests : IDisposable
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
+    }
 
-        var folder = Path.GetDirectoryName(TestResources.Path("BibleData2026", "BibleData-Person.csv"))!;
-        new BibleDataLoader(_db, NullLogger<BibleDataLoader>.Instance).Load(folder).GetAwaiter().GetResult();
+    public sealed class Encyclopedia(WitnessDatabase database) : SeededDatabase(database)
+    {
+        protected override Task Seed(AppDbContext db) =>
+            new BibleDataLoader(db, NullLogger<BibleDataLoader>.Instance)
+                .Load(Path.GetDirectoryName(TestResources.Path("BibleData2026", "BibleData-Person.csv"))!);
     }
 
     public void Dispose()

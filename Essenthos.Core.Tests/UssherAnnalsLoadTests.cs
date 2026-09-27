@@ -18,7 +18,7 @@ namespace Essenthos.Core.Tests;
 /// </summary>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class UssherAnnalsLoadTests : IDisposable
+public sealed class UssherAnnalsLoadTests : IClassFixture<UssherAnnalsLoadTests.Annals>, IDisposable
 {
     private const int FirstApostolicBook = 40;
 
@@ -29,10 +29,16 @@ public sealed class UssherAnnalsLoadTests : IDisposable
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
+    }
 
-        var folder = Path.GetDirectoryName(TestResources.Path("BibleData2026", "BibleData-Person.csv"))!;
-        new BibleDataLoader(_db, NullLogger<BibleDataLoader>.Instance).Load(folder).GetAwaiter().GetResult();
-        new UssherAnnalsLoader(_db, NullLogger<UssherAnnalsLoader>.Instance).Load(folder).GetAwaiter().GetResult();
+    public sealed class Annals(WitnessDatabase database) : SeededDatabase(database)
+    {
+        protected override async Task Seed(AppDbContext db)
+        {
+            var folder = Path.GetDirectoryName(TestResources.Path("BibleData2026", "BibleData-Person.csv"))!;
+            await new BibleDataLoader(db, NullLogger<BibleDataLoader>.Instance).Load(folder);
+            await new UssherAnnalsLoader(db, NullLogger<UssherAnnalsLoader>.Instance).Load(folder);
+        }
     }
 
     public void Dispose()
