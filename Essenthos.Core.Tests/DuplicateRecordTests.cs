@@ -1,4 +1,5 @@
-﻿using Essenthos.Core.Database;
+﻿using System.Text.Json;
+using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
@@ -333,7 +334,7 @@ public sealed class DuplicateRecordTests : IDisposable
         _db.EntityNames.Add(new EntityName { Entity = _folded, Label = "Helkiah", HebrewStrongNumber = "H2518" });
         await _db.SaveChangesAsync();
 
-        var parted = await _loader.Split([Helkiah]);
+        var (parted, _) = await _loader.Split([Helkiah]);
 
         parted.Should().Be(4);
         (await _db.WordEntities.AsNoTracking().SingleAsync()).EntityId.Should().Be(_meshullam.Id);
@@ -357,7 +358,7 @@ public sealed class DuplicateRecordTests : IDisposable
         _db.EntityNames.Add(new EntityName { Entity = _folded, Label = "Helkiah", HebrewStrongNumber = "H2518" });
         await _db.SaveChangesAsync();
 
-        var parted = await _loader.Split([Helkiah with { Name = null }]);
+        var (parted, _) = await _loader.Split([Helkiah with { Name = null }]);
 
         parted.Should().Be(2);
         (await _db.WordEntities.AsNoTracking().SingleAsync()).EntityId.Should().Be(_meshullam.Id);
@@ -478,6 +479,84 @@ public sealed class DuplicateRecordTests : IDisposable
             .Found.Should().Be(0);
     }
 
+    /// <summary>
+    /// The annotation pass ran after the split's record came to bear the name and before the split said
+    /// what it chose, and withdrew Hilkiah's word in Nehemiah as a name two men bear. The ruling lists
+    /// the verse as his: the word and the King James word it renders name him again on the ruling, as
+    /// the words the split chose would, once and not twice.
+    /// </summary>
+    [Fact]
+    public async Task AWordWithdrawnInAVerseTheRulingKeepsNamesTheRecordAgain()
+    {
+        var english = KeptVerse();
+        Cites(_folded, 16, 11, 11);
+        await _db.SaveChangesAsync();
+        var keeps = Helkiah with { Name = null, Keeps = ["NEH 11:11"] };
+
+        var (_, kept) = await _loader.Split([keeps]);
+
+        kept.Should().Be(2);
+        var rows = await _db.WordEntities.AsNoTracking().Include(a => a.Claims).Include(a => a.Word)
+            .Where(a => a.EntityId == _folded.Id).ToListAsync();
+        rows.Should().HaveCount(2).And.OnlyContain(a => a.Method == LinkMethod.Manual && a.Source == DuplicateRecordLoader.Chose);
+        var seed = rows.Single(a => a.Word!.TextId == _hebrew.Id);
+        seed.Confidence.Should().Be(EntityAnnotationLoader.Corroborated, "the verse list names him in the verse");
+        seed.Claims.Select(c => (c.Method, c.Source)).Should().BeEquivalentTo(
+            [(LinkMethod.Manual, DuplicateRecordLoader.Chose), (LinkMethod.Manual, EntityAnnotationLoader.VerseList)]);
+        rows.Single(a => a.Word!.TextId == english.Id).Note.Should().StartWith("through BHSA word ");
+        (await _loader.Split([keeps])).Kept.Should().Be(0);
+        var check = new CorpusCheck(_db, NullLogger<CorpusCheck>.Instance);
+        (await check.Measure()).Integrity
+            .Single(i => i.Breaks == "words a name-resolution annotated although the name is several people's")
+            .Found.Should().Be(0);
+    }
+
+    /// <summary>
+    /// A third Hilkiah bears the name: the resolution never answered the word, and a ruling on which
+    /// verses are whose between two of them does not choose among three.
+    /// </summary>
+    [Fact]
+    public async Task AVerseTheRulingKeepsIsLeftAloneWhereAThirdRecordBearsTheName()
+    {
+        KeptVerse();
+        _db.EntityNames.Add(new EntityName { Entity = _kept, Label = "Hilkiah", HebrewStrongNumber = "H2518" });
+        await _db.SaveChangesAsync();
+
+        var (_, kept) = await _loader.Split([Helkiah with { Name = null, Keeps = ["NEH 11:11"] }]);
+
+        kept.Should().Be(0);
+        (await _db.WordEntities.AnyAsync()).Should().BeFalse();
+    }
+
+    /// <summary>
+    /// Nehemiah 11:11 in the Hebrew, the name marked a person's and borne by Hilkiah and Meshullam
+    /// alike, and in the King James linked to it by the translators' mapping; nothing names either word.
+    /// </summary>
+    private Text KeptVerse()
+    {
+        _db.AddBook(_hebrew, 16, "Nehemiah", (11, 11, ["חִלְקִיָּה"]));
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "en");
+        _db.AddBook(english, 16, "Nehemiah", (11, 11, ["Hilkiah"]));
+        _db.EntityNames.Add(new EntityName { Entity = _folded, Label = "Hilkiah", HebrewStrongNumber = "H2518" });
+        _db.EntityNames.Add(new EntityName { Entity = _meshullam, Label = "Hilkiah", HebrewStrongNumber = "H2518" });
+        _db.SaveChanges();
+
+        var hebrew = _db.WordAt(_hebrew, 11, 11, 1);
+        hebrew.StrongNumber = "H2518";
+        hebrew.Morphology = JsonDocument.Parse("""{"pos": "nmpr", "nameType": "pers"}""");
+        var rendering = _db.WordAt(english, 11, 11, 1);
+        var link = new Link
+        {
+            FromTextId = _hebrew.Id, ToTextId = english.Id, Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource, Source = "a test",
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = hebrew, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.To });
+        _db.SaveChanges();
+        return english;
+    }
+
     [Fact]
     public async Task ASplitMadeFindsNothingLeftToMove()
     {
@@ -485,8 +564,8 @@ public sealed class DuplicateRecordTests : IDisposable
         await _db.SaveChangesAsync();
         await _loader.Split([Helkiah]);
 
-        (await _loader.Split([Helkiah])).Should().Be(0);
-        (await _loader.Split([Helkiah with { To = "nobody" }])).Should().Be(0);
+        (await _loader.Split([Helkiah])).Should().Be((0, 0));
+        (await _loader.Split([Helkiah with { To = "nobody" }])).Should().Be((0, 0));
     }
 
     /// <summary>A pair read on another day, under another ruling, says whose reading it is.</summary>
@@ -514,5 +593,7 @@ public sealed class DuplicateRecordTests : IDisposable
         list.Splits.Should().NotBeNullOrEmpty();
         list.Splits!.SelectMany(split => split.Verses).Should().OnlyContain(span => ScriptureSpan.TryParse(span) != null);
         list.Splits.Select(split => split.From).Should().NotIntersectWith(list.Merges.Select(m => m.Folds));
+        list.Splits.SelectMany(split => split.Keeps ?? []).Should().OnlyContain(span => ScriptureSpan.TryParse(span) != null);
+        list.Splits.Single(split => split.To == "ahasuerus-father-of-darius").Keeps.Should().Contain("EZR 4:6");
     }
 }

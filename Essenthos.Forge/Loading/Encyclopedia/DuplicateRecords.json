@@ -1,5 +1,5 @@
 {
-  "about": "Records BibleData wrote twice for one person, each folded into the record that keeps its address; the same for the two records it writes for one Hebrew word of the creation, earth and heaven, by the owner's ruling of 2026-09-24, each pair carrying its own source; and, under 'splits', a record it wrote once for two men, whose second man's verses move to his own record. The pairs come from an audit that showed a model every same-name, same-kind pair of records under one Strong number with their descriptions and verse lists: 1,021 pairs, 83 judged one referent, 40 of them with high confidence, 39 medium and 4 low. Every pair was then read again against its verses; the ones under 'merges' hold up, and the ones under 'declined' do not, or rest on a question the text leaves open. A pair read less surely than the list's own confidence carries its own. The record more words already name keeps its address, so fewer annotations move; on a tie the lower-numbered one does. Everything the folded record held moves with it, and its address, name, description and BibleData id stay on as a merged record, so a link to it still arrives and what the dataset said is not lost.",
+  "about": "Records BibleData wrote twice for one person, each folded into the record that keeps its address; the same for the two records it writes for one Hebrew word of the creation, earth and heaven, by the owner's ruling of 2026-09-24, each pair carrying its own source; and, under 'splits', a record it wrote once for two men, whose second man's verses move to his own record, and where the ruling lists the verses the first man keeps, his words there name him again. The pairs come from an audit that showed a model every same-name, same-kind pair of records under one Strong number with their descriptions and verse lists: 1,021 pairs, 83 judged one referent, 40 of them with high confidence, 39 medium and 4 low. Every pair was then read again against its verses; the ones under 'merges' hold up, and the ones under 'declined' do not, or rest on a question the text leaves open. A pair read less surely than the list's own confidence carries its own. The record more words already name keeps its address, so fewer annotations move; on a tie the lower-numbered one does. Everything the folded record held moves with it, and its address, name, description and BibleData id stay on as a merged record, so a link to it still arrives and what the dataset said is not lost.",
   "method": "model-reading",
   "confidence": 0.9,
   "source": "Essenthos: BibleData's same-name records compared pair by pair by claude-opus-5 (prompt records-1, 2026-09-06), and each pair it held to be one person read again against its verses by claude-opus-5-5, the high pairs on 2026-09-23 and the medium and low ones on 2026-09-24",
@@ -703,7 +703,11 @@
       "verses": [
         "DAN 9:1"
       ],
-      "why": "Daniel 9:1 names Darius 'the son of Ahasuerus, of the seed of the Medes'. The king of Esther and of Ezra 4:6 reigns after Cyrus; the father of the Mede who took the kingdom at Babylon's fall is another man."
+      "why": "Daniel 9:1 names Darius 'the son of Ahasuerus, of the seed of the Medes'. The king of Esther and of Ezra 4:6 reigns after Cyrus; the father of the Mede who took the kingdom at Babylon's fall is another man.",
+      "keeps": [
+        "EZR 4:6",
+        "EST 1:1-10:3"
+      ]
     },
     {
       "from": "beeri",
@@ -734,7 +738,11 @@
       "verses": [
         "2CH 28:9"
       ],
-      "why": "2 Chronicles 28:9 is the prophet Oded at Samaria in the days of Ahaz and Pekah (28:1, 28:6). The record's own man is the father of Azariah, who prophesied to Asa in his fifteenth year (15:1, 15:10), more than a century and a half of the text's reigns earlier."
+      "why": "2 Chronicles 28:9 is the prophet Oded at Samaria in the days of Ahaz and Pekah (28:1, 28:6). The record's own man is the father of Azariah, who prophesied to Asa in his fifteenth year (15:1, 15:10), more than a century and a half of the text's reigns earlier.",
+      "keeps": [
+        "2CH 15:1",
+        "2CH 15:8"
+      ]
     },
     {
       "from": "zechariah-13",

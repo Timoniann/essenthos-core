@@ -17,6 +17,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Moved">Rows moved onto the record that stays, across every table that names a record.</param>
 /// <param name="Joined">Rows that said again what the record that stays already said, joined into its own.</param>
 /// <param name="Parted">Rows a split moved off the dataset's record onto the other man's, this run.</param>
+/// <param name="Kept">Words a split gave back to the dataset's record in the verses it keeps, this run.</param>
 internal sealed record DuplicateRecordOutcome(
     int Listed,
     int Folded,
@@ -25,13 +26,15 @@ internal sealed record DuplicateRecordOutcome(
     int Moved,
     int Joined,
     TimeSpan Elapsed,
-    int Parted = 0)
+    int Parted = 0,
+    int Kept = 0)
 {
     public override string ToString() =>
         $"{Listed} records the dataset wrote twice for one referent: {Folded} folded into the record that " +
         $"stays ({Moved} rows moved, {Joined} that repeated it joined), {AlreadyFolded} folded by an earlier " +
         $"run, {Missing} naming a record not held, in {Elapsed}" +
-        (Parted > 0 ? $"; {Parted} rows of a record that held two men moved to the other" : "");
+        (Parted > 0 ? $"; {Parted} rows of a record that held two men moved to the other" : "") +
+        (Kept > 0 ? $"; {Kept} words given back to the record in the verses it keeps" : "");
 }
 
 /// <summary>
@@ -287,8 +290,8 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
     {
         var list = Read();
         var folded = await Fold(list, cancellationToken);
-        var parted = await Split(list.Splits ?? [], cancellationToken);
-        return folded with { Parted = parted };
+        var (parted, kept) = await Split(list.Splits ?? [], cancellationToken);
+        return folded with { Parted = parted, Kept = kept };
     }
 
     /// <summary>
@@ -306,7 +309,8 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
     /// An annotation his record already has for the same word keeps the moved one's testimony as its
     /// claims, as a fold does. The rest of the record stays as it was, except that a word it keeps
     /// under a name the split has made the other man's too now says the split chose it
-    /// (<see cref="ChosenStatements"/>).
+    /// (<see cref="ChosenStatements"/>), and a word in a verse the ruling says the record keeps, left
+    /// naming nobody, names it again (<see cref="KeptSeed"/>).
     /// </para>
     ///
     /// <para>
@@ -314,12 +318,14 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
     /// again beside it; a split already made finds nothing left to move.
     /// </para>
     /// </summary>
-    /// <returns>The rows moved or joined.</returns>
-    internal async Task<int> Split(IReadOnlyList<DuplicateRecordSplit> splits, CancellationToken cancellationToken = default)
+    /// <returns>The rows moved or joined, and the words given back to the record in the verses it keeps.</returns>
+    internal async Task<(int Parted, int Kept)> Split(
+        IReadOnlyList<DuplicateRecordSplit> splits,
+        CancellationToken cancellationToken = default)
     {
         if (splits.Count == 0)
         {
-            return 0;
+            return (0, 0);
         }
 
         var slugs = splits.SelectMany(s => new[] { s.From, s.To }).Distinct(StringComparer.Ordinal).ToList();
@@ -329,7 +335,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-        var parted = 0;
+        int parted = 0, kept = 0;
         foreach (var split in splits)
         {
             if (!held.TryGetValue(split.From, out var from) || !held.TryGetValue(split.To, out var to))
@@ -365,6 +371,10 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                     ("method", EnumSpelling.Of(LinkMethod.Manual)), ("chose", Chose));
             }
 
+            var given = split.Keeps is { Count: > 0 }
+                ? await Keep(connection, transaction, from, to, split.Keeps, cancellationToken)
+                : 0;
+
             var (moved, joined) = await Counted(connection, transaction, cancellationToken);
             await transaction.CommitAsync(cancellationToken);
             if (moved + joined > 0)
@@ -374,10 +384,58 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                     split.To, split.Why);
             }
 
+            if (given > 0)
+            {
+                logger.LogInformation(
+                    "Gave {Words} words back to {From} in the verses the ruling leaves it: {Why}", given, split.From, split.Why);
+            }
+
             parted += moved + joined;
+            kept += given;
         }
 
-        return parted;
+        return (parted, kept);
+    }
+
+    /// <summary>
+    /// <see cref="KeptSeed"/> for one split, carried and settled in its transaction.
+    /// </summary>
+    /// <returns>The words that name the record again.</returns>
+    private static async Task<int> Keep(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        int from,
+        int to,
+        IReadOnlyList<string> verses,
+        CancellationToken cancellationToken)
+    {
+        var spans = verses.Select(ScriptureSpan.Parse).ToList();
+        await Annotating.Run(connection, transaction, Keeping, cancellationToken,
+            ("books", spans.Select(v => v.Book).ToArray()),
+            ("fromChapters", spans.Select(v => v.FromChapter).ToArray()),
+            ("fromVerses", spans.Select(v => v.FromVerse ?? 0).ToArray()),
+            ("toChapters", spans.Select(v => v.ToChapter).ToArray()),
+            ("toVerses", spans.Select(v => v.ToVerse ?? int.MaxValue).ToArray()));
+        await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
+        await Annotating.Run(connection, transaction, KeptSeed, cancellationToken,
+            ("from", from), ("to", to), ("witness", EntityCandidates.Witness),
+            ("resolution", EntityAnnotationLoader.NameResolution),
+            ("corroborated", EntityAnnotationLoader.Corroborated),
+            ("method", EnumSpelling.Of(LinkMethod.Manual)), ("chose", Chose));
+        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
+
+        await using var settle = new NpgsqlCommand(
+            KeptSettle, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+        settle.CommandTimeout = Annotating.Patient;
+        var given = await settle.ExecuteNonQueryAsync(cancellationToken);
+
+        foreach (var claim in KeptClaims)
+        {
+            await Annotating.Run(connection, transaction, claim, cancellationToken,
+                ("corroborated", EntityAnnotationLoader.Corroborated), ("verseList", EntityAnnotationLoader.VerseList));
+        }
+
+        return given;
     }
 
     /// <summary>How many of <see cref="SplitStatements"/>, at its end, move the name.</summary>
@@ -460,6 +518,97 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         """
         UPDATE word_entity a SET method = @method, source = @chose
         FROM left_to_choose l WHERE a.id = l.id
+        """,
+    ];
+
+    /// <summary>The verses a ruling says the dataset's record keeps, as the spans the file writes.</summary>
+    private const string Keeping =
+        """
+        CREATE TEMP TABLE keeping (book integer NOT NULL, from_chapter integer NOT NULL, from_verse integer NOT NULL,
+                                   to_chapter integer NOT NULL, to_verse integer NOT NULL) ON COMMIT DROP;
+        INSERT INTO keeping SELECT * FROM unnest(@books, @fromChapters, @fromVerses, @toChapters, @toVerses)
+        """;
+
+    /// <summary>
+    /// The Hebrew words of the verses a ruling says the dataset's record keeps, where the name is one
+    /// only the two men bear and nothing names the word: what the resolution wrote there before the
+    /// split gave the other man the name, seeded again as <see cref="ChosenStatements"/> leaves it.
+    ///
+    /// <para>
+    /// <see cref="ChosenStatements"/> only rewrites what is there. A corpus whose annotation pass ran
+    /// between the other man's record bearing the name and the split saying what it chose has already
+    /// withdrawn those words as a name two men bear, which left Ahasuerus of Esther naming no word in
+    /// any text. The seed has the resolution's confidence and the verse list's agreement, and is
+    /// carried over the links into every text, on the ruling rather than the number. A word that
+    /// already names anybody is left as it is, so a second run, and a corpus built from nothing where
+    /// the words were never withdrawn, write nothing. A number a third record bears is left alone: the
+    /// resolution never answered it, and the ruling says whose the verses are, not which of three.
+    /// </para>
+    /// </summary>
+    private static readonly string KeptSeed =
+        $"""
+         INSERT INTO pending_annotation
+             (word_id, entity_id, confidence, claim_confidence, corroborated, method, source, note)
+         SELECT w.id, @from,
+                CASE WHEN agreed.named THEN @corroborated ELSE @resolution END,
+                @resolution, agreed.named, @method, @chose,
+                w.strong_number || ', which BHSA marks ' || (w.morphology->>'nameType')
+         FROM word w
+         JOIN text t ON t.id = w.text_id AND t.slug = @witness
+         JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+         JOIN entity kept ON kept.id = @from
+         CROSS JOIN LATERAL (SELECT EXISTS (
+             SELECT 1 FROM entity_verse ev
+             WHERE ev.entity_id = @from
+               AND (ev.canonical_book, ev.canonical_chapter, ev.canonical_verse)
+                   = (r.canonical_book, r.canonical_chapter, r.canonical_verse)) AS named) agreed
+         WHERE EXISTS (SELECT 1 FROM keeping k
+                       WHERE k.book = r.canonical_book
+                         AND (r.canonical_chapter, r.canonical_verse) >= (k.from_chapter, k.from_verse)
+                         AND (r.canonical_chapter, r.canonical_verse) <= (k.to_chapter, k.to_verse))
+           AND NOT {string.Format(InParting, "r")}
+           AND w.strong_number IS NOT NULL
+           AND EXISTS (SELECT 1 FROM entity_name n
+                       WHERE {EntityCandidates.Resolves} = @from AND n.hebrew_strong_number = w.strong_number)
+           AND EXISTS (SELECT 1 FROM entity_name n
+                       WHERE {EntityCandidates.Resolves} = @to AND n.hebrew_strong_number = w.strong_number)
+           AND (SELECT count(DISTINCT {EntityCandidates.Resolves}) FROM entity_name n
+                WHERE n.hebrew_strong_number = w.strong_number OR n.greek_strong_number = w.strong_number) = 2
+           AND kept.kind::text = {EntityAnnotationLoader.Marked}
+           AND NOT EXISTS (SELECT 1 FROM word_entity spoken WHERE spoken.word_id = w.id)
+         """;
+
+    /// <summary>The seeds and the words they reached, wherever the word names nobody else.</summary>
+    private const string KeptSettle =
+        """
+        INSERT INTO word_entity (word_id, entity_id, method, confidence, source, note)
+        SELECT a.word_id, a.entity_id, a.method, a.confidence, a.source, a.note
+        FROM pending_annotation a
+        WHERE NOT EXISTS (SELECT 1 FROM word_entity spoken
+                          WHERE spoken.word_id = a.word_id AND spoken.entity_id <> a.entity_id)
+        ON CONFLICT (word_id, entity_id) DO NOTHING
+        """;
+
+    /// <summary>
+    /// The ruling's claim and, where the verse list names the record in the verse, the list's: the
+    /// two a resolution's row holds once <see cref="ChosenStatements"/> has rewritten it.
+    /// </summary>
+    private static readonly string[] KeptClaims =
+    [
+        """
+        INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
+        SELECT a.id, p.method, p.claim_confidence, p.source, a.note
+        FROM word_entity a
+        JOIN pending_annotation p ON p.word_id = a.word_id AND p.entity_id = a.entity_id
+        ON CONFLICT DO NOTHING
+        """,
+        """
+        INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
+        SELECT a.id, p.method, @corroborated * coalesce(p.link, 1.0), @verseList, a.note
+        FROM word_entity a
+        JOIN pending_annotation p ON p.word_id = a.word_id AND p.entity_id = a.entity_id
+        WHERE p.corroborated
+        ON CONFLICT DO NOTHING
         """,
     ];
 
@@ -737,7 +886,16 @@ internal sealed record DuplicateRecordList(
 /// </param>
 /// <param name="Verses">The verses that are his, as spans: <c>JHN 1:45-49</c>.</param>
 /// <param name="Why">Who ruled so, and on what.</param>
-internal sealed record DuplicateRecordSplit(string From, string To, string? Name, IReadOnlyList<string> Verses, string Why);
+/// <param name="Keeps">
+/// The verses the ruling says stay the dataset's record's, as spans; null where it says only which move.
+/// </param>
+internal sealed record DuplicateRecordSplit(
+    string From,
+    string To,
+    string? Name,
+    IReadOnlyList<string> Verses,
+    string Why,
+    IReadOnlyList<string>? Keeps = null);
 
 /// <param name="Keeps">The record that stays, by address.</param>
 /// <param name="Folds">The record folded into it, by address.</param>

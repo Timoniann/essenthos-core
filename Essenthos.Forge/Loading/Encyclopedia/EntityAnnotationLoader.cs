@@ -202,7 +202,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// in the data contradicts the annotation — this is the room left for what the data does not
     /// yet hold.
     /// </summary>
-    private const double NameResolution = 0.9;
+    internal const double NameResolution = 0.9;
 
     /// <summary>
     /// The same for a Greek name, and lower, because two of its three supports are weaker.
@@ -225,7 +225,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// 13,587 of 14,138 occurrences; over the Greek, on 5,458 of 5,722. Almost every disagreement
     /// is the list being silent about a verse rather than naming somebody else.
     /// </summary>
-    private const double Corroborated = 0.99;
+    internal const double Corroborated = 0.99;
 
     /// <summary>
     /// The same, where the name itself is the corpus's own conclusion rather than the
@@ -284,7 +284,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         "BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders " +
         "it in a verse the geocoding dataset says the place is named in";
 
-    private const string VerseList =
+    internal const string VerseList =
         "the encyclopedia's own list of the verses each entity is named in";
 
     /// <summary>
@@ -444,7 +444,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// that carry one kind and not of four hundred thousand.
     /// </para>
     /// </summary>
-    private static readonly string Marked =
+    internal static readonly string Marked =
         $"""
          CASE w.morphology->>'nameType'
               WHEN 'pers' THEN CASE WHEN {ReadAsAPlace} THEN 'place' ELSE 'person' END
