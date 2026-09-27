@@ -206,6 +206,46 @@ answering behind its password and nothing more.
 A publication stops the API for the second or two the rename takes; Caddy holds requests through it.
 Measured on the rehearsal under continuous traffic: 2,230 requests, none failed, the slowest 5.4 s.
 
+## Pages for search engines and link previews
+
+The reader is one script, and crawlers and link-preview bots do not reliably run it. So every page of
+the site is written out by the API first — its title, description, canonical address and its
+addresses in the other three languages, Open Graph and Twitter tags, and the page's essentials (the
+verse, the chapter's text in the language's own Bible, a record's name, line and first verses) inside
+`#root`, where the application's first render replaces them. Caddy routes it (`(pages)` in the
+Caddyfile):
+
+| Request | Goes to |
+|---|---|
+| `/v1/*` | the API, as before |
+| `/robots.txt`, `/sitemap.xml`, `/sitemaps/*` | the API, as `/v1/robots.txt` and so on |
+| `/assets/*`, and anything with a file extension | the web container, as before |
+| every other `GET` — a page | the API, as `/v1/pages/<the address>` |
+
+A page the API answers with a server error or a refusal, or does not answer within two seconds, is
+served by the web container as the plain application, so the API being down or restarting costs the
+preview and never the page. An address that names nothing is the API's `404`, carrying the
+application's own not-found page.
+
+The API reads the reader's `index.html` from the web container (`Site__Shell` in `compose.yaml`) and
+every absolute link names `Site__Origin`; both are set there from `SITE_DOMAIN` and `DEV_DOMAIN`, so
+`.env` needs nothing new. The page wording — each language's titles and descriptions — is the reader's
+own `meta` namespace, read from `/meta/<language>.json` beside `index.html` where the web build
+publishes it, and from the copy compiled into the API (`Essenthos.Api/Pages/Wording/`) where it does
+not. A page is kept ten minutes once written; a reader redeploy is picked up within a minute.
+
+When the reader gains a public page at a new address, add it to `PageSections` in
+`Essenthos.Api/Pages/PageAddress.cs` — until then that address is answered `404` to a search engine,
+although a reader who follows a link still gets the page.
+
+To see what a crawler sees:
+
+    curl -s https://essenthos.org/uk/read/mark/3/3 | grep -E '<title>|canonical|hreflang'
+    curl -s https://essenthos.org/robots.txt
+
+and give `https://essenthos.org/sitemap.xml` to Google Search Console and Bing Webmaster Tools once.
+Dev asks for a password and says `noindex`, so nothing there is indexed or previewed.
+
 ## The database's extensions
 
 The corpus compares spellings with `similarity()` from `pg_trgm`, a contrib module of Postgres itself,

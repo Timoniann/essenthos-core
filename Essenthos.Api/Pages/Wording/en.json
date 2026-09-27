@@ -1,0 +1,178 @@
+{
+  "site": "Essenthos",
+  "titled": "{{title}} · Essenthos",
+  "home": {
+    "title": "Essenthos — the Bible beside its Hebrew and Greek, word by word",
+    "description": "Read the Bible beside the Hebrew and Greek it was translated from, word by word, with a lexicon, an encyclopedia of people and places, a timeline and a map."
+  },
+  "quoted": "“{{text}}”",
+  "beside": {
+    "hebrew": "Read it beside the Hebrew, word by word.",
+    "greek": "Read it beside the Greek, word by word."
+  },
+  "chapter": {
+    "description": "{{reference}}, {{text}}: {{opening}} {{beside}}",
+    "plain": "{{reference}}. {{beside}}"
+  },
+  "verse": {
+    "description": "{{reference}}, {{text}}: {{quote}} {{beside}}"
+  },
+  "entity": {
+    "verses_one": "Named in {{count}} verse of the Bible.",
+    "verses_other": "Named in {{count}} verses of the Bible.",
+    "kind": {
+      "person": "a person in the Bible",
+      "place": "a place in the Bible",
+      "people": "a people in the Bible",
+      "term": "a word the Bible uses of God",
+      "title": "a title in the Bible",
+      "object": "an object in the Bible",
+      "observance": "a feast or observance in the Bible"
+    }
+  },
+  "strong": {
+    "hebrew": "Hebrew word",
+    "greek": "Greek word",
+    "uses_one": "Used {{count}} time in the Bible.",
+    "uses_other": "Used {{count}} times in the Bible."
+  },
+  "event": {
+    "description": "{{name}}: when it happened by each reckoning of the Bible's chronology, and the verses it is read from."
+  },
+  "period": {
+    "description": "{{name}}: its years by each reckoning, and the events that fall within it."
+  },
+  "text": {
+    "translation": "Read the {{name}} online, chapter by chapter, beside the Hebrew and Greek it was translated from.",
+    "original": "Read the {{name}} online, chapter by chapter, word by word with its grammar and meanings."
+  },
+  "familyTree": {
+    "title": "Family tree of {{name}}",
+    "description": "The ancestors and descendants of {{name}}, as the Bible records them."
+  },
+  "syntaxGroup": {
+    "title": "Syntax of {{reference}}",
+    "description": "{{reference}}: a clause or phrase of the Hebrew, and what the analysis says it does."
+  },
+  "search": {
+    "query": "“{{query}}” — search the Bible"
+  },
+  "textName": {
+    "UBIO": "Ohienko Bible",
+    "UKR1871": "Kulish Bible",
+    "NPU2022": "New Ukrainian Translation",
+    "LUTH1912": "Luther Bible 1912",
+    "ELB1905": "Elberfelder Bible 1905",
+    "RV1909": "Reina-Valera 1909"
+  },
+  "page": {
+    "texts": {
+      "title": "Bible texts and translations",
+      "description": "Every Bible here — the Hebrew and Greek, the ancient translations and the modern ones — and what each one is."
+    },
+    "lexicon": {
+      "title": "Lexicon of Biblical Hebrew and Greek",
+      "description": "Strong's dictionary: every Hebrew and Greek word of the Bible, what it means, and every verse that uses it."
+    },
+    "syntax": {
+      "title": "Syntax of the Hebrew Bible",
+      "description": "Every clause and phrase of the Hebrew, and what the analysis says each one does."
+    },
+    "encyclopedia": {
+      "title": "People and places of the Bible",
+      "description": "Everyone and everywhere the Bible names, what it calls them, and how they stand to one another."
+    },
+    "familyTree": {
+      "title": "Family trees of the Bible",
+      "description": "Anyone's ancestors and descendants on one page, as far back and as wide as the records go."
+    },
+    "events": {
+      "title": "Events of the Bible",
+      "description": "Every event the Bible's chronology dates, in order, each showing the arithmetic behind its year."
+    },
+    "timeline": {
+      "title": "Timeline of the Bible and world history",
+      "description": "Scripture and world history on one axis, under whichever reckoning you choose."
+    },
+    "kings": {
+      "title": "Kings of Israel and Judah",
+      "description": "The kings of Israel and Judah side by side, each reign where the Bible dates it."
+    },
+    "map": {
+      "title": "Map of Bible places",
+      "description": "Every place the Bible names that can be placed, by period, book and land."
+    },
+    "concordance": {
+      "title": "Concordance",
+      "description": "Every verse a word is used in, and the Hebrew or Greek it translates."
+    },
+    "parallels": {
+      "title": "Parallel passages",
+      "description": "Two passages that tell the same events, side by side."
+    },
+    "search": {
+      "title": "Search the Bible",
+      "description": "Search the text of every Bible here, in any of its languages."
+    },
+    "about": {
+      "title": "About Essenthos",
+      "description": "What Essenthos is: the Bible read beside the Hebrew and Greek it was translated from, word by word."
+    },
+    "sources": {
+      "title": "Sources and licences",
+      "description": "Where every text and dataset here comes from, who made it, and on what terms."
+    },
+    "licence": {
+      "title": "Licence",
+      "description": "What may be reused from Essenthos, and what each source's licence asks."
+    },
+    "privacy": {
+      "title": "Privacy",
+      "description": "What Essenthos keeps about its readers, and what it does not."
+    },
+    "terms": {
+      "title": "Terms of use",
+      "description": "The terms on which Essenthos can be used."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "How to reach the people who make Essenthos."
+    },
+    "support": {
+      "title": "Support the project",
+      "description": "How to give towards Essenthos, and what it pays for."
+    },
+    "downloads": {
+      "title": "Downloads",
+      "description": "Whole texts and data to take away."
+    },
+    "api": {
+      "title": "API",
+      "description": "How to read the texts, the lexicon and the encyclopedia from your own program."
+    },
+    "suggestions": {
+      "title": "Suggestions and ideas",
+      "description": "Corrections and ideas readers have sent, and what came of them."
+    },
+    "newSuggestion": {
+      "title": "Suggest a correction or an idea",
+      "description": "Send a correction or an idea to the people who make Essenthos."
+    },
+    "account": {
+      "title": "Your account",
+      "description": "Your profile, your sign-ins and your devices."
+    },
+    "bookmarks": {
+      "title": "Your bookmarks",
+      "description": "Every verse and chapter you have bookmarked, in the order of the Bible."
+    },
+    "admin": {
+      "title": "Admin",
+      "description": "Suggestions, readers and activity."
+    },
+    "notFound": {
+      "title": "No such page",
+      "description": "That address does not match anything here."
+    }
+  }
+}

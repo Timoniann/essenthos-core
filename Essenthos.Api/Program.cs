@@ -4,6 +4,7 @@ using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Endpoints;
+using Essenthos.Core.Pages;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
@@ -67,6 +68,13 @@ builder.Services.AddSingleton<DatasetCountsCache>();
 builder.Services.AddSingleton<WordForms>();
 builder.Services.AddSingleton(services =>
     new SiteSettingsFile(siteSettings, services.GetRequiredService<ILogger<SiteSettingsFile>>()));
+
+// Each page of the reader written out for a search engine or a link preview, which the proxy asks
+// for before it falls back to the plain application.
+builder.Services.AddSingleton<PageShell>();
+builder.Services.AddSingleton<PageCache>();
+builder.Services.AddScoped<PageLoader>();
+builder.Services.AddScoped<Sitemaps>();
 
 // Accounts: the database the API owns and writes, and sign-in with whichever providers are
 // configured. Reading needs none of it.
@@ -161,6 +169,7 @@ v1.MapChapterBookmarks();
 v1.MapSuggestions();
 v1.MapAdmin();
 v1.MapCspReports();
+v1.MapPages();
 
 // Every chapter's context is weighed against counts over the whole Bible; counting them as the
 // process starts spares the first reader to open the panel the wait.

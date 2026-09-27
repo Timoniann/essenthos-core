@@ -31,6 +31,13 @@
     </ItemGroup>
 
     <ItemGroup>
+        <!-- What each page is called in each language, as the reader's own meta.json words it; read
+             from the web container where it publishes them, and from here where it does not. -->
+        <Content Remove="Pages\Wording\*.json" />
+        <EmbeddedResource Include="Pages\Wording\*.json" LogicalName="Wording.%(Filename).json" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="9.4.1" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.12" />
     </ItemGroup>

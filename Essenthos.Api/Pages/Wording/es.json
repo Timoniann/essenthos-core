@@ -1,0 +1,180 @@
+{
+  "site": "Essenthos",
+  "titled": "{{title}} · Essenthos",
+  "home": {
+    "title": "Essenthos — la Biblia junto a su hebreo y su griego, palabra por palabra",
+    "description": "Lea la Biblia junto al texto hebreo y griego del que se tradujo, palabra por palabra, con un léxico, una enciclopedia de personas y lugares, una cronología y un mapa."
+  },
+  "quoted": "«{{text}}»",
+  "beside": {
+    "hebrew": "Léalo junto al original hebreo, palabra por palabra.",
+    "greek": "Léalo junto al original griego, palabra por palabra."
+  },
+  "chapter": {
+    "description": "{{reference}}, {{text}}: {{opening}} {{beside}}",
+    "plain": "{{reference}}. {{beside}}"
+  },
+  "verse": {
+    "description": "{{reference}}, {{text}}: {{quote}} {{beside}}"
+  },
+  "entity": {
+    "verses_one": "Aparece en {{count}} versículo de la Biblia.",
+    "verses_many": "Aparece en {{count}} versículos de la Biblia.",
+    "verses_other": "Aparece en {{count}} versículos de la Biblia.",
+    "kind": {
+      "person": "una persona de la Biblia",
+      "place": "un lugar de la Biblia",
+      "people": "un pueblo de la Biblia",
+      "term": "una palabra con que la Biblia nombra a Dios",
+      "title": "un título de la Biblia",
+      "object": "un objeto de la Biblia",
+      "observance": "una fiesta o celebración de la Biblia"
+    }
+  },
+  "strong": {
+    "hebrew": "Palabra hebrea",
+    "greek": "Palabra griega",
+    "uses_one": "Aparece {{count}} vez en la Biblia.",
+    "uses_many": "Aparece {{count}} veces en la Biblia.",
+    "uses_other": "Aparece {{count}} veces en la Biblia."
+  },
+  "event": {
+    "description": "{{name}}: cuándo ocurrió según cada cronología bíblica, y los versículos de los que se deduce."
+  },
+  "period": {
+    "description": "{{name}}: sus años según cada cronología y los acontecimientos que caen dentro de él."
+  },
+  "text": {
+    "translation": "Lea la {{name}} en línea, capítulo por capítulo, junto al hebreo y el griego del que se tradujo.",
+    "original": "Lea el texto {{name}} en línea, capítulo por capítulo, palabra por palabra con su gramática y su significado."
+  },
+  "familyTree": {
+    "title": "Árbol genealógico: {{name}}",
+    "description": "{{name}}: antepasados y descendientes, tal como los registra la Biblia."
+  },
+  "syntaxGroup": {
+    "title": "Sintaxis: {{reference}}",
+    "description": "{{reference}}: una oración o un sintagma del texto hebreo, y lo que el análisis dice de él."
+  },
+  "search": {
+    "query": "«{{query}}» — buscar en la Biblia"
+  },
+  "textName": {
+    "UBIO": "Biblia de Ohienko",
+    "UKR1871": "Biblia de Kulish",
+    "NPU2022": "Nueva Traducción Ucraniana",
+    "LUTH1912": "Biblia de Lutero 1912",
+    "ELB1905": "Biblia de Elberfeld 1905",
+    "RV1909": "Reina-Valera 1909"
+  },
+  "page": {
+    "texts": {
+      "title": "Textos y traducciones de la Biblia",
+      "description": "Cada Biblia que hay aquí —el hebreo y el griego, las traducciones antiguas y las modernas— y qué es cada una."
+    },
+    "lexicon": {
+      "title": "Léxico del hebreo y el griego bíblicos",
+      "description": "El diccionario de Strong: cada palabra hebrea y griega de la Biblia, lo que significa y cada versículo que la usa."
+    },
+    "syntax": {
+      "title": "Sintaxis de la Biblia hebrea",
+      "description": "Cada oración y cada sintagma del hebreo, y lo que el análisis dice que hace cada uno."
+    },
+    "encyclopedia": {
+      "title": "Personas y lugares de la Biblia",
+      "description": "Todas las personas y todos los lugares que nombra la Biblia, cómo los llama y cómo se relacionan entre sí."
+    },
+    "familyTree": {
+      "title": "Árboles genealógicos de la Biblia",
+      "description": "Los antepasados y descendientes de cualquiera en una sola página, hasta donde llegan los registros."
+    },
+    "events": {
+      "title": "Acontecimientos de la Biblia",
+      "description": "Cada acontecimiento que fecha la cronología bíblica, en orden, con el cálculo que da su año."
+    },
+    "timeline": {
+      "title": "Cronología de la Biblia y de la historia universal",
+      "description": "La Escritura y la historia universal en un mismo eje, según el cómputo que usted elija."
+    },
+    "kings": {
+      "title": "Los reyes de Israel y de Judá",
+      "description": "Los reyes de Israel y de Judá lado a lado, cada reinado donde la Biblia lo fecha."
+    },
+    "map": {
+      "title": "Mapa de los lugares bíblicos",
+      "description": "Cada lugar que nombra la Biblia y que puede situarse, por periodo, libro y tierra."
+    },
+    "concordance": {
+      "title": "Concordancia",
+      "description": "Cada versículo en que aparece una palabra, y la palabra hebrea o griega que traduce."
+    },
+    "parallels": {
+      "title": "Pasajes paralelos",
+      "description": "Dos pasajes que narran los mismos hechos, lado a lado."
+    },
+    "search": {
+      "title": "Buscar en la Biblia",
+      "description": "Busque en el texto de cada Biblia que hay aquí, en cualquiera de sus idiomas."
+    },
+    "about": {
+      "title": "Acerca de Essenthos",
+      "description": "Qué es Essenthos: la Biblia junto al texto hebreo y griego del que se tradujo, palabra por palabra."
+    },
+    "sources": {
+      "title": "Fuentes y licencias",
+      "description": "De dónde procede cada texto y cada conjunto de datos, quién lo hizo y en qué condiciones."
+    },
+    "licence": {
+      "title": "Licencia",
+      "description": "Qué se puede reutilizar de Essenthos y qué pide la licencia de cada fuente."
+    },
+    "privacy": {
+      "title": "Privacidad",
+      "description": "Qué guarda Essenthos sobre sus lectores y qué no."
+    },
+    "terms": {
+      "title": "Condiciones de uso",
+      "description": "Las condiciones en que se puede usar Essenthos."
+    },
+    "contact": {
+      "title": "Contacto",
+      "description": "Cómo ponerse en contacto con quienes hacen Essenthos."
+    },
+    "support": {
+      "title": "Apoyar el proyecto",
+      "description": "Cómo contribuir a Essenthos y a qué se destina el dinero."
+    },
+    "downloads": {
+      "title": "Descargas",
+      "description": "Textos completos y datos para llevarse."
+    },
+    "api": {
+      "title": "API",
+      "description": "Cómo leer los textos, el léxico y la enciclopedia desde su propio programa."
+    },
+    "suggestions": {
+      "title": "Sugerencias e ideas",
+      "description": "Correcciones e ideas que han enviado los lectores, y en qué quedaron."
+    },
+    "newSuggestion": {
+      "title": "Proponer una corrección o una idea",
+      "description": "Envíe una corrección o una idea a quienes hacen Essenthos."
+    },
+    "account": {
+      "title": "Tu cuenta",
+      "description": "Tu perfil, tus formas de acceso y tus dispositivos."
+    },
+    "bookmarks": {
+      "title": "Tus marcadores",
+      "description": "Cada versículo y capítulo que has marcado, en el orden de la Biblia."
+    },
+    "admin": {
+      "title": "Administración",
+      "description": "Sugerencias, lectores y actividad."
+    },
+    "notFound": {
+      "title": "No existe esa página",
+      "description": "Esa dirección no corresponde a nada de aquí."
+    }
+  }
+}

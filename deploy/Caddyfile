@@ -82,6 +82,56 @@
 	import csp-policy Content-Security-Policy
 }
 
+# The reader's pages, as the API writes them for search engines and link previews: each with its own
+# title, description, preview and text, inside the same index.html the web container serves. Called
+# with the environment's API and web containers.
+#
+# A page is any GET that is neither under /assets nor a file with an extension; the API has it as
+# /v1/pages/<the address>. robots.txt and the sitemaps are the API's too, under /v1. Where the API
+# answers a page with a server error or a refusal, or cannot be reached within two seconds, the web
+# container serves the plain application instead, so a fault there costs the preview and never the
+# page. A page that does not exist is the API's 404, with the application's own not-found page in it.
+(pages) {
+	@crawl path /robots.txt /sitemap.xml /sitemaps/*
+	handle @crawl {
+		reverse_proxy {args[0]}:8080 {
+			rewrite /v1{uri}
+			lb_try_duration 2s
+			lb_try_interval 250ms
+		}
+	}
+
+	@page {
+		method GET HEAD
+		not path /assets/*
+		not path_regexp \.[A-Za-z0-9]+$
+	}
+	handle @page {
+		reverse_proxy {args[0]}:8080 {
+			rewrite /v1/pages{uri}
+			lb_try_duration 2s
+			lb_try_interval 250ms
+			@unwritten status 5xx 429
+			handle_response @unwritten {
+				reverse_proxy {args[1]}:8080
+			}
+		}
+	}
+
+	handle {
+		reverse_proxy {args[1]}:8080
+	}
+
+	handle_errors 502 503 504 {
+		@unreached {
+			method GET HEAD
+			not path /v1/* /assets/*
+			not path_regexp \.[A-Za-z0-9]+$
+		}
+		reverse_proxy @unreached {args[1]}:8080
+	}
+}
+
 (site) {
 	encode zstd gzip
 
@@ -110,9 +160,7 @@
 	handle /v1/* {
 		import api api
 	}
-	handle {
-		reverse_proxy web:8080
-	}
+	import pages api web
 }
 
 {$API_DOMAIN} {
@@ -135,9 +183,7 @@
 	handle /v1/* {
 		import api api-dev
 	}
-	handle {
-		reverse_proxy web-dev:8080
-	}
+	import pages api-dev web-dev
 }
 
 {$DEV_API_DOMAIN} {
