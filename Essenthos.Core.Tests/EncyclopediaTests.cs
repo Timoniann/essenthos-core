@@ -169,6 +169,21 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
     }
 
     [Fact]
+    public void APhraseNamedAfterAnotherPlaceDoesNotTakeItsNumber()
+    {
+        var jordan = new EntityName { EntityId = 1, Label = "Jordan", Kind = BibleDataLoader.LabelKind, HebrewStrongNumber = "H3383" };
+        var valley = new EntityName { EntityId = 2, Label = "Valley of the Jordan", Kind = BibleDataLoader.LabelKind, HebrewStrongNumber = "H3383" };
+        var siddim = new EntityName { EntityId = 3, Label = "Valley of Siddim", Kind = BibleDataLoader.LabelKind, HebrewStrongNumber = "H7708" };
+
+        var taken = BibleDataLoader.NumberPhrasesOnlyByTheirOwnNames([jordan, valley, siddim], new HashSet<int> { 1, 2, 3 });
+
+        taken.Should().Be(1);
+        jordan.HebrewStrongNumber.Should().Be("H3383");
+        valley.HebrewStrongNumber.Should().BeNull("the word is the river, and the valley is named after it");
+        siddim.HebrewStrongNumber.Should().Be("H7708", "no other place is called Siddim alone");
+    }
+
+    [Fact]
     public void APersonIsNumberedInGreekByHisNameAndNotByWhatItMeans()
     {
         var bendeker = new EntityName { EntityId = 1, Label = "Ben-deker", Kind = BibleDataLoader.LabelKind, GreekStrongNumber = "G5207" };

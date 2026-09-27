@@ -267,7 +267,8 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                             && (n.HebrewStrongNumber != null || n.GreekStrongNumber != null))
                 .ToListAsync(cancellationToken);
             var places = loaded.Select(n => n.EntityId).ToHashSet();
-            if (NumberPlacesOnlyByTheirNames(loaded, places, await PlaceNameNumbers(cancellationToken)) is > 0 and var taken)
+            if ((NumberPlacesOnlyByTheirNames(loaded, places, await PlaceNameNumbers(cancellationToken))
+                 + NumberPhrasesOnlyByTheirOwnNames(loaded, places)) is > 0 and var taken)
             {
                 await db.SaveChangesAsync(cancellationToken);
                 logger.LogInformation(
@@ -321,10 +322,10 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         // After the references, because a label of the divine name is a name of whichever entity
         // its namings turned out to be about.
         var names = Names(folder, entities, divided);
+        var placeIds = entities.Values.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id).ToHashSet();
         var unnumbered = NumberPlacesOnlyByTheirNames(
-            names.Where(n => n.Kind == LabelKind),
-            entities.Values.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id).ToHashSet(),
-            await PlaceNameNumbers(cancellationToken));
+            names.Where(n => n.Kind == LabelKind), placeIds, await PlaceNameNumbers(cancellationToken));
+        unnumbered += NumberPhrasesOnlyByTheirOwnNames(names.Where(n => n.Kind == LabelKind).ToList(), placeIds);
         if (unnumbered > 0)
         {
             logger.LogInformation(
@@ -1018,6 +1019,40 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// <summary>The Greek numbers this project read for the dataset's lettered ones, which are names by that reading.</summary>
     private static readonly HashSet<string> ReadGreekNumbers =
         BibleDataGreekNumbers.All.Select(n => n.Strong).OfType<string>().ToHashSet(StringComparer.Ordinal);
+
+    /// <summary>
+    /// Takes off a place's phrase the number that is another place's own name, and says how many.
+    ///
+    /// <para>
+    /// A phrase keeps the number of the name inside it (<see cref="NumberPlacesOnlyByTheirNames"/>),
+    /// and where that name is another place's, the phrase is named after the other place rather than
+    /// by it: <em>the Valley of the Jordan</em> kept H3383, the Jordan's own number, and every one of
+    /// the Jordan's 181 words then named two places and was refused. The word is the river; the
+    /// valley is the phrase around it.
+    /// </para>
+    /// </summary>
+    internal static int NumberPhrasesOnlyByTheirOwnNames(IReadOnlyCollection<EntityName> names, IReadOnlySet<int> places)
+    {
+        var placed = names.Where(n => places.Contains(n.EntityId) && n.AspectOfEntityId is null).ToList();
+        var ownNames = placed
+            .Where(n => !n.Label.Contains(' ') && n.HebrewStrongNumber is { } number && !number.Contains(','))
+            .GroupBy(n => n.HebrewStrongNumber!, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.Select(n => n.EntityId).ToHashSet(), StringComparer.Ordinal);
+
+        var removed = 0;
+        foreach (var phrase in placed.Where(n => n.Label.Contains(' ')))
+        {
+            if (phrase.HebrewStrongNumber is { } number
+                && ownNames.TryGetValue(number, out var bearers)
+                && bearers.Any(bearer => bearer != phrase.EntityId))
+            {
+                phrase.HebrewStrongNumber = null;
+                removed++;
+            }
+        }
+
+        return removed;
+    }
 
     /// <summary>
     /// Keeps on a person's names only a Greek number that is a name, and says how many it took off.
