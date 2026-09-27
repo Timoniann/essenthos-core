@@ -80,8 +80,9 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
 
     private const string Folding =
         """
-        CREATE TEMP TABLE folding (folded integer PRIMARY KEY, kept integer NOT NULL) ON COMMIT DROP;
-        INSERT INTO folding (folded, kept) SELECT * FROM unnest(@folded, @kept);
+        CREATE TEMP TABLE folding (folded integer PRIMARY KEY, kept integer NOT NULL, across boolean NOT NULL)
+        ON COMMIT DROP;
+        INSERT INTO folding (folded, kept, across) SELECT * FROM unnest(@folded, @kept, @across);
         CREATE TEMP TABLE fold_count (rows integer NOT NULL, joined boolean NOT NULL) ON COMMIT DROP
         """;
 
@@ -185,7 +186,10 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         "DELETE FROM entity_relationship WHERE from_entity_id = to_entity_id AND from_entity_id IN (SELECT kept FROM folding)",
 
         // What our own reading said of each: the folded record's clauses follow the kept record's,
-        // and a clause that now names the man as his own relative goes.
+        // and a clause that now names the man as his own relative goes. A record of another kind
+        // folded in was described as what it is not — the Amorite as Canaan's son — and its clauses
+        // go rather than stand on the people's page.
+        "DELETE FROM entity_descriptor WHERE entity_id IN (SELECT folded FROM folding WHERE across)",
         Move("entity_descriptor", "target_entity_id"),
         """
         WITH tops AS (
@@ -746,7 +750,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
             .ToDictionaryAsync(m => m.Slug, m => m.EntityId, StringComparer.Ordinal, cancellationToken);
 
         int already = 0, missing = 0;
-        var folds = new List<(int Folded, int Kept, MergedRecord Record)>();
+        var folds = new List<(int Folded, int Kept, bool Across, MergedRecord Record)>();
         foreach (var merge in list.Merges)
         {
             if (!held.TryGetValue(merge.Folds, out var folded))
@@ -770,7 +774,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
             int? kept = held.TryGetValue(merge.Keeps, out var keeps) ? keeps.Id
                 : gone.TryGetValue(merge.Keeps, out var into) ? into
                 : null;
-            if (kept is null || kept == folded.Id || (keeps is not null && keeps.Kind != folded.Kind))
+            if (kept is null || kept == folded.Id || (keeps is not null && keeps.Kind != folded.Kind && !merge.AcrossKinds))
             {
                 missing++;
                 logger.LogWarning(
@@ -780,7 +784,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                 continue;
             }
 
-            folds.Add((folded.Id, kept.Value, new MergedRecord
+            folds.Add((folded.Id, kept.Value, merge.AcrossKinds, new MergedRecord
             {
                 Slug = folded.Slug,
                 EntityId = kept.Value,
@@ -812,7 +816,8 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
 
         await Annotating.Run(connection, transaction, Folding, cancellationToken,
             ("folded", folds.Select(f => f.Folded).ToArray()),
-            ("kept", folds.Select(f => f.Kept).ToArray()));
+            ("kept", folds.Select(f => f.Kept).ToArray()),
+            ("across", folds.Select(f => f.Across).ToArray()));
         foreach (var statement in Statements)
         {
             await Annotating.Run(connection, transaction, statement, cancellationToken);
@@ -902,10 +907,15 @@ internal sealed record DuplicateRecordSplit(
 /// <param name="Why">The verses that make them one person.</param>
 /// <param name="Confidence">How sure the reading of this pair is, where it is less sure than the list.</param>
 /// <param name="Source">Who said so, where the pair was not read with the rest of the list.</param>
+/// <param name="AcrossKinds">
+/// The folded record is of another kind than the one it is folded into: a man the dataset wrote for
+/// what the text names as a people, <em>the Amorite</em> of Genesis 10:16.
+/// </param>
 internal sealed record DuplicateRecordPair(
     string StrongNumber,
     string Keeps,
     string Folds,
     string Why,
     double? Confidence = null,
-    string? Source = null);
+    string? Source = null,
+    bool AcrossKinds = false);

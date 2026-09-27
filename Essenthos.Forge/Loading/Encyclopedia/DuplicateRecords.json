@@ -345,6 +345,150 @@
       "folds": "heaven-2",
       "why": "Both are the one Hebrew word שמים, which BibleData files as the abode of stars (heaven) or of birds (heaven-2), and the text puts both in the same place: the lights are set 'in the firmament of the heaven' (GEN 1:14-17) and the fowl fly 'in the open firmament of heaven' (GEN 1:20), and God called the firmament Heaven (GEN 1:8). The two records already share the name 'expanse of the heavens'.",
       "source": "Essenthos, on the project owner's ruling of 2026-09-24 that where BibleData splits the same words into two records without a distinction the text makes, the two are one record; the verses were read against the rule by claude-opus-5-5 the same day"
+    },
+    {
+      "strongNumber": "H6208",
+      "keeps": "arkites",
+      "folds": "ark",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Canaan in the gentilic, as peoples: 'the Arkite' (GEN 10:17, 1CH 1:15). The lexicon heads H6208 as an Arkite, and the encyclopedia holds the people as Arkites; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H721",
+      "keeps": "arvadites",
+      "folds": "arvad",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Canaan in the gentilic, as peoples: 'the Arvadite' (GEN 10:18, 1CH 1:16). The lexicon heads H721 as an Arvadite, and the encyclopedia holds the people as Arvadites; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H3732",
+      "keeps": "caphthorim",
+      "folds": "caphtor",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Mizraim in the gentilic, as peoples: 'Caphtorim' (GEN 10:14, 1CH 1:12). The lexicon heads H3732 as a Caphtorite, collectively, and the encyclopedia holds the people as Caphthorim; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H1622",
+      "keeps": "girgashites",
+      "folds": "girgash",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Canaan in the gentilic, as peoples: 'the Girgasite' (GEN 10:16, 1CH 1:14). The lexicon heads H1622 as a Girgashite, and the encyclopedia holds the people as Girgashites; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H3794",
+      "keeps": "kittim-h3794",
+      "folds": "kittim",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Javan in the gentilic, as peoples: 'Kittim' (GEN 10:4, 1CH 1:7). The lexicon heads H3794 as a Kittite, an islander, and the encyclopedia holds the people as Kittim; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H6625",
+      "keeps": "pathrusim",
+      "folds": "pathrus",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Mizraim in the gentilic, as peoples: 'Pathrusim' (GEN 10:14, 1CH 1:12). The lexicon heads H6625 as a Pathrusite, and the encyclopedia holds the people as Pathrusim; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H5513",
+      "keeps": "sinites",
+      "folds": "sini",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Canaan in the gentilic, as peoples: 'the Sinite' (GEN 10:17, 1CH 1:15). The lexicon heads H5513 as a Sinite, and the encyclopedia holds the people as Sinites; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H6786",
+      "keeps": "zemarites",
+      "folds": "zemar",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Canaan in the gentilic, as peoples: 'the Zemarite' (GEN 10:18, 1CH 1:16). The lexicon heads H6786 as a Zemarite, and the encyclopedia holds the people as Zemarites; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H6047",
+      "keeps": "anamim",
+      "folds": "anam",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Mizraim in the gentilic, as peoples: 'Anamim' (GEN 10:13, 1CH 1:11). The lexicon heads H6047 as Anamim, a people, and the encyclopedia holds the people as Anamim; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H3695",
+      "keeps": "casluhim",
+      "folds": "casluh",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Mizraim in the gentilic, as peoples: 'Casluhim' (GEN 10:14, 1CH 1:12). The lexicon heads H3695 as Casluchim, a people, and the encyclopedia holds the people as Casluhim; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H567",
+      "keeps": "amorites",
+      "folds": "amor",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Canaan in the gentilic, as peoples: 'the Amorite' (GEN 10:16, 1CH 1:14). The lexicon heads H567 as an Amorite, and the encyclopedia holds the people as Amorites; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H2577",
+      "keeps": "hamathites",
+      "folds": "hamath",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Canaan in the gentilic, as peoples: 'the Hamathite' (GEN 10:18, 1CH 1:16). The lexicon heads H2577 as a Hamathite, and the encyclopedia holds the people as Hamathites; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H2340",
+      "keeps": "hivites",
+      "folds": "hivi",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Canaan in the gentilic, as peoples: 'the Hivite' (GEN 10:17, 1CH 1:15). The lexicon heads H2340 as a Hivite, and the encyclopedia holds the people as Hivites; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H3853",
+      "keeps": "lehabim",
+      "folds": "lehab",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Mizraim in the gentilic, as peoples: 'Lehabim' (GEN 10:13, 1CH 1:11). The lexicon heads H3853 as Lehabim, a people, and the encyclopedia holds the people as Lehabim; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H2983",
+      "keeps": "jebusites",
+      "folds": "jebus",
+      "why": "Genesis 10 and 1 Chronicles 1 name the offspring of Canaan in the gentilic, as peoples: 'the Jebusite' (GEN 10:16, 1CH 1:14). The lexicon heads H2983 as a Jebusite, and the encyclopedia holds the people as Jebusites; BibleData wrote a man for the same word, whose page held the people's verses and nothing else.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "H805",
+      "keeps": "ashurites-h805",
+      "folds": "asshur-2",
+      "why": "'The sons of Dedan were Asshurim, and Letushim, and Leummim' (GEN 25:3): the three are plural gentilics, peoples descended from Dedan. The lexicon heads H805 as an Ashurite, collectively, and the encyclopedia holds the people as Ashurites; BibleData wrote a man for the same word. Letushim and Leummim have no people record yet and stay as they are.",
+      "confidence": 0.95,
+      "source": "Essenthos: the records BibleData wrote as men for the peoples of the table of nations, each read against its verses and against the lexicon by claude-opus-5-5, 2026-09-27",
+      "acrossKinds": true
     }
   ],
   "declined": [
