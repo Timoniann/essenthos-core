@@ -772,6 +772,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// also holds the lexical matches, which are themselves inferred, so scoring against them is
     /// partly a measure of agreement with another guess. Both are worth having: the wider one is
     /// what every earlier measurement of this aligner used, and the narrower one is the claim.
+    /// Neither holds EVIDENTIA's rule-based links, which were never part of the wider one.
     /// </param>
     private async Task<(HashSet<(long From, long To)> Gold, HashSet<long> Structural)> Stated(
         int fromTextId,
@@ -790,7 +791,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
             JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
             WHERE l.from_text_id = @from AND l.to_text_id = @to
-              AND (l.method = 'stated-by-source' OR (l.method <> 'aligner' AND NOT @stated))
+              AND (l.method = 'stated-by-source' OR (l.method NOT IN ('aligner', 'rule-based') AND NOT @stated))
             """, connection))
         {
             command.Parameters.AddWithValue("stated", statedOnly);
