@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json;
 using Essenthos.Core.Database;
@@ -300,7 +300,9 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
     /// calls Bartholomew. Where the owner has ruled that the verses are the other man's, what the
     /// record holds in them moves: the annotations of their words, in every text; the verse rows, the
     /// dataset's and ours alike, keeping their sources, because they are still the same testimony
-    /// about the verse; and the name the record holds for him, which his own record carries instead.
+    /// about the verse; the relationships and our own reading's clauses that cite one of those verses,
+    /// row by row as a fold moves them, since a father named in the second man's verse is his father;
+    /// and the name the record holds for him, which his own record carries instead.
     /// An annotation his record already has for the same word keeps the moved one's testimony as its
     /// claims, as a fold does. The rest of the record stays as it was.
     /// </para>
@@ -391,7 +393,8 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
 
     /// <summary>
     /// The statements of a split, in order: the annotations, joined where his record already names
-    /// the word and moved where it does not; the verse rows, the same way; and the name.
+    /// the word and moved where it does not; the verse rows, the same way; the relationships and
+    /// clauses the moved verses cite; and the name.
     /// </summary>
     private static readonly string[] SplitStatements =
     [
@@ -445,6 +448,36 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
              RETURNING 1)
          INSERT INTO fold_count SELECT count(*), false FROM moved
          """,
+        $"""
+         WITH moved AS (
+             UPDATE entity_relationship r
+             SET from_entity_id = CASE WHEN r.from_entity_id = @from THEN @to ELSE r.from_entity_id END,
+                 to_entity_id = CASE WHEN r.to_entity_id = @from THEN @to ELSE r.to_entity_id END
+             WHERE (r.from_entity_id = @from OR r.to_entity_id = @from) AND {string.Format(InParting, "r")}
+             RETURNING 1)
+         INSERT INTO fold_count SELECT count(*), false FROM moved
+         """,
+        "DELETE FROM entity_relationship WHERE from_entity_id = @to AND to_entity_id = @to",
+        $"""
+         WITH moved AS (
+             UPDATE entity_descriptor d SET target_entity_id = @to
+             WHERE d.target_entity_id = @from AND {string.Format(InParting, "d")}
+             RETURNING 1)
+         INSERT INTO fold_count SELECT count(*), false FROM moved
+         """,
+        $"""
+         WITH top AS (SELECT coalesce(max(ordinal), 0) AS ordinal FROM entity_descriptor WHERE entity_id = @to),
+         leaving AS (
+             SELECT d.id, row_number() OVER (ORDER BY d.ordinal) AS n
+             FROM entity_descriptor d
+             WHERE d.entity_id = @from AND {string.Format(InParting, "d")}),
+         moved AS (
+             UPDATE entity_descriptor d SET entity_id = @to, ordinal = top.ordinal + l.n
+             FROM leaving l, top WHERE d.id = l.id
+             RETURNING 1)
+         INSERT INTO fold_count SELECT count(*), false FROM moved
+         """,
+        "DELETE FROM entity_descriptor WHERE entity_id = @to AND target_entity_id = @to",
         """
         WITH gone AS (
             DELETE FROM entity_name n

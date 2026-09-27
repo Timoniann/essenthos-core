@@ -726,6 +726,97 @@
         "2CH 20:14"
       ],
       "why": "The fold of Mattaniah son of Micha brought 2 Chronicles 20:14 with it, and that verse's Mattaniah is Jahaziel's ancestor in Jehoshaphat's day, not the man of the lists of Nehemiah."
+    },
+    {
+      "from": "oded",
+      "to": "oded-prophet-in-samaria",
+      "name": null,
+      "verses": [
+        "2CH 28:9"
+      ],
+      "why": "2 Chronicles 28:9 is the prophet Oded at Samaria in the days of Ahaz and Pekah (28:1, 28:6). The record's own man is the father of Azariah, who prophesied to Asa in his fifteenth year (15:1, 15:10), more than a century and a half of the text's reigns earlier."
+    },
+    {
+      "from": "zechariah-13",
+      "to": "zechariah-who-taught-uzziah",
+      "name": null,
+      "verses": [
+        "2CH 26:5"
+      ],
+      "why": "2 Chronicles 26:5 is the Zechariah 'who had understanding in the visions of God' in the days of Uzziah, two centuries before the prophet whose word came in the second year of Darius (ZEC 1:1)."
+    },
+    {
+      "from": "zechariah-13",
+      "to": "zechariah-24",
+      "name": null,
+      "verses": [
+        "NEH 8:4"
+      ],
+      "why": "Nehemiah 8:4 names a Zechariah standing at Ezra's left hand when he read the law, in Nehemiah's day; the verse does not make him the prophet of Darius' second year."
+    },
+    {
+      "from": "zechariah-13",
+      "to": "zechariah-25",
+      "name": null,
+      "verses": [
+        "NEH 12:16"
+      ],
+      "why": "Nehemiah 12:16 names the head of the house of Iddo in the days of Joiakim (12:12). Whether he is the prophet the verse does not say, so he keeps his own record with the prophet as the open alternative."
+    },
+    {
+      "from": "zechariah-13",
+      "to": "zacharias-son-of-barachias",
+      "name": null,
+      "verses": [
+        "MAT 23:35",
+        "LUK 11:51"
+      ],
+      "why": "Matthew 23:35 and Luke 11:51 name the Zacharias slain between the temple and the altar. His father's name is the prophet's father's and his death is that of Zechariah son of Jehoiada (2 Chronicles 24:20-21); the text does not say which he is, so he has a record of his own naming both."
+    },
+    {
+      "from": "berechiah-6",
+      "to": "barachias",
+      "name": null,
+      "verses": [
+        "MAT 23:35"
+      ],
+      "why": "Matthew 23:35 names Barachias as the father of the Zacharias slain between the temple and the altar; whether he is the prophet's father Berechiah is as open as whether his son is the prophet."
+    },
+    {
+      "from": "mary",
+      "to": "mary-7",
+      "name": null,
+      "verses": [
+        "MAT 27:56",
+        "MAT 27:61",
+        "MAT 28:1",
+        "MRK 15:40",
+        "MRK 15:47",
+        "MRK 16:1",
+        "LUK 24:10"
+      ],
+      "why": "These verses name Mary Magdalene beside 'Mary the mother of James and Joses', 'the other Mary'. The record of Jesus' mother held her; the verses do not say she is his mother, and the encyclopedia holds a record of her."
+    },
+    {
+      "from": "john-2",
+      "to": "john-who-saw-the-revelation",
+      "name": null,
+      "verses": [
+        "REV 1:1",
+        "REV 1:4",
+        "REV 1:9",
+        "REV 22:8"
+      ],
+      "why": "Revelation names its writer as John, the servant of Jesus Christ in Patmos (1:1, 1:9), and does not say which John he is; tradition takes him for the son of Zebedee, and he keeps that as the open alternative."
+    },
+    {
+      "from": "caleb",
+      "to": "chelubai",
+      "name": null,
+      "verses": [
+        "1CH 2:18-49"
+      ],
+      "why": "1 Chronicles 2:18-49 is Caleb 'the son of Hezron' (2:18), 'the brother of Jerahmeel' (2:42), the Chelubai of 2:9, with his wives Azubah and Jerioth and his concubine Maachah. The relationships read from these verses were written onto the record of Caleb the son of Jephunneh."
     }
   ]
 }

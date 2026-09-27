@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
@@ -380,6 +380,47 @@ public sealed class DuplicateRecordTests : IDisposable
         var row = await _db.WordEntities.AsNoTracking().Include(a => a.Claims).SingleAsync();
         row.Id.Should().Be(ruling.Id);
         row.Claims.Select(c => c.Source).Should().Contain("the lexicon");
+    }
+
+    /// <summary>
+    /// A relationship or a clause citing the second man's verse is about him: it moves with the verse,
+    /// by row, and one citing a verse the first man keeps stays.
+    /// </summary>
+    [Fact]
+    public async Task ASplitTakesTheRelationshipsAndClausesItsVersesCite()
+    {
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            From = _kept, To = _folded, Type = "father-of", Category = RelationshipCategories.Explicit,
+            CanonicalBook = 1, CanonicalChapter = 9, CanonicalVerse = 11,
+            Method = LinkMethod.StatedBySource, Source = BibleData,
+        });
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            From = _folded, To = _kept, Type = "son-of", Category = RelationshipCategories.Explicit,
+            CanonicalBook = 16, CanonicalChapter = 11, CanonicalVerse = 11,
+            Method = LinkMethod.StatedBySource, Source = BibleData,
+        });
+        var staying = Clause(_meshullam, 1, "son-of");
+        staying.Target = _kept;
+        _db.EntityDescriptors.Add(staying);
+        var leaving = Clause(_folded, 1, "son-of");
+        leaving.Target = _kept;
+        leaving.CanonicalBook = 1;
+        leaving.CanonicalChapter = 9;
+        leaving.CanonicalVerse = 11;
+        _db.EntityDescriptors.Add(leaving);
+        await _db.SaveChangesAsync();
+
+        await _loader.Split([Helkiah with { Name = null }]);
+
+        var rows = await _db.EntityRelationships.AsNoTracking().ToListAsync();
+        rows.Single(r => r.CanonicalBook == 1).ToEntityId.Should().Be(_meshullam.Id);
+        rows.Single(r => r.CanonicalBook == 16).FromEntityId.Should().Be(_folded.Id);
+        var clauses = await _db.EntityDescriptors.AsNoTracking().Where(d => d.EntityId == _meshullam.Id)
+            .OrderBy(d => d.Ordinal).ToListAsync();
+        clauses.Select(d => d.Ordinal).Should().Equal(1, 2);
+        clauses[1].TargetEntityId.Should().Be(_kept.Id);
     }
 
     [Fact]
