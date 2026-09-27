@@ -471,6 +471,8 @@ internal sealed class PersonRegisterLoader(
         var held = await db.Entities
             .Where(entity => sourceIds.Contains(entity.SourceId))
             .Include(entity => entity.Verses)
+            .Include(entity => entity.Names)
+            .AsSplitQuery()
             .ToListAsync(cancellationToken);
         var bySourceId = held.ToDictionary(entity => entity.SourceId, StringComparer.Ordinal);
         var repaired = 0;
@@ -504,6 +506,8 @@ internal sealed class PersonRegisterLoader(
             }
         }
 
+        var stranded = TakeTheNamesTheMovedVersesAloneUsed(repairs, bySourceId);
+
         var obsolete = repairs
             .Select(misfiled => misfiled.Obsolete)
             .Where(sourceId => !string.IsNullOrWhiteSpace(sourceId))
@@ -517,12 +521,45 @@ internal sealed class PersonRegisterLoader(
             db.Entities.RemoveRange(stale);
         }
 
-        if (repaired > 0 || obsolete.Count > 0)
+        if (repaired > 0 || stranded > 0 || obsolete.Count > 0)
         {
             await db.SaveChangesAsync(cancellationToken);
         }
 
         return repaired;
+    }
+
+    /// <summary>
+    /// The names a record held only for the verses taken off it. The dataset labelled the six Shishak
+    /// verses it filed under Solomon's father-in-law with Shishak's name, and once the verses are
+    /// Shishak's the name stayed behind, so the father-in-law's page gave Shishak as another name of
+    /// his and he stood in the namesake group of a name he never bore. A name leaves the record where
+    /// the record it lost verses to bears it, it is not the record's own heading, and no verse still
+    /// on the record is labelled with it.
+    /// </summary>
+    private static int TakeTheNamesTheMovedVersesAloneUsed(
+        IReadOnlyList<Misfiled> repairs,
+        IReadOnlyDictionary<string, Entity> bySourceId)
+    {
+        var taken = 0;
+        foreach (var (from, to) in repairs
+                     .Select(misfiled => (bySourceId.GetValueOrDefault(misfiled.Held), bySourceId.GetValueOrDefault(misfiled.Target!)))
+                     .Where(pair => pair.Item1 is not null && pair.Item2 is not null)
+                     .Distinct())
+        {
+            var stranded = from!.Names
+                .Where(name => name.Label != from.Name
+                               && to!.Names.Any(other => other.Label == name.Label)
+                               && !from.Verses.Any(verse => verse.Label == name.Label))
+                .ToList();
+            foreach (var name in stranded)
+            {
+                from.Names.Remove(name);
+                taken++;
+            }
+        }
+
+        return taken;
     }
 
     /// <summary>
