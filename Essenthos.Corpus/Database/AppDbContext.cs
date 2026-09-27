@@ -151,6 +151,15 @@ public class AppDbContext : DbContext
     /// <summary>The verses that set a prophet, a foreign ruler or a king in a ruler's days.</summary>
     public DbSet<ReignStatement> ReignStatements { get; set; } = null!;
 
+    /// <summary>How long the text says each king reigned, with the verse.</summary>
+    public DbSet<ReignLength> ReignLengths { get; set; } = null!;
+
+    /// <summary>Where each prophet spoke, came from and was sent, with the verse.</summary>
+    public DbSet<ProphetField> ProphetFields { get; set; } = null!;
+
+    /// <summary>The names kings reigned under where their records are headed by another.</summary>
+    public DbSet<ThroneName> ThroneNames { get; set; } = null!;
+
     /// <summary>
     /// The ordered clauses this corpus says an entity is, out of which its description is rendered
     /// in whatever language a reader asks for.
@@ -472,6 +481,61 @@ public class AppDbContext : DbContext
                 t.HasCheckConstraint(
                     "ck_reign_statement_end_verse", "end_verse IS NULL OR end_verse > canonical_verse");
                 t.HasCheckConstraint("ck_reign_statement_source_not_empty", "length(btrim(source)) > 0");
+            });
+        });
+
+        modelBuilder.Entity<ReignLength>(entity =>
+        {
+            entity.HasOne(l => l.Entity)
+                .WithMany()
+                .HasForeignKey(l => l.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("reign_length", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_reign_length_stated", "years IS NOT NULL OR months IS NOT NULL OR days IS NOT NULL");
+                t.HasCheckConstraint("ck_reign_length_source_not_empty", "length(btrim(source)) > 0");
+            });
+        });
+
+        modelBuilder.Entity<ThroneName>(entity =>
+        {
+            entity.HasOne(n => n.Entity)
+                .WithMany()
+                .HasForeignKey(n => n.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("throne_name", t =>
+            {
+                t.HasCheckConstraint("ck_throne_name_not_empty", "length(btrim(name)) > 0");
+                t.HasCheckConstraint("ck_throne_name_source_not_empty", "length(btrim(source)) > 0");
+            });
+        });
+
+        modelBuilder.Entity<ProphetField>(entity =>
+        {
+            entity.HasOne(f => f.Entity)
+                .WithMany()
+                .HasForeignKey(f => f.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(f => f.Place)
+                .WithMany()
+                .HasForeignKey(f => f.PlaceEntityId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.ToTable("prophet_field", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_prophet_field_realm",
+                    $"realm IN ({string.Join(", ", ProphetRealms.All.Select(realm => $"'{realm}'"))})");
+                t.HasCheckConstraint(
+                    "ck_prophet_field_kind",
+                    $"kind IN ({string.Join(", ", ProphetFieldKinds.All.Select(kind => $"'{kind}'"))})");
+                t.HasCheckConstraint(
+                    "ck_prophet_field_end_verse", "end_verse IS NULL OR end_verse > canonical_verse");
+                t.HasCheckConstraint("ck_prophet_field_source_not_empty", "length(btrim(source)) > 0");
             });
         });
 

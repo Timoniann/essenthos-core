@@ -33,6 +33,7 @@ public sealed class ReignLoaderTests : IDisposable
 
         var slugs = _decision.Rulers.Select(r => r.Slug)
             .Concat(_decision.Statements.SelectMany(s => new[] { s.Person, s.Ruler, s.Through }))
+            .Concat(_decision.Prophets.SelectMany(p => p.Fields.Select(f => f.Place).Prepend(p.Slug)))
             .OfType<string>()
             .Distinct();
         var entities = slugs.ToDictionary(slug => slug, slug => new Entity
@@ -93,6 +94,28 @@ public sealed class ReignLoaderTests : IDisposable
         }
 
         _decision.Rulers.Select(r => r.Realm).Should().OnlyContain(realm => RulerRealms.All.Contains(realm));
+
+        foreach (var field in _decision.Prophets.SelectMany(p => p.Fields))
+        {
+            ReignLoader.Verses(field.Verse).Should().NotBeNull(field.Verse);
+            ProphetRealms.All.Should().Contain(field.Realm);
+            ProphetFieldKinds.All.Should().Contain(field.Kind);
+        }
+
+        foreach (var ruler in _decision.Rulers)
+        {
+            if (ruler.Reigned is { } reigned)
+            {
+                ReignLoader.Verses(reigned.Verse).Should().NotBeNull(reigned.Verse);
+                reigned.InYears.Should().BePositive(ruler.Slug);
+            }
+
+            if (ruler.Throne is { } throne)
+            {
+                ReignLoader.Verses(throne.Verse).Should().NotBeNull(throne.Verse);
+                throne.Names.Keys.Should().Contain(["eng", "ukr", "deu", "spa"], ruler.Slug);
+            }
+        }
         _decision.Rulers.Select(r => r.Slug).Should().OnlyHaveUniqueItems();
     }
 
@@ -126,6 +149,8 @@ public sealed class ReignLoaderTests : IDisposable
         first.Missing.Should().Be(0);
         first.Rulers.Should().Be(_decision.Rulers.Count);
         first.Statements.Should().Be(_decision.Statements.Count);
+        first.Lengths.Should().Be(_decision.Rulers.Count(r => r.Reigned is not null));
+        first.Fields.Should().Be(_decision.Prophets.Sum(p => p.Fields.Count));
 
         var second = await _loader.Load();
 
@@ -154,5 +179,50 @@ public sealed class ReignLoaderTests : IDisposable
         kings.Statements.Should().Contain(s =>
             s.Person == "jonah" && s.Ruler == "jeroboam-2" && s.Verse.BookOrdinal == 12 && s.Verse.Chapter == 14
             && s.Verse.Verse == 25);
+    }
+
+    /// <summary>
+    /// Every prophet the text sets in a king's days is said to have prophesied somewhere, so the
+    /// chart can put him beside his kingdom rather than in a column of his own.
+    /// </summary>
+    [Fact]
+    public void EveryProphetOfTheKingsIsPlacedWhereHeProphesied()
+    {
+        var prophets = _decision.Statements.Where(s => s.Role == ReignRoles.Prophet).Select(s => s.Person).ToHashSet();
+        var placed = _decision.Prophets
+            .Where(p => p.Fields.Any(f => f.Kind == ProphetFieldKinds.Prophesied))
+            .Select(p => p.Slug)
+            .ToHashSet();
+
+        prophets.Should().BeSubsetOf(placed);
+        _decision.Prophets.Select(p => p.Slug).Should().OnlyHaveUniqueItems();
+    }
+
+    /// <summary>
+    /// A ruler comes with the length the text gives his reign and the name he reigned under, and a
+    /// prophet with where he spoke and where he came from: Amos at Bethel, from Tekoa in Judah.
+    /// </summary>
+    [Fact]
+    public async Task TheTimelineOfTheKingsSaysHowLongEachReignedAndWhereEachProphetSpoke()
+    {
+        await _loader.Load();
+
+        var kings = await KingsEndpoints.Kings(_db, "ukr", CancellationToken.None);
+
+        var elah = kings.Rulers.Single(r => r.Slug == "elah-2");
+        elah.Reigned.Should().NotBeNull();
+        (elah.Reigned!.Years, elah.Reigned.Verse.BookOrdinal, elah.Reigned.Verse.Chapter, elah.Reigned.Verse.Verse)
+            .Should().Be(((int?)2, 11, 16, 8));
+
+        var eliakim = kings.Rulers.Single(r => r.Slug == "eliakim-2");
+        eliakim.Throne.Should().NotBeNull();
+        (eliakim.Throne!.Name, eliakim.Throne.LocalName).Should().Be(("Jehoiakim", "Єгояким"));
+        kings.Rulers.Single(r => r.Slug == "ahab").Throne.Should().BeNull();
+
+        var amos = kings.People.Single(p => p.Slug == "amos");
+        amos.Fields.Select(f => (f.Kind, f.Realm, f.Place?.Slug)).Should().Equal(
+            (ProphetFieldKinds.Prophesied, ProphetRealms.Israel, "bethel"),
+            (ProphetFieldKinds.From, ProphetRealms.Judah, "tekoa-2"));
+        kings.People.Single(p => p.Slug == "zerubbabel-2").Fields.Should().BeEmpty();
     }
 }

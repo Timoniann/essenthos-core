@@ -167,13 +167,14 @@ internal static partial class Periods
 
     /// <summary>
     /// Openings the dataset closes under another event's name, keyed by the opening's slug.
-    /// Pekah's sole reign opens as such and is never closed as such; the text closes it when Hoshea
-    /// smote him and reigned in his stead (2KI 15:30), which is the opening of Hoshea's reign.
+    /// Pekah's sole reign opens as such and closes as his reign, when Hoshea smote him (2KI 15:30).
+    /// Not at Hoshea's accession: Ussher sets nine years of disorder between the two, and Hoshea's
+    /// nine years of 2KI 17:1 begin after them.
     /// </summary>
     internal static readonly IReadOnlyDictionary<string, string> ClosedElsewhere =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["beginpekah1solereign"] = "beginhoshea1reign",
+            ["beginpekah1solereign"] = "endpekah1reign",
         };
 
     /// <summary>The band between an opening and its close.</summary>

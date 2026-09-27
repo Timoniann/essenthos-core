@@ -1,6 +1,6 @@
 {
-  "about": "Events that bound a period, which BibleData dates in its own reckoning and leaves undated in Ussher's although his Annals date them. Each names the paragraph that does, and the years are read from that paragraph, so this file holds no figure of its own. Only the event Ussher himself dates is listed: where he dates a neighbouring event that BibleData's own rule ties it to, or dates nothing, the period stays without his years.",
-  "source": "Essenthos: the periods /v1/timeline dated by BibleData and not by Ussher, each bounding event read against the Annals by claude-opus-5-5, 2026-09-27",
+  "about": "Events that bound a period, which BibleData dates in its own reckoning and leaves undated in Ussher's although his Annals date them. Each names the paragraph that does, and the years are read from that paragraph, so this file holds no figure of its own. Only the event Ussher himself dates is listed: where he dates a neighbouring event that BibleData's own rule ties it to, or dates nothing, the period stays without his years. An entry with 'replaces' is an event whose cell BibleData filled with a year that is not his — Shulman's copied across, or another king's — and it takes the place of that year only, so a dataset corrected at its source is read as it stands.",
+  "source": "Essenthos: the periods /v1/timeline dated by BibleData and not by Ussher, and the reigns whose length in his column disagreed with the Books of Kings, each bounding event read against the Annals by claude-opus-5-5, 2026-09-27",
   "events": [
     { "event": "end400yearsofoppression", "paragraph": 192, "says": "the Exodus, which ¶88 says closes the four hundred years" },
     { "event": "endsevenyearsfamineegypt", "paragraph": 144, "says": "the seventh and last year of the famine" },
@@ -23,6 +23,12 @@
     { "event": "endzechariah13prophesying", "paragraph": 1031, "says": "the fourth year of Darius, Zechariah 7:1" },
     { "event": "enddarius1reign", "paragraph": 1100, "says": "Darius dies and Xerxes reigns" },
     { "event": "beginartaxerxes1reign", "paragraph": 1178, "says": "Artaxerxes becomes king" },
-    { "event": "endartaxerxes1reign", "paragraph": 1291, "says": "Artaxerxes dies" }
+    { "event": "endartaxerxes1reign", "paragraph": 1291, "says": "Artaxerxes dies" },
+    { "event": "endpekah1reign", "paragraph": 611, "says": "Hoshea slays Pekah and takes the kingdom, 2KI 15:30" },
+    { "event": "beginelah2reign", "paragraph": 500, "says": "Baasha dies and Elah his son succeeds him", "replaces": 3009 },
+    { "event": "endjoash3reign", "paragraph": 545, "says": "Joash of Judah slain in his bed at the beginning of his fortieth year; the dataset gave him the death of Joash of Israel", "replaces": 3179 },
+    { "event": "beginjeroboam2reign", "paragraph": 551, "says": "Joash of Israel dies and Jeroboam reigns 41 years, 2KI 14:23", "replaces": 3115 },
+    { "event": "beginhoshea1reign", "paragraph": 615, "says": "Hoshea's reign begins in the twelfth year of Ahaz, 2KI 17:1, after the nine years of disorder that followed Pekah's death", "replaces": 3265 },
+    { "event": "beginjehoiachin1reign", "paragraph": 795, "says": "Jehoiachin reigns three months and ten days after Jehoiakim", "replaces": 3327 }
   ]
 }
