@@ -153,6 +153,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
             .Should().Equal(Enumerable.Range(1, 13));
         Deuterocanon.Verses(esther).Should().Be(167 + 105);
         Deuterocanon.Text(read.KingJames, 17, 11, 2).Should().StartWith("In the second year of the reign");
+        Deuterocanon.Text(read.KingJames, 17, 10, 4).Should().StartWith("Then Mardocheus said");
         read.KingJames.Definition.PartSources.Should()
             .Equal(DeuterocanonTextSource.KingJamesSource, DeuterocanonTextSource.KingJamesEstherSource);
 

@@ -179,7 +179,11 @@ internal static class DeuterocanonTextSource
         }).ToList();
 
         var order = PrintedOrder(slug, gained.Select(book => book.CanonicalOrdinal));
-        var longer = continued.ToDictionary(code => Ordinals[code], code => files[code].Chapters);
+        // The headings the file sets over the additions say where the Greek places each of them, which
+        // is the editor's note and not the text.
+        var longer = continued.ToDictionary(
+            code => Ordinals[code],
+            code => UsfmReader.Read(File.ReadAllText(files[code].File), editorialHeadings: true).Chapters);
         var books = source.Books
             .Select(book => longer.TryGetValue(book.CanonicalOrdinal, out var more) ? Continue(book, more) : book)
             .Concat(gained)
