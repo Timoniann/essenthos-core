@@ -242,6 +242,21 @@ public sealed class DeskTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task ADecisionOnAFactTheListNoLongerShowsCanBeChanged()
+    {
+        WriteRelationships();
+
+        var response = await Put("/desk-api/review/relationships/70845", new { decision = "remove", note = "changed my mind" });
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var decision = Relationships()["decisions"]!["70845"]!;
+        (decision["decision"]!.GetValue<string>(), decision["rows"]!.GetValue<string>()).Should().Be(("remove", "70845"));
+        (decision["a"]!.GetValue<string>(), decision["b"]!.GetValue<string>()).Should().Be(("yhvh", "adam"));
+        var logged = Logged().Should().ContainSingle().Which;
+        (logged.Before!["decision"]!.GetValue<string>(), logged.After!["decision"]!.GetValue<string>()).Should().Be(("confirm", "remove"));
+    }
+
+    [Fact]
     public async Task TakingARelationshipDecisionBackRemovesIt()
     {
         WriteRelationships();

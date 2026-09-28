@@ -73,7 +73,7 @@ internal sealed class RelationshipReview(DeskPaths paths, ChangeLog log)
         string target = string.Empty, label = string.Empty;
         var decided = await JsonFiles.Change(File, node =>
         {
-            var fact = Fact(node, key);
+            var fact = Fact(node, key) ?? Remembered(node, key);
             if (fact is null || !Valid(request.Decision, request.Note))
             {
                 return (false, (RelationshipDecisionResponse?)null);
@@ -157,6 +157,24 @@ internal sealed class RelationshipReview(DeskPaths paths, ChangeLog log)
 
     private static JsonNode? Fact(JsonNode node, string key) =>
         (node["facts"]?.AsArray() ?? []).FirstOrDefault(fact => fact is not null && Key(fact) == key);
+
+    /// <summary>
+    /// A fact the list no longer shows, rebuilt from the decision taken on it. The list is rewritten
+    /// with the facts still waiting, so a fact decided on an earlier list is only in its decision —
+    /// and the owner changing his mind about it is exactly as much his to do as deciding it was.
+    /// </summary>
+    private static JsonNode? Remembered(JsonNode node, string key) =>
+        node["decisions"]?[key] is not JsonObject decision
+            ? null
+            : new JsonObject
+            {
+                ["id"] = decision["rows"]?.DeepClone() ?? key,
+                ["subset"] = decision["subset"]?.DeepClone(),
+                ["why"] = decision["why"]?.DeepClone(),
+                ["relation"] = decision["relation"]?.DeepClone(),
+                ["a"] = new JsonObject { ["slug"] = decision["a"]?.DeepClone(), ["name"] = decision["a"]?.DeepClone() },
+                ["b"] = new JsonObject { ["slug"] = decision["b"]?.DeepClone(), ["name"] = decision["b"]?.DeepClone() },
+            };
 
     private static JsonObject DecisionsOf(JsonNode node)
     {
