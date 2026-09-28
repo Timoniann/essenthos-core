@@ -19,7 +19,8 @@ namespace Essenthos.Core.Berean;
 /// </param>
 /// <param name="English">
 /// The Berean phrase rendering this word, as the file writes it — with its brackets around supplied
-/// words, its <c>-</c> for a word the English does not render, and its <c>. . .</c> where a
+/// words, its <c>-</c> for a word the English does not render, its <c>vvv</c> for one rendered
+/// together with the word whose English follows, and its <c>. . .</c> where a
 /// rendering has moved elsewhere in the verse.
 /// </param>
 internal readonly record struct BereanRow(

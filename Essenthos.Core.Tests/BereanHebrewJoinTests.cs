@@ -98,9 +98,8 @@ public class BereanHebrewJoinTests
         var ours = first.Trim() == "-" ? new List<BereanLinkLoader.Word>() : [new(100, 1, "Bethlehem", null)];
         List<List<long>> witness = [[7], [7]];
         var drafts = new List<BereanLinkLoader.Draft>();
-        int absent = 0, moved = 0;
 
-        BereanLinkLoader.Pair(rows, ours, witness, drafts, ref absent, ref moved).Should().BeTrue();
+        BereanLinkLoader.Pair(rows, ours, witness, drafts, new BereanLinkLoader.Silences()).Should().BeTrue();
 
         drafts.Count(draft => draft.Relation == LinkRelation.Omits).Should().Be(omits);
     }

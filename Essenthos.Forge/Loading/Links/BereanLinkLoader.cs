@@ -29,7 +29,16 @@ namespace Essenthos.Core.Loading.Links;
 /// <param name="Moved">
 /// Words the table marks <c>. . .</c> — the Greek word is rendered, but somewhere else in the verse
 /// and the file does not say where. No link is written: naming the wrong English words would be
-/// worse than naming none, and calling it unrendered would be false.
+/// worse than naming none, and calling it unrendered would be false. A <c>vvv</c> with no English
+/// after it to join, which the table has eight times, is counted here for the same reason.
+/// </param>
+/// <param name="Joined">
+/// Words the table marks <c>vvv</c>: rendered together with the word whose English follows, so they
+/// stand in that word's link beside it rather than in a link of their own or none.
+/// </param>
+/// <param name="Unmarked">
+/// Words whose row has no English at all, not even a dash. The table states nothing about them, so
+/// nothing is written: not a rendering it does not give, and not an absence it does not state.
 /// </param>
 internal sealed record BereanLinkOutcome(
     bool AlreadyLoaded,
@@ -37,6 +46,8 @@ internal sealed record BereanLinkOutcome(
     int Links,
     int Absent,
     int Moved,
+    int Joined,
+    int Unmarked,
     int Divided,
     int Drifted,
     int Disputed,
@@ -48,7 +59,8 @@ internal sealed record BereanLinkOutcome(
         AlreadyLoaded
             ? "the Berean is already linked to the Greek"
             : $"{Links} links over {Verses} verses in {Elapsed}: {Absent} original words the English does " +
-              $"not render, {Moved} whose rendering the file places elsewhere, {Divided} verses the two " +
+              $"not render, {Moved} whose rendering the file places elsewhere, {Joined} rendered together " +
+              $"with the next word's English, {Unmarked} with no English stated, {Divided} verses the two " +
               $"divide differently, {Drifted} whose English did not line up, {Disputed} refused on their " +
               $"numbers; {NumbersAgreeing} of {NumbersCompared} Strong numbers agree " +
               $"({(NumbersCompared == 0 ? 0 : (double)NumbersAgreeing / NumbersCompared):P2})";
@@ -106,6 +118,9 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
 
     private const char ClosedParagraph = 'ס';
 
+    /// <summary>The table's mark for a word rendered together with the word whose English follows.</summary>
+    private const string Together = "vvv";
+
     private const string LinkImport =
         """
         COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
@@ -125,7 +140,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
 
         if (from == 0 || to == 0)
         {
-            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         // Guarded on this source rather than on the pair: the aligner may already have spoken about
@@ -134,7 +149,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
                 l => l.FromTextId == from && l.ToTextId == to && l.Source == Source, cancellationToken))
         {
             logger.LogInformation("The Berean is already linked to {Witness}; nothing to do", witnessSlug);
-            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         if (!File.Exists(tables))
@@ -142,7 +157,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             logger.LogWarning(
                 "The Berean tables are not at {Path}, so the Berean is linked to nothing. They are 85 MB "
                 + "and are fetched rather than committed; run scripts/fetch-berean.ps1", tables);
-            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -153,7 +168,8 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
 
         var drafts = new List<Draft>(150_000);
         var covered = new List<int>(30_000);
-        int verses = 0, absent = 0, moved = 0, divided = 0, drifted = 0, disputed = 0;
+        var silences = new Silences();
+        int verses = 0, divided = 0, drifted = 0, disputed = 0;
         int compared = 0, agreeing = 0;
 
         foreach (var (reference, rows) in BereanTable.Verses(tables))
@@ -219,7 +235,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
                 continue;
             }
 
-            if (Pair(rows, ours, run, drafts, ref absent, ref moved) is false)
+            if (Pair(rows, ours, run, drafts, silences) is false)
             {
                 drifted++;
                 continue;
@@ -235,7 +251,8 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         var replaced = await Supersede(from, to, covered, cancellationToken);
 
         var outcome = new BereanLinkOutcome(
-            false, verses, drafts.Count, absent, moved, divided, drifted, disputed, compared, agreeing,
+            false, verses, drafts.Count, silences.Absent, silences.Moved, silences.Joined, silences.Unmarked,
+            divided, drifted, disputed, compared, agreeing,
             started.Elapsed);
         logger.LogInformation(
             "Linked the Berean to {Witness}: {Outcome}; {Replaced} aligner links superseded",
@@ -436,13 +453,14 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         IReadOnlyList<Word> ours,
         IReadOnlyList<List<long>> witness,
         List<Draft> drafts,
-        ref int absent,
-        ref int moved)
+        Silences silences)
     {
         if (Claims(rows, ours) is not { } claimed)
         {
             return false;
         }
+
+        var into = Joins(rows, claimed);
 
         // Two Berean words can share one witness word where the editions divide a name differently,
         // so a word some row renders is not also unrendered, and a word two silent rows share is
@@ -450,7 +468,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         var rendered = new HashSet<long>();
         for (var i = 0; i < rows.Count; i++)
         {
-            if (claimed[i] is { Count: > 0 })
+            if (claimed[i] is { Count: > 0 } || into[i] is not null)
             {
                 rendered.UnionWith(witness[i]);
             }
@@ -462,28 +480,87 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             var mine = claimed[i] ?? [];
             if (mine.Count > 0)
             {
-                drafts.Add(new Draft(LinkRelation.Renders, mine, witness[i]));
+                List<long> theirs = [.. witness[i]];
+                for (var j = 0; j < rows.Count; j++)
+                {
+                    if (into[j] == i)
+                    {
+                        theirs.AddRange(witness[j].Where(word => !theirs.Contains(word)));
+                    }
+                }
+
+                drafts.Add(new Draft(LinkRelation.Renders, mine, theirs));
                 continue;
             }
 
-            // The file distinguishes the two silences, and so does this. A dash is a Greek word the
-            // English does not render; an ellipsis is one it renders somewhere else without saying
-            // where, and calling that unrendered would be false.
-            if (rows[i].English.Contains('.', StringComparison.Ordinal))
+            if (into[i] is not null)
             {
-                moved++;
+                silences.Joined++;
+                continue;
+            }
+
+            // The file distinguishes its silences, and so does this. A dash is a word the English
+            // does not render. An ellipsis is one it renders somewhere else without saying where, and
+            // so is a vvv with no rendering after it to join; calling either unrendered would be
+            // false. A row with no English at all states nothing, so nothing is written for it.
+            var english = rows[i].English;
+            if (english.Contains('.', StringComparison.Ordinal) || english.Contains(Together, StringComparison.Ordinal))
+            {
+                silences.Moved++;
+                continue;
+            }
+
+            if (!english.Contains('-', StringComparison.Ordinal))
+            {
+                silences.Unmarked++;
                 continue;
             }
 
             var unrendered = witness[i].Where(word => !rendered.Contains(word) && omitted.Add(word)).ToList();
             if (unrendered.Count > 0)
             {
-                absent++;
+                silences.Absent++;
                 drafts.Add(new Draft(LinkRelation.Omits, [], unrendered));
             }
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// For each row the table marks <c>vvv</c>, the row whose English renders it together with its
+    /// own word: the next row in the English order that has English, past any further <c>vvv</c>.
+    /// <em>μὴ</em> is <c>vvv</c> and <em>ἀγαπῶν</em> is <em>does not love</em> in 1 John 4:8, and
+    /// the <em>not</em> is the <em>μὴ</em>. Measured over the whole table before this was written:
+    /// of 4,849 such rows, 4,841 are followed by a rendering, and the other eight by a dash or an
+    /// ellipsis, which leave them with nothing stated to join.
+    /// </summary>
+    internal static int?[] Joins(IReadOnlyList<BereanRow> rows, List<long>[] claimed)
+    {
+        var into = new int?[rows.Count];
+        var waiting = new List<int>();
+        foreach (var index in Enumerable.Range(0, rows.Count).OrderBy(index => rows[index].EnglishOrder))
+        {
+            if (claimed[index] is { Count: > 0 })
+            {
+                foreach (var joined in waiting)
+                {
+                    into[joined] = index;
+                }
+
+                waiting.Clear();
+            }
+            else if (rows[index].English.Contains(Together, StringComparison.Ordinal))
+            {
+                waiting.Add(index);
+            }
+            else
+            {
+                waiting.Clear();
+            }
+        }
+
+        return into;
     }
 
     /// <summary>
@@ -668,4 +745,16 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     internal sealed record Word(long Id, int VerseId, string Surface, string? Strong);
 
     internal sealed record Draft(LinkRelation Relation, List<long> From, List<long> To);
+
+    /// <summary>The rows with no English of their own, by what the table says about each.</summary>
+    internal sealed class Silences
+    {
+        public int Absent { get; set; }
+
+        public int Moved { get; set; }
+
+        public int Joined { get; set; }
+
+        public int Unmarked { get; set; }
+    }
 }
