@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('ukrainian', 'russian', 'english')]
+    [ValidateSet('ukrainian', 'russian', 'english', 'german', 'spanish')]
     [string] $Language = 'ukrainian'
 )
 
@@ -10,6 +10,10 @@ $model = if ($Language -eq 'ukrainian') {
     Join-Path $root 'models\ukrainian-iu-ud-2.5-191206.udpipe'
 } elseif ($Language -eq 'russian') {
     Join-Path $root 'models\russian-syntagrus-ud-2.5-191206.udpipe'
+} elseif ($Language -eq 'german') {
+    Join-Path $root 'models\german-hdt-ud-2.5-191206.udpipe'
+} elseif ($Language -eq 'spanish') {
+    Join-Path $root 'models\spanish-ancora-ud-2.5-191206.udpipe'
 } else {
     Join-Path $root 'models\english-ud-2.1-20180111.udpipe'
 }
@@ -18,7 +22,11 @@ if ($null -eq $executable -or -not (Test-Path -LiteralPath $model)) {
     throw 'UDPipe resources are absent. Run the fetch-udpipe action first.'
 }
 
-$sentence = if ($Language -eq 'ukrainian') {
+$sentence = if ($Language -eq 'german') {
+    'Jesus aber sprach zu ihnen: Um eures Unglaubens willen.'
+} elseif ($Language -eq 'spanish') {
+    'Y Jesús les dijo: Por vuestra incredulidad.'
+} elseif ($Language -eq 'ukrainian') {
     'Ісус же рече їм: Через невірство ваше.'
 } else {
     if ($Language -eq 'english') {

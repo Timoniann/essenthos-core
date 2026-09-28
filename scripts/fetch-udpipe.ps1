@@ -2,7 +2,9 @@
 param(
     # Recovery is deliberately opt-in: it discards whatever a previous run left half-fetched under
     # Resources/UDPipe and starts a clean download. Without it an unrecognised folder is refused.
-    [switch] $Repair
+    [switch] $Repair,
+    # The default matches Dataset:ResourcesPath: this project's own Resources folder.
+    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources')
 )
 
 $ErrorActionPreference = 'Stop'
@@ -10,7 +12,7 @@ $ErrorActionPreference = 'Stop'
 # EVIDENTIA uses these only to *analyse* an unannotated translation. They are not corpus text,
 # are not loaded into Postgres, and cannot themselves create a word link. Keeping the model bytes,
 # their checksums and their licence beside each other makes a later adapter auditable and replaceable.
-$destination = Join-Path $PSScriptRoot '..\Resources\UDPipe'
+$destination = Join-Path $ResourcesPath 'UDPipe'
 
 # What was fetched, whose it is and what it obliges is recorded in Resources/UDPipe/LICENCE.md.
 # .gitignore un-ignores that one name per corpus folder, so it is the only statement here that
@@ -20,21 +22,52 @@ $staging = Join-Path ([System.IO.Path]::GetTempPath()) ('essenthos-udpipe-' + [g
 $models = @(
     @{ Name = 'ukrainian-iu-ud-2.5-191206.udpipe'; Md5 = 'c134ee9fad7989636fc0b6499d0c5e1e'; Bytes = 16929888; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/72ba199d-b8fc-40a5-a12d-c5ea219de998/content' },
     @{ Name = 'russian-syntagrus-ud-2.5-191206.udpipe'; Md5 = '8a985b9b7c3902bf76e55f0806ccbbd2'; Bytes = 45859472; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/f612687b-e000-4493-b078-b2d8fd9e008c/content' },
-    @{ Name = 'english-ud-2.1-20180111.udpipe'; Md5 = 'a5e99059a91f04740e1a588732a8c27c'; Bytes = 16368326; Url = 'https://raw.githubusercontent.com/bnosac/udpipe.models.ud/master/models/english-ud-2.1-20180111.udpipe' }
+    @{ Name = 'english-ud-2.1-20180111.udpipe'; Md5 = 'a5e99059a91f04740e1a588732a8c27c'; Bytes = 16368326; Url = 'https://raw.githubusercontent.com/bnosac/udpipe.models.ud/master/models/english-ud-2.1-20180111.udpipe' },
+    @{ Name = 'german-hdt-ud-2.5-191206.udpipe'; Md5 = '7f0a828e795c0f0c630629b4ab1a017d'; Bytes = 62982275; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/0d5a53e7-039b-4997-af3f-94faad001a6c/content' },
+    @{ Name = 'spanish-ancora-ud-2.5-191206.udpipe'; Md5 = '08e63ea07501b2917d29c011276a499a'; Bytes = 20400504; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/52474ca8-939b-4fcf-80b0-228679464582/content' }
 )
 
+function Get-PinnedModel([hashtable] $model, [string] $directory) {
+    $file = Join-Path $directory $model.Name
+    Invoke-WebRequest -Uri $model.Url -OutFile $file
+    $actual = (Get-FileHash -Algorithm MD5 -LiteralPath $file).Hash.ToLowerInvariant()
+    if ($actual -ne $model.Md5 -or (Get-Item -LiteralPath $file).Length -ne $model.Bytes) {
+        throw "Refusing $($model.Name): expected $($model.Bytes) bytes / MD5 $($model.Md5), got $((Get-Item -LiteralPath $file).Length) / $actual."
+    }
+}
+
 if (Test-Path -LiteralPath $destination) {
-    $expectedModels = $models | ForEach-Object { Join-Path $destination ('models\' + $_.Name) }
     $executable = Join-Path $destination 'bin\udpipe.exe'
-    $missing = @($expectedModels | Where-Object { -not (Test-Path -LiteralPath $_) })
-    if ($missing.Count -eq 0 -and (Test-Path -LiteralPath $executable)) {
-        foreach ($model in $models) {
-            $actual = (Get-FileHash -Algorithm MD5 -LiteralPath (Join-Path $destination ('models\' + $model.Name))).Hash.ToLowerInvariant()
-            if ($actual -ne $model.Md5) {
-                throw "Existing $($model.Name) has MD5 $actual, not pinned $($model.Md5); refusing to merge a replacement."
+    $present = @($models | Where-Object { Test-Path -LiteralPath (Join-Path $destination ('models\' + $_.Name)) })
+    foreach ($model in $present) {
+        $actual = (Get-FileHash -Algorithm MD5 -LiteralPath (Join-Path $destination ('models\' + $model.Name))).Hash.ToLowerInvariant()
+        if ($actual -ne $model.Md5) {
+            throw "Existing $($model.Name) has MD5 $actual, not pinned $($model.Md5); refusing to merge a replacement."
+        }
+    }
+    if ($present.Count -gt 0 -and (Test-Path -LiteralPath $executable)) {
+        # A verified installation that predates a model on the list gains that model alone; what is
+        # already here and verified is not fetched again.
+        $absent = @($models | Where-Object { $present -notcontains $_ })
+        if ($absent.Count -eq 0) {
+            Write-Host "UDPipe 1.4.0 and all $($models.Count) pinned models are already present and verified; nothing downloaded."
+            return
+        }
+        try {
+            New-Item -ItemType Directory -Force -Path $staging | Out-Null
+            foreach ($model in $absent) {
+                Get-PinnedModel $model $staging
+            }
+            Get-ChildItem -LiteralPath $staging -File |
+                Move-Item -Destination (Join-Path $destination 'models') -Force
+            $absent | ForEach-Object { Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $destination ('models\' + $_.Name)) } |
+                Select-Object Path, Hash | Format-Table -AutoSize
+        }
+        finally {
+            if (Test-Path -LiteralPath $staging) {
+                Remove-Item -LiteralPath $staging -Recurse -Force
             }
         }
-        Write-Host 'UDPipe 1.4.0 and both pinned models are already present and verified; nothing downloaded.'
         return
     }
     # A fresh clone already has this folder holding LICENCE.md alone, because .gitignore un-ignores
@@ -58,12 +91,7 @@ try {
     New-Item -ItemType Directory -Force -Path $modelDirectory | Out-Null
 
     foreach ($model in $models) {
-        $file = Join-Path $modelDirectory $model.Name
-        Invoke-WebRequest -Uri $model.Url -OutFile $file
-        $actual = (Get-FileHash -Algorithm MD5 -LiteralPath $file).Hash.ToLowerInvariant()
-        if ($actual -ne $model.Md5 -or (Get-Item -LiteralPath $file).Length -ne $model.Bytes) {
-            throw "Refusing $($model.Name): expected $($model.Bytes) bytes / MD5 $($model.Md5), got $((Get-Item -LiteralPath $file).Length) / $actual."
-        }
+        Get-PinnedModel $model $modelDirectory
     }
 
     Invoke-WebRequest -Uri 'https://github.com/ufal/udpipe/releases/download/v1.4.0/udpipe-1.4.0-bin.zip' -OutFile $binaryArchive
@@ -76,7 +104,7 @@ try {
         throw 'The verified UDPipe 1.4.0 release contained no Windows udpipe.exe.'
     }
 
-    # The three original licence texts are kept, not paraphrased: CC BY-NC-SA 4.0 for the two
+    # The three original licence texts are kept, not paraphrased: CC BY-NC-SA 4.0 for the four
     # LINDAT models, CC BY-SA 4.0 for the English one, MPL-2.0 for the tool.
     $binaryDirectory = Join-Path $ready 'bin'
     New-Item -ItemType Directory -Force -Path $binaryDirectory | Out-Null

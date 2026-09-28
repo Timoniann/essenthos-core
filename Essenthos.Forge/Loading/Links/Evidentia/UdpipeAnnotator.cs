@@ -11,6 +11,8 @@ internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnviron
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             ["eng"] = "english-ud-2.1-20180111.udpipe",
+            ["deu"] = "german-hdt-ud-2.5-191206.udpipe",
+            ["spa"] = "spanish-ancora-ud-2.5-191206.udpipe",
             ["rus"] = "russian-syntagrus-ud-2.5-191206.udpipe",
             ["ukr"] = "ukrainian-iu-ud-2.5-191206.udpipe",
         };

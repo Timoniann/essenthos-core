@@ -7,12 +7,18 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Loading.Links.Evidentia;
 
 /// <summary>Which pending proposals a listing or a tier acceptance reaches.</summary>
+/// <param name="Kinds">
+/// The rules whose decisions it reaches, by the name a decision stores: an absence rule such as
+/// <c>supplied-article-deu</c>, so that a run over a text other sources already link can have its
+/// absences accepted without its proposals.
+/// </param>
 internal sealed record EvidentiaQueueFilter(
     string? Tier = null,
     int? Book = null,
     int? Chapter = null,
     int? Verse = null,
-    int Take = EvidentiaReviewQueue.DefaultTake);
+    int Take = EvidentiaReviewQueue.DefaultTake,
+    IReadOnlyList<string>? Kinds = null);
 
 /// <summary>
 /// The editor's side of a run: what is waiting, and the verdicts that settle it.
@@ -220,7 +226,8 @@ internal sealed class EvidentiaReviewQueue(AppDbContext db)
             .Where(decision => filter.Tier == null || decision.Tier == filter.Tier)
             .Where(decision => filter.Book == null || decision.CanonicalBook == filter.Book)
             .Where(decision => filter.Chapter == null || decision.CanonicalChapter == filter.Chapter)
-            .Where(decision => filter.Verse == null || decision.CanonicalVerse == filter.Verse);
+            .Where(decision => filter.Verse == null || decision.CanonicalVerse == filter.Verse)
+            .Where(decision => filter.Kinds == null || filter.Kinds.Contains(decision.Kind!));
 
     /// <summary>The run a decision belongs to.</summary>
     public Task<int> RunOf(long decisionId, CancellationToken cancellationToken = default) =>
@@ -268,7 +275,8 @@ internal sealed class EvidentiaReviewQueue(AppDbContext db)
         (filter.Tier is null ? string.Empty : $" in the {filter.Tier} tier")
         + (filter.Book is null ? string.Empty : $" at {filter.Book}")
         + (filter.Chapter is null ? string.Empty : $":{filter.Chapter}")
-        + (filter.Verse is null ? string.Empty : $":{filter.Verse}");
+        + (filter.Verse is null ? string.Empty : $":{filter.Verse}")
+        + (filter.Kinds is null ? string.Empty : $" by {string.Join(", ", filter.Kinds)}");
 }
 
 /// <summary>How a stored decision is shown to a person reading it.</summary>

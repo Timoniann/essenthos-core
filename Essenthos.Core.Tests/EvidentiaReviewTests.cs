@@ -292,6 +292,22 @@ public sealed class EvidentiaReviewTests : IDisposable
     }
 
     [Fact]
+    public async Task ATierAcceptedByRuleLeavesTheRunsOtherDecisionsWaiting()
+    {
+        var supplied = Absence(LinkRelation.Expands, English(2), EvidentiaDecisionRecorder.SafeTier,
+            EvidentiaAbsenceRule.GermanUnwrittenArticle.Spelling);
+        var god = Proposal(English(4), Hebrew(3), EvidentiaDecisionRecorder.SafeTier);
+
+        var accepted = await Queue().AcceptTier(_run.Id, new EvidentiaQueueFilter(
+            Tier: EvidentiaDecisionRecorder.SafeTier, Kinds: [EvidentiaAbsenceRule.GermanUnwrittenArticle.Spelling]), Reviewer, null);
+
+        accepted.Should().Be(1);
+        (await _db.EvidentiaReviews.AsNoTracking().SingleAsync()).DecisionId.Should().Be(supplied.Id,
+            "a run over a text its sources already link has its absences accepted without its proposals");
+        god.Review.Should().BeNull();
+    }
+
+    [Fact]
     public async Task AnAbsenceTheCorpusAlreadyStatesGainsTheClaimAndARenderingKeepsAnyAbsenceOut()
     {
         var stated = ExistingAbsence(LinkRelation.Omits, Hebrew(2));
