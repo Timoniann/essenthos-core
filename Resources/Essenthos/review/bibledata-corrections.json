@@ -51,10 +51,8 @@
   "74613": "descendant-of"
  },
  "relationWhy": "The note names the right word where the dataset's is wrong, and a removal or re-ask so corrected is a confirmation. The owner's: Salu, descendant of Simeon ('not son, but descendant'); Ishbi-benob, descendant of Rapha; Kish, son of Abiel, not grandson; Amminadab, son of Ram ('Aram begat Amminadab'); Ephraim, ancestor of Telah and of Ammihud; Sisera, Jabin's commander, not Jabin king of Sisera. The agent's: Tohu, grandson of Elkanah (1CH 6:34-35); Tahath, Zabad and Ladan, descendants of Ephraim down a 'his son' chain (1CH 7:20-26); Benaiah the Pirathonite, descendant of Ephraim (1CH 27:14).",
- "hold": [
-  76119
- ],
- "holdWhy": "James son of Mary (MAT 27:56): the owner's note doubts which Mary is meant, so the decision waits.",
+ "hold": [],
+ "holdWhy": "A fact whose note questions who is meant waits here. The last one, James son of Mary (76119), the owner removed on 2026-09-28: no verse makes the brothers of Jesus Mary's sons.",
  "flip": [
   72171,
   74613
