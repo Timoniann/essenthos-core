@@ -99,6 +99,31 @@ public sealed class CoveredVerseTests : IDisposable
         (await _loader.Cover()).Should().Be(0);
     }
 
+    /// <summary>
+    /// A verse a covering joins may cover a further address itself, and what stands there belongs to
+    /// the same link: the Synodal's Esther 5:1a covers the Greek additions 15:2 to 15:11, and it is
+    /// joined to Brenton's verses only because Brenton's 5:1 covers its 15:1.
+    /// </summary>
+    [Fact]
+    public async Task ACoveringReachedByACoveringIsJoinedInTheSameRun()
+    {
+        var book = _db.Books.Single(b => b.TextId == _hebrew.Id);
+        var chapter = _db.Chapters.Single(c => c.TextId == _hebrew.Id);
+        var further = new Verse { Text = _hebrew, Book = book, Chapter = chapter, ChapterNumber = 1, Number = 7 };
+        _db.Verses.Add(further);
+        _db.VerseReferences.Add(new VerseReference
+        {
+            Verse = further, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 7, IsPrimary = true,
+        });
+        _db.SaveChanges();
+        Covers(_hebrew, chapter: 1, verse: 5, alsoAt: 6);
+        Covers(_english, chapter: 1, verse: 6, alsoAt: 7);
+
+        (await _loader.Cover()).Should().Be(2);
+
+        Members(_verseLink.Id, LinkSide.To).Should().BeEquivalentTo([_db.VerseAt(_hebrew, 1, 5).Id, further.Id]);
+    }
+
     /// <summary>Records that a verse stands at a second canonical address as well as its own.</summary>
     private void Covers(Text text, int chapter, int verse, int alsoAt)
     {

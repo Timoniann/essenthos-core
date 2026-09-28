@@ -65,6 +65,7 @@ builder.Services.AddScoped<PsalmOpeningLoader>();
 builder.Services.AddScoped<VerseEndingLoader>();
 builder.Services.AddScoped<SweteRestorationLoader>();
 builder.Services.AddScoped<TextRepairLoader>();
+builder.Services.AddScoped<BrentonDivisionLoader>();
 builder.Services.AddScoped<BhsaLemmaLoader>();
 builder.Services.AddScoped<BereanNumberLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
@@ -1178,6 +1179,8 @@ if (args is ["reload", var reloadSlug])
 // The words bible4u's King James, Synodal and Ohienko print wrong, corrected in a corpus that loaded
 // them before the reader did it: word rows kept wherever the word is the same, the corrected verses
 // linked again by the sources that state what their words render, then the verse links and the carry.
+// Brenton's Greek verses are begun where his English begins them the same way, their words keeping
+// their rows and losing their links until the pairs are aligned again.
 // BHSA's headwords and the Berean's Strong numbers are put in place first, the same way.
 if (args is ["correct", ..])
 {

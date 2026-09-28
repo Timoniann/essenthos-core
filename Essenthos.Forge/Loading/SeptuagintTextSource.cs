@@ -84,6 +84,7 @@ internal static class SeptuagintTextSource
         Editors = "Sir Lancelot Charles Lee Brenton",
         Edition = SeptuagintEdition,
         About = SeptuagintAbout,
+        RightsNote = BrentonDivisions.Note,
     };
 
     /// <summary>
@@ -176,13 +177,14 @@ internal static class SeptuagintTextSource
         return new TextSource(Definition(), books);
     }
 
+    /// <summary>A book as Brenton divides it, which is not everywhere where the file does: see <see cref="BrentonDivisions"/>.</summary>
     private static BookDraft Book(int canonical, int position, IReadOnlyList<ChapterDraft> chapters) => new(
         CanonicalOrdinal: canonical,
         Position: position,
         Name: BookReferences.Name(canonical),
         Slug: BookReferences.Slug(canonical),
         Abbreviation: BookReferences.Abbreviation(canonical),
-        Chapters: chapters);
+        Chapters: BrentonDivisions.Apply(canonical, chapters));
 
     private static ChapterDraft Chapter(UsfmChapter chapter) => new(
         chapter.Number,

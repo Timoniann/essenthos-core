@@ -475,12 +475,13 @@ internal sealed class DatasetLoader(
 
     /// <summary>
     /// The words bible4u's King James, Synodal and Ohienko print wrong, put right in a corpus that loaded them
-    /// before the reader did it. A cold load reads the corrected words from the reader, and this finds
-    /// nothing to do. Before the psalm openings and the links, so that on a cold corpus they meet the
-    /// corrected verses; on a warm one the links already stand, and the corrected words are linked
-    /// here by the sources that state what they render: the mapping file for the King James verses
-    /// it refused while they were garbled, and the Synodal's Strong numbering for the words that were
-    /// run together. Returns whether anything was linked.
+    /// before the reader did it, and the verses of Brenton's Greek begun where his English begins them. A
+    /// cold load reads the corrected words from the reader, and this finds nothing to do. Before the psalm
+    /// openings and the links, so that on a cold corpus they meet the corrected verses; on a warm one the
+    /// links already stand, and the corrected words are linked here by the sources that state what they
+    /// render: the mapping file for the King James verses it refused while they were garbled, and the
+    /// Synodal's Strong numbering for the words that were run together. Brenton's moved words lose the
+    /// links drawn against the verse they were printed in. Returns whether any link was written or taken.
     /// </summary>
     private async Task<bool> CorrectWhatTheirFilesMisprint(string resources, CancellationToken cancellationToken)
     {
@@ -549,6 +550,48 @@ internal sealed class DatasetLoader(
                 }
 
                 relinked = true;
+            }
+        }
+
+        using (var scope = services.CreateScope())
+        {
+            var divisions = scope.ServiceProvider.GetRequiredService<BrentonDivisionLoader>();
+            var divided = await divisions.Load(cancellationToken);
+            if (divided.Divisions > 0)
+            {
+                status.Record(divided.ToString());
+                relinked = true;
+
+                // How long a verse is decides which scheme of its tradition an edition follows, so the
+                // text is placed again; where that moves a verse, its verse links were joined at the old
+                // address and are joined again by the verse link pass.
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                var brenton = await db.Texts.SingleAsync(t => t.Slug == SeptuagintTextSource.Slug, cancellationToken);
+                var placed = await scope.ServiceProvider.GetRequiredService<CanonicalFrameLoader>().Place(
+                    brenton, TvtmsReader.Read(ResourcePaths.File(resources, "Versification", "TVTMS.txt")), cancellationToken);
+                status.Record(placed);
+                if (!placed.AlreadyPlaced)
+                {
+                    status.Record($"{await divisions.Unjoin(brenton.Id, cancellationToken)} verse links of "
+                                  + $"{SeptuagintTextSource.Slug} taken to be joined again at its new addresses");
+                }
+
+                // Swete's editions are linked to Brenton's by the letters both print within each address,
+                // book by book, which is the load's own pass: the books the divisions touched are drawn again.
+                var books = divided.Verses.Select(verse => verse.Book).ToHashSet();
+                foreach (var slug in (string[])[SweteTextSource.Slug, SweteOldGreekTextSource.Slug])
+                {
+                    if (await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken) is not { } swete)
+                    {
+                        continue;
+                    }
+
+                    var withdrawn = await divisions.Unlink(swete.Id, brenton.Id, books, cancellationToken);
+                    var drawn = await scope.ServiceProvider.GetRequiredService<SeptuagintLinkLoader>()
+                        .Load(slug, SeptuagintTextSource.Slug, cancellationToken);
+                    status.Record($"{slug} to {SeptuagintTextSource.Slug}: {withdrawn} links withdrawn in the books "
+                                  + $"divided again; {drawn}");
+                }
             }
         }
 

@@ -116,6 +116,10 @@
         <Content Remove="Loading\SynodalCorrections.json" />
         <EmbeddedResource Include="Loading\SynodalCorrections.json" />
 
+        <!-- The verses Brenton's Greek file begins at another word than his English, reviewed one by one. -->
+        <Content Remove="Loading\BrentonDivisions.json" />
+        <EmbeddedResource Include="Loading\BrentonDivisions.json" />
+
         <!-- Which Greek verse each verse of the Ge'ez books the church divides its own way answers. -->
         <EmbeddedResource Include="BetaMasaheft\GeezVerseMap.tsv" />
     </ItemGroup>
