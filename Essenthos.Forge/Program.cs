@@ -165,6 +165,7 @@ builder.Services.AddScoped<EntityNameFormLoader>();
 builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<StrongRenderingLoader>();
 builder.Services.AddScoped<OwnRelationshipLoader>();
+builder.Services.AddScoped<WithdrawnRelationshipLoader>();
 builder.Services.AddScoped<DuplicateRecordLoader>();
 builder.Services.AddScoped<RefiledTieLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
