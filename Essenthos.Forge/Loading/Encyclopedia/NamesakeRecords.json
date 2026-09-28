@@ -1,0 +1,1259 @@
+{
+  "decidedBy": "Essenthos, 2026-09-28, on the genealogy review's names several men share, each occurrence read against its verse by claude-sonnet-5 and every reading checked against the Hebrew and its parallel lists by claude-opus-5-5, under the project owner's decision of 2026-09-16 that a namesake the text does not identify is a person of his own",
+  "policy": "A word names the one its verse names. Where the verse, its register or a list it repeats identifies the man, the word is his; where the text gives him a family or an office no held record has, he is written here as a person of his own; where the text leaves two readings open, the word is left unnamed.",
+  "method": "manual",
+  "source": "Essenthos, on the genealogy review's names several men share, each occurrence read against its verse by claude-sonnet-5 and checked by claude-opus-5-5, 2026-09-28",
+  "rulings": [
+    {
+      "wordId": 6471374,
+      "reference": "Genesis 10:7",
+      "strongNumber": "H3568",
+      "existing": "cush",
+      "why": "This heads the list 'the sons of Ham; Cush, and Mizraim...' and here begins the enumeration of his own sons, identifying him as Ham's son Cush."
+    },
+    {
+      "wordId": 6471377,
+      "reference": "Genesis 10:7",
+      "strongNumber": "H2341",
+      "existing": "havilah",
+      "why": "The verse gives him as one of 'the sons of Cush' just named, making him Cush's son Havilah."
+    },
+    {
+      "wordId": 6471389,
+      "reference": "Genesis 10:7",
+      "strongNumber": "H1719",
+      "existing": "dedan",
+      "why": "The verse states 'the sons of Raamah; Sheba, and Dedan,' making him the son of Raamah."
+    },
+    {
+      "wordId": 6479235,
+      "reference": "Genesis 25:4",
+      "strongNumber": "H5891",
+      "existing": "ephah",
+      "why": "The verse reads 'the sons of Midian; Ephah...' identifying him as Midian's son."
+    },
+    {
+      "wordId": 6479237,
+      "reference": "Genesis 25:4",
+      "strongNumber": "H6081",
+      "existing": "epher",
+      "why": "Named among 'the sons of Midian' in the same clause, he is Midian's son Epher."
+    },
+    {
+      "wordId": 6479239,
+      "reference": "Genesis 25:4",
+      "strongNumber": "H2585",
+      "existing": "hanoch",
+      "why": "Named among 'the sons of Midian' in this Keturah genealogy, he is Midian's son Hanoch."
+    },
+    {
+      "wordId": 6479327,
+      "reference": "Genesis 25:9",
+      "strongNumber": "H6714",
+      "existing": "zohar",
+      "why": "He is given as 'Ephron the son of Zohar the Hittite,' the same Zohar whose son Ephron sold Abraham the cave at Machpelah."
+    },
+    {
+      "wordId": 6492919,
+      "reference": "Genesis 46:10",
+      "strongNumber": "H6714",
+      "existing": "zohar-2",
+      "why": "The verse lists 'the sons of Simeon; ... and Zohar'."
+    },
+    {
+      "wordId": 6492935,
+      "reference": "Genesis 46:12",
+      "strongNumber": "H6147",
+      "existing": "er",
+      "why": "The verse reads 'the sons of Judah; Er, and Onan...' naming Judah's firstborn son Er."
+    },
+    {
+      "wordId": 6492943,
+      "reference": "Genesis 46:12",
+      "strongNumber": "H2226",
+      "existing": "zerah-3",
+      "why": "Named as one of 'the sons of Judah' alongside Pharez, he is the Zerah born to Judah and Tamar."
+    },
+    {
+      "wordId": 6492946,
+      "reference": "Genesis 46:12",
+      "strongNumber": "H6147",
+      "existing": "er",
+      "why": "This repeats 'Er and Onan died in the land of Canaan,' referring to the same Er just named as Judah's son."
+    },
+    {
+      "wordId": 6492956,
+      "reference": "Genesis 46:12",
+      "strongNumber": "H2696",
+      "existing": "hezron-2",
+      "why": "The verse states 'the sons of Pharez were Hezron and Hamul,' identifying him as Pharez's son Hezron."
+    },
+    {
+      "wordId": 6498290,
+      "reference": "Exodus 6:15",
+      "strongNumber": "H6714",
+      "existing": "zohar-2",
+      "why": "This Zohar is named among the sons of Simeon."
+    },
+    {
+      "wordId": 6537373,
+      "reference": "Numbers 2:14",
+      "strongNumber": "H7467",
+      "existing": "deuel",
+      "why": "Eliasaph the son of Reuel, captain of the children of Gad: Numbers 1:14, 7:42 and 10:20 name the same captain Eliasaph the son of Deuel."
+    },
+    {
+      "wordId": 6553324,
+      "reference": "Numbers 26:44",
+      "strongNumber": "H3232",
+      "existing": "imnah",
+      "why": "The verse lists Jimna (Imnah) among the sons of Asher counted in the census."
+    },
+    {
+      "wordId": 6587231,
+      "reference": "Joshua 13:5",
+      "strongNumber": "H2574",
+      "existing": "hamath-2",
+      "why": "This is the standard border formula 'unto the entering into Hamath,' referring to the well-known city of Hamath on the Orontes."
+    },
+    {
+      "wordId": 6588688,
+      "reference": "Joshua 15:34",
+      "strongNumber": "H5879",
+      "existing": "enam",
+      "why": "Enam appears here in the list of towns of Judah in the lowland."
+    },
+    {
+      "wordId": 6588970,
+      "reference": "Joshua 16:2",
+      "strongNumber": "H3870",
+      "existing": "luz",
+      "why": "The text says the border 'goeth out from Bethel to Luz,' identifying Luz as the older name of Bethel."
+    },
+    {
+      "wordId": 6591852,
+      "reference": "Joshua 21:38",
+      "strongNumber": "H7433",
+      "existing": "ramoth-3",
+      "why": "The text explicitly names it 'Ramoth in Gilead,' the Levitical city of refuge for the tribe of Gad, i.e. Ramoth-gilead."
+    },
+    {
+      "wordId": 6642167,
+      "reference": "2 Samuel 23:37",
+      "strongNumber": "H3097",
+      "existing": "joab",
+      "why": "The verse explicitly identifies him as 'Joab the son of Zeruiah'."
+    },
+    {
+      "wordId": 6858294,
+      "reference": "1 Chronicles 1:29",
+      "strongNumber": "H5032",
+      "existing": "nebaioth",
+      "why": "The verse calls him 'the firstborn of Ishmael, Nebaioth'."
+    },
+    {
+      "wordId": 6858401,
+      "reference": "1 Chronicles 1:38",
+      "strongNumber": "H7732",
+      "existing": "shobal",
+      "why": "He is named among 'the sons of Seir' alongside Lotan, Zibeon, Anah, Dishon, Ezer and Dishan, identifying him as Shobal son of Seir."
+    },
+    {
+      "wordId": 6858405,
+      "reference": "1 Chronicles 1:38",
+      "strongNumber": "H6034",
+      "existing": "anah",
+      "why": "This Anah is named directly among 'the sons of Seir', not as son of Zibeon, so he is Anah son of Seir."
+    },
+    {
+      "wordId": 6858407,
+      "reference": "1 Chronicles 1:38",
+      "strongNumber": "H1787",
+      "existing": "dishon",
+      "why": "Named among 'the sons of Seir', this is Dishon the son of Seir, distinct from Dishon son of Anah."
+    },
+    {
+      "wordId": 6858458,
+      "reference": "1 Chronicles 1:42",
+      "strongNumber": "H1787",
+      "existing": "dishan",
+      "why": "The verse gives 'the sons of Dishan; Uz, and Aran'."
+    },
+    {
+      "wordId": 6858638,
+      "reference": "1 Chronicles 2:3",
+      "strongNumber": "H7774",
+      "existing": "shua",
+      "why": "The verse names Judah's sons as born \"of the daughter of Shua the Canaanitess,\" identifying Shua as the Canaanite father of Judah's wife."
+    },
+    {
+      "wordId": 6858661,
+      "reference": "1 Chronicles 2:4",
+      "strongNumber": "H2226",
+      "existing": "zerah-3",
+      "why": "This Zerah is born to Tamar as a son of Judah, the same Zerah of the Pharez-Zerah pair found throughout the genealogies."
+    },
+    {
+      "wordId": 6858850,
+      "reference": "1 Chronicles 2:21",
+      "strongNumber": "H1568",
+      "existing": "gilead",
+      "why": "The verse calls Machir \"the father of Gilead\"."
+    },
+    {
+      "wordId": 6858868,
+      "reference": "1 Chronicles 2:22",
+      "strongNumber": "H2971",
+      "existing": "jair",
+      "why": "Segub begat Jair, who had three and twenty cities in the land of Gilead: the towns of Jair of verse 23, which Numbers 32:41 says Jair the son of Manasseh took."
+    },
+    {
+      "wordId": 6858887,
+      "reference": "1 Chronicles 2:23",
+      "strongNumber": "H2971",
+      "existing": "jair",
+      "why": "Geshur and Aram took the towns of Jair from them: the towns of the Jair of verse 22."
+    },
+    {
+      "wordId": 6858902,
+      "reference": "1 Chronicles 2:23",
+      "strongNumber": "H1568",
+      "existing": "gilead",
+      "why": "\"Machir the father of Gilead\" repeats the identification of Gilead as Machir's son."
+    },
+    {
+      "wordId": 6858929,
+      "reference": "1 Chronicles 2:25",
+      "strongNumber": "H7410",
+      "existing": "ram-2",
+      "why": "The verse explicitly names Ram as \"the firstborn\" of Jerahmeel."
+    },
+    {
+      "wordId": 6858952,
+      "reference": "1 Chronicles 2:27",
+      "strongNumber": "H7410",
+      "existing": "ram-2",
+      "why": "This again is \"Ram the firstborn of Jerahmeel,\" the same figure just introduced in verse 25."
+    },
+    {
+      "wordId": 6859144,
+      "reference": "1 Chronicles 2:43",
+      "strongNumber": "H8599",
+      "existing": "tappuah",
+      "why": "Tappuah is named among \"the sons of Hebron\"."
+    },
+    {
+      "wordId": 6859192,
+      "reference": "1 Chronicles 2:47",
+      "strongNumber": "H3147",
+      "existing": "jotham-3",
+      "why": "Jotham is named among \"the sons of Jahdai\"."
+    },
+    {
+      "wordId": 6859196,
+      "reference": "1 Chronicles 2:47",
+      "strongNumber": "H6404",
+      "existing": "pelet",
+      "why": "Pelet appears among \"the sons of Jahdai\"."
+    },
+    {
+      "wordId": 6859198,
+      "reference": "1 Chronicles 2:47",
+      "strongNumber": "H5891",
+      "existing": "ephah-3",
+      "why": "Ephah is named as one of \"the sons of Jahdai\"."
+    },
+    {
+      "wordId": 6859200,
+      "reference": "1 Chronicles 2:47",
+      "strongNumber": "H8174",
+      "existing": "shaaph",
+      "why": "Shaaph is named among \"the sons of Jahdai\"."
+    },
+    {
+      "wordId": 6859211,
+      "reference": "1 Chronicles 2:49",
+      "strongNumber": "H8174",
+      "existing": "shaaph-2",
+      "why": "This Shaaph is introduced as \"the father of Madmannah,\" born to Caleb's line, distinct from the earlier son of Jahdai."
+    },
+    {
+      "wordId": 6859215,
+      "reference": "1 Chronicles 2:49",
+      "strongNumber": "H7724",
+      "existing": "sheva-2",
+      "why": "Sheva is called \"the father of Machbenah,\" the son of Caleb (Chelubai) by Maacah named in this verse."
+    },
+    {
+      "wordId": 6859223,
+      "reference": "1 Chronicles 2:49",
+      "strongNumber": "H3612",
+      "existing": "chelubai",
+      "why": "The daughter of Caleb was Achsa, in the line of Caleb the brother of Jerahmeel begun at verse 42."
+    },
+    {
+      "wordId": 6859228,
+      "reference": "1 Chronicles 2:50",
+      "strongNumber": "H3612",
+      "existing": "chelubai",
+      "why": "These were the sons of Caleb: the list begun at verse 42 with Caleb the brother of Jerahmeel closes here, and the sons of Hur, whom Ephrath bore to that Caleb (verse 19), follow."
+    },
+    {
+      "wordId": 6859480,
+      "reference": "1 Chronicles 3:17",
+      "strongNumber": "H617",
+      "existing": "assir-3",
+      "why": "The verse names him among 'the sons of Jeconiah,' making him a son of the exiled king Jeconiah, distinct from the Levitical Assirs of the Kohathite line."
+    },
+    {
+      "wordId": 6859607,
+      "reference": "1 Chronicles 4:3",
+      "strongNumber": "H5862",
+      "existing": "etam",
+      "why": "These were of the father of Etam: Jezreel, Ishma and Idbash."
+    },
+    {
+      "wordId": 6859843,
+      "reference": "1 Chronicles 4:18",
+      "strongNumber": "H7755",
+      "existing": "soco",
+      "why": "Heber the father of Socho is named among the children of Mered's Jewish wife."
+    },
+    {
+      "wordId": 6860052,
+      "reference": "1 Chronicles 4:33",
+      "strongNumber": "H1168",
+      "existing": "baalathbeer",
+      "why": "The villages of Simeon reached 'unto Baal'; Joshua 19:8 names the same town of Simeon's border Baalath-beer."
+    },
+    {
+      "wordId": 6860213,
+      "reference": "1 Chronicles 4:42",
+      "strongNumber": "H3469",
+      "create": {
+        "slug": "ishi-the-simeonite",
+        "kind": "person",
+        "name": "Ishi",
+        "distinguisher": "a Simeonite, father of Pelatiah, Neariah, Rephaiah and Uzziel, who led five hundred men to mount Seir (1CH 4:42)",
+        "notes": null
+      },
+      "why": "Of the sons of Simeon, five hundred men went to mount Seir, having for their captains Pelatiah, Neariah, Rephaiah and Uzziel, the sons of Ishi."
+    },
+    {
+      "wordId": 6860446,
+      "reference": "1 Chronicles 5:15",
+      "strongNumber": "H277",
+      "existing": "ahi",
+      "why": "The verse names him 'Ahi the son of Abdiel, the son of Guni'."
+    },
+    {
+      "wordId": 6861720,
+      "reference": "1 Chronicles 7:1",
+      "strongNumber": "H8439",
+      "existing": "tola",
+      "why": "The verse lists 'the sons of Issachar were, Tola, and Puah, Jashub, and Shimrom' — this is the same Tola son of Issachar known from Genesis and Numbers."
+    },
+    {
+      "wordId": 6861722,
+      "reference": "1 Chronicles 7:1",
+      "strongNumber": "H6312",
+      "existing": "puvvah",
+      "why": "Named among 'the sons of Issachar' with Tola."
+    },
+    {
+      "wordId": 6861723,
+      "reference": "1 Chronicles 7:1",
+      "strongNumber": "H3437",
+      "existing": "iob",
+      "why": "The sons of Issachar were Tola, Puah, Jashub and Shimrom; Genesis 46:13 names the same son Job."
+    },
+    {
+      "wordId": 6861861,
+      "reference": "1 Chronicles 7:8",
+      "strongNumber": "H3406",
+      "existing": "jeremoth",
+      "why": "The verse explicitly gives 'the sons of Becher' including Jerimoth."
+    },
+    {
+      "wordId": 6861957,
+      "reference": "1 Chronicles 7:14",
+      "strongNumber": "H1568",
+      "existing": "gilead",
+      "why": "The text calls Machir 'the father of Gilead', identifying him as the same Gilead son of Machir known elsewhere in the genealogies."
+    },
+    {
+      "wordId": 6862006,
+      "reference": "1 Chronicles 7:17",
+      "strongNumber": "H1568",
+      "existing": "gilead",
+      "why": "The verse explicitly states 'these were the sons of Gilead, the son of Machir, the son of Manasseh', the same Gilead identified two verses earlier."
+    },
+    {
+      "wordId": 6862142,
+      "reference": "1 Chronicles 7:27",
+      "strongNumber": "H3091",
+      "existing": "joshua",
+      "why": "The genealogy of Ephraim ends 'Non his son, Jehoshuah his son' — Non (Nun) and Joshua identify this as Joshua son of Nun, Moses' successor."
+    },
+    {
+      "wordId": 6862245,
+      "reference": "1 Chronicles 7:34",
+      "strongNumber": "H277",
+      "existing": "ahi-2",
+      "why": "The verse names him among 'the sons of Shamer; Ahi, and Rohgah'."
+    },
+    {
+      "wordId": 6862287,
+      "reference": "1 Chronicles 7:38",
+      "strongNumber": "H3500",
+      "existing": "ithran-2",
+      "why": "The sons of Jether, Jephunneh, Pispah and Ara, close the line of Zophah, whose son verse 37 calls Ithran."
+    },
+    {
+      "wordId": 6862490,
+      "reference": "1 Chronicles 8:14",
+      "strongNumber": "H3406",
+      "existing": "jeremoth-2",
+      "why": "Named among the sons of Elpaal in this Benjamite genealogy."
+    },
+    {
+      "wordId": 6862578,
+      "reference": "1 Chronicles 8:27",
+      "strongNumber": "H3395",
+      "create": {
+        "slug": "jeroham-father-of-jaresiah",
+        "kind": "person",
+        "name": "Jeroham",
+        "distinguisher": "a Benjamite whose sons Jaresiah, Eliah and Zichri were heads of fathers in Jerusalem (1CH 8:27)",
+        "notes": null
+      },
+      "why": "Jaresiah, Eliah and Zichri, the sons of Jeroham, stand among the Benjamite heads of fathers who dwelt in Jerusalem."
+    },
+    {
+      "wordId": 6862647,
+      "reference": "1 Chronicles 8:33",
+      "strongNumber": "H3083",
+      "existing": "jonathan-2",
+      "why": "The verse states 'Saul begat Jonathan', identifying him as the well-known son of King Saul."
+    },
+    {
+      "wordId": 6862659,
+      "reference": "1 Chronicles 8:34",
+      "strongNumber": "H3083",
+      "existing": "jonathan-2",
+      "why": "The verse continues directly from the prior mention of Saul's son Jonathan, whose son was Meribbaal (Mephibosheth)."
+    },
+    {
+      "wordId": 6862975,
+      "reference": "1 Chronicles 9:14",
+      "strongNumber": "H2811",
+      "existing": "hashabiah-11",
+      "why": "Shemaiah the son of Hasshub, the son of Azrikam, the son of Hashabiah: Nehemiah 11:15 gives the same line and carries it on to Bunni."
+    },
+    {
+      "wordId": 6863332,
+      "reference": "1 Chronicles 9:35",
+      "strongNumber": "H3273",
+      "existing": "jeiel-2",
+      "why": "In Gibeon dwelt the father of Gibeon, Jehiel, whose wife's name was Maachah; 1 Chronicles 8:29-30 gives the same household."
+    },
+    {
+      "wordId": 6863389,
+      "reference": "1 Chronicles 9:39",
+      "strongNumber": "H3083",
+      "existing": "jonathan-2",
+      "why": "The text says 'Saul begat Jonathan', naming the son of King Saul directly."
+    },
+    {
+      "wordId": 6863401,
+      "reference": "1 Chronicles 9:40",
+      "strongNumber": "H3083",
+      "existing": "jonathan-2",
+      "why": "This continues the genealogy of the same Jonathan just named as Saul's son, whose own son was Meribbaal (Mephibosheth)."
+    },
+    {
+      "wordId": 6864377,
+      "reference": "1 Chronicles 11:34",
+      "strongNumber": "H3129",
+      "existing": "jonathan-5",
+      "why": "Jonathan the son of Shage the Hararite stands where 2 Samuel 23:32-33 has Jonathan in the same roll of David's mighty men."
+    },
+    {
+      "wordId": 6864546,
+      "reference": "1 Chronicles 12:3",
+      "strongNumber": "H5820",
+      "existing": "azmaveth-6",
+      "why": "The verse names Azmaveth as father of Jeziel and Pelet, Benjamites who joined David at Ziklag."
+    },
+    {
+      "wordId": 6864554,
+      "reference": "1 Chronicles 12:4",
+      "strongNumber": "H3460",
+      "existing": "ishmaiah-2",
+      "why": "The text names 'Ismaiah the Gibeonite, a mighty man among the thirty'."
+    },
+    {
+      "wordId": 6864566,
+      "reference": "1 Chronicles 12:4",
+      "strongNumber": "H3414",
+      "existing": "jeremiah-3",
+      "why": "This Jeremiah is one of the Benjamite warriors named as joining David."
+    },
+    {
+      "wordId": 6864568,
+      "reference": "1 Chronicles 12:4",
+      "strongNumber": "H3166",
+      "existing": "jahaziel",
+      "why": "This Jahaziel is named among the Benjamite warriors who came to David."
+    },
+    {
+      "wordId": 6864570,
+      "reference": "1 Chronicles 12:4",
+      "strongNumber": "H3076",
+      "existing": "johanan-4",
+      "why": "This Johanan is named among the Benjamite warriors who came to David at Ziklag."
+    },
+    {
+      "wordId": 6864572,
+      "reference": "1 Chronicles 12:4",
+      "strongNumber": "H3107",
+      "existing": "jozabad",
+      "why": "The verse itself calls him 'Josabad the Gederathite'."
+    },
+    {
+      "wordId": 6864662,
+      "reference": "1 Chronicles 12:12",
+      "strongNumber": "H3076",
+      "existing": "johanan-5",
+      "why": "The verse explicitly numbers him 'Johanan the eighth' among the Gadite warriors who joined David."
+    },
+    {
+      "wordId": 6864778,
+      "reference": "1 Chronicles 12:18",
+      "strongNumber": "H6022",
+      "existing": "amasa-3",
+      "why": "The spirit came upon Amasai, who was chief of the captains, and he pledged the men of Benjamin and Judah to David at the hold."
+    },
+    {
+      "wordId": 6864958,
+      "reference": "1 Chronicles 12:27",
+      "strongNumber": "H3077",
+      "existing": "jehoiada-4",
+      "why": "The verse calls him 'the leader of the Aaronites' who came to David at Hebron with 3,700 men."
+    },
+    {
+      "wordId": 6866203,
+      "reference": "1 Chronicles 15:23",
+      "strongNumber": "H511",
+      "create": {
+        "slug": "elkanah-doorkeeper-of-the-ark",
+        "kind": "person",
+        "name": "Elkanah",
+        "distinguisher": "a Levite doorkeeper for the ark when David brought it up to Jerusalem (1CH 15:23)",
+        "notes": null
+      },
+      "why": "Berechiah and Elkanah were doorkeepers for the ark when David brought it up; the Elkanahs of the Levite genealogies lived generations before him."
+    },
+    {
+      "wordId": 6866215,
+      "reference": "1 Chronicles 15:24",
+      "strongNumber": "H6022",
+      "existing": "amasai-2",
+      "why": "Amasai is one of the priests who blew with the trumpets before the ark of God when David brought it up."
+    },
+    {
+      "wordId": 6869978,
+      "reference": "1 Chronicles 23:20",
+      "strongNumber": "H5816",
+      "existing": "uzziel",
+      "why": "This heads the list 'sons of Uzziel' among the Levitical Kohathite divisions."
+    },
+    {
+      "wordId": 6869979,
+      "reference": "1 Chronicles 23:20",
+      "strongNumber": "H4318",
+      "existing": "micah-3",
+      "why": "The verse names Micah as the firstborn of Uzziel."
+    },
+    {
+      "wordId": 6869983,
+      "reference": "1 Chronicles 23:20",
+      "strongNumber": "H3449",
+      "existing": "isshiah-3",
+      "why": "The verse names Jesiah (Isshiah) as the second son of Uzziel."
+    },
+    {
+      "wordId": 6870410,
+      "reference": "1 Chronicles 24:11",
+      "strongNumber": "H3442",
+      "existing": "jeshua",
+      "why": "This is the ninth of the twenty-four priestly courses cast by lot under David."
+    },
+    {
+      "wordId": 6870414,
+      "reference": "1 Chronicles 24:11",
+      "strongNumber": "H7935",
+      "existing": "shecaniah-2",
+      "why": "This is the tenth of the twenty-four priestly courses cast by lot under David."
+    },
+    {
+      "wordId": 6870907,
+      "reference": "1 Chronicles 25:17",
+      "strongNumber": "H8096",
+      "existing": "shimei-10",
+      "why": "This is the tenth division by lot among the sons of Jeduthun's musical service."
+    },
+    {
+      "wordId": 6871064,
+      "reference": "1 Chronicles 26:1",
+      "strongNumber": "H623",
+      "existing": "abiasaph",
+      "why": "Meshelemiah the son of Kore, of the sons of Asaph: 1 Chronicles 9:19 gives the same doorkeeper's line as the son of Kore, the son of Ebiasaph, the son of Korah."
+    },
+    {
+      "wordId": 6871357,
+      "reference": "1 Chronicles 26:20",
+      "strongNumber": "H281",
+      "existing": "ahijah-8",
+      "why": "The verse states Ahijah 'was over the treasures of the house of God, and over the treasures of the dedicated things'."
+    },
+    {
+      "wordId": 6871499,
+      "reference": "1 Chronicles 26:28",
+      "strongNumber": "H8019",
+      "existing": "shelomoth-2",
+      "why": "The dedicated things were under the hand of Shelomith and his brethren, the Shelomith of verses 25 and 26, of the line of Eliezer the son of Moses."
+    },
+    {
+      "wordId": 6871964,
+      "reference": "1 Chronicles 27:18",
+      "strongNumber": "H453",
+      "existing": "elihu-4",
+      "why": "The verse names him as one of the chief officers over Judah, 'one of the brethren of David'."
+    },
+    {
+      "wordId": 6871972,
+      "reference": "1 Chronicles 27:18",
+      "strongNumber": "H4317",
+      "existing": "michael-10",
+      "why": "The verse identifies him as father of Omri, chief officer of Issachar under David."
+    },
+    {
+      "wordId": 6872079,
+      "reference": "1 Chronicles 27:25",
+      "strongNumber": "H5717",
+      "existing": "adiel-3",
+      "why": "The verse names him as father of Azmaveth, keeper of the king's treasures."
+    },
+    {
+      "wordId": 6872100,
+      "reference": "1 Chronicles 27:25",
+      "strongNumber": "H5818",
+      "existing": "uzziah-4",
+      "why": "The verse names him as father of Jehonathan, overseer of the king's storehouses in the fields, cities, villages, and castles."
+    },
+    {
+      "wordId": 6872208,
+      "reference": "1 Chronicles 27:32",
+      "strongNumber": "H3083",
+      "existing": "jonathan-15",
+      "why": "The verse explicitly calls him 'Jonathan David's uncle,' a counsellor, wise man, and scribe."
+    },
+    {
+      "wordId": 6845217,
+      "reference": "Ezra 2:2",
+      "strongNumber": "H3442",
+      "existing": "jeshua-3",
+      "why": "This Jeshua heads the list of those who returned with Zerubbabel."
+    },
+    {
+      "wordId": 6845218,
+      "reference": "Ezra 2:2",
+      "strongNumber": "H5166",
+      "existing": "nehemiah-3",
+      "why": "He is named among the twelve leaders who came with Zerubbabel, distinct from Nehemiah son of Hacaliah who came later under Artaxerxes."
+    },
+    {
+      "wordId": 6845219,
+      "reference": "Ezra 2:2",
+      "strongNumber": "H8304",
+      "existing": "seraiah-6",
+      "why": "He is one of the twelve leaders returning with Zerubbabel."
+    },
+    {
+      "wordId": 6845221,
+      "reference": "Ezra 2:2",
+      "strongNumber": "H4782",
+      "existing": "mordecai",
+      "why": "He is named among the leaders returning with Zerubbabel."
+    },
+    {
+      "wordId": 6845225,
+      "reference": "Ezra 2:2",
+      "strongNumber": "H7348",
+      "existing": "rehum",
+      "why": "He is one of the leaders who came with Zerubbabel."
+    },
+    {
+      "wordId": 6845329,
+      "reference": "Ezra 2:16",
+      "strongNumber": "H2396",
+      "existing": "hezekiah-2",
+      "why": "The 'children of Ater of Hezekiah' names the ancestral house whose descendants returned with Zerubbabel, the same family named in Nehemiah 7:21."
+    },
+    {
+      "wordId": 6847721,
+      "reference": "Ezra 7:1",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is the genealogy opening the book of Ezra, identifying Ezra as son of Seraiah, the scribe of the following narrative."
+    },
+    {
+      "wordId": 6847759,
+      "reference": "Ezra 7:6",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This continues the same narrative describing 'this Ezra' as the ready scribe who went up from Babylon."
+    },
+    {
+      "wordId": 6847762,
+      "reference": "Ezra 7:6",
+      "strongNumber": "H894",
+      "existing": "babylon",
+      "why": "This refers to the historical city of Babylon from which Ezra departed for Jerusalem."
+    },
+    {
+      "wordId": 6847845,
+      "reference": "Ezra 7:9",
+      "strongNumber": "H894",
+      "existing": "babylon",
+      "why": "This continues the same account of Ezra's journey, naming Babylon as his starting point."
+    },
+    {
+      "wordId": 6847864,
+      "reference": "Ezra 7:10",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This continues the same narrative describing Ezra's preparation to seek the law of the LORD."
+    },
+    {
+      "wordId": 6847894,
+      "reference": "Ezra 7:11",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This names the same Ezra the priest and scribe to whom Artaxerxes gave his letter, continuing the same narrative."
+    },
+    {
+      "wordId": 6848312,
+      "reference": "Ezra 8:1",
+      "strongNumber": "H894",
+      "existing": "babylon",
+      "why": "This is the Babylon from which Ezra and the exiles departed to return to Jerusalem, the same Babylon of the captivity."
+    },
+    {
+      "wordId": 6848327,
+      "reference": "Ezra 8:3",
+      "strongNumber": "H7935",
+      "existing": "shecaniah",
+      "why": "Of the sons of David, Hattush; of the sons of Shechaniah: 1 Chronicles 3:22 names Hattush a grandson of Shechaniah of David's line."
+    },
+    {
+      "wordId": 6848463,
+      "reference": "Ezra 8:13",
+      "strongNumber": "H3273",
+      "existing": "jeiel-10",
+      "why": "Of the last sons of Adonikam, whose names are these, Eliphelet, Jeiel and Shemaiah, who went up with Ezra."
+    },
+    {
+      "wordId": 6848518,
+      "reference": "Ezra 8:16",
+      "strongNumber": "H740",
+      "existing": "ariel-2",
+      "why": "This Ariel is one of the chief men Ezra sent for at the river Ahava."
+    },
+    {
+      "wordId": 6848594,
+      "reference": "Ezra 8:18",
+      "strongNumber": "H4249",
+      "existing": "mahli",
+      "why": "The verse explicitly traces Mahli as 'the son of Levi, the son of Israel,' identifying him as the well-known son of Merari."
+    },
+    {
+      "wordId": 6848937,
+      "reference": "Ezra 8:33",
+      "strongNumber": "H6372",
+      "existing": "phinehas-3",
+      "why": "This Phinehas is the father of Eleazar who helped weigh the treasure."
+    },
+    {
+      "wordId": 6849476,
+      "reference": "Ezra 10:1",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is Ezra the scribe and priest whose prayer and confession before the house of God open this narrative."
+    },
+    {
+      "wordId": 6849517,
+      "reference": "Ezra 10:2",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is the same Ezra to whom Shechaniah speaks immediately after his prayer in the preceding verse."
+    },
+    {
+      "wordId": 6849579,
+      "reference": "Ezra 10:5",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is the same Ezra who continues to act throughout the chapter, making the priests and Levites swear."
+    },
+    {
+      "wordId": 6849602,
+      "reference": "Ezra 10:6",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is the same Ezra continuing the narrative, mourning and going to the chamber of Johanan."
+    },
+    {
+      "wordId": 6849714,
+      "reference": "Ezra 10:10",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "The text calls him 'Ezra the priest,' the same figure acting throughout this chapter."
+    },
+    {
+      "wordId": 6849873,
+      "reference": "Ezra 10:16",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is again 'Ezra the priest' overseeing the separation of those with foreign wives, continuing the same narrative."
+    },
+    {
+      "wordId": 6850136,
+      "reference": "Ezra 10:38",
+      "strongNumber": "H1121",
+      "existing": "bani-5",
+      "why": "This Bani appears in the list of men who had taken foreign wives in Ezra 10:38."
+    },
+    {
+      "wordId": 6853379,
+      "reference": "Nehemiah 7:21",
+      "strongNumber": "H2396",
+      "existing": "hezekiah-2",
+      "why": "This is the family of Ater identified 'of Hezekiah' among those who returned from captivity."
+    },
+    {
+      "wordId": 6853942,
+      "reference": "Nehemiah 8:1",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is Ezra the scribe who is asked to bring the book of the law of Moses, the same figure known as scribe skilled in the Law."
+    },
+    {
+      "wordId": 6853958,
+      "reference": "Nehemiah 8:2",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is Ezra the priest bringing the law before the congregation, continuing the same narrative as the preceding verse."
+    },
+    {
+      "wordId": 6854026,
+      "reference": "Nehemiah 8:4",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is Ezra the scribe standing on the pulpit of wood, the same figure throughout this chapter's reading of the law."
+    },
+    {
+      "wordId": 6854069,
+      "reference": "Nehemiah 8:5",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is Ezra opening the book before the people, continuing the same scene."
+    },
+    {
+      "wordId": 6854093,
+      "reference": "Nehemiah 8:6",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is Ezra blessing the LORD immediately after opening the book, the same figure as the rest of the chapter."
+    },
+    {
+      "wordId": 6854174,
+      "reference": "Nehemiah 8:9",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is 'Ezra the priest the scribe' named alongside Nehemiah the Tirshatha, the same figure as throughout Nehemiah 8."
+    },
+    {
+      "wordId": 6854309,
+      "reference": "Nehemiah 8:13",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "This is Ezra the scribe to whom the chief of the fathers gather to understand the law, continuing the same narrative."
+    },
+    {
+      "wordId": 6854441,
+      "reference": "Nehemiah 8:17",
+      "strongNumber": "H3442",
+      "existing": "joshua",
+      "why": "Since the days of Jeshua the son of Nun: Joshua the son of Nun, in the spelling of the later books."
+    },
+    {
+      "wordId": 6855545,
+      "reference": "Nehemiah 10:10",
+      "strongNumber": "H2605",
+      "existing": "hanan-6",
+      "why": "Shebaniah, Hodijah, Kelita, Pelaiah, Hanan: one of the Levites who sealed the covenant."
+    },
+    {
+      "wordId": 6855546,
+      "reference": "Nehemiah 10:11",
+      "strongNumber": "H4316",
+      "existing": "mica-2",
+      "why": "Micha, Rehob, Hashabiah: one of the Levites who sealed the covenant."
+    },
+    {
+      "wordId": 6855563,
+      "reference": "Nehemiah 10:15",
+      "strongNumber": "H1138",
+      "create": {
+        "slug": "bunni-the-covenant-chief",
+        "kind": "person",
+        "name": "Bunni",
+        "distinguisher": "one of the chiefs of the people who sealed the covenant under Nehemiah (NEH 10:15)",
+        "notes": null
+      },
+      "why": "Bunni stands among the chief of the people who sealed the covenant, not among its Levites."
+    },
+    {
+      "wordId": 6855570,
+      "reference": "Nehemiah 10:17",
+      "strongNumber": "H2396",
+      "create": {
+        "slug": "hizkijah-the-covenant-chief",
+        "kind": "person",
+        "name": "Hizkijah",
+        "distinguisher": "one of the chiefs of the people who sealed the covenant under Nehemiah (NEH 10:17)",
+        "notes": null
+      },
+      "why": "Ater, Hizkijah, Azzur: one of the chief of the people who sealed the covenant."
+    },
+    {
+      "wordId": 6855579,
+      "reference": "Nehemiah 10:20",
+      "strongNumber": "H4918",
+      "create": {
+        "slug": "meshullam-the-covenant-chief",
+        "kind": "person",
+        "name": "Meshullam",
+        "distinguisher": "one of the chiefs of the people who sealed the covenant under Nehemiah (NEH 10:20)",
+        "notes": null
+      },
+      "why": "Magpiash, Meshullam, Hezir: one of the chief of the people who sealed the covenant, apart from the priest Meshullam of verse 7."
+    },
+    {
+      "wordId": 6855581,
+      "reference": "Nehemiah 10:21",
+      "strongNumber": "H4898",
+      "existing": "meshezabel-3",
+      "why": "Meshezabeel, Zadok, Jaddua: one of the chief of the people who sealed the covenant."
+    },
+    {
+      "wordId": 6855582,
+      "reference": "Nehemiah 10:21",
+      "strongNumber": "H6659",
+      "existing": "zadok-8",
+      "why": "Meshezabeel, Zadok, Jaddua: one of the chief of the people who sealed the covenant."
+    },
+    {
+      "wordId": 6855585,
+      "reference": "Nehemiah 10:22",
+      "strongNumber": "H2605",
+      "existing": "hanan-5",
+      "why": "Pelatiah, Hanan, Anaiah: one of the chief of the people who sealed the covenant."
+    },
+    {
+      "wordId": 6855588,
+      "reference": "Nehemiah 10:23",
+      "strongNumber": "H2608",
+      "existing": "hananiah-7",
+      "why": "Hoshea, Hananiah, Hashub: one of the chief of the people who sealed the covenant."
+    },
+    {
+      "wordId": 6855589,
+      "reference": "Nehemiah 10:23",
+      "strongNumber": "H2815",
+      "existing": "hasshub-4",
+      "why": "Hoshea, Hananiah, Hashub: one of the chief of the people who sealed the covenant."
+    },
+    {
+      "wordId": 6855594,
+      "reference": "Nehemiah 10:25",
+      "strongNumber": "H7348",
+      "existing": "rehum-5",
+      "why": "Rehum, Hashabnah, Maaseiah: one of the chief of the people who sealed the covenant."
+    },
+    {
+      "wordId": 6855596,
+      "reference": "Nehemiah 10:25",
+      "strongNumber": "H4641",
+      "existing": "maaseiah-17",
+      "why": "Rehum, Hashabnah, Maaseiah: one of the chief of the people who sealed the covenant."
+    },
+    {
+      "wordId": 6855599,
+      "reference": "Nehemiah 10:26",
+      "strongNumber": "H2605",
+      "existing": "hanan-9",
+      "why": "Ahijah, Hanan, Anan: one of the chief of the people who sealed the covenant, the second Hanan of that list after verse 22."
+    },
+    {
+      "wordId": 6855601,
+      "reference": "Nehemiah 10:27",
+      "strongNumber": "H4409",
+      "existing": "malluch-5",
+      "why": "Malluch, Harim, Baanah: one of the chief of the people who sealed the covenant."
+    },
+    {
+      "wordId": 6856260,
+      "reference": "Nehemiah 11:15",
+      "strongNumber": "H2811",
+      "existing": "hashabiah-11",
+      "why": "The genealogy names him as 'the son of Bunni'."
+    },
+    {
+      "wordId": 6856283,
+      "reference": "Nehemiah 11:17",
+      "strongNumber": "H4318",
+      "existing": "mica-2",
+      "why": "Mattaniah the son of Micha, the son of Zabdi, the son of Asaph; 1 Chronicles 9:15 gives the same line as Mattaniah the son of Micah, the son of Zichri."
+    },
+    {
+      "wordId": 6856552,
+      "reference": "Nehemiah 12:1",
+      "strongNumber": "H5830",
+      "existing": "ezra-3",
+      "why": "This Ezra is named among those 'that went up with Zerubbabel the son of Shealtiel, and Jeshua' (Neh 12:1), an ancestral priestly figure of the return generation, not the scribe Ezra who arrived decades later under Artaxerxes."
+    },
+    {
+      "wordId": 6856553,
+      "reference": "Nehemiah 12:2",
+      "strongNumber": "H568",
+      "create": {
+        "slug": "amariah-priest-with-zerubbabel",
+        "kind": "person",
+        "name": "Amariah",
+        "distinguisher": "one of the chief priests who went up with Zerubbabel and Jeshua (NEH 12:2)",
+        "notes": null
+      },
+      "why": "Amariah is one of the priests that went up with Zerubbabel and Jeshua, three generations before the priest Amariah who sealed Nehemiah's covenant."
+    },
+    {
+      "wordId": 6856554,
+      "reference": "Nehemiah 12:2",
+      "strongNumber": "H4409",
+      "existing": "malluch-6",
+      "why": "Malluch is one of the priests that went up with Zerubbabel; verse 14 names his house, Melicu, in the days of Joiakim."
+    },
+    {
+      "wordId": 6856558,
+      "reference": "Nehemiah 12:3",
+      "strongNumber": "H4822",
+      "existing": "meremoth-3",
+      "why": "This Meremoth is placed among the priests 'that went up with Zerubbabel,' the earliest return generation, distinct from the Meremoth son of Urijah active generations later under Nehemiah in repairing the wall and sealing the covenant."
+    },
+    {
+      "wordId": 6856562,
+      "reference": "Nehemiah 12:5",
+      "strongNumber": "H4326",
+      "existing": "mijamin-4",
+      "why": "Miamin is one of the priests that went up with Zerubbabel and Jeshua."
+    },
+    {
+      "wordId": 6856565,
+      "reference": "Nehemiah 12:6",
+      "strongNumber": "H8098",
+      "existing": "shemaiah-24",
+      "why": "This Shemaiah heads a priestly house in the Zerubbabel-era roster, and the same house's head, Jehonathan, is named for Shemaiah's line in the parallel list of Joiakim's day (Neh 12:18)."
+    },
+    {
+      "wordId": 6856586,
+      "reference": "Nehemiah 12:8",
+      "strongNumber": "H1131",
+      "create": {
+        "slug": "binnui-levite-with-zerubbabel",
+        "kind": "person",
+        "name": "Binnui",
+        "distinguisher": "a Levite who went up with Zerubbabel and Jeshua (NEH 12:8)",
+        "notes": null
+      },
+      "why": "Jeshua, Binnui, Kadmiel: one of the Levites that went up with Zerubbabel, generations before Binnui the son of Henadad who repaired the wall."
+    },
+    {
+      "wordId": 6856645,
+      "reference": "Nehemiah 12:13",
+      "strongNumber": "H5830",
+      "existing": "ezra-3",
+      "why": "'Of Ezra, Meshullam' names the head of Ezra's priestly house in the days of Joiakim, the direct continuation of the Ezra named among those who went up with Zerubbabel (Neh 12:1), not the scribe."
+    },
+    {
+      "wordId": 6856648,
+      "reference": "Nehemiah 12:13",
+      "strongNumber": "H568",
+      "existing": "amariah-priest-with-zerubbabel",
+      "why": "Of Amariah, Jehohanan: the priestly house of the Amariah of verse 2, in the days of Joiakim."
+    },
+    {
+      "wordId": 6856651,
+      "reference": "Nehemiah 12:14",
+      "strongNumber": "H4409",
+      "existing": "malluch-6",
+      "why": "Of Melicu, Jonathan: the priestly house of the Malluch who went up with Zerubbabel (verse 2), in the days of Joiakim."
+    },
+    {
+      "wordId": 6856654,
+      "reference": "Nehemiah 12:14",
+      "strongNumber": "H7645",
+      "existing": "shebaniah-3",
+      "why": "Of Shebaniah, Joseph: a priestly house in the days of Joiakim."
+    },
+    {
+      "wordId": 6856660,
+      "reference": "Nehemiah 12:15",
+      "strongNumber": "H4812",
+      "existing": "meraioth-2",
+      "why": "Of Meraioth, Helkai: a priestly house in the days of Joiakim."
+    },
+    {
+      "wordId": 6856680,
+      "reference": "Nehemiah 12:18",
+      "strongNumber": "H8098",
+      "existing": "shemaiah-24",
+      "why": "'Of Shemaiah, Jehonathan' continues the priestly house of Shemaiah already named among the Zerubbabel-era priests (Neh 12:6), now giving its head in the days of Joiakim."
+    },
+    {
+      "wordId": 6856705,
+      "reference": "Nehemiah 12:22",
+      "strongNumber": "H475",
+      "existing": "eliashib-7",
+      "why": "'The Levites in the days of Eliashib, Joiada, and Johanan, and Jaddua' names the high priest who served alongside Nehemiah during the rebuilding of Jerusalem."
+    },
+    {
+      "wordId": 6856796,
+      "reference": "Nehemiah 12:26",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "The text explicitly identifies him as 'Ezra the priest, the scribe,' the well-known scribe active alongside Nehemiah the governor."
+    },
+    {
+      "wordId": 6856924,
+      "reference": "Nehemiah 12:33",
+      "strongNumber": "H5830",
+      "existing": "ezra-4",
+      "why": "This Ezra is grouped among princes of Judah walking in the dedication procession, a separate mention from 'Ezra the scribe' who is named distinctly a few verses later (v.36) as leading before the singers."
+    },
+    {
+      "wordId": 6856926,
+      "reference": "Nehemiah 12:33",
+      "strongNumber": "H4918",
+      "existing": "meshullam-16",
+      "why": "Azariah, Ezra and Meshullam walked in the procession at the dedication; Nehemiah 12:13 names Meshullam the head of the house of Ezra in the days of Joiakim."
+    },
+    {
+      "wordId": 6856931,
+      "reference": "Nehemiah 12:34",
+      "strongNumber": "H8098",
+      "existing": "shemaiah-25",
+      "why": "This Shemaiah is named among the princes of Judah (with Judah, Benjamin, and Jeremiah) walking in the wall-dedication procession."
+    },
+    {
+      "wordId": 6856945,
+      "reference": "Nehemiah 12:35",
+      "strongNumber": "H8098",
+      "existing": "shemaiah-26",
+      "why": "The verse itself gives the genealogy: Zechariah 'the son of Jonathan, the son of Shemaiah,' naming this Shemaiah as grandfather of the trumpeting priest Zechariah."
+    },
+    {
+      "wordId": 6856947,
+      "reference": "Nehemiah 12:35",
+      "strongNumber": "H4983",
+      "existing": "mattaniah-12",
+      "why": "The verse's own genealogy names this Mattaniah as ancestor of Zechariah the trumpeter, 'the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph.'."
+    },
+    {
+      "wordId": 6856956,
+      "reference": "Nehemiah 12:36",
+      "strongNumber": "H8098",
+      "existing": "shemaiah-27",
+      "why": "This Shemaiah is named among the priestly musicians ('his brethren') playing instruments in the wall-dedication procession."
+    },
+    {
+      "wordId": 6856958,
+      "reference": "Nehemiah 12:36",
+      "strongNumber": "H5832",
+      "existing": "azarel-6",
+      "why": "Azarael is one of the brethren of Zechariah who played the musical instruments of David at the dedication of the wall."
+    },
+    {
+      "wordId": 6856962,
+      "reference": "Nehemiah 12:36",
+      "strongNumber": "H5417",
+      "existing": "nethanel-10",
+      "why": "Nethaneel is one of the brethren of Zechariah who played the musical instruments of David at the dedication of the wall."
+    },
+    {
+      "wordId": 6856965,
+      "reference": "Nehemiah 12:36",
+      "strongNumber": "H2607",
+      "existing": "hanani-5",
+      "why": "This Hanani is grouped with priestly musicians ('his brethren') bearing instruments at the dedication, a distinct role from Nehemiah's brother Hanani who held a governing office in the city."
+    },
+    {
+      "wordId": 6856974,
+      "reference": "Nehemiah 12:36",
+      "strongNumber": "H5830",
+      "existing": "ezra",
+      "why": "The text explicitly names him 'Ezra the scribe,' walking before the singers at the dedication, the same scribe Ezra known from his own book."
+    },
+    {
+      "wordId": 6857099,
+      "reference": "Nehemiah 12:41",
+      "strongNumber": "H2148",
+      "create": {
+        "slug": "zechariah-trumpeter-of-the-second-company",
+        "kind": "person",
+        "name": "Zechariah",
+        "distinguisher": "a priest with a trumpet in the second company at the dedication of the wall (NEH 12:41)",
+        "notes": null
+      },
+      "why": "Eliakim, Maaseiah, Miniamin, Michaiah, Elioenai, Zechariah and Hananiah, with trumpets, went with the company Nehemiah followed; Zechariah the son of Jonathan blew in the other company (verse 35)."
+    },
+    {
+      "wordId": 6857100,
+      "reference": "Nehemiah 12:41",
+      "strongNumber": "H2608",
+      "existing": "hananiah-9",
+      "why": "Hananiah is one of the priests with trumpets at the dedication; Nehemiah 12:12 names Hananiah the head of the house of Jeremiah in the days of Joiakim."
+    },
+    {
+      "wordId": 6857104,
+      "reference": "Nehemiah 12:42",
+      "strongNumber": "H4641",
+      "existing": "maaseiah-18",
+      "why": "The second Maaseiah of the company Nehemiah followed, after the priest with a trumpet of verse 41."
+    },
+    {
+      "wordId": 6857106,
+      "reference": "Nehemiah 12:42",
+      "strongNumber": "H8098",
+      "existing": "shemaiah-19",
+      "why": "Maaseiah, Shemaiah, Eleazar: one of those who stood with the second company in the house of God at the dedication of the wall."
+    },
+    {
+      "wordId": 6857116,
+      "reference": "Nehemiah 12:42",
+      "strongNumber": "H5867",
+      "existing": "elam-9",
+      "why": "Elam is one of those who stood with the second company in the house of God at the dedication of the wall."
+    }
+  ]
+}

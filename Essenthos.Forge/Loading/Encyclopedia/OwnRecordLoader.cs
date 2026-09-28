@@ -363,10 +363,12 @@ internal sealed class OwnRecordLoader(
 
     /// <summary>
     /// The record a ruling names, with the claims already standing on it, so a second ruling on the
-    /// same record adds the file's claim once rather than twice.
+    /// same record adds the file's claim once rather than twice. A record an earlier ruling of the
+    /// same file wrote is not saved yet, so it is looked for among the tracked entities first.
     /// </summary>
     private async Task<Entity?> Existing(string slug, CancellationToken cancellationToken) =>
-        await db.Entities.Include(e => e.Claims).FirstOrDefaultAsync(e => e.Slug == slug, cancellationToken);
+        db.Entities.Local.FirstOrDefault(e => e.Slug == slug)
+        ?? await db.Entities.Include(e => e.Claims).FirstOrDefaultAsync(e => e.Slug == slug, cancellationToken);
 
     /// <summary>
     /// What the ruling makes the record say about itself, and the claim that it was a person who
