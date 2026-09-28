@@ -445,13 +445,14 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         }
 
         var decisions = await Decisions(run.Id, cancellationToken);
+        var taken = new HashSet<long>();
         await using (var import = await connection.BeginBinaryImportAsync(ReviewImport, cancellationToken))
         {
             foreach (var (line, source, target, corrected) in resolved)
             {
                 var session = recorded.Reviews[line.Review];
                 await import.StartRowAsync(cancellationToken);
-                await import.WriteAsync(decisions[Key(source, target)].Id, NpgsqlDbType.Bigint, cancellationToken);
+                await import.WriteAsync(Pick(decisions, line, source, target, taken)!.Id, NpgsqlDbType.Bigint, cancellationToken);
                 await import.WriteAsync(EnumSpelling.Of(line.Verdict), NpgsqlDbType.Text, cancellationToken);
                 await import.WriteAsync(session.Examined, NpgsqlDbType.Boolean, cancellationToken);
                 await Optional(import, corrected, NpgsqlDbType.Bigint, cancellationToken);
@@ -482,11 +483,12 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         CancellationToken cancellationToken)
     {
         var decisions = await Decisions(run.Id, cancellationToken);
+        var taken = new HashSet<long>();
         var added = new List<EvidentiaReview>();
         var lost = new List<long>();
         foreach (var (line, source, target, corrected) in resolved)
         {
-            if (!decisions.TryGetValue(Key(source, target), out var decision))
+            if (Pick(decisions, line, source, target, taken) is not { } decision)
             {
                 tally.Conflicts.Add($"{name}: {line.Where} — run {run.Id} holds no decision about this word, so the verdict has nothing to stand on");
                 continue;
@@ -543,28 +545,65 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         return run.Id;
     }
 
-    private sealed record Held(long Id, long? ReviewId, EvidentiaVerdict? Verdict, long? Corrected, DateTimeOffset? AppliedAt, long? LinkId, string? Withheld);
+    private sealed record Held(
+        long Id,
+        long? Target,
+        string? Kind,
+        LinkRelation? Absence,
+        long? ReviewId,
+        EvidentiaVerdict? Verdict,
+        long? Corrected,
+        DateTimeOffset? AppliedAt,
+        long? LinkId,
+        string? Withheld);
 
-    private async Task<Dictionary<(long?, long?), Held>> Decisions(int runId, CancellationToken cancellationToken) =>
+    private async Task<ILookup<(long?, long?), Held>> Decisions(int runId, CancellationToken cancellationToken) =>
         (await db.EvidentiaDecisions.AsNoTracking()
             .Where(decision => decision.RunId == runId)
+            .OrderBy(decision => decision.Id)
             .Select(decision => new
             {
                 decision.Id,
                 decision.SourceWordId,
                 decision.TargetWordId,
+                decision.Kind,
+                decision.Absence,
                 Review = decision.Review == null
                     ? null
                     : new { decision.Review.Id, decision.Review.Verdict, decision.Review.CorrectedTargetWordId, decision.Review.AppliedAt, decision.Review.LinkId, decision.Review.Withheld },
             })
             .ToListAsync(cancellationToken))
-        .ToDictionary(
+        .ToLookup(
             decision => Key(decision.SourceWordId, decision.TargetWordId),
-            decision => new Held(decision.Id, decision.Review?.Id, decision.Review?.Verdict, decision.Review?.CorrectedTargetWordId,
-                decision.Review?.AppliedAt, decision.Review?.LinkId, decision.Review?.Withheld));
+            decision => new Held(decision.Id, decision.TargetWordId, decision.Kind, decision.Absence, decision.Review?.Id,
+                decision.Review?.Verdict, decision.Review?.CorrectedTargetWordId, decision.Review?.AppliedAt, decision.Review?.LinkId,
+                decision.Review?.Withheld));
 
-    /// <summary>A run decides once about each word of its source, and about each word of its target only where it has no source word.</summary>
+    /// <summary>A run decides about each word of its source, and about each word of its target only where it has no source word.</summary>
     private static (long?, long?) Key(long? source, long? target) => source is null ? (null, target) : (source, null);
+
+    /// <summary>
+    /// The decision a line of the ledger is about, which no earlier line of the run took. A run should
+    /// decide once about a word, but one that read a verse spanning two chapters once with each holds
+    /// two decisions about each of its words, and the ledger names a word and not a decision. So the
+    /// line's own proposal picks: the decision with its target, rule and absence, a reviewed one before
+    /// one that is not, then the earliest stored, which gives every replay the same answer.
+    /// </summary>
+    private static Held? Pick(ILookup<(long?, long?), Held> decisions, LedgerLine line, long? source, long? target, HashSet<long> taken)
+    {
+        var picked = decisions[Key(source, target)]
+            .Where(decision => !taken.Contains(decision.Id))
+            .OrderByDescending(decision => decision.Target == target && decision.Kind == line.Rule && decision.Absence == line.Absence)
+            .ThenByDescending(decision => decision.ReviewId is not null)
+            .ThenBy(decision => decision.Id)
+            .FirstOrDefault();
+        if (picked is not null)
+        {
+            taken.Add(picked.Id);
+        }
+
+        return picked;
+    }
 
     /// <summary>
     /// Every word of one text in these canonical books, with its address. The ordinal counts the

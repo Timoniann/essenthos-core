@@ -519,6 +519,33 @@ public sealed class EvidentiaReviewTests : IDisposable
     }
 
     [Fact]
+    public void AVerseReadWithTwoChaptersIsDecidedOnceAWord()
+    {
+        EvidentiaAnalysis At(long id, int position, string surface, int chapter) =>
+            new(new EvidentiaToken(id, new EvidentiaAddress(18, chapter, chapter == 39 ? 27 : 1), position, surface, "spa"),
+                surface, null, null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
+        var behemoth = At(English(4), 4, "behemot", 39);
+        var laterBehemoth = At(English(4), 4, "behemot", 40);
+        var hand = At(English(5), 5, "mano", 39);
+        var laterHand = At(English(5), 5, "mano", 40);
+        var target = Analysis(Hebrew(3), _hebrew, 3, "בהמות");
+        var proposal = new EvidentiaProposal(laterBehemoth, target, EvidentiaProposalKind.GlobalReviewKnownRendering, 0.7,
+            EvidentiaDecisionTrace.For(new EvidentiaCandidate(laterBehemoth, target, []), "review", "test"));
+        var recorder = new EvidentiaDecisionRecorder(_run.Id);
+
+        recorder.Record(new EvidentiaChapterDecisions(18, 39, [behemoth.Token, hand.Token],
+            new HashSet<long> { behemoth.Token.Id, hand.Token.Id }, [], [], []));
+        recorder.Record(new EvidentiaChapterDecisions(18, 40, [laterBehemoth.Token, laterHand.Token],
+            new HashSet<long> { laterBehemoth.Token.Id, laterHand.Token.Id }, [], [], [proposal]));
+
+        recorder.Decisions.Should().BeEquivalentTo(new object[]
+        {
+            new { SourceWordId = (long?)English(4), TargetWordId = (long?)Hebrew(3), CanonicalChapter = (short)40 },
+            new { SourceWordId = (long?)English(5), TargetWordId = (long?)null, CanonicalChapter = (short)39 },
+        }, options => options.WithStrictOrdering(), "the chapter that placed the word stands, and otherwise the first");
+    }
+
+    [Fact]
     public async Task ARunKeepsItsAbsencesWithTheTierAndConfidenceOfThePairTheyRestOn()
     {
         var the = Analysis(English(2), _english, 2, "the");

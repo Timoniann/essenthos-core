@@ -153,6 +153,45 @@ public sealed class EvidentiaLedgerTests : IDisposable
         (await Snapshot()).Should().Equal(before);
     }
 
+    /// <summary>
+    /// The shape a Reina-Valera run left: one verse of it spans Job 39:27 to 40:5, it was read with
+    /// both chapters, and the run holds two decisions about each of its words, most of them abstentions
+    /// nobody reviewed. Replaying such a run stopped every load.
+    /// </summary>
+    [Fact]
+    public async Task ARunThatDecidedTwiceAboutAWordReplaysEachVerdictOnTheDecisionItWasGivenOn()
+    {
+        Abstained(English(1), chapter: 1);
+        Abstained(English(1), chapter: 2);
+        var created = Abstained(English(5), chapter: 1);
+        await Decide();
+        var before = await Snapshot();
+
+        var settled = await Ledger().Replay(_resources);
+
+        settled.Conflicts.Should().BeEmpty();
+        settled.AlreadyThere.Should().Be(4);
+        settled.Applied.Should().BeEmpty();
+        (await Snapshot()).Should().Equal(before);
+
+        await _db.EvidentiaReviews.ExecuteDeleteAsync();
+        var restored = await Ledger().Replay(_resources);
+
+        restored.Restored.Should().Be(4);
+        (await _db.EvidentiaReviews.AsNoTracking().Include(review => review.Decision)
+                .SingleAsync(review => review.Decision!.SourceWordId == English(5)))
+            .Decision!.Should().Match<EvidentiaDecision>(decision => decision.Id != created.Id && decision.TargetWordId == Hebrew(2),
+                "the verdict was given on the proposal, not on the abstention stored before it");
+        (await Snapshot()).Should().Equal(before);
+
+        await Rebuild();
+        var rebuilt = await Ledger().Replay(_resources);
+
+        rebuilt.Conflicts.Should().BeEmpty();
+        rebuilt.Restored.Should().Be(4);
+        (await Snapshot()).Should().Equal(before);
+    }
+
     [Fact]
     public async Task AWordThatNoLongerReadsTheSameIsReportedAndNotGuessedAt()
     {
@@ -290,6 +329,19 @@ public sealed class EvidentiaLedgerTests : IDisposable
             Tier = EvidentiaDecisionRecorder.SafeTier,
             Rationale = "the English article with no article under it",
             Confidence = RuleConfidence,
+        });
+
+    private EvidentiaDecision Abstained(long word, int chapter) =>
+        Stored(new EvidentiaDecision
+        {
+            RunId = _run.Id,
+            SourceWordId = word,
+            CanonicalBook = 1,
+            CanonicalChapter = (short)chapter,
+            CanonicalVerse = 1,
+            Content = true,
+            Abstention = EvidentiaAbstention.Declined,
+            Candidates = 1,
         });
 
     private EvidentiaDecision Stored(EvidentiaDecision decision)
