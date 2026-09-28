@@ -991,7 +991,8 @@ if (args is ["redraw", var redrawSource, var redrawSlug])
                 await berean.Withdraw(slug), slug);
             logger.LogInformation(
                 "{Outcome}",
-                await berean.Load(ResourcePaths.File(resources, "Berean", "bsb_tables.tsv"), slug));
+                await berean.Load(
+                    ResourcePaths.File(resources, "Berean", "bsb_tables.tsv"), slug, LinkRulings.Read(resources)));
             break;
 
         case "clearbible":
@@ -1000,7 +1001,8 @@ if (args is ["redraw", var redrawSource, var redrawSlug])
             {
                 await clearBible.Withdraw(set);
                 logger.LogInformation(
-                    "{Outcome}", await clearBible.Load(Path.Combine(resources, "ClearBible"), set));
+                    "{Outcome}",
+                    await clearBible.Load(Path.Combine(resources, "ClearBible"), set, LinkRulings.Read(resources)));
             }
 
             break;
@@ -1034,7 +1036,7 @@ if (args is ["clearbible", ..])
 
     foreach (var set in ClearBibleSet.All())
     {
-        logger.LogInformation("{Outcome}", await clearBible.Load(folder, set));
+        logger.LogInformation("{Outcome}", await clearBible.Load(folder, set, LinkRulings.Read(resources)));
     }
 
     logger.LogInformation(
