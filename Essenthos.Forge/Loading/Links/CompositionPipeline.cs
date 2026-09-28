@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using Essenthos.Core.Database;
@@ -109,12 +109,15 @@ internal sealed class CompositionPipeline(
         double precision = Admission.DefaultPrecision,
         bool unmeasured = false,
         bool daughter = false,
+        int agreeing = 1,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
-        var measured = daughter ? MeasuredThrough.GetValueOrDefault(from.Language ?? string.Empty) : null;
+        var measured = daughter
+            ? MeasuredThrough.GetValueOrDefault(from.Language ?? string.Empty)
+            : unmeasured ? MeasuredUnstated.GetValueOrDefault(from.Language ?? string.Empty) : null;
         var threshold = minimumConfidence ?? measured?.Minimum ?? AlignmentPipeline.DefaultMinimumConfidence;
 
         await db.Database.OpenConnectionAsync(cancellationToken);
@@ -133,10 +136,12 @@ internal sealed class CompositionPipeline(
                 "and add --unmeasured to write every answer from the threshold regardless.");
         }
 
-        var merged = Merge(proposed, admission);
+        var merged = Merge(proposed, admission, agreeing);
         var (fresh, corroborated) = await Write(
             connection, from, to, [.. viaSlugs], merged, cancellationToken,
-            measured is not null && threshold == measured.Minimum ? measured.Note : null);
+            measured is not null && threshold == measured.Minimum && (daughter || admission.Floors.Count == 0)
+                ? measured.Note
+                : null);
 
         var outcome = new CompositionOutcome(
             fromSlug, string.Join(" and ", viaSlugs), toSlug,
@@ -172,6 +177,7 @@ internal sealed class CompositionPipeline(
         double precision = Admission.DefaultPrecision,
         string? explain = null,
         bool daughter = false,
+        int agreeing = 1,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -192,7 +198,7 @@ internal sealed class CompositionPipeline(
 
         if (explain is not null)
         {
-            await Explain(explain, fromSlug, viaSlugs, proposed, admission, books, cancellationToken);
+            await Explain(explain, fromSlug, viaSlugs, proposed, admission, agreeing, books, cancellationToken);
         }
 
         var report = new StringBuilder()
@@ -201,7 +207,9 @@ internal sealed class CompositionPipeline(
         foreach (var (title, merged) in new[]
                  {
                      ("every answer from the ordinary threshold:", every),
-                     ($"as a run writes it — {admission.Describe([.. viaSlugs])}:", Merge(proposed, admission)),
+                     ($"as a run writes it — {admission.Describe([.. viaSlugs])}" +
+                      (agreeing > 1 ? $", and only what {agreeing} families of readings found:" : ":"),
+                      Merge(proposed, admission, agreeing)),
                  })
         {
             report.AppendLine(title).Append(CompositionTrial.Score(scope, merged, [.. viaSlugs]).Describe(
@@ -223,10 +231,11 @@ internal sealed class CompositionPipeline(
         IReadOnlyList<string> viaSlugs,
         Proposed proposed,
         Admission admission,
+        int agreeing,
         IReadOnlySet<int>? books,
         CancellationToken cancellationToken)
     {
-        var chosen = Merge(proposed, admission).Select(link => (link.From, link.To)).ToHashSet();
+        var chosen = Merge(proposed, admission, agreeing).Select(link => (link.From, link.To)).ToHashSet();
         await using var writer = new StreamWriter(path, false, new UTF8Encoding(false));
         await writer.WriteLineAsync("reading\tfrom\tto\tconfidence\tadmitted\tchosen");
         foreach (var link in Routes.MergeFamilies(proposed.Written, proposed.Reduced, [.. proposed.Composed]))
@@ -411,9 +420,17 @@ internal sealed class CompositionPipeline(
     /// the whole reason there are three.
     /// </summary>
     /// <param name="admission">Which answers may be written at all, before one is chosen per word.</param>
-    internal static List<RoutedLink> Merge(Proposed proposed, Admission admission) =>
+    /// <param name="agreeing">
+    /// How many families of readings must have found an answer for it to be written. More than one
+    /// where the pair's only statements are a transfer from one of its middle texts: the Almeida's
+    /// New Testament key was carried over from Clear's Reina-Valera alignment, so it scores the
+    /// Reina-Valera's answers right whatever they are, and 28 of 44 answers only that route found were
+    /// right by hand against 96 of 96 all three found.
+    /// </param>
+    internal static List<RoutedLink> Merge(Proposed proposed, Admission admission, int agreeing = 1) =>
         Routes.MergeFamilies(proposed.Written, proposed.Reduced, [.. proposed.Composed])
             .Where(admission.Admits)
+            .Where(link => Routes.Families(link.Route) >= agreeing)
             .GroupBy(link => link.From)
             .SelectMany(group =>
             {
@@ -474,7 +491,7 @@ internal sealed class CompositionPipeline(
 
     /// <summary>
     /// The threshold measured for a daughter version composed through the text it was translated
-    /// from, where nothing states the target for it, and what the link's source says about it.
+    /// from, or for a language nothing states the target in, and what the link's source says about it.
     /// </summary>
     internal sealed record MeasuredComposition(double Minimum, string Note);
 
@@ -483,6 +500,15 @@ internal sealed class CompositionPipeline(
     private static readonly Dictionary<string, MeasuredComposition> MeasuredThrough = new()
     {
         ["gez"] = new(0.4, "threshold 0.40 from a hand-scored sample, about 90% right above it"),
+    };
+
+    // Hand-scored by Claude on 154 of the Almeida's Old Testament pairs composed through the
+    // Reina-Valera and the King James, drawn in proportion to the readings that found them
+    // (2026-09-28): 146 right, 95%; 13 of 16 where only the direct model spoke.
+    private static readonly Dictionary<string, MeasuredComposition> MeasuredUnstated = new()
+    {
+        ["por"] = new(AlignmentPipeline.DefaultMinimumConfidence,
+            "every answer from 0.25 with nothing stated to measure against; about 95% right on a hand-scored sample"),
     };
 
     /// <summary>

@@ -241,7 +241,8 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
                 : null,
             composePrecision,
             Option(args, "--explain"),
-            args.Contains("--daughter")));
+            args.Contains("--daughter"),
+            Agreeing(args)));
         return 0;
     }
 
@@ -252,7 +253,8 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
         least >= 0 ? composeMinimum : null,
         composePrecision,
         args.Contains("--unmeasured"),
-        args.Contains("--daughter")));
+        args.Contains("--daughter"),
+        Agreeing(args)));
     await Replay(composeScope, (from, to) => Between(from, to, Identifier(composeFrom), Identifier(composeTo)));
     Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
@@ -311,6 +313,9 @@ if (args is ["releases", ..])
     return await releasesScope.ServiceProvider.GetRequiredService<Publisher>().List(
         Option(args, "--on"), CancellationToken.None);
 }
+
+// --agreeing 3 writes only what the direct model and both middle texts all found.
+static int Agreeing(string[] args) => Option(args, "--agreeing") is { } agreeing ? int.Parse(agreeing) : 1;
 
 static string? Option(string[] args, string name) =>
     Array.IndexOf(args, name) is var at and >= 0 && at + 1 < args.Length ? args[at + 1] : null;
@@ -1187,6 +1192,8 @@ if (args is ["marks", ..])
     return 0;
 }
 
+// --outside BHSA trains on every verse the pair shares and writes only where BHSA has no verse: the
+// King James's Apocrypha against the Greek it was translated from, and not its Old Testament.
 if (args is ["align", var alignFrom, var alignTo, ..])
 {
     using var alignScope = app.Services.CreateScope();
@@ -1202,7 +1209,8 @@ if (args is ["align", var alignFrom, var alignTo, ..])
             ? double.Parse(args[confidence + 1], System.Globalization.CultureInfo.InvariantCulture)
             : null,
         args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
-        replace: args.Contains("--replace")));
+        replace: args.Contains("--replace"),
+        outsideSlug: Option(args, "--outside") is { } outside ? Identifier(outside) : null));
     await Replay(alignScope, (from, to) => Between(from, to, alignOne, alignTwo));
     Recipe.Record(resources, args, DateTimeOffset.UtcNow);
     return 0;
