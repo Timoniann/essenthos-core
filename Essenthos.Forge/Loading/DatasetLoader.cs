@@ -283,6 +283,7 @@ internal sealed class DatasetLoader(
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
+            await HoldBackTheRelationshipsTheOwnerRemoved(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
             await FoldTheRecordsWrittenTwice(stoppingToken);
@@ -1673,6 +1674,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityDescriptorLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The dataset's relationships the owner removed, kept from the page. On every load, because his
+    /// console changes them between loads, and before our own are picked, so a row he struck out does
+    /// not outrank a reading of ours.
+    /// </summary>
+    private async Task HoldBackTheRelationshipsTheOwnerRemoved(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the relationships the owner removed");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<WithdrawnRelationshipLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
     }
 

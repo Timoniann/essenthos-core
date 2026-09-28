@@ -474,6 +474,13 @@ public class EntityRelationship
 
     public string? Notes { get; set; }
 
+    /// <summary>
+    /// The owner removed this witness's row in his console. It stays in the table as what the witness
+    /// said, and no query sees it: a page, a tree and the pick among the witnesses read the table as
+    /// though it were not there.
+    /// </summary>
+    public bool Withdrawn { get; set; }
+
     public override string ToString() => $"EntityRelationship({FromEntityId} {Type} {ToEntityId})";
 }
 

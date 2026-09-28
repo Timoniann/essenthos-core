@@ -248,6 +248,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<EntityRelationship>(entity =>
         {
             entity.Property(r => r.Method).HasConversion(EnumStorage.LinkMethod);
+            entity.HasQueryFilter(r => !r.Withdrawn);
 
             entity.HasOne(r => r.From).WithMany().HasForeignKey(r => r.FromEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
