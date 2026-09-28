@@ -1,3 +1,4 @@
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Xunit;
@@ -19,6 +20,9 @@ public class NameConsensusTests
     private const int Chilion = 5;
     private const int Joshua = 6;
     private const int Og = 7;
+    private const int Jashub = 8;
+    private const int TheLord = 9;
+    private const int Zechariah = 10;
 
     [Theory]
     [InlineData("وَلِإِبْرَاهِيمَ", "ولابراهيم")]
@@ -218,6 +222,141 @@ public class NameConsensusTests
         var (findings, _) = NameConsensus.Read(text, question);
 
         new ConsensusBar(5, 0.1, 0.05).Accepts(findings.Single()).Should().Be(accepted);
+    }
+
+    [Fact]
+    public void ACoreHoldsAtLeastHalfTheLettersOfEveryFormFiledUnderIt()
+    {
+        NameConsensus.Cores("gazites").Should().NotContain("ite");
+        NameConsensus.Cores("abraham").Should().Contain("abra");
+    }
+
+    [Fact]
+    public void TwoNamesSharingLettersAtDifferentPlacesAreNotOneName()
+    {
+        var text = Text(
+            (101, "Schadrac Meschac and Abednego"),
+            (102, "and Schadrac spoke"),
+            (103, "Schadrac and Meschac went"),
+            (104, "and Schadrac stood"),
+            (105, "Schadrac Meschac and Abednego fell"),
+            (201, "and the king went"));
+
+        var (findings, _) = NameConsensus.Read(text, Question((Joshua, [101, 102, 103, 104, 105])));
+
+        findings.Single().Name!.Forms.Should().Contain("schadrac").And.NotContain("meschac");
+    }
+
+    [Fact]
+    public void AFormAnotherEntityOfTheVerseIsNamedByAsOftenIsLeftToIt()
+    {
+        var text = Text(
+            (101, "of Jashub the family of the Jashubites"),
+            (102, "and Jashub went"),
+            (103, "and Jashub said"),
+            (104, "and Jashub slept"),
+            (105, "and Jashub rose"),
+            (201, "and the people went"));
+        const int jashubites = 21;
+
+        var (findings, claims) = NameConsensus.Read(
+            text,
+            Question((Jashub, [101, 102, 103, 104, 105]), (jashubites, [101])));
+
+        findings.Single(finding => finding.Entity == Jashub).Name!.Forms.Should().Contain("jashubites");
+        Surfaces(text, NameConsensus.Settle(findings, claims, Lenient).Where(word => word.Entity == Jashub))
+            .Should().OnlyContain(surface => surface == "Jashub").And.HaveCount(5);
+    }
+
+    [Fact]
+    public void AFatherNamedInEveryOneOfHisFewVersesKeepsHisName()
+    {
+        var verses = Enumerable.Range(0, 10)
+            .Select(verse => (101 + verse, verse < 2 ? "and Joshua the son of Nun went" : $"and Joshua spoke {verse}"))
+            .Append((901, "and the people went"))
+            .ToArray();
+        var text = Text(verses);
+        const int joshua = 22;
+        const int nun = 23;
+
+        var (findings, claims) = NameConsensus.Read(
+            text,
+            Question((joshua, verses.Take(10).Select(verse => verse.Item1).ToArray()), (nun, [101, 102])));
+
+        Surfaces(text, NameConsensus.Settle(findings, claims, Lenient).Where(word => word.Entity == nun))
+            .Should().Equal("Nun", "Nun");
+    }
+
+    [Fact]
+    public void AWordPrintedInLowerCaseIsNotTakenForANameThatIsPrintedWithACapital()
+    {
+        var text = Text(
+            (101, "and the LORD said"),
+            (102, "and the LORD went"),
+            (103, "my lord the LORD is good"),
+            (104, "the LORD is my shepherd"),
+            (105, "praise the LORD"),
+            (201, "and the people went"));
+
+        var (findings, claims) = NameConsensus.Read(text, Question((TheLord, [101, 102, 103, 104, 105])));
+
+        Surfaces(text, NameConsensus.Settle(findings, claims, Lenient)).Should().OnlyContain(surface => surface == "LORD");
+    }
+
+    [Fact]
+    public void AWordFewOfTheEntitysVersesPrintIsNotItsName()
+    {
+        var verses = new[] { (101, "Zechariah prophesied in Sebat") }
+            .Concat(Enumerable.Range(0, 5).Select(verse => (102 + verse, "and Zechariah spoke")))
+            .Concat(Enumerable.Range(0, 30).Select(verse => (201 + verse, "and Zechariah spoke to the priest")))
+            .ToArray();
+        var text = Text(verses);
+
+        var (findings, _) = NameConsensus.Read(text, Question((Zechariah, [101, 102, 103, 104, 105, 106])));
+
+        var finding = findings.Single();
+        finding.Name!.Coverage.Should().BeLessThan(NameConsensus.LeastCoverage);
+        Lenient.Accepts(finding).Should().BeFalse();
+    }
+
+    [Fact]
+    public void AnAppointedTimesWordIsACommonNounAndIsReadInLowerCase()
+    {
+        var text = Text(
+            (101, "remember the sabbath day"),
+            (102, "the sabbath is holy"),
+            (103, "on the sabbath they rested"),
+            (104, "Moses spoke of the sabbath"),
+            (105, "a sabbath of rest"),
+            (201, "and Moses went"),
+            (202, "and the people rested"),
+            (203, "the day is holy"));
+        const int sabbath = 24;
+        var entities = new Dictionary<int, IReadOnlySet<int>> { [sabbath] = new HashSet<int> { 101, 102, 103, 104, 105 } };
+        var none = new Dictionary<int, IReadOnlySet<int>>();
+
+        var (asPerson, _) = NameConsensus.Read(text, new ConsensusQuestion(entities, none));
+        var (asObservance, claims) = NameConsensus.Read(
+            text,
+            new ConsensusQuestion(entities, none, Kinds: new Dictionary<int, EntityKind> { [sabbath] = EntityKind.Observance }));
+
+        asPerson.Single().Name?.Core.Should().NotBe("sabbath");
+        asObservance.Single().Name!.Core.Should().Be("sabbath");
+        asObservance.Single().Kind.Should().Be(EntityKind.Observance);
+        Surfaces(text, NameConsensus.Settle(asObservance, claims, Lenient)).Should().HaveCount(5).And.OnlyContain(surface => surface == "sabbath");
+    }
+
+    [Fact]
+    public void EachKindIsSettledAtItsOwnBar()
+    {
+        var person = new NameFinding(1, 6, new NameCluster("abraham", ["abraham"], 6, 1, 1), 1, Kind: EntityKind.Person);
+        var thing = person with { Entity = 2, Kind = EntityKind.Object };
+        var bars = new ConsensusBars(
+            new Dictionary<EntityKind, ConsensusBar> { [EntityKind.Object] = new(12, 0.1, 0.05) },
+            new ConsensusBar(5, 0.1, 0.05));
+
+        bars.Accepts(person).Should().BeTrue();
+        bars.Accepts(thing).Should().BeFalse();
     }
 
     private static List<ConsensusVerse> Text(params (int Address, string Words)[] verses)

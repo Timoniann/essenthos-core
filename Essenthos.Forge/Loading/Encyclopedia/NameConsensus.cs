@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
@@ -42,7 +43,13 @@ internal sealed record NameCluster(
 /// <see cref="NameLists"/>; null in a script whose letters that cannot read — Chinese, Korean,
 /// Devanagari, Arabic — or where the question gives no spelling.
 /// </param>
-internal sealed record NameFinding(int Entity, int Verses, NameCluster? Name, double Margin, double? Likeness = null);
+internal sealed record NameFinding(
+    int Entity,
+    int Verses,
+    NameCluster? Name,
+    double Margin,
+    double? Likeness = null,
+    EntityKind Kind = EntityKind.Person);
 
 /// <summary>A word the consensus reads as naming an entity.</summary>
 /// <param name="Verse">Which of the verses read it stands in.</param>
@@ -52,10 +59,45 @@ internal readonly record struct ConsensusWord(long Word, int Entity, int Verse);
 /// <param name="Entities">Each entity's verses, as canonical addresses.</param>
 /// <param name="Namesakes">For an entity, the others the original calls by one of its names.</param>
 /// <param name="Spellings">For an entity, the lemmas the original names it with.</param>
+/// <param name="Kinds">What each entity is; a person where it is not said.</param>
 internal sealed record ConsensusQuestion(
     IReadOnlyDictionary<int, IReadOnlySet<int>> Entities,
     IReadOnlyDictionary<int, IReadOnlySet<int>> Namesakes,
-    IReadOnlyDictionary<int, IReadOnlySet<string>>? Spellings = null);
+    IReadOnlyDictionary<int, IReadOnlySet<string>>? Spellings = null,
+    IReadOnlyDictionary<int, EntityKind>? Kinds = null)
+{
+    public EntityKind KindOf(int entity) => Kinds?.GetValueOrDefault(entity, EntityKind.Person) ?? EntityKind.Person;
+}
+
+/// <summary>How the words of one kind of entity are read.</summary>
+/// <param name="Capitalised">
+/// Whether, in a text that marks names with capitals, a form printed mostly in lower case is refused.
+/// True of a person's and a place's name; a people's is a gentilic Spanish and Russian write in lower
+/// case, and a thing's, a feast's or a title's is a common noun.
+/// </param>
+/// <param name="FormSpecificity">
+/// How particular to the entity's verses a form must be to join its name. A common noun recurs in
+/// verses that do not name the thing — <em>ark</em> is Noah's as well — so the contrast is held stricter.
+/// </param>
+/// <param name="Spelt">
+/// Whether a finding read off fewer verses than the bar stands where its consonants are the
+/// original's: a name is transliterated, a thing's word is translated.
+/// </param>
+internal sealed record ConsensusRules(bool Capitalised, double FormSpecificity, bool Spelt)
+{
+    private static readonly ConsensusRules Names = new(true, NameConsensus.FormSpecificity, true);
+    private static readonly ConsensusRules Peoples = new(false, NameConsensus.FormSpecificity, true);
+    private static readonly ConsensusRules Titles = new(false, NameConsensus.CommonNounSpecificity, true);
+    private static readonly ConsensusRules CommonNouns = new(false, NameConsensus.CommonNounSpecificity, false);
+
+    public static ConsensusRules For(EntityKind kind) => kind switch
+    {
+        EntityKind.People => Peoples,
+        EntityKind.Title => Titles,
+        EntityKind.Object or EntityKind.Observance or EntityKind.Term => CommonNouns,
+        _ => Names,
+    };
+}
 
 /// <summary>When a finding is believed.</summary>
 /// <param name="LeastVerses">
@@ -68,9 +110,19 @@ internal sealed record ConsensusBar(int LeastVerses, double LeastScore, double L
 {
     public bool Accepts(NameFinding finding) =>
         finding.Name is { } name
-        && (finding.Verses >= LeastVerses || finding.Likeness >= NameLists.LeastLikeness)
+        && (finding.Verses >= LeastVerses
+            || (ConsensusRules.For(finding.Kind).Spelt && finding.Likeness >= NameLists.LeastLikeness))
+        && name.Coverage >= NameConsensus.LeastCoverage
         && name.Score >= LeastScore
         && finding.Margin >= LeastMargin;
+}
+
+/// <summary>A bar for each kind of entity, and one for a kind given none.</summary>
+internal sealed record ConsensusBars(IReadOnlyDictionary<EntityKind, ConsensusBar> ByKind, ConsensusBar Otherwise)
+{
+    public ConsensusBar For(EntityKind kind) => ByKind.GetValueOrDefault(kind, Otherwise);
+
+    public bool Accepts(NameFinding finding) => For(finding.Kind).Accepts(finding);
 }
 
 /// <summary>
@@ -110,6 +162,17 @@ internal static class NameConsensus
     /// are of the whole text.
     /// </summary>
     internal const double FormSpecificity = 0.5;
+
+    /// <summary>
+    /// The share of an entity's verses its name must be printed in. A word printed in one of six, the
+    /// month <em>Sebat</em> beside the prophet Zechariah, is particular to the verses and is not the
+    /// name: on the texts whose annotations came across a stated link, a fifth of the words found
+    /// under this share were another entity's, against one in three hundred above it.
+    /// </summary>
+    internal const double LeastCoverage = 0.3;
+
+    /// <summary><see cref="FormSpecificity"/> for a word that is a common noun: a thing's, a feast's, a title's.</summary>
+    internal const double CommonNounSpecificity = 0.7;
 
     /// <summary>A name of two letters is a name — Og, Ur, Er — and a name of one is a letter.</summary>
     private const int ShortestName = 2;
@@ -258,7 +321,7 @@ internal static class NameConsensus
             yield break;
         }
 
-        var shortest = Math.Max(script.LeastCore, folded.Length - script.Affixes);
+        var shortest = Math.Max(Math.Max(script.LeastCore, folded.Length - script.Affixes), (folded.Length + 1) / 2);
         for (var length = folded.Length; length >= shortest; length--)
         {
             for (var start = 0; start + length <= folded.Length; start++)
@@ -285,7 +348,7 @@ internal static class NameConsensus
     {
         var text = new TextIndex(verses);
         var findings = new List<NameFinding>();
-        var read = new Dictionary<int, (int[] Mine, HashSet<int> Forms, HashSet<int> Particular)>();
+        var read = new Dictionary<int, (int[] Mine, HashSet<int> Forms, Dictionary<int, int> Particular)>();
 
         foreach (var (entity, addresses) in question.Entities.OrderBy(entry => entry.Key))
         {
@@ -305,8 +368,13 @@ internal static class NameConsensus
                     .ToArray()
                 : [];
 
-            var (finding, forms, particular) = text.Name(entity, mine, namesakeOnly);
-            findings.Add(finding with { Likeness = Likeness(finding.Name, question.Spellings?.GetValueOrDefault(entity)) });
+            var kind = question.KindOf(entity);
+            var (finding, forms, particular) = text.Name(entity, mine, namesakeOnly, ConsensusRules.For(kind));
+            findings.Add(finding with
+            {
+                Likeness = Likeness(finding.Name, question.Spellings?.GetValueOrDefault(entity)),
+                Kind = kind,
+            });
             read[entity] = (mine, forms, particular);
         }
 
@@ -325,32 +393,58 @@ internal static class NameConsensus
         }
 
         var claims = new List<ConsensusWord>();
-        foreach (var (entity, (mine, forms, _)) in read.OrderBy(entry => entry.Key))
+        foreach (var (entity, (mine, forms, particular)) in read.OrderBy(entry => entry.Key))
         {
             if (forms.Count == 0)
             {
                 continue;
             }
 
+            var rules = ConsensusRules.For(question.KindOf(entity));
             var namesakes = question.Namesakes.GetValueOrDefault(entity);
             foreach (var verse in mine)
             {
-                var sharing = namesakes is null
-                    ? []
-                    : standing[verse].Where(other => other != entity && namesakes.Contains(other)).ToList();
+                var others = standing[verse].Where(other => other != entity).ToList();
                 var tokens = text.Tokens[verse];
                 for (var at = 0; at < tokens.Length; at++)
                 {
                     var type = tokens[at];
-                    if (forms.Contains(type) && !sharing.Any(namesake => read[namesake].Particular.Contains(type)))
+                    if (!forms.Contains(type)
+                        || (rules.Capitalised && text.MarksNames && text.Lower[verse][at])
+                        || others.Any(other => Rivals(entity, other, type, particular[type], mine.Length, namesakes?.Contains(other) == true)))
                     {
-                        claims.Add(new ConsensusWord(verses[verse].Words[at].Word, entity, verse));
+                        continue;
                     }
+
+                    claims.Add(new ConsensusWord(verses[verse].Words[at].Word, entity, verse));
                 }
             }
         }
 
         return (findings, claims);
+
+        // Another entity the verse names has as good a claim on the form. A namesake does whenever its
+        // own verses print the form too. Another entity of the same kind does when the form is its own
+        // name as well, and then neither takes it: Dishan beside Ezer, John beside James where the
+        // Arabic's "and John" follows James in nearly every verse. A form that merely stands beside
+        // another's name, as Abihu's does beside Nadab's, is not theirs. An entity of another kind does
+        // when the form is particular to its verses and they print it as large a share of the time:
+        // the Jashubites beside Jashub.
+        bool Rivals(int entity, int other, int type, int own, int mine, bool namesake)
+        {
+            var (theirVerses, theirForms, theirs) = read[other];
+            if (namesake)
+            {
+                return theirs.ContainsKey(type) || text.Printing(theirVerses, type) * 2 >= theirVerses.Length;
+            }
+
+            if (question.KindOf(other) == question.KindOf(entity))
+            {
+                return theirForms.Contains(type);
+            }
+
+            return theirs.TryGetValue(type, out var printed) && (long)printed * mine >= (long)own * theirVerses.Length;
+        }
     }
 
     /// <summary>How many of a name's commonest forms are spelt against the original.</summary>
@@ -393,9 +487,16 @@ internal static class NameConsensus
     public static IReadOnlyList<ConsensusWord> Settle(
         IReadOnlyList<NameFinding> findings,
         IReadOnlyList<ConsensusWord> claims,
-        ConsensusBar bar)
+        ConsensusBar bar) =>
+        Settle(findings, claims, bar.Accepts);
+
+    /// <inheritdoc cref="Settle(IReadOnlyList{NameFinding}, IReadOnlyList{ConsensusWord}, ConsensusBar)"/>
+    public static IReadOnlyList<ConsensusWord> Settle(
+        IReadOnlyList<NameFinding> findings,
+        IReadOnlyList<ConsensusWord> claims,
+        Func<NameFinding, bool> accepts)
     {
-        var accepted = findings.Where(bar.Accepts).Select(finding => finding.Entity).ToHashSet();
+        var accepted = findings.Where(accepts).Select(finding => finding.Entity).ToHashSet();
         return claims
             .Where(claim => accepted.Contains(claim.Entity))
             .GroupBy(claim => claim.Word)
@@ -411,7 +512,6 @@ internal static class NameConsensus
         private readonly List<string> _forms = [];
         private readonly List<int[]> _printedIn = [];
         private readonly List<bool> _lowerCase = [];
-        private readonly bool _marksNames;
         private readonly int[] _stamp;
         private int _generation;
 
@@ -423,6 +523,7 @@ internal static class NameConsensus
             var capitals = new List<int>();
             var lower = new List<int>();
             Tokens = new int[verses.Count][];
+            Lower = new bool[verses.Count][];
             for (var verse = 0; verse < verses.Count; verse++)
             {
                 foreach (var address in verses[verse].Addresses)
@@ -437,6 +538,7 @@ internal static class NameConsensus
 
                 var words = verses[verse].Words;
                 var tokens = new int[words.Count];
+                var lowered = new bool[words.Count];
                 for (var at = 0; at < words.Count; at++)
                 {
                     var folded = Fold(words[at].Surface);
@@ -466,6 +568,7 @@ internal static class NameConsensus
                     else if (char.IsLower(first))
                     {
                         lower[type]++;
+                        lowered[at] = true;
                     }
 
                     var list = printedIn[type];
@@ -476,6 +579,7 @@ internal static class NameConsensus
                 }
 
                 Tokens[verse] = tokens;
+                Lower[verse] = lowered;
             }
 
             _printedIn = printedIn.Select(list => list.ToArray()).ToList();
@@ -483,10 +587,19 @@ internal static class NameConsensus
             _lowerCase = Enumerable.Range(0, occurrences.Count)
                 .Select(type => lower[type] > 0 && capitals[type] < Capitalised * occurrences[type])
                 .ToList();
-            _marksNames = capitals.Sum() >= MarksNames * (capitals.Sum() + lower.Sum());
+            MarksNames = capitals.Sum() >= NameConsensus.MarksNames * (capitals.Sum() + lower.Sum());
         }
 
         public int[][] Tokens { get; }
+
+        /// <summary>Whether each word is printed beginning with a lower-case letter.</summary>
+        public bool[][] Lower { get; }
+
+        /// <summary>Whether the text marks its names with capitals, which a manuscript edition does not.</summary>
+        public bool MarksNames { get; }
+
+        /// <summary>How many of <paramref name="verses"/> print the form.</summary>
+        public int Printing(int[] verses, int type) => verses.Count(verse => Tokens[verse].Contains(type));
 
         public int[] VersesAt(IEnumerable<int> addresses) =>
             addresses
@@ -495,10 +608,15 @@ internal static class NameConsensus
                 .Order()
                 .ToArray();
 
-        public (NameFinding Finding, HashSet<int> Forms, HashSet<int> Particular) Name(
+        /// <returns>
+        /// The finding, the forms of its name, and every form particular to the entity's verses with how
+        /// many of them print it.
+        /// </returns>
+        public (NameFinding Finding, HashSet<int> Forms, Dictionary<int, int> Particular) Name(
             int entity,
             int[] mine,
-            int[] namesakeOnly)
+            int[] namesakeOnly,
+            ConsensusRules rules)
         {
             var inMine = new Dictionary<int, int>();
             foreach (var verse in mine)
@@ -520,13 +638,12 @@ internal static class NameConsensus
 
             var particular = inMine
                 .Where(entry => (double)entry.Value
-                    / (_printedIn[entry.Key].Length - inNamesakes.GetValueOrDefault(entry.Key)) >= FormSpecificity
-                    && !(_marksNames && _lowerCase[entry.Key]))
-                .Select(entry => entry.Key)
-                .ToHashSet();
+                    / (_printedIn[entry.Key].Length - inNamesakes.GetValueOrDefault(entry.Key)) >= rules.FormSpecificity
+                    && !(rules.Capitalised && MarksNames && _lowerCase[entry.Key]))
+                .ToDictionary(entry => entry.Key, entry => entry.Value);
 
             var byCore = new Dictionary<string, HashSet<int>>(StringComparer.Ordinal);
-            foreach (var type in particular)
+            foreach (var type in particular.Keys)
             {
                 foreach (var core in Cores(_forms[type]))
                 {
@@ -541,8 +658,14 @@ internal static class NameConsensus
 
             foreach (var (core, types) in byCore.Where(entry => entry.Key.Length < Of(entry.Key).LeastCore))
             {
-                types.UnionWith(particular.Where(type => _forms[type].Length - core.Length <= ShortNameAffixes
+                types.UnionWith(particular.Keys.Where(type => _forms[type].Length - core.Length <= ShortNameAffixes
                     && _forms[type].StartsWith(core, StringComparison.Ordinal)));
+            }
+
+            foreach (var (core, types) in byCore)
+            {
+                var lead = _forms[types.MaxBy(type => particular[type])];
+                types.RemoveWhere(type => !SameName(_forms[type], lead, core));
             }
 
             var excluded = namesakeOnly.ToHashSet();
@@ -565,6 +688,17 @@ internal static class NameConsensus
 
             return (new NameFinding(entity, mine.Length, best.Cluster, margin), best.Types, particular);
         }
+
+        /// <summary>
+        /// Whether a form filed under a core is the same name as the form the entity's verses print most:
+        /// one holds the other, or the core opens both or closes both. <em>Schadrac</em> and
+        /// <em>Méschac</em> share <em>scha</em>, at the head of one and inside the other, and are two men.
+        /// </summary>
+        private static bool SameName(string form, string lead, string core) =>
+            form.Contains(lead, StringComparison.Ordinal)
+            || lead.Contains(form, StringComparison.Ordinal)
+            || (form.StartsWith(core, StringComparison.Ordinal) && lead.StartsWith(core, StringComparison.Ordinal))
+            || (form.EndsWith(core, StringComparison.Ordinal) && lead.EndsWith(core, StringComparison.Ordinal));
 
         private (NameCluster Cluster, HashSet<int> Types) Score(
             string core,

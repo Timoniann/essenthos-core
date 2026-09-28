@@ -290,6 +290,7 @@ internal sealed class DatasetLoader(
             await RenderOurOwnLinesInEveryLanguage(stoppingToken);
             await MoveWhatWasReadOffTheMisfiledVerses(stoppingToken);
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
+            await NameWhatTheVersesShare(resources, stoppingToken);
             await CountHowEachTextSpellsEachName(stoppingToken);
             await CountTheLexiconsPhrases(stoppingToken);
             await PutThePlacesOnTheMap(resources, stoppingToken);
@@ -1790,6 +1791,31 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<CrossedNameLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// In every text, the word the verses naming an entity share, written on the words no annotation
+    /// names. After every step that names a word or corrects one, because it reads the originals'
+    /// settled answers and writes only where every other method is silent; before the spellings are
+    /// counted, which count these words too. Once: a corpus that holds them already is left as it is,
+    /// and name-consensus --apply --replace writes them again.
+    /// </summary>
+    private async Task NameWhatTheVersesShare(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the words the verses naming each entity share");
+
+        using var scope = services.CreateScope();
+        var pass = scope.ServiceProvider.GetRequiredService<NameConsensusPass>();
+        if (await pass.Written(cancellationToken))
+        {
+            status.Record("the words the verses naming each entity share are already annotated");
+            return;
+        }
+
+        var report = await pass.Run(null, NameConsensusPass.Precision, null, null, apply: true, resources: resources,
+            cancellationToken: cancellationToken);
+        logger.LogInformation("\n{Report}", report);
+        status.Record("the words the verses naming each entity share, annotated where nothing else named them");
     }
 
     /// <summary>

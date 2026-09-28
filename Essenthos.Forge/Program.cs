@@ -1083,10 +1083,13 @@ if (args is ["names", var namesFrom, var namesTo, ..])
     return 0;
 }
 
-// The name of every person, place and people in every text, read off the words the verses naming it
-// share rather than off a link, measured against the texts whose annotations a stated link carried.
-// Reads only: `--texts` limits the texts reported, `--precision` sets what the bar must reach on the
-// measured texts, `--bar verses,score,margin` skips choosing it, `--out` writes each text's findings.
+// The words naming every person, place, people, title, thing and appointed time in every text, read
+// off the words the verses naming it share rather than off a link, measured kind by kind against the
+// texts whose annotations a stated link carried. `--texts` limits the texts, `--precision` sets what
+// each kind's bar must reach on the measured texts, `--bar verses,score,margin` sets one bar for all,
+// `--out` writes each text's findings. Writes nothing without --apply, which annotates the words no
+// annotation names and lists the disagreements for review; --replace takes back an earlier run's
+// first. The load runs it once on a cold corpus, so it is not in the recipe.
 if (args is ["name-consensus", ..])
 {
     using var consensusScope = app.Services.CreateScope();
@@ -1096,9 +1099,14 @@ if (args is ["name-consensus", ..])
         : null;
     logger.LogInformation("\n{Report}", await consensusScope.ServiceProvider.GetRequiredService<NameConsensusPass>().Run(
         Option(args, "--texts")?.Split(',').Select(Identifier).ToHashSet(),
-        double.Parse(Option(args, "--precision") ?? "0.97", System.Globalization.CultureInfo.InvariantCulture),
+        Option(args, "--precision") is { } consensusPrecision
+            ? double.Parse(consensusPrecision, System.Globalization.CultureInfo.InvariantCulture)
+            : NameConsensusPass.Precision,
         Option(args, "--out"),
-        consensusBar));
+        consensusBar,
+        args.Contains("--apply"),
+        args.Contains("--replace"),
+        resources));
     return 0;
 }
 
