@@ -18,7 +18,10 @@ param(
     # coverage and how far the links agree with the King James's and the Berean's own.
     [string] $Runs = 'ind,val,val2,kjv',
 
-    [string] $Output = (Join-Path ([IO.Path]::GetTempPath()) 'essenthos-evidentia')
+    [string] $Output = (Join-Path ([IO.Path]::GetTempPath()) 'essenthos-evidentia'),
+
+    # How many verses on either side a word's candidates may come from; left out, the Forge's default.
+    [int] $NeighbourVerses = -1
 )
 
 # Reads essenthos_core and writes nothing to it. Passages run one at a time: the owner works on this
@@ -167,7 +170,7 @@ Push-Location $snapshot
 try {
     foreach ($set in $Runs -split ',') {
         if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, kjv, kjvval, self, selfstrong, bbe or nwt." }
-        $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0 }
+        $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0; Seconds = 0.0 }
         $words = @{}
         $routes = [ordered]@{}
         foreach ($passage in $passages[$set]) {
@@ -175,9 +178,13 @@ try {
             $prefix = Join-Path $directory $name
             $arguments = @('Essenthos.Forge.dll', 'evidentia-measure-book', $from, $to, $book) + $flags
             if ($first -gt 0) { $arguments += '--from-chapter', $first, '--to-chapter', $last }
+            if ($NeighbourVerses -ge 0) { $arguments += '--neighbour-verses', $NeighbourVerses }
             $arguments += '--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json"
+            $clock = [Diagnostics.Stopwatch]::StartNew()
             & dotnet @arguments *> "$prefix.report.txt"
             if ($LASTEXITCODE -ne 0) { throw "$name failed; see $prefix.report.txt" }
+            $total.Seconds += $clock.Elapsed.TotalSeconds
+            '{0,-10} wall {1:N1}s' -f $name, $clock.Elapsed.TotalSeconds
             foreach ($match in (Select-String -LiteralPath "$prefix.report.txt" -Pattern $line)) {
                 $tier = $match.Matches[0].Groups['tier'].Value.Trim()
                 $correct = Number $match.Matches[0].Groups['correct'].Value
@@ -208,6 +215,7 @@ try {
             ($total.SafeCorrect / [Math]::Max(1, $total.SafeCovered))
         ByWord "$set all" $words
         RouteSummary "$set all" $routes
+        '{0,-10} wall {1:N1}s' -f "$set all", $total.Seconds
     }
 }
 finally {

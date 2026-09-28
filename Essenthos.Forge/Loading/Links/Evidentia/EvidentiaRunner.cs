@@ -345,6 +345,7 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
             ["allowKnownRenderingEvidence"] = options.AllowKnownRenderingEvidence,
             ["learnRenderingsFrom"] = options.LearnRenderingsFrom,
             ["learnedRenderingMethods"] = options.LearnedRenderingMethods?.Select(EnumSpelling.Of).ToArray(),
+            ["neighbourVerseDistance"] = options.NeighbourVerseDistance,
             ["defaults"] = typeof(EvidentiaDefaults)
                 .GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(field => field.IsLiteral)
@@ -367,6 +368,16 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
                                  && learnFrom.ValueKind == JsonValueKind.String
                 ? learnFrom.GetString()
                 : null,
-            LearnedRenderingMethods: methods);
+            LearnedRenderingMethods: methods,
+            NeighbourVerseDistance: NeighbourVerseDistance(root));
     }
+
+    /// <summary>A run stored before the window was an option read with the default of its day.</summary>
+    private static int NeighbourVerseDistance(JsonElement root) =>
+        root.TryGetProperty("neighbourVerseDistance", out var distance)
+            ? distance.GetInt32()
+            : root.TryGetProperty("defaults", out var defaults)
+              && defaults.TryGetProperty(nameof(EvidentiaDefaults.NeighbourVerseDistance), out var stored)
+                ? stored.GetInt32()
+                : EvidentiaDefaults.NeighbourVerseDistance;
 }

@@ -48,7 +48,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var lengths = await ChapterLengths(fromSlug, toSlug, canonicalBook, cancellationToken);
         var source = EnglishCompounds.Join(sourceAnalysis.Tokens).Select(lengths.Place).ToList();
         var target = (await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken)).Select(lengths.Place).ToList();
-        var window = await Window(toSlug, canonicalBook, canonicalChapter, target, lengths, cancellationToken);
+        var window = await Window(toSlug, canonicalBook, canonicalChapter, target, lengths, EvidentiaDefaults.NeighbourVerseDistance, cancellationToken);
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
         var targetGlossEvidence = TargetGlossEvidenceSource.For(window);
         var knownRenderingEvidence = allowKnownRenderingEvidence
@@ -56,7 +56,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 fromSlug, toSlug, source, canonicalBook, canonicalChapter, null, cancellationToken: cancellationToken)
             : null;
         var preview = pipeline.Preview(
-            new EvidentiaRequest(source, Near(window, canonicalChapter, source), AllowSourceStrongEvidence: allowSourceStrongEvidence),
+            new EvidentiaRequest(source, Near(window, source, EvidentiaDefaults.NeighbourVerseDistance), AllowSourceStrongEvidence: allowSourceStrongEvidence),
             Evidence(dictionaryEvidence, knownRenderingEvidence, targetGlossEvidence));
 
         return new EvidentiaCorpusPreview(
@@ -85,7 +85,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var lengths = await ChapterLengths(fromSlug, toSlug, canonicalBook, cancellationToken);
         var source = EnglishCompounds.Join(sourceAnalysis.Tokens).Select(lengths.Place).ToList();
         var target = (await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken)).Select(lengths.Place).ToList();
-        var window = await Window(toSlug, canonicalBook, canonicalChapter, target, lengths, cancellationToken);
+        var window = await Window(toSlug, canonicalBook, canonicalChapter, target, lengths, options.NeighbourVerseDistance, cancellationToken);
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
         var targetGlossEvidence = TargetGlossEvidenceSource.For(window);
         var knownRenderingEvidence = options.AllowKnownRenderingEvidence
@@ -97,7 +97,11 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var previews = source.GroupBy(token => token.Address)
             .OrderBy(group => group.Key.Verse)
             .Select(group => pipeline.Preview(
-                new EvidentiaRequest(group.ToList(), Near(window, canonicalChapter, group), AllowSourceStrongEvidence: options.AllowSourceStrongEvidence),
+                new EvidentiaRequest(
+                    group.ToList(),
+                    Near(window, group, options.NeighbourVerseDistance),
+                    options.NeighbourVerseDistance,
+                    AllowSourceStrongEvidence: options.AllowSourceStrongEvidence),
                 Evidence(dictionaryEvidence, knownRenderingEvidence, targetGlossEvidence)))
             .ToList();
 
@@ -480,11 +484,12 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         int canonicalChapter,
         IReadOnlyList<EvidentiaToken> target,
         EvidentiaChapterLengths lengths,
+        int neighbourVerseDistance,
         CancellationToken cancellationToken)
     {
         var window = target.ToList();
         var held = target.Select(token => token.Id).ToHashSet();
-        foreach (var (chapter, verse) in lengths.Edges(canonicalChapter, EvidentiaDefaults.NeighbourVerseDistance))
+        foreach (var (chapter, verse) in lengths.Edges(canonicalChapter, neighbourVerseDistance))
         {
             window.AddRange((await Tokens(slug, canonicalBook, chapter, verse, cancellationToken, required: false))
                 .Where(token => held.Add(token.Id))
@@ -494,14 +499,14 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         return window;
     }
 
-    /// <summary>The window as some source verses see it: a neighbouring chapter's words only where they stand near one of them.</summary>
-    private static List<EvidentiaToken> Near(IReadOnlyList<EvidentiaToken> window, int chapter, IEnumerable<EvidentiaToken> source)
+    /// <summary>The window as some source verses see it: the words, of this chapter or a neighbouring one, that stand near one of them.</summary>
+    private static List<EvidentiaToken> Near(
+        IReadOnlyList<EvidentiaToken> window, IEnumerable<EvidentiaToken> source, int neighbourVerseDistance)
     {
         var addresses = source.Select(token => token.Address).Distinct().ToList();
         return
         [
-            .. window.Where(token => token.Address.Chapter == chapter
-                || addresses.Any(address => address.DistanceTo(token.Address) <= EvidentiaDefaults.NeighbourVerseDistance)),
+            .. window.Where(token => addresses.Any(address => address.DistanceTo(token.Address) <= neighbourVerseDistance)),
         ];
     }
 
@@ -1292,7 +1297,8 @@ internal sealed record EvidentiaMeasurementOptions(
     string? GoldInterlinear = null,
     bool LearnAcrossLanguages = false,
     bool SourceFromFiles = false,
-    IReadOnlyList<string>? RouteTexts = null);
+    IReadOnlyList<string>? RouteTexts = null,
+    int NeighbourVerseDistance = EvidentiaDefaults.NeighbourVerseDistance);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.

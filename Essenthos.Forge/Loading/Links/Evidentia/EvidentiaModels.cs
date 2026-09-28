@@ -2,7 +2,12 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 
 internal static class EvidentiaDefaults
 {
-    public const int NeighbourVerseDistance = 2;
+    /// <summary>
+    /// How many verses on either side of its own a word's candidates are read from. Every tier places
+    /// a word in its own verse, so the neighbours only show where its evidence was pulled; one verse is
+    /// enough to show a versification shift, and a wider window placed nothing differently.
+    /// </summary>
+    public const int NeighbourVerseDistance = 1;
     public const double MinimumContentCoverage = 0.30;
     public const double ExactAddressScore = 0.30;
     public const double NeighbourAddressScore = 0.08;

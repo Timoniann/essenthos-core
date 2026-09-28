@@ -104,7 +104,8 @@ internal sealed class EvidentiaPipeline(
         {
             foreach (var to in target)
             {
-                if (EvidentiaTenseAgreement.Disagrees(from, to))
+                if (from.Token.Address.DistanceTo(to.Token.Address) > maximumDistance
+                    || EvidentiaTenseAgreement.Disagrees(from, to))
                 {
                     continue;
                 }
