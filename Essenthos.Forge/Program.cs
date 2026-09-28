@@ -145,6 +145,7 @@ builder.Services.AddScoped<HebrewOriginNameLoader>();
 builder.Services.AddScoped<RenderedNameLoader>();
 builder.Services.AddScoped<TribeNameLoader>();
 builder.Services.AddScoped<EponymNameLoader>();
+builder.Services.AddScoped<RealmNameLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
 builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();

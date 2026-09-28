@@ -10,7 +10,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Occurrences">Hebrew names a tribe bears with its ancestor that nothing had named.</param>
 /// <param name="Children">Of those, <em>the children of Israel</em>, which name the people.</param>
 /// <param name="Eponyms">Of those, the ones named after the ancestor.</param>
-/// <param name="Realms">Of those, a king's, a land's or a city's, which are left unnamed.</param>
+/// <param name="Realms">Of those, a king's, a land's or a city's, which are left to the realm rule.</param>
 /// <param name="Written">Annotations written under this pass's source, the carried ones included.</param>
 internal sealed record EponymNameOutcome(
     bool AlreadyLoaded,
@@ -48,7 +48,8 @@ internal sealed record EponymNameOutcome(
 /// <em>the children of Reuben</em> of Numbers 1:20 are counted as a tribe and are Reuben's. One
 /// phrase is the exception he named — <em>the children of Israel</em>, בְּנֵי יִשְׂרָאֵל, is the
 /// people Israel. A name standing after a king, a kingdom, a land, a city, a border, a field or a
-/// mountain is a realm, which is neither the man nor the tribe, and it is left as it was.
+/// mountain is a realm, which is neither the man nor the tribe, and is left to
+/// <see cref="RealmNameLoader"/>, which names the people there.
 /// </para>
 ///
 /// <para>
@@ -71,12 +72,10 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
     private const string Israel = "H3478";
 
     /// <summary>
-    /// The words a realm is named after: king, kingdom and reign, land and ground, city, border,
-    /// field and mountain. <em>The king of Israel</em> and <em>the land of Judah</em> are neither the
-    /// man nor the tribe.
+    /// The words a realm is named after. <em>The king of Israel</em> and <em>the land of Judah</em>
+    /// are neither the man nor the tribe, and <see cref="RealmNameLoader"/> answers them.
     /// </summary>
-    private static readonly string[] Realm =
-        ["H4428", "H4467", "H4438", "H776", "H127", "H5892", "H1366", "H7704", "H2022"];
+    private static readonly string[] Realm = RealmNameLoader.Governing;
 
     /// <summary>
     /// How sure a rule about the phrase is. The owner's reading of <em>the children of Israel</em>

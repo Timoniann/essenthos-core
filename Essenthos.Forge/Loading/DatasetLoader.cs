@@ -280,6 +280,7 @@ internal sealed class DatasetLoader(
             await WriteTheThingsMadeAndTheTimesKept(stoppingToken);
             await WriteWhatTheNarrativesTurnOn(stoppingToken);
             await NameTheAncestorsTheTribesAreNamedAfter(stoppingToken);
+            await NameThePeoplesTheRealmsAreNamedAfter(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
@@ -1776,6 +1777,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EponymNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// <em>The king of Israel</em> and <em>the land of Judah</em>: the people, on the owner's ruling.
+    /// After the ancestors, whose pass leaves these words to it, and before the verses are cited off
+    /// the words.
+    /// </summary>
+    private async Task NameThePeoplesTheRealmsAreNamedAfter(CancellationToken cancellationToken)
+    {
+        status.Starting("the peoples a king, a land or a city is named after");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<RealmNameLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 
