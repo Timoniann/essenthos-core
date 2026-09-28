@@ -403,24 +403,6 @@
     {
       "verb": "compose",
       "arguments": [
-        "LSG1910",
-        "KJV,BSB",
-        "BHSA"
-      ],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "LSG1910",
-        "KJV,BSB",
-        "NESTLE1904"
-      ],
-      "note": "run on essenthos_core on 2026-09-25"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
         "ELB1905",
         "KJV,BSB",
         "BHSA"
@@ -756,6 +738,75 @@
         "--apply"
       ],
       "at": "2026-09-28T16:22:35.700987+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "KJV",
+        "GRCBRENT",
+        "--outside",
+        "BHSA"
+      ],
+      "at": "2026-09-28T16:39:17.1888844+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "WEB",
+        "GRCBRENT",
+        "--outside",
+        "BHSA"
+      ],
+      "at": "2026-09-28T16:39:36.3326921+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "RUSV",
+        "GRCBRENT",
+        "--outside",
+        "BHSA"
+      ],
+      "at": "2026-09-28T16:39:54.1564166+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "ALM1911",
+        "RV1909,KJV",
+        "BHSA",
+        "--unmeasured"
+      ],
+      "at": "2026-09-28T16:40:43.0458392+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "ALM1911",
+        "RV1909,KJV",
+        "NESTLE1904",
+        "--agreeing",
+        "3"
+      ],
+      "at": "2026-09-28T16:41:11.9246791+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "LSG1910",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "at": "2026-09-28T16:42:02.0783014+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "LSG1910",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "at": "2026-09-28T16:42:35.5353439+00:00"
     }
   ]
 }
