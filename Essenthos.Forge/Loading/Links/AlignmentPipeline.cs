@@ -94,6 +94,14 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// The threshold, or null for the one measured for the source's language, and
     /// <see cref="DefaultMinimumConfidence"/> where none was.
     /// </param>
+    /// <param name="outsideSlug">
+    /// A text whose verses the source was not translated alongside the target, or null. The model
+    /// still trains on every verse the pair shares, and only the source's words standing where this
+    /// text has no verse are written: the King James's Apocrypha was translated from the Greek and
+    /// the rest of its Old Testament from the Hebrew, so against the Septuagint it renders the one
+    /// and only resembles the other. Lettered verses are read too, because every address written is
+    /// one the frame gives a Greek addition by the versification data's rule for it.
+    /// </param>
     public async Task<AlignmentOutcome> Run(
         string fromSlug,
         string toSlug,
@@ -101,6 +109,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         double? minimumConfidence,
         string modelType,
         bool replace = false,
+        string? outsideSlug = null,
         CancellationToken cancellationToken = default)
     {
         var from = await Text(fromSlug, cancellationToken);
@@ -121,7 +130,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var measured = Measured.GetValueOrDefault(from.Language ?? string.Empty);
         var threshold = minimumConfidence ?? measured?.Minimum ?? DefaultMinimumConfidence;
         var pool = Pool(fromSlug, toSlug);
-        var lettered = await PrintTheSameVerses(fromSlug, toSlug, cancellationToken);
+        var lettered = outsideSlug is not null || await PrintTheSameVerses(fromSlug, toSlug, cancellationToken);
         var source = await Words(fromSlug, word => Reduce(word), cancellationToken, lettered: lettered);
         var target = await Words(
             toSlug, pool is null ? word => Comparable(word) : Pooled, cancellationToken, primaryOnly: pool is not null,
@@ -146,6 +155,11 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var (drafts, proposed, collapsed, below) = Read(
             alignmentFile, addresses, source, target, threshold, Selection.BestPerSource, prior,
             MarksNoNames(from.Language), BothMarkTheirNames(from.Language, to.Language));
+        if (outsideSlug is not null)
+        {
+            var beyond = await Beyond(from.Id, (await Text(outsideSlug, cancellationToken)).Id, cancellationToken);
+            drafts = [.. drafts.Where(draft => beyond.Contains(draft.SourceWordId))];
+        }
 
         var note = pool is null ? null : $"one model over {string.Join(", ", pool)}";
         if (measured is not null && threshold == measured.Minimum)
@@ -159,6 +173,47 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             fromSlug, toSlug, addresses.Count, proposed, collapsed, below, drafts.Count, started.Elapsed);
         logger.LogInformation("Aligned {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The words of a text standing, by their verse's own address, where another text has no verse
+    /// at any address.
+    /// </summary>
+    private async Task<HashSet<long>> Beyond(int textId, int outsideTextId, CancellationToken cancellationToken)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        try
+        {
+            await using var command = new NpgsqlCommand(
+                """
+                SELECT w.id
+                FROM word w
+                JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+                WHERE w.text_id = @text
+                  AND NOT EXISTS (
+                      SELECT 1
+                      FROM verse_reference o
+                      JOIN verse v ON v.id = o.verse_id AND v.text_id = @outside
+                      WHERE (o.canonical_book, o.canonical_chapter, o.canonical_verse)
+                          = (r.canonical_book, r.canonical_chapter, r.canonical_verse))
+                """, (NpgsqlConnection)db.Database.GetDbConnection());
+            command.Parameters.AddWithValue("text", textId);
+            command.Parameters.AddWithValue("outside", outsideTextId);
+            command.CommandTimeout = 600;
+
+            var words = new HashSet<long>();
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                words.Add(reader.GetInt64(0));
+            }
+
+            return words;
+        }
+        finally
+        {
+            await db.Database.CloseConnectionAsync();
+        }
     }
 
     /// <summary>
@@ -1586,6 +1641,8 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         "grc" => GreekStemmer.Stem(word.Surface),
         "deu" => GermanStemmer.Stem(word.Surface),
         "spa" => SpanishStemmer.Stem(word.Surface),
+        "fra" => FrenchStemmer.Stem(word.Surface),
+        "por" => PortugueseStemmer.Stem(word.Surface),
         "gez" => GeezStemmer.Stem(word.Surface),
         _ => word.Surface.ToLowerInvariant(),
     };
@@ -1624,7 +1681,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// them often enough; using the consonants instead raised precision by a quarter.
     /// </summary>
     private static string Comparable(WordForms word, bool suppletion = false) =>
-        word.Language is "rus" or "ukr" or "eng" or "deu" or "spa" or "gez" ? Reduce(word, suppletion)
+        word.Language is "rus" or "ukr" or "eng" or "deu" or "spa" or "fra" or "por" or "gez" ? Reduce(word, suppletion)
         // A Greek witness with a lemma keeps it, and a word without one is reduced like any other
         // heavily inflected language rather than counted as eight words for one. Brenton had none
         // at all until GLAUx; it now has one on 97.1% of its words, so this is per word rather than
