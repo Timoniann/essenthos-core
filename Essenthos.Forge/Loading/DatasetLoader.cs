@@ -1031,11 +1031,12 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<Links.BereanLinkLoader>();
         var tables = Path.Combine(resources, "Berean", "bsb_tables.tsv");
-        status.Record(await loader.Load(tables, NestleTextSource.Slug, cancellationToken));
+        var rulings = Links.LinkRulings.Read(resources);
+        status.Record(await loader.Load(tables, NestleTextSource.Slug, rulings, cancellationToken));
 
         // The same file's Hebrew half, which joins on the letters rather than on the order or the
         // number, because BHSA and the Westminster edition tokenise the same text differently.
-        status.Record(await loader.Load(tables, BhsaTextSource.Slug, cancellationToken));
+        status.Record(await loader.Load(tables, BhsaTextSource.Slug, rulings, cancellationToken));
         await NumberTheBereanAsItsTablesDo(resources, cancellationToken);
     }
 
@@ -1083,10 +1084,11 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<Links.ClearBibleLinkLoader>();
         var clearBible = Path.Combine(resources, "ClearBible");
+        var rulings = Links.LinkRulings.Read(resources);
 
         foreach (var set in ClearBible.ClearBibleSet.All())
         {
-            status.Record(await loader.Load(clearBible, set, cancellationToken));
+            status.Record(await loader.Load(clearBible, set, rulings, cancellationToken));
         }
     }
 

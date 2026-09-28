@@ -40,6 +40,10 @@ namespace Essenthos.Core.Loading.Links;
 /// Words whose row has no English at all, not even a dash. The table states nothing about them, so
 /// nothing is written: not a rendering it does not give, and not an absence it does not state.
 /// </param>
+/// <param name="Overruled">
+/// Witness words whose statement here this project's reading of the English sets aside, as
+/// <see cref="LinkRulings"/> records it: the table's word for them is not written.
+/// </param>
 internal sealed record BereanLinkOutcome(
     bool AlreadyLoaded,
     int Verses,
@@ -48,6 +52,7 @@ internal sealed record BereanLinkOutcome(
     int Moved,
     int Joined,
     int Unmarked,
+    int Overruled,
     int Divided,
     int Drifted,
     int Disputed,
@@ -60,8 +65,9 @@ internal sealed record BereanLinkOutcome(
             ? "the Berean is already linked to the Greek"
             : $"{Links} links over {Verses} verses in {Elapsed}: {Absent} original words the English does " +
               $"not render, {Moved} whose rendering the file places elsewhere, {Joined} rendered together " +
-              $"with the next word's English, {Unmarked} with no English stated, {Divided} verses the two " +
-              $"divide differently, {Drifted} whose English did not line up, {Disputed} refused on their " +
+              $"with the next word's English, {Unmarked} with no English stated, {Overruled} set aside by a " +
+              $"ruling on the English, {Divided} verses the two divide differently, {Drifted} whose English " +
+              $"did not line up, {Disputed} refused on their " +
               $"numbers; {NumbersAgreeing} of {NumbersCompared} Strong numbers agree " +
               $"({(NumbersCompared == 0 ? 0 : (double)NumbersAgreeing / NumbersCompared):P2})";
 }
@@ -133,6 +139,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     public async Task<BereanLinkOutcome> Load(
         string tables,
         string witnessSlug,
+        LinkRulings? rulings = null,
         CancellationToken cancellationToken = default)
     {
         var from = await Text(BereanTextSource.Slug, cancellationToken);
@@ -140,7 +147,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
 
         if (from == 0 || to == 0)
         {
-            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         // Guarded on this source rather than on the pair: the aligner may already have spoken about
@@ -149,7 +156,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
                 l => l.FromTextId == from && l.ToTextId == to && l.Source == Source, cancellationToken))
         {
             logger.LogInformation("The Berean is already linked to {Witness}; nothing to do", witnessSlug);
-            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         if (!File.Exists(tables))
@@ -157,7 +164,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             logger.LogWarning(
                 "The Berean tables are not at {Path}, so the Berean is linked to nothing. They are 85 MB "
                 + "and are fetched rather than committed; run scripts/fetch-berean.ps1", tables);
-            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -165,6 +172,8 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
             .Where(t => t.Id == to).Select(t => t.Language).FirstAsync(cancellationToken) == "grc";
         var english = await Words(from, cancellationToken);
         var greek = await Words(to, cancellationToken);
+        var overruled = await (rulings ?? LinkRulings.None).Overruled(
+            db, BereanTextSource.Slug, witnessSlug, LinkRulings.Berean, logger, cancellationToken);
 
         var drafts = new List<Draft>(150_000);
         var covered = new List<int>(30_000);
@@ -235,7 +244,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
                 continue;
             }
 
-            if (Pair(rows, ours, run, drafts, silences) is false)
+            if (Pair(rows, ours, run, drafts, silences, overruled) is false)
             {
                 drifted++;
                 continue;
@@ -252,7 +261,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
 
         var outcome = new BereanLinkOutcome(
             false, verses, drafts.Count, silences.Absent, silences.Moved, silences.Joined, silences.Unmarked,
-            divided, drifted, disputed, compared, agreeing,
+            silences.Overruled, divided, drifted, disputed, compared, agreeing,
             started.Elapsed);
         logger.LogInformation(
             "Linked the Berean to {Witness}: {Outcome}; {Replaced} aligner links superseded",
@@ -447,17 +456,30 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     /// verses, all 3,000 — so this walks the two in step and stops the whole verse the moment they
     /// part. Returning false rather than writing what it has is the point: a partial alignment
     /// produces links about the wrong words for the rest of the verse and looks exactly right.
+    ///
+    /// <para>
+    /// A witness word in <paramref name="overruled"/> is one a ruling on the English says the table
+    /// is wrong about, so the table's word on it is left out: an absence is not written, and a
+    /// rendering names the row's other words or is not written either.
+    /// </para>
     /// </summary>
     internal static bool Pair(
         IReadOnlyList<BereanRow> rows,
         IReadOnlyList<Word> ours,
         IReadOnlyList<List<long>> witness,
         List<Draft> drafts,
-        Silences silences)
+        Silences silences,
+        IReadOnlySet<long>? overruled = null)
     {
         if (Claims(rows, ours) is not { } claimed)
         {
             return false;
+        }
+
+        if (overruled is { Count: > 0 } && witness.Any(words => words.Any(overruled.Contains)))
+        {
+            silences.Overruled += witness.SelectMany(words => words).Where(overruled.Contains).Distinct().Count();
+            witness = [.. witness.Select(words => words.Where(word => !overruled.Contains(word)).ToList())];
         }
 
         var into = Joins(rows, claimed);
@@ -489,7 +511,11 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
                     }
                 }
 
-                drafts.Add(new Draft(LinkRelation.Renders, mine, theirs));
+                if (theirs.Count > 0)
+                {
+                    drafts.Add(new Draft(LinkRelation.Renders, mine, theirs));
+                }
+
                 continue;
             }
 
@@ -756,5 +782,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         public int Joined { get; set; }
 
         public int Unmarked { get; set; }
+
+        public int Overruled { get; set; }
     }
 }

@@ -51,6 +51,11 @@ namespace Essenthos.Core.Loading.Links;
 /// that point the numbers and the words no longer agree. See
 /// <see cref="ClearBibleLinkLoader.Retokenised"/>.
 /// </param>
+/// <param name="Overruled">
+/// Records naming a witness word this project's reading of the translation says the record is wrong
+/// about, as <see cref="LinkRulings"/> records it: withheld where it was the record's only witness
+/// word, and otherwise written without it (<paramref name="Trimmed"/>).
+/// </param>
 /// <param name="Placed">
 /// Their words that became ours, on each side. It is the measure of the join itself rather than of
 /// the alignment, and it is what says whether an empty result means the two disagree or means
@@ -67,6 +72,8 @@ internal sealed record ClearBibleOutcome(
     int Astray,
     int Shifted,
     int Misnumbered,
+    int Overruled,
+    int Trimmed,
     ClearBiblePlacement Placed,
     TimeSpan Elapsed)
 {
@@ -80,7 +87,8 @@ internal sealed record ClearBibleOutcome(
               $"the witness has no counterpart for), {Astray} refused for pairing verses by number where the " +
               $"file and the frame both say they do not answer each other, {Shifted} refused for putting a " +
               $"word on the 'and' before the word that renders it, {Misnumbered} refused in verses whose words "
-              + $"the records number otherwise than the text does; {Placed}";
+              + $"the records number otherwise than the text does, {Overruled} naming a word a ruling on the translation "
+              + $"sets aside ({Trimmed} written without it, the rest withheld); {Placed}";
 }
 
 /// <param name="SourceWords">Their source words this corpus could name a word of its own for.</param>
@@ -182,6 +190,7 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
     public async Task<ClearBibleOutcome> Load(
         string directory,
         ClearBibleSet set,
+        LinkRulings? rulings = null,
         CancellationToken cancellationToken = default)
     {
         var from = await db.Texts.SingleOrDefaultAsync(t => t.Slug == set.From, cancellationToken);
@@ -241,11 +250,13 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
             ? new Shift(Ands(tokens, and.And), Joining(source, and.Also), Named(all))
             : null;
         var misnumbered = retokenised ? Misnumbered(all, tokens) : [];
+        var overruled = await (rulings ?? LinkRulings.None).Overruled(
+            db, set.From, set.To, LinkRulings.ClearBible, logger, cancellationToken);
 
         var claims = new List<long>();
         var drafts = new List<Draft>();
         int records = 0, corroborated = 0, added = 0, contradicted = 0, unresolved = 0, withoutCounterpart = 0;
-        int astray = 0, shifted = 0, refused = 0;
+        int astray = 0, shifted = 0, refused = 0, overruledRecords = 0, trimmed = 0;
 
         foreach (var record in all)
         {
@@ -280,6 +291,18 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
                 }
 
                 continue;
+            }
+
+            var (kept, lost) = LinkRulings.Trim(witness, overruled);
+            if (lost)
+            {
+                overruledRecords++;
+                if (!kept)
+                {
+                    continue;
+                }
+
+                trimmed++;
             }
 
             if (existing.Shapes.TryGetValue(Shape(translation, witness), out var link))
@@ -317,6 +340,8 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
             astray,
             shifted,
             refused,
+            overruledRecords,
+            trimmed,
             placement.Read(),
             started.Elapsed);
         logger.LogInformation("Clear Bible on {From} against {To}: {Outcome}", set.From, set.To, outcome);
@@ -360,7 +385,7 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
     }
 
     private static ClearBibleOutcome Nothing() =>
-        new(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, default, TimeSpan.Zero);
+        new(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, default, TimeSpan.Zero);
 
     /// <summary>
     /// Whether a record pairs the translation's verse with the source verse of the same number where
