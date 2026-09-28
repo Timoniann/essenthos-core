@@ -66,6 +66,19 @@ internal sealed class SynodalStrongLinkLoader(
         CancellationToken cancellationToken = default,
         IReadOnlySet<long>? only = null)
     {
+        var numbers = await Numbers(editionPath, cancellationToken);
+        var outcomes = new List<TaggedTextLinkOutcome>(witnesses.Count);
+        foreach (var witness in witnesses)
+        {
+            outcomes.Add(await tagged.Load(Bible4uTextSource.Synodal, witness, numbers, cancellationToken, only));
+        }
+
+        return outcomes;
+    }
+
+    /// <summary>The numbering laid onto the Synodal's words, for the length of the caller's run.</summary>
+    public async Task<EditionNumbers> Numbers(string editionPath, CancellationToken cancellationToken = default)
+    {
         var synodal = await db.Texts.SingleOrDefaultAsync(t => t.Slug == Bible4uTextSource.Synodal, cancellationToken)
                       ?? throw new InvalidOperationException(
                           $"The Synodal ({Bible4uTextSource.Synodal}) is not loaded, and the numbering is only " +
@@ -74,15 +87,7 @@ internal sealed class SynodalStrongLinkLoader(
         var edition = SynodalStrongEdition.Read(editionPath);
         var laid = SynodalStrongLayer.Lay(edition, await Verses(synodal.Id, cancellationToken));
         logger.LogInformation("{Laid}", laid);
-
-        var numbers = new EditionNumbers(laid.Tags, Credit);
-        var outcomes = new List<TaggedTextLinkOutcome>(witnesses.Count);
-        foreach (var witness in witnesses)
-        {
-            outcomes.Add(await tagged.Load(synodal.Slug, witness, numbers, cancellationToken, only));
-        }
-
-        return outcomes;
+        return new EditionNumbers(laid.Tags, Credit);
     }
 
     private async Task<List<CorpusVerse>> Verses(int textId, CancellationToken cancellationToken)
