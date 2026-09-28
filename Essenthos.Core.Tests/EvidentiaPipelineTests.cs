@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Essenthos.Core.Loading.Links.Evidentia;
 using FluentAssertions;
 using Xunit;
@@ -131,10 +132,34 @@ public class EvidentiaPipelineTests
         opening.Address.Should().Be(new EvidentiaAddress(40, 3, 1), "where a verse stands in its book is not part of which verse it is");
         preview.Candidates.Where(candidate => candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.NeighbouringCanonicalAddress))
             .Should().ContainSingle().Which.Target.Token.Id.Should().Be(11, "3:1 is one verse from 2:25 and four from 2:22");
-        lengths.Edges(2, EvidentiaDefaults.NeighbourVerseDistance).Should().Equal((1, 30), (1, 31), (3, 1), (3, 2));
-        lengths.Edges(3, EvidentiaDefaults.NeighbourVerseDistance).Should().Equal((2, 24), (2, 25));
+        lengths.Edges(2, 2).Should().Equal((1, 30), (1, 31), (3, 1), (3, 2));
+        lengths.Edges(3, 2).Should().Equal((2, 24), (2, 25));
         new EvidentiaAddress(40, 3, 1).DistanceTo(new EvidentiaAddress(40, 2, 25)).Should().Be(int.MaxValue,
             "without the chapter lengths there is no telling how far apart two chapters' verses are");
+    }
+
+    [Fact]
+    public void AWordOutsideTheNeighbourWindowIsNoCandidate()
+    {
+        var preview = Pipeline().Preview(new EvidentiaRequest(
+            [Token(1, "faith", "eng", verse: 5)],
+            [Token(11, "faith", "eng", verse: 5), Token(12, "faith", "eng", verse: 6), Token(13, "faith", "eng", verse: 8)],
+            NeighbourVerseDistance: 1));
+
+        preview.Candidates.Select(candidate => candidate.Target.Token.Id).Should().BeEquivalentTo([11L, 12L]);
+    }
+
+    [Fact]
+    public void AContinuedRunReadsWithTheWindowItWasStartedWith()
+    {
+        static EvidentiaMeasurementOptions Stored(string json) =>
+            EvidentiaRunner.Options(JsonDocument.Parse(json));
+        const string Allowed = "\"allowSourceStrongEvidence\": false, \"allowKnownRenderingEvidence\": true";
+
+        Stored($$"""{ {{Allowed}}, "neighbourVerseDistance": 0 }""").NeighbourVerseDistance.Should().Be(0);
+        Stored($$"""{ {{Allowed}}, "defaults": { "NeighbourVerseDistance": 2 } }""").NeighbourVerseDistance
+            .Should().Be(2, "a run stored before the window was an option read with the default of its day");
+        Stored($$"""{ {{Allowed}} }""").NeighbourVerseDistance.Should().Be(EvidentiaDefaults.NeighbourVerseDistance);
     }
 
     [Fact]
