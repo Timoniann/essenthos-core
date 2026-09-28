@@ -33,9 +33,13 @@
   "71518": "GEN 35:18",
   "71519": "GEN 35:18",
   "71520": "GEN 35:18",
-  "71521": "GEN 35:18"
+  "71521": "GEN 35:18",
+  "74589": "1CH 26:22",
+  "74591": "1CH 26:22",
+  "75103": "EZR 10:18",
+  "75193": "EZR 10:24"
  },
- "referenceWhy": "BibleData cites the verse of a son's birth in Genesis 30 and 35, where he is 'a son' and not yet named: the verse names neither end of the tie, and a clause cites a verse its subject is named in. The next verse names him (Naphtali GEN 30:8, Zebulun 30:20, Joseph 30:24, Benjamin 35:18), and the clause is written there, on his record. Abram and Sarai (GEN 20:12) are not here: no verse naming either of them states that she is his father's daughter.",
+ "referenceWhy": "BibleData cites the verse of a son's birth in Genesis 30 and 35, where he is 'a son' and not yet named: the verse names neither end of the tie, and a clause cites a verse its subject is named in. The next verse names him (Naphtali GEN 30:8, Zebulun 30:20, Joseph 30:24, Benjamin 35:18), and the clause is written there, on his record. Abram and Sarai (GEN 20:12) are not here: no verse naming either of them states that she is his father's daughter. Where BibleData cites a verse that does not name the person, or the owner names another: Zetham and Joel, sons of Jehieli, at 1CH 26:22 (BibleData cites 1CH 25:22, which names neither); Eliashib the singer at EZR 10:24 (BibleData cites 10:23, the verse before); Eliezer, descendant of Levi, at EZR 10:18, as the owner's note '10:18' says.",
  "relation": {
   "72061": "descendant-of",
   "72171": "commander-of",
@@ -51,8 +55,11 @@
   "74613": "descendant-of"
  },
  "relationWhy": "The note names the right word where the dataset's is wrong, and a removal or re-ask so corrected is a confirmation. The owner's: Salu, descendant of Simeon ('not son, but descendant'); Ishbi-benob, descendant of Rapha; Kish, son of Abiel, not grandson; Amminadab, son of Ram ('Aram begat Amminadab'); Ephraim, ancestor of Telah and of Ammihud; Sisera, Jabin's commander, not Jabin king of Sisera. The agent's: Tohu, grandson of Elkanah (1CH 6:34-35); Tahath, Zabad and Ladan, descendants of Ephraim down a 'his son' chain (1CH 7:20-26); Benaiah the Pirathonite, descendant of Ephraim (1CH 27:14).",
- "hold": [],
- "holdWhy": "A fact whose note questions who is meant waits here. The last one, James son of Mary (76119), the owner removed on 2026-09-28: no verse makes the brothers of Jesus Mary's sons.",
+ "hold": [
+  72591,
+  73281
+ ],
+ "holdWhy": "A fact waits here when its note questions who is meant, or when the owner asked for the text to be checked before his decision is applied and the text does not say what the decision would write. Manasseh, descendant of Ben-geber (72591): 1KI 4:13 gives Ben-geber 'the towns of Jair the son of Manasseh' (חַוֹּת יָאִיר בֶּן־מְנַשֶּׁה) and says nothing of Ben-geber's descent or Manasseh's. Meonothai, son of Othniel (73281): 1CH 4:13 in BHSA reads 'and the sons of Othniel: Hathath' (וּבְנֵי עָתְנִיאֵל חֲתַת), as do Brenton, Swete, the King James and the Synodal; the Vulgate ('Hathath, et Maonathi') and the Berean name Meonothai there. Both wait for the owner. James son of Mary (76119), held before, the owner removed on 2026-09-28: no verse makes the brothers of Jesus Mary's sons.",
  "flip": [
   72171,
   74613
@@ -74,6 +81,15 @@
   "74127": 0.9,
   "74723": 0.9,
   "74725": 0.9,
+  "74835": 0.9,
+  "74837": 0.9,
+  "74839": 0.9,
+  "74841": 0.9,
+  "74843": 0.9,
+  "74845": 0.9,
+  "74847": 0.9,
+  "74849": 0.9,
+  "74851": 0.9,
   "75157": 0.9,
   "75515": 0.9,
   "75517": 0.9,
@@ -96,7 +112,8 @@
   "75795": 0.9,
   "75797": 0.9,
   "75801": 0.9,
+  "75831": 0.5,
   "75911": 0.9
  },
- "unsureWhy": "The owner accepts the fact but says the verse does not settle it. 0.5: Eshcol and Aner as Amorites, Abital as David's wife who may be a concubine, Rimmon of Benjamin ('not exact'). 0.9: Doeg and Ahimelech, Gilead and Hammolecheth ('high confidence, not absolute'), and his ruling in chat of 2026-09-27 that a man the verse calls a priest is Aaron's descendant, not certainly."
+ "unsureWhy": "The owner accepts the fact but says the verse does not settle it. 0.5: Eshcol and Aner as Amorites, Abital as David's wife who may be a concubine, Rimmon of Benjamin ('not exact'). 0.9: Doeg and Ahimelech, Gilead and Hammolecheth ('high confidence, not absolute'), and his ruling in chat of 2026-09-27 that a man the verse calls a priest is Aaron's descendant, not certainly. Of 2026-09-28 in the console: 0.9 for the nine Levites of 2CH 31:13 he marked 'very likely', and 0.5 for Hammedatha, descendant of Agag (EST 3:1), which he marked 'let's use it as unsure'."
 }

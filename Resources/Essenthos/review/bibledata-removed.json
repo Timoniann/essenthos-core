@@ -167,6 +167,18 @@
  },
  {
   "rows": [
+   72185,
+   72186
+  ],
+  "a": "joash",
+  "relation": "descendant-of",
+  "b": "iezer",
+  "note": "clan-derived",
+  "decidedAt": "2026-09-28T20:23:18.452Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    72323,
    72324
   ],
@@ -191,6 +203,18 @@
  },
  {
   "rows": [
+   72424,
+   72426
+  ],
+  "a": "ishbosheth",
+  "relation": "killed-by",
+  "b": "rimmon",
+  "note": "owner on PRB-0829, 2026-09-28: 2 Samuel 4:5-6 names Rechab and Baanah, the sons of Rimmon, as the killers",
+  "decidedAt": "2026-09-28T18:14:33.222Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    72509,
    72510
   ],
@@ -211,6 +235,30 @@
   "b": "levi",
   "note": "",
   "decidedAt": "2026-09-13T13:21:19.431Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72551,
+   72552
+  ],
+  "a": "jashen",
+  "relation": "son-of",
+  "b": "eliahba",
+  "note": "Здається що каже, просто англійська тут не точна. Перевір це",
+  "decidedAt": "2026-09-28T20:28:59.824Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72553,
+   72554
+  ],
+  "a": "jonathan-5",
+  "relation": "son-of",
+  "b": "eliahba",
+  "note": "Здається шо ні, бо англійська тут не точна, перевір",
+  "decidedAt": "2026-09-28T20:29:02.295Z",
   "decidedBy": "the project owner"
  },
  {
@@ -268,6 +316,18 @@
   "b": "bidkar",
   "note": "",
   "decidedAt": "2026-09-13T13:58:06.705Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   72903,
+   72904
+  ],
+  "a": "jerioth",
+  "relation": "wife-of",
+  "b": "chelubai",
+  "note": "owner in chat 2026-09-28 (PRB-0543): 1 Chronicles 2:18 does not identify Jerioth; wife of Caleb stays only among her readings",
+  "decidedAt": "2026-09-28T18:27:12.137Z",
   "decidedBy": "the project owner"
  },
  {
@@ -428,6 +488,54 @@
  },
  {
   "rows": [
+   73159,
+   73160
+  ],
+  "a": "rephaiah",
+  "relation": "son-of",
+  "b": "hananiah",
+  "note": "Тут взагалі все дивне. Треба подивитися і оригінал і все навколо",
+  "decidedAt": "2026-09-28T20:30:14.238Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73161,
+   73162
+  ],
+  "a": "arnan",
+  "relation": "son-of",
+  "b": "hananiah",
+  "note": "Тут взагалі все дивне. Треба глянути оригінал і все довкола",
+  "decidedAt": "2026-09-28T20:30:16.964Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73163,
+   73164
+  ],
+  "a": "obadiah-2",
+  "relation": "son-of",
+  "b": "hananiah",
+  "note": "Тут взагалі все дивне. Треба глянути оригінал і все довкола",
+  "decidedAt": "2026-09-28T20:30:18.406Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73165,
+   73166
+  ],
+  "a": "shecaniah",
+  "relation": "son-of",
+  "b": "hananiah",
+  "note": "",
+  "decidedAt": "2026-09-28T20:30:19.852Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    73259,
    73260
   ],
@@ -512,6 +620,18 @@
  },
  {
   "rows": [
+   73563,
+   73564
+  ],
+  "a": "elkanah",
+  "relation": "son-of",
+  "b": "assir",
+  "note": "Son of Ebiasaph, not Elkanah",
+  "decidedAt": "2026-09-28T18:49:11.919Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    73731,
    73732
   ],
@@ -524,6 +644,196 @@
  },
  {
   "rows": [
+   73778
+  ],
+  "a": "rephah",
+  "relation": "son-of",
+  "b": "beriah-2",
+  "note": "",
+  "decidedAt": "2026-09-28T18:56:45.753Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73780
+  ],
+  "a": "resheph",
+  "relation": "son-of",
+  "b": "beriah-2",
+  "note": "",
+  "decidedAt": "2026-09-28T19:02:58.536Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73847,
+   73848
+  ],
+  "a": "arah",
+  "relation": "son-of",
+  "b": "jephunneh-2",
+  "note": "",
+  "decidedAt": "2026-09-28T18:56:56.495Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73851,
+   73852
+  ],
+  "a": "rizia",
+  "relation": "son-of",
+  "b": "jephunneh-2",
+  "note": "",
+  "decidedAt": "2026-09-28T18:57:01.234Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73873,
+   73874
+  ],
+  "a": "shaharaim",
+  "relation": "son-of",
+  "b": "gera-4",
+  "note": "",
+  "decidedAt": "2026-09-28T18:58:44.781Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73927,
+   73928
+  ],
+  "a": "ahio-2",
+  "relation": "son-of",
+  "b": "elpaal",
+  "note": "",
+  "decidedAt": "2026-09-28T19:05:32.402Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73929,
+   73930
+  ],
+  "a": "shashak",
+  "relation": "son-of",
+  "b": "elpaal",
+  "note": "",
+  "decidedAt": "2026-09-28T18:59:05.365Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   73931,
+   73932
+  ],
+  "a": "jeremoth-2",
+  "relation": "son-of",
+  "b": "elpaal",
+  "note": "",
+  "decidedAt": "2026-09-28T18:59:11.329Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74001,
+   74002
+  ],
+  "a": "shehariah",
+  "relation": "son-of",
+  "b": "jeremoth-2",
+  "note": "",
+  "decidedAt": "2026-09-28T18:59:20.085Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74003,
+   74004
+  ],
+  "a": "athaliah-2",
+  "relation": "son-of",
+  "b": "jeremoth-2",
+  "note": "",
+  "decidedAt": "2026-09-28T18:59:29.670Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74005,
+   74006
+  ],
+  "a": "jaareshiah",
+  "relation": "son-of",
+  "b": "jeremoth-2",
+  "note": "",
+  "decidedAt": "2026-09-28T18:59:31.865Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74007,
+   74008
+  ],
+  "a": "elijah-2",
+  "relation": "son-of",
+  "b": "jeremoth-2",
+  "note": "",
+  "decidedAt": "2026-09-28T18:59:33.252Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74009,
+   74010
+  ],
+  "a": "zichri-4",
+  "relation": "son-of",
+  "b": "jeremoth-2",
+  "note": "",
+  "decidedAt": "2026-09-28T18:59:34.695Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74189,
+   74190
+  ],
+  "a": "akkub-2",
+  "relation": "descendant-of",
+  "b": "korah-3",
+  "note": "",
+  "decidedAt": "2026-09-28T19:40:04.179Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74191,
+   74192
+  ],
+  "a": "talmon",
+  "relation": "descendant-of",
+  "b": "korah-3",
+  "note": "",
+  "decidedAt": "2026-09-28T19:40:09.212Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74193,
+   74194
+  ],
+  "a": "ahiman-2",
+  "relation": "descendant-of",
+  "b": "korah-3",
+  "note": "",
+  "decidedAt": "2026-09-28T19:40:11.748Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    74213,
    74214
   ],
@@ -532,6 +842,330 @@
   "b": "joshaphat",
   "note": "",
   "decidedAt": "2026-09-26T21:51:08.539Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74261,
+   74262
+  ],
+  "a": "elkanah-7",
+  "relation": "descendant-of",
+  "b": "korah-3",
+  "note": "",
+  "decidedAt": "2026-09-28T19:41:16.079Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74263,
+   74264
+  ],
+  "a": "isshiah-2",
+  "relation": "descendant-of",
+  "b": "korah-3",
+  "note": "",
+  "decidedAt": "2026-09-28T19:41:28.741Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74417,
+   74418
+  ],
+  "a": "jehoiarib-2",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:07:54.999Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74419,
+   74420
+  ],
+  "a": "jedaiah-3",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:07:56.872Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74421,
+   74422
+  ],
+  "a": "harim-3",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:07:58.660Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74423,
+   74424
+  ],
+  "a": "seorim",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:00.460Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74425,
+   74426
+  ],
+  "a": "malchijah-3",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:02.230Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74427,
+   74428
+  ],
+  "a": "mijamin",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:04.481Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74429,
+   74430
+  ],
+  "a": "hakkoz",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:06.062Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74431,
+   74432
+  ],
+  "a": "abijah-5",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:07.799Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74433,
+   74434
+  ],
+  "a": "jeshua",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:09.702Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74435,
+   74436
+  ],
+  "a": "shecaniah-2",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:13.000Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74437,
+   74438
+  ],
+  "a": "eliashib-2",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:14.691Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74439,
+   74440
+  ],
+  "a": "jakim-2",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:16.537Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74441,
+   74442
+  ],
+  "a": "huppah",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:19.228Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74443,
+   74444
+  ],
+  "a": "jeshebeab",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:23.707Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74445,
+   74446
+  ],
+  "a": "bilgah",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:25.807Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74447,
+   74448
+  ],
+  "a": "immer",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:27.792Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74449,
+   74450
+  ],
+  "a": "hezir",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:29.612Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74451,
+   74452
+  ],
+  "a": "happizzez",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:31.503Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74453,
+   74454
+  ],
+  "a": "pethahiah",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:33.324Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74455,
+   74456
+  ],
+  "a": "jehezkel",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:35.026Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74457,
+   74458
+  ],
+  "a": "jachin-3",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:36.680Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74459,
+   74460
+  ],
+  "a": "gamul",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:38.327Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74461,
+   74462
+  ],
+  "a": "delaiah-2",
+  "relation": "descendant-of",
+  "b": "eleazar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:40.208Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74463,
+   74464
+  ],
+  "a": "maaziah",
+  "relation": "descendant-of",
+  "b": "ithamar",
+  "note": "descendant of Aaron",
+  "decidedAt": "2026-09-28T20:08:45.878Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74587,
+   74588
+  ],
+  "a": "shuppim",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:11:05.332Z",
   "decidedBy": "the project owner"
  },
  {
@@ -616,6 +1250,42 @@
   "b": "levi",
   "note": "",
   "decidedAt": "2026-09-26T21:52:00.931Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74939,
+   74940
+  ],
+  "a": "azmaveth-4",
+  "relation": "descendant-of",
+  "b": "jacob",
+  "note": "",
+  "decidedAt": "2026-09-28T20:12:49.542Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74941,
+   74942
+  ],
+  "a": "nebo",
+  "relation": "descendant-of",
+  "b": "jacob",
+  "note": "",
+  "decidedAt": "2026-09-28T20:13:01.805Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   74943,
+   74944
+  ],
+  "a": "magbish",
+  "relation": "descendant-of",
+  "b": "jacob",
+  "note": "",
+  "decidedAt": "2026-09-28T20:13:07.968Z",
   "decidedBy": "the project owner"
  },
  {
@@ -1052,6 +1722,30 @@
  },
  {
   "rows": [
+   75045,
+   75046
+  ],
+  "a": "haggai",
+  "relation": "descendant-of",
+  "b": "jacob",
+  "note": "",
+  "decidedAt": "2026-09-28T20:15:26.816Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75049,
+   75050
+  ],
+  "a": "iddo-5",
+  "relation": "descendant-of",
+  "b": "jacob",
+  "note": "",
+  "decidedAt": "2026-09-28T20:15:51.623Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    75057,
    75058
   ],
@@ -1061,6 +1755,126 @@
   "note": "agent: EZR 8:3 places Zechariah 'of the sons of Pharosh' - a lay family of the people of Israel (EZR 2:3), not Levites.",
   "decidedAt": "2026-09-26T22:40:31.529Z",
   "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75105,
+   75106
+  ],
+  "a": "ariel-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:18:51.277Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75107,
+   75108
+  ],
+  "a": "shemaiah-14",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:18:53.863Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75109,
+   75110
+  ],
+  "a": "elnathan-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:18:55.905Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75111,
+   75112
+  ],
+  "a": "jarib",
+  "relation": "descendant-of",
+  "b": "aaron",
+  "note": "",
+  "decidedAt": "2026-09-28T20:19:02.149Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75113,
+   75114
+  ],
+  "a": "elnathan-3",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:19:06.557Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75115,
+   75116
+  ],
+  "a": "nathan-7",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:19:08.703Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75117,
+   75118
+  ],
+  "a": "meshullam-8",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:19:12.610Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75119,
+   75120
+  ],
+  "a": "joiarib",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:19:14.622Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75121,
+   75122
+  ],
+  "a": "elnathan-4",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:19:18.122Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75123,
+   75124
+  ],
+  "a": "iddo-6",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:21:55.383Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -1088,6 +1902,90 @@
  },
  {
   "rows": [
+   75459,
+   75460
+  ],
+  "a": "mattithiah-5",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:02.198Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75461,
+   75462
+  ],
+  "a": "shema-4",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:04.316Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75463,
+   75464
+  ],
+  "a": "anaiah",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:06.400Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75465,
+   75466
+  ],
+  "a": "uriah-3",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:09.050Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75467,
+   75468
+  ],
+  "a": "maaseiah-10",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:11.094Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75469,
+   75470
+  ],
+  "a": "pedaiah-5",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:12.984Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75471,
+   75472
+  ],
+  "a": "mishael-2",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:14.816Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    75473,
    75474
   ],
@@ -1100,6 +1998,42 @@
  },
  {
   "rows": [
+   75475,
+   75476
+  ],
+  "a": "hashbaddanah",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:17.716Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75477,
+   75478
+  ],
+  "a": "zechariah-24",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:19.510Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75479,
+   75480
+  ],
+  "a": "meshullam-13",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "We can't be sure",
+  "decidedAt": "2026-09-28T19:58:21.932Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    75681,
    75682
   ],
@@ -1109,6 +2043,18 @@
   "note": "agent: reversed and wrong: Levi is Jacob's son (GEN 29:34); NEH 11:17 only names Bakbukiah 'the second among his brethren'.",
   "decidedAt": "2026-09-26T22:40:32.765Z",
   "decidedBy": "an agent, on the project owner's instruction"
+ },
+ {
+  "rows": [
+   75683,
+   75684
+  ],
+  "a": "gishpa",
+  "relation": "descendant-of",
+  "b": "levi",
+  "note": "",
+  "decidedAt": "2026-09-28T20:04:25.464Z",
+  "decidedBy": "the project owner"
  },
  {
   "rows": [
@@ -1384,6 +2330,18 @@
   "b": "shallum-13",
   "note": "owner in chat 2026-09-27: Hanamel is ben-dodi, son of my uncle — Shallum is Jeremiah's uncle, Hanamel his cousin",
   "decidedAt": "2026-09-27T14:22:45.460Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   75969,
+   75970
+  ],
+  "a": "malchijah-10",
+  "relation": "son-of",
+  "b": "mattaniah",
+  "note": "",
+  "decidedAt": "2026-09-28T19:31:44.726Z",
   "decidedBy": "the project owner"
  },
  {
