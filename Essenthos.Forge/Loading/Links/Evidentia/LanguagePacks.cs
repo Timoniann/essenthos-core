@@ -182,17 +182,18 @@ internal static class EnglishPersonalPronouns
 }
 
 /// <summary>
-/// Ukrainian and Russian share a stemmer and nothing else: each has its own function words, because a
-/// word that carries only grammar in one is a content word in the other, and the pack that claims a
-/// language is the one that decides which of its words can anchor a link.
+/// A language whose words are compared by a stemmer of its own and which has its own function words,
+/// because a word that carries only grammar in one language is a content word in another, and the pack
+/// that claims a language is the one that decides which of its words can anchor a link.
 /// </summary>
-internal abstract class SlavicLanguagePack(string language, IReadOnlySet<string> functionWords) : ILanguagePack
+internal abstract class StemmedLanguagePack(string language, IReadOnlySet<string> functionWords, Func<string, string> stem)
+    : ILanguagePack
 {
     public bool Supports(string candidate) => candidate.Equals(language, StringComparison.OrdinalIgnoreCase);
 
     public EvidentiaAnalysis Analyse(EvidentiaToken token)
     {
-        var normalised = SlavicStemmer.Stem(token.Surface);
+        var normalised = stem(token.Surface);
         return new EvidentiaAnalysis(
             token,
             normalised,
@@ -210,6 +211,10 @@ internal abstract class SlavicLanguagePack(string language, IReadOnlySet<string>
         | (string.IsNullOrWhiteSpace(token.PartOfSpeech) ? LanguagePackCapability.None : LanguagePackCapability.PartOfSpeech)
         | (token.Morphology is { Count: > 0 } ? LanguagePackCapability.Morphology : LanguagePackCapability.None);
 }
+
+/// <summary>Ukrainian and Russian share a stemmer and nothing else.</summary>
+internal abstract class SlavicLanguagePack(string language, IReadOnlySet<string> functionWords)
+    : StemmedLanguagePack(language, functionWords, word => SlavicStemmer.Stem(word));
 
 internal sealed class UkrainianLanguagePack() : SlavicLanguagePack("ukr", FunctionWords)
 {
@@ -230,6 +235,34 @@ internal sealed class RussianLanguagePack() : SlavicLanguagePack("rus", Function
         "без", "бы", "был", "была", "были", "будет", "в", "во", "вы", "для", "его", "ее", "если", "же", "за",
         "и", "из", "их", "к", "как", "когда", "ли", "лишь", "мы", "на", "не", "о", "он", "она", "они", "от",
         "по", "с", "то", "у", "через", "что", "чтобы", "это", "я",
+    };
+}
+
+/// <summary>Luther's and the Elberfelder's German, spelt as 1905 and 1912 spelt it: <em>daß</em>, <em>ward</em>.</summary>
+internal sealed class GermanLanguagePack() : StemmedLanguagePack("deu", FunctionWords, GermanStemmer.Stem)
+{
+    internal static readonly IReadOnlySet<string> FunctionWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "der", "die", "das", "des", "dem", "den", "ein", "eine", "einen", "einem", "einer", "eines",
+        "und", "oder", "aber", "denn", "doch", "daß", "dass", "so", "wie", "als", "wenn", "ob", "da",
+        "zu", "zum", "zur", "in", "im", "ins", "an", "am", "auf", "aus", "bei", "beim", "mit", "nach", "von", "vom",
+        "vor", "über", "unter", "um", "durch", "für", "gegen", "bis",
+        "ich", "du", "er", "sie", "es", "wir", "ihr", "mich", "dich", "mir", "dir", "ihn", "ihm", "ihnen",
+        "uns", "euch", "sich", "ist", "war", "sind", "waren", "wird", "werden", "ward", "wurde", "hat", "haben", "hatte",
+        "nicht", "auch",
+    };
+}
+
+/// <summary>The Reina-Valera's Spanish of 1909, which still writes <em>á</em> and <em>fué</em>.</summary>
+internal sealed class SpanishLanguagePack() : StemmedLanguagePack("spa", FunctionWords, SpanishStemmer.Stem)
+{
+    internal static readonly IReadOnlySet<string> FunctionWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "el", "la", "los", "las", "lo", "un", "una", "unos", "unas", "y", "e", "o", "u", "pero", "mas", "que",
+        "de", "del", "a", "á", "al", "en", "con", "por", "para", "sin", "sobre", "entre", "hasta", "desde",
+        "él", "ella", "ellos", "ellas", "yo", "tú", "nosotros", "vosotros", "le", "les", "se", "me", "te", "nos", "os",
+        "su", "sus", "mi", "mis", "tu", "tus", "es", "fué", "fue", "era", "son", "ha", "han", "había", "no", "ni",
+        "como", "cuando", "si",
     };
 }
 

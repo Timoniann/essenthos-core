@@ -73,6 +73,8 @@ builder.Services.AddScoped<AlignmentPipeline>();
 builder.Services.AddSingleton<ILanguagePack, EnglishLanguagePack>();
 builder.Services.AddSingleton<ILanguagePack, UkrainianLanguagePack>();
 builder.Services.AddSingleton<ILanguagePack, RussianLanguagePack>();
+builder.Services.AddSingleton<ILanguagePack, GermanLanguagePack>();
+builder.Services.AddSingleton<ILanguagePack, SpanishLanguagePack>();
 builder.Services.AddSingleton<ILanguagePack, OriginalLanguagePack>();
 builder.Services.AddSingleton<LanguagePackRegistry>();
 builder.Services.AddScoped<EvidentiaPipeline>();
@@ -602,7 +604,10 @@ static EvidentiaQueueFilter QueueFilter(string[] arguments) => new(
     Book: OptionalInt(arguments, "--book"),
     Chapter: OptionalInt(arguments, "--chapter"),
     Verse: OptionalInt(arguments, "--verse"),
-    Take: OptionalInt(arguments, "--take") ?? EvidentiaReviewQueue.DefaultTake);
+    Take: OptionalInt(arguments, "--take") ?? EvidentiaReviewQueue.DefaultTake,
+    Kinds: OptionalText(arguments, "--kind") is { } kinds
+        ? [.. kinds.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)]
+        : null);
 
 // Contradicted proposals and per-word outcomes go to files rather than to the report, because they
 // are read one at a time and there are thousands of them: a classification pass or a comparison of
