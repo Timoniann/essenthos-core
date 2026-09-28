@@ -106,6 +106,9 @@ internal static class StrongNumberMatch
     /// and its εἰμί arrive at the same link instead of at two claiming the same word. A tag naming
     /// several numbers is grouped under all of them together, which keeps a phrase apart from the
     /// words that carry one of its numbers alone.
+    ///
+    /// The Hebrew object marker is the exception on both sides: a bare one is reached by nothing, and
+    /// a tag naming it beside other numbers is matched on the others (<see cref="ObjectMarker"/>).
     /// </summary>
     /// <param name="tagged">
     /// The translation's words in verse order, each with the numbers its tag names. A word with none
@@ -126,7 +129,7 @@ internal static class StrongNumberMatch
         var byNumber = new Dictionary<string, List<long>>(witness.Count, StringComparer.Ordinal);
         foreach (var word in witness)
         {
-            if (word.Strong is null)
+            if (word.Strong is null || !ObjectMarker.Reachable(word.Strong, word.Suffixed))
             {
                 continue;
             }
@@ -151,7 +154,7 @@ internal static class StrongNumberMatch
                 continue;
             }
 
-            if (Reach(byNumber, resolution, word.Numbers) is not { } reached)
+            if (Reach(byNumber, resolution, ObjectMarker.Rendered(word.Numbers)) is not { } reached)
             {
                 unmatched++;
                 continue;
@@ -330,7 +333,11 @@ internal static class StrongNumberMatch
     /// </param>
     internal readonly record struct TaggedWord(long Id, IReadOnlyList<string> Numbers);
 
-    internal readonly record struct WitnessWord(long Id, string? Strong);
+    /// <param name="Suffixed">
+    /// Whether the word carries a pronominal suffix, which is what makes an object marker a word a
+    /// translation renders (<see cref="ObjectMarker"/>).
+    /// </param>
+    internal readonly record struct WitnessWord(long Id, string? Strong, bool Suffixed = false);
 
     /// <param name="To">Every witness word the tag's numbers name, in the order the numbers stand.</param>
     /// <param name="Numbers">

@@ -51,19 +51,7 @@ internal sealed class UnionStrongLinkLoader(
         var outcomes = new List<TaggedTextLinkOutcome>();
         foreach (var (slug, module) in modules)
         {
-            var text = await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken)
-                       ?? throw new InvalidOperationException(
-                           $"{slug} is not loaded, and FHL's numbers are only ever laid onto the text the corpus "
-                           + "already holds. Load the corpus first.");
-
-            var laid = SynodalStrongLayer.Lay(
-                SwordTextSource.Numbers(module), await Verses(text.Id, cancellationToken));
-            logger.LogInformation(
-                "{Slug}: FHL's numbers laid onto {Verses} verses, {Refused} refused because the loaded words differ "
-                + "from the module's, {Words} words given a number",
-                slug, laid.Verses, laid.Refused, laid.TaggedWords);
-
-            var numbers = new EditionNumbers(laid.Tags, Credit);
+            var numbers = await Numbers(slug, module, cancellationToken);
             foreach (var witness in witnesses)
             {
                 outcomes.Add(await tagged.Load(slug, witness, numbers, cancellationToken));
@@ -71,6 +59,24 @@ internal sealed class UnionStrongLinkLoader(
         }
 
         return outcomes;
+    }
+
+    /// <summary>FHL's numbers laid onto one Chinese text's words, for the length of the caller's run.</summary>
+    /// <param name="module">The text's module root.</param>
+    public async Task<EditionNumbers> Numbers(string slug, string module, CancellationToken cancellationToken = default)
+    {
+        var text = await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken)
+                   ?? throw new InvalidOperationException(
+                       $"{slug} is not loaded, and FHL's numbers are only ever laid onto the text the corpus "
+                       + "already holds. Load the corpus first.");
+
+        var laid = SynodalStrongLayer.Lay(
+            SwordTextSource.Numbers(module), await Verses(text.Id, cancellationToken));
+        logger.LogInformation(
+            "{Slug}: FHL's numbers laid onto {Verses} verses, {Refused} refused because the loaded words differ "
+            + "from the module's, {Words} words given a number",
+            slug, laid.Verses, laid.Refused, laid.TaggedWords);
+        return new EditionNumbers(laid.Tags, Credit);
     }
 
     private async Task<List<CorpusVerse>> Verses(int textId, CancellationToken cancellationToken)

@@ -69,7 +69,7 @@ public class StrongNumberMatchTests
     [Fact]
     public void ANumberWrittenOnceHereAndTwiceThereIsOneLinkNamingBoth()
     {
-        var links = Match([(1, ["H853"])], [(11, "H853"), (12, "H853")]);
+        var links = Match([(1, ["H1121"])], [(11, "H1121"), (12, "H1121")]);
 
         links.Should().ContainSingle();
         links[0].To.Should().Equal(11, 12);
@@ -167,5 +167,128 @@ public class StrongNumberMatchTests
 
         links.Should().ContainSingle();
         links[0].From.Should().Equal(2);
+    }
+
+    private static StrongNumberMatch.WitnessWord Marker(long id, bool suffixed = false) =>
+        new(id, ObjectMarker.Number, suffixed);
+
+    /// <summary>
+    /// Genesis 1:1 as the Synodal's numbering tags it: <em>сотворил</em> <c>H1254 H853</c>, the
+    /// King James convention of hanging the object marker on the verb, and <em>и</em> before
+    /// <em>землю</em> <c>H853</c> alone. Neither אֵת has a suffix, so neither is a word a translation
+    /// renders: the verb reaches its verb and nothing else, settled, and the conjunction reaches
+    /// nothing and is counted.
+    /// </summary>
+    [Fact]
+    public void GenesisOneOneSendsTheVerbToTheVerbAndTheConjunctionNowhere()
+    {
+        var links = StrongNumberMatch.Verse(
+            [
+                new StrongNumberMatch.TaggedWord(1, []),
+                new StrongNumberMatch.TaggedWord(2, ["H7225"]),
+                new StrongNumberMatch.TaggedWord(3, ["H1254", "H853"]),
+                new StrongNumberMatch.TaggedWord(4, ["H430"]),
+                new StrongNumberMatch.TaggedWord(5, ["H8064"]),
+                new StrongNumberMatch.TaggedWord(6, ["H853"]),
+                new StrongNumberMatch.TaggedWord(7, ["H776"]),
+            ],
+            [
+                new StrongNumberMatch.WitnessWord(11, "H9003"),
+                new StrongNumberMatch.WitnessWord(12, "H7225"),
+                new StrongNumberMatch.WitnessWord(13, "H1254"),
+                new StrongNumberMatch.WitnessWord(14, "H430"),
+                Marker(15),
+                new StrongNumberMatch.WitnessWord(16, "H9009"),
+                new StrongNumberMatch.WitnessWord(17, "H8064"),
+                new StrongNumberMatch.WitnessWord(18, "H9000"),
+                Marker(19),
+                new StrongNumberMatch.WitnessWord(20, "H9009"),
+                new StrongNumberMatch.WitnessWord(21, "H776"),
+            ],
+            NoRedirects,
+            out var tally);
+
+        var created = links.Single(link => link.From.Contains(3));
+        created.From.Should().Equal(3);
+        created.To.Should().Equal(13);
+        created.Confidence.Should().Be(0.9);
+        created.Kind.Should().Be(StrongMatchKind.Unambiguous);
+
+        links.Should().NotContain(link => link.From.Contains(6));
+        links.Should().NotContain(link => link.To.Contains(15) || link.To.Contains(19));
+        links.Should().OnlyContain(link => link.Confidence == 0.9);
+        tally.Unmatched.Should().Be(1);
+        tally.Phrases.Should().Be(0);
+    }
+
+    /// <summary>
+    /// With a suffix the marker is a pronoun — אֹתוֹ is <em>его</em> — and a tag naming it alone is
+    /// about that word, not about the bare markers beside it.
+    /// </summary>
+    [Fact]
+    public void ASuffixedMarkerIsAPronounAndIsReached()
+    {
+        var links = StrongNumberMatch.Verse(
+            [new StrongNumberMatch.TaggedWord(1, ["H853"])],
+            [Marker(11), Marker(12, suffixed: true)],
+            NoRedirects,
+            out _);
+
+        links.Should().ContainSingle();
+        links[0].To.Should().Equal(12);
+        links[0].Confidence.Should().Be(0.9);
+    }
+
+    /// <summary>
+    /// Beside another number the marker is dropped even where it has a suffix: the tag is the verb's,
+    /// and the pronoun is somebody else's word.
+    /// </summary>
+    [Fact]
+    public void AMarkerBesideAnotherNumberIsDroppedEvenWithASuffix()
+    {
+        var links = Match([(1, ["H5414", "H853"])], [(11, "H5414")]);
+        var suffixed = StrongNumberMatch.Verse(
+            [new StrongNumberMatch.TaggedWord(1, ["H5414", "H853"])],
+            [new StrongNumberMatch.WitnessWord(11, "H5414"), Marker(12, suffixed: true)],
+            NoRedirects,
+            out _);
+
+        links.Should().ContainSingle().Which.To.Should().Equal(11);
+        suffixed.Should().ContainSingle();
+        suffixed[0].To.Should().Equal(11);
+        suffixed[0].Confidence.Should().Be(0.9);
+    }
+
+    /// <summary>
+    /// A verb that no longer carries the marker is one more occurrence of its own number, grouped with
+    /// the others — here two verbs against two, paired in order, where the marker had kept them apart.
+    /// </summary>
+    [Fact]
+    public void AVerbWithoutItsMarkerJoinsTheOtherOccurrencesOfItsNumber()
+    {
+        var links = StrongNumberMatch.Verse(
+            [new StrongNumberMatch.TaggedWord(1, ["H1254", "H853"]), new StrongNumberMatch.TaggedWord(2, ["H1254"])],
+            [new StrongNumberMatch.WitnessWord(11, "H1254"), Marker(12), new StrongNumberMatch.WitnessWord(13, "H1254")],
+            NoRedirects,
+            out _);
+
+        links.Select(link => (link.From.Single(), link.To.Single())).Should().Equal((1L, 11L), (2L, 13L));
+        links.Should().OnlyContain(link => link.Kind == StrongMatchKind.Paired);
+    }
+
+    /// <summary>
+    /// Two markers and nothing else is still the marker alone, and reaches what a tag naming it once
+    /// would: the pronoun, and never the bare one.
+    /// </summary>
+    [Fact]
+    public void ATagNamingOnlyTheMarkerTwiceIsStillTheMarkerAlone()
+    {
+        var links = StrongNumberMatch.Verse(
+            [new StrongNumberMatch.TaggedWord(1, ["H853", "H853"])],
+            [Marker(11), Marker(12, suffixed: true)],
+            NoRedirects,
+            out _);
+
+        links.Should().ContainSingle().Which.To.Should().Equal(12);
     }
 }

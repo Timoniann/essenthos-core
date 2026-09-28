@@ -122,6 +122,7 @@ builder.Services.AddScoped<ClearBibleLinkLoader>();
 builder.Services.AddScoped<TaggedTextLinkLoader>();
 builder.Services.AddScoped<SynodalStrongLinkLoader>();
 builder.Services.AddScoped<UnionStrongLinkLoader>();
+builder.Services.AddScoped<ObjectMarkerRepair>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
 builder.Services.AddScoped<UssherAnnalsLoader>();
@@ -794,6 +795,36 @@ if (args is ["union-strong", ..])
     return 0;
 }
 
+// The numbered links to the Hebrew matched again where the object marker made them, for a corpus
+// whose numberings were laid before a bare marker stopped being a target (ObjectMarker). Every
+// numbering is read as its own load reads it. Reports and writes nothing without --apply; the texts
+// to repair may follow the verb, and every text a numbering links to the Hebrew is repaired without.
+// Not in the recipe: a load draws these links by the same rule and has nothing to repair.
+if (args is ["object-marker", ..])
+{
+    using var markerScope = app.Services.CreateScope();
+    var markerTexts = args[1..].Where(argument => !argument.StartsWith("--", StringComparison.Ordinal))
+        .Select(Identifier)
+        .ToHashSet();
+    var markerModules = SwordTextSource.Texts.Values
+        .Where(text => text.Segmentation == SwordSegmentation.Tagged)
+        .ToDictionary(text => text.Definition.Slug, text => Path.Combine(resources, text.Folder));
+    var markerApply = args.Contains("--apply");
+
+    logger.LogInformation("\n{Report}", await markerScope.ServiceProvider.GetRequiredService<ObjectMarkerRepair>().Run(
+        ResourcePaths.File(resources, SynodalStrongLinkLoader.EditionFile),
+        markerModules,
+        markerTexts.Count == 0 ? null : markerTexts,
+        markerApply));
+    if (markerApply)
+    {
+        logger.LogInformation(
+            "{Outcome}", await markerScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    }
+
+    return 0;
+}
+
 // Where the places are, for a corpus loaded before the gazetteer's points were. The load does the
 // same as its last encyclopedia step; this is that step alone, so a full corpus is not read again
 // to add thirteen hundred rows.
@@ -1228,6 +1259,6 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 logger.LogError(
     "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, marks, verify, release, publish, rollback, releases, align, names, possessives, unshare, score, score-anchors, syntax, "
-    + "compose, strong, synodal-strong, carry, clearbible, redraw, interlinear-join, locate, spell, images, dillmann, cross-references and the evidentia family",
+    + "compose, strong, synodal-strong, union-strong, object-marker, carry, clearbible, redraw, interlinear-join, locate, spell, images, dillmann, cross-references and the evidentia family",
     args[0]);
 return 1;
