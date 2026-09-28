@@ -56,6 +56,9 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
 
     public List<EvidentiaDecision> Decisions { get; } = [];
 
+    /// <summary>Where in <see cref="Decisions"/> each word's decision stands, by its source word, or its target word where it has none.</summary>
+    private readonly Dictionary<(long?, long?), int> _decided = [];
+
     /// <summary>Which evidence source stood behind each signal kind, over the whole run.</summary>
     public SortedDictionary<string, SortedSet<string>> EvidenceSources { get; } = new(StringComparer.Ordinal);
 
@@ -75,8 +78,29 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
             }
         }
 
-        Decisions.AddRange(Decide(runId, chapter, verses));
+        foreach (var decision in Decide(runId, chapter, verses))
+        {
+            var word = decision.SourceWordId is null ? (null, decision.TargetWordId) : (decision.SourceWordId, (long?)null);
+            if (!_decided.TryGetValue(word, out var index))
+            {
+                _decided[word] = Decisions.Count;
+                Decisions.Add(decision);
+            }
+            else if (Outranks(decision, Decisions[index]))
+            {
+                Decisions[index] = decision;
+            }
+        }
     }
+
+    /// <summary>
+    /// A run decides once about a word, and a verse spanning two chapters is read with each of them,
+    /// so its words are decided twice, each time against the other text's words of that chapter. What
+    /// placed the word, a proposal or an absence, stands over an abstention, then the more confident,
+    /// then what was decided first.
+    /// </summary>
+    private static bool Outranks(EvidentiaDecision candidate, EvidentiaDecision held) =>
+        (candidate.Abstention is null, candidate.Confidence ?? 0f).CompareTo((held.Abstention is null, held.Confidence ?? 0f)) > 0;
 
     /// <summary>
     /// An evidence source names itself before its first semicolon and describes the edge after it —
