@@ -149,7 +149,7 @@
   ],
   "a": "sihon",
   "relation": "descendant-of",
-  "b": "amor",
+  "b": "amorites",
   "note": "",
   "decidedAt": "2026-09-12T20:48:17.574Z",
   "decidedBy": "the project owner"
@@ -1384,6 +1384,54 @@
   "b": "shallum-13",
   "note": "owner in chat 2026-09-27: Hanamel is ben-dodi, son of my uncle — Shallum is Jeremiah's uncle, Hanamel his cousin",
   "decidedAt": "2026-09-27T14:22:45.460Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   76119,
+   76120
+  ],
+  "a": "james-3",
+  "relation": "son-of",
+  "b": "mary",
+  "note": "owner on PRB-0831, 2026-09-28: no verse makes the brothers Mary's children",
+  "decidedAt": "2026-09-28T14:11:38.533Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   76121,
+   76122
+  ],
+  "a": "joseph-7",
+  "relation": "son-of",
+  "b": "mary",
+  "note": "owner on PRB-0831, 2026-09-28: no verse makes the brothers Mary's children",
+  "decidedAt": "2026-09-28T14:11:38.927Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   76123,
+   76124
+  ],
+  "a": "simon-3",
+  "relation": "son-of",
+  "b": "mary",
+  "note": "owner on PRB-0831, 2026-09-28: no verse makes the brothers Mary's children",
+  "decidedAt": "2026-09-28T14:11:54.926Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
+   76125,
+   76126
+  ],
+  "a": "judas-2",
+  "relation": "son-of",
+  "b": "mary",
+  "note": "owner on PRB-0831, 2026-09-28: no verse makes the brothers Mary's children",
+  "decidedAt": "2026-09-28T14:11:54.926Z",
   "decidedBy": "the project owner"
  },
  {
