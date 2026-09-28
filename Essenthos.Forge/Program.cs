@@ -163,6 +163,7 @@ builder.Services.AddScoped<NaveTopicLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.CrossReferences.CrossReferenceLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();
 builder.Services.AddScoped<EntityRenderingLoader>();
+builder.Services.AddScoped<NameConsensusPass>();
 builder.Services.AddScoped<StrongRenderingLoader>();
 builder.Services.AddScoped<OwnRelationshipLoader>();
 builder.Services.AddScoped<WithdrawnRelationshipLoader>();
@@ -1073,6 +1074,25 @@ if (args is ["names", var namesFrom, var namesTo, ..])
     }
 
     Recipe.Record(resources, args, DateTimeOffset.UtcNow);
+    return 0;
+}
+
+// The name of every person, place and people in every text, read off the words the verses naming it
+// share rather than off a link, measured against the texts whose annotations a stated link carried.
+// Reads only: `--texts` limits the texts reported, `--precision` sets what the bar must reach on the
+// measured texts, `--bar verses,score,margin` skips choosing it, `--out` writes each text's findings.
+if (args is ["name-consensus", ..])
+{
+    using var consensusScope = app.Services.CreateScope();
+    var consensusBar = Option(args, "--bar")?.Split(',') is [var barVerses, var barScore, var barMargin]
+        ? new ConsensusBar(int.Parse(barVerses), double.Parse(barScore, System.Globalization.CultureInfo.InvariantCulture),
+            double.Parse(barMargin, System.Globalization.CultureInfo.InvariantCulture))
+        : null;
+    logger.LogInformation("\n{Report}", await consensusScope.ServiceProvider.GetRequiredService<NameConsensusPass>().Run(
+        Option(args, "--texts")?.Split(',').Select(Identifier).ToHashSet(),
+        double.Parse(Option(args, "--precision") ?? "0.97", System.Globalization.CultureInfo.InvariantCulture),
+        Option(args, "--out"),
+        consensusBar));
     return 0;
 }
 
