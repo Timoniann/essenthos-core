@@ -71,6 +71,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsSecond.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsThird.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecords.json" />
         <Content Remove="Loading\Encyclopedia\ObjectRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ObjectRecords.json" />
         <Content Remove="Loading\Encyclopedia\ObservanceRecords.json" />

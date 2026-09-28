@@ -290,6 +290,8 @@ internal static class SenseReadingFiles
     private const string SeveralPeopleThirdResource =
         "Essenthos.Core.Loading.Encyclopedia.SeveralPeopleRecordsThird.json";
 
+    private const string NamesakeResource = "Essenthos.Core.Loading.Encyclopedia.NamesakeRecords.json";
+
     private static readonly JsonSerializerOptions Shape = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -450,11 +452,18 @@ internal static class SenseReadingFiles
     public static OwnRecordRulings SeveralPeopleThirdRulings() =>
         Embedded<OwnRecordRulings>(SeveralPeopleThirdResource);
 
+    /// <summary>
+    /// The names several men share that the genealogy review left unnamed, each read against its
+    /// verse: the record the text makes him, or a person of his own where it gives him a family or
+    /// an office no held record has.
+    /// </summary>
+    public static OwnRecordRulings NamesakeRulings() => Embedded<OwnRecordRulings>(NamesakeResource);
+
     /// <summary>Every rulings file, in the order they were decided.</summary>
     public static IReadOnlyList<OwnRecordRulings> AllRulings() =>
     [
         Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings(),
-        SeveralPeopleRulings(), SeveralPeopleSecondRulings(), SeveralPeopleThirdRulings(),
+        SeveralPeopleRulings(), SeveralPeopleSecondRulings(), SeveralPeopleThirdRulings(), NamesakeRulings(),
     ];
 
     private static T Embedded<T>(string name)
