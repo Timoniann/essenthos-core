@@ -82,10 +82,18 @@ internal sealed record OwnRelationshipOutcome(
 /// </summary>
 internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelationshipLoader> logger)
 {
-    public async Task<OwnRelationshipOutcome> Load(CancellationToken cancellationToken = default)
+    /// <param name="resettle">
+    /// Entities whose readings are read again although their clauses did not change, because a row
+    /// of a witness that outranked one of them has been withdrawn or restored since they were last
+    /// read. Their own rows are deleted first, so the pick is made afresh.
+    /// </param>
+    public async Task<OwnRelationshipOutcome> Load(
+        IReadOnlySet<int>? resettle = null,
+        CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
 
+        await Unread(resettle, cancellationToken);
         var already = await Described(cancellationToken);
         var clauses = await Clauses(already, cancellationToken);
         if (clauses.Count == 0)
@@ -111,6 +119,19 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
 
         logger.LogInformation("Read the relationships off the clauses: {Outcome}", outcome);
         return outcome;
+    }
+
+    private async Task Unread(IReadOnlySet<int>? entities, CancellationToken cancellationToken)
+    {
+        if (entities is not { Count: > 0 })
+        {
+            return;
+        }
+
+        var ids = entities.ToList();
+        await db.EntityRelationships
+            .Where(r => r.Source.StartsWith(EntityDescriptorLoader.SourcePrefix) && ids.Contains(r.FromEntityId))
+            .ExecuteDeleteAsync(cancellationToken);
     }
 
     /// <summary>

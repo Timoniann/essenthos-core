@@ -1234,6 +1234,12 @@ internal sealed class DatasetLoader(
     private bool _wroteWords;
 
     /// <summary>
+    /// The entities at either end of a relationship row the owner's removals just held back or gave
+    /// back, so the step that reads our own relationships reads theirs again.
+    /// </summary>
+    private IReadOnlySet<int> _entitiesWhoseWitnessChanged = new HashSet<int>();
+
+    /// <summary>
     /// Brings the planner's statistics up to the words just written. A text is a few percent of a
     /// corpus of twenty million words, too small a share for autovacuum to analyse the table again,
     /// so without this every pass after a load or a reload plans against statistics that do not know
@@ -1736,7 +1742,9 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<WithdrawnRelationshipLoader>();
-        status.Record(await loader.Load(resources, cancellationToken));
+        var outcome = await loader.Load(resources, cancellationToken);
+        _entitiesWhoseWitnessChanged = outcome.Changed;
+        status.Record(outcome);
     }
 
     /// <summary>
@@ -1750,7 +1758,7 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OwnRelationshipLoader>();
-        status.Record(await loader.Load(cancellationToken));
+        status.Record(await loader.Load(_entitiesWhoseWitnessChanged, cancellationToken));
     }
 
     /// <summary>

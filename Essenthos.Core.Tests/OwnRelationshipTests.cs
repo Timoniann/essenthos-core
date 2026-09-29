@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -328,6 +329,78 @@ public sealed class OwnRelationshipTests : IDisposable
         var abraham = Person("abraham");
         Clause(abraham, haran, DescriptorRelations.BrotherOf, 0.9);
         (await Load()).Written.Should().Be(1);
+    }
+
+    /// <summary>
+    /// A reading withheld because a row of the dataset outranked it comes back when the owner
+    /// removes that row, although the entity's own clauses did not change and it already has other
+    /// rows of ours that would otherwise say it is settled.
+    /// </summary>
+    [Fact]
+    public async Task AReadingWithheldByARowTheOwnerRemovesReturnsWithoutNewClauses()
+    {
+        var (gershom, manasseh, dan) = (Person("gershom-2"), Person("manasseh-2"), Person("dan"));
+        var reversed = new EntityRelationship
+        {
+            FromEntityId = manasseh.Id,
+            ToEntityId = gershom.Id,
+            Type = "son",
+            Category = RelationshipCategories.Explicit,
+            CanonicalBook = 7,
+            CanonicalChapter = 18,
+            CanonicalVerse = 30,
+            Method = LinkMethod.StatedBySource,
+            Source = BibleDataLoader.Source,
+        };
+        _db.EntityRelationships.Add(reversed);
+        _db.SaveChanges();
+        Clause(gershom, manasseh, DescriptorRelations.SonOf, 0.8);
+        Clause(gershom, dan, DescriptorRelations.BrotherOf, 0.9);
+
+        var first = await Load();
+        first.Withheld.Should().Be(1);
+        (await Relations(gershom, manasseh)).Should().BeEmpty();
+
+        var resources = Path.Combine(Path.GetTempPath(), $"essenthos-own-{Guid.NewGuid():N}");
+        var review = Path.Combine(resources, "Essenthos", "review");
+        Directory.CreateDirectory(review);
+        try
+        {
+            File.WriteAllText(
+                Path.Combine(review, WithdrawnRelationshipLoader.ReviewFile),
+                new JsonObject
+                {
+                    ["decisions"] = new JsonObject
+                    {
+                        ["x"] = new JsonObject
+                        {
+                            ["a"] = "gershom-2",
+                            ["b"] = "manasseh-2",
+                            ["decidedAt"] = "2026-09-29T08:00:00Z",
+                            ["decision"] = WithdrawnRelationshipLoader.Remove,
+                            ["rows"] = reversed.Id.ToString(),
+                        },
+                    },
+                }.ToJsonString());
+
+            var withdrawn = await new WithdrawnRelationshipLoader(
+                _db, NullLogger<WithdrawnRelationshipLoader>.Instance).Load(resources);
+
+            withdrawn.Changed.Should().BeEquivalentTo([gershom.Id, manasseh.Id]);
+            (await _loader.Load()).AlreadyLoaded.Should().BeTrue();
+            (await Relations(gershom, manasseh)).Should().BeEmpty("nothing told the loader the row is gone");
+
+            var again = await _loader.Load(withdrawn.Changed);
+
+            again.Withheld.Should().Be(0);
+            (await Relations(gershom, manasseh)).Should().Equal("son-of");
+            (await Relations(gershom, dan)).Should().Equal("brother-of");
+            (await _db.EntityRelationships.CountAsync(r => r.Source == Model)).Should().Be(2);
+        }
+        finally
+        {
+            Directory.Delete(resources, recursive: true);
+        }
     }
 
     /// <summary>
