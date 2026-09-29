@@ -86,6 +86,10 @@ public sealed class DescriptorTests : IDisposable
         Add("athaliah-1", EntityKind.Person, "Athaliah", null, (12, 8, 26));
         Add("jehoram-1", EntityKind.Person, "Jehoram", null, (12, 8, 16), (12, 8, 25));
 
+        // A passage joined to a verse elsewhere: Sarah is named in Genesis 20:14, after Abraham says
+        // in 20:12 that she is his father's daughter, and Terah is named as his father in 11:27.
+        Add("sarai-1", EntityKind.Person, "Sarai", null, (1, 20, 14));
+
         _db.SaveChanges();
     }
 
@@ -272,7 +276,7 @@ public sealed class DescriptorTests : IDisposable
     [Fact]
     public async Task APassageNamingBothPeopleIsCitedWhole()
     {
-        (await Load("cited")).Clauses.Should().Be(2);
+        (await Load("cited")).Clauses.Should().Be(3);
 
         var clause = await _db.EntityDescriptors.SingleAsync(d => d.Entity!.Slug == "jezreel-1");
         (clause.CanonicalBook, clause.CanonicalChapter, clause.CanonicalVerse).Should().Be((28, 1, 2));
@@ -297,7 +301,7 @@ public sealed class DescriptorTests : IDisposable
     [Fact]
     public async Task TwoVersesComposedAreCitedTogetherBelowAStatement()
     {
-        (await Load("cited")).Clauses.Should().Be(2);
+        (await Load("cited")).Clauses.Should().Be(3);
 
         var clause = await _db.EntityDescriptors.SingleAsync(d => d.Entity!.Slug == "athaliah-1");
         clause.Method.Should().Be(LinkMethod.Manual);
@@ -313,15 +317,39 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
+    /// A passage and a verse elsewhere, each stating its part, are one composed citation: the clause
+    /// is addressed at the passage's first verse, keeps the whole citation, and carries the composed
+    /// confidence, and the page is sent every verse of both parts.
+    /// </summary>
+    [Fact]
+    public async Task APassageAndAVerseElsewhereAreComposed()
+    {
+        (await Load("cited")).Clauses.Should().Be(3);
+
+        var clause = await _db.EntityDescriptors.SingleAsync(d => d.Entity!.Slug == "sarai-1");
+        clause.Method.Should().Be(LinkMethod.Manual);
+        clause.Confidence.Should().Be(Citation.ComposedConfidence);
+        (clause.CanonicalBook, clause.CanonicalChapter, clause.CanonicalVerse).Should().Be((1, 20, 12));
+        clause.Citation.Should().Be("GEN 20:12-14; GEN 11:27");
+
+        await new OwnRelationshipLoader(_db, NullLogger<OwnRelationshipLoader>.Instance).Load();
+        var sarai = await _db.Entities.SingleAsync(e => e.Slug == "sarai-1");
+        var row = (await Relationships.Of(_db, sarai.Id, null, default)).Single(r => r.Slug == "terah-1");
+        row.Confidence.Should().Be(Citation.ComposedConfidence);
+        row.Verses!.Select(v => (v.Chapter, v.Verse)).Should().Equal((20, 12), (20, 13), (20, 14), (11, 27));
+    }
+
+    /// <summary>
     /// What the owner allowed and no more: a passage naming only one of the two, one longer than three
-    /// verses, two verses neither of which names the subject, and three verses joined are refused.
+    /// verses, two verses neither of which names the subject, three verses joined, and a passage joined
+    /// to a verse it already holds are refused.
     /// </summary>
     [Fact]
     public async Task ACitationBeyondWhatTheOwnerAllowedIsRefused()
     {
         var outcome = await Load("cited-refused");
 
-        outcome.Refused.UnmatchedReference.Should().Be(4);
+        outcome.Refused.UnmatchedReference.Should().Be(5);
         outcome.Clauses.Should().Be(0);
     }
 
@@ -330,8 +358,10 @@ public sealed class DescriptorTests : IDisposable
     [InlineData("HOS 1:2-4", false, 3)]
     [InlineData("2KI 8:18; 2KI 8:26", true, 2)]
     [InlineData("NEH 11:15; 1CH 9:14", true, 2)]
+    [InlineData("GEN 20:12-14; GEN 11:27", true, 4)]
+    [InlineData("2KI 8:18-19; 2KI 8:26", true, 3)]
     [InlineData("PSA 7:0", false, 1)]
-    public void ACitationIsOneVerseAPassageOrTwoVerses(string text, bool composed, int verses)
+    public void ACitationIsOneVerseAPassageOrTwoParts(string text, bool composed, int verses)
     {
         var citation = Citation.Parse(text);
 
@@ -345,7 +375,8 @@ public sealed class DescriptorTests : IDisposable
     [InlineData("HOS 1:4-2")]
     [InlineData("HOS 1:2-2:1")]
     [InlineData("2KI 8:18; 2KI 8:18")]
-    [InlineData("2KI 8:18-19; 2KI 8:26")]
+    [InlineData("GEN 20:12-14; GEN 20:14")]
+    [InlineData("GEN 20:11-14; GEN 11:27")]
     [InlineData("2KI 8:16; 2KI 8:18; 2KI 8:26")]
     [InlineData("XYZ 1:1")]
     [InlineData("")]

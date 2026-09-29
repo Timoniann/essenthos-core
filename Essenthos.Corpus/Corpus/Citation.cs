@@ -3,23 +3,24 @@ namespace Essenthos.Core.Corpus;
 /// <summary>
 /// The verses a claim rests on, as a clause writes them: one verse (<c>NUM 10:29</c>), a passage of
 /// adjacent verses in one chapter that tell one event or one list under one heading
-/// (<c>HOS 1:2-4</c>), or two verses that each state part of it (<c>2KI 8:18; 2KI 8:26</c>).
+/// (<c>HOS 1:2-4</c>), or two parts that each state part of it, each a verse or such a passage
+/// (<c>2KI 8:18; 2KI 8:26</c>, <c>GEN 20:12-14; GEN 11:27</c>).
 ///
 /// <para>
 /// A passage is a statement read over its whole length — Hosea is named in 1:2 and Jezreel in 1:4,
 /// and the verses between say whose son he is — so both people have to be named somewhere in it.
-/// Two verses composed are two statements joined by a reader, and a claim so made is never stored as
+/// Two parts composed are two statements joined by a reader, and a claim so made is never stored as
 /// though one verse stated it: it carries <see cref="ComposedConfidence"/> at most.
 /// </para>
 /// </summary>
 /// <param name="Verses">The verses in the order cited; a passage's in the order they stand.</param>
-/// <param name="Composed">Two verses each stating a part, rather than one verse or one passage.</param>
+/// <param name="Composed">Two parts each stating a part, rather than one verse or one passage.</param>
 internal sealed record Citation(IReadOnlyList<(int Book, int Chapter, int Verse)> Verses, bool Composed)
 {
     /// <summary>The most verses a passage may run to and still be read as one statement.</summary>
     public const int LongestPassage = 3;
 
-    /// <summary>How many verses a composed claim joins.</summary>
+    /// <summary>How many parts, each a verse or a passage, a composed claim joins.</summary>
     public const int ComposedParts = 2;
 
     /// <summary>
@@ -40,8 +41,8 @@ internal sealed record Citation(IReadOnlyList<(int Book, int Chapter, int Verse)
 
     /// <summary>
     /// The citation a claim writes, or null where it is not one: an unknown book, a passage running
-    /// across a chapter or past <see cref="LongestPassage"/> verses, or anything but two single
-    /// verses joined by a semicolon.
+    /// across a chapter or past <see cref="LongestPassage"/> verses, anything but two parts joined by
+    /// a semicolon, or two parts that share a verse.
     /// </summary>
     public static Citation? Parse(string? text)
     {
@@ -62,12 +63,12 @@ internal sealed record Citation(IReadOnlyList<(int Book, int Chapter, int Verse)
         }
 
         var joined = parts.Select(Passage).ToList();
-        if (joined.Any(verses => verses is not { Count: 1 }) || joined[0]![0] == joined[1]![0])
+        if (joined.Any(verses => verses is null) || joined[0]!.Intersect(joined[1]!).Any())
         {
             return null;
         }
 
-        return new Citation([joined[0]![0], joined[1]![0]], Composed: true);
+        return new Citation([.. joined.SelectMany(verses => verses!)], Composed: true);
     }
 
     /// <summary><c>HOS 1:2-4</c> or <c>HOS 1:2</c> as its verses, in order.</summary>
