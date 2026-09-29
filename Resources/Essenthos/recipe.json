@@ -455,11 +455,6 @@
       "at": "2026-09-25T14:13:56.7515299+00:00"
     },
     {
-      "verb": "correct",
-      "arguments": [],
-      "at": "2026-09-25T14:41:54.077339+00:00"
-    },
-    {
       "verb": "reload",
       "arguments": [
         "ALEX"
@@ -524,46 +519,10 @@
       "verb": "align",
       "arguments": [
         "GEEZ81",
-        "GRCBRENT",
-        "--replace"
-      ],
-      "at": "2026-09-27T21:15:31.4724853+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "GEEZ81",
         "SWETE",
         "--replace"
       ],
       "at": "2026-09-27T21:15:59.5688963+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "BRENTON",
-        "GRCBRENT",
-        "--replace"
-      ],
-      "at": "2026-09-27T21:18:52.0989135+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "ALEX",
-        "GRCBRENT",
-        "--replace"
-      ],
-      "at": "2026-09-27T21:19:13.658254+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "GRCBRENT",
-        "KJV",
-        "--replace"
-      ],
-      "at": "2026-09-27T21:21:50.1720088+00:00"
     },
     {
       "verb": "align",
@@ -582,27 +541,6 @@
         "--replace"
       ],
       "at": "2026-09-27T21:27:38.4625122+00:00"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "GEEZ81",
-        "GRCBRENT",
-        "BHSA",
-        "--daughter",
-        "--unmeasured"
-      ],
-      "at": "2026-09-27T21:28:00.7177509+00:00"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "GRCBRENT",
-        "KJV",
-        "BHSA",
-        "--unmeasured"
-      ],
-      "at": "2026-09-27T21:30:55.7197577+00:00"
     },
     {
       "verb": "compose",
@@ -639,24 +577,6 @@
         "NESTLE1904"
       ],
       "at": "2026-09-27T21:43:42.6357983+00:00"
-    },
-    {
-      "verb": "names",
-      "arguments": [
-        "GRCBRENT",
-        "KJV",
-        "--apply"
-      ],
-      "at": "2026-09-27T21:43:53.4255251+00:00"
-    },
-    {
-      "verb": "names",
-      "arguments": [
-        "GRCBRENT",
-        "BHSA",
-        "--apply"
-      ],
-      "at": "2026-09-27T21:44:02.350739+00:00"
     },
     {
       "verb": "names",
@@ -807,6 +727,119 @@
         "--apply"
       ],
       "at": "2026-09-28T19:07:55.5493044+00:00"
+    },
+    {
+      "verb": "correct",
+      "arguments": [],
+      "at": "2026-09-29T05:52:08.530145+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "BRENTON",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "at": "2026-09-29T05:52:35.9571616+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "ALEX",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "at": "2026-09-29T05:52:47.5489267+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "at": "2026-09-29T05:53:11.1864833+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "--replace"
+      ],
+      "at": "2026-09-29T05:53:37.6276744+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "KJV",
+        "GRCBRENT",
+        "--outside",
+        "BHSA",
+        "--replace"
+      ],
+      "at": "2026-09-29T05:53:54.8708797+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "WEB",
+        "GRCBRENT",
+        "--outside",
+        "BHSA",
+        "--replace"
+      ],
+      "at": "2026-09-29T05:54:10.6527848+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "RUSV",
+        "GRCBRENT",
+        "--outside",
+        "BHSA",
+        "--replace"
+      ],
+      "at": "2026-09-29T05:54:26.5463325+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "BHSA",
+        "--unmeasured"
+      ],
+      "at": "2026-09-29T05:55:08.6159377+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "GEEZ81",
+        "GRCBRENT",
+        "BHSA",
+        "--daughter",
+        "--unmeasured"
+      ],
+      "at": "2026-09-29T05:55:29.8073394+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "GRCBRENT",
+        "KJV",
+        "--apply"
+      ],
+      "at": "2026-09-29T05:55:41.6903533+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "GRCBRENT",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-29T05:55:50.2752012+00:00"
     }
   ]
 }
