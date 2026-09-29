@@ -50,9 +50,11 @@ internal static class Relationships
     /// direction and has to be in hand before either row is shown.
     ///
     /// <para>
-    /// With <paramref name="oursOnly"/> a witness's rows are left out before anything is paired, so
-    /// a fact only a dataset states is not shown and one it shares with ours is ours alone, with no
-    /// credit to the dataset beside it.
+    /// A witness's rows are left out before anything is paired, so a fact only a dataset states is
+    /// not shown and one it shares with ours is ours alone, with no credit to the dataset beside it:
+    /// the owner's ruling of 2026-09-29 that relationships are this project's and no dataset's, so
+    /// every endpoint a reader reaches passes <paramref name="oursOnly"/>. The rows stay stored as
+    /// the witness they are compared with, and without it they are read too.
     /// </para>
     /// </summary>
     public static async Task<List<EntityRelationshipResponse>> Of(
