@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -66,7 +67,8 @@ internal static class ChapterFamily
         int book,
         int chapter,
         string? language,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool oursOnly = false)
     {
         var named = (await ContextEndpoints.Named(db, book, chapter, cancellationToken)).Keys.ToList();
         var people = await db.Entities
@@ -86,10 +88,10 @@ internal static class ChapterFamily
                             && r.FromEntityId != r.ToEntityId
                             && !FamilyEndpoints.Deities.Contains(r.From!.Slug)
                             && !FamilyEndpoints.Deities.Contains(r.To!.Slug))
-                .Select(r => new { r.FromEntityId, r.ToEntityId, r.Type })
+                .Select(r => new { r.FromEntityId, r.ToEntityId, r.Type, r.Source })
                 .ToListAsync(cancellationToken);
             var next = new List<int>();
-            foreach (var row in rows)
+            foreach (var row in rows.Where(r => !oursOnly || Relationships.IsOurs(r.Source)))
             {
                 ties.Add(new Tie(row.FromEntityId, row.ToEntityId, Descent(row.Type)));
                 foreach (var id in (int[])[row.FromEntityId, row.ToEntityId])
@@ -120,7 +122,8 @@ internal static class ChapterFamily
         // A member's family ties reach only the tree, so the tree draws exactly who is in it. Their
         // other ties stay, because a king's crown on his card is read from them — all but the
         // ancestors and descendants, which a tree never draws and a genealogy has hundreds of.
-        var family = await FamilyEndpoints.Family(db, [.. memberSlugs], language, cancellationToken);
+        var family = await FamilyEndpoints.Family(
+            db, [.. memberSlugs], language, cancellationToken, oursOnly: oursOnly);
         var familyTypes = Types.ToHashSet(StringComparer.Ordinal);
         var shown = family.People
             .Select(p => p with

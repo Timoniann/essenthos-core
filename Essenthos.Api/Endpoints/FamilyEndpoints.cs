@@ -33,7 +33,8 @@ internal static class FamilyEndpoints
         IReadOnlyCollection<string> slugs,
         string? language,
         CancellationToken cancellationToken,
-        bool generated = true)
+        bool generated = true,
+        bool oursOnly = false)
     {
         var people = await db.Entities
             .Where(e => slugs.Contains(e.Slug))
@@ -58,8 +59,14 @@ internal static class FamilyEndpoints
                 r.CanonicalBook,
                 r.CanonicalChapter,
                 r.CanonicalVerse,
+                r.Source,
             })
             .ToListAsync(cancellationToken);
+        if (oursOnly)
+        {
+            rows = [.. rows.Where(r => Relationships.IsOurs(r.Source))];
+        }
+
         VerseRefResponse? Cited(int? book, int? chapter, int? verse) =>
             book is { } b && chapter is { } c && verse is { } v
                 ? new VerseRefResponse(b, BookReferences.Name(b), BookReferences.Slug(b), c, v)

@@ -55,10 +55,12 @@ internal static class ContextEndpoints
             [FromQuery] string? language,
             AppDbContext db,
             ICanonIndex canon,
+            SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
         {
             var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
-            return refusal ?? Results.Ok(await ChapterFamily.Of(db, ordinal, chapter, language, cancellationToken));
+            return refusal ?? Results.Ok(await ChapterFamily.Of(
+                db, ordinal, chapter, language, cancellationToken, settings.Is(SiteSettings.RelationshipsOursOnly)));
         });
     }
 
