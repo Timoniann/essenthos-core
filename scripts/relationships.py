@@ -703,8 +703,15 @@ def run_batches(directory, folder, jobs, system, version, args, shape):
     began = time.time()
     totals = {'cost': 0.0, 'done': 0, 'failed': 0, 'input': 0, 'output': 0}
 
+    budget = getattr(args, 'budget', None)
+
     def one(job):
         name, prompt, items = job
+        with lock:
+            if budget is not None and totals['cost'] >= budget:
+                totals['failed'] += 1
+                print(f'{name}: not asked, ${totals["cost"]:.4f} already spent of the ${budget} budget', flush=True)
+                return
         started = time.time()
         outcome, failure = call(prompt, args.model, args.effort, system)
         seconds = time.time() - started

@@ -150,6 +150,7 @@ builder.Services.AddScoped<EponymNameLoader>();
 builder.Services.AddScoped<RealmNameLoader>();
 builder.Services.AddScoped<ContextBearerLoader>();
 builder.Services.AddScoped<FixedTitleLoader>();
+builder.Services.AddScoped<PassageReadingLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
 builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
@@ -1166,6 +1167,19 @@ if (args is ["fixed-titles", ..])
     logger.LogInformation("{Outcome}", await titleScope.ServiceProvider.GetRequiredService<FixedTitleLoader>()
         .Load());
     logger.LogInformation("{Outcome}", await titleScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
+        .Load());
+    return 0;
+}
+
+// The word by which a verse speaks of a person the dataset lists there without printing the name, as two
+// readings of the passage agreed on it, written where no word names anybody, carried across the links,
+// and the verses read off the words again.
+if (args is ["passage-readings", ..])
+{
+    using var readingScope = app.Services.CreateScope();
+    logger.LogInformation("{Outcome}", await readingScope.ServiceProvider.GetRequiredService<PassageReadingLoader>()
+        .Load(resources));
+    logger.LogInformation("{Outcome}", await readingScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
         .Load());
     return 0;
 }

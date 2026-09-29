@@ -283,6 +283,7 @@ internal sealed class DatasetLoader(
             await NameThePeoplesTheRealmsAreNamedAfter(resources, stoppingToken);
             await NameTheBearerTheBookNames(resources, stoppingToken);
             await NameTheTitlesTheTextFixes(stoppingToken);
+            await NameWhomTheReadingsOfThePassagesFind(resources, stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
@@ -1865,6 +1866,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<FixedTitleLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The word by which a verse speaks of a person without printing the name, as two readings of the
+    /// passage agreed on it. After the titles, because it writes only where no pass named the word, and
+    /// before the verses are cited off the words.
+    /// </summary>
+    private async Task NameWhomTheReadingsOfThePassagesFind(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the words a reading of the passage finds");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<PassageReadingLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     /// <summary>

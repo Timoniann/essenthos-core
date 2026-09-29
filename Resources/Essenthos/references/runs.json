@@ -1,0 +1,97 @@
+{
+ "accepted": [
+  "name",
+  "pronoun",
+  "title"
+ ],
+ "counts": {
+  "asked": 905,
+  "answered": 742,
+  "refused by the second reading": 242,
+  "not written": 281,
+  "agreed": 500,
+  "to write": 461,
+  "agreed, confidence under 0.7": 15,
+  "none": 92,
+  "implied, or a word that names nobody": 51,
+  "agreed, the word already names somebody": 24,
+  "another record": 15,
+  "no answer": 5
+ },
+ "runs": {
+  "out": [
+   {
+    "at": "2026-09-29T08:42:35+00:00",
+    "batches": 50,
+    "failed": 2,
+    "cost": 15.1905,
+    "wall_seconds": 216.8,
+    "workers": 3,
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "prompt_version": "references-2",
+    "input_tokens": 1688510,
+    "output_tokens": 75987
+   },
+   {
+    "at": "2026-09-29T08:42:56+00:00",
+    "batches": 2,
+    "failed": 1,
+    "cost": 0.5944,
+    "wall_seconds": 13.0,
+    "workers": 2,
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "prompt_version": "references-2",
+    "input_tokens": 41204,
+    "output_tokens": 1561
+   },
+   {
+    "at": "2026-09-29T08:43:21+00:00",
+    "batches": 1,
+    "failed": 0,
+    "cost": 0.2224,
+    "wall_seconds": null,
+    "workers": 1,
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "prompt_version": "references-2",
+    "input_tokens": null,
+    "output_tokens": null,
+    "note": "batch-0030 asked by hand after its reply held no JSON array twice"
+   }
+  ],
+  "check": [
+   {
+    "at": "2026-09-29T08:48:15+00:00",
+    "batches": 38,
+    "failed": 1,
+    "cost": 14.9173,
+    "wall_seconds": 288.5,
+    "workers": 3,
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "prompt_version": "references-check-2",
+    "input_tokens": 1604530,
+    "output_tokens": 104068
+   },
+   {
+    "at": "2026-09-29T08:48:28+00:00",
+    "batches": 1,
+    "failed": 0,
+    "cost": 0.0455,
+    "wall_seconds": 6.9,
+    "workers": 1,
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "prompt_version": "references-check-2",
+    "input_tokens": 4334,
+    "output_tokens": 544
+   }
+  ]
+ },
+ "heldout": {
+  "out": 8.0511,
+  "check": 7.3925
+ }
+}
