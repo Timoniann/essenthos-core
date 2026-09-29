@@ -94,6 +94,13 @@ public class EntityDescriptor
 
     public int CanonicalVerse { get; set; }
 
+    /// <summary>
+    /// The whole <see cref="Corpus.Citation"/> where the clause rests on more than one verse — a
+    /// passage (<c>HOS 1:2-4</c>) or two verses composed (<c>2KI 8:18; 2KI 8:26</c>) — whose first
+    /// verse is the address above. Null for a clause read from one verse, which is nearly all.
+    /// </summary>
+    public string? Citation { get; set; }
+
     public LinkMethod Method { get; set; }
 
     /// <summary>

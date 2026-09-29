@@ -9,7 +9,9 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// </summary>
 /// <param name="Reference">
 /// A canonical address in the corpus's own spelling — <c>NUM 10:29</c>. It must be a verse the
-/// entity is actually named in; a reference nobody can follow is worse than none.
+/// entity is actually named in; a reference nobody can follow is worse than none. A decision may
+/// cite more, as a <see cref="Citation"/> says: a passage of up to three verses naming both people
+/// (<c>HOS 1:2-4</c>), or two verses each stating a part (<c>2KI 8:18; 2KI 8:26</c>).
 /// </param>
 /// <param name="Confidence">
 /// The model's own, in 0..1. Required, because the method is an inference and this corpus refuses

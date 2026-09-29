@@ -245,23 +245,24 @@ internal sealed class EntityDescriptorLoader(
                     continue;
                 }
 
-                if (Reference(claim.Reference) is not { } verse)
+                if (Citation.Parse(claim.Reference) is not { } citation
+                    || !Cites(citation, entityId, targetId, occurrences))
                 {
                     unmatchedReference++;
                     continue;
                 }
 
-                if (!occurrences.Contains((entityId, verse.Book, verse.Chapter, verse.Verse)))
-                {
-                    unmatchedReference++;
-                    continue;
-                }
+                var verse = citation.First;
 
                 // A clause read while the dataset still filed this verse under the wrong man of the
                 // name points at him; the verse is his namesake's, and so is the clause's target.
-                if (refiled.TryGetValue((targetId, verse.Book, verse.Chapter, verse.Verse), out var namesake))
+                foreach (var cited in citation.Verses)
                 {
-                    targetId = namesake;
+                    if (refiled.TryGetValue((targetId, cited.Book, cited.Chapter, cited.Verse), out var namesake))
+                    {
+                        targetId = namesake;
+                        break;
+                    }
                 }
 
                 // A decision is not a pass's reading: it is stored as manual, credited to whoever
@@ -281,6 +282,11 @@ internal sealed class EntityDescriptorLoader(
                 if (decided && confidence is < 0 or > 1)
                 {
                     confidence = null;
+                }
+
+                if (citation.Composed)
+                {
+                    confidence = Math.Min(confidence ?? Citation.ComposedConfidence, Citation.ComposedConfidence);
                 }
 
                 // A companionship the cited verse does not mention. This one relation is read out
@@ -310,6 +316,7 @@ internal sealed class EntityDescriptorLoader(
                     CanonicalBook = verse.Book,
                     CanonicalChapter = verse.Chapter,
                     CanonicalVerse = verse.Verse,
+                    Citation = citation.Single ? null : claim.Reference.Trim(),
                     Method = method,
                     Confidence = confidence,
                     Source = credit,
@@ -573,7 +580,7 @@ internal sealed class EntityDescriptorLoader(
         var wanted = records
             .SelectMany(record => record.Claims ?? [])
             .Where(claim => claim.Relation == DescriptorRelations.CompanionOf)
-            .Select(claim => Reference(claim.Reference))
+            .Select(claim => Citation.Parse(claim.Reference)?.First)
             .OfType<(int Book, int Chapter, int Verse)>()
             .Distinct()
             .ToList();
@@ -647,6 +654,24 @@ internal sealed class EntityDescriptorLoader(
             .Select(f => new { f.EntityId, f.Language, f.GrammaticalCase })
             .ToListAsync(cancellationToken))
             .Select(f => (f.EntityId, f.Language, f.GrammaticalCase))];
+
+    /// <summary>
+    /// Whether a reader following the citation finds the clause's subject named in it: in its verse,
+    /// in one verse of a passage or in one of two verses composed. A passage is one statement read
+    /// over several verses, so the other person has to be named in it too; a single verse or a
+    /// composed part may name them only as <em>his wife</em> or <em>my father</em>.
+    /// </summary>
+    internal static bool Cites(
+        Citation citation,
+        int subject,
+        int target,
+        IReadOnlySet<(int Entity, int Book, int Chapter, int Verse)> occurrences)
+    {
+        bool Names(int entity) =>
+            citation.Verses.Any(v => occurrences.Contains((entity, v.Book, v.Chapter, v.Verse)));
+
+        return Names(subject) && (citation.Single || citation.Composed || Names(target));
+    }
 
     /// <summary>
     /// Every verse each of these entities is named in, so a reference can be checked against the

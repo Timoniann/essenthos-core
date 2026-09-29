@@ -371,7 +371,8 @@ def relationships():
                    'id', r.id, 'from', f.slug, 'to', t.slug, 'type', r.type, 'from_sex', f.sex,
                    'category', r.category, 'method', r.method, 'source', r.source,
                    'book', r.canonical_book, 'chapter', r.canonical_chapter,
-                   'verse', r.canonical_verse) ORDER BY r.id), '[]')
+                   'verse', r.canonical_verse, 'notes', r.notes,
+                   'withdrawn', r.withdrawn) ORDER BY r.id), '[]')
         FROM entity_relationship r
         JOIN entity f ON f.id = r.from_entity_id
         JOIN entity t ON t.id = r.to_entity_id
@@ -900,20 +901,58 @@ def load_facts(directories):
         return json.load(handle)
 
 
+# What a decision may cite besides one verse, as the loader's `Citation` reads it: a passage of up to
+# three adjacent verses telling one event or one list under one heading, which has to name both
+# people (HOS 1:2-4), or two verses each stating a part (2KI 8:18; 2KI 8:26), which the loader stores
+# a little below a statement.
+LONGEST_PASSAGE = 3
+PASSAGE = re.compile(r'^(.*[:.]\s*)(\d+)\s*-\s*(\d+)\s*$')
+COMPOSED = ';'
+
+
+def citation(reference):
+    """The verses a reference cites and whether two verses are composed, or None where the loader refuses it."""
+    parts = [part.strip() for part in (reference or '').split(COMPOSED) if part.strip()]
+    if len(parts) == 2:
+        verses = [shared.parse_reference(part) for part in parts]
+        return None if None in verses or verses[0] == verses[1] else (verses, True)
+    if len(parts) != 1:
+        return None
+    passage = PASSAGE.match(parts[0])
+    if not passage:
+        verse = shared.parse_reference(parts[0])
+        return ([verse], False) if verse else None
+    first = shared.parse_reference(passage.group(1) + passage.group(2))
+    through = int(passage.group(3))
+    if not first or not 0 <= through - first[2] < LONGEST_PASSAGE:
+        return None
+    return [(first[0], first[1], verse) for verse in range(first[2], through + 1)], False
+
+
 def carrier(fact, reference, corpus):
     """
     Which record a verdict can be written on, and as what -- or why it cannot be written at all.
 
-    The loader keeps a clause only where its reference is among the verses its subject is named in.
-    So the fact goes on the end the question was asked from where that verse names it, and on the
-    other end, as the inverse relation, where only that one is named there. The inverse of *son of*
+    The loader keeps a clause only where its citation names its subject: its verse, a verse of its
+    passage or one of its two verses composed. So the fact goes on the end the question was asked
+    from where the citation names it, and on the other end, as the inverse relation, where only that
+    one is named there. A passage is one statement and has to name both. The inverse of *son of*
     is *father of* or *mother of*, and which is the other end's sex; where the encyclopedia records
     none, the dataset's own row from that end names it.
     """
-    address = shared.parse_reference(reference)
-    if address in corpus.verses.get(fact['a'], ()):
+    cited = citation(reference)
+    if cited is None:
+        return None, 'the citation is not one verse, a passage of three or two verses composed'
+    addresses, composed = cited
+
+    def named(slug):
+        return any(address in corpus.verses.get(slug, ()) for address in addresses)
+
+    if len(addresses) > 1 and not composed and not (named(fact['a']) and named(fact['b'])):
+        return None, 'the passage does not name both'
+    if named(fact['a']):
         return (fact['a'], fact['relation'], fact['b']), None
-    if address not in corpus.verses.get(fact['b'], ()):
+    if not named(fact['b']):
         return None, 'the verse names neither in this corpus'
     words = sorted(shared.inverse().get(fact['relation'], ()))
     if not words:
@@ -1250,14 +1289,16 @@ def decision_documents(where):
 
 DECISIONS = os.path.join(REVIEW, 'bibledata-relationships.json')
 CORRECTIONS = os.path.join(REVIEW, 'bibledata-corrections.json')
-BY_ROW = ('reference', 'relation', 'unsure')
+BY_ROW = ('reference', 'relation', 'unsure', 'people', 'reason', 'owner')
+OF_PEOPLE = 'of-people'
+PEOPLE = 'people'
 ROWS = ('hold', 'flip')
 
 
 def corrections(path):
     """
     The corrections a decision needs and the review list cannot hold, kept where the next run finds
-    them: the same five as the flags, keyed by a BibleData row id of the fact, beside whatever else
+    them: the same eight as the flags, keyed by a BibleData row id of the fact, beside whatever else
     the file says about them.
     """
     document = {}
@@ -1323,6 +1364,7 @@ def decide(args):
     given = with_flags(kept, args)
     flagged = given != kept
     corrected, relabelled, unsure = given['reference'], given['relation'], given['unsure']
+    gentilic, reasons, ruled = given['people'], given['reason'], given['owner']
     held, flipped = set(given['hold']), set(given['flip'])
     # Read afresh, as the relationships are: a cached encyclopedia names the verses entities were
     # named in when it was cached, and a clause refused against it is silently not written.
@@ -1341,7 +1383,7 @@ def decide(args):
         if body.get('subset') in args.subsets and body.get('decision'):
             decisions.append(({int(row) for row in str(body['rows']).split('|')}, body))
 
-    by_entity, report, reask, removed, taken_back = {}, {}, [], [], []
+    by_entity, report, reask, removed, taken_back, unwritten = {}, {}, [], [], [], []
 
     def count(what):
         report[what] = report.get(what, 0) + 1
@@ -1381,8 +1423,10 @@ def decide(args):
         # one confirmed only because its note named the right word stays, since the dataset's word goes.
         if verdict != 'remove' and not any(str(i) in relabelled for i in ids):
             taken_back.append(sorted(ids))
-        # A fact the owner decided himself is his, whatever an agent said about it beside him.
-        agent = all(by_the_agent(body) for body in mine)
+        # A fact the owner decided himself is his, whatever an agent said about it beside him, and so
+        # is one the agent decided in the console that the owner has since ruled on himself.
+        owned = next((ruled[str(i)] for i in sorted(ids) if str(i) in ruled), None)
+        agent = all(by_the_agent(body) for body in mine) and not owned
         decided_at = max(b['decidedAt'] for b in mine)
         if verdict == 'remove':
             removed.append({'rows': sorted(ids), 'a': fact['a'], 'relation': fact['relation'] or fact['type'],
@@ -1402,6 +1446,7 @@ def decide(args):
             or (fact['cited'][0] if fact['cited'] else None)
         if not reference or not fact['relation']:
             count('confirmed, but there is no verse or no relation word to write it with')
+            unwritten.append((fact, reference, 'no verse or no relation word'))
             continue
         # The dataset states the tie from the end the owner does not want it read from -- a king is
         # not defined by whose king he is, but a commander is by whose commander he is. Reading it
@@ -1411,6 +1456,13 @@ def decide(args):
         relation_as = next((relabelled[str(i)] for i in sorted(ids) if str(i) in relabelled), None)
         if relation_as:
             fact = dict(fact, relation=relation_as)
+        # A gentilic -- *Cush the Benjamite* -- says which people a man is of, not whose descendant.
+        people = next((gentilic[str(i)] for i in sorted(ids) if str(i) in gentilic), None)
+        if people:
+            if (corpus.entities.get(people) or {}).get('kind') != PEOPLE:
+                count(f'confirmed, but {people} is not a people of the encyclopedia')
+                continue
+            fact = dict(fact, relation=OF_PEOPLE, b=people)
         clause, refused = carrier(fact, reference, corpus)
         # A model's reading of the very clause decided gives way to the decision, so the page credits
         # the tie to whoever decided it rather than to the model at the model's confidence.
@@ -1418,6 +1470,7 @@ def decide(args):
         clause, refused, _ = settle_against_record(clause, refused, standing, ignoring=superseded)
         if not clause:
             count(f'confirmed, not writable: {refused}')
+            unwritten.append((fact, reference, refused))
             continue
 
         subject, relation, target = clause
@@ -1438,10 +1491,12 @@ def decide(args):
             count('confirmed, already in the record')
             continue
         sure = next((unsure[str(i)] for i in sorted(ids) if str(i) in unsure), None)
+        reason = next((reasons[str(i)] for i in sorted(ids) if str(i) in reasons), None)
         record['claims'].append({
             'relation': relation, 'target': target, 'reference': reference, 'confidence': sure,
-            'reason': note or 'the verse states it, decided on the review page',
-            'decidedBy': (AGENT_DECIDED_BY.format(reference=reference, date=decided_at[:10]) if agent
+            'reason': reason or note or 'the verse states it, decided on the review page',
+            'decidedBy': (DECIDED_BY.format(date=owned) if owned
+                          else AGENT_DECIDED_BY.format(reference=reference, date=decided_at[:10]) if agent
                           else DECIDED_BY.format(date=decided_at[:10])),
         })
         count('confirmed and written' + (', by the agent' if agent else ''))
@@ -1479,6 +1534,88 @@ def decide(args):
         print(f'  {n:>4}  {what}')
     if reask:
         print('re-ask with: extract --rows ' + ' '.join(map(str, reask)))
+    if unwritten:
+        print('confirmed and not written:')
+    for fact, reference, why in unwritten:
+        rows = '|'.join(str(row['id']) for row in fact['rows'])
+        print(f'  {fact["a"]} {fact["relation"] or fact["type"]} {fact["b"]} @ {reference} ({rows}): {why}')
+
+
+NOT_ASKED = 'not-asked'
+
+
+def offer(args):
+    """
+    The facts a page still shows as BibleData's alone and the owner was never asked about, added to
+    his review list undecided, in the shape its facts have.
+
+    A fact is offered where no row of ours joins its two people in either direction, in any word --
+    what a reader sees there is BibleData's and nothing else -- and none of its rows is in a listed
+    fact or a decision. No model is asked: the fact goes to the owner as the dataset states it, with
+    the verses it cites in the King James, and `why` says it was not asked. The decisions are not
+    touched, and a fact already listed is not listed again, so a second run adds nothing.
+    """
+    with open(args.decisions, encoding='utf-8') as handle:
+        review = json.load(handle)
+    listed = {int(row) for fact in review['facts'] for row in fact['id'].split('|')}
+    listed |= {int(row) for body in review['decisions'].values()
+               for row in str(body.get('rows') or '').split('|') if row}
+
+    rows = [row for row in relationships() if not row['withdrawn']]
+    by_id = {row['id']: row for row in rows}
+    ours = {frozenset((row['from'], row['to'])) for row in rows if not row['source'].startswith(WITNESS_SOURCE)}
+    _, _, alone = fold(rows, vocabulary())
+    corpus = Corpus(None)
+
+    def person(slug):
+        entity = corpus.entities[slug]
+        return {'slug': slug, 'name': entity['name'], 'kind': entity['kind']}
+
+    def sex(slug, fact):
+        stated = corpus.entities[slug].get('sex')
+        return stated or next((row['from_sex'] for row in map(by_id.get, (r['id'] for r in fact['rows']))
+                               if row['from'] == slug and row.get('from_sex')), None)
+
+    offered = []
+    for fact in alone:
+        ids = [row['id'] for row in fact['rows']]
+        if frozenset((fact['a'], fact['b'])) in ours or any(i in listed for i in ids):
+            continue
+        addresses = [shared.parse_reference(reference) for reference in fact['cited']]
+        first = addresses[0] if addresses else None
+        offered.append({
+            'book': first[0] if first else None,
+            'bookCode': shared.BOOKS[first[0] - 1] if first else None,
+            'sexA': sex(fact['a'], fact),
+            'sexB': sex(fact['b'], fact),
+            'id': '|'.join(map(str, ids)),
+            'subset': fact['subset'],
+            'a': person(fact['a']),
+            'b': person(fact['b']),
+            'relation': fact['relation'],
+            'says': [{'from': corpus.entities[by_id[i]['from']]['name'], 'type': by_id[i]['type'],
+                      'to': corpus.entities[by_id[i]['to']]['name'], 'category': by_id[i]['category'],
+                      'note': by_id[i]['notes']} for i in ids],
+            'verses': [{'ref': reference, 'text': ' '.join((corpus.lines.get(address) or '').split())}
+                       for reference, address in zip(fact['cited'], addresses)],
+            'reading': None,
+            'check': None,
+            'why': NOT_ASKED,
+            'outcome': None,
+            'settled': None,
+        })
+
+    for fact in offered:
+        print(f"  {fact['id']:<13} {fact['a']['slug']} {fact['relation']} {fact['b']['slug']} "
+              f"@ {', '.join(v['ref'] for v in fact['verses']) or 'no verse'}")
+    print(f'{len(offered)} facts offered, over '
+          f'{len({frozenset((f["a"]["slug"], f["b"]["slug"])) for f in offered})} pairs')
+    if args.dry_run or not offered:
+        return
+    review['facts'].extend(offered)
+    with open(args.decisions, 'w', encoding='utf-8', newline='\n') as handle:
+        handle.write(json.dumps(review, ensure_ascii=False, indent=2) + '\n')
+    print(f'-> {args.decisions}; its decisions are as they were')
 
 
 def main():
@@ -1520,13 +1657,25 @@ def main():
                          help='row ids the owner reads from the other end, so A and B swap before the relation is read')
     decider.add_argument('--unsure', nargs='+',
                          help='ROW_ID=confidence, where the owner accepts the fact but says the verse does not settle it')
+    decider.add_argument('--people', nargs='+',
+                         help='ROW_ID=people-slug, where a gentilic states membership of a people, not descent')
+    decider.add_argument('--reason', nargs='+',
+                         help="ROW_ID=text, the clause's reason where the decision's note does not give one")
+    decider.add_argument('--owner', nargs='+',
+                         help='ROW_ID=YYYY-MM-DD, where the owner ruled on an agent-decided fact himself')
     decider.add_argument('--corrections', default=CORRECTIONS,
-                         help='the corrections kept between runs, in the shape of the five flags; '
+                         help='the corrections kept between runs, in the shape of the eight flags; '
                               'a flag given is added to it, and wins over it for the same row')
     decider.add_argument('--to', default=os.path.join('Resources', 'Essenthos', 'descriptors'))
     decider.add_argument('--prefix', default='zz-words',
                          help="the decided records' files, which have to sort after every other file")
     decider.set_defaults(run=decide)
+
+    offerer = commands.add_parser('offer', help="add the facts pages show as BibleData's alone to the review list")
+    offerer.add_argument('--decisions', default=DECISIONS,
+                         help='the review list the console keeps; its decisions are read and never written')
+    offerer.add_argument('--dry-run', action='store_true', help='print what would be offered and write nothing')
+    offerer.set_defaults(run=offer)
 
     for name, run, what in (('ask', ask, 'the first reading'), ('check', check, 'the second reading')):
         sub = commands.add_parser(name, help=f'run {what} over every batch that has no answers yet')

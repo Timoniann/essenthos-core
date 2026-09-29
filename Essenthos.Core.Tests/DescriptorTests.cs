@@ -79,6 +79,13 @@ public sealed class DescriptorTests : IDisposable
         Add("jerusalem-1", EntityKind.Place, "Jerusalem", null, (16, 3, 29));
         Add("eastgate-1", EntityKind.Place, "East Gate", null, (16, 3, 29));
 
+        // The claims no single verse holds: Hosea is named in 1:2 and his son in 1:4, and Athaliah is
+        // named in 2 Kings 8:26 while 8:18 calls her only Jehoram's wife.
+        Add("hosea-1", EntityKind.Person, "Hosea", null, (28, 1, 1), (28, 1, 2));
+        Add("jezreel-1", EntityKind.Person, "Jezreel", null, (28, 1, 4));
+        Add("athaliah-1", EntityKind.Person, "Athaliah", null, (12, 8, 26));
+        Add("jehoram-1", EntityKind.Person, "Jehoram", null, (12, 8, 16), (12, 8, 25));
+
         _db.SaveChanges();
     }
 
@@ -256,6 +263,94 @@ public sealed class DescriptorTests : IDisposable
         clause.Method.Should().Be(LinkMethod.Manual);
         clause.Confidence.Should().Be(0.5);
     }
+
+    /// <summary>
+    /// A passage of up to three verses is one statement when it names both people: the clause is
+    /// addressed at its first verse and keeps the whole citation, and so does the relationship read
+    /// off it, which is what lets the page show the passage rather than a verse naming neither.
+    /// </summary>
+    [Fact]
+    public async Task APassageNamingBothPeopleIsCitedWhole()
+    {
+        (await Load("cited")).Clauses.Should().Be(2);
+
+        var clause = await _db.EntityDescriptors.SingleAsync(d => d.Entity!.Slug == "jezreel-1");
+        (clause.CanonicalBook, clause.CanonicalChapter, clause.CanonicalVerse).Should().Be((28, 1, 2));
+        clause.Citation.Should().Be("HOS 1:2-4");
+        clause.Confidence.Should().BeNull("a passage that states the tie is a statement");
+
+        await new OwnRelationshipLoader(_db, NullLogger<OwnRelationshipLoader>.Instance).Load();
+        var jezreel = await _db.Entities.SingleAsync(e => e.Slug == "jezreel-1");
+        var row = (await Relationships.Of(_db, jezreel.Id, null, default)).Single(r => r.Slug == "hosea-1");
+        row.Reference!.Verse.Should().Be(2);
+        row.Verses!.Select(v => (v.Book, v.Chapter, v.Verse)).Should().Equal(
+            ("Hosea", 1, 2), ("Hosea", 1, 3), ("Hosea", 1, 4));
+
+        var described = await Read("jezreel-1", null);
+        described!.Claims.Single().Verses!.Select(v => v.Verse).Should().Equal(2, 3, 4);
+    }
+
+    /// <summary>
+    /// Two verses each stating a part are cited together, and what a reader joins is never stored as
+    /// though a verse said it: the owner's decision keeps his credit and carries the composed confidence.
+    /// </summary>
+    [Fact]
+    public async Task TwoVersesComposedAreCitedTogetherBelowAStatement()
+    {
+        (await Load("cited")).Clauses.Should().Be(2);
+
+        var clause = await _db.EntityDescriptors.SingleAsync(d => d.Entity!.Slug == "athaliah-1");
+        clause.Method.Should().Be(LinkMethod.Manual);
+        clause.Confidence.Should().Be(Citation.ComposedConfidence);
+        (clause.CanonicalBook, clause.CanonicalChapter, clause.CanonicalVerse).Should().Be((12, 8, 18));
+        clause.Citation.Should().Be("2KI 8:18; 2KI 8:26");
+
+        await new OwnRelationshipLoader(_db, NullLogger<OwnRelationshipLoader>.Instance).Load();
+        var athaliah = await _db.Entities.SingleAsync(e => e.Slug == "athaliah-1");
+        var row = (await Relationships.Of(_db, athaliah.Id, null, default)).Single(r => r.Slug == "jehoram-1");
+        row.Confidence.Should().Be(Citation.ComposedConfidence);
+        row.Verses!.Select(v => v.Verse).Should().Equal(18, 26);
+    }
+
+    /// <summary>
+    /// What the owner allowed and no more: a passage naming only one of the two, one longer than three
+    /// verses, two verses neither of which names the subject, and three verses joined are refused.
+    /// </summary>
+    [Fact]
+    public async Task ACitationBeyondWhatTheOwnerAllowedIsRefused()
+    {
+        var outcome = await Load("cited-refused");
+
+        outcome.Refused.UnmatchedReference.Should().Be(4);
+        outcome.Clauses.Should().Be(0);
+    }
+
+    [Theory]
+    [InlineData("NUM 10:29", false, 1)]
+    [InlineData("HOS 1:2-4", false, 3)]
+    [InlineData("2KI 8:18; 2KI 8:26", true, 2)]
+    [InlineData("NEH 11:15; 1CH 9:14", true, 2)]
+    [InlineData("PSA 7:0", false, 1)]
+    public void ACitationIsOneVerseAPassageOrTwoVerses(string text, bool composed, int verses)
+    {
+        var citation = Citation.Parse(text);
+
+        citation.Should().NotBeNull();
+        citation!.Composed.Should().Be(composed);
+        citation.Verses.Should().HaveCount(verses);
+    }
+
+    [Theory]
+    [InlineData("HOS 1:1-4")]
+    [InlineData("HOS 1:4-2")]
+    [InlineData("HOS 1:2-2:1")]
+    [InlineData("2KI 8:18; 2KI 8:18")]
+    [InlineData("2KI 8:18-19; 2KI 8:26")]
+    [InlineData("2KI 8:16; 2KI 8:18; 2KI 8:26")]
+    [InlineData("XYZ 1:1")]
+    [InlineData("")]
+    public void WhatIsNotACitationIsRefused(string text) =>
+        Citation.Parse(text).Should().BeNull();
 
     /// <summary>
     /// The other loader writes this table too, and a name has one row per language and case. Until
