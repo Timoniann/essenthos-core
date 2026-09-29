@@ -276,12 +276,70 @@ public sealed class OldTestamentLinkTests : IDisposable
         (await Numbers()).Should().Equal("H7225", "H2", "H3", "H4");
     }
 
+    /// <summary>
+    /// Two verses the file divides differently from BHSA: neither joins by itself, and the file's
+    /// running word numbers between the verses on either side still say which number each word bears.
+    /// </summary>
+    [Fact]
+    public async Task AVerseTheFileDividesDifferentlyIsNumberedByItsRunningWordNumbers()
+    {
+        Divided(["ב", "ר", "א"], ["ת", "ה"]);
+
+        await Load(Records((1, [1, 2]), (2, [3, 4]), (3, [5, 6, 7]), (4, [8, 9])));
+
+        (await Numbers()).Should().Equal("H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9");
+    }
+
+    /// <summary>
+    /// A word the file counts as one and BHSA as two leaves the stretch a word longer than its
+    /// numbers: the words whose glosses pair up in order are numbered, and the extra word is not.
+    /// </summary>
+    [Fact]
+    public async Task AWordBhsaSplitsIsLeftWithoutANumberAndTheRestOfTheStretchIsNumbered()
+    {
+        Divided(["ב", "ר", "א", Split], ["ת", "ה"]);
+
+        await Load(Records((1, [1, 2]), (2, [3, 4]), (3, [5, 6, 7]), (4, [8, 9])));
+
+        (await Numbers()).Should().Equal("H1", "H2", "H3", "H4", "H5", null, "H6", "H7", "H8", "H9");
+    }
+
+    /// <summary>The half of a word BHSA writes as two and the file as one, glossed as neither half.</summary>
+    private const string Split = "נ";
+
+    /// <summary>
+    /// BHSA's Genesis 1:1-4 with verses 2 and 3 of the lengths given, every word glossed as the file
+    /// glosses its running number, and the King James beside it.
+    /// </summary>
+    private void Divided(string[] second, string[] third)
+    {
+        Clear();
+        _kjv = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
+            (1, 1, ["a"]), (1, 2, ["b"]), (1, 3, ["c"]), (1, 4, ["d"]));
+        _bhsa = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
+            (1, 1, ["א", "ב"]), (1, 2, second), (1, 3, third), (1, 4, ["ו", "ז"]));
+        _db.SaveChanges();
+        var running = 0;
+        foreach (var word in _db.Words.Where(w => w.TextId == _bhsa.Id).OrderBy(w => w.Id).ToList())
+        {
+            word.Gloss = word.Surface == Split ? "split" : $"gloss{++running}";
+        }
+
+        _db.SaveChanges();
+    }
+
+    private static MappingRecord[] Records(params (int Verse, int[] Positions)[] verses) =>
+    [
+        .. verses.Select(verse => new MappingRecord(1, 1, verse.Verse,
+            [.. verse.Positions.Select(Hebrew)], [Segment(["x"], verse.Positions[0])])),
+    ];
+
     private async Task<List<string?>> Numbers()
     {
         _db.ChangeTracker.Clear();
         return await _db.Words
             .Where(w => w.TextId == _bhsa.Id)
-            .OrderBy(w => w.Position)
+            .OrderBy(w => w.Id)
             .Select(w => w.StrongNumber)
             .ToListAsync();
     }

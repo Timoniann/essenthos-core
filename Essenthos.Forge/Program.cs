@@ -149,6 +149,7 @@ builder.Services.AddScoped<TribeNameLoader>();
 builder.Services.AddScoped<EponymNameLoader>();
 builder.Services.AddScoped<RealmNameLoader>();
 builder.Services.AddScoped<ContextBearerLoader>();
+builder.Services.AddScoped<FixedTitleLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
 builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
@@ -1153,6 +1154,18 @@ if (args is ["context-bearers", ..])
     logger.LogInformation("{Outcome}", await bearerScope.ServiceProvider.GetRequiredService<ContextBearerLoader>()
         .Load(resources));
     logger.LogInformation("{Outcome}", await bearerScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
+        .Load());
+    return 0;
+}
+
+// A title the text fixes to one bearer — the devil, the Christ, the Son of Man — written on the original
+// words of its shape nothing names yet, carried across the links, and the verses read off the words again.
+if (args is ["fixed-titles", ..])
+{
+    using var titleScope = app.Services.CreateScope();
+    logger.LogInformation("{Outcome}", await titleScope.ServiceProvider.GetRequiredService<FixedTitleLoader>()
+        .Load());
+    logger.LogInformation("{Outcome}", await titleScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
         .Load());
     return 0;
 }

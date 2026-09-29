@@ -213,6 +213,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var glossesDrifted = 0;
         var unreached = 0;
         var statedVerses = 0;
+        var placed = new Dictionary<long, int>(430_000);
 
         foreach (var record in records)
         {
@@ -232,7 +233,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             // The numbers belong to the Hebrew words, so they need only the Hebrew join. A verse the
             // King James words differently from the file is refused its links, and its Hebrew is
             // still the Hebrew the file numbers.
-            StateNumbers(record, bhsaWords, statedStrong);
+            StateNumbers(record, bhsaWords, statedStrong, placed);
 
             if (!englishVerses.TryGetValue((record.Book, record.Chapter, record.Verse), out var kjvWords))
             {
@@ -262,6 +263,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             unreached += bhsaWords.Count - drafts.SelectMany(d => d.Hebrew).Distinct().Count();
         }
 
+        statedStrong.AddRange(Unplaced(records, hebrewVerses, placed));
         await Write(english.Id, hebrew.Id, pairs, statedStrong, cancellationToken);
 
         var outcome = new LinkOutcome(
@@ -382,10 +384,12 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     private static void StateNumbers(
         MappingRecord record,
         List<Word> bhsa,
-        List<(long WordId, string Strong)> statedStrong)
+        List<(long WordId, string Strong)> statedStrong,
+        Dictionary<long, int> placed)
     {
         for (var i = 0; i < record.Hebrew.Count; i++)
         {
+            placed[bhsa[i].Id] = record.Hebrew[i].Position;
             var strong = StrongNumbers.Normalize(record.Hebrew[i].Strong);
             if (strong is not null)
             {
@@ -411,15 +415,46 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
         var hebrewVerses = await VerseWords(hebrewTextId, cancellationToken);
         var statedStrong = new List<(long WordId, string Strong)>(430_000);
+        var placed = new Dictionary<long, int>(430_000);
         foreach (var record in records)
         {
             if (JoinHebrew(record, hebrewVerses, out _) is { } bhsaWords)
             {
-                StateNumbers(record, bhsaWords, statedStrong);
+                StateNumbers(record, bhsaWords, statedStrong, placed);
             }
         }
 
+        statedStrong.AddRange(Unplaced(records, hebrewVerses, placed));
         return await WriteStrongNumbers(statedStrong, cancellationToken);
+    }
+
+    /// <summary>
+    /// The numbers of the words no verse join placed — verses the file divides differently from BHSA —
+    /// read off the file's running word numbers between the placed words on either side.
+    /// </summary>
+    private static IEnumerable<(long WordId, string Strong)> Unplaced(
+        IReadOnlyList<MappingRecord> records,
+        Dictionary<(int, int, int), List<Word>> hebrewVerses,
+        Dictionary<long, int> placed)
+    {
+        var stated = new Dictionary<int, (string Strong, string Gloss)>(430_000);
+        foreach (var entry in records.SelectMany(record => record.Hebrew))
+        {
+            stated.TryAdd(entry.Position, (entry.Strong, entry.Gloss));
+        }
+
+        var inTextOrder = hebrewVerses.Values
+            .SelectMany(words => words)
+            .OrderBy(word => word.Id)
+            .Select(word => (word.Id, word.Gloss))
+            .ToList();
+        foreach (var (wordId, strong) in RunningWordNumbers.Between(inTextOrder, placed, stated, SameVerse))
+        {
+            if (StrongNumbers.Normalize(strong) is { } number)
+            {
+                yield return (wordId, number);
+            }
+        }
     }
 
     /// <summary>The numbers without links, in a transaction of their own, which the temporary table needs.</summary>
