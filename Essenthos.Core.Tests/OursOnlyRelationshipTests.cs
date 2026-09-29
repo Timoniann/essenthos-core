@@ -12,8 +12,9 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// The owner's switch for relationships as this project reads them: a tie only BibleData states
-/// leaves the page, the card and the tree, and one it shares with ours is ours alone.
+/// Relationships as this project reads them, since 2026-09-29 the only way they are shown: a tie
+/// only BibleData states leaves the page, the card and the tree, and one it shares with ours is
+/// ours alone.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class OursOnlyRelationshipTests : IDisposable
@@ -37,11 +38,11 @@ public sealed class OursOnlyRelationshipTests : IDisposable
     }
 
     [Fact]
-    public void TheSwitchIsOffUntilTheOwnerTurnsItOn() =>
-        SiteSettings.Defaults()[SiteSettings.RelationshipsOursOnly].Should().BeFalse();
+    public void NoSwitchBringsTheDatasetBack() =>
+        SiteSettings.Knows("relationshipsOursOnly").Should().BeFalse();
 
     /// <summary>
-    /// Lot is Haran's son by both witnesses and Milcah's brother by BibleData alone. Switched on, the
+    /// Lot is Haran's son by both witnesses and Milcah's brother by BibleData alone. The
     /// page keeps the first as ours with no credit to BibleData beside it, and drops the second.
     /// </summary>
     [Fact]
@@ -63,7 +64,7 @@ public sealed class OursOnlyRelationshipTests : IDisposable
             r => r.Slug == "haran" && r.Type == "son-of" && r.Source == OwnerDecided && r.Corroboration!.Count == 0);
     }
 
-    /// <summary>The tree asks only who: switched on, a relative only BibleData names is not drawn.</summary>
+    /// <summary>The tree asks only who: a relative only BibleData names is not drawn.</summary>
     [Fact]
     public async Task TheTreeDrawsNoRelativeOnlyTheDatasetNames()
     {
