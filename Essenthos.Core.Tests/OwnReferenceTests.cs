@@ -134,19 +134,28 @@ public sealed class OwnReferenceTests : IDisposable
     }
 
     /// <summary>
-    /// The peoples are left to their own derivation, which rests on the form of the word rather
-    /// than on a name resolving. Two passes writing the same address under two credits would make
-    /// a page report a reference twice and attribute one of them to reasoning that never ran.
+    /// A people's verse is cited under the people's own line, not the one names resolve under, and
+    /// once: a verse <see cref="PeopleLoader"/> already cited is not cited again, and a word a later
+    /// pass named the people — the children of Israel — puts its verse on the page on the next boot.
     /// </summary>
     [Fact]
-    public async Task APeopleIsLeftToItsOwnDerivation()
+    public async Task APeopleIsCitedUnderItsOwnLineOnce()
     {
         var people = Add("moabites", EntityKind.People);
         Annotate(Hebrew(4, 1), people, LinkMethod.Lexical, 0.9);
+        Annotate(Hebrew(3, 1), people, LinkMethod.RuleBased, 0.9);
+        _db.EntityVerses.Add(new EntityVerse
+        {
+            Entity = people, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 4,
+            Source = PeopleLoader.FromOurOwnWords,
+        });
+        await _db.SaveChangesAsync();
 
-        await Load();
+        (await Load()).Should().Be(1);
 
-        (await Referenced(people)).Should().BeEmpty();
+        (await Referenced(people)).Should().Equal((1, 1, 3), (1, 1, 4));
+        (await _db.EntityVerses.Where(v => v.EntityId == people.Id).Select(v => v.Source).Distinct().ToListAsync())
+            .Should().Equal(PeopleLoader.FromOurOwnWords);
     }
 
     /// <summary>

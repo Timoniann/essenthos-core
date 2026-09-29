@@ -206,7 +206,7 @@ internal sealed class PeopleLoader(
         "a reading of the verse naming a people the encyclopedia did not hold";
 
     /// <summary>Where a people's verse list comes from, which is this corpus and not a dataset.</summary>
-    private const string FromOurOwnWords =
+    internal const string FromOurOwnWords =
         "Essenthos, from the words this corpus annotates to the people";
 
     public async Task<PeopleOutcome> Load(
