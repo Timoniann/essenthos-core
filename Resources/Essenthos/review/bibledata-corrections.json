@@ -37,6 +37,7 @@
   "71519": "GEN 35:18",
   "71520": "GEN 35:18",
   "71521": "GEN 35:18",
+  "71689": "GEN 38:9-10",
   "72615": "1KI 7:13-14",
   "72707": "2KI 8:18; 2KI 8:26",
   "73281": "1CH 4:13-14",
@@ -64,12 +65,17 @@
   "73781": "ancestor-of",
   "73783": "descendant-of",
   "73785": "ancestor-of",
+  "74409": "son-of",
   "74589": "brother-of",
   "74591": "brother-of",
-  "74613": "descendant-of"
+  "74613": "descendant-of",
+  "75679": "son-of",
+  "75889": "son-of"
  },
  "relationWhy": "The note names the right word where the dataset's is wrong, and a removal or re-ask so corrected is a confirmation. The owner's: Salu, descendant of Simeon ('not son, but descendant'); Ishbi-benob, descendant of Rapha; Kish, son of Abiel, not grandson; Amminadab, son of Ram ('Aram begat Amminadab'); Ephraim, ancestor of Telah and of Ammihud; Sisera, Jabin's commander, not Jabin king of Sisera. The agent's: Tohu, grandson of Elkanah (1CH 6:34-35); Tahath, Zabad and Ladan, descendants of Ephraim down a 'his son' chain (1CH 7:20-26); Benaiah the Pirathonite, descendant of Ephraim (1CH 27:14). The owner's of 2026-09-29: Zetham is Jehiel's brother (1CH 23:8), and 'the sons of Jehieli' in 26:22 is the clan's name. Joel is Jehiel's brother as Zetham is (1CH 23:8), the owner's of 2026-09-29. Gershom is Manasseh's son (JDG 18:30), the owner's of 2026-09-29: BibleData states the tie the other way round, so its rows are removed and the fact is written from Gershom's end.",
- "hold": [],
+ "hold": [
+  75279
+ ],
  "holdWhy": "A fact waits here when its note questions who is meant, or when the owner asked for the text to be checked before his decision is applied and the text does not say what the decision would write. None waits now. Manasseh, descendant of Ben-geber (72591), and Meonothai, son of Othniel (73281), the owner kept on 2026-09-29 once the Hebrew was put to him: 1KI 4:13 gives Ben-geber 'the towns of Jair the son of Manasseh' (חַוֹּת יָאִיר בֶּן־מְנַשֶּׁה); 1CH 4:13 in BHSA reads 'and the sons of Othniel: Hathath' (וּבְנֵי עָתְנִיאֵל חֲתַת), which he reads as shortened, since 4:14 goes on to Meonothai and the Vulgate and the Berean name him in 4:13. James son of Mary (76119), held before, the owner removed on 2026-09-28: no verse makes the brothers of Jesus Mary's sons.",
  "flip": [
   72171,
@@ -137,6 +143,7 @@
   "71131": "Genesis 20:12: 'she is the daughter of my father, but not the daughter of my mother'; 20:14: Abimelech 'restored him Sarah his wife'; 11:27: 'Terah begat Abram'",
   "71133": "Genesis 20:12: 'she is the daughter of my father, but not the daughter of my mother; and she became my wife'; 20:14: Abimelech 'restored him Sarah his wife'",
   "71512": "Genesis 35:22-24: 'the sons of Jacob were twelve: the sons of Leah; Reuben, Jacob's firstborn, and Simeon ... the sons of Rachel; Joseph, and Benjamin'",
+  "71689": "Genesis 38:9-10: 'Onan knew that the seed should not be his ... And the thing which he did displeased the LORD: wherefore he slew him also'",
   "72219": "Judges 18:30: 'Jonathan, the son of Gershom, the son of Manasseh'",
   "72591": "1 Kings 4:13 gives Ben-geber 'the towns of Jair the son of Manasseh'",
   "72615": "1 Kings 7:13-14: Solomon 'fetched Hiram out of Tyre. He was a widow's son of the tribe of Naphtali'",
@@ -146,9 +153,13 @@
   "74589": "1 Chronicles 23:8: 'The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three'",
   "74591": "1 Chronicles 23:8: 'The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three'",
   "75047": "Zechariah 1:1: 'Zechariah, the son of Berechiah, the son of Iddo the prophet'",
+  "75125": "Ezra 8:18: 'a man of understanding, of the sons of Mahli, the son of Levi, the son of Israel; and Sherebiah, with his sons and his brethren'",
+  "75403": "Nehemiah 3:11: 'Malchijah the son of Harim'; Harim is also the name of a family (Ezra 2:32; 10:31), and son here may mean descendant",
+  "75433": "Nehemiah 3:25: 'Pedaiah the son of Parosh'; Parosh is also the name of a family (Ezra 2:3; 8:3), and son here may mean descendant",
   "75539": "Nehemiah 10:9-10: 'And the Levites: both Jeshua the son of Azaniah, Binnui of the sons of Henadad, Kadmiel; and their brethren, Shebaniah, Hodijah, Kelita, Pelaiah, Hanan'",
   "75677": "Nehemiah 11:15: 'Shemaiah the son of Hashub, the son of Azrikam, the son of Hashabiah, the son of Bunni'; 1 Chronicles 9:14 gives the same line as 'of the sons of Merari'",
   "75867": "Psalm 7, the title: 'concerning the words of Cush the Benjamite'",
+  "75889": "Jeremiah 20:1: 'Pashur the son of Immer the priest'; Immer is also the name of a priestly course (1 Chronicles 24:14; Ezra 2:37), and son here may mean descendant",
   "75999": "Hosea 1:2-4: the LORD said to Hosea, Go, take unto thee a wife; he took Gomer, which bare him a son; and the LORD said unto him, Call his name Jezreel"
  },
  "owner": {

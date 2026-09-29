@@ -48,14 +48,26 @@ internal static class Relationships
     /// reading only one side would give Isaac a father and no sons — and a row of ours is often
     /// answered by a row of a witness's on the pair read backwards, which is in the other
     /// direction and has to be in hand before either row is shown.
+    ///
+    /// <para>
+    /// With <paramref name="oursOnly"/> a witness's rows are left out before anything is paired, so
+    /// a fact only a dataset states is not shown and one it shares with ours is ours alone, with no
+    /// credit to the dataset beside it.
+    /// </para>
     /// </summary>
     public static async Task<List<EntityRelationshipResponse>> Of(
         AppDbContext db,
         int entityId,
         string? language,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool oursOnly = false)
     {
         var rows = await Rows(db, entityId, cancellationToken);
+        if (oursOnly)
+        {
+            rows = [.. rows.Where(Ours)];
+        }
+
         var merged = Merged(rows);
 
         // The counterpart's name in the case the reader's language puts it in. Without it the
@@ -342,7 +354,10 @@ internal static class Relationships
     private static string? Says(Related witness) =>
         RelationshipVocabulary.Says.GetValueOrDefault(witness.Type);
 
-    private static bool Ours(Related row) => Datasets.Of(row.Source) == Datasets.Own;
+    private static bool Ours(Related row) => IsOurs(row.Source);
+
+    /// <summary>Whether a relationship row's source is this project's own reading rather than a dataset's.</summary>
+    internal static bool IsOurs(string source) => Datasets.Of(source) == Datasets.Own;
 
     private static EntityRelationshipResponse Show(Related row, IReadOnlyList<Related> corroboration) =>
         new(row.Type, row.Category, row.Slug, row.Name, row.Distinguisher, row.Inward,
