@@ -280,6 +280,9 @@ internal static class SenseReadingFiles
 
     private const string UnsettledResource = "Essenthos.Core.Loading.Encyclopedia.UnsettledRecords.json";
 
+    private const string UnsettledSecondResource =
+        "Essenthos.Core.Loading.Encyclopedia.UnsettledRecordsSecond.json";
+
     private const string GenealogyResource = "Essenthos.Core.Loading.Encyclopedia.GenealogyRecords.json";
 
     private const string SeveralPeopleResource = "Essenthos.Core.Loading.Encyclopedia.SeveralPeopleRecords.json";
@@ -428,6 +431,13 @@ internal static class SenseReadingFiles
     public static OwnRecordRulings UnsettledRulings() => Embedded<OwnRecordRulings>(UnsettledResource);
 
     /// <summary>
+    /// The same decision taken for Iezer on 2026-09-29: whether he is the Abiezer whom Gilead's sister
+    /// bore is open. A file of its own, because a rulings file a corpus has already recorded is skipped
+    /// whole, and because its claim credits a different decision than Jerioth's.
+    /// </summary>
+    public static OwnRecordRulings UnsettledSecondRulings() => Embedded<OwnRecordRulings>(UnsettledSecondResource);
+
+    /// <summary>
     /// The occurrences in the genealogies a reading answered against the verse the genealogy repeats.
     /// </summary>
     public static OwnRecordRulings GenealogyRulings() => Embedded<OwnRecordRulings>(GenealogyResource);
@@ -464,6 +474,7 @@ internal static class SenseReadingFiles
     [
         Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings(),
         SeveralPeopleRulings(), SeveralPeopleSecondRulings(), SeveralPeopleThirdRulings(), NamesakeRulings(),
+        UnsettledSecondRulings(),
     ];
 
     private static T Embedded<T>(string name)
