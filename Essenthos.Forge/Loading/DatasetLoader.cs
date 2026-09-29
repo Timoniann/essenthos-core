@@ -282,6 +282,7 @@ internal sealed class DatasetLoader(
             await NameTheAncestorsTheTribesAreNamedAfter(stoppingToken);
             await NameThePeoplesTheRealmsAreNamedAfter(resources, stoppingToken);
             await NameTheBearerTheBookNames(resources, stoppingToken);
+            await NameTheTitlesTheTextFixes(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
@@ -1850,6 +1851,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<ContextBearerLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// A title the text fixes to one bearer, on the original words of its shape. After every pass that
+    /// names an original word, because it writes only where none of them did, and before the verses
+    /// are cited off the words.
+    /// </summary>
+    private async Task NameTheTitlesTheTextFixes(CancellationToken cancellationToken)
+    {
+        status.Starting("the titles the text fixes to one bearer");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<FixedTitleLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>
