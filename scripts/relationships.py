@@ -903,30 +903,34 @@ def load_facts(directories):
 
 # What a decision may cite besides one verse, as the loader's `Citation` reads it: a passage of up to
 # three adjacent verses telling one event or one list under one heading, which has to name both
-# people (HOS 1:2-4), or two verses each stating a part (2KI 8:18; 2KI 8:26), which the loader stores
-# a little below a statement.
+# people (HOS 1:2-4), or two parts each stating a part, each a verse or such a passage (2KI 8:18;
+# 2KI 8:26, GEN 20:12-14; GEN 11:27), which the loader stores a little below a statement.
 LONGEST_PASSAGE = 3
 PASSAGE = re.compile(r'^(.*[:.]\s*)(\d+)\s*-\s*(\d+)\s*$')
 COMPOSED = ';'
 
 
-def citation(reference):
-    """The verses a reference cites and whether two verses are composed, or None where the loader refuses it."""
-    parts = [part.strip() for part in (reference or '').split(COMPOSED) if part.strip()]
-    if len(parts) == 2:
-        verses = [shared.parse_reference(part) for part in parts]
-        return None if None in verses or verses[0] == verses[1] else (verses, True)
-    if len(parts) != 1:
-        return None
-    passage = PASSAGE.match(parts[0])
+def passage_verses(text):
+    """One verse or a passage of up to three, as its verses in order, or None."""
+    passage = PASSAGE.match(text)
     if not passage:
-        verse = shared.parse_reference(parts[0])
-        return ([verse], False) if verse else None
+        verse = shared.parse_reference(text)
+        return [verse] if verse else None
     first = shared.parse_reference(passage.group(1) + passage.group(2))
     through = int(passage.group(3))
     if not first or not 0 <= through - first[2] < LONGEST_PASSAGE:
         return None
-    return [(first[0], first[1], verse) for verse in range(first[2], through + 1)], False
+    return [(first[0], first[1], verse) for verse in range(first[2], through + 1)]
+
+
+def citation(reference):
+    """The verses a reference cites and whether two parts are composed, or None where the loader refuses it."""
+    parts = [passage_verses(part.strip()) for part in (reference or '').split(COMPOSED) if part.strip()]
+    if len(parts) not in (1, 2) or None in parts:
+        return None
+    if len(parts) == 1:
+        return parts[0], False
+    return (None if set(parts[0]) & set(parts[1]) else (parts[0] + parts[1], True))
 
 
 def carrier(fact, reference, corpus):
@@ -993,6 +997,40 @@ def read_by_a_model(clause, standing):
     subject, relation, target = clause
     return [c for c in (standing.get(subject) or {}).get('claims', [])
             if c['relation'] == relation and c['target'] == target and not c.get('decidedBy')]
+
+
+def answers_otherwise(relation, said):
+    """
+    Whether a claim `said` about the same two people, from the same end, answers the question
+    `relation` answers and answers it some other way: *son of* against *grandson of*, *sister of*
+    against *brother-in-law of*. The same word, or one the other already implies, does not.
+    """
+    return (branch(said) == branch(relation) and said != relation
+            and broader().get(relation) != said and broader().get(said) != relation)
+
+
+def overruled_readings(clause, verses, standing):
+    """
+    A model's readings that a decision overrules: claims with no decider, about the decision's two
+    people from either end, that answer its question otherwise and cite a verse the decision was
+    taken on -- the verse the owner read on the review page or the one it is written with. Where the
+    owner read a verse one way, a model's reading of the same verse the other way is not a second
+    witness; it is the reading he corrected. A reading of another verse stays, and gives way on the
+    page by rank: Sarai is Terah's daughter-in-law in Genesis 11:31 and his daughter in 20:12.
+    """
+    subject, relation, target = clause
+    ends = ((subject, target, {relation}), (target, subject, set(shared.inverse().get(relation, ()))))
+    found = []
+    for entity, other, expected in ends:
+        for claim in (standing.get(entity) or {}).get('claims', []):
+            if claim.get('decidedBy') or claim['target'] != other or not expected:
+                continue
+            if not all(answers_otherwise(word, claim['relation']) for word in expected):
+                continue
+            cited = citation(claim.get('reference'))
+            if cited and set(cited[0]) & verses:
+                found.append((entity, claim))
+    return found
 
 
 def settle_against_record(clause, refused, standing, ignoring=()):
@@ -1349,7 +1387,9 @@ def decide(args):
     judgement and not as a reading. A fact only the agent he set to it decided is credited to that
     agent and the verse it read, never to him. A fact to re-ask is printed as BibleData row ids for
     `extract --rows`. A fact removed stays BibleData's and is listed in a review file for the cut-over,
-    which is where BibleData's rows leave the page.
+    which is where BibleData's rows leave the page. A decision outranks a model's reading: one that
+    answers the same question otherwise never stops it being written, and one that reads a verse the
+    decision was taken on is withdrawn from its record and listed.
 
     Everything a run reads besides the database is kept: the decisions in the review list, and the
     corrections they need in the file beside it, where a correction given as a flag is written too. So a
@@ -1384,9 +1424,22 @@ def decide(args):
             decisions.append(({int(row) for row in str(body['rows']).split('|')}, body))
 
     by_entity, report, reask, removed, taken_back, unwritten = {}, {}, [], [], [], []
+    withdrawn = []
 
     def count(what):
         report[what] = report.get(what, 0) + 1
+
+    def record_of(slug, model, date):
+        before = standing.get(slug) or {}
+        return by_entity.setdefault(slug, {
+            'entity': slug,
+            'kind': before.get('kind') or corpus.entities[slug]['kind'],
+            'claims': list(before.get('claims', [])),
+            'names': before.get('names') or {},
+            'unresolved': before.get('unresolved') or [],
+            'model': before.get('model') or model,
+            'askedAt': before.get('askedAt') or date,
+        })
 
     reached = {row['id'] for fact in alone for row in fact['rows']}
     for rows, body in decisions:
@@ -1467,26 +1520,27 @@ def decide(args):
         # A model's reading of the very clause decided gives way to the decision, so the page credits
         # the tie to whoever decided it rather than to the model at the model's confidence.
         superseded = read_by_a_model(clause, standing)
-        clause, refused, _ = settle_against_record(clause, refused, standing, ignoring=superseded)
+        # A decision outranks a model's reading that answers the same question otherwise: that reading
+        # never stops the decision being written, and where it reads a verse the decision was taken
+        # on, it is withdrawn from whichever record holds it.
+        answered = [c for c in (standing.get(clause[0]) or {}).get('claims', [])
+                    if c['target'] == clause[2] and not c.get('decidedBy')
+                    and answers_otherwise(clause[1], c['relation'])] if clause else []
+        clause, refused, _ = settle_against_record(clause, refused, standing, ignoring=superseded + answered)
         if not clause:
             count(f'confirmed, not writable: {refused}')
             unwritten.append((fact, reference, refused))
             continue
 
         subject, relation, target = clause
-        before = standing.get(subject) or {}
-        record = by_entity.setdefault(subject, {
-            'entity': subject,
-            'kind': before.get('kind') or corpus.entities[subject]['kind'],
-            'claims': list(before.get('claims', [])),
-            'names': before.get('names') or {},
-            'unresolved': before.get('unresolved') or [],
-            'model': before.get('model') or (AGENT if agent else DECIDED_BY.split(',')[0]),
-            'askedAt': before.get('askedAt') or decided_at[:10],
-        })
+        decider = AGENT if agent else DECIDED_BY.split(',')[0]
+        record = record_of(subject, decider, decided_at[:10])
         if superseded:
             record['claims'] = [c for c in record['claims'] if c not in superseded]
             count('confirmed, in place of the same reading by a model')
+        decided_on = set(citation(reference)[0]) | {shared.parse_reference(r) for r in fact['cited']}
+        for entity, claim in overruled_readings(clause, decided_on, standing):
+            withdrawn.append((entity, claim, clause, decider, decided_at[:10]))
         if (relation, target) in {(c['relation'], c['target']) for c in record['claims']}:
             count('confirmed, already in the record')
             continue
@@ -1500,6 +1554,12 @@ def decide(args):
                           else DECIDED_BY.format(date=decided_at[:10])),
         })
         count('confirmed and written' + (', by the agent' if agent else ''))
+
+    for entity, claim, _, decider, date in withdrawn:
+        record = record_of(entity, decider, date)
+        record['claims'] = [c for c in record['claims'] if c != claim]
+    if withdrawn:
+        report['model readings withdrawn: a decision reads the same verse otherwise'] = len(withdrawn)
 
     for name in os.listdir(args.to):
         if name.startswith(args.prefix + '-') and name.endswith('.jsonl'):
@@ -1539,6 +1599,11 @@ def decide(args):
     for fact, reference, why in unwritten:
         rows = '|'.join(str(row['id']) for row in fact['rows'])
         print(f'  {fact["a"]} {fact["relation"] or fact["type"]} {fact["b"]} @ {reference} ({rows}): {why}')
+    if withdrawn:
+        print('model readings withdrawn, each for the decision that reads its verse otherwise:')
+    for entity, claim, (subject, relation, target), _, _ in withdrawn:
+        print(f'  {entity} {claim["relation"]} {claim["target"]} @ {claim["reference"]} '
+              f'({claim.get("confidence")}) -> {subject} {relation} {target}')
 
 
 NOT_ASKED = 'not-asked'

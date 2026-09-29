@@ -657,7 +657,7 @@ internal sealed class EntityDescriptorLoader(
 
     /// <summary>
     /// Whether a reader following the citation finds the clause's subject named in it: in its verse,
-    /// in one verse of a passage or in one of two verses composed. A passage is one statement read
+    /// in one verse of a passage or in a verse of either part composed. A passage is one statement read
     /// over several verses, so the other person has to be named in it too; a single verse or a
     /// composed part may name them only as <em>his wife</em> or <em>my father</em>.
     /// </summary>
