@@ -550,9 +550,7 @@ internal static class EncyclopediaEndpoints
                 .Select(Summary)
                 .ToDictionaryAsync(row => row.Slug, cancellationToken);
             var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], language, cancellationToken);
-            var ours = settings.Is(SiteSettings.RecordsOursOnly)
-                ? await OursOnlyRecords.Among(db, slugs, cancellationToken)
-                : [];
+            var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
             var page = named
                 .Select(row => ours.ContainsKey(row.Slug)
                     ? summaries[row.Slug] with { Distinguisher = null, LocalName = row.LocalName }
@@ -684,15 +682,6 @@ internal static class EncyclopediaEndpoints
             var related = await Relationships.Of(db, entity.Id, language, cancellationToken, oursOnly: true);
             var own = await Relationships.Forms(db, [entity.Id], language, cancellationToken);
 
-            var readByUs = settings.Is(SiteSettings.RecordsOursOnly)
-                ? await OursOnlyRecords.Among(db, [entity.Slug, .. related.Select(r => r.Slug)], cancellationToken)
-                : [];
-            var mine = readByUs.GetValueOrDefault(entity.Slug);
-            if (readByUs.Count > 0)
-            {
-                related = [.. related.Select(r => readByUs.ContainsKey(r.Slug) ? r with { Distinguisher = null } : r)];
-            }
-
             var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
                 .ToListAsync(cancellationToken);
@@ -773,13 +762,30 @@ internal static class EncyclopediaEndpoints
                     a.Slug, a.Name, a.Distinguisher, a.Describes, a.Reason, a.Source, Datasets.Of(a.Source)))
                 .ToList();
 
+            var readByUs = await OursOnlyRecords.Among(
+                db,
+                [
+                    entity.Slug,
+                    .. related.Select(r => r.Slug),
+                    .. bearers.Select(b => b.Slug),
+                    .. titles.Select(t => t.Slug),
+                    .. alternatives.Select(a => a.Slug).OfType<string>(),
+                ],
+                cancellationToken);
+            var mine = readByUs.GetValueOrDefault(entity.Slug);
+            related = [.. related.Select(r => r with { Distinguisher = OursOnlyRecords.Line(readByUs, r.Slug, r.Distinguisher) })];
+            alternatives =
+            [
+                .. alternatives.Select(a => a with { Distinguisher = OursOnlyRecords.Line(readByUs, a.Slug, a.Distinguisher) }),
+            ];
+
             return Results.Ok(new EntityResponse(
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
                 entity.Name,
                 mine is null ? entity.Distinguisher : null,
-                mine is null ? entity.Sex : OursOnlyRecords.Agreed(entity.Sex, mine.Sex),
-                mine is null ? entity.Tribe : OursOnlyRecords.Agreed(entity.Tribe, mine.Tribe),
+                mine is null ? entity.Sex : mine.Sex,
+                mine is null ? entity.Tribe : mine.Tribe,
                 entity.PlaceKind,
                 entity.ModernEquivalent,
                 mine is null ? entity.Notes : null,
@@ -824,13 +830,13 @@ internal static class EncyclopediaEndpoints
                 Bearers =
                 [
                     .. bearers.Select(b => new EntityTitleResponse(
-                        b.Slug, EnumSpelling.Of(b.Kind), b.Name, b.Distinguisher,
+                        b.Slug, EnumSpelling.Of(b.Kind), b.Name, OursOnlyRecords.Line(readByUs, b.Slug, b.Distinguisher),
                         BookReferences.At(b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse)!, b.Note)),
                 ],
                 Titles =
                 [
                     .. titles.Select(t => new EntityTitleResponse(
-                        t.Slug, EnumSpelling.Of(t.Kind), t.Name, t.Distinguisher,
+                        t.Slug, EnumSpelling.Of(t.Kind), t.Name, OursOnlyRecords.Line(readByUs, t.Slug, t.Distinguisher),
                         BookReferences.At(t.CanonicalBook, t.CanonicalChapter, t.CanonicalVerse)!, t.Note)),
                 ],
                 Subtype = entity.Subtype,
