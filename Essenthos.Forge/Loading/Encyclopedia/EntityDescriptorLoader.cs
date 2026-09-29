@@ -16,11 +16,12 @@ internal sealed record DescriptorRefusals(
     int WithoutConfidence,
     int Unaccompanied,
     int Misplaced,
-    int Inadmissible)
+    int Inadmissible,
+    int Reversed = 0)
 {
     public int Total =>
         UnknownEntity + UnknownRelation + UnresolvedTarget + UnmatchedReference + WithoutConfidence
-        + Unaccompanied + Misplaced + Inadmissible;
+        + Unaccompanied + Misplaced + Inadmissible + Reversed;
 
     public override string ToString() =>
         $"{UnknownEntity} for an entity the encyclopedia does not hold, " +
@@ -30,7 +31,8 @@ internal sealed record DescriptorRefusals(
         $"{WithoutConfidence} carrying no confidence, and " +
         $"{Unaccompanied} reading company out of a verse that speaks of none, and " +
         $"{Misplaced} placing something somewhere that is not a place, and " +
-        $"{Inadmissible} saying of a record what its kind cannot be";
+        $"{Inadmissible} saying of a record what its kind cannot be, and " +
+        $"{Reversed} reading a line of descent the wrong way round against a reading of equal or higher standing";
 }
 
 internal sealed record DescriptorOutcome(
@@ -134,6 +136,8 @@ internal sealed class EntityDescriptorLoader(
 
         var entities = await Slugs(records, cancellationToken);
         var described = await Described(entities.Values, cancellationToken);
+        var occurrences = await Occurrences(entities.Values, cancellationToken);
+        var opposed = Opposed(records, entities, occurrences);
 
         // A record for an entity this loader already described, published in a file it has not
         // read, is a re-ask: the vocabulary widened or the prompt changed and the pass was asked
@@ -149,6 +153,7 @@ internal sealed class EntityDescriptorLoader(
                 && !loaded.Contains(record.Run))
             .Select(record => entities[record.Entity])
             .ToHashSet();
+        superseded.UnionWith(await HoldingAnOpposedClause(opposed, cancellationToken));
 
         // In one transaction with the writes below, and this is not a precaution. `Forget` deletes
         // through the database rather than through the change tracker, so it lands the moment it
@@ -173,7 +178,6 @@ internal sealed class EntityDescriptorLoader(
         // have. Read after the removal above, so a form this loader has just dropped is free again.
         var taken = await Taken(entities.Values, cancellationToken);
 
-        var occurrences = await Occurrences(entities.Values, cancellationToken);
         var refiled = await Refiled(cancellationToken);
         var accompanied = await Accompanied(records, cancellationToken);
 
@@ -186,7 +190,7 @@ internal sealed class EntityDescriptorLoader(
             .Select(e => new { e.Id, e.Kind })
             .ToDictionaryAsync(e => e.Id, e => e.Kind, cancellationToken);
 
-        int unknownEntity = 0, unknownRelation = 0, unresolvedTarget = 0;
+        int unknownEntity = 0, unknownRelation = 0, unresolvedTarget = 0, reversed = 0;
         int unmatchedReference = 0, withoutConfidence = 0, unaccompanied = 0, misplaced = 0, inadmissible = 0;
         int skipped = 0, unresolved = 0, clauses = 0, forms = 0, wrote = 0;
 
@@ -249,6 +253,12 @@ internal sealed class EntityDescriptorLoader(
                     || !Cites(citation, entityId, targetId, occurrences))
                 {
                     unmatchedReference++;
+                    continue;
+                }
+
+                if (opposed.Contains((entityId, claim.Relation, targetId)))
+                {
+                    reversed++;
                     continue;
                 }
 
@@ -346,7 +356,7 @@ internal sealed class EntityDescriptorLoader(
 
         var refused = new DescriptorRefusals(
             unknownEntity, unknownRelation, unresolvedTarget, unmatchedReference, withoutConfidence,
-            unaccompanied, misplaced, inadmissible);
+            unaccompanied, misplaced, inadmissible, reversed);
 
         if (clauses > 0 || forms > 0)
         {
@@ -533,6 +543,80 @@ internal sealed class EntityDescriptorLoader(
         }
 
         return described;
+    }
+
+    /// <summary>
+    /// The clauses that put somebody on the wrong side of a line of descent: each says its subject is
+    /// below the target, or each says it is above, and the reading of the other person is of equal or
+    /// higher standing. A decision is never one of them, and two readings of equal confidence are
+    /// both here, because nothing says which of them the verse gave.
+    /// </summary>
+    internal static HashSet<(int Entity, string Relation, int Target)> Opposed(
+        IReadOnlyList<DescriptorRecord> records,
+        IReadOnlyDictionary<string, int> entities,
+        IReadOnlySet<(int Entity, int Book, int Chapter, int Verse)> occurrences)
+    {
+        var claims = new List<(int Entity, string Relation, int Target, int Standing, double Confidence, bool Decided)>();
+        foreach (var record in records)
+        {
+            if (!entities.TryGetValue(record.Entity, out var entityId))
+            {
+                continue;
+            }
+
+            foreach (var claim in record.Claims ?? [])
+            {
+                var decided = !string.IsNullOrWhiteSpace(claim.DecidedBy);
+                if (!RelationshipVocabulary.IsDescent(claim.Relation)
+                    || !entities.TryGetValue(claim.Target, out var targetId)
+                    || Citation.Parse(claim.Reference) is not { } citation
+                    || !Cites(citation, entityId, targetId, occurrences)
+                    || (!decided && claim.Confidence is null or < 0 or > 1))
+                {
+                    continue;
+                }
+
+                claims.Add((
+                    entityId, claim.Relation, targetId,
+                    ClaimStanding.Of(decided ? LinkMethod.Manual : LinkMethod.ModelReading),
+                    claim.Confidence ?? 1, decided));
+            }
+        }
+
+        var byPair = claims.ToLookup(c => (c.Entity, c.Target));
+        return
+        [
+            .. claims
+                .Where(c => !c.Decided && byPair[(c.Target, c.Entity)].Any(other =>
+                    RelationshipVocabulary.Opposes(c.Relation, other.Relation)
+                    && (other.Standing > c.Standing
+                        || (other.Standing == c.Standing && other.Confidence >= c.Confidence))))
+                .Select(c => (c.Entity, c.Relation, c.Target)),
+        ];
+    }
+
+    /// <summary>
+    /// The entities whose loaded clauses include one of those, so a record read before the rule
+    /// existed is read again and the clause leaves the page with the relationship read off it.
+    /// </summary>
+    private async Task<HashSet<int>> HoldingAnOpposedClause(
+        HashSet<(int Entity, string Relation, int Target)> opposed,
+        CancellationToken cancellationToken)
+    {
+        if (opposed.Count == 0)
+        {
+            return [];
+        }
+
+        var subjects = opposed.Select(o => o.Entity).Distinct().ToList();
+        var loaded = await db.EntityDescriptors
+            .Where(d => subjects.Contains(d.EntityId) && d.Source.StartsWith(SourcePrefix))
+            .Select(d => new { d.EntityId, d.Relation, d.TargetEntityId })
+            .ToListAsync(cancellationToken);
+
+        return [.. loaded
+            .Where(d => opposed.Contains((d.EntityId, d.Relation, d.TargetEntityId)))
+            .Select(d => d.EntityId)];
     }
 
     /// <summary>

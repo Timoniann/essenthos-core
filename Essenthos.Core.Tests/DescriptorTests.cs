@@ -2,6 +2,7 @@
 ﻿using Essenthos.Core.Loading;
 using System.Data.Common;
 using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -907,6 +908,57 @@ public sealed class DescriptorTests : IDisposable
         again.Skipped.Should().Be(7, "every record in the file names an entity already described");
         (await _db.EntityDescriptors.CountAsync()).Should().Be(before);
         (await _db.EntityNameForms.CountAsync()).Should().Be(forms);
+    }
+
+    /// <summary>
+    /// Two people cannot each descend from the other. The reading of lower confidence is refused, two
+    /// of equal confidence are both refused, and a decision is kept against any reading; the
+    /// relationships are read off what is kept, so they follow.
+    /// </summary>
+    [Fact]
+    public async Task AReadingThatPutsAPersonOnTheWrongSideOfADescentIsRefused()
+    {
+        var outcome = await Load("opposed");
+
+        outcome.Refused.Reversed.Should().Be(5);
+        outcome.Clauses.Should().Be(2);
+        var kept = await _db.EntityDescriptors
+            .Select(d => d.Entity!.Slug + " " + d.Relation + " " + d.Target!.Slug)
+            .ToListAsync();
+        kept.Should().BeEquivalentTo("lot-1 descendant-of haran-1", "haran-1 ancestor-of terah-1");
+    }
+
+    /// <summary>
+    /// A record read before its opposite was loaded is read again when the opposite arrives, so a
+    /// clause already on the page and the relationship read off it leave together.
+    /// </summary>
+    [Fact]
+    public async Task AClauseAlreadyLoadedLeavesWhenTheReadingThatOutranksItArrives()
+    {
+        (await Load("opposed-first")).Clauses.Should().Be(1);
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            FromEntityId = await _db.Entities.Where(e => e.Slug == "haran-1").Select(e => e.Id).SingleAsync(),
+            ToEntityId = await _db.Entities.Where(e => e.Slug == "lot-1").Select(e => e.Id).SingleAsync(),
+            Type = DescriptorRelations.DescendantOf,
+            Category = RelationshipCategories.Read,
+            CanonicalBook = 1,
+            CanonicalChapter = 11,
+            CanonicalVerse = 27,
+            Method = LinkMethod.ModelReading,
+            Confidence = 0.7,
+            Source = EntityDescriptorLoader.SourcePrefix + " a test",
+        });
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load("opposed-later");
+
+        outcome.Superseded.Should().Be(1);
+        outcome.Refused.Reversed.Should().Be(1);
+        (await _db.EntityDescriptors.Select(d => d.Entity!.Slug + " " + d.Relation + " " + d.Target!.Slug).ToListAsync())
+            .Should().Equal("lot-1 descendant-of haran-1");
+        (await _db.EntityRelationships.CountAsync()).Should().Be(0);
+        (await Load("opposed-later")).Superseded.Should().Be(0, "the second load has nothing left to withdraw");
     }
 
     /// <summary>

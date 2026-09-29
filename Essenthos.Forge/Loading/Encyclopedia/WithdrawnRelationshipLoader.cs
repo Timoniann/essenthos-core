@@ -13,7 +13,16 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// person it was decided about: left alone, because the list was keyed by the rows the database held
 /// the day he decided.
 /// </param>
-internal sealed record WithdrawnRelationshipOutcome(int Withdrawn, int Restored, int Elsewhere, TimeSpan Elapsed)
+/// <param name="Changed">
+/// The entities at either end of a row this load withdrew or restored: the ones whose own readings
+/// may have been withheld by that row, or may now be.
+/// </param>
+internal sealed record WithdrawnRelationshipOutcome(
+    int Withdrawn,
+    int Restored,
+    int Elsewhere,
+    TimeSpan Elapsed,
+    IReadOnlySet<int> Changed)
 {
     public override string ToString() =>
         $"{Withdrawn} of BibleData's relationship rows held back as the owner removed them, {Restored} " +
@@ -62,19 +71,20 @@ internal sealed class WithdrawnRelationshipLoader(AppDbContext db, ILogger<Withd
         var rows = await db.EntityRelationships
             .IgnoreQueryFilters()
             .Where(r => r.Source == BibleDataLoader.Source)
-            .Select(r => new { r.Id, From = r.From!.Slug, To = r.To!.Slug, r.Withdrawn })
+            .Select(r => new { r.Id, r.FromEntityId, r.ToEntityId, From = r.From!.Slug, To = r.To!.Slug, r.Withdrawn })
             .ToListAsync(cancellationToken);
 
         var wanted = rows
             .Where(r => removed.TryGetValue(r.Id, out var people) && (people.Contains(r.From) || people.Contains(r.To)))
             .Select(r => r.Id)
             .ToHashSet();
-        var withdraw = rows.Where(r => !r.Withdrawn && wanted.Contains(r.Id)).Select(r => r.Id).ToList();
-        var restore = rows.Where(r => r.Withdrawn && !wanted.Contains(r.Id)).Select(r => r.Id).ToList();
+        var withdraw = rows.Where(r => !r.Withdrawn && wanted.Contains(r.Id)).ToList();
+        var restore = rows.Where(r => r.Withdrawn && !wanted.Contains(r.Id)).ToList();
         var elsewhere = removed.Count - wanted.Count;
 
-        await Mark(withdraw, true, cancellationToken);
-        await Mark(restore, false, cancellationToken);
+        await Mark([.. withdraw.Select(r => r.Id)], true, cancellationToken);
+        await Mark([.. restore.Select(r => r.Id)], false, cancellationToken);
+        var changed = withdraw.Concat(restore).SelectMany(r => new[] { r.FromEntityId, r.ToEntityId }).ToHashSet();
 
         if (elsewhere > 0)
         {
@@ -85,7 +95,7 @@ internal sealed class WithdrawnRelationshipLoader(AppDbContext db, ILogger<Withd
                 elsewhere, ReviewFile);
         }
 
-        return new WithdrawnRelationshipOutcome(wanted.Count, restore.Count, elsewhere, started.Elapsed);
+        return new WithdrawnRelationshipOutcome(wanted.Count, restore.Count, elsewhere, started.Elapsed, changed);
     }
 
     /// <summary>Every row whose latest decision is a removal, with the two people it was decided about.</summary>

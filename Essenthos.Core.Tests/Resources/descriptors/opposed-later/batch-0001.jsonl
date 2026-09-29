@@ -1,0 +1,1 @@
+{"entity": "lot-1", "kind": "person", "claims": [{"relation": "descendant-of", "target": "haran-1", "reference": "GEN 11:27", "confidence": 0.9, "reason": "a test"}], "names": {}, "unresolved": [], "model": "claude-sonnet-5", "askedAt": "2026-09-10"}
