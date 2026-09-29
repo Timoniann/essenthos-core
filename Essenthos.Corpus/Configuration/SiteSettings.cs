@@ -39,19 +39,10 @@ public static class SiteSettings
     /// <summary>Our own generated pictures — portraits and the picture of the glory — on person pages and in lists.</summary>
     public const string GeneratedImages = "generatedImages";
 
-    /// <summary>
-    /// Relationships as this project reads them and nothing else: a tie only a dataset states leaves
-    /// entity pages, hover cards and family trees, and one a dataset shares with ours is shown as
-    /// ours, without the dataset's credit beside it. Events and the timeline are not relationships
-    /// and do not change.
-    /// </summary>
-    public const string RelationshipsOursOnly = "relationshipsOursOnly";
-
     public static readonly IReadOnlyList<SiteSetting> Catalogue =
     [
         new(NaveTopics, true),
         new(GeneratedImages, true),
-        new(RelationshipsOursOnly, false),
     ];
 
     /// <summary>
