@@ -307,6 +307,27 @@ internal static class RelationshipVocabulary
     public static IReadOnlySet<string> Reversed(string relation) =>
         Inverse.GetValueOrDefault(relation, Empty);
 
+    private static readonly IReadOnlySet<string> Below = Set(
+        DescriptorRelations.SonOf, DescriptorRelations.DaughterOf, DescriptorRelations.DescendantOf,
+        DescriptorRelations.GrandsonOf, DescriptorRelations.GranddaughterOf);
+
+    private static readonly IReadOnlySet<string> Above = Set(
+        DescriptorRelations.FatherOf, DescriptorRelations.MotherOf, DescriptorRelations.AncestorOf,
+        DescriptorRelations.GrandfatherOf, DescriptorRelations.GrandmotherOf);
+
+    /// <summary>Whether the relation puts its subject in a line of descent, below the target or above it.</summary>
+    public static bool IsDescent(string relation) => Below.Contains(relation) || Above.Contains(relation);
+
+    /// <summary>
+    /// Whether a claim about one order of a pair and a claim about the other order cannot both be
+    /// true: each puts its subject below the other person, or each puts it above. Adna is a
+    /// descendant of Harim and Harim a descendant of Adna is the shape; a father of and a son of over
+    /// the same two people is the same fact said from both ends and is not.
+    /// </summary>
+    public static bool Opposes(string relation, string relationOfTheReversePair) =>
+        (Below.Contains(relation) && Below.Contains(relationOfTheReversePair))
+        || (Above.Contains(relation) && Above.Contains(relationOfTheReversePair));
+
     private static readonly IReadOnlySet<string> Empty = new HashSet<string>(StringComparer.Ordinal);
 
     private static IReadOnlySet<string> Set(params string[] relations) =>
