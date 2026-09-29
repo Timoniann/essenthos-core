@@ -684,7 +684,9 @@ static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments, string r
     RouteTexts: OptionalText(arguments, "--routes") is { } routes
         ? [.. routes.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier)]
         : null,
-    NeighbourVerseDistance: OptionalInt(arguments, "--neighbour-verses") ?? EvidentiaDefaults.NeighbourVerseDistance);
+    NeighbourVerseDistance: OptionalInt(arguments, "--neighbour-verses") ?? EvidentiaDefaults.NeighbourVerseDistance,
+    EntityAnchors: arguments.Contains("--entity-anchors"),
+    EntityNamesFrom: OptionalText(arguments, "--entity-names"));
 
 // Unlike `score`, this is an out-of-sample test: only 80% of the stated and Strong one-to-one pairs
 // reach SIL.Machine as its partial-alignment corpus, and a deterministic fifth of verses stays out

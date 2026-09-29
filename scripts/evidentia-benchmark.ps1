@@ -21,7 +21,9 @@ param(
     [string] $Output = (Join-Path ([IO.Path]::GetTempPath()) 'essenthos-evidentia'),
 
     # How many verses on either side a word's candidates may come from; left out, the Forge's default.
-    [int] $NeighbourVerses = -1
+    [int] $NeighbourVerses = -1,
+    # Further flags for every passage, e.g. '--entity-anchors', '--entity-names', '<name-consensus words.tsv>'.
+    [string[]] $Extra = @()
 )
 
 # Reads essenthos_core and writes nothing to it. Passages run one at a time: the owner works on this
@@ -179,6 +181,7 @@ try {
             $arguments = @('Essenthos.Forge.dll', 'evidentia-measure-book', $from, $to, $book) + $flags
             if ($first -gt 0) { $arguments += '--from-chapter', $first, '--to-chapter', $last }
             if ($NeighbourVerses -ge 0) { $arguments += '--neighbour-verses', $NeighbourVerses }
+            $arguments += $Extra
             $arguments += '--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json"
             $clock = [Diagnostics.Stopwatch]::StartNew()
             & dotnet @arguments *> "$prefix.report.txt"

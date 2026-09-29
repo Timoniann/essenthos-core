@@ -346,6 +346,7 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
             ["learnRenderingsFrom"] = options.LearnRenderingsFrom,
             ["learnedRenderingMethods"] = options.LearnedRenderingMethods?.Select(EnumSpelling.Of).ToArray(),
             ["neighbourVerseDistance"] = options.NeighbourVerseDistance,
+            ["entityAnchors"] = options.EntityAnchors,
             ["defaults"] = typeof(EvidentiaDefaults)
                 .GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(field => field.IsLiteral)
@@ -369,7 +370,8 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
                 ? learnFrom.GetString()
                 : null,
             LearnedRenderingMethods: methods,
-            NeighbourVerseDistance: NeighbourVerseDistance(root));
+            NeighbourVerseDistance: NeighbourVerseDistance(root),
+            EntityAnchors: root.TryGetProperty("entityAnchors", out var anchors) && anchors.ValueKind == JsonValueKind.True);
     }
 
     /// <summary>A run stored before the window was an option read with the default of its day.</summary>

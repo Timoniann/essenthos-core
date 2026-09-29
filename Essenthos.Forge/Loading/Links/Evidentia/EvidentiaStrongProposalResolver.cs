@@ -110,6 +110,9 @@ internal enum EvidentiaProposalKind
 
     /// <summary><em>you</em> or <em>but</em> on the one free word of its verse that is its own counterpart.</summary>
     UniqueCounterpart,
+
+    /// <summary>A word on the word of the original annotated as the same entity, in the order the verse names it.</summary>
+    SharedEntityInOrder,
 }
 
 /// <param name="Head">For an attached word, the proposal of the word it belongs to.</param>
