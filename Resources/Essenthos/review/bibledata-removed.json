@@ -644,6 +644,18 @@
  },
  {
   "rows": [
+   73747,
+   73748
+  ],
+  "a": "iezer",
+  "relation": "son-of",
+  "b": "hammolecheth",
+  "note": "Ishod, not Iezer. Check it",
+  "decidedAt": "2026-09-29T11:32:12.152Z",
+  "decidedBy": "the project owner"
+ },
+ {
+  "rows": [
    73778
   ],
   "a": "rephah",
