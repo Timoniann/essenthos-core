@@ -33,6 +33,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     private readonly Dictionary<(string From, string To, int Book), EvidentiaChapterLengths> chapterLengths = [];
     private IReadOnlyDictionary<string, string>? greekGlosses;
     private IReadOnlyList<(IReadOnlyList<long> From, IReadOnlyList<long> To)>? interlinearPairs;
+    private (string Path, Dictionary<(int Book, int Chapter, int Verse, int Position), HashSet<int>> Names)? consensusNames;
 
     public async Task<EvidentiaCorpusPreview> Preview(
         string fromSlug,
@@ -106,6 +107,15 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             .ToList();
 
         var candidates = previews.SelectMany(preview => preview.Candidates).ToList();
+        List<EvidentiaAnalysis> sourceAnalyses = [.. source.Select(Analyse).OfType<EvidentiaAnalysis>()];
+        List<EvidentiaAnalysis> targetAnalyses = [.. target.Select(Analyse).OfType<EvidentiaAnalysis>()];
+        var entityAnchors = options.EntityAnchors
+            ? EvidentiaEntityAnchors.Resolve(
+                sourceAnalyses,
+                targetAnalyses,
+                await EntityNames(source, target, options.EntityNamesFrom, cancellationToken),
+                options.NeighbourVerseDistance)
+            : [];
         var resolution = strongProposalResolver.Resolve(candidates);
         var knownRenderingResolution = knownRenderingProposalResolver.Resolve(candidates);
         var reviewKnownRenderingResolution = knownRenderingProposalResolver.Resolve(
@@ -113,8 +123,6 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var globalKnownRenderingResolution = knownRenderingProposalResolver.ResolveGlobally(
             candidates, EvidentiaKnownRenderingProposalResolver.Safe);
         var globalReviewKnownRenderingResolution = knownRenderingProposalResolver.ResolveGlobally(candidates);
-        List<EvidentiaAnalysis> sourceAnalyses = [.. source.Select(Analyse).OfType<EvidentiaAnalysis>()];
-        List<EvidentiaAnalysis> targetAnalyses = [.. target.Select(Analyse).OfType<EvidentiaAnalysis>()];
         var frame = EvidentiaVerseFrame.Of(sourceAnalyses, targetAnalyses, globalReviewKnownRenderingResolution.Proposals);
         var dictionaryReviewResolution = frame.Near(
             dictionaryProposalResolver.ResolveAdditional(candidates, globalReviewKnownRenderingResolution.Proposals));
@@ -224,6 +232,17 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var lexicalProposals = syntaxTargetGlossReviewResolution.Proposals
             .Concat(globalReviewKnownRenderingResolution.Proposals)
             .ToList();
+        // After every lexical tier and only on the words it leaves free: the tiers already place most
+        // names rightly, and a name placed ahead of them only takes those words out of the safe tier.
+        var placed = lexicalProposals.Select(proposal => proposal.Source.Token.Id).ToHashSet();
+        var taken = lexicalProposals.Select(proposal => proposal.Target.Token.Id).ToHashSet();
+        List<EvidentiaProposal> named = [.. entityAnchors.Where(anchor =>
+            !placed.Contains(anchor.Source.Token.Id) && !taken.Contains(anchor.Target.Token.Id))];
+        syntaxTargetGlossReviewResolution = syntaxTargetGlossReviewResolution with
+        {
+            Proposals = [.. syntaxTargetGlossReviewResolution.Proposals, .. named],
+        };
+        lexicalProposals.AddRange(named);
         var attachedWords = EvidentiaAttachedWords.Resolve(
             EvidentiaAuxiliaryWords.Mark(sourceAnalyses),
             targetAnalyses,
@@ -233,7 +252,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
 
         var absences = EvidentiaAbsences.Resolve(sourceAnalyses, targetAnalyses, finalProposals);
         var byWord = EvidentiaWordScore.Of(sourceAnalyses, targetAnalyses, finalProposals, absences, goldAnnotation, out var absenceVerdicts);
-        var safe = EvidentiaAttachedWords.Safe(globalKnownRenderingResolution.Proposals, attachedWords);
+        var safe = EvidentiaAttachedWords.Safe([.. globalKnownRenderingResolution.Proposals, .. named], attachedWords);
         List<EvidentiaProposal> safeProposals =
             [.. finalProposals.Where(proposal => safe.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))];
         var words = EvidentiaSourceWordAccount.Classify(
@@ -768,6 +787,103 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     /// stood on each side of the link decides whether a one-to-one selector could have satisfied it
     /// at all, and which dataset stated it decides whose convention is being compared with ours.
     /// </summary>
+    /// <summary>
+    /// Which entity each word of the passage names. The original's are its annotations. The
+    /// translation's are its own annotations, or, with <paramref name="consensusFile"/>, the words
+    /// file of a <c>name-consensus --out</c> reading, which addresses each word by its verse's first
+    /// canonical address and its place in the verse, and knows nothing of the translation's links.
+    /// </summary>
+    private async Task<EvidentiaEntityNames> EntityNames(
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        string? consensusFile,
+        CancellationToken cancellationToken)
+    {
+        var targetIds = target.Select(token => token.Id).ToList();
+        var targetNames = await Annotations(targetIds, cancellationToken);
+        if (consensusFile is null)
+        {
+            return new EvidentiaEntityNames(await Annotations([.. source.Select(token => token.Id)], cancellationToken), targetNames);
+        }
+
+        var names = await ConsensusNames(consensusFile, cancellationToken);
+        var sourceNames = new Dictionary<long, IReadOnlySet<int>>();
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        try
+        {
+            await using var command = new NpgsqlCommand(
+                """
+                SELECT w.id, m.canonical_book, m.canonical_chapter, m.canonical_verse,
+                       (SELECT count(*) FROM word x WHERE x.verse_id = w.verse_id AND x.position <= w.position)::int
+                FROM word w
+                CROSS JOIN LATERAL (
+                    SELECT r.canonical_book, r.canonical_chapter, r.canonical_verse FROM verse_reference r
+                    WHERE r.verse_id = w.verse_id
+                    ORDER BY r.canonical_book, r.canonical_chapter, r.canonical_verse LIMIT 1) m
+                WHERE w.id = ANY(@ids)
+                """,
+                (NpgsqlConnection)db.Database.GetDbConnection());
+            command.Parameters.AddWithValue("ids", source.Select(token => token.Id).ToArray());
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                if (names.TryGetValue(
+                        (reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4)), out var named))
+                {
+                    sourceNames[reader.GetInt64(0)] = named;
+                }
+            }
+        }
+        finally
+        {
+            await db.Database.CloseConnectionAsync();
+        }
+
+        return new EvidentiaEntityNames(sourceNames, targetNames);
+    }
+
+    private async Task<Dictionary<long, IReadOnlySet<int>>> Annotations(
+        IReadOnlyList<long> words, CancellationToken cancellationToken) =>
+        (await db.WordEntities.AsNoTracking()
+            .Where(annotation => words.Contains(annotation.WordId))
+            .Select(annotation => new { annotation.WordId, annotation.EntityId })
+            .ToListAsync(cancellationToken))
+        .GroupBy(annotation => annotation.WordId)
+        .ToDictionary(word => word.Key, word => (IReadOnlySet<int>)word.Select(annotation => annotation.EntityId).ToHashSet());
+
+    private async Task<Dictionary<(int Book, int Chapter, int Verse, int Position), HashSet<int>>> ConsensusNames(
+        string path, CancellationToken cancellationToken)
+    {
+        if (consensusNames is { } cached && cached.Path == path)
+        {
+            return cached.Names;
+        }
+
+        var slugs = await db.Entities.AsNoTracking()
+            .ToDictionaryAsync(entity => entity.Slug, entity => entity.Id, StringComparer.Ordinal, cancellationToken);
+        var names = new Dictionary<(int, int, int, int), HashSet<int>>();
+        foreach (var line in (await File.ReadAllLinesAsync(path, cancellationToken)).Skip(1))
+        {
+            var fields = line.Split('	');
+            var address = fields[0].Split(':');
+            if (fields.Length < 4 || address.Length != 3 || !slugs.TryGetValue(fields[3], out var entity))
+            {
+                continue;
+            }
+
+            var key = (int.Parse(address[0]), int.Parse(address[1]), int.Parse(address[2]), int.Parse(fields[1]));
+            if (!names.TryGetValue(key, out var named))
+            {
+                names[key] = named = [];
+            }
+
+            named.Add(entity);
+        }
+
+        consensusNames = (path, names);
+        return names;
+    }
+
     private async Task<EvidentiaGold> Gold(
         string fromSlug,
         string toSlug,
@@ -1298,7 +1414,9 @@ internal sealed record EvidentiaMeasurementOptions(
     bool LearnAcrossLanguages = false,
     bool SourceFromFiles = false,
     IReadOnlyList<string>? RouteTexts = null,
-    int NeighbourVerseDistance = EvidentiaDefaults.NeighbourVerseDistance);
+    int NeighbourVerseDistance = EvidentiaDefaults.NeighbourVerseDistance,
+    bool EntityAnchors = false,
+    string? EntityNamesFrom = null);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.
