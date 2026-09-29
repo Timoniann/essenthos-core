@@ -127,6 +127,7 @@ internal static class ContextEndpoints
             })
             .ToListAsync(cancellationToken);
 
+        var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
         var local = await EntityNames.Of(db, [.. records.Select(r => r.Id)], language, cancellationToken);
         var described = await Descriptors.Of(db, slugs, language, cancellationToken);
         var meanings = await Meanings(db, [.. records.Select(r => r.Id)], cancellationToken);
@@ -144,7 +145,7 @@ internal static class ContextEndpoints
                 r.Slug,
                 EnumSpelling.Of(r.Kind),
                 r.Name,
-                r.Distinguisher,
+                OursOnlyRecords.Line(ours, r.Slug, r.Distinguisher),
                 [.. verses[r.Slug]])
             {
                 LocalName = local.GetValueOrDefault(r.Id),
@@ -154,7 +155,7 @@ internal static class ContextEndpoints
                 Subtype = r.Subtype,
                 Location = r.Location,
                 How = [.. how.GetValueOrDefault(r.Slug) ?? []],
-                SourceId = Datasets.Of(r.Source),
+                SourceId = Datasets.Of(ours.ContainsKey(r.Slug) ? OursOnlyRecords.Credit : r.Source),
                 Group = ChapterSalience.WordsForGod.Contains(r.Slug) ? ChapterSalience.GodGroup : null,
                 ChapterName = ChapterSalience.WordsForGod.Contains(r.Slug)
                     ? null

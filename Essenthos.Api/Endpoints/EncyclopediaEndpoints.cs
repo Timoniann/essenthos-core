@@ -550,12 +550,15 @@ internal static class EncyclopediaEndpoints
                 .Select(Summary)
                 .ToDictionaryAsync(row => row.Slug, cancellationToken);
             var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], language, cancellationToken);
+            var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
             var page = named
-                .Select(row => summaries[row.Slug] with
-                {
-                    LocalName = row.LocalName,
-                    LocalDistinguisher = lines.GetValueOrDefault(row.Id),
-                })
+                .Select(row => ours.ContainsKey(row.Slug)
+                    ? summaries[row.Slug] with { Distinguisher = null, LocalName = row.LocalName }
+                    : summaries[row.Slug] with
+                    {
+                        LocalName = row.LocalName,
+                        LocalDistinguisher = lines.GetValueOrDefault(row.Id),
+                    })
                 .ToList();
 
             var described = await Descriptors.Of(
@@ -759,20 +762,37 @@ internal static class EncyclopediaEndpoints
                     a.Slug, a.Name, a.Distinguisher, a.Describes, a.Reason, a.Source, Datasets.Of(a.Source)))
                 .ToList();
 
+            var readByUs = await OursOnlyRecords.Among(
+                db,
+                [
+                    entity.Slug,
+                    .. related.Select(r => r.Slug),
+                    .. bearers.Select(b => b.Slug),
+                    .. titles.Select(t => t.Slug),
+                    .. alternatives.Select(a => a.Slug).OfType<string>(),
+                ],
+                cancellationToken);
+            var mine = readByUs.GetValueOrDefault(entity.Slug);
+            related = [.. related.Select(r => r with { Distinguisher = OursOnlyRecords.Line(readByUs, r.Slug, r.Distinguisher) })];
+            alternatives =
+            [
+                .. alternatives.Select(a => a with { Distinguisher = OursOnlyRecords.Line(readByUs, a.Slug, a.Distinguisher) }),
+            ];
+
             return Results.Ok(new EntityResponse(
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
                 entity.Name,
-                entity.Distinguisher,
-                entity.Sex,
-                entity.Tribe,
+                mine is null ? entity.Distinguisher : null,
+                mine is null ? entity.Sex : mine.Sex,
+                mine is null ? entity.Tribe : mine.Tribe,
                 entity.PlaceKind,
                 entity.ModernEquivalent,
-                entity.Notes,
+                mine is null ? entity.Notes : null,
                 entity.OpenBibleId,
                 entity.Origin,
-                entity.Source,
-                Datasets.Of(entity.Source),
+                mine is null ? entity.Source : OursOnlyRecords.Credit,
+                Datasets.Of(mine is null ? entity.Source : OursOnlyRecords.Credit),
                 tally.References,
                 tally.Mentions,
                 tally.Disputed,
@@ -800,21 +820,23 @@ internal static class EncyclopediaEndpoints
                 Location = entity.Location,
                 LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
                     .GetValueOrDefault(entity.Id),
-                LocalDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], language, cancellationToken))
-                    .GetValueOrDefault(entity.Id),
+                LocalDistinguisher = mine is null
+                    ? (await EntityDistinguishers.Of(db, [entity.Id], language, cancellationToken))
+                        .GetValueOrDefault(entity.Id)
+                    : null,
                 Renderings = await Renderings(db, entity.Id, cancellationToken),
                 Images = await ImageEndpoints.Of(
                     db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages), language),
                 Bearers =
                 [
                     .. bearers.Select(b => new EntityTitleResponse(
-                        b.Slug, EnumSpelling.Of(b.Kind), b.Name, b.Distinguisher,
+                        b.Slug, EnumSpelling.Of(b.Kind), b.Name, OursOnlyRecords.Line(readByUs, b.Slug, b.Distinguisher),
                         BookReferences.At(b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse)!, b.Note)),
                 ],
                 Titles =
                 [
                     .. titles.Select(t => new EntityTitleResponse(
-                        t.Slug, EnumSpelling.Of(t.Kind), t.Name, t.Distinguisher,
+                        t.Slug, EnumSpelling.Of(t.Kind), t.Name, OursOnlyRecords.Line(readByUs, t.Slug, t.Distinguisher),
                         BookReferences.At(t.CanonicalBook, t.CanonicalChapter, t.CanonicalVerse)!, t.Note)),
                 ],
                 Subtype = entity.Subtype,
