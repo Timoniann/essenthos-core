@@ -614,7 +614,17 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         {
             CommandTimeout = 600,
         };
-        return await command.ExecuteNonQueryAsync(cancellationToken);
+
+        // A verse one covering joins can cover a further address, which only the next pass sees.
+        var added = 0;
+        for (var pass = await command.ExecuteNonQueryAsync(cancellationToken);
+             pass > 0;
+             pass = await command.ExecuteNonQueryAsync(cancellationToken))
+        {
+            added += pass;
+        }
+
+        return added;
     }
 
     /// <summary>

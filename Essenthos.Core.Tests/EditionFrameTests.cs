@@ -280,7 +280,7 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
 
     /// <summary>
     /// What the whole change amounts to. Reading the conditions, and the passages written down for
-    /// this edition where the data describes none, moves 583 of Brenton's 28,597 verses and leaves
+    /// this edition where the data describes none, moves 603 of Brenton's 28,597 verses and leaves
     /// the other 98% exactly where the tradition put them — which is the shape this should have: the
     /// schemes agree almost everywhere, and the passages where they do not are the passages a reader
     /// is comparing.
@@ -293,7 +293,7 @@ public class EditionFrameTests(BrentonEdition brenton) : IClassFixture<BrentonEd
             brenton.Edition.Resolve(verse.Book, verse.Chapter, verse.Number, verse.Label.Length > 0)[0]);
 
         brenton.Verses.Should().HaveCount(28_597);
-        moved.Should().Be(609);
+        moved.Should().Be(603, "Psalm 12 opens with its title, as Brenton divides it, and stands where the tradition puts it");
     }
 
     /// <summary>
