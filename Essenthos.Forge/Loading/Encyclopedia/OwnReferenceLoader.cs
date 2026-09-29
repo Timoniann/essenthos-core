@@ -68,10 +68,12 @@ internal sealed record OwnReferenceOutcome(
 /// </para>
 ///
 /// <para>
-/// The peoples keep their own derivation in <see cref="PeopleLoader"/>. It reads the same table and
-/// arrives at the same addresses, but what establishes a people reference is the form of the word —
-/// Strong's gentilic, resolving to one people — and what establishes these is the resolution of a
-/// name, so the two are credited apart at the claim rather than blended under one line.
+/// The peoples' references are credited apart, under <see cref="PeopleLoader"/>'s line: what
+/// establishes a people reference is the form of the word — Strong's gentilic, resolving to one
+/// people — and what establishes these is the resolution of a name. <see cref="PeopleLoader"/> reads
+/// them once, for the peoples it writes; they are read again here on every boot, because the passes
+/// after it — the tribes named after an ancestor, the realms, the readings — go on naming words the
+/// people, and a verse read off none of them is a people's page missing <em>the children of Israel</em>.
 /// </para>
 ///
 /// <para>
@@ -98,6 +100,8 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var written = await Run(connection, transaction, Derivation, cancellationToken);
+        written += await Run(connection, transaction, PeopleDerivation, cancellationToken,
+            PeopleLoader.FromOurOwnWords);
         var withdrawn = await Run(connection, transaction, Retraction, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
@@ -136,6 +140,33 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
          FROM settled s
          JOIN entity e ON e.id = s.entity_id AND e.kind IN ({Named})
          JOIN word w ON w.id = s.word_id
+         JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+         WHERE NOT EXISTS (
+             SELECT 1 FROM entity_verse cited
+             WHERE cited.entity_id = s.entity_id
+               AND cited.canonical_book = r.canonical_book
+               AND cited.canonical_chapter = r.canonical_chapter
+               AND cited.canonical_verse = r.canonical_verse
+               AND cited.source = @source)
+         """;
+
+    /// <summary>
+    /// The verses the original names a people in, off the same settled answers: the witness's words
+    /// only, as <see cref="PeopleLoader"/> reads them, and only what is not cited yet. Nothing is
+    /// taken back here, since <see cref="PeopleLoader"/>'s own reading of the stated descent writes
+    /// under the same line.
+    /// </summary>
+    private static readonly string PeopleDerivation =
+        $"""
+         WITH {Annotating.Settled}
+         INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
+                                   label, disputed, source)
+         SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
+                e.name, FALSE, @source
+         FROM settled s
+         JOIN entity e ON e.id = s.entity_id AND e.kind = '{EnumSpelling.Of(EntityKind.People)}'
+         JOIN word w ON w.id = s.word_id
+         JOIN text t ON t.id = w.text_id AND t.slug = '{EntityCandidates.Witness}'
          JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
          WHERE NOT EXISTS (
              SELECT 1 FROM entity_verse cited
@@ -194,11 +225,12 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
         NpgsqlConnection connection,
         IDbContextTransaction transaction,
         string sql,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string source = FromOurOwnWords)
     {
         await using var command = new NpgsqlCommand(
             sql, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.Parameters.AddWithValue("source", FromOurOwnWords);
+        command.Parameters.AddWithValue("source", source);
         command.CommandTimeout = Annotating.Patient;
         return await command.ExecuteNonQueryAsync(cancellationToken);
     }

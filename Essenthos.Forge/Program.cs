@@ -148,6 +148,7 @@ builder.Services.AddScoped<RenderedNameLoader>();
 builder.Services.AddScoped<TribeNameLoader>();
 builder.Services.AddScoped<EponymNameLoader>();
 builder.Services.AddScoped<RealmNameLoader>();
+builder.Services.AddScoped<ContextBearerLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
 builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
@@ -1140,6 +1141,19 @@ if (args is ["name-consensus", ..])
         args.Contains("--apply"),
         args.Contains("--replace"),
         resources));
+    return 0;
+}
+
+// A name several records bear, printed where nothing settled which of them it is, settled by the one
+// of them the rest of its book names, and the verses read off the words again. Reports the rule's
+// held-out precision first; writes once, and lists what the dataset or a carried word disputes.
+if (args is ["context-bearers", ..])
+{
+    using var bearerScope = app.Services.CreateScope();
+    logger.LogInformation("{Outcome}", await bearerScope.ServiceProvider.GetRequiredService<ContextBearerLoader>()
+        .Load(resources));
+    logger.LogInformation("{Outcome}", await bearerScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
+        .Load());
     return 0;
 }
 

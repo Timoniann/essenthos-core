@@ -281,6 +281,7 @@ internal sealed class DatasetLoader(
             await WriteWhatTheNarrativesTurnOn(stoppingToken);
             await NameTheAncestorsTheTribesAreNamedAfter(stoppingToken);
             await NameThePeoplesTheRealmsAreNamedAfter(resources, stoppingToken);
+            await NameTheBearerTheBookNames(resources, stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
@@ -1834,6 +1835,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<RealmNameLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// A name several records bear, where nothing settled which: the one of them the rest of the book
+    /// names. After every pass that names an original word, because it reads what they settled and
+    /// answers only where none of them did, and before the verses are cited off the words.
+    /// </summary>
+    private async Task NameTheBearerTheBookNames(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the names a book settles on one bearer");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<ContextBearerLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
     }
 
