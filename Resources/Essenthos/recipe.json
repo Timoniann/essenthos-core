@@ -704,42 +704,6 @@
       "at": "2026-09-27T21:45:07.4313678+00:00"
     },
     {
-      "verb": "compose",
-      "arguments": [
-        "RUSV",
-        "KJV,BSB",
-        "BHSA"
-      ],
-      "at": "2026-09-28T16:22:00.7129111+00:00"
-    },
-    {
-      "verb": "names",
-      "arguments": [
-        "RUSV",
-        "BHSA",
-        "--apply"
-      ],
-      "at": "2026-09-28T16:22:22.2978663+00:00"
-    },
-    {
-      "verb": "unshare",
-      "arguments": [
-        "RUSV",
-        "BHSA",
-        "--apply"
-      ],
-      "at": "2026-09-28T16:22:28.3272123+00:00"
-    },
-    {
-      "verb": "possessives",
-      "arguments": [
-        "RUSV",
-        "BHSA",
-        "--apply"
-      ],
-      "at": "2026-09-28T16:22:35.700987+00:00"
-    },
-    {
       "verb": "align",
       "arguments": [
         "KJV",
@@ -807,6 +771,42 @@
         "NESTLE1904"
       ],
       "at": "2026-09-28T16:42:35.5353439+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "RUSV",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "at": "2026-09-28T19:07:29.7084139+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-28T19:07:42.6955938+00:00"
+    },
+    {
+      "verb": "unshare",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-28T19:07:48.8403497+00:00"
+    },
+    {
+      "verb": "possessives",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-09-28T19:07:55.5493044+00:00"
     }
   ]
 }
