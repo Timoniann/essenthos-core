@@ -550,12 +550,17 @@ internal static class EncyclopediaEndpoints
                 .Select(Summary)
                 .ToDictionaryAsync(row => row.Slug, cancellationToken);
             var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], language, cancellationToken);
+            var ours = settings.Is(SiteSettings.RecordsOursOnly)
+                ? await OursOnlyRecords.Among(db, slugs, cancellationToken)
+                : [];
             var page = named
-                .Select(row => summaries[row.Slug] with
-                {
-                    LocalName = row.LocalName,
-                    LocalDistinguisher = lines.GetValueOrDefault(row.Id),
-                })
+                .Select(row => ours.ContainsKey(row.Slug)
+                    ? summaries[row.Slug] with { Distinguisher = null, LocalName = row.LocalName }
+                    : summaries[row.Slug] with
+                    {
+                        LocalName = row.LocalName,
+                        LocalDistinguisher = lines.GetValueOrDefault(row.Id),
+                    })
                 .ToList();
 
             var described = await Descriptors.Of(
@@ -681,6 +686,15 @@ internal static class EncyclopediaEndpoints
                 db, entity.Id, language, cancellationToken, settings.Is(SiteSettings.RelationshipsOursOnly));
             var own = await Relationships.Forms(db, [entity.Id], language, cancellationToken);
 
+            var readByUs = settings.Is(SiteSettings.RecordsOursOnly)
+                ? await OursOnlyRecords.Among(db, [entity.Slug, .. related.Select(r => r.Slug)], cancellationToken)
+                : [];
+            var mine = readByUs.GetValueOrDefault(entity.Slug);
+            if (readByUs.Count > 0)
+            {
+                related = [.. related.Select(r => readByUs.ContainsKey(r.Slug) ? r with { Distinguisher = null } : r)];
+            }
+
             var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
                 .ToListAsync(cancellationToken);
@@ -765,16 +779,16 @@ internal static class EncyclopediaEndpoints
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
                 entity.Name,
-                entity.Distinguisher,
-                entity.Sex,
-                entity.Tribe,
+                mine is null ? entity.Distinguisher : null,
+                mine is null ? entity.Sex : OursOnlyRecords.Agreed(entity.Sex, mine.Sex),
+                mine is null ? entity.Tribe : OursOnlyRecords.Agreed(entity.Tribe, mine.Tribe),
                 entity.PlaceKind,
                 entity.ModernEquivalent,
-                entity.Notes,
+                mine is null ? entity.Notes : null,
                 entity.OpenBibleId,
                 entity.Origin,
-                entity.Source,
-                Datasets.Of(entity.Source),
+                mine is null ? entity.Source : OursOnlyRecords.Credit,
+                Datasets.Of(mine is null ? entity.Source : OursOnlyRecords.Credit),
                 tally.References,
                 tally.Mentions,
                 tally.Disputed,
@@ -802,8 +816,10 @@ internal static class EncyclopediaEndpoints
                 Location = entity.Location,
                 LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
                     .GetValueOrDefault(entity.Id),
-                LocalDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], language, cancellationToken))
-                    .GetValueOrDefault(entity.Id),
+                LocalDistinguisher = mine is null
+                    ? (await EntityDistinguishers.Of(db, [entity.Id], language, cancellationToken))
+                        .GetValueOrDefault(entity.Id)
+                    : null,
                 Renderings = await Renderings(db, entity.Id, cancellationToken),
                 Images = await ImageEndpoints.Of(
                     db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages), language),

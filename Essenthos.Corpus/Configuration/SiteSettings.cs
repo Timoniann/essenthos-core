@@ -47,11 +47,19 @@ public static class SiteSettings
     /// </summary>
     public const string RelationshipsOursOnly = "relationshipsOursOnly";
 
+    /// <summary>
+    /// A record a dataset supplied and this project has read for itself, shown as ours: credited to
+    /// us, with the line under the name and the notes only the dataset states left out, and its sex
+    /// and tribe kept only where our own reading says the same. Every other record is unchanged.
+    /// </summary>
+    public const string RecordsOursOnly = "recordsOursOnly";
+
     public static readonly IReadOnlyList<SiteSetting> Catalogue =
     [
         new(NaveTopics, true),
         new(GeneratedImages, true),
         new(RelationshipsOursOnly, false),
+        new(RecordsOursOnly, false),
     ];
 
     /// <summary>
