@@ -38,6 +38,7 @@
   "71520": "GEN 35:18",
   "71521": "GEN 35:18",
   "71689": "GEN 38:9-10",
+  "72489": "2SA 13:12-14; 2SA 13:22",
   "72615": "1KI 7:13-14",
   "72707": "2KI 8:18; 2KI 8:26",
   "73281": "1CH 4:13-14",
@@ -51,7 +52,7 @@
   "75867": "PSA 7:0",
   "75999": "HOS 1:2-4"
  },
- "referenceWhy": "BibleData cites the verse of a son's birth in Genesis 30 and 35, where he is 'a son' and not yet named: the verse names neither end of the tie, and a clause cites a verse its subject is named in. The next verse names him (Naphtali GEN 30:8, Zebulun 30:20, Joseph 30:24, Benjamin 35:18), and the clause is written there, on his record. Abram and Sarai (GEN 20:12) are not here: no verse naming either of them states that she is his father's daughter. Where BibleData cites a verse that does not name the person, or the owner names another: Zetham and Joel, whom BibleData makes Jehiel's sons citing 1CH 25:22 (which names neither), at 1CH 23:8, where the owner reads them as Jehiel's brothers; Eliashib the singer at EZR 10:24 (BibleData cites 10:23, the verse before); Eliezer, descendant of Levi, at EZR 10:18, as the owner's note '10:18' says. Under the owner's rules of 2026-09-29 (a passage of up to three verses naming both people, or two verses each stating a part): Jezreel, son of Hosea, at HOS 1:2-4, where 1:2 names Hosea and 1:4 Jezreel (1:3-4, as the owner cited it, does not name Hosea); Shebaniah of the Levites at NEH 10:9-10, the heading and the line he stands in (this Shebaniah is the one of 10:10, not 10:12); Athaliah, wife of Jehoram, at 2KI 8:18 with 8:26; Bunni, descendant of Merari, at NEH 11:15 with 1CH 9:14; Cush the Benjamite at the title of Psalm 7, which the canonical frame numbers 7:0; Zetham at 1CH 23:8; Simeon, half-brother of Benjamin, at GEN 35:22-24, the list of Jacob's sons by their mothers; Abram, half-brother of Sarai, at GEN 20:12-14, Abraham's answer to Abimelech and Sarah restored to him; Meonothai, son of Othniel, at 1CH 4:13-14 as the owner cited it. Under the owner's rule of 2026-09-29 that a passage and a verse elsewhere may be joined, each stating its part: Sarai, daughter of Terah, at GEN 20:12-14 with GEN 11:27 (she is Abraham's father's daughter; Terah is Abram's father). Hiram, of the Naphtalites, at 1KI 7:13-14: 7:13 names him and 7:14 the tribe, since 7:14 calls him only 'a widow's son'. Zechariah, grandson of Iddo, at ZEC 1:1, the verse that names Berechiah between them; EZR 5:1 calls him 'the son of Iddo'.",
+ "referenceWhy": "BibleData cites the verse of a son's birth in Genesis 30 and 35, where he is 'a son' and not yet named: the verse names neither end of the tie, and a clause cites a verse its subject is named in. The next verse names him (Naphtali GEN 30:8, Zebulun 30:20, Joseph 30:24, Benjamin 35:18), and the clause is written there, on his record. Abram and Sarai (GEN 20:12) are not here: no verse naming either of them states that she is his father's daughter. Where BibleData cites a verse that does not name the person, or the owner names another: Zetham and Joel, whom BibleData makes Jehiel's sons citing 1CH 25:22 (which names neither), at 1CH 23:8, where the owner reads them as Jehiel's brothers; Eliashib the singer at EZR 10:24 (BibleData cites 10:23, the verse before); Eliezer, descendant of Levi, at EZR 10:18, as the owner's note '10:18' says. Under the owner's rules of 2026-09-29 (a passage of up to three verses naming both people, or two verses each stating a part): Jezreel, son of Hosea, at HOS 1:2-4, where 1:2 names Hosea and 1:4 Jezreel (1:3-4, as the owner cited it, does not name Hosea); Shebaniah of the Levites at NEH 10:9-10, the heading and the line he stands in (this Shebaniah is the one of 10:10, not 10:12); Athaliah, wife of Jehoram, at 2KI 8:18 with 8:26; Bunni, descendant of Merari, at NEH 11:15 with 1CH 9:14; Cush the Benjamite at the title of Psalm 7, which the canonical frame numbers 7:0; Zetham at 1CH 23:8; Simeon, half-brother of Benjamin, at GEN 35:22-24, the list of Jacob's sons by their mothers; Abram, half-brother of Sarai, at GEN 20:12-14, Abraham's answer to Abimelech and Sarah restored to him; Meonothai, son of Othniel, at 1CH 4:13-14 as the owner cited it. Under the owner's rule of 2026-09-29 that a passage and a verse elsewhere may be joined, each stating its part: Sarai, daughter of Terah, at GEN 20:12-14 with GEN 11:27 (she is Abraham's father's daughter; Terah is Abram's father). Hiram, of the Naphtalites, at 1KI 7:13-14: 7:13 names him and 7:14 the tribe, since 7:14 calls him only 'a widow's son'. Zechariah, grandson of Iddo, at ZEC 1:1, the verse that names Berechiah between them; EZR 5:1 calls him 'the son of Iddo'. Amnon, who forced Tamar, at 2SA 13:12-14 with 2SA 13:22: the passage the owner cited tells it and names neither of them, 13:22 names both and says it again.",
  "relation": {
   "72061": "descendant-of",
   "72171": "commander-of",
@@ -145,6 +146,7 @@
   "71512": "Genesis 35:22-24: 'the sons of Jacob were twelve: the sons of Leah; Reuben, Jacob's firstborn, and Simeon ... the sons of Rachel; Joseph, and Benjamin'",
   "71689": "Genesis 38:9-10: 'Onan knew that the seed should not be his ... And the thing which he did displeased the LORD: wherefore he slew him also'",
   "72219": "Judges 18:30: 'Jonathan, the son of Gershom, the son of Manasseh'",
+  "72489": "2 Samuel 13:12-14: 'Nay, my brother, do not force me ... being stronger than she, forced her, and lay with her'; 13:22: Absalom 'hated Amnon, because he had forced his sister Tamar'",
   "72591": "1 Kings 4:13 gives Ben-geber 'the towns of Jair the son of Manasseh'",
   "72615": "1 Kings 7:13-14: Solomon 'fetched Hiram out of Tyre. He was a widow's son of the tribe of Naphtali'",
   "72707": "2 Kings 8:18: 'the daughter of Ahab was his wife'; 8:26: the mother of Ahaziah, Jehoram's son, 'was Athaliah'; so also 2 Chronicles 21:6 and 22:2",
@@ -163,11 +165,12 @@
   "75999": "Hosea 1:2-4: the LORD said to Hosea, Go, take unto thee a wife; he took Gomer, which bare him a son; and the LORD said unto him, Call his name Jezreel"
  },
  "owner": {
+  "72489": "2026-09-29",
   "75539": "2026-09-29",
   "75677": "2026-09-29",
   "75867": "2026-09-29"
  },
  "peopleWhy": "A gentilic is membership of the people, not descent from the eponym (the owner, 2026-09-29): Cush the Benjamite (Psalm 7) of the Benjaminites, and Shebaniah of the Levites under the heading 'And the Levites' (NEH 10:9), each in place of BibleData's descent from Benjamin and from Levi. Hiram, 'a widow's son of the tribe of Naphtali' (1KI 7:14), of the Naphtalites, in place of BibleData's descent from Naphtali.",
  "reasonWhy": "The reason a written clause carries, which the page shows beside it, where the decision's note is a question or the agent's working rather than what the verse says.",
- "ownerWhy": "Facts an agent decided in the console that the owner has since ruled on himself, in chat on 2026-09-29: Shebaniah of the Levites, Bunni of the sons of Merari, and Cush the Benjamite. They are credited to him."
+ "ownerWhy": "Facts an agent decided in the console that the owner has since ruled on himself, in chat on 2026-09-29: Shebaniah of the Levites, Bunni of the sons of Merari, and Cush the Benjamite. They are credited to him. Amnon, who forced Tamar (2SA 13:12-14), the owner confirmed on the review page on 2026-09-13 and asked for again in chat on 2026-09-29, once the dataset's row stopped being shown; it is credited to the later date."
 }

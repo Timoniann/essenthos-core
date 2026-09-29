@@ -1,0 +1,29 @@
+{
+  "decidedBy": "the project owner, 2026-09-29, on how the encyclopedia holds Iezer of Numbers 26:30 and the Abiezer of 1 Chronicles 7:18 — recorded on TSK-0428",
+  "policy": "Held as Jerioth is (PRB-0538): a name the text does not settle is one record that says what is open about it and names every reading. Iezer is named among the sons of Gilead, Abiezer is borne by Gilead's sister Hammolecheth, and whether they are one man the text does not say. The record keeps the reading that they are, because Iezer is Abiezer shortened and the verse's word is already his; it says that the identification is open, and a relationship that holds under only one reading, that he was Hammolecheth's son, is not written as settled.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-09-29 that whether Iezer of Numbers 26:30 is the Abiezer of 1 Chronicles 7:18 is left open",
+  "rulings": [
+    {
+      "wordId": 6862020,
+      "reference": "1 Chronicles 7:18",
+      "strongNumber": "H44",
+      "existing": "iezer",
+      "says": {
+        "distinguisher": "named among the sons of Gilead (NUM 26:30) and called Abiezer in JOS 17:2; whether he is the Abiezer whom Gilead's sister Hammolecheth bore (1CH 7:18) the text does not settle",
+        "notes": "Numbers 26:30 names Iezer first among the sons of Gilead: \"These are the sons of Gilead: of Iezer, the family of the Iezerites; of Helek, the family of the Helekites\" (American Standard Version). Joshua 17:2 lists the same six clans of Manasseh — Abiezer, Helek, Asriel, Shechem, Hepher and Shemida — with Abiezer where Numbers has Iezer. In Hebrew the two names differ by their first syllable: אִיעֶזֶר, and אֲבִיעֶזֶר, whose אֲבִי is \"father\". The clan is known by the longer name: Gideon's father is \"Joash the Abiezrite\" (Judges 6:11), and when Gideon blew the trumpet \"Abiezer was gathered together after him\" (Judges 6:34).\n\n1 Chronicles 7 gives the family of Manasseh another way. After the sons of Gilead it goes on: \"And his sister Hammolecheth bare Ishhod, and Abiezer, and Mahlah\" (1 Chronicles 7:18). There Abiezer is the son of Gilead's sister, not of Gilead.\n\nThe text does not say whether the two are one man. If they are, Iezer is Abiezer shortened, and \"the sons of Gilead\" in Numbers 26:30 are the clans counted under Gilead, a sister's son among them. If they are not, Iezer is Gilead's own son, and the Abiezer whom Hammolecheth bore is another man of the same family with the same name."
+      },
+      "alternatives": [
+        {
+          "describes": "the Abiezer whom Hammolecheth, Gilead's sister, bore (1 Chronicles 7:18), the same man under a shorter name",
+          "reason": "Numbers 26:30 has \"Iezer, the family of the Iezerites\" where Joshua 17:2 has \"the children of Abiezer\" in the same list of clans, and Gideon's clan is Abiezer (Judges 6:11, 6:34), so Iezer reads as Abiezer shortened. \"The sons of Gilead\" is then the clans of Gilead's house: by 1 Chronicles 7:18 he was the son of Gilead's sister."
+        },
+        {
+          "describes": "a son of Gilead, and another man than the Abiezer whom Hammolecheth bore",
+          "reason": "Numbers 26:30 counts Iezer among the sons of Gilead, and 1 Chronicles 7:18 gives Abiezer to Gilead's sister. Read as each verse stands, they are two men of one family who share a name."
+        }
+      ],
+      "why": "The owner's decision of 2026-09-29: Iezer is one record, and whether he is the Abiezer whom Hammolecheth bore (1 Chronicles 7:18) is left open, so that he was her son is not written as settled."
+    }
+  ]
+}
