@@ -18,6 +18,8 @@ public sealed class OursOnlyRecordTests : IDisposable
 {
     private const string OurVerse = "Essenthos, from the words this corpus annotates to the person or the place they name";
 
+    private const string OurSource = "read from Scripture by the project owner, decided 2026-09-30";
+
     private readonly AppDbContext _db;
     private readonly IDbContextTransaction _transaction;
 
@@ -102,6 +104,92 @@ public sealed class OursOnlyRecordTests : IDisposable
         ours["both"].Tribe.Should().BeNull();
     }
 
+    /// <summary>
+    /// Uri is Levi's grandson by our rows, so the tribe is Levi's; a row only BibleData states is not
+    /// followed, a line that reaches two tribes gives none, and a loop of rows ends.
+    /// </summary>
+    [Fact]
+    public async Task TheTribeFollowsOurLinesOfDescentUpToAPatriarchAndOnlyWhenItIsOne()
+    {
+        var (uri, kohath, mixed, byDataset, loop) = (
+            Supplied("uri", "male", "Judah"), Person("kohath"), Supplied("mixed", "male", null),
+            Supplied("by-dataset", "male", "Levi"), Supplied("loop", "male", null));
+        var (levi, judah, elder, other, wife, bystander) = (
+            Person("levi"), Person("judah"), Person("elder"), Person("other"), Person("wife"), Person("bystander"));
+        await _db.SaveChangesAsync();
+        Clause(bystander, "of-tribe", levi);
+        Clause(bystander, "of-tribe", judah);
+        foreach (var record in new[] { uri, mixed, byDataset, loop })
+        {
+            Clause(record, "brother-of", bystander);
+            Verse(record, OurVerse);
+        }
+
+        Tie(uri, "son-of", kohath, OurSource);
+        Tie(kohath, "descendant-of", levi, OurSource);
+        Tie(mixed, "son-of", elder, OurSource);
+        Tie(elder, "son-of", levi, OurSource);
+        Tie(mixed, "son-of", other, OurSource);
+        Tie(other, "son-of", judah, OurSource);
+        Tie(byDataset, "son-of", levi, BibleDataLoader.Source);
+        Tie(loop, "son-of", wife, OurSource);
+        Tie(wife, "son-of", loop, OurSource);
+        await _db.SaveChangesAsync();
+
+        var ours = await OursOnlyRecords.Among(_db, ["uri", "mixed", "by-dataset", "loop"], default);
+
+        ours["uri"].Tribe.Should().Be("Levi", "ours puts Uri under Levi; BibleData's Judah is not used");
+        ours["mixed"].Tribe.Should().BeNull("two tribes are reached");
+        ours["by-dataset"].Tribe.Should().BeNull("only BibleData ties him to Levi");
+        ours["loop"].Tribe.Should().BeNull();
+    }
+
+    /// <summary>Where the two sides reach two tribes the father's line decides, and only a father ours says is male.</summary>
+    [Fact]
+    public async Task WhereTheLinesReachTwoTribesTheFathersLineDecides()
+    {
+        var (child, orphan) = (Supplied("child", "male", null), Supplied("orphan", "male", null));
+        var (dad, mum, unknown, levi, judah, bystander) = (
+            Person("dad"), Person("mum"), Person("unknown"), Person("levi"), Person("judah"), Person("bystander"));
+        await _db.SaveChangesAsync();
+        Clause(bystander, "of-tribe", levi);
+        Clause(bystander, "of-tribe", judah);
+        Clause(dad, "father-of", bystander);
+        Clause(mum, "mother-of", bystander);
+        foreach (var record in new[] { child, orphan })
+        {
+            Clause(record, "brother-of", bystander);
+            Verse(record, OurVerse);
+        }
+
+        Tie(child, "son-of", dad, OurSource);
+        Tie(child, "son-of", mum, OurSource);
+        Tie(dad, "son-of", levi, OurSource);
+        Tie(mum, "daughter-of", judah, OurSource);
+        Tie(orphan, "son-of", unknown, OurSource);
+        Tie(orphan, "son-of", mum, OurSource);
+        Tie(unknown, "descendant-of", levi, OurSource);
+        await _db.SaveChangesAsync();
+
+        var ours = await OursOnlyRecords.Among(_db, ["child", "orphan"], default);
+
+        ours["child"].Tribe.Should().Be("Levi", "the father's line reaches Levi, the mother's Judah");
+        ours["orphan"].Tribe.Should().BeNull("nothing says the father is male, and the mother's side is Judah");
+    }
+
+    [Fact]
+    public async Task ATribesOwnPatriarchIsOfThatTribe()
+    {
+        var (levi, other) = (Supplied("levi", "male", null), Person("other"));
+        await _db.SaveChangesAsync();
+        Clause(other, "of-tribe", levi);
+        Clause(levi, "father-of", other);
+        Verse(levi, OurVerse);
+        await _db.SaveChangesAsync();
+
+        (await OursOnlyRecords.Among(_db, ["levi"], default))["levi"].Tribe.Should().Be("Levi");
+    }
+
     [Fact]
     public void ALineIsLeftOutOnlyWhereTheRecordIsOurs()
     {
@@ -149,6 +237,12 @@ public sealed class OursOnlyRecordTests : IDisposable
             Method = LinkMethod.ModelReading,
             Confidence = 0.9,
             Source = "read from Scripture by a test",
+        });
+
+    private void Tie(Entity from, string type, Entity to, string source) =>
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            From = from, To = to, Type = type, Category = "explicit", Method = LinkMethod.StatedBySource, Source = source,
         });
 
     private void Verse(Entity entity, string source) =>
