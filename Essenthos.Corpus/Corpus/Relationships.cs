@@ -124,7 +124,10 @@ internal static class Relationships
                 r.Notes,
                 r.Method,
                 r.Confidence,
-                r.Source))
+                r.Source)
+            {
+                Citation = r.Citation,
+            })
             .ToListAsync(cancellationToken);
 
     /// <summary>
@@ -349,8 +352,15 @@ internal static class Relationships
             Method = EnumSpelling.Of(row.Method),
             Confidence = row.Confidence,
             Source = row.Source,
+            Verses = Verses(row.Citation),
             Corroboration = [.. corroboration.Select(witness => Corroborating(row, witness))],
         };
+
+    /// <summary>Every verse a citation of more than one verse names, in order; null for one verse.</summary>
+    internal static List<VerseRefResponse>? Verses(string? citation) =>
+        Citation.Parse(citation) is { Single: false } cited
+            ? [.. cited.Verses.Select(v => BookReferences.At(v.Book, v.Chapter, v.Verse)!)]
+            : null;
 
     private static EntityRelationshipWitnessResponse Corroborating(Related row, Related witness) =>
         new(witness.Type, witness.Category, witness.Inward != row.Inward, witness.Reference, witness.Notes)
@@ -383,5 +393,9 @@ internal static class Relationships
         string? Notes,
         LinkMethod Method,
         double? Confidence,
-        string Source);
+        string Source)
+    {
+        /// <summary>The passage or the two verses composed, where one verse does not hold the row.</summary>
+        public string? Citation { get; init; }
+    }
 }

@@ -425,6 +425,13 @@ internal record EntityRelationshipResponse(
 
     public double? Confidence { get; init; }
 
+    /// <summary>
+    /// Every verse the row rests on, where one verse does not hold it: a passage in the order it
+    /// stands (Hosea 1:2, 1:3, 1:4), or the two verses a composed statement joins. The first is
+    /// <see cref="EntityRelationshipResponse.Reference"/>. Null for a row resting on one verse or none.
+    /// </summary>
+    public IList<VerseRefResponse>? Verses { get; init; }
+
     /// <summary>Which dataset, model or person says so.</summary>
     public string? Source { get; init; }
 

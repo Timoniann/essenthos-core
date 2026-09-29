@@ -82,7 +82,10 @@ internal static class Descriptors
                 d.Method,
                 d.Confidence,
                 d.Source,
-                d.Note))
+                d.Note)
+            {
+                Citation = d.Citation,
+            })
             .ToListAsync(cancellationToken);
 
         if (clauses.Count == 0)
@@ -188,6 +191,7 @@ internal static class Descriptors
                 doubtful)
             {
                 Note = clause.Note,
+                Verses = Relationships.Verses(clause.Citation),
             });
         }
 
@@ -251,7 +255,10 @@ internal static class Descriptors
         LinkMethod Method,
         double? Confidence,
         string Source,
-        string? Note);
+        string? Note)
+    {
+        public string? Citation { get; init; }
+    }
 }
 
 /// <param name="Language">
@@ -341,4 +348,10 @@ internal record DescriptorClaimResponse(
 {
     /// <summary>Why, in the words the row carries. Usually the model's own sentence for the clause.</summary>
     public string? Note { get; init; }
+
+    /// <summary>
+    /// Every verse the clause rests on where one does not hold it — a passage, or two verses
+    /// composed — the first being <see cref="Reference"/>. Null for a clause read from one verse.
+    /// </summary>
+    public IList<VerseRefResponse>? Verses { get; init; }
 }

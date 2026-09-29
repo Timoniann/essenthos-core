@@ -192,6 +192,7 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
             CanonicalBook = clause.Book,
             CanonicalChapter = clause.Chapter,
             CanonicalVerse = clause.Verse,
+            Citation = clause.Citation,
             Method = clause.Method,
             Confidence = clause.Confidence,
             Source = clause.Source,
@@ -219,7 +220,10 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
             .Select(d => new Clause(
                 d.EntityId, d.TargetEntityId, d.Relation,
                 d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse,
-                d.Method, d.Confidence, d.Source, d.Note))
+                d.Method, d.Confidence, d.Source, d.Note)
+            {
+                Citation = d.Citation,
+            })
             .ToListAsync(cancellationToken);
 
     /// <summary>
@@ -285,7 +289,11 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
         LinkMethod Method,
         double? Confidence,
         string Source,
-        string? Note);
+        string? Note)
+    {
+        /// <summary>The passage or the two verses composed, where one verse does not hold the clause.</summary>
+        public string? Citation { get; init; }
+    }
 
     /// <summary>
     /// One claim about one pair, as the pick sees it: how much its method knew, how sure it is, and

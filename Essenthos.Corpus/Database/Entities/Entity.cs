@@ -461,6 +461,12 @@ public class EntityRelationship
 
     public int? CanonicalVerse { get; set; }
 
+    /// <summary>
+    /// The whole <see cref="Corpus.Citation"/> where a clause of ours rests on more than one verse,
+    /// whose first verse is the address above; null where one verse holds it.
+    /// </summary>
+    public string? Citation { get; set; }
+
     public LinkMethod Method { get; set; }
 
     /// <summary>
