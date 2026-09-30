@@ -47,6 +47,12 @@ internal static class EvidentiaDefaults
     /// </summary>
     public const double ResidualRenderingShare = 0.05;
 
+    /// <summary>How often the first pass must have placed a pair before the second places it on the counts alone.</summary>
+    public const int SecondPassPlacements = 3;
+
+    /// <summary>The least share of the form's placements that pair must hold for the same.</summary>
+    public const double SecondPassShare = 0.8;
+
     /// <summary>A word named in a reader-language Strong definition, which is a secondary reading.</summary>
     public const double DictionarySenseScore = 0.34;
 

@@ -113,6 +113,12 @@ internal enum EvidentiaProposalKind
 
     /// <summary>A word on the word of the original annotated as the same entity, in the order the verse names it.</summary>
     SharedEntityInOrder,
+
+    /// <summary>A word on the one free lexeme of its verse that the text's own placements say its form renders.</summary>
+    ConfirmedRendering,
+
+    /// <summary>An unplaced word on the word the statistical aligner pairs it with, where a dictionary sense or gloss names the same pair.</summary>
+    AlignerAndLexicalEvidence,
 }
 
 /// <param name="Head">For an attached word, the proposal of the word it belongs to.</param>

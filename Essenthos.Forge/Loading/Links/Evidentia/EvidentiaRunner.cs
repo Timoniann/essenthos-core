@@ -150,6 +150,25 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
                 $"EVIDENTIA needs two loaded texts and {(texts.ContainsKey(fromSlug) ? toSlug : fromSlug)} is not one.");
         }
 
+        options = await WithConfirmed(options, parentRunId, cancellationToken);
+        if (options.SecondPass && parentRunId is null)
+        {
+            // The first pass, kept nowhere: what it placed over the whole scope by evidence of its own, the
+            // aligner not consulted, is what the stored pass reads.
+            var learnt = options.Confirmed ?? new EvidentiaConfirmedRenderings();
+            var first = options with
+            {
+                Confirmed = null, Learns = learnt, AlignerLinks = false, AlignerPairs = null,
+                Decisions = null, RecordWords = false, RecordDisagreements = false,
+            };
+            foreach (var book in books)
+            {
+                await loader.MeasureBook(fromSlug, toSlug, book.Book, first, book.FromChapter, book.ToChapter, cancellationToken);
+            }
+
+            options = options with { Confirmed = learnt };
+        }
+
         var run = new EvidentiaRun
         {
             FromTextId = fromId,
@@ -199,6 +218,70 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
         return new EvidentiaRunOutcome(run.Id, decisions, proposals, safe, decisions - proposals - absences, absences,
             elapsed.Elapsed, measurements);
     }
+
+    /// <summary>
+    /// The options with the confirmed renderings they name read in: the files, and what the stored runs
+    /// placed by evidence of their own. A run repeated over some verses reads its parent's placements as
+    /// its first pass, since the whole text is not measured again.
+    /// </summary>
+    internal async Task<EvidentiaMeasurementOptions> WithConfirmed(
+        EvidentiaMeasurementOptions options, int? parentRunId = null, CancellationToken cancellationToken = default)
+    {
+        List<int> runs = [.. options.ConfirmedByRuns ?? []];
+        if (options.SecondPass && parentRunId is { } parent)
+        {
+            runs.Add(parent);
+        }
+
+        if (runs.Count == 0 && options.ConfirmedByFiles is not { Count: > 0 })
+        {
+            return options;
+        }
+
+        var confirmed = EvidentiaConfirmedRenderings.Read(options.ConfirmedByFiles ?? []);
+        if (runs.Count > 0)
+        {
+            var known = await db.EvidentiaRuns.AsNoTracking().Where(run => runs.Contains(run.Id)).Select(run => run.Id)
+                .ToListAsync(cancellationToken);
+            if (runs.Except(known).ToList() is { Count: > 0 } missing)
+            {
+                throw new InvalidOperationException(
+                    $"There is no EVIDENTIA run {string.Join(", ", missing)} to confirm renderings by. List the stored runs with evidentia-runs.");
+            }
+
+            var placed = await db.EvidentiaDecisions.AsNoTracking()
+                .Where(decision => runs.Contains(decision.RunId) && decision.Absence == null
+                    && decision.Kind != null && !NotLexical.Contains(decision.Kind)
+                    && decision.TargetWord!.StrongNumber != null)
+                .GroupBy(decision => new
+                {
+                    Form = decision.SourceWord!.Surface.ToLower(),
+                    decision.TargetWord!.StrongNumber,
+                })
+                .Select(pair => new
+                {
+                    pair.Key.Form,
+                    pair.Key.StrongNumber,
+                    Safe = pair.Count(decision => decision.Tier == EvidentiaDecisionRecorder.SafeTier),
+                    Placed = pair.Count(),
+                })
+                .ToListAsync(cancellationToken);
+            foreach (var pair in placed)
+            {
+                confirmed.Add(pair.Form, pair.StrongNumber!, pair.Safe, pair.Placed);
+            }
+        }
+
+        return options with { Confirmed = confirmed };
+    }
+
+    /// <summary>The kinds <see cref="EvidentiaConfirmedRenderings.Learn"/> leaves out, as a run stores them.</summary>
+    private static readonly string[] NotLexical =
+    [
+        EvidentiaDecisionRecorder.Spelling(EvidentiaProposalKind.AttachedWord),
+        EvidentiaDecisionRecorder.Spelling(EvidentiaProposalKind.UniqueCounterpart),
+        EvidentiaDecisionRecorder.Spelling(EvidentiaProposalKind.ConfirmedRendering),
+    ];
 
     /// <summary>Every stored run, newest first, with what it holds and how much of it was reviewed.</summary>
     public async Task<string> List(CancellationToken cancellationToken = default)
@@ -347,6 +430,10 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
             ["learnedRenderingMethods"] = options.LearnedRenderingMethods?.Select(EnumSpelling.Of).ToArray(),
             ["neighbourVerseDistance"] = options.NeighbourVerseDistance,
             ["entityAnchors"] = options.EntityAnchors,
+            ["secondPass"] = options.SecondPass,
+            ["confirmedByRuns"] = options.ConfirmedByRuns,
+            ["confirmedByFiles"] = options.ConfirmedByFiles,
+            ["alignerLinks"] = options.AlignerLinks,
             ["defaults"] = typeof(EvidentiaDefaults)
                 .GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(field => field.IsLiteral)
@@ -371,7 +458,15 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
                 : null,
             LearnedRenderingMethods: methods,
             NeighbourVerseDistance: NeighbourVerseDistance(root),
-            EntityAnchors: root.TryGetProperty("entityAnchors", out var anchors) && anchors.ValueKind == JsonValueKind.True);
+            EntityAnchors: root.TryGetProperty("entityAnchors", out var anchors) && anchors.ValueKind == JsonValueKind.True,
+            SecondPass: root.TryGetProperty("secondPass", out var secondPass) && secondPass.ValueKind == JsonValueKind.True,
+            ConfirmedByRuns: root.TryGetProperty("confirmedByRuns", out var byRuns) && byRuns.ValueKind == JsonValueKind.Array
+                ? [.. byRuns.EnumerateArray().Select(run => run.GetInt32())]
+                : null,
+            ConfirmedByFiles: root.TryGetProperty("confirmedByFiles", out var byFiles) && byFiles.ValueKind == JsonValueKind.Array
+                ? [.. byFiles.EnumerateArray().Select(file => file.GetString()!)]
+                : null,
+            AlignerLinks: root.TryGetProperty("alignerLinks", out var alignerLinks) && alignerLinks.ValueKind == JsonValueKind.True);
     }
 
     /// <summary>A run stored before the window was an option read with the default of its day.</summary>

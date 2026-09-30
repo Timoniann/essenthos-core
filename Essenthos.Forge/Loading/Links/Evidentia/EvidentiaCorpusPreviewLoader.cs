@@ -34,6 +34,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     private IReadOnlyDictionary<string, string>? greekGlosses;
     private IReadOnlyList<(IReadOnlyList<long> From, IReadOnlyList<long> To)>? interlinearPairs;
     private (string Path, Dictionary<(int Book, int Chapter, int Verse, int Position), HashSet<int>> Names)? consensusNames;
+    private (EvidentiaConfirmedRenderings Renderings, string Language, EvidentiaConfirmedIndex Index)? confirmedIndex;
 
     public async Task<EvidentiaCorpusPreview> Preview(
         string fromSlug,
@@ -238,11 +239,48 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var taken = lexicalProposals.Select(proposal => proposal.Target.Token.Id).ToHashSet();
         List<EvidentiaProposal> named = [.. entityAnchors.Where(anchor =>
             !placed.Contains(anchor.Source.Token.Id) && !taken.Contains(anchor.Target.Token.Id))];
+        lexicalProposals.AddRange(named);
+        var aligner = options.AlignerPairs
+            ?? (options.AlignerLinks ? await AlignerPairs(fromSlug, toSlug, sourceIds, cancellationToken) : null);
+        // A word whose placement was withheld stays unplaced: two lexical readings and the aligner on one of
+        // them is not the agreement the fill asks for.
+        HashSet<long> withheld = [];
+        if (aligner is not null
+            && EvidentiaAlignerCheck.Contested(lexicalProposals, candidates, aligner) is { Count: > 0 } contested)
+        {
+            withheld.UnionWith(contested.Select(pair => pair.From));
+            EvidentiaResolution Uncontested(EvidentiaResolution resolution) => resolution with
+            {
+                Proposals = [.. resolution.Proposals.Where(proposal =>
+                    !contested.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))],
+            };
+            globalKnownRenderingResolution = Uncontested(globalKnownRenderingResolution);
+            globalReviewKnownRenderingResolution = Uncontested(globalReviewKnownRenderingResolution);
+            syntaxTargetGlossReviewResolution = Uncontested(syntaxTargetGlossReviewResolution);
+            lexicalProposals.RemoveAll(proposal => contested.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)));
+        }
+
+        // Last of the lexical tiers, on the words they leave free, and before the grammatical words, which
+        // then find their head placed.
+        List<EvidentiaProposal> filled = [];
+        if (options.Confirmed is { } renderings && source.FirstOrDefault()?.Language is { } sourceLanguage)
+        {
+            filled.AddRange(EvidentiaSecondPass.Resolve(
+                    sourceAnalyses, targetAnalyses, lexicalProposals, ConfirmedIndex(renderings, sourceLanguage), frame, aligner)
+                .Where(proposal => !withheld.Contains(proposal.Source.Token.Id)));
+        }
+
+        if (aligner is not null)
+        {
+            filled.AddRange(EvidentiaAlignerCheck.Resolve(candidates, [.. lexicalProposals, .. filled], aligner, frame)
+                .Where(proposal => !withheld.Contains(proposal.Source.Token.Id)));
+        }
+
         syntaxTargetGlossReviewResolution = syntaxTargetGlossReviewResolution with
         {
-            Proposals = [.. syntaxTargetGlossReviewResolution.Proposals, .. named],
+            Proposals = [.. syntaxTargetGlossReviewResolution.Proposals, .. named, .. filled],
         };
-        lexicalProposals.AddRange(named);
+        lexicalProposals.AddRange(filled);
         var attachedWords = EvidentiaAttachedWords.Resolve(
             EvidentiaAuxiliaryWords.Mark(sourceAnalyses),
             targetAnalyses,
@@ -252,9 +290,27 @@ internal sealed class EvidentiaCorpusPreviewLoader(
 
         var absences = EvidentiaAbsences.Resolve(sourceAnalyses, targetAnalyses, finalProposals);
         var byWord = EvidentiaWordScore.Of(sourceAnalyses, targetAnalyses, finalProposals, absences, goldAnnotation, out var absenceVerdicts);
-        var safe = EvidentiaAttachedWords.Safe([.. globalKnownRenderingResolution.Proposals, .. named], attachedWords);
+        // A placement the aligner names too is right more often than the safe tier's own, and one whose word
+        // the aligner links elsewhere is right less often than the review tier's. Not the words the aligner's
+        // pair itself placed: there it is the evidence, not a second opinion.
+        List<EvidentiaProposal> safeLexical =
+        [
+            .. globalKnownRenderingResolution.Proposals.Where(proposal =>
+                aligner?.Contradicts(proposal.Source.Token.Id, proposal.Target.Token.Id) != true),
+            .. named,
+        ];
+        var demoted = globalKnownRenderingResolution.Proposals.Count + named.Count - safeLexical.Count;
+        var alreadySafe = safeLexical.Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id)).ToHashSet();
+        List<EvidentiaProposal> promoted = aligner is null
+            ? []
+            : [.. lexicalProposals.Except(filled).Where(proposal =>
+                aligner.Agrees(proposal.Source.Token.Id, proposal.Target.Token.Id)
+                && !alreadySafe.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))];
+        safeLexical.AddRange(promoted);
+        var safe = EvidentiaAttachedWords.Safe(safeLexical, attachedWords);
         List<EvidentiaProposal> safeProposals =
             [.. finalProposals.Where(proposal => safe.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))];
+        options.Learns?.Learn(lexicalProposals, safe);
         var words = EvidentiaSourceWordAccount.Classify(
             source,
             Analyse,
@@ -356,6 +412,12 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 : [])
         {
             Routes = routes,
+            SecondPass = new EvidentiaSecondPassAccount(
+                filled.Count(proposal => proposal.Kind == EvidentiaProposalKind.ConfirmedRendering),
+                filled.Count(proposal => proposal.Kind == EvidentiaProposalKind.AlignerAndLexicalEvidence),
+                withheld.Count,
+                promoted.Count,
+                demoted),
         };
     }
 
@@ -479,6 +541,37 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             options.AllowKnownRenderingEvidence,
             canonicalBook,
             measurements);
+    }
+
+    /// <summary>The pairs the statistical aligner's stored links hold for the passage's words.</summary>
+    private async Task<EvidentiaAlignerPairs> AlignerPairs(
+        string fromSlug, string toSlug, IReadOnlySet<long> sourceIds, CancellationToken cancellationToken)
+    {
+        var texts = await db.Texts.AsNoTracking()
+            .Where(text => text.Slug == fromSlug || text.Slug == toSlug)
+            .ToDictionaryAsync(text => text.Slug, text => text.Id, cancellationToken);
+        var from = texts[fromSlug];
+        var to = texts[toSlug];
+        var scope = sourceIds.ToList();
+        var inScope = db.LinkWords.Where(word => scope.Contains(word.WordId)).Select(word => word.LinkId);
+        var words = await db.Links.AsNoTracking()
+            .Where(link => inScope.Contains(link.Id) && link.Method == LinkMethod.Aligner)
+            .Where(link => (link.FromTextId == from && link.ToTextId == to) || (link.FromTextId == to && link.ToTextId == from))
+            .SelectMany(link => link.Words.Select(word => new { link.Id, word.WordId }))
+            .ToListAsync(cancellationToken);
+        return EvidentiaAlignerPairs.Of(words.GroupBy(word => word.Id).SelectMany(link =>
+            link.Where(word => sourceIds.Contains(word.WordId)).SelectMany(source =>
+                link.Where(word => !sourceIds.Contains(word.WordId)).Select(target => (source.WordId, target.WordId)))));
+    }
+
+    private EvidentiaConfirmedIndex ConfirmedIndex(EvidentiaConfirmedRenderings renderings, string language)
+    {
+        if (confirmedIndex is not { } known || !ReferenceEquals(known.Renderings, renderings) || known.Language != language)
+        {
+            confirmedIndex = known = (renderings, language, renderings.For(language, languagePacks));
+        }
+
+        return known.Index;
     }
 
     private EvidentiaAnalysis? Analyse(EvidentiaToken token) =>
@@ -1122,6 +1215,9 @@ internal sealed record EvidentiaBookMeasurement(
 
     public EvidentiaWordMeasure ByWord => Chapters.Aggregate(default(EvidentiaWordMeasure), (running, next) => running + next.ByWord);
 
+    public EvidentiaSecondPassAccount SecondPass =>
+        Chapters.Aggregate(default(EvidentiaSecondPassAccount), (running, next) => running + next.SecondPass);
+
     /// <summary>
     /// The book's distinct content source forms, and how many of them the learned index holds an
     /// entry for. Unioned rather than summed: a form standing in four chapters is one word the
@@ -1171,6 +1267,7 @@ internal sealed record EvidentiaBookMeasurement(
                $"content source words unplaced ({Abstention:P2})\n" +
                WordAccount.Report() + "\n" +
                ByWord.Report() +
+               (SecondPass == default ? string.Empty : "\n" + SecondPass.Report()) +
                string.Concat(EvidentiaRouteAgreement.Total(Chapters.SelectMany(chapter => chapter.Routes))
                    .Select(route => "\n" + route.Report())) +
                string.Concat(Chapters
@@ -1184,6 +1281,23 @@ internal sealed record EvidentiaBookMeasurement(
 /// How many of a passage's final links a route text could check, and how many of those it agrees
 /// with. <see cref="Links"/> is every final link, so the share a route reaches is part of the answer.
 /// </summary>
+/// <summary>
+/// What the confirmed renderings and the aligner's pairs changed in a passage: words placed by each,
+/// placements withheld, and placements moved into and out of the safe tier.
+/// </summary>
+internal readonly record struct EvidentiaSecondPassAccount(
+    int ConfirmedRenderings, int AlignerAndLexical, int Withheld, int IntoSafe, int OutOfSafe)
+{
+    public static EvidentiaSecondPassAccount operator +(EvidentiaSecondPassAccount one, EvidentiaSecondPassAccount two) =>
+        new(one.ConfirmedRenderings + two.ConfirmedRenderings, one.AlignerAndLexical + two.AlignerAndLexical,
+            one.Withheld + two.Withheld, one.IntoSafe + two.IntoSafe, one.OutOfSafe + two.OutOfSafe);
+
+    public string Report() =>
+        $"second pass: {ConfirmedRenderings:N0} words placed by the text's own renderings, {AlignerAndLexical:N0} by the aligner " +
+        $"with a dictionary sense or gloss; {Withheld:N0} placements withheld where the aligner names another supported word; " +
+        $"{IntoSafe:N0} into the safe tier on its agreement, {OutOfSafe:N0} out of it";
+}
+
 internal sealed record EvidentiaRouteAgreement(string Route, int Links, int Compared, int Agreed)
 {
     public static IEnumerable<EvidentiaRouteAgreement> Total(IEnumerable<EvidentiaRouteAgreement> routes) =>
@@ -1284,6 +1398,8 @@ internal sealed record EvidentiaChapterMeasurement(
     /// <summary>How far the final links agree with each route text asked for; empty where none was.</summary>
     public IReadOnlyList<EvidentiaRouteAgreement> Routes { get; init; } = [];
 
+    public EvidentiaSecondPassAccount SecondPass { get; init; }
+
     public double SourceCoverage => SourceWords == 0 ? 0 : (double)CoveredSourceWords / SourceWords;
     public double ContentCoverage => ContentSourceWords == 0
         ? 0
@@ -1359,6 +1475,7 @@ internal sealed record EvidentiaChapterMeasurement(
                $"content source words unplaced ({Abstention:P1})\n" +
                WordAccount.Report() + "\n" +
                ByWord.Report() +
+               (SecondPass == default ? string.Empty : "\n" + SecondPass.Report()) +
                string.Concat(Routes.Select(route => "\n" + route.Report())) +
                (Samples.Count == 0 ? string.Empty : "\nsample:\n" + string.Join("\n", Samples));
     }
@@ -1416,7 +1533,14 @@ internal sealed record EvidentiaMeasurementOptions(
     IReadOnlyList<string>? RouteTexts = null,
     int NeighbourVerseDistance = EvidentiaDefaults.NeighbourVerseDistance,
     bool EntityAnchors = false,
-    string? EntityNamesFrom = null);
+    string? EntityNamesFrom = null,
+    EvidentiaConfirmedRenderings? Confirmed = null,
+    EvidentiaConfirmedRenderings? Learns = null,
+    bool SecondPass = false,
+    IReadOnlyList<int>? ConfirmedByRuns = null,
+    IReadOnlyList<string>? ConfirmedByFiles = null,
+    bool AlignerLinks = false,
+    EvidentiaAlignerPairs? AlignerPairs = null);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.

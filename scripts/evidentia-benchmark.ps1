@@ -22,7 +22,8 @@ param(
 
     # How many verses on either side a word's candidates may come from; left out, the Forge's default.
     [int] $NeighbourVerses = -1,
-    # Further flags for every passage, e.g. '--entity-anchors', '--entity-names', '<name-consensus words.tsv>'.
+    # Further flags for every passage, e.g. '--entity-anchors', '--entity-names', '<name-consensus words.tsv>',
+    # or the second pass: '--confirmed', '<folder of --confirmed-out files>', '--aligner-pairs', '<score --pairs files>'.
     [string[]] $Extra = @()
 )
 
