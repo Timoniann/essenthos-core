@@ -89,6 +89,36 @@ public partial class DistinguisherTests
         File.Records.Select(r => r.Ukr).Should().NotContain(text => text!.Contains("проєкт"));
     }
 
+    /// <summary>
+    /// The lines this project wrote for the records a dataset supplied: every one in every language,
+    /// citing what its English cites, each record once and in neither file twice, and credited to this
+    /// project.
+    /// </summary>
+    [Fact]
+    public void OurOwnLinesForTheDatasetsRecordsAreWholeInEveryLanguage()
+    {
+        var own = DistinguisherLoader.ReadOwnLines();
+
+        own.SetsTheLine.Should().BeTrue();
+        own.Source.Should().StartWith("Essenthos, ");
+        own.Records.Select(r => r.Slug).Should().OnlyHaveUniqueItems()
+            .And.NotIntersectWith(File.Records.Select(r => r.Slug));
+        foreach (var record in own.Records)
+        {
+            record.English.Should().NotBeNullOrWhiteSpace(record.Slug);
+            record.Languages().Select(one => one.Language).Should().Equal(Languages, record.Slug);
+            var cited = Reference().Matches(record.English).Select(m => m.Value).ToList();
+            cited.Should().NotBeEmpty($"{record.Slug}'s line cites the verse it was written from");
+            foreach (var (language, text) in record.Languages())
+            {
+                Reference().Matches(text).Select(m => m.Value).Should()
+                    .BeEquivalentTo(cited, $"{record.Slug} in {language} cites what the English cites");
+            }
+        }
+
+        own.Records.Select(r => r.Ukr).Should().NotContain(text => text!.Contains("проєкт"));
+    }
+
     [GeneratedRegex(@"\b[1-3]?[A-Z]{2,3} \d+(?::\d+(?:-\d+)?)?")]
     private static partial Regex Reference();
 }

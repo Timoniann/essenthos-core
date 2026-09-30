@@ -1,0 +1,67 @@
+{
+  "decidedBy": "Essenthos, 2026-09-30, on the records BibleData supplied that no word of ours named: each read against its verses by claude-opus-5-5 on the project owner's instruction to settle every one of them. No person read them",
+  "policy": "A word names the record its verse names. Where the Septuagint this corpus holds, Brenton's, prints a name the Hebrew does not, the word of that text is the record's, in the Greek where it prints it and in Brenton's English; where a record is headed by a spelling the text does not print, it is headed by the one it prints.",
+  "method": "manual",
+  "source": "Essenthos, the records BibleData supplied that rested on it alone, each read against its verses by claude-opus-5-5 on the project owner's instruction, 2026-09-30",
+  "rulings": [
+    {
+      "wordId": 6778044,
+      "reference": "Psalms 7:0",
+      "strongNumber": "H3568",
+      "existing": "cush-2",
+      "why": "The title of Psalm 7, 'Shiggaion of David, which he sang unto the LORD, concerning the words of Cush the Benjamite', names this Cush, ben Yemini.",
+      "create": null
+    },
+    {
+      "wordId": 7317544,
+      "reference": "Genesis 10:2",
+      "strongNumber": null,
+      "existing": "elishah-2",
+      "why": "The Septuagint's list of the sons of Japheth, 'Gamer, and Magog, and Madoi, and Jovan, and Elisa, and Thobel', names Elisa between Javan and Tubal, where the Hebrew names no one.",
+      "create": null
+    },
+    {
+      "wordId": 25914529,
+      "reference": "Genesis 10:2",
+      "strongNumber": null,
+      "existing": "elishah-2",
+      "why": "Brenton's English of the same list: 'and Jovan, and Elisa, and Thobel'.",
+      "create": null
+    },
+    {
+      "wordId": 26204331,
+      "reference": "1 Chronicles 4:26",
+      "strongNumber": null,
+      "existing": "zaboud",
+      "why": "Brenton's 'Amuel his son, Sabud his son, Zacchur his son' names Sabud between Hammuel and Zaccur, where the Hebrew has Hammuel and Zaccur only.",
+      "create": null
+    },
+    {
+      "wordId": 7593846,
+      "reference": "Nehemiah 7:7",
+      "strongNumber": null,
+      "existing": "ezra-2",
+      "why": "The Septuagint's list of those who came with Zerubbabel names Esdra after Maspharath; this record is that man.",
+      "create": null
+    },
+    {
+      "wordId": 26269625,
+      "reference": "Nehemiah 7:7",
+      "strongNumber": null,
+      "existing": "ezra-2",
+      "why": "Brenton's English of the same list: 'Maspharath, Esdra, Boguia'.",
+      "create": null
+    },
+    {
+      "wordId": 26249289,
+      "reference": "Ezra 2:50",
+      "strongNumber": null,
+      "existing": "nephisim",
+      "says": {
+        "name": "Nephusim"
+      },
+      "why": "'The children of Nephusim' (EZR 2:50) is the spelling the King James and Brenton print; Nehemiah 7:52 writes the same family 'Nephishesim', and no text prints 'Nephisim'.",
+      "create": null
+    }
+  ]
+}

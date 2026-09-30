@@ -25,6 +25,11 @@ internal sealed record PassageReadingCheck(bool? Holds, string? Why, string? Mod
 /// Whether both readings agree, the class was accepted on the held-out set, the first reading was sure
 /// enough, and no annotation stood on the word when it was read. Only these are written.
 /// </param>
+/// <param name="DecidedBy">
+/// Who read the passage and on whose word, where one reading decided it rather than a reading upheld
+/// by a second — <c>a reading of the passage by claude-opus-5-5 alone, on the project owner's
+/// instruction, 2026-09-30</c>. It is then the whole of the source every word written from it carries.
+/// </param>
 internal sealed record PassageReadingRecord(
     string Reference,
     string Record,
@@ -39,7 +44,8 @@ internal sealed record PassageReadingRecord(
     string? Reason,
     PassageReadingRun? Reading,
     PassageReadingCheck? Check,
-    bool Write);
+    bool Write,
+    string? DecidedBy = null);
 
 /// <summary>
 /// Where the passage readings are read from. They are a model run and live beside the other runs under

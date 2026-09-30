@@ -59,6 +59,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\SupersededReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OwnRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\Distinguishers.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\OwnLines.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\MisplacedAnnotations.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReviewRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReportRecords.json" />
         <Content Remove="Loading\Encyclopedia\OwnNames.json" />
@@ -83,6 +85,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\AddressedRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecordsSecond.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\DatasetRecordRulings.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />

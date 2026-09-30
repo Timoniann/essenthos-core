@@ -36,7 +36,7 @@ public sealed class OwnRecordTests : IDisposable
 
         var ruled = _rulings.DistinctBy(ruling => ruling.WordId).ToList();
         var verses = ruled
-            .Select((ruling, position) => (Chapter: 1, Verse: position + 1, Words: new[] { ruling.StrongNumber }))
+            .Select((ruling, position) => (Chapter: 1, Verse: position + 1, Words: new[] { ruling.StrongNumber ?? "name" }))
             .ToArray();
 
         _hebrew = Corpus.Add(_db, SenseReadingLoader.Witness, TextKind.CriticalEdition, "hbo", verses);
@@ -446,7 +446,7 @@ public sealed class OwnRecordTests : IDisposable
         var file = SenseReadingFiles.NamesakeSecondRulings();
         file.Rulings.Should().NotBeEmpty();
         file.Rulings.Should().OnlyContain(r => r.Existing != null && r.Create == null && r.WordId > 0
-                                               && r.StrongNumber.Length > 1 && r.Why.Length > 0);
+                                               && r.StrongNumber != null && r.StrongNumber.Length > 1 && r.Why.Length > 0);
         file.Source.Should().Contain("claude-sonnet").And.Contain("claude-opus").And.Contain("2026-09-30");
         file.DecidedBy.Should().Contain("No person read them");
 
@@ -456,6 +456,34 @@ public sealed class OwnRecordTests : IDisposable
         var named = await _db.WordEntities.Where(a => a.Source == file.Source).ToListAsync();
         named.Select(a => (a.WordId, a.EntityId)).Should().BeEquivalentTo(
             file.Rulings.Select(r => (r.WordId, slugs[r.Existing!])));
+    }
+
+    /// <summary>
+    /// The words the records a dataset supplied print and no word of ours named: each given to the
+    /// record its reading names, under a source that says who read it and on whose instruction,
+    /// and the record the text spells otherwise headed by the name it prints and credited to the ruling.
+    /// </summary>
+    [Fact]
+    public async Task ARecordTheDatasetSuppliedIsGivenTheWordItsVersePrints()
+    {
+        var file = SenseReadingFiles.DatasetRecordRulings();
+        file.Rulings.Should().NotBeEmpty();
+        file.Rulings.Should().OnlyContain(r => r.Existing != null && r.Create == null && r.WordId > 0 && r.Why.Length > 0);
+        file.Source.Should().Contain("claude-opus-5-5").And.Contain("2026-09-30").And.Contain("owner's instruction");
+        file.DecidedBy.Should().Contain("No person read them");
+
+        await Load();
+
+        var slugs = await _db.Entities.ToDictionaryAsync(e => e.Slug, e => e.Id);
+        var named = await _db.WordEntities.Where(a => a.Source == file.Source).ToListAsync();
+        named.Select(a => (a.WordId, a.EntityId)).Should().BeEquivalentTo(
+            file.Rulings.Select(r => (r.WordId, slugs[r.Existing!])));
+        foreach (var ruling in file.Rulings.Where(r => r.Says?.Name is not null))
+        {
+            var record = await _db.Entities.AsNoTracking().SingleAsync(e => e.Slug == ruling.Existing);
+            record.Name.Should().Be(ruling.Says!.Name);
+            record.Source.Should().Be(file.Source);
+        }
     }
 
     /// <summary>

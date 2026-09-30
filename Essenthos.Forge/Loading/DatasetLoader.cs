@@ -288,6 +288,7 @@ internal sealed class DatasetLoader(
             await ReadWhoseTheTitleIsWhereItStands(stoppingToken);
             await NameWhomTheReadingsOfThePassagesFind(resources, stoppingToken);
             await KeepTheVersesReadForTheRecordsTheySpeakOf(stoppingToken);
+            await TakeTheMisplacedNamesOffTheirRecords(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
@@ -297,6 +298,7 @@ internal sealed class DatasetLoader(
             await RenderOurOwnLinesInEveryLanguage(stoppingToken);
             await MoveWhatWasReadOffTheMisfiledVerses(stoppingToken);
             await CrossBackTheNamesGivenToEachOther(stoppingToken);
+            await ListTheVersesTheRelationshipsWereReadFrom(stoppingToken);
             await NameWhatTheVersesShare(resources, stoppingToken);
             await CountHowEachTextSpellsEachName(stoppingToken);
             await CountTheLexiconsPhrases(stoppingToken);
@@ -1943,6 +1945,33 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<VerseReadingLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The verses where a word names a record it does not mean, taken off the record. After every pass
+    /// that names a word, so nothing puts the answer back, and before the verses are read off the words.
+    /// </summary>
+    private async Task TakeTheMisplacedNamesOffTheirRecords(CancellationToken cancellationToken)
+    {
+        status.Starting("the names a word was wrongly given");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<MisplacedAnnotationLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The verses a record's relationships were read from, on the page of a record nothing else lists a
+    /// verse for. After every pass that lists a verse or folds a record, because it lists these only
+    /// where none of them did, and before the verses that name are told from those that concern.
+    /// </summary>
+    private async Task ListTheVersesTheRelationshipsWereReadFrom(CancellationToken cancellationToken)
+    {
+        status.Starting("the verses the relationships were read from");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<RelationshipVerseLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

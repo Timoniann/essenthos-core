@@ -6,16 +6,19 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Corpus;
 
 /// <summary>
-/// The records a dataset supplied that this project has since read for itself. Such a record's
-/// line under the name and its notes are still the dataset's words, and its verses and descriptor
-/// are ours, so it is credited as ours and leaves out what only the dataset states.
+/// The records a dataset supplied that this project has since read for itself. Such a record is
+/// credited as ours, and nothing only the dataset states of it is shown: not its line under the name,
+/// not its notes, not its sex or tribe.
 ///
 /// <para>
-/// A record qualifies when a dataset supplied it, it has a descriptor, and at least one of its
-/// verses is a row of ours. Its sex and tribe are what our own rows say, never the dataset's: the
-/// gendered word of a relationship it is the subject of, and the tribe it is of, is the patriarch of
-/// or descends from, however many generations up. Where our rows say nothing, or say two things,
-/// they are empty.
+/// A record qualifies when a dataset supplied it and the text has it by our own reading: at least one
+/// of its verses is a row of ours, or it stands in a relationship of ours, every one of which was read
+/// from a verse by this project. Its line under the name is its descriptor clauses where it has them,
+/// and otherwise the line this project wrote for it from its verses, which is its English line only
+/// where this project rendered that line into the readers' languages; where it has neither, it has no
+/// line. Its sex and tribe are what our own rows say: the gendered word of a relationship it is the
+/// subject of, and the tribe it is of, is the patriarch of or descends from, however many generations
+/// up. Where our rows say nothing, or say two things, they are empty.
 /// </para>
 /// </summary>
 internal static class OursOnlyRecords
@@ -53,8 +56,12 @@ internal static class OursOnlyRecords
 
     private static readonly HashSet<string> Tribal = [OfTribe, "of-people", "descendant-of", "descendants-of"];
 
-    /// <summary>What our own rows say of a qualifying record; null where they say nothing or disagree.</summary>
-    public sealed record OwnFacts(string? Sex, string? Tribe);
+    /// <summary>
+    /// What our own rows say of a qualifying record; null where they say nothing or disagree. The line
+    /// is this project's own English line, and null where the record has descriptor clauses or no line
+    /// of ours.
+    /// </summary>
+    public sealed record OwnFacts(string? Sex, string? Tribe, string? Line = null);
 
     private sealed record Clause(int EntityId, string Relation, int TargetId);
 
@@ -81,12 +88,6 @@ internal static class OursOnlyRecords
         }
 
         var ids = supplied.Keys.ToList();
-        var described = (await db.EntityDescriptors
-                .Where(d => ids.Contains(d.EntityId))
-                .Select(d => d.EntityId)
-                .Distinct()
-                .ToListAsync(cancellationToken))
-            .ToHashSet();
         var ours = (await db.EntityVerses
                 .Where(v => ids.Contains(v.EntityId))
                 .Select(v => new { v.EntityId, v.Source })
@@ -95,11 +96,33 @@ internal static class OursOnlyRecords
             .Where(v => Datasets.Of(v.Source) == Datasets.Own)
             .Select(v => v.EntityId)
             .ToHashSet();
-        var qualifying = ids.Where(id => described.Contains(id) && ours.Contains(id)).ToList();
+        var tied = (await db.EntityRelationships
+                .Where(r => (ids.Contains(r.FromEntityId) || ids.Contains(r.ToEntityId))
+                            && !r.Source.StartsWith(ShownVerses.Witness))
+                .Select(r => new { r.FromEntityId, r.ToEntityId })
+                .ToListAsync(cancellationToken))
+            .SelectMany(r => new[] { r.FromEntityId, r.ToEntityId })
+            .ToHashSet();
+        var qualifying = ids.Where(id => ours.Contains(id) || tied.Contains(id)).ToList();
         if (qualifying.Count == 0)
         {
             return [];
         }
+
+        var described = (await db.EntityDescriptors
+                .Where(d => qualifying.Contains(d.EntityId))
+                .Select(d => d.EntityId)
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .ToHashSet();
+        var bare = qualifying.Where(id => !described.Contains(id)).ToList();
+        var lines = bare.Count == 0
+            ? []
+            : await db.EntityDistinguishers
+                .Where(d => bare.Contains(d.EntityId) && d.English == d.Entity!.Distinguisher)
+                .Select(d => new { d.EntityId, d.English })
+                .Distinct()
+                .ToDictionaryAsync(d => d.EntityId, d => d.English, cancellationToken);
 
         var clauses = await OurClauses(db, qualifying, cancellationToken);
         var tribes = await TribeNames(db, cancellationToken);
@@ -120,13 +143,14 @@ internal static class OursOnlyRecords
                     tribes.GetValueOrDefault(id)
                     ?? (named.Count == 1
                         ? named[0]
-                        : named.Count == 0 ? descent.GetValueOrDefault(id) ?? fathers.GetValueOrDefault(id) : null));
+                        : named.Count == 0 ? descent.GetValueOrDefault(id) ?? fathers.GetValueOrDefault(id) : null),
+                    lines.GetValueOrDefault(id));
             });
     }
 
-    /// <summary>A dataset's line, or nothing where the record is ours.</summary>
+    /// <summary>A dataset's line, or our own where the record is ours; never the dataset's for a record of ours.</summary>
     public static string? Line(IReadOnlyDictionary<string, OwnFacts> ours, string? slug, string? line) =>
-        slug is not null && ours.ContainsKey(slug) ? null : line;
+        slug is not null && ours.TryGetValue(slug, out var own) ? own.Line : line;
 
     private static string? Sex(List<Clause> clauses)
     {

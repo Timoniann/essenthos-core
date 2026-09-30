@@ -491,6 +491,29 @@
       "why": "Both records are Joses the brother of Jesus, named with James, Simon and Judas in Matthew 13:55 and Mark 6:3; the second holds only these two verses, both of them under the first.",
       "confidence": 0.95,
       "source": "Essenthos: the records the portrait briefs of 2026-09-27 found written twice, each read against its verses by claude-opus-5-5, 2026-09-27"
+    },
+    {
+      "strongNumber": "H6130",
+      "keeps": "akan",
+      "folds": "jucam",
+      "why": "Genesis 36:27 names the sons of Ezer Bilhan, Zaavan and Akan in the Hebrew, and Balaam, Zucam and Jucam in the Septuagint: Jucam is Akan as the Greek writes him, as Zucam is Zaavan, and the Greek word already names Akan.",
+      "source": "Essenthos: the records BibleData supplied that rested on it alone, each read against its verses by claude-opus-5-5 on the project owner's instruction, 2026-09-30"
+    },
+    {
+      "strongNumber": "H5820",
+      "keeps": "azmaveth-5",
+      "folds": "azmaveth-4",
+      "why": "'The children of Azmaveth, forty and two' (Ezra 2:24) are 'the men of Beth-azmaveth, forty and two' (Nehemiah 7:28): the same entry of one list, which Nehemiah writes as the town, and the town's record already holds it.",
+      "source": "Essenthos: the records BibleData supplied that rested on it alone, each read against its verses by claude-opus-5-5 on the project owner's instruction, 2026-09-30",
+      "acrossKinds": true
+    },
+    {
+      "strongNumber": "G3962",
+      "keeps": "yhvh",
+      "folds": "yhvh-2",
+      "why": "The dataset's second YHVH, God the Father as the New Testament names him, is the God of Israel: the project owner ruled that the Father is YHVH, and the record is folded into YHVH's.",
+      "source": "the project owner, ruled 2026-09-30",
+      "method": "manual"
     }
   ],
   "declined": [
