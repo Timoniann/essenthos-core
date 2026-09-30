@@ -177,8 +177,11 @@ internal enum EvidentiaAttachmentPlacement
 /// periphrastic <em>ἦσαν</em> of its own rather than part of the verb after it; an auxiliary on the
 /// negation after it (<em>will not</em>, 89-91%); a copula on its predicate where the original writes
 /// no <em>be</em> (81-83%); <em>there is</em> on אֵין (86%); and Greek <em>of</em> on its genitive
-/// noun (55-64%). The roles come from the English UDPipe parse, so every other source language is
-/// left alone.</para>
+/// noun (55-64%).</para>
+///
+/// <para>All of that is English. German and Spanish attach two kinds only, the two that write a verb's
+/// inflection as a word: the subject pronoun and the auxiliary of tense, by the German and Spanish
+/// UDPipe parses (<see cref="ClassifyInflection"/>). Every other source language is left alone.</para>
 /// </summary>
 internal static class EvidentiaAttachedWords
 {
@@ -192,6 +195,49 @@ internal static class EvidentiaAttachedWords
     private static readonly HashSet<string> Quantifiers = new(StringComparer.OrdinalIgnoreCase) { "all", "every", "each", "any" };
 
     private const string EnglishLanguage = "eng";
+
+    private const string GermanLanguage = "deu";
+
+    private const string SpanishLanguage = "spa";
+
+    /// <summary>
+    /// The auxiliaries of German and Spanish that write an original verb's tense, mood or voice as a word of
+    /// their own: <em>wird sagen</em>, <em>hat gesagt</em>, <em>ist gekommen</em>, <em>sollst töten</em>,
+    /// <em>ha dicho</em>, <em>fue hecho</em>, each with the forms of the verb it is the tense of: with
+    /// any other it is a verb of its own, as in <em>ich hatte euch viel zu schreiben</em>, or the parse
+    /// hung it on the verb of another clause. <em>ha de morir</em> is Spanish's own future. The modals
+    /// that are words of their own in the original - <em>können</em>, <em>poder</em> for יכל and δύναμαι -
+    /// are not here.
+    /// </summary>
+    private static readonly Dictionary<string, string[]> InflectionAuxiliaries = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["werden"] = [ParticipleForm, InfinitiveForm],
+        ["haben"] = [ParticipleForm],
+        ["sein"] = [ParticipleForm],
+        ["sollen"] = [InfinitiveForm],
+        ["haber"] = [ParticipleForm, InfinitiveForm],
+        ["ser"] = [ParticipleForm],
+    };
+
+    private const string ParticipleForm = "Part";
+
+    private const string InfinitiveForm = "Inf";
+
+    private const string PassiveSubjectRelation = "nsubj:pass";
+
+    private const string GreekBe = "G1510";
+
+    /// <summary>μέλλω, <em>be about to</em>.</summary>
+    private const string GreekAboutTo = "G3195";
+
+    private const string HebrewBe = "H1961";
+
+    /// <summary>BHSA's active and passive participle.</summary>
+    private static readonly HashSet<string> HebrewParticiples = new(StringComparer.OrdinalIgnoreCase) { "ptca", "ptcp" };
+
+    private const int OwnAuxiliaryReach = 2;
+
+    private const string NeuterGender = "Neut";
 
     private const string HebrewLanguage = "hbo";
 
@@ -303,7 +349,7 @@ internal static class EvidentiaAttachedWords
         var taken = placed.Select(proposal => proposal.Target.Token.Id).ToHashSet();
         var proposals = new List<EvidentiaProposal>();
         var verses = source
-            .Where(analysis => analysis.Token.Language.Equals(EnglishLanguage, StringComparison.OrdinalIgnoreCase))
+            .Where(analysis => Attaches(analysis.Token.Language))
             .DistinctBy(analysis => analysis.Token.Id)
             .GroupBy(analysis => analysis.Token.Address)
             .Select(verse => verse.OrderBy(analysis => analysis.Token.Position).ToList())
@@ -393,7 +439,7 @@ internal static class EvidentiaAttachedWords
                 Math.Max(0, headProposal.Confidence - ConfidenceBelowHead),
                 new EvidentiaDecisionTrace(
                     "attached",
-                    $"{attachment} of '{head.Token.Surface}'",
+                    $"{attachment} of '{head.Token.Surface}'{ParseCredit(words[index])}",
                     headProposal.Trace?.Evidence ?? []),
                 headProposal);
             proposals.Add(proposal);
@@ -427,6 +473,11 @@ internal static class EvidentiaAttachedWords
     private static IEnumerable<(EvidentiaAttachment, EvidentiaAnalysis)> Fallbacks(IReadOnlyList<EvidentiaAnalysis> words, int index)
     {
         var word = words[index];
+        if (!IsEnglish(word))
+        {
+            yield break;
+        }
+
         if (word.Token.Surface.Equals(Let, StringComparison.OrdinalIgnoreCase))
         {
             for (var next = index + 1; next < words.Count && next - index <= 2; next++)
@@ -523,8 +574,13 @@ internal static class EvidentiaAttachedWords
             ? attachment
             : null;
 
-    internal static EvidentiaAttachmentPlacement Placement(EvidentiaAttachment attachment, string witnessLanguage) =>
-        witnessLanguage.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase)
+    internal static EvidentiaAttachmentPlacement Placement(
+        EvidentiaAttachment attachment,
+        string witnessLanguage,
+        string sourceLanguage = EnglishLanguage) =>
+        !sourceLanguage.Equals(EnglishLanguage, StringComparison.OrdinalIgnoreCase)
+            ? InflectionPlacement(attachment, witnessLanguage)
+            : witnessLanguage.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase)
             ? attachment switch
             {
                 EvidentiaAttachment.Article or EvidentiaAttachment.Conjunction or EvidentiaAttachment.Preposition =>
@@ -570,6 +626,11 @@ internal static class EvidentiaAttachedWords
         int index)
     {
         var word = words[index];
+        if (!IsEnglish(word))
+        {
+            return ClassifyInflection(words, word);
+        }
+
         var partOfSpeech = Class(word);
         if (partOfSpeech == "det" && Articles.Contains(word.Token.Surface))
         {
@@ -702,8 +763,13 @@ internal static class EvidentiaAttachedWords
         IReadOnlySet<long> taken)
     {
         var word = words[index];
-        return Placement(attachment, rendering.Token.Language) switch
+        return Placement(attachment, rendering.Token.Language, word.Token.Language) switch
         {
+            EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb && !IsEnglish(word)
+                && OwnAuxiliary(rendering, verse) is { } own =>
+                taken.Contains(own.Token.Id) ? null : own,
+            EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb && !IsEnglish(word)
+                && Class(rendering) != "verb" => null,
             EvidentiaAttachmentPlacement.Rendering => rendering,
             EvidentiaAttachmentPlacement.Dependent => index > 0
                 && placedBySource.TryGetValue(words[index - 1].Token.Id, out var governing)
@@ -714,7 +780,7 @@ internal static class EvidentiaAttachedWords
             EvidentiaAttachmentPlacement.PhraseStart => PhraseStart(words, index, verse, placedBySource, taken),
             EvidentiaAttachmentPlacement.AgreeingRendering => afterVerb
                 ? PrepositionAfter(word, rendering, verse, taken)
-                : Agreeing(attachment, word, rendering, verse),
+                : Agreeing(attachment, word, rendering, verse, taken),
             EvidentiaAttachmentPlacement.Infinitive => Infinitive(rendering, verse, taken),
             EvidentiaAttachmentPlacement.BeBeside => BeBeside(rendering, verse, taken),
             EvidentiaAttachmentPlacement.ConjunctionBefore => ConjunctionBefore(rendering, verse, taken),
@@ -854,6 +920,40 @@ internal static class EvidentiaAttachedWords
                 && string.Equals(Feature(word, "tense"), InfinitiveAbsoluteTense, StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// The original's own auxiliary, where it writes a tense in two words: then the auxiliary of <em>war
+    /// gelegt</em> or <em>había de venir</em> is that word and not the verb. Greek's εἰμί beside a
+    /// participle or an adjective (<em>ἦν βεβλημένος</em>, <em>κλητοῖς οὖσιν</em>) and its μέλλω before an
+    /// infinitive (<em>ὁ μέλλων ἔρχεσθαι</em>); Hebrew's היה beside a participle (<em>וָאֱהִי נָגוּעַ</em>).
+    /// After the word only directly: one further on it opens the next clause, <em>ἐγερθείς, ὅς ἐστιν</em>.
+    /// </summary>
+    private static EvidentiaAnalysis? OwnAuxiliary(EvidentiaAnalysis rendering, IReadOnlyList<EvidentiaAnalysis> verse)
+    {
+        var at = IndexOf(verse, rendering);
+        var greek = rendering.Token.Language.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase);
+        var before = verse.Skip(Math.Max(0, at - OwnAuxiliaryReach)).Take(Math.Min(at, OwnAuxiliaryReach)).Reverse();
+        if (greek && IsInfinitive(rendering))
+        {
+            return before.FirstOrDefault(word => word.Token.StrongNumber == GreekAboutTo);
+        }
+
+        if (!(greek ? IsParticiple(rendering) || Class(rendering) == "adj" : IsHebrewParticiple(rendering)))
+        {
+            return null;
+        }
+
+        var be = greek ? GreekBe : HebrewBe;
+        return before.Concat(verse.Skip(at + 1).Take(1)).FirstOrDefault(word => word.Token.StrongNumber == be);
+    }
+
+    private static bool IsFinite(EvidentiaAnalysis word) => Class(word) == "verb" && Feature(word, "person") is not null;
+
+    private static bool IsParticiple(EvidentiaAnalysis word) =>
+        string.Equals(Feature(word, "mood"), "participle", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsHebrewParticiple(EvidentiaAnalysis word) =>
+        Feature(word, "tense") is { } tense && HebrewParticiples.Contains(tense);
+
     private static bool IsInfinitive(EvidentiaAnalysis word) =>
         EvidentiaPersonAgreement.IsInfinitive(word)
         || string.Equals(Feature(word, "mood"), "infinitive", StringComparison.OrdinalIgnoreCase);
@@ -881,31 +981,120 @@ internal static class EvidentiaAttachedWords
     /// participle names none - or in the suffix of a Hebrew infinitive; a possessive or an object in
     /// the suffix.
     /// </summary>
+    private static bool Attaches(string language) =>
+        language.Equals(EnglishLanguage, StringComparison.OrdinalIgnoreCase)
+        || language.Equals(GermanLanguage, StringComparison.OrdinalIgnoreCase)
+        || language.Equals(SpanishLanguage, StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>Whose parse said the word belongs to that verb; it goes into the note of every claim written from it.</summary>
+    private static string ParseCredit(EvidentiaAnalysis word) =>
+        word.Token.Language.Equals(GermanLanguage, StringComparison.OrdinalIgnoreCase) ? GermanParse
+        : word.Token.Language.Equals(SpanishLanguage, StringComparison.OrdinalIgnoreCase) ? SpanishParse
+        : string.Empty;
+
+    private const string GermanParse =
+        ", by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)";
+
+    private const string SpanishParse =
+        ", by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)";
+
+    private static bool IsEnglish(EvidentiaAnalysis word) =>
+        word.Token.Language.Equals(EnglishLanguage, StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// A German or Spanish word that writes the inflection of its verb: the subject pronoun of <em>er
+    /// sprach</em> and <em>él dijo</em>, which a Hebrew or Greek verb carries in its ending, and the
+    /// auxiliary of <em>wird sagen</em> or <em>ha dicho</em>, which it carries in its tense. The verb is
+    /// the one the parse makes it depend on, since German puts the verb second or last and the pronoun
+    /// after it as often as before. <em>es</em> is left alone, as <em>it</em> is: it is as often the
+    /// empty subject of <em>es geschah</em>; so is a pronoun after a preposition, which the parse takes
+    /// for the subject of <em>envió á él</em>. An auxiliary belongs to a participle or an infinitive; one
+    /// the parse hangs on a finite verb is the verb of another clause, or the <em>he</em> of <em>he aquí</em>.
+    /// </summary>
+    private static (EvidentiaAttachment? Attachment, EvidentiaAnalysis? Head) ClassifyInflection(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        EvidentiaAnalysis word)
+    {
+        if (Syntactic(words, word.Token.SyntacticHead) is not { } verb || Class(verb) != "verb")
+        {
+            return (null, null);
+        }
+
+        var partOfSpeech = Class(word);
+        var at = IndexOf(words, word);
+        if (partOfSpeech == "pron" && word.Token.Relation is SubjectRelation or PassiveSubjectRelation
+            && !(at > 0 && Class(words[at - 1]) == "adp" && !Punctuated(words[at - 1]))
+            && Feature(word, "PronType") == "Prs" && Feature(word, "Poss") is null && Feature(word, "Reflex") is null
+            && Feature(word, "Gender") != NeuterGender && EvidentiaPersonAgreement.Person(word) is not null)
+        {
+            return (EvidentiaAttachment.SubjectPronoun, verb);
+        }
+
+        return partOfSpeech == "aux" && word.Token.Relation is { } relation && AuxiliaryRelations.Contains(relation)
+            && word.Token.Lemma is { } lemma && InflectionAuxiliaries.TryGetValue(lemma, out var forms)
+            && Feature(verb, "VerbForm") is { } form && forms.Contains(form)
+                ? (EvidentiaAttachment.AuxiliaryVerb, verb)
+                : (null, null);
+    }
+
+    /// <summary>
+    /// A German or Spanish subject pronoun goes on the verb whose ending names its person, and an
+    /// auxiliary on the verb itself, in Hebrew and in Greek alike, since the verb the main verb was
+    /// placed on is the one whose tense the auxiliary writes; <see cref="OwnAuxiliary"/> is the exception.
+    /// Where the main verb was placed on a word that is no verb, the auxiliary is left alone: the parse
+    /// reads <em>era sábado</em> and <em>no había agua</em> as a tense of a participle.
+    /// </summary>
+    private static EvidentiaAttachmentPlacement InflectionPlacement(EvidentiaAttachment attachment, string witnessLanguage) =>
+        !witnessLanguage.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
+        && !witnessLanguage.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase)
+            ? EvidentiaAttachmentPlacement.None
+            : attachment switch
+            {
+                EvidentiaAttachment.SubjectPronoun => EvidentiaAttachmentPlacement.AgreeingRendering,
+                EvidentiaAttachment.AuxiliaryVerb => EvidentiaAttachmentPlacement.Rendering,
+                _ => EvidentiaAttachmentPlacement.None,
+            };
+
     private static EvidentiaAnalysis? Agreeing(
         EvidentiaAttachment attachment,
         EvidentiaAnalysis pronoun,
         EvidentiaAnalysis rendering,
-        IReadOnlyList<EvidentiaAnalysis> verse) =>
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken) =>
         attachment switch
         {
             EvidentiaAttachment.SubjectPronoun when Class(rendering) == "verb"
                 && (EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: false)
                     || EvidentiaPersonAgreement.IsInfinitive(rendering) && EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: true))
-                && !WritesTheSubjectApart(pronoun, rendering, verse) => rendering,
+                && !WritesTheSubjectApart(pronoun, rendering, verse, taken) => rendering,
             EvidentiaAttachment.PossessivePronoun or EvidentiaAttachment.ObjectPronoun
                 when EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: true) => rendering,
             _ => null,
         };
 
-    /// <summary>A pronoun of the same person standing by the verb, which is then where the subject is written.</summary>
+    /// <summary>
+    /// A pronoun of the same person standing by the verb, which is then where the subject is written.
+    /// A German or Spanish pronoun stands as far from its verb as the clause is long - <em>Tú, con todo,
+    /// por tus muchas misericordias no los abandonaste</em> - so there a pronoun of the original that no
+    /// word renders yet counts anywhere in the verse, and so does the Greek article standing for the
+    /// person before the verb, with no other finite verb between them: <em>οἱ δὲ εἶπαν</em> is <em>y
+    /// ellos dijeron</em>, and <em>οἱ δὲ εὐθέως ἀφέντες τὰ δίκτυα ἠκολούθησαν</em> is <em>ellos siguieron</em>.
+    /// </summary>
     private static bool WritesTheSubjectApart(
         EvidentiaAnalysis pronoun,
         EvidentiaAnalysis verb,
-        IReadOnlyList<EvidentiaAnalysis> verse) =>
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken) =>
         verse.Any(word => word.Token.Id != verb.Token.Id
-            && Math.Abs(word.Token.Position - verb.Token.Position) <= SubjectPronounReach
+            && (Math.Abs(word.Token.Position - verb.Token.Position) <= SubjectPronounReach
+                || !IsEnglish(pronoun) && !taken.Contains(word.Token.Id))
             && Class(word) == "pron"
-            && EvidentiaPersonAgreement.CouldBeTheSubject(pronoun, word));
+            && EvidentiaPersonAgreement.CouldBeTheSubject(pronoun, word))
+        || !IsEnglish(pronoun) && EvidentiaAuxiliaryWords.Mark(verse).Any(word =>
+            word.Role == EvidentiaAuxiliaryRole.PronominalArticle
+            && word.Token.Position < verb.Token.Position
+            && !verse.Any(between => between.Token.Position > word.Token.Position
+                && between.Token.Position < verb.Token.Position && IsFinite(between)));
 
     private static EvidentiaAnalysis? PrepositionAfter(
         EvidentiaAnalysis pronoun,
