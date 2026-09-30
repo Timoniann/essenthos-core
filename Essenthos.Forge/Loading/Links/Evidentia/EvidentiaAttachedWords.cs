@@ -569,7 +569,7 @@ internal static class EvidentiaAttachedWords
         return pairs;
     }
 
-    private static EvidentiaAttachment? Attachment(EvidentiaProposal proposal) =>
+    internal static EvidentiaAttachment? Attachment(EvidentiaProposal proposal) =>
         proposal.Trace?.Rationale.Split(' ', 2)[0] is { } name && Enum.TryParse<EvidentiaAttachment>(name, out var attachment)
             ? attachment
             : null;

@@ -10,6 +10,11 @@ param(
     # held: nine chapters drawn at random (seed 20260928) from outside every passage measured before,
     # which no rule was chosen or kept on: val and val2 have since been used to keep rules, so held is
     # the one figure still free of that. Measure on it, never tune on it.
+    # held2: nine more, drawn the same way (random.Random(202609300888), six Old Testament chapters and then
+    # three New Testament ones) from outside ind, val, val2, held and every chapter a later round read:
+    # Deuteronomy 23, 1 Kings 2, Job 19, Psalm 25, Proverbs 7, Jeremiah 21, Matthew 24, 2 Corinthians 5,
+    # Hebrews 13. Sealed: held has been measured many times since it was drawn, so held2 is run once per
+    # step, when the step's rules are fixed, and never read before that. It runs only with -Unseal.
     # self: the King James against its own stated links; selfstrong: the same with source Strong allowed.
     # kjv, kjvval: the King James against its own links with the index learned from the Berean instead,
     # so nothing the King James states teaches it (the passages of ind, and of val and val2).
@@ -24,7 +29,10 @@ param(
     [int] $NeighbourVerses = -1,
     # Further flags for every passage, e.g. '--entity-anchors', '--entity-names', '<name-consensus words.tsv>',
     # or the second pass: '--confirmed', '<folder of --confirmed-out files>', '--aligner-pairs', '<score --pairs files>'.
-    [string[]] $Extra = @()
+    [string[]] $Extra = @(),
+
+    # Says the one run of held2 a step is allowed is this one.
+    [switch] $Unseal
 )
 
 # Reads essenthos_core and writes nothing to it. Passages run one at a time: the owner works on this
@@ -74,6 +82,16 @@ $passages = @{
         @('held-matt', 'BSB', 'NESTLE1904', 40, 25, 25, ($independent + '--learn-from-strong-numbers')),
         @('held-heb', 'BSB', 'NESTLE1904', 58, 10, 10, ($independent + '--learn-from-strong-numbers')),
         @('held-rev', 'BSB', 'NESTLE1904', 66, 17, 17, ($independent + '--learn-from-strong-numbers')))
+    held2      = @(
+        @('held2-deut', 'BSB', 'BHSA', 5, 23, 23, $independent),
+        @('held2-1ki', 'BSB', 'BHSA', 11, 2, 2, $independent),
+        @('held2-job', 'BSB', 'BHSA', 18, 19, 19, $independent),
+        @('held2-ps', 'BSB', 'BHSA', 19, 25, 25, $independent),
+        @('held2-prov', 'BSB', 'BHSA', 20, 7, 7, $independent),
+        @('held2-jer', 'BSB', 'BHSA', 24, 21, 21, $independent),
+        @('held2-matt', 'BSB', 'NESTLE1904', 40, 24, 24, ($independent + '--learn-from-strong-numbers')),
+        @('held2-2cor', 'BSB', 'NESTLE1904', 47, 5, 5, ($independent + '--learn-from-strong-numbers')),
+        @('held2-heb', 'BSB', 'NESTLE1904', 58, 13, 13, ($independent + '--learn-from-strong-numbers')))
     val2       = @(
         @('val2-exo', 'BSB', 'BHSA', 2, 21, 23, $independent),
         @('val2-isa', 'BSB', 'BHSA', 23, 40, 42, $independent),
@@ -159,6 +177,32 @@ function RouteSummary([string] $name, $routes) {
             (Ratio $r.Agreed $r.Compared), (Ratio $r.Compared $r.Links)
     }
 }
+# The lines on the split key and by state: each a label and a run of part/whole counts, summed label by label.
+$splitLines = '^(?<label>split key, pairs|by state, [^:]+|by rule, [^:]+|cascade): '
+function Fractions([string] $report) {
+    $found = [ordered]@{}
+    foreach ($match in (Select-String -LiteralPath $report -Pattern $splitLines)) {
+        $found[$match.Matches[0].Groups['label'].Value] = @([regex]::Matches($match.Line, '([\d,]+)/([\d,]+)') |
+            ForEach-Object { , @((Number $_.Groups[1].Value), (Number $_.Groups[2].Value)) })
+    }
+    $found
+}
+function AddFractions($total, $passage) {
+    foreach ($label in $passage.Keys) {
+        if (-not $total.Contains($label)) { $total[$label] = @($passage[$label] | ForEach-Object { , @(0, 0) }) }
+        for ($i = 0; $i -lt $passage[$label].Count; $i++) {
+            $total[$label][$i][0] += $passage[$label][$i][0]
+            $total[$label][$i][1] += $passage[$label][$i][1]
+        }
+    }
+}
+# split key, pairs: precision, recall, safe tier. by state: share of words, right, safe tier. by rule: right.
+# cascade: head placed, head unplaced with a key counterpart.
+function FractionSummary([string] $name, $fractions) {
+    foreach ($label in $fractions.Keys) {
+        '{0,-10} {1}: {2}' -f $name, $label, (($fractions[$label] | ForEach-Object { Ratio $_[0] $_[1] }) -join '; ')
+    }
+}
 function Ratio($part, $whole) { '{0:N0}/{1:N0} = {2:P2}' -f $part, $whole, ($part / [Math]::Max(1, $whole)) }
 function ByWord([string] $name, $c) {
     '{0,-10} by word: coverage {1} -> {2}, original {10} -> {11}; links by pair {3}, paired {4}; supplied {5}; unrendered {6}; right source {7}, original {8}, both {9}' -f $name,
@@ -172,10 +216,12 @@ function ByWord([string] $name, $c) {
 Push-Location $snapshot
 try {
     foreach ($set in $Runs -split ',') {
-        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, kjv, kjvval, self, selfstrong, bbe or nwt." }
+        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, bbe or nwt." }
+        if ($set -eq 'held2' -and -not $Unseal) { throw 'held2 is sealed: it is run once per step, with its rules fixed. Pass -Unseal when this is that run.' }
         $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0; Seconds = 0.0 }
         $words = @{}
         $routes = [ordered]@{}
+        $fractions = [ordered]@{}
         foreach ($passage in $passages[$set]) {
             $name, $from, $to, $book, $first, $last, $flags = $passage
             $prefix = Join-Path $directory $name
@@ -183,7 +229,8 @@ try {
             if ($first -gt 0) { $arguments += '--from-chapter', $first, '--to-chapter', $last }
             if ($NeighbourVerses -ge 0) { $arguments += '--neighbour-verses', $NeighbourVerses }
             $arguments += $Extra
-            $arguments += '--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json"
+            $arguments += '--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json",
+                '--key-doubts', "$prefix.key-doubts.json"
             $clock = [Diagnostics.Stopwatch]::StartNew()
             & dotnet @arguments *> "$prefix.report.txt"
             if ($LASTEXITCODE -ne 0) { throw "$name failed; see $prefix.report.txt" }
@@ -212,6 +259,7 @@ try {
                 foreach ($field in 'Agreed', 'Compared', 'Links') { $routes[$route][$field] += $passageRoutes[$route][$field] }
             }
             foreach ($key in $counts.Keys) { $words[$key] = [int]$words[$key] + $counts[$key] }
+            AddFractions $fractions (Fractions "$prefix.report.txt")
         }
         '{0,-10} precision {1,5}/{2,-5} = {3:P2}   recall {1,5}/{4,-5} = {5:P2}   safe tier {6}/{7} = {8:P2}' -f "$set all",
             $total.Correct, $total.Covered, ($total.Correct / [Math]::Max(1, $total.Covered)), $total.Gold,
@@ -219,6 +267,7 @@ try {
             ($total.SafeCorrect / [Math]::Max(1, $total.SafeCovered))
         ByWord "$set all" $words
         RouteSummary "$set all" $routes
+        FractionSummary "$set all" $fractions
         '{0,-10} wall {1:N1}s' -f "$set all", $total.Seconds
     }
 }

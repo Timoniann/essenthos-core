@@ -281,10 +281,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             Proposals = [.. syntaxTargetGlossReviewResolution.Proposals, .. named, .. filled],
         };
         lexicalProposals.AddRange(filled);
-        var attachedWords = EvidentiaAttachedWords.Resolve(
-            EvidentiaAuxiliaryWords.Mark(sourceAnalyses),
-            targetAnalyses,
-            lexicalProposals);
+        var markedSource = EvidentiaAuxiliaryWords.Mark(sourceAnalyses);
+        var attachedWords = EvidentiaAttachedWords.Resolve(markedSource, targetAnalyses, lexicalProposals);
         List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
         finalProposals.AddRange(frame.Near(EvidentiaCounterparts.Resolve(sourceAnalyses, targetAnalyses, finalProposals)));
 
@@ -311,6 +309,12 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         List<EvidentiaProposal> safeProposals =
             [.. finalProposals.Where(proposal => safe.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))];
         options.Learns?.Learn(lexicalProposals, safe);
+        var splitKey = EvidentiaKeySplit.Of(goldAnnotation, sourceAnalyses, targetAnalyses);
+        var acceptedOnSplitKey = EvidentiaWordScore.Of(
+            sourceAnalyses, targetAnalyses, finalProposals, absences, goldAnnotation with { Pairs = splitKey.Pairs }, out _).Accepted
+            ?? new HashSet<(long From, long To)>();
+        var states = EvidentiaStateScore.Of(
+            markedSource, finalProposals, absences, absenceVerdicts, goldAnnotation, splitKey, acceptedOnSplitKey, safe, out var wordStates);
         var words = EvidentiaSourceWordAccount.Classify(
             source,
             Analyse,
@@ -330,6 +334,18 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             : word.TargetWordId is { } placed && goldAnnotation.CoveredSourceWords.Contains(word.SourceWordId)
                 ? word with { CorrectByWord = byWord.Accepted?.Contains((word.SourceWordId, placed)) }
                 : word)];
+        words = [.. words.Select(word => wordStates.TryGetValue(word.SourceWordId, out var state)
+            ? word with
+            {
+                State = EvidentiaStateMeasure.Name(state.State),
+                Rule = state.Rule,
+                Grammatical = state.Grammatical,
+                HeadWordId = state.HeadWordId,
+                HeadState = state.HeadState?.ToString(),
+                CorrectOnSplitKey = state.State == EvidentiaWordState.Supplied ? null : state.Right,
+                SplitKey = options.RecordWords ? state.KeyTargets : null,
+            }
+            : word)];
         var routes = new List<EvidentiaRouteAgreement>();
         var routeVerdicts = new Dictionary<(long From, long To), List<string>>();
         foreach (var route in options.RouteTexts ?? [])
@@ -412,6 +428,10 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 : [])
         {
             Routes = routes,
+            States = states,
+            KeyDoubts = options.RecordKeyDoubts
+                ? EvidentiaKeyDoubts.Of(goldAnnotation, splitKey, sourceAnalyses, targetAnalyses, finalProposals, acceptedOnSplitKey)
+                : [],
             SecondPass = new EvidentiaSecondPassAccount(
                 filled.Count(proposal => proposal.Kind == EvidentiaProposalKind.ConfirmedRendering),
                 filled.Count(proposal => proposal.Kind == EvidentiaProposalKind.AlignerAndLexicalEvidence),
@@ -1218,6 +1238,10 @@ internal sealed record EvidentiaBookMeasurement(
     public EvidentiaSecondPassAccount SecondPass =>
         Chapters.Aggregate(default(EvidentiaSecondPassAccount), (running, next) => running + next.SecondPass);
 
+    public EvidentiaStateMeasure States => Chapters.Aggregate(EvidentiaStateMeasure.Empty, (running, next) => running + next.States);
+
+    public IReadOnlyList<EvidentiaKeyDoubtRecord> KeyDoubts => [.. Chapters.SelectMany(chapter => chapter.KeyDoubts)];
+
     /// <summary>
     /// The book's distinct content source forms, and how many of them the learned index holds an
     /// entry for. Unioned rather than summed: a form standing in four chapters is one word the
@@ -1266,7 +1290,8 @@ internal sealed record EvidentiaBookMeasurement(
                $"final abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
                $"content source words unplaced ({Abstention:P2})\n" +
                WordAccount.Report() + "\n" +
-               ByWord.Report() +
+               ByWord.Report() + "\n" +
+               States.Report() +
                (SecondPass == default ? string.Empty : "\n" + SecondPass.Report()) +
                string.Concat(EvidentiaRouteAgreement.Total(Chapters.SelectMany(chapter => chapter.Routes))
                    .Select(route => "\n" + route.Report())) +
@@ -1400,6 +1425,12 @@ internal sealed record EvidentiaChapterMeasurement(
 
     public EvidentiaSecondPassAccount SecondPass { get; init; }
 
+    /// <summary>The passage on the split key, by state, with the cascade.</summary>
+    public EvidentiaStateMeasure States { get; init; } = EvidentiaStateMeasure.Empty;
+
+    /// <summary>The cases for hand judgment; empty unless asked for.</summary>
+    public IReadOnlyList<EvidentiaKeyDoubtRecord> KeyDoubts { get; init; } = [];
+
     public double SourceCoverage => SourceWords == 0 ? 0 : (double)CoveredSourceWords / SourceWords;
     public double ContentCoverage => ContentSourceWords == 0
         ? 0
@@ -1474,7 +1505,8 @@ internal sealed record EvidentiaChapterMeasurement(
                $"\nfinal abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
                $"content source words unplaced ({Abstention:P1})\n" +
                WordAccount.Report() + "\n" +
-               ByWord.Report() +
+               ByWord.Report() + "\n" +
+               States.Report() +
                (SecondPass == default ? string.Empty : "\n" + SecondPass.Report()) +
                string.Concat(Routes.Select(route => "\n" + route.Report())) +
                (Samples.Count == 0 ? string.Empty : "\nsample:\n" + string.Join("\n", Samples));
@@ -1513,6 +1545,9 @@ internal sealed record EvidentiaChapterMeasurement(
 /// <param name="RecordWords">
 /// Keep every source word with its outcome, so two runs can be compared word by word.
 /// </param>
+/// <param name="RecordKeyDoubts">
+/// Keep the cases the split key, the key as loaded and the placements do not settle, for a person to judge.
+/// </param>
 /// <param name="Decisions">
 /// Handed each chapter's candidates and proposals as the measurement made them, so a stored run
 /// keeps exactly what was scored rather than a second selection that could drift from it.
@@ -1540,7 +1575,8 @@ internal sealed record EvidentiaMeasurementOptions(
     IReadOnlyList<int>? ConfirmedByRuns = null,
     IReadOnlyList<string>? ConfirmedByFiles = null,
     bool AlignerLinks = false,
-    EvidentiaAlignerPairs? AlignerPairs = null);
+    EvidentiaAlignerPairs? AlignerPairs = null,
+    bool RecordKeyDoubts = false);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.

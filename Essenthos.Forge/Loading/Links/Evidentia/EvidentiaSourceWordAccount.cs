@@ -59,7 +59,14 @@ internal sealed record EvidentiaWordRecord(
     string? Absence = null,
     bool? AbsenceCorrect = null,
     bool? CorrectByWord = null,
-    IReadOnlyList<EvidentiaGoldTargetTrace>? Gold = null);
+    IReadOnlyList<EvidentiaGoldTargetTrace>? Gold = null,
+    string? State = null,
+    string? Rule = null,
+    bool? Grammatical = null,
+    long? HeadWordId = null,
+    string? HeadState = null,
+    bool? CorrectOnSplitKey = null,
+    IReadOnlyList<long>? SplitKey = null);
 
 /// <summary>
 /// A word the answer key puts the source word on, whether another word's proposal holds it, and what
