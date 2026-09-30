@@ -10,13 +10,6 @@
       "why": "Not written while BibleData's rows for the pair said: abiel grandfather kish, which the owner removed; kish grandson abiel, which the owner removed. This corpus holds for the pair: kish son-of abiel (1SA 9:1, the owner)."
     },
     {
-      "entity": "ahitub-3",
-      "relation": "father-of",
-      "target": "zadok-3",
-      "reference": "1CH 6:12",
-      "why": "Not written while BibleData's rows for the pair said: ahitub-3 grandfather zadok-3, which the owner removed; zadok-3 grandson ahitub-3, which the owner removed. This corpus holds nothing else for the pair."
-    },
-    {
       "entity": "amok",
       "relation": "ancestor-of",
       "target": "eber-5",
@@ -157,13 +150,6 @@
       "why": "Not written while BibleData's rows for the pair said: gershom-2 father manasseh-2, which the owner removed; manasseh-2 son gershom-2, which the owner removed. This corpus holds for the pair: gershom-2 son-of manasseh-2 (JDG 18:30, the owner)."
     },
     {
-      "entity": "meraiah",
-      "relation": "descendant-of",
-      "target": "seraiah-6",
-      "reference": "NEH 12:12",
-      "why": "Not written while BibleData's rows for the pair said: meraiah son seraiah-6, which the owner removed; seraiah-6 father meraiah, which the owner removed. This corpus holds nothing else for the pair."
-    },
-    {
       "entity": "mica-2",
       "relation": "father-of",
       "target": "mattaniah-9",
@@ -218,13 +204,6 @@
       "target": "eran",
       "reference": "NUM 26:36",
       "why": "Not written while BibleData's rows for the pair said: eran son shuthelah; shuthelah father eran. This corpus holds for the pair: eran son-of shuthelah (NUM 26:36, a model)."
-    },
-    {
-      "entity": "zadok-3",
-      "relation": "son-of",
-      "target": "ahitub-3",
-      "reference": "1CH 6:12",
-      "why": "Not written while BibleData's rows for the pair said: ahitub-3 grandfather zadok-3, which the owner removed; zadok-3 grandson ahitub-3, which the owner removed. This corpus holds nothing else for the pair."
     },
     {
       "entity": "zechariah-6",
