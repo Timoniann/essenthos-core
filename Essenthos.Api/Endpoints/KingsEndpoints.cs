@@ -16,6 +16,12 @@ namespace Essenthos.Core.Endpoints;
 /// timeline from what is already in memory. What this adds is only what the periods cannot say:
 /// whose each reign is, which kingdom it is drawn under, and who the text says was there.
 /// </para>
+///
+/// <para>
+/// Beside each king goes what the text says of his doing, as the verses it is quoted from and never
+/// as their words, which a reader is shown in his own language; the age a verse gives him; and the
+/// carryings away and the return, each by the ruler's year its verse gives.
+/// </para>
 /// </summary>
 internal static class KingsEndpoints
 {
@@ -123,6 +129,34 @@ internal static class KingsEndpoints
             })
             .ToListAsync(cancellationToken);
 
+        var verdicts = (await db.RulerVerdicts
+                .Include(v => v.Witnesses).ThenInclude(w => w.Passages)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken))
+            .ToDictionary(v => v.EntityId);
+
+        var ages = (await db.StatedAges
+                .OrderBy(a => a.Position)
+                .ToListAsync(cancellationToken))
+            .ToLookup(a => a.EntityId);
+
+        var events = await db.ReignEvents
+            .OrderBy(e => e.Position).ThenBy(e => e.Id)
+            .Select(e => new
+            {
+                e.Slug,
+                e.Kind,
+                e.Realm,
+                Timeline = e.TimelineEvent == null ? null : e.TimelineEvent.Slug,
+                Ruler = e.Ruler!.Slug,
+                e.Year,
+                e.CanonicalBook,
+                e.CanonicalChapter,
+                e.CanonicalVerse,
+                e.EndVerse,
+            })
+            .ToListAsync(cancellationToken);
+
         var rulers = reigns.GroupBy(r => r.EntityId).Select(g => g.First()).ToList();
         var ruling = rulers.Select(r => r.EntityId).ToHashSet();
         var people = statements
@@ -159,7 +193,9 @@ internal static class KingsEndpoints
                             length.Days,
                             BookReferences.At(length.CanonicalBook, length.CanonicalChapter, length.CanonicalVerse)!)
                         : null,
-                    thrones.TryGetValue(r.EntityId, out var throne) ? Throne(throne, local) : null)),
+                    thrones.TryGetValue(r.EntityId, out var throne) ? Throne(throne, local) : null,
+                    verdicts.TryGetValue(r.EntityId, out var verdict) ? Verdict(verdict) : null,
+                    [.. ages[r.EntityId].Select(Age)])),
             ],
             [
                 .. people.Select(p => new ReignPersonResponse(
@@ -176,7 +212,8 @@ internal static class KingsEndpoints
                                     f.Place, f.PlaceName!, names.GetValueOrDefault(f.PlaceEntityId!.Value)),
                             BookReferences.At(f.CanonicalBook, f.CanonicalChapter, f.CanonicalVerse)!,
                             f.EndVerse)),
-                    ])),
+                    ],
+                    [.. ages[p.Id].Select(Age)])),
             ],
             [
                 .. statements.Select(s => new ReignStatementResponse(
@@ -190,8 +227,48 @@ internal static class KingsEndpoints
                     BookReferences.At(s.CanonicalBook, s.CanonicalChapter, s.CanonicalVerse)!,
                     s.EndVerse)),
             ],
-            await Lands(db, cancellationToken));
+            await Lands(db, cancellationToken),
+            [
+                .. events.GroupBy(e => e.Slug).Select(g => new ReignEventResponse(
+                    g.Key,
+                    g.First().Kind,
+                    g.First().Realm,
+                    g.First().Timeline,
+                    [
+                        .. g.Select(e => new ReignEventDatingResponse(
+                            e.Ruler,
+                            e.Year,
+                            BookReferences.At(e.CanonicalBook, e.CanonicalChapter, e.CanonicalVerse)!,
+                            e.EndVerse)),
+                    ])),
+            ]);
     }
+
+    private static RulerVerdictResponse Verdict(RulerVerdict verdict)
+    {
+        var witnesses = verdict.Witnesses.OrderBy(w => w.Position).ToList();
+        return new RulerVerdictResponse(
+            verdict.Mark,
+            witnesses.All(w => w.Basis == VerdictBases.Text) ? VerdictBases.Text : VerdictBases.Reading,
+            [
+                .. witnesses.Select(w => new VerdictSourceResponse(
+                    w.Witness,
+                    w.Mark,
+                    w.Basis,
+                    [
+                        .. w.Passages.OrderBy(p => p.Position).Select(p => new ReignPassageResponse(
+                            BookReferences.At(p.CanonicalBook, p.CanonicalChapter, p.CanonicalVerse)!,
+                            p.EndVerse)),
+                    ])),
+            ]);
+    }
+
+    private static StatedAgeResponse Age(StatedAge age) =>
+        new(
+            age.Kind,
+            age.Years,
+            age.About,
+            BookReferences.At(age.CanonicalBook, age.CanonicalChapter, age.CanonicalVerse)!);
 
     private static ThroneNameResponse? Throne(IReadOnlyList<ThroneName> rows, string? local)
     {
@@ -246,11 +323,13 @@ internal static class KingsEndpoints
 /// spoke though neither was a king.
 /// </param>
 /// <param name="Lands">The world-history periods and events drawn behind each nation's rulers.</param>
+/// <param name="Events">The carryings away of Israel and of Judah and the return, in the order they happened.</param>
 internal record KingsTimelineResponse(
     IList<RulerResponse> Rulers,
     IList<ReignPersonResponse> People,
     IList<ReignStatementResponse> Statements,
-    IList<ReignLandResponse> Lands);
+    IList<ReignLandResponse> Lands,
+    IList<ReignEventResponse> Events);
 
 /// <param name="LocalName">The name in the language asked for, where the corpus has one.</param>
 /// <param name="Realm">The kingdom he ruled: <c>united</c>, <c>israel</c>, <c>judah</c>, or a nation.</param>
@@ -259,6 +338,11 @@ internal record KingsTimelineResponse(
 /// <param name="Throne">
 /// The name he reigned under, where his record is headed by another: Jehoiakim for Eliakim.
 /// </param>
+/// <param name="Verdict">
+/// What the text says of his doing; null for a ruler of the nations, and for a king of whom the text
+/// tells nothing to judge him by.
+/// </param>
+/// <param name="Ages">The ages the text gives him; two where two verses give two.</param>
 internal record RulerResponse(
     string Slug,
     string Name,
@@ -266,7 +350,46 @@ internal record RulerResponse(
     string Realm,
     IList<RulerPeriodResponse> Reigns,
     ReignLengthResponse? Reigned,
-    ThroneNameResponse? Throne);
+    ThroneNameResponse? Throne,
+    RulerVerdictResponse? Verdict,
+    IList<StatedAgeResponse> Ages);
+
+/// <param name="Mark"><c>right</c>, <c>evil</c> or <c>mixed</c>, over everything the histories say of him.</param>
+/// <param name="Basis">
+/// <c>text</c> where every source says of him that he did right or did evil; <c>reading</c> where any
+/// of them is read from what it tells.
+/// </param>
+/// <param name="Sources">Samuel, Kings and Chronicles apart, each as it judges him.</param>
+internal record RulerVerdictResponse(string Mark, string Basis, IList<VerdictSourceResponse> Sources);
+
+/// <param name="Source"><c>samuel</c>, <c>kings</c> or <c>chronicles</c>.</param>
+/// <param name="Mark">The mark this history alone leaves him with.</param>
+/// <param name="Basis"><c>text</c> or <c>reading</c>.</param>
+/// <param name="Passages">The verses to quote, in the order they are to be read.</param>
+internal record VerdictSourceResponse(string Source, string Mark, string Basis, IList<ReignPassageResponse> Passages);
+
+/// <param name="EndVerse">The last verse, where it takes more than one to say it.</param>
+internal record ReignPassageResponse(VerseRefResponse Verse, int? EndVerse);
+
+/// <param name="Kind"><c>accession</c> for his age when he began to reign, <c>death</c> for his age when he died.</param>
+/// <param name="About">The verse says <em>about</em>.</param>
+internal record StatedAgeResponse(string Kind, int Years, bool About, VerseRefResponse Verse);
+
+/// <param name="Kind"><c>exile</c> or <c>return</c>.</param>
+/// <param name="Realm">The kingdom it befell: <c>israel</c> or <c>judah</c>.</param>
+/// <param name="Event">The same event's slug in <c>/v1/timeline</c>, where the chronologies date one.</param>
+/// <param name="Datings">Every verse that sets it in a ruler's days.</param>
+internal record ReignEventResponse(
+    string Slug,
+    string Kind,
+    string Realm,
+    string? Event,
+    IList<ReignEventDatingResponse> Datings);
+
+/// <param name="Ruler">The ruler whose year dates it.</param>
+/// <param name="Year">His year the verse gives; null where it says only that it was in his days.</param>
+/// <param name="EndVerse">The last verse, where it takes more than one to say it.</param>
+internal record ReignEventDatingResponse(string Ruler, int? Year, VerseRefResponse Verse, int? EndVerse);
 
 /// <param name="LocalName">The name in the language asked for, where one is held.</param>
 /// <param name="Verse">Where the text gives him the name.</param>
@@ -285,7 +408,13 @@ internal record RulerPeriodResponse(string Period, string? Over, bool Shared, bo
 /// For a prophet, where the text says he prophesied, came from and was sent, in the order a reader
 /// meets them; empty for anyone else.
 /// </param>
-internal record ReignPersonResponse(string Slug, string Name, string? LocalName, IList<ProphetFieldResponse> Fields);
+/// <param name="Ages">The ages the text gives him, which for a prophet it almost never does.</param>
+internal record ReignPersonResponse(
+    string Slug,
+    string Name,
+    string? LocalName,
+    IList<ProphetFieldResponse> Fields,
+    IList<StatedAgeResponse> Ages);
 
 /// <param name="Realm">
 /// <c>united</c>, <c>israel</c>, <c>judah</c>, <c>exile</c>, <c>return</c>, or the nation he was sent to.

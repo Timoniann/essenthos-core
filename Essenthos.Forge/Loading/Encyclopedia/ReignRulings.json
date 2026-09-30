@@ -1,0 +1,158 @@
+{
+  "decidedBy": "the project owner, 2026-09-30, asking that each king of the united kingdom, of Israel and of Judah carry what the text says of his doing — right, evil or mixed — with the verse it is said in, the age the text gives him, and the carryings away and the return",
+  "policy": "A king is marked right, evil or mixed. Where the text says of the king himself that he did right, or did evil, in the sight of the LORD — in its own narration, or in a word of the LORD to him — the mark rests on the text and cites those verses. A right the text qualifies is mixed: 'yet not like David', 'only the high places were not removed', a good beginning with a bad end, or a bad beginning with a good end. Wholly evil is evil, and an evil the text only lessens ('but not as the kings of Israel that were before him') stays evil. David is right, with the exception 1KI 15:5 itself names; Saul and Solomon are mixed. Where the text says neither of a king, the mark is a reading of what it tells of him: it is marked a reading, cites the verses it rests on and gives its reason in a sentence. Samuel, Kings and Chronicles are judged apart. A second history stands beside the first where it passes its own judgment on the king or tells of him what the first does not, and a king on whom the two part is mixed. A king of whom the text tells nothing to judge him by is listed unmarked and given no mark. An age is recorded only where a verse gives it, as the Hebrew has it, and two verses giving two ages are both kept. A carrying away or a return is dated only by the ruler's year its verse gives, and names the event the chronologies already date where they hold it.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's request of 2026-09-30 that each king carry the text's judgment of him with its verse, the age the text gives him, and the carryings away and the return dated by the rulers' years",
+  "verdicts": [
+    {"king": "saul", "mark": "mixed", "witnesses": [
+      {"book": "samuel", "mark": "mixed", "basis": "reading", "verses": ["1SA 10:9", "1SA 11:13", "1SA 13:13-14", "1SA 15:11"], "reason": "God gave him another heart and wrought salvation in Israel by him; afterwards he kept not the commandment of the LORD, and the LORD repented of having made him king."},
+      {"book": "chronicles", "mark": "evil", "basis": "reading", "verses": ["1CH 10:13-14"], "reason": "The Chronicler tells of Saul only his death, and that he died for his transgression against the LORD."}]},
+    {"king": "david", "mark": "right", "witnesses": [
+      {"book": "kings", "mark": "right", "basis": "text", "verses": ["1KI 15:5"]}]},
+    {"king": "solomon", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "mixed", "basis": "text", "verses": ["1KI 3:3", "1KI 11:4-6"]},
+      {"book": "chronicles", "mark": "right", "basis": "reading", "verses": ["2CH 1:1", "2CH 11:17"], "reason": "The Chronicler tells no turning of Solomon's heart, and names the way of David and Solomon as the way Judah walked in while it did well."}]},
+    {"king": "jeroboam", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["1KI 13:33-34", "1KI 14:8-9"]}]},
+    {"king": "nadab-2", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["1KI 15:26"]}]},
+    {"king": "baasha", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["1KI 15:34"]}]},
+    {"king": "elah-2", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "reading", "verses": ["1KI 16:13"], "reason": "No judgment stands at his reign; the history charges him with the sins by which he and his father made Israel to sin."}]},
+    {"king": "zimri-2", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["1KI 16:19"]}]},
+    {"king": "omri", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["1KI 16:25-26"]}]},
+    {"king": "ahab", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["1KI 16:30", "1KI 21:25"]}]},
+    {"king": "ahaziah", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["1KI 22:52"]}]},
+    {"king": "jehoram-2", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 3:2-3"]}]},
+    {"king": "jehu-2", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "mixed", "basis": "text", "verses": ["2KI 10:29-31"]}]},
+    {"king": "jehoahaz", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 13:2"]}]},
+    {"king": "joash-4", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 13:11"]}]},
+    {"king": "jeroboam-2", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 14:24"]}]},
+    {"king": "zechariah", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 15:9"]}]},
+    {"king": "shallum", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "reading", "verses": ["2KI 15:10", "2KI 15:15"], "reason": "No judgment stands at his month; all the text tells of him is the conspiracy by which he slew the king and took the throne."}]},
+    {"king": "menachem", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 15:18"]}]},
+    {"king": "pekahiah", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 15:24"]}]},
+    {"king": "pekah", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 15:28"]}]},
+    {"king": "hoshea", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 17:2"]}]},
+    {"king": "rehoboam", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "reading", "verses": ["1KI 14:22-24"], "reason": "The judgment at his reign is spoken of Judah under him and not of the king by name, and nothing good is told of his seventeen years."},
+      {"book": "chronicles", "mark": "mixed", "basis": "text", "verses": ["2CH 11:17", "2CH 12:1", "2CH 12:12", "2CH 12:14"]}]},
+    {"king": "abijam", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "reading", "verses": ["1KI 15:3"], "reason": "The text does not say he did evil; it says he walked in all the sins of his father and his heart was not perfect with the LORD."},
+      {"book": "chronicles", "mark": "right", "basis": "reading", "verses": ["2CH 13:10-12", "2CH 13:18"], "reason": "The Chronicler passes no judgment and tells only his war with Jeroboam, where he speaks of keeping the charge of the LORD and Judah prevails because it relied on the LORD."}]},
+    {"king": "asa", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "mixed", "basis": "text", "verses": ["1KI 15:11", "1KI 15:14"]},
+      {"book": "chronicles", "mark": "mixed", "basis": "text", "verses": ["2CH 14:2", "2CH 16:7", "2CH 16:10", "2CH 16:12"]}]},
+    {"king": "jehoshaphat-3", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "mixed", "basis": "text", "verses": ["1KI 22:43"]},
+      {"book": "chronicles", "mark": "mixed", "basis": "text", "verses": ["2CH 19:2-3", "2CH 20:32-33", "2CH 20:35-37"]}]},
+    {"king": "jehoram", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 8:18"]},
+      {"book": "chronicles", "mark": "evil", "basis": "text", "verses": ["2CH 21:6"]}]},
+    {"king": "ahaziah-2", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 8:27"]},
+      {"book": "chronicles", "mark": "evil", "basis": "text", "verses": ["2CH 22:3-4"]}]},
+    {"king": "athaliah", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "reading", "verses": ["2KI 11:1"], "reason": "No judgment stands at her reign; all the text tells of it is that she destroyed all the seed royal."},
+      {"book": "chronicles", "mark": "evil", "basis": "reading", "verses": ["2CH 22:10", "2CH 24:7"], "reason": "The Chronicler tells the same slaughter and calls her that wicked woman, whose sons broke up the house of God."}]},
+    {"king": "joash-3", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "mixed", "basis": "text", "verses": ["2KI 12:2-3"]},
+      {"book": "chronicles", "mark": "mixed", "basis": "text", "verses": ["2CH 24:2", "2CH 24:17-18", "2CH 24:22"]}]},
+    {"king": "amaziah", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "mixed", "basis": "text", "verses": ["2KI 14:3-4"]},
+      {"book": "chronicles", "mark": "mixed", "basis": "text", "verses": ["2CH 25:2", "2CH 25:14", "2CH 25:27"]}]},
+    {"king": "azariah-3", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "mixed", "basis": "text", "verses": ["2KI 15:3-4"]},
+      {"book": "chronicles", "mark": "mixed", "basis": "text", "verses": ["2CH 26:4-5", "2CH 26:16"]}]},
+    {"king": "jotham-2", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "mixed", "basis": "text", "verses": ["2KI 15:34-35"]},
+      {"book": "chronicles", "mark": "right", "basis": "text", "verses": ["2CH 27:2", "2CH 27:6"]}]},
+    {"king": "ahaz", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 16:2-3"]},
+      {"book": "chronicles", "mark": "evil", "basis": "text", "verses": ["2CH 28:1-2", "2CH 28:22"]}]},
+    {"king": "hezekiah", "mark": "right", "witnesses": [
+      {"book": "kings", "mark": "right", "basis": "text", "verses": ["2KI 18:3", "2KI 18:5-6"]},
+      {"book": "chronicles", "mark": "right", "basis": "text", "verses": ["2CH 29:2", "2CH 31:20", "2CH 32:25-26"]}]},
+    {"king": "manasseh-3", "mark": "mixed", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 21:2", "2KI 21:16"]},
+      {"book": "chronicles", "mark": "mixed", "basis": "text", "verses": ["2CH 33:2", "2CH 33:12-13", "2CH 33:15-16"]}]},
+    {"king": "amon-2", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 21:20-22"]},
+      {"book": "chronicles", "mark": "evil", "basis": "text", "verses": ["2CH 33:22-23"]}]},
+    {"king": "josiah", "mark": "right", "witnesses": [
+      {"book": "kings", "mark": "right", "basis": "text", "verses": ["2KI 22:2", "2KI 23:25"]},
+      {"book": "chronicles", "mark": "right", "basis": "text", "verses": ["2CH 34:2", "2CH 34:33", "2CH 35:22"]}]},
+    {"king": "jehoahaz-2", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 23:32"]}]},
+    {"king": "eliakim-2", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 23:37"]},
+      {"book": "chronicles", "mark": "evil", "basis": "text", "verses": ["2CH 36:5"]}]},
+    {"king": "jehoiachin", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 24:9"]},
+      {"book": "chronicles", "mark": "evil", "basis": "text", "verses": ["2CH 36:9"]}]},
+    {"king": "mattaniah", "mark": "evil", "witnesses": [
+      {"book": "kings", "mark": "evil", "basis": "text", "verses": ["2KI 24:19"]},
+      {"book": "chronicles", "mark": "evil", "basis": "text", "verses": ["2CH 36:12-13"]}]}
+  ],
+  "unmarked": [
+    {"king": "ishbosheth", "verses": ["2SA 2:8-10", "2SA 4:11"], "reason": "The text judges nothing he did as king. Abner made him king, and David calls him a righteous person only of his murder in his own house."},
+    {"king": "tibni", "verses": ["1KI 16:21-22"], "reason": "The text tells only that half the people followed him, and that he died."}
+  ],
+  "ages": [
+    {"person": "ishbosheth", "kind": "accession", "years": 40, "verse": "2SA 2:10"},
+    {"person": "david", "kind": "accession", "years": 30, "verse": "2SA 5:4"},
+    {"person": "rehoboam", "kind": "accession", "years": 41, "verse": "1KI 14:21"},
+    {"person": "jehoshaphat-3", "kind": "accession", "years": 35, "verse": "1KI 22:42"},
+    {"person": "jehoram", "kind": "accession", "years": 32, "verse": "2KI 8:17"},
+    {"person": "ahaziah-2", "kind": "accession", "years": 22, "verse": "2KI 8:26"},
+    {"person": "ahaziah-2", "kind": "accession", "years": 42, "verse": "2CH 22:2"},
+    {"person": "joash-3", "kind": "accession", "years": 7, "verse": "2KI 11:21"},
+    {"person": "amaziah", "kind": "accession", "years": 25, "verse": "2KI 14:2"},
+    {"person": "azariah-3", "kind": "accession", "years": 16, "verse": "2KI 15:2"},
+    {"person": "jotham-2", "kind": "accession", "years": 25, "verse": "2KI 15:33"},
+    {"person": "ahaz", "kind": "accession", "years": 20, "verse": "2KI 16:2"},
+    {"person": "hezekiah", "kind": "accession", "years": 25, "verse": "2KI 18:2"},
+    {"person": "manasseh-3", "kind": "accession", "years": 12, "verse": "2KI 21:1"},
+    {"person": "amon-2", "kind": "accession", "years": 22, "verse": "2KI 21:19"},
+    {"person": "josiah", "kind": "accession", "years": 8, "verse": "2KI 22:1"},
+    {"person": "jehoahaz-2", "kind": "accession", "years": 23, "verse": "2KI 23:31"},
+    {"person": "eliakim-2", "kind": "accession", "years": 25, "verse": "2KI 23:36"},
+    {"person": "jehoiachin", "kind": "accession", "years": 18, "verse": "2KI 24:8"},
+    {"person": "jehoiachin", "kind": "accession", "years": 8, "verse": "2CH 36:9"},
+    {"person": "mattaniah", "kind": "accession", "years": 21, "verse": "2KI 24:18"},
+    {"person": "darius-2", "kind": "accession", "years": 62, "about": true, "verse": "DAN 5:31"}
+  ],
+  "events": [
+    {"slug": "exile-of-israel", "kind": "exile", "realm": "israel", "event": "theassyriancaptivityofisrael", "datings": [
+      {"ruler": "hoshea", "year": 9, "verse": "2KI 17:6"},
+      {"ruler": "hoshea", "year": 9, "verse": "2KI 18:10-11"},
+      {"ruler": "hezekiah", "year": 6, "verse": "2KI 18:10-11"}]},
+    {"slug": "first-taking-of-jerusalem", "kind": "exile", "realm": "judah", "event": "begindaniel2captivity", "datings": [
+      {"ruler": "eliakim-2", "year": 3, "verse": "DAN 1:1-2"},
+      {"ruler": "eliakim-2", "verse": "2KI 24:1"}]},
+    {"slug": "exile-of-jehoiachin", "kind": "exile", "realm": "judah", "event": "beginjehoiachin1exile", "datings": [
+      {"ruler": "nebuchadnezzar", "year": 8, "verse": "2KI 24:12"},
+      {"ruler": "jehoiachin", "verse": "2KI 24:14-15"}]},
+    {"slug": "fall-of-jerusalem", "kind": "exile", "realm": "judah", "event": "destructionofsolomonstemple", "datings": [
+      {"ruler": "mattaniah", "year": 11, "verse": "2KI 25:2"},
+      {"ruler": "nebuchadnezzar", "year": 19, "verse": "2KI 25:8-11"}]},
+    {"slug": "decree-of-cyrus", "kind": "return", "realm": "judah", "event": "cyrusdecree", "datings": [
+      {"ruler": "cyrus", "year": 1, "verse": "EZR 1:1-3"}]}
+  ]
+}

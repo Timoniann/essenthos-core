@@ -343,3 +343,246 @@ public class ThroneName
 
     public override string ToString() => $"ThroneName({EntityId} {Language} {Name})";
 }
+
+/// <summary>What the text says of a king's doing before the LORD.</summary>
+public static class RulerMarks
+{
+    /// <summary>He did what was right, and the text does not take it back.</summary>
+    public const string Right = "right";
+
+    /// <summary>He did evil, and nothing else is said of him.</summary>
+    public const string Evil = "evil";
+
+    /// <summary>
+    /// A right the text qualifies — <em>yet not like David</em>, <em>only the high places were not
+    /// removed</em> — or a reign that began one way and ended the other.
+    /// </summary>
+    public const string Mixed = "mixed";
+
+    public static readonly IReadOnlyList<string> All = [Right, Evil, Mixed];
+}
+
+/// <summary>What a mark rests on.</summary>
+public static class VerdictBases
+{
+    /// <summary>The text says of him that he did right, or did evil, in the sight of the LORD.</summary>
+    public const string Text = "text";
+
+    /// <summary>The text says neither of him, and the mark is read from what it tells.</summary>
+    public const string Reading = "reading";
+
+    public static readonly IReadOnlyList<string> All = [Text, Reading];
+}
+
+/// <summary>The histories that judge a king, each in its own words.</summary>
+public static class VerdictWitnesses
+{
+    public const string Samuel = "samuel";
+    public const string Kings = "kings";
+    public const string Chronicles = "chronicles";
+
+    public static readonly IReadOnlyList<string> All = [Samuel, Kings, Chronicles];
+}
+
+/// <summary>
+/// The mark a king is drawn with: right, evil or mixed, over everything the histories say of him.
+/// What each history says is a <see cref="RulerVerdictWitness"/>, and where Kings and Chronicles
+/// part — Manasseh, who in Chronicles humbles himself — both stand under the one mark.
+/// </summary>
+[Index(nameof(EntityId), IsUnique = true)]
+public class RulerVerdict
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int EntityId { get; set; }
+
+    public Entity? Entity { get; set; }
+
+    /// <summary>One of <see cref="RulerMarks"/>.</summary>
+    public required string Mark { get; set; }
+
+    public required string Source { get; set; }
+
+    public List<RulerVerdictWitness> Witnesses { get; set; } = [];
+
+    public override string ToString() => $"RulerVerdict({EntityId} {Mark})";
+}
+
+/// <summary>What one history says of a king, and the verses it says it in.</summary>
+[Index(nameof(VerdictId), nameof(Witness), IsUnique = true)]
+public class RulerVerdictWitness
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int VerdictId { get; set; }
+
+    public RulerVerdict? Verdict { get; set; }
+
+    /// <summary>One of <see cref="VerdictWitnesses"/>.</summary>
+    public required string Witness { get; set; }
+
+    /// <summary>One of <see cref="RulerMarks"/>.</summary>
+    public required string Mark { get; set; }
+
+    /// <summary>One of <see cref="VerdictBases"/>.</summary>
+    public required string Basis { get; set; }
+
+    public int Position { get; set; }
+
+    public List<RulerVerdictPassage> Passages { get; set; } = [];
+
+    public override string ToString() => $"RulerVerdictWitness({VerdictId} {Witness} {Mark})";
+}
+
+/// <summary>A verse, or a run of verses in one chapter, a witness's mark is quoted from.</summary>
+[Index(nameof(WitnessId))]
+public class RulerVerdictPassage
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int WitnessId { get; set; }
+
+    public RulerVerdictWitness? Witness { get; set; }
+
+    public int CanonicalBook { get; set; }
+
+    public int CanonicalChapter { get; set; }
+
+    public int CanonicalVerse { get; set; }
+
+    /// <summary>The last verse, where it takes more than one to say it.</summary>
+    public int? EndVerse { get; set; }
+
+    public int Position { get; set; }
+
+    public override string ToString() =>
+        $"RulerVerdictPassage({WitnessId} {CanonicalBook} {CanonicalChapter}:{CanonicalVerse})";
+}
+
+/// <summary>What a stated age is the age at.</summary>
+public static class StatedAgeKinds
+{
+    /// <summary>When he began to reign: <em>twenty and five years old was he when he began to reign</em>.</summary>
+    public const string Accession = "accession";
+
+    /// <summary>When he died.</summary>
+    public const string Death = "death";
+
+    public static readonly IReadOnlyList<string> All = [Accession, Death];
+}
+
+/// <summary>
+/// An age the text gives, in the verse that gives it: David thirty when he began to reign (2SA 5:4),
+/// Hezekiah twenty-five (2KI 18:2).
+///
+/// <para>
+/// Only the age is held. A year of birth is that age taken from the year a reckoning gives the
+/// accession, and so differs by reckoning. Where two verses give two ages — Ahaziah twenty-two in
+/// 2KI 8:26 and forty-two in 2CH 22:2 — both are rows, and neither is corrected by the other.
+/// </para>
+/// </summary>
+[Index(nameof(EntityId))]
+public class StatedAge
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public int EntityId { get; set; }
+
+    public Entity? Entity { get; set; }
+
+    /// <summary>One of <see cref="StatedAgeKinds"/>.</summary>
+    public required string Kind { get; set; }
+
+    public int Years { get; set; }
+
+    /// <summary>The verse says <em>about</em>: Darius the Mede, about threescore and two.</summary>
+    public bool About { get; set; }
+
+    public int CanonicalBook { get; set; }
+
+    public int CanonicalChapter { get; set; }
+
+    public int CanonicalVerse { get; set; }
+
+    public int Position { get; set; }
+
+    public required string Source { get; set; }
+
+    public override string ToString() => $"StatedAge({EntityId} {Kind} {Years})";
+}
+
+/// <summary>What a <see cref="ReignEvent"/> was for the people it befell.</summary>
+public static class ReignEventKinds
+{
+    /// <summary>A carrying away out of the land.</summary>
+    public const string Exile = ProphetRealms.Exile;
+
+    /// <summary>The going up again.</summary>
+    public const string Return = ProphetRealms.Return;
+
+    public static readonly IReadOnlyList<string> All = [Exile, Return];
+}
+
+/// <summary>
+/// A carrying away or a return, in a verse that sets it in a ruler's days: Samaria taken in the ninth
+/// year of Hoshea (2KI 17:6), which is the sixth of Hezekiah (2KI 18:10), and the proclamation in the
+/// first year of Cyrus (EZR 1:1).
+///
+/// <para>
+/// One row is one verse dating it by one ruler, as a <see cref="ReignStatement"/> dates a prophet, so
+/// the event stands wherever a reckoning puts that ruler's year. The rows of one event share its
+/// <see cref="Slug"/>, and name the event the timeline already dates, where it holds one.
+/// </para>
+/// </summary>
+[Index(nameof(Slug))]
+[Index(nameof(RulerEntityId))]
+public class ReignEvent
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    public required string Slug { get; set; }
+
+    /// <summary>One of <see cref="ReignEventKinds"/>.</summary>
+    public required string Kind { get; set; }
+
+    /// <summary>The kingdom it befell: <see cref="RulerRealms.Israel"/> or <see cref="RulerRealms.Judah"/>.</summary>
+    public required string Realm { get; set; }
+
+    /// <summary>Where the event stands among the events, in the order they happened.</summary>
+    public int Position { get; set; }
+
+    /// <summary>The same event on the timeline, where the chronologies date one.</summary>
+    public int? TimelineEventId { get; set; }
+
+    public Event? TimelineEvent { get; set; }
+
+    public int RulerEntityId { get; set; }
+
+    public Entity? Ruler { get; set; }
+
+    /// <summary>The ruler's year the verse gives; null where it says only that it was in his days.</summary>
+    public int? Year { get; set; }
+
+    public int CanonicalBook { get; set; }
+
+    public int CanonicalChapter { get; set; }
+
+    public int CanonicalVerse { get; set; }
+
+    /// <summary>The last verse, where it takes more than one to say it.</summary>
+    public int? EndVerse { get; set; }
+
+    public required string Source { get; set; }
+
+    public override string ToString() => $"ReignEvent({Slug} {RulerEntityId} {Year})";
+}
