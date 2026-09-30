@@ -228,7 +228,7 @@ internal static class Texts
             marked
                 .GroupBy(m => m.WordId)
                 .ToDictionary(group => group.Key, group => group.Min(m => m.Kind)),
-            await Annotations.Of(db, ids, cancellationToken),
+            await Annotations.AllOf(db, ids, cancellationToken),
             await Proposed(db, ids, cancellationToken));
     }
 
@@ -288,8 +288,8 @@ internal static class Texts
     /// first-hand claim about one text and names no counterpart for it.
     /// </param>
     /// <param name="Named">
-    /// The person or place each word names, where the corpus can say and can say it without
-    /// choosing. Empty for most words, because most words are not names.
+    /// Every record each word names, the first answer first, where the corpus can say and can say
+    /// it without choosing. Empty for most words, because most words are not names.
     /// </param>
     /// <param name="Proposed">
     /// The one Strong number the corpus proposed for each word, where it proposed exactly one.
@@ -299,7 +299,7 @@ internal static class Texts
         Dictionary<long, string> Provenance,
         Dictionary<long, string> Absent,
         Dictionary<long, WordGroupKind> Marks,
-        Dictionary<long, EntityRefResponse> Named,
+        Dictionary<long, IReadOnlyList<EntityRefResponse>> Named,
         Dictionary<long, StrongCandidateResponse> Proposed)
     {
         /// <summary>The lexicon's gloss for each Greek word its edition does not gloss, and how it was reached.</summary>
@@ -678,7 +678,7 @@ internal static class Texts
             [.. counterparts.Witnesses[id].Distinct()],
             counterparts.Provenance.GetValueOrDefault(id),
             counterparts.Absent.GetValueOrDefault(id),
-            counterparts.Named.GetValueOrDefault(id),
+            counterparts.Named.GetValueOrDefault(id)?[0],
             Morphology(features),
             Feature(features, Phono),
             Feature(features, PhonoTrailer),
@@ -692,6 +692,7 @@ internal static class Texts
             ThroughGreek = counterparts.ThroughGreek.GetValueOrDefault(id),
             GeezEntry = counterparts.GeezEntries.GetValueOrDefault(id),
             Break = opening is { } kind ? EnumSpelling.Of(kind) : null,
+            Entities = counterparts.Named.GetValueOrDefault(id) ?? [],
         };
     }
 

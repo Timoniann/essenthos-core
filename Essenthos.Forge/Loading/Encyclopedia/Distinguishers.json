@@ -875,6 +875,13 @@
       "ukr": "слово на означення Бога, в однині: найчастіше вживане щодо YHVH, але не завжди — також щодо бога іншого народу (2CH 32:15) і щодо чужого бога (DAN 11:39)",
       "deu": "ein Wort für Gott, Singular: meist auf YHVH bezogen, aber nicht immer — auch auf den Gott eines anderen Volkes (2CH 32:15) und auf einen fremden Gott (DAN 11:39)",
       "spa": "una palabra para Dios, singular: aplicada la mayoría de las veces a YHVH, pero no siempre — también al dios de otra nación (2CH 32:15) y a un dios extraño (DAN 11:39)"
+    },
+    {
+      "slug": "anointed",
+      "english": "the title of one anointed to an office, Hebrew mashiach and Greek Christos: given to the anointed priest, to Saul, to David, to Cyrus and to Jesus",
+      "ukr": "титул помазаного на служіння, єврейською машіах, грецькою Христос: так названо помазаного священика, Саула, Давида, Кира та Ісуса",
+      "deu": "der Titel dessen, der zu einem Amt gesalbt ist, hebräisch Maschiach, griechisch Christos: so heißen der gesalbte Priester, Saul, David, Kyrus und Jesus",
+      "spa": "el título del ungido para un oficio, en hebreo mashiaj y en griego Christos: se da al sacerdote ungido, a Saúl, a David, a Ciro y a Jesús"
     }
   ]
 }

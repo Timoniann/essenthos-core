@@ -5,6 +5,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <summary>An original word with what the rules read off it and off the words around it.</summary>
 /// <param name="Previous">The word before it in the verse, or null at the start of the verse.</param>
 /// <param name="Following">The Strong numbers of the words after it in the verse, nearest first.</param>
+/// <param name="Nth">Which occurrence of its number in the verse it is.</param>
 internal sealed record FixedTitleWord(
     long Id,
     string Text,
@@ -12,7 +13,10 @@ internal sealed record FixedTitleWord(
     string Number,
     FixedTitleMorphology Morphology,
     FixedTitleMorphology? Previous,
-    IReadOnlyList<string> Following);
+    IReadOnlyList<string> Following,
+    int Chapter = 0,
+    int Verse = 0,
+    int Nth = 1);
 
 /// <param name="Pos">BHSA's or Nestle's part of speech: <c>art</c> is BHSA's article, <c>det</c> Nestle's.</param>
 /// <param name="Form">Nestle's parsing code, which carries the number where the morphology has no field for it.</param>
@@ -27,6 +31,7 @@ internal sealed record FixedTitleMorphology(string? Pos, string? Case, string? N
 /// <param name="Construct">Whether the Hebrew word must be in the construct state.</param>
 /// <param name="Then">The Strong numbers the words after it must carry, in order.</param>
 /// <param name="Note">What the annotation says about the title, written on it and on its claim.</param>
+/// <param name="Except">The verses where the word is the title and the text leaves open whose.</param>
 internal sealed record FixedTitleRule(
     string Slug,
     string Text,
@@ -35,12 +40,14 @@ internal sealed record FixedTitleRule(
     bool Article,
     bool Construct,
     IReadOnlyList<string> Then,
-    string Note)
+    string Note,
+    IReadOnlyList<ScriptureSpan>? Except = null)
 {
     public bool Holds(FixedTitleWord word) =>
         word.Text == Text
         && word.Number == Number
         && (Books is null || Books.Contains(word.Book))
+        && (Except is null || !Except.Any(span => span.Holds(word.Book, word.Chapter, word.Verse, word.Nth)))
         && FixedTitles.Singular(word.Morphology)
         && (!Article || FixedTitles.HasArticle(word))
         && (!Construct || word.Morphology.State == "c")
@@ -82,10 +89,15 @@ internal static partial class FixedTitles
             "הַשָּׂטָן with the article: the text uses a title here, 'the adversary', and not yet a name"),
         // Χριστός, 529 words in 499 verses, 492 of them filed under Jesus; the 7 the dataset leaves out
         // (Rom 15:5, Gal 2:19, Phil 1:16, 4:7, 1 Thess 2:6, Jas 2:1, 1 Pet 1:7) mean him as plainly, four
-        // of them beside his name. In the Gospels' questions about the Christ the dataset files every
-        // verse under Jesus too, 54 of 54.
-        new("jesus", NestleTextSource.Slug, "G5547", null, Article: false, Construct: false, [],
-            "Χριστός, the title the New Testament gives Jesus"),
+        // of them beside his name. The dataset files the Gospels' questions about the Christ under Jesus
+        // too, 54 of 54; those are not his by the verse, which asks, denies or reports a claim, and the
+        // rulings on the title leave them to the title alone. Read in each Greek witness, because the
+        // Byzantine and the Received Text print Χριστός in some forty verses where Nestle does not, and
+        // Robinson and Stephanus are not linked to Nestle at all.
+        .. EntityCandidates.GreekWitnesses.Select(witness => new FixedTitleRule(
+            "jesus", witness, "G5547", null, Article: false, Construct: false, [],
+            "Χριστός, the title the New Testament gives Jesus",
+            Except: SenseReadingFiles.TitleReadings().Open("G5547"))),
         // ὁ υἱὸς τοῦ ἀνθρώπου: 81 words in 77 verses, every one filed under Jesus. Without the articles it
         // is Daniel's 'a son of man' (John 5:27, Heb 2:6, Rev 1:13, 14:14), and is left to the readings.
         new("jesus", NestleTextSource.Slug, "G5207", null, Article: false, Construct: false, ["G3588", "G444"],

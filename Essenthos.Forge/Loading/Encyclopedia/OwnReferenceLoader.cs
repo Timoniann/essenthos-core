@@ -61,8 +61,9 @@ internal sealed record OwnReferenceOutcome(
 /// **Not every annotation puts a verse on a page.** A word may carry several, because several
 /// methods may speak about it, and what a reader is shown is one answer settled by standing —
 /// testimony over inference, a person over both, and nothing at all where two methods of equal
-/// standing name two different entities. That rule is <see cref="Endpoints.Annotations"/>'s and it
-/// is not restated here: a verse listed on a page and the word that put it there must be the same
+/// standing name two different entities; and where a word names two records that stand beside each
+/// other, a title and its bearer or a person and a people, the verse is on both pages. That rule is
+/// <see cref="Endpoints.Annotations"/>'s and it is not restated here: a verse listed on a page and the word that put it there must be the same
 /// claim, so the ordering below is the same ordering, and the standing it orders by is read out of
 /// <see cref="ClaimStanding"/> rather than copied into the statement.
 /// </para>
@@ -132,12 +133,13 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     /// </summary>
     private static readonly string Derivation =
         $"""
-         WITH {Annotating.Settled}
+         WITH {Annotating.Settled},
+         {Annotating.Named}
          INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
                                    label, disputed, source)
          SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
                 NULL, FALSE, @source
-         FROM settled s
+         FROM named s
          JOIN entity e ON e.id = s.entity_id AND e.kind IN ({Named})
          JOIN word w ON w.id = s.word_id
          JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
@@ -158,12 +160,13 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     /// </summary>
     private static readonly string PeopleDerivation =
         $"""
-         WITH {Annotating.Settled}
+         WITH {Annotating.Settled},
+         {Annotating.Named}
          INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
                                    label, disputed, source)
          SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
                 e.name, FALSE, @source
-         FROM settled s
+         FROM named s
          JOIN entity e ON e.id = s.entity_id AND e.kind = '{EnumSpelling.Of(EntityKind.People)}'
          JOIN word w ON w.id = s.word_id
          JOIN text t ON t.id = w.text_id AND t.slug = '{EntityCandidates.Witness}'
@@ -205,9 +208,10 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     private static readonly string Retraction =
         $"""
          WITH {Annotating.Settled},
+         {Annotating.Named},
          kept AS MATERIALIZED (
              SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
-             FROM settled s
+             FROM named s
              JOIN word w ON w.id = s.word_id
              JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
          )

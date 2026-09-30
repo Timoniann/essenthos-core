@@ -32,8 +32,37 @@ public sealed class AnnotationProvenanceTests
     [InlineData(typeof(EntityAlternativeResponse))]
     [InlineData(typeof(IList<EntityClaimResponse>))]
     [InlineData(typeof(IList<EntityAlternativeResponse>))]
+    [InlineData(typeof(IReadOnlyList<EntityRefResponse>))]
     public void EveryResponseTheEntityPageReturnsIsRegistered(Type response) =>
         AppJsonSerializerContext.Default.GetTypeInfo(response).Should().NotBeNull();
+
+    /// <summary>
+    /// A word that names a title and its bearer is sent with both, the first also as the single
+    /// answer an older client reads; a word that names nothing is sent with an empty list.
+    /// </summary>
+    [Fact]
+    public void AWordIsSentWithEveryRecordItNames()
+    {
+        var jesus = new EntityRefResponse("person", "jesus", "Jesus");
+        var anointed = new EntityRefResponse("title", "anointed", "Anointed (Messiah, Christ)");
+        TextWordResponse Word(params EntityRefResponse[] named) =>
+            new(1, "Χριστοῦ", "", null, null, "G5547", [], null, null, named.FirstOrDefault(), null, null, null, null)
+            {
+                Entities = named,
+            };
+
+        string Wire(TextWordResponse word) => JsonSerializer.Serialize(
+            word, AppJsonSerializerContext.Default.GetTypeInfo(typeof(TextWordResponse))!);
+
+        using var both = JsonDocument.Parse(Wire(Word(jesus, anointed)));
+        both.RootElement.GetProperty("entity").GetProperty("slug").GetString().Should().Be("jesus");
+        both.RootElement.GetProperty("entities").EnumerateArray().Select(named => named.GetProperty("slug").GetString())
+            .Should().Equal("jesus", "anointed");
+
+        using var none = JsonDocument.Parse(Wire(Word()));
+        none.RootElement.GetProperty("entity").ValueKind.Should().Be(JsonValueKind.Null);
+        none.RootElement.GetProperty("entities").GetArrayLength().Should().Be(0);
+    }
 
     /// <summary>
     /// The hover card answers who said this and how sure they are, in the same shape whichever

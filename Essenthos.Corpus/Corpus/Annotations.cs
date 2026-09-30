@@ -30,14 +30,24 @@ namespace Essenthos.Core.Corpus;
 /// which of the two it is — the method, the confidence and the source travel with it — because a
 /// reader who cannot tell a reading from a resolution is being asked to trust both equally.
 /// </para>
+///
+/// <para>
+/// One answer is not always one record. <em>Christ</em> in <em>Jesus Christ</em> is a title and the
+/// man who bears it, and <em>the Shunammite</em> is Abishag and her people: neither answer takes
+/// anything from the other, so the word names both and the reader is shown both, the first answer
+/// first. That holds for exactly two pairs — a title and a record <see cref="TitleBearer"/> joins to
+/// it, and a person and a people — and for nothing else: two men, or a man and a town, on one word
+/// are two answers to one question, and the second is the one the first outranked.
+/// </para>
 /// </summary>
 internal static class Annotations
 {
     /// <summary>
-    /// The annotations on a set of words, in one query. A chapter is a thousand words and this is
-    /// asked for every one of them, so it is a single indexed read rather than a lookup per word.
+    /// Every record each word names, the first answer first, in one query. A chapter is a thousand
+    /// words and this is asked for every one of them, so it is a single indexed read rather than a
+    /// lookup per word. A word that names nothing, or whose strongest two answers disagree, is absent.
     /// </summary>
-    public static async Task<Dictionary<long, EntityRefResponse>> Of(
+    public static async Task<Dictionary<long, IReadOnlyList<EntityRefResponse>>> AllOf(
         AppDbContext db,
         IEnumerable<long> wordIds,
         CancellationToken cancellationToken)
@@ -55,13 +65,54 @@ internal static class Annotations
                 a.Entity!.Kind, a.Entity.Slug, a.Entity.Name) { EntityId = a.EntityId })
             .ToListAsync(cancellationToken);
 
-        var settled = Settle(rows);
-        var namedAs = await NamedAs(db, rows, settled, cancellationToken);
-        return namedAs.Count == 0
-            ? settled
-            : settled.ToDictionary(
-                pair => pair.Key,
-                pair => namedAs.TryGetValue(pair.Key, out var label) ? pair.Value with { NamedAs = label } : pair.Value);
+        var settled = Settle(rows, await Bearers(db, rows, cancellationToken));
+        var namedAs = await NamedAs(db, settled, cancellationToken);
+        return settled.ToDictionary(
+            pair => pair.Key,
+            pair => (IReadOnlyList<EntityRefResponse>)
+            [
+                .. pair.Value.Select(claimed =>
+                    namedAs.TryGetValue((claimed.WordId, claimed.EntityId), out var label)
+                        ? Show(claimed) with { NamedAs = label }
+                        : Show(claimed)),
+            ]);
+    }
+
+    /// <summary>The first answer for each word, which is all an older client reads.</summary>
+    public static async Task<Dictionary<long, EntityRefResponse>> Of(
+        AppDbContext db,
+        IEnumerable<long> wordIds,
+        CancellationToken cancellationToken) =>
+        (await AllOf(db, wordIds, cancellationToken)).ToDictionary(pair => pair.Key, pair => pair.Value[0]);
+
+    /// <summary>
+    /// Which record bears which title, for the titles among the rows of words that carry more than
+    /// one answer. Most chapters have no such word and ask nothing.
+    /// </summary>
+    private static async Task<HashSet<(int Title, int Bearer)>> Bearers(
+        AppDbContext db,
+        List<Claimed> rows,
+        CancellationToken cancellationToken)
+    {
+        var titles = rows
+            .GroupBy(row => row.WordId)
+            .Where(word => word.Skip(1).Any())
+            .SelectMany(word => word)
+            .Where(row => row.Kind == EntityKind.Title)
+            .Select(row => row.EntityId)
+            .Distinct()
+            .ToList();
+        if (titles.Count == 0)
+        {
+            return [];
+        }
+
+        return (await db.TitleBearers
+                .Where(b => titles.Contains(b.TitleEntityId))
+                .Select(b => new { b.TitleEntityId, b.BearerEntityId })
+                .ToListAsync(cancellationToken))
+            .Select(b => (b.TitleEntityId, b.BearerEntityId))
+            .ToHashSet();
     }
 
     /// <summary>
@@ -78,17 +129,12 @@ internal static class Annotations
     /// is said and the card keeps the heading.
     /// </para>
     /// </summary>
-    private static async Task<Dictionary<long, string>> NamedAs(
+    private static async Task<Dictionary<(long Word, int Entity), string>> NamedAs(
         AppDbContext db,
-        List<Claimed> rows,
-        Dictionary<long, EntityRefResponse> settled,
+        Dictionary<long, List<Claimed>> settled,
         CancellationToken cancellationToken)
     {
-        var chosen = rows
-            .Where(row => settled.TryGetValue(row.WordId, out var shown) && shown.Slug == row.Slug)
-            .GroupBy(row => row.WordId)
-            .Select(group => group.First())
-            .ToList();
+        var chosen = settled.Values.SelectMany(shown => shown).ToList();
         if (chosen.Count == 0)
         {
             return [];
@@ -111,7 +157,7 @@ internal static class Annotations
                 .ToListAsync(cancellationToken))
             .ToLookup(n => n.EntityId);
 
-        var found = new Dictionary<long, string>();
+        var found = new Dictionary<(long, int), string>();
         foreach (var (row, via) in through)
         {
             var number = numbers.GetValueOrDefault(via ?? row.WordId) ?? LeadingNumber(row.Note);
@@ -127,7 +173,7 @@ internal static class Annotations
                 .ToList();
             if (bearing.Count == 1 && bearing[0] != row.Name)
             {
-                found[row.WordId] = bearing[0];
+                found[(row.WordId, row.EntityId)] = bearing[0];
             }
         }
 
@@ -183,7 +229,10 @@ internal static class Annotations
                     reference.CanonicalVerse,
                     Claimed = new Claimed(
                         annotation.WordId, annotation.Method, annotation.Confidence, annotation.Source,
-                        annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name),
+                        annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name)
+                    {
+                        EntityId = annotation.EntityId,
+                    },
                 })
             .ToListAsync(cancellationToken);
 
@@ -193,15 +242,16 @@ internal static class Annotations
             verseOf[row.Claimed.WordId] = row.CanonicalVerse;
         }
 
+        var claimed = rows.Select(row => row.Claimed).ToList();
         var verses = new Dictionary<string, SortedSet<int>>(StringComparer.Ordinal);
-        foreach (var (wordId, named) in Settle([.. rows.Select(row => row.Claimed)]))
+        foreach (var named in Settle(claimed, await Bearers(db, claimed, cancellationToken)).Values.SelectMany(shown => shown))
         {
             if (!verses.TryGetValue(named.Slug, out var at))
             {
                 verses[named.Slug] = at = [];
             }
 
-            at.Add(verseOf[wordId]);
+            at.Add(verseOf[named.WordId]);
         }
 
         return verses;
@@ -227,7 +277,10 @@ internal static class Annotations
                     reference.CanonicalVerse,
                     Claimed = new Claimed(
                         annotation.WordId, annotation.Method, annotation.Confidence, annotation.Source,
-                        annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name),
+                        annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name)
+                    {
+                        EntityId = annotation.EntityId,
+                    },
                 })
             .ToListAsync(cancellationToken);
 
@@ -237,37 +290,56 @@ internal static class Annotations
             verseOf[row.Claimed.WordId] = (row.CanonicalChapter, row.CanonicalVerse);
         }
 
+        var claimed = rows.Select(row => row.Claimed).ToList();
         var verses = new Dictionary<string, HashSet<(int Chapter, int Verse)>>(StringComparer.Ordinal);
-        foreach (var (wordId, named) in Settle([.. rows.Select(row => row.Claimed)]))
+        foreach (var named in Settle(claimed, await Bearers(db, claimed, cancellationToken)).Values.SelectMany(shown => shown))
         {
             if (!verses.TryGetValue(named.Slug, out var at))
             {
                 verses[named.Slug] = at = [];
             }
 
-            at.Add(verseOf[wordId]);
+            at.Add(verseOf[named.WordId]);
         }
 
         return verses;
     }
 
     /// <summary>The same for one word, which is what the word panel asks.</summary>
-    public static async Task<EntityRefResponse?> Of(
+    public static async Task<IReadOnlyList<EntityRefResponse>> AllOf(
         AppDbContext db,
         long wordId,
         CancellationToken cancellationToken)
     {
-        var found = await Of(db, [wordId], cancellationToken);
-        return found.GetValueOrDefault(wordId);
+        var found = await AllOf(db, [wordId], cancellationToken);
+        return found.GetValueOrDefault(wordId) ?? [];
     }
 
+    /// <summary>The first answer for one word.</summary>
+    public static async Task<EntityRefResponse?> Of(
+        AppDbContext db,
+        long wordId,
+        CancellationToken cancellationToken) =>
+        (await AllOf(db, wordId, cancellationToken)).FirstOrDefault();
+
     /// <summary>
-    /// One answer per word, or none where the strongest two disagree. Ordered by standing first and
+    /// The answer per word, or none where the strongest two disagree. Ordered by standing first and
     /// by confidence within it, so a hand correction beats a resolution however sure the resolution
     /// was — the standing is what the method knew before it started, and no confidence can make a
-    /// guess into a reading.
+    /// guess into a reading. Where standing and confidence are both equal the record that is not a
+    /// title stands first, so the order is the same on every read.
+    ///
+    /// <para>
+    /// With that answer come the records that stand beside it (<see cref="Beside"/>) and no others:
+    /// an answer of another kind that it outranked is a rival it beat, not a second thing the word
+    /// names. A title is shown after the record that bears it whatever their standing, because the
+    /// title says what the word is and the bearer whom it names: the first answer of <em>Christ</em>
+    /// in <em>Jesus Christ</em> is Jesus.
+    /// </para>
     /// </summary>
-    private static Dictionary<long, EntityRefResponse> Settle(List<Claimed> rows) =>
+    private static Dictionary<long, List<Claimed>> Settle(
+        List<Claimed> rows,
+        IReadOnlySet<(int Title, int Bearer)> bearers) =>
         rows.GroupBy(row => row.WordId)
             .Select(group => new
             {
@@ -275,15 +347,34 @@ internal static class Annotations
                 Ranked = group
                     .OrderByDescending(row => ClaimStanding.Of(row.Method))
                     .ThenByDescending(row => row.Confidence ?? 1)
+                    .ThenBy(row => row.Kind == EntityKind.Title)
+                    .ThenBy(row => EnumSpelling.Of(row.Kind), StringComparer.Ordinal)
+                    .ThenBy(row => row.EntityId)
                     .ToList(),
             })
-            .Where(word => word.Ranked.Count == 1 || !Disputed(word.Ranked[0], word.Ranked[1]))
-            .ToDictionary(word => word.Key, word => Show(word.Ranked[0]));
+            .Where(word => word.Ranked.Count == 1
+                           || !Disputed(word.Ranked[0], word.Ranked[1])
+                           || Beside(word.Ranked[0], word.Ranked[1], bearers))
+            .ToDictionary(
+                word => word.Key,
+                word => word.Ranked
+                    .Where((other, place) => place == 0 || Beside(word.Ranked[0], other, bearers))
+                    .OrderBy(shown => shown.Kind == EntityKind.Title)
+                    .ToList());
 
     private static bool Disputed(Claimed best, Claimed next) =>
         best.Slug != next.Slug
         && ClaimStanding.Of(best.Method) == ClaimStanding.Of(next.Method)
         && (best.Confidence ?? 1) == (next.Confidence ?? 1);
+
+    /// <summary>
+    /// Whether one word names both records without either answering for the other: a title and a
+    /// record joined to it as its bearer, or a person and a people.
+    /// </summary>
+    private static bool Beside(Claimed one, Claimed other, IReadOnlySet<(int Title, int Bearer)> bearers) =>
+        (one.Kind, other.Kind) is (EntityKind.Person, EntityKind.People) or (EntityKind.People, EntityKind.Person)
+        || (one.Kind == EntityKind.Title && bearers.Contains((one.EntityId, other.EntityId)))
+        || (other.Kind == EntityKind.Title && bearers.Contains((other.EntityId, one.EntityId)));
 
     private static EntityRefResponse Show(Claimed claimed) =>
         new(EnumSpelling.Of(claimed.Kind), claimed.Slug, claimed.Name)
@@ -305,7 +396,7 @@ internal static class Annotations
         string Slug,
         string Name)
     {
-        /// <summary>The record's row, read only where the name an occurrence is shown under is asked.</summary>
+        /// <summary>The record's row, which is what a title's bearers and a record's names are joined by.</summary>
         public int EntityId { get; init; }
     }
 }

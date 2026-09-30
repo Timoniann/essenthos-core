@@ -132,6 +132,41 @@ public sealed class FixedTitleLoaderTests : IDisposable
         (await _db.WordEntities.SingleAsync(a => a.WordId == Greek(3, 2).Id)).EntityId.Should().Be(_judas.Id);
     }
 
+    /// <summary>A word that names a title only is nobody's yet: the bearer is written beside the title.</summary>
+    [Fact]
+    public async Task ATitleOnTheWordDoesNotKeepItsBearerOffIt()
+    {
+        var title = new Entity { Kind = EntityKind.Title, Slug = "adversary", Name = "Adversary", SourceId = "adversary", Source = "a test" };
+        _db.Entities.Add(title);
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = Greek(1, 2).Id, Entity = title, Method = LinkMethod.RuleBased, Confidence = 0.99, Source = "a title",
+        });
+        await _db.SaveChangesAsync();
+
+        await Loader().Load();
+
+        (await Ours())[Greek(1, 2).Id].EntityId.Should().Be(_satan.Id);
+        (await _db.WordEntities.CountAsync(a => a.WordId == Greek(1, 2).Id)).Should().Be(2);
+        (await Ours()).Should().ContainKey(_db.WordAt(_english, 4, 1, 2).Id);
+    }
+
+    /// <summary>A later run names the word that has become nobody's since, and writes nothing twice.</summary>
+    [Fact]
+    public async Task ALaterRunNamesOnlyWhatIsNew()
+    {
+        await Loader().Load();
+        await _db.WordEntities.Where(a => a.WordId == Greek(3, 2).Id).ExecuteDeleteAsync();
+
+        var outcome = await Loader().Load();
+
+        outcome.AlreadyLoaded.Should().BeFalse();
+        var ours = await Ours();
+        ours.Should().ContainKey(Greek(3, 2).Id);
+        ours.Should().HaveCount(3);
+        (await _db.WordEntityClaims.CountAsync(c => c.WordEntityId == ours[Greek(1, 2).Id].Id)).Should().Be(1);
+    }
+
     /// <summary>A second run writes nothing.</summary>
     [Fact]
     public async Task ItRunsOnce()

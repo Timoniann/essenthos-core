@@ -285,6 +285,7 @@ internal sealed class DatasetLoader(
             await NameTheGreekNamesARecordSpells(stoppingToken);
             await NameTheBearerTheBookNames(resources, stoppingToken);
             await NameTheTitlesTheTextFixes(stoppingToken);
+            await ReadWhoseTheTitleIsWhereItStands(stoppingToken);
             await NameWhomTheReadingsOfThePassagesFind(resources, stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
@@ -1919,6 +1920,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<FixedTitleLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// Whose the Anointed is at each occurrence the rulings read: the bearer beside the title where
+    /// the text fixes one, the title alone where it leaves that open. After the titles, which put the
+    /// title on the words, and the fixed titles, whose Christos the open verses are taken back from.
+    /// </summary>
+    private async Task ReadWhoseTheTitleIsWhereItStands(CancellationToken cancellationToken)
+    {
+        status.Starting("whose the title is where it stands");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<TitleReadingLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

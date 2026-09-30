@@ -159,6 +159,30 @@ public sealed class TitleWordTests : IDisposable
     }
 
     /// <summary>
+    /// A title the file says stands beside its bearer is written on a word somebody already names,
+    /// and the name stays: Christ in Jesus Christ is the title and the man.
+    /// </summary>
+    [Fact]
+    public async Task ATitleThatStandsBesideItsBearerIsWrittenOnAWordAlreadyNamed()
+    {
+        var word = _db.WordAt(_hebrew, 41, 1, 1);
+        var man = new Entity { Kind = EntityKind.Person, Slug = "pharaoh-2", Name = "Pharaoh", SourceId = "p2", Source = "a test" };
+        _db.Entities.Add(man);
+        _db.WordEntities.Add(new WordEntity
+        {
+            Word = word, Entity = man, Method = LinkMethod.ModelReading, Confidence = 0.9, Source = "a reading",
+        });
+        await _db.SaveChangesAsync();
+
+        await _loader.NameTheWords(
+            [Title("pharaoh-title", new TitleWord(Pharaoh, Beside: true))], CancellationToken.None);
+
+        (await Named())[word.Id].Should().Be("pharaoh-title");
+        (await _db.WordEntities.Where(a => a.WordId == word.Id).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().BeEquivalentTo("pharaoh-2", "pharaoh-title");
+    }
+
+    /// <summary>
     /// <em>The priest</em> is the high priest beside <em>great</em>, and both words are the title;
     /// alone it is not.
     /// </summary>

@@ -67,6 +67,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\WithdrawnRecords.json" />
         <Content Remove="Loading\Encyclopedia\TitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\TitleRecords.json" />
+        <Content Remove="Loading\Encyclopedia\TitleReadings.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\TitleReadings.json" />
         <Content Remove="Loading\Encyclopedia\UnsettledRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecords.json" />
         <Content Remove="Loading\Encyclopedia\UnsettledRecordsSecond.json" />
