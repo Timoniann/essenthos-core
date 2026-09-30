@@ -146,11 +146,16 @@ internal enum EvidentiaAttachmentPlacement
 /// prefixed prepositions and ו as words of their own, and <em>the</em> goes on the article, spelt out or
 /// swallowed by a preposition, where the answer keys put it with the noun; a noun the original writes
 /// without one leaves <em>the</em> to be said supplied. <em>and</em> goes on the ו before the word it
-/// joins; an auxiliary goes on the verb, which carries tense and mood in itself.</para>
+/// joins; an auxiliary goes on the verb, which carries tense and mood in itself, and on nothing else:
+/// where its verb was placed on a noun (<em>had followed</em> on אַחֲרֵי) there is no tense for it to
+/// write, and where the verb's ending names another person than the subject the parse gives the English
+/// verb (<em>May the LORD make</em> on the imperative עֲשֵׂה, <em>he had become</em> on וַיִּהְיוּ) the
+/// verb is another clause's.</para>
 ///
 /// <para>A personal pronoun goes where the original writes the person: a subject on the verb whose
 /// ending names it, a possessive on the Hebrew noun whose suffix does, an object on the suffix of the
-/// verb or preposition. The morphology decides, not the habit: a pronoun whose head was placed on a
+/// verb or preposition - the object of a verb on a verb only, since the suffix of a noun its verb was
+/// placed on (<em>named him</em> on שְׁמוֹ) is a possessive. The morphology decides, not the habit: a pronoun whose head was placed on a
 /// word that names another person, or none, is left unplaced, and so is a subject the original writes
 /// as a pronoun of its own beside the verb, since both annotations put it there.</para>
 ///
@@ -240,6 +245,12 @@ internal static class EvidentiaAttachedWords
     private const string InfinitiveForm = "Inf";
 
     private const string PassiveSubjectRelation = "nsubj:pass";
+
+    private const string NominativeCase = "Nom";
+
+    private const string PersonalPronounType = "Prs";
+
+    private const string ThirdPerson = "3";
 
     private const string GreekBe = "G1510";
 
@@ -683,7 +694,7 @@ internal static class EvidentiaAttachedWords
         HashSet<long> taken) =>
         HeadProposal(attachment, index, head, words, placedBySource) is ({ } headProposal, var afterVerb)
         && targetsByVerse.TryGetValue(headProposal.Target.Token.Address, out var targetVerse)
-        && Place(attachment, words, index, headProposal.Target, targetVerse, afterVerb, placedBySource, taken) is { } placement
+        && Place(attachment, words, index, head, headProposal.Target, targetVerse, afterVerb, placedBySource, taken) is { } placement
             ? (placement, headProposal)
             : null;
 
@@ -912,6 +923,7 @@ internal static class EvidentiaAttachedWords
         EvidentiaAttachment attachment,
         IReadOnlyList<EvidentiaAnalysis> words,
         int index,
+        EvidentiaAnalysis head,
         EvidentiaAnalysis rendering,
         IReadOnlyList<EvidentiaAnalysis> verse,
         bool afterVerb,
@@ -924,8 +936,8 @@ internal static class EvidentiaAttachedWords
             EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb && !IsEnglish(word)
                 && OwnAuxiliary(rendering, verse) is { } own =>
                 taken.Contains(own.Token.Id) ? null : own,
-            EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb && !IsEnglish(word)
-                && Class(rendering) != "verb" => null,
+            EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb
+                && (Class(rendering) != "verb" || IsEnglish(word) && !CouldTakeItsSubject(words, head, rendering)) => null,
             EvidentiaAttachmentPlacement.Rendering => rendering,
             EvidentiaAttachmentPlacement.Dependent => index > 0
                 && placedBySource.TryGetValue(words[index - 1].Token.Id, out var governing)
@@ -936,7 +948,7 @@ internal static class EvidentiaAttachedWords
             EvidentiaAttachmentPlacement.PhraseStart => PhraseStart(words, index, verse, placedBySource, taken),
             EvidentiaAttachmentPlacement.AgreeingRendering => afterVerb
                 ? PrepositionAfter(word, rendering, verse, taken)
-                : Agreeing(attachment, word, rendering, verse, taken),
+                : Agreeing(attachment, word, head, rendering, verse, taken),
             EvidentiaAttachmentPlacement.Infinitive => Infinitive(rendering, verse, taken),
             EvidentiaAttachmentPlacement.BeBeside => BeBeside(rendering, verse, taken),
             EvidentiaAttachmentPlacement.ConjunctionBefore => ConjunctionBefore(rendering, verse, taken),
@@ -1214,6 +1226,7 @@ internal static class EvidentiaAttachedWords
     private static EvidentiaAnalysis? Agreeing(
         EvidentiaAttachment attachment,
         EvidentiaAnalysis pronoun,
+        EvidentiaAnalysis head,
         EvidentiaAnalysis rendering,
         IReadOnlyList<EvidentiaAnalysis> verse,
         IReadOnlySet<long> taken) =>
@@ -1223,10 +1236,43 @@ internal static class EvidentiaAttachedWords
                 && (EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: false)
                     || EvidentiaPersonAgreement.IsInfinitive(rendering) && EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: true))
                 && !WritesTheSubjectApart(pronoun, rendering, verse, taken) => rendering,
+            // The object of a verb is written in the verb: on a noun the suffix is whose it is.
+            EvidentiaAttachment.ObjectPronoun when Class(head) == "verb" && Class(rendering) != "verb" => null,
             EvidentiaAttachment.PossessivePronoun or EvidentiaAttachment.ObjectPronoun
                 when EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: true) => rendering,
             _ => null,
         };
+
+    /// <summary>
+    /// Whether the verb the head was placed on could have the subject the parse gives the English verb. A
+    /// verb that names no person - a participle, an infinitive - takes any; one that names a person takes
+    /// a pronoun of that person, number and gender, and a noun only in the third person. Where the parse
+    /// gives no subject, or one that says nothing of person (<em>whoever</em>), nothing is refused; a
+    /// pronoun outside the nominative is no subject whatever the parse made of it.
+    /// </summary>
+    private static bool CouldTakeItsSubject(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        EvidentiaAnalysis verb,
+        EvidentiaAnalysis rendering)
+    {
+        if (Feature(rendering, "person") is not { } person)
+        {
+            return true;
+        }
+
+        var subjects = words
+            .Where(other => other.Token.SyntacticHead == verb.Token.Id
+                && other.Token.Relation is SubjectRelation or PassiveSubjectRelation
+                && !(Feature(other, "Case") is { } stated && !stated.Equals(NominativeCase, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
+        return subjects.Count == 0 || subjects.Any(subject => Class(subject) switch
+        {
+            "pron" when Feature(subject, "PronType") == PersonalPronounType && EvidentiaPersonAgreement.Person(subject) is not null =>
+                EvidentiaPersonAgreement.Agrees(subject, rendering, suffix: false),
+            "noun" or "propn" => EvidentiaMorphologyLabels.Feature(person, rendering.Token.Language) == ThirdPerson,
+            _ => true,
+        });
+    }
 
     /// <summary>
     /// A pronoun of the same person standing by the verb, which is then where the subject is written.
