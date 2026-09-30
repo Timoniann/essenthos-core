@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -13,7 +14,9 @@ namespace Essenthos.Core.Tests;
 /// <summary>
 /// The kings, the rulers of the nations and the prophets of their days, against the file the corpus
 /// actually ships: every row resting on a verse written as one, every word from the vocabularies the
-/// tables allow, and the rows reaching the endpoint as the timeline of the kings reads them.
+/// tables allow, and the rows reaching the endpoint as the timeline of the kings reads them. With
+/// them the rulings on the kings: a mark for every king the text judges, quoted from verses, the ages
+/// a verse gives, and the carryings away and the return by the rulers' years.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class ReignLoaderTests : IDisposable
@@ -23,17 +26,20 @@ public sealed class ReignLoaderTests : IDisposable
     private readonly AppDbContext _db;
     private readonly ReignLoader _loader;
     private readonly ReignDecision _decision = ReignLoader.Records();
+    private readonly ReignRulings _rulings = ReignLoader.Rulings();
 
     public ReignLoaderTests(WitnessDatabase database)
     {
         _db = database.NewContext();
-        _db.Database.ExecuteSqlRaw("DELETE FROM period");
-        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        Empty();
         _loader = new ReignLoader(_db, NullLogger<ReignLoader>.Instance);
 
         var slugs = _decision.Rulers.Select(r => r.Slug)
             .Concat(_decision.Statements.SelectMany(s => new[] { s.Person, s.Ruler, s.Through }))
             .Concat(_decision.Prophets.SelectMany(p => p.Fields.Select(f => f.Place).Prepend(p.Slug)))
+            .Concat(_rulings.Verdicts.Select(v => v.King))
+            .Concat(_rulings.Ages.Select(a => a.Person))
+            .Concat(_rulings.Events.SelectMany(e => e.Datings.Select(d => d.Ruler)))
             .OfType<string>()
             .Distinct();
         var entities = slugs.ToDictionary(slug => slug, slug => new Entity
@@ -58,14 +64,27 @@ public sealed class ReignLoaderTests : IDisposable
             }));
         }
 
+        _db.Events.AddRange(_rulings.Events.Select(e => e.Event).OfType<string>().Select(slug => new Event
+        {
+            Slug = slug,
+            Name = slug,
+            Source = Source,
+        }));
+
         _db.SaveChanges();
     }
 
     public void Dispose()
     {
-        _db.Database.ExecuteSqlRaw("DELETE FROM period");
-        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        Empty();
         _db.Dispose();
+    }
+
+    private void Empty()
+    {
+        _db.Database.ExecuteSqlRaw("DELETE FROM period");
+        _db.Database.ExecuteSqlRaw("DELETE FROM event");
+        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
     }
 
     /// <summary>
@@ -151,11 +170,16 @@ public sealed class ReignLoaderTests : IDisposable
         first.Statements.Should().Be(_decision.Statements.Count);
         first.Lengths.Should().Be(_decision.Rulers.Count(r => r.Reigned is not null));
         first.Fields.Should().Be(_decision.Prophets.Sum(p => p.Fields.Count));
+        first.Verdicts.Should().Be(_rulings.Verdicts.Count);
+        first.Ages.Should().Be(_rulings.Ages.Count);
+        first.Events.Should().Be(_rulings.Events.Sum(e => e.Datings.Count));
 
         var second = await _loader.Load();
 
         second.AlreadyLoaded.Should().BeTrue();
         (await _db.ReignStatements.CountAsync()).Should().Be(_decision.Statements.Count);
+        (await _db.RulerVerdictPassages.CountAsync()).Should().Be(
+            _rulings.Verdicts.Sum(v => v.Witnesses.Sum(w => w.Verses.Count)));
     }
 
     /// <summary>
@@ -224,5 +248,216 @@ public sealed class ReignLoaderTests : IDisposable
             (ProphetFieldKinds.Prophesied, ProphetRealms.Israel, "bethel"),
             (ProphetFieldKinds.From, ProphetRealms.Judah, "tekoa-2"));
         kings.People.Single(p => p.Slug == "zerubbabel-2").Fields.Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// Every king of the united kingdom, of Israel and of Judah is either marked or listed as one the
+    /// text tells nothing to judge by, and never both; the owner's three stand as he set them.
+    /// </summary>
+    [Fact]
+    public void EveryKingIsMarkedOrSaidToBeUnmarked()
+    {
+        var kings = _decision.Rulers
+            .Where(r => r.Realm is RulerRealms.United or RulerRealms.Israel or RulerRealms.Judah)
+            .Select(r => r.Slug)
+            .ToList();
+        var marked = _rulings.Verdicts.Select(v => v.King).ToList();
+        var unmarked = _rulings.Unmarked.Select(u => u.King).ToList();
+
+        marked.Should().OnlyHaveUniqueItems();
+        marked.Concat(unmarked).Should().BeEquivalentTo(kings);
+
+        foreach (var left in _rulings.Unmarked)
+        {
+            left.Reason.Should().NotBeNullOrWhiteSpace(left.King);
+            left.Verses.Should().NotBeEmpty(left.King)
+                .And.OnlyContain(verse => ReignLoader.Verses(verse) != null, left.King);
+        }
+
+        var marks = _rulings.Verdicts.ToDictionary(v => v.King, v => v.Mark);
+        (marks["david"], marks["saul"], marks["solomon"])
+            .Should().Be((RulerMarks.Right, RulerMarks.Mixed, RulerMarks.Mixed));
+    }
+
+    /// <summary>
+    /// A mark is quoted from verses the loader can read, in the tables' own words; a reading gives
+    /// its reason and a judgment the text states needs none; and a king his histories part on is mixed.
+    /// </summary>
+    [Fact]
+    public void EveryVerdictIsQuotedFromVersesAndAReadingSaysWhy()
+    {
+        foreach (var verdict in _rulings.Verdicts)
+        {
+            RulerMarks.All.Should().Contain(verdict.Mark, verdict.King);
+            verdict.Witnesses.Should().NotBeEmpty(verdict.King);
+            verdict.Witnesses.Select(w => w.Book).Should().OnlyHaveUniqueItems(verdict.King);
+
+            foreach (var witness in verdict.Witnesses)
+            {
+                VerdictWitnesses.All.Should().Contain(witness.Book, verdict.King);
+                RulerMarks.All.Should().Contain(witness.Mark, verdict.King);
+                VerdictBases.All.Should().Contain(witness.Basis, verdict.King);
+                witness.Verses.Should().NotBeEmpty(verdict.King).And.OnlyHaveUniqueItems(verdict.King);
+
+                foreach (var verse in witness.Verses)
+                {
+                    ReignLoader.Verses(verse).Should().NotBeNull(verse);
+                }
+
+                if (witness.Basis == VerdictBases.Reading)
+                {
+                    witness.Reason.Should().NotBeNullOrWhiteSpace(verdict.King);
+                }
+                else
+                {
+                    witness.Reason.Should().BeNull(verdict.King);
+                }
+            }
+
+            var said = verdict.Witnesses.Select(w => w.Mark).Distinct().ToList();
+            verdict.Mark.Should().Be(said.Count == 1 ? said[0] : RulerMarks.Mixed, verdict.King);
+        }
+    }
+
+    /// <summary>
+    /// An age is a verse's, of somebody the timeline of the kings names; an event is one of the two
+    /// kinds, befalls Israel or Judah, and every verse dating it names a ruler.
+    /// </summary>
+    [Fact]
+    public void EveryAgeAndEveryCarryingAwayRestsOnAVerse()
+    {
+        var rulers = _decision.Rulers.Select(r => r.Slug).ToHashSet();
+        var named = rulers.Concat(_decision.Prophets.Select(p => p.Slug)).ToHashSet();
+
+        foreach (var age in _rulings.Ages)
+        {
+            named.Should().Contain(age.Person);
+            StatedAgeKinds.All.Should().Contain(age.Kind, age.Person);
+            age.Years.Should().BePositive(age.Person);
+            ReignLoader.Verses(age.Verse).Should().NotBeNull(age.Verse);
+            ReignLoader.Verses(age.Verse)!.Value.EndVerse.Should().BeNull(age.Verse);
+        }
+
+        _rulings.Ages.Select(a => (a.Person, a.Kind, a.Verse)).Should().OnlyHaveUniqueItems();
+        _rulings.Events.Select(e => e.Slug).Should().OnlyHaveUniqueItems();
+
+        foreach (var happened in _rulings.Events)
+        {
+            ReignEventKinds.All.Should().Contain(happened.Kind, happened.Slug);
+            happened.Realm.Should().BeOneOf([RulerRealms.Israel, RulerRealms.Judah], happened.Slug);
+            happened.Datings.Should().NotBeEmpty(happened.Slug)
+                .And.Contain(d => d.Year != null, "one verse at least gives a ruler's year");
+
+            foreach (var dating in happened.Datings)
+            {
+                rulers.Should().Contain(dating.Ruler, happened.Slug);
+                ReignLoader.Verses(dating.Verse).Should().NotBeNull(dating.Verse);
+                (dating.Year ?? 1).Should().BePositive(dating.Verse);
+            }
+        }
+    }
+
+    /// <summary>
+    /// A king comes with his mark and each history's own: Hezekiah right in both, Manasseh evil in
+    /// Kings and mixed in Chronicles, Elah a reading; a king the text does not judge, and a ruler of
+    /// the nations, with none.
+    /// </summary>
+    [Fact]
+    public async Task TheTimelineOfTheKingsSaysWhatTheTextSaysOfEachKing()
+    {
+        await _loader.Load();
+
+        var kings = await KingsEndpoints.Kings(_db, null, CancellationToken.None);
+
+        var hezekiah = kings.Rulers.Single(r => r.Slug == "hezekiah").Verdict;
+        hezekiah.Should().NotBeNull();
+        (hezekiah!.Mark, hezekiah.Basis).Should().Be((RulerMarks.Right, VerdictBases.Text));
+        hezekiah.Sources.Select(s => (s.Source, s.Mark)).Should().Equal(
+            (VerdictWitnesses.Kings, RulerMarks.Right),
+            (VerdictWitnesses.Chronicles, RulerMarks.Right));
+        hezekiah.Sources[0].Passages.Select(p => (p.Verse.BookOrdinal, p.Verse.Chapter, p.Verse.Verse, p.EndVerse))
+            .Should().Equal((12, 18, 3, (int?)null), (12, 18, 5, (int?)6));
+
+        var manasseh = kings.Rulers.Single(r => r.Slug == "manasseh-3").Verdict!;
+        manasseh.Mark.Should().Be(RulerMarks.Mixed);
+        manasseh.Sources.Select(s => (s.Source, s.Mark)).Should().Equal(
+            (VerdictWitnesses.Kings, RulerMarks.Evil),
+            (VerdictWitnesses.Chronicles, RulerMarks.Mixed));
+
+        var elah = kings.Rulers.Single(r => r.Slug == "elah-2").Verdict!;
+        (elah.Mark, elah.Basis).Should().Be((RulerMarks.Evil, VerdictBases.Reading));
+
+        kings.Rulers.Single(r => r.Slug == "tibni").Verdict.Should().BeNull();
+        kings.Rulers.Single(r => r.Slug == "shishak").Verdict.Should().BeNull();
+    }
+
+    /// <summary>
+    /// The ages go with whom the verse gives them to — both of Ahaziah's, and Darius the Mede's as
+    /// about — and the events come in the order they happened, each with every verse that dates it.
+    /// </summary>
+    [Fact]
+    public async Task TheTimelineOfTheKingsGivesTheAgesAndTheCarryingsAway()
+    {
+        await _loader.Load();
+
+        var kings = await KingsEndpoints.Kings(_db, null, CancellationToken.None);
+
+        kings.Rulers.Single(r => r.Slug == "ahaziah-2").Ages
+            .Select(a => (a.Kind, a.Years, a.About, a.Verse.BookOrdinal, a.Verse.Chapter, a.Verse.Verse))
+            .Should().Equal(
+                (StatedAgeKinds.Accession, 22, false, 12, 8, 26),
+                (StatedAgeKinds.Accession, 42, false, 14, 22, 2));
+        kings.Rulers.Single(r => r.Slug == "darius-2").Ages.Should().ContainSingle(a => a.About && a.Years == 62);
+        kings.Rulers.Single(r => r.Slug == "solomon").Ages.Should().BeEmpty();
+        kings.People.Single(p => p.Slug == "isaiah").Ages.Should().BeEmpty();
+
+        kings.Events.Select(e => (e.Slug, e.Kind, e.Realm)).Should().Equal(
+            ("exile-of-israel", ReignEventKinds.Exile, RulerRealms.Israel),
+            ("first-taking-of-jerusalem", ReignEventKinds.Exile, RulerRealms.Judah),
+            ("exile-of-jehoiachin", ReignEventKinds.Exile, RulerRealms.Judah),
+            ("fall-of-jerusalem", ReignEventKinds.Exile, RulerRealms.Judah),
+            ("decree-of-cyrus", ReignEventKinds.Return, RulerRealms.Judah));
+
+        var samaria = kings.Events[0];
+        samaria.Event.Should().Be("theassyriancaptivityofisrael");
+        samaria.Datings.Select(d => (d.Ruler, d.Year, d.Verse.Chapter, d.Verse.Verse, d.EndVerse)).Should().Equal(
+            ("hoshea", (int?)9, 17, 6, (int?)null),
+            ("hoshea", (int?)9, 18, 10, (int?)11),
+            ("hezekiah", (int?)6, 18, 10, (int?)11));
+        kings.Events[1].Datings.Should().Contain(d => d.Ruler == "eliakim-2" && d.Year == null);
+    }
+
+    /// <summary>
+    /// What is added goes over the wire under the names the client reads, through the serializer the
+    /// API answers with.
+    /// </summary>
+    [Fact]
+    public async Task TheVerdictsTheAgesAndTheEventsAreSentAsTheClientReadsThem()
+    {
+        await _loader.Load();
+
+        var kings = await KingsEndpoints.Kings(_db, null, CancellationToken.None);
+        using var wire = JsonDocument.Parse(JsonSerializer.Serialize(
+            kings, AppJsonSerializerContext.Default.GetTypeInfo(typeof(KingsTimelineResponse))!));
+
+        var josiah = wire.RootElement.GetProperty("rulers").EnumerateArray()
+            .Single(r => r.GetProperty("slug").GetString() == "josiah");
+        var verdict = josiah.GetProperty("verdict");
+        verdict.GetProperty("mark").GetString().Should().Be(RulerMarks.Right);
+        verdict.GetProperty("basis").GetString().Should().Be(VerdictBases.Text);
+        var source = verdict.GetProperty("sources")[0];
+        source.GetProperty("source").GetString().Should().Be(VerdictWitnesses.Kings);
+        source.GetProperty("passages")[0].GetProperty("verse").GetProperty("slug").GetString().Should().Be("2-kings");
+        source.GetProperty("passages")[0].GetProperty("endVerse").ValueKind.Should().Be(JsonValueKind.Null);
+
+        var age = josiah.GetProperty("ages")[0];
+        (age.GetProperty("kind").GetString(), age.GetProperty("years").GetInt32(), age.GetProperty("about").GetBoolean())
+            .Should().Be((StatedAgeKinds.Accession, 8, false));
+
+        var decree = wire.RootElement.GetProperty("events").EnumerateArray().Last();
+        decree.GetProperty("event").GetString().Should().Be("cyrusdecree");
+        var dating = decree.GetProperty("datings")[0];
+        (dating.GetProperty("ruler").GetString(), dating.GetProperty("year").GetInt32(), dating.GetProperty("endVerse").GetInt32())
+            .Should().Be(("cyrus", 1, 3));
     }
 }

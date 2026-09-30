@@ -160,6 +160,21 @@ public class AppDbContext : DbContext
     /// <summary>The names kings reigned under where their records are headed by another.</summary>
     public DbSet<ThroneName> ThroneNames { get; set; } = null!;
 
+    /// <summary>The mark each king is drawn with: right, evil or mixed.</summary>
+    public DbSet<RulerVerdict> RulerVerdicts { get; set; } = null!;
+
+    /// <summary>What Samuel, Kings and Chronicles each say of a king.</summary>
+    public DbSet<RulerVerdictWitness> RulerVerdictWitnesses { get; set; } = null!;
+
+    /// <summary>The verses each of them says it in.</summary>
+    public DbSet<RulerVerdictPassage> RulerVerdictPassages { get; set; } = null!;
+
+    /// <summary>The ages the text gives, with the verse.</summary>
+    public DbSet<StatedAge> StatedAges { get; set; } = null!;
+
+    /// <summary>The carryings away and the return, each verse dating one by a ruler's year.</summary>
+    public DbSet<ReignEvent> ReignEvents { get; set; } = null!;
+
     /// <summary>
     /// The ordered clauses this corpus says an entity is, out of which its description is rendered
     /// in whatever language a reader asks for.
@@ -537,6 +552,99 @@ public class AppDbContext : DbContext
                 t.HasCheckConstraint(
                     "ck_prophet_field_end_verse", "end_verse IS NULL OR end_verse > canonical_verse");
                 t.HasCheckConstraint("ck_prophet_field_source_not_empty", "length(btrim(source)) > 0");
+            });
+        });
+
+        modelBuilder.Entity<RulerVerdict>(entity =>
+        {
+            entity.HasOne(v => v.Entity)
+                .WithMany()
+                .HasForeignKey(v => v.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("ruler_verdict", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_ruler_verdict_mark",
+                    $"mark IN ({string.Join(", ", RulerMarks.All.Select(mark => $"'{mark}'"))})");
+                t.HasCheckConstraint("ck_ruler_verdict_source_not_empty", "length(btrim(source)) > 0");
+            });
+        });
+
+        modelBuilder.Entity<RulerVerdictWitness>(entity =>
+        {
+            entity.HasOne(w => w.Verdict)
+                .WithMany(v => v.Witnesses)
+                .HasForeignKey(w => w.VerdictId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("ruler_verdict_witness", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_ruler_verdict_witness_witness",
+                    $"witness IN ({string.Join(", ", VerdictWitnesses.All.Select(witness => $"'{witness}'"))})");
+                t.HasCheckConstraint(
+                    "ck_ruler_verdict_witness_mark",
+                    $"mark IN ({string.Join(", ", RulerMarks.All.Select(mark => $"'{mark}'"))})");
+                t.HasCheckConstraint(
+                    "ck_ruler_verdict_witness_basis",
+                    $"basis IN ({string.Join(", ", VerdictBases.All.Select(basis => $"'{basis}'"))})");
+            });
+        });
+
+        modelBuilder.Entity<RulerVerdictPassage>(entity =>
+        {
+            entity.HasOne(p => p.Witness)
+                .WithMany(w => w.Passages)
+                .HasForeignKey(p => p.WitnessId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("ruler_verdict_passage", t =>
+                t.HasCheckConstraint(
+                    "ck_ruler_verdict_passage_end_verse", "end_verse IS NULL OR end_verse > canonical_verse"));
+        });
+
+        modelBuilder.Entity<StatedAge>(entity =>
+        {
+            entity.HasOne(a => a.Entity)
+                .WithMany()
+                .HasForeignKey(a => a.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("stated_age", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_stated_age_kind",
+                    $"kind IN ({string.Join(", ", StatedAgeKinds.All.Select(kind => $"'{kind}'"))})");
+                t.HasCheckConstraint("ck_stated_age_years", "years >= 1");
+                t.HasCheckConstraint("ck_stated_age_source_not_empty", "length(btrim(source)) > 0");
+            });
+        });
+
+        // The timeline's event can be reloaded from under the row, and the verse still dates it.
+        modelBuilder.Entity<ReignEvent>(entity =>
+        {
+            entity.HasOne(e => e.Ruler)
+                .WithMany()
+                .HasForeignKey(e => e.RulerEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(e => e.TimelineEvent)
+                .WithMany()
+                .HasForeignKey(e => e.TimelineEventId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.ToTable("reign_event", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_reign_event_kind",
+                    $"kind IN ({string.Join(", ", ReignEventKinds.All.Select(kind => $"'{kind}'"))})");
+                t.HasCheckConstraint(
+                    "ck_reign_event_realm", $"realm IN ('{RulerRealms.Israel}', '{RulerRealms.Judah}')");
+                t.HasCheckConstraint("ck_reign_event_year", "year IS NULL OR year >= 1");
+                t.HasCheckConstraint("ck_reign_event_end_verse", "end_verse IS NULL OR end_verse > canonical_verse");
+                t.HasCheckConstraint("ck_reign_event_slug_not_empty", "length(btrim(slug)) > 0");
+                t.HasCheckConstraint("ck_reign_event_source_not_empty", "length(btrim(source)) > 0");
             });
         });
 
