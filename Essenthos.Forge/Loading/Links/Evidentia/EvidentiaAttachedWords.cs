@@ -70,6 +70,18 @@ internal enum EvidentiaAttachment
     /// governs when the word after it was a possessive or a quantifier the original writes elsewhere.
     /// </summary>
     PrepositionOfPhrase,
+
+    /// <summary>
+    /// <em>and</em> of <em>and his voice</em> or <em>But</em> of <em>But you, Daniel</em>, on the ו written on
+    /// the word of the first placed word after it, where its own rule found no placed word to follow.
+    /// </summary>
+    PrefixConjunction,
+
+    /// <summary>
+    /// <em>to</em> of <em>to everlasting shame</em> or <em>as</em> of <em>as the great owl</em>, on the ל or כ
+    /// written on the word of the noun its modifiers stand before.
+    /// </summary>
+    PrefixPreposition,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -179,6 +191,10 @@ internal enum EvidentiaAttachmentPlacement
 /// no <em>be</em> (81-83%); <em>there is</em> on אֵין (86%); and Greek <em>of</em> on its genitive
 /// noun (55-64%).</para>
 ///
+/// <para>Last, when every other attached word has its place, a coordinator, <em>to</em>, <em>as</em> or
+/// <em>like</em> still unplaced goes on the prefix of its own kind written on the word of the first
+/// placed word after it (<see cref="AttachToPrefixes"/>).</para>
+///
 /// <para>All of that is English. German and Spanish attach two kinds only, the two that write a verb's
 /// inflection as a word: the subject pronoun and the auxiliary of tense, by the German and Spanish
 /// UDPipe parses (<see cref="ClassifyInflection"/>). Every other source language is left alone.</para>
@@ -283,6 +299,31 @@ internal static class EvidentiaAttachedWords
 
     private const string Lamed = "H9005";
 
+    private const string Kaph = "H9004";
+
+    private const string Vav = "H9000";
+
+    /// <summary>The coordinators that reach for the ו written on the word of the first placed word after them.</summary>
+    private static readonly HashSet<string> PrefixConjunctions = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "and", "but", "or", "nor", "yet", "while",
+    };
+
+    /// <summary>The prepositions that reach for the prefix of their own kind, and the prefix each renders.</summary>
+    private static readonly Dictionary<string, string> PrefixPrepositions = new(StringComparer.OrdinalIgnoreCase)
+    {
+        [To] = Lamed, ["as"] = Kaph, ["like"] = Kaph,
+    };
+
+    /// <summary>
+    /// How far after a coordinator the first placed word may stand: <em>and then he was no more</em>. On the
+    /// passages the rules were chosen on a fifth word added two placements, one of them wrong.
+    /// </summary>
+    private const int ConjunctionPrefixReach = 4;
+
+    /// <summary>How far after <em>to</em> or <em>as</em> its noun may stand, past its modifiers: <em>to his own place</em>.</summary>
+    private const int PrepositionPrefixReach = 3;
+
     private const string Of = "of";
 
     private static readonly HashSet<string> UnplacedPrepositions = new(StringComparer.OrdinalIgnoreCase)
@@ -363,6 +404,11 @@ internal static class EvidentiaAttachedWords
             {
                 placing |= Attach(words, placedBySource, targetsByVerse, taken, proposals);
             }
+        }
+
+        foreach (var words in verses)
+        {
+            AttachToPrefixes(words, placedBySource, targetsByVerse, taken, proposals);
         }
 
         return proposals;
@@ -449,6 +495,116 @@ internal static class EvidentiaAttachedWords
 
         return attached;
     }
+
+    /// <summary>
+    /// A coordinator, <em>to</em>, <em>as</em> or <em>like</em> that its own rule left unplaced, on the prefix
+    /// of its kind written on the word of the first placed word after it: <em>and his voice</em> on the ו of
+    /// וְקוֹלוֹ, <em>But you, Daniel</em> on the ו of וְאַתָּה, <em>to everlasting shame</em> on the ל of
+    /// לַחֲרָפוֹת. Its own rule reads it with one word, within three, and that word is as often a
+    /// possessive, an adjective, or a subject the original writes in the verb.
+    ///
+    /// <para>The prefix must be written on the very word the placed word renders, free, and after the
+    /// rendering of the last word placed before it: a ו standing earlier belongs to a clause the English
+    /// reordered. Nothing is read past punctuation or another coordinator. A coordinator reaches across
+    /// any words, since the ו opens the clause whatever English puts first; a preposition only across
+    /// the words that modify its noun, since across a verb <em>to</em> belongs to the infinitive.</para>
+    /// </summary>
+    private static void AttachToPrefixes(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        Dictionary<long, EvidentiaProposal> placedBySource,
+        IReadOnlyDictionary<EvidentiaAddress, List<EvidentiaAnalysis>> targetsByVerse,
+        HashSet<long> taken,
+        List<EvidentiaProposal> proposals)
+    {
+        for (var index = 0; index < words.Count; index++)
+        {
+            var word = words[index];
+            var conjunction = PrefixConjunctions.Contains(word.Token.Surface);
+            if (placedBySource.ContainsKey(word.Token.Id) || !IsEnglish(word) || Punctuated(word)
+                || !conjunction && !PrefixPrepositions.ContainsKey(word.Token.Surface))
+            {
+                continue;
+            }
+
+            var prefixNumber = conjunction ? Vav : PrefixPrepositions[word.Token.Surface];
+            var reach = conjunction ? ConjunctionPrefixReach : PrepositionPrefixReach;
+            for (var next = index + 1; next < words.Count && next - index <= reach; next++)
+            {
+                var other = words[next];
+                if (PrefixConjunctions.Contains(other.Token.Surface))
+                {
+                    break;
+                }
+
+                if (placedBySource.TryGetValue(other.Token.Id, out var head))
+                {
+                    if (head.Target.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
+                        && targetsByVerse.TryGetValue(head.Target.Token.Address, out var verse)
+                        && PrefixOfItsWord(head.Target, verse, prefixNumber) is { } prefix
+                        && !taken.Contains(prefix.Token.Id)
+                        && StandsAfterTheWordBefore(words, index, prefix, placedBySource))
+                    {
+                        var attachment = conjunction ? EvidentiaAttachment.PrefixConjunction : EvidentiaAttachment.PrefixPreposition;
+                        taken.Add(prefix.Token.Id);
+                        var proposal = new EvidentiaProposal(
+                            word,
+                            prefix,
+                            EvidentiaProposalKind.AttachedWord,
+                            Math.Max(0, head.Confidence - ConfidenceBelowHead),
+                            new EvidentiaDecisionTrace("attached", $"{attachment} of '{other.Token.Surface}'", head.Trace?.Evidence ?? []),
+                            head);
+                        proposals.Add(proposal);
+                        placedBySource[word.Token.Id] = proposal;
+                    }
+
+                    break;
+                }
+
+                if (Punctuated(other) || !conjunction && !IsModifier(other))
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    /// <summary>The prefix of that number among the parts written on the rendering's own word, before it: וּ of וּלְבֵיתוֹ.</summary>
+    private static EvidentiaAnalysis? PrefixOfItsWord(EvidentiaAnalysis rendering, IReadOnlyList<EvidentiaAnalysis> verse, string number)
+    {
+        for (var before = IndexOf(verse, rendering) - 1;
+             before >= 0 && verse[before].Token.Trailer.Length == 0 && Class(verse[before]) is "det" or "adp" or "conj";
+             before--)
+        {
+            if (verse[before].Token.StrongNumber == number)
+            {
+                return verse[before];
+            }
+        }
+
+        return null;
+    }
+
+    private static bool StandsAfterTheWordBefore(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        int index,
+        EvidentiaAnalysis prefix,
+        IReadOnlyDictionary<long, EvidentiaProposal> placedBySource)
+    {
+        for (var before = index - 1; before >= 0; before--)
+        {
+            if (placedBySource.TryGetValue(words[before].Token.Id, out var earlier))
+            {
+                return !earlier.Target.Token.Address.Equals(prefix.Token.Address)
+                    || earlier.Target.Token.Position < prefix.Token.Position;
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>A word that stands between a preposition and its noun: an article, an adjective, a numeral or a possessive.</summary>
+    private static bool IsModifier(EvidentiaAnalysis word) =>
+        Class(word) is "det" or "adj" or "num" || Class(word) == "pron" && Feature(word, "Poss") == "Yes";
 
     /// <summary>
     /// <em>And</em> of <em>And God said</em> stands before the subject, and the וַ it renders is written on
