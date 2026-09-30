@@ -1,0 +1,62 @@
+{
+  "about": "Words where the one bearer of a name the rest of the book names disagrees with the dataset's verse list or with an annotation the word already carries. Nothing here was written. Reference is canonical book:chapter:verse, position the word's place in the verse from 1, found the record the book names, by what disagrees and against the records it names.",
+  "written": "2026-09-30T09:16:55.0025516+00:00",
+  "words": [
+    {
+      "text": "ASV",
+      "reference": "7:4:6",
+      "position": 13,
+      "word": "Kedesh-naphtali",
+      "found": "kedesh-4",
+      "by": "an annotation the word already carries",
+      "against": [
+        "naphtali"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "7:4:6",
+      "position": 13,
+      "word": "Kedesh-naphtali",
+      "found": "kedesh-4",
+      "by": "an annotation the word already carries",
+      "against": [
+        "naphtali"
+      ]
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "43:14:22",
+      "position": 3,
+      "word": "Ἰούδας",
+      "found": "judas",
+      "by": "the dataset's list",
+      "against": [
+        "judas-of-james",
+        "thaddaeus"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "6:18:17",
+      "position": 21,
+      "word": "Евен-Боган-Бен-Реувену",
+      "found": "reuben",
+      "by": "an annotation the word already carries",
+      "against": [
+        "bohan"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "7:4:6",
+      "position": 13,
+      "word": "Kedesh-Naphtali",
+      "found": "kedesh-4",
+      "by": "an annotation the word already carries",
+      "against": [
+        "naphtali"
+      ]
+    }
+  ]
+}
