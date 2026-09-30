@@ -201,7 +201,8 @@ function AddFractions($total, $passage) {
 # Both ways: a by state or by rule line then gives right with chunk-boundary counted right and with
 # chunk-boundary-attached counted right (a state, last, its safe tier with both), and by state, explained
 # ends with the words right with both. chunk boundary: the size of chunk-boundary, its conjunctions, those
-# on a written word the key leaves out, the size of chunk-boundary-attached, its auxiliaries. The pairs lines
+# on a written word the key leaves out, the size of chunk-boundary-attached, its auxiliaries, those on a
+# verb the key leaves out beside its infinitive absolute. The pairs lines
 # both ways: by the key, with chunk-boundary, with chunk-boundary-attached, with both (split key: then the
 # safe tier with both).
 function FractionSummary([string] $name, $fractions) {

@@ -23,7 +23,8 @@ internal readonly record struct EvidentiaBoundaryCase(
     EvidentiaBoundaryClass Class,
     bool Conjunction = false,
     bool WordLeftOut = false,
-    bool Auxiliary = false);
+    bool Auxiliary = false,
+    bool BesideItsInfinitive = false);
 
 /// <summary>How many placements the key counts wrong stand in each class, and how many of them in the safe tier.</summary>
 internal readonly record struct EvidentiaBoundaryCount(
@@ -33,7 +34,8 @@ internal readonly record struct EvidentiaBoundaryCount(
     int Attached,
     int AttachedAuxiliaries,
     int SafePrefix,
-    int SafeAttached)
+    int SafeAttached,
+    int AttachedBesideInfinitives = 0)
 {
     public static EvidentiaBoundaryCount operator +(EvidentiaBoundaryCount one, EvidentiaBoundaryCount two) => new(
         one.Prefix + two.Prefix,
@@ -42,7 +44,8 @@ internal readonly record struct EvidentiaBoundaryCount(
         one.Attached + two.Attached,
         one.AttachedAuxiliaries + two.AttachedAuxiliaries,
         one.SafePrefix + two.SafePrefix,
-        one.SafeAttached + two.SafeAttached);
+        one.SafeAttached + two.SafeAttached,
+        one.AttachedBesideInfinitives + two.AttachedBesideInfinitives);
 }
 
 /// <summary>
@@ -69,7 +72,10 @@ internal readonly record struct EvidentiaBoundaryCount(
 /// or a suffix of the pronoun's person) and the key's own link for it is a chunk with the word standing
 /// beside it that names nothing else that could: no verb for an auxiliary; no verb, pronoun, preposition
 /// or suffixed word for a pronoun, and for a subject no noun, name, adjective or numeral either, since
-/// <em>He</em> of <em>and He separated</em> is the אֱלֹהִים the original writes.</para>
+/// <em>He</em> of <em>and He separated</em> is the אֱלֹהִים the original writes. Where the original writes
+/// the verb twice, the infinitive absolute beside the finite form (מוֹת תָּמוּת), and the key puts the whole
+/// phrase <em>you will surely die</em> on the infinitive and leaves the finite verb out of every link, the
+/// finite verb is the word the auxiliary and the subject belong on, and the infinitive is no other verb.</para>
 ///
 /// <para>Whatever fails one of these stays wrong: a prefix another word of the key takes, a word whose
 /// link names a word of its kind elsewhere (<em>from</em> with מִמֶּנּוּ), a conjunction reordered away
@@ -100,6 +106,8 @@ internal static class EvidentiaChunkBoundary
     private const string PersonalPronoun = "Prs";
 
     private const string SuffixPerson = "suffixPerson";
+
+    private const string InfinitiveAbsolute = "infa";
 
     public static string? Name(EvidentiaBoundaryClass boundary) => boundary switch
     {
@@ -152,7 +160,8 @@ internal static class EvidentiaChunkBoundary
             Of(EvidentiaBoundaryClass.Attached),
             Of(EvidentiaBoundaryClass.Attached, found => found.Auxiliary),
             Of(EvidentiaBoundaryClass.Prefix, safeOnly: true),
-            Of(EvidentiaBoundaryClass.Attached, safeOnly: true));
+            Of(EvidentiaBoundaryClass.Attached, safeOnly: true),
+            Of(EvidentiaBoundaryClass.Attached, found => found.BesideItsInfinitive));
     }
 
     private sealed class Reading
@@ -243,8 +252,13 @@ internal static class EvidentiaChunkBoundary
             var pronoun = wordClass == "pron" && Feature(word, "PronType") == PersonalPronoun;
             var subject = pronoun && SubjectRelations.Contains(relation);
             var suffixed = pronoun && SuffixRelations.Contains(relation);
-            if (!auxiliary && !subject && !suffixed
-                || word.Token.SyntacticHead is not { } head || !key.Pairs.Contains((head, placement.Token.Id)))
+            if (!auxiliary && !subject && !suffixed || word.Token.SyntacticHead is not { } head)
+            {
+                return null;
+            }
+
+            var infinitive = key.Pairs.Contains((head, placement.Token.Id)) ? null : InfinitiveBeside(head, placement);
+            if (infinitive is null && !key.Pairs.Contains((head, placement.Token.Id)))
             {
                 return null;
             }
@@ -254,14 +268,29 @@ internal static class EvidentiaChunkBoundary
                 : subject ? placedOn == "verb" && EvidentiaPersonAgreement.Agrees(word, placement, suffix: false)
                 : EvidentiaPersonAgreement.Agrees(word, placement, suffix: true);
             var own = keyTargets[word.Token.Id].Select(id => targetById.GetValueOrDefault(id)).OfType<EvidentiaAnalysis>().ToList();
-            var writtenElsewhere = own.Any(other => EvidentiaAttachedWords.Class(other) is var otherClass && (auxiliary
-                ? otherClass == "verb"
-                : otherClass is not null && (WritesAPerson.Contains(otherClass) || subject && Nominals.Contains(otherClass))
-                  || Feature(other, SuffixPerson) is not null));
+            var writtenElsewhere = own.Any(other => other.Token.Id != infinitive?.Token.Id
+                && EvidentiaAttachedWords.Class(other) is var otherClass && (auxiliary
+                    ? otherClass == "verb"
+                    : otherClass is not null && (WritesAPerson.Contains(otherClass) || subject && Nominals.Contains(otherClass))
+                      || Feature(other, SuffixPerson) is not null));
             return writesIt && own.Count > 0 && !writtenElsewhere && IsChunkedWithItsNeighbour(word, head)
-                ? new EvidentiaBoundaryCase(EvidentiaBoundaryClass.Attached, Auxiliary: auxiliary)
+                ? new EvidentiaBoundaryCase(EvidentiaBoundaryClass.Attached, Auxiliary: auxiliary, BesideItsInfinitive: infinitive is not null)
                 : null;
         }
+
+        /// <summary>
+        /// The infinitive absolute of the placement's own lexeme, written directly beside it, where the key
+        /// names the infinitive for the head and leaves the placement out of every link.
+        /// </summary>
+        private EvidentiaAnalysis? InfinitiveBeside(long head, EvidentiaAnalysis placement) =>
+            named.Contains(placement.Token.Id) || EvidentiaAttachedWords.Class(placement) != "verb"
+            || placement.Token.StrongNumber is not { } lexeme || !written.TryGetValue(placement.Token.Id, out var place)
+                ? null
+                : keyTargets[head].Select(id => targetById.GetValueOrDefault(id)).OfType<EvidentiaAnalysis>()
+                    .FirstOrDefault(other => other.Token.StrongNumber == lexeme
+                        && string.Equals(Feature(other, "tense"), InfinitiveAbsolute, StringComparison.OrdinalIgnoreCase)
+                        && written.TryGetValue(other.Token.Id, out var beside) && beside.Verse.Equals(place.Verse)
+                        && Math.Abs(beside.Word - place.Word) == 1);
 
         private bool StandsDirectlyBefore(EvidentiaAnalysis word, IReadOnlyList<EvidentiaAnalysis> rendering)
         {

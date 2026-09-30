@@ -69,7 +69,9 @@ internal sealed record EvidentiaWordRecord(
     IReadOnlyList<long>? SplitKey = null,
     string? KeyClass = null,
     long? ParseHeadWordId = null,
-    string? Relation = null);
+    string? Relation = null,
+    IReadOnlyDictionary<string, string>? SourceMorphology = null,
+    IReadOnlyDictionary<string, string>? TargetMorphology = null);
 
 /// <summary>
 /// A word the answer key puts the source word on, whether another word's proposal holds it, and what
@@ -237,7 +239,9 @@ internal readonly record struct EvidentiaSourceWordAccount(
                     Strongest(candidatesBySource.GetValueOrDefault(token.Id) ?? []),
                     Gold: target is null ? null : GoldTargets(
                         token.Id, goldBySource.GetValueOrDefault(token.Id) ?? [], targetById, holderByTarget,
-                        candidatesBySource.GetValueOrDefault(token.Id) ?? []));
+                        candidatesBySource.GetValueOrDefault(token.Id) ?? []),
+                    SourceMorphology: target is null ? null : token.Morphology,
+                    TargetMorphology: target is null ? null : proposal?.Target.Token.Morphology);
             }),
         ];
     }

@@ -177,7 +177,8 @@ internal sealed record EvidentiaStateMeasure(
             $"chunk boundary: {EvidentiaChunkBoundary.PrefixName} {Share(Boundary.Prefix, Final.OnCoveredWords)} of the placed words the key judges, " +
             $"conjunctions {Share(Boundary.PrefixConjunctions, Boundary.Prefix)}, on a written word the key leaves out " +
             $"{Share(Boundary.PrefixOnWordsLeftOut, Boundary.Prefix)}; {EvidentiaChunkBoundary.AttachedName} " +
-            $"{Share(Boundary.Attached, Final.OnCoveredWords)}, auxiliaries {Share(Boundary.AttachedAuxiliaries, Boundary.Attached)}",
+            $"{Share(Boundary.Attached, Final.OnCoveredWords)}, auxiliaries {Share(Boundary.AttachedAuxiliaries, Boundary.Attached)}, " +
+            $"on a verb the key leaves out beside its infinitive absolute {Share(Boundary.AttachedBesideInfinitives, Boundary.Attached)}",
             $"key as loaded, pairs, both ways: {BothWays(Loaded.Correct, Loaded.OnCoveredWords, Boundary.Prefix, Boundary.Attached)}; " +
             $"with both {Share(Loaded.Correct + Boundary.Prefix + Boundary.Attached, Loaded.OnCoveredWords)}",
             $"split key, pairs, both ways: {BothWays(Final.Correct, Final.OnCoveredWords, Boundary.Prefix, Boundary.Attached)}; " +

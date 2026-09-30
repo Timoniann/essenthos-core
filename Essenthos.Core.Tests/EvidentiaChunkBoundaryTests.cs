@@ -178,6 +178,32 @@ public class EvidentiaChunkBoundaryTests
     }
 
     [Fact]
+    public void AnAuxiliaryAndASubjectOnTheFiniteVerbAreOfTheClassWhereTheKeyNamesOnlyTheInfinitiveBesideIt()
+    {
+        // you will surely die: the key has the whole phrase on מוֹת and leaves תָּמוּת out.
+        EvidentiaToken[] english =
+        [
+            English(1, "you", "PRON", head: 4, relation: "nsubj", morphology: [("PronType", "Prs"), ("Person", "2")]),
+            English(2, "will", "AUX", head: 4, relation: "aux"), English(3, "surely", "ADV"), English(4, "die", "VERB"),
+        ];
+        (string, string)[] second = [("person", "p2"), ("number", "sg"), ("gender", "m"), ("tense", "impf")];
+        EvidentiaToken[] original = [Hebrew(11, "מוֹת", "H4191", "verb", [("tense", "infa")]), Hebrew(12, "תָּמוּת", "H4191", "verb", second)];
+
+        var found = Classes(english, original, [([1, 2, 3, 4], [11])], (1, 12), (2, 12), (4, 12));
+
+        found.Should().BeEquivalentTo(new Dictionary<(long, long), EvidentiaBoundaryCase>
+        {
+            [(1, 12)] = new(EvidentiaBoundaryClass.Attached, BesideItsInfinitive: true),
+            [(2, 12)] = new(EvidentiaBoundaryClass.Attached, Auxiliary: true, BesideItsInfinitive: true),
+        });
+
+        // Another verb than the infinitive of its own lexeme, or one the key links, is the key's own choice.
+        EvidentiaToken[] other = [Hebrew(11, "יָדֹעַ", "H3045", "verb", [("tense", "infa")]), Hebrew(12, "תָּמוּת", "H4191", "verb", second)];
+        Classes(english, other, [([1, 2, 3, 4], [11])], (2, 12)).Should().BeEmpty();
+        Classes(english, original, [([1, 2, 3, 4], [11]), ([3], [12])], (2, 12)).Should().BeEmpty();
+    }
+
+    [Fact]
     public void APossessiveOnTheSuffixOfItsNounIsOfTheClassWhereTheKeyChunksItWithANumeral()
     {
         // his two sons: the key has his two on שְׁנֵי.
@@ -223,7 +249,7 @@ public class EvidentiaChunkBoundaryTests
         words[3].Boundary.Should().Be(EvidentiaBoundaryClass.None);
         measure.Of(EvidentiaWordState.Linked).Should().Be(new EvidentiaStateCount(2, 2, 1, 0, 0, Boundary: 1));
         measure.Rules[(EvidentiaWordState.Linked, nameof(EvidentiaAttachment.Preposition))].Should().Be(new EvidentiaStateCount(1, 1, 0, 0, 0, Boundary: 1));
-        measure.Boundary.Should().Be(new EvidentiaBoundaryCount(1, 0, 0, 0, 0, 0, 0));
+        measure.Boundary.Should().Be(new EvidentiaBoundaryCount(1, 0, 0, 0, 0, 0, 0, 0));
         (measure + measure).Boundary.Prefix.Should().Be(2);
         measure.Report().Should()
             .Contain("chunk boundary: chunk-boundary 1/2")
