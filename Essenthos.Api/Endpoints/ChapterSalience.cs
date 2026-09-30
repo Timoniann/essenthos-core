@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -92,7 +93,7 @@ internal static class ChapterSalience
         int chapter,
         CancellationToken cancellationToken)
     {
-        var labelled = await db.EntityVerses
+        var labelled = await db.EntityVerses.Shown()
             .Where(v => v.CanonicalBook == book && v.CanonicalChapter == chapter && !v.Disputed
                         && v.Label != null && v.Label != "")
             .Select(v => new { v.EntityId, v.Entity!.Slug, Label = v.Label!, v.CanonicalVerse })

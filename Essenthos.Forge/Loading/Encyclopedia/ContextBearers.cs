@@ -5,8 +5,11 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <summary>A canonical address: book, chapter and verse.</summary>
 internal readonly record struct Address(int Book, int Chapter, int Verse);
 
-/// <summary>An original word this corpus already settled on an entity, and where it stands.</summary>
-internal readonly record struct Attestation(int Entity, Address At);
+/// <summary>
+/// An original word this corpus already settled on an entity, where it stands, and the Strong number
+/// it is written under; empty where the word carries none.
+/// </summary>
+internal readonly record struct Attestation(int Entity, Address At, string Number);
 
 /// <summary>One name row: a Strong number a record is called by, and the name it is called.</summary>
 internal readonly record struct BearerName(int Entity, EntityKind Kind, string Number, string Label);
@@ -41,6 +44,8 @@ internal sealed class NameBearers
     private readonly Dictionary<string, HashSet<int>> _byNumber = new(StringComparer.Ordinal);
     private readonly Dictionary<string, HashSet<int>> _byLabel = new(StringComparer.Ordinal);
     private readonly Dictionary<int, HashSet<string>> _labels = [];
+    private readonly HashSet<(int Entity, string Number)> _called = [];
+    private readonly Dictionary<string, HashSet<string>> _spelled = new(StringComparer.Ordinal);
     private readonly Dictionary<int, EntityKind> _kinds = [];
 
     public NameBearers(IEnumerable<BearerName> names)
@@ -63,9 +68,29 @@ internal sealed class NameBearers
             if (!string.IsNullOrEmpty(name.Number))
             {
                 Add(_byNumber, name.Number, name.Entity);
+                if (label.Length > 0)
+                {
+                    Add(_spelled, name.Number, label);
+                }
+
+                _called.Add((name.Entity, name.Number));
             }
         }
     }
+
+    /// <summary>Whether the record is called by this number, under any name.</summary>
+    public bool Bears(int entity, string number) => _called.Contains((entity, number));
+
+    /// <summary>
+    /// Whether the two numbers spell one name: some record is called under the one by a name some
+    /// record is called under the other, as Jonathan is under both of his. Samuel's son Joel is a
+    /// candidate for a word written Saul, because a namesake of his is called Shaul too, and his own
+    /// name in 1 Samuel 8 is not that word.
+    /// </summary>
+    public bool SpellTheSame(string written, string number) =>
+        _spelled.TryGetValue(written, out var one)
+        && _spelled.TryGetValue(number, out var other)
+        && one.Overlaps(other);
 
     /// <summary>Every Strong number some record is called by.</summary>
     public IEnumerable<string> Numbers => _byNumber.Keys;
@@ -97,14 +122,14 @@ internal sealed class NameBearers
         return candidates;
     }
 
-    private static void Add(Dictionary<string, HashSet<int>> index, string key, int entity)
+    private static void Add<T>(Dictionary<string, HashSet<T>> index, string key, T value)
     {
         if (!index.TryGetValue(key, out var set))
         {
             index[key] = set = [];
         }
 
-        set.Add(entity);
+        set.Add(value);
     }
 }
 
@@ -116,10 +141,18 @@ internal sealed class NameBearers
 /// A name several men bear is a question of which one, and a book almost always answers it the same
 /// way throughout: 1 Samuel has one Jonathan, Judges 17–18 one Micah, 2 Chronicles one Asa. Where the
 /// book's settled words name exactly one of the candidates, and name him densely enough near the word
-/// — twice within <see cref="NearVerses"/> verses of it, or <see cref="InBook"/> times in the book
-/// with one of them within <see cref="NearChapters"/> chapter — the word is him. Where the book names
-/// two of them anywhere, nothing is said: Jeroboam the son of Nebat is named in the reign of the
-/// second Jeroboam, and a book that names both has not told us which one a bare name is.
+/// — twice within <see cref="NearVerses"/> verses of it, <see cref="InBook"/> times in the book
+/// with one of them within <see cref="NearChapters"/> chapter, or <see cref="AloneInBook"/> times in
+/// the book however far off — the word is him. Where the book names two of them anywhere, nothing is
+/// said: Jeroboam the son of Nebat is named in the reign of the second Jeroboam, and a book that
+/// names both has not told us which one a bare name is.
+/// </para>
+///
+/// <para>
+/// A candidate is named only by a word that spells this name. The candidates of a name reach every
+/// record called by any name one of its bearers is called, so a record can be a candidate under a
+/// second name of his and stand in the book under his first; that is not the book naming a second
+/// bearer of this word's name, and it is left out on both sides, as a rival and as support.
 /// </para>
 ///
 /// <para>
@@ -141,10 +174,18 @@ internal sealed class ContextBearers
     /// <summary>How far, in chapters, one of those must stand from the word.</summary>
     public const int NearChapters = 1;
 
-    private readonly Dictionary<int, List<Attestation>> _byBook = [];
+    /// <summary>
+    /// How many attestations in the book settle the word with none near it: 1 Samuel writes Saul's
+    /// son under one number in chapters 13 and 14 and under the other from chapter 18 on.
+    /// </summary>
+    public const int AloneInBook = 20;
 
-    public ContextBearers(IEnumerable<Attestation> attestations)
+    private readonly Dictionary<int, List<Attestation>> _byBook = [];
+    private readonly NameBearers _bearers;
+
+    public ContextBearers(IEnumerable<Attestation> attestations, NameBearers bearers)
     {
+        _bearers = bearers;
         foreach (var attestation in attestations)
         {
             if (!_byBook.TryGetValue(attestation.At.Book, out var book))
@@ -156,8 +197,8 @@ internal sealed class ContextBearers
         }
     }
 
-    /// <summary>The one candidate the book means at this address, or null where it does not say.</summary>
-    public int? Bearer(Address at, IReadOnlySet<int> candidates)
+    /// <summary>The one candidate the book means by a word of this number at this address, or null where it does not say.</summary>
+    public int? Bearer(Address at, IReadOnlySet<int> candidates, string number)
     {
         if (candidates.Count == 0 || !_byBook.TryGetValue(at.Book, out var book))
         {
@@ -169,7 +210,8 @@ internal sealed class ContextBearers
         var nearChapter = false;
         foreach (var attestation in book)
         {
-            if (!candidates.Contains(attestation.Entity) || attestation.At == at)
+            if (!candidates.Contains(attestation.Entity) || attestation.At == at
+                || !_bearers.SpellTheSame(attestation.Number, number))
             {
                 continue;
             }
@@ -189,6 +231,6 @@ internal sealed class ContextBearers
             }
         }
 
-        return near >= NearAtLeast || (inBook >= InBook && nearChapter) ? only : null;
+        return near >= NearAtLeast || (inBook >= InBook && nearChapter) || inBook >= AloneInBook ? only : null;
     }
 }

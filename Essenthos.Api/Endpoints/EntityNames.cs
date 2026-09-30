@@ -212,7 +212,7 @@ internal static class EntityNames
                     || (anyFolded && db.EntityRenderings.Any(r => r.EntityId == l.Entity.Id && r.Folded == folded))
                         ? 0
                         : EF.Functions.ILike(l.Shown, opening) || EF.Functions.ILike(l.Entity.Name, opening) ? 1 : 2)
-                .ThenByDescending(l => l.Entity.Verses.Count),
+                .ThenByDescending(l => l.Entity.Verses.Count(v => !v.Source.StartsWith(ShownVerses.Witness))),
             language);
     }
 

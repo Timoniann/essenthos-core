@@ -47,12 +47,13 @@ internal static class EncyclopediaEndpoints
     internal static readonly Expression<Func<Entity, EntityTally>> Tally =
         e => new EntityTally(
             e.Verses
+                .Where(v => !v.Source.StartsWith(ShownVerses.Witness))
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count(),
-            e.Verses.Count,
+            e.Verses.Count(v => !v.Source.StartsWith(ShownVerses.Witness)),
             e.Verses
-                .Where(v => v.Disputed)
+                .Where(v => v.Disputed && !v.Source.StartsWith(ShownVerses.Witness))
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count());
@@ -64,10 +65,11 @@ internal static class EncyclopediaEndpoints
             e.Name,
             e.Distinguisher,
             e.Verses
+                .Where(v => !v.Source.StartsWith(ShownVerses.Witness))
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count(),
-            e.Verses.Count)
+            e.Verses.Count(v => !v.Source.StartsWith(ShownVerses.Witness)))
         {
             Subtype = e.Subtype,
         };
@@ -103,6 +105,7 @@ internal static class EncyclopediaEndpoints
                 l.Score,
                 l.Source,
                 References = l.Entity.Verses
+                    .Where(v => !v.Source.StartsWith(ShownVerses.Witness))
                     .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                                  + v.CanonicalVerse)
                     .Distinct().Count(),
@@ -111,7 +114,7 @@ internal static class EncyclopediaEndpoints
 
         // The chapters in a second query: EF cannot put a distinct list inside the projection above,
         // and one row per place and chapter is a few thousand small rows.
-        var chapters = (await db.EntityVerses
+        var chapters = (await db.EntityVerses.Shown()
                 .Where(v => db.PlaceLocations.Any(l => l.EntityId == v.EntityId))
                 .Select(v => new { v.Entity!.Slug, Chapter = (v.CanonicalBook * ChapterStride) + v.CanonicalChapter })
                 .Distinct()
@@ -205,15 +208,20 @@ internal static class EncyclopediaEndpoints
     {
         var tallies = await db.Entities
             .GroupBy(e => e.Kind)
-            .Select(g => new { Kind = g.Key, Entities = g.Count(), Named = g.Count(e => e.Verses.Any()) })
+            .Select(g => new
+            {
+                Kind = g.Key,
+                Entities = g.Count(),
+                Named = g.Count(e => e.Verses.Any(v => !v.Source.StartsWith(ShownVerses.Witness))),
+            })
             .ToListAsync(cancellationToken);
 
-        var mentions = await db.EntityVerses
+        var mentions = await db.EntityVerses.Shown()
             .GroupBy(v => v.Entity!.Kind)
             .Select(g => new { Kind = g.Key, Count = g.Count() })
             .ToDictionaryAsync(row => row.Kind, row => row.Count, cancellationToken);
 
-        var verses = await db.EntityVerses
+        var verses = await db.EntityVerses.Shown()
             .Select(v => new
             {
                 v.Entity!.Kind,
@@ -224,7 +232,7 @@ internal static class EncyclopediaEndpoints
             .Select(g => new { Kind = g.Key, Count = g.Count() })
             .ToDictionaryAsync(row => row.Kind, row => row.Count, cancellationToken);
 
-        var reached = (await db.EntityVerses
+        var reached = (await db.EntityVerses.Shown()
                 .Select(v => new { v.Entity!.Kind, v.CanonicalBook })
                 .Distinct()
                 .ToListAsync(cancellationToken))
@@ -269,12 +277,12 @@ internal static class EncyclopediaEndpoints
         AppDbContext db,
         CancellationToken cancellationToken)
     {
-        var mentions = await db.EntityVerses
+        var mentions = await db.EntityVerses.Shown()
             .GroupBy(v => new { v.Entity!.Kind, v.Source })
             .Select(g => new { g.Key.Kind, g.Key.Source, Mentions = g.Count() })
             .ToListAsync(cancellationToken);
 
-        var verses = (await db.EntityVerses
+        var verses = (await db.EntityVerses.Shown()
                 .Select(v => new
                 {
                     v.Entity!.Kind,
@@ -287,7 +295,7 @@ internal static class EncyclopediaEndpoints
             .GroupBy(v => (v.Kind, v.Source))
             .ToDictionary(g => g.Key, g => g.Count());
 
-        var books = (await db.EntityVerses
+        var books = (await db.EntityVerses.Shown()
                 .Select(v => new { v.Entity!.Kind, v.Source, v.CanonicalBook })
                 .Distinct()
                 .ToListAsync(cancellationToken))
@@ -331,7 +339,7 @@ internal static class EncyclopediaEndpoints
     /// both break ties on the name so that a page boundary falls in the same place twice. The name
     /// is the one shown, in the language asked for and in that language's own alphabetical order.
     /// </summary>
-    private static IQueryable<LocalisedEntity> Ordered(
+    internal static IQueryable<LocalisedEntity> Ordered(
         AppDbContext db,
         IQueryable<LocalisedEntity> entities,
         string? sort,
@@ -340,11 +348,14 @@ internal static class EncyclopediaEndpoints
     {
         "verses" => EntityNames.Alphabetical(
             entities.OrderByDescending(l => l.Entity.Verses
+                .Where(v => !v.Source.StartsWith(ShownVerses.Witness))
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count()),
             language),
-        "mentions" => EntityNames.Alphabetical(entities.OrderByDescending(l => l.Entity.Verses.Count), language),
+        "mentions" => EntityNames.Alphabetical(
+            entities.OrderByDescending(l => l.Entity.Verses.Count(v => !v.Source.StartsWith(ShownVerses.Witness))),
+            language),
         "name" => EntityNames.Alphabetical(entities, language),
         _ => q is { Length: > 0 }
             ? EntityNames.ByRelevance(db, entities, q, language)
@@ -691,7 +702,7 @@ internal static class EncyclopediaEndpoints
             // supplied the entity. A place can come from one dataset and be referenced by another,
             // and a page reporting 955 verses under the first one's credit would attribute the
             // second one's work to it.
-            var stated = await db.EntityVerses
+            var stated = await db.EntityVerses.Shown()
                 .Where(v => v.EntityId == entity.Id)
                 .GroupBy(v => v.Source)
                 .Select(g => new
@@ -877,7 +888,7 @@ internal static class EncyclopediaEndpoints
             // Paged by verse, not by naming. The source writes one row per naming, so Manasseh's
             // list showed the same address twice wherever the text names him twice in it — a verse
             // repeated in a list of verses, with nothing on the page saying why.
-            var references = db.EntityVerses.Where(v => v.EntityId == entity);
+            var references = db.EntityVerses.Shown().Where(v => v.EntityId == entity);
 
             var total = await Addresses(references).CountAsync(cancellationToken);
             var wanted = await NamingFirst(references)

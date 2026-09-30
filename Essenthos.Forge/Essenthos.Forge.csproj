@@ -63,6 +63,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\ReportRecords.json" />
         <Content Remove="Loading\Encyclopedia\OwnNames.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OwnNames.json" />
+        <Content Remove="Loading\Encyclopedia\WithdrawnRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\WithdrawnRecords.json" />
         <Content Remove="Loading\Encyclopedia\TitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\TitleRecords.json" />
         <Content Remove="Loading\Encyclopedia\UnsettledRecords.json" />
@@ -73,6 +75,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsSecond.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsThird.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsFourth.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecords.json" />
         <Content Remove="Loading\Encyclopedia\ObjectRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ObjectRecords.json" />

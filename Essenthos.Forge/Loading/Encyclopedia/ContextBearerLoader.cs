@@ -54,8 +54,11 @@ internal sealed record ContextBearerOutcome(
 /// Only the originals are read and only this corpus's own settled words are evidence; a dataset's
 /// verse list is never the answer. It is the brake: where the list files the verse under another of
 /// the candidates, nothing is written and the word goes to the review list, and so does every word
-/// the links reach that already names somebody else. A word a reading already answered, even with
-/// nobody, keeps that answer, so without the readings on disk nothing is written.
+/// the links reach that already names somebody else. A word a reading already answered keeps that
+/// answer, so without the readings on disk nothing is written. One answer is not the last word: a
+/// reading shown the bearers of the word's number that found none of them there has said nothing
+/// of a record held under another number of the same name, as Saul's son is, and the book may
+/// still name that record.
 /// </para>
 ///
 /// <para>
@@ -73,8 +76,8 @@ internal sealed class ContextBearerLoader(
 
     /// <summary>
     /// The rule's precision held out over the originals' settled namesake words, rounded down: on
-    /// 2026-09-29 it answered 7,315 of 14,967 at 99.48%, and 2,941 the dataset's list files alike
-    /// at 99.32%.
+    /// 2026-09-30 it answered 8,556 of 14,985 at 99.67%, and 3,907 the dataset's list files alike
+    /// at 99.56%.
     /// </summary>
     private const double Measured = 0.99;
 
@@ -97,7 +100,8 @@ internal sealed class ContextBearerLoader(
     private static readonly string Attested =
         $"""
          WITH {Annotating.Settled}
-         SELECT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
+         SELECT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
+                coalesce(w.strong_number, '')
          FROM settled s
          JOIN word w ON w.id = s.word_id
          JOIN text t ON t.id = w.text_id AND t.slug = ANY(@originals)
@@ -147,12 +151,13 @@ internal sealed class ContextBearerLoader(
             reader.GetInt32(0), EnumSpelling.ToEntityKind(reader.GetString(1)), reader.GetString(2),
             reader.GetString(3)), cancellationToken));
         var attested = await Read(connection, Attested, reader => new Attestation(
-            reader.GetInt32(0), new Address(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3))),
+            reader.GetInt32(0), new Address(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3)),
+            reader.GetString(4)),
             cancellationToken, ("originals", Originals));
         var listed = (await Read(connection, Listed, reader => (reader.GetInt32(0),
             new Address(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3))),
             cancellationToken, ("dataset", BibleDataLoader.Source))).ToHashSet();
-        var context = new ContextBearers(attested);
+        var context = new ContextBearers(attested, bearers);
 
         var (measured, agreed) = await HeldOut(connection, bearers, context, listed, cancellationToken);
 
@@ -167,6 +172,10 @@ internal sealed class ContextBearerLoader(
         }
 
         var (readings, contradicted, _, _, _) = SenseReadingFiles.Read(directory);
+        var foundNobodyListed = readings.Where(r => r.Referent == SenseReading.Unlisted)
+            .Select(r => r.WordId)
+            .Except(contradicted)
+            .ToHashSet();
         var answeredByReading = readings.Select(r => r.WordId)
             .Concat(contradicted)
             .Concat(SenseReadingFiles.Refused().Readings.Select(r => r.WordId))
@@ -178,7 +187,9 @@ internal sealed class ContextBearerLoader(
             reader.GetInt32(7), reader.GetString(8)),
             cancellationToken, ("originals", Originals), ("witness", BhsaTextSource.Slug),
             ("numbers", bearers.Numbers.ToArray()));
-        words = words.Where(word => !answeredByReading.Contains(word.Id)).ToList();
+        words = words
+            .Where(word => !answeredByReading.Contains(word.Id) || foundNobodyListed.Contains(word.Id))
+            .ToList();
 
         var slugs = await db.Entities.AsNoTracking().ToDictionaryAsync(e => e.Id, e => e.Slug, cancellationToken);
         var seed = new List<(long, int, double?, bool, string)>();
@@ -186,7 +197,15 @@ internal sealed class ContextBearerLoader(
         foreach (var word in words)
         {
             var candidates = bearers.Of(word.Number, word.Marking);
-            if (context.Bearer(word.At, candidates) is not { } bearer)
+            if (context.Bearer(word.At, candidates, word.Number) is not { } bearer)
+            {
+                continue;
+            }
+
+            // A reading that found nobody among the bearers of the number it was shown has not
+            // spoken of a record held under another number of the name; of one it was shown, it has.
+            var underAnotherNumber = foundNobodyListed.Contains(word.Id);
+            if (underAnotherNumber && bearers.Bears(bearer, word.Number))
             {
                 continue;
             }
@@ -199,7 +218,10 @@ internal sealed class ContextBearerLoader(
             }
 
             seed.Add((word.Id, bearer, Measured, filed.Count > 0,
-                $"{word.Number}, of which the book names only this record"));
+                underAnotherNumber
+                    ? $"{word.Number}, a number of the name this record is held under another number of; the book " +
+                      "names only this record by it, and a reading found none of this number's own bearers here"
+                    : $"{word.Number}, of which the book names only this record"));
         }
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
@@ -263,7 +285,7 @@ internal sealed class ContextBearerLoader(
             }
 
             tested++;
-            if (context.Bearer(word.At, candidates) is not { } bearer)
+            if (context.Bearer(word.At, candidates, word.Number) is not { } bearer)
             {
                 continue;
             }

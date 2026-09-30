@@ -775,6 +775,13 @@
   ],
   "splits": [
     {
+      "from": "deborah",
+      "to": "deborah-2",
+      "name": null,
+      "verses": ["JDG 4:1-24", "JDG 5:1-31"],
+      "why": "Judges 4 and 5 are the prophetess who judged Israel, the wife of Lapidoth, who went up with Barak against Sisera and sang after the battle. The record of Rebekah's nurse (Genesis 35:8) held these verses because the dataset numbers the judge by the word for a bee, so the name resolved to the nurse's record alone, and the word the verses share was then read off them in every text as hers."
+    },
+    {
       "from": "bartholomew",
       "to": "nathanael",
       "name": "Nathanael",

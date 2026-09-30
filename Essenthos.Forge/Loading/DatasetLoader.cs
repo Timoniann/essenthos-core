@@ -260,6 +260,7 @@ internal sealed class DatasetLoader(
             await JoinTheVerses(stoppingToken);
             await ReplayTheVerdictsOnEvidentia(resources, stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
+            await CorrectTheNumbersADatasetMiswrote(stoppingToken);
             await ReadTheStatedKinship(stoppingToken);
             await NameThePeoples(resources, stoppingToken);
             await MakeThePlacesOurs(resources, stoppingToken);
@@ -281,6 +282,7 @@ internal sealed class DatasetLoader(
             await WriteWhatTheNarrativesTurnOn(stoppingToken);
             await NameTheAncestorsTheTribesAreNamedAfter(stoppingToken);
             await NameThePeoplesTheRealmsAreNamedAfter(resources, stoppingToken);
+            await NameTheGreekNamesARecordSpells(stoppingToken);
             await NameTheBearerTheBookNames(resources, stoppingToken);
             await NameTheTitlesTheTextFixes(stoppingToken);
             await NameWhomTheReadingsOfThePassagesFind(resources, stoppingToken);
@@ -304,6 +306,7 @@ internal sealed class DatasetLoader(
             await SendTheVersesToOneAnother(resources, stoppingToken);
             await TellTheVersesThatNameFromThoseThatConcern(stoppingToken);
             await PictureThePeopleAndPlaces(resources, stoppingToken);
+            await WithdrawTheRecordsThatAreNoName(stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -1399,6 +1402,21 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
+    /// The Strong numbers a dataset wrote on a name that are another word's. Straight after the
+    /// encyclopedia and before anything resolves a number, because a wrong number resolves a name to
+    /// the wrong record or keeps it from resolving at all.
+    /// </summary>
+    private async Task CorrectTheNumbersADatasetMiswrote(CancellationToken cancellationToken)
+    {
+        status.Starting("the numbers a dataset wrote for another word");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<OwnNameLoader>();
+        var corrected = await loader.Correct(cancellationToken);
+        logger.LogInformation("{Corrected} name numbers a dataset wrote for another word corrected", corrected);
+    }
+
+    /// <summary>
     /// Which peoples the dictionary already says descend from whom. Last of the encyclopedia's
     /// loads because it reads both halves: the lexicon for the claim and the entities for the page
     /// each claim points at.
@@ -1778,6 +1796,20 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
+    /// The records a dataset filed under a word that is no name. Last of the encyclopedia's steps,
+    /// because a record something of ours stands on is kept, and every pass that could put something
+    /// of ours on one has to have run before that is asked.
+    /// </summary>
+    private async Task WithdrawTheRecordsThatAreNoName(CancellationToken cancellationToken)
+    {
+        status.Starting("the records that are no name");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<WithdrawnRecordLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
     /// The people the dataset wrote two records for, one list each, folded into one. After every pass
     /// that writes onto a record by the address a file gives it, because those files still name both,
     /// and before the passes that count and picture what the records hold, so they count one man.
@@ -1860,6 +1892,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<ContextBearerLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// A Greek name no record is held under the number of, named as the one record whose own Greek
+    /// spelling it is. After every pass that resolves a number, because it writes only where none of
+    /// them could, and before the book's own words are asked which bearer a name means.
+    /// </summary>
+    private async Task NameTheGreekNamesARecordSpells(CancellationToken cancellationToken)
+    {
+        status.Starting("the Greek names a record spells");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SpelledNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>

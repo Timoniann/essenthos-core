@@ -1,0 +1,21 @@
+{
+  "decidedBy": "the project owner's direction of 2026-09-29 that the encyclopedia is this project's own and BibleData is kept for events and the timeline, applied to the records the dataset heads with a word that is nobody's and no place's name — recorded on TSK-0428",
+  "policy": "A record is a person, a place or a people the text names, or something this project has read for itself. A dataset's record headed by a common noun or a description, with no word, verse, line, tie or picture of ours on it, is withdrawn. What the dataset says of it stays in the dataset's own files.",
+  "records": [
+    {
+      "slug": "waters",
+      "sourceId": "place:waters_1",
+      "why": "The waters of Genesis 1 are a common noun, mayim, and the seas they are gathered into; the text names no place by it."
+    },
+    {
+      "slug": "seas",
+      "sourceId": "place:seas_1",
+      "why": "Genesis 1:10 calls the gathered waters seas, a common noun; the dataset itself lists no verse for the record."
+    },
+    {
+      "slug": "adespicableperson",
+      "sourceId": "person:a despicable person_1",
+      "why": "Daniel 11:21 says a vile person shall stand up, and gives him no name; the heading is the dataset's paraphrase of the description, and whom it means is a reading the text does not state."
+    }
+  ]
+}
