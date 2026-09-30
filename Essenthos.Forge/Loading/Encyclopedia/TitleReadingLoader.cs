@@ -26,7 +26,11 @@ internal sealed record TitleReadingOutcome(
     IReadOnlyList<(string Text, int Words)> ByText,
     TimeSpan Elapsed)
 {
+    /// <summary>The title the rulings read, by slug.</summary>
+    public string Title { get; init; } = "";
+
     public override string ToString() =>
+        (Title.Length > 0 ? Title + ": " : "") +
         (AlreadyLoaded
             ? "the occurrences of the title are already read as the rulings read them: "
             : "") +
@@ -40,7 +44,10 @@ internal sealed record TitleReadingOutcome(
 }
 
 /// <summary>
-/// Whose the Anointed is at each occurrence, as the rulings in <c>TitleReadings.json</c> read it.
+/// Whose a title is at each occurrence, as the rulings read it: the Anointed in
+/// <c>TitleReadings.json</c>, Pharaoh and Caesar in <c>PharaohReadings.json</c> and
+/// <c>CaesarReadings.json</c>. What follows is said of the Anointed, where the pass began, and holds
+/// for each.
 ///
 /// <para>
 /// <see cref="TitleLoader"/> writes the title on every <em>mashiach</em>, <em>Christos</em> and
@@ -115,10 +122,24 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
 
     private static readonly string Title = EnumSpelling.Of(EntityKind.Title);
 
-    public async Task<TitleReadingOutcome> Load(CancellationToken cancellationToken = default)
+    /// <summary>Every title's rulings in turn, each under its own source.</summary>
+    public async Task<IReadOnlyList<TitleReadingOutcome>> LoadAll(CancellationToken cancellationToken = default)
+    {
+        var outcomes = new List<TitleReadingOutcome>();
+        foreach (var rulings in SenseReadingFiles.AllTitleReadings())
+        {
+            outcomes.Add(await Load(rulings, cancellationToken));
+        }
+
+        return outcomes;
+    }
+
+    public Task<TitleReadingOutcome> Load(CancellationToken cancellationToken = default) =>
+        Load(SenseReadingFiles.TitleReadings(), cancellationToken);
+
+    internal async Task<TitleReadingOutcome> Load(TitleReadings rulings, CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
-        var rulings = SenseReadingFiles.TitleReadings();
         var method = EnumSpelling.Of(EnumSpelling.ToLinkMethod(rulings.Method));
 
         var slugs = rulings.Readings.Select(r => r.Bearer).OfType<string>().Append(rulings.Title).Distinct().ToList();
@@ -133,7 +154,10 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
                 "of that slug. Either the titles have not been loaded yet or the record was renamed, and " +
                 "TitleReadings.json has to follow it",
                 rulings.Title);
-            return new TitleReadingOutcome(false, [], 0, 0, missing, 0, 0, [], started.Elapsed);
+            return new TitleReadingOutcome(false, [], 0, 0, missing, 0, 0, [], started.Elapsed)
+            {
+                Title = rulings.Title,
+            };
         }
 
         await db.Database.OpenConnectionAsync(cancellationToken);
@@ -154,7 +178,7 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
             }
         }
 
-        var fixedTo = new Dictionary<long, (int Entity, string Bearer, string Note)>();
+        var fixedTo = new Dictionary<long, (int Entity, string Bearer, string Note, double? Confidence)>();
         var open = new HashSet<long>();
         var unfound = 0;
         foreach (var ruling in rulings.Readings)
@@ -181,7 +205,8 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
                 foreach (var word in words)
                 {
                     fixedTo[word.Id] = (bearer, ruling.Bearer,
-                        $"{ruling.Strong} at {BookReferences.Name(word.Book)} {word.Chapter}:{word.Verse}: {ruling.Why}");
+                        $"{ruling.Strong} at {BookReferences.Name(word.Book)} {word.Chapter}:{word.Verse}: {ruling.Why}",
+                        ruling.Confidence);
                 }
             }
         }
@@ -221,7 +246,10 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
         {
             await transaction.RollbackAsync(cancellationToken);
             var standing = new TitleReadingOutcome(
-                true, byBearer, open.Count, unfound, missing, 0, 0, [], started.Elapsed);
+                true, byBearer, open.Count, unfound, missing, 0, 0, [], started.Elapsed)
+            {
+                Title = rulings.Title,
+            };
             logger.LogInformation("The occurrences of the title: {Outcome}", standing);
             return standing;
         }
@@ -232,7 +260,7 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
         await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
         await Annotating.Seed(
             connection,
-            fixedTo.Select(f => (f.Key, f.Value.Entity, (double?)null, false, f.Value.Note)),
+            fixedTo.Select(f => (f.Key, f.Value.Entity, f.Value.Confidence, false, f.Value.Note)),
             cancellationToken);
         await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
         await using var contest = new NpgsqlCommand(
@@ -250,7 +278,10 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
         await transaction.CommitAsync(cancellationToken);
 
         var outcome = new TitleReadingOutcome(
-            false, byBearer, open.Count, unfound, missing, withdrawn, contested, byText, started.Elapsed);
+            false, byBearer, open.Count, unfound, missing, withdrawn, contested, byText, started.Elapsed)
+        {
+            Title = rulings.Title,
+        };
         logger.LogInformation("The occurrences of the title: {Outcome}", outcome);
         return outcome;
     }

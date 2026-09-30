@@ -1,0 +1,175 @@
+{
+  "decidedBy": "Essenthos, 2026-09-30, on the verses a dataset lists for one of the emperors the text calls Caesar: each verse read by claude-sonnet-5-5 and claude-opus-5-5, neither seeing the other's answer, and a third time by claude-opus-5-5 where the two differed; under the project owner's decision of 2026-09-19 that Caesar is a title",
+  "policy": "Caesar names the title at every word. It names a emperor beside the title where the verse stands in that emperor's own episode, names him, or recalls an event the text tells of him; it names the title alone where the text does not say which emperor is meant. Only the verses a dataset lists for one of the emperors were read; the rest name the title alone.",
+  "method": "model-reading",
+  "source": "Essenthos, which emperor Caesar means at each verse, read from the verse by two language models, claude-sonnet-5-5 and claude-opus-5-5, on 2026-09-30, and a third time by claude-opus-5-5 where the two differed",
+  "title": "caesar-title",
+  "readings": [
+    {
+      "reference": "MAT 22:17",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "MAT 22:17, Jesus is questioned in his ministry: 'Is it lawful to give tribute unto Caesar'; the ruling Caesar of his ministry (Tiberius, LUK 3:1) is meant, though not named here.",
+      "confidence": 0.8,
+      "second": "Asked of Jesus in his ministry, 'Is it lawful to give tribute unto Caesar': the reigning Caesar whose coin they bring (MAT 22:19-21), i.e. the Caesar of Jesus' ministry, though Matthew never names him."
+    },
+    {
+      "reference": "MAT 22:21",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "MAT 22:21, in Jesus' ministry, 'Render therefore unto Caesar the things which are Caesar's', said of the coin's image; the ruling Caesar of the ministry.",
+      "confidence": 0.8,
+      "second": "The coin's image is 'Caesar's' and 'Render therefore unto Caesar': the reigning Caesar of Jesus' ministry whose coin they hold; Matthew does not name him."
+    },
+    {
+      "reference": "MRK 12:14",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "MRK 12:14, Jesus is asked 'Is it lawful to give tribute to Caesar'; the Caesar reigning in his ministry.",
+      "confidence": 0.8,
+      "second": "The Pharisees and Herodians ask Jesus 'Is it lawful to give tribute to Caesar': the emperor then reigning during Jesus' ministry; Mark does not name him."
+    },
+    {
+      "reference": "MRK 12:16",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "MRK 12:16, the coin's 'image and superscription' in Jesus' ministry: 'Caesar's'; the Caesar of the ministry.",
+      "confidence": 0.8,
+      "second": "The penny's image and superscription are 'Caesar's': the reigning Caesar of Jesus' ministry; Mark does not name him."
+    },
+    {
+      "reference": "MRK 12:17",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "MRK 12:17, Jesus says 'Render to Caesar the things that are Caesar's', in his ministry; the Caesar of that time.",
+      "confidence": 0.8,
+      "second": "'Render to Caesar the things that are Caesar's', said of the Caesar whose coin was just shown (MRK 12:16), the one reigning in Jesus' ministry; unnamed in Mark."
+    },
+    {
+      "reference": "LUK 3:1",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "LUK 3:1 names him: 'the fifteenth year of the reign of Tiberius Caesar', at the start of John's and Jesus' ministry.",
+      "confidence": 0.9,
+      "second": "The verse names him: 'the fifteenth year of the reign of Tiberius Caesar'."
+    },
+    {
+      "reference": "LUK 20:22",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "LUK 20:22, spies ask Jesus 'Is it lawful for us to give tribute unto Caesar'; the Caesar of his ministry.",
+      "confidence": 0.8,
+      "second": "'Is it lawful for us to give tribute unto Caesar' is asked during Jesus' ministry, which Luke dates to 'the reign of Tiberius Caesar' (LUK 3:1)."
+    },
+    {
+      "reference": "LUK 20:24",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "LUK 20:24, the denarius shown to Jesus in his ministry: 'They answered and said, Caesar's'; the Caesar of that time.",
+      "confidence": 0.8,
+      "second": "The penny's image is 'Caesar's', the reigning emperor during Jesus' ministry, which Luke sets in 'the reign of Tiberius Caesar' (LUK 3:1)."
+    },
+    {
+      "reference": "LUK 20:25",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "LUK 20:25, Jesus says 'Render therefore unto Caesar the things which be Caesar's'; the Caesar of his ministry.",
+      "confidence": 0.8,
+      "second": "'Render therefore unto Caesar the things which be Caesar's', of the Caesar on the coin during Jesus' ministry, set by Luke in Tiberius' reign (LUK 3:1)."
+    },
+    {
+      "reference": "LUK 23:2",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "LUK 23:2, at Jesus' trial before Pilate: 'forbidding to give tribute to Caesar'; the Caesar of the time of Jesus' ministry and death.",
+      "confidence": 0.8,
+      "second": "At Jesus' trial before Pilate he is accused of 'forbidding to give tribute to Caesar', the emperor then reigning, whom Luke names Tiberius for Pilate's governorship (LUK 3:1)."
+    },
+    {
+      "reference": "JHN 19:12",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "JHN 19:12, at Jesus' trial before Pilate: 'thou art not Caesar's friend'; the Caesar reigning at that time.",
+      "confidence": 0.8,
+      "second": "At Jesus' trial the Jews tell Pilate 'thou art not Caesar's friend... speaketh against Caesar': the emperor reigning during Jesus' ministry; John does not name him."
+    },
+    {
+      "reference": "JHN 19:15",
+      "strong": "G2541",
+      "bearer": "caesar",
+      "why": "JHN 19:15, at Jesus' trial: 'We have no king but Caesar'; the Caesar reigning at the time of Jesus' ministry.",
+      "confidence": 0.8,
+      "second": "At Jesus' trial the chief priests say 'We have no king but Caesar': the emperor then reigning over Pilate, the Caesar of Jesus' ministry, unnamed in John."
+    },
+    {
+      "reference": "ACT 25:8",
+      "strong": "G2541",
+      "bearer": "caesar-2",
+      "why": "ACT 25:8, Paul before Festus: 'nor yet against Caesar, have I offended'; the Caesar to whom he appeals in the same chapter (25:11).",
+      "confidence": 0.8,
+      "second": "Paul before Festus: 'nor yet against Caesar, have I offended', the same Caesar he appeals to two verses later, 'I appeal unto Caesar' (ACT 25:11)."
+    },
+    {
+      "reference": "ACT 25:10",
+      "strong": "G2541",
+      "bearer": "caesar-2",
+      "why": "ACT 25:10, Paul before Festus: 'I stand at Caesar's judgment seat'; the Caesar to whom he then appeals (25:11).",
+      "confidence": 0.8,
+      "second": "Paul before Festus: 'I stand at Caesar's judgment seat', the reigning Caesar to whom he appeals in the next verse (ACT 25:11)."
+    },
+    {
+      "reference": "ACT 25:11",
+      "strong": "G2541",
+      "bearer": "caesar-2",
+      "why": "ACT 25:11, Paul says 'I appeal unto Caesar'; the Caesar of Paul's appeal.",
+      "confidence": 0.9,
+      "second": "Paul says 'I appeal unto Caesar': this is the Caesar to whom Paul appeals."
+    },
+    {
+      "reference": "ACT 25:12",
+      "strong": "G2541",
+      "bearer": "caesar-2",
+      "why": "ACT 25:12, Festus: 'Hast thou appealed unto Caesar? unto Caesar shalt thou go'; the Caesar of Paul's appeal.",
+      "confidence": 0.9,
+      "second": "Festus answers 'Hast thou appealed unto Caesar? unto Caesar shalt thou go': both are the Caesar to whom Paul appeals."
+    },
+    {
+      "reference": "ACT 25:21",
+      "strong": "G2541",
+      "bearer": "caesar-2",
+      "why": "ACT 25:21, Festus: 'till I might send him to Caesar', after Paul appealed 'unto the hearing of Augustus' (the emperor); the Caesar of Paul's appeal.",
+      "confidence": 0.9,
+      "second": "Festus: Paul 'appealed to be reserved unto the hearing of Augustus... till I might send him to Caesar': the Caesar of Paul's appeal."
+    },
+    {
+      "reference": "ACT 26:32",
+      "strong": "G2541",
+      "bearer": "caesar-2",
+      "why": "ACT 26:32, Agrippa: 'if he had not appealed unto Caesar'; the Caesar of Paul's appeal.",
+      "confidence": 0.9,
+      "second": "Agrippa: 'This man might have been set at liberty, if he had not appealed unto Caesar': the Caesar of Paul's appeal."
+    },
+    {
+      "reference": "ACT 27:24",
+      "strong": "G2541",
+      "bearer": "caesar-2",
+      "why": "ACT 27:24, the angel says to Paul 'thou must be brought before Caesar'; the Caesar of Paul's appeal (ACT 25:11).",
+      "confidence": 0.9,
+      "second": "The angel tells Paul, on his way to Rome after his appeal, 'thou must be brought before Caesar': the Caesar to whom he appealed."
+    },
+    {
+      "reference": "ACT 28:19",
+      "strong": "G2541",
+      "bearer": "caesar-2",
+      "why": "ACT 28:19, Paul in Rome: 'I was constrained to appeal unto Caesar'; the Caesar of his appeal.",
+      "confidence": 0.9,
+      "second": "Paul in Rome: 'I was constrained to appeal unto Caesar': the Caesar of his appeal (ACT 25:11)."
+    },
+    {
+      "reference": "PHP 4:22",
+      "strong": "G2541",
+      "bearer": null,
+      "why": "PHP 4:22 says only 'they that are of Caesar's household'; no Caesar is named and the letter does not recall Paul's appeal or say which emperor reigned."
+    }
+  ]
+}

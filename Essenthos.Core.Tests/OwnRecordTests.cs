@@ -436,6 +436,29 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
+    /// A name a dataset lists a verse for, which two readings of the verse gave to the same record:
+    /// the word is that record's, under a source that names both models and the day, and says in
+    /// who decided that no person read it.
+    /// </summary>
+    [Fact]
+    public async Task ANameTwoReadingsGaveToOneRecordIsThatRecords()
+    {
+        var file = SenseReadingFiles.NamesakeSecondRulings();
+        file.Rulings.Should().NotBeEmpty();
+        file.Rulings.Should().OnlyContain(r => r.Existing != null && r.Create == null && r.WordId > 0
+                                               && r.StrongNumber.Length > 1 && r.Why.Length > 0);
+        file.Source.Should().Contain("claude-sonnet").And.Contain("claude-opus").And.Contain("2026-09-30");
+        file.DecidedBy.Should().Contain("No person read them");
+
+        await Load();
+
+        var slugs = await _db.Entities.ToDictionaryAsync(e => e.Slug, e => e.Id);
+        var named = await _db.WordEntities.Where(a => a.Source == file.Source).ToListAsync();
+        named.Select(a => (a.WordId, a.EntityId)).Should().BeEquivalentTo(
+            file.Rulings.Select(r => (r.WordId, slugs[r.Existing!])));
+    }
+
+    /// <summary>
     /// A correction takes back the answer it names, and the word names the record the correction
     /// gives it — on a corpus the earlier ruling was already written into as on a cold one.
     /// </summary>

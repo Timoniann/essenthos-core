@@ -1,0 +1,195 @@
+{
+  "about": "Вірші, про які власника вже спитано в консолі (список eponym-verses: ім’я предка чи народ). Два незалежні читання кожного вірша (claude-sonnet-5-5 і claude-opus-5-5, 2026-09-30) — українською, як підказка до відповіді. Нічого з цього не записано в корпус: відповідь у консолі вирішує.",
+  "written": "2026-09-30",
+  "rows": [
+    {
+      "reference": "EXO 17:14",
+      "record": "amalek",
+      "verse": "And the LORD said unto Moses, Write this for a memorial in a book, and rehearse it in the ears of Joshua: for I will utterly put out the remembrance of Amalek from under heaven.",
+      "asked": "eponym-verses.json: amalek / Amalek",
+      "first": "Народ (амаликитяни): «Ісус розбив Амалика й народ його» — це народ, що воював з Ізраїлем, не син Еліфаза і не місце.",
+      "second": "Народ (запис amalek-2, що тримає Амалика як народ у Вих 17), не син Еліфаза.",
+      "summary": "Обидва: народ Амалик, не людина; різняться лише тим, до якого з двох записів народу — amalekites чи amalek-2."
+    },
+    {
+      "reference": "EXO 17:16",
+      "record": "amalek",
+      "verse": "For he said, Because the LORD hath sworn that the LORD will have war with Amalek from generation to generation.",
+      "asked": "eponym-verses.json: amalek / Amalek",
+      "first": "Народ (амаликитяни): «Ісус розбив Амалика й народ його» — це народ, що воював з Ізраїлем, не син Еліфаза і не місце.",
+      "second": "Народ (запис amalek-2, що тримає Амалика як народ у Вих 17), не син Еліфаза.",
+      "summary": "Обидва: народ Амалик, не людина; різняться лише тим, до якого з двох записів народу — amalekites чи amalek-2."
+    },
+    {
+      "reference": "NUM 13:29",
+      "record": "amalek",
+      "verse": "The Amalekites dwell in the land of the south: and the Hittites, and the Jebusites, and the Amorites, dwell in the mountains: and the Canaanites dwell by the sea, and by the coast of Jordan.",
+      "asked": "eponym-verses.json: amalek / Amalek",
+      "first": "Народ (амаликитяни): «Ісус розбив Амалика й народ його» — це народ, що воював з Ізраїлем, не син Еліфаза і не місце.",
+      "second": "Народ (запис amalek-2, що тримає Амалика як народ у Вих 17), не син Еліфаза.",
+      "summary": "Обидва: народ Амалик, не людина; різняться лише тим, до якого з двох записів народу — amalekites чи amalek-2."
+    },
+    {
+      "reference": "DEU 25:19",
+      "record": "amalek",
+      "verse": "Therefore it shall be, when the LORD thy God hath given thee rest from all thine enemies round about, in the land which the LORD thy God giveth thee for an inheritance to possess it, that thou shalt blot out the remembrance of Amalek from under heaven; thou shalt not forget it.",
+      "asked": "eponym-verses.json: amalek / Amalek",
+      "first": "Народ (амаликитяни): «Ісус розбив Амалика й народ його» — це народ, що воював з Ізраїлем, не син Еліфаза і не місце.",
+      "second": "Народ (запис amalek-2, що тримає Амалика як народ у Вих 17), не син Еліфаза.",
+      "summary": "Обидва: народ Амалик, не людина; різняться лише тим, до якого з двох записів народу — amalekites чи amalek-2."
+    },
+    {
+      "reference": "JDG 3:13",
+      "record": "amalek",
+      "verse": "And he gathered unto him the children of Ammon and Amalek, and went and smote Israel, and possessed the city of palm trees.",
+      "asked": "eponym-verses.json: amalek / Amalek",
+      "first": "Народ (амаликитяни): «Ісус розбив Амалика й народ його» — це народ, що воював з Ізраїлем, не син Еліфаза і не місце.",
+      "second": "Народ (запис amalek-2, що тримає Амалика як народ у Вих 17), не син Еліфаза.",
+      "summary": "Обидва: народ Амалик, не людина; різняться лише тим, до якого з двох записів народу — amalekites чи amalek-2."
+    },
+    {
+      "reference": "1SA 15:2",
+      "record": "amalek",
+      "verse": "Thus saith the LORD of hosts, I remember that which Amalek did to Israel, how he laid wait for him in the way, when he came up from Egypt.",
+      "asked": "eponym-verses.json: amalek / Amalek",
+      "first": "Народ (амаликитяни): «Ісус розбив Амалика й народ його» — це народ, що воював з Ізраїлем, не син Еліфаза і не місце.",
+      "second": "Народ (запис amalek-2, що тримає Амалика як народ у Вих 17), не син Еліфаза.",
+      "summary": "Обидва: народ Амалик, не людина; різняться лише тим, до якого з двох записів народу — amalekites чи amalek-2."
+    },
+    {
+      "reference": "1SA 15:3",
+      "record": "amalek",
+      "verse": "Now go and smite Amalek, and utterly destroy all that they have, and spare them not; but slay both man and woman, infant and suckling, ox and sheep, camel and ass.",
+      "asked": "eponym-verses.json: amalek / Amalek",
+      "first": "Народ (амаликитяни): «Ісус розбив Амалика й народ його» — це народ, що воював з Ізраїлем, не син Еліфаза і не місце.",
+      "second": "Народ (запис amalek-2, що тримає Амалика як народ у Вих 17), не син Еліфаза.",
+      "summary": "Обидва: народ Амалик, не людина; різняться лише тим, до якого з двох записів народу — amalekites чи amalek-2."
+    },
+    {
+      "reference": "1SA 28:18",
+      "record": "amalek",
+      "verse": "Because thou obeyedst not the voice of the LORD, nor executedst his fierce wrath upon Amalek, therefore hath the LORD done this thing unto thee this day.",
+      "asked": "eponym-verses.json: amalek / Amalek",
+      "first": "Народ (амаликитяни): «Ісус розбив Амалика й народ його» — це народ, що воював з Ізраїлем, не син Еліфаза і не місце.",
+      "second": "Народ (запис amalek-2, що тримає Амалика як народ у Вих 17), не син Еліфаза.",
+      "summary": "Обидва: народ Амалик, не людина; різняться лише тим, до якого з двох записів народу — amalekites чи amalek-2."
+    },
+    {
+      "reference": "GEN 19:38",
+      "record": "benammi",
+      "verse": "And the younger, she also bare a son, and called his name Benammi: the same is the father of the children of Ammon unto this day.",
+      "asked": "eponym-verses.json: benammi / Ben-ammi",
+      "first": "Бен-Аммі — син Лота; «сини Аммона» — народ, що походить від нього (амонітяни).",
+      "second": "Бен-Аммі — син Лота; «батько синів Аммона» називає народ Аммон (запис ammon).",
+      "summary": "Обидва: Бен-Аммі — людина, «сини Аммона» — народ (читачі різняться лише тим, який із двох записів народу)."
+    },
+    {
+      "reference": "1KI 18:31",
+      "record": "israelites",
+      "verse": "And Elijah took twelve stones, according to the number of the tribes of the sons of Jacob, unto whom the word of the LORD came, saying, Israel shall be thy name:",
+      "asked": "eponym-verses.json: jacob / Israel",
+      "first": "Людина: «синів Якова, до якого було слово Господнє: Ізраїль буде ім’я твоє» — ім’я дане Якову як одній людині.",
+      "second": "Народ: дванадцять каменів «за числом племен синів Якова» — це народ; «Ізраїль буде ім’я твоє» — ім’я, дане людині.",
+      "summary": "Читання розійшлися; третє читання: вірш говорить про племена (народ), а ім’я Ізраїль тут — ім’я людини."
+    },
+    {
+      "reference": "2KI 17:34",
+      "record": "israelites",
+      "verse": "Unto this day they do after the former manners: they fear not the LORD, neither do they after their statutes, or after their ordinances, or after the law and commandment which the LORD commanded the children of Jacob, whom he named Israel;",
+      "asked": "eponym-verses.json: jacob / Israel",
+      "first": "Народ: заповідь дана «синам Якова, якого Він назвав Ізраїлем»; слово Ізраїль там — ім’я самого Якова, народ названо «синами Якова».",
+      "second": "Народ: заповідь, яку Господь дав синам Якова, — народ у заповіті (17:35); «якого Він назвав Ізраїлем» — це людина Яків.",
+      "summary": "Обидва: народ (сини Якова); ім’я Ізраїль у цьому вірші — людина."
+    },
+    {
+      "reference": "PSA 14:7",
+      "record": "israelites",
+      "verse": "Oh that the salvation of Israel were come out of Zion! when the LORD bringeth back the captivity of his people, Jacob shall rejoice, and Israel shall be glad.",
+      "asked": "eponym-verses.json: jacob / Jacob",
+      "first": "Народ: «спасіння Ізраїлеві… поверне полон народу Свого, радітиме Яків і веселитиметься Ізраїль» — відновлений народ.",
+      "second": "Народ: паралельно до «народу Свого».",
+      "summary": "Обидва: народ."
+    },
+    {
+      "reference": "ISA 49:6",
+      "record": "israelites",
+      "verse": "And he said, It is a light thing that thou shouldest be my servant to raise up the tribes of Jacob, and to restore the preserved of Israel: I will also give thee for a light to the Gentiles, that thou mayest be my salvation unto the end of the earth.",
+      "asked": "eponym-verses.json: jacob / Israel",
+      "first": "Народ: «щоб відновити племена Якова і повернути збережених Ізраїля» — племена й уцілілі народу.",
+      "second": "Народ: племена й уцілілі народу.",
+      "summary": "Обидва: народ."
+    },
+    {
+      "reference": "EZK 20:5",
+      "record": "israelites",
+      "verse": "And say unto them, Thus saith the Lord GOD; In the day when I chose Israel, and lifted up mine hand unto the seed of the house of Jacob, and made myself known unto them in the land of Egypt, when I lifted up mine hand unto them, saying, I am the LORD your God;",
+      "asked": "eponym-verses.json: jacob / Israel",
+      "first": "Народ: «того дня, коли Я вибрав Ізраїля… в єгипетському краї» — народ, вибраний в Єгипті.",
+      "second": "Народ.",
+      "summary": "Обидва: народ."
+    },
+    {
+      "reference": "EZK 28:25",
+      "record": "israelites",
+      "verse": "Thus saith the Lord GOD; When I shall have gathered the house of Israel from the people among whom they are scattered, and shall be sanctified in them in the sight of the heathen, then shall they dwell in their land that I have given to my servant Jacob.",
+      "asked": "eponym-verses.json: jacob / My servant Jacob",
+      "first": "Народ: «коли зберу дім Ізраїлів з народів, між якими вони розпорошені»; «раб Мій Яків» — предок.",
+      "second": "Народ: дім Ізраїлів; «раб Мій Яків» може бути патріархом, тож його не віднесено.",
+      "summary": "Обидва: «дім Ізраїлів» — народ; «раб Мій Яків» лишається відкритим."
+    },
+    {
+      "reference": "EZK 39:25",
+      "record": "israelites",
+      "verse": "Therefore thus saith the Lord GOD; Now will I bring again the captivity of Jacob, and have mercy upon the whole house of Israel, and will be jealous for my holy name;",
+      "asked": "eponym-verses.json: jacob / Jacob",
+      "first": "Народ: «змилуюся над усім домом Ізраїлевим»; «Яків» у «полоні Якова» — паралельно.",
+      "second": "Народ: обидва імені означають народ у вигнанні.",
+      "summary": "Обидва: народ."
+    },
+    {
+      "reference": "GEN 42:38",
+      "record": "jacob",
+      "verse": "And he said, My son shall not go down with you; for his brother is dead, and he is left alone: if mischief befall him by the way in the which ye go, then shall ye bring down my gray hairs with sorrow to the grave.",
+      "asked": "eponym-verses.json: jacob / Jacob",
+      "first": "Так: «І він сказав: Мій син не піде» — це відповідь Рувимові, що «говорив до батька свого» (42:37); батько — «Яків, їхній батько» з 42:36, названий лише особою дієслова.",
+      "second": "Так: відповідає Рувимові (42:37); це Яків, «їхній батько» з 42:36; у гебрейському лише особа дієслова.",
+      "summary": "Обидва читання: вірш говорить про Якова-людину (батька), не про народ."
+    },
+    {
+      "reference": "ROM 9:6",
+      "record": "jacob",
+      "verse": "Not as though the word of God hath taken none effect. For they are not all Israel, which are of Israel:",
+      "asked": "eponym-verses.json: jacob / Israel",
+      "first": "«Не всі ті Ізраїль, що від Ізраїля»: обидва вжитки — народ і його члени.",
+      "second": "«Від Ізраїля» може означати походження від людини Якова або від народу (відкрите); «є Ізраїль» — народ.",
+      "summary": "Друге слово обидва читають як народ; перше лишається відкритим."
+    },
+    {
+      "reference": "MAL 2:8",
+      "record": "levi",
+      "verse": "But ye are departed out of the way; ye have caused many to stumble at the law; ye have corrupted the covenant of Levi, saith the LORD of hosts.",
+      "asked": "eponym-verses.json: levi / Levi",
+      "first": "«Заповіт Левія» повторює 2:4–5, де заповіт був з Левієм; інших Левіїв у книзі нема.",
+      "second": "«Зіпсували заповіт Левія» повторює 2:4; предок Левій стоїть за священичу лінію.",
+      "summary": "Обидва: слово — Левій-людина (через нього мовиться про священиків)."
+    },
+    {
+      "reference": "1CH 7:12",
+      "record": "muppim",
+      "verse": "Shuppim also, and Huppim, the children of Ir, and Hushim, the sons of Aher.",
+      "asked": "eponym-verses.json: muppim / Shuppim",
+      "first": "«Шуппім і Хуппім, сини Іра» — у родоводі Веніямина, пара як «Муппім і Хуппім» у Бут 46:21; не левит-воротар.",
+      "second": "Те саме: пара з Хуппімом відповідає синам Веніямина (Бут 46:21).",
+      "summary": "Обидва: Муппім (запис muppim)."
+    },
+    {
+      "reference": "1CH 7:15",
+      "record": "muppim",
+      "verse": "And Machir took to wife the sister of Huppim and Shuppim, whose sister's name was Maachah;) and the name of the second was Zelophehad: and Zelophehad had daughters.",
+      "asked": "eponym-verses.json: muppim / Shuppim",
+      "first": "«Сестра Хуппіма й Шуппіма» повторює пару з 7:12 — найпевніше та сама людина.",
+      "second": "Те саме: повторює пару з 7:12.",
+      "summary": "Обидва: Муппім."
+    }
+  ]
+}

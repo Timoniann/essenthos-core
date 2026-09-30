@@ -243,6 +243,76 @@ public sealed class TitleReadingLoaderTests : IDisposable
     }
 
     /// <summary>
+    /// Pharaoh in the plagues, read by two models as the king of the Exodus: the king stands beside
+    /// the title as a reading with its confidence, under the file's own source, and the rulings on the
+    /// Anointed are not touched by it.
+    /// </summary>
+    [Fact]
+    public async Task AKingAReadingFixesStandsBesideTheTitleAsAReading()
+    {
+        const string Pharaoh = "H6547";
+        const int Exodus = 2;
+        _db.AddBook(_hebrew, Exodus, "Exodus", (9, 12, ["לב", "פרעה"]));
+        await _db.SaveChangesAsync();
+        var word = _db.WordAt(_hebrew, 9, 12, 2);
+        word.StrongNumber = Pharaoh;
+        var title = Add("pharaoh-title", EntityKind.Title);
+        var king = Add("pharaoh-4", EntityKind.Person);
+        _db.WordEntities.Add(new WordEntity
+        {
+            Word = word, Entity = title, Method = LinkMethod.RuleBased, Confidence = 0.99,
+            Source = TitleLoader.WordSource,
+        });
+        await _db.SaveChangesAsync();
+        await Loader().Load();
+        var anointed = await Named();
+        var readings = new TitleReadings(
+            "two models", "which king the verse means", "model-reading", "a reading of Pharaoh by two models",
+            "pharaoh-title",
+            [new TitleReading("EXO 9:12", Pharaoh, "pharaoh-4", "inside the plagues", Confidence: 0.9)]);
+
+        var outcome = await Loader().Load(readings);
+
+        outcome.Title.Should().Be("pharaoh-title");
+        outcome.ByBearer.Should().Equal(("pharaoh-4", 1));
+        var named = await Named();
+        named.Should().Contain([(word.Id, title.Id), (word.Id, king.Id)]);
+        named.Should().Contain(anointed);
+        var row = await _db.WordEntities.SingleAsync(a => a.WordId == word.Id && a.EntityId == king.Id);
+        row.Method.Should().Be(LinkMethod.ModelReading);
+        row.Confidence.Should().Be(0.9);
+        row.Source.Should().Be("a reading of Pharaoh by two models");
+        (await Loader().Load(readings)).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>
+    /// The shipped readings of Pharaoh and Caesar: every reference is a verse read once, the number
+    /// is one the title is written with, the king is one its record joins to it, and a reading that
+    /// names a king says how sure it is.
+    /// </summary>
+    [Fact]
+    public void TheShippedReadingsOfPharaohAndCaesarAreWellFormed()
+    {
+        foreach (var rulings in new[] { SenseReadingFiles.PharaohReadings(), SenseReadingFiles.CaesarReadings() })
+        {
+            var title = SenseReadingFiles.Titles().Titles.Single(t => t.Slug == rulings.Title);
+
+            rulings.Method.Should().Be("model-reading");
+            rulings.Readings.Should().NotBeEmpty();
+            rulings.Readings.Should().OnlyContain(r => r.At.IsVerse && r.At.FromChapter == r.At.ToChapter && r.At.FromVerse == r.At.ToVerse);
+            rulings.Readings.Select(r => (r.Reference, r.Strong)).Should().OnlyHaveUniqueItems();
+            rulings.Readings.Select(r => r.Strong).Distinct().Should().BeSubsetOf(title.Words!.Select(w => w.Strong));
+            rulings.Readings.Select(r => r.Bearer).OfType<string>().Distinct()
+                .Should().BeSubsetOf(title.Bearers!.Select(b => b.Slug));
+            rulings.Readings.Where(r => r.Bearer is not null)
+                .Should().OnlyContain(r => r.Confidence > 0 && r.Confidence <= 1);
+        }
+
+        SenseReadingFiles.AllTitleReadings().Select(r => r.Source).Should().OnlyHaveUniqueItems();
+        SenseReadingFiles.AllTitleReadings().Select(r => r.Title).Should().OnlyHaveUniqueItems();
+    }
+
+    /// <summary>
     /// The owner's corrections of 2026-09-30: the shield of 2 Samuel 1:21 is not anointed with oil and
     /// the word there is no title; John 9:22 and both words of Acts 17:3 are the title alone; the
     /// Christ of Revelation 11:15 and 12:10 is the title and Jesus.

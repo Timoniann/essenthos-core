@@ -158,6 +158,7 @@ builder.Services.AddScoped<SoleBearerLoader>();
 builder.Services.AddScoped<TermLoader>();
 builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<TitleReadingLoader>();
+builder.Services.AddScoped<VerseReadingLoader>();
 builder.Services.AddScoped<ReignLoader>();
 builder.Services.AddScoped<OwnNameLoader>();
 builder.Services.AddScoped<WithdrawnRecordLoader>();
@@ -1226,8 +1227,11 @@ if (args is ["titles", ..])
         .Load());
     logger.LogInformation("{Outcome}", await titlesScope.ServiceProvider.GetRequiredService<FixedTitleLoader>()
         .Load());
-    logger.LogInformation("{Outcome}", await titlesScope.ServiceProvider.GetRequiredService<TitleReadingLoader>()
-        .Load());
+    foreach (var read in await titlesScope.ServiceProvider.GetRequiredService<TitleReadingLoader>().LoadAll())
+    {
+        logger.LogInformation("{Outcome}", read);
+    }
+
     logger.LogInformation("{Outcome}", await titlesScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
         .Load());
     return 0;
@@ -1242,6 +1246,24 @@ if (args is ["fixed-titles", ..])
         .Load());
     logger.LogInformation("{Outcome}", await titleScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
         .Load());
+    return 0;
+}
+
+// The verses a dataset lists for a record that two readings of the verse agree speak of it, in an
+// already loaded corpus: the reference of the verse under this project's name, the word that stands for
+// the record annotated where it is a noun or a name, the verses read off the words again, and the verses
+// that name told from those that do not. The load does the same; this is those steps alone.
+if (args is ["verse-readings", ..])
+{
+    using var verseScope = app.Services.CreateScope();
+    logger.LogInformation("{Outcome}", await verseScope.ServiceProvider.GetRequiredService<VerseReadingLoader>()
+        .Load());
+    logger.LogInformation("{Outcome}", await verseScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
+        .Load());
+    var verseDb = verseScope.ServiceProvider.GetRequiredService<AppDbContext>();
+    verseDb.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
+    var verseNaming = await verseDb.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+    Console.WriteLine($"{verseNaming} listed verses changed between naming their entity and only concerning it");
     return 0;
 }
 

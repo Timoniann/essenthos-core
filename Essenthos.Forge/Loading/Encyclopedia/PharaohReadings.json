@@ -1,0 +1,1796 @@
+{
+  "decidedBy": "Essenthos, 2026-09-30, on the verses a dataset lists for one of the kings the text calls Pharaoh: each verse read by claude-sonnet-5-5 and claude-opus-5-5, neither seeing the other's answer, and a third time by claude-opus-5-5 where the two differed; under the project owner's decision of 2026-09-19 that Pharaoh is a title",
+  "policy": "Pharaoh names the title at every word. It names a king beside the title where the verse stands in that king's own episode, names him, or recalls an event the text tells of him; it names the title alone where the text does not say which king is meant. Only the verses a dataset lists for one of the kings were read; the rest name the title alone.",
+  "method": "model-reading",
+  "source": "Essenthos, which king Pharaoh means at each verse, read from the verse by two language models, claude-sonnet-5-5 and claude-opus-5-5, on 2026-09-30, and a third time by claude-opus-5-5 where the two differed",
+  "title": "pharaoh-title",
+  "readings": [
+    {
+      "reference": "GEN 12:15",
+      "strong": "H6547",
+      "bearer": "pharaoh",
+      "why": "GEN 12:15, 'the princes also of Pharaoh saw her... the woman was taken into Pharaoh's house': Sarai taken in Egypt, the Pharaoh who took Sarai; all three words.",
+      "confidence": 0.9,
+      "second": "All three are the king who took Sarai: 'the woman was taken into Pharaoh's house' when Abram came into Egypt (GEN 12:14-15)."
+    },
+    {
+      "reference": "GEN 12:17",
+      "strong": "H6547",
+      "bearer": "pharaoh",
+      "why": "GEN 12:17, 'the LORD plagued Pharaoh and his house... because of Sarai Abram's wife': the Pharaoh who took Sarai.",
+      "confidence": 0.9,
+      "second": "'the LORD plagued Pharaoh and his house... because of Sarai Abram's wife': the Pharaoh who took Sarai."
+    },
+    {
+      "reference": "GEN 12:18",
+      "strong": "H6547",
+      "bearer": "pharaoh",
+      "why": "GEN 12:18, 'Pharaoh called Abram... why didst thou not tell me that she was thy wife?': the Pharaoh who took Sarai.",
+      "confidence": 0.9,
+      "second": "'Pharaoh called Abram and said... why didst thou not tell me that she was thy wife?': the Pharaoh who took Sarai."
+    },
+    {
+      "reference": "GEN 12:20",
+      "strong": "H6547",
+      "bearer": "pharaoh",
+      "why": "GEN 12:20, 'Pharaoh commanded his men concerning him: and they sent him away, and his wife': the Pharaoh who took Sarai.",
+      "confidence": 0.9,
+      "second": "'Pharaoh commanded his men concerning him: and they sent him away, and his wife': the Pharaoh who took Sarai."
+    },
+    {
+      "reference": "GEN 37:36",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 37:36, Joseph sold 'unto Potiphar, an officer of Pharaoh's': Joseph's own king, GEN 37-50.",
+      "confidence": 0.9,
+      "second": "Joseph is sold 'unto Potiphar, an officer of Pharaoh's': the Pharaoh of Joseph's lifetime."
+    },
+    {
+      "reference": "GEN 39:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 39:1, 'Potiphar, an officer of Pharaoh... bought him' (Joseph): the Pharaoh of Joseph's lifetime.",
+      "confidence": 0.9,
+      "second": "'Potiphar, an officer of Pharaoh' bought Joseph: Joseph's king."
+    },
+    {
+      "reference": "GEN 40:2",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 40:2, 'Pharaoh was wroth against two of his officers', in the prison where Joseph was bound (40:3): Joseph's Pharaoh.",
+      "confidence": 0.9,
+      "second": "'Pharaoh was wroth against two of his officers', whom he put in the prison 'where Joseph was bound' (GEN 40:3): Joseph's king."
+    },
+    {
+      "reference": "GEN 40:7",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 40:7, Joseph 'asked Pharaoh's officers that were with him in the ward': Joseph's Pharaoh.",
+      "confidence": 0.9,
+      "second": "Joseph 'asked Pharaoh's officers that were with him in the ward': Joseph's king."
+    },
+    {
+      "reference": "GEN 40:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 40:11, the butler tells Joseph his dream: 'Pharaoh's cup was in my hand'; the Pharaoh of Joseph's lifetime, all three words.",
+      "confidence": 0.9,
+      "second": "The butler's dream told to Joseph: 'Pharaoh's cup was in my hand... into Pharaoh's hand': all three are Joseph's king."
+    },
+    {
+      "reference": "GEN 40:13",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 40:13, Joseph tells the butler 'within three days shall Pharaoh lift up thine head': Joseph's Pharaoh, both words.",
+      "confidence": 0.9,
+      "second": "Joseph interprets: 'within three days shall Pharaoh lift up thine head... deliver Pharaoh's cup into his hand': Joseph's king."
+    },
+    {
+      "reference": "GEN 40:14",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 40:14, Joseph asks the butler 'make mention of me unto Pharaoh, and bring me out of this house': Joseph's Pharaoh.",
+      "confidence": 0.9,
+      "second": "Joseph asks the butler 'make mention of me unto Pharaoh': Joseph's king."
+    },
+    {
+      "reference": "GEN 40:17",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 40:17, the baker tells Joseph his dream: 'bakemeats for Pharaoh'; Joseph's Pharaoh.",
+      "confidence": 0.9,
+      "second": "The baker's dream told to Joseph: 'all manner of bakemeats for Pharaoh': Joseph's king."
+    },
+    {
+      "reference": "GEN 40:19",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 40:19, Joseph to the baker: 'within three days shall Pharaoh lift up thy head from off thee'; Joseph's Pharaoh.",
+      "confidence": 0.9,
+      "second": "Joseph tells the baker 'within three days shall Pharaoh lift up thy head from off thee': Joseph's king."
+    },
+    {
+      "reference": "GEN 40:20",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 40:20, 'the third day, which was Pharaoh's birthday', as Joseph had interpreted (40:22): Joseph's Pharaoh.",
+      "confidence": 0.9,
+      "second": "'the third day, which was Pharaoh's birthday', fulfilling Joseph's interpretation: Joseph's king."
+    },
+    {
+      "reference": "GEN 40:21",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 40:21, the butler restored, 'he gave the cup into Pharaoh's hand', as Joseph interpreted (40:22): Joseph's Pharaoh.",
+      "confidence": 0.9,
+      "second": "'he gave the cup into Pharaoh's hand' as Joseph had interpreted (GEN 40:22): Joseph's king."
+    },
+    {
+      "reference": "GEN 41:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:1, 'at the end of two full years, that Pharaoh dreamed', the dream Joseph then interprets; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Two years after the butler forgot Joseph (GEN 40:23), 'Pharaoh dreamed': the king whose dreams Joseph interprets, Joseph's king."
+    },
+    {
+      "reference": "GEN 41:4",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:4, 'So Pharaoh awoke' from the dream of the kine that Joseph interprets (41:25); Joseph's king.",
+      "confidence": 0.9,
+      "second": "'So Pharaoh awoke' from the dream of the kine that Joseph will interpret (GEN 41:25): Joseph's king."
+    },
+    {
+      "reference": "GEN 41:7",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:7, 'And Pharaoh awoke, and, behold, it was a dream', the dream Joseph interprets; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'And Pharaoh awoke, and, behold, it was a dream', the dream Joseph interprets: Joseph's king."
+    },
+    {
+      "reference": "GEN 41:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:8, 'Pharaoh told them his dream; but there was none that could interpret them unto Pharaoh', before Joseph is called (41:14); both words.",
+      "confidence": 0.9,
+      "second": "'Pharaoh told them his dream; but there was none that could interpret them unto Pharaoh': both are the king who then calls Joseph (GEN 41:14)."
+    },
+    {
+      "reference": "GEN 41:9",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:9, 'the chief butler unto Pharaoh... I do remember my faults', leading to Joseph being called; Joseph's Pharaoh.",
+      "confidence": 0.9,
+      "second": "'Then spake the chief butler unto Pharaoh', recalling Joseph in the prison: Joseph's king."
+    },
+    {
+      "reference": "GEN 41:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:10, 'Pharaoh was wroth with his servants', the butler recalling the ward where Joseph interpreted (41:12-13); Joseph's Pharaoh.",
+      "confidence": 0.9,
+      "second": "The butler recalls 'Pharaoh was wroth with his servants, and put me in ward', the event of GEN 40:2 in Joseph's day: Joseph's king."
+    },
+    {
+      "reference": "GEN 41:14",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:14, 'Pharaoh sent and called Joseph... and came in unto Pharaoh'; both words are Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh sent and called Joseph... and came in unto Pharaoh': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 41:15",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:15, 'Pharaoh said unto Joseph, I have dreamed a dream'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said unto Joseph, I have dreamed a dream': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:16",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:16, 'Joseph answered Pharaoh... God shall give Pharaoh an answer of peace'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Joseph answered Pharaoh... God shall give Pharaoh an answer of peace': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 41:17",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:17, 'Pharaoh said unto Joseph, In my dream, behold, I stood upon the bank of the river'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said unto Joseph, In my dream': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:25",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:25, 'Joseph said unto Pharaoh, The dream of Pharaoh is one: God hath shewed Pharaoh'; all three words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Joseph said unto Pharaoh, The dream of Pharaoh is one: God hath shewed Pharaoh': all three are Joseph's king."
+    },
+    {
+      "reference": "GEN 41:28",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:28, Joseph speaking: 'the thing which I have spoken unto Pharaoh... he sheweth unto Pharaoh'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph interpreting: 'the thing which I have spoken unto Pharaoh... he sheweth unto Pharaoh': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 41:32",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:32, Joseph: 'the dream was doubled unto Pharaoh twice'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph interpreting: 'the dream was doubled unto Pharaoh twice': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:33",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:33, Joseph advising: 'let Pharaoh look out a man discreet and wise, and set him over the land of Egypt'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph advises 'let Pharaoh look out a man discreet and wise': Joseph's king, who then sets Joseph over Egypt (GEN 41:41)."
+    },
+    {
+      "reference": "GEN 41:34",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:34, Joseph advising: 'Let Pharaoh do this, and let him appoint officers'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph advises 'Let Pharaoh do this, and let him appoint officers over the land': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:35",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:35, Joseph advising: 'lay up corn under the hand of Pharaoh'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph advises laying up corn 'under the hand of Pharaoh': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:37",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:37, 'the thing was good in the eyes of Pharaoh', who then sets Joseph over Egypt (41:41); Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph's counsel 'was good in the eyes of Pharaoh': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:38",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:38, 'Pharaoh said unto his servants, Can we find such a one as this is', of Joseph; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said unto his servants, Can we find such a one as this is', of Joseph: Joseph's king."
+    },
+    {
+      "reference": "GEN 41:39",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:39, 'Pharaoh said unto Joseph... there is none so discreet and wise as thou art'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said unto Joseph... there is none so discreet and wise as thou art': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:41",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:41, 'Pharaoh said unto Joseph, See, I have set thee over all the land of Egypt'; Joseph set over Egypt is told of Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said unto Joseph, See, I have set thee over all the land of Egypt': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:42",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:42, 'Pharaoh took off his ring from his hand, and put it upon Joseph's hand'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh took off his ring from his hand, and put it upon Joseph's hand': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:44",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:44, 'Pharaoh said unto Joseph, I am Pharaoh, and without thee shall no man lift up his hand'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said unto Joseph, I am Pharaoh': both occurrences are Joseph's king speaking of himself."
+    },
+    {
+      "reference": "GEN 41:45",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:45, 'Pharaoh called Joseph's name Zaphnathpaaneah; and he gave him to wife Asenath'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh called Joseph's name Zaphnathpaaneah; and he gave him to wife Asenath': Joseph's king."
+    },
+    {
+      "reference": "GEN 41:46",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:46, 'Joseph was thirty years old when he stood before Pharaoh king of Egypt'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Joseph... stood before Pharaoh king of Egypt. And Joseph went out from the presence of Pharaoh': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 41:55",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 41:55, 'the people cried to Pharaoh for bread: and Pharaoh said... Go unto Joseph'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'the people cried to Pharaoh for bread: and Pharaoh said... Go unto Joseph': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 42:15",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 42:15, Joseph swears 'By the life of Pharaoh', the king he serves as ruler of Egypt; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph swears to his brothers 'By the life of Pharaoh': the reigning king he serves, Joseph's king."
+    },
+    {
+      "reference": "GEN 42:16",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 42:16, Joseph again: 'by the life of Pharaoh surely ye are spies'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph again swears 'by the life of Pharaoh surely ye are spies': the king he serves, Joseph's king."
+    },
+    {
+      "reference": "GEN 44:18",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 44:18, Judah to Joseph: 'thou art even as Pharaoh'; a comparison, but the Pharaoh meant is the king Joseph serves, Joseph's Pharaoh.",
+      "confidence": 0.8,
+      "second": "Judah to Joseph: 'thou art even as Pharaoh', a comparison with the reigning king who set Joseph over Egypt, Joseph's king."
+    },
+    {
+      "reference": "GEN 45:2",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 45:2, Joseph wept and 'the house of Pharaoh heard', while he made himself known to his brethren; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph weeps aloud 'and the Egyptians and the house of Pharaoh heard': Joseph's king's house."
+    },
+    {
+      "reference": "GEN 45:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 45:8, Joseph: 'he hath made me a father to Pharaoh, and lord of all his house'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph: God 'hath made me a father to Pharaoh, and lord of all his house': Joseph's king."
+    },
+    {
+      "reference": "GEN 45:16",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 45:16, 'heard in Pharaoh's house, saying, Joseph's brethren are come: and it pleased Pharaoh well'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'the fame thereof was heard in Pharaoh's house... Joseph's brethren are come: and it pleased Pharaoh well': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 45:17",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 45:17, 'Pharaoh said unto Joseph, Say unto thy brethren... get you unto the land of Canaan'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said unto Joseph, Say unto thy brethren... get you unto the land of Canaan': Joseph's king."
+    },
+    {
+      "reference": "GEN 45:21",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 45:21, 'Joseph gave them wagons, according to the commandment of Pharaoh'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Joseph gave them wagons, according to the commandment of Pharaoh': Joseph's king (GEN 45:17-19)."
+    },
+    {
+      "reference": "GEN 46:5",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 46:5, Jacob's household carried 'in the wagons which Pharaoh had sent' (45:19-21), through Joseph; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Jacob carried 'in the wagons which Pharaoh had sent to carry him', the wagons Pharaoh commanded Joseph to send (GEN 45:19-21): Joseph's king."
+    },
+    {
+      "reference": "GEN 46:31",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 46:31, Joseph: 'I will go up, and shew Pharaoh... My brethren... are come unto me'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph: 'I will go up, and shew Pharaoh... My brethren... are come unto me': Joseph's king."
+    },
+    {
+      "reference": "GEN 46:33",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 46:33, Joseph to his brethren: 'when Pharaoh shall call you'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph instructs his brothers 'when Pharaoh shall call you, and shall say, What is your occupation?': Joseph's king (GEN 47:1-3)."
+    },
+    {
+      "reference": "GEN 47:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:1, 'Joseph came and told Pharaoh... My father and my brethren... are come'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Joseph came and told Pharaoh... My father and my brethren... are come': Joseph's king."
+    },
+    {
+      "reference": "GEN 47:2",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:2, Joseph 'presented them unto Pharaoh', five of his brethren; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph took five of his brethren 'and presented them unto Pharaoh': Joseph's king."
+    },
+    {
+      "reference": "GEN 47:3",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:3, 'Pharaoh said unto his brethren, What is your occupation?' (Joseph's brethren); both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said unto his brethren, What is your occupation? And they said unto Pharaoh': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 47:4",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:4, Joseph's brethren 'said morever unto Pharaoh... let thy servants dwell in the land of Goshen'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph's brothers 'said moreover unto Pharaoh... let thy servants dwell in the land of Goshen': Joseph's king."
+    },
+    {
+      "reference": "GEN 47:5",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:5, 'Pharaoh spake unto Joseph, saying, Thy father and thy brethren are come unto thee'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh spake unto Joseph, saying, Thy father and thy brethren are come unto thee': Joseph's king."
+    },
+    {
+      "reference": "GEN 47:7",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:7, Joseph 'set him before Pharaoh: and Jacob blessed Pharaoh'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Joseph brought in Jacob his father, and set him before Pharaoh: and Jacob blessed Pharaoh': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 47:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:8, 'Pharaoh said unto Jacob, How old art thou?', Jacob being brought in by Joseph; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said unto Jacob, How old art thou?', Jacob presented by Joseph: Joseph's king."
+    },
+    {
+      "reference": "GEN 47:9",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:9, 'Jacob said unto Pharaoh, The days of the years of my pilgrimage are an hundred and thirty years'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Jacob said unto Pharaoh, The days of the years of my pilgrimage': Joseph's king."
+    },
+    {
+      "reference": "GEN 47:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:10, 'Jacob blessed Pharaoh, and went out from before Pharaoh'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Jacob blessed Pharaoh, and went out from before Pharaoh': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 47:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:11, 'Joseph placed his father and his brethren... as Pharaoh had commanded'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph settled his family in Rameses 'as Pharaoh had commanded' (GEN 47:6): Joseph's king."
+    },
+    {
+      "reference": "GEN 47:14",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:14, 'Joseph brought the money into Pharaoh's house' during the famine; Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Joseph brought the money into Pharaoh's house' in the famine: Joseph's king."
+    },
+    {
+      "reference": "GEN 47:19",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:19, the famished Egyptians to Joseph: 'we and our land will be servants unto Pharaoh'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "The Egyptians to Joseph: 'we and our land will be servants unto Pharaoh': Joseph's king."
+    },
+    {
+      "reference": "GEN 47:20",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:20, 'Joseph bought all the land of Egypt for Pharaoh... so the land became Pharaoh's'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Joseph bought all the land of Egypt for Pharaoh... so the land became Pharaoh's': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 47:22",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:22, 'the priests had a portion assigned them of Pharaoh, and did eat their portion which Pharaoh gave them', under Joseph; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "'the priests had a portion assigned them of Pharaoh... which Pharaoh gave them', in Joseph's land purchase: Joseph's king."
+    },
+    {
+      "reference": "GEN 47:23",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:23, Joseph: 'I have bought you this day and your land for Pharaoh'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph: 'I have bought you this day and your land for Pharaoh': Joseph's king."
+    },
+    {
+      "reference": "GEN 47:24",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:24, Joseph: 'ye shall give the fifth part unto Pharaoh'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "Joseph: 'ye shall give the fifth part unto Pharaoh': Joseph's king."
+    },
+    {
+      "reference": "GEN 47:25",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:25, the people to Joseph: 'we will be Pharaoh's servants'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "The people to Joseph: 'we will be Pharaoh's servants': Joseph's king."
+    },
+    {
+      "reference": "GEN 47:26",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 47:26, 'Joseph made it a law... that Pharaoh should have the fifth part... not Pharaoh's'; 'unto this day' reaches later kings, but the Pharaoh named is the one Joseph served.",
+      "confidence": 0.8,
+      "second": "'Joseph made it a law... that Pharaoh should have the fifth part... which became not Pharaoh's': the law is made for Joseph's king, though 'unto this day' extends it to the office."
+    },
+    {
+      "reference": "GEN 50:4",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 50:4, after Jacob's death 'Joseph spake unto the house of Pharaoh... speak in the ears of Pharaoh'; both words Joseph's king.",
+      "confidence": 0.9,
+      "second": "After Jacob's mourning 'Joseph spake unto the house of Pharaoh... in the ears of Pharaoh': both are Joseph's king."
+    },
+    {
+      "reference": "GEN 50:6",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 50:6, 'Pharaoh said, Go up, and bury thy father' (Joseph's father Jacob); Joseph's king.",
+      "confidence": 0.9,
+      "second": "'Pharaoh said, Go up, and bury thy father', answering Joseph: Joseph's king."
+    },
+    {
+      "reference": "GEN 50:7",
+      "strong": "H6547",
+      "bearer": "pharaoh-2",
+      "why": "GEN 50:7, 'Joseph went up to bury his father: and with him went up all the servants of Pharaoh'; Joseph's king.",
+      "confidence": 0.9,
+      "second": "At Jacob's burial 'with him went up all the servants of Pharaoh': Joseph's king."
+    },
+    {
+      "reference": "EXO 1:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 1:11, 'they built for Pharaoh treasure cities, Pithom and Raamses', under the 'new king which knew not Joseph' (EXO 1:8); the king of the oppression.",
+      "confidence": 0.9,
+      "second": "Under the new king who knew not Joseph (EXO 1:8), taskmasters afflict Israel 'and they built for Pharaoh treasure cities, Pithom and Raamses': the king of the oppression."
+    },
+    {
+      "reference": "EXO 1:19",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 1:19, 'the midwives said unto Pharaoh', the king of Egypt who ordered the Hebrew boys killed (1:15-18); king of the oppression.",
+      "confidence": 0.9,
+      "second": "'the midwives said unto Pharaoh', the 'king of Egypt' of EXO 1:17-18 who ordered the boys killed: the king of the oppression."
+    },
+    {
+      "reference": "EXO 1:22",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 1:22, 'Pharaoh charged all his people, Every son that is born ye shall cast into the river'; the king of the oppression.",
+      "confidence": 0.9,
+      "second": "'Pharaoh charged all his people... Every son that is born ye shall cast into the river', just before Moses' birth (EXO 2:1-2): the king of the oppression."
+    },
+    {
+      "reference": "EXO 2:5",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 2:5, 'the daughter of Pharaoh came down to wash herself at the river' and took up the child; Pharaoh's daughter taking up Moses is the king of the oppression's.",
+      "confidence": 0.9,
+      "second": "'the daughter of Pharaoh came down to wash herself at the river' and finds Moses: Pharaoh's daughter taking up Moses is told of the king of the oppression."
+    },
+    {
+      "reference": "EXO 2:7",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 2:7, 'his sister to Pharaoh's daughter... nurse the child for thee'; the daughter of the king of the oppression.",
+      "confidence": 0.9,
+      "second": "Moses' sister speaks 'to Pharaoh's daughter' who found the child: the king of the oppression."
+    },
+    {
+      "reference": "EXO 2:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 2:8, 'Pharaoh's daughter said to her, Go', taking up the Hebrew child; the king of the oppression.",
+      "confidence": 0.9,
+      "second": "'Pharaoh's daughter said to her, Go', in the taking up of Moses: the king of the oppression."
+    },
+    {
+      "reference": "EXO 2:9",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 2:9, 'Pharaoh's daughter said unto her, Take this child away, and nurse it for me'; the king of the oppression.",
+      "confidence": 0.9,
+      "second": "'Pharaoh's daughter said unto her, Take this child away, and nurse it for me': the king of the oppression."
+    },
+    {
+      "reference": "EXO 2:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 2:10, 'she brought him unto Pharaoh's daughter, and he became her son... Moses'; the king of the oppression.",
+      "confidence": 0.9,
+      "second": "'she brought him unto Pharaoh's daughter, and he became her son... Moses': the king of the oppression."
+    },
+    {
+      "reference": "EXO 2:15",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 2:15, 'when Pharaoh heard this thing, he sought to slay Moses. But Moses fled from the face of Pharaoh'; king of the oppression who died while Moses was in Midian (2:23); both words.",
+      "confidence": 0.9,
+      "second": "'Pharaoh heard this thing, he sought to slay Moses. But Moses fled from the face of Pharaoh... in the land of Midian': the king who died while Moses was there (EXO 2:23)."
+    },
+    {
+      "reference": "EXO 3:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 3:10, 'I will send thee unto Pharaoh, that thou mayest bring forth my people', after the old king died (EXO 2:23); the king of the Exodus.",
+      "confidence": 0.9,
+      "second": "God at the bush: 'I will send thee unto Pharaoh, that thou mayest bring forth my people... out of Egypt': the Pharaoh of the Exodus."
+    },
+    {
+      "reference": "EXO 3:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 3:11, Moses: 'that I should go unto Pharaoh, and that I should bring forth the children of Israel out of Egypt'; the king of the Exodus.",
+      "confidence": 0.9,
+      "second": "Moses at the bush: 'Who am I, that I should go unto Pharaoh... bring forth the children of Israel out of Egypt?': the Pharaoh of the Exodus."
+    },
+    {
+      "reference": "EXO 4:21",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 4:21, Moses sent back after the old king's death (4:19): 'I will harden his heart, that he shall not let the people go' is told of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "EXO 4:21, Moses sent back after the oppressor died (EXO 2:23, 4:19): 'do all those wonders before Pharaoh... I will harden his heart' — the Exodus king."
+    },
+    {
+      "reference": "EXO 4:22",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 4:22, same speech as 4:21 (hardened heart, 'Let my son go'), Moses sent to Pharaoh in the Exodus story of EXO 3-15.",
+      "confidence": 0.9,
+      "second": "EXO 4:22, the message Moses is to bring: 'thou shalt say unto Pharaoh... Israel is my son' — the king he is sent to for the Exodus."
+    },
+    {
+      "reference": "EXO 5:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:1, Moses and Aaron go in to Pharaoh with 'Let my people go', the opening of the Exodus confrontation after EXO 4:21 'harden his heart'.",
+      "confidence": 0.9,
+      "second": "EXO 5:1: 'Moses and Aaron went in, and told Pharaoh... Let my people go' — the king of the Exodus."
+    },
+    {
+      "reference": "EXO 5:2",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:2, 'Who is the LORD... neither will I let Israel go', the Pharaoh Moses and Aaron confront in the Exodus (EXO 5:1).",
+      "confidence": 0.9,
+      "second": "EXO 5:2: 'And Pharaoh said, Who is the LORD... neither will I let Israel go' — the king Moses faces for the Exodus."
+    },
+    {
+      "reference": "EXO 5:5",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:5, Pharaoh answers Moses and Aaron about the people resting from their burdens, continuous with EXO 5:1-4 in the Exodus narrative.",
+      "confidence": 0.9,
+      "second": "EXO 5:5, answering Moses and Aaron (5:4): 'And Pharaoh said, Behold, the people of the land now are many' — the Exodus king."
+    },
+    {
+      "reference": "EXO 5:6",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:6, 'Pharaoh commanded the same day the taskmasters', the reaction to Moses and Aaron's demand in EXO 5:1-5.",
+      "confidence": 0.9,
+      "second": "EXO 5:6, the same day as Moses' demand: 'Pharaoh commanded the same day the taskmasters' — the king of EXO 5, the Exodus king."
+    },
+    {
+      "reference": "EXO 5:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:10, 'Thus saith Pharaoh, I will not give you straw', the same king who answered Moses in EXO 5:2-9.",
+      "confidence": 0.9,
+      "second": "EXO 5:10, the straw order after Moses' demand: 'Thus saith Pharaoh, I will not give you straw' — the Exodus king."
+    },
+    {
+      "reference": "EXO 5:14",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:14, 'Pharaoh's taskmasters' enforcing the straw order of EXO 5:10, the Exodus-time Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 5:14, the same episode: 'which Pharaoh's taskmasters had set over them, were beaten' — the king who refused Moses in EXO 5."
+    },
+    {
+      "reference": "EXO 5:15",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:15, the officers 'cried unto Pharaoh' about the straw order he gave in EXO 5:10, the Exodus-time king.",
+      "confidence": 0.9,
+      "second": "EXO 5:15: 'the officers of the children of Israel came and cried unto Pharaoh' — the king of EXO 5 whom Moses confronts."
+    },
+    {
+      "reference": "EXO 5:20",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:20, 'they met Moses and Aaron... as they came forth from Pharaoh', the Pharaoh of the audience in EXO 5:1-18.",
+      "confidence": 0.9,
+      "second": "EXO 5:20: the officers met Moses and Aaron 'as they came forth from Pharaoh' — the Exodus king."
+    },
+    {
+      "reference": "EXO 5:21",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:21, 'ye have made our savour to be abhorred in the eyes of Pharaoh', the king Moses and Aaron confronted in EXO 5:1.",
+      "confidence": 0.9,
+      "second": "EXO 5:21, to Moses and Aaron: 'ye have made our savour to be abhorred in the eyes of Pharaoh' — the king they had confronted."
+    },
+    {
+      "reference": "EXO 5:23",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 5:23, Moses: 'since I came to Pharaoh to speak in thy name', the king of the Exodus confrontation (EXO 5:1).",
+      "confidence": 0.9,
+      "second": "EXO 5:23, Moses: 'since I came to Pharaoh to speak in thy name, he hath done evil to this people' — the Exodus king."
+    },
+    {
+      "reference": "EXO 6:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 6:1, 'Now shalt thou see what I will do to Pharaoh... with a strong hand shall he let them go', the Exodus Pharaoh of EXO 5.",
+      "confidence": 0.9,
+      "second": "EXO 6:1: 'Now shalt thou see what I will do to Pharaoh: for with a strong hand shall he let them go' — the Exodus king."
+    },
+    {
+      "reference": "EXO 6:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 6:11, 'speak unto Pharaoh king of Egypt, that he let the children of Israel go out', the king of the Exodus (EXO 5-6).",
+      "confidence": 0.9,
+      "second": "EXO 6:11: 'speak unto Pharaoh king of Egypt, that he let the children of Israel go out of his land' — the Exodus king."
+    },
+    {
+      "reference": "EXO 6:12",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 6:12, Moses: 'how then shall Pharaoh hear me', the king of Exodus 5-6 who refused the demand to let Israel go.",
+      "confidence": 0.9,
+      "second": "EXO 6:12, Moses: 'how then shall Pharaoh hear me' — the king he is sent to in 6:11 to let Israel go."
+    },
+    {
+      "reference": "EXO 6:13",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 6:13, charge 'unto Pharaoh king of Egypt, to bring the children of Israel out of the land of Egypt', the Exodus king.",
+      "confidence": 0.9,
+      "second": "EXO 6:13: a charge 'unto Pharaoh king of Egypt, to bring the children of Israel out of the land of Egypt' — the Exodus king."
+    },
+    {
+      "reference": "EXO 6:27",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 6:27, 'they which spake to Pharaoh king of Egypt, to bring out the children of Israel', Moses and Aaron's mission to the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 6:27: 'These are they which spake to Pharaoh king of Egypt, to bring out the children of Israel from Egypt' — the Exodus king."
+    },
+    {
+      "reference": "EXO 6:29",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 6:29, 'speak thou unto Pharaoh king of Egypt all that I say unto thee', the Exodus commission continuing into the plagues (EXO 7).",
+      "confidence": 0.9,
+      "second": "EXO 6:29: 'speak thou unto Pharaoh king of Egypt all that I say unto thee' — the king Moses confronts for the Exodus."
+    },
+    {
+      "reference": "EXO 6:30",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 6:30, 'how shall Pharaoh hearken unto me?', the Pharaoh of the Exodus commission, followed by EXO 7:3 'harden Pharaoh's heart'.",
+      "confidence": 0.9,
+      "second": "EXO 6:30, Moses: 'how shall Pharaoh hearken unto me' — the king of 6:29 whom he must address for the Exodus."
+    },
+    {
+      "reference": "EXO 7:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:1, 'I have made thee a god to Pharaoh', followed by EXO 7:3 'I will harden Pharaoh's heart', the Pharaoh of the plagues.",
+      "confidence": 0.9,
+      "second": "EXO 7:1: 'I have made thee a god to Pharaoh' — the king to whom Moses and Aaron speak before the plagues."
+    },
+    {
+      "reference": "EXO 7:2",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:2, Aaron 'shall speak unto Pharaoh, that he send the children of Israel out', just before 'I will harden Pharaoh's heart' (7:3).",
+      "confidence": 0.9,
+      "second": "EXO 7:2: 'Aaron thy brother shall speak unto Pharaoh, that he send the children of Israel out' — the Exodus king."
+    },
+    {
+      "reference": "EXO 7:3",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:3, 'I will harden Pharaoh's heart, and multiply my signs and my wonders in the land of Egypt', the hardened heart of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 7:3: 'I will harden Pharaoh's heart, and multiply my signs' — the hardened heart told of the Exodus king."
+    },
+    {
+      "reference": "EXO 7:4",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:4, 'Pharaoh shall not hearken unto you, that I may... bring forth... the children of Israel, out of the land of Egypt by great judgments'.",
+      "confidence": 0.9,
+      "second": "EXO 7:4: 'Pharaoh shall not hearken unto you... bring forth... out of the land of Egypt by great judgments' — the Exodus king."
+    },
+    {
+      "reference": "EXO 7:7",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:7, Moses eighty and Aaron eighty-three 'when they spake unto Pharaoh', the Exodus confrontation with the plagues about to begin.",
+      "confidence": 0.9,
+      "second": "EXO 7:7: Moses fourscore and Aaron fourscore and three 'when they spake unto Pharaoh' — the Exodus king."
+    },
+    {
+      "reference": "EXO 7:9",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:9, 'When Pharaoh shall speak unto you... cast it before Pharaoh', both occurrences the Pharaoh of the signs and plagues (EXO 7:10-13).",
+      "confidence": 0.9,
+      "second": "EXO 7:9, both occurrences: 'When Pharaoh shall speak unto you... cast it before Pharaoh' — the king of the signs, the Exodus king."
+    },
+    {
+      "reference": "EXO 7:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:10, 'Moses and Aaron went in unto Pharaoh... Aaron cast down his rod before Pharaoh', both the Exodus Pharaoh of EXO 7:13 hardened heart.",
+      "confidence": 0.9,
+      "second": "EXO 7:10, both occurrences: 'Moses and Aaron went in unto Pharaoh... cast down his rod before Pharaoh' — the Exodus king."
+    },
+    {
+      "reference": "EXO 7:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:11, 'Pharaoh also called the wise men and the sorcerers', the same Pharaoh whose heart is hardened in 7:13.",
+      "confidence": 0.9,
+      "second": "EXO 7:11, after Aaron's rod: 'Then Pharaoh also called the wise men and the sorcerers' — the Exodus king."
+    },
+    {
+      "reference": "EXO 7:13",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:13, 'he hardened Pharaoh's heart, that he hearkened not unto them; as the LORD had said', the hardened heart of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 7:13: 'he hardened Pharaoh's heart, that he hearkened not unto them' — the hardened heart of the Exodus king."
+    },
+    {
+      "reference": "EXO 7:14",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:14, 'Pharaoh's heart is hardened, he refuseth to let the people go', the hardened heart told of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "EXO 7:14: 'Pharaoh's heart is hardened, he refuseth to let the people go' — the Exodus king."
+    },
+    {
+      "reference": "EXO 7:15",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:15, 'Get thee unto Pharaoh in the morning', sent to the Pharaoh whose heart is hardened (7:14) before the plague of blood.",
+      "confidence": 0.9,
+      "second": "EXO 7:15, before the plague of blood: 'Get thee unto Pharaoh in the morning... by the river's brink' — the Exodus king."
+    },
+    {
+      "reference": "EXO 7:20",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:20, the Nile turned to blood 'in the sight of Pharaoh', the first plague, told of the Pharaoh of the plagues.",
+      "confidence": 0.9,
+      "second": "EXO 7:20, the first plague: 'smote the waters... in the sight of Pharaoh' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 7:22",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:22, 'Pharaoh's heart was hardened, neither did he hearken unto them; as the LORD had said', during the plague of blood.",
+      "confidence": 0.9,
+      "second": "EXO 7:22, after the water turned to blood: 'Pharaoh's heart was hardened' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 7:23",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 7:23, 'Pharaoh turned and went into his house', right after the plague of blood (7:20-22), the Pharaoh of the plagues.",
+      "confidence": 0.9,
+      "second": "EXO 7:23, during the plague of blood: 'Pharaoh turned and went into his house' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:1, 'Go unto Pharaoh... Let my people go', the frogs plague announced to the Pharaoh of the plagues (EXO 7-8).",
+      "confidence": 0.9,
+      "second": "EXO 8:1, before the frogs: 'Go unto Pharaoh... Let my people go' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:8, 'Pharaoh called for Moses and Aaron... Intreat the LORD, that he may take away the frogs', the plague of frogs.",
+      "confidence": 0.9,
+      "second": "EXO 8:8: 'Pharaoh called for Moses and Aaron... take away the frogs from me' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:9",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:9, Moses to Pharaoh about removing the frogs, the second plague told of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "EXO 8:9, the plague of frogs: 'Moses said unto Pharaoh... to destroy the frogs from thee' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:12",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:12, 'Moses cried unto the LORD because of the frogs which he had brought against Pharaoh', both occurrences the Pharaoh of the plague of frogs.",
+      "confidence": 0.9,
+      "second": "EXO 8:12, both occurrences: 'went out from Pharaoh... the frogs which he had brought against Pharaoh' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:15",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:15, 'when Pharaoh saw that there was respite, he hardened his heart', after the frogs, the hardened heart of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 8:15, after the frogs: 'when Pharaoh saw that there was respite, he hardened his heart' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:19",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:19, 'the magicians said unto Pharaoh, This is the finger of God: and Pharaoh's heart was hardened', in the plague of lice.",
+      "confidence": 0.9,
+      "second": "EXO 8:19, both occurrences, the plague of lice: 'the magicians said unto Pharaoh... and Pharaoh's heart was hardened' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:20",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:20, 'stand before Pharaoh... Let my people go', announcing the plague of flies to the Pharaoh of the plagues.",
+      "confidence": 0.9,
+      "second": "EXO 8:20, before the flies: 'stand before Pharaoh... Let my people go' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:24",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:24, 'a grievous swarm of flies into the house of Pharaoh', the plague of flies told of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 8:24: 'there came a grievous swarm of flies into the house of Pharaoh' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:25",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:25, 'Pharaoh called for Moses and for Aaron, and said, Go ye, sacrifice to your God in the land', during the plague of flies.",
+      "confidence": 0.9,
+      "second": "EXO 8:25, after the flies: 'Pharaoh called for Moses and for Aaron... sacrifice to your God in the land' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:28",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:28, 'Pharaoh said, I will let you go... intreat for me', after the swarms of flies of EXO 8:24.",
+      "confidence": 0.9,
+      "second": "EXO 8:28: 'Pharaoh said, I will let you go, that ye may sacrifice... in the wilderness' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:29",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:29, 'the swarms of flies may depart from Pharaoh... let not Pharaoh deal deceitfully', both occurrences the Pharaoh of the plague of flies.",
+      "confidence": 0.9,
+      "second": "EXO 8:29, both occurrences: 'the swarms of flies may depart from Pharaoh... let not Pharaoh deal deceitfully' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:30",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:30, 'Moses went out from Pharaoh, and intreated the LORD', the plague of flies, followed by 8:32 'Pharaoh hardened his heart'.",
+      "confidence": 0.9,
+      "second": "EXO 8:30, during the plague of flies: 'Moses went out from Pharaoh, and intreated the LORD' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:31",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:31, 'he removed the swarms of flies from Pharaoh', the plague of flies told of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "EXO 8:31: 'he removed the swarms of flies from Pharaoh, from his servants' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 8:32",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 8:32, 'Pharaoh hardened his heart at this time also, neither would he let the people go', the hardened heart of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 8:32: 'Pharaoh hardened his heart at this time also, neither would he let the people go' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:1, 'Go in unto Pharaoh... Let my people go', announcing the murrain of cattle to the Pharaoh who hardened his heart (8:32).",
+      "confidence": 0.9,
+      "second": "EXO 9:1, before the murrain: 'Go in unto Pharaoh... Let my people go' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:7",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:7, 'the heart of Pharaoh was hardened, and he did not let the people go', after the cattle murrain, both occurrences the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 9:7, both occurrences, after the murrain: 'Pharaoh sent... And the heart of Pharaoh was hardened' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:8, 'sprinkle it toward the heaven in the sight of Pharaoh', the plague of boils told of the Pharaoh of the plagues.",
+      "confidence": 0.9,
+      "second": "EXO 9:8, the plague of boils: 'let Moses sprinkle it toward the heaven in the sight of Pharaoh' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:10, 'stood before Pharaoh; and Moses sprinkled it... a boil', the plague of boils, followed by 9:12 'the LORD hardened the heart of Pharaoh'.",
+      "confidence": 0.9,
+      "second": "EXO 9:10: 'took ashes of the furnace, and stood before Pharaoh... it became a boil' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:12",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:12, 'the LORD hardened the heart of Pharaoh... as the LORD had spoken unto Moses', the hardened heart of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 9:12: 'the LORD hardened the heart of Pharaoh' — the hardened heart told of the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:13",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:13, 'stand before Pharaoh... Let my people go', announcing the hail to the Pharaoh whose heart was hardened (9:12).",
+      "confidence": 0.9,
+      "second": "EXO 9:13, before the hail: 'stand before Pharaoh... Let my people go' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:20",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:20, 'the servants of Pharaoh' at the hail of EXO 9:18-25, told of the Pharaoh of the plagues.",
+      "confidence": 0.9,
+      "second": "EXO 9:20, the plague of hail: 'He that feared the word of the LORD among the servants of Pharaoh' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:27",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:27, 'Pharaoh sent, and called for Moses and Aaron, and said, I have sinned this time', after the hail, the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 9:27, after the hail: 'Pharaoh sent, and called for Moses and Aaron... I have sinned this time' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:33",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:33, 'Moses went out of the city from Pharaoh... the thunders and hail ceased', the hail plague told of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 9:33: 'Moses went out of the city from Pharaoh... the thunders and hail ceased' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:34",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:34, 'when Pharaoh saw that the rain and the hail and the thunders were ceased, he sinned yet more, and hardened his heart'.",
+      "confidence": 0.9,
+      "second": "EXO 9:34: 'when Pharaoh saw that the rain and the hail... were ceased, he... hardened his heart' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 9:35",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 9:35, 'the heart of Pharaoh was hardened, neither would he let the children of Israel go; as the LORD had spoken by Moses'.",
+      "confidence": 0.9,
+      "second": "EXO 9:35: 'the heart of Pharaoh was hardened, neither would he let the children of Israel go' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:1, 'Go in unto Pharaoh: for I have hardened his heart... that I might shew these my signs', the hardened heart of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 10:1: 'Go in unto Pharaoh: for I have hardened his heart' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:3",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:3, 'Moses and Aaron came in unto Pharaoh... How long wilt thou refuse to humble thyself before me?', the locust warning, same Pharaoh as 10:1.",
+      "confidence": 0.9,
+      "second": "EXO 10:3, before the locusts: 'Moses and Aaron came in unto Pharaoh... let my people go' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:6",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:6, 'he turned himself, and went out from Pharaoh', after the locust warning to the Pharaoh of the plagues (10:3-4).",
+      "confidence": 0.9,
+      "second": "EXO 10:6, the locusts announced: 'he turned himself, and went out from Pharaoh' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:7",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:7, 'Pharaoh's servants said unto him... knowest thou not yet that Egypt is destroyed?', during the locust threat to the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 10:7: 'Pharaoh's servants said unto him... knowest thou not yet that Egypt is destroyed?' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:8, 'Moses and Aaron were brought again unto Pharaoh: and he said unto them, Go, serve the LORD your God', the locust episode.",
+      "confidence": 0.9,
+      "second": "EXO 10:8: 'Moses and Aaron were brought again unto Pharaoh: and he said... Go, serve the LORD' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:11, 'they were driven out from Pharaoh's presence', Moses and Aaron cast out of the audience of the Exodus Pharaoh before the locusts.",
+      "confidence": 0.9,
+      "second": "EXO 10:11, before the locusts: 'they were driven out from Pharaoh's presence' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:16",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:16, 'Pharaoh called for Moses and Aaron in haste... I have sinned against the LORD your God', after the locusts.",
+      "confidence": 0.9,
+      "second": "EXO 10:16, after the locusts: 'Pharaoh called for Moses and Aaron in haste... I have sinned' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:18",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:18, 'he went out from Pharaoh, and intreated the LORD', the locust plague ended, followed by 10:20 'the LORD hardened Pharaoh's heart'.",
+      "confidence": 0.9,
+      "second": "EXO 10:18, the plague of locusts: 'he went out from Pharaoh, and intreated the LORD' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:20",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:20, 'the LORD hardened Pharaoh's heart, so that he would not let the children of Israel go', the hardened heart of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 10:20: 'the LORD hardened Pharaoh's heart, so that he would not let the children of Israel go' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:24",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:24, 'Pharaoh called unto Moses, and said, Go ye, serve the LORD', after the three days of darkness (10:22), the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 10:24, after the three days' darkness: 'Pharaoh called unto Moses, and said, Go ye, serve the LORD' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:27",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:27, 'the LORD hardened Pharaoh's heart, and he would not let them go', the hardened heart told of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "EXO 10:27: 'the LORD hardened Pharaoh's heart, and he would not let them go' — the hardened heart of the king of the plagues."
+    },
+    {
+      "reference": "EXO 10:28",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 10:28, 'Pharaoh said unto him, Get thee from me... see my face no more', the break with Moses after the darkness, the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 10:28, after the darkness: 'Pharaoh said unto him, Get thee from me... see my face no more' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 11:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 11:1, 'one plague more upon Pharaoh, and upon Egypt; afterwards he will let you go hence', the tenth plague on the Pharaoh of the plagues.",
+      "confidence": 0.9,
+      "second": "EXO 11:1: 'Yet will I bring one plague more upon Pharaoh, and upon Egypt; afterwards he will let you go' — the Exodus king."
+    },
+    {
+      "reference": "EXO 11:3",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 11:3, 'Moses was very great in the land of Egypt, in the sight of Pharaoh's servants', the servants of the Pharaoh of the plagues (EXO 11:1).",
+      "confidence": 0.9,
+      "second": "EXO 11:3, before the last plague: Moses 'very great... in the sight of Pharaoh's servants' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 11:5",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 11:5, 'all the firstborn in the land of Egypt shall die, from the first born of Pharaoh that sitteth upon his throne', the tenth plague.",
+      "confidence": 0.9,
+      "second": "EXO 11:5, the last plague announced: 'from the first born of Pharaoh that sitteth upon his throne' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 11:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 11:8, 'he went out from Pharaoh in a great anger', Moses leaving the Pharaoh of the plagues after announcing the firstborn's death.",
+      "confidence": 0.9,
+      "second": "EXO 11:8, after announcing the death of the firstborn: 'he went out from Pharaoh in a great anger' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 11:9",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 11:9, 'Pharaoh shall not hearken unto you; that my wonders may be multiplied in the land of Egypt', the plagues Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 11:9: 'Pharaoh shall not hearken unto you; that my wonders may be multiplied in the land of Egypt' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 11:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 11:10, 'Moses and Aaron did all these wonders before Pharaoh: and the LORD hardened Pharaoh's heart', both occurrences the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 11:10, both occurrences: 'did all these wonders before Pharaoh: and the LORD hardened Pharaoh's heart' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 12:29",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 12:29, 'the LORD smote all the firstborn in the land of Egypt, from the firstborn of Pharaoh that sat on his throne', the tenth plague.",
+      "confidence": 0.9,
+      "second": "EXO 12:29, the tenth plague: 'from the firstborn of Pharaoh that sat on his throne' — the king of the plagues."
+    },
+    {
+      "reference": "EXO 12:30",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 12:30, 'Pharaoh rose up in the night... not a house where there was not one dead', the night of the firstborn's death, the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 12:30, the night of the firstborn's death: 'Pharaoh rose up in the night, he, and all his servants' — the Exodus king."
+    },
+    {
+      "reference": "EXO 13:15",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 13:15, 'when Pharaoh would hardly let us go, that the LORD slew all the firstborn in the land of Egypt', the tenth plague recalled.",
+      "confidence": 0.9,
+      "second": "EXO 13:15 recalls the tenth plague: 'when Pharaoh would hardly let us go, that the LORD slew all the firstborn' — the Exodus king."
+    },
+    {
+      "reference": "EXO 13:17",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 13:17, 'when Pharaoh had let the people go', the release after the firstborn's death, the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 13:17: 'when Pharaoh had let the people go' — the king who released Israel at the Exodus (EXO 12:31)."
+    },
+    {
+      "reference": "EXO 14:3",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:3, 'Pharaoh will say of the children of Israel, They are entangled in the land', before 14:4 'I will harden Pharaoh's heart', the Red Sea pursuer.",
+      "confidence": 0.9,
+      "second": "EXO 14:3, before the Red sea: 'Pharaoh will say of the children of Israel, They are entangled in the land' — the Exodus king."
+    },
+    {
+      "reference": "EXO 14:4",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:4, 'I will harden Pharaoh's heart, that he shall follow after them; and I will be honoured upon Pharaoh', both occurrences the Red Sea Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 14:4, both occurrences: 'I will harden Pharaoh's heart, that he shall follow after them; and I will be honoured upon Pharaoh' — the Red sea king."
+    },
+    {
+      "reference": "EXO 14:5",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:5, 'the king of Egypt... the heart of Pharaoh and of his servants was turned against the people', the pursuit to the Red Sea.",
+      "confidence": 0.9,
+      "second": "EXO 14:5: 'told the king of Egypt that the people fled: and the heart of Pharaoh... was turned' — the Exodus king."
+    },
+    {
+      "reference": "EXO 14:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:8, 'the LORD hardened the heart of Pharaoh king of Egypt, and he pursued after the children of Israel', the hardened heart at the Red Sea.",
+      "confidence": 0.9,
+      "second": "EXO 14:8: 'the LORD hardened the heart of Pharaoh king of Egypt, and he pursued after the children of Israel' — the Red sea king."
+    },
+    {
+      "reference": "EXO 14:9",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:9, 'all the horses and chariots of Pharaoh... overtook them encamping by the sea', the Red Sea pursuit.",
+      "confidence": 0.9,
+      "second": "EXO 14:9: 'all the horses and chariots of Pharaoh... overtook them encamping by the sea' — the Red sea king."
+    },
+    {
+      "reference": "EXO 14:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:10, 'when Pharaoh drew nigh, the children of Israel lifted up their eyes', the pursuit at the Red Sea.",
+      "confidence": 0.9,
+      "second": "EXO 14:10, at the sea: 'when Pharaoh drew nigh, the children of Israel lifted up their eyes' — the Red sea king."
+    },
+    {
+      "reference": "EXO 14:17",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:17, 'I will harden the hearts of the Egyptians... get me honour upon Pharaoh, and upon all his host', the Red Sea Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 14:17, at the dividing of the sea: 'I will get me honour upon Pharaoh, and upon all his host' — the Red sea king."
+    },
+    {
+      "reference": "EXO 14:18",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:18, 'when I have gotten me honour upon Pharaoh, upon his chariots, and upon his horsemen', the Red Sea Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 14:18: 'when I have gotten me honour upon Pharaoh, upon his chariots, and upon his horsemen' — the Red sea king."
+    },
+    {
+      "reference": "EXO 14:23",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:23, 'the Egyptians pursued... all Pharaoh's horses, his chariots, and his horsemen' into the midst of the sea.",
+      "confidence": 0.9,
+      "second": "EXO 14:23: 'went in after them to the midst of the sea, even all Pharaoh's horses' — the Red sea king."
+    },
+    {
+      "reference": "EXO 14:28",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 14:28, 'the waters returned, and covered the chariots... all the host of Pharaoh that came into the sea after them', the Red Sea.",
+      "confidence": 0.9,
+      "second": "EXO 14:28: 'the waters returned, and covered... all the host of Pharaoh that came into the sea' — the Red sea king."
+    },
+    {
+      "reference": "EXO 15:4",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 15:4, the song of the sea: 'Pharaoh's chariots and his host hath he cast into the sea... drowned in the Red sea'.",
+      "confidence": 0.9,
+      "second": "EXO 15:4, the song of the sea: 'Pharaoh's chariots and his host hath he cast into the sea... drowned in the Red sea' — the Red sea king."
+    },
+    {
+      "reference": "EXO 15:19",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 15:19, 'the horse of Pharaoh went in with his chariots and with his horsemen into the sea', the Red Sea Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 15:19: 'the horse of Pharaoh went in with his chariots... into the sea' — the Red sea king."
+    },
+    {
+      "reference": "EXO 18:4",
+      "strong": "H6547",
+      "bearer": "pharaoh-3",
+      "why": "EXO 18:4, Moses 'delivered me from the sword of Pharaoh': EXO 2:15 says Pharaoh sought to slay Moses, who fled to Midian, and 2:23 has that king die there.",
+      "confidence": 0.8,
+      "second": "EXO 18:4, Moses naming Eliezer: 'delivered me from the sword of Pharaoh' recalls EXO 2:15, 'Pharaoh... sought to slay Moses', the king of the oppression, before Moses fled to Midian."
+    },
+    {
+      "reference": "EXO 18:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 18:8, 'all that the LORD had done unto Pharaoh and to the Egyptians for Israel's sake', the plagues and deliverance told of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "EXO 18:8: Moses told Jethro 'all that the LORD had done unto Pharaoh and to the Egyptians for Israel's sake' — the plagues and Red sea."
+    },
+    {
+      "reference": "EXO 18:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "EXO 18:10, 'delivered you out of the hand of the Egyptians, and out of the hand of Pharaoh', recalling the deliverance of 18:8-9, the Exodus.",
+      "confidence": 0.8,
+      "second": "EXO 18:10, Jethro on the Exodus: 'delivered you... out of the hand of Pharaoh' — the king Israel was delivered from, EXO 3-15."
+    },
+    {
+      "reference": "DEU 6:21",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "DEU 6:21, 'We were Pharaoh's bondmen in Egypt; and the LORD brought us out', the recital continues in 6:22 with signs 'upon Pharaoh', the Pharaoh of the Exodus.",
+      "confidence": 0.8,
+      "second": "DEU 6:21: 'We were Pharaoh's bondmen in Egypt; and the LORD brought us out... with a mighty hand' ties the bondage to the deliverance, with 6:22's signs 'upon Pharaoh'; the bondage itself also spans the oppression king."
+    },
+    {
+      "reference": "DEU 6:22",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "DEU 6:22, 'the LORD shewed signs and wonders, great and sore, upon Egypt, upon Pharaoh, and upon all his household', the plagues told of the Exodus Pharaoh.",
+      "confidence": 0.9,
+      "second": "DEU 6:22 recalls the plagues: 'the LORD shewed signs and wonders... upon Egypt, upon Pharaoh' — the king of the plagues."
+    },
+    {
+      "reference": "DEU 7:8",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "DEU 7:8, 'brought you out with a mighty hand, and redeemed you... from the hand of Pharaoh king of Egypt', the redemption out of Egypt, the Exodus.",
+      "confidence": 0.8,
+      "second": "DEU 7:8 recalls the Exodus: 'brought you out with a mighty hand, and redeemed you... from the hand of Pharaoh king of Egypt'."
+    },
+    {
+      "reference": "DEU 7:18",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "DEU 7:18, 'what the LORD thy God did unto Pharaoh, and unto all Egypt', followed in 7:19 by 'the signs, and the wonders, and the mighty hand', the plagues and Exodus.",
+      "confidence": 0.9,
+      "second": "DEU 7:18-19 recall the plagues: 'what the LORD thy God did unto Pharaoh... the signs, and the wonders... whereby the LORD... brought thee out'."
+    },
+    {
+      "reference": "DEU 11:3",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "DEU 11:3-4, 'his miracles ... unto Pharaoh the king of Egypt' and 'the water of the Red sea' overflowing the pursuers: the plagues and Red sea are told of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "DEU 11:3-4 recalls 'his miracles... unto Pharaoh the king of Egypt' and 'the water of the Red sea to overflow them', events told of the Pharaoh of the Exodus."
+    },
+    {
+      "reference": "DEU 29:2",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "DEU 29:2-3, 'all that the LORD did ... in the land of Egypt unto Pharaoh' with 'the signs, and those great miracles': the plagues, told of the Pharaoh of the Exodus.",
+      "confidence": 0.8,
+      "second": "DEU 29:2-3: 'all that the LORD did... in the land of Egypt unto Pharaoh', 'the signs, and those great miracles' recalls the plagues, told of the Exodus Pharaoh."
+    },
+    {
+      "reference": "DEU 34:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "DEU 34:11, 'the signs and the wonders, which the LORD sent him to do in the land of Egypt to Pharaoh': Moses' signs before Pharaoh are the plagues of the Exodus.",
+      "confidence": 0.9,
+      "second": "DEU 34:11: 'the signs and the wonders, which the LORD sent him [Moses] to do in the land of Egypt to Pharaoh' recalls the plagues of the Exodus king."
+    },
+    {
+      "reference": "1SA 2:27",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "1SA 2:27, 'when they were in Egypt in Pharaoh's house': Aaron's house in Egypt, no king named and no event recalled that fixes one of the kings of the oppression or of the Exodus."
+    },
+    {
+      "reference": "1SA 6:6",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "1SA 6:6, 'as the Egyptians and Pharaoh hardened their hearts ... did they not let the people go': the hardened heart and the release are told of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "1SA 6:6: 'as the Egyptians and Pharaoh hardened their hearts... did they not let the people go' recalls the hardened heart of the Exodus Pharaoh."
+    },
+    {
+      "reference": "1KI 3:1",
+      "strong": "H6547",
+      "bearer": "pharaoh-5",
+      "why": "1KI 3:1, 'Solomon made affinity with Pharaoh king of Egypt, and took Pharaoh's daughter': both words mean Solomon's father-in-law.",
+      "confidence": 0.9,
+      "second": "1KI 3:1: 'Solomon made affinity with Pharaoh king of Egypt, and took Pharaoh's daughter'; both words mean Solomon's father-in-law."
+    },
+    {
+      "reference": "1KI 9:16",
+      "strong": "H6547",
+      "bearer": "pharaoh-5",
+      "why": "1KI 9:16, Pharaoh who took Gezer and 'given it for a present unto his daughter, Solomon's wife': the father of Solomon's wife.",
+      "confidence": 0.9,
+      "second": "1KI 9:16: 'Pharaoh king of Egypt... given it for a present unto his daughter, Solomon's wife' is the father of Solomon's wife."
+    },
+    {
+      "reference": "1KI 9:24",
+      "strong": "H6547",
+      "bearer": "pharaoh-5",
+      "why": "1KI 9:24, 'Pharaoh's daughter came up out of the city of David unto her house which Solomon had built for her': the father of Solomon's wife.",
+      "confidence": 0.9,
+      "second": "1KI 9:24: 'Pharaoh's daughter came up... unto her house which Solomon had built for her' is Solomon's wife (1KI 3:1), so her father."
+    },
+    {
+      "reference": "1KI 11:18",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "1KI 11:18, Hadad came 'unto Pharaoh king of Egypt' who gave him a house; the text does not say whether this is the Pharaoh whose daughter Solomon took (1KI 3:1) or another."
+    },
+    {
+      "reference": "1KI 11:19",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "1KI 11:19, 'Hadad found great favour in the sight of Pharaoh': the same unnamed Pharaoh of Hadad's exile, not tied by the text to Solomon's father-in-law of 1KI 3:1."
+    },
+    {
+      "reference": "1KI 11:20",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "1KI 11:20, 'Pharaoh's house ... among the sons of Pharaoh', all three words mean the unnamed Pharaoh who took in Hadad; the text does not identify him with the Pharaoh of 1KI 3:1."
+    },
+    {
+      "reference": "1KI 11:21",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "1KI 11:21, 'Hadad said to Pharaoh, Let me depart' after David's death: the same unnamed Pharaoh of Hadad's exile, not said to be Solomon's father-in-law."
+    },
+    {
+      "reference": "1KI 11:22",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "1KI 11:22, 'Then Pharaoh said unto him, But what hast thou lacked with me': the unnamed Pharaoh of Hadad's exile; the text does not say which listed king, if any, he is."
+    },
+    {
+      "reference": "2KI 17:7",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "2KI 17:7, the LORD 'brought them up out of the land of Egypt, from under the hand of Pharaoh king of Egypt': the deliverance of the Exodus, told of the Pharaoh of the Exodus.",
+      "confidence": 0.8,
+      "second": "2KI 17:7: 'brought them up out of the land of Egypt, from under the hand of Pharaoh king of Egypt' recalls the Exodus, told of the Exodus Pharaoh."
+    },
+    {
+      "reference": "2CH 8:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-5",
+      "why": "2CH 8:11, 'Solomon brought up the daughter of Pharaoh out of the city of David ... My wife': Pharaoh is the father of Solomon's wife.",
+      "confidence": 0.9,
+      "second": "2CH 8:11: 'Solomon brought up the daughter of Pharaoh... My wife shall not dwell' makes this Pharaoh the father of Solomon's wife."
+    },
+    {
+      "reference": "NEH 9:10",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "NEH 9:10-11, 'signs and wonders upon Pharaoh, and on all his servants' followed by 'thou didst divide the sea before them': the plagues and the sea, told of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "NEH 9:10-11: 'shewedst signs and wonders upon Pharaoh' followed by dividing the sea recalls the plagues and Red sea of the Exodus king."
+    },
+    {
+      "reference": "PSA 135:9",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "PSA 135:8-9, 'smote the firstborn of Egypt' and 'sent tokens and wonders ... upon Pharaoh, and upon all his servants': the plagues of the Exodus.",
+      "confidence": 0.9,
+      "second": "PSA 135:8-9: 'smote the firstborn of Egypt... sent tokens and wonders... upon Pharaoh' recalls the plagues, told of the Exodus Pharaoh."
+    },
+    {
+      "reference": "PSA 136:15",
+      "strong": "H6547",
+      "bearer": "pharaoh-4",
+      "why": "PSA 136:15, 'overthrew Pharaoh and his host in the Red sea': the Red sea is told of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "PSA 136:15: 'overthrew Pharaoh and his host in the Red sea' is the Red sea event, told of the Pharaoh of the Exodus."
+    },
+    {
+      "reference": "SNG 1:9",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "SNG 1:9, 'a company of horses in Pharaoh's chariots': a poem's image, used of no particular king, and no king is named or recalled."
+    },
+    {
+      "reference": "ISA 19:11",
+      "strong": "H6547",
+      "bearer": "pharaoh-7",
+      "why": "ISA 19:11, 'the counsel of the wise counsellors of Pharaoh ... how say ye unto Pharaoh': an oracle to Egypt in Isaiah's own book, the reigning Pharaoh of Isaiah's day; both words the same.",
+      "confidence": 0.8,
+      "second": "ISA 19:11: 'the wise counsellors of Pharaoh... how say ye unto Pharaoh' addresses the reigning king of Egypt in Isaiah's oracle; the record is defined by this verse. Both words same king."
+    },
+    {
+      "reference": "ISA 30:2",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "The title alone: both readings leaned to the Pharaoh of Isaiah's day, unsure; the text names no king here and does not say he is the Pharaoh of the undated oracle of 19:11."
+    },
+    {
+      "reference": "ISA 30:3",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "The title alone: as 30:2."
+    },
+    {
+      "reference": "ISA 36:6",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "The title alone: Rabshakeh's 'Pharaoh king of Egypt' in Hezekiah's fourteenth year (36:1) is not named, nor said to be the Pharaoh of 19:11."
+    },
+    {
+      "reference": "JER 25:19",
+      "strong": "H6547",
+      "bearer": "pharaoh-8",
+      "why": "Pharaoh of Jeremiah's day: the title's record joins him to the title at this very verse. JER 46:2 names Pharaoh-necho in the same fourth year of Jehoiakim (25:1), which may make them one man; the records keep them apart.",
+      "confidence": 0.7
+    },
+    {
+      "reference": "JER 37:5",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "JER 37:5, 'Pharaoh's army was come forth out of Egypt' in Zedekiah's siege: no king is named here, and Pharaoh-hophra of JER 44:30 is not tied by the text to this event."
+    },
+    {
+      "reference": "JER 37:7",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "JER 37:7, 'Pharaoh's army, which is come forth to help you, shall return to Egypt': Zedekiah's time, the Pharaoh unnamed, and no listed king is tied to it by the text."
+    },
+    {
+      "reference": "JER 37:11",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "JER 37:11, 'for fear of Pharaoh's army' when the Chaldeans left Jerusalem: the Pharaoh is not named, so the text does not fix which king, and no listed record clearly fits."
+    },
+    {
+      "reference": "JER 43:9",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "JER 43:9, 'Pharaoh's house in Tahpanhes' where the Jews then lived (44:1); JER 44:30 names 'Pharaohhophra king of Egypt' for that time, a king with no record in the list."
+    },
+    {
+      "reference": "JER 44:30",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "JER 44:30, 'I will give Pharaohhophra king of Egypt into the hand of his enemies': the text names Pharaoh-hophra, who has no record in the list."
+    },
+    {
+      "reference": "JER 46:17",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "JER 46:17, 'Pharaoh king of Egypt is but a noise': an oracle of Nebuchadrezzar's coming (46:13), the Pharaoh unnamed; the text does not fix which king."
+    },
+    {
+      "reference": "JER 46:25",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "JER 46:25, 'I will punish ... Pharaoh, and all them that trust in him' into Nebuchadrezzar's hand: no king is named in the verse, so the text does not fix which; both words the same."
+    },
+    {
+      "reference": "JER 47:1",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "JER 47:1, 'before that Pharaoh smote Gaza': the verse names no king and tells no other event of one listed king, so the text does not fix which Pharaoh."
+    },
+    {
+      "reference": "EZK 17:17",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 17:17, 'Neither shall Pharaoh with his mighty army ... make for him in the war': the help Zedekiah seeks from Egypt (17:15); the Pharaoh is unnamed and Ezekiel gives no name."
+    },
+    {
+      "reference": "EZK 29:2",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 29:2, 'set thy face against Pharaoh king of Egypt' in the tenth year (29:1): the reigning Pharaoh, not named in Ezekiel, so the text does not fix which king."
+    },
+    {
+      "reference": "EZK 29:3",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 29:3, 'I am against thee, Pharaoh king of Egypt, the great dragon': the same unnamed reigning Pharaoh of the tenth year; no name or event fixes which king."
+    },
+    {
+      "reference": "EZK 30:21",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 30:21, 'I have broken the arm of Pharaoh king of Egypt' in the eleventh year: the Pharaoh is unnamed in Ezekiel and no recalled event fixes which king."
+    },
+    {
+      "reference": "EZK 30:22",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 30:22, 'I am against Pharaoh king of Egypt, and will break his arms': the same unnamed Pharaoh of Ezekiel's eleventh year; the text does not say which king."
+    },
+    {
+      "reference": "EZK 30:24",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 30:24, 'I will break Pharaoh's arms' while strengthening the king of Babylon: the same unnamed Pharaoh of Ezekiel's day, not fixed by the text."
+    },
+    {
+      "reference": "EZK 30:25",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 30:25, 'the arms of Pharaoh shall fall down' under the king of Babylon: the same unnamed Pharaoh of Ezekiel's day, not fixed by the text."
+    },
+    {
+      "reference": "EZK 31:2",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 31:2, 'speak unto Pharaoh king of Egypt, and to his multitude': the unnamed reigning Pharaoh of the eleventh year; the text does not say which king."
+    },
+    {
+      "reference": "EZK 31:18",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 31:18, 'This is Pharaoh and all his multitude': the unnamed Pharaoh of the eleventh-year oracle, a figure compared to the trees of Eden; no king is fixed."
+    },
+    {
+      "reference": "EZK 32:2",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 32:2, 'take up a lamentation for Pharaoh king of Egypt' in the twelfth year: the unnamed reigning Pharaoh; the text does not fix which king."
+    },
+    {
+      "reference": "EZK 32:31",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 32:31, 'Pharaoh shall see them ... even Pharaoh and all his army slain by the sword': the unnamed Pharaoh of Ezekiel's lament, used of no fixed king; both words the same."
+    },
+    {
+      "reference": "EZK 32:32",
+      "strong": "H6547",
+      "bearer": null,
+      "why": "EZK 32:32, 'even Pharaoh and all his multitude' laid among the slain: the unnamed Pharaoh of Ezekiel's lament, not fixed to any listed king."
+    },
+    {
+      "reference": "ACT 7:10",
+      "strong": "G5328",
+      "bearer": "pharaoh-2",
+      "why": "ACT 7:10, 'favour and wisdom in the sight of Pharaoh king of Egypt; and he made him governor over Egypt': Joseph set over Egypt is told of Joseph's king.",
+      "confidence": 0.9,
+      "second": "ACT 7:10: 'favour and wisdom in the sight of Pharaoh king of Egypt; and he made him governor over Egypt' recalls Joseph set over Egypt, told of Joseph's king."
+    },
+    {
+      "reference": "ACT 7:13",
+      "strong": "G5328",
+      "bearer": "pharaoh-2",
+      "why": "ACT 7:13, 'Joseph's kindred was made known unto Pharaoh', in the story of Joseph and his brothers in Egypt (7:9-14): Joseph's king.",
+      "confidence": 0.9,
+      "second": "ACT 7:13: 'Joseph's kindred was made known unto Pharaoh' recalls Joseph revealing himself to his brothers, in the reign of Joseph's king."
+    },
+    {
+      "reference": "ACT 7:21",
+      "strong": "G5328",
+      "bearer": "pharaoh-3",
+      "why": "ACT 7:21, 'Pharaoh's daughter took him up, and nourished him for her own son': Pharaoh's daughter taking up Moses is told of the king of the oppression (7:19-20).",
+      "confidence": 0.9,
+      "second": "ACT 7:21: 'Pharaoh's daughter took him up, and nourished him' recalls Pharaoh's daughter taking up Moses, told of the king of the oppression."
+    },
+    {
+      "reference": "ROM 9:17",
+      "strong": "G5328",
+      "bearer": "pharaoh-4",
+      "why": "ROM 9:17-18, 'the scripture saith unto Pharaoh, ... that I might shew my power in thee', with 'whom he will he hardeneth': quotes EXO 9:16 and the hardened heart of the Pharaoh of the Exodus.",
+      "confidence": 0.9,
+      "second": "ROM 9:17 quotes God's word to Pharaoh, 'for this same purpose have I raised thee up, that I might shew my power', with 'whom he will he hardeneth' (9:18): the plagues' Pharaoh."
+    },
+    {
+      "reference": "HEB 11:24",
+      "strong": "G5328",
+      "bearer": "pharaoh-3",
+      "why": "HEB 11:24, 'Moses ... refused to be called the son of Pharaoh's daughter', following his birth and hiding under 'the king's commandment' (11:23): the daughter who took Moses up, the king of the oppression.",
+      "confidence": 0.9,
+      "second": "HEB 11:24: Moses 'refused to be called the son of Pharaoh's daughter' recalls her taking up Moses, told of the king of the oppression."
+    }
+  ]
+}
