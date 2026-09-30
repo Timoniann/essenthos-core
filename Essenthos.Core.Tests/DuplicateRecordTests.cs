@@ -21,6 +21,8 @@ public sealed class DuplicateRecordTests : IDisposable
 {
     private const string BibleData = "BibleData";
 
+    private const string Decided = "read from Scripture by the project owner, decided 2026-09-12";
+
     private readonly AppDbContext _db;
     private readonly DuplicateRecordLoader _loader;
     private readonly Text _hebrew;
@@ -160,13 +162,15 @@ public sealed class DuplicateRecordTests : IDisposable
     {
         _db.EntityRelationships.Add(new EntityRelationship
         {
-            From = _folded, To = _meshullam, Type = "son-of", Category = RelationshipCategories.Explicit,
-            Method = LinkMethod.StatedBySource, Source = BibleData,
+            From = _folded, To = _meshullam, Type = "son-of", Category = RelationshipCategories.Read,
+            CanonicalBook = 16, CanonicalChapter = 11, CanonicalVerse = 11,
+            Method = LinkMethod.Manual, Source = Decided,
         });
         _db.EntityRelationships.Add(new EntityRelationship
         {
-            From = _folded, To = _kept, Type = "same-as", Category = RelationshipCategories.Explicit,
-            Method = LinkMethod.StatedBySource, Source = BibleData,
+            From = _folded, To = _kept, Type = "same-as", Category = RelationshipCategories.Read,
+            CanonicalBook = 16, CanonicalChapter = 11, CanonicalVerse = 11,
+            Method = LinkMethod.Manual, Source = Decided,
         });
         await _db.SaveChangesAsync();
 
@@ -430,15 +434,15 @@ public sealed class DuplicateRecordTests : IDisposable
     {
         _db.EntityRelationships.Add(new EntityRelationship
         {
-            From = _kept, To = _folded, Type = "father-of", Category = RelationshipCategories.Explicit,
+            From = _kept, To = _folded, Type = "father-of", Category = RelationshipCategories.Read,
             CanonicalBook = 1, CanonicalChapter = 9, CanonicalVerse = 11,
-            Method = LinkMethod.StatedBySource, Source = BibleData,
+            Method = LinkMethod.Manual, Source = Decided,
         });
         _db.EntityRelationships.Add(new EntityRelationship
         {
-            From = _folded, To = _kept, Type = "son-of", Category = RelationshipCategories.Explicit,
+            From = _folded, To = _kept, Type = "son-of", Category = RelationshipCategories.Read,
             CanonicalBook = 16, CanonicalChapter = 11, CanonicalVerse = 11,
-            Method = LinkMethod.StatedBySource, Source = BibleData,
+            Method = LinkMethod.Manual, Source = Decided,
         });
         var staying = Clause(_meshullam, 1, "son-of");
         staying.Target = _kept;

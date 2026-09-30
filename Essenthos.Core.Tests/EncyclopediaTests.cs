@@ -50,9 +50,6 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _output.WriteLine($"  Strong numbers in all  {strongNumbers}");
         _output.WriteLine($"  on places              {_corpus.PlaceNames.Count}");
         _output.WriteLine($"  on Jesus               {_corpus.NamesOf("jesus").Count}");
-        _output.WriteLine($"relationships            {_corpus.Relationships.Count}");
-        _output.WriteLine($"  duplicates dropped     {_corpus.Duplicates}");
-        _output.WriteLine($"  without a reciprocal   {_corpus.Unpaired}");
         _output.WriteLine($"references               {_corpus.References.Count}");
         _output.WriteLine($"  disputed               {_corpus.Disputed}");
         _output.WriteLine($"  on Jesus               {_corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id)}");
@@ -67,9 +64,6 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         strongNumbers.Should().Be(5_850);
         _corpus.PlaceNames.Should().HaveCount(141);
         _corpus.NamesOf("jesus").Should().HaveCount(73);
-        _corpus.Relationships.Should().HaveCount(5_446);
-        _corpus.Duplicates.Should().Be(2);
-        _corpus.Unpaired.Should().Be(7);
         _corpus.References.Should().HaveCount(28_223);
         _corpus.Disputed.Should().Be(1_417);
         _corpus.References.Count(r => r.EntityId == _corpus.Jesus.Id).Should().Be(1_477);
@@ -108,7 +102,6 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         _corpus.Entities.Values.Should().Contain(entity => entity.Slug == "jairus");
 
         var ids = _corpus.Entities.Values.Select(entity => entity.Id).ToHashSet();
-        _corpus.Relationships.Should().OnlyContain(r => ids.Contains(r.FromEntityId) && ids.Contains(r.ToEntityId));
         _corpus.Names.Should().OnlyContain(name => ids.Contains(name.EntityId));
     }
 
@@ -358,26 +351,10 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         frame.Dangling.Should().ContainKey("GEN 45:52");
     }
 
-    [Fact]
-    public void NoRelationshipCitesAVerseNobodyCanRead() =>
-        _corpus.Relationships
-            .Should().NotContain(r => r.CanonicalBook == 1 && r.CanonicalChapter == 45 && r.CanonicalVerse == 52);
-
-    [Fact]
-    public void ARelationshipTheSourceStatesTwiceIsListedOnce()
-    {
-        _corpus.Duplicates.Should().BeGreaterThan(0);
-
-        _corpus.Relationships
-            .GroupBy(r => (r.FromEntityId, r.Type, r.ToEntityId, r.CanonicalBook, r.CanonicalChapter,
-                r.CanonicalVerse, r.Notes))
-            .Should().OnlyContain(group => group.Count() == 1);
-    }
-
     /// <summary>
     /// The rename pass ran over events only, so <em>"father of Shelemiah_6 (JER 36:26)"</em>
-    /// reached the entity list, the search results and every relationship row on another person's
-    /// page.
+    /// reached the entity list, the search results and the line under a relative's name on another
+    /// person's page.
     /// </summary>
     [Fact]
     public void NoRowIdentifierIsLeftInProseTheReaderSees()
@@ -386,9 +363,9 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
             .Select(key => key[(key.IndexOf(':') + 1)..])
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-        // What survives is an identifier the dataset itself does not define — a typo upstream —
+        // What may survive is an identifier the dataset itself does not define — a typo upstream —
         // and leaving one visible is better than replacing it with a name nobody said.
-        Leaked().Should().OnlyContain(identifier => !known.Contains(identifier));
+        Leaked().Should().NotContain(identifier => known.Contains(identifier));
     }
 
     /// <summary>
@@ -528,7 +505,6 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
     {
         var prose = _corpus.Entities.Values.Select(e => e.Distinguisher)
             .Concat(_corpus.Entities.Values.Select(e => e.Notes))
-            .Concat(_corpus.Relationships.Select(r => r.Notes))
             .Where(text => text is not null);
 
         return [.. prose.SelectMany(text => Identifier().Matches(text!).Select(match => match.Value))];
@@ -542,61 +518,6 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
 
     [GeneratedRegex(@"\b[A-Za-z][A-Za-z0-9-]*(?:_[A-Za-z0-9-]+)+")]
     private static partial Regex Identifier();
-
-    /// <summary>
-    /// The dataset holds the God of Israel and Jesus as one entity, and the separation was applied
-    /// to the references and not to these — so the twelve apostles were apostles of the God of
-    /// Israel, Mary was his bearer, and the encyclopedia said "YHVH brother of James".
-    /// </summary>
-    [Fact]
-    public void TheApostlesAreApostlesOfJesus()
-    {
-        var apostles = _corpus.Relationships
-            .Where(r => r.ToEntityId == _corpus.Jesus.Id && r.Type == "apostle")
-            .ToList();
-
-        apostles.Should().HaveCount(12);
-        apostles.Should().OnlyContain(r => r.CanonicalBook >= 40);
-    }
-
-    [Fact]
-    public void MaryBearsJesusRatherThanTheGodOfIsrael()
-    {
-        var divine = _corpus.Entities.Values.Single(e => e.SourceId == "person:YHVH_1");
-
-        _corpus.Relationships.Where(r => r.Type == "bearer")
-            .Should().OnlyContain(r => r.FromEntityId != divine.Id && r.ToEntityId != divine.Id);
-    }
-
-    /// <summary>
-    /// Both directions of one tie are separate rows in this dataset, so both have to move or the
-    /// encyclopedia says one thing on his page and the other on hers.
-    /// </summary>
-    [Fact]
-    public void BothDirectionsOfATieMoveTogether()
-    {
-        var jesus = _corpus.Jesus.Id;
-        var brothers = _corpus.Relationships.Where(r => r.Type == "brother"
-            && (r.FromEntityId == jesus || r.ToEntityId == jesus)).ToList();
-
-        brothers.Where(r => r.FromEntityId == jesus).Should().HaveCount(4);
-        brothers.Where(r => r.ToEntityId == jesus).Should().HaveCount(4);
-    }
-
-    /// <summary>
-    /// A relation to the divine name outside the New Testament is a relation to the God of Israel,
-    /// and stays. Abraham is not a servant of Jesus of Nazareth.
-    /// </summary>
-    [Fact]
-    public void TheOldTestamentRelationsStayWithTheGodOfIsrael()
-    {
-        var divine = _corpus.Entities.Values.Single(e => e.SourceId == "person:YHVH_1");
-        var servants = _corpus.Relationships
-            .Where(r => r.ToEntityId == divine.Id && r.Type == "servant").ToList();
-
-        servants.Should().NotBeEmpty();
-        servants.Should().OnlyContain(r => r.CanonicalBook < 40);
-    }
 }
 
 /// <summary>
@@ -623,11 +544,10 @@ public sealed class BibleDataCorpus
         }
 
         var frame = BibleDataLoader.ReferenceTable.Read(Folder);
-        (Relationships, Duplicates, Unpaired) = BibleDataLoader.Relationships(Folder, Entities, frame, Jesus);
         (References, Disputed, var divided) = BibleDataLoader.References(Folder, Entities, frame, Jesus);
         Names = BibleDataLoader.Names(Folder, Entities, divided);
         var events = BibleDataLoader.Events(Folder, Entities, frame);
-        BibleDataLoader.Name(Entities, events, Relationships);
+        BibleDataLoader.Name(Entities, events);
 
         var parser = new StrongXmlParser();
         Lexicon =
@@ -645,12 +565,6 @@ public sealed class BibleDataCorpus
     public Entity Jesus { get; }
 
     public List<EntityName> Names { get; }
-
-    public List<EntityRelationship> Relationships { get; }
-
-    public int Duplicates { get; }
-
-    public int Unpaired { get; }
 
     public List<EntityVerse> References { get; }
 

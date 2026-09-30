@@ -422,6 +422,40 @@ public sealed class CorpusCheckTests : IDisposable
             .Should().Be(0);
     }
 
+    /// <summary>
+    /// Every relationship is read from the text by this project. A row a dataset states is one a
+    /// loader brought in from somebody's edge list, and a corpus holding one is not sound.
+    /// </summary>
+    [Fact]
+    public async Task ARelationshipADatasetStatesIsFound()
+    {
+        Entity Person(string slug) => new()
+        {
+            Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test",
+        };
+        var (lot, haran) = (Person("lot"), Person("haran"));
+        _db.Entities.AddRange(lot, haran);
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            From = lot, To = haran, Type = "son-of", Category = RelationshipCategories.Read,
+            CanonicalBook = 1, CanonicalChapter = 11, CanonicalVerse = 27,
+            Method = LinkMethod.ModelReading, Confidence = 0.95, Source = "read from Scripture by a test",
+        });
+        _db.SaveChanges();
+
+        const string check = "relationships a dataset states, where every one is read from the text by this project";
+        (await Integrity(check)).Should().Be(0);
+
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            From = lot, To = haran, Type = "son", Category = "explicit",
+            Method = LinkMethod.StatedBySource, Source = "BibleData by Brady Stephenson, a test",
+        });
+        _db.SaveChanges();
+
+        (await Integrity(check)).Should().Be(1);
+    }
+
     private async Task<int> Integrity(string breaks) =>
         (await _check.Measure()).Integrity.Single(check => check.Breaks == breaks).Found;
 

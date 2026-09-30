@@ -80,22 +80,30 @@ public sealed class BibleDataLoadTests : IClassFixture<BibleDataLoadTests.Encycl
     }
 
     /// <summary>
-    /// Six Levites of Hezekiah's and Nehemiah's day are Levi's descendants, as the dataset holds every
-    /// other Levite of those chapters, and not his sons beside Gershon, Kohath and Merari.
+    /// The dataset's relationships are not loaded: every relationship the encyclopedia holds is read
+    /// from the text by this project, and a corpus that has loaded the dataset holds none of its.
     /// </summary>
     [Fact]
-    public async Task LevisSonsAreGershonKohathAndMerari()
+    public async Task TheLoadedEncyclopediaHoldsNoRelationshipOfTheDatasets()
     {
-        var sons = await _db.EntityRelationships
-            .Where(r => r.From!.SourceId == "person:Levi_1" && r.Type == "father")
-            .Select(r => r.To!.SourceId)
-            .ToListAsync();
-        sons.Should().BeEquivalentTo(["person:Gershon_1", "person:Kohath_1", "person:Merari_1"]);
+        (await _db.Entities.AnyAsync(e => e.Source == BibleDataLoader.Source)).Should().BeTrue();
 
-        var miniamin = await _db.EntityRelationships
-            .SingleAsync(r => r.From!.SourceId == "person:Miniamin_1" && r.To!.SourceId == "person:Levi_1");
-        miniamin.Type.Should().Be("descendant");
-        miniamin.Notes.Should().StartWith("inferred that these are Levites serving their brothers. Read as descent");
+        (await _db.EntityRelationships.AnyAsync()).Should().BeFalse();
+    }
+
+    /// <summary>
+    /// Read from the dataset's own file to tell a genealogy from a people's verse, six Levites of
+    /// Hezekiah's and Nehemiah's day are not Levi's sons beside Gershon, Kohath and Merari: the
+    /// dataset holds every other Levite of those chapters as his descendant.
+    /// </summary>
+    [Fact]
+    public void LevisSonsAreGershonKohathAndMerari()
+    {
+        var folder = Path.GetDirectoryName(TestResources.Path(BibleDataLoader.Folder, DatasetKinship.FileName))!;
+
+        var children = DatasetKinship.Read(folder).Descents.Where(d => d.Parent == "Levi_1").Select(d => d.Child);
+
+        children.Should().BeEquivalentTo(["Gershon_1", "Kohath_1", "Merari_1"]);
     }
 
     [Fact]

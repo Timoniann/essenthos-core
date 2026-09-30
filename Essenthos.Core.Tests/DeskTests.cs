@@ -218,81 +218,6 @@ public sealed class DeskTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task ARelationshipDecisionIsStoredInTheShapeTheDecideCommandReads()
-    {
-        WriteRelationships();
-
-        var response = await Put("/desk-api/review/relationships/72185-72186", new { decision = "remove", note = "Абієзер — рід" });
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-        var decision = Relationships()["decisions"]!["72185-72186"]!;
-        decision["decision"]!.GetValue<string>().Should().Be("remove");
-        decision["note"]!.GetValue<string>().Should().Be("Абієзер — рід");
-        decision["rows"]!.GetValue<string>().Should().Be("72185|72186");
-        (decision["a"]!.GetValue<string>(), decision["relation"]!.GetValue<string>(), decision["b"]!.GetValue<string>())
-            .Should().Be(("joash", "descendant-of", "iezer"));
-        (decision["subset"]!.GetValue<string>(), decision["why"]!.GetValue<string>()).Should().Be(("descent", "not-stated"));
-        decision["decidedAt"]!.GetValue<string>().Should().EndWith("Z");
-        Relationships()["decisions"]!["70845"]!["decision"]!.GetValue<string>().Should().Be("confirm", "an earlier decision is kept");
-        File.ReadAllText(Path.Combine(Review, RelationshipReview.FileName)).Should().Contain("Абієзер", "Cyrillic is written as it is typed");
-
-        var logged = Logged().Should().ContainSingle().Which;
-        (logged.Section, logged.Target, logged.Needs).Should().Be(("relationships", "joash descendant-of iezer (72185|72186)", "relationships"));
-        (logged.Before, logged.After!["decision"]!.GetValue<string>()).Should().Be((null, "remove"));
-    }
-
-    [Fact]
-    public async Task ADecisionOnAFactTheListNoLongerShowsCanBeChanged()
-    {
-        WriteRelationships();
-
-        var response = await Put("/desk-api/review/relationships/70845", new { decision = "remove", note = "changed my mind" });
-
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var decision = Relationships()["decisions"]!["70845"]!;
-        (decision["decision"]!.GetValue<string>(), decision["rows"]!.GetValue<string>()).Should().Be(("remove", "70845"));
-        (decision["a"]!.GetValue<string>(), decision["b"]!.GetValue<string>()).Should().Be(("yhvh", "adam"));
-        var logged = Logged().Should().ContainSingle().Which;
-        (logged.Before!["decision"]!.GetValue<string>(), logged.After!["decision"]!.GetValue<string>()).Should().Be(("confirm", "remove"));
-    }
-
-    [Fact]
-    public async Task TakingARelationshipDecisionBackRemovesIt()
-    {
-        WriteRelationships();
-        await Put("/desk-api/review/relationships/72185-72186", new { decision = "confirm", note = "" });
-
-        await Put("/desk-api/review/relationships/72185-72186", new { decision = (string?)null, note = "" });
-
-        Relationships()["decisions"]!.AsObject().ContainsKey("72185-72186").Should().BeFalse();
-    }
-
-    [Fact]
-    public async Task ABulkDecisionLeavesTheDecidedFactsAsTheyWere()
-    {
-        WriteRelationships();
-        await Put("/desk-api/review/relationships/72531-72532", new { decision = "confirm", note = "" });
-
-        var response = await Post("/desk-api/review/relationships/bulk",
-            new { keys = new[] { "72185-72186", "72531-72532", "99999-1" }, decision = "reask" });
-
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var decisions = Relationships()["decisions"]!;
-        decisions["72185-72186"]!["decision"]!.GetValue<string>().Should().Be("reask");
-        decisions["72531-72532"]!["decision"]!.GetValue<string>().Should().Be("confirm");
-        decisions.AsObject().ContainsKey("99999-1").Should().BeFalse("only listed facts are decided");
-    }
-
-    [Fact]
-    public async Task ADecisionOutsideTheFourIsRefused()
-    {
-        WriteRelationships();
-
-        (await Put("/desk-api/review/relationships/72185-72186", new { decision = "maybe", note = "" }))
-            .StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
-    }
-
-    [Fact]
     public async Task AnsweringAnOccurrenceWithARecordWritesAReviewedRuleTheLoaderReads()
     {
         WriteThings();
@@ -553,7 +478,6 @@ public sealed class DeskTests : IAsyncLifetime
     [InlineData("Essenthos.Forge/Loading/Encyclopedia/ObservanceRecords.json")]
     [InlineData("Essenthos.Forge/Loading/Encyclopedia/NarrativeRecords.json")]
     [InlineData("Resources/Essenthos/review/objects-and-observances.json")]
-    [InlineData("Resources/Essenthos/review/bibledata-relationships.json")]
     [InlineData("Resources/Essenthos/review/eponym-verses.json")]
     [InlineData("Resources/Essenthos/review/septuagint-placement.json")]
     [InlineData("Essenthos.Api/site-settings.json")]
@@ -577,18 +501,6 @@ public sealed class DeskTests : IAsyncLifetime
     [InlineData("XYZ 1:1", null)]
     public void AVerseIsAddressedAsTheReadingApiTakesIt(string reference, string? address) =>
         Addresses.Of(reference).Should().Be(address);
-
-    [Fact]
-    public async Task TheRelationshipListCarriesEachVersesAddress()
-    {
-        File.WriteAllText(Path.Combine(Review, RelationshipReview.FileName),
-            """{ "facts": [{ "id": "1|2", "verses": [{ "ref": "JDG 6:11", "text": "And there came an angel" }] }], "decisions": {} }""");
-
-        var list = JsonNode.Parse(await _http.GetStringAsync("/desk-api/review/relationships"))!;
-
-        list["facts"]![0]!["verses"]![0]!["address"]!.GetValue<string>().Should().Be("judges:6:11");
-        File.ReadAllText(Path.Combine(Review, RelationshipReview.FileName)).Should().NotContain("address", "the address is shown, not stored");
-    }
 
     [Fact]
     public void EveryOpenOccurrenceHasAKeyOfItsOwn()
@@ -647,8 +559,6 @@ public sealed class DeskTests : IAsyncLifetime
             ? File.ReadAllLines(Calls).Select(line => JsonSerializer.Deserialize<string[]>(line)!).ToList()
             : [];
 
-    private JsonNode Relationships() => JsonFiles.Read(Path.Combine(Review, RelationshipReview.FileName));
-
     private JsonNode Occurrences() => JsonFiles.Read(Path.Combine(Review, ThingReview.QuestionsFile));
 
     private ThingRecord Record(string slug)
@@ -658,25 +568,6 @@ public sealed class DeskTests : IAsyncLifetime
             .SelectMany(file => JsonSerializer.Deserialize<ThingFile>(File.ReadAllText(Path.Combine(Records, file)), shape)!.Records)
             .Single(r => r.Slug == slug);
     }
-
-    private void WriteRelationships() =>
-        File.WriteAllText(Path.Combine(Review, RelationshipReview.FileName),
-            """
-            {
-              "about": "BibleData's facts the text did not confirm.",
-              "facts": [
-                { "id": "72185|72186", "subset": "descent", "why": "not-stated", "relation": "descendant-of",
-                  "a": { "slug": "joash", "name": "Joash" }, "b": { "slug": "iezer", "name": "Iezer" },
-                  "says": [{ "from": "Iezer", "type": "ancestor", "to": "Joash" }], "verses": [] },
-                { "id": "72531|72532", "subset": "explicit", "why": "not-stated", "relation": null,
-                  "a": { "slug": "ishbibenob", "name": "Ishbi-benob" }, "b": { "slug": "raphah", "name": "Raphah" },
-                  "says": [{ "from": "Ishbi-benob", "type": "son-of", "to": "Raphah" }], "verses": [] }
-              ],
-              "decisions": {
-                "70845": { "a": "yhvh", "b": "adam", "decision": "confirm", "note": "", "rows": "70845" }
-              }
-            }
-            """);
 
     private void WriteThings()
     {

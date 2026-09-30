@@ -29,10 +29,9 @@ internal sealed record RefiledTieOutcome(int Moved, int Withdrawn, int Joined, i
 /// <see cref="PersonRegisterLoader.MisfiledVerses"/> moves a verse to the record it names before
 /// anything reads the verse lists, so a corpus built from nothing reads each verse against the right
 /// man. A corpus built before the verse was moved has already read it against the wrong one, and the
-/// passes that did so run once: the dataset's relationships cite the verse between the wrong man and
-/// his supposed kin, a description of ours was read from it about him, and a name settled by the one
-/// record a list named there names him. Nehemiah 12:10 made the Levite Jeshua the father of Joiakim
-/// the high priest four times over, twice in the dataset and twice in our own reading.
+/// passes that did so run once: a description of ours was read from it about him, and a name settled
+/// by the one record a list named there names him. Nehemiah 12:10 made the Levite Jeshua the father
+/// of Joiakim the high priest twice over in our own reading.
 /// </para>
 ///
 /// <para>
@@ -40,10 +39,9 @@ internal sealed record RefiledTieOutcome(int Moved, int Withdrawn, int Joined, i
 /// relationship or clause pointing at him from the verse was read about whoever the verse names, so
 /// it points at the record the verse was moved to. A clause describing him was read from a verse that
 /// is not about him, and the descriptor pass would refuse it today for citing a verse he is not named
-/// in, so it is withdrawn with the relationship read off it. The dataset's own rows move at either
-/// end, as its verse rows did: they are its testimony about the man the verse names. A clause that,
-/// once moved, says what the record already says is joined to it, so the description does not say
-/// it twice. A decision the owner made is never touched.
+/// in, so it is withdrawn with the relationship read off it. A clause that, once moved, says what
+/// the record already says is joined to it, so the description does not say it twice. A decision
+/// the owner made is never touched.
 /// </para>
 ///
 /// <para>
@@ -79,16 +77,10 @@ internal sealed class RefiledTieLoader(AppDbContext db, ILogger<RefiledTieLoader
     private static readonly string WithdrawReadRelationships =
         $"DELETE FROM entity_relationship x USING refiled r WHERE x.from_entity_id = r.held AND {At} AND {Reading}";
 
-    private static readonly string MoveRelationshipsFrom =
-        $"""
-         UPDATE entity_relationship x SET from_entity_id = r.target FROM refiled r
-         WHERE x.from_entity_id = r.held AND {At} AND x.source = @dataset
-         """;
-
     private static readonly string MoveRelationshipsTo =
         $"""
          UPDATE entity_relationship x SET to_entity_id = r.target FROM refiled r
-         WHERE x.to_entity_id = r.held AND {At} AND (x.source = @dataset OR ({Reading}))
+         WHERE x.to_entity_id = r.held AND {At} AND {Reading}
          """;
 
     private const string WithdrawSelfRelationships =
@@ -154,14 +146,12 @@ internal sealed class RefiledTieLoader(AppDbContext db, ILogger<RefiledTieLoader
             ("verses", refiled.Select(r => r.At.Verse).ToArray()),
             ("reading", Sources.DescriptorReadingPrefix + "%"),
             ("read", EnumSpelling.Of(LinkMethod.ModelReading)),
-            ("dataset", BibleDataLoader.Source),
             ("listed", Listed),
         ];
 
         await Run(connection, transaction, Refiled, parameters, cancellationToken);
         var withdrawn = await Run(connection, transaction, WithdrawReadRelationships, parameters, cancellationToken);
-        var moved = await Run(connection, transaction, MoveRelationshipsFrom, parameters, cancellationToken);
-        moved += await Run(connection, transaction, MoveRelationshipsTo, parameters, cancellationToken);
+        var moved = await Run(connection, transaction, MoveRelationshipsTo, parameters, cancellationToken);
         withdrawn += await Run(connection, transaction, WithdrawSelfRelationships, parameters, cancellationToken);
         withdrawn += await Run(connection, transaction, WithdrawClauses, parameters, cancellationToken);
         moved += await Run(connection, transaction, MoveClauses, parameters, cancellationToken);

@@ -58,8 +58,7 @@ internal static class ContextEndpoints
             CancellationToken cancellationToken) =>
         {
             var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
-            return refusal ?? Results.Ok(await ChapterFamily.Of(
-                db, ordinal, chapter, language, cancellationToken, oursOnly: true));
+            return refusal ?? Results.Ok(await ChapterFamily.Of(db, ordinal, chapter, language, cancellationToken));
         });
     }
 

@@ -105,8 +105,9 @@ public sealed class OursOnlyRecordTests : IDisposable
     }
 
     /// <summary>
-    /// Uri is Levi's grandson by our rows, so the tribe is Levi's; a row only BibleData states is not
-    /// followed, a line that reaches two tribes gives none, and a loop of rows ends.
+    /// Uri is Levi's grandson by the relationships, so the tribe is Levi's and not the one the dataset's
+    /// record gives him; a record nothing ties to a tribe has none whatever the dataset's record says,
+    /// a line that reaches two tribes gives none, and a loop of rows ends.
     /// </summary>
     [Fact]
     public async Task TheTribeFollowsOurLinesOfDescentUpToAPatriarchAndOnlyWhenItIsOne()
@@ -131,7 +132,6 @@ public sealed class OursOnlyRecordTests : IDisposable
         Tie(elder, "son-of", levi, OurSource);
         Tie(mixed, "son-of", other, OurSource);
         Tie(other, "son-of", judah, OurSource);
-        Tie(byDataset, "son-of", levi, BibleDataLoader.Source);
         Tie(loop, "son-of", wife, OurSource);
         Tie(wife, "son-of", loop, OurSource);
         await _db.SaveChangesAsync();
@@ -140,7 +140,7 @@ public sealed class OursOnlyRecordTests : IDisposable
 
         ours["uri"].Tribe.Should().Be("Levi", "ours puts Uri under Levi; BibleData's Judah is not used");
         ours["mixed"].Tribe.Should().BeNull("two tribes are reached");
-        ours["by-dataset"].Tribe.Should().BeNull("only BibleData ties him to Levi");
+        ours["by-dataset"].Tribe.Should().BeNull("only BibleData's record puts him under Levi");
         ours["loop"].Tribe.Should().BeNull();
     }
 
@@ -242,7 +242,8 @@ public sealed class OursOnlyRecordTests : IDisposable
     private void Tie(Entity from, string type, Entity to, string source) =>
         _db.EntityRelationships.Add(new EntityRelationship
         {
-            From = from, To = to, Type = type, Category = "explicit", Method = LinkMethod.StatedBySource, Source = source,
+            From = from, To = to, Type = type, Category = RelationshipCategories.Read,
+            CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 1, Method = LinkMethod.Manual, Source = source,
         });
 
     private void Verse(Entity entity, string source) =>

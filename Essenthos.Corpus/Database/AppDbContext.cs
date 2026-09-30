@@ -263,18 +263,13 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<EntityRelationship>(entity =>
         {
             entity.Property(r => r.Method).HasConversion(EnumStorage.LinkMethod);
-            entity.HasQueryFilter(r => !r.Withdrawn);
 
             entity.HasOne(r => r.From).WithMany().HasForeignKey(r => r.FromEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
             entity.HasOne(r => r.To).WithMany().HasForeignKey(r => r.ToEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // A relationship this corpus concludes for itself names the verse it read; one carried
-            // in from a witness names whatever the witness gave, which for 40 of BibleData's rows
-            // is nothing. Writing an address for those would be a citation a reader cannot follow
-            // dressed as one they can, so the asymmetry is kept and only our own half of it is
-            // enforced.
+            // A relationship this corpus concludes for itself names the verse it read.
             entity.ToTable(
                 "entity_relationship",
                 t =>
@@ -286,12 +281,9 @@ public class AppDbContext : DbContext
                         + "AND \"canonical_verse\" IS NOT NULL)");
 
                     t.HasComment(
-                        "One entity standing in one relation to another. Two witnesses speak here "
-                        + "and every row says which: BibleData's edge list under its own category "
-                        + "and its own relation names, and the clauses this corpus read from "
-                        + "Scripture under theirs. Nothing settles them into one row -- what a "
-                        + "reader is shown is settled the way an annotation is, by claim standing "
-                        + "and then confidence.");
+                        "One entity standing in one relation to another, as this project holds it: "
+                        + "read from the verse the row names by the model or the person its source "
+                        + "names, in this project's own relation words. No dataset's row is here.");
                 });
         });
 

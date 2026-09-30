@@ -1,5 +1,7 @@
 using Essenthos.Core.Corpus;
 using System.Diagnostics;
+using System.Reflection;
+using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -8,103 +10,118 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <param name="Withheld">
-/// Clauses a witness of higher standing answers differently. Counted rather than written, because a
-/// page showing both would be the corpus contradicting itself in public.
+/// Clauses a claim of higher standing about the same pair answers differently. Counted rather than
+/// written, because a page showing both would be the corpus contradicting itself in public.
 /// </param>
 /// <param name="Disputed">
 /// Pairs where two claims of equal standing and equal confidence answer the same question two ways,
-/// so nothing of ours is written for them at all.
+/// so nothing is written for them at all.
 /// </param>
+/// <param name="Held">Clauses <see cref="OwnRelationshipLoader.WithheldClauses"/> lists, left unwritten.</param>
 internal sealed record OwnRelationshipOutcome(
     bool AlreadyLoaded,
     int Entities,
     int Written,
     int Withheld,
     int Disputed,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int Held = 0)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "the relationships this corpus reads for itself are already there"
             : $"{Written} relationships over {Entities} entities, read off the descriptor clauses "
-              + $"in {Elapsed}. {Withheld} clauses were withheld because a witness of higher "
-              + $"standing answers the same question differently, and {Disputed} pairs are disputed "
-              + "between claims of equal standing";
+              + $"in {Elapsed}. {Withheld} clauses were withheld because a claim of higher "
+              + $"standing answers the same question differently, {Disputed} pairs are disputed "
+              + $"between claims of equal standing, and {Held} clauses are on the list of readings held back";
 }
 
+/// <summary>A reading the list holds back: a clause by the slugs of its two ends and its relation.</summary>
+/// <param name="Reference">The verse the clause was read from, for whoever weighs the entry.</param>
+/// <param name="Why">What stood against the reading, and what this corpus holds for the pair.</param>
+internal sealed record WithheldClause(string Entity, string Relation, string Target, string? Reference, string? Why);
+
+/// <param name="DecidedBy">Whose decision the list rests on, and when.</param>
+/// <param name="Policy">What being on the list means, and how an entry leaves it.</param>
+internal sealed record WithheldClauseList(string DecidedBy, string Policy, IReadOnlyList<WithheldClause> Clauses);
+
 /// <summary>
-/// The relationships an entity page draws, read off the clauses this corpus wrote for itself rather
-/// than taken from a dataset's edge list.
+/// The relationships an entity page draws, read off the clauses this corpus wrote for itself.
 ///
-/// Every relationship a reader is shown is BibleData's, and none of them needs to be. A descriptor
-/// clause already <em>is</em> a relationship — an entity, a relation from a closed vocabulary, a
-/// target the encyclopedia holds, and the verse it was read from — and the only thing missing was
-/// that it reached the table the page draws. So this generates nothing: it is one pass over
-/// <see cref="EntityDescriptor"/>, and the claims it writes were made by a model that never saw
-/// BibleData's sentence.
+/// A descriptor clause already <em>is</em> a relationship — an entity, a relation from a closed
+/// vocabulary, a target the encyclopedia holds, and the verse it was read from — and the only thing
+/// missing was that it reached the table the page draws. So this generates nothing: it is one pass
+/// over <see cref="EntityDescriptor"/>, and every row it writes names the model that read the verse
+/// or the person who decided it.
 ///
 /// <para>
-/// **BibleData's rows stay**, for the reason they stayed in <see cref="OwnReferenceLoader"/>: they
-/// are the second witness ours are measured against, they reach entities and relations ours does
-/// not, and the corpus has already lost 14,515 rows once to a pass that thought it could rebuild
-/// them. Nothing here deletes or rewrites a row it did not write.
+/// **Where two clauses about one pair disagree, the rule is <see cref="Endpoints.Annotations"/>'s
+/// and not a second one.** For each ordered pair, every clause about it is ranked by claim standing
+/// and then by confidence — a decision of the owner's above a model's reading — and what the
+/// strongest rank asserts is what the pair stands in. A clause is written unless it answers the
+/// same question differently, and nothing is written for a pair where two clauses of equal standing
+/// and equal confidence answer it two ways. That is <see cref="Endpoints.Annotations"/>'s
+/// <c>Settle</c> and <c>Disputed</c> with one change the domain forces: a word names one entity,
+/// and a pair of people stand in as many relations as they stand in, so the answer is a set and
+/// <see cref="RelationshipVocabulary.Branch"/> says which relations are answers to the same
+/// question.
 /// </para>
 ///
 /// <para>
-/// **Where the two disagree, the rule is <see cref="Endpoints.Annotations"/>'s and not a second
-/// one.** For each ordered pair, every claim about it is ranked by claim standing and then by
-/// confidence — BibleData's rows as testimony, ours as a model reading — and what the strongest
-/// rank asserts is what the pair stands in. A clause of ours is written unless it answers the same
-/// question differently, and nothing of ours is written for a pair where two claims of equal
-/// standing and equal confidence answer it two ways. That is
-/// <see cref="Endpoints.Annotations"/>'s <c>Settle</c> and <c>Disputed</c> with one change the
-/// domain forces: a word names one entity, and a pair of people stand in as many relations as they
-/// stand in, so the answer is a set and <see cref="RelationshipVocabulary.Branch"/> says which
-/// relations are answers to the same question.
-/// </para>
-///
-/// <para>
-/// **A witness's rows are read from both ends and our own clauses only from their own.** BibleData
-/// states <em>Bani is the ancestor of Adaiah</em> and the encyclopedia answers it on Adaiah's page,
-/// so a row of a witness has to reach the pair read backwards or 463 corroborations read as
-/// disagreements. Our own clauses do not, because the two sides of one pair were written by one
+/// **A pair is read from its own subject's end only.** The two sides of one pair were written by one
 /// pass in one ordered answer: Lot is a descendant of Terah and Terah is Lot's grandfather, and
 /// setting those against each other would be a witness disputing itself.
 /// </para>
 ///
 /// <para>
-/// **A witness of ours always names the verse it read.** BibleData states 40 rows with no reference
-/// and 14 of those it calls <c>explicit</c>, which is a fact about that dataset and not a licence to
-/// write a citation nobody can follow. The asymmetry is kept rather than flattened: the column
-/// stays nullable because a witness may honestly have given none, and the database refuses a
-/// verseless row from any method but <see cref="LinkMethod.StatedBySource"/>.
+/// **Some readings are held back by name** (<see cref="WithheldClauses"/>). Until 2026-09-30 a
+/// dataset's rows stood in this table as a second witness and outranked a model's reading, so a
+/// clause that answered a pair otherwise than the dataset did was never written. The dataset's rows
+/// are gone, on the owner's decision that every relationship is this project's own, and those
+/// clauses are listed so that what a page says did not change the day they left. An entry taken
+/// off the list is written on the next load that reads its record.
+/// </para>
+///
+/// <para>
+/// **Every row names the verse it read.** The database refuses a verseless row from any method but
+/// <see cref="LinkMethod.StatedBySource"/>, which nothing here writes.
 /// </para>
 /// </summary>
 internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelationshipLoader> logger)
 {
-    /// <param name="resettle">
-    /// Entities whose readings are read again although their clauses did not change, because a row
-    /// of a witness that outranked one of them has been withdrawn or restored since they were last
-    /// read. Their own rows are deleted first, so the pick is made afresh.
-    /// </param>
-    public async Task<OwnRelationshipOutcome> Load(
-        IReadOnlySet<int>? resettle = null,
-        CancellationToken cancellationToken = default)
+    private const string Resource = "Essenthos.Core.Loading.Encyclopedia.WithheldClauses.json";
+
+    private static readonly JsonSerializerOptions Shape = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    };
+
+    public async Task<OwnRelationshipOutcome> Load(CancellationToken cancellationToken = default) =>
+        await Load(WithheldClauses().Clauses, cancellationToken);
+
+    internal async Task<OwnRelationshipOutcome> Load(
+        IReadOnlyList<WithheldClause> heldByName,
+        CancellationToken cancellationToken)
     {
         var started = Stopwatch.StartNew();
 
-        await Unread(resettle, cancellationToken);
         var already = await Described(cancellationToken);
-        var clauses = await Clauses(already, cancellationToken);
+        var read = await Clauses(already, cancellationToken);
+        var named = heldByName.Select(c => (c.Entity, c.Relation, c.Target)).ToHashSet();
+        var clauses = read
+            .Where(c => !named.Contains((c.Subject, c.Clause.Relation, c.Target)))
+            .Select(c => c.Clause)
+            .ToList();
+        var held = read.Count - clauses.Count;
         if (clauses.Count == 0)
         {
             logger.LogInformation(
                 "Every entity with a descriptor clause already has its relationships; nothing to do");
-            return new OwnRelationshipOutcome(true, 0, 0, 0, 0, started.Elapsed);
+            return new OwnRelationshipOutcome(true, 0, 0, 0, 0, started.Elapsed, held);
         }
 
-        var stated = await Stated(cancellationToken);
-        var (rows, withheld, disputed) = Settle(clauses, stated);
+        var (rows, withheld, disputed) = Settle(clauses);
 
         db.EntityRelationships.AddRange(rows);
         await db.SaveChangesAsync(cancellationToken);
@@ -115,23 +132,23 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
             Written: rows.Count,
             withheld,
             disputed,
-            started.Elapsed);
+            started.Elapsed,
+            held);
 
         logger.LogInformation("Read the relationships off the clauses: {Outcome}", outcome);
         return outcome;
     }
 
-    private async Task Unread(IReadOnlySet<int>? entities, CancellationToken cancellationToken)
+    /// <summary>The readings held back by name, as the list beside this loader states them.</summary>
+    internal static WithheldClauseList WithheldClauses()
     {
-        if (entities is not { Count: > 0 })
-        {
-            return;
-        }
-
-        var ids = entities.ToList();
-        await db.EntityRelationships
-            .Where(r => r.Source.StartsWith(EntityDescriptorLoader.SourcePrefix) && ids.Contains(r.FromEntityId))
-            .ExecuteDeleteAsync(cancellationToken);
+        using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Resource)
+            ?? throw new InvalidOperationException(
+                $"The list of readings held back is not in the assembly as {Resource}. Check that "
+                + "WithheldClauses.json is an EmbeddedResource of Essenthos.Forge.");
+        return JsonSerializer.Deserialize<WithheldClauseList>(stream, Shape)
+            ?? throw new InvalidOperationException(
+                $"{Resource} is empty. Give it the list, or an object with an empty clauses array.");
     }
 
     /// <summary>
@@ -139,8 +156,7 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
     /// rather than only through a database.
     /// </summary>
     internal static (List<EntityRelationship> Rows, int Withheld, int Disputed) Settle(
-        IReadOnlyCollection<Clause> clauses,
-        ILookup<(int From, int To), Asserted> stated)
+        IReadOnlyCollection<Clause> clauses)
     {
         var rows = new List<EntityRelationship>(clauses.Count);
         var written = new HashSet<(int From, int To, string Relation)>();
@@ -148,11 +164,9 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
 
         foreach (var pair in clauses.GroupBy(c => (c.From, c.To)))
         {
-            var mine = pair
-                .Select(c => new Asserted(ClaimStanding.Of(c.Method), c.Confidence ?? 1, One(c.Relation)))
+            var candidates = pair
+                .Select(c => new Asserted(ClaimStanding.Of(c.Method), c.Confidence ?? 1, c.Relation))
                 .ToList();
-
-            var candidates = stated[pair.Key].Concat(mine).ToList();
             var best = candidates.Max(c => (c.Standing, c.Confidence));
             var top = candidates.Where(c => (c.Standing, c.Confidence) == best).ToList();
 
@@ -163,7 +177,7 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
                 continue;
             }
 
-            var settled = top.SelectMany(c => c.Relations).ToHashSet(StringComparer.Ordinal);
+            var settled = top.Select(c => c.Relation).ToHashSet(StringComparer.Ordinal);
             var standing = pair
                 .Where(clause => !RelationshipVocabulary.Contradicts(clause.Relation, settled))
                 .ToList();
@@ -198,10 +212,8 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
     /// </summary>
     private static bool Disputed(List<Asserted> top) =>
         top.Any(one => top.Any(other =>
-            !ReferenceEquals(one, other)
-            && !one.Relations.Overlaps(other.Relations)
-            && one.Relations.Any(mine => other.Relations.Any(theirs =>
-                RelationshipVocabulary.Branch(mine) == RelationshipVocabulary.Branch(theirs)))));
+            one.Relation != other.Relation
+            && RelationshipVocabulary.Branch(one.Relation) == RelationshipVocabulary.Branch(other.Relation)));
 
     private static EntityRelationship Row(Clause clause) =>
         new()
@@ -221,10 +233,9 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
         };
 
     /// <summary>
-    /// The entities this loader has already written for. On its own rows and per entity, because
-    /// the descriptor passes arrive in batches over days and a second batch has to load beside the
-    /// first — and because a guard on the table would find BibleData's 5,448 rows and conclude the
-    /// work was done.
+    /// The entities this loader has already written for. Per entity, because the descriptor passes
+    /// arrive in batches over days and a second batch has to load beside the first, and on its own
+    /// rows, because other passes write relationships here too.
     /// </summary>
     private async Task<HashSet<int>> Described(CancellationToken cancellationToken) =>
         [.. await db.EntityRelationships
@@ -233,71 +244,37 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
             .Distinct()
             .ToListAsync(cancellationToken)];
 
-    private async Task<List<Clause>> Clauses(
+    /// <summary>Each clause with the slugs of its two ends, which is how a reading held back is named.</summary>
+    private async Task<List<(Clause Clause, string Subject, string Target)>> Clauses(
         HashSet<int> already,
-        CancellationToken cancellationToken) =>
-        await db.EntityDescriptors
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.EntityDescriptors
             .Where(d => !already.Contains(d.EntityId))
-            .Select(d => new Clause(
+            .Select(d => new
+            {
                 d.EntityId, d.TargetEntityId, d.Relation,
                 d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse,
-                d.Method, d.Confidence, d.Source, d.Note)
-            {
-                Citation = d.Citation,
+                d.Method, d.Confidence, d.Source, d.Note, d.Citation,
+                Subject = d.Entity!.Slug,
+                Target = d.Target!.Slug,
             })
             .ToListAsync(cancellationToken);
 
-    /// <summary>
-    /// What every other witness already asserts, per ordered pair — each row on the pair it names
-    /// and again, inverted, on the pair read from the other end, because a clause is written from
-    /// its own subject's side and <em>Bani is the ancestor of Adaiah</em> is answered on Adaiah's
-    /// page. A type the vocabulary has no word for asserts nothing here: it can neither corroborate
-    /// a clause nor contradict one, and counting it as a disagreement would make the encyclopedia
-    /// silent about a pair over a word it does not have.
-    /// </summary>
-    private async Task<ILookup<(int From, int To), Asserted>> Stated(CancellationToken cancellationToken)
-    {
-        var rows = await db.EntityRelationships
-            .Select(r => new { r.FromEntityId, r.ToEntityId, r.Type, r.Method, r.Confidence })
-            .ToListAsync(cancellationToken);
-
-        return rows
-            .SelectMany(row =>
-            {
-                if (RelationshipVocabulary.SaysFromTheOtherEnd.TryGetValue(row.Type, out var otherEnd))
+        return
+        [
+            .. rows.Select(d => (
+                new Clause(
+                    d.EntityId, d.TargetEntityId, d.Relation,
+                    d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse,
+                    d.Method, d.Confidence, d.Source, d.Note)
                 {
-                    return new[]
-                    {
-                        ((row.ToEntityId, row.FromEntityId),
-                            new Asserted(ClaimStanding.Of(row.Method), row.Confidence ?? 1, One(otherEnd))),
-                    };
-                }
-
-                if (!RelationshipVocabulary.Says.TryGetValue(row.Type, out var relation))
-                {
-                    return Enumerable.Empty<(( int From, int To) Pair, Asserted Claim)>();
-                }
-
-                var standing = ClaimStanding.Of(row.Method);
-                var confidence = row.Confidence ?? 1;
-                var forward = ((row.FromEntityId, row.ToEntityId),
-                    new Asserted(standing, confidence, One(relation)));
-
-                var reversed = RelationshipVocabulary.Reversed(relation);
-                return reversed.Count == 0
-                    ? [forward]
-                    : new[]
-                    {
-                        forward,
-                        ((row.ToEntityId, row.FromEntityId),
-                            new Asserted(standing, confidence, reversed)),
-                    };
-            })
-            .ToLookup(entry => entry.Item1, entry => entry.Item2);
+                    Citation = d.Citation,
+                },
+                d.Subject,
+                d.Target)),
+        ];
     }
-
-    private static IReadOnlySet<string> One(string relation) =>
-        new HashSet<string>(StringComparer.Ordinal) { relation };
 
     /// <summary>One descriptor clause, flattened for the pick.</summary>
     internal sealed record Clause(
@@ -316,11 +293,6 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
         public string? Citation { get; init; }
     }
 
-    /// <summary>
-    /// One claim about one pair, as the pick sees it: how much its method knew, how sure it is, and
-    /// what it says. The relations are a set because a claim read from the other end is often two —
-    /// <em>father of</em> reversed is <em>son of</em> or <em>daughter of</em>, and the witness does
-    /// not say which.
-    /// </summary>
-    internal sealed record Asserted(int Standing, double Confidence, IReadOnlySet<string> Relations);
+    /// <summary>One clause about one pair, as the pick sees it: how much its method knew, how sure it is, and what it says.</summary>
+    private sealed record Asserted(int Standing, double Confidence, string Relation);
 }

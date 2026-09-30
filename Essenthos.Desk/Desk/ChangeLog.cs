@@ -11,7 +11,12 @@ namespace Essenthos.Core.Desk;
 /// </summary>
 /// <param name="Line">Where it stands in the log, from 1, which is stable because the log is only appended to.</param>
 /// <param name="At">When, in UTC.</param>
-/// <param name="Section">Which part of the console: <c>portraits</c>, <c>pictures</c>, <c>relationships</c>, <c>occurrences</c>, <c>records</c>, <c>settings</c>, <c>deploy</c> for a deploy run (logged when it starts and when it ends), or <c>apply</c> for a run.</param>
+/// <param name="Section">
+/// Which part of the console: <c>portraits</c>, <c>pictures</c>, <c>occurrences</c>, <c>records</c>,
+/// <c>settings</c>, <c>deploy</c> for a deploy run (logged when it starts and when it ends), or
+/// <c>apply</c> for a run. Lines of <c>relationships</c> are from the review of a dataset's
+/// relationships the console held until 2026-09-30, and stay in the log as what was decided.
+/// </param>
 /// <param name="Action">What was done in it: <c>status</c>, <c>brief</c>, <c>upload</c>, <c>decision</c>, …</param>
 /// <param name="Target">What it was done to, named the way the corpus is addressed outside itself — a slug, a verse, a file under the images folder — never by a row id.</param>
 /// <param name="Label">What it was done to in words, as the owner reads it: a name, not an address. Null where the section names it itself.</param>
@@ -19,9 +24,8 @@ namespace Essenthos.Core.Desk;
 /// <param name="After">What it became, or null where it was taken away.</param>
 /// <param name="Note">What the owner wrote beside it.</param>
 /// <param name="Needs">
-/// What has to run before the site shows it: <c>images</c>, <c>load</c>, <c>relationships</c> for the
-/// relationship decide command, <c>agent</c> for a change somebody has to make by hand, or null
-/// where it took effect when it was saved.
+/// What has to run before the site shows it: <c>images</c>, <c>load</c>, <c>agent</c> for a change
+/// somebody has to make by hand, or null where it took effect when it was saved.
 /// </param>
 /// <param name="Waiting">Whether what it needs has not run through the console since; read, never stored.</param>
 internal sealed record ChangeEntry(

@@ -73,7 +73,7 @@ public sealed class RefiledVerseTests : IDisposable
     private void Tie(Entity from, string type, Entity to, int verse, LinkMethod method, string source) =>
         _db.EntityRelationships.Add(new EntityRelationship
         {
-            From = from, To = to, Type = type, Category = RelationshipCategories.Explicit,
+            From = from, To = to, Type = type, Category = RelationshipCategories.Read,
             CanonicalBook = 16, CanonicalChapter = 12, CanonicalVerse = verse, Method = method,
             Confidence = method == LinkMethod.ModelReading ? 0.9 : null, Source = source,
         });
@@ -115,8 +115,6 @@ public sealed class RefiledVerseTests : IDisposable
     [Fact]
     public async Task WhatWasReadOffTheVerseNamesTheHighPriest()
     {
-        Tie(_levite, "father", _joiakim, 10, LinkMethod.StatedBySource, BibleDataLoader.Source);
-        Tie(_joiakim, "son", _levite, 10, LinkMethod.StatedBySource, BibleDataLoader.Source);
         Tie(_levite, "father-of", _joiakim, 10, LinkMethod.ModelReading, Reading);
         Tie(_joiakim, "son-of", _levite, 10, LinkMethod.ModelReading, Reading);
         Tie(_levite, "son-of", _joiakim, 24, LinkMethod.ModelReading, Reading);
@@ -131,8 +129,6 @@ public sealed class RefiledVerseTests : IDisposable
             .Select(r => new { r.FromEntityId, r.Type, r.ToEntityId, r.CanonicalVerse }).ToListAsync();
         ties.Should().BeEquivalentTo(
         [
-            new { FromEntityId = _highPriest.Id, Type = "father", ToEntityId = _joiakim.Id, CanonicalVerse = (int?)10 },
-            new { FromEntityId = _joiakim.Id, Type = "son", ToEntityId = _highPriest.Id, CanonicalVerse = (int?)10 },
             new { FromEntityId = _joiakim.Id, Type = "son-of", ToEntityId = _highPriest.Id, CanonicalVerse = (int?)10 },
             new { FromEntityId = _levite.Id, Type = "son-of", ToEntityId = _joiakim.Id, CanonicalVerse = (int?)24 },
         ], "the Levite's own reading of Nehemiah 12:10 goes, and a verse that is not moved is not touched");
@@ -142,7 +138,7 @@ public sealed class RefiledVerseTests : IDisposable
         clauses.Should().BeEquivalentTo(
             [new { EntityId = _joiakim.Id, TargetEntityId = _highPriest.Id, CanonicalVerse = 26 }],
             "the clause about Joiakim's father, once it names the high priest, says what his record already says");
-        outcome.Should().BeEquivalentTo(new { Moved = 4, Withdrawn = 2, Joined = 1, Renamed = 0 });
+        outcome.Should().BeEquivalentTo(new { Moved = 2, Withdrawn = 2, Joined = 1, Renamed = 0 });
     }
 
     [Fact]

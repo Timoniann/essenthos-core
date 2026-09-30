@@ -398,19 +398,6 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
 
     private const string GreekPlural = "plural";
 
-    /// <summary>The relation words a row reading from a parent to the child is written with.</summary>
-    private static readonly string[] Parents = ["father", "mother"];
-
-    /// <summary>The relation words a row reading from a child to the parent is written with.</summary>
-    private static readonly string[] Offspring = ["son", "daughter"];
-
-    /// <summary>The other relation words that make somebody the man's close kin, as the dataset writes them.</summary>
-    private static readonly string[] Kin =
-    [
-        "brother", "sister", "half-brother", "half-sister", "grandfather", "grandmother", "grandson",
-        "granddaughter",
-    ];
-
     /// <summary>The book codes the review lists write a verse with, in canonical order.</summary>
     private static readonly string[] Codes =
     [
@@ -436,7 +423,7 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
         var moving = new List<Row>();
         var open = new List<(Row Row, string Why, string Strong)>();
         var decided = 0;
-        foreach (var (row, reading, why, strong) in await ReadAll(rows, cancellationToken))
+        foreach (var (row, reading, why, strong) in await ReadAll(rows, resources, cancellationToken))
         {
             if (reading == Reading.ThePeople)
             {
@@ -535,7 +522,7 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
 
     /// <returns>Each row's reading, and the number of the name its label means, for the review list.</returns>
     private async Task<List<(Row Row, Reading Reading, string? Why, string Strong)>> ReadAll(
-        List<Row> rows, CancellationToken cancellationToken)
+        List<Row> rows, string resources, CancellationToken cancellationToken)
     {
         if (rows.Count == 0)
         {
@@ -544,7 +531,7 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
 
         var eponyms = rows.Select(r => r.EponymId).Distinct().ToArray();
         var peoples = rows.Select(r => r.PeopleId).Distinct().ToArray();
-        var families = await Families(eponyms, cancellationToken);
+        var families = await Families(eponyms, resources, cancellationToken);
         var ancestors = await Ancestors(cancellationToken);
         var lives = await Lives(eponyms, cancellationToken);
 
@@ -599,49 +586,41 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
     ];
 
     /// <summary>
-    /// Each man's parents, children and siblings. The dataset writes a tie between parent and child
-    /// from both ends, and siblings mostly not at all, so brothers are also read as the other children
-    /// of his parents: <em>the sons of Levi; Gershon, Kohath, and Merari</em> is a genealogy for each of
-    /// the three.
+    /// Each man's parents, children and siblings, as the dataset's own file states them of the records
+    /// its person ids are now held as. Read from the file because the dataset's relationships are not
+    /// loaded: they are its word about its own verse lists here, and no relationship of this corpus.
     /// </summary>
-    private async Task<Dictionary<int, Family>> Families(int[] eponyms, CancellationToken cancellationToken)
+    private async Task<Dictionary<int, Family>> Families(
+        int[] eponyms, string resources, CancellationToken cancellationToken)
     {
+        var statements = DatasetKinship.Read(Path.Combine(resources, BibleDataLoader.Folder));
+        var ids = statements.People.Distinct(StringComparer.Ordinal).Select(id => $"{PersonPrefix}{id}").ToArray();
+
+        // A record folded into another is still named by the id the dataset gave it, and the record
+        // that holds an id outright is the one it names.
         const string sql =
             """
-            WITH descent AS (
-                SELECT CASE WHEN r.type = ANY(@parents) THEN r.from_entity_id ELSE r.to_entity_id END AS parent,
-                       CASE WHEN r.type = ANY(@parents) THEN r.to_entity_id ELSE r.from_entity_id END AS child
-                FROM entity_relationship r
-                WHERE (r.type = ANY(@parents) OR r.type = ANY(@offspring)) AND r.from_entity_id <> r.to_entity_id)
-            SELECT child, parent, FALSE FROM descent WHERE child = ANY(@eponyms)
-            UNION SELECT parent, child, TRUE FROM descent WHERE parent = ANY(@eponyms)
-            UNION SELECT a.child, b.child, FALSE FROM descent a JOIN descent b ON b.parent = a.parent
-                  WHERE a.child = ANY(@eponyms) AND b.child <> a.child
-            UNION SELECT r.from_entity_id, r.to_entity_id, FALSE FROM entity_relationship r
-                  WHERE r.type = ANY(@kin) AND r.from_entity_id = ANY(@eponyms) AND r.from_entity_id <> r.to_entity_id
-            UNION SELECT r.to_entity_id, r.from_entity_id, FALSE FROM entity_relationship r
-                  WHERE r.type = ANY(@kin) AND r.to_entity_id = ANY(@eponyms) AND r.from_entity_id <> r.to_entity_id
+            SELECT m.record_source_id, m.entity_id, FALSE FROM merged_record m WHERE m.record_source_id = ANY(@ids)
+            UNION ALL SELECT e.source_id, e.id, TRUE FROM entity e WHERE e.source_id = ANY(@ids)
             """;
-        var kin = eponyms.ToDictionary(id => id, _ => new HashSet<int>());
-        var children = eponyms.ToDictionary(id => id, _ => new HashSet<int>());
+        var records = new Dictionary<string, int>(StringComparer.Ordinal);
         await using var command = await Command(sql, cancellationToken);
-        command.Parameters.AddWithValue("parents", Parents);
-        command.Parameters.AddWithValue("offspring", Offspring);
-        command.Parameters.AddWithValue("kin", Kin);
-        command.Parameters.AddWithValue("eponyms", eponyms);
+        command.Parameters.AddWithValue("ids", ids);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {
-            var (of, who) = (reader.GetInt32(0), reader.GetInt32(1));
-            kin[of].Add(who);
-            if (reader.GetBoolean(2))
+            var id = reader.GetString(0)[PersonPrefix.Length..];
+            if (reader.GetBoolean(2) || !records.ContainsKey(id))
             {
-                children[of].Add(who);
+                records[id] = reader.GetInt32(1);
             }
         }
 
-        return eponyms.ToDictionary(id => id, id => new Family(kin[id], children[id]));
+        return DatasetKinship.Families(statements, records, eponyms);
     }
+
+    /// <summary>What the dataset's id for a person begins with on the record that holds it.</summary>
+    private const string PersonPrefix = "person:";
 
     /// <summary>Every record some people is named after.</summary>
     private async Task<HashSet<int>> Ancestors(CancellationToken cancellationToken) =>

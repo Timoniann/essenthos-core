@@ -191,20 +191,19 @@ public sealed class ChapterFamilyEndpointTests : IDisposable
     }
 
     /// <summary>
-    /// Mary is recorded as the one who bore Jesus and as the mother of Simon, and the chapter names
-    /// the two brothers: she is their mother, drawn over them — not, read the wrong way round, a
-    /// daughter of Jesus.
+    /// Mary is recorded as the mother of Jesus and of Simon, and the chapter names the two brothers:
+    /// she is their mother, drawn over them though the chapter does not name her.
     /// </summary>
     [Fact]
-    public async Task SheWhoBoreAChildIsHisMother()
+    public async Task AMotherTheChapterDoesNotNameIsDrawnOverHerSons()
     {
         var mary = Person("mary");
         var jesus = Person("jesus");
         var simon = Person("simon");
         await _db.SaveChangesAsync();
-        Tie(mary, "bearer", jesus);
-        Tie(mary, "mother", simon);
-        Tie(simon, "brother", jesus);
+        Tie(mary, "mother-of", jesus);
+        Tie(mary, "mother-of", simon);
+        Tie(simon, "brother-of", jesus);
         NamedAt(jesus, 13, 55);
         NamedAt(simon, 13, 55);
         await _db.SaveChangesAsync();
@@ -236,9 +235,12 @@ public sealed class ChapterFamilyEndpointTests : IDisposable
             FromEntityId = from.Id,
             ToEntityId = to.Id,
             Type = type,
-            Category = "explicit",
-            Method = LinkMethod.StatedBySource,
-            Source = "test",
+            Category = RelationshipCategories.Read,
+            CanonicalBook = Genesis,
+            CanonicalChapter = 1,
+            CanonicalVerse = 1,
+            Method = LinkMethod.Manual,
+            Source = "read from Scripture by a test",
         });
 
     private void NamedAt(Entity entity, int chapter, int verse) =>

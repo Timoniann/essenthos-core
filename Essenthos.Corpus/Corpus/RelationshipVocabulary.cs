@@ -3,15 +3,23 @@ using Essenthos.Core.Database.Entities;
 namespace Essenthos.Core.Corpus;
 
 /// <summary>
-/// How another witness's relation names line up with this corpus's own, and which of them are
-/// answers to the same question.
+/// Which of this corpus's relations are answers to the same question, which say one fact from the
+/// other end, and how a dataset's relation names line up with them.
 ///
-/// BibleData writes <c>son</c> where <see cref="DescriptorRelations"/> writes <c>son-of</c>, states
-/// <em>Bani is the ancestor of Adaiah</em> where the encyclopedia says <em>Adaiah is a descendant
-/// of Bani</em>, and names twenty-three relations the vocabulary has no word for at all. None of
-/// that can be settled by string comparison, and the descriptor pass already had to answer it to
-/// score itself against the same rows — so the table here is that scorer's, moved to where the
-/// loader can use it too. One answer to <em>do these two witnesses say the same thing</em>, not two.
+/// <para>
+/// The first two are what the loader and the page decide by: a pair of people stand in as many
+/// relations as they stand in, and only some of those exclude one another.
+/// </para>
+///
+/// <para>
+/// The last is kept for measuring and for nothing a reader sees. BibleData writes <c>son</c> where
+/// <see cref="DescriptorRelations"/> writes <c>son-of</c>, states <em>Bani is the ancestor of
+/// Adaiah</em> where the encyclopedia says <em>Adaiah is a descendant of Bani</em>, and names
+/// relations the vocabulary has no word for at all. No row of that dataset's is in the corpus, and
+/// <c>scripts/descriptors.py</c> reads <see cref="Says"/>, <see cref="SaysFromTheOtherEnd"/> and
+/// <see cref="SaysOneOf"/> out of this file to score a pass of readings against the dataset's own
+/// file, under exactly the words the readings are stored in.
+/// </para>
 /// </summary>
 internal static class RelationshipVocabulary
 {
@@ -21,9 +29,8 @@ internal static class RelationshipVocabulary
     ///
     /// <para>
     /// What is absent is absent from the vocabulary rather than from this table, and a type with no
-    /// entry is a claim this corpus cannot compare itself with — <c>cousin</c>, <c>rabbi</c>,
-    /// <c>concubinator</c>, <c>Creator</c>. Those neither corroborate nor contradict anything;
-    /// they are counted, and what we say about the same pair stands on its own.
+    /// entry is a claim a reading cannot be compared with. Those neither corroborate nor contradict
+    /// anything; they are counted.
     /// </para>
     /// </summary>
     public static readonly IReadOnlyDictionary<string, string> Says =
@@ -133,9 +140,8 @@ internal static class RelationshipVocabulary
 
     /// <summary>
     /// The same fact said from the other end. A descriptor is written from its own subject's side,
-    /// so BibleData's <c>bani-4 ancestor adaiah-6</c> is answered by the claim on Adaiah and not by
-    /// one on Bani. Read one-directionally that is a disagreement, and every one of them would be
-    /// the encyclopedia saying the thing correctly in the only place a reader would look for it.
+    /// so <em>Bani, ancestor of Adaiah</em> and <em>Adaiah, descendant of Bani</em> are one fact on
+    /// two records, and a page about either folds the other into it.
     /// </summary>
     public static readonly IReadOnlyDictionary<string, IReadOnlySet<string>> Inverse =
         new Dictionary<string, IReadOnlySet<string>>(StringComparer.Ordinal)
@@ -303,7 +309,7 @@ internal static class RelationshipVocabulary
         !settled.Contains(relation)
         && settled.Any(other => Branch(other) == Branch(relation) && !Implies(relation, other));
 
-    /// <summary>What a witness stating this relation about a pair says about the reverse pair.</summary>
+    /// <summary>What stating this relation about a pair says about the reverse pair.</summary>
     public static IReadOnlySet<string> Reversed(string relation) =>
         Inverse.GetValueOrDefault(relation, Empty);
 

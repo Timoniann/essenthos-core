@@ -42,22 +42,21 @@ internal static class ChapterFamily
 
     /// <summary>Ties naming the other person as a parent, read from the row's first person.</summary>
     private static readonly HashSet<string> ParentTypes =
-        new(["son-of", "daughter-of", "son", "daughter", "born by"], StringComparer.Ordinal);
+        new(["son-of", "daughter-of"], StringComparer.Ordinal);
 
     /// <summary>Ties naming the other person as a child, read from the row's first person.</summary>
     private static readonly HashSet<string> ChildTypes =
-        new(["father-of", "mother-of", "father", "mother", "bearer"], StringComparer.Ordinal);
+        new(["father-of", "mother-of"], StringComparer.Ordinal);
 
     private static readonly HashSet<string> SideTypes = new(
     [
-        "husband-of", "wife-of", "concubine-of", "husband", "wife", "concubine", "concubinator",
-        "brother-of", "sister-of", "half-brother-of", "half-sister-of", "brother", "sister", "half-brother",
-        "half-sister",
+        "husband-of", "wife-of", "concubine-of",
+        "brother-of", "sister-of", "half-brother-of", "half-sister-of",
     ], StringComparer.Ordinal);
 
     /// <summary>Descent over many generations, which a tree draws as the generations themselves.</summary>
     private static readonly HashSet<string> LineageTypes = new(
-        ["ancestor", "descendant", "ancestor-of", "descendant-of", "descendants-of"], StringComparer.Ordinal);
+        ["ancestor-of", "descendant-of", "descendants-of"], StringComparer.Ordinal);
 
     /// <summary>Every tie a family tree draws: the reader's family section's four ranks, and nothing else.</summary>
     internal static readonly string[] Types = [.. ParentTypes, .. ChildTypes, .. SideTypes];
@@ -67,8 +66,7 @@ internal static class ChapterFamily
         int book,
         int chapter,
         string? language,
-        CancellationToken cancellationToken,
-        bool oursOnly = false)
+        CancellationToken cancellationToken)
     {
         var named = (await ContextEndpoints.Named(db, book, chapter, cancellationToken)).Keys.ToList();
         var people = await db.Entities
@@ -88,10 +86,10 @@ internal static class ChapterFamily
                             && r.FromEntityId != r.ToEntityId
                             && !FamilyEndpoints.Deities.Contains(r.From!.Slug)
                             && !FamilyEndpoints.Deities.Contains(r.To!.Slug))
-                .Select(r => new { r.FromEntityId, r.ToEntityId, r.Type, r.Source })
+                .Select(r => new { r.FromEntityId, r.ToEntityId, r.Type })
                 .ToListAsync(cancellationToken);
             var next = new List<int>();
-            foreach (var row in rows.Where(r => !oursOnly || Relationships.IsOurs(r.Source)))
+            foreach (var row in rows)
             {
                 ties.Add(new Tie(row.FromEntityId, row.ToEntityId, Descent(row.Type)));
                 foreach (var id in (int[])[row.FromEntityId, row.ToEntityId])
@@ -122,8 +120,7 @@ internal static class ChapterFamily
         // A member's family ties reach only the tree, so the tree draws exactly who is in it. Their
         // other ties stay, because a king's crown on his card is read from them — all but the
         // ancestors and descendants, which a tree never draws and a genealogy has hundreds of.
-        var family = await FamilyEndpoints.Family(
-            db, [.. memberSlugs], language, cancellationToken, oursOnly: oursOnly);
+        var family = await FamilyEndpoints.Family(db, [.. memberSlugs], language, cancellationToken);
         var familyTypes = Types.ToHashSet(StringComparer.Ordinal);
         var shown = family.People
             .Select(p => p with

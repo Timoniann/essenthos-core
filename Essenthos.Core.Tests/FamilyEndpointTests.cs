@@ -50,16 +50,12 @@ public sealed class FamilyEndpointTests : IDisposable
         family.People.Select(p => p.Slug).Should().Equal("isaac", "abraham");
         var father = family.People[1];
         father.Sex.Should().Be("male");
-        father.Ties.Should().BeEquivalentTo(
-        [
-            new FamilyTieResponse("husband-of", false, "sarah"),
-            new FamilyTieResponse("son-of", true, "isaac"),
-        ]);
-        family.People[0].Ties.Should().Equal(new FamilyTieResponse("son-of", false, "abraham"));
+        father.Ties.Select(Who).Should().BeEquivalentTo([("husband-of", false, "sarah"), ("son-of", true, "isaac")]);
+        family.People[0].Ties.Select(Who).Should().Equal(("son-of", false, "abraham"));
     }
 
     /// <summary>
-    /// Two witnesses stating one fact in one word are one tie to a tree, which only asks who.
+    /// Two readings stating one fact in one word are one tie to a tree, which only asks who.
     /// </summary>
     [Fact]
     public async Task ATieStatedTwiceInOneWordIsOneTie()
@@ -68,7 +64,7 @@ public sealed class FamilyEndpointTests : IDisposable
         var haran = Person("haran", "male");
         await _db.SaveChangesAsync();
         Tie(lot, "son-of", haran);
-        Tie(lot, "son-of", haran, source: "test:second");
+        Tie(lot, "son-of", haran, source: "read from Scripture by a second test");
         await _db.SaveChangesAsync();
 
         var family = await FamilyEndpoints.Family(_db, ["lot"], null, default);
@@ -95,8 +91,8 @@ public sealed class FamilyEndpointTests : IDisposable
 
         var family = await FamilyEndpoints.Family(_db, ["jesus", "yhvh-2"], null, default);
 
-        family.People[0].Ties.Should().Equal(new FamilyTieResponse("son-of", false, "mary"));
-        family.People[1].Ties.Should().Equal(new FamilyTieResponse("servant-of", true, "james-3"));
+        family.People[0].Ties.Select(Who).Should().Equal(("son-of", false, "mary"));
+        family.People[1].Ties.Select(Who).Should().Equal(("servant-of", true, "james-3"));
     }
 
     /// <summary>
@@ -163,22 +159,24 @@ public sealed class FamilyEndpointTests : IDisposable
         return entity;
     }
 
+    private static (string Type, bool Inward, string Slug) Who(FamilyTieResponse tie) => (tie.Type, tie.Inward, tie.Slug);
+
     private void Tie(
         Entity from,
         string type,
         Entity to,
-        string source = "test",
+        string source = "read from Scripture by a test",
         (int Book, int Chapter, int Verse)? verse = null) =>
         _db.EntityRelationships.Add(new EntityRelationship
         {
             FromEntityId = from.Id,
             ToEntityId = to.Id,
             Type = type,
-            Category = "explicit",
-            Method = LinkMethod.StatedBySource,
+            Category = RelationshipCategories.Read,
+            Method = LinkMethod.Manual,
             Source = source,
-            CanonicalBook = verse?.Book,
-            CanonicalChapter = verse?.Chapter,
-            CanonicalVerse = verse?.Verse,
+            CanonicalBook = verse?.Book ?? 1,
+            CanonicalChapter = verse?.Chapter ?? 1,
+            CanonicalVerse = verse?.Verse ?? 1,
         });
 }
