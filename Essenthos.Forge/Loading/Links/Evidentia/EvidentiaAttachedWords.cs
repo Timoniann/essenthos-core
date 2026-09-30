@@ -70,6 +70,18 @@ internal enum EvidentiaAttachment
     /// governs when the word after it was a possessive or a quantifier the original writes elsewhere.
     /// </summary>
     PrepositionOfPhrase,
+
+    /// <summary>
+    /// <em>and</em> of <em>and his voice</em> or <em>But</em> of <em>But you, Daniel</em>, on the ו written on
+    /// the word of the first placed word after it, where its own rule found no placed word to follow.
+    /// </summary>
+    PrefixConjunction,
+
+    /// <summary>
+    /// <em>to</em> of <em>to everlasting shame</em> or <em>as</em> of <em>as the great owl</em>, on the ל or כ
+    /// written on the word of the noun its modifiers stand before.
+    /// </summary>
+    PrefixPreposition,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -134,11 +146,18 @@ internal enum EvidentiaAttachmentPlacement
 /// prefixed prepositions and ו as words of their own, and <em>the</em> goes on the article, spelt out or
 /// swallowed by a preposition, where the answer keys put it with the noun; a noun the original writes
 /// without one leaves <em>the</em> to be said supplied. <em>and</em> goes on the ו before the word it
-/// joins; an auxiliary goes on the verb, which carries tense and mood in itself.</para>
+/// joins; an auxiliary goes on the verb, which carries tense and mood in itself, and on nothing else:
+/// where its verb was placed on a noun (<em>had followed</em> on אַחֲרֵי) there is no tense for it to
+/// write, and where the verb's ending names another person than the subject the parse gives the English
+/// verb (<em>May the LORD make</em> on the imperative עֲשֵׂה, <em>he had become</em> on וַיִּהְיוּ) the
+/// verb is another clause's. Nor on an infinitive: a verb placed on one was the wrong verb one time in
+/// six on the passages measured, the tense being written in the finite verb beside it (<em>shall we
+/// again break</em>, נָשׁוּב לְהָפֵר).</para>
 ///
 /// <para>A personal pronoun goes where the original writes the person: a subject on the verb whose
 /// ending names it, a possessive on the Hebrew noun whose suffix does, an object on the suffix of the
-/// verb or preposition. The morphology decides, not the habit: a pronoun whose head was placed on a
+/// verb or preposition - the object of a verb on a verb only, since the suffix of a noun its verb was
+/// placed on (<em>named him</em> on שְׁמוֹ) is a possessive. The morphology decides, not the habit: a pronoun whose head was placed on a
 /// word that names another person, or none, is left unplaced, and so is a subject the original writes
 /// as a pronoun of its own beside the verb, since both annotations put it there.</para>
 ///
@@ -178,6 +197,10 @@ internal enum EvidentiaAttachmentPlacement
 /// negation after it (<em>will not</em>, 89-91%); a copula on its predicate where the original writes
 /// no <em>be</em> (81-83%); <em>there is</em> on אֵין (86%); and Greek <em>of</em> on its genitive
 /// noun (55-64%).</para>
+///
+/// <para>Last, when every other attached word has its place, a coordinator, <em>to</em>, <em>as</em> or
+/// <em>like</em> still unplaced goes on the prefix of its own kind written on the word of the first
+/// placed word after it (<see cref="AttachToPrefixes"/>).</para>
 ///
 /// <para>All of that is English. German and Spanish attach two kinds only, the two that write a verb's
 /// inflection as a word: the subject pronoun and the auxiliary of tense, by the German and Spanish
@@ -224,6 +247,12 @@ internal static class EvidentiaAttachedWords
     private const string InfinitiveForm = "Inf";
 
     private const string PassiveSubjectRelation = "nsubj:pass";
+
+    private const string NominativeCase = "Nom";
+
+    private const string PersonalPronounType = "Prs";
+
+    private const string ThirdPerson = "3";
 
     private const string GreekBe = "G1510";
 
@@ -282,6 +311,31 @@ internal static class EvidentiaAttachedWords
     private const string InfinitiveAbsoluteTense = "infa";
 
     private const string Lamed = "H9005";
+
+    private const string Kaph = "H9004";
+
+    private const string Vav = "H9000";
+
+    /// <summary>The coordinators that reach for the ו written on the word of the first placed word after them.</summary>
+    private static readonly HashSet<string> PrefixConjunctions = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "and", "but", "or", "nor", "yet", "while",
+    };
+
+    /// <summary>The prepositions that reach for the prefix of their own kind, and the prefix each renders.</summary>
+    private static readonly Dictionary<string, string> PrefixPrepositions = new(StringComparer.OrdinalIgnoreCase)
+    {
+        [To] = Lamed, ["as"] = Kaph, ["like"] = Kaph,
+    };
+
+    /// <summary>
+    /// How far after a coordinator the first placed word may stand: <em>and then he was no more</em>. On the
+    /// passages the rules were chosen on a fifth word added two placements, one of them wrong.
+    /// </summary>
+    private const int ConjunctionPrefixReach = 4;
+
+    /// <summary>How far after <em>to</em> or <em>as</em> its noun may stand, past its modifiers: <em>to his own place</em>.</summary>
+    private const int PrepositionPrefixReach = 3;
 
     private const string Of = "of";
 
@@ -363,6 +417,11 @@ internal static class EvidentiaAttachedWords
             {
                 placing |= Attach(words, placedBySource, targetsByVerse, taken, proposals);
             }
+        }
+
+        foreach (var words in verses)
+        {
+            AttachToPrefixes(words, placedBySource, targetsByVerse, taken, proposals);
         }
 
         return proposals;
@@ -451,6 +510,116 @@ internal static class EvidentiaAttachedWords
     }
 
     /// <summary>
+    /// A coordinator, <em>to</em>, <em>as</em> or <em>like</em> that its own rule left unplaced, on the prefix
+    /// of its kind written on the word of the first placed word after it: <em>and his voice</em> on the ו of
+    /// וְקוֹלוֹ, <em>But you, Daniel</em> on the ו of וְאַתָּה, <em>to everlasting shame</em> on the ל of
+    /// לַחֲרָפוֹת. Its own rule reads it with one word, within three, and that word is as often a
+    /// possessive, an adjective, or a subject the original writes in the verb.
+    ///
+    /// <para>The prefix must be written on the very word the placed word renders, free, and after the
+    /// rendering of the last word placed before it: a ו standing earlier belongs to a clause the English
+    /// reordered. Nothing is read past punctuation or another coordinator. A coordinator reaches across
+    /// any words, since the ו opens the clause whatever English puts first; a preposition only across
+    /// the words that modify its noun, since across a verb <em>to</em> belongs to the infinitive.</para>
+    /// </summary>
+    private static void AttachToPrefixes(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        Dictionary<long, EvidentiaProposal> placedBySource,
+        IReadOnlyDictionary<EvidentiaAddress, List<EvidentiaAnalysis>> targetsByVerse,
+        HashSet<long> taken,
+        List<EvidentiaProposal> proposals)
+    {
+        for (var index = 0; index < words.Count; index++)
+        {
+            var word = words[index];
+            var conjunction = PrefixConjunctions.Contains(word.Token.Surface);
+            if (placedBySource.ContainsKey(word.Token.Id) || !IsEnglish(word) || Punctuated(word)
+                || !conjunction && !PrefixPrepositions.ContainsKey(word.Token.Surface))
+            {
+                continue;
+            }
+
+            var prefixNumber = conjunction ? Vav : PrefixPrepositions[word.Token.Surface];
+            var reach = conjunction ? ConjunctionPrefixReach : PrepositionPrefixReach;
+            for (var next = index + 1; next < words.Count && next - index <= reach; next++)
+            {
+                var other = words[next];
+                if (PrefixConjunctions.Contains(other.Token.Surface))
+                {
+                    break;
+                }
+
+                if (placedBySource.TryGetValue(other.Token.Id, out var head))
+                {
+                    if (head.Target.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
+                        && targetsByVerse.TryGetValue(head.Target.Token.Address, out var verse)
+                        && PrefixOfItsWord(head.Target, verse, prefixNumber) is { } prefix
+                        && !taken.Contains(prefix.Token.Id)
+                        && StandsAfterTheWordBefore(words, index, prefix, placedBySource))
+                    {
+                        var attachment = conjunction ? EvidentiaAttachment.PrefixConjunction : EvidentiaAttachment.PrefixPreposition;
+                        taken.Add(prefix.Token.Id);
+                        var proposal = new EvidentiaProposal(
+                            word,
+                            prefix,
+                            EvidentiaProposalKind.AttachedWord,
+                            Math.Max(0, head.Confidence - ConfidenceBelowHead),
+                            new EvidentiaDecisionTrace("attached", $"{attachment} of '{other.Token.Surface}'", head.Trace?.Evidence ?? []),
+                            head);
+                        proposals.Add(proposal);
+                        placedBySource[word.Token.Id] = proposal;
+                    }
+
+                    break;
+                }
+
+                if (Punctuated(other) || !conjunction && !IsModifier(other))
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    /// <summary>The prefix of that number among the parts written on the rendering's own word, before it: וּ of וּלְבֵיתוֹ.</summary>
+    private static EvidentiaAnalysis? PrefixOfItsWord(EvidentiaAnalysis rendering, IReadOnlyList<EvidentiaAnalysis> verse, string number)
+    {
+        for (var before = IndexOf(verse, rendering) - 1;
+             before >= 0 && verse[before].Token.Trailer.Length == 0 && Class(verse[before]) is "det" or "adp" or "conj";
+             before--)
+        {
+            if (verse[before].Token.StrongNumber == number)
+            {
+                return verse[before];
+            }
+        }
+
+        return null;
+    }
+
+    private static bool StandsAfterTheWordBefore(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        int index,
+        EvidentiaAnalysis prefix,
+        IReadOnlyDictionary<long, EvidentiaProposal> placedBySource)
+    {
+        for (var before = index - 1; before >= 0; before--)
+        {
+            if (placedBySource.TryGetValue(words[before].Token.Id, out var earlier))
+            {
+                return !earlier.Target.Token.Address.Equals(prefix.Token.Address)
+                    || earlier.Target.Token.Position < prefix.Token.Position;
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>A word that stands between a preposition and its noun: an article, an adjective, a numeral or a possessive.</summary>
+    private static bool IsModifier(EvidentiaAnalysis word) =>
+        Class(word) is "det" or "adj" or "num" || Class(word) == "pron" && Feature(word, "Poss") == "Yes";
+
+    /// <summary>
     /// <em>And</em> of <em>And God said</em> stands before the subject, and the וַ it renders is written on
     /// the verb before it: וַיֹּאמֶר אֱלֹהִים. Where the head it was read with has no conjunction before its
     /// rendering, <em>and</em> goes on the one before the rendering of its clause's verb - in Hebrew when it
@@ -527,7 +696,7 @@ internal static class EvidentiaAttachedWords
         HashSet<long> taken) =>
         HeadProposal(attachment, index, head, words, placedBySource) is ({ } headProposal, var afterVerb)
         && targetsByVerse.TryGetValue(headProposal.Target.Token.Address, out var targetVerse)
-        && Place(attachment, words, index, headProposal.Target, targetVerse, afterVerb, placedBySource, taken) is { } placement
+        && Place(attachment, words, index, head, headProposal.Target, targetVerse, afterVerb, placedBySource, taken) is { } placement
             ? (placement, headProposal)
             : null;
 
@@ -756,6 +925,7 @@ internal static class EvidentiaAttachedWords
         EvidentiaAttachment attachment,
         IReadOnlyList<EvidentiaAnalysis> words,
         int index,
+        EvidentiaAnalysis head,
         EvidentiaAnalysis rendering,
         IReadOnlyList<EvidentiaAnalysis> verse,
         bool afterVerb,
@@ -768,8 +938,9 @@ internal static class EvidentiaAttachedWords
             EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb && !IsEnglish(word)
                 && OwnAuxiliary(rendering, verse) is { } own =>
                 taken.Contains(own.Token.Id) ? null : own,
-            EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb && !IsEnglish(word)
-                && Class(rendering) != "verb" => null,
+            EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb
+                && (Class(rendering) != "verb"
+                    || IsEnglish(word) && (WritesNoTense(rendering) || !CouldTakeItsSubject(words, head, rendering))) => null,
             EvidentiaAttachmentPlacement.Rendering => rendering,
             EvidentiaAttachmentPlacement.Dependent => index > 0
                 && placedBySource.TryGetValue(words[index - 1].Token.Id, out var governing)
@@ -780,7 +951,7 @@ internal static class EvidentiaAttachedWords
             EvidentiaAttachmentPlacement.PhraseStart => PhraseStart(words, index, verse, placedBySource, taken),
             EvidentiaAttachmentPlacement.AgreeingRendering => afterVerb
                 ? PrepositionAfter(word, rendering, verse, taken)
-                : Agreeing(attachment, word, rendering, verse, taken),
+                : Agreeing(attachment, word, head, rendering, verse, taken),
             EvidentiaAttachmentPlacement.Infinitive => Infinitive(rendering, verse, taken),
             EvidentiaAttachmentPlacement.BeBeside => BeBeside(rendering, verse, taken),
             EvidentiaAttachmentPlacement.ConjunctionBefore => ConjunctionBefore(rendering, verse, taken),
@@ -954,6 +1125,10 @@ internal static class EvidentiaAttachedWords
     private static bool IsHebrewParticiple(EvidentiaAnalysis word) =>
         Feature(word, "tense") is { } tense && HebrewParticiples.Contains(tense);
 
+    /// <summary>An infinitive, construct or absolute.</summary>
+    private static bool WritesNoTense(EvidentiaAnalysis word) =>
+        IsInfinitive(word) || string.Equals(Feature(word, "tense"), InfinitiveAbsoluteTense, StringComparison.OrdinalIgnoreCase);
+
     private static bool IsInfinitive(EvidentiaAnalysis word) =>
         EvidentiaPersonAgreement.IsInfinitive(word)
         || string.Equals(Feature(word, "mood"), "infinitive", StringComparison.OrdinalIgnoreCase);
@@ -1058,6 +1233,7 @@ internal static class EvidentiaAttachedWords
     private static EvidentiaAnalysis? Agreeing(
         EvidentiaAttachment attachment,
         EvidentiaAnalysis pronoun,
+        EvidentiaAnalysis head,
         EvidentiaAnalysis rendering,
         IReadOnlyList<EvidentiaAnalysis> verse,
         IReadOnlySet<long> taken) =>
@@ -1067,10 +1243,43 @@ internal static class EvidentiaAttachedWords
                 && (EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: false)
                     || EvidentiaPersonAgreement.IsInfinitive(rendering) && EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: true))
                 && !WritesTheSubjectApart(pronoun, rendering, verse, taken) => rendering,
+            // The object of a verb is written in the verb: on a noun the suffix is whose it is.
+            EvidentiaAttachment.ObjectPronoun when Class(head) == "verb" && Class(rendering) != "verb" => null,
             EvidentiaAttachment.PossessivePronoun or EvidentiaAttachment.ObjectPronoun
                 when EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: true) => rendering,
             _ => null,
         };
+
+    /// <summary>
+    /// Whether the verb the head was placed on could have the subject the parse gives the English verb. A
+    /// verb that names no person - a participle, an infinitive - takes any; one that names a person takes
+    /// a pronoun of that person, number and gender, and a noun only in the third person. Where the parse
+    /// gives no subject, or one that says nothing of person (<em>whoever</em>), nothing is refused; a
+    /// pronoun outside the nominative is no subject whatever the parse made of it.
+    /// </summary>
+    private static bool CouldTakeItsSubject(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        EvidentiaAnalysis verb,
+        EvidentiaAnalysis rendering)
+    {
+        if (Feature(rendering, "person") is not { } person)
+        {
+            return true;
+        }
+
+        var subjects = words
+            .Where(other => other.Token.SyntacticHead == verb.Token.Id
+                && other.Token.Relation is SubjectRelation or PassiveSubjectRelation
+                && !(Feature(other, "Case") is { } stated && !stated.Equals(NominativeCase, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
+        return subjects.Count == 0 || subjects.Any(subject => Class(subject) switch
+        {
+            "pron" when Feature(subject, "PronType") == PersonalPronounType && EvidentiaPersonAgreement.Person(subject) is not null =>
+                EvidentiaPersonAgreement.Agrees(subject, rendering, suffix: false),
+            "noun" or "propn" => EvidentiaMorphologyLabels.Feature(person, rendering.Token.Language) == ThirdPerson,
+            _ => true,
+        });
+    }
 
     /// <summary>
     /// A pronoun of the same person standing by the verb, which is then where the subject is written.

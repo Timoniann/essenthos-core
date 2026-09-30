@@ -156,7 +156,8 @@ public class EvidentiaKeySplitTests
         var accepted = EvidentiaWordScore.Of(english, original, proposals, absences, gold with { Pairs = key.Pairs }, out var verdicts).Accepted!;
 
         var measure = EvidentiaStateScore.Of(
-            english, proposals, absences, verdicts, gold, key, accepted, new HashSet<(long, long)> { (3, 12) }, out var words);
+            english, proposals, absences, verdicts, gold, key, accepted, new HashSet<(long, long)> { (3, 12) },
+            new Dictionary<(long, long), EvidentiaBoundaryCase>(), out var words);
 
         words[1].State.Should().Be(EvidentiaWordState.Linked);
         words[1].Rule.Should().Be(nameof(EvidentiaAttachment.Conjunction));
@@ -197,7 +198,8 @@ public class EvidentiaKeySplitTests
 
         var measure = EvidentiaStateScore.Of(
             english, proposals, [], new Dictionary<long, bool?>(), gold, key,
-            new HashSet<(long, long)> { (4, 13) }, new HashSet<(long, long)>(), out var words);
+            new HashSet<(long, long)> { (4, 13) }, new HashSet<(long, long)>(),
+            new Dictionary<(long, long), EvidentiaBoundaryCase>(), out var words);
 
         words[1].HeadState.Should().Be(EvidentiaHeadState.UnplacedWithCounterpart);
         words[3].HeadState.Should().Be(EvidentiaHeadState.Placed);

@@ -48,6 +48,28 @@ public class EvidentiaAbsenceTests
     }
 
     [Fact]
+    public void ACoordinatorPlacedFromAcrossOtherWordsLeavesTheOtherVavsOfTheVerseAsTheyWere()
+    {
+        var and = English(1, 1, "and", "CCONJ");
+        var his = English(2, 2, "his", "PRON");
+        var voice = English(3, 3, "voice", "NOUN");
+        var came = English(4, 4, "came", "VERB");
+        var vav = Hebrew(11, 1, "וְ", "H9000", "conj", joined: true);
+        var sound = Hebrew(12, 2, "קוֹל", "H6963", "subs");
+        var narrative = Hebrew(13, 3, "וַ", "H9000", "conj", joined: true);
+        var come = Hebrew(14, 4, "יָּבֹא", "H935", "verb");
+
+        var across = Resolve([and, his, voice, came], [vav, sound, narrative, come], (voice, sound), (came, come));
+        across.Attached.Should().Equal((1L, 11L));
+        across.Absences.Should().BeEmpty();
+
+        // Directly before its word it is placed by its own rule, and the other ו is then said unrendered.
+        var beside = Resolve([and, voice, came], [vav, sound, narrative, come], (voice, sound), (came, come));
+        beside.Attached.Should().Equal((1L, 11L));
+        beside.Absences.Should().Equal((13L, EvidentiaAbsenceKind.NotRendered));
+    }
+
+    [Fact]
     public void AVavIsNotSaidUnrenderedWhileAnAndOfTheVerseIsUnplacedNorAnObjectMarkerWithASuffix()
     {
         var and = English(1, 1, "and", "CCONJ");

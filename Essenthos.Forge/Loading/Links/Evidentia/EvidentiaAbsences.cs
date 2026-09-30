@@ -499,7 +499,11 @@ internal static class EvidentiaAbsences
         IReadOnlyDictionary<long, EvidentiaProposal> placedByTarget)
     {
         var free = words.Where(word => !placedBySource.ContainsKey(word.Token.Id)).ToList();
-        var freeCoordinator = free.Any(word => FunctionClass(word) == EvidentiaFunctionClass.Coordinator);
+        // A coordinator placed from across other words leaves the verse's other ו as they stood before it
+        // was: said unrendered on its account they were right 84% of the time, against 95-98% otherwise.
+        var freeCoordinator = free.Any(word => FunctionClass(word) == EvidentiaFunctionClass.Coordinator)
+            || words.Any(word => placedBySource.TryGetValue(word.Token.Id, out var reached)
+                && EvidentiaAttachedWords.Attachment(reached) == EvidentiaAttachment.PrefixConjunction);
         var freeArticle = free.Any(word => FunctionClass(word) == EvidentiaFunctionClass.Article);
         for (var index = 0; index < verse.Count; index++)
         {

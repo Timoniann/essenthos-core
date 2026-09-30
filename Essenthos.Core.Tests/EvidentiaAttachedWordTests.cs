@@ -73,6 +73,80 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
+    public void AnAuxiliaryIsNotPlacedWhereItsVerbWasPlacedOnAWordThatIsNoVerbOrOnAnInfinitive()
+    {
+        var had = English(1, Genesis122, 1, "had", "AUX");
+        var followed = English(2, Genesis122, 2, "followed", "VERB");
+        var after = Hebrew(11, Genesis122, 1, "אַחֲרֵי", "H310", "subs");
+        var went = Hebrew(12, Genesis122, 2, "הָלְכוּ", "H1980", "verb", ("tense", "perf"));
+        var toGo = Hebrew(13, Genesis122, 3, "לֶכֶת", "H1980", "verb", ("tense", "infc"));
+        var going = Hebrew(14, Genesis122, 4, "הָלוֹךְ", "H1980", "verb", ("tense", "infa"));
+
+        Attach([had, followed], [after, went], (followed, after)).Should().BeEmpty();
+        Attach([had, followed], [after, went], (followed, went)).Should().Equal((1L, 12L));
+        Attach([had, followed], [toGo, going], (followed, toGo)).Should().BeEmpty();
+        Attach([had, followed], [toGo, going], (followed, going)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void AnAuxiliaryIsNotPlacedOnAVerbWhoseEndingNamesAnotherPersonThanTheSubjectOfItsVerb()
+    {
+        var may = English(1, Genesis122, 1, "May", "AUX");
+        var lord = English(2, Genesis122, 2, "LORD", "PROPN") with { SyntacticHead = 3, Relation = "nsubj" };
+        var make = English(3, Genesis122, 3, "make", "VERB");
+        var imperative = Hebrew(11, Genesis122, 1, "עֲשֵׂה", "H6213", "verb", ("tense", "impv"), ("person", "p2"), ("number", "sg"), ("gender", "m"));
+        var jussive = Hebrew(12, Genesis122, 2, "יִתֵּן", "H5414", "verb", ("tense", "impf"), ("person", "p3"), ("number", "sg"), ("gender", "m"));
+        var participle = Hebrew(13, Genesis122, 3, "עֹשֶׂה", "H6213", "verb", ("tense", "ptca"), ("number", "sg"), ("gender", "m"));
+
+        Attach([may, lord, make], [imperative, jussive], (make, imperative)).Should().BeEmpty();
+        Attach([may, lord, make], [imperative, jussive], (make, jussive)).Should().Equal((1L, 12L));
+        // A participle names no person and takes any subject.
+        Attach([may, lord, make], [participle], (make, participle)).Should().Equal((1L, 13L));
+
+        var he = English(4, Genesis122, 4, "he", "PRON") with
+        {
+            SyntacticHead = 6, Relation = "nsubj",
+            Morphology = new Dictionary<string, string>
+            {
+                ["PronType"] = "Prs", ["Person"] = "3", ["Number"] = "Sing", ["Case"] = "Nom", ["Gender"] = "Masc",
+            },
+        };
+        var had = English(5, Genesis122, 5, "had", "AUX");
+        var become = English(6, Genesis122, 6, "become", "VERB");
+        var theyWere = Hebrew(14, Genesis122, 4, "יִּהְיוּ", "H1961", "verb", ("tense", "wayq"), ("person", "p3"), ("number", "pl"), ("gender", "m"));
+        var heWas = Hebrew(15, Genesis122, 5, "יְהִי", "H1961", "verb", ("tense", "wayq"), ("person", "p3"), ("number", "sg"), ("gender", "m"));
+
+        Attach([he, had, become], [theyWere], (become, theyWere)).Should().BeEmpty();
+        Attach([he, had, become], [heWas], (become, heWas)).Should().BeEquivalentTo([(4L, 15L), (5L, 15L)]);
+
+        // An object the parse took for the subject says nothing of the verb.
+        var me = he with
+        {
+            Surface = "me",
+            Morphology = new Dictionary<string, string> { ["PronType"] = "Prs", ["Person"] = "1", ["Number"] = "Sing", ["Case"] = "Acc" },
+        };
+        Attach([me, had, become], [heWas], (become, heWas)).Should().Contain((5L, 15L));
+    }
+
+    [Fact]
+    public void AnObjectOfAVerbGoesOnTheSuffixOfAVerbAndNotOnTheSuffixOfANounItsVerbWasPlacedOn()
+    {
+        var named = English(1, Genesis122, 1, "named", "VERB");
+        var him = English(2, Genesis122, 2, "him", "PRON");
+        var before = English(3, Genesis122, 3, "before", "ADP");
+        var himAgain = English(4, Genesis122, 4, "him", "PRON");
+        (string, string)[] his = [("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m")];
+        var hisName = Hebrew(11, Genesis122, 1, "שְׁמוֹ", "H8034", "subs", his);
+        var calledHim = Hebrew(12, Genesis122, 2, "יִּקְרָאֵהוּ", "H7121", "verb", his);
+        var hisFace = Hebrew(13, Genesis122, 3, "פָנָיו", "H6440", "subs", his);
+
+        Attach([named, him], [hisName, calledHim], (named, hisName)).Should().BeEmpty();
+        Attach([named, him], [hisName, calledHim], (named, calledHim)).Should().Equal((2L, 12L));
+        // The object of a preposition still goes on the noun Hebrew writes that preposition with.
+        Attach([before, himAgain], [hisFace], (before, hisFace)).Should().Equal((4L, 13L));
+    }
+
+    [Fact]
     public void AnArticleWhoseNounWasNotPlacedIsNotPlacedEither()
     {
         var the = English(1, Genesis122, 1, "the", "DET");
@@ -442,6 +516,73 @@ public class EvidentiaAttachedWordTests
 
         Attach([to, all, the, kings], [lamed, kol, kingsNoun], (all, kol), (kings, kingsNoun))
             .Should().Contain((4L, 21L));
+    }
+
+    [Fact]
+    public void ACoordinatorReachesTheVavWrittenOnTheWordOfTheFirstPlacedWordAfterIt()
+    {
+        var and = English(1, Genesis122, 1, "and", "CCONJ");
+        var his = English(2, Genesis122, 2, "his", "PRON");
+        var voice = English(3, Genesis122, 3, "voice", "NOUN");
+        var but = English(4, Genesis122, 4, "But", "CCONJ");
+        var you = English(5, Genesis122, 5, "you", "PRON");
+        var vav = Hebrew(11, Genesis122, 1, "וְ", "H9000", "conj");
+        var sound = Hebrew(12, Genesis122, 2, "קוֹל", "H6963", "subs");
+        var secondVav = Hebrew(13, Genesis122, 3, "וְ", "H9000", "conj");
+        var thou = Hebrew(14, Genesis122, 4, "אַתָּה", "H859", "prps");
+
+        Attach([and, his, voice, but, you], [vav, sound, secondVav, thou], (voice, sound), (you, thou))
+            .Should().Equal((1L, 11L), (4L, 13L));
+    }
+
+    [Fact]
+    public void ACoordinatorDoesNotReachPastAnotherOneNorBackBeforeTheWordPlacedBeforeIt()
+    {
+        var bread = English(1, Genesis122, 1, "bread", "NOUN");
+        var and = English(2, Genesis122, 2, "and", "CCONJ");
+        var much = English(3, Genesis122, 3, "much", "ADJ");
+        var or = English(4, Genesis122, 4, "or", "CCONJ");
+        var wine = English(5, Genesis122, 5, "wine", "NOUN");
+        var vav = Hebrew(11, Genesis122, 1, "וְ", "H9000", "conj");
+        var yayin = Hebrew(12, Genesis122, 2, "יַיִן", "H3196", "subs");
+        var lechem = Hebrew(13, Genesis122, 3, "לֶחֶם", "H3899", "subs");
+
+        Attach([and, much, wine], [vav, yayin, lechem], (wine, yayin))
+            .Should().Equal((2L, 11L));
+
+        // and is stopped by or, which stands nearer the word and takes its ו.
+        Attach([and, much, or, wine], [vav, yayin, lechem], (wine, yayin))
+            .Should().Equal((4L, 11L));
+
+        // The ו stands before the rendering of bread: it opens an earlier clause than the one and joins.
+        Attach([bread, and, much, wine], [vav, yayin, lechem], (bread, lechem), (wine, yayin))
+            .Should().BeEmpty();
+    }
+
+    [Fact]
+    public void ToAndAsReachThePrefixOfTheirKindAcrossModifiersOnly()
+    {
+        var to = English(1, Genesis122, 1, "to", "ADP");
+        var everlasting = English(2, Genesis122, 2, "everlasting", "ADJ");
+        var shame = English(3, Genesis122, 3, "shame", "NOUN");
+        var asWord = English(4, Genesis122, 4, "as", "ADP");
+        var the = English(5, Genesis122, 5, "the", "DET");
+        var owl = English(6, Genesis122, 6, "owl", "NOUN");
+        var lamed = Hebrew(11, Genesis122, 1, "לַ", "H9005", "prep");
+        var reproach = Hebrew(12, Genesis122, 2, "חֲרָפוֹת", "H2781", "subs");
+        var kaph = Hebrew(13, Genesis122, 3, "כְּ", "H9004", "prep");
+        var yanshuf = Hebrew(14, Genesis122, 4, "יַנְשׁוּף", "H3244", "subs");
+
+        Attach([to, everlasting, shame, asWord, the, owl], [lamed, reproach, kaph, yanshuf], (shame, reproach), (owl, yanshuf))
+            .Should().Equal((1L, 11L), (4L, 13L));
+
+        // Across a verb to is the infinitive's, and on a ב it is no to at all.
+        var be = English(2, Genesis122, 2, "be", "AUX");
+        var alone = English(3, Genesis122, 3, "alone", "ADJ");
+        var toPart = English(1, Genesis122, 1, "to", "PART");
+        Attach([toPart, be, alone], [lamed, reproach], (alone, reproach)).Should().BeEmpty();
+        var bet = Hebrew(11, Genesis122, 1, "בְּ", "H9003", "prep");
+        Attach([to, everlasting, shame], [bet, reproach], (shame, reproach)).Should().BeEmpty();
     }
 
     private static IReadOnlyList<(long Source, long Target)> Attach(
