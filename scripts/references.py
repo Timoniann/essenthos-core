@@ -68,7 +68,7 @@ import random
 import re
 
 import descriptors as shared
-import relationships as harness
+import batches as harness
 
 PROMPT_VERSION = 'references-2'
 CHECK_VERSION = 'references-check-2'

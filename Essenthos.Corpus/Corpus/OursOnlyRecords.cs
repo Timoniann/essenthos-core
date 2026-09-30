@@ -147,7 +147,7 @@ internal static class OursOnlyRecords
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
 
-    /// <summary>Our descriptor clauses and our relationship rows, of which each record is the subject.</summary>
+    /// <summary>The descriptor clauses and the relationship rows of which each record is the subject.</summary>
     private static async Task<List<Clause>> OurClauses(
         AppDbContext db,
         IReadOnlyCollection<int> ids,
@@ -157,13 +157,10 @@ internal static class OursOnlyRecords
             .Where(d => ids.Contains(d.EntityId))
             .Select(d => new Clause(d.EntityId, d.Relation, d.TargetEntityId))
             .ToListAsync(cancellationToken);
-        var rows = await db.EntityRelationships
-            .Where(r => ids.Contains(r.FromEntityId) && !r.Withdrawn)
-            .Select(r => new { r.FromEntityId, r.Type, r.ToEntityId, r.Source })
-            .ToListAsync(cancellationToken);
-        clauses.AddRange(rows
-            .Where(r => Datasets.Of(r.Source) == Datasets.Own)
-            .Select(r => new Clause(r.FromEntityId, r.Type, r.ToEntityId)));
+        clauses.AddRange(await db.EntityRelationships
+            .Where(r => ids.Contains(r.FromEntityId))
+            .Select(r => new Clause(r.FromEntityId, r.Type, r.ToEntityId))
+            .ToListAsync(cancellationToken));
         return clauses;
     }
 
@@ -201,7 +198,7 @@ internal static class OursOnlyRecords
     }
 
     /// <summary>
-    /// The one tribe a record's line of descent reaches through our rows, for a record with no
+    /// The one tribe a record's line of descent reaches through the relationships, for a record with no
     /// clause of its own naming one: up its fathers and ancestors until a tribe's patriarch (or a
     /// people that is a tribe) is met, each path stopping where it meets one. Empty where two
     /// different tribes are reached, where none is, and past <see cref="MostGenerations"/>. With
@@ -225,12 +222,10 @@ internal static class OursOnlyRecords
                     .Where(d => asked.Contains(d.EntityId) && ascent.Contains(d.Relation))
                     .Select(d => new { From = d.EntityId, To = d.TargetEntityId })
                     .ToListAsync(cancellationToken))
-                .Concat((await db.EntityRelationships
-                        .Where(r => asked.Contains(r.FromEntityId) && !r.Withdrawn && ascent.Contains(r.Type))
-                        .Select(r => new { From = r.FromEntityId, To = r.ToEntityId, r.Source })
-                        .ToListAsync(cancellationToken))
-                    .Where(r => Datasets.Of(r.Source) == Datasets.Own)
-                    .Select(r => new { r.From, r.To }))
+                .Concat(await db.EntityRelationships
+                    .Where(r => asked.Contains(r.FromEntityId) && ascent.Contains(r.Type))
+                    .Select(r => new { From = r.FromEntityId, To = r.ToEntityId })
+                    .ToListAsync(cancellationToken))
                 .Distinct()
                 .ToLookup(edge => edge.From, edge => edge.To);
 

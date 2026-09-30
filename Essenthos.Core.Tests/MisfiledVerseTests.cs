@@ -14,6 +14,86 @@ using static Essenthos.Core.Loading.Encyclopedia.MisfiledVerseLoader;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
+/// A man's family as the dataset's own file states it, which is what tells a genealogy from a verse
+/// about his people.
+/// </summary>
+public sealed class DatasetKinshipTests
+{
+    private static readonly Dictionary<string, int> Records = new()
+    {
+        ["Jacob_1"] = 1, ["Levi_1"] = 2, ["Gershon_1"] = 3, ["Kohath_1"] = 4, ["Isaac_1"] = 5, ["Esau_1"] = 6,
+    };
+
+    /// <summary>
+    /// The dataset writes a parent and child from both ends and brothers mostly not at all, so the
+    /// other children of a man's parents are his brothers.
+    /// </summary>
+    [Fact]
+    public void A_mans_kin_are_his_parents_his_children_and_their_other_children()
+    {
+        var statements = new DatasetKinship.Statements(
+            new HashSet<DatasetKinship.Descent>
+            {
+                new("Jacob_1", "Levi_1"), new("Levi_1", "Gershon_1"), new("Levi_1", "Kohath_1"), new("Isaac_1", "Jacob_1"),
+            },
+            new HashSet<(string, string)> { ("Esau_1", "Jacob_1") });
+
+        var families = DatasetKinship.Families(statements, Records, [1, 3]);
+
+        families[1].Kin.Should().BeEquivalentTo([2, 5, 6], "Levi his son, Isaac his father and Esau his brother");
+        families[1].Children.Should().BeEquivalentTo([2]);
+        families[3].Kin.Should().BeEquivalentTo([2, 4], "Levi his father and Kohath, Levi's other son");
+        families[3].Children.Should().BeEmpty();
+    }
+
+    /// <summary>A person the corpus does not hold is nobody's kin, and a record is not its own.</summary>
+    [Fact]
+    public void A_person_the_corpus_does_not_hold_is_left_out()
+    {
+        var statements = new DatasetKinship.Statements(
+            new HashSet<DatasetKinship.Descent> { new("Jacob_1", "Dinah_1"), new("Jacob_1", "Jacob_1") },
+            new HashSet<(string, string)>());
+
+        DatasetKinship.Families(statements, Records, [1])[1].Kin.Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// The file is read from either end of a parent and child, and the six Levites of a later day it
+    /// writes as Levi's sons are not his children.
+    /// </summary>
+    [Fact]
+    public void The_file_is_read_from_both_ends_and_the_later_Levites_are_not_Levis_sons()
+    {
+        var folder = Path.Combine(Path.GetTempPath(), $"essenthos-kinship-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(folder);
+        try
+        {
+            File.WriteAllLines(Path.Combine(folder, DatasetKinship.FileName),
+            [
+                "person_relationship_id,person_id_1,relationship_type,person_id_2",
+                "1,Levi_1,father,Gershon_1",
+                "2,Kohath_1,son,Levi_1",
+                "3,Levi_1,father,Miniamin_1",
+                "4,Miniamin_1,son,Levi_1",
+                "5,Esau_1,brother,Jacob_1",
+                "6,Levi_1,ancestor,Shebaniah_4",
+            ]);
+
+            var read = DatasetKinship.Read(folder);
+
+            read.Descents.Should().BeEquivalentTo(
+                [new DatasetKinship.Descent("Levi_1", "Gershon_1"), new DatasetKinship.Descent("Levi_1", "Kohath_1")]);
+            read.Others.Should().BeEquivalentTo([("Esau_1", "Jacob_1")]);
+            DatasetKinship.Read(Path.Combine(folder, "absent")).Descents.Should().BeEmpty();
+        }
+        finally
+        {
+            Directory.Delete(folder, recursive: true);
+        }
+    }
+}
+
+/// <summary>
 /// Whether a verse the dataset files under a people's ancestor names the man or the people, read off
 /// the Hebrew one occurrence of the name at a time.
 /// </summary>
@@ -186,8 +266,8 @@ public sealed class MisfiledVerseLoadTests : IDisposable
         People("reubenites", "Reubenites", reuben);
         _db.SaveChanges();
 
-        Tie(isaac, "father", _jacob);
-        Tie(_jacob, "father", reuben);
+        States("Isaac_1", "father", "Jacob_1");
+        States("Jacob_1", "father", "Reuben_1");
 
         Cite(_jacob, Genesis, 32, 28);
         Cite(_jacob, Genesis, 32, 32);
@@ -428,12 +508,19 @@ public sealed class MisfiledVerseLoadTests : IDisposable
         return people;
     }
 
-    private void Tie(Entity from, string type, Entity to) =>
-        _db.EntityRelationships.Add(new EntityRelationship
+    /// <summary>A row of the dataset's own relationship file, which is where the pass reads a man's family.</summary>
+    private void States(string one, string type, string other)
+    {
+        var folder = Path.Combine(_resources, BibleDataLoader.Folder);
+        var file = Path.Combine(folder, DatasetKinship.FileName);
+        if (!File.Exists(file))
         {
-            FromEntityId = from.Id, ToEntityId = to.Id, Type = type, Category = "explicit",
-            Method = LinkMethod.StatedBySource, Source = BibleDataLoader.Source,
-        });
+            Directory.CreateDirectory(folder);
+            File.WriteAllLines(file, ["person_relationship_id,person_id_1,relationship_type,person_id_2"]);
+        }
+
+        File.AppendAllLines(file, [$"{one}:{other},{one},{type},{other}"]);
+    }
 
     private void Cite(Entity entity, int book, int chapter, int verse) =>
         _db.EntityVerses.Add(new EntityVerse

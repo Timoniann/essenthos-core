@@ -16,9 +16,14 @@ language needs. One newline-delimited JSON file per batch, in the shape DOC-0191
   entity in, with the Ohienko and Synodal texts shown for the name forms. No third-party
   description was shown to the model and none is reproduced here: replacing BibleData's imported
   English sentence is the entire point of the pass (NOT-0171).
-- **Measured against** BibleData's `entity_relationship` rows, which are the answer key and not the
-  source. That dataset is CC BY 4.0 and is attributed where it is loaded; nothing of it is copied
-  into these files.
+- **Measured against** BibleData's relationship file (`BibleData-PersonRelationship.csv`), which is
+  the answer key and not the source: the corpus loads none of its rows, and every relationship there
+  is this project's own. That dataset is CC BY 4.0 and is attributed where it is loaded; nothing of
+  it is copied into these files.
+- **The owner's decisions are among them.** The `zz-words-*.jsonl` files hold the clauses the owner
+  decided in his console's review of BibleData's relationships (2026-09-11 to 2026-09-29), each with
+  its verse and `decidedBy`. They were written from that review by a command that no longer exists;
+  they are now the record itself, and a later decision is written beside them by hand.
 - **Terms.** Ours, under the project's own licence. Facts about who a person's father was are not
   anyone's property; the wording, the structure and the readings here are this project's.
 
@@ -121,15 +126,29 @@ the record's rules.
   only to find the entries; none of its prose, and nothing of Theographic's matching, is reproduced.
 - **Terms.** Ours, under the project's own licence.
 
+## review/archive/
+
+Lists nothing reads any more, kept as the record of what was decided.
+
+- `bibledata-relationships.json` — BibleData's relationship facts the text did not confirm, and the
+  owner's decision on each (confirm, remove, re-ask), taken in his console between 2026-09-11 and
+  2026-09-29. `bibledata-corrections.json` holds the corrections those decisions needed (another
+  verse, another relation word, a gentilic read as a people), and `bibledata-removed.json` the facts
+  he removed. What he confirmed is in `descriptors/zz-words-*.jsonl` as clauses of this project's
+  own; BibleData's relationship rows left the corpus on 2026-09-30, so the facts he removed and the
+  ones never decided are moot. The row ids in these files are the ones the database held then.
+- **Made by** the project owner, in his console; the facts listed are BibleData's (CC BY 4.0).
+  **Terms.** Ours.
+
 ## owner-changes.jsonl
 
 Every change the project owner makes in his local console (`Essenthos.Desk`), one JSON object a line,
 appended and never rewritten: `{"at", "section", "action", "target", "before", "after", "note",
 "needs"}`. `target` names what was changed the way the corpus is addressed from outside it — a slug, a
 verse, a file under `Resources/Images` — never a row id. `needs` says what has to run before the site
-shows the change: `images` (the Forge `images` verb), `load` (the next corpus load), `relationships`
-(`scripts/relationships.py decide`), `agent` (a change somebody has to make by hand), or null where it
-took effect when saved. A run the console starts is recorded as section `apply`, with the step as its
+shows the change: `images` (the Forge `images` verb), `load` (the next corpus load), `agent` (a
+change somebody has to make by hand), or null where it took effect when saved. Lines of section
+`relationships` are from the review of BibleData's relationships the console held until 2026-09-30. A run the console starts is recorded as section `apply`, with the step as its
 action and `succeeded` or `failed` after it; an agent that applies a step outside the console appends
 a line of the same shape, so the console stops showing the change as waiting.
 

@@ -80,28 +80,26 @@ public sealed class DatasetCorrectionMigrationTests : IDisposable
         fast.Notes.Should().Be($"{renaming.Why} [Ussher date p96]", "a second run finds nothing left to rename");
     }
 
+    /// <summary>
+    /// The dataset's relationship rows leave a corpus that already holds them, as a cold load no
+    /// longer writes them, and a row this project read for itself is not touched.
+    /// </summary>
     [Fact]
-    public async Task Levi_s_six_are_his_descendants_as_the_loader_reads_them()
+    public async Task The_dataset_s_relationships_leave_and_ours_stay()
     {
         var levi = Person("levi", "person:Levi_1");
-        var miniamin = Person("miniamin", "person:Miniamin_1");
         var gershon = Person("gershon", "person:Gershon_1");
         await _db.SaveChangesAsync();
-        const string note = "inferred that these are Levites serving their brothers";
-        Tie(levi, "father", miniamin, note);
-        Tie(miniamin, "son", levi, note);
-        Tie(levi, "father", gershon, null);
+        Tie(levi, "father", gershon, Dataset, LinkMethod.StatedBySource);
+        Tie(gershon, "son", levi, Dataset, LinkMethod.StatedBySource);
+        Tie(gershon, "son-of", levi, "read from Scripture by the project owner, decided 2026-09-12", LinkMethod.Manual);
         await _db.SaveChangesAsync();
 
-        await Migrate();
+        await Migrate(new EveryRelationshipIsThisProjectsOwn());
+        await Migrate(new EveryRelationshipIsThisProjectsOwn());
 
-        var rows = await _db.EntityRelationships.AsNoTracking().ToListAsync();
-        var expected = BibleDataLoader.Restated[("Levi_1", "father", "Miniamin_1")];
-        rows.Single(r => r.FromEntityId == levi.Id && r.ToEntityId == miniamin.Id).Type.Should().Be(expected.Type);
-        rows.Single(r => r.FromEntityId == miniamin.Id).Type.Should().Be("descendant");
-        rows.Single(r => r.FromEntityId == miniamin.Id).Notes
-            .Should().Be($"{BibleDataLoader.Stopped(note)} {expected.Why}");
-        rows.Single(r => r.ToEntityId == gershon.Id).Type.Should().Be("father", "Gershon is Levi's son");
+        var left = await _db.EntityRelationships.AsNoTracking().SingleAsync();
+        (left.Type, left.Method, left.FromEntityId).Should().Be(("son-of", LinkMethod.Manual, gershon.Id));
     }
 
     [Fact]
@@ -230,11 +228,11 @@ public sealed class DatasetCorrectionMigrationTests : IDisposable
         return person;
     }
 
-    private void Tie(Entity from, string type, Entity to, string? notes) =>
+    private void Tie(Entity from, string type, Entity to, string source, LinkMethod method) =>
         _db.EntityRelationships.Add(new EntityRelationship
         {
-            FromEntityId = from.Id, ToEntityId = to.Id, Type = type, Category = "inferred",
-            CanonicalBook = 14, CanonicalChapter = 31, CanonicalVerse = 15,
-            Method = LinkMethod.StatedBySource, Source = Dataset, Notes = notes,
+            FromEntityId = from.Id, ToEntityId = to.Id, Type = type, Category = RelationshipCategories.Read,
+            CanonicalBook = 2, CanonicalChapter = 6, CanonicalVerse = 16,
+            Method = method, Source = source,
         });
 }

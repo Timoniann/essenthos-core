@@ -290,7 +290,6 @@ internal sealed class DatasetLoader(
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
-            await HoldBackTheRelationshipsTheOwnerRemoved(resources, stoppingToken);
             await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
             await DeclineTheNamesThoseLinesName(resources, stoppingToken);
             await FoldTheRecordsWrittenTwice(stoppingToken);
@@ -1238,12 +1237,6 @@ internal sealed class DatasetLoader(
     private bool _wroteWords;
 
     /// <summary>
-    /// The entities at either end of a relationship row the owner's removals just held back or gave
-    /// back, so the step that reads our own relationships reads theirs again.
-    /// </summary>
-    private IReadOnlySet<int> _entitiesWhoseWitnessChanged = new HashSet<int>();
-
-    /// <summary>
     /// Brings the planner's statistics up to the words just written. A text is a few percent of a
     /// corpus of twenty million words, too small a share for autovacuum to analyse the table again,
     /// so without this every pass after a load or a reload plans against statistics that do not know
@@ -1351,7 +1344,7 @@ internal sealed class DatasetLoader(
     {
         status.Starting("the encyclopedia");
 
-        var bibleData = Path.Combine(resources, "BibleData2026");
+        var bibleData = Path.Combine(resources, BibleDataLoader.Folder);
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<BibleDataLoader>();
@@ -1751,25 +1744,8 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The dataset's relationships the owner removed, kept from the page. On every load, because his
-    /// console changes them between loads, and before our own are picked, so a row he struck out does
-    /// not outrank a reading of ours.
-    /// </summary>
-    private async Task HoldBackTheRelationshipsTheOwnerRemoved(string resources, CancellationToken cancellationToken)
-    {
-        status.Starting("the relationships the owner removed");
-
-        using var scope = services.CreateScope();
-        var loader = scope.ServiceProvider.GetRequiredService<WithdrawnRelationshipLoader>();
-        var outcome = await loader.Load(resources, cancellationToken);
-        _entitiesWhoseWitnessChanged = outcome.Changed;
-        status.Record(outcome);
-    }
-
-    /// <summary>
-    /// The relationships an entity page draws, read off the clauses the step above loaded rather
-    /// than left to a dataset's edge list. Immediately after it, because it reads nothing else, and
-    /// after the dataset loaders because what a witness already states is half of the pick.
+    /// The relationships an entity page draws, read off the clauses the step above loaded.
+    /// Immediately after it, because it reads nothing else.
     /// </summary>
     private async Task RelateTheEntitiesOurOwnClausesRelate(CancellationToken cancellationToken)
     {
@@ -1777,7 +1753,7 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OwnRelationshipLoader>();
-        status.Record(await loader.Load(_entitiesWhoseWitnessChanged, cancellationToken));
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>

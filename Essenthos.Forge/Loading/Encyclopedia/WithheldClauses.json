@@ -1,0 +1,237 @@
+{
+  "decidedBy": "the project owner's decision of 2026-09-30 that every relationship is this project's own and BibleData's relationship rows leave the corpus — recorded on TSK-0893 — applied so that what a page says did not change the day they left",
+  "policy": "A reading listed here is a descriptor clause that is not written as a relationship. Each was read by a model and never written, because BibleData's row for the same two records answered the question otherwise and a dataset's statement outranked a model's reading; one (Keturah) is listed because the dataset's row is what settled a tie between two readings of equal confidence. The dataset's rows are gone and nothing of ours has weighed these readings since, so they stay unwritten until somebody reads the verse: several say loosely what this corpus already says closely from the other end, several contradict what the owner decided from the other end, and three pairs (Zadok and Ahitub, Meraiah and Seraiah, Jedaiah and Jeshua) have nothing else. Taking an entry off the list lets the reading be written on the next load that reads its record; a record that already has relationships is read again only when its clauses change.",
+  "clauses": [
+    {
+      "entity": "abiel",
+      "relation": "father-of",
+      "target": "kish",
+      "reference": "1SA 9:1",
+      "why": "Not written while BibleData's rows for the pair said: abiel grandfather kish, which the owner removed; kish grandson abiel, which the owner removed. This corpus holds for the pair: kish son-of abiel (1SA 9:1, the owner)."
+    },
+    {
+      "entity": "ahitub-3",
+      "relation": "father-of",
+      "target": "zadok-3",
+      "reference": "1CH 6:12",
+      "why": "Not written while BibleData's rows for the pair said: ahitub-3 grandfather zadok-3, which the owner removed; zadok-3 grandson ahitub-3, which the owner removed. This corpus holds nothing else for the pair."
+    },
+    {
+      "entity": "amok",
+      "relation": "ancestor-of",
+      "target": "eber-5",
+      "reference": "NEH 12:20",
+      "why": "Not written while BibleData's rows for the pair said: amok father eber-5, which the owner removed; eber-5 son amok, which the owner removed. This corpus holds for the pair: eber-5 descendant-of amok (NEH 12:20, a model)."
+    },
+    {
+      "entity": "benjamin",
+      "relation": "brother-of",
+      "target": "simeon",
+      "reference": "GEN 42:36",
+      "why": "Not written while BibleData's rows for the pair said: benjamin half-brother simeon; simeon half-brother benjamin. This corpus holds for the pair: simeon half-brother-of benjamin (GEN 35:22-24, the owner)."
+    },
+    {
+      "entity": "elioenai",
+      "relation": "ancestor-of",
+      "target": "akkub",
+      "reference": "1CH 3:24",
+      "why": "Not written while BibleData's rows for the pair said: akkub son elioenai; elioenai father akkub. This corpus holds for the pair: akkub son-of elioenai (1CH 3:24, a model)."
+    },
+    {
+      "entity": "elioenai",
+      "relation": "ancestor-of",
+      "target": "anani",
+      "reference": "1CH 3:24",
+      "why": "Not written while BibleData's rows for the pair said: anani son elioenai; elioenai father anani. This corpus holds for the pair: anani son-of elioenai (1CH 3:24, a model)."
+    },
+    {
+      "entity": "elioenai",
+      "relation": "ancestor-of",
+      "target": "delaiah",
+      "reference": "1CH 3:24",
+      "why": "Not written while BibleData's rows for the pair said: delaiah son elioenai; elioenai father delaiah. This corpus holds for the pair: delaiah son-of elioenai (1CH 3:24, a model)."
+    },
+    {
+      "entity": "elioenai",
+      "relation": "ancestor-of",
+      "target": "eliashib",
+      "reference": "1CH 3:24",
+      "why": "Not written while BibleData's rows for the pair said: eliashib son elioenai; elioenai father eliashib. This corpus holds for the pair: eliashib son-of elioenai (1CH 3:24, a model)."
+    },
+    {
+      "entity": "elioenai",
+      "relation": "ancestor-of",
+      "target": "hodaviah",
+      "reference": "1CH 3:24",
+      "why": "Not written while BibleData's rows for the pair said: elioenai father hodaviah; hodaviah son elioenai. This corpus holds for the pair: hodaviah son-of elioenai (1CH 3:24, a model)."
+    },
+    {
+      "entity": "elioenai",
+      "relation": "ancestor-of",
+      "target": "johanan-2",
+      "reference": "1CH 3:24",
+      "why": "Not written while BibleData's rows for the pair said: elioenai father johanan-2; johanan-2 son elioenai. This corpus holds for the pair: johanan-2 son-of elioenai (1CH 3:24, a model)."
+    },
+    {
+      "entity": "elioenai",
+      "relation": "descendant-of",
+      "target": "neariah",
+      "reference": "1CH 3:23",
+      "why": "Not written while BibleData's rows for the pair said: elioenai son neariah; neariah father elioenai. This corpus holds for the pair: neariah father-of elioenai (1CH 3:23, a model)."
+    },
+    {
+      "entity": "elioenai",
+      "relation": "ancestor-of",
+      "target": "pelaiah",
+      "reference": "1CH 3:24",
+      "why": "Not written while BibleData's rows for the pair said: elioenai father pelaiah; pelaiah son elioenai. This corpus holds for the pair: pelaiah son-of elioenai (1CH 3:24, a model)."
+    },
+    {
+      "entity": "elioenai-3",
+      "relation": "descendant-of",
+      "target": "becher",
+      "reference": "1CH 7:8",
+      "why": "Not written while BibleData's rows for the pair said: becher father elioenai-3; elioenai-3 son becher. This corpus holds for the pair: becher father-of elioenai-3 (1CH 7:8, a model)."
+    },
+    {
+      "entity": "eshtemoa-2",
+      "relation": "son-of",
+      "target": "hodiah",
+      "reference": "1CH 4:19",
+      "why": "Not written while BibleData's rows for the pair said: eshtemoa-2 grandson hodiah, which the owner removed; hodiah grandfather eshtemoa-2, which the owner removed. This corpus holds for the pair: hodiah mother-of eshtemoa-2 (1CH 4:19, a model)."
+    },
+    {
+      "entity": "hananiah-9",
+      "relation": "descendant-of",
+      "target": "jeremiah-7",
+      "reference": "NEH 12:12",
+      "why": "Not written while BibleData's rows for the pair said: hananiah-9 son jeremiah-7, which the owner removed; jeremiah-7 father hananiah-9, which the owner removed. This corpus holds for the pair: jeremiah-7 ancestor-of hananiah-9 (NEH 12:12, a model)."
+    },
+    {
+      "entity": "harim-2",
+      "relation": "father-of",
+      "target": "malchijah-6",
+      "reference": "NEH 3:11",
+      "why": "Not written while BibleData's rows for the pair said: harim-2 ancestor malchijah-6; harim-2 father malchijah-6; malchijah-6 descendant harim-2; malchijah-6 son harim-2. This corpus holds for the pair: malchijah-6 son-of harim-2 (NEH 3:11, the owner)."
+    },
+    {
+      "entity": "hobab",
+      "relation": "father-in-law-of",
+      "target": "moses",
+      "reference": "NUM 10:29",
+      "why": "Not written while BibleData's rows for the pair said: hobab brother-in-law moses; moses brother-in-law hobab. This corpus holds for the pair: moses brother-in-law-of hobab (NUM 10:29, the owner)."
+    },
+    {
+      "entity": "hushim-2",
+      "relation": "descendant-of",
+      "target": "ehi",
+      "reference": "1CH 7:12",
+      "why": "Not written while BibleData's rows for the pair said: ehi father hushim-2; hushim-2 son ehi. This corpus holds for the pair: ehi father-of hushim-2 (1CH 7:12, a model)."
+    },
+    {
+      "entity": "jedaiah-2",
+      "relation": "ancestor-of",
+      "target": "jeshua",
+      "reference": "EZR 2:36",
+      "why": "Not written while BibleData's rows for the pair said: jedaiah-2 descendant jeshua; jeshua ancestor jedaiah-2. This corpus holds nothing else for the pair."
+    },
+    {
+      "entity": "keturah",
+      "relation": "concubine-of",
+      "target": "abram",
+      "reference": "1CH 1:32",
+      "why": "Read at the same confidence as wife-of (GEN 25:1 calls her Abraham's wife, 1CH 1:32 his concubine), so the two would stand disputed and neither be written. BibleData's row said wife, which settled the pair as wife-of; this reading is held so that wife-of stays written."
+    },
+    {
+      "entity": "machir",
+      "relation": "wife-of",
+      "target": "maacah-5",
+      "reference": "1CH 7:15",
+      "why": "Not written while BibleData's rows for the pair said: maacah-5 wife machir; machir husband maacah-5. This corpus holds for the pair: maacah-5 wife-of machir (1CH 7:16, a model)."
+    },
+    {
+      "entity": "manasseh-2",
+      "relation": "father-of",
+      "target": "gershom-2",
+      "reference": "JDG 18:30",
+      "why": "Not written while BibleData's rows for the pair said: gershom-2 father manasseh-2, which the owner removed; manasseh-2 son gershom-2, which the owner removed. This corpus holds for the pair: gershom-2 son-of manasseh-2 (JDG 18:30, the owner)."
+    },
+    {
+      "entity": "meraiah",
+      "relation": "descendant-of",
+      "target": "seraiah-6",
+      "reference": "NEH 12:12",
+      "why": "Not written while BibleData's rows for the pair said: meraiah son seraiah-6, which the owner removed; seraiah-6 father meraiah, which the owner removed. This corpus holds nothing else for the pair."
+    },
+    {
+      "entity": "mica-2",
+      "relation": "father-of",
+      "target": "mattaniah-9",
+      "reference": "NEH 11:17",
+      "why": "Not written while BibleData's rows for the pair said: mattaniah-9 descendant mica-2; mattaniah-9 son mica-2; mica-2 ancestor mattaniah-9; mica-2 father mattaniah-9. This corpus holds for the pair: mattaniah-9 son-of mica-2 (1CH 9:15, the owner)."
+    },
+    {
+      "entity": "mushi",
+      "relation": "father-of",
+      "target": "mahli-3",
+      "reference": "1CH 23:23",
+      "why": "Not written while BibleData's rows for the pair said: mahli-3 descendant mushi; mahli-3 son mushi; mushi ancestor mahli-3; mushi father mahli-3. This corpus holds for the pair: mahli-3 son-of mushi (1CH 6:47, the owner)."
+    },
+    {
+      "entity": "ram",
+      "relation": "father-of",
+      "target": "amminadab",
+      "reference": "RUT 4:19",
+      "why": "Not written while BibleData's rows for the pair said: amminadab grandson ram, which the owner removed; ram grandfather amminadab, which the owner removed. This corpus holds for the pair: amminadab son-of ram (RUT 4:19, the owner)."
+    },
+    {
+      "entity": "reuben",
+      "relation": "brother-of",
+      "target": "joseph",
+      "reference": "GEN 37:21",
+      "why": "Not written while BibleData's rows for the pair said: joseph half-brother reuben; reuben half-brother joseph. This corpus holds for the pair: joseph half-brother-of reuben (GEN 30:24, the owner)."
+    },
+    {
+      "entity": "shamir",
+      "relation": "descendant-of",
+      "target": "micah-3",
+      "reference": "1CH 24:24",
+      "why": "Not written while BibleData's rows for the pair said: micah-3 father shamir; shamir son micah-3. This corpus holds for the pair: micah-3 father-of shamir (1CH 24:24, a model)."
+    },
+    {
+      "entity": "shecaniah",
+      "relation": "ancestor-of",
+      "target": "shemaiah-2",
+      "reference": "1CH 3:22",
+      "why": "Not written while BibleData's rows for the pair said: shecaniah father shemaiah-2; shemaiah-2 son shecaniah. This corpus holds for the pair: shemaiah-2 son-of shecaniah (1CH 3:22, a model)."
+    },
+    {
+      "entity": "shelomith-3",
+      "relation": "ancestor-of",
+      "target": "jahath-5",
+      "reference": "1CH 24:22",
+      "why": "Not written while BibleData's rows for the pair said: jahath-5 son shelomith-3; shelomith-3 father jahath-5. This corpus holds for the pair: jahath-5 son-of shelomith-3 (1CH 24:22, a model)."
+    },
+    {
+      "entity": "shuthelah",
+      "relation": "ancestor-of",
+      "target": "eran",
+      "reference": "NUM 26:36",
+      "why": "Not written while BibleData's rows for the pair said: eran son shuthelah; shuthelah father eran. This corpus holds for the pair: eran son-of shuthelah (NUM 26:36, a model)."
+    },
+    {
+      "entity": "zadok-3",
+      "relation": "son-of",
+      "target": "ahitub-3",
+      "reference": "1CH 6:12",
+      "why": "Not written while BibleData's rows for the pair said: ahitub-3 grandfather zadok-3, which the owner removed; zadok-3 grandson ahitub-3, which the owner removed. This corpus holds nothing else for the pair."
+    },
+    {
+      "entity": "zechariah-6",
+      "relation": "descendant-of",
+      "target": "isshiah-3",
+      "reference": "1CH 24:25",
+      "why": "Not written while BibleData's rows for the pair said: isshiah-3 father zechariah-6; zechariah-6 son isshiah-3. This corpus holds for the pair: isshiah-3 father-of zechariah-6 (1CH 24:25, a model)."
+    }
+  ]
+}

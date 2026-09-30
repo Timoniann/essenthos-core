@@ -388,8 +388,7 @@ internal record TextVerseResponse(int Number, IList<TextWordResponse> Words, str
 internal record VerseRefResponse(int BookOrdinal, string Book, string Slug, int Chapter, int Verse);
 
 /// <param name="Category">
-/// <c>explicit</c> where a verse says it, <c>inferred</c> where the source worked it out. Keeping
-/// the two apart is the same discipline the link table applies to words.
+/// <c>read</c>: read here from the verse on the row, by whatever <see cref="Source"/> names.
 /// </param>
 /// <param name="Inward">
 /// True when this is the other entity's relationship read backwards — Isaac is recorded as the son
@@ -425,8 +424,8 @@ internal record EntityRelationshipResponse(
     public string Kind { get; init; } = "person";
 
     /// <summary>
-    /// What established it. Two witnesses speak in this table and a reader who cannot tell a
-    /// dataset's edge from a model's reading of a verse is being asked to trust both equally.
+    /// What established it: a model's reading of the verse, or a person's decision. A reader who
+    /// cannot tell the two apart is being asked to trust both equally.
     /// </summary>
     public string? Method { get; init; }
 
@@ -439,7 +438,7 @@ internal record EntityRelationshipResponse(
     /// </summary>
     public IList<VerseRefResponse>? Verses { get; init; }
 
-    /// <summary>Which dataset, model or person says so.</summary>
+    /// <summary>Which model or person says so.</summary>
     public string? Source { get; init; }
 
     /// <summary>
@@ -450,34 +449,25 @@ internal record EntityRelationshipResponse(
     public string? Dataset => Datasets.Of(Source);
 
     /// <summary>
-    /// The other witnesses that state this same fact, each in its own words and on its own verse.
-    ///
-    /// Empty on nearly every row and the most valuable thing on the page where it is not: a
-    /// relation this corpus read out of a verse that a dataset compiled separately also states is
-    /// better evidenced than either alone, and a client renders <em>BibleData states this too</em>
-    /// from it without having to work out which two rows were one fact.
+    /// The same fact as the other record states it, folded into this row: <em>Haran, father of
+    /// Lot</em> under <em>Lot, son of Haran</em>, with its own verse and its own credit, so a client
+    /// renders the fact once without having to work out which two rows were one.
     /// </summary>
     public IList<EntityRelationshipWitnessResponse> Corroboration { get; init; } = [];
 }
 
 /// <summary>
-/// A second witness to the relationship it hangs on — what it calls the relation, where it rests
-/// it, and who it is.
+/// The other end of the relationship it hangs on — what it calls the relation, where it rests it,
+/// and who says so.
 /// </summary>
-/// <param name="Type">
-/// The relation in the witness's own vocabulary, never translated into ours. BibleData writes
-/// <c>son</c> where this corpus writes <c>son-of</c>, and a page saying the dataset said our word
-/// would be putting words in its mouth.
-/// </param>
+/// <param name="Type">The relation as the other record states it: <c>father-of</c> under <c>son-of</c>.</param>
 /// <param name="Reference">
-/// The verse this witness rests it on, which is not always the one the row above rests it on and is
-/// null where the witness gave none. Both citations are real, so both are here rather than one
-/// standing for the fact.
+/// The verse it rests on, which is not always the one the row above rests on. Both citations are
+/// real, so both are here rather than one standing for the fact.
 /// </param>
 /// <param name="Reversed">
-/// True where the witness states the pair the other way about: BibleData records Bani as the
-/// ancestor of Adaiah, which is the row above — <em>Adaiah, descendant of Bani</em> — read from the
-/// other end.
+/// True where it states the pair the other way about: Bani the ancestor of Adaiah, which is the row
+/// above — <em>Adaiah, descendant of Bani</em> — read from the other end.
 /// </param>
 internal record EntityRelationshipWitnessResponse(
     string Type,

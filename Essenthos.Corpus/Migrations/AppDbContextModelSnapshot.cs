@@ -1228,10 +1228,6 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("type");
 
-                    b.Property<bool>("Withdrawn")
-                        .HasColumnType("boolean")
-                        .HasColumnName("withdrawn");
-
                     b.HasKey("Id")
                         .HasName("pk_entity_relationship");
 
@@ -1243,7 +1239,7 @@ namespace Essenthos.Core.Migrations
 
                     b.ToTable("entity_relationship", null, t =>
                         {
-                            t.HasComment("One entity standing in one relation to another. Two witnesses speak here and every row says which: BibleData's edge list under its own category and its own relation names, and the clauses this corpus read from Scripture under theirs. Nothing settles them into one row -- what a reader is shown is settled the way an annotation is, by claim standing and then confidence.");
+                            t.HasComment("One entity standing in one relation to another, as this project holds it: read from the verse the row names by the model or the person its source names, in this project's own relation words. No dataset's row is here.");
 
                             t.HasCheckConstraint("ck_entity_relationship_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
 

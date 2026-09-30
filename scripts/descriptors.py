@@ -28,10 +28,10 @@ candidate's. The whole point of the pass is that the prose stops being theirs; a
 son of Reuel, Moses' father-in-law* and asked for claims would be transcribing it, and the agreement
 figure would measure transcription. The model gets Scripture, our own slugs, and nothing else.
 
-**`entity_relationship` is the answer key and is never in the prompt.** 5,448 rows of BibleData's
-relations exist in the same database and would answer most of the question outright. `score` reads
-them; `extract` must not, and the one place that could leak them -- the candidate list -- is built
-from shared verses instead.
+**BibleData's relations are the answer key and are never in the prompt.** Its 5,448 relationship
+rows would answer most of the question outright. They are not in the corpus -- every relationship
+there is this project's own -- so `score` reads them from the dataset's file; `extract` must not,
+and the one place that could leak them -- the candidate list -- is built from shared verses instead.
 
 **A claim can only cite one of the entity's own verses.** Those are its `entity_verse` rows, which
 is exactly what the loader will accept, so every surviving claim is loadable by construction. A
@@ -94,6 +94,7 @@ batches under `Resources/Essenthos/descriptors/`. A run leaves:
 
 import argparse
 import concurrent.futures
+import csv
 import datetime
 import functools
 import json
@@ -746,20 +747,45 @@ def greek_words(words):
             for w in words if GREEK_WORD.search(w['text'])]
 
 
+ANSWER_KEY = os.path.join(ROOT, 'Resources', 'BibleData2026', 'BibleData-PersonRelationship.csv')
+
+
+@functools.cache
 def answer_key():
     """
-    BibleData's relations, read only at scoring time. `from` is the RELATION of `to`, which is the
-    same direction the vocabulary reads in: `isaac son sarai` is Isaac the son of Sarai.
+    BibleData's relations, read only at scoring time and from the dataset's own file: the corpus holds
+    no relationship of a dataset's. `from` is the RELATION of `to`, which is the same direction the
+    vocabulary reads in: `isaac son sarai` is Isaac the son of Sarai.
+
+    A person is the record that holds the dataset's id, or the record the one holding it was folded
+    into; a row naming somebody the corpus does not hold is left out. The file is read as it stands,
+    so the few rows the loader used to correct -- Jesus divided from the divine name, six Levites read
+    as descendants of Levi -- are scored as the dataset wrote them.
     """
-    return psql("""
-        SELECT coalesce(json_agg(json_build_object(
-                   'from', f.slug, 'to', t.slug, 'type', r.type, 'category', r.category,
-                   'book', r.canonical_book, 'chapter', r.canonical_chapter,
-                   'verse', r.canonical_verse)), '[]')
-        FROM entity_relationship r
-        JOIN entity f ON f.id = r.from_entity_id
-        JOIN entity t ON t.id = r.to_entity_id
+    if not os.path.exists(ANSWER_KEY):
+        raise SystemExit(f'{ANSWER_KEY} is not there, so there is nothing to score against. Fetch the '
+                         'dataset with scripts/fetch-bibledata.ps1, or copy Resources/BibleData2026 from '
+                         'the main checkout when this is a worktree.')
+    held = psql("""
+        SELECT json_build_object(
+            'folded', (SELECT coalesce(json_object_agg(m.record_source_id, e.slug), '{}')
+                       FROM merged_record m JOIN entity e ON e.id = m.entity_id
+                       WHERE m.record_source_id LIKE 'person:%'),
+            'held', (SELECT coalesce(json_object_agg(e.source_id, e.slug), '{}')
+                     FROM entity e WHERE e.source_id LIKE 'person:%'))
     """)
+    record = {**held['folded'], **held['held']}
+    rows = []
+    with open(ANSWER_KEY, encoding='utf-8-sig', newline='') as handle:
+        for row in csv.DictReader(handle):
+            one, other = record.get('person:' + row['person_id_1']), record.get('person:' + row['person_id_2'])
+            if not one or not other:
+                continue
+            book, chapter, verse = parse_reference(row['reference_id']) or (None, None, None)
+            rows.append({'from': one, 'to': other, 'type': row['relationship_type'],
+                         'category': row['relationship_category'],
+                         'book': book, 'chapter': chapter, 'verse': verse})
+    return rows
 
 
 @functools.cache

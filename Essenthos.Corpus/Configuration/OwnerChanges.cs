@@ -7,8 +7,8 @@ namespace Essenthos.Core.Configuration;
 /// <summary>
 /// The owner's change log: one JSON object per line, appended by his console for every change he
 /// makes and never rewritten. A line whose <c>needs</c> names a step — <c>load</c>, <c>images</c>,
-/// <c>relationships</c>, <c>agent</c> — waits until a later line of section <c>apply</c> says that step
-/// <c>succeeded</c>. What waits is not yet in the corpus.
+/// <c>agent</c> — waits until a later line of section <c>apply</c> says that step <c>succeeded</c>.
+/// What waits is not yet in the corpus.
 /// </summary>
 public static class OwnerChanges
 {

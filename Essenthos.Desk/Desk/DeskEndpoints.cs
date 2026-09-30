@@ -37,7 +37,6 @@ internal static class DeskEndpoints
     /// </summary>
     public static void MapSummary(this RouteGroupBuilder routes) =>
         routes.MapGet("/summary", async (
-            RelationshipReview relationships,
             ThingReview things,
             PortraitBoard portraits,
             ChangeLog log,
@@ -45,8 +44,6 @@ internal static class DeskEndpoints
         {
             var counts = new List<SummaryCount>
             {
-                Count("relationships", () => relationships.Exists ? relationships.Undecided() : null,
-                    "The relationship list is not in the review folder."),
                 Count("occurrences", () => things.Exists ? things.Unanswered() : null,
                     "There is no list of open questions in the review folder."),
                 Count("records", () => things.Unreviewed(), null),
@@ -85,25 +82,6 @@ internal static class DeskEndpoints
             await switches.Set(key, request) is { } set
                 ? Results.Ok(set)
                 : NotThere("There is no such switch for the site."));
-    }
-
-    public static void MapRelationshipReview(this RouteGroupBuilder routes)
-    {
-        routes.MapGet("/review/relationships", (RelationshipReview review) =>
-            review.Exists
-                ? Results.Json(review.ReadForPage(), DeskJsonContext.Default.JsonNode)
-                : NotThere("The relationship list is not in the review folder."));
-
-        routes.MapPut("/review/relationships/{key}", async (string key, RelationshipDecisionRequest request, RelationshipReview review) =>
-            await review.Decide(key, request) is { } decided
-                ? Results.Ok(decided)
-                : Results.UnprocessableEntity(new ProblemResponse(
-                    "That fact is not in the list, or the decision is not one of the four. Reload the list and decide again.")));
-
-        routes.MapPost("/review/relationships/bulk", async (RelationshipBulkRequest request, RelationshipReview review) =>
-            await review.DecideAll(request) is { } decided
-                ? Results.Ok(decided)
-                : Results.UnprocessableEntity(new ProblemResponse("The decision is not one of the four.")));
     }
 
     public static void MapThingReview(this RouteGroupBuilder routes)

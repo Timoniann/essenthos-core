@@ -1,9 +1,7 @@
-using System.Text.Json.Nodes;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
-using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -17,21 +15,21 @@ namespace Essenthos.Core.Tests;
 /// Which relationships an entity page draws once the clauses this corpus wrote for itself reach the
 /// table it draws from.
 ///
-/// The cases are the ones where the two witnesses come apart: where they say the same thing, where
-/// they say the same thing from opposite ends, where they answer one question two ways, and where
-/// they are not answering the same question at all. And the one the whole exercise is measured by —
-/// that nothing of BibleData's is touched, whatever we conclude.
+/// The cases are the ones where two clauses about one pair come apart: where the owner decided what
+/// a model read otherwise, where two readings answer one question two ways, where they are not
+/// answering the same question at all, and where a reading is held back by name.
 ///
 /// <para>
-/// Asked of Postgres because half of what is under test is what the database will accept: a
-/// relationship read here without the verse it was read from must be refused, and the same row from
-/// a witness that gave none must not be.
+/// Asked of Postgres because part of what is under test is what the database will accept: a
+/// relationship read here without the verse it was read from must be refused.
 /// </para>
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class OwnRelationshipTests : IDisposable
 {
     private const string Model = EntityDescriptorLoader.SourcePrefix + " a test, asked 2026-09-09";
+
+    private const string Owner = EntityDescriptorLoader.SourcePrefix + " the project owner, decided 2026-09-12";
 
     private readonly AppDbContext _db;
     private readonly OwnRelationshipLoader _loader;
@@ -50,11 +48,11 @@ public sealed class OwnRelationshipTests : IDisposable
     }
 
     /// <summary>
-    /// The plain case, and the reason the table is worth writing into at all: a clause about a pair
-    /// nobody else states becomes a relationship, credited to the pass that read it.
+    /// The plain case, and the reason the table is worth writing into at all: a clause becomes a
+    /// relationship, credited to the pass that read it.
     /// </summary>
     [Fact]
-    public async Task AClauseNobodyElseStatesBecomesARelationship()
+    public async Task AClauseBecomesARelationship()
     {
         var lot = Person("lot");
         var haran = Person("haran");
@@ -67,131 +65,81 @@ public sealed class OwnRelationshipTests : IDisposable
         written.Category.Should().Be(RelationshipCategories.Read);
         written.Method.Should().Be(LinkMethod.ModelReading);
         written.Confidence.Should().Be(0.95);
-        Datasets.Of(written.Source).Should().Be("essenthos");
+        Datasets.Of(written.Source).Should().Be(Datasets.Own);
     }
 
     /// <summary>
-    /// Agreement is written rather than skipped. It is the evidence the whole layer rests on — a
-    /// clause two witnesses reach independently is better evidenced than one only the model
-    /// proposed — and it is what has to be there before BibleData's rows can ever be let go.
+    /// A decision outranks a reading, so where the two answer one question two ways the decision
+    /// stands and the reading is withheld: the page never shows Reuben as Joseph's brother and his
+    /// half-brother at once.
     /// </summary>
     [Fact]
-    public async Task WhatBothWitnessesSayIsWrittenUnderBothCredits()
+    public async Task AReadingAnsweringTheOwnersDecisionDifferentlyIsWithheld()
     {
-        var isaac = Person("isaac");
-        var abraham = Person("abraham");
-        Stated(isaac, abraham, "son");
-        Clause(isaac, abraham, DescriptorRelations.SonOf, 0.99);
-
-        (await Load()).Written.Should().Be(1);
-
-        (await Relations(isaac, abraham)).Should().BeEquivalentTo(["son", DescriptorRelations.SonOf]);
-    }
-
-    /// <summary>
-    /// The same fact from the other end. A clause is written from its own subject's side, so
-    /// BibleData's <em>Bani is the ancestor of Adaiah</em> is answered by the claim on Adaiah, and
-    /// reading it one-directionally would call that a disagreement.
-    /// </summary>
-    [Fact]
-    public async Task AClauseThatAnswersTheWitnessFromTheOtherEndStands()
-    {
-        var bani = Person("bani-4");
-        var adaiah = Person("adaiah-6");
-        Stated(bani, adaiah, "ancestor");
-        Clause(adaiah, bani, DescriptorRelations.DescendantOf, 0.9);
-
-        (await Load()).Written.Should().Be(1);
-
-        (await Relations(adaiah, bani)).Should().Equal(DescriptorRelations.DescendantOf);
-    }
-
-    /// <summary>
-    /// The rule the corpus already had, applied here rather than replaced. Testimony outranks a
-    /// reading, so where the two answer one question two ways the witness stands and the clause is
-    /// withheld — and the page never shows a man as somebody's father and his grandfather at once.
-    /// </summary>
-    [Fact]
-    public async Task AClauseAnsweringTheSameQuestionDifferentlyIsWithheld()
-    {
-        var abiel = Person("abiel");
-        var kish = Person("kish");
-        Stated(abiel, kish, "grandfather");
-        Clause(abiel, kish, DescriptorRelations.FatherOf, 0.98);
-
-        var outcome = await Load();
-        outcome.Written.Should().Be(0);
-        outcome.Withheld.Should().Be(1);
-
-        (await Relations(abiel, kish)).Should().Equal("grandfather");
-    }
-
-    /// <summary>
-    /// A closer tie is not a different answer. The witness says only that Lot descends from Haran and
-    /// the verse was read as <em>son of</em>: the reading says everything the witness says and more,
-    /// and withholding it would put the looser line on the page in place of the one the text gives.
-    /// </summary>
-    [Fact]
-    public async Task AReadingCloserThanTheWitnessIsWrittenRatherThanWithheld()
-    {
-        var lot = Person("lot");
-        var haran = Person("haran");
-        Stated(haran, lot, "ancestor");
-        Clause(lot, haran, DescriptorRelations.SonOf, 0.95);
+        var reuben = Person("reuben");
+        var joseph = Person("joseph");
+        Decided(reuben, joseph, DescriptorRelations.HalfBrotherOf);
+        Clause(reuben, joseph, DescriptorRelations.BrotherOf, 0.85);
 
         var outcome = await Load();
         outcome.Written.Should().Be(1);
-        outcome.Withheld.Should().Be(0);
+        outcome.Withheld.Should().Be(1);
+
+        var kept = await _db.EntityRelationships.SingleAsync();
+        kept.Type.Should().Be(DescriptorRelations.HalfBrotherOf);
+        kept.Method.Should().Be(LinkMethod.Manual);
+        kept.Source.Should().Be(Owner);
     }
 
     /// <summary>
-    /// And only that way round. A reading of <em>descendant of</em> against a witness's <em>son</em>
-    /// says less than the witness, so it gives way exactly as any other disagreement does.
+    /// A looser word is a different answer where the closer one is settled. The owner decided
+    /// <em>son of</em>, and a reading of <em>descendant of</em> says less than he did, so it gives
+    /// way as any other disagreement does.
     /// </summary>
     [Fact]
-    public async Task AReadingLooserThanTheWitnessStillGivesWay()
+    public async Task AReadingLooserThanTheDecisionGivesWay()
     {
         var lot = Person("lot");
         var haran = Person("haran");
-        Stated(lot, haran, "son");
+        Decided(lot, haran, DescriptorRelations.SonOf);
         Clause(lot, haran, DescriptorRelations.DescendantOf, 0.95);
 
         var outcome = await Load();
-        outcome.Written.Should().Be(0);
         outcome.Withheld.Should().Be(1);
+        (await Relations(lot, haran)).Should().Equal(DescriptorRelations.SonOf);
     }
 
     /// <summary>
-    /// Son of Haran already says descendant of Haran, so a pair read both ways is one row and not two.
+    /// And a closer one is not a different answer. The owner decided only that Lot descends from
+    /// Haran, and a verse read as <em>son of</em> says everything he said and more.
     /// </summary>
     [Fact]
-    public async Task TheWiderClauseBesideACloserOneIsNotWrittenAgain()
+    public async Task AReadingCloserThanTheDecisionIsWrittenBesideIt()
     {
         var lot = Person("lot");
         var haran = Person("haran");
-        Stated(lot, haran, "descendant");
-        Clause(lot, haran, DescriptorRelations.SonOf, 0.9);
-        Clause(lot, haran, DescriptorRelations.DescendantOf, 0.9);
+        Decided(lot, haran, DescriptorRelations.DescendantOf);
+        Clause(lot, haran, DescriptorRelations.SonOf, 0.95);
 
-        (await Load()).Written.Should().Be(1);
-
-        (await Relations(lot, haran)).Should().BeEquivalentTo(["descendant", DescriptorRelations.SonOf]);
+        var outcome = await Load();
+        outcome.Withheld.Should().Be(0);
+        (await Relations(lot, haran)).Should().Equal(DescriptorRelations.DescendantOf, DescriptorRelations.SonOf);
     }
 
     /// <summary>
     /// Not everything that differs disagrees. The commander of Judah is also of the tribe of Judah,
     /// and treating a second kind of claim about one pair as a contradiction would withhold a true
-    /// clause for saying something the witness simply did not say.
+    /// clause for saying something the first simply did not say.
     /// </summary>
     [Fact]
-    public async Task AClauseAboutSomethingElseEntirelyStandsBesideTheWitness()
+    public async Task AClauseAboutSomethingElseEntirelyStandsBesideTheFirst()
     {
         var nahshon = Person("nahshon");
         var judah = Person("judah");
-        Stated(nahshon, judah, "descendant");
+        Clause(nahshon, judah, DescriptorRelations.DescendantOf, 0.95);
         Clause(nahshon, judah, DescriptorRelations.OfTribe, 0.9);
 
-        (await Load()).Written.Should().Be(1);
+        (await Load()).Written.Should().Be(2);
     }
 
     /// <summary>
@@ -213,99 +161,114 @@ public sealed class OwnRelationshipTests : IDisposable
     }
 
     /// <summary>
-    /// A relation the vocabulary has no word for cannot corroborate a clause and cannot contradict
-    /// one. Counting it as a disagreement would leave the encyclopedia silent about a pair over a
-    /// word it does not happen to have.
-    /// </summary>
-    [Fact]
-    public async Task ARelationTheVocabularyCannotExpressSettlesNothing()
-    {
-        // "victim" is killed-by or raped-by and does not say which, so it can neither settle a pair
-        // nor contradict a clause about it. This test used "cousin" until cousin-of was added, and
-        // "concubinator" until it was read as a concubine row from the other end.
-        var sisera = Person("sisera");
-        var jael = Person("jael");
-        Stated(sisera, jael, "victim");
-        Clause(sisera, jael, DescriptorRelations.KilledBy, 0.8);
-
-        (await Load()).Written.Should().Be(1);
-    }
-
-    /// <summary>
-    /// A witness's word for the other end of a fact is that fact. BibleData's <em>Abram concubinator
-    /// Hagar</em> says what a reading of <em>Hagar, wife of Abram</em> answers differently, so the
-    /// reading gives way as it would to the dataset's own <c>concubine</c> row.
-    /// </summary>
-    [Fact]
-    public async Task AWordForTheOtherEndSettlesThePairReadTheOtherWay()
-    {
-        var abram = Person("abram");
-        var hagar = Person("hagar");
-        Stated(abram, hagar, "concubinator");
-        Clause(hagar, abram, DescriptorRelations.WifeOf, 0.8);
-
-        var outcome = await Load();
-        outcome.Written.Should().Be(0);
-        outcome.Withheld.Should().Be(1);
-    }
-
-    /// <summary>
-    /// What a word the vocabulary gains is for. Until cousin-of existed, the dataset's "cousin" on
-    /// Mordecai and Esther settled nothing and a reading calling him her uncle was written. The text
-    /// says she was <em>his uncle's daughter</em> (EST 2:7): the dataset is right and the reading is
-    /// wrong, and now that the two are answers to one question the witness of higher standing wins.
-    /// </summary>
-    [Fact]
-    public async Task AWordTheVocabularyGainsLetsAWitnessCatchAWrongReading()
-    {
-        var mordecai = Person("mordecai");
-        var esther = Person("esther");
-        Stated(mordecai, esther, "cousin");
-        Clause(mordecai, esther, DescriptorRelations.UncleOf, 0.8);
-
-        var outcome = await Load();
-        outcome.Written.Should().Be(0);
-        outcome.Withheld.Should().Be(1);
-    }
-
-    /// <summary>
-    /// Marriage is not an answer to the question descent answers. BibleData says Abram is Sarai's
-    /// husband and her half-brother, both from GEN 11:29 and both what the text says, and reading
-    /// the two as one contradiction would withhold the very clause the witness agrees with.
+    /// Marriage is not an answer to the question descent answers. Abram is Sarai's husband and her
+    /// half-brother, both what the text says, and reading the two as one contradiction would
+    /// withhold one of them.
     /// </summary>
     [Fact]
     public async Task AMarriageAndAKinshipOverOnePairAreTwoFactsAndNotTwoAnswers()
     {
         var abram = Person("abram");
         var sarai = Person("sarai");
-        Stated(abram, sarai, "husband");
-        Stated(abram, sarai, "half-brother");
         Clause(abram, sarai, DescriptorRelations.HusbandOf, 0.9);
+        Clause(abram, sarai, DescriptorRelations.HalfBrotherOf, 0.9);
 
         var outcome = await Load();
-        outcome.Written.Should().Be(1);
+        outcome.Written.Should().Be(2);
         outcome.Disputed.Should().Be(0);
     }
 
     /// <summary>
-    /// Nothing of the witness's is deleted, rewritten or reordered. The corpus lost 14,515 rows to
-    /// a pass that believed it could rebuild them, and BibleData's edge list is the
-    /// answer key everything here is measured against.
+    /// A pair is read from its own subject's end. Lot is a descendant of Terah on Lot's record and
+    /// Terah is Lot's grandfather on Terah's: one pass wrote both, and setting them against each
+    /// other would be a witness disputing itself.
     /// </summary>
     [Fact]
-    public async Task TheWitnessKeepsEveryRowItHad()
+    public async Task TheTwoEndsOfAPairAreNotSetAgainstEachOther()
     {
-        var abiel = Person("abiel");
-        var kish = Person("kish");
-        Stated(abiel, kish, "grandfather");
-        Clause(abiel, kish, DescriptorRelations.FatherOf, 0.98);
+        var lot = Person("lot");
+        var terah = Person("terah");
+        Clause(lot, terah, DescriptorRelations.DescendantOf, 0.9);
+        Clause(terah, lot, DescriptorRelations.GrandfatherOf, 0.95);
 
-        await Load();
+        var outcome = await Load();
+        outcome.Written.Should().Be(2);
+        outcome.Withheld.Should().Be(0);
+    }
 
-        var witness = await _db.EntityRelationships.SingleAsync(r => r.Type == "grandfather");
-        witness.Method.Should().Be(LinkMethod.StatedBySource);
-        witness.Confidence.Should().BeNull();
-        witness.Category.Should().Be(RelationshipCategories.Explicit);
+    /// <summary>
+    /// A reading the list names is not written, and what else the record says is. Its record is read
+    /// on every load while it has no other row, and the reading stays unwritten each time.
+    /// </summary>
+    [Fact]
+    public async Task AReadingTheListNamesIsHeldBack()
+    {
+        var elioenai = Person("elioenai");
+        var hodaviah = Person("hodaviah");
+        var machir = Person("machir");
+        var maacah = Person("maacah-5");
+        var gilead = Person("gilead");
+        Clause(elioenai, hodaviah, DescriptorRelations.AncestorOf, 0.85);
+        Clause(machir, maacah, DescriptorRelations.WifeOf, 0.85);
+        Clause(machir, gilead, DescriptorRelations.FatherOf, 0.9);
+        WithheldClause[] held =
+        [
+            new("elioenai", DescriptorRelations.AncestorOf, "hodaviah", "1CH 3:24", null),
+            new("machir", DescriptorRelations.WifeOf, "maacah-5", "1CH 7:15", null),
+        ];
+
+        var outcome = await _loader.Load(held, default);
+
+        outcome.Held.Should().Be(2);
+        outcome.Written.Should().Be(1);
+        (await _db.EntityRelationships.SingleAsync()).Type.Should().Be(DescriptorRelations.FatherOf);
+
+        var again = await _loader.Load(held, default);
+        again.AlreadyLoaded.Should().BeTrue();
+        again.Held.Should().Be(1, "Elioenai has no row, so his clause is read again and held again");
+        (await _db.EntityRelationships.CountAsync()).Should().Be(1);
+    }
+
+    /// <summary>
+    /// A reading held back takes no part in the pick. Keturah is read as Abraham's wife and as his
+    /// concubine at one confidence, which would leave the pair disputed and unwritten; with the
+    /// second held, the first stands.
+    /// </summary>
+    [Fact]
+    public async Task AReadingHeldBackDoesNotDisputeTheOneBesideIt()
+    {
+        var keturah = Person("keturah");
+        var abram = Person("abram");
+        Clause(keturah, abram, DescriptorRelations.WifeOf, 0.85);
+        Clause(keturah, abram, DescriptorRelations.ConcubineOf, 0.85);
+
+        var outcome = await _loader.Load(
+            [new WithheldClause("keturah", DescriptorRelations.ConcubineOf, "abram", "1CH 1:32", null)], default);
+
+        outcome.Disputed.Should().Be(0);
+        (await Relations(keturah, abram)).Should().Equal(DescriptorRelations.WifeOf);
+    }
+
+    /// <summary>
+    /// The list the loader ships with: every entry names a relation of the vocabulary and says why
+    /// it is there, and none is listed twice.
+    /// </summary>
+    [Fact]
+    public void TheListOfReadingsHeldBackIsWellFormed()
+    {
+        var list = OwnRelationshipLoader.WithheldClauses();
+        var vocabulary = typeof(DescriptorRelations).GetFields()
+            .Where(field => field.IsLiteral && field.FieldType == typeof(string))
+            .Select(field => (string)field.GetRawConstantValue()!)
+            .ToHashSet(StringComparer.Ordinal);
+
+        list.DecidedBy.Should().NotBeNullOrWhiteSpace();
+        list.Policy.Should().NotBeNullOrWhiteSpace();
+        list.Clauses.Should().NotBeEmpty();
+        list.Clauses.Should().OnlyContain(clause =>
+            clause.Entity.Length > 0 && clause.Target.Length > 0 && vocabulary.Contains(clause.Relation)
+            && !string.IsNullOrWhiteSpace(clause.Reference) && !string.IsNullOrWhiteSpace(clause.Why));
+        list.Clauses.Select(clause => (clause.Entity, clause.Relation, clause.Target)).Should().OnlyHaveUniqueItems();
     }
 
     /// <summary>
@@ -322,7 +285,7 @@ public sealed class OwnRelationshipTests : IDisposable
 
         (await Load()).Written.Should().Be(1);
 
-        var again = await _loader.Load();
+        var again = await _loader.Load([], default);
         again.AlreadyLoaded.Should().BeTrue();
         (await _db.EntityRelationships.CountAsync()).Should().Be(1);
 
@@ -332,81 +295,8 @@ public sealed class OwnRelationshipTests : IDisposable
     }
 
     /// <summary>
-    /// A reading withheld because a row of the dataset outranked it comes back when the owner
-    /// removes that row, although the entity's own clauses did not change and it already has other
-    /// rows of ours that would otherwise say it is settled.
-    /// </summary>
-    [Fact]
-    public async Task AReadingWithheldByARowTheOwnerRemovesReturnsWithoutNewClauses()
-    {
-        var (gershom, manasseh, dan) = (Person("gershom-2"), Person("manasseh-2"), Person("dan"));
-        var reversed = new EntityRelationship
-        {
-            FromEntityId = manasseh.Id,
-            ToEntityId = gershom.Id,
-            Type = "son",
-            Category = RelationshipCategories.Explicit,
-            CanonicalBook = 7,
-            CanonicalChapter = 18,
-            CanonicalVerse = 30,
-            Method = LinkMethod.StatedBySource,
-            Source = BibleDataLoader.Source,
-        };
-        _db.EntityRelationships.Add(reversed);
-        _db.SaveChanges();
-        Clause(gershom, manasseh, DescriptorRelations.SonOf, 0.8);
-        Clause(gershom, dan, DescriptorRelations.BrotherOf, 0.9);
-
-        var first = await Load();
-        first.Withheld.Should().Be(1);
-        (await Relations(gershom, manasseh)).Should().BeEmpty();
-
-        var resources = Path.Combine(Path.GetTempPath(), $"essenthos-own-{Guid.NewGuid():N}");
-        var review = Path.Combine(resources, "Essenthos", "review");
-        Directory.CreateDirectory(review);
-        try
-        {
-            File.WriteAllText(
-                Path.Combine(review, WithdrawnRelationshipLoader.ReviewFile),
-                new JsonObject
-                {
-                    ["decisions"] = new JsonObject
-                    {
-                        ["x"] = new JsonObject
-                        {
-                            ["a"] = "gershom-2",
-                            ["b"] = "manasseh-2",
-                            ["decidedAt"] = "2026-09-29T08:00:00Z",
-                            ["decision"] = WithdrawnRelationshipLoader.Remove,
-                            ["rows"] = reversed.Id.ToString(),
-                        },
-                    },
-                }.ToJsonString());
-
-            var withdrawn = await new WithdrawnRelationshipLoader(
-                _db, NullLogger<WithdrawnRelationshipLoader>.Instance).Load(resources);
-
-            withdrawn.Changed.Should().BeEquivalentTo([gershom.Id, manasseh.Id]);
-            (await _loader.Load()).AlreadyLoaded.Should().BeTrue();
-            (await Relations(gershom, manasseh)).Should().BeEmpty("nothing told the loader the row is gone");
-
-            var again = await _loader.Load(withdrawn.Changed);
-
-            again.Withheld.Should().Be(0);
-            (await Relations(gershom, manasseh)).Should().Equal("son-of");
-            (await Relations(gershom, dan)).Should().Equal("brother-of");
-            (await _db.EntityRelationships.CountAsync(r => r.Source == Model)).Should().Be(2);
-        }
-        finally
-        {
-            Directory.Delete(resources, recursive: true);
-        }
-    }
-
-    /// <summary>
-    /// The asymmetry between the two witnesses, as a constraint rather than a convention. A reading
-    /// with no verse behind it is a claim nobody can check, and this table is where a reader is
-    /// most likely to try.
+    /// A reading with no verse behind it is a claim nobody can check, and this table is where a
+    /// reader is most likely to try; the database refuses it rather than a convention.
     /// </summary>
     [Fact]
     public async Task AReadingWithNoVerseIsRefusedByTheDatabase()
@@ -431,35 +321,9 @@ public sealed class OwnRelationshipTests : IDisposable
         _db.ChangeTracker.Clear();
     }
 
-    /// <summary>
-    /// And the other half of the same decision: a witness that gave no reference keeps its row.
-    /// Forty of BibleData's 5,448 are like this and fourteen of those it calls explicit, which is a
-    /// fact about that dataset — refusing them would delete it, and filling them in would be
-    /// writing a citation nobody can follow.
-    /// </summary>
-    [Fact]
-    public async Task AWitnessThatGaveNoVerseKeepsItsRow()
-    {
-        var one = Person("adam");
-        var two = Person("eve");
-
-        _db.EntityRelationships.Add(new EntityRelationship
-        {
-            FromEntityId = one.Id,
-            ToEntityId = two.Id,
-            Type = "husband",
-            Category = RelationshipCategories.Inferred,
-            Method = LinkMethod.StatedBySource,
-            Source = "a witness",
-        });
-
-        await _db.SaveChangesAsync();
-        (await _db.EntityRelationships.CountAsync()).Should().Be(1);
-    }
-
     private async Task<OwnRelationshipOutcome> Load()
     {
-        var outcome = await _loader.Load();
+        var outcome = await _loader.Load([], default);
         outcome.AlreadyLoaded.Should().BeFalse();
         return outcome;
     }
@@ -471,24 +335,13 @@ public sealed class OwnRelationshipTests : IDisposable
             .Select(r => r.Type)
             .ToListAsync();
 
-    private void Stated(Entity from, Entity to, string type)
-    {
-        _db.EntityRelationships.Add(new EntityRelationship
-        {
-            FromEntityId = from.Id,
-            ToEntityId = to.Id,
-            Type = type,
-            Category = RelationshipCategories.Explicit,
-            CanonicalBook = 1,
-            CanonicalChapter = 1,
-            CanonicalVerse = 1,
-            Method = LinkMethod.StatedBySource,
-            Source = "a witness",
-        });
-        _db.SaveChanges();
-    }
+    private void Clause(Entity entity, Entity target, string relation, double confidence) =>
+        Claim(entity, target, relation, LinkMethod.ModelReading, confidence, Model);
 
-    private void Clause(Entity entity, Entity target, string relation, double confidence)
+    private void Decided(Entity entity, Entity target, string relation) =>
+        Claim(entity, target, relation, LinkMethod.Manual, null, Owner);
+
+    private void Claim(Entity entity, Entity target, string relation, LinkMethod method, double? confidence, string source)
     {
         _db.EntityDescriptors.Add(new EntityDescriptor
         {
@@ -499,9 +352,9 @@ public sealed class OwnRelationshipTests : IDisposable
             CanonicalBook = 1,
             CanonicalChapter = 11,
             CanonicalVerse = 27,
-            Method = LinkMethod.ModelReading,
+            Method = method,
             Confidence = confidence,
-            Source = Model,
+            Source = source,
         });
         _db.SaveChanges();
     }

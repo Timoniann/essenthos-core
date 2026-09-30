@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using Microsoft.EntityFrameworkCore;
@@ -475,6 +476,13 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// </summary>
     private static readonly (string Breaks, string Sql)[] Integrity =
     [
+        // Every relationship is read from the text by this project. A row a dataset states is one a
+        // loader brought in from somebody's edge list, which none is meant to.
+        ("relationships a dataset states, where every one is read from the text by this project",
+            $"""
+             SELECT count(*) FROM entity_relationship
+             WHERE method = '{EnumSpelling.Of(LinkMethod.StatedBySource)}' OR source LIKE 'BibleData%'
+             """),
         ("verses with no canonical reference",
             """
             SELECT count(*) FROM verse v

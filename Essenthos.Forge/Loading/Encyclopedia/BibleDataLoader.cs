@@ -15,7 +15,6 @@ internal sealed record EncyclopediaOutcome(
     int People,
     int Places,
     int Names,
-    int Relationships,
     int References,
     int Disputed,
     int Events,
@@ -25,13 +24,17 @@ internal sealed record EncyclopediaOutcome(
     public override string ToString() =>
         AlreadyLoaded
             ? "the encyclopedia is already loaded"
-            : $"{People} people and {Places} places with {Names} names, {Relationships} relationships, " +
+            : $"{People} people and {Places} places with {Names} names, " +
               $"{References} references ({Disputed} of them disputed), {Events} dated events and " +
               $"{Periods} periods in {Elapsed}";
 }
 
 /// <summary>
-/// Brady Stephenson's BibleData: the people, places, relationships and chronology.
+/// Brady Stephenson's BibleData: the people, places and chronology.
+///
+/// Its relationships are not loaded. Every relationship the encyclopedia holds is read from the
+/// text by this project (<see cref="OwnRelationshipLoader"/>), and the dataset's edge list stays in
+/// its file.
 ///
 /// Chosen over Theographic after both were read. Its dates are the reason: every one is
 /// computed from a verse and carries the arithmetic in a sentence, with Ussher's and Shulman's
@@ -47,6 +50,9 @@ internal sealed record EncyclopediaOutcome(
 internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleDataLoader> logger)
 {
     internal const string Source = "BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0";
+
+    /// <summary>The folder under the corpus sources the dataset's files are read from.</summary>
+    internal const string Folder = "BibleData2026";
 
     /// <summary>
     /// The identifier the dataset gives the God of Israel — and, in the New Testament, to Jesus as
@@ -290,13 +296,13 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             }
 
             logger.LogInformation("The encyclopedia is already loaded; nothing to do");
-            return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         if (!Directory.Exists(folder))
         {
             logger.LogWarning("No encyclopedia data at {Folder}; the corpus keeps its texts only", folder);
-            return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -316,7 +322,6 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         db.Entities.AddRange(entities.Values);
         await db.SaveChangesAsync(cancellationToken);
 
-        var (relationships, duplicates, unpaired) = Relationships(folder, entities, frame, jesus);
         var (references, disputed, divided) = References(folder, entities, frame, jesus);
 
         // After the references, because a label of the divine name is a name of whichever entity
@@ -349,12 +354,11 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         var events = Events(folder, entities, frame);
         var chronologies = Reckon();
 
-        // After the relationships, because their notes name the dataset's rows too, and before the
-        // save, so that the entities the first save is still tracking are written back changed.
-        Name(entities, events, relationships);
+        // Before the save, so that the entities the first save is still tracking are written back
+        // changed.
+        Name(entities, events);
 
         db.EntityNames.AddRange(names);
-        db.EntityRelationships.AddRange(relationships);
         db.EntityVerses.AddRange(references);
         db.Chronologies.AddRange(chronologies);
         db.Events.AddRange(events);
@@ -373,14 +377,13 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 unpairedPeriods);
         }
 
-        Report(frame, duplicates, unpaired);
+        Report(frame);
 
         var outcome = new EncyclopediaOutcome(
             false,
             entities.Values.Count(e => e.Kind == EntityKind.Person),
             entities.Values.Count(e => e.Kind == EntityKind.Place),
             names.Count,
-            relationships.Count,
             references.Count,
             disputed,
             events.Count,
@@ -398,7 +401,7 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// once and everybody downstream stops paying for — and because a number that changes between
     /// two loads is how a new defect in the source is noticed at all.
     /// </summary>
-    private void Report(ReferenceTable frame, int duplicates, int unpaired)
+    private void Report(ReferenceTable frame)
     {
         if (frame.Dangling.Count > 0)
         {
@@ -407,21 +410,6 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 "dropped: {References}. Correcting them is upstream work, in BibleData itself.",
                 frame.Dangling.Values.Sum(),
                 string.Join(", ", frame.Dangling.OrderByDescending(d => d.Value).Select(d => $"{d.Key} ×{d.Value}")));
-        }
-
-        if (duplicates > 0)
-        {
-            logger.LogInformation(
-                "{Duplicates} relationship rows repeated one the source already stated and were dropped.",
-                duplicates);
-        }
-
-        if (unpaired > 0)
-        {
-            logger.LogInformation(
-                "{Unpaired} relationships have no row stating the inverse. The source records both " +
-                "readings of an ambiguous genealogy without pairing them, so nothing is inferred here.",
-                unpaired);
         }
     }
 
@@ -514,16 +502,12 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     private static string? Sentences(params string?[] parts) =>
         Blank(string.Join(" ", parts.Where(part => !string.IsNullOrWhiteSpace(part))));
 
-    /// <summary>A note the dataset left without a full stop, given one so a sentence can follow it.</summary>
-    internal static string? Stopped(string? note) =>
-        note is null || note.EndsWith('.') || note.EndsWith('?') || note.EndsWith('!') ? note : note + ".";
-
     /// <summary>
     /// Rows of the person file that name nobody, by the dataset's own id, with the reason.
     ///
     /// Not loaded at all rather than loaded and corrected: a record is a claim that somebody of that
-    /// name exists, and there is nothing true left of it once the name is taken away. Its labels,
-    /// verses and relationships fall away with it, because each of them is read through the record.
+    /// name exists, and there is nothing true left of it once the name is taken away. Its labels
+    /// and verses fall away with it, because each of them is read through the record.
     /// </summary>
     internal static readonly IReadOnlyDictionary<string, string> NotAPerson =
         new Dictionary<string, string>(StringComparer.Ordinal)
@@ -566,52 +550,6 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// <param name="Name">The name the verse supports.</param>
     /// <param name="Why">What the verse says and the dataset's name does not, for the event's notes.</param>
     internal sealed record Renaming(string Was, string Name, string Why);
-
-    /// <summary>
-    /// Why the Levites of 2 Chronicles 31:15 are not sons of Levi, for the notes of the rows that
-    /// said so.
-    /// </summary>
-    private const string LevitesOfHezekiahsDay =
-        "Read as descent and not as father and son. 2CH 31:15 names Levites of Hezekiah's day who " +
-        "served under Kore; the dataset's own note says so, and it holds the Levites of 31:13 and 31:14 " +
-        "beside them as descendants of Levi. Levi is Jacob's son, centuries before them.";
-
-    private const string LeviteOfNehemiahsDay =
-        "Read as descent and not as father and son. NEH 13:13 names Mattaniah as the grandfather of " +
-        "Hanan, a Levite treasurer of Nehemiah's day, and the dataset holds the Levites of that day as " +
-        "descendants of Levi. Levi is Jacob's son, centuries before him.";
-
-    /// <summary>
-    /// Relationships the dataset states as father and son that its own rows and notes hold as descent
-    /// in a tribe, by its person ids and relation word, with the word they are read as and why.
-    ///
-    /// <para>
-    /// The same dataset writes <c>ancestor</c> for every other Levite of those chapters, and a family
-    /// tree draws <c>father</c> as a parent: six men of the monarchy and the return stood under Levi
-    /// beside Gershon, Kohath and Merari. Both directions of each tie are listed, because the dataset
-    /// writes both.
-    /// </para>
-    /// </summary>
-    internal static readonly IReadOnlyDictionary<(string From, string Type, string To), Restatement> Restated =
-        new Dictionary<(string, string, string), Restatement>
-        {
-            [("Levi_1", "father", "Miniamin_1")] = new("ancestor", LevitesOfHezekiahsDay),
-            [("Miniamin_1", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
-            [("Levi_1", "father", "Jeshua_2")] = new("ancestor", LevitesOfHezekiahsDay),
-            [("Jeshua_2", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
-            [("Levi_1", "father", "Shemaiah_12")] = new("ancestor", LevitesOfHezekiahsDay),
-            [("Shemaiah_12", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
-            [("Levi_1", "father", "Amariah_4")] = new("ancestor", LevitesOfHezekiahsDay),
-            [("Amariah_4", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
-            [("Levi_1", "father", "Shecaniah_3")] = new("ancestor", LevitesOfHezekiahsDay),
-            [("Shecaniah_3", "son", "Levi_1")] = new("descendant", LevitesOfHezekiahsDay),
-            [("Levi_1", "father", "Mattaniah_10")] = new("ancestor", LeviteOfNehemiahsDay),
-            [("Mattaniah_10", "son", "Levi_1")] = new("descendant", LeviteOfNehemiahsDay),
-        };
-
-    /// <param name="Type">The relation word the row is read as.</param>
-    /// <param name="Why">Why, added to the row's notes after the dataset's own.</param>
-    internal sealed record Restatement(string Type, string Why);
 
     internal static void People(string folder, Dictionary<string, Entity> entities, HashSet<string> slugs)
     {
@@ -1116,135 +1054,6 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
         ("BibleData-PlaceLabel.csv", "place_id", "place_label_id", EntityKind.Place),
     ];
 
-    /// <summary>Where the source says a verse states the relation, rather than having deduced it.</summary>
-    private const string Explicit = "explicit";
-
-    /// <summary>
-    /// Who stands in what relation to whom, once each.
-    ///
-    /// The source restates a line where the text does — Uriah is Meremoth's father in Ezra 8:33
-    /// and again in Nehemiah 3:4 — and those two rows are two citations of one fact and are both
-    /// kept. What is dropped is a row identical to one already read down to the note: Ezra 3:2
-    /// gives Aaron as Jozadak's ancestor twice, once said to be explicit and once inferred, and an
-    /// entity page that listed it twice would be reporting a spreadsheet rather than a genealogy.
-    /// </summary>
-    /// <summary>
-    /// The relations to the divine name that are relations to Jesus of Nazareth.
-    ///
-    /// The separation was applied to the references and not to these, so every one of them stayed
-    /// on the divine name: the twelve apostles were apostles of the God of Israel, Mary was his
-    /// bearer, and the encyclopedia said <em>YHVH brother of James</em> at Matthew 13:55.
-    ///
-    /// Listed rather than derived, and the list is the whole population — nine types across
-    /// sixty-four rows, which is a paragraph of reading rather than an algorithm. A rule saying
-    /// "in the New Testament it means Jesus" would be wrong the first time the dataset records
-    /// <em>servant</em> of God in a letter, and wrong silently.
-    ///
-    /// <para>
-    /// **Both directions of a tie are separate rows with different words**, and both have to be
-    /// here or the tie comes apart: <em>apostle</em> against <em>master</em>, <em>disciple</em>
-    /// against <em>rabbi</em>, <em>bearer</em> against <em>born by</em>, <em>patron</em> against
-    /// <em>client</em>. Listing only the first of each pair moved half of every tie and left 56
-    /// relationships pointing at an entity that no longer pointed back.
-    /// </para>
-    ///
-    /// <para>
-    /// <em>master</em> is why the New Testament test is not redundant: it is the reverse of
-    /// <em>apostle</em> twelve times in Matthew and the reverse of <em>servant</em> nine times from
-    /// Genesis to Jeremiah, and Moses is not a servant of Jesus of Nazareth.
-    /// </para>
-    /// </summary>
-    private static readonly HashSet<string> RelationsToJesus = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "apostle", "master", "disciple", "rabbi", "brother", "bearer", "born by", "patron", "client",
-    };
-
-    /// <summary>The first book of the New Testament in the shared order.</summary>
-    private const int FirstApostolicBook = 40;
-
-    /// <param name="jesus">
-    /// Where a relation to the divine name is a relation to Jesus of Nazareth. Both directions are
-    /// separate rows in this dataset and both are moved, or the encyclopedia would say one thing
-    /// on his page and the other on hers.
-    /// </param>
-    internal static (List<EntityRelationship> Relationships, int Duplicates, int Unpaired) Relationships(
-        string folder,
-        Dictionary<string, Entity> entities,
-        ReferenceTable frame,
-        Entity jesus)
-    {
-        var relationships = new List<EntityRelationship>(6_000);
-        var seen = new Dictionary<(int From, string Type, int To, int? Book, int? Chapter, int? Verse, string? Notes),
-            EntityRelationship>();
-        var duplicates = 0;
-
-        foreach (var row in Csv.Read(Path.Combine(folder, "BibleData-PersonRelationship.csv")))
-        {
-            if (!entities.TryGetValue(Key(EntityKind.Person, row["person_id_1"]), out var from)
-                || !entities.TryGetValue(Key(EntityKind.Person, row["person_id_2"]), out var to))
-            {
-                continue;
-            }
-
-            var reference = frame.Resolve(row["reference_id"]);
-            var type = row["relationship_type"];
-            var restated = Restated.GetValueOrDefault((row["person_id_1"], type, row["person_id_2"]));
-            var relationship = new EntityRelationship
-            {
-                FromEntityId = Read(from, type, reference, jesus).Id,
-                ToEntityId = Read(to, type, reference, jesus).Id,
-                Type = restated?.Type ?? type,
-                Category = row["relationship_category"],
-                CanonicalBook = reference?.Book,
-                CanonicalChapter = reference?.Chapter,
-                CanonicalVerse = reference?.Verse,
-                Method = LinkMethod.StatedBySource,
-                Source = Source,
-                Notes = Sentences(Stopped(Blank(row["relationship_notes"])), restated?.Why),
-            };
-
-            var key = (relationship.FromEntityId, relationship.Type, relationship.ToEntityId,
-                relationship.CanonicalBook, relationship.CanonicalChapter, relationship.CanonicalVerse,
-                relationship.Notes);
-
-            if (seen.TryGetValue(key, out var already))
-            {
-                duplicates++;
-
-                // The source contradicts itself on one of these: same verse, same note, explicit
-                // once and inferred the other time. The stronger claim is the one it can point at.
-                if (relationship.Category == Explicit)
-                {
-                    already.Category = Explicit;
-                }
-
-                continue;
-            }
-
-            seen[key] = relationship;
-            relationships.Add(relationship);
-        }
-
-        var directed = relationships.Select(r => (r.FromEntityId, r.ToEntityId)).ToHashSet();
-        var unpaired = relationships.Count(r => !directed.Contains((r.ToEntityId, r.FromEntityId)));
-
-        return (relationships, duplicates, unpaired);
-    }
-
-    /// <summary>
-    /// Which of the two the divine name is standing for in one relationship. Anything that is not
-    /// the divine name is itself; anything outside the New Testament is the God of Israel; and a
-    /// New Testament relation is his unless its type is one of the handful that can only be a
-    /// relation to a man.
-    /// </summary>
-    private static Entity Read(
-        Entity entity, string type, (int Book, int Chapter, int Verse)? reference, Entity jesus) =>
-        entity.SourceId == DivineName
-        && reference is { Book: >= FirstApostolicBook }
-        && RelationsToJesus.Contains(type)
-            ? jesus
-            : entity;
-
     /// <returns>
     /// The references, how many of them are contested, and which entities each label of the
     /// divine name turned out to name — <see cref="Names"/> writes the labels where the namings
@@ -1387,17 +1196,14 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// Exodus (2515) minus his age…"</em>. A reader has no idea there is a Moses_1, and the
     /// underscore and the number are an artefact of a spreadsheet rather than anything about
     /// Moses. The same identifiers are in the distinguishers — <em>"father of Shelemiah_6 (JER
-    /// 36:26)"</em> — and in the notes on both entities and relationships.
+    /// 36:26)"</em> — and in the notes on entities.
     ///
     /// This is not editing a quotation. The sentence is machine-written and the identifier stands
     /// for exactly one entity or event; putting the name back is rendering it, not rewriting it.
     /// Anything the corpus cannot resolve is left exactly as it was, because a stray identifier
     /// visible on the page is a better outcome than a wrong name.
     /// </summary>
-    internal static void Name(
-        Dictionary<string, Entity> entities,
-        List<Event> events,
-        List<EntityRelationship> relationships)
+    internal static void Name(Dictionary<string, Entity> entities, List<Event> events)
     {
         // Case-insensitively, because the source writes ZADOK_3 for the row it elsewhere calls
         // Zadok_3, and a reader owed "Zadok" should not be given the shouted identifier instead.
@@ -1420,18 +1226,13 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             one.Description = Named(one.Description, names);
         }
 
-        // The distinguisher is the field that appears everywhere — the entity list, every other
-        // entity's relationship rows, search results — so an identifier left in one shows up in
-        // more places than an identifier left anywhere else.
+        // The distinguisher is the field that appears everywhere — the entity list, the hover
+        // cards, search results — so an identifier left in one shows up in more places than an
+        // identifier left anywhere else.
         foreach (var entity in entities.Values)
         {
             entity.Distinguisher = Named(entity.Distinguisher, names);
             entity.Notes = Named(entity.Notes, names);
-        }
-
-        foreach (var relationship in relationships)
-        {
-            relationship.Notes = Named(relationship.Notes, names);
         }
     }
 

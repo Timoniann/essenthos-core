@@ -625,7 +625,7 @@ internal static class EncyclopediaEndpoints
             CancellationToken cancellationToken) =>
             FamilyEndpoints.Requested(slugs) is { } named
                 ? Results.Ok(await FamilyEndpoints.Family(
-                    db, named, language, cancellationToken, settings.Is(SiteSettings.GeneratedImages), oursOnly: true))
+                    db, named, language, cancellationToken, settings.Is(SiteSettings.GeneratedImages)))
                 : Results.BadRequest(new ProblemResponse(
                     $"Name between 1 and {FamilyEndpoints.MostPeople} people, as slugs=moses,aaron.")));
 
@@ -690,7 +690,7 @@ internal static class EncyclopediaEndpoints
                 })
                 .ToListAsync(cancellationToken);
 
-            var related = await Relationships.Of(db, entity.Id, language, cancellationToken, oursOnly: true);
+            var related = await Relationships.Of(db, entity.Id, language, cancellationToken);
             var own = await Relationships.Forms(db, [entity.Id], language, cancellationToken);
 
             var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
