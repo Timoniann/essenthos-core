@@ -4961,7 +4961,7 @@
       "related": [
         {
           "type": "stands-at",
-          "to": "thegarden",
+          "to": "eden-2",
           "reference": "GEN 2:9"
         }
       ],
@@ -5033,7 +5033,7 @@
       "related": [
         {
           "type": "stands-at",
-          "to": "thegarden",
+          "to": "eden-2",
           "reference": "GEN 2:9"
         }
       ],

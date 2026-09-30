@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -122,8 +123,14 @@ public sealed class OwnNameLoadTests : IDisposable
     [Fact]
     public async Task TheEmbeddedListIsRead()
     {
+        await using var stream = typeof(OwnNameLoader).Assembly
+            .GetManifestResourceStream("Essenthos.Core.Loading.Encyclopedia.OwnNames.json");
+        stream.Should().NotBeNull();
+        using var list = await JsonDocument.ParseAsync(stream!);
+        list.RootElement.GetProperty("numbers").GetArrayLength().Should().BeGreaterThan(0);
+
         var outcome = await new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance).Load();
 
-        outcome.Missing.Should().Be(1, "the scratch database does not hold the heaven the list names");
+        outcome.Missing.Should().Be(0, "no name is given to a record the scratch database lacks");
     }
 }

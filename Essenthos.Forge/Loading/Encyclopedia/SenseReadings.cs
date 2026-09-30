@@ -127,9 +127,11 @@ internal sealed record OwnRecordRuling(
 /// A ruling could already write a description onto a record it created and could not touch one it
 /// merely named, so a decision that a compiled record claims too much had nowhere to land: Jerioth
 /// arrived distinguished as the wife of Caleb, which is one of six readings of a verse that settles
-/// none of them. Both fields are set where they are given and left alone where they are not.
+/// none of them. Each field is set where it is given and left alone where it is not.
+///
+/// The name is the heading of a record the dataset headed by a word that is not the person's name.
 /// </summary>
-internal sealed record RecordSays(string? Distinguisher, string? Notes);
+internal sealed record RecordSays(string? Distinguisher, string? Notes, string? Name = null);
 
 internal sealed record OwnRecord(
     string Slug,
@@ -297,6 +299,8 @@ internal static class SenseReadingFiles
         "Essenthos.Core.Loading.Encyclopedia.SeveralPeopleRecordsFourth.json";
 
     private const string NamesakeResource = "Essenthos.Core.Loading.Encyclopedia.NamesakeRecords.json";
+
+    private const string AddressedResource = "Essenthos.Core.Loading.Encyclopedia.AddressedRecords.json";
 
     private static readonly JsonSerializerOptions Shape = new()
     {
@@ -479,12 +483,18 @@ internal static class SenseReadingFiles
     public static OwnRecordRulings SeveralPeopleFourthRulings() =>
         Embedded<OwnRecordRulings>(SeveralPeopleFourthResource);
 
+    /// <summary>
+    /// The words in which somebody is addressed by what he or she is to the speaker, given to the person
+    /// addressed: <em>Daughter</em>, said to the woman with the issue of blood.
+    /// </summary>
+    public static OwnRecordRulings AddressedRulings() => Embedded<OwnRecordRulings>(AddressedResource);
+
     /// <summary>Every rulings file, in the order they were decided.</summary>
     public static IReadOnlyList<OwnRecordRulings> AllRulings() =>
     [
         Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings(),
         SeveralPeopleRulings(), SeveralPeopleSecondRulings(), SeveralPeopleThirdRulings(), NamesakeRulings(),
-        UnsettledSecondRulings(), SeveralPeopleFourthRulings(),
+        UnsettledSecondRulings(), SeveralPeopleFourthRulings(), AddressedRulings(),
     ];
 
     private static T Embedded<T>(string name)
