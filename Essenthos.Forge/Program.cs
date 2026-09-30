@@ -415,11 +415,14 @@ if (args is ["evidentia-measure", var measureFrom, var measureTo, var measureBoo
     }
 
     using var measureScope = app.Services.CreateScope();
+    var measureOptions = await measureScope.ServiceProvider.GetRequiredService<EvidentiaRunner>()
+        .WithConfirmed(EvidentiaOptions(args, resources));
     var measurement = await measureScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureChapter(
-        Identifier(measureFrom), Identifier(measureTo), book, chapter, EvidentiaOptions(args, resources));
+        Identifier(measureFrom), Identifier(measureTo), book, chapter, measureOptions);
     await WriteRows(args, "--disagreements", measurement.Disagreements);
     await WriteRows(args, "--words", measurement.Words);
     await WriteRows(args, "--absences", measurement.Absences);
+    measureOptions.Learns?.Write(OptionalText(args, "--confirmed-out")!);
     logger.LogInformation("\n{Measurement}", measurement);
     return 0;
 }
@@ -438,13 +441,16 @@ if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, v
     {
         throw new ArgumentException("evidentia-measure-book needs --from-chapter less than or equal to --to-chapter.");
     }
+    var measureBookOptions = await measureBookScope.ServiceProvider.GetRequiredService<EvidentiaRunner>()
+        .WithConfirmed(EvidentiaOptions(args, resources));
     var measurement = await measureBookScope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>().MeasureBook(
-        Identifier(measureBookFrom), Identifier(measureBookTo), book, EvidentiaOptions(args, resources),
+        Identifier(measureBookFrom), Identifier(measureBookTo), book, measureBookOptions,
         firstChapter: fromChapter,
         lastChapter: toChapter);
     await WriteRows(args, "--disagreements", measurement.Disagreements);
     await WriteRows(args, "--words", measurement.Words);
     await WriteRows(args, "--absences", measurement.Absences);
+    measureBookOptions.Learns?.Write(OptionalText(args, "--confirmed-out")!);
     logger.LogInformation("\n{Measurement}", measurement);
     return 0;
 }
@@ -688,7 +694,17 @@ static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments, string r
         : null,
     NeighbourVerseDistance: OptionalInt(arguments, "--neighbour-verses") ?? EvidentiaDefaults.NeighbourVerseDistance,
     EntityAnchors: arguments.Contains("--entity-anchors"),
-    EntityNamesFrom: OptionalText(arguments, "--entity-names"));
+    EntityNamesFrom: OptionalText(arguments, "--entity-names"),
+    Learns: OptionalText(arguments, "--confirmed-out") is not null ? new EvidentiaConfirmedRenderings() : null,
+    SecondPass: arguments.Contains("--second-pass"),
+    ConfirmedByRuns: OptionalText(arguments, "--confirmed-by") is { } confirmedBy
+        ? [.. confirmedBy.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(run => int.Parse(run, System.Globalization.CultureInfo.InvariantCulture))]
+        : null,
+    ConfirmedByFiles: OptionalText(arguments, "--confirmed")?.Split(',', StringSplitOptions.RemoveEmptyEntries),
+    AlignerLinks: arguments.Contains("--aligner-links"),
+    AlignerPairs: OptionalText(arguments, "--aligner-pairs") is { } alignerPairs
+        ? EvidentiaAlignerPairs.Read(alignerPairs.Split(',', StringSplitOptions.RemoveEmptyEntries))
+        : null);
 
 // Unlike `score`, this is an out-of-sample test: only 80% of the stated and Strong one-to-one pairs
 // reach SIL.Machine as its partial-alignment corpus, and a deterministic fifth of verses stays out

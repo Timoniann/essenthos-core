@@ -117,6 +117,68 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
         _db.ChangeTracker.HasChanges().Should().BeFalse();
     }
 
+    /// <summary>
+    /// A stored run with a second pass measures the scope twice and keeps one run: its own rows, the
+    /// options it ran with, and the word the aligner's stored link and the original's gloss both name,
+    /// which the first pass left unplaced because two words carry that gloss.
+    /// </summary>
+    [Fact]
+    public async Task ARunWithASecondPassAndTheAlignersLinksStoresOneRunAndNothingOfTheCorpus()
+    {
+        var english = Corpus.Add(_db, "ENGT", TextKind.Translation, "eng", (1, 1, ["God", "made"]));
+        var hebrew = Corpus.Add(_db, "HEBT", TextKind.CriticalEdition, "hbo", (1, 1, ["ברא", "אלהים", "אל"]));
+        await _db.SaveChangesAsync();
+        foreach (var (position, number) in new[] { (2, "H430"), (3, "H410") })
+        {
+            var word = _db.WordAt(hebrew, 1, 1, position);
+            word.StrongNumber = number;
+            word.Gloss = "God";
+        }
+
+        var link = new Link
+        {
+            FromText = english,
+            ToText = hebrew,
+            Relation = LinkRelation.Renders,
+            Method = LinkMethod.Aligner,
+            Confidence = 0.6,
+            Source = "a test's aligner",
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(english, 1, 1, 1), Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 2), Side = LinkSide.To });
+        await _db.SaveChangesAsync();
+        var god = _db.WordAt(english, 1, 1, 1).Id;
+        var elohim = _db.WordAt(hebrew, 1, 1, 2).Id;
+        var links = await _db.Links.CountAsync();
+        _db.ChangeTracker.Clear();
+
+        try
+        {
+            var plain = await Loader().MeasureChapter("ENGT", "HEBT", 1, 1, new EvidentiaMeasurementOptions(RecordWords: true));
+            plain.Words.Single(word => word.SourceWordId == god).TargetWordId
+                .Should().BeNull("two words of the verse carry the gloss, and nothing chooses between them");
+
+            var outcome = await new EvidentiaRunner(_db, Loader()).Run("ENGT", "HEBT", [new EvidentiaBookScope(1)],
+                new EvidentiaMeasurementOptions(SecondPass: true, AlignerLinks: true));
+
+            var run = await _db.EvidentiaRuns.AsNoTracking().SingleAsync();
+            run.Id.Should().Be(outcome.RunId);
+            run.Configuration.RootElement.GetProperty("secondPass").GetBoolean().Should().BeTrue();
+            run.Configuration.RootElement.GetProperty("alignerLinks").GetBoolean().Should().BeTrue();
+            var placed = await _db.EvidentiaDecisions.AsNoTracking().SingleAsync(decision => decision.SourceWordId == god);
+            placed.TargetWordId.Should().Be(elohim);
+            placed.Kind.Should().Be("aligner-and-lexical-evidence");
+            placed.Tier.Should().Be("review", "the aligner's pair is the evidence here, not a second opinion on it");
+            (await _db.Links.CountAsync()).Should().Be(links);
+        }
+        finally
+        {
+            await _db.EvidentiaDecisions.ExecuteDeleteAsync();
+            await _db.EvidentiaRuns.ExecuteDeleteAsync();
+        }
+    }
+
     private static Essenthos.Core.Loading.TextSource Private() => new(
         Essenthos.Core.Loading.NewWorldTextSource.Definition with { Slug = "PRIVATE" },
         [

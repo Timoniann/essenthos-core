@@ -60,6 +60,12 @@ internal sealed class EvidentiaVerseFrame
             ? verse.Distance(proposal.Source.Token.Position, proposal.Target.Token.Position)
             : 0;
 
+    /// <summary>The same for a pair nothing has proposed yet.</summary>
+    public double Distance(EvidentiaAnalysis source, EvidentiaAnalysis target) =>
+        source.Token.Address == target.Token.Address && verses.TryGetValue(source.Token.Address, out var verse)
+            ? verse.Distance(source.Token.Position, target.Token.Position)
+            : 0;
+
     public IReadOnlyList<EvidentiaProposal> Near(IEnumerable<EvidentiaProposal> proposals) =>
         [.. proposals.Where(proposal => Distance(proposal) < MaximumDistance)];
 

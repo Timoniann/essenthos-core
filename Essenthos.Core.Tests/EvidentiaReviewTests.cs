@@ -546,6 +546,31 @@ public sealed class EvidentiaReviewTests : IDisposable
     }
 
     [Fact]
+    public async Task AStoredRunsLexicalPlacementsAreWhatALaterPassReadsAsConfirmed()
+    {
+        var god = _db.WordAt(_hebrew, 1, 1, 3);
+        god.StrongNumber = "H430";
+        _db.SaveChanges();
+        Proposal(English(4), Hebrew(3), "safe");
+        var article = Proposal(English(2), Hebrew(3));
+        await _db.EvidentiaDecisions.Where(decision => decision.Id == article.Id)
+            .ExecuteUpdateAsync(set => set.SetProperty(decision => decision.Kind, "attached-word"));
+        var packs = new LanguagePackRegistry([new EnglishLanguagePack(), new OriginalLanguagePack()]);
+        packs.TryAnalyse(new EvidentiaToken(0, default, 0, "God", "eng"), out var word).Should().BeTrue();
+        packs.TryAnalyse(new EvidentiaToken(0, default, 0, "the", "eng"), out var the).Should().BeTrue();
+
+        var options = await new EvidentiaRunner(_db, null!).WithConfirmed(
+            new EvidentiaMeasurementOptions(ConfirmedByRuns: [_run.Id]));
+
+        var confirmed = options.Confirmed!.For("eng", packs);
+        confirmed.Of(word!, "H430").Should().Be(new ConfirmedRendering(Safe: 1, Placed: 1, FormPlaced: 1));
+        confirmed.Of(the!).Should().BeEmpty("a word attached to its head says nothing of its own");
+        var unknown = () => new EvidentiaRunner(_db, null!).WithConfirmed(
+            new EvidentiaMeasurementOptions(ConfirmedByRuns: [_run.Id + 1000]));
+        await unknown.Should().ThrowAsync<InvalidOperationException>().WithMessage("*evidentia-runs*");
+    }
+
+    [Fact]
     public async Task ARunKeepsItsAbsencesWithTheTierAndConfidenceOfThePairTheyRestOn()
     {
         var the = Analysis(English(2), _english, 2, "the");
