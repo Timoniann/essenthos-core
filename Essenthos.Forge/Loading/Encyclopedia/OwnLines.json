@@ -1,0 +1,698 @@
+{
+  "source": "Essenthos, the line under the name written from the record's verses, in English, Ukrainian, German and Spanish, by claude-opus-5-5 on 2026-09-30, on the project owner's instruction",
+  "records": [
+    {
+      "slug": "agag",
+      "english": "the king of Amalek whom Balaam names: Israel's king shall be higher than Agag (NUM 24:7)",
+      "ukr": "цар Амаліка, якого називає Валаам: Ізраїлів цар буде вищий за Аґаґа (NUM 24:7)",
+      "deu": "der König Amaleks, den Bileam nennt: Israels König wird höher sein als Agag (NUM 24:7)",
+      "spa": "el rey de Amalec que nombra Balaam: el rey de Israel será más alto que Agag (NUM 24:7)"
+    },
+    {
+      "slug": "nobah",
+      "english": "took Kenath and its villages and called it Nobah after his own name (NUM 32:42)",
+      "ukr": "здобув Кенат з його селами і назвав його своїм ім'ям Новах (NUM 32:42)",
+      "deu": "nahm Kenat mit seinen Dörfern ein und nannte es nach seinem Namen Nobach (NUM 32:42)",
+      "spa": "tomó Kenat con sus aldeas y la llamó Noba, por su propio nombre (NUM 32:42)"
+    },
+    {
+      "slug": "uzza",
+      "english": "owner of the garden where Manasseh and Amon were buried (2KI 21:18, 26)",
+      "ukr": "власник саду, де поховали Манасію та Амона (2KI 21:18, 26)",
+      "deu": "Besitzer des Gartens, in dem Manasse und Amon begraben wurden (2KI 21:18, 26)",
+      "spa": "dueño del huerto donde fueron sepultados Manasés y Amón (2KI 21:18, 26)"
+    },
+    {
+      "slug": "jabez",
+      "english": "more honourable than his brethren; he called on the God of Israel and was granted what he asked (1CH 4:9-10)",
+      "ukr": "шанованіший за своїх братів; він кликав до Бога Ізраїлевого, і Бог дав, чого він просив (1CH 4:9-10)",
+      "deu": "angesehener als seine Brüder; er rief den Gott Israels an, und Gott gab ihm, was er erbat (1CH 4:9-10)",
+      "spa": "más ilustre que sus hermanos; invocó al Dios de Israel y Dios le otorgó lo que pidió (1CH 4:9-10)"
+    },
+    {
+      "slug": "satan",
+      "english": "the adversary who came among the sons of God before the LORD (JOB 1:6) and moved David to number Israel (1CH 21:1)",
+      "ukr": "супротивник, що прийшов серед Божих синів перед Господа (JOB 1:6) і спонукав Давида перелічити Ізраїля (1CH 21:1)",
+      "deu": "der Widersacher, der unter den Söhnen Gottes vor den HERRN trat (JOB 1:6) und David reizte, Israel zu zählen (1CH 21:1)",
+      "spa": "el adversario que vino entre los hijos de Dios ante el SEÑOR (JOB 1:6) e incitó a David a contar a Israel (1CH 21:1)"
+    },
+    {
+      "slug": "benhail",
+      "english": "one of the princes Jehoshaphat sent to teach in the cities of Judah (2CH 17:7)",
+      "ukr": "один із зверхників, яких Йосафат послав навчати в Юдиних містах (2CH 17:7)",
+      "deu": "einer der Obersten, die Joschafat aussandte, in den Städten Judas zu lehren (2CH 17:7)",
+      "spa": "uno de los príncipes que Josafat envió a enseñar en las ciudades de Judá (2CH 17:7)"
+    },
+    {
+      "slug": "magbish",
+      "english": "whose children, a hundred fifty and six, returned from the captivity (EZR 2:30)",
+      "ukr": "чиї сини, сто п'ятдесят і шість, повернулися з полону (EZR 2:30)",
+      "deu": "dessen Söhne, hundertsechsundfünfzig, aus der Gefangenschaft heimkehrten (EZR 2:30)",
+      "spa": "cuyos hijos, ciento cincuenta y seis, volvieron del cautiverio (EZR 2:30)"
+    },
+    {
+      "slug": "nekoda",
+      "english": "forefather of a family of the Nethinims who returned, and of a family that could not show its descent (EZR 2:48, 60)",
+      "ukr": "предок роду храмових слуг, що повернувся, і роду, який не міг показати свого походження (EZR 2:48, 60)",
+      "deu": "Stammvater einer Familie der Tempeldiener, die heimkehrte, und einer, die ihre Abstammung nicht nachweisen konnte (EZR 2:48, 60)",
+      "spa": "antepasado de una familia de los sirvientes del templo que volvió, y de otra que no pudo mostrar su linaje (EZR 2:48, 60)"
+    },
+    {
+      "slug": "elnathan-3",
+      "english": "the first Elnathan of the chief men Ezra sent for at the river Ahava (EZR 8:16)",
+      "ukr": "перший Елнатан серед головних мужів, по яких Езра послав над річкою Агавою (EZR 8:16)",
+      "deu": "der erste Elnatan unter den Häuptern, nach denen Esra am Fluss Ahawa sandte (EZR 8:16)",
+      "spa": "el primer Elnatán de los principales a quienes Esdras mandó llamar junto al río Ahava (EZR 8:16)"
+    },
+    {
+      "slug": "elnathan-4",
+      "english": "the second Elnathan of the chief men Ezra sent for at the river Ahava (EZR 8:16)",
+      "ukr": "другий Елнатан серед головних мужів, по яких Езра послав над річкою Агавою (EZR 8:16)",
+      "deu": "der zweite Elnatan unter den Häuptern, nach denen Esra am Fluss Ahawa sandte (EZR 8:16)",
+      "spa": "el segundo Elnatán de los principales a quienes Esdras mandó llamar junto al río Ahava (EZR 8:16)"
+    },
+    {
+      "slug": "barabbas",
+      "english": "a notable prisoner, released to the crowd instead of Jesus (MAT 27:16-26)",
+      "ukr": "відомий в'язень, якого відпустили народові замість Ісуса (MAT 27:16-26)",
+      "deu": "ein berüchtigter Gefangener, der dem Volk statt Jesus freigegeben wurde (MAT 27:16-26)",
+      "spa": "un preso famoso, soltado al pueblo en lugar de Jesús (MAT 27:16-26)"
+    },
+    {
+      "slug": "jairus",
+      "english": "a ruler of the synagogue who fell at Jesus' feet for his daughter (MRK 5:22-23)",
+      "ukr": "начальник синагоги, що впав до ніг Ісуса, просячи за доньку (MRK 5:22-23)",
+      "deu": "ein Vorsteher der Synagoge, der Jesus zu Füßen fiel und für seine Tochter bat (MRK 5:22-23)",
+      "spa": "un principal de la sinagoga que cayó a los pies de Jesús rogando por su hija (MRK 5:22-23)"
+    },
+    {
+      "slug": "salome",
+      "english": "one of the women who looked on at the cross and brought spices to the tomb (MRK 15:40, 16:1)",
+      "ukr": "одна з жінок, що дивилися здалека на хрест і принесли пахощі до гробу (MRK 15:40, 16:1)",
+      "deu": "eine der Frauen, die von fern beim Kreuz zusahen und Spezereien zum Grab brachten (MRK 15:40, 16:1)",
+      "spa": "una de las mujeres que miraban de lejos la cruz y llevaron especias al sepulcro (MRK 15:40, 16:1)"
+    },
+    {
+      "slug": "theophilus",
+      "english": "the one to whom Luke writes his account and the Acts (LUK 1:3, ACT 1:1)",
+      "ukr": "той, кому Лука пише свою розповідь і Дії (LUK 1:3, ACT 1:1)",
+      "deu": "der, an den Lukas seinen Bericht und die Apostelgeschichte schreibt (LUK 1:3, ACT 1:1)",
+      "spa": "aquel a quien Lucas escribe su relato y los Hechos (LUK 1:3, ACT 1:1)"
+    },
+    {
+      "slug": "caesaraugustus",
+      "english": "the Caesar whose decree that all the world should be taxed brought Joseph to Bethlehem (LUK 2:1-4)",
+      "ukr": "кесар, чий наказ переписати всю землю привів Йосипа до Вифлеєму (LUK 2:1-4)",
+      "deu": "der Kaiser, dessen Gebot, alle Welt zu schätzen, Josef nach Bethlehem führte (LUK 2:1-4)",
+      "spa": "el César cuyo edicto de empadronar a todo el mundo llevó a José a Belén (LUK 2:1-4)"
+    },
+    {
+      "slug": "cleopas",
+      "english": "one of the two walking to Emmaus when Jesus joined them (LUK 24:18)",
+      "ukr": "один із двох, що йшли до Еммаусу, коли Ісус пристав до них (LUK 24:18)",
+      "deu": "einer der beiden auf dem Weg nach Emmaus, zu denen Jesus sich gesellte (LUK 24:18)",
+      "spa": "uno de los dos que iban a Emaús cuando Jesús se les unió (LUK 24:18)"
+    },
+    {
+      "slug": "nicodemus",
+      "english": "a Pharisee and ruler of the Jews who came to Jesus by night (JHN 3:1-2) and brought myrrh and aloes for his burial (JHN 19:39)",
+      "ukr": "фарисей і начальник юдейський, що прийшов до Ісуса вночі (JHN 3:1-2) і приніс смирну та алое на його похорон (JHN 19:39)",
+      "deu": "ein Pharisäer und Oberster der Juden, der nachts zu Jesus kam (JHN 3:1-2) und Myrrhe und Aloe zu seinem Begräbnis brachte (JHN 19:39)",
+      "spa": "un fariseo, principal entre los judíos, que vino a Jesús de noche (JHN 3:1-2) y trajo mirra y áloe para su sepultura (JHN 19:39)"
+    },
+    {
+      "slug": "malchus",
+      "english": "the high priest's servant whose right ear Peter cut off (JHN 18:10)",
+      "ukr": "раб первосвященика, якому Петро відтяв праве вухо (JHN 18:10)",
+      "deu": "der Knecht des Hohenpriesters, dem Petrus das rechte Ohr abhieb (JHN 18:10)",
+      "spa": "el siervo del sumo sacerdote a quien Pedro cortó la oreja derecha (JHN 18:10)"
+    },
+    {
+      "slug": "matthias",
+      "english": "on whom the lot fell to be numbered with the eleven apostles (ACT 1:23-26)",
+      "ukr": "на кого впав жереб, і його зараховано до одинадцятьох апостолів (ACT 1:23-26)",
+      "deu": "auf den das Los fiel, sodass er den elf Aposteln zugezählt wurde (ACT 1:23-26)",
+      "spa": "sobre quien cayó la suerte y fue contado con los once apóstoles (ACT 1:23-26)"
+    },
+    {
+      "slug": "theudas",
+      "english": "who rose up boasting himself to be somebody, with about four hundred men, and was slain (ACT 5:36)",
+      "ukr": "що повстав, видаючи себе за когось великого, з яким було близько чотирьохсот мужів, і був убитий (ACT 5:36)",
+      "deu": "der sich erhob und vorgab, etwas zu sein, mit etwa vierhundert Mann, und erschlagen wurde (ACT 5:36)",
+      "spa": "que se levantó diciendo que era alguien, con unos cuatrocientos hombres, y fue muerto (ACT 5:36)"
+    },
+    {
+      "slug": "stephen",
+      "english": "one of the seven chosen to serve, full of faith and of the Holy Ghost (ACT 6:5), stoned in Jerusalem (ACT 7:59)",
+      "ukr": "один із сімох, обраних служити, повний віри та Духа Святого (ACT 6:5), побитий камінням у Єрусалимі (ACT 7:59)",
+      "deu": "einer der Sieben, die zum Dienst gewählt wurden, voll Glaubens und Heiligen Geistes (ACT 6:5), in Jerusalem gesteinigt (ACT 7:59)",
+      "spa": "uno de los siete elegidos para servir, lleno de fe y del Espíritu Santo (ACT 6:5), apedreado en Jerusalén (ACT 7:59)"
+    },
+    {
+      "slug": "prochorus",
+      "english": "one of the seven chosen to serve the tables (ACT 6:5)",
+      "ukr": "один із сімох, обраних служити при столах (ACT 6:5)",
+      "deu": "einer der Sieben, die zum Dienst an den Tischen gewählt wurden (ACT 6:5)",
+      "spa": "uno de los siete elegidos para servir a las mesas (ACT 6:5)"
+    },
+    {
+      "slug": "nicanor",
+      "english": "one of the seven chosen to serve the tables (ACT 6:5)",
+      "ukr": "один із сімох, обраних служити при столах (ACT 6:5)",
+      "deu": "einer der Sieben, die zum Dienst an den Tischen gewählt wurden (ACT 6:5)",
+      "spa": "uno de los siete elegidos para servir a las mesas (ACT 6:5)"
+    },
+    {
+      "slug": "timon",
+      "english": "one of the seven chosen to serve the tables (ACT 6:5)",
+      "ukr": "один із сімох, обраних служити при столах (ACT 6:5)",
+      "deu": "einer der Sieben, die zum Dienst an den Tischen gewählt wurden (ACT 6:5)",
+      "spa": "uno de los siete elegidos para servir a las mesas (ACT 6:5)"
+    },
+    {
+      "slug": "parmenas",
+      "english": "one of the seven chosen to serve the tables (ACT 6:5)",
+      "ukr": "один із сімох, обраних служити при столах (ACT 6:5)",
+      "deu": "einer der Sieben, die zum Dienst an den Tischen gewählt wurden (ACT 6:5)",
+      "spa": "uno de los siete elegidos para servir a las mesas (ACT 6:5)"
+    },
+    {
+      "slug": "aeneas",
+      "english": "a man of Lydda, eight years in bed with the palsy, made whole by Peter (ACT 9:33-34)",
+      "ukr": "чоловік у Лідді, вісім років розслаблений у ліжку, якого Петро оздоровив (ACT 9:33-34)",
+      "deu": "ein Mann in Lydda, acht Jahre gelähmt im Bett, den Petrus gesund machte (ACT 9:33-34)",
+      "spa": "un hombre de Lida, ocho años en cama paralítico, sanado por Pedro (ACT 9:33-34)"
+    },
+    {
+      "slug": "rhoda",
+      "english": "the damsel who came to the gate when Peter knocked (ACT 12:13)",
+      "ukr": "дівчина, що підійшла до брами, коли Петро стукав (ACT 12:13)",
+      "deu": "die Magd, die ans Tor kam, als Petrus anklopfte (ACT 12:13)",
+      "spa": "la muchacha que acudió a la puerta cuando Pedro llamó (ACT 12:13)"
+    },
+    {
+      "slug": "sergius",
+      "english": "Sergius Paulus, the deputy of the country at Paphos, a prudent man, who believed (ACT 13:7-12)",
+      "ukr": "Сергій Павло, проконсул у Пафосі, муж розумний, що увірував (ACT 13:7-12)",
+      "deu": "Sergius Paulus, der Statthalter in Paphos, ein verständiger Mann, der gläubig wurde (ACT 13:7-12)",
+      "spa": "Sergio Paulo, el procónsul en Pafos, varón prudente, que creyó (ACT 13:7-12)"
+    },
+    {
+      "slug": "jason",
+      "english": "at whose house in Thessalonica Paul and Silas stayed, dragged before the rulers of the city (ACT 17:5-9)",
+      "ukr": "у чиєму домі в Солуні перебували Павло й Сила; його притягли до міських урядників (ACT 17:5-9)",
+      "deu": "in dessen Haus in Thessalonich Paulus und Silas wohnten; er wurde vor die Obersten der Stadt geschleppt (ACT 17:5-9)",
+      "spa": "en cuya casa de Tesalónica se hospedaron Pablo y Silas; fue llevado ante las autoridades de la ciudad (ACT 17:5-9)"
+    },
+    {
+      "slug": "dionysius",
+      "english": "the Areopagite, who clave to Paul and believed (ACT 17:34)",
+      "ukr": "Ареопагіт, що пристав до Павла й увірував (ACT 17:34)",
+      "deu": "der Areopagit, der sich Paulus anschloss und gläubig wurde (ACT 17:34)",
+      "spa": "el areopagita, que se juntó a Pablo y creyó (ACT 17:34)"
+    },
+    {
+      "slug": "damaris",
+      "english": "a woman of Athens who believed after Paul spoke at the Areopagus (ACT 17:34)",
+      "ukr": "жінка в Афінах, що увірувала після Павлової промови в Ареопазі (ACT 17:34)",
+      "deu": "eine Frau in Athen, die gläubig wurde, nachdem Paulus auf dem Areopag gesprochen hatte (ACT 17:34)",
+      "spa": "una mujer de Atenas que creyó después de que Pablo habló en el Areópago (ACT 17:34)"
+    },
+    {
+      "slug": "titius",
+      "english": "Justus, one that worshipped God, whose house in Corinth joined the synagogue (ACT 18:7)",
+      "ukr": "Юст, що шанував Бога, чий дім у Коринті межував із синагогою (ACT 18:7)",
+      "deu": "Justus, ein Gottesfürchtiger, dessen Haus in Korinth an die Synagoge grenzte (ACT 18:7)",
+      "spa": "Justo, temeroso de Dios, cuya casa en Corinto estaba junto a la sinagoga (ACT 18:7)"
+    },
+    {
+      "slug": "tyrannus",
+      "english": "in whose school at Ephesus Paul disputed daily (ACT 19:9)",
+      "ukr": "у чиїй школі в Ефесі Павло щодня провадив бесіди (ACT 19:9)",
+      "deu": "in dessen Schule in Ephesus Paulus täglich redete (ACT 19:9)",
+      "spa": "en cuya escuela en Éfeso Pablo discutía cada día (ACT 19:9)"
+    },
+    {
+      "slug": "erastus",
+      "english": "one of those who ministered to Paul, sent into Macedonia with Timothy (ACT 19:22)",
+      "ukr": "один із тих, що служили Павлові, посланий з Тимофієм до Македонії (ACT 19:22)",
+      "deu": "einer von denen, die Paulus dienten, mit Timotheus nach Mazedonien gesandt (ACT 19:22)",
+      "spa": "uno de los que ayudaban a Pablo, enviado a Macedonia con Timoteo (ACT 19:22)"
+    },
+    {
+      "slug": "eutychus",
+      "english": "a young man at Troas who fell asleep in a window during Paul's preaching, fell from the third loft and was taken up alive (ACT 20:9-12)",
+      "ukr": "юнак у Троаді, що заснув на вікні під час Павлової проповіді, упав з третього поверху і був узятий живим (ACT 20:9-12)",
+      "deu": "ein junger Mann in Troas, der während der Predigt des Paulus im Fenster einschlief, vom dritten Stock fiel und lebend aufgehoben wurde (ACT 20:9-12)",
+      "spa": "un joven de Troas que se durmió en una ventana mientras Pablo predicaba, cayó del tercer piso y fue levantado vivo (ACT 20:9-12)"
+    },
+    {
+      "slug": "claudius-2",
+      "english": "Claudius Lysias, the chief captain in Jerusalem, who sent Paul to Felix (ACT 23:26)",
+      "ukr": "Клавдій Лисій, тисяцький у Єрусалимі, що відіслав Павла до Фелікса (ACT 23:26)",
+      "deu": "Klaudius Lysias, der Oberst in Jerusalem, der Paulus zu Felix sandte (ACT 23:26)",
+      "spa": "Claudio Lisias, el tribuno en Jerusalén, que envió a Pablo a Félix (ACT 23:26)"
+    },
+    {
+      "slug": "julius",
+      "english": "a centurion of Augustus' band, to whom Paul was delivered for the voyage to Italy (ACT 27:1-3)",
+      "ukr": "сотник Августового полку, якому передали Павла для подорожі до Італії (ACT 27:1-3)",
+      "deu": "ein Hauptmann der kaiserlichen Kohorte, dem Paulus für die Fahrt nach Italien übergeben wurde (ACT 27:1-3)",
+      "spa": "un centurión de la compañía Augusta, a quien Pablo fue entregado para el viaje a Italia (ACT 27:1-3)"
+    },
+    {
+      "slug": "publius",
+      "english": "the chief man of the island of Melita, who lodged Paul; Paul healed his father (ACT 28:7-8)",
+      "ukr": "начальник острова Меліт, що прийняв Павла; Павло оздоровив його батька (ACT 28:7-8)",
+      "deu": "der Erste der Insel Melite, der Paulus beherbergte; Paulus heilte seinen Vater (ACT 28:7-8)",
+      "spa": "el principal de la isla de Malta, que hospedó a Pablo; Pablo sanó a su padre (ACT 28:7-8)"
+    },
+    {
+      "slug": "andronicus",
+      "english": "Paul's kinsman and fellow prisoner, of note among the apostles (ROM 16:7)",
+      "ukr": "родич Павла і його співв'язень, знаний між апостолами (ROM 16:7)",
+      "deu": "Verwandter und Mitgefangener des Paulus, angesehen unter den Aposteln (ROM 16:7)",
+      "spa": "pariente y compañero de prisión de Pablo, estimado entre los apóstoles (ROM 16:7)"
+    },
+    {
+      "slug": "junias",
+      "english": "Paul's kin and fellow prisoner, greeted with Andronicus, of note among the apostles (ROM 16:7)",
+      "ukr": "родич Павла і співв'язень, привітаний разом з Андроніком, знаний між апостолами (ROM 16:7)",
+      "deu": "Verwandte des Paulus und Mitgefangene, mit Andronikus gegrüßt, angesehen unter den Aposteln (ROM 16:7)",
+      "spa": "pariente de Pablo y compañero de prisión, saludado junto con Andrónico, estimado entre los apóstoles (ROM 16:7)"
+    },
+    {
+      "slug": "ampliatus",
+      "english": "greeted by Paul as his beloved in the Lord (ROM 16:8)",
+      "ukr": "якого Павло вітає як улюбленого в Господі (ROM 16:8)",
+      "deu": "den Paulus als seinen Geliebten im Herrn grüßt (ROM 16:8)",
+      "spa": "a quien Pablo saluda como su amado en el Señor (ROM 16:8)"
+    },
+    {
+      "slug": "urbanus",
+      "english": "greeted by Paul as our helper in Christ (ROM 16:9)",
+      "ukr": "якого Павло вітає як співробітника в Христі (ROM 16:9)",
+      "deu": "den Paulus als unseren Mitarbeiter in Christus grüßt (ROM 16:9)",
+      "spa": "a quien Pablo saluda como colaborador en Cristo (ROM 16:9)"
+    },
+    {
+      "slug": "stachys",
+      "english": "greeted by Paul as my beloved (ROM 16:9)",
+      "ukr": "якого Павло вітає як свого улюбленого (ROM 16:9)",
+      "deu": "den Paulus als seinen Geliebten grüßt (ROM 16:9)",
+      "spa": "a quien Pablo saluda como su amado (ROM 16:9)"
+    },
+    {
+      "slug": "apelles",
+      "english": "greeted by Paul as approved in Christ (ROM 16:10)",
+      "ukr": "якого Павло вітає як випробуваного в Христі (ROM 16:10)",
+      "deu": "den Paulus als bewährt in Christus grüßt (ROM 16:10)",
+      "spa": "a quien Pablo saluda como aprobado en Cristo (ROM 16:10)"
+    },
+    {
+      "slug": "aristobulus",
+      "english": "whose household Paul greets (ROM 16:10)",
+      "ukr": "чий дім Павло вітає (ROM 16:10)",
+      "deu": "dessen Haus Paulus grüßt (ROM 16:10)",
+      "spa": "a cuya casa saluda Pablo (ROM 16:10)"
+    },
+    {
+      "slug": "herodian",
+      "english": "greeted by Paul as his kinsman (ROM 16:11)",
+      "ukr": "якого Павло вітає як свого родича (ROM 16:11)",
+      "deu": "den Paulus als seinen Verwandten grüßt (ROM 16:11)",
+      "spa": "a quien Pablo saluda como su pariente (ROM 16:11)"
+    },
+    {
+      "slug": "narcissus",
+      "english": "whose household in the Lord Paul greets (ROM 16:11)",
+      "ukr": "чий дім, що в Господі, Павло вітає (ROM 16:11)",
+      "deu": "dessen Hausgenossen im Herrn Paulus grüßt (ROM 16:11)",
+      "spa": "a cuya casa en el Señor saluda Pablo (ROM 16:11)"
+    },
+    {
+      "slug": "tryphaena",
+      "english": "greeted by Paul with Tryphosa, who labour in the Lord (ROM 16:12)",
+      "ukr": "привітана Павлом разом з Трифосою, що працюють у Господі (ROM 16:12)",
+      "deu": "von Paulus mit Tryphosa gegrüßt, die im Herrn arbeiten (ROM 16:12)",
+      "spa": "saludada por Pablo junto con Trifosa, que trabajan en el Señor (ROM 16:12)"
+    },
+    {
+      "slug": "tryphosa",
+      "english": "greeted by Paul with Tryphena, who labour in the Lord (ROM 16:12)",
+      "ukr": "привітана Павлом разом з Трифеною, що працюють у Господі (ROM 16:12)",
+      "deu": "von Paulus mit Tryphäna gegrüßt, die im Herrn arbeiten (ROM 16:12)",
+      "spa": "saludada por Pablo junto con Trifena, que trabajan en el Señor (ROM 16:12)"
+    },
+    {
+      "slug": "persis",
+      "english": "the beloved, who laboured much in the Lord, greeted by Paul (ROM 16:12)",
+      "ukr": "улюблена, що багато працювала в Господі, привітана Павлом (ROM 16:12)",
+      "deu": "die Geliebte, die viel im Herrn gearbeitet hat, von Paulus gegrüßt (ROM 16:12)",
+      "spa": "la amada, que trabajó mucho en el Señor, saludada por Pablo (ROM 16:12)"
+    },
+    {
+      "slug": "phlegon",
+      "english": "greeted by Paul with the brethren who are with him (ROM 16:14)",
+      "ukr": "привітаний Павлом разом з братами, що з ним (ROM 16:14)",
+      "deu": "von Paulus mit den Brüdern bei ihm gegrüßt (ROM 16:14)",
+      "spa": "saludado por Pablo con los hermanos que están con él (ROM 16:14)"
+    },
+    {
+      "slug": "hermes",
+      "english": "greeted by Paul with the brethren who are with him (ROM 16:14)",
+      "ukr": "привітаний Павлом разом з братами, що з ним (ROM 16:14)",
+      "deu": "von Paulus mit den Brüdern bei ihm gegrüßt (ROM 16:14)",
+      "spa": "saludado por Pablo con los hermanos que están con él (ROM 16:14)"
+    },
+    {
+      "slug": "patrobas",
+      "english": "greeted by Paul with the brethren who are with him (ROM 16:14)",
+      "ukr": "привітаний Павлом разом з братами, що з ним (ROM 16:14)",
+      "deu": "von Paulus mit den Brüdern bei ihm gegrüßt (ROM 16:14)",
+      "spa": "saludado por Pablo con los hermanos que están con él (ROM 16:14)"
+    },
+    {
+      "slug": "hermas",
+      "english": "greeted by Paul with the brethren who are with him (ROM 16:14)",
+      "ukr": "привітаний Павлом разом з братами, що з ним (ROM 16:14)",
+      "deu": "von Paulus mit den Brüdern bei ihm gegrüßt (ROM 16:14)",
+      "spa": "saludado por Pablo con los hermanos que están con él (ROM 16:14)"
+    },
+    {
+      "slug": "philologus",
+      "english": "greeted by Paul with the saints who are with him (ROM 16:15)",
+      "ukr": "привітаний Павлом разом зі святими, що з ним (ROM 16:15)",
+      "deu": "von Paulus mit den Heiligen bei ihm gegrüßt (ROM 16:15)",
+      "spa": "saludado por Pablo con los santos que están con él (ROM 16:15)"
+    },
+    {
+      "slug": "julia",
+      "english": "greeted by Paul with Philologus and the saints who are with them (ROM 16:15)",
+      "ukr": "привітана Павлом разом з Філологом і святими, що з ними (ROM 16:15)",
+      "deu": "von Paulus mit Philologus und den Heiligen bei ihnen gegrüßt (ROM 16:15)",
+      "spa": "saludada por Pablo con Filólogo y los santos que están con ellos (ROM 16:15)"
+    },
+    {
+      "slug": "nereus",
+      "english": "greeted by Paul with his sister and the saints who are with them (ROM 16:15)",
+      "ukr": "привітаний Павлом разом зі своєю сестрою і святими, що з ними (ROM 16:15)",
+      "deu": "von Paulus mit seiner Schwester und den Heiligen bei ihnen gegrüßt (ROM 16:15)",
+      "spa": "saludado por Pablo con su hermana y los santos que están con ellos (ROM 16:15)"
+    },
+    {
+      "slug": "sosipater",
+      "english": "one of Paul's kinsmen who send greetings with Timothy (ROM 16:21)",
+      "ukr": "один із Павлових родичів, що вітають разом з Тимофієм (ROM 16:21)",
+      "deu": "einer der Verwandten des Paulus, die mit Timotheus grüßen (ROM 16:21)",
+      "spa": "uno de los parientes de Pablo que saludan con Timoteo (ROM 16:21)"
+    },
+    {
+      "slug": "tertius",
+      "english": "who wrote the epistle to the Romans and added his own greeting (ROM 16:22)",
+      "ukr": "той, хто написав Послання до римлян і додав своє вітання (ROM 16:22)",
+      "deu": "der den Brief an die Römer schrieb und seinen eigenen Gruß hinzufügte (ROM 16:22)",
+      "spa": "quien escribió la epístola a los romanos y añadió su propio saludo (ROM 16:22)"
+    },
+    {
+      "slug": "quartus",
+      "english": "a brother who sends greetings to Rome (ROM 16:23)",
+      "ukr": "брат, що посилає вітання до Риму (ROM 16:23)",
+      "deu": "ein Bruder, der nach Rom grüßen lässt (ROM 16:23)",
+      "spa": "un hermano que envía saludos a Roma (ROM 16:23)"
+    },
+    {
+      "slug": "chloe",
+      "english": "by those of whose house Paul heard of contentions in Corinth (1CO 1:11)",
+      "ukr": "від домашніх якої Павло почув про суперечки в Коринті (1CO 1:11)",
+      "deu": "durch deren Hausgenossen Paulus von Streitigkeiten in Korinth hörte (1CO 1:11)",
+      "spa": "por los de cuya casa Pablo supo de contiendas en Corinto (1CO 1:11)"
+    },
+    {
+      "slug": "forunatus",
+      "english": "whose coming from Corinth with Stephanas and Achaicus gladdened Paul (1CO 16:17)",
+      "ukr": "чий прихід з Коринту разом зі Стефаном і Ахаїком потішив Павла (1CO 16:17)",
+      "deu": "dessen Kommen aus Korinth mit Stephanas und Achaikus Paulus erfreute (1CO 16:17)",
+      "spa": "cuya llegada de Corinto con Estéfanas y Acaico alegró a Pablo (1CO 16:17)"
+    },
+    {
+      "slug": "achaicus",
+      "english": "whose coming from Corinth with Stephanas and Fortunatus gladdened Paul (1CO 16:17)",
+      "ukr": "чий прихід з Коринту разом зі Стефаном і Фортунатом потішив Павла (1CO 16:17)",
+      "deu": "dessen Kommen aus Korinth mit Stephanas und Fortunatus Paulus erfreute (1CO 16:17)",
+      "spa": "cuya llegada de Corinto con Estéfanas y Fortunato alegró a Pablo (1CO 16:17)"
+    },
+    {
+      "slug": "euodia",
+      "english": "a woman at Philippi whom Paul besought to be of one mind with Syntyche (PHP 4:2)",
+      "ukr": "жінка у Филипах, яку Павло благав бути однодумною із Синтихою (PHP 4:2)",
+      "deu": "eine Frau in Philippi, die Paulus ermahnte, eines Sinnes mit Syntyche zu sein (PHP 4:2)",
+      "spa": "una mujer de Filipos a quien Pablo rogó ser de un mismo sentir con Síntique (PHP 4:2)"
+    },
+    {
+      "slug": "syntyche",
+      "english": "a woman at Philippi whom Paul besought to be of one mind with Euodias (PHP 4:2)",
+      "ukr": "жінка у Филипах, яку Павло благав бути однодумною з Єводією (PHP 4:2)",
+      "deu": "eine Frau in Philippi, die Paulus ermahnte, eines Sinnes mit Euodia zu sein (PHP 4:2)",
+      "spa": "una mujer de Filipos a quien Pablo rogó ser de un mismo sentir con Evodia (PHP 4:2)"
+    },
+    {
+      "slug": "clement",
+      "english": "one of Paul's fellow labourers whose names are in the book of life (PHP 4:3)",
+      "ukr": "один із Павлових співробітників, чиї імена в книзі життя (PHP 4:3)",
+      "deu": "einer der Mitarbeiter des Paulus, deren Namen im Buch des Lebens stehen (PHP 4:3)",
+      "spa": "uno de los colaboradores de Pablo cuyos nombres están en el libro de la vida (PHP 4:3)"
+    },
+    {
+      "slug": "onesimus",
+      "english": "a faithful and beloved brother of Colossae (COL 4:9), for whom Paul writes to Philemon (PHM 1:10)",
+      "ukr": "вірний і улюблений брат із Колос (COL 4:9), за якого Павло пише Филимонові (PHM 1:10)",
+      "deu": "ein treuer und geliebter Bruder aus Kolossä (COL 4:9), für den Paulus an Philemon schreibt (PHM 1:10)",
+      "spa": "un hermano fiel y amado de Colosas (COL 4:9), por quien Pablo escribe a Filemón (PHM 1:10)"
+    },
+    {
+      "slug": "luke",
+      "english": "the beloved physician (COL 4:14), who alone was with Paul at the last (2TI 4:11)",
+      "ukr": "улюблений лікар (COL 4:14), що один лишився з Павлом наприкінці (2TI 4:11)",
+      "deu": "der geliebte Arzt (COL 4:14), der zuletzt allein bei Paulus war (2TI 4:11)",
+      "spa": "el médico amado (COL 4:14), el único que quedó con Pablo al final (2TI 4:11)"
+    },
+    {
+      "slug": "hymenaeus",
+      "english": "whom Paul delivered unto Satan (1TI 1:20) and whose word eats as doth a canker (2TI 2:17)",
+      "ukr": "якого Павло віддав сатані (1TI 1:20) і чиє слово ширилося, як рак (2TI 2:17)",
+      "deu": "den Paulus dem Satan übergab (1TI 1:20) und dessen Wort um sich frisst wie der Krebs (2TI 2:17)",
+      "spa": "a quien Pablo entregó a Satanás (1TI 1:20) y cuya palabra carcome como gangrena (2TI 2:17)"
+    },
+    {
+      "slug": "onesiphorus",
+      "english": "who oft refreshed Paul and was not ashamed of his chain (2TI 1:16)",
+      "ukr": "що часто підкріплював Павла і не соромився його кайданів (2TI 1:16)",
+      "deu": "der Paulus oft erquickte und sich seiner Kette nicht schämte (2TI 1:16)",
+      "spa": "que muchas veces confortó a Pablo y no se avergonzó de su cadena (2TI 1:16)"
+    },
+    {
+      "slug": "philetus",
+      "english": "named with Hymenaeus, whose word eats as doth a canker (2TI 2:17)",
+      "ukr": "названий разом з Гіменеєм, чиє слово ширилося, як рак (2TI 2:17)",
+      "deu": "mit Hymenäus genannt, deren Wort um sich frisst wie der Krebs (2TI 2:17)",
+      "spa": "nombrado con Himeneo, cuya palabra carcome como gangrena (2TI 2:17)"
+    },
+    {
+      "slug": "jannes",
+      "english": "named with Jambres as having withstood Moses (2TI 3:8)",
+      "ukr": "названий разом з Ямврієм як той, що противився Мойсеєві (2TI 3:8)",
+      "deu": "mit Jambres genannt als einer, der Mose widerstand (2TI 3:8)",
+      "spa": "nombrado con Jambres como quien resistió a Moisés (2TI 3:8)"
+    },
+    {
+      "slug": "jambres",
+      "english": "named with Jannes as having withstood Moses (2TI 3:8)",
+      "ukr": "названий разом з Янієм як той, що противився Мойсеєві (2TI 3:8)",
+      "deu": "mit Jannes genannt als einer, der Mose widerstand (2TI 3:8)",
+      "spa": "nombrado con Janes como quien resistió a Moisés (2TI 3:8)"
+    },
+    {
+      "slug": "crescens",
+      "english": "who departed from Paul to Galatia (2TI 4:10)",
+      "ukr": "що відійшов від Павла до Галатії (2TI 4:10)",
+      "deu": "der von Paulus nach Galatien zog (2TI 4:10)",
+      "spa": "que se fue de junto a Pablo a Galacia (2TI 4:10)"
+    },
+    {
+      "slug": "eubulus",
+      "english": "who greets Timothy in Paul's last letter (2TI 4:21)",
+      "ukr": "що вітає Тимофія в останньому листі Павла (2TI 4:21)",
+      "deu": "der Timotheus im letzten Brief des Paulus grüßt (2TI 4:21)",
+      "spa": "que saluda a Timoteo en la última carta de Pablo (2TI 4:21)"
+    },
+    {
+      "slug": "pudens",
+      "english": "who greets Timothy in Paul's last letter (2TI 4:21)",
+      "ukr": "що вітає Тимофія в останньому листі Павла (2TI 4:21)",
+      "deu": "der Timotheus im letzten Brief des Paulus grüßt (2TI 4:21)",
+      "spa": "que saluda a Timoteo en la última carta de Pablo (2TI 4:21)"
+    },
+    {
+      "slug": "linus",
+      "english": "who greets Timothy in Paul's last letter (2TI 4:21)",
+      "ukr": "що вітає Тимофія в останньому листі Павла (2TI 4:21)",
+      "deu": "der Timotheus im letzten Brief des Paulus grüßt (2TI 4:21)",
+      "spa": "que saluda a Timoteo en la última carta de Pablo (2TI 4:21)"
+    },
+    {
+      "slug": "claudia",
+      "english": "who greets Timothy in Paul's last letter (2TI 4:21)",
+      "ukr": "що вітає Тимофія в останньому листі Павла (2TI 4:21)",
+      "deu": "die Timotheus im letzten Brief des Paulus grüßt (2TI 4:21)",
+      "spa": "que saluda a Timoteo en la última carta de Pablo (2TI 4:21)"
+    },
+    {
+      "slug": "artemas",
+      "english": "whom Paul thought to send to Titus in Crete (TIT 3:12)",
+      "ukr": "якого Павло думав послати до Тита (TIT 3:12)",
+      "deu": "den Paulus zu Titus zu senden gedachte (TIT 3:12)",
+      "spa": "a quien Pablo pensaba enviar a Tito (TIT 3:12)"
+    },
+    {
+      "slug": "zenas",
+      "english": "the lawyer whom Titus is to bring on his journey with Apollos (TIT 3:13)",
+      "ukr": "законник, якого Тит має виправити в дорогу разом з Аполлосом (TIT 3:13)",
+      "deu": "der Gesetzeskundige, den Titus mit Apollos geleiten soll (TIT 3:13)",
+      "spa": "el intérprete de la ley a quien Tito ha de encaminar con Apolos (TIT 3:13)"
+    },
+    {
+      "slug": "apphia",
+      "english": "the beloved, greeted in Paul's letter with Philemon and Archippus (PHM 1:2)",
+      "ukr": "улюблена, привітана в Павловому листі разом з Филимоном і Архипом (PHM 1:2)",
+      "deu": "die Geliebte, im Brief des Paulus mit Philemon und Archippus gegrüßt (PHM 1:2)",
+      "spa": "la amada, saludada en la carta de Pablo junto con Filemón y Arquipo (PHM 1:2)"
+    },
+    {
+      "slug": "diotrephes",
+      "english": "who loveth to have the preeminence and receiveth not the elder (3JN 1:9)",
+      "ukr": "що любить першенство і не приймає старця (3JN 1:9)",
+      "deu": "der gern der Erste sein will und den Ältesten nicht aufnimmt (3JN 1:9)",
+      "spa": "al que le gusta tener el primer lugar y no recibe al anciano (3JN 1:9)"
+    },
+    {
+      "slug": "antipas",
+      "english": "the faithful martyr slain at Pergamos (REV 2:13)",
+      "ukr": "вірний свідок, убитий у Пергамі (REV 2:13)",
+      "deu": "der treue Zeuge, der in Pergamon getötet wurde (REV 2:13)",
+      "spa": "el testigo fiel que fue muerto en Pérgamo (REV 2:13)"
+    },
+    {
+      "slug": "abaddon",
+      "english": "the name in the Hebrew tongue of the king over the locusts, the angel of the bottomless pit; in the Greek, Apollyon (REV 9:11)",
+      "ukr": "ім'я єврейською мовою царя над сараною, ангела безодні; грецькою — Аполліон (REV 9:11)",
+      "deu": "der hebräische Name des Königs über die Heuschrecken, des Engels des Abgrunds; griechisch Apollyon (REV 9:11)",
+      "spa": "el nombre en hebreo del rey sobre las langostas, el ángel del abismo; en griego, Apolión (REV 9:11)"
+    },
+    {
+      "slug": "hazazontamar",
+      "english": "where the Amorites dwelt whom Chedorlaomer smote (GEN 14:7); the same as En-gedi (2CH 20:2)",
+      "ukr": "місце, де жили амореї, яких побив Кедорлаомер (GEN 14:7); те саме, що Ен-Ґеді (2CH 20:2)",
+      "deu": "wo die Amoriter wohnten, die Kedorlaomer schlug (GEN 14:7); dasselbe wie En-Gedi (2CH 20:2)",
+      "spa": "donde habitaban los amorreos a quienes hirió Quedorlaomer (GEN 14:7); lo mismo que En-gadi (2CH 20:2)"
+    },
+    {
+      "slug": "thelordwillprovide",
+      "english": "the name Abraham gave the place on the mount where the ram was provided (GEN 22:14)",
+      "ukr": "ім'я, яке Авраам дав місцю на горі, де було дано барана (GEN 22:14)",
+      "deu": "der Name, den Abraham der Stätte auf dem Berg gab, wo der Widder bereitet war (GEN 22:14)",
+      "spa": "el nombre que Abraham dio al lugar del monte donde fue provisto el carnero (GEN 22:14)"
+    },
+    {
+      "slug": "arba",
+      "english": "the greatest man among the Anakims, after whom Kirjath-arba was named (JOS 14:15)",
+      "ukr": "найбільша людина серед енакитів, від якої Кір'ят-Арба дістала ім'я (JOS 14:15)",
+      "deu": "der größte Mensch unter den Enakitern, nach dem Kirjat-Arba benannt war (JOS 14:15)",
+      "spa": "el hombre más grande entre los anaceos, de quien tomó nombre Quiriat-arba (JOS 14:15)"
+    },
+    {
+      "slug": "raphah",
+      "english": "the giant whose sons fell by the hand of David and of his servants (2SA 21:22)",
+      "ukr": "велетень, чиї сини полягли від руки Давида та його слуг (2SA 21:22)",
+      "deu": "der Riese, dessen Söhne durch die Hand Davids und seiner Knechte fielen (2SA 21:22)",
+      "spa": "el gigante cuyos hijos cayeron por mano de David y de sus siervos (2SA 21:22)"
+    },
+    {
+      "slug": "meunim",
+      "english": "forefather of a family of the Nethinims who returned from the captivity (EZR 2:50)",
+      "ukr": "предок роду храмових слуг, що повернувся з полону (EZR 2:50)",
+      "deu": "Stammvater einer Familie der Tempeldiener, die aus der Gefangenschaft heimkehrte (EZR 2:50)",
+      "spa": "antepasado de una familia de los sirvientes del templo que volvió del cautiverio (EZR 2:50)"
+    },
+    {
+      "slug": "philemon",
+      "english": "Paul's dearly beloved fellowlabourer, to whom he writes with Timothy (PHM 1:1)",
+      "ukr": "улюблений співпрацівник Павла, якому він пише разом із Тимофієм (PHM 1:1)",
+      "deu": "der geliebte Mitarbeiter des Paulus, an den er mit Timotheus schreibt (PHM 1:1)",
+      "spa": "el amado colaborador de Pablo, a quien escribe junto con Timoteo (PHM 1:1)"
+    },
+    {
+      "slug": "asynchritus",
+      "english": "one of those Paul salutes with Phlegon, Hermas, Patrobas and Hermes (ROM 16:14)",
+      "ukr": "один із тих, кого Павло вітає разом із Флегонтом, Ермом, Патробом та Ермієм (ROM 16:14)",
+      "deu": "einer von denen, die Paulus mit Phlegon, Hermas, Patrobas und Hermes grüßt (ROM 16:14)",
+      "spa": "uno de los que Pablo saluda junto con Flegonte, Hermas, Patrobas y Hermes (ROM 16:14)"
+    },
+    {
+      "slug": "legion",
+      "english": "the name the unclean spirit gave when Jesus asked it, for they were many (MRK 5:9, LUK 8:30)",
+      "ukr": "ім'я, яке назвав нечистий дух, коли Ісус його запитав, бо їх було багато (MRK 5:9, LUK 8:30)",
+      "deu": "der Name, den der unreine Geist nannte, als Jesus ihn fragte, denn sie waren viele (MRK 5:9, LUK 8:30)",
+      "spa": "el nombre que dio el espíritu inmundo cuando Jesús le preguntó, porque eran muchos (MRK 5:9, LUK 8:30)"
+    },
+    {
+      "slug": "death",
+      "english": "the name of him that sat on the pale horse, whom Hell followed (REV 6:8)",
+      "ukr": "ім'я того, хто сидів на блідому коні і за ким ішов ад (REV 6:8)",
+      "deu": "der Name dessen, der auf dem fahlen Pferd saß und dem die Hölle folgte (REV 6:8)",
+      "spa": "el nombre del que montaba el caballo pálido, al que seguía el Hades (REV 6:8)"
+    },
+    {
+      "slug": "antichrist",
+      "english": "the one whose coming the readers had heard of, who denies the Father and the Son (1JN 2:18, 22)",
+      "ukr": "той, про чий прихід чули читачі, хто відрікається Отця і Сина (1JN 2:18, 22)",
+      "deu": "der, von dessen Kommen die Leser gehört hatten, der den Vater und den Sohn leugnet (1JN 2:18, 22)",
+      "spa": "aquel de cuya venida habían oído los lectores, que niega al Padre y al Hijo (1JN 2:18, 22)"
+    },
+    {
+      "slug": "nephisim",
+      "english": "forefather of a family of the Nethinims who returned from the captivity (EZR 2:50, NEH 7:52)",
+      "ukr": "предок роду храмових слуг, що повернувся з полону (EZR 2:50, NEH 7:52)",
+      "deu": "Stammvater einer Familie der Tempeldiener, die aus der Gefangenschaft heimkehrte (EZR 2:50, NEH 7:52)",
+      "spa": "antepasado de una familia de los sirvientes del templo que volvió del cautiverio (EZR 2:50, NEH 7:52)"
+    },
+    {
+      "slug": "elishah-2",
+      "english": "a son of Japheth whom only the Greek list names (GEN 10:2)",
+      "ukr": "син Яфета, якого називає лише грецький список (GEN 10:2)",
+      "deu": "ein Sohn Japhets, den nur die griechische Liste nennt (GEN 10:2)",
+      "spa": "un hijo de Jafet a quien solo nombra la lista griega (GEN 10:2)"
+    },
+    {
+      "slug": "zaboud",
+      "english": "son of Hammuel and father of Zaccur in the Greek list of Simeon's descendants (1CH 4:26)",
+      "ukr": "син Хаммуїла і батько Заккура в грецькому списку нащадків Симеона (1CH 4:26)",
+      "deu": "Sohn Hammuels und Vater Sakkurs in der griechischen Liste der Nachkommen Simeons (1CH 4:26)",
+      "spa": "hijo de Hamuel y padre de Zacur en la lista griega de los descendientes de Simeón (1CH 4:26)"
+    },
+    {
+      "slug": "ezra-2",
+      "english": "one of those who came with Zerubbabel, as the Greek list names him (NEH 7:7)",
+      "ukr": "один із тих, хто прийшов із Зоровавелем, як його називає грецький список (NEH 7:7)",
+      "deu": "einer von denen, die mit Serubbabel kamen, wie ihn die griechische Liste nennt (NEH 7:7)",
+      "spa": "uno de los que vinieron con Zorobabel, según lo nombra la lista griega (NEH 7:7)"
+    },
+    {
+      "slug": "caesar-2",
+      "english": "the Caesar to whom Paul appealed, at whose judgment seat he stood (ACT 25:10-11)",
+      "ukr": "кесар, до якого відкликався Павло і перед чиїм судом він стояв (ACT 25:10-11)",
+      "deu": "der Kaiser, auf den sich Paulus berief und vor dessen Richterstuhl er stand (ACT 25:10-11)",
+      "spa": "el César a quien apeló Pablo y ante cuyo tribunal estaba (ACT 25:10-11)"
+    }
+  ]
+}

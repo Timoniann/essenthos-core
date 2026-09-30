@@ -10,8 +10,9 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// A record BibleData supplied and this project has read for itself is ours: it loses the dataset's
-/// line and notes, and its sex and tribe are what our own rows say and nothing the dataset says.
+/// A record BibleData supplied and this project has read for itself — a verse of ours or a relationship
+/// of ours stands on it — is ours: it loses the dataset's line and notes, its line is its clauses or the
+/// line we wrote for it, and its sex and tribe are what our own rows say and nothing the dataset says.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class OursOnlyRecordTests : IDisposable
@@ -52,16 +53,67 @@ public sealed class OursOnlyRecordTests : IDisposable
     }
 
     [Fact]
-    public async Task ARecordWhoseOnlyVersesAreTheDatasetsOrThatHasNoDescriptorStaysTheDatasets()
+    public async Task ARecordWhoseOnlyVersesAndTiesAreTheDatasetsStaysTheDatasets()
     {
-        var (bare, mute, target) = (Supplied("bare", "male", null), Supplied("mute", "male", null), Person("target"));
+        var (bare, target) = (Supplied("bare", "male", null), Person("target"));
         await _db.SaveChangesAsync();
         Clause(bare, "father-of", target);
         Verse(bare, BibleDataLoader.Source);
-        Verse(mute, OurVerse);
+        Tie(bare, "father-of", target, BibleDataLoader.Source);
         await _db.SaveChangesAsync();
 
-        (await OursOnlyRecords.Among(_db, ["bare", "mute"], default)).Should().BeEmpty();
+        (await OursOnlyRecords.Among(_db, ["bare"], default)).Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// A verse of ours is enough without a clause, and so is a relationship of ours without a verse,
+    /// from either end of it; neither shows the dataset's line.
+    /// </summary>
+    [Fact]
+    public async Task AVerseOfOursOrARelationshipOfOursMakesTheRecordOurs()
+    {
+        var (mute, son, father) = (Supplied("mute", "male", null), Supplied("son", "male", null), Supplied("father", null, null));
+        await _db.SaveChangesAsync();
+        Verse(mute, OurVerse);
+        Tie(son, "son-of", father, OurSource);
+        await _db.SaveChangesAsync();
+
+        var ours = await OursOnlyRecords.Among(_db, ["mute", "son", "father"], default);
+
+        ours.Keys.Should().BeEquivalentTo(["mute", "son", "father"]);
+        ours.Values.Should().OnlyContain(facts => facts.Line == null, "no line of ours was written for any of them");
+        OursOnlyRecords.Line(ours, "son", "a line only BibleData states").Should().BeNull();
+    }
+
+    /// <summary>
+    /// The line we wrote is the record's line only where it is not described by clauses, and only while
+    /// its English is the line this project rendered; the dataset's English is never ours.
+    /// </summary>
+    [Fact]
+    public async Task OurOwnLineIsTheLineOfARecordWithNoClause()
+    {
+        var (lined, described, unrendered, target) = (
+            Supplied("lined", "male", null), Supplied("described", "male", null), Supplied("unrendered", "male", null),
+            Person("target"));
+        lined.Distinguisher = "took Kenath and called it Nobah after his own name (NUM 32:42)";
+        described.Distinguisher = lined.Distinguisher;
+        await _db.SaveChangesAsync();
+        foreach (var record in new[] { lined, described, unrendered })
+        {
+            Verse(record, OurVerse);
+            Rendered(record, record.Distinguisher!);
+        }
+
+        Clause(described, "son-of", target);
+        unrendered.Distinguisher = "a line only BibleData states, changed since";
+        await _db.SaveChangesAsync();
+
+        var ours = await OursOnlyRecords.Among(_db, ["lined", "described", "unrendered"], default);
+
+        ours["lined"].Line.Should().Be(lined.Distinguisher);
+        ours["described"].Line.Should().BeNull("its clauses are its line");
+        ours["unrendered"].Line.Should().BeNull("its English is not the line this project rendered");
+        OursOnlyRecords.Line(ours, "lined", lined.Distinguisher).Should().Be(lined.Distinguisher);
     }
 
     [Fact]
@@ -191,11 +243,16 @@ public sealed class OursOnlyRecordTests : IDisposable
     }
 
     [Fact]
-    public void ALineIsLeftOutOnlyWhereTheRecordIsOurs()
+    public void ARecordOfOursShowsOnlyOurLineAndAnyOtherItsOwn()
     {
-        var ours = new Dictionary<string, OursOnlyRecords.OwnFacts> { ["zebedee"] = new(null, null) };
+        var ours = new Dictionary<string, OursOnlyRecords.OwnFacts>
+        {
+            ["zebedee"] = new(null, null),
+            ["nobah"] = new(null, null, "took Kenath (NUM 32:42)"),
+        };
 
         OursOnlyRecords.Line(ours, "zebedee", "father of James").Should().BeNull();
+        OursOnlyRecords.Line(ours, "nobah", "a line only BibleData states").Should().Be("took Kenath (NUM 32:42)");
         OursOnlyRecords.Line(ours, "james", "son of Zebedee").Should().Be("son of Zebedee");
     }
 
@@ -244,6 +301,12 @@ public sealed class OursOnlyRecordTests : IDisposable
         {
             From = from, To = to, Type = type, Category = RelationshipCategories.Read,
             CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 1, Method = LinkMethod.Manual, Source = source,
+        });
+
+    private void Rendered(Entity entity, string english) =>
+        _db.EntityDistinguishers.Add(new EntityDistinguisher
+        {
+            Entity = entity, Language = "ukr", Text = "рядок", English = english, Source = "Essenthos, a test",
         });
 
     private void Verse(Entity entity, string source) =>

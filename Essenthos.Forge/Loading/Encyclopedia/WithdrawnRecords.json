@@ -46,6 +46,26 @@
       "sourceId": "place:The Garden_1",
       "why": "Hebrew gan, garden, is an ordinary word: the king's garden (2KI 25:4), the garden of Uzza (2KI 21:18), a garden inclosed (SNG 4:12). The garden the LORD God planted in Eden (GEN 2:8) is held under Eden.",
       "ownerRuled": "the project owner, 2026-09-30, although this corpus held its own rows on the record"
+    },
+    {
+      "slug": "abdeel-2",
+      "sourceId": "person:Abdeel_2",
+      "why": "Withdrawn on the project owner's instruction of 2026-09-30 to settle every record BibleData supplied that rested on it alone, as claude-opus-5-5 read its verse. Rahlfs' Septuagint adds Raguel and Nabdeel to the sons of Dedan at Genesis 25:3; the Hebrew does not, and neither does Brenton's Septuagint, the one this corpus holds ('the sons of Dedan were the Assurians and the Latusians, and Laomim'). No text here names him."
+    },
+    {
+      "slug": "reuel-4",
+      "sourceId": "person:Reuel_4",
+      "why": "Withdrawn on the project owner's instruction of 2026-09-30 to settle every record BibleData supplied that rested on it alone, as claude-opus-5-5 read its verse. Rahlfs' Septuagint names Raguel among the sons of Dedan at Genesis 25:3; the Hebrew does not, and neither does Brenton's Septuagint. No text here names him."
+    },
+    {
+      "slug": "tema-2",
+      "sourceId": "person:Tema_2",
+      "why": "Withdrawn on the project owner's instruction of 2026-09-30 to settle every record BibleData supplied that rested on it alone, as claude-opus-5-5 read its verse. Rahlfs' Septuagint names Thaeman among the sons of Jokshan at Genesis 25:3; the Hebrew does not, and neither does Brenton's Septuagint ('Jezan begot Saba and Dedan'). No text here names him."
+    },
+    {
+      "slug": "rokeim",
+      "sourceId": "person:Rokeim_1",
+      "why": "Withdrawn on the project owner's instruction of 2026-09-30 to settle every record BibleData supplied that rested on it alone, as claude-opus-5-5 read its verse. Rahlfs' Septuagint transliterates the apothecaries of Nehemiah 3:8 as a name; Brenton's reads 'Ananias the son of one of the apothecaries', and the Hebrew and every translation here read the word as a trade."
     }
   ]
 }

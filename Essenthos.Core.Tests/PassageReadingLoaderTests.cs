@@ -142,6 +142,32 @@ public sealed class PassageReadingLoaderTests : IDisposable
         (await Loader().Load([Line(1)])).AlreadyLoaded.Should().BeTrue();
     }
 
+    /// <summary>
+    /// A reading one reader decided says so in its source, and is written on a corpus that already holds
+    /// the readings of another file.
+    /// </summary>
+    [Fact]
+    public async Task ADecidedReadingIsWrittenBesideTheOnesAlreadyThere()
+    {
+        await Loader().Load([Line(1)]);
+        var decided = Line(3) with
+        {
+            Check = null,
+            DecidedBy = "a reading of the passage by claude-opus-5-5 alone, on the project owner's instruction, 2026-09-30",
+        };
+
+        var outcome = await Loader().Load([Line(1), decided]);
+
+        outcome.AlreadyLoaded.Should().BeFalse();
+        outcome.Written.Should().Be(1);
+        _db.ChangeTracker.Clear();
+        var row = await _db.WordEntities.SingleAsync(a => a.WordId == Greek(3, 2).Id);
+        row.Source.Should().Be(
+            "Essenthos, a reading of the passage by claude-opus-5-5 alone, on the project owner's instruction, 2026-09-30");
+        row.Method.Should().Be(LinkMethod.ModelReading);
+        (await Loader().Load([Line(1), decided])).AlreadyLoaded.Should().BeTrue();
+    }
+
     [Theory]
     [InlineData("2KI 25:21", 12, 25, 21)]
     [InlineData("1JN 4:14", 62, 4, 14)]

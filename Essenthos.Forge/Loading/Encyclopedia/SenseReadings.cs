@@ -105,6 +105,10 @@ internal sealed record SupersededReadings(
 /// The owner's ruling on one occurrence: whom the word names, and whether that is somebody the
 /// encyclopedia already holds or a record this corpus has to write.
 /// </summary>
+/// <param name="StrongNumber">
+/// The number the word carries, or null for a word of a text that carries none: a name only the
+/// Septuagint prints, in Brenton's Greek or English.
+/// </param>
 /// <param name="Corrects">
 /// The record an earlier ruling gave this word, where this one corrects it. A ruling does not
 /// overrule another ruling on its own, so the correction says which one it takes back.
@@ -112,7 +116,7 @@ internal sealed record SupersededReadings(
 internal sealed record OwnRecordRuling(
     long WordId,
     string Reference,
-    string StrongNumber,
+    string? StrongNumber,
     OwnRecord? Create,
     string? Existing,
     RecordSays? Says,
@@ -364,6 +368,8 @@ internal static class SenseReadingFiles
     private const string NamesakeSecondResource =
         "Essenthos.Core.Loading.Encyclopedia.NamesakeRecordsSecond.json";
 
+    private const string DatasetRecordResource = "Essenthos.Core.Loading.Encyclopedia.DatasetRecordRulings.json";
+
     private static readonly JsonSerializerOptions Shape = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -578,12 +584,20 @@ internal static class SenseReadingFiles
     /// </summary>
     public static OwnRecordRulings AddressedRulings() => Embedded<OwnRecordRulings>(AddressedResource);
 
+    /// <summary>
+    /// The records a dataset supplied that no word of ours named: the word each one's verse prints
+    /// given to it — in the Hebrew title of a psalm, or in the Septuagint where only the Septuagint
+    /// names him — and the heading of one the text spells otherwise.
+    /// </summary>
+    public static OwnRecordRulings DatasetRecordRulings() => Embedded<OwnRecordRulings>(DatasetRecordResource);
+
     /// <summary>Every rulings file, in the order they were decided.</summary>
     public static IReadOnlyList<OwnRecordRulings> AllRulings() =>
     [
         Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings(),
         SeveralPeopleRulings(), SeveralPeopleSecondRulings(), SeveralPeopleThirdRulings(), NamesakeRulings(),
         UnsettledSecondRulings(), SeveralPeopleFourthRulings(), AddressedRulings(), NamesakeSecondRulings(),
+        DatasetRecordRulings(),
     ];
 
     private static T Embedded<T>(string name)

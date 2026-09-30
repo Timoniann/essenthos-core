@@ -805,8 +805,8 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                 Distinguisher = folded.Distinguisher,
                 RecordSourceId = folded.SourceId,
                 RecordSource = folded.Source,
-                Method = list.Method,
-                Confidence = merge.Confidence ?? list.Confidence,
+                Method = merge.Method is { } method ? EnumSpelling.ToLinkMethod(method) : list.Method,
+                Confidence = merge.Method is null ? merge.Confidence ?? list.Confidence : merge.Confidence,
                 Reason = merge.Why,
                 Source = merge.Source ?? list.Source,
             }));
@@ -924,6 +924,10 @@ internal sealed record DuplicateRecordSplit(
 /// The folded record is of another kind than the one it is folded into: a man the dataset wrote for
 /// what the text names as a people, <em>the Amorite</em> of Genesis 10:16.
 /// </param>
+/// <param name="Method">
+/// What decided this pair, where it is not what decided the list: <c>manual</c> for the owner's own
+/// ruling, which then carries no confidence unless the pair gives one.
+/// </param>
 internal sealed record DuplicateRecordPair(
     string StrongNumber,
     string Keeps,
@@ -931,4 +935,5 @@ internal sealed record DuplicateRecordPair(
     string Why,
     double? Confidence = null,
     string? Source = null,
-    bool AcrossKinds = false);
+    bool AcrossKinds = false,
+    string? Method = null);

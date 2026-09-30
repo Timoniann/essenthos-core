@@ -573,8 +573,13 @@ internal static class EncyclopediaEndpoints
             var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], language, cancellationToken);
             var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
             var page = named
-                .Select(row => ours.ContainsKey(row.Slug)
-                    ? summaries[row.Slug] with { Distinguisher = null, LocalName = row.LocalName }
+                .Select(row => ours.TryGetValue(row.Slug, out var own)
+                    ? summaries[row.Slug] with
+                    {
+                        Distinguisher = own.Line,
+                        LocalName = row.LocalName,
+                        LocalDistinguisher = own.Line is null ? null : lines.GetValueOrDefault(row.Id),
+                    }
                     : summaries[row.Slug] with
                     {
                         LocalName = row.LocalName,
@@ -804,7 +809,7 @@ internal static class EncyclopediaEndpoints
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
                 entity.Name,
-                mine is null ? entity.Distinguisher : null,
+                mine is null ? entity.Distinguisher : mine.Line,
                 mine is null ? entity.Sex : mine.Sex,
                 mine is null ? entity.Tribe : mine.Tribe,
                 entity.PlaceKind,
@@ -841,7 +846,7 @@ internal static class EncyclopediaEndpoints
                 Location = entity.Location,
                 LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
                     .GetValueOrDefault(entity.Id),
-                LocalDistinguisher = mine is null
+                LocalDistinguisher = mine is null || mine.Line is not null
                     ? (await EntityDistinguishers.Of(db, [entity.Id], language, cancellationToken))
                         .GetValueOrDefault(entity.Id)
                     : null,

@@ -159,6 +159,8 @@ builder.Services.AddScoped<TermLoader>();
 builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<TitleReadingLoader>();
 builder.Services.AddScoped<VerseReadingLoader>();
+builder.Services.AddScoped<RelationshipVerseLoader>();
+builder.Services.AddScoped<MisplacedAnnotationLoader>();
 builder.Services.AddScoped<ReignLoader>();
 builder.Services.AddScoped<OwnNameLoader>();
 builder.Services.AddScoped<WithdrawnRecordLoader>();
@@ -1277,6 +1279,34 @@ if (args is ["passage-readings", ..])
         .Load(resources));
     logger.LogInformation("{Outcome}", await readingScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
         .Load());
+    return 0;
+}
+
+// The records a dataset supplied, made this project's own, folded or withdrawn, in an already loaded
+// corpus: the words the rulings give them, the words one reading of a passage finds, the names a
+// word was wrongly given taken off, the verses read off the words, the clauses that describe them and
+// the relationships read off those, the folds and the withdrawals, the verses their relationships were
+// read from where nothing else lists one, their own lines, and the verses that name told from those
+// that concern. The load does each at its own step.
+if (args is ["dataset-records", ..])
+{
+    using var recordsScope = app.Services.CreateScope();
+    var records = recordsScope.ServiceProvider;
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<OwnRecordLoader>().Load(resources));
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<PassageReadingLoader>().Load(resources));
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<MisplacedAnnotationLoader>().Load());
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<OwnReferenceLoader>().Load());
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<EntityDescriptorLoader>().Load(resources));
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<OwnRelationshipLoader>().Load());
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<EntityNameFormLoader>().Load(resources));
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<DuplicateRecordLoader>().Load());
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<WithdrawnRecordLoader>().Load());
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<RelationshipVerseLoader>().Load());
+    logger.LogInformation("{Outcome}", await records.GetRequiredService<DistinguisherLoader>().Load());
+    var recordsDb = records.GetRequiredService<AppDbContext>();
+    recordsDb.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
+    var recordsNaming = await recordsDb.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+    Console.WriteLine($"{recordsNaming} listed verses changed between naming their entity and only concerning it");
     return 0;
 }
 

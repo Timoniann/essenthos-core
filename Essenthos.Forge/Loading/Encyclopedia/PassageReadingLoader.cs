@@ -44,8 +44,10 @@ internal sealed record PassageReadingOutcome(
 ///
 /// <para>
 /// A model's reading, so it carries the reading's own confidence and a source naming the model, the
-/// prompt and the day. A word that names anybody already is never touched, whoever settled it, and a
-/// carried word that already names somebody else keeps its answer. Idempotent on its sources.
+/// prompt and the day, or the one reading that decided it and on whose word. A word that names anybody
+/// already is never touched, whoever settled it, and a carried word that already names somebody else
+/// keeps its answer. Idempotent on each of its sources, so a file of readings added later is written
+/// beside the ones already there.
 /// </para>
 /// </summary>
 internal sealed class PassageReadingLoader(
@@ -76,10 +78,14 @@ internal sealed class PassageReadingLoader(
         WHERE already.word_id = a.word_id AND already.entity_id <> a.entity_id
         """;
 
+    private const string DecidedShape = "Essenthos, {0}";
+
     public static string SourceOf(PassageReadingRecord line) =>
-        string.Format(
-            System.Globalization.CultureInfo.InvariantCulture, SourceShape,
-            line.Reading?.Model, line.Reading?.PromptVersion, line.Check?.Model, line.Reading?.AskedAt);
+        line.DecidedBy is { Length: > 0 } decided
+            ? string.Format(System.Globalization.CultureInfo.InvariantCulture, DecidedShape, decided)
+            : string.Format(
+                System.Globalization.CultureInfo.InvariantCulture, SourceShape,
+                line.Reading?.Model, line.Reading?.PromptVersion, line.Check?.Model, line.Reading?.AskedAt);
 
     public async Task<PassageReadingOutcome> Load(string resources, CancellationToken cancellationToken = default)
     {
@@ -104,14 +110,23 @@ internal sealed class PassageReadingLoader(
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
-        var marked = lines
+        var readable = lines
             .Where(line => line.Write && line.Confidence is not null && line.Reading?.Model is not null)
             .ToList();
-        var sources = marked.Select(SourceOf).Distinct().ToList();
-        if (sources.Count > 0 && await db.WordEntities.AnyAsync(a => sources.Contains(a.Source), cancellationToken))
+        var sources = readable.Select(SourceOf).Distinct().ToList();
+        var written = sources.Count == 0
+            ? []
+            : (await db.WordEntities
+                .Where(a => sources.Contains(a.Source))
+                .Select(a => a.Source)
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .ToHashSet(StringComparer.Ordinal);
+        var marked = readable.Where(line => !written.Contains(SourceOf(line))).ToList();
+        if (marked.Count == 0 && written.Count > 0)
         {
             logger.LogInformation("The words a reading of the passage found are already named; nothing to do");
-            return new PassageReadingOutcome(true, lines.Count, marked.Count, [], 0, 0, 0, 0, [], started.Elapsed);
+            return new PassageReadingOutcome(true, lines.Count, readable.Count, [], 0, 0, 0, 0, [], started.Elapsed);
         }
 
         var slugs = marked.Select(line => line.Record).Distinct().ToList();

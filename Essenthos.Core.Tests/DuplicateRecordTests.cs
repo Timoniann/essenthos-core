@@ -274,6 +274,19 @@ public sealed class DuplicateRecordTests : IDisposable
         (await _db.MergedRecords.AsNoTracking().SingleAsync()).Confidence.Should().Be(0.8);
     }
 
+    /// <summary>A pair the owner ruled says so, and carries no confidence the list gives its readings.</summary>
+    [Fact]
+    public async Task APairTheOwnerRuledIsHisDecision()
+    {
+        await _loader.Fold(new DuplicateRecordList(LinkMethod.ModelReading, 0.9, "a test",
+            [new DuplicateRecordPair("H2518", "hilkiah-3", "hilkiah-6", "one man", Source: "the project owner", Method: "manual")]));
+
+        var merged = await _db.MergedRecords.AsNoTracking().SingleAsync();
+        merged.Method.Should().Be(LinkMethod.Manual);
+        merged.Confidence.Should().BeNull();
+        merged.Source.Should().Be("the project owner");
+    }
+
     [Fact]
     public async Task ASecondRunFindsNothingLeftToFold()
     {

@@ -67,6 +67,47 @@ public sealed class DistinguisherLoaderTests : IDisposable
         (await EntityDistinguishers.Of(_db, [_cherubim.Id], "eng", CancellationToken.None)).Should().BeEmpty();
     }
 
+    /// <summary>
+    /// A line this project wrote for a record a dataset supplied replaces the dataset's English, once, and
+    /// is rendered beside the lines of the other file in the same pass.
+    /// </summary>
+    [Fact]
+    public async Task OurOwnLineReplacesTheDatasetsEnglishAndIsRendered()
+    {
+        const string Ours = "took Kenath and its villages and called it Nobah after his own name (NUM 32:42)";
+        var nobah = new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = "nobah",
+            Name = "Nobah",
+            Distinguisher = "a Manassite who captured Kenath (NUM 32:42)",
+            SourceId = "nobah",
+            Source = "BibleData by a test",
+        };
+        _db.Entities.Add(nobah);
+        await _db.SaveChangesAsync();
+        var own = new DistinguisherFile(
+            "Essenthos, a test",
+            [new DistinguisherRecord("nobah", Ours, "здобув Кенат (NUM 32:42)", "nahm Kenat ein (NUM 32:42)", "tomó Kenat (NUM 32:42)")])
+        {
+            SetsTheLine = true,
+        };
+
+        var first = await _loader.Load([File, own], CancellationToken.None);
+        var second = await _loader.Load([File, own], CancellationToken.None);
+
+        first.Lined.Should().Be(1);
+        first.Written.Should().Be(6);
+        second.Lined.Should().Be(0);
+        second.Written.Should().Be(0);
+        _db.ChangeTracker.Clear();
+        (await _db.Entities.SingleAsync(e => e.Slug == "nobah")).Distinguisher.Should().Be(Ours);
+        (await EntityDistinguishers.Of(_db, [nobah.Id], "ukr", CancellationToken.None))
+            .Should().Equal(new Dictionary<int, string> { [nobah.Id] = "здобув Кенат (NUM 32:42)" });
+        (await _db.EntityDistinguishers.SingleAsync(d => d.EntityId == nobah.Id && d.Language == "deu"))
+            .Source.Should().Be("Essenthos, a test");
+    }
+
     [Fact]
     public async Task ALineRewrittenSinceItWasRenderedKeepsNoTranslation()
     {
