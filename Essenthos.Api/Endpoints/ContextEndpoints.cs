@@ -233,7 +233,7 @@ internal static class ContextEndpoints
 
         // Disputed rows are left out: they are the references the source itself would not assign
         // to the record, and listing them here would assign them.
-        var stated = await db.EntityVerses
+        var stated = await db.EntityVerses.Shown()
             .Where(v => v.CanonicalBook == book && v.CanonicalChapter == chapter && !v.Disputed)
             .Select(v => new { v.Entity!.Slug, v.CanonicalVerse, v.Source })
             .Distinct()

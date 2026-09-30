@@ -149,6 +149,7 @@ builder.Services.AddScoped<TribeNameLoader>();
 builder.Services.AddScoped<EponymNameLoader>();
 builder.Services.AddScoped<RealmNameLoader>();
 builder.Services.AddScoped<ContextBearerLoader>();
+builder.Services.AddScoped<SpelledNameLoader>();
 builder.Services.AddScoped<FixedTitleLoader>();
 builder.Services.AddScoped<PassageReadingLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
@@ -158,6 +159,7 @@ builder.Services.AddScoped<TermLoader>();
 builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<ReignLoader>();
 builder.Services.AddScoped<OwnNameLoader>();
+builder.Services.AddScoped<WithdrawnRecordLoader>();
 builder.Services.AddScoped<ThingLoader>();
 builder.Services.AddScoped<DistinguisherLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
@@ -1157,6 +1159,28 @@ if (args is ["context-bearers", ..])
     logger.LogInformation("{Outcome}", await bearerScope.ServiceProvider.GetRequiredService<ContextBearerLoader>()
         .Load(resources));
     logger.LogInformation("{Outcome}", await bearerScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
+        .Load());
+    return 0;
+}
+
+// A Greek name no record is held under the number of, named as the one record whose own Greek spelling
+// it is, carried across the links, and the verses read off the words again.
+if (args is ["spelled-names", ..])
+{
+    using var spelledScope = app.Services.CreateScope();
+    logger.LogInformation("{Outcome}", await spelledScope.ServiceProvider.GetRequiredService<SpelledNameLoader>()
+        .Load());
+    logger.LogInformation("{Outcome}", await spelledScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
+        .Load());
+    return 0;
+}
+
+// The records a dataset filed under a word that is no name, withdrawn where nothing of ours stands on
+// them; a listed record that carries something of ours is kept and named.
+if (args is ["withdrawn-records", ..])
+{
+    using var withdrawnScope = app.Services.CreateScope();
+    logger.LogInformation("{Outcome}", await withdrawnScope.ServiceProvider.GetRequiredService<WithdrawnRecordLoader>()
         .Load());
     return 0;
 }

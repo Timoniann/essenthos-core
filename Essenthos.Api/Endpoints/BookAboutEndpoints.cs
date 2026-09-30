@@ -110,7 +110,7 @@ internal static class BookAboutEndpoints
         CancellationToken cancellationToken)
     {
         var verses = await Annotations.InBook(db, book, cancellationToken);
-        var listed = await db.EntityVerses
+        var listed = await db.EntityVerses.Shown()
             .Where(v => v.CanonicalBook == book && !v.Disputed)
             .Select(v => new { v.Entity!.Slug, v.CanonicalChapter, v.CanonicalVerse })
             .Distinct()

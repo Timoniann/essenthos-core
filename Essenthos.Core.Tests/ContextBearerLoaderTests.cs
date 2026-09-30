@@ -36,8 +36,9 @@ public sealed class ContextBearerLoaderTests : IDisposable
 
     /// <summary>
     /// Chapter 20: Saul's son named at verses 1 and 2; verse 3 the name nothing settled; verse 4 a
-    /// name a reading answered with nobody the encyclopedia holds; verse 5 a name the dataset files
-    /// under the other Jonathan. Chapter 21: two Micahs the book names both of, and the name again.
+    /// name a reading shown the long number's bearers found none of; verse 5 a name the dataset files
+    /// under the other Jonathan; verse 6 his name under his own number, which a reading found nobody
+    /// listed for. Chapter 21: two Micahs the book names both of, and the name again.
     /// </summary>
     public ContextBearerLoaderTests(WitnessDatabase database)
     {
@@ -49,14 +50,14 @@ public sealed class ContextBearerLoaderTests : IDisposable
 
         _hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
             (20, 1, ["יהונתן"]), (20, 2, ["יונתן"]), (20, 3, ["יהונתן"]), (20, 4, ["יהונתן"]),
-            (20, 5, ["יהונתן"]), (21, 1, ["מיכה"]), (21, 2, ["מיכה"]), (21, 3, ["מיכה"]));
+            (20, 5, ["יהונתן"]), (20, 6, ["יונתן"]), (21, 1, ["מיכה"]), (21, 2, ["מיכה"]), (21, 3, ["מיכה"]));
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (20, 3, ["Jonathan"]));
         _db.SaveChanges();
 
         foreach (var (chapter, verse, number) in new[]
                  {
                      (20, 1, Jonathan), (20, 2, ShortJonathan), (20, 3, Jonathan), (20, 4, Jonathan),
-                     (20, 5, Jonathan), (21, 1, Micah), (21, 2, Micah), (21, 3, Micah),
+                     (20, 5, Jonathan), (20, 6, ShortJonathan), (21, 1, Micah), (21, 2, Micah), (21, 3, Micah),
                  })
         {
             var word = Hebrew(chapter, verse);
@@ -81,7 +82,8 @@ public sealed class ContextBearerLoaderTests : IDisposable
         _db.SaveChanges();
 
         File.WriteAllText(Path.Combine(_resources, SenseReadingFiles.DefaultFolder, "run-1", SenseReadingFiles.AnswersFileName),
-            $$"""{"word_id": {{Hebrew(20, 4).Id}}, "strong_number": "{{Jonathan}}", "referent": "unlisted", "names": null, "confidence": "high", "reason": "a test", "prompt_version": "sense-1", "model": "a test", "run": "2026-09-29"}""" + "\n");
+            $$"""{"word_id": {{Hebrew(20, 4).Id}}, "strong_number": "{{Jonathan}}", "referent": "unlisted", "names": null, "confidence": "high", "reason": "a test", "prompt_version": "sense-1", "model": "a test", "run": "2026-09-29"}""" + "\n" +
+            $$"""{"word_id": {{Hebrew(20, 6).Id}}, "strong_number": "{{ShortJonathan}}", "referent": "unlisted", "names": null, "confidence": "high", "reason": "a test", "prompt_version": "sense-1", "model": "a test", "run": "2026-09-29"}""" + "\n");
     }
 
     public void Dispose()
@@ -138,16 +140,30 @@ public sealed class ContextBearerLoaderTests : IDisposable
         row.Method.Should().Be(LinkMethod.RuleBased);
         row.Confidence.Should().Be(0.99);
         (await _db.WordEntityClaims.CountAsync(c => c.WordEntityId == row.Id)).Should().Be(1);
-        outcome.Written.Should().Be(1);
+        outcome.Written.Should().Be(2);
     }
 
-    /// <summary>A reading that answered the word, even with nobody the encyclopedia holds, keeps it.</summary>
+    /// <summary>
+    /// A reading that found none of the number's own bearers has not spoken of Saul's son, who is
+    /// held under the other number: the book names him, and the word is his.
+    /// </summary>
     [Fact]
-    public async Task AWordAReadingAnsweredIsLeft()
+    public async Task AReadingThatFoundNobodyListedLeavesTheRecordUnderAnotherNumberToTheBook()
     {
         await Loader().Load(_resources);
 
-        (await Ours()).Should().NotContainKey(Hebrew(20, 4).Id);
+        (await Ours()).Should().ContainKey(Hebrew(20, 4).Id).WhoseValue.Should().Be("jonathan-2");
+        (await _db.WordEntities.SingleAsync(a => a.WordId == Hebrew(20, 4).Id)).Note.Should()
+            .Contain("held under another number");
+    }
+
+    /// <summary>A reading shown the record itself that found nobody there keeps its answer.</summary>
+    [Fact]
+    public async Task AReadingThatWasShownTheRecordKeepsItsAnswer()
+    {
+        await Loader().Load(_resources);
+
+        (await Ours()).Should().NotContainKey(Hebrew(20, 6).Id);
     }
 
     /// <summary>Where the dataset's list files the verse under the other bearer, nothing is written and the word is listed.</summary>
@@ -189,7 +205,7 @@ public sealed class ContextBearerLoaderTests : IDisposable
         _db.LinkWords.Add(new LinkWord { Link = link, Word = Hebrew(20, 3), Side = LinkSide.To });
         await _db.SaveChangesAsync();
 
-        (await Loader().Load(_resources)).Written.Should().Be(2);
+        (await Loader().Load(_resources)).Written.Should().Be(3);
         (await Ours()).Should().ContainKey(rendering.Id).WhoseValue.Should().Be("jonathan-2");
 
         _db.WordEntities.RemoveRange(_db.WordEntities.Where(a => a.Source == ContextBearerLoader.Source));

@@ -226,7 +226,7 @@ internal sealed class PageLoader(
             .Where(e => e.Id == entity.Id)
             .Select(EncyclopediaEndpoints.Tally)
             .SingleAsync(cancellationToken);
-        var first = await db.EntityVerses
+        var first = await db.EntityVerses.Shown()
             .Where(v => v.EntityId == entity.Id)
             .Select(v => new { v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse })
             .Distinct()

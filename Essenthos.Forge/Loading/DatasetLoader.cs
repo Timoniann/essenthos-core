@@ -281,6 +281,7 @@ internal sealed class DatasetLoader(
             await WriteWhatTheNarrativesTurnOn(stoppingToken);
             await NameTheAncestorsTheTribesAreNamedAfter(stoppingToken);
             await NameThePeoplesTheRealmsAreNamedAfter(resources, stoppingToken);
+            await NameTheGreekNamesARecordSpells(stoppingToken);
             await NameTheBearerTheBookNames(resources, stoppingToken);
             await NameTheTitlesTheTextFixes(stoppingToken);
             await NameWhomTheReadingsOfThePassagesFind(resources, stoppingToken);
@@ -304,6 +305,7 @@ internal sealed class DatasetLoader(
             await SendTheVersesToOneAnother(resources, stoppingToken);
             await TellTheVersesThatNameFromThoseThatConcern(stoppingToken);
             await PictureThePeopleAndPlaces(resources, stoppingToken);
+            await WithdrawTheRecordsThatAreNoName(stoppingToken);
 
             // The index answers from what it read the first time it was asked, and until now that
             // was an empty database.
@@ -1778,6 +1780,20 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
+    /// The records a dataset filed under a word that is no name. Last of the encyclopedia's steps,
+    /// because a record something of ours stands on is kept, and every pass that could put something
+    /// of ours on one has to have run before that is asked.
+    /// </summary>
+    private async Task WithdrawTheRecordsThatAreNoName(CancellationToken cancellationToken)
+    {
+        status.Starting("the records that are no name");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<WithdrawnRecordLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
     /// The people the dataset wrote two records for, one list each, folded into one. After every pass
     /// that writes onto a record by the address a file gives it, because those files still name both,
     /// and before the passes that count and picture what the records hold, so they count one man.
@@ -1860,6 +1876,20 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<ContextBearerLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// A Greek name no record is held under the number of, named as the one record whose own Greek
+    /// spelling it is. After every pass that resolves a number, because it writes only where none of
+    /// them could, and before the book's own words are asked which bearer a name means.
+    /// </summary>
+    private async Task NameTheGreekNamesARecordSpells(CancellationToken cancellationToken)
+    {
+        status.Starting("the Greek names a record spells");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SpelledNameLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>

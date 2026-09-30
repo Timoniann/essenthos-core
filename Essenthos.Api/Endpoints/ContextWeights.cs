@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -105,7 +106,7 @@ internal sealed class ContextWeights
             }
         }
 
-        var entityChapters = (await db.EntityVerses
+        var entityChapters = (await db.EntityVerses.Shown()
                 .Where(v => !v.Disputed)
                 .Select(v => new { v.Entity!.Slug, v.CanonicalBook, v.CanonicalChapter })
                 .Distinct()
@@ -166,7 +167,7 @@ internal sealed class ContextWeights
             .ToHashSet(StringComparer.Ordinal);
 
         var ids = named.Select(pair => pair.Id).Distinct().ToList();
-        var listed = (await db.EntityVerses
+        var listed = (await db.EntityVerses.Shown()
                 .Where(v => !v.Disputed && ids.Contains(v.EntityId))
                 .Select(v => new { v.EntityId, v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse })
                 .ToListAsync(cancellationToken))
