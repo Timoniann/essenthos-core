@@ -93,7 +93,8 @@ public sealed class FixedTitlesTests
 
     /// <summary>
     /// Χριστός is Jesus where the text says so, and nobody's where the verse asks or denies: John
-    /// 1:20, and the first of the two in Acts 17:3, where the second names him.
+    /// 1:20, John 9:22 and both of the two in Acts 17:3 (the owner's ruling of 2026-09-30), and Jesus in
+    /// Revelation 11:15 and 12:10.
     /// </summary>
     [Fact]
     public void TheChristIsJesusExceptWhereTheVerseLeavesItOpen()
@@ -107,7 +108,10 @@ public sealed class FixedTitlesTests
         FixedTitles.Of(Christ(John, 1, 20)).Should().BeNull();
         FixedTitles.Of(Christ(Matthew, 24, 5)).Should().BeNull();
         FixedTitles.Of(Christ(Acts, 17, 3, 1)).Should().BeNull();
-        SlugOf(Christ(Acts, 17, 3, 2)).Should().Be("jesus");
+        FixedTitles.Of(Christ(Acts, 17, 3, 2)).Should().BeNull();
+        FixedTitles.Of(Christ(John, 9, 22)).Should().BeNull();
+        SlugOf(Christ(Revelation, 11, 15)).Should().Be("jesus");
+        SlugOf(Christ(Revelation, 12, 10)).Should().Be("jesus");
     }
 
     /// <summary>ὁ υἱὸς τοῦ ἀνθρώπου, and υἱὸς ἀνθρώπου without the article, John 5:27.</summary>

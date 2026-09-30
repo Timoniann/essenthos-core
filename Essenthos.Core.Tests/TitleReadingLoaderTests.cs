@@ -241,4 +241,33 @@ public sealed class TitleReadingLoaderTests : IDisposable
         rulings.Readings.Count(r => r.Strong == Mashiach).Should().Be(38);
         title.Words.Should().OnlyContain(w => w.Beside);
     }
+
+    /// <summary>
+    /// The owner's corrections of 2026-09-30: the shield of 2 Samuel 1:21 is not anointed with oil and
+    /// the word there is no title; John 9:22 and both words of Acts 17:3 are the title alone; the
+    /// Christ of Revelation 11:15 and 12:10 is the title and Jesus.
+    /// </summary>
+    [Fact]
+    public void TheOwnersCorrectionsOfTheThirtiethAreInTheRulings()
+    {
+        var rulings = SenseReadingFiles.TitleReadings();
+        var title = SenseReadingFiles.Titles().Titles.Single(t => t.Slug == rulings.Title);
+        const int Samuel2 = 10;
+        const int John = 43;
+        const int Acts = 44;
+        const int Revelation = 66;
+
+        var mashiach = title.Words!.Single(w => w.Strong == Mashiach);
+        mashiach.Admits(Samuel2, 1, 21, 1).Should().BeFalse("the word there is an adjective of the shield");
+        mashiach.Admits(Samuel2, 1, 14, 1).Should().BeTrue();
+        rulings.Readings.Single(r => r.Reference == "2SA 1:21").Bearer.Should().BeNull();
+
+        var open = rulings.Open("G5547");
+        open.Should().Contain(span => span.Holds(John, 9, 22, 1));
+        open.Should().Contain(span => span.Holds(Acts, 17, 3, 1));
+        open.Should().Contain(span => span.Holds(Acts, 17, 3, 2));
+        open.Should().NotContain(span => span.Holds(Revelation, 11, 15, 1));
+        open.Should().NotContain(span => span.Holds(Revelation, 12, 10, 1));
+        rulings.Readings.Where(r => r.Reference is "REV 11:15" or "REV 12:10").Should().BeEmpty();
+    }
 }
