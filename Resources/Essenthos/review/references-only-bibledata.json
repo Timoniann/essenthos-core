@@ -1,8 +1,8 @@
 {
   "about": "The verse references only BibleData states, which a reader is not shown. classes says what the text has at each; losers every record that loses verses, with the verses of ours it keeps; namesakes each reference where the name is printed and no rule decides the bearer (ours names the records our words name there instead); titles the records listed where the verse does not print their name, with the labels the dataset gives; records the BibleData records that are not yet read as ours. Reference is the canonical address.",
-  "written": "2026-09-30T10:59:33Z",
-  "references": 3576,
-  "entities": 380,
+  "written": "2026-09-30T18:31:15Z",
+  "references": 2387,
+  "entities": 225,
   "classes": [
     {
       "class": "word-for-god",
@@ -18,38 +18,38 @@
     },
     {
       "class": "title",
-      "references": 264,
-      "entities": 10,
+      "references": 33,
+      "entities": 6,
       "what": "one of the dataset's per-king Pharaohs or Caesars; the owner ruled the word a title"
     },
     {
       "class": "people",
-      "references": 526,
-      "entities": 24,
+      "references": 13,
+      "entities": 5,
       "what": "a people's verse that prints the ancestor's or the realm's name, or no name of the people"
     },
     {
       "class": "other-bearer",
-      "references": 107,
-      "entities": 82,
+      "references": 123,
+      "entities": 96,
       "what": "the name is printed and our words name another record of that name there"
     },
     {
       "class": "unsettled",
-      "references": 118,
-      "entities": 91,
+      "references": 32,
+      "entities": 17,
       "what": "the name is printed and nothing has told its bearers apart there"
     },
     {
       "class": "other-number",
-      "references": 109,
-      "entities": 49,
+      "references": 23,
+      "entities": 16,
       "what": "the name is printed under a number the record is not held under"
     },
     {
       "class": "not-printed",
-      "references": 467,
-      "entities": 154,
+      "references": 178,
+      "entities": 94,
       "what": "the verse prints no name of the record: a title, a pronoun or another name"
     }
   ],
@@ -67,178 +67,22 @@
       "kept": 0
     },
     {
-      "slug": "israelites",
-      "name": "Israelites",
-      "lost": 178,
-      "kept": 842
-    },
-    {
       "slug": "jesus",
       "name": "Jesus",
-      "lost": 136,
-      "kept": 1349
-    },
-    {
-      "slug": "pharaoh-4",
-      "name": "Pharaoh",
-      "lost": 115,
-      "kept": 0
-    },
-    {
-      "slug": "pharaoh-2",
-      "name": "Pharaoh",
-      "lost": 72,
-      "kept": 0
-    },
-    {
-      "slug": "ammonites",
-      "name": "Ammonites",
-      "lost": 71,
-      "kept": 20
-    },
-    {
-      "slug": "manassites",
-      "name": "Manassites",
-      "lost": 37,
-      "kept": 4
-    },
-    {
-      "slug": "gadites",
-      "name": "Gadites",
-      "lost": 36,
-      "kept": 16
-    },
-    {
-      "slug": "judahites",
-      "name": "Judahites",
-      "lost": 35,
-      "kept": 475
-    },
-    {
-      "slug": "nebuchadnezzar",
-      "name": "Nebuchadnezzar",
       "lost": 31,
-      "kept": 127
-    },
-    {
-      "slug": "reubenites",
-      "name": "Reubenites",
-      "lost": 30,
-      "kept": 25
-    },
-    {
-      "slug": "benjaminites",
-      "name": "Benjaminites",
-      "lost": 25,
-      "kept": 73
-    },
-    {
-      "slug": "levites",
-      "name": "Levites",
-      "lost": 24,
-      "kept": 268
+      "kept": 1472
     },
     {
       "slug": "pharaoh-8",
       "name": "Pharaoh",
-      "lost": 21,
-      "kept": 0
-    },
-    {
-      "slug": "goliath",
-      "name": "Goliath",
-      "lost": 17,
-      "kept": 7
-    },
-    {
-      "slug": "jonathan-2",
-      "name": "Jonathan",
-      "lost": 17,
-      "kept": 65
-    },
-    {
-      "slug": "micah",
-      "name": "Micah",
-      "lost": 17,
-      "kept": 2
-    },
-    {
-      "slug": "sennacherib",
-      "name": "Sennacherib",
-      "lost": 17,
-      "kept": 28
-    },
-    {
-      "slug": "ahab",
-      "name": "Ahab",
-      "lost": 16,
-      "kept": 104
-    },
-    {
-      "slug": "ephraimites",
-      "name": "Ephraimites",
-      "lost": 16,
-      "kept": 43
-    },
-    {
-      "slug": "pharaoh-3",
-      "name": "Pharaoh",
-      "lost": 16,
-      "kept": 0
-    },
-    {
-      "slug": "simeonites",
-      "name": "Simeonites",
-      "lost": 15,
-      "kept": 4
+      "lost": 20,
+      "kept": 1
     },
     {
       "slug": "jehoram-2",
       "name": "Jehoram",
-      "lost": 13,
-      "kept": 26
-    },
-    {
-      "slug": "caesar",
-      "name": "Caesar",
-      "lost": 12,
-      "kept": 0
-    },
-    {
-      "slug": "kohathites",
-      "name": "Kohathites",
-      "lost": 12,
-      "kept": 15
-    },
-    {
-      "slug": "gershonites",
-      "name": "Gershonites",
-      "lost": 11,
-      "kept": 12
-    },
-    {
-      "slug": "mattaniah",
-      "name": "Mattaniah",
-      "lost": 11,
-      "kept": 53
-    },
-    {
-      "slug": "caesar-2",
-      "name": "Caesar",
       "lost": 10,
-      "kept": 0
-    },
-    {
-      "slug": "jacob",
-      "name": "Jacob",
-      "lost": 10,
-      "kept": 1702
-    },
-    {
-      "slug": "shalmaneser",
-      "name": "Shalmaneser",
-      "lost": 10,
-      "kept": 5
+      "kept": 29
     },
     {
       "slug": "amalek",
@@ -247,40 +91,22 @@
       "kept": 3
     },
     {
-      "slug": "asherites",
-      "name": "Asherites",
+      "slug": "jacob",
+      "name": "Jacob",
       "lost": 9,
-      "kept": 9
+      "kept": 1702
     },
     {
-      "slug": "pharaoh-5",
-      "name": "Pharaoh",
+      "slug": "shalmaneser",
+      "name": "Shalmaneser",
       "lost": 9,
-      "kept": 0
+      "kept": 6
     },
     {
-      "slug": "benhadad",
-      "name": "Ben-hadad",
+      "slug": "israelites",
+      "name": "Israelites",
       "lost": 8,
-      "kept": 22
-    },
-    {
-      "slug": "david",
-      "name": "David",
-      "lost": 8,
-      "kept": 1018
-    },
-    {
-      "slug": "naphtalites",
-      "name": "Naphtalites",
-      "lost": 8,
-      "kept": 14
-    },
-    {
-      "slug": "anak",
-      "name": "Anak",
-      "lost": 7,
-      "kept": 1
+      "kept": 1034
     },
     {
       "slug": "solomon",
@@ -289,10 +115,16 @@
       "kept": 279
     },
     {
-      "slug": "zebulonites",
-      "name": "Zebulonites",
-      "lost": 7,
-      "kept": 12
+      "slug": "david",
+      "name": "David",
+      "lost": 6,
+      "kept": 1021
+    },
+    {
+      "slug": "mattaniah",
+      "name": "Mattaniah",
+      "lost": 6,
+      "kept": 58
     },
     {
       "slug": "adonizedek",
@@ -301,34 +133,22 @@
       "kept": 2
     },
     {
+      "slug": "benhadad",
+      "name": "Ben-hadad",
+      "lost": 5,
+      "kept": 25
+    },
+    {
       "slug": "canaan",
       "name": "Canaan",
       "lost": 5,
       "kept": 9
     },
     {
-      "slug": "jeremiah-6",
-      "name": "Jeremiah",
+      "slug": "pharaoh-5",
+      "name": "Pharaoh",
       "lost": 5,
-      "kept": 120
-    },
-    {
-      "slug": "micaiah",
-      "name": "Micaiah",
-      "lost": 5,
-      "kept": 13
-    },
-    {
-      "slug": "moses",
-      "name": "Moses",
-      "lost": 5,
-      "kept": 801
-    },
-    {
-      "slug": "satan",
-      "name": "Satan",
-      "lost": 5,
-      "kept": 91
+      "kept": 4
     },
     {
       "slug": "theangelofthelord",
@@ -337,58 +157,10 @@
       "kept": 69
     },
     {
-      "slug": "antichrist",
-      "name": "Antichrist",
-      "lost": 4,
-      "kept": 0
-    },
-    {
-      "slug": "baanah",
-      "name": "Baanah",
-      "lost": 4,
-      "kept": 0
-    },
-    {
-      "slug": "canaan-2",
-      "name": "Canaan",
-      "lost": 4,
-      "kept": 101
-    },
-    {
-      "slug": "daniel-2",
-      "name": "Daniel",
-      "lost": 4,
-      "kept": 69
-    },
-    {
-      "slug": "james-2",
-      "name": "James",
-      "lost": 4,
-      "kept": 3
-    },
-    {
-      "slug": "josiah",
-      "name": "Josiah",
-      "lost": 4,
-      "kept": 50
-    },
-    {
       "slug": "moab",
       "name": "Moab",
       "lost": 4,
       "kept": 1
-    },
-    {
-      "slug": "pharaoh",
-      "name": "Pharaoh",
-      "lost": 4,
-      "kept": 0
-    },
-    {
-      "slug": "pharaoh-7",
-      "name": "Pharaoh",
-      "lost": 4,
-      "kept": 0
     },
     {
       "slug": "shemaiah-19",
@@ -403,28 +175,10 @@
       "kept": 1
     },
     {
-      "slug": "baanah-3",
-      "name": "Baanah",
-      "lost": 3,
-      "kept": 0
-    },
-    {
-      "slug": "bera",
-      "name": "Bera",
-      "lost": 3,
-      "kept": 2
-    },
-    {
       "slug": "bezalel",
       "name": "Bezalel",
       "lost": 3,
       "kept": 9
-    },
-    {
-      "slug": "elisha",
-      "name": "Elisha",
-      "lost": 3,
-      "kept": 73
     },
     {
       "slug": "ezra",
@@ -439,16 +193,16 @@
       "kept": 10
     },
     {
+      "slug": "james-2",
+      "name": "James",
+      "lost": 3,
+      "kept": 4
+    },
+    {
       "slug": "jehoiada",
       "name": "Jehoiada",
       "lost": 3,
       "kept": 20
-    },
-    {
-      "slug": "jeshua-3",
-      "name": "Jeshua",
-      "lost": 3,
-      "kept": 11
     },
     {
       "slug": "judah",
@@ -457,50 +211,26 @@
       "kept": 364
     },
     {
-      "slug": "judas",
-      "name": "Judas",
-      "lost": 3,
-      "kept": 21
-    },
-    {
-      "slug": "mephibosheth",
-      "name": "Mephibosheth",
-      "lost": 3,
-      "kept": 11
-    },
-    {
       "slug": "nebo",
       "name": "Nebo",
       "lost": 3,
       "kept": 1
     },
     {
-      "slug": "pharzites",
-      "name": "Pharzites",
+      "slug": "nebuchadnezzar",
+      "name": "Nebuchadnezzar",
       "lost": 3,
-      "kept": 1
+      "kept": 155
     },
     {
-      "slug": "rahab",
-      "name": "Rahab",
+      "slug": "pharaoh-4",
+      "name": "Pharaoh",
       "lost": 3,
-      "kept": 5
+      "kept": 112
     },
     {
-      "slug": "reuel-2",
-      "name": "Reuel",
-      "lost": 3,
-      "kept": 11
-    },
-    {
-      "slug": "saul",
-      "name": "Saul",
-      "lost": 3,
-      "kept": 330
-    },
-    {
-      "slug": "seir",
-      "name": "Seir",
+      "slug": "pharaoh-7",
+      "name": "Pharaoh",
       "lost": 3,
       "kept": 1
     },
@@ -509,12 +239,6 @@
       "name": "Senaah",
       "lost": 3,
       "kept": 0
-    },
-    {
-      "slug": "simon-9",
-      "name": "Simon",
-      "lost": 3,
-      "kept": 1
     },
     {
       "slug": "amariah-6",
@@ -527,12 +251,6 @@
       "name": "Amasai",
       "lost": 2,
       "kept": 2
-    },
-    {
-      "slug": "areli",
-      "name": "Areli",
-      "lost": 2,
-      "kept": 0
     },
     {
       "slug": "ariel",
@@ -571,70 +289,10 @@
       "kept": 2
     },
     {
-      "slug": "esau",
-      "name": "Esau",
-      "lost": 2,
-      "kept": 85
-    },
-    {
-      "slug": "ezer-5",
-      "name": "Ezer",
-      "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "gideon",
-      "name": "Gideon",
-      "lost": 2,
-      "kept": 49
-    },
-    {
-      "slug": "hassophereth",
-      "name": "Hassophereth",
-      "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "hazael",
-      "name": "Hazael",
-      "lost": 2,
-      "kept": 21
-    },
-    {
-      "slug": "herod-2",
-      "name": "Herod",
-      "lost": 2,
-      "kept": 24
-    },
-    {
-      "slug": "hoham",
-      "name": "Hoham",
-      "lost": 2,
-      "kept": 3
-    },
-    {
       "slug": "horam",
       "name": "Horam",
       "lost": 2,
       "kept": 1
-    },
-    {
-      "slug": "iddo-4",
-      "name": "Iddo",
-      "lost": 2,
-      "kept": 1
-    },
-    {
-      "slug": "immanuel",
-      "name": "Immanuel",
-      "lost": 2,
-      "kept": 3
-    },
-    {
-      "slug": "ishbosheth",
-      "name": "Ish-bosheth",
-      "lost": 2,
-      "kept": 12
     },
     {
       "slug": "jaaziel",
@@ -649,22 +307,10 @@
       "kept": 7
     },
     {
-      "slug": "japhia",
-      "name": "Japhia",
+      "slug": "jeshua-3",
+      "name": "Jeshua",
       "lost": 2,
-      "kept": 2
-    },
-    {
-      "slug": "jehoahaz-2",
-      "name": "Jehoahaz",
-      "lost": 2,
-      "kept": 6
-    },
-    {
-      "slug": "john",
-      "name": "John",
-      "lost": 2,
-      "kept": 92
+      "kept": 12
     },
     {
       "slug": "john-2",
@@ -673,28 +319,10 @@
       "kept": 30
     },
     {
-      "slug": "jonathan-3",
-      "name": "Jonathan",
+      "slug": "judahites",
+      "name": "Judahites",
       "lost": 2,
-      "kept": 4
-    },
-    {
-      "slug": "jonathan-4",
-      "name": "Jonathan",
-      "lost": 2,
-      "kept": 1
-    },
-    {
-      "slug": "joseph",
-      "name": "Joseph",
-      "lost": 2,
-      "kept": 194
-    },
-    {
-      "slug": "joseph-6",
-      "name": "Joseph",
-      "lost": 2,
-      "kept": 14
+      "kept": 524
     },
     {
       "slug": "kingofdebir",
@@ -711,18 +339,6 @@
     {
       "slug": "kingofivvah",
       "name": "King of Ivvah",
-      "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "legion",
-      "name": "Legion",
-      "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "lud",
-      "name": "Lud",
       "lost": 2,
       "kept": 0
     },
@@ -751,12 +367,6 @@
       "kept": 0
     },
     {
-      "slug": "moabites",
-      "name": "Moabites",
-      "lost": 2,
-      "kept": 15
-    },
-    {
       "slug": "muppim",
       "name": "Muppim",
       "lost": 2,
@@ -769,52 +379,22 @@
       "kept": 0
     },
     {
-      "slug": "nephisim",
-      "name": "Nephisim",
-      "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "pekah",
-      "name": "Pekah",
-      "lost": 2,
-      "kept": 14
-    },
-    {
       "slug": "pul",
       "name": "Pul",
       "lost": 2,
       "kept": 3
     },
     {
-      "slug": "saul-2",
-      "name": "Saul",
+      "slug": "reuel-2",
+      "name": "Reuel",
       "lost": 2,
-      "kept": 184
+      "kept": 12
     },
     {
-      "slug": "shammah-2",
-      "name": "Shammah",
+      "slug": "satan",
+      "name": "Satan",
       "lost": 2,
-      "kept": 6
-    },
-    {
-      "slug": "sheba",
-      "name": "Sheba",
-      "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "sheba-3",
-      "name": "Sheba",
-      "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "simon",
-      "name": "Simon",
-      "lost": 2,
-      "kept": 179
+      "kept": 94
     },
     {
       "slug": "tekoa",
@@ -827,18 +407,6 @@
       "name": "Thaddaeus",
       "lost": 2,
       "kept": 2
-    },
-    {
-      "slug": "tiglathpileser",
-      "name": "Tiglath-pileser",
-      "lost": 2,
-      "kept": 9
-    },
-    {
-      "slug": "timothy",
-      "name": "Timothy",
-      "lost": 2,
-      "kept": 24
     },
     {
       "slug": "uzziah",
@@ -859,12 +427,6 @@
       "kept": 1
     },
     {
-      "slug": "abijam",
-      "name": "Abijam",
-      "lost": 1,
-      "kept": 19
-    },
-    {
       "slug": "abishai",
       "name": "Abishai",
       "lost": 1,
@@ -877,64 +439,22 @@
       "kept": 4
     },
     {
-      "slug": "abner",
-      "name": "Abner",
-      "lost": 1,
-      "kept": 51
-    },
-    {
       "slug": "adiel-2",
       "name": "Adiel",
       "lost": 1,
       "kept": 1
     },
     {
-      "slug": "admin",
-      "name": "Admin",
+      "slug": "ahab",
+      "name": "Ahab",
       "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "ahaziah",
-      "name": "Ahaziah",
-      "lost": 1,
-      "kept": 8
-    },
-    {
-      "slug": "ahaziah-2",
-      "name": "Ahaziah",
-      "lost": 1,
-      "kept": 25
+      "kept": 119
     },
     {
       "slug": "ahijah",
       "name": "Ahijah",
       "lost": 1,
       "kept": 11
-    },
-    {
-      "slug": "ahijah-7",
-      "name": "Ahijah",
-      "lost": 1,
-      "kept": 1
-    },
-    {
-      "slug": "ahitub",
-      "name": "Ahitub",
-      "lost": 1,
-      "kept": 4
-    },
-    {
-      "slug": "allon",
-      "name": "Allon",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "amon-3",
-      "name": "Amon",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "anah",
@@ -955,22 +475,10 @@
       "kept": 0
     },
     {
-      "slug": "argob",
-      "name": "Argob",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "ashbelites",
       "name": "Ashbelites",
       "lost": 1,
       "kept": 1
-    },
-    {
-      "slug": "asynchritus",
-      "name": "Asynchritus",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "azarel-4",
@@ -1009,22 +517,16 @@
       "kept": 0
     },
     {
-      "slug": "azzur-3",
-      "name": "Azzur",
+      "slug": "baanah-3",
+      "name": "Baanah",
       "lost": 1,
-      "kept": 0
+      "kept": 2
     },
     {
       "slug": "balak",
       "name": "Balak",
       "lost": 1,
       "kept": 41
-    },
-    {
-      "slug": "bani-3",
-      "name": "Bani",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "bani-4",
@@ -1039,34 +541,10 @@
       "kept": 1
     },
     {
-      "slug": "bathsheba",
-      "name": "Bathsheba",
-      "lost": 1,
-      "kept": 13
-    },
-    {
-      "slug": "bathshua",
-      "name": "Bath-shua",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "benaiah-11",
-      "name": "Benaiah",
-      "lost": 1,
-      "kept": 1
-    },
-    {
       "slug": "benjamin-4",
       "name": "Benjamin",
       "lost": 1,
       "kept": 1
-    },
-    {
-      "slug": "beor-2",
-      "name": "Beor",
-      "lost": 1,
-      "kept": 8
     },
     {
       "slug": "berechiah-3",
@@ -1099,16 +577,28 @@
       "kept": 1
     },
     {
+      "slug": "caesar-2",
+      "name": "Caesar",
+      "lost": 1,
+      "kept": 9
+    },
+    {
+      "slug": "canaan-2",
+      "name": "Canaan",
+      "lost": 1,
+      "kept": 104
+    },
+    {
       "slug": "claudius",
       "name": "Claudius",
       "lost": 1,
       "kept": 3
     },
     {
-      "slug": "cushi-2",
-      "name": "Cushi",
+      "slug": "daniel-2",
+      "name": "Daniel",
       "lost": 1,
-      "kept": 0
+      "kept": 72
     },
     {
       "slug": "darius",
@@ -1117,22 +607,10 @@
       "kept": 16
     },
     {
-      "slug": "death",
-      "name": "Death",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "debir",
       "name": "Debir",
       "lost": 1,
       "kept": 3
-    },
-    {
-      "slug": "delilah",
-      "name": "Delilah",
-      "lost": 1,
-      "kept": 6
     },
     {
       "slug": "dishon-2",
@@ -1147,28 +625,10 @@
       "kept": 6
     },
     {
-      "slug": "eliab-3",
-      "name": "Eliab",
-      "lost": 1,
-      "kept": 4
-    },
-    {
-      "slug": "eliada",
-      "name": "Eliada",
-      "lost": 1,
-      "kept": 2
-    },
-    {
       "slug": "eliam-2",
       "name": "Eliam",
       "lost": 1,
       "kept": 1
-    },
-    {
-      "slug": "eliashib-7",
-      "name": "Eliashib",
-      "lost": 1,
-      "kept": 9
     },
     {
       "slug": "elkanah-4",
@@ -1189,13 +649,13 @@
       "kept": 3
     },
     {
-      "slug": "eshtemoa",
-      "name": "Eshtemoa",
+      "slug": "esau",
+      "name": "Esau",
       "lost": 1,
-      "kept": 0
+      "kept": 86
     },
     {
-      "slug": "eshtemoa-2",
+      "slug": "eshtemoa",
       "name": "Eshtemoa",
       "lost": 1,
       "kept": 0
@@ -1207,16 +667,10 @@
       "kept": 1
     },
     {
-      "slug": "evilmerodach",
-      "name": "Evil-merodach",
-      "lost": 1,
-      "kept": 2
-    },
-    {
-      "slug": "ezer-4",
+      "slug": "ezer-5",
       "name": "Ezer",
       "lost": 1,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "gedor",
@@ -1231,34 +685,10 @@
       "kept": 0
     },
     {
-      "slug": "gemariah-2",
-      "name": "Gemariah",
-      "lost": 1,
-      "kept": 3
-    },
-    {
       "slug": "gibbar",
       "name": "Gibbar",
       "lost": 1,
       "kept": 1
-    },
-    {
-      "slug": "gomer-2",
-      "name": "Gomer",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "haahashtari",
-      "name": "Haahashtari",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "haggai",
-      "name": "Haggai",
-      "lost": 1,
-      "kept": 10
     },
     {
       "slug": "haggedolim",
@@ -1291,22 +721,10 @@
       "kept": 8
     },
     {
-      "slug": "hananiah-12",
-      "name": "Hananiah",
-      "lost": 1,
-      "kept": 15
-    },
-    {
       "slug": "harhas",
       "name": "Harhas",
       "lost": 1,
       "kept": 2
-    },
-    {
-      "slug": "haroeh",
-      "name": "Haroeh",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "hashabiah",
@@ -1339,12 +757,6 @@
       "kept": 1
     },
     {
-      "slug": "helkites",
-      "name": "Helkites",
-      "lost": 1,
-      "kept": 1
-    },
-    {
       "slug": "hezekiah-2",
       "name": "Hezekiah",
       "lost": 1,
@@ -1355,30 +767,6 @@
       "name": "Hilkiah",
       "lost": 1,
       "kept": 6
-    },
-    {
-      "slug": "hilkiah-2",
-      "name": "Hilkiah",
-      "lost": 1,
-      "kept": 18
-    },
-    {
-      "slug": "hirah",
-      "name": "Hirah",
-      "lost": 1,
-      "kept": 2
-    },
-    {
-      "slug": "hiram",
-      "name": "Hiram",
-      "lost": 1,
-      "kept": 23
-    },
-    {
-      "slug": "hodaviah",
-      "name": "Hodaviah",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "hodaviah-5",
@@ -1393,22 +781,10 @@
       "kept": 2
     },
     {
-      "slug": "hodiah-3",
-      "name": "Hodiah",
+      "slug": "hoham",
+      "name": "Hoham",
       "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "hodiah-4",
-      "name": "Hodiah",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "horeb",
-      "name": "Horeb",
-      "lost": 1,
-      "kept": 17
+      "kept": 4
     },
     {
       "slug": "hoshaiah-2",
@@ -1429,22 +805,16 @@
       "kept": 2
     },
     {
-      "slug": "hur",
-      "name": "Hur",
+      "slug": "immanuel",
+      "name": "Immanuel",
       "lost": 1,
-      "kept": 11
+      "kept": 4
     },
     {
       "slug": "immer",
       "name": "Immer",
       "lost": 1,
       "kept": 6
-    },
-    {
-      "slug": "isaac",
-      "name": "Isaac",
-      "lost": 1,
-      "kept": 122
     },
     {
       "slug": "ishvah",
@@ -1457,48 +827,6 @@
       "name": "Ishvi",
       "lost": 1,
       "kept": 4
-    },
-    {
-      "slug": "issacharites",
-      "name": "Issacharites",
-      "lost": 1,
-      "kept": 28
-    },
-    {
-      "slug": "izeharites",
-      "name": "Izeharites",
-      "lost": 1,
-      "kept": 4
-    },
-    {
-      "slug": "jaazaniah-4",
-      "name": "Jaazaniah",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "jambres",
-      "name": "Jambres",
-      "lost": 1,
-      "kept": 1
-    },
-    {
-      "slug": "james",
-      "name": "James",
-      "lost": 1,
-      "kept": 19
-    },
-    {
-      "slug": "james-4",
-      "name": "James",
-      "lost": 1,
-      "kept": 1
-    },
-    {
-      "slug": "jannes",
-      "name": "Jannes",
-      "lost": 1,
-      "kept": 1
     },
     {
       "slug": "javan",
@@ -1525,34 +853,10 @@
       "kept": 1
     },
     {
-      "slug": "jehiel",
-      "name": "Jehiel",
-      "lost": 1,
-      "kept": 5
-    },
-    {
       "slug": "jehiel-4",
       "name": "Jehiel",
       "lost": 1,
       "kept": 2
-    },
-    {
-      "slug": "jehoiachin",
-      "name": "Jehoiachin",
-      "lost": 1,
-      "kept": 21
-    },
-    {
-      "slug": "jehoram",
-      "name": "Jehoram",
-      "lost": 1,
-      "kept": 21
-    },
-    {
-      "slug": "jehoshaphat-3",
-      "name": "Jehoshaphat",
-      "lost": 1,
-      "kept": 67
     },
     {
       "slug": "jeiel-7",
@@ -1567,22 +871,10 @@
       "kept": 1
     },
     {
-      "slug": "jerimoth-4",
-      "name": "Jerimoth",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "jerusalem",
       "name": "Jerusalem",
       "lost": 1,
       "kept": 964
-    },
-    {
-      "slug": "jeuel-2",
-      "name": "Jeuel",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "job",
@@ -1591,46 +883,16 @@
       "kept": 55
     },
     {
-      "slug": "jobab-3",
-      "name": "Jobab",
-      "lost": 1,
-      "kept": 1
-    },
-    {
-      "slug": "joel",
-      "name": "Joel",
-      "lost": 1,
-      "kept": 4
-    },
-    {
-      "slug": "jonathan",
+      "slug": "jonathan-4",
       "name": "Jonathan",
       "lost": 1,
-      "kept": 0
+      "kept": 2
     },
     {
       "slug": "jorkeam",
       "name": "Jorkeam",
       "lost": 1,
       "kept": 0
-    },
-    {
-      "slug": "joseph-12",
-      "name": "Joseph",
-      "lost": 1,
-      "kept": 28
-    },
-    {
-      "slug": "joseph-8",
-      "name": "Joseph",
-      "lost": 1,
-      "kept": 6
-    },
-    {
-      "slug": "joshebbasshebeth",
-      "name": "Josheb-basshebeth",
-      "lost": 1,
-      "kept": 2
     },
     {
       "slug": "joshua",
@@ -1645,34 +907,10 @@
       "kept": 11
     },
     {
-      "slug": "judas-3",
-      "name": "Judas",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "judas-of-james",
-      "name": "Judas",
-      "lost": 1,
-      "kept": 2
-    },
-    {
       "slug": "keilah",
       "name": "Keilah",
       "lost": 1,
       "kept": 0
-    },
-    {
-      "slug": "kenan",
-      "name": "Kenan",
-      "lost": 1,
-      "kept": 7
-    },
-    {
-      "slug": "kingjareb",
-      "name": "King Jareb",
-      "lost": 1,
-      "kept": 1
     },
     {
       "slug": "kingofaphek",
@@ -1699,12 +937,6 @@
       "kept": 0
     },
     {
-      "slug": "kingofjokneam",
-      "name": "King of Jokneam",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "kingofkedesh",
       "name": "King of Kedesh",
       "lost": 1,
@@ -1721,18 +953,6 @@
       "name": "King of Makkedah",
       "lost": 1,
       "kept": 0
-    },
-    {
-      "slug": "kingofmegiddo",
-      "name": "King of Megiddo",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "kingofsepharvaim",
-      "name": "King of Sepharvaim",
-      "lost": 1,
-      "kept": 1
     },
     {
       "slug": "kingofshimron",
@@ -1777,38 +997,14 @@
       "kept": 21
     },
     {
-      "slug": "kore-2",
-      "name": "Kore",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "laban",
       "name": "Laban",
       "lost": 1,
       "kept": 46
     },
     {
-      "slug": "lamech-2",
-      "name": "Lamech",
-      "lost": 1,
-      "kept": 7
-    },
-    {
       "slug": "lecah",
       "name": "Lecah",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "letush",
-      "name": "Letush",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "leum",
-      "name": "Leum",
       "lost": 1,
       "kept": 0
     },
@@ -1837,12 +1033,6 @@
       "kept": 1
     },
     {
-      "slug": "mahlah",
-      "name": "Mahlah",
-      "lost": 1,
-      "kept": 3
-    },
-    {
       "slug": "malluch-2",
       "name": "Malluch",
       "lost": 1,
@@ -1855,12 +1045,6 @@
       "kept": 8
     },
     {
-      "slug": "mary",
-      "name": "Mary",
-      "lost": 1,
-      "kept": 21
-    },
-    {
       "slug": "mattaniah-4",
       "name": "Mattaniah",
       "lost": 1,
@@ -1871,12 +1055,6 @@
       "name": "Mattithiah",
       "lost": 1,
       "kept": 2
-    },
-    {
-      "slug": "melchizedek",
-      "name": "Melchizedek",
-      "lost": 1,
-      "kept": 11
     },
     {
       "slug": "meonothai",
@@ -1895,12 +1073,6 @@
       "name": "Meremoth",
       "lost": 1,
       "kept": 4
-    },
-    {
-      "slug": "mesha",
-      "name": "Mesha",
-      "lost": 1,
-      "kept": 3
     },
     {
       "slug": "meshech",
@@ -1927,12 +1099,6 @@
       "kept": 4
     },
     {
-      "slug": "micah-4",
-      "name": "Micah",
-      "lost": 1,
-      "kept": 1
-    },
-    {
       "slug": "michael-2",
       "name": "Michael",
       "lost": 1,
@@ -1951,16 +1117,10 @@
       "kept": 1
     },
     {
-      "slug": "milcah-2",
-      "name": "Milcah",
+      "slug": "moses",
+      "name": "Moses",
       "lost": 1,
-      "kept": 3
-    },
-    {
-      "slug": "mishael-3",
-      "name": "Mishael",
-      "lost": 1,
-      "kept": 15
+      "kept": 805
     },
     {
       "slug": "mountseir",
@@ -1981,22 +1141,10 @@
       "kept": 11
     },
     {
-      "slug": "naomi",
-      "name": "Naomi",
-      "lost": 1,
-      "kept": 20
-    },
-    {
       "slug": "naphtali",
       "name": "Naphtali",
       "lost": 1,
       "kept": 33
-    },
-    {
-      "slug": "nathan",
-      "name": "Nathan",
-      "lost": 1,
-      "kept": 3
     },
     {
       "slug": "nathan-2",
@@ -2047,12 +1195,6 @@
       "kept": 1
     },
     {
-      "slug": "pelatiah-4",
-      "name": "Pelatiah",
-      "lost": 1,
-      "kept": 1
-    },
-    {
       "slug": "pharaoh-6",
       "name": "Pharaoh",
       "lost": 1,
@@ -2065,22 +1207,10 @@
       "kept": 9
     },
     {
-      "slug": "philemon",
-      "name": "Philemon",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "phinehas",
       "name": "Phinehas",
       "lost": 1,
       "kept": 16
-    },
-    {
-      "slug": "phinehas-2",
-      "name": "Phinehas",
-      "lost": 1,
-      "kept": 6
     },
     {
       "slug": "piram",
@@ -2089,16 +1219,10 @@
       "kept": 3
     },
     {
-      "slug": "pyrrhus",
-      "name": "Pyrrhus",
+      "slug": "rahab",
+      "name": "Rahab",
       "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "redsea",
-      "name": "Red Sea",
-      "lost": 1,
-      "kept": 3
+      "kept": 7
     },
     {
       "slug": "rehoboam",
@@ -2113,10 +1237,28 @@
       "kept": 1
     },
     {
+      "slug": "reubenites",
+      "name": "Reubenites",
+      "lost": 1,
+      "kept": 54
+    },
+    {
       "slug": "rezin",
       "name": "Rezin",
       "lost": 1,
       "kept": 10
+    },
+    {
+      "slug": "seir",
+      "name": "Seir",
+      "lost": 1,
+      "kept": 3
+    },
+    {
+      "slug": "sennacherib",
+      "name": "Sennacherib",
+      "lost": 1,
+      "kept": 44
     },
     {
       "slug": "seraiah-6",
@@ -2131,10 +1273,10 @@
       "kept": 2
     },
     {
-      "slug": "shammua-2",
-      "name": "Shammua",
+      "slug": "shammah-2",
+      "name": "Shammah",
       "lost": 1,
-      "kept": 2
+      "kept": 7
     },
     {
       "slug": "shaul-3",
@@ -2147,18 +1289,6 @@
       "name": "Shecaniah",
       "lost": 1,
       "kept": 1
-    },
-    {
-      "slug": "shechem-3",
-      "name": "Shechem",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "shelah",
-      "name": "Shelah",
-      "lost": 1,
-      "kept": 9
     },
     {
       "slug": "shemaiah-12",
@@ -2179,34 +1309,10 @@
       "kept": 3
     },
     {
-      "slug": "shemidaites",
-      "name": "Shemidaites",
-      "lost": 1,
-      "kept": 1
-    },
-    {
-      "slug": "shichemites",
-      "name": "Shichemites",
-      "lost": 1,
-      "kept": 1
-    },
-    {
       "slug": "shimei-10",
       "name": "Shimei",
       "lost": 1,
       "kept": 1
-    },
-    {
-      "slug": "shobab",
-      "name": "Shobab",
-      "lost": 1,
-      "kept": 2
-    },
-    {
-      "slug": "shobal-2",
-      "name": "Shobal",
-      "lost": 1,
-      "kept": 3
     },
     {
       "slug": "shua",
@@ -2215,10 +1321,10 @@
       "kept": 3
     },
     {
-      "slug": "simon-2",
+      "slug": "simon",
       "name": "Simon",
       "lost": 1,
-      "kept": 3
+      "kept": 180
     },
     {
       "slug": "so",
@@ -2227,10 +1333,10 @@
       "kept": 1
     },
     {
-      "slug": "temeni",
-      "name": "Temeni",
+      "slug": "tiglathpileser",
+      "name": "Tiglath-pileser",
       "lost": 1,
-      "kept": 0
+      "kept": 10
     },
     {
       "slug": "tikvah",
@@ -2239,34 +1345,16 @@
       "kept": 2
     },
     {
-      "slug": "tobiah-2",
-      "name": "Tobiah",
+      "slug": "timothy",
+      "name": "Timothy",
       "lost": 1,
-      "kept": 11
+      "kept": 25
     },
     {
       "slug": "tubal",
       "name": "Tubal",
       "lost": 1,
       "kept": 2
-    },
-    {
-      "slug": "ucal",
-      "name": "Ucal",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "uri",
-      "name": "Uri",
-      "lost": 1,
-      "kept": 4
-    },
-    {
-      "slug": "zaccheus",
-      "name": "Zaccheus",
-      "lost": 1,
-      "kept": 3
     },
     {
       "slug": "zadok-4",
@@ -2299,18 +1387,6 @@
       "kept": 3
     },
     {
-      "slug": "zecher",
-      "name": "Zecher",
-      "lost": 1,
-      "kept": 1
-    },
-    {
-      "slug": "zeri",
-      "name": "Zeri",
-      "lost": 1,
-      "kept": 1
-    },
-    {
       "slug": "zimmah",
       "name": "Zimmah",
       "lost": 1,
@@ -2327,12 +1403,6 @@
       "name": "Zoar",
       "lost": 1,
       "kept": 9
-    },
-    {
-      "slug": "zohar",
-      "name": "Zohar",
-      "lost": 1,
-      "kept": 1
     }
   ],
   "namesakes": [
@@ -2345,11 +1415,35 @@
       ]
     },
     {
+      "slug": "assyria",
+      "reference": "GEN 14:1",
+      "class": "other-bearer",
+      "ours": [
+        "ellasar"
+      ]
+    },
+    {
+      "slug": "assyria",
+      "reference": "GEN 14:9",
+      "class": "other-bearer",
+      "ours": [
+        "ellasar"
+      ]
+    },
+    {
       "slug": "mamre-2",
       "reference": "GEN 14:13",
       "class": "other-bearer",
       "ours": [
         "mamre"
+      ]
+    },
+    {
+      "slug": "jerusalem",
+      "reference": "GEN 14:18",
+      "class": "other-bearer",
+      "ours": [
+        "salem"
       ]
     },
     {
@@ -2401,35 +1495,11 @@
       ]
     },
     {
-      "slug": "seir",
-      "reference": "GEN 36:20",
-      "class": "other-bearer",
-      "ours": [
-        "mountseir"
-      ]
-    },
-    {
-      "slug": "seir",
-      "reference": "GEN 36:21",
-      "class": "other-bearer",
-      "ours": [
-        "mountseir"
-      ]
-    },
-    {
       "slug": "moab",
       "reference": "GEN 36:35",
       "class": "other-bearer",
       "ours": [
         "moab-2"
-      ]
-    },
-    {
-      "slug": "anak",
-      "reference": "DEU 9:2",
-      "class": "other-bearer",
-      "ours": [
-        "anakim"
       ]
     },
     {
@@ -2446,14 +1516,6 @@
       "class": "other-bearer",
       "ours": [
         "shimei-2"
-      ]
-    },
-    {
-      "slug": "argob",
-      "reference": "2KI 15:25",
-      "class": "other-bearer",
-      "ours": [
-        "argob-2"
       ]
     },
     {
@@ -2499,14 +1561,6 @@
     {
       "slug": "eshtemoa",
       "reference": "1CH 4:17",
-      "class": "other-bearer",
-      "ours": [
-        "eshtemoa-3"
-      ]
-    },
-    {
-      "slug": "eshtemoa-2",
-      "reference": "1CH 4:19",
       "class": "other-bearer",
       "ours": [
         "eshtemoa-3"
@@ -2689,6 +1743,38 @@
       ]
     },
     {
+      "slug": "azariah",
+      "reference": "2CH 26:17",
+      "class": "other-bearer",
+      "ours": [
+        "azariah-20"
+      ]
+    },
+    {
+      "slug": "azariah",
+      "reference": "2CH 26:20",
+      "class": "other-bearer",
+      "ours": [
+        "azariah-20"
+      ]
+    },
+    {
+      "slug": "abdi",
+      "reference": "2CH 29:12",
+      "class": "other-bearer",
+      "ours": [
+        "abdi-3"
+      ]
+    },
+    {
+      "slug": "amasai",
+      "reference": "2CH 29:12",
+      "class": "other-bearer",
+      "ours": [
+        "amasai-3"
+      ]
+    },
+    {
       "slug": "kishi",
       "reference": "2CH 29:12",
       "class": "other-bearer",
@@ -2721,11 +1807,35 @@
       ]
     },
     {
+      "slug": "zechariah-15",
+      "reference": "2CH 35:8",
+      "class": "other-bearer",
+      "ours": [
+        "zechariah-26"
+      ]
+    },
+    {
       "slug": "hashabiah-3",
       "reference": "2CH 35:9",
       "class": "other-bearer",
       "ours": [
-        "conaniah"
+        "hashabiah-10"
+      ]
+    },
+    {
+      "slug": "nethanel-4",
+      "reference": "2CH 35:9",
+      "class": "other-bearer",
+      "ours": [
+        "nethanel-9"
+      ]
+    },
+    {
+      "slug": "shemaiah-12",
+      "reference": "2CH 35:9",
+      "class": "other-bearer",
+      "ours": [
+        "shemaiah-23"
       ]
     },
     {
@@ -2766,6 +1876,14 @@
       "class": "other-bearer",
       "ours": [
         "mehunim"
+      ]
+    },
+    {
+      "slug": "hodaviah-5",
+      "reference": "EZR 3:9",
+      "class": "other-bearer",
+      "ours": [
+        "henadad-2"
       ]
     },
     {
@@ -3161,11 +2279,83 @@
       ]
     },
     {
+      "slug": "pedaiah-5",
+      "reference": "NEH 13:13",
+      "class": "other-bearer",
+      "ours": [
+        "pedaiah-7"
+      ]
+    },
+    {
+      "slug": "ham",
+      "reference": "PSA 78:51",
+      "class": "other-bearer",
+      "ours": [
+        "ham-3"
+      ]
+    },
+    {
+      "slug": "immer",
+      "reference": "JER 20:1",
+      "class": "other-bearer",
+      "ours": [
+        "immer-5"
+      ]
+    },
+    {
+      "slug": "maaseiah-6",
+      "reference": "JER 29:21",
+      "class": "other-bearer",
+      "ours": [
+        "maaseiah-19"
+      ]
+    },
+    {
+      "slug": "maaseiah",
+      "reference": "JER 35:4",
+      "class": "other-bearer",
+      "ours": [
+        "maaseiah-20"
+      ]
+    },
+    {
+      "slug": "hananiah-10",
+      "reference": "JER 36:12",
+      "class": "other-bearer",
+      "ours": [
+        "hananiah-13"
+      ]
+    },
+    {
+      "slug": "shemaiah-21",
+      "reference": "JER 36:12",
+      "class": "other-bearer",
+      "ours": [
+        "shemaiah-22"
+      ]
+    },
+    {
+      "slug": "javan",
+      "reference": "EZK 27:13",
+      "class": "other-bearer",
+      "ours": [
+        "javan-2"
+      ]
+    },
+    {
       "slug": "meshech",
       "reference": "EZK 27:13",
       "class": "other-bearer",
       "ours": [
         "meshech-2"
+      ]
+    },
+    {
+      "slug": "tubal",
+      "reference": "EZK 27:13",
+      "class": "other-bearer",
+      "ours": [
+        "tubal-2"
       ]
     },
     {
@@ -3177,25 +2367,29 @@
       ]
     },
     {
-      "slug": "judas",
+      "slug": "thaddaeus",
       "reference": "LUK 6:16",
       "class": "other-bearer",
       "ours": [
+        "judas",
         "judas-of-james"
       ]
     },
     {
       "slug": "thaddaeus",
-      "reference": "LUK 6:16",
+      "reference": "JHN 14:22",
       "class": "other-bearer",
       "ours": [
         "judas-of-james"
       ]
     },
     {
-      "slug": "sheba",
-      "reference": "GEN 10:7",
-      "class": "other-number"
+      "slug": "simon",
+      "reference": "ACT 9:43",
+      "class": "other-bearer",
+      "ours": [
+        "simon-9"
+      ]
     },
     {
       "slug": "nile",
@@ -3208,23 +2402,8 @@
       "class": "other-number"
     },
     {
-      "slug": "zohar",
-      "reference": "GEN 23:8",
-      "class": "other-number"
-    },
-    {
-      "slug": "sheba-3",
-      "reference": "GEN 25:3",
-      "class": "other-number"
-    },
-    {
       "slug": "dishon-2",
       "reference": "GEN 36:26",
-      "class": "other-number"
-    },
-    {
-      "slug": "areli",
-      "reference": "GEN 46:16",
       "class": "other-number"
     },
     {
@@ -3233,273 +2412,8 @@
       "class": "other-number"
     },
     {
-      "slug": "anak",
-      "reference": "NUM 13:22",
-      "class": "other-number"
-    },
-    {
-      "slug": "anak",
-      "reference": "NUM 13:28",
-      "class": "other-number"
-    },
-    {
-      "slug": "anak",
-      "reference": "NUM 13:33",
-      "class": "other-number"
-    },
-    {
-      "slug": "areli",
-      "reference": "NUM 26:17",
-      "class": "other-number"
-    },
-    {
-      "slug": "anak",
-      "reference": "JOS 15:13",
-      "class": "other-number"
-    },
-    {
-      "slug": "anak",
-      "reference": "JOS 15:14",
-      "class": "other-number"
-    },
-    {
-      "slug": "anak",
-      "reference": "JDG 1:20",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 17:5",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 17:8",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 17:9",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 17:10",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 17:12",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 17:13",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:2",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:3",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:4",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:13",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:15",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:18",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:22",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:23",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:26",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:27",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan",
-      "reference": "JDG 18:30",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah",
-      "reference": "JDG 18:31",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 1:4",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 1:5",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 1:12",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 1:17",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 1:22",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 1:23",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 1:25",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 1:26",
-      "class": "other-number"
-    },
-    {
-      "slug": "abner",
-      "reference": "2SA 2:30",
-      "class": "other-number"
-    },
-    {
-      "slug": "baanah",
-      "reference": "2SA 4:2",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 4:4",
-      "class": "other-number"
-    },
-    {
-      "slug": "baanah",
-      "reference": "2SA 4:5",
-      "class": "other-number"
-    },
-    {
-      "slug": "baanah",
-      "reference": "2SA 4:6",
-      "class": "other-number"
-    },
-    {
-      "slug": "baanah",
-      "reference": "2SA 4:9",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 9:1",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 9:3",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 9:6",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 9:7",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 21:7",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 21:12",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 21:13",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-2",
-      "reference": "2SA 21:14",
-      "class": "other-number"
-    },
-    {
-      "slug": "joshebbasshebeth",
-      "reference": "2SA 23:8",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-3",
-      "reference": "1KI 1:42",
-      "class": "other-number"
-    },
-    {
-      "slug": "jonathan-3",
-      "reference": "1KI 1:43",
-      "class": "other-number"
-    },
-    {
-      "slug": "sheba",
-      "reference": "1CH 1:9",
-      "class": "other-number"
-    },
-    {
-      "slug": "sheba-3",
-      "reference": "1CH 1:32",
-      "class": "other-number"
-    },
-    {
       "slug": "tekoa",
       "reference": "1CH 2:24",
-      "class": "other-number"
-    },
-    {
-      "slug": "haroeh",
-      "reference": "1CH 2:52",
       "class": "other-number"
     },
     {
@@ -3518,11 +2432,6 @@
       "class": "other-number"
     },
     {
-      "slug": "allon",
-      "reference": "1CH 4:37",
-      "class": "other-number"
-    },
-    {
       "slug": "muppim",
       "reference": "1CH 7:12",
       "class": "other-number"
@@ -3530,16 +2439,6 @@
     {
       "slug": "muppim",
       "reference": "1CH 7:15",
-      "class": "other-number"
-    },
-    {
-      "slug": "shechem-3",
-      "reference": "1CH 7:19",
-      "class": "other-number"
-    },
-    {
-      "slug": "ezer-4",
-      "reference": "1CH 12:9",
       "class": "other-number"
     },
     {
@@ -3553,61 +2452,6 @@
       "class": "other-number"
     },
     {
-      "slug": "jerimoth-4",
-      "reference": "2CH 11:18",
-      "class": "other-number"
-    },
-    {
-      "slug": "iddo-4",
-      "reference": "2CH 12:15",
-      "class": "other-number"
-    },
-    {
-      "slug": "iddo-4",
-      "reference": "2CH 13:22",
-      "class": "other-number"
-    },
-    {
-      "slug": "micaiah",
-      "reference": "2CH 18:8",
-      "class": "other-number"
-    },
-    {
-      "slug": "micaiah",
-      "reference": "2CH 18:12",
-      "class": "other-number"
-    },
-    {
-      "slug": "micaiah",
-      "reference": "2CH 18:14",
-      "class": "other-number"
-    },
-    {
-      "slug": "kore-2",
-      "reference": "2CH 31:14",
-      "class": "other-number"
-    },
-    {
-      "slug": "jehoahaz-2",
-      "reference": "2CH 36:2",
-      "class": "other-number"
-    },
-    {
-      "slug": "jehoahaz-2",
-      "reference": "2CH 36:4",
-      "class": "other-number"
-    },
-    {
-      "slug": "baanah-3",
-      "reference": "EZR 2:2",
-      "class": "other-number"
-    },
-    {
-      "slug": "jeshua-3",
-      "reference": "EZR 5:2",
-      "class": "other-number"
-    },
-    {
       "slug": "jacob",
       "reference": "EZR 6:16",
       "class": "other-number"
@@ -3615,16 +2459,6 @@
     {
       "slug": "jacob",
       "reference": "EZR 6:17",
-      "class": "other-number"
-    },
-    {
-      "slug": "ezer-5",
-      "reference": "NEH 3:19",
-      "class": "other-number"
-    },
-    {
-      "slug": "baanah-3",
-      "reference": "NEH 7:7",
       "class": "other-number"
     },
     {
@@ -3640,51 +2474,6 @@
     {
       "slug": "esau",
       "reference": "PSA 137:7",
-      "class": "other-number"
-    },
-    {
-      "slug": "micah-4",
-      "reference": "JER 26:18",
-      "class": "other-number"
-    },
-    {
-      "slug": "daniel-2",
-      "reference": "DAN 2:48",
-      "class": "other-number"
-    },
-    {
-      "slug": "hananiah-12",
-      "reference": "DAN 3:22",
-      "class": "other-number"
-    },
-    {
-      "slug": "mishael-3",
-      "reference": "DAN 3:22",
-      "class": "other-number"
-    },
-    {
-      "slug": "nebuchadnezzar",
-      "reference": "DAN 3:24",
-      "class": "other-number"
-    },
-    {
-      "slug": "daniel-2",
-      "reference": "DAN 6:23",
-      "class": "other-number"
-    },
-    {
-      "slug": "gomer-2",
-      "reference": "HOS 1:3",
-      "class": "other-number"
-    },
-    {
-      "slug": "cushi-2",
-      "reference": "ZEP 1:1",
-      "class": "other-number"
-    },
-    {
-      "slug": "haggai",
-      "reference": "HAG 1:13",
       "class": "other-number"
     },
     {
@@ -3708,11 +2497,6 @@
       "class": "other-number"
     },
     {
-      "slug": "judas-3",
-      "reference": "ACT 5:37",
-      "class": "other-number"
-    },
-    {
       "slug": "jesus",
       "reference": "ROM 1:3",
       "class": "other-number"
@@ -3723,36 +2507,6 @@
       "class": "other-number"
     },
     {
-      "slug": "rahab",
-      "reference": "HEB 11:31",
-      "class": "other-number"
-    },
-    {
-      "slug": "rahab",
-      "reference": "JAS 2:25",
-      "class": "other-number"
-    },
-    {
-      "slug": "death",
-      "reference": "REV 6:8",
-      "class": "other-number"
-    },
-    {
-      "slug": "assyria",
-      "reference": "GEN 14:1",
-      "class": "unsettled"
-    },
-    {
-      "slug": "assyria",
-      "reference": "GEN 14:9",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jerusalem",
-      "reference": "GEN 14:18",
-      "class": "unsettled"
-    },
-    {
       "slug": "benammi",
       "reference": "GEN 19:38",
       "class": "unsettled"
@@ -3760,16 +2514,6 @@
     {
       "slug": "nahor-2",
       "reference": "GEN 24:10",
-      "class": "unsettled"
-    },
-    {
-      "slug": "letush",
-      "reference": "GEN 25:3",
-      "class": "unsettled"
-    },
-    {
-      "slug": "leum",
-      "reference": "GEN 25:3",
       "class": "unsettled"
     },
     {
@@ -3783,33 +2527,8 @@
       "class": "unsettled"
     },
     {
-      "slug": "hur",
-      "reference": "EXO 38:22",
-      "class": "unsettled"
-    },
-    {
-      "slug": "uri",
-      "reference": "EXO 38:22",
-      "class": "unsettled"
-    },
-    {
       "slug": "amalek",
       "reference": "NUM 13:29",
-      "class": "unsettled"
-    },
-    {
-      "slug": "mahlah",
-      "reference": "NUM 36:11",
-      "class": "unsettled"
-    },
-    {
-      "slug": "milcah-2",
-      "reference": "NUM 36:11",
-      "class": "unsettled"
-    },
-    {
-      "slug": "beor-2",
-      "reference": "DEU 23:4",
       "class": "unsettled"
     },
     {
@@ -3818,33 +2537,8 @@
       "class": "unsettled"
     },
     {
-      "slug": "japhia",
-      "reference": "JOS 10:3",
-      "class": "unsettled"
-    },
-    {
-      "slug": "joseph",
-      "reference": "JDG 1:35",
-      "class": "unsettled"
-    },
-    {
       "slug": "amalek",
       "reference": "JDG 3:13",
-      "class": "unsettled"
-    },
-    {
-      "slug": "ahijah-7",
-      "reference": "1SA 14:3",
-      "class": "unsettled"
-    },
-    {
-      "slug": "ahitub",
-      "reference": "1SA 14:3",
-      "class": "unsettled"
-    },
-    {
-      "slug": "phinehas-2",
-      "reference": "1SA 14:3",
       "class": "unsettled"
     },
     {
@@ -3858,11 +2552,6 @@
       "class": "unsettled"
     },
     {
-      "slug": "eliab-3",
-      "reference": "1SA 16:6",
-      "class": "unsettled"
-    },
-    {
       "slug": "amalek",
       "reference": "1SA 28:18",
       "class": "unsettled"
@@ -3873,78 +2562,8 @@
       "class": "unsettled"
     },
     {
-      "slug": "nathan",
-      "reference": "2SA 5:14",
-      "class": "unsettled"
-    },
-    {
-      "slug": "shammua-2",
-      "reference": "2SA 5:14",
-      "class": "unsettled"
-    },
-    {
-      "slug": "shobab",
-      "reference": "2SA 5:14",
-      "class": "unsettled"
-    },
-    {
       "slug": "amalek",
       "reference": "2SA 8:12",
-      "class": "unsettled"
-    },
-    {
-      "slug": "mephibosheth",
-      "reference": "2SA 21:7",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jonathan-4",
-      "reference": "2SA 21:21",
-      "class": "unsettled"
-    },
-    {
-      "slug": "shammah-2",
-      "reference": "2SA 21:21",
-      "class": "unsettled"
-    },
-    {
-      "slug": "hiram",
-      "reference": "1KI 9:11",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jehoram",
-      "reference": "2KI 8:16",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jehoram-2",
-      "reference": "2KI 8:16",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jehoshaphat-3",
-      "reference": "2KI 8:16",
-      "class": "unsettled"
-    },
-    {
-      "slug": "ahaziah-2",
-      "reference": "2KI 9:27",
-      "class": "unsettled"
-    },
-    {
-      "slug": "shobal-2",
-      "reference": "1CH 2:52",
-      "class": "unsettled"
-    },
-    {
-      "slug": "haahashtari",
-      "reference": "1CH 4:6",
-      "class": "unsettled"
-    },
-    {
-      "slug": "temeni",
-      "reference": "1CH 4:6",
       "class": "unsettled"
     },
     {
@@ -3958,21 +2577,6 @@
       "class": "unsettled"
     },
     {
-      "slug": "zecher",
-      "reference": "1CH 8:31",
-      "class": "unsettled"
-    },
-    {
-      "slug": "bani-3",
-      "reference": "1CH 9:4",
-      "class": "unsettled"
-    },
-    {
-      "slug": "david",
-      "reference": "1CH 12:17",
-      "class": "unsettled"
-    },
-    {
       "slug": "berechiah-3",
       "reference": "1CH 15:23",
       "class": "unsettled"
@@ -3980,11 +2584,6 @@
     {
       "slug": "jaaziel",
       "reference": "1CH 16:6",
-      "class": "unsettled"
-    },
-    {
-      "slug": "satan",
-      "reference": "1CH 21:1",
       "class": "unsettled"
     },
     {
@@ -3998,193 +2597,13 @@
       "class": "unsettled"
     },
     {
-      "slug": "zeri",
-      "reference": "1CH 25:11",
-      "class": "unsettled"
-    },
-    {
-      "slug": "abijam",
-      "reference": "2CH 13:19",
-      "class": "unsettled"
-    },
-    {
-      "slug": "azariah",
-      "reference": "2CH 26:17",
-      "class": "unsettled"
-    },
-    {
-      "slug": "azariah",
-      "reference": "2CH 26:20",
-      "class": "unsettled"
-    },
-    {
-      "slug": "abdi",
-      "reference": "2CH 29:12",
-      "class": "unsettled"
-    },
-    {
-      "slug": "amasai",
-      "reference": "2CH 29:12",
-      "class": "unsettled"
-    },
-    {
-      "slug": "zechariah-15",
-      "reference": "2CH 35:8",
-      "class": "unsettled"
-    },
-    {
       "slug": "jeiel-7",
       "reference": "2CH 35:9",
       "class": "unsettled"
     },
     {
-      "slug": "nethanel-4",
-      "reference": "2CH 35:9",
-      "class": "unsettled"
-    },
-    {
-      "slug": "shemaiah-12",
-      "reference": "2CH 35:9",
-      "class": "unsettled"
-    },
-    {
-      "slug": "nephisim",
-      "reference": "EZR 2:50",
-      "class": "unsettled"
-    },
-    {
-      "slug": "hassophereth",
-      "reference": "EZR 2:55",
-      "class": "unsettled"
-    },
-    {
-      "slug": "hodaviah-5",
-      "reference": "EZR 3:9",
-      "class": "unsettled"
-    },
-    {
-      "slug": "nephisim",
-      "reference": "NEH 7:52",
-      "class": "unsettled"
-    },
-    {
-      "slug": "hassophereth",
-      "reference": "NEH 7:57",
-      "class": "unsettled"
-    },
-    {
       "slug": "haggedolim",
       "reference": "NEH 11:14",
-      "class": "unsettled"
-    },
-    {
-      "slug": "tobiah-2",
-      "reference": "NEH 13:8",
-      "class": "unsettled"
-    },
-    {
-      "slug": "pedaiah-5",
-      "reference": "NEH 13:13",
-      "class": "unsettled"
-    },
-    {
-      "slug": "eliashib-7",
-      "reference": "NEH 13:28",
-      "class": "unsettled"
-    },
-    {
-      "slug": "ham",
-      "reference": "PSA 78:51",
-      "class": "unsettled"
-    },
-    {
-      "slug": "ucal",
-      "reference": "PRO 30:1",
-      "class": "unsettled"
-    },
-    {
-      "slug": "immanuel",
-      "reference": "ISA 8:8",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jeremiah-6",
-      "reference": "JER 19:14",
-      "class": "unsettled"
-    },
-    {
-      "slug": "immer",
-      "reference": "JER 20:1",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jeremiah-6",
-      "reference": "JER 28:6",
-      "class": "unsettled"
-    },
-    {
-      "slug": "maaseiah-6",
-      "reference": "JER 29:21",
-      "class": "unsettled"
-    },
-    {
-      "slug": "maaseiah",
-      "reference": "JER 35:4",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jeremiah-6",
-      "reference": "JER 36:8",
-      "class": "unsettled"
-    },
-    {
-      "slug": "gemariah-2",
-      "reference": "JER 36:10",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jeremiah-6",
-      "reference": "JER 36:10",
-      "class": "unsettled"
-    },
-    {
-      "slug": "hananiah-10",
-      "reference": "JER 36:12",
-      "class": "unsettled"
-    },
-    {
-      "slug": "shemaiah-21",
-      "reference": "JER 36:12",
-      "class": "unsettled"
-    },
-    {
-      "slug": "azzur-3",
-      "reference": "EZK 11:1",
-      "class": "unsettled"
-    },
-    {
-      "slug": "benaiah-11",
-      "reference": "EZK 11:1",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jaazaniah-4",
-      "reference": "EZK 11:1",
-      "class": "unsettled"
-    },
-    {
-      "slug": "pelatiah-4",
-      "reference": "EZK 11:1",
-      "class": "unsettled"
-    },
-    {
-      "slug": "javan",
-      "reference": "EZK 27:13",
-      "class": "unsettled"
-    },
-    {
-      "slug": "tubal",
-      "reference": "EZK 27:13",
       "class": "unsettled"
     },
     {
@@ -4218,11 +2637,6 @@
       "class": "unsettled"
     },
     {
-      "slug": "legion",
-      "reference": "MRK 5:9",
-      "class": "unsettled"
-    },
-    {
       "slug": "jacob",
       "reference": "MRK 12:29",
       "class": "unsettled"
@@ -4233,68 +2647,8 @@
       "class": "unsettled"
     },
     {
-      "slug": "legion",
-      "reference": "LUK 8:30",
-      "class": "unsettled"
-    },
-    {
-      "slug": "judas-of-james",
-      "reference": "JHN 14:22",
-      "class": "unsettled"
-    },
-    {
-      "slug": "thaddaeus",
-      "reference": "JHN 14:22",
-      "class": "unsettled"
-    },
-    {
-      "slug": "james",
-      "reference": "ACT 1:13",
-      "class": "unsettled"
-    },
-    {
-      "slug": "james-2",
-      "reference": "ACT 1:13",
-      "class": "unsettled"
-    },
-    {
-      "slug": "james-4",
-      "reference": "ACT 1:13",
-      "class": "unsettled"
-    },
-    {
-      "slug": "simon-2",
-      "reference": "ACT 1:13",
-      "class": "unsettled"
-    },
-    {
-      "slug": "simon",
-      "reference": "ACT 9:43",
-      "class": "unsettled"
-    },
-    {
-      "slug": "simon-9",
-      "reference": "ACT 9:43",
-      "class": "unsettled"
-    },
-    {
-      "slug": "simon-9",
-      "reference": "ACT 10:17",
-      "class": "unsettled"
-    },
-    {
-      "slug": "simon-9",
-      "reference": "ACT 10:32",
-      "class": "unsettled"
-    },
-    {
       "slug": "satan",
       "reference": "ACT 13:10",
-      "class": "unsettled"
-    },
-    {
-      "slug": "pyrrhus",
-      "reference": "ACT 20:4",
       "class": "unsettled"
     },
     {
@@ -4308,117 +2662,40 @@
       "class": "unsettled"
     },
     {
-      "slug": "asynchritus",
-      "reference": "ROM 16:14",
-      "class": "unsettled"
-    },
-    {
       "slug": "jacob",
       "reference": "PHP 3:5",
-      "class": "unsettled"
-    },
-    {
-      "slug": "philemon",
-      "reference": "PHM 1:1",
-      "class": "unsettled"
-    },
-    {
-      "slug": "jacob",
-      "reference": "HEB 11:22",
       "class": "unsettled"
     }
   ],
   "titles": [
     {
       "slug": "jesus",
-      "verses": 134,
+      "verses": 29,
       "labels": {
-        "Jesus": 32,
-        "Lamb": 28,
-        "The Light": 12,
-        "Teacher": 9,
-        "Rabbi": 8,
-        "Master": 5,
-        "Son": 5,
-        "Son of Man": 5,
-        "Son of G-d": 4,
-        "Christ": 3,
-        "Son of David": 3,
-        "The First and the Last": 3,
-        "King of the Jews": 2,
-        "Righteous One": 2,
-        "The Living One": 2,
-        "The Word": 2,
-        "Chief Shepherd": 1,
-        "Faithful and True": 1,
-        "High Priest": 1,
+        "Christ": 14,
+        "The Light": 5,
+        "Master": 2,
+        "The Messiah": 2,
+        "Lamb": 1,
+        "Leader": 1,
         "Lord Jesus": 1,
-        "The Amen": 1,
-        "The Lion of the Tribe of Judah": 1,
-        "Word of G-d": 1,
-        "Word of Life": 1,
-        "the last Adam": 1
-      }
-    },
-    {
-      "slug": "nebuchadnezzar",
-      "verses": 30,
-      "labels": {
-        "King of Babylon": 28,
-        "King of Sheshach": 1,
-        "king of kings": 1
-      }
-    },
-    {
-      "slug": "goliath",
-      "verses": 17,
-      "labels": {
-        "The Philistine": 17
-      }
-    },
-    {
-      "slug": "sennacherib",
-      "verses": 17,
-      "labels": {
-        "King of Assyria": 17
-      }
-    },
-    {
-      "slug": "ahab",
-      "verses": 16,
-      "labels": {
-        "King of Israel": 16
+        "Righteous One": 1,
+        "Son of Man": 1,
+        "the Lord's Christ": 1
       }
     },
     {
       "slug": "jehoram-2",
-      "verses": 12,
+      "verses": 10,
       "labels": {
-        "King of Israel": 12
-      }
-    },
-    {
-      "slug": "mattaniah",
-      "verses": 11,
-      "labels": {
-        "King of Judah": 9,
-        "Prince of Israel": 1,
-        "Zedekiah": 1
+        "King of Israel": 10
       }
     },
     {
       "slug": "shalmaneser",
-      "verses": 10,
+      "verses": 9,
       "labels": {
-        "King of Assyria": 10
-      }
-    },
-    {
-      "slug": "benhadad",
-      "verses": 8,
-      "labels": {
-        "King of Aram": 7,
-        "Ben-hadad": 1
+        "King of Assyria": 9
       }
     },
     {
@@ -4429,15 +2706,12 @@
       }
     },
     {
-      "slug": "david",
+      "slug": "mattaniah",
       "verses": 6,
       "labels": {
-        "David": 1,
-        "His Annointed": 1,
-        "King of Israel": 1,
-        "My King": 1,
-        "My Son": 1,
-        "Your Holy One": 1
+        "King of Judah": 4,
+        "Prince of Israel": 1,
+        "Zedekiah": 1
       }
     },
     {
@@ -4448,39 +2722,21 @@
       }
     },
     {
-      "slug": "moses",
+      "slug": "benhadad",
       "verses": 5,
       "labels": {
-        "Moses": 5
+        "King of Aram": 5
       }
     },
     {
-      "slug": "antichrist",
-      "verses": 4,
+      "slug": "david",
+      "verses": 5,
       "labels": {
-        "Antichrist": 4
-      }
-    },
-    {
-      "slug": "canaan-2",
-      "verses": 4,
-      "labels": {
-        "Land flowing with milk and honey": 3,
-        "Canaan": 1
-      }
-    },
-    {
-      "slug": "josiah",
-      "verses": 4,
-      "labels": {
-        "King of Judah": 4
-      }
-    },
-    {
-      "slug": "bera",
-      "verses": 3,
-      "labels": {
-        "King of Sodom": 3
+        "David": 1,
+        "His Annointed": 1,
+        "King of Israel": 1,
+        "My King": 1,
+        "My Son": 1
       }
     },
     {
@@ -4491,25 +2747,11 @@
       }
     },
     {
-      "slug": "elisha",
+      "slug": "nebuchadnezzar",
       "verses": 3,
       "labels": {
-        "man of G-d": 3
-      }
-    },
-    {
-      "slug": "satan",
-      "verses": 3,
-      "labels": {
-        "The Dragon": 2,
-        "the tempter": 1
-      }
-    },
-    {
-      "slug": "saul",
-      "verses": 3,
-      "labels": {
-        "the LORD's anointed": 3
+        "King of Babylon": 2,
+        "King of Sheshach": 1
       }
     },
     {
@@ -4527,53 +2769,10 @@
       }
     },
     {
-      "slug": "daniel-2",
-      "verses": 2,
-      "labels": {
-        "Belteshazzar": 1,
-        "Son of man": 1
-      }
-    },
-    {
-      "slug": "gideon",
-      "verses": 2,
-      "labels": {
-        "Gideon": 2
-      }
-    },
-    {
-      "slug": "hazael",
-      "verses": 2,
-      "labels": {
-        "King of Aram": 2
-      }
-    },
-    {
-      "slug": "herod-2",
-      "verses": 2,
-      "labels": {
-        "Herod": 2
-      }
-    },
-    {
-      "slug": "hoham",
-      "verses": 2,
-      "labels": {
-        "Hoham": 2
-      }
-    },
-    {
       "slug": "horam",
       "verses": 2,
       "labels": {
         "Horam": 2
-      }
-    },
-    {
-      "slug": "ishbosheth",
-      "verses": 2,
-      "labels": {
-        "Ish-bosheth": 2
       }
     },
     {
@@ -4591,14 +2790,6 @@
       }
     },
     {
-      "slug": "john",
-      "verses": 2,
-      "labels": {
-        "My Messenger": 1,
-        "Prophet of the Most High": 1
-      }
-    },
-    {
       "slug": "john-2",
       "verses": 2,
       "labels": {
@@ -4606,24 +2797,10 @@
       }
     },
     {
-      "slug": "joseph-6",
-      "verses": 2,
-      "labels": {
-        "Joseph": 2
-      }
-    },
-    {
       "slug": "judah",
       "verses": 2,
       "labels": {
         "Judah": 2
-      }
-    },
-    {
-      "slug": "judas",
-      "verses": 2,
-      "labels": {
-        "Judas": 2
       }
     },
     {
@@ -4648,39 +2825,10 @@
       }
     },
     {
-      "slug": "lud",
-      "verses": 2,
-      "labels": {
-        "Lud": 2
-      }
-    },
-    {
       "slug": "manasseh",
       "verses": 2,
       "labels": {
         "Manasseh": 2
-      }
-    },
-    {
-      "slug": "mephibosheth",
-      "verses": 2,
-      "labels": {
-        "Merib-baal": 2
-      }
-    },
-    {
-      "slug": "micaiah",
-      "verses": 2,
-      "labels": {
-        "Micaiah": 2
-      }
-    },
-    {
-      "slug": "pekah",
-      "verses": 2,
-      "labels": {
-        "King of Israel": 1,
-        "son of Remaliah": 1
       }
     },
     {
@@ -4691,35 +2839,6 @@
       }
     },
     {
-      "slug": "reuel-2",
-      "verses": 2,
-      "labels": {
-        "Priest of Midian": 1,
-        "the Kenite": 1
-      }
-    },
-    {
-      "slug": "saul-2",
-      "verses": 2,
-      "labels": {
-        "Paul": 2
-      }
-    },
-    {
-      "slug": "tiglathpileser",
-      "verses": 2,
-      "labels": {
-        "King of Assyria": 2
-      }
-    },
-    {
-      "slug": "timothy",
-      "verses": 2,
-      "labels": {
-        "man of G-d": 2
-      }
-    },
-    {
       "slug": "aaron",
       "verses": 1,
       "labels": {
@@ -4727,17 +2846,10 @@
       }
     },
     {
-      "slug": "admin",
+      "slug": "ahab",
       "verses": 1,
       "labels": {
-        "Admin": 1
-      }
-    },
-    {
-      "slug": "ahaziah",
-      "verses": 1,
-      "labels": {
-        "Ahaziah": 1
+        "King of Israel": 1
       }
     },
     {
@@ -4745,13 +2857,6 @@
       "verses": 1,
       "labels": {
         "the Shilonite": 1
-      }
-    },
-    {
-      "slug": "amon-3",
-      "verses": 1,
-      "labels": {
-        "Amon": 1
       }
     },
     {
@@ -4790,20 +2895,6 @@
       }
     },
     {
-      "slug": "bathsheba",
-      "verses": 1,
-      "labels": {
-        "Bathsheba": 1
-      }
-    },
-    {
-      "slug": "bathshua",
-      "verses": 1,
-      "labels": {
-        "Bath-shua": 1
-      }
-    },
-    {
       "slug": "benammi",
       "verses": 1,
       "labels": {
@@ -4818,10 +2909,24 @@
       }
     },
     {
+      "slug": "canaan-2",
+      "verses": 1,
+      "labels": {
+        "Land flowing with milk and honey": 1
+      }
+    },
+    {
       "slug": "claudius",
       "verses": 1,
       "labels": {
         "Caesar": 1
+      }
+    },
+    {
+      "slug": "daniel-2",
+      "verses": 1,
+      "labels": {
+        "Belteshazzar": 1
       }
     },
     {
@@ -4839,20 +2944,6 @@
       }
     },
     {
-      "slug": "delilah",
-      "verses": 1,
-      "labels": {
-        "Delilah": 1
-      }
-    },
-    {
-      "slug": "eliada",
-      "verses": 1,
-      "labels": {
-        "Eliada": 1
-      }
-    },
-    {
       "slug": "enaim",
       "verses": 1,
       "labels": {
@@ -4867,24 +2958,10 @@
       }
     },
     {
-      "slug": "esau",
-      "verses": 1,
-      "labels": {
-        "Esau": 1
-      }
-    },
-    {
       "slug": "eunice",
       "verses": 1,
       "labels": {
         "Eunice": 1
-      }
-    },
-    {
-      "slug": "evilmerodach",
-      "verses": 1,
-      "labels": {
-        "King of Babylon": 1
       }
     },
     {
@@ -4916,27 +2993,6 @@
       }
     },
     {
-      "slug": "hilkiah-2",
-      "verses": 1,
-      "labels": {
-        "Hilkiah": 1
-      }
-    },
-    {
-      "slug": "hirah",
-      "verses": 1,
-      "labels": {
-        "Adullamite": 1
-      }
-    },
-    {
-      "slug": "hodaviah",
-      "verses": 1,
-      "labels": {
-        "Hodaviah": 1
-      }
-    },
-    {
       "slug": "hodiah-2",
       "verses": 1,
       "labels": {
@@ -4944,24 +3000,10 @@
       }
     },
     {
-      "slug": "hodiah-3",
+      "slug": "hoham",
       "verses": 1,
       "labels": {
-        "Hodiah": 1
-      }
-    },
-    {
-      "slug": "hodiah-4",
-      "verses": 1,
-      "labels": {
-        "Hodiah": 1
-      }
-    },
-    {
-      "slug": "horeb",
-      "verses": 1,
-      "labels": {
-        "Mountain of G-d": 1
+        "Hoham": 1
       }
     },
     {
@@ -4993,52 +3035,10 @@
       }
     },
     {
-      "slug": "isaac",
-      "verses": 1,
-      "labels": {
-        "Isaac": 1
-      }
-    },
-    {
       "slug": "ishvah",
       "verses": 1,
       "labels": {
         "Ishvah": 1
-      }
-    },
-    {
-      "slug": "jambres",
-      "verses": 1,
-      "labels": {
-        "Jambres": 1
-      }
-    },
-    {
-      "slug": "jannes",
-      "verses": 1,
-      "labels": {
-        "Jannes": 1
-      }
-    },
-    {
-      "slug": "japhia",
-      "verses": 1,
-      "labels": {
-        "Japhia": 1
-      }
-    },
-    {
-      "slug": "jehiel",
-      "verses": 1,
-      "labels": {
-        "Jehiel": 1
-      }
-    },
-    {
-      "slug": "jehoiachin",
-      "verses": 1,
-      "labels": {
-        "Jehoiachin": 1
       }
     },
     {
@@ -5049,20 +3049,6 @@
       }
     },
     {
-      "slug": "jeremiah-6",
-      "verses": 1,
-      "labels": {
-        "Jeremiah": 1
-      }
-    },
-    {
-      "slug": "jeuel-2",
-      "verses": 1,
-      "labels": {
-        "Jeuel": 1
-      }
-    },
-    {
       "slug": "job",
       "verses": 1,
       "labels": {
@@ -5070,59 +3056,10 @@
       }
     },
     {
-      "slug": "jobab-3",
-      "verses": 1,
-      "labels": {
-        "Jobab": 1
-      }
-    },
-    {
-      "slug": "joel",
-      "verses": 1,
-      "labels": {
-        "Joel": 1
-      }
-    },
-    {
-      "slug": "joseph",
-      "verses": 1,
-      "labels": {
-        "Joseph": 1
-      }
-    },
-    {
-      "slug": "joseph-12",
-      "verses": 1,
-      "labels": {
-        "Barnabas": 1
-      }
-    },
-    {
-      "slug": "joseph-8",
-      "verses": 1,
-      "labels": {
-        "Joseph": 1
-      }
-    },
-    {
       "slug": "joshua",
       "verses": 1,
       "labels": {
         "Joshua": 1
-      }
-    },
-    {
-      "slug": "kenan",
-      "verses": 1,
-      "labels": {
-        "Cainan": 1
-      }
-    },
-    {
-      "slug": "kingjareb",
-      "verses": 1,
-      "labels": {
-        "King Jareb": 1
       }
     },
     {
@@ -5154,13 +3091,6 @@
       }
     },
     {
-      "slug": "kingofjokneam",
-      "verses": 1,
-      "labels": {
-        "King of Jokneam": 1
-      }
-    },
-    {
       "slug": "kingofkedesh",
       "verses": 1,
       "labels": {
@@ -5179,20 +3109,6 @@
       "verses": 1,
       "labels": {
         "King of Makkedah": 1
-      }
-    },
-    {
-      "slug": "kingofmegiddo",
-      "verses": 1,
-      "labels": {
-        "King of Megiddo": 1
-      }
-    },
-    {
-      "slug": "kingofsepharvaim",
-      "verses": 1,
-      "labels": {
-        "King of Sepharvaim": 1
       }
     },
     {
@@ -5245,31 +3161,10 @@
       }
     },
     {
-      "slug": "lamech-2",
-      "verses": 1,
-      "labels": {
-        "Lamech": 1
-      }
-    },
-    {
-      "slug": "mary",
-      "verses": 1,
-      "labels": {
-        "Mary": 1
-      }
-    },
-    {
       "slug": "mattithiah-3",
       "verses": 1,
       "labels": {
         "Mattithiah": 1
-      }
-    },
-    {
-      "slug": "melchizedek",
-      "verses": 1,
-      "labels": {
-        "King of Salem": 1
       }
     },
     {
@@ -5287,17 +3182,17 @@
       }
     },
     {
-      "slug": "mesha",
-      "verses": 1,
-      "labels": {
-        "King of Moab": 1
-      }
-    },
-    {
       "slug": "mica-2",
       "verses": 1,
       "labels": {
         "Mica": 1
+      }
+    },
+    {
+      "slug": "moses",
+      "verses": 1,
+      "labels": {
+        "Moses": 1
       }
     },
     {
@@ -5312,13 +3207,6 @@
       "verses": 1,
       "labels": {
         "Naaman": 1
-      }
-    },
-    {
-      "slug": "naomi",
-      "verses": 1,
-      "labels": {
-        "Naomi": 1
       }
     },
     {
@@ -5357,17 +3245,17 @@
       }
     },
     {
-      "slug": "redsea",
-      "verses": 1,
-      "labels": {
-        "Red Sea": 1
-      }
-    },
-    {
       "slug": "rehoboam",
       "verses": 1,
       "labels": {
         "Rehoboam": 1
+      }
+    },
+    {
+      "slug": "reuel-2",
+      "verses": 1,
+      "labels": {
+        "the Kenite": 1
       }
     },
     {
@@ -5378,17 +3266,24 @@
       }
     },
     {
+      "slug": "satan",
+      "verses": 1,
+      "labels": {
+        "The Dragon": 1
+      }
+    },
+    {
+      "slug": "sennacherib",
+      "verses": 1,
+      "labels": {
+        "King of Assyria": 1
+      }
+    },
+    {
       "slug": "shallum-2",
       "verses": 1,
       "labels": {
         "Shallum": 1
-      }
-    },
-    {
-      "slug": "shelah",
-      "verses": 1,
-      "labels": {
-        "Shelah": 1
       }
     },
     {
@@ -5406,17 +3301,17 @@
       }
     },
     {
-      "slug": "simon",
-      "verses": 1,
-      "labels": {
-        "Peter": 1
-      }
-    },
-    {
       "slug": "so",
       "verses": 1,
       "labels": {
         "Pharaoh": 1
+      }
+    },
+    {
+      "slug": "tiglathpileser",
+      "verses": 1,
+      "labels": {
+        "King of Assyria": 1
       }
     },
     {
@@ -5427,10 +3322,10 @@
       }
     },
     {
-      "slug": "zaccheus",
+      "slug": "timothy",
       "verses": 1,
       "labels": {
-        "Zaccheus": 1
+        "man of G-d": 1
       }
     },
     {
@@ -5481,6 +3376,11 @@
         "verses": 1
       },
       {
+        "slug": "antichrist",
+        "name": "Antichrist",
+        "verses": 4
+      },
+      {
         "slug": "antipas",
         "name": "Antipas",
         "verses": 1
@@ -5506,6 +3406,11 @@
         "verses": 1
       },
       {
+        "slug": "asynchritus",
+        "name": "Asynchritus",
+        "verses": 1
+      },
+      {
         "slug": "barabbas",
         "name": "Barabbas",
         "verses": 10
@@ -5514,6 +3419,11 @@
         "slug": "benhail",
         "name": "Ben-hail",
         "verses": 1
+      },
+      {
+        "slug": "caesar-2",
+        "name": "Caesar",
+        "verses": 9
       },
       {
         "slug": "caesaraugustus",
@@ -5556,9 +3466,9 @@
         "verses": 1
       },
       {
-        "slug": "daughter",
-        "name": "Woman with an issue of blood",
-        "verses": 3
+        "slug": "death",
+        "name": "Death",
+        "verses": 1
       },
       {
         "slug": "dionysius",
@@ -5643,12 +3553,12 @@
       {
         "slug": "jambres",
         "name": "Jambres",
-        "verses": 1
+        "verses": 2
       },
       {
         "slug": "jannes",
         "name": "Jannes",
-        "verses": 1
+        "verses": 2
       },
       {
         "slug": "jason",
@@ -5669,6 +3579,11 @@
         "slug": "junias",
         "name": "Junias",
         "verses": 1
+      },
+      {
+        "slug": "legion",
+        "name": "Legion",
+        "verses": 2
       },
       {
         "slug": "linus",
@@ -5704,6 +3619,11 @@
         "slug": "nekoda",
         "name": "Nekoda",
         "verses": 4
+      },
+      {
+        "slug": "nephisim",
+        "name": "Nephisim",
+        "verses": 2
       },
       {
         "slug": "nereus",
@@ -5748,6 +3668,11 @@
       {
         "slug": "persis",
         "name": "Persis",
+        "verses": 1
+      },
+      {
+        "slug": "philemon",
+        "name": "Philemon",
         "verses": 1
       },
       {
@@ -5798,7 +3723,7 @@
       {
         "slug": "satan",
         "name": "Satan",
-        "verses": 91
+        "verses": 94
       },
       {
         "slug": "sergius",
@@ -5895,46 +3820,11 @@
         "why": "the dataset lists no verse for it"
       },
       {
-        "slug": "admin",
-        "name": "Admin",
-        "line": true,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "allon",
-        "name": "Allon",
-        "line": true,
-        "listed": 1,
-        "why": "other-number 1"
-      },
-      {
-        "slug": "amon-3",
-        "name": "Amon",
-        "line": true,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "antichrist",
-        "name": "Antichrist",
-        "line": false,
-        "listed": 4,
-        "why": "not-printed 4"
-      },
-      {
         "slug": "arba",
         "name": "Arba",
         "line": false,
         "listed": 1,
         "why": "not-printed 1"
-      },
-      {
-        "slug": "argob",
-        "name": "Argob",
-        "line": true,
-        "listed": 1,
-        "why": "other-bearer 1"
       },
       {
         "slug": "ariel",
@@ -5944,32 +3834,11 @@
         "why": "not-printed 2"
       },
       {
-        "slug": "asynchritus",
-        "name": "Asynchritus",
-        "line": false,
-        "listed": 1,
-        "why": "unsettled 1"
-      },
-      {
         "slug": "azmaveth-4",
         "name": "Azmaveth",
         "line": false,
         "listed": 1,
         "why": "other-bearer 1"
-      },
-      {
-        "slug": "azzur-3",
-        "name": "Azzur",
-        "line": true,
-        "listed": 1,
-        "why": "unsettled 1"
-      },
-      {
-        "slug": "bathshua",
-        "name": "Bath-shua",
-        "line": true,
-        "listed": 1,
-        "why": "not-printed 1"
       },
       {
         "slug": "benammi",
@@ -5986,20 +3855,6 @@
         "why": "unsettled 2"
       },
       {
-        "slug": "caesar",
-        "name": "Caesar",
-        "line": true,
-        "listed": 12,
-        "why": "title 12"
-      },
-      {
-        "slug": "caesar-2",
-        "name": "Caesar",
-        "line": false,
-        "listed": 10,
-        "why": "title 10"
-      },
-      {
         "slug": "cush-2",
         "name": "Cush",
         "line": false,
@@ -6007,25 +3862,11 @@
         "why": "the dataset lists no verse for it"
       },
       {
-        "slug": "death",
-        "name": "Death",
-        "line": false,
-        "listed": 1,
-        "why": "other-number 1"
-      },
-      {
         "slug": "elishah-2",
         "name": "Elishah",
         "line": false,
         "listed": 0,
         "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "ezer-5",
-        "name": "Ezer",
-        "line": true,
-        "listed": 2,
-        "why": "other-number 2"
       },
       {
         "slug": "ezra-2",
@@ -6042,34 +3883,6 @@
         "why": "unsettled 1"
       },
       {
-        "slug": "haroeh",
-        "name": "Haroeh",
-        "line": true,
-        "listed": 1,
-        "why": "other-number 1"
-      },
-      {
-        "slug": "hodiah-3",
-        "name": "Hodiah",
-        "line": true,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "hodiah-4",
-        "name": "Hodiah",
-        "line": true,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "jeuel-2",
-        "name": "Jeuel",
-        "line": true,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
         "slug": "jorkeam",
         "name": "Jorkeam",
         "line": true,
@@ -6082,13 +3895,6 @@
         "line": false,
         "listed": 0,
         "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "judas-3",
-        "name": "Judas",
-        "line": true,
-        "listed": 1,
-        "why": "other-number 1"
       },
       {
         "slug": "keilah",
@@ -6161,13 +3967,6 @@
         "why": "not-printed 2"
       },
       {
-        "slug": "kingofjokneam",
-        "name": "King of Jokneam",
-        "line": true,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
         "slug": "kingofkedesh",
         "name": "King of Kedesh",
         "line": false,
@@ -6185,13 +3984,6 @@
         "slug": "kingofmakkedah",
         "name": "King of Makkedah",
         "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingofmegiddo",
-        "name": "King of Megiddo",
-        "line": true,
         "listed": 1,
         "why": "not-printed 1"
       },
@@ -6231,34 +4023,6 @@
         "why": "other-bearer 1"
       },
       {
-        "slug": "legion",
-        "name": "Legion",
-        "line": false,
-        "listed": 2,
-        "why": "unsettled 2"
-      },
-      {
-        "slug": "letush",
-        "name": "Letush",
-        "line": true,
-        "listed": 1,
-        "why": "unsettled 1"
-      },
-      {
-        "slug": "leum",
-        "name": "Leum",
-        "line": true,
-        "listed": 1,
-        "why": "unsettled 1"
-      },
-      {
-        "slug": "lud",
-        "name": "Lud",
-        "line": true,
-        "listed": 2,
-        "why": "not-printed 2"
-      },
-      {
         "slug": "meunim",
         "name": "Meunim",
         "line": false,
@@ -6273,81 +4037,11 @@
         "why": "other-bearer 2"
       },
       {
-        "slug": "nephisim",
-        "name": "Nephisim",
-        "line": false,
-        "listed": 2,
-        "why": "unsettled 2"
-      },
-      {
-        "slug": "pharaoh",
-        "name": "Pharaoh",
-        "line": true,
-        "listed": 4,
-        "why": "title 4"
-      },
-      {
-        "slug": "pharaoh-2",
-        "name": "Pharaoh",
-        "line": true,
-        "listed": 72,
-        "why": "title 72"
-      },
-      {
-        "slug": "pharaoh-3",
-        "name": "Pharaoh",
-        "line": true,
-        "listed": 16,
-        "why": "title 16"
-      },
-      {
-        "slug": "pharaoh-4",
-        "name": "Pharaoh",
-        "line": true,
-        "listed": 115,
-        "why": "title 115"
-      },
-      {
-        "slug": "pharaoh-5",
-        "name": "Pharaoh",
-        "line": true,
-        "listed": 9,
-        "why": "title 9"
-      },
-      {
         "slug": "pharaoh-6",
         "name": "Pharaoh",
         "line": true,
         "listed": 1,
         "why": "title 1"
-      },
-      {
-        "slug": "pharaoh-7",
-        "name": "Pharaoh",
-        "line": true,
-        "listed": 4,
-        "why": "title 4"
-      },
-      {
-        "slug": "pharaoh-8",
-        "name": "Pharaoh",
-        "line": true,
-        "listed": 21,
-        "why": "title 21"
-      },
-      {
-        "slug": "philemon",
-        "name": "Philemon",
-        "line": false,
-        "listed": 1,
-        "why": "unsettled 1"
-      },
-      {
-        "slug": "pyrrhus",
-        "name": "Pyrrhus",
-        "line": true,
-        "listed": 1,
-        "why": "unsettled 1"
       },
       {
         "slug": "raphah",
