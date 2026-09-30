@@ -260,6 +260,7 @@ internal sealed class DatasetLoader(
             await JoinTheVerses(stoppingToken);
             await ReplayTheVerdictsOnEvidentia(resources, stoppingToken);
             await LoadTheEncyclopedia(resources, stoppingToken);
+            await CorrectTheNumbersADatasetMiswrote(stoppingToken);
             await ReadTheStatedKinship(stoppingToken);
             await NameThePeoples(resources, stoppingToken);
             await MakeThePlacesOurs(resources, stoppingToken);
@@ -1398,6 +1399,21 @@ internal sealed class DatasetLoader(
             bibleData,
             Path.Combine(AppContext.BaseDirectory, "Resources", "WorldHistory"),
             cancellationToken));
+    }
+
+    /// <summary>
+    /// The Strong numbers a dataset wrote on a name that are another word's. Straight after the
+    /// encyclopedia and before anything resolves a number, because a wrong number resolves a name to
+    /// the wrong record or keeps it from resolving at all.
+    /// </summary>
+    private async Task CorrectTheNumbersADatasetMiswrote(CancellationToken cancellationToken)
+    {
+        status.Starting("the numbers a dataset wrote for another word");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<OwnNameLoader>();
+        var corrected = await loader.Correct(cancellationToken);
+        logger.LogInformation("{Corrected} name numbers a dataset wrote for another word corrected", corrected);
     }
 
     /// <summary>

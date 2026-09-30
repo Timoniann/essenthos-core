@@ -1,13 +1,42 @@
 {
   "names": [
     {
-      "entities": ["heaven"],
+      "entities": [
+        "heaven"
+      ],
       "label": "heavens",
       "hebrew": "שָׁמַיִם",
       "hebrewTransliterated": "shamayim",
       "hebrewStrongNumber": "H8064",
       "meaning": "the heavens; the Hebrew word has no singular",
       "why": "Hebrew shamayim is plural in form and has no singular, so 'the heavens' is as much its name as 'heaven'. The project owner asked for it on 2026-09-23."
+    }
+  ],
+  "numbers": [
+    {
+      "entities": [
+        "deborah-2",
+        "deborah"
+      ],
+      "label": "Deborah",
+      "was": {
+        "hebrew": "H1682"
+      },
+      "hebrewStrongNumber": "H1683",
+      "why": "H1682 is deborah, the bee; the name is H1683, which Strong heads for two women, Rebekah's nurse and the prophetess who judged Israel. BibleData numbers the judge by the bee, and the person register gave the nurse it added the first number of the group."
+    },
+    {
+      "entities": [
+        "antichrist"
+      ],
+      "label": "Antichrist",
+      "was": {
+        "hebrew": "H6696",
+        "greek": "G5000"
+      },
+      "hebrewStrongNumber": "H6696",
+      "greekStrongNumber": "G500",
+      "why": "G5000 is Tabitha; antichristos is G500, and the dataset's number has a digit too many. Left as it was, two records bear Tabitha's number and her name in Acts 9:36 and 9:40 names nobody."
     }
   ]
 }

@@ -178,19 +178,26 @@ public sealed class DuplicateRecordTests : IDisposable
         rows[0].ToEntityId.Should().Be(_meshullam.Id);
     }
 
+    /// <summary>
+    /// The folded record's clauses follow the kept record's own, and one that says what the kept
+    /// record already says is not said a second time.
+    /// </summary>
     [Fact]
-    public async Task TheFoldedRecordsClausesFollowTheKeptRecordsOwn()
+    public async Task TheFoldedRecordsClausesFollowTheKeptRecordsOwnAndARepeatedOneIsSaidOnce()
     {
         _db.EntityDescriptors.Add(Clause(_kept, 1, "son-of"));
         _db.EntityDescriptors.Add(Clause(_kept, 2, "father-of"));
         _db.EntityDescriptors.Add(Clause(_folded, 1, "son-of"));
+        _db.EntityDescriptors.Add(Clause(_folded, 2, "brother-of"));
         await _db.SaveChangesAsync();
 
         await _loader.Fold(List(("hilkiah-3", "hilkiah-6")));
 
-        var ordinals = await _db.EntityDescriptors.AsNoTracking()
-            .Where(d => d.EntityId == _kept.Id).OrderBy(d => d.Ordinal).Select(d => d.Ordinal).ToListAsync();
-        ordinals.Should().Equal(1, 2, 3);
+        var clauses = await _db.EntityDescriptors.AsNoTracking()
+            .Where(d => d.EntityId == _kept.Id).OrderBy(d => d.Ordinal).Select(d => new { d.Ordinal, d.Relation })
+            .ToListAsync();
+        clauses.Select(c => c.Relation).Should().Equal("son-of", "father-of", "brother-of");
+        clauses.Select(c => c.Ordinal).Should().BeInAscendingOrder().And.OnlyHaveUniqueItems();
     }
 
     private EntityDescriptor Clause(Entity entity, int ordinal, string relation) => new()

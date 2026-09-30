@@ -210,6 +210,19 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         """,
         "DELETE FROM entity_descriptor WHERE entity_id = target_entity_id AND entity_id IN (SELECT kept FROM folding)",
 
+        // What both records said of the one man is said once: the line under the name is built from
+        // the clauses in order, and the nurse of Rebekah folded from two records would otherwise be
+        // Rebekah's servant twice in it. The earlier clause stays.
+        """
+        DELETE FROM entity_descriptor d
+        USING entity_descriptor o
+        WHERE d.entity_id IN (SELECT kept FROM folding)
+          AND o.entity_id = d.entity_id
+          AND o.relation = d.relation
+          AND o.target_entity_id = d.target_entity_id
+          AND o.ordinal < d.ordinal
+        """,
+
         // A claim both records carry from one source by one method is one claim: where they said
         // different things of the two, the kept record's says both, as the person register writes a
         // record two of its bearers reach.

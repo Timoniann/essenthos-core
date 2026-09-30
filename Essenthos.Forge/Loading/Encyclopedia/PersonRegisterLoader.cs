@@ -281,6 +281,11 @@ internal sealed class PersonRegisterLoader(
             "Jehucal son of Shelemiah is Jucal son of Shelemiah of Jeremiah 38:1, which the dataset files "
             + "under shelemiah-8, not the son of Abdeel sent to seize Baruch.",
             "JER 37:3"),
+        .. Namesake("person:Deborah_1", "person:Deborah_2", "Deborah#3",
+            "The dataset's first Deborah is Rebekah's nurse and its second the prophetess who judged Israel, "
+            + "but it numbers the judge by the word for a bee, so her name in Judges 4 and 5 resolved to the "
+            + "nurse's record and the register reached the judge there.",
+            "JDG 4:4", "JDG 4:5", "JDG 4:9", "JDG 4:10", "JDG 4:14", "JDG 5:1", "JDG 5:7", "JDG 5:12", "JDG 5:15"),
         .. Namesake("person:Ahitub_2", "person:Ahitub_3", "Ahitub#3",
             "Ezra's Ahitub has a son Zadok whose son is Shallum, which is the line of 1 Chronicles 6:11-12; "
             + "the Ahitub of David's Zadok has Ahimaaz for a grandson.",

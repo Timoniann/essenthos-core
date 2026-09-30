@@ -426,6 +426,73 @@ public sealed class PersonRegisterLoadTests : IDisposable
     }
 
     /// <summary>
+    /// The dataset numbered the judge Deborah by the word for a bee, so her name in Judges resolved to
+    /// the record of Rebekah's nurse: the register's judge reached the nurse's record by the verses
+    /// read off those words, and the nurse was added a second time. Matched again, the judge is on
+    /// her own record, the nurse's record says it is the nurse, and the second nurse is folded into it.
+    /// </summary>
+    [Fact]
+    public async Task The_judge_Deborah_leaves_the_record_of_Rebekahs_nurse()
+    {
+        (int Book, int Chapter, int Verse)[] judges =
+            [(7, 4, 4), (7, 4, 5), (7, 4, 9), (7, 4, 10), (7, 4, 14), (7, 5, 1), (7, 5, 7), (7, 5, 12), (7, 5, 15)];
+        string[] cited = ["JDG 4:4", "JDG 4:5", "JDG 4:9", "JDG 4:10", "JDG 4:14", "JDG 5:1", "JDG 5:7", "JDG 5:12", "JDG 5:15"];
+        const string fromTheWords = "Essenthos, from the words this corpus annotates to the person or the place they name";
+
+        Held("deborah", "Deborah", "person:Deborah_1", ["Deborah"], [(1, 35, 8)]);
+        Held("deborah-2", "Deborah", "person:Deborah_2", ["Deborah"], judges);
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = "deborah-3",
+            Name = "Deborah",
+            SourceId = "essenthos:deborah2",
+            Source = Ours,
+            Names = [new EntityName { Label = "Deborah", Kind = "proper name" }],
+        });
+        await _db.SaveChangesAsync();
+        var nurse = (await Person("deborah"))!;
+        foreach (var (book, chapter, verse) in judges)
+        {
+            nurse.Verses.Add(new EntityVerse
+            {
+                CanonicalBook = book, CanonicalChapter = chapter, CanonicalVerse = verse, Source = fromTheWords,
+            });
+        }
+
+        nurse.Claims.Add(new EntityClaim
+        {
+            Method = LinkMethod.StatedBySource, Source = Dataset,
+            Note = "holds this man as a record of its own, which is where this record's relationships, verses "
+                   + "and descriptors come from and whose they stay",
+        });
+        Claimed(nurse, "Deborah #3, \"a prophetess who judged Israel\" — 9 verses of this corpus print the name");
+        Claimed((await Person("deborah-3"))!, "Deborah #2, \"the nurse of Rebekah\" — 1 verse of this corpus prints the name");
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(2, "Rebekah's nurse, buried under an oak below Bethel.", ["GEN 35:8"], group: "Deborah", name: "Deborah"),
+            Bearer(3, "Prophetess, wife of Lapidoth, judged Israel.", cited, group: "Deborah", name: "Deborah"));
+
+        (await Load()).AlreadyLoaded.Should().BeTrue();
+
+        _db.ChangeTracker.Clear();
+        nurse = (await Person("deborah"))!;
+        var judge = (await Person("deborah-2"))!;
+        (await Person("deborah-3")).Should().BeNull("the second record of the nurse is folded into the first");
+        nurse.Claims.Should().ContainSingle(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Which.Note.Should().StartWith("Deborah #2, ").And.NotContain("Deborah #3, ");
+        nurse.Verses.Select(v => v.CanonicalBook).Distinct().Should().Equal(1);
+        judge.Source.Should().Be(Ours);
+        judge.Claims.Should().ContainSingle(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Which.Note.Should().StartWith("Deborah #3, ");
+        judge.Verses.Select(v => (v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse)).Distinct()
+            .Should().BeEquivalentTo(judges);
+
+        await Load();
+        (await _db.Entities.CountAsync(e => e.Name == "Deborah")).Should().Be(2, "a second load finds nothing to move");
+    }
+
+    /// <summary>
     /// Genesis 36's Adah is the woman the dataset keeps as Basemath. The register read before the
     /// verses moved put her on Lamech's wife; matched again she is on Basemath's record beside
     /// Basemath's own bearer, and Lamech's wife is the Adah she is.

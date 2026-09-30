@@ -1,8 +1,8 @@
 {
   "about": "The verse references only BibleData states, which a reader is not shown. classes says what the text has at each; losers every record that loses verses, with the verses of ours it keeps; namesakes each reference where the name is printed and no rule decides the bearer (ours names the records our words name there instead); titles the records listed where the verse does not print their name, with the labels the dataset gives; records the BibleData records that are not yet read as ours. Reference is the canonical address.",
-  "written": "2026-09-30T06:39:19Z",
-  "references": 3749,
-  "entities": 386,
+  "written": "2026-09-30T08:23:25Z",
+  "references": 3739,
+  "entities": 384,
   "classes": [
     {
       "class": "word-for-god",
@@ -36,14 +36,14 @@
     },
     {
       "class": "unsettled",
-      "references": 119,
-      "entities": 92,
+      "references": 118,
+      "entities": 91,
       "what": "the name is printed and nothing has told its bearers apart there"
     },
     {
       "class": "other-number",
-      "references": 118,
-      "entities": 50,
+      "references": 109,
+      "entities": 49,
       "what": "the name is printed under a number the record is not held under"
     },
     {
@@ -269,12 +269,6 @@
       "name": "Asherites",
       "lost": 9,
       "kept": 9
-    },
-    {
-      "slug": "deborah-2",
-      "name": "Deborah",
-      "lost": 9,
-      "kept": 0
     },
     {
       "slug": "pharaoh-5",
@@ -2257,12 +2251,6 @@
       "kept": 1
     },
     {
-      "slug": "tabitha",
-      "name": "Tabitha",
-      "lost": 1,
-      "kept": 2
-    },
-    {
       "slug": "temeni",
       "name": "Temeni",
       "lost": 1,
@@ -3304,51 +3292,6 @@
       "class": "other-number"
     },
     {
-      "slug": "deborah-2",
-      "reference": "JDG 4:4",
-      "class": "other-number"
-    },
-    {
-      "slug": "deborah-2",
-      "reference": "JDG 4:5",
-      "class": "other-number"
-    },
-    {
-      "slug": "deborah-2",
-      "reference": "JDG 4:9",
-      "class": "other-number"
-    },
-    {
-      "slug": "deborah-2",
-      "reference": "JDG 4:10",
-      "class": "other-number"
-    },
-    {
-      "slug": "deborah-2",
-      "reference": "JDG 4:14",
-      "class": "other-number"
-    },
-    {
-      "slug": "deborah-2",
-      "reference": "JDG 5:1",
-      "class": "other-number"
-    },
-    {
-      "slug": "deborah-2",
-      "reference": "JDG 5:7",
-      "class": "other-number"
-    },
-    {
-      "slug": "deborah-2",
-      "reference": "JDG 5:12",
-      "class": "other-number"
-    },
-    {
-      "slug": "deborah-2",
-      "reference": "JDG 5:15",
-      "class": "other-number"
-    },
-    {
       "slug": "micah",
       "reference": "JDG 17:5",
       "class": "other-number"
@@ -4346,11 +4289,6 @@
     {
       "slug": "simon-2",
       "reference": "ACT 1:13",
-      "class": "unsettled"
-    },
-    {
-      "slug": "tabitha",
-      "reference": "ACT 9:40",
       "class": "unsettled"
     },
     {
@@ -6100,13 +6038,6 @@
         "line": false,
         "listed": 1,
         "why": "other-number 1"
-      },
-      {
-        "slug": "deborah-2",
-        "name": "Deborah",
-        "line": true,
-        "listed": 9,
-        "why": "other-number 9"
       },
       {
         "slug": "earth",
