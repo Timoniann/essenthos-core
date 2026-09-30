@@ -959,6 +959,17 @@ if (args is ["reigns", ..])
     return 0;
 }
 
+// The rulings on records the encyclopedia holds, for a corpus loaded before the credit of a record a
+// ruling re-heads moved to the ruling; then the lines in every reader's language, which follow the
+// credit. The load does both after the records; this is those two steps alone.
+if (args is ["own-records", ..])
+{
+    using var ownScope = app.Services.CreateScope();
+    Console.WriteLine(await ownScope.ServiceProvider.GetRequiredService<OwnRecordLoader>().Load(resources));
+    Console.WriteLine(await ownScope.ServiceProvider.GetRequiredService<DistinguisherLoader>().Load());
+    return 0;
+}
+
 // The lines this corpus wrote under its own records, in every reader's language, for a corpus
 // loaded before they were. The load does this after the records; this is that step alone.
 if (args is ["distinguishers", ..])

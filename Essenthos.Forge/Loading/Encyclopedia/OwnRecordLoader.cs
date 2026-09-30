@@ -146,6 +146,7 @@ internal sealed class OwnRecordLoader(
         }
 
         var labelled = await Label(files, cancellationToken);
+        await Rehead(files, cancellationToken);
 
         if (pending.Count == 0)
         {
@@ -173,6 +174,71 @@ internal sealed class OwnRecordLoader(
     private async Task<bool> Recorded(OwnRecordRulings file, CancellationToken cancellationToken) =>
         await db.EntityClaims.AnyAsync(c => c.Source == file.Source, cancellationToken)
         || await db.WordEntities.AnyAsync(a => a.Source == file.Source, cancellationToken);
+
+    /// <summary>
+    /// A record a ruling re-heads is ours: its heading, its line and its note are what the ruling
+    /// says, and its verses are the words the ruling gives it, so it is credited to the ruling and no
+    /// longer to the dataset that first listed the person. The dataset's row is kept as a claim,
+    /// which is how the two loaders that separated a record out of a dataset before this one did it.
+    ///
+    /// <para>
+    /// Asked per record and outside the guard that skips the rulings, like the name rows, because the
+    /// file is already recorded on a database that loaded it before the credit moved.
+    /// </para>
+    /// </summary>
+    private async Task<int> Rehead(
+        IReadOnlyList<OwnRecordRulings> files,
+        CancellationToken cancellationToken)
+    {
+        var reheaded = files
+            .SelectMany(file => file.Rulings
+                .Where(ruling => ruling.Existing is not null && ruling.Says?.Name is not null)
+                .Select(ruling => (Slug: ruling.Existing!, file.Source)))
+            .DistinctBy(record => record.Slug)
+            .ToList();
+        if (reheaded.Count == 0)
+        {
+            return 0;
+        }
+
+        var slugs = reheaded.Select(record => record.Slug).ToList();
+        var records = await db.Entities
+            .Where(e => slugs.Contains(e.Slug))
+            .Include(e => e.Claims)
+            .ToDictionaryAsync(e => e.Slug, cancellationToken);
+
+        var moved = 0;
+        foreach (var (slug, source) in reheaded)
+        {
+            if (!records.TryGetValue(slug, out var record) || record.Source.StartsWith(Ours, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            if (record.Claims.All(claim => claim.Method != LinkMethod.StatedBySource || claim.Source != record.Source))
+            {
+                record.Claims.Add(new EntityClaim
+                {
+                    Method = LinkMethod.StatedBySource,
+                    Confidence = null,
+                    Source = record.Source,
+                    Note = "listed this person under another heading, which is where this record's "
+                           + "relationships come from and whose they stay",
+                });
+            }
+
+            record.Source = source;
+            moved++;
+        }
+
+        if (moved > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+            logger.LogInformation("{Moved} re-headed records are credited to the ruling that re-headed them", moved);
+        }
+
+        return moved;
+    }
 
     /// <summary>
     /// The name row every record these rulings ask for should have had.

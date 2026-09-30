@@ -882,6 +882,13 @@
       "ukr": "титул помазаного на служіння, єврейською машіах, грецькою Христос: так названо помазаного священика, Саула, Давида, Кира та Ісуса",
       "deu": "der Titel dessen, der zu einem Amt gesalbt ist, hebräisch Maschiach, griechisch Christos: so heißen der gesalbte Priester, Saul, David, Kyrus und Jesus",
       "spa": "el título del ungido para un oficio, en hebreo mashiaj y en griego Christos: se da al sacerdote ungido, a Saúl, a David, a Ciro y a Jesús"
+    },
+    {
+      "slug": "daughter",
+      "english": "who touched the hem of Jesus' garment (MAT 9:20-22)",
+      "ukr": "яка торкнулася краю Ісусового одягу (MAT 9:20-22)",
+      "deu": "die den Saum von Jesu Gewand berührte (MAT 9:20-22)",
+      "spa": "que tocó el borde del manto de Jesús (MAT 9:20-22)"
     }
   ]
 }

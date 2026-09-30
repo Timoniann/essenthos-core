@@ -126,11 +126,36 @@ public sealed class OwnRecordTests : IDisposable
         woman.Name.Should().Be("Woman with an issue of blood");
         woman.Distinguisher.Should().Contain("MAT 9:20-22");
         woman.Notes.Should().Contain("MAT 9:22; MRK 5:34; LUK 8:48").And.Contain("does not give her name");
-        woman.Claims.Should().ContainSingle().Which.Source.Should().Contain("2026-09-30");
+        woman.Claims.Should().ContainSingle(claim => claim.Method == LinkMethod.Manual)
+            .Which.Source.Should().Contain("2026-09-30");
 
         var words = SenseReadingFiles.AddressedRulings().Rulings.Select(r => r.WordId);
         (await _db.WordEntities.Where(a => a.EntityId == woman.Id).Select(a => a.WordId).ToListAsync())
             .Should().BeEquivalentTo(words);
+    }
+
+    /// <summary>
+    /// The woman's record was listed by a dataset and is headed, described and read by us, so the
+    /// page credits the ruling and not the dataset, on a database that loaded the ruling before the
+    /// credit moved as well as on a cold one. The dataset's listing stays as a claim.
+    /// </summary>
+    [Fact]
+    public async Task ARecordTheRulingReHeadsIsCreditedToTheRulingAndACreditIsNotMovedTwice()
+    {
+        await Load();
+        await Load();
+
+        var woman = await _db.Entities.Include(e => e.Claims).SingleAsync(e => e.Slug == "daughter");
+        woman.Source.Should().StartWith("Essenthos").And.Contain("2026-09-30");
+        woman.Claims.Should().ContainSingle(claim => claim.Method == LinkMethod.StatedBySource)
+            .Which.Source.Should().Be("a test");
+
+        // A database that loaded the file before the credit moved: the dataset's credit is back and
+        // the file is already recorded, so nothing else of the file runs again.
+        woman.Source = "BibleData by a test";
+        await _db.SaveChangesAsync();
+        await Load();
+        (await _db.Entities.SingleAsync(e => e.Slug == "daughter")).Source.Should().StartWith("Essenthos");
     }
 
     /// <summary>
@@ -218,7 +243,7 @@ public sealed class OwnRecordTests : IDisposable
 
         outcome.Created.Should().Be(_rulings.Count(r => r.Create is not null));
         (await _db.Entities.CountAsync(e => e.Source.StartsWith("Essenthos")))
-            .Should().Be(outcome.Created);
+            .Should().Be(outcome.Created + _rulings.Count(r => r.Existing is not null && r.Says?.Name is not null));
     }
 
     /// <summary>
@@ -265,7 +290,7 @@ public sealed class OwnRecordTests : IDisposable
 
         outcome.Withheld.Should().Be(0);
         (await _db.Entities.CountAsync(e => e.Source.StartsWith("Essenthos")))
-            .Should().Be(outcome.Created);
+            .Should().Be(outcome.Created + _rulings.Count(r => r.Existing is not null && r.Says?.Name is not null));
     }
 
     [Fact]
