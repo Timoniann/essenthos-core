@@ -1,0 +1,494 @@
+{
+  "decidedBy": "the project owner, 2026-09-30, on the rule: the Anointed is a title, and its word names the person too where the text fixes who is meant and the title alone where the text leaves that open — recorded on TSK-0867. Each occurrence was then read against its verse under that rule; an entry with a doubt says what can be said for the other reading and waits for the owner",
+  "policy": "Every mashiach (H4899), Christos (G5547) and Messias (G3323) names the title. It names a person beside the title only where the text fixes who is meant: the verse names him, or the speaker says it of one man who is present or has just been named. It names the title alone where the verse asks who the Christ is, denies it, supposes it, reports a claim made by or about someone, or speaks of an anointed one it does not name. Christos is read as Jesus wherever it is not listed here; mashiach and Messias are listed in full. Where a reading could go either way the word is left to the title.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-09-30 that the word for the Anointed names its bearer where the text fixes who is meant, each occurrence read against its verse",
+  "title": "anointed",
+  "readings": [
+    {
+      "reference": "LEV 4:3",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The priest that is anointed: the Law names the office, and no man by it."
+    },
+    {
+      "reference": "LEV 4:5",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The priest that is anointed: the Law names the office, and no man by it."
+    },
+    {
+      "reference": "LEV 4:16",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The priest that is anointed: the Law names the office, and no man by it."
+    },
+    {
+      "reference": "LEV 6:22",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The priest of Aaron's sons that is anointed in his stead: whoever holds the office after him."
+    },
+    {
+      "reference": "1SA 2:10",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Hannah's song: the LORD shall give strength unto his king, and exalt the horn of his anointed. No king is named, and there is none in Israel yet."
+    },
+    {
+      "reference": "1SA 2:35",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The faithful priest shall walk before mine anointed for ever: the anointed is not named."
+    },
+    {
+      "reference": "1SA 12:3",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Samuel to Israel: witness against me before the LORD, and before his anointed. The verse does not name him.",
+      "doubt": "Saul, whom Samuel has just made king: behold, the king walketh before you (1SA 12:2); behold the king whom ye have chosen (1SA 12:13)."
+    },
+    {
+      "reference": "1SA 12:5",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The LORD is witness against you, and his anointed is witness this day. The verse does not name him.",
+      "doubt": "Saul, the king standing there, as in 1SA 12:3."
+    },
+    {
+      "reference": "1SA 16:6",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Samuel looks on Eliab and says, Surely the LORD's anointed is before him; the LORD answers that he has refused him. A supposition the next verse denies."
+    },
+    {
+      "reference": "1SA 24:6",
+      "strong": "H4899",
+      "bearer": "saul",
+      "why": "David, having cut off the skirt of Saul's robe: my master, the LORD's anointed, the anointed of the LORD. Both times it is Saul."
+    },
+    {
+      "reference": "1SA 24:10",
+      "strong": "H4899",
+      "bearer": "saul",
+      "why": "David to Saul: I will not put forth mine hand against my lord; for he is the LORD's anointed."
+    },
+    {
+      "reference": "1SA 26:9",
+      "strong": "H4899",
+      "bearer": "saul",
+      "why": "David to Abishai over the sleeping Saul: who can stretch forth his hand against the LORD's anointed, and be guiltless?"
+    },
+    {
+      "reference": "1SA 26:11",
+      "strong": "H4899",
+      "bearer": "saul",
+      "why": "David over the sleeping Saul: The LORD forbid that I should stretch forth mine hand against the LORD's anointed."
+    },
+    {
+      "reference": "1SA 26:16",
+      "strong": "H4899",
+      "bearer": "saul",
+      "why": "David to Abner: ye have not kept your master, the LORD's anointed; see where the king's spear is."
+    },
+    {
+      "reference": "1SA 26:23",
+      "strong": "H4899",
+      "bearer": "saul",
+      "why": "David to Saul: the LORD delivered thee into my hand to day, but I would not stretch forth mine hand against the LORD's anointed."
+    },
+    {
+      "reference": "2SA 1:14",
+      "strong": "H4899",
+      "bearer": "saul",
+      "why": "David to the Amalekite who says he slew Saul: How wast thou not afraid to stretch forth thine hand to destroy the LORD's anointed?"
+    },
+    {
+      "reference": "2SA 1:16",
+      "strong": "H4899",
+      "bearer": "saul",
+      "why": "Thy mouth hath testified against thee, saying, I have slain the LORD's anointed: Saul, whose crown the man brought."
+    },
+    {
+      "reference": "2SA 1:21",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The shield of Saul, as though he had not been anointed with oil: the word describes and is no one's title here.",
+      "doubt": "The King James reads it of Saul; the Hebrew can as well be the shield, not anointed with oil."
+    },
+    {
+      "reference": "2SA 19:21",
+      "strong": "H4899",
+      "bearer": "david",
+      "why": "Abishai of Shimei, who cursed David at Bahurim: he cursed the LORD's anointed."
+    },
+    {
+      "reference": "2SA 22:51",
+      "strong": "H4899",
+      "bearer": "david",
+      "why": "He sheweth mercy to his anointed, unto David, and to his seed for evermore: the verse names him."
+    },
+    {
+      "reference": "2SA 23:1",
+      "strong": "H4899",
+      "bearer": "david",
+      "why": "David the son of Jesse, the man who was raised up on high, the anointed of the God of Jacob."
+    },
+    {
+      "reference": "1CH 16:22",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Touch not mine anointed, and do my prophets no harm: said of the fathers when they went from nation to nation, in the plural, none named."
+    },
+    {
+      "reference": "2CH 6:42",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Solomon's prayer: O LORD God, turn not away the face of thine anointed. The verse names David beside him and not the anointed.",
+      "doubt": "Solomon, who is praying, speaks of himself."
+    },
+    {
+      "reference": "PSA 2:2",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The rulers take counsel together, against the LORD, and against his anointed: the psalm does not name him."
+    },
+    {
+      "reference": "PSA 18:50",
+      "strong": "H4899",
+      "bearer": "david",
+      "why": "He sheweth mercy to his anointed, to David, and to his seed for evermore: the verse names him."
+    },
+    {
+      "reference": "PSA 20:6",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Now know I that the LORD saveth his anointed: the king the psalm prays for is not named."
+    },
+    {
+      "reference": "PSA 28:8",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The LORD is the saving strength of his anointed: not named."
+    },
+    {
+      "reference": "PSA 84:9",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Behold, O God our shield, and look upon the face of thine anointed: not named."
+    },
+    {
+      "reference": "PSA 89:38",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Thou hast been wroth with thine anointed: the king of David's line in the psalmist's day, whom the psalm does not name."
+    },
+    {
+      "reference": "PSA 89:51",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "They have reproached the footsteps of thine anointed: the same king, not named."
+    },
+    {
+      "reference": "PSA 105:15",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Touch not mine anointed, and do my prophets no harm: the fathers, in the plural, as in 1CH 16:22."
+    },
+    {
+      "reference": "PSA 132:10",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "For thy servant David's sake turn not away the face of thine anointed: another than David, for whose sake it is asked, and not named."
+    },
+    {
+      "reference": "PSA 132:17",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "I have ordained a lamp for mine anointed: the verse names David for the horn and does not say who the anointed is."
+    },
+    {
+      "reference": "ISA 45:1",
+      "strong": "H4899",
+      "bearer": "cyrus",
+      "why": "Thus saith the LORD to his anointed, to Cyrus: the verse names him."
+    },
+    {
+      "reference": "LAM 4:20",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "The breath of our nostrils, the anointed of the LORD, was taken in their pits: the king of Judah at the fall of Jerusalem, whom the verse does not name.",
+      "doubt": "Zedekiah, the king taken when the city fell (2KI 25:5-7)."
+    },
+    {
+      "reference": "DAN 9:25",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Unto the Messiah the Prince shall be seven weeks, and threescore and two weeks: the vision does not name him."
+    },
+    {
+      "reference": "DAN 9:26",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "After threescore and two weeks shall Messiah be cut off: the vision does not name him."
+    },
+    {
+      "reference": "HAB 3:13",
+      "strong": "H4899",
+      "bearer": null,
+      "why": "Thou wentest forth for the salvation of thy people, even for salvation with thine anointed: not named."
+    },
+    {
+      "reference": "JHN 1:41",
+      "strong": "G3323",
+      "bearer": "jesus",
+      "why": "Andrew, who had followed Jesus, to his brother Simon: We have found the Messias; and he brought him to Jesus (JHN 1:42)."
+    },
+    {
+      "reference": "JHN 4:25",
+      "strong": "G3323",
+      "bearer": null,
+      "why": "The woman of Samaria: I know that Messias cometh. One she is waiting for; Jesus answers only in the next verse."
+    },
+    {
+      "reference": "MAT 2:4",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Herod demanded of the chief priests and scribes where Christ should be born: a question about the one expected."
+    },
+    {
+      "reference": "MAT 22:42",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "What think ye of Christ? whose son is he? A question put about the Christ."
+    },
+    {
+      "reference": "MAT 23:8",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "One is your Master, even Christ, as the Received Text reads: Jesus speaks of the Christ and does not say I.",
+      "doubt": "Jesus speaks of himself, as in MAT 23:10."
+    },
+    {
+      "reference": "MAT 23:10",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "One is your Master, even Christ: Jesus speaks of the Christ and does not say I.",
+      "doubt": "Jesus speaks of himself."
+    },
+    {
+      "reference": "MAT 24:5",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Many shall come in my name, saying, I am Christ: the claim of others."
+    },
+    {
+      "reference": "MAT 24:23",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "If any man shall say unto you, Lo, here is Christ, or there; believe it not: a claim about another."
+    },
+    {
+      "reference": "MAT 26:63",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "The high priest: tell us whether thou be the Christ, the Son of God. A question."
+    },
+    {
+      "reference": "MAT 26:68",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Those who struck him: Prophesy unto us, thou Christ. Said in mockery by men who deny it.",
+      "doubt": "The word is addressed to Jesus."
+    },
+    {
+      "reference": "MRK 12:35",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "How say the scribes that Christ is the Son of David? A question put about the Christ."
+    },
+    {
+      "reference": "MRK 13:21",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "If any man shall say to you, Lo, here is Christ; believe him not: a claim about another."
+    },
+    {
+      "reference": "MRK 14:61",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "The high priest: Art thou the Christ, the Son of the Blessed? A question."
+    },
+    {
+      "reference": "MRK 15:32",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "The chief priests mocking: Let Christ the King of Israel descend now from the cross. Said by men who deny it.",
+      "doubt": "They say it of Jesus on the cross."
+    },
+    {
+      "reference": "LUK 2:26",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "It was revealed unto Simeon that he should not see death before he had seen the Lord's Christ: a promise of one not yet shown him.",
+      "doubt": "The child Jesus, whom Simeon takes up in the verses that follow (LUK 2:27-30)."
+    },
+    {
+      "reference": "LUK 3:15",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "All men mused in their hearts of John, whether he were the Christ, or not: asked of John."
+    },
+    {
+      "reference": "LUK 20:41",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "How say they that Christ is David's son? A question put about the Christ."
+    },
+    {
+      "reference": "LUK 22:67",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Art thou the Christ? tell us. A question."
+    },
+    {
+      "reference": "LUK 23:2",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "His accusers before Pilate: saying that he himself is Christ a King. A claim they report against him."
+    },
+    {
+      "reference": "LUK 23:35",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "The rulers deriding: let him save himself, if he be Christ, the chosen of God. A supposition."
+    },
+    {
+      "reference": "LUK 23:39",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "One of the malefactors: If thou be Christ, save thyself and us. A supposition."
+    },
+    {
+      "reference": "JHN 1:20",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "John confessed, I am not the Christ: a denial."
+    },
+    {
+      "reference": "JHN 1:25",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Why baptizest thou then, if thou be not that Christ? Asked of John."
+    },
+    {
+      "reference": "JHN 1:41",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Which is, being interpreted, the Christ: the evangelist translates the word Messias.",
+      "doubt": "The word translated is said of Jesus in the same verse."
+    },
+    {
+      "reference": "JHN 3:28",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "John: I said, I am not the Christ, but that I am sent before him. A denial."
+    },
+    {
+      "reference": "JHN 4:25",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Messias cometh, which is called Christ: the woman of Samaria speaks of one she is waiting for."
+    },
+    {
+      "reference": "JHN 4:29",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Come, see a man, which told me all things that ever I did: is not this the Christ? A question."
+    },
+    {
+      "reference": "JHN 7:26",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Do the rulers know indeed that this is the very Christ? A question."
+    },
+    {
+      "reference": "JHN 7:27",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "When Christ cometh, no man knoweth whence he is: the people's saying about the Christ."
+    },
+    {
+      "reference": "JHN 7:31",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "When Christ cometh, will he do more miracles than these which this man hath done? A question."
+    },
+    {
+      "reference": "JHN 7:41",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Others said, This is the Christ. But some said, Shall Christ come out of Galilee? A claim and the question that answers it; there was a division among the people."
+    },
+    {
+      "reference": "JHN 7:42",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Hath not the scripture said, That Christ cometh of the seed of David? A question."
+    },
+    {
+      "reference": "JHN 9:22",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "The Jews had agreed already, that if any man did confess that he was Christ, he should be put out of the synagogue: a confession supposed.",
+      "doubt": "The one who would be confessed is Jesus."
+    },
+    {
+      "reference": "JHN 10:24",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "If thou be the Christ, tell us plainly: a supposition."
+    },
+    {
+      "reference": "JHN 12:34",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "We have heard out of the law that Christ abideth for ever: the people's saying about the Christ."
+    },
+    {
+      "reference": "ACT 2:30",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "God had sworn to David that he would raise up Christ to sit on his throne, as the Received Text reads: what was promised, before Peter names Jesus.",
+      "doubt": "Peter says in ACT 2:32 that this Jesus hath God raised up."
+    },
+    {
+      "reference": "ACT 2:31",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "David, seeing this before, spake of the resurrection of Christ: what David foresaw, before Peter names Jesus.",
+      "doubt": "Peter says in the next verse that this Jesus hath God raised up."
+    },
+    {
+      "reference": "ACT 4:26",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "The rulers were gathered together against the Lord, and against his Christ: the words of PSA 2:2, quoted.",
+      "doubt": "The next verse applies them: against thy holy child Jesus, whom thou hast anointed (ACT 4:27)."
+    },
+    {
+      "reference": "ACT 17:3#1",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "Paul alleging that Christ must needs have suffered, and risen again from the dead: what the Scriptures say of the Christ, before he names Jesus.",
+      "doubt": "The same verse goes on: this Jesus, whom I preach unto you, is Christ."
+    },
+    {
+      "reference": "ACT 26:23",
+      "strong": "G5547",
+      "bearer": null,
+      "why": "That Christ should suffer, and that he should be the first that should rise from the dead: what Moses and the prophets said should come.",
+      "doubt": "Paul is preaching Jesus to Agrippa."
+    }
+  ]
+}

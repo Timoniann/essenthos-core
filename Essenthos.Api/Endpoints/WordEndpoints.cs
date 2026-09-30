@@ -115,6 +115,7 @@ internal static class WordEndpoints
             var supplied = await Supplied(db, id, cancellationToken);
 
             var syntax = await Syntax(db, id, cancellationToken);
+            var named = await Annotations.AllOf(db, id, cancellationToken);
 
             return Results.Ok(new WordDetailResponse(
                 word.Id,
@@ -136,10 +137,13 @@ internal static class WordEndpoints
                     word.CanonicalVerse),
                 Morphology(word.Morphology),
                 supplied,
-                await Annotations.Of(db, id, cancellationToken),
+                named.FirstOrDefault(),
                 strong,
                 renderings,
-                syntax));
+                syntax)
+            {
+                Entities = named,
+            });
         });
     }
 
@@ -351,7 +355,14 @@ internal record WordDetailResponse(
     EntityRefResponse? Entity,
     StrongEntryResponse? Strong,
     IList<WordRenderingResponse> Renderings,
-    IList<SyntaxGroupResponse> Syntax);
+    IList<SyntaxGroupResponse> Syntax)
+{
+    /// <summary>
+    /// Every record the word names, in a fixed order, <see cref="Entity"/> first. Empty for a word
+    /// that names nothing. <see cref="Entity"/> stays for a client that reads one.
+    /// </summary>
+    public IReadOnlyList<EntityRefResponse> Entities { get; init; } = [];
+}
 
 /// <param name="Reference">
 /// Where this rendering stands in the shared frame, not in its own text's numbering.

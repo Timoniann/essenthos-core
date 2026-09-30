@@ -33,6 +33,13 @@ public sealed class TitleLoaderTests : IDisposable
     private readonly TitleLoader _loader;
     private readonly TitleDecision _decision = SenseReadingFiles.Titles();
 
+    /// <summary>
+    /// The titles the file writes itself. One of them can bear another — the anointed priest is the
+    /// high priest — and such a bearer is a record the loader writes, not one a dataset holds.
+    /// </summary>
+    private HashSet<string> Written =>
+        [.. _decision.Titles.Where(title => title.Names is not null).Select(title => title.Slug)];
+
     public TitleLoaderTests(WitnessDatabase database)
     {
         _db = database.NewContext();
@@ -40,7 +47,8 @@ public sealed class TitleLoaderTests : IDisposable
         _loader = new TitleLoader(_db, NullLogger<TitleLoader>.Instance);
 
         var held = _decision.Titles.Where(title => title.Names is null).Select(title => title.Slug)
-            .Concat(_decision.Titles.SelectMany(title => title.Bearers ?? []).Select(bearer => bearer.Slug))
+            .Concat(_decision.Titles.SelectMany(title => title.Bearers ?? []).Select(bearer => bearer.Slug)
+                .Where(slug => !Written.Contains(slug)))
             .Concat(["abimelech-4", "abimelech-2", "achish"])
             .Distinct();
 
@@ -248,8 +256,9 @@ public sealed class TitleLoaderTests : IDisposable
         outcome.AlreadyLoaded.Should().BeFalse();
         outcome.Missing.Should().Be(
             _decision.Titles.Count(title => title.Names is null)
-            + _decision.Titles.Sum(title => title.Bearers?.Count ?? 0));
-        (await _db.TitleBearers.AnyAsync()).Should().BeFalse("a bearer is never guessed at");
+            + _decision.Titles.Sum(title => title.Bearers?.Count(bearer => !Written.Contains(bearer.Slug)) ?? 0));
+        (await _db.TitleBearers.Select(b => b.Bearer!.Slug).ToListAsync())
+            .Should().OnlyContain(slug => Written.Contains(slug), "a bearer is never guessed at");
     }
 
     /// <summary>

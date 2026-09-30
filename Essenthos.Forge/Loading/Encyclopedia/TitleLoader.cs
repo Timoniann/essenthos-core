@@ -92,6 +92,13 @@ internal sealed record TitleOutcome(
 /// </para>
 ///
 /// <para>
+/// **The Anointed is the exception, and the file says so on its words.** <em>Christos</em> is a
+/// title wherever it stands, and in <em>Jesus Christ</em> it is also the man: the word names both,
+/// and the title is written beside whatever else names the word rather than only where nothing does.
+/// Whose it is at each occurrence is <see cref="TitleReadingLoader"/>'s, not this pass's.
+/// </para>
+///
+/// <para>
 /// Idempotent per record. It runs after every pass that writes a person and before the references
 /// and descriptions, so on a cold corpus the records are persons while names are resolved among
 /// persons and titles by the time anything is read off them; on a loaded corpus a record already
@@ -203,11 +210,13 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         }
 
         await db.SaveChangesAsync(cancellationToken);
+        var forms = await NameInEachLanguage(decision, records, cancellationToken);
 
         var (seed, byText) = await NameTheWords(decision.Titles, cancellationToken);
 
         var outcome = new TitleOutcome(
-            retitled == 0 && written == 0 && retired == 0 && bearers == 0 && missing == 0 && byText is null,
+            retitled == 0 && written == 0 && retired == 0 && bearers == 0 && missing == 0 && forms == 0
+            && byText is null,
             retitled,
             written,
             retired,
@@ -253,6 +262,58 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
     private const string OwnSourceId = "essenthos:title:";
 
     /// <summary>
+    /// What each title is called in a reader's language, where the file says: the nominative, held as
+    /// every record's name in a language is held. Returns how many forms were written or changed.
+    /// </summary>
+    private async Task<int> NameInEachLanguage(
+        TitleDecision decision,
+        IReadOnlyDictionary<string, Entity> records,
+        CancellationToken cancellationToken)
+    {
+        var changed = 0;
+        foreach (var title in decision.Titles.Where(t => t.LocalNames is { Count: > 0 }))
+        {
+            if (!records.TryGetValue(title.Slug, out var record))
+            {
+                continue;
+            }
+
+            var source = title.Source ?? decision.Source;
+            var held = await db.EntityNameForms
+                .Where(f => f.EntityId == record.Id && f.GrammaticalCase == GrammaticalCases.Nominative)
+                .ToListAsync(cancellationToken);
+            foreach (var (language, name) in title.LocalNames!)
+            {
+                var existing = held.FirstOrDefault(f => f.Language == language);
+                if (existing is null)
+                {
+                    db.EntityNameForms.Add(new EntityNameForm
+                    {
+                        EntityId = record.Id,
+                        Language = language,
+                        GrammaticalCase = GrammaticalCases.Nominative,
+                        Form = name,
+                        Method = LinkMethod.Manual,
+                        Source = source,
+                    });
+                    changed++;
+                }
+                else if (existing.Form != name || existing.Source != source)
+                {
+                    existing.Form = name;
+                    existing.Method = LinkMethod.Manual;
+                    existing.Confidence = null;
+                    existing.Source = source;
+                    changed++;
+                }
+            }
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        return changed;
+    }
+
+    /// <summary>
     /// A rule chose these words, not the number alone. Pharaoh's number is also on the names of the
     /// Pharaohs the text tells apart, and Caesar's on Augustus and Tiberius, so an annotation that
     /// called itself a reading of the number would be a resolution of a name several records bear,
@@ -276,9 +337,10 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
     private const string SingularNoun = "^N-.S";
 
     /// <summary>
-    /// Every occurrence of one number in the witnesses that nothing else names, where it stands and
-    /// which of its number it is in its verse, kept where the second word stands close enough when one
-    /// is asked for and where it is singular when that is asked for.
+    /// Every occurrence of one number in the witnesses that nothing else names, or every one where
+    /// the rule says the word is the title beside whoever it names, where it stands and which of its
+    /// number it is in its verse, kept where the second word stands close enough when one is asked
+    /// for and where it is singular when that is asked for.
     /// </summary>
     private const string Occurrences =
         """
@@ -297,8 +359,9 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
                             AND abs(beside.position - o.position) <= @reach))
           AND (NOT @singular
                OR coalesce(o.morphology ->> 'form', o.morphology ->> 'robinson') ~ @singularNoun)
-          AND NOT EXISTS (SELECT 1 FROM word_entity named
-                          WHERE named.word_id = o.id AND named.source <> @source)
+          AND (@alongside
+               OR NOT EXISTS (SELECT 1 FROM word_entity named
+                              WHERE named.word_id = o.id AND named.source <> @source))
         """;
 
     /// <summary>The words these rules seeded last time, which is what decides whether to write again.</summary>
@@ -404,6 +467,7 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         command.Parameters.AddWithValue("reach", ThingLoader.Reach);
         command.Parameters.AddWithValue("singular", rule.Singular);
         command.Parameters.AddWithValue("singularNoun", SingularNoun);
+        command.Parameters.AddWithValue("alongside", rule.Beside);
         command.Parameters.AddWithValue("source", WordSource);
         command.CommandTimeout = Annotating.Patient;
 

@@ -281,6 +281,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(VerseRefResponse))]
 [JsonSerializable(typeof(MorphologyResponse))]
 [JsonSerializable(typeof(EntityRefResponse))]
+[JsonSerializable(typeof(IReadOnlyList<EntityRefResponse>))]
 [JsonSerializable(typeof(TextWordResponse))]
 [JsonSerializable(typeof(StrongCandidateResponse))]
 [JsonSerializable(typeof(LexiconGlossResponse))]

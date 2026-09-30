@@ -173,6 +173,7 @@ internal sealed record OwnRecordRulings(
 /// </param>
 /// <param name="Bearers">Who the text gives the title to, each at the verse where it does.</param>
 /// <param name="Words">Which words of the witnesses are the title, wherever the text uses it.</param>
+/// <param name="LocalNames">The title in a reader's language, keyed by the language's code: <c>ukr</c>, <c>deu</c>, <c>spa</c>.</param>
 internal sealed record TitleRecord(
     string Slug,
     string Name,
@@ -184,7 +185,8 @@ internal sealed record TitleRecord(
     string? Source = null,
     IReadOnlyList<TitleName>? Names = null,
     IReadOnlyList<TitleBearerRecord>? Bearers = null,
-    IReadOnlyList<TitleWord>? Words = null);
+    IReadOnlyList<TitleWord>? Words = null,
+    IReadOnlyDictionary<string, string>? LocalNames = null);
 
 /// <summary>
 /// The occurrences of one Strong number that are the title: every one the witnesses number with
@@ -203,11 +205,16 @@ internal sealed record TitleRecord(
 /// Only the singular, where the plural of the word is something else: <em>archiereus</em> is the
 /// high priest, and <em>archiereis</em> the chief priests as a body.
 /// </param>
+/// <param name="Beside">
+/// The word is the title even where something else names it too: <em>Christos</em> in <em>Jesus
+/// Christ</em> is the title and the man. Without it a title joins only the words nobody holds.
+/// </param>
 internal sealed record TitleWord(
     string Strong,
     IReadOnlyList<string>? Except = null,
     string? With = null,
-    bool Singular = false)
+    bool Singular = false,
+    bool Beside = false)
 {
     public bool Admits(int book, int chapter, int verse, int nth) =>
         Except is null || !Except.Any(span => ScriptureSpan.Parse(span).Holds(book, chapter, verse, nth));
@@ -246,6 +253,41 @@ internal sealed record TitleDecision(
     string Method,
     string Source,
     IReadOnlyList<TitleRecord> Titles);
+
+/// <summary>
+/// One occurrence of a title's word, read against its verse: whom the text fixes it to, or that the
+/// text leaves open who is meant.
+/// </summary>
+/// <param name="Reference">
+/// The verse, and which occurrence of the number in it where the ruling is of one of several:
+/// <c>ISA 45:1</c>, <c>ACT 17:3#1</c>. Canonical numbering.
+/// </param>
+/// <param name="Bearer">
+/// The record the text fixes the word to, which the word then names beside the title. Null where
+/// the verse asks, denies, supposes or reports a claim, and the word names the title alone.
+/// </param>
+/// <param name="Doubt">What can be said for the other reading, where the ruling is the cautious one of two.</param>
+internal sealed record TitleReading(string Reference, string Strong, string? Bearer, string Why, string? Doubt = null)
+{
+    public ScriptureSpan At { get; } = ScriptureSpan.Parse(Reference);
+}
+
+/// <summary>
+/// The occurrences of one title's words ruled on one by one, in the file that says who decided and how.
+/// </summary>
+/// <param name="Title">The title the words are, by slug.</param>
+internal sealed record TitleReadings(
+    string DecidedBy,
+    string Policy,
+    string Method,
+    string Source,
+    string Title,
+    IReadOnlyList<TitleReading> Readings)
+{
+    /// <summary>The verses where the number names the title alone.</summary>
+    public IReadOnlyList<ScriptureSpan> Open(string strong) =>
+        [.. Readings.Where(reading => reading.Bearer is null && reading.Strong == strong).Select(reading => reading.At)];
+}
 
 /// <summary>
 /// Where the readings and the two review files are read from.
@@ -301,6 +343,8 @@ internal static class SenseReadingFiles
     private const string NamesakeResource = "Essenthos.Core.Loading.Encyclopedia.NamesakeRecords.json";
 
     private const string AddressedResource = "Essenthos.Core.Loading.Encyclopedia.AddressedRecords.json";
+
+    private const string TitleReadingsResource = "Essenthos.Core.Loading.Encyclopedia.TitleReadings.json";
 
     private static readonly JsonSerializerOptions Shape = new()
     {
@@ -430,6 +474,12 @@ internal static class SenseReadingFiles
 
     /// <summary>The same decision read as what it says about the records themselves.</summary>
     public static TitleDecision Titles() => Embedded<TitleDecision>(TitleResource);
+
+    /// <summary>
+    /// The occurrences of the Anointed's words, each read against its verse: whom the text fixes the
+    /// title to there, and where it leaves that open.
+    /// </summary>
+    public static TitleReadings TitleReadings() => Embedded<TitleReadings>(TitleReadingsResource);
 
     /// <summary>
     /// The records the owner has ruled the text does not identify: what each of them says about

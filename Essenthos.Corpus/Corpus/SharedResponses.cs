@@ -300,6 +300,13 @@ internal record TextWordResponse(
     public GeezEntryResponse? GeezEntry { get; init; }
 
     /// <summary>
+    /// Every record the word names, in a fixed order, <see cref="Entity"/> first: <em>Christ</em> names
+    /// the title and the man who bears it, <em>the Shunammite</em> Abishag and her people. Empty for a
+    /// word that names nothing. <see cref="Entity"/> stays for a client that reads one.
+    /// </summary>
+    public IReadOnlyList<EntityRefResponse> Entities { get; init; } = [];
+
+    /// <summary>
     /// The edition starts a new paragraph (<c>paragraph</c>) or a new line (<c>line</c>) before this
     /// word. Null where it marks nothing, which for most texts is everywhere: silence, not a claim
     /// that the text runs on.

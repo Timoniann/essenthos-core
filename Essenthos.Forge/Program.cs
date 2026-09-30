@@ -157,6 +157,7 @@ builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
 builder.Services.AddScoped<TermLoader>();
 builder.Services.AddScoped<TitleLoader>();
+builder.Services.AddScoped<TitleReadingLoader>();
 builder.Services.AddScoped<ReignLoader>();
 builder.Services.AddScoped<OwnNameLoader>();
 builder.Services.AddScoped<WithdrawnRecordLoader>();
@@ -1197,6 +1198,24 @@ if (args is ["withdrawn-records", ..])
 {
     using var withdrawnScope = app.Services.CreateScope();
     logger.LogInformation("{Outcome}", await withdrawnScope.ServiceProvider.GetRequiredService<WithdrawnRecordLoader>()
+        .Load());
+    return 0;
+}
+
+// The titles the file holds, in an already loaded corpus: a title it has gained is written with its
+// bearers and named at its words, the words a fixed title's rule newly reaches are given its bearer, the
+// occurrences the rulings read are given theirs or left to the title alone, and the verses are read off
+// the words again.
+if (args is ["titles", ..])
+{
+    using var titlesScope = app.Services.CreateScope();
+    logger.LogInformation("{Outcome}", await titlesScope.ServiceProvider.GetRequiredService<TitleLoader>()
+        .Load());
+    logger.LogInformation("{Outcome}", await titlesScope.ServiceProvider.GetRequiredService<FixedTitleLoader>()
+        .Load());
+    logger.LogInformation("{Outcome}", await titlesScope.ServiceProvider.GetRequiredService<TitleReadingLoader>()
+        .Load());
+    logger.LogInformation("{Outcome}", await titlesScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
         .Load());
     return 0;
 }

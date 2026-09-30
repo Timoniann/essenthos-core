@@ -382,8 +382,8 @@ internal static class VerseEndpoints
             return await Numbered(db, ids, numbers, cancellationToken);
         }
 
-        return (await Annotations.Of(db, ids, cancellationToken))
-            .Where(annotation => annotation.Value.Slug == slug)
+        return (await Annotations.AllOf(db, ids, cancellationToken))
+            .Where(annotation => annotation.Value.Any(named => named.Slug == slug))
             .Select(annotation => annotation.Key)
             .ToHashSet();
     }

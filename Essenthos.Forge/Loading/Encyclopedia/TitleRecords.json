@@ -519,6 +519,82 @@
       "notes": "Kandake was the title of the ruling queens of the kingdom of Meroë on the Nile, south of Egypt; Pliny the Elder writes that the name had passed from queen to queen for many years (Natural History 6.186), and Strabo tells of one who fought Rome under Augustus. The eunuch Philip baptised was treasurer 'under Candace queen of the Ethiopians' (ACT 8:27), which gives the title and not her name.",
       "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
       "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to"
+    },
+    {
+      "slug": "anointed",
+      "name": "Anointed (Messiah, Christ)",
+      "distinguisher": "the title of one anointed to an office, Hebrew mashiach and Greek Christos: given to the anointed priest, to Saul, to David, to Cyrus and to Jesus",
+      "notes": "Mashiach, 'anointed', is said of one on whom oil was poured to set him apart for an office. Leviticus says it of the priest, 'the priest that is anointed' (LEV 4:3, 4:5, 4:16; 6:22). From Samuel on it is the king, 'the LORD's anointed': Saul in the mouth of David, who would not stretch forth his hand against him (1SA 24:6, 24:10; 26:9, 26:11, 26:16, 26:23; 2SA 1:14, 1:16), and David himself (2SA 19:21; 22:51; 23:1; PSA 18:50). Once it is a foreign king, Cyrus of Persia (ISA 45:1). In the Psalms and the Prophets it often stands with no name beside it (PSA 2:2; DAN 9:25-26). The Septuagint renders it Christos, and the New Testament takes that word up; John gives the Hebrew word once as Messias and translates it, 'which is, being interpreted, the Christ' (JHN 1:41). The Gospels record the question being asked of John the Baptist and of Jesus (LUK 3:15; JHN 1:20; 10:24; MAT 26:63) and answer that Jesus is the Christ (MAT 16:16; JHN 20:31); in the letters Christ stands beside his name and in place of it.",
+      "why": "The owner ruled that the Anointed, mashiach in Hebrew and Christos and Messias in Greek, is held as a title, as Pharaoh is: joined to the bearers a verse gives it to, and named at every word the text writes it with.",
+      "source": "Essenthos, on the project owner's decision of 2026-09-30 that the Anointed (Messiah, Christ) is a title with bearers, as Pharaoh is, and that its word names the person too where the text fixes who is meant",
+      "words": [
+        {
+          "strong": "H4899",
+          "beside": true
+        },
+        {
+          "strong": "G5547",
+          "beside": true
+        },
+        {
+          "strong": "G3323",
+          "beside": true
+        }
+      ],
+      "localNames": {
+        "ukr": "Помазанець (Месія, Христос)",
+        "deu": "Gesalbter (Messias, Christus)",
+        "spa": "Ungido (Mesías, Cristo)"
+      },
+      "names": [
+        {
+          "label": "Anointed",
+          "hebrew": "מָשִׁיחַ",
+          "hebrewTransliterated": "mashiach",
+          "greek": "Χριστός",
+          "greekTransliterated": "Christos",
+          "meaning": "anointed",
+          "hebrewStrongNumber": "H4899",
+          "greekStrongNumber": "G5547"
+        },
+        {
+          "label": "Messiah",
+          "hebrew": null,
+          "hebrewTransliterated": null,
+          "greek": "Μεσσίας",
+          "greekTransliterated": "Messias",
+          "meaning": "anointed",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": "G3323"
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "high-priest",
+          "reference": "LEV 4:3",
+          "why": "If the priest that is anointed do sin according to the sin of the people; so also LEV 4:5, 4:16 and 6:22. The Law names the office and no man: the high priest, upon whose head the anointing oil was poured (LEV 21:10)."
+        },
+        {
+          "slug": "saul",
+          "reference": "1SA 24:6",
+          "why": "David of Saul: The LORD forbid that I should do this thing unto my master, the LORD's anointed; so also 1SA 24:10; 26:9, 26:11, 26:16, 26:23; 2SA 1:14, 1:16."
+        },
+        {
+          "slug": "david",
+          "reference": "2SA 23:1",
+          "why": "David the son of Jesse, the man who was raised up on high, the anointed of the God of Jacob; so also 2SA 19:21; 22:51; PSA 18:50."
+        },
+        {
+          "slug": "cyrus",
+          "reference": "ISA 45:1",
+          "why": "Thus saith the LORD to his anointed, to Cyrus, whose right hand I have holden."
+        },
+        {
+          "slug": "jesus",
+          "reference": "MAT 1:16",
+          "why": "Jacob begat Joseph the husband of Mary, of whom was born Jesus, who is called Christ."
+        }
+      ]
     }
   ],
   "rulings": [

@@ -91,6 +91,25 @@ public sealed class FixedTitlesTests
         FixedTitles.Of(Hebrew("H7854", "prep", 4)).Should().BeNull();
     }
 
+    /// <summary>
+    /// Χριστός is Jesus where the text says so, and nobody's where the verse asks or denies: John
+    /// 1:20, and the first of the two in Acts 17:3, where the second names him.
+    /// </summary>
+    [Fact]
+    public void TheChristIsJesusExceptWhereTheVerseLeavesItOpen()
+    {
+        const int Acts = 44;
+        FixedTitleWord Christ(int book, int chapter, int verse, int nth = 1) =>
+            Greek("G5547", "N-NSM", null, book) with { Chapter = chapter, Verse = verse, Nth = nth };
+
+        SlugOf(Christ(Matthew, 1, 16)).Should().Be("jesus");
+        SlugOf(Christ(Matthew, 16, 16)).Should().Be("jesus");
+        FixedTitles.Of(Christ(John, 1, 20)).Should().BeNull();
+        FixedTitles.Of(Christ(Matthew, 24, 5)).Should().BeNull();
+        FixedTitles.Of(Christ(Acts, 17, 3, 1)).Should().BeNull();
+        SlugOf(Christ(Acts, 17, 3, 2)).Should().Be("jesus");
+    }
+
     /// <summary>ὁ υἱὸς τοῦ ἀνθρώπου, and υἱὸς ἀνθρώπου without the article, John 5:27.</summary>
     [Fact]
     public void TheSonOfManIsJesusAndASonOfManIsNot()

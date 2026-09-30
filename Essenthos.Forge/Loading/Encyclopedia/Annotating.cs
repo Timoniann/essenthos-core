@@ -618,41 +618,105 @@ internal static class Annotating
     /// <summary>
     /// The entity each word stands named as, as the common table <c>settled (word_id, entity_id)</c>:
     /// the annotation of highest claim standing and then confidence, and nothing for a word where
-    /// two of equal standing and equal confidence name two entities. Every pass that reads an
-    /// entity's verses off the words reads them through this, so a verse is never listed on a page
-    /// for a word the word panel shows nothing at.
+    /// two of equal standing and equal confidence name two entities, unless the two stand beside
+    /// each other (<see cref="Beside"/>). A title gives way to the record that bears it, whatever
+    /// their standing: the title says what the word is and the bearer whom it names, so the bearer
+    /// is the word's first answer. Every pass that reads an entity's verses off the words reads
+    /// them through this, so a verse is never listed on a page for a word the word panel shows
+    /// nothing at.
     /// </summary>
     public static readonly string Settled =
         $"""
          standing AS (
              SELECT a.word_id,
                     a.entity_id,
+                    e.kind,
                     {Standing} AS standing,
                     coalesce(a.confidence, 1.0) AS confidence
              FROM word_entity a
+             JOIN entity e ON e.id = a.entity_id
          ),
          ranked AS (
              SELECT s.word_id,
                     s.entity_id,
+                    s.kind,
                     s.standing,
                     s.confidence,
                     row_number() OVER settling AS place,
                     count(*) OVER (PARTITION BY s.word_id) AS claims,
                     lead(s.entity_id) OVER settling AS next_entity,
+                    lead(s.kind) OVER settling AS next_kind,
                     lead(s.standing) OVER settling AS next_standing,
                     lead(s.confidence) OVER settling AS next_confidence
              FROM standing s
-             WINDOW settling AS (PARTITION BY s.word_id ORDER BY s.standing DESC, s.confidence DESC)
+             WINDOW settling AS (
+                 PARTITION BY s.word_id
+                 ORDER BY s.standing DESC, s.confidence DESC, s.kind = '{Title}', s.kind COLLATE "C", s.entity_id)
+         ),
+         several AS MATERIALIZED (
+             SELECT r.word_id, r.entity_id, r.kind, r.place FROM ranked r WHERE r.claims > 1
+         ),
+         bearer_first AS (
+             SELECT DISTINCT ON (top.word_id) top.word_id, other.entity_id
+             FROM several top
+             JOIN several other ON other.word_id = top.word_id AND other.place > 1
+             JOIN title_bearer borne
+                  ON borne.title_entity_id = top.entity_id AND borne.bearer_entity_id = other.entity_id
+             WHERE top.place = 1 AND top.kind = '{Title}'
+             ORDER BY top.word_id, other.place
          ),
          settled AS (
-             SELECT word_id, entity_id
-             FROM ranked
-             WHERE place = 1
-               AND (claims = 1
-                    OR NOT (next_entity <> entity_id
-                            AND next_standing = standing
-                            AND next_confidence = confidence))
+             SELECT r.word_id, coalesce(bearer_first.entity_id, r.entity_id) AS entity_id
+             FROM ranked r
+             LEFT JOIN bearer_first ON bearer_first.word_id = r.word_id
+             WHERE r.place = 1
+               AND (r.claims = 1
+                    OR NOT (r.next_entity <> r.entity_id
+                            AND r.next_standing = r.standing
+                            AND r.next_confidence = r.confidence)
+                    OR {Beside("r.kind", "r.entity_id", "r.next_kind", "r.next_entity")})
          )
+         """;
+
+    /// <summary>
+    /// Every entity each word names, as the common table <c>named (word_id, entity_id)</c>, to be
+    /// written after <see cref="Settled"/>: the settled answer, and each other annotation of the
+    /// word that stands beside it. It is the rule the reader is shown a word by, asked of the whole
+    /// corpus, and what a verse list is read through, so that a word shown naming a title and its
+    /// bearer puts the verse on both pages.
+    /// </summary>
+    public static readonly string Named =
+        $"""
+         named AS (
+             SELECT word_id, entity_id FROM settled
+             UNION ALL
+             SELECT other.word_id, other.entity_id
+             FROM settled first
+             JOIN several top ON top.word_id = first.word_id AND top.place = 1
+             JOIN several other ON other.word_id = first.word_id AND other.entity_id <> first.entity_id
+             WHERE other.place = 1
+                OR {Beside("top.kind", "top.entity_id", "other.kind", "other.entity_id")}
+         )
+         """;
+
+    /// <summary>A property and not a field, because the statements above are fields and are built first.</summary>
+    private static string Title => EnumSpelling.Of(EntityKind.Title);
+
+    /// <summary>
+    /// Whether one word names both records without either answering for the other: a title and a
+    /// record joined to it as its bearer, or a person and a people. Two men on one word, or a man
+    /// and a town, are two answers to one question, and the lower is the one the higher outranked.
+    /// </summary>
+    private static string Beside(string kind, string entity, string otherKind, string otherEntity) =>
+        $"""
+         (({kind} = '{EnumSpelling.Of(EntityKind.Person)}' AND {otherKind} = '{EnumSpelling.Of(EntityKind.People)}')
+          OR ({kind} = '{EnumSpelling.Of(EntityKind.People)}' AND {otherKind} = '{EnumSpelling.Of(EntityKind.Person)}')
+          OR ({kind} = '{Title}' AND EXISTS (
+                  SELECT 1 FROM title_bearer borne
+                  WHERE borne.title_entity_id = {entity} AND borne.bearer_entity_id = {otherEntity}))
+          OR ({otherKind} = '{Title}' AND EXISTS (
+                  SELECT 1 FROM title_bearer borne
+                  WHERE borne.title_entity_id = {otherEntity} AND borne.bearer_entity_id = {entity})))
          """;
 
     /// <summary>
