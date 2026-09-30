@@ -178,7 +178,7 @@ function RouteSummary([string] $name, $routes) {
     }
 }
 # The lines on the split key and by state: each a label and a run of part/whole counts, summed label by label.
-$splitLines = '^(?<label>split key, pairs|chunk boundary|key as loaded, pairs, both ways|split key, pairs, both ways|by state, [^:]+|by rule, [^:]+|cascade): '
+$splitLines = '^(?<label>split key, pairs|chunk boundary|key as loaded, pairs, three ways|split key, pairs, three ways|judged key|by state, [^:]+|by rule, [^:]+|cascade): '
 function Fractions([string] $report) {
     $found = [ordered]@{}
     foreach ($match in (Select-String -LiteralPath $report -Pattern $splitLines)) {
@@ -198,13 +198,17 @@ function AddFractions($total, $passage) {
 }
 # split key, pairs: precision, recall, safe tier. by state: share of words, right, safe tier. by rule: right.
 # cascade: head placed, head unplaced with a key counterpart.
-# Both ways: a by state or by rule line then gives right with chunk-boundary counted right and with
-# chunk-boundary-attached counted right (a state, last, its safe tier with both), and by state, explained
-# ends with the words right with both. chunk boundary: the size of chunk-boundary, its conjunctions, those
-# on a written word the key leaves out, the size of chunk-boundary-attached, its auxiliaries, those on a
-# verb the key leaves out beside its infinitive absolute. The pairs lines
-# both ways: by the key, with chunk-boundary, with chunk-boundary-attached, with both (split key: then the
-# safe tier with both).
+# Three ways: a by state or by rule line then gives right with chunk-boundary counted right and with
+# chunk-boundary-attached counted right (a state, then, its safe tier with both), and last right against
+# the judged key (a state, then, its safe tier against it); by state, supplied ends with right against the
+# judged key, and by state, explained with the words right with both classes and against the judged key.
+# chunk boundary: the size of chunk-boundary, its conjunctions, those on a written word the key leaves out,
+# the size of chunk-boundary-attached, its auxiliaries, those on a verb the key leaves out beside its
+# infinitive absolute. The pairs lines three ways: by the key, with chunk-boundary, with
+# chunk-boundary-attached, with both (split key: then the safe tier with both), against the judged key
+# (split key: then the safe tier against it). judged key: of the readings of the key on the passage's
+# words, those corrected, defensible, confirmed, neither and unsettled; the readings the text no longer
+# reads as; and of the placements the key counts wrong, those nobody has read.
 function FractionSummary([string] $name, $fractions) {
     foreach ($label in $fractions.Keys) {
         '{0,-10} {1}: {2}' -f $name, $label, (($fractions[$label] | ForEach-Object { Ratio $_[0] $_[1] }) -join '; ')

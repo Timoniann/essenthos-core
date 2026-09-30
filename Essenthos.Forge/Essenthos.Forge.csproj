@@ -132,6 +132,10 @@
         <Content Remove="Loading\BrentonDivisions.json" />
         <EmbeddedResource Include="Loading\BrentonDivisions.json" />
 
+        <!-- What two readers made of each placement the answer key and EVIDENTIA disagree on. Read by
+             the scorer of a measurement and by nothing else: it is never a link and never a training label. -->
+        <EmbeddedResource Include="Loading\Links\Evidentia\EvidentiaKeyCorrections.json" />
+
         <!-- Which Greek verse each verse of the Ge'ez books the church divides its own way answers. -->
         <EmbeddedResource Include="BetaMasaheft\GeezVerseMap.tsv" />
     </ItemGroup>
