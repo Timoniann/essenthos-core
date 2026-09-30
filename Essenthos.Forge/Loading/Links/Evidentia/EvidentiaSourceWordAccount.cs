@@ -66,7 +66,10 @@ internal sealed record EvidentiaWordRecord(
     long? HeadWordId = null,
     string? HeadState = null,
     bool? CorrectOnSplitKey = null,
-    IReadOnlyList<long>? SplitKey = null);
+    IReadOnlyList<long>? SplitKey = null,
+    string? KeyClass = null,
+    long? ParseHeadWordId = null,
+    string? Relation = null);
 
 /// <summary>
 /// A word the answer key puts the source word on, whether another word's proposal holds it, and what

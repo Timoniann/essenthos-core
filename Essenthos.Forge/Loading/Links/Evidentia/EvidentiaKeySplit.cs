@@ -280,6 +280,16 @@ internal static class EvidentiaKeySplit
         _ => EvidentiaAttachedWords.Class(word) == "adp" || PrepositionWords.Contains(word.Token.Surface),
     };
 
+    /// <summary>
+    /// Whether a word on a prefix is a pair the split makes by order and leaves for a person to judge:
+    /// <em>when</em> or <em>while</em> on a preposition, <em>of</em> on a preposition other than ל or מ.
+    /// </summary>
+    public static bool IsInDoubtOn(EvidentiaAnalysis word, EvidentiaAnalysis prefix) =>
+        EvidentiaAbsences.FunctionClass(prefix) == EvidentiaFunctionClass.Preposition
+        && (TemporalWords.Contains(word.Token.Surface)
+            || word.Token.Surface.Equals(Genitive, StringComparison.OrdinalIgnoreCase)
+            && !(prefix.Token.StrongNumber is { } strong && GenitivePrefixes.Contains(strong)));
+
     private static bool IsHebrew(EvidentiaAnalysis word) => word.Token.Language is "hbo" or "arc";
 
     private static (int, int, int) Order(EvidentiaAnalysis word) =>

@@ -178,7 +178,7 @@ function RouteSummary([string] $name, $routes) {
     }
 }
 # The lines on the split key and by state: each a label and a run of part/whole counts, summed label by label.
-$splitLines = '^(?<label>split key, pairs|by state, [^:]+|by rule, [^:]+|cascade): '
+$splitLines = '^(?<label>split key, pairs|chunk boundary|key as loaded, pairs, both ways|split key, pairs, both ways|by state, [^:]+|by rule, [^:]+|cascade): '
 function Fractions([string] $report) {
     $found = [ordered]@{}
     foreach ($match in (Select-String -LiteralPath $report -Pattern $splitLines)) {
@@ -198,6 +198,12 @@ function AddFractions($total, $passage) {
 }
 # split key, pairs: precision, recall, safe tier. by state: share of words, right, safe tier. by rule: right.
 # cascade: head placed, head unplaced with a key counterpart.
+# Both ways: a by state or by rule line then gives right with chunk-boundary counted right and with
+# chunk-boundary-attached counted right (a state, last, its safe tier with both), and by state, explained
+# ends with the words right with both. chunk boundary: the size of chunk-boundary, its conjunctions, those
+# on a written word the key leaves out, the size of chunk-boundary-attached, its auxiliaries. The pairs lines
+# both ways: by the key, with chunk-boundary, with chunk-boundary-attached, with both (split key: then the
+# safe tier with both).
 function FractionSummary([string] $name, $fractions) {
     foreach ($label in $fractions.Keys) {
         '{0,-10} {1}: {2}' -f $name, $label, (($fractions[$label] | ForEach-Object { Ratio $_[0] $_[1] }) -join '; ')
