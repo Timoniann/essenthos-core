@@ -73,15 +73,19 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
-    public void AnAuxiliaryIsNotPlacedWhereItsVerbWasPlacedOnAWordThatIsNoVerb()
+    public void AnAuxiliaryIsNotPlacedWhereItsVerbWasPlacedOnAWordThatIsNoVerbOrOnAnInfinitive()
     {
         var had = English(1, Genesis122, 1, "had", "AUX");
         var followed = English(2, Genesis122, 2, "followed", "VERB");
         var after = Hebrew(11, Genesis122, 1, "אַחֲרֵי", "H310", "subs");
-        var went = Hebrew(12, Genesis122, 2, "הָלְכוּ", "H1980", "verb");
+        var went = Hebrew(12, Genesis122, 2, "הָלְכוּ", "H1980", "verb", ("tense", "perf"));
+        var toGo = Hebrew(13, Genesis122, 3, "לֶכֶת", "H1980", "verb", ("tense", "infc"));
+        var going = Hebrew(14, Genesis122, 4, "הָלוֹךְ", "H1980", "verb", ("tense", "infa"));
 
         Attach([had, followed], [after, went], (followed, after)).Should().BeEmpty();
         Attach([had, followed], [after, went], (followed, went)).Should().Equal((1L, 12L));
+        Attach([had, followed], [toGo, going], (followed, toGo)).Should().BeEmpty();
+        Attach([had, followed], [toGo, going], (followed, going)).Should().BeEmpty();
     }
 
     [Fact]

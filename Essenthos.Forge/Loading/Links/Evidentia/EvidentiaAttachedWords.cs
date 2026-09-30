@@ -150,7 +150,9 @@ internal enum EvidentiaAttachmentPlacement
 /// where its verb was placed on a noun (<em>had followed</em> on אַחֲרֵי) there is no tense for it to
 /// write, and where the verb's ending names another person than the subject the parse gives the English
 /// verb (<em>May the LORD make</em> on the imperative עֲשֵׂה, <em>he had become</em> on וַיִּהְיוּ) the
-/// verb is another clause's.</para>
+/// verb is another clause's. Nor on an infinitive: a verb placed on one was the wrong verb one time in
+/// six on the passages measured, the tense being written in the finite verb beside it (<em>shall we
+/// again break</em>, נָשׁוּב לְהָפֵר).</para>
 ///
 /// <para>A personal pronoun goes where the original writes the person: a subject on the verb whose
 /// ending names it, a possessive on the Hebrew noun whose suffix does, an object on the suffix of the
@@ -937,7 +939,8 @@ internal static class EvidentiaAttachedWords
                 && OwnAuxiliary(rendering, verse) is { } own =>
                 taken.Contains(own.Token.Id) ? null : own,
             EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb
-                && (Class(rendering) != "verb" || IsEnglish(word) && !CouldTakeItsSubject(words, head, rendering)) => null,
+                && (Class(rendering) != "verb"
+                    || IsEnglish(word) && (WritesNoTense(rendering) || !CouldTakeItsSubject(words, head, rendering))) => null,
             EvidentiaAttachmentPlacement.Rendering => rendering,
             EvidentiaAttachmentPlacement.Dependent => index > 0
                 && placedBySource.TryGetValue(words[index - 1].Token.Id, out var governing)
@@ -1121,6 +1124,10 @@ internal static class EvidentiaAttachedWords
 
     private static bool IsHebrewParticiple(EvidentiaAnalysis word) =>
         Feature(word, "tense") is { } tense && HebrewParticiples.Contains(tense);
+
+    /// <summary>An infinitive, construct or absolute.</summary>
+    private static bool WritesNoTense(EvidentiaAnalysis word) =>
+        IsInfinitive(word) || string.Equals(Feature(word, "tense"), InfinitiveAbsoluteTense, StringComparison.OrdinalIgnoreCase);
 
     private static bool IsInfinitive(EvidentiaAnalysis word) =>
         EvidentiaPersonAgreement.IsInfinitive(word)
