@@ -423,6 +423,7 @@ if (args is ["evidentia-measure", var measureFrom, var measureTo, var measureBoo
     await WriteRows(args, "--disagreements", measurement.Disagreements);
     await WriteRows(args, "--words", measurement.Words);
     await WriteRows(args, "--absences", measurement.Absences);
+    await WriteRows(args, "--key-doubts", measurement.KeyDoubts);
     measureOptions.Learns?.Write(OptionalText(args, "--confirmed-out")!);
     logger.LogInformation("\n{Measurement}", measurement);
     return 0;
@@ -451,6 +452,7 @@ if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, v
     await WriteRows(args, "--disagreements", measurement.Disagreements);
     await WriteRows(args, "--words", measurement.Words);
     await WriteRows(args, "--absences", measurement.Absences);
+    await WriteRows(args, "--key-doubts", measurement.KeyDoubts);
     measureBookOptions.Learns?.Write(OptionalText(args, "--confirmed-out")!);
     logger.LogInformation("\n{Measurement}", measurement);
     return 0;
@@ -685,6 +687,7 @@ static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments, string r
     SampleSize: OptionalInt(arguments, "--sample") ?? 0,
     RecordDisagreements: OptionalText(arguments, "--disagreements") is not null,
     RecordWords: OptionalText(arguments, "--words") is not null,
+    RecordKeyDoubts: OptionalText(arguments, "--key-doubts") is not null,
     GoldInterlinear: arguments.Contains("--gold-interlinear")
         ? InterlinearFolder(resourcesPath, Identifier(arguments[1]))
         : null,
