@@ -1,13 +1,13 @@
 {
   "about": "The verse references only BibleData states, which a reader is not shown. classes says what the text has at each; losers every record that loses verses, with the verses of ours it keeps; namesakes each reference where the name is printed and no rule decides the bearer (ours names the records our words name there instead); titles the records listed where the verse does not print their name, with the labels the dataset gives; records the BibleData records that are not yet read as ours. Reference is the canonical address.",
-  "written": "2026-09-30T18:31:15Z",
-  "references": 2387,
-  "entities": 225,
+  "written": "2026-09-30T19:19:40Z",
+  "references": 2343,
+  "entities": 213,
   "classes": [
     {
       "class": "word-for-god",
-      "references": 1980,
-      "entities": 2,
+      "references": 1956,
+      "entities": 1,
       "what": "YHVH where the verse has a word for God and not the name; the owner's rule of 2026-09-11"
     },
     {
@@ -18,8 +18,8 @@
     },
     {
       "class": "title",
-      "references": 33,
-      "entities": 6,
+      "references": 32,
+      "entities": 5,
       "what": "one of the dataset's per-king Pharaohs or Caesars; the owner ruled the word a title"
     },
     {
@@ -30,25 +30,25 @@
     },
     {
       "class": "other-bearer",
-      "references": 123,
-      "entities": 96,
+      "references": 113,
+      "entities": 89,
       "what": "the name is printed and our words name another record of that name there"
     },
     {
       "class": "unsettled",
-      "references": 32,
-      "entities": 17,
+      "references": 29,
+      "entities": 15,
       "what": "the name is printed and nothing has told its bearers apart there"
     },
     {
       "class": "other-number",
-      "references": 23,
-      "entities": 16,
+      "references": 20,
+      "entities": 14,
       "what": "the name is printed under a number the record is not held under"
     },
     {
       "class": "not-printed",
-      "references": 178,
+      "references": 175,
       "entities": 94,
       "what": "the verse prints no name of the record: a title, a pronoun or another name"
     }
@@ -57,14 +57,8 @@
     {
       "slug": "yhvh",
       "name": "YHVH",
-      "lost": 1655,
+      "lost": 1956,
       "kept": 6055
-    },
-    {
-      "slug": "yhvh-2",
-      "name": "God the Father",
-      "lost": 325,
-      "kept": 0
     },
     {
       "slug": "jesus",
@@ -235,12 +229,6 @@
       "kept": 1
     },
     {
-      "slug": "senaah",
-      "name": "Senaah",
-      "lost": 3,
-      "kept": 0
-    },
-    {
       "slug": "amariah-6",
       "name": "Amariah",
       "lost": 2,
@@ -253,12 +241,6 @@
       "kept": 2
     },
     {
-      "slug": "ariel",
-      "name": "Ariel",
-      "lost": 2,
-      "kept": 0
-    },
-    {
       "slug": "assyria",
       "name": "Assyria",
       "lost": 2,
@@ -269,18 +251,6 @@
       "name": "Azariah",
       "lost": 2,
       "kept": 5
-    },
-    {
-      "slug": "benammi",
-      "name": "Ben-ammi",
-      "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "beno",
-      "name": "Beno",
-      "lost": 2,
-      "kept": 0
     },
     {
       "slug": "berodachbaladan",
@@ -328,19 +298,7 @@
       "slug": "kingofdebir",
       "name": "King of Debir",
       "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "kingofhena",
-      "name": "King of Hena",
-      "lost": 2,
-      "kept": 0
-    },
-    {
-      "slug": "kingofivvah",
-      "name": "King of Ivvah",
-      "lost": 2,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "maaseiah-10",
@@ -361,22 +319,10 @@
       "kept": 107
     },
     {
-      "slug": "meunim",
-      "name": "Meunim",
-      "lost": 2,
-      "kept": 0
-    },
-    {
       "slug": "muppim",
       "name": "Muppim",
       "lost": 2,
       "kept": 3
-    },
-    {
-      "slug": "naphtuh",
-      "name": "Naphtuh",
-      "lost": 2,
-      "kept": 0
     },
     {
       "slug": "pul",
@@ -397,10 +343,10 @@
       "kept": 94
     },
     {
-      "slug": "tekoa",
-      "name": "Tekoa",
+      "slug": "senaah",
+      "name": "Senaah",
       "lost": 2,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "thaddaeus",
@@ -472,7 +418,13 @@
       "slug": "arba",
       "name": "Arba",
       "lost": 1,
-      "kept": 0
+      "kept": 1
+    },
+    {
+      "slug": "ariel",
+      "name": "Ariel",
+      "lost": 1,
+      "kept": 1
     },
     {
       "slug": "ashbelites",
@@ -511,12 +463,6 @@
       "kept": 2
     },
     {
-      "slug": "azmaveth-4",
-      "name": "Azmaveth",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "baanah-3",
       "name": "Baanah",
       "lost": 1,
@@ -541,8 +487,20 @@
       "kept": 1
     },
     {
+      "slug": "benammi",
+      "name": "Ben-ammi",
+      "lost": 1,
+      "kept": 3
+    },
+    {
       "slug": "benjamin-4",
       "name": "Benjamin",
+      "lost": 1,
+      "kept": 1
+    },
+    {
+      "slug": "beno",
+      "name": "Beno",
       "lost": 1,
       "kept": 1
     },
@@ -551,12 +509,6 @@
       "name": "Berechiah",
       "lost": 1,
       "kept": 1
-    },
-    {
-      "slug": "bethzur",
-      "name": "Bethzur",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "binnui-4",
@@ -655,12 +607,6 @@
       "kept": 86
     },
     {
-      "slug": "eshtemoa",
-      "name": "Eshtemoa",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "eunice",
       "name": "Eunice",
       "lost": 1,
@@ -673,28 +619,10 @@
       "kept": 1
     },
     {
-      "slug": "gedor",
-      "name": "Gedor",
-      "lost": 1,
-      "kept": 0
-    },
-    {
-      "slug": "gedor-2",
-      "name": "Gedor",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "gibbar",
       "name": "Gibbar",
       "lost": 1,
       "kept": 1
-    },
-    {
-      "slug": "haggedolim",
-      "name": "Haggedolim",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "ham",
@@ -889,12 +817,6 @@
       "kept": 2
     },
     {
-      "slug": "jorkeam",
-      "name": "Jorkeam",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "joshua",
       "name": "Joshua",
       "lost": 1,
@@ -907,52 +829,58 @@
       "kept": 11
     },
     {
-      "slug": "keilah",
-      "name": "Keilah",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "kingofaphek",
       "name": "King of Aphek",
       "lost": 1,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "kingofbethel",
       "name": "King of Bethel",
       "lost": 1,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "kingofdor",
       "name": "King of Dor",
       "lost": 1,
-      "kept": 0
+      "kept": 1
+    },
+    {
+      "slug": "kingofhena",
+      "name": "King of Hena",
+      "lost": 1,
+      "kept": 1
     },
     {
       "slug": "kingofhormah",
       "name": "King of Hormah",
       "lost": 1,
-      "kept": 0
+      "kept": 1
+    },
+    {
+      "slug": "kingofivvah",
+      "name": "King of Ivvah",
+      "lost": 1,
+      "kept": 1
     },
     {
       "slug": "kingofkedesh",
       "name": "King of Kedesh",
       "lost": 1,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "kingoflibnah",
       "name": "King of Libnah",
       "lost": 1,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "kingofmakkedah",
       "name": "King of Makkedah",
       "lost": 1,
-      "kept": 0
+      "kept": 2
     },
     {
       "slug": "kingofshimron",
@@ -964,25 +892,25 @@
       "slug": "kingofshimronmeron",
       "name": "King of Shimron-meron",
       "lost": 1,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "kingoftaanach",
       "name": "King of Taanach",
       "lost": 1,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "kingoftappuah",
       "name": "King of Tappuah",
       "lost": 1,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "kingoftirzah",
       "name": "King of Tirzah",
       "lost": 1,
-      "kept": 0
+      "kept": 1
     },
     {
       "slug": "kishi",
@@ -1001,12 +929,6 @@
       "name": "Laban",
       "lost": 1,
       "kept": 46
-    },
-    {
-      "slug": "lecah",
-      "name": "Lecah",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "levi",
@@ -1093,6 +1015,12 @@
       "kept": 3
     },
     {
+      "slug": "meunim",
+      "name": "Meunim",
+      "lost": 1,
+      "kept": 1
+    },
+    {
       "slug": "mica-2",
       "name": "Mica",
       "lost": 1,
@@ -1147,6 +1075,12 @@
       "kept": 33
     },
     {
+      "slug": "naphtuh",
+      "name": "Naphtuh",
+      "lost": 1,
+      "kept": 1
+    },
+    {
       "slug": "nathan-2",
       "name": "Nathan",
       "lost": 1,
@@ -1193,12 +1127,6 @@
       "name": "Pedaiah",
       "lost": 1,
       "kept": 1
-    },
-    {
-      "slug": "pharaoh-6",
-      "name": "Pharaoh",
-      "lost": 1,
-      "kept": 0
     },
     {
       "slug": "pharaohneco",
@@ -1333,6 +1261,12 @@
       "kept": 1
     },
     {
+      "slug": "tekoa",
+      "name": "Tekoa",
+      "lost": 1,
+      "kept": 1
+    },
+    {
       "slug": "tiglathpileser",
       "name": "Tiglath-pileser",
       "lost": 1,
@@ -1393,12 +1327,6 @@
       "kept": 2
     },
     {
-      "slug": "ziph",
-      "name": "Ziph",
-      "lost": 1,
-      "kept": 0
-    },
-    {
       "slug": "zoar",
       "name": "Zoar",
       "lost": 1,
@@ -1406,14 +1334,6 @@
     }
   ],
   "namesakes": [
-    {
-      "slug": "naphtuh",
-      "reference": "GEN 10:13",
-      "class": "other-bearer",
-      "ours": [
-        "naphtuhim"
-      ]
-    },
     {
       "slug": "assyria",
       "reference": "GEN 14:1",
@@ -1532,54 +1452,6 @@
       "class": "other-bearer",
       "ours": [
         "anah-son-of-zibeon"
-      ]
-    },
-    {
-      "slug": "ziph",
-      "reference": "1CH 2:42",
-      "class": "other-bearer",
-      "ours": [
-        "ziph-3"
-      ]
-    },
-    {
-      "slug": "jorkeam",
-      "reference": "1CH 2:44",
-      "class": "other-bearer",
-      "ours": [
-        "jorkeam-2"
-      ]
-    },
-    {
-      "slug": "bethzur",
-      "reference": "1CH 2:45",
-      "class": "other-bearer",
-      "ours": [
-        "bethzur-2"
-      ]
-    },
-    {
-      "slug": "eshtemoa",
-      "reference": "1CH 4:17",
-      "class": "other-bearer",
-      "ours": [
-        "eshtemoa-3"
-      ]
-    },
-    {
-      "slug": "keilah",
-      "reference": "1CH 4:19",
-      "class": "other-bearer",
-      "ours": [
-        "keilah-2"
-      ]
-    },
-    {
-      "slug": "lecah",
-      "reference": "1CH 4:21",
-      "class": "other-bearer",
-      "ours": [
-        "lecah-2"
       ]
     },
     {
@@ -1847,35 +1719,11 @@
       ]
     },
     {
-      "slug": "azmaveth-4",
-      "reference": "EZR 2:24",
-      "class": "other-bearer",
-      "ours": [
-        "azmaveth-5"
-      ]
-    },
-    {
       "slug": "nebo",
       "reference": "EZR 2:29",
       "class": "other-bearer",
       "ours": [
         "nebo-3"
-      ]
-    },
-    {
-      "slug": "senaah",
-      "reference": "EZR 2:35",
-      "class": "other-bearer",
-      "ours": [
-        "senaah-2"
-      ]
-    },
-    {
-      "slug": "meunim",
-      "reference": "EZR 2:50",
-      "class": "other-bearer",
-      "ours": [
-        "mehunim"
       ]
     },
     {
@@ -2413,22 +2261,7 @@
     },
     {
       "slug": "tekoa",
-      "reference": "1CH 2:24",
-      "class": "other-number"
-    },
-    {
-      "slug": "gedor",
-      "reference": "1CH 4:4",
-      "class": "other-number"
-    },
-    {
-      "slug": "tekoa",
       "reference": "1CH 4:5",
-      "class": "other-number"
-    },
-    {
-      "slug": "gedor-2",
-      "reference": "1CH 4:18",
       "class": "other-number"
     },
     {
@@ -2507,11 +2340,6 @@
       "class": "other-number"
     },
     {
-      "slug": "benammi",
-      "reference": "GEN 19:38",
-      "class": "unsettled"
-    },
-    {
       "slug": "nahor-2",
       "reference": "GEN 24:10",
       "class": "unsettled"
@@ -2588,22 +2416,12 @@
     },
     {
       "slug": "beno",
-      "reference": "1CH 24:26",
-      "class": "unsettled"
-    },
-    {
-      "slug": "beno",
       "reference": "1CH 24:27",
       "class": "unsettled"
     },
     {
       "slug": "jeiel-7",
       "reference": "2CH 35:9",
-      "class": "unsettled"
-    },
-    {
-      "slug": "haggedolim",
-      "reference": "NEH 11:14",
       "class": "unsettled"
     },
     {
@@ -2755,13 +2573,6 @@
       }
     },
     {
-      "slug": "ariel",
-      "verses": 2,
-      "labels": {
-        "Ariel": 2
-      }
-    },
-    {
       "slug": "berodachbaladan",
       "verses": 2,
       "labels": {
@@ -2811,20 +2622,6 @@
       }
     },
     {
-      "slug": "kingofhena",
-      "verses": 2,
-      "labels": {
-        "King of Hena": 2
-      }
-    },
-    {
-      "slug": "kingofivvah",
-      "verses": 2,
-      "labels": {
-        "King of Ivvah": 2
-      }
-    },
-    {
       "slug": "manasseh",
       "verses": 2,
       "labels": {
@@ -2864,6 +2661,13 @@
       "verses": 1,
       "labels": {
         "Arba": 1
+      }
+    },
+    {
+      "slug": "ariel",
+      "verses": 1,
+      "labels": {
+        "Ariel": 1
       }
     },
     {
@@ -3084,10 +2888,24 @@
       }
     },
     {
+      "slug": "kingofhena",
+      "verses": 1,
+      "labels": {
+        "King of Hena": 1
+      }
+    },
+    {
       "slug": "kingofhormah",
       "verses": 1,
       "labels": {
         "King of Hormah": 1
+      }
+    },
+    {
+      "slug": "kingofivvah",
+      "verses": 1,
+      "labels": {
+        "King of Ivvah": 1
       }
     },
     {
@@ -3396,6 +3214,11 @@
         "verses": 1
       },
       {
+        "slug": "arba",
+        "name": "Arba",
+        "verses": 1
+      },
+      {
         "slug": "aristobulus",
         "name": "Aristobulus",
         "verses": 1
@@ -3481,6 +3304,11 @@
         "verses": 1
       },
       {
+        "slug": "elishah-2",
+        "name": "Elishah",
+        "verses": 1
+      },
+      {
         "slug": "elnathan-3",
         "name": "Elnathan",
         "verses": 1
@@ -3511,6 +3339,11 @@
         "verses": 1
       },
       {
+        "slug": "ezra-2",
+        "name": "Ezra",
+        "verses": 1
+      },
+      {
         "slug": "forunatus",
         "name": "Forunatus",
         "verses": 2
@@ -3528,7 +3361,7 @@
       {
         "slug": "hermes",
         "name": "Hermes",
-        "verses": 2
+        "verses": 1
       },
       {
         "slug": "herodian",
@@ -3611,6 +3444,11 @@
         "verses": 2
       },
       {
+        "slug": "meunim",
+        "name": "Meunim",
+        "verses": 1
+      },
+      {
         "slug": "narcissus",
         "name": "Narcissus",
         "verses": 1
@@ -3619,11 +3457,6 @@
         "slug": "nekoda",
         "name": "Nekoda",
         "verses": 4
-      },
-      {
-        "slug": "nephisim",
-        "name": "Nephisim",
-        "verses": 2
       },
       {
         "slug": "nereus",
@@ -3709,6 +3542,11 @@
         "slug": "quartus",
         "name": "Quartus",
         "verses": 1
+      },
+      {
+        "slug": "raphah",
+        "name": "Raphah",
+        "verses": 2
       },
       {
         "slug": "rhoda",
@@ -3806,306 +3644,16 @@
         "verses": 2
       },
       {
+        "slug": "zaboud",
+        "name": "Zaboud",
+        "verses": 1
+      },
+      {
         "slug": "zenas",
         "name": "Zenas",
         "verses": 1
       }
     ],
-    "nothingOfOurs": [
-      {
-        "slug": "abdeel-2",
-        "name": "Abdeel",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "arba",
-        "name": "Arba",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "ariel",
-        "name": "Ariel",
-        "line": true,
-        "listed": 2,
-        "why": "not-printed 2"
-      },
-      {
-        "slug": "azmaveth-4",
-        "name": "Azmaveth",
-        "line": false,
-        "listed": 1,
-        "why": "other-bearer 1"
-      },
-      {
-        "slug": "benammi",
-        "name": "Ben-ammi",
-        "line": true,
-        "listed": 2,
-        "why": "unsettled 1, not-printed 1"
-      },
-      {
-        "slug": "beno",
-        "name": "Beno",
-        "line": true,
-        "listed": 2,
-        "why": "unsettled 2"
-      },
-      {
-        "slug": "cush-2",
-        "name": "Cush",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "elishah-2",
-        "name": "Elishah",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "ezra-2",
-        "name": "Ezra",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "haggedolim",
-        "name": "Haggedolim",
-        "line": true,
-        "listed": 1,
-        "why": "unsettled 1"
-      },
-      {
-        "slug": "jorkeam",
-        "name": "Jorkeam",
-        "line": true,
-        "listed": 1,
-        "why": "other-bearer 1"
-      },
-      {
-        "slug": "jucam",
-        "name": "Jucam",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "keilah",
-        "name": "Keilah",
-        "line": true,
-        "listed": 1,
-        "why": "other-bearer 1"
-      },
-      {
-        "slug": "kingofai",
-        "name": "King of Ai",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "kingofaphek",
-        "name": "King of Aphek",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingofbethel",
-        "name": "King of Bethel",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingofdamascus",
-        "name": "King of Damascus",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "kingofdebir",
-        "name": "King of Debir",
-        "line": false,
-        "listed": 2,
-        "why": "not-printed 2"
-      },
-      {
-        "slug": "kingofdor",
-        "name": "King of Dor",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingofhena",
-        "name": "King of Hena",
-        "line": true,
-        "listed": 2,
-        "why": "not-printed 2"
-      },
-      {
-        "slug": "kingofhormah",
-        "name": "King of Hormah",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingofivvah",
-        "name": "King of Ivvah",
-        "line": true,
-        "listed": 2,
-        "why": "not-printed 2"
-      },
-      {
-        "slug": "kingofkedesh",
-        "name": "King of Kedesh",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingoflibnah",
-        "name": "King of Libnah",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingofmakkedah",
-        "name": "King of Makkedah",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingofshimronmeron",
-        "name": "King of Shimron-meron",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingoftaanach",
-        "name": "King of Taanach",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingoftappuah",
-        "name": "King of Tappuah",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "kingoftirzah",
-        "name": "King of Tirzah",
-        "line": false,
-        "listed": 1,
-        "why": "not-printed 1"
-      },
-      {
-        "slug": "lecah",
-        "name": "Lecah",
-        "line": true,
-        "listed": 1,
-        "why": "other-bearer 1"
-      },
-      {
-        "slug": "meunim",
-        "name": "Meunim",
-        "line": false,
-        "listed": 2,
-        "why": "other-bearer 2"
-      },
-      {
-        "slug": "naphtuh",
-        "name": "Naphtuh",
-        "line": true,
-        "listed": 2,
-        "why": "other-bearer 2"
-      },
-      {
-        "slug": "pharaoh-6",
-        "name": "Pharaoh",
-        "line": true,
-        "listed": 1,
-        "why": "title 1"
-      },
-      {
-        "slug": "raphah",
-        "name": "Raphah",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "reuel-4",
-        "name": "Reuel",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "rokeim",
-        "name": "Rokeim",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "senaah",
-        "name": "Senaah",
-        "line": true,
-        "listed": 3,
-        "why": "other-bearer 3"
-      },
-      {
-        "slug": "tekoa",
-        "name": "Tekoa",
-        "line": true,
-        "listed": 2,
-        "why": "other-number 2"
-      },
-      {
-        "slug": "tema-2",
-        "name": "Tema",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "yhvh-2",
-        "name": "God the Father",
-        "line": false,
-        "listed": 325,
-        "why": "word-for-god 325"
-      },
-      {
-        "slug": "zaboud",
-        "name": "Zaboud",
-        "line": false,
-        "listed": 0,
-        "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "ziph",
-        "name": "Ziph",
-        "line": true,
-        "listed": 1,
-        "why": "other-bearer 1"
-      }
-    ]
+    "nothingOfOurs": []
   }
 }
