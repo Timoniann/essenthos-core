@@ -113,6 +113,27 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
+    /// Daughter is the word Jesus says to the woman with the issue of blood, and no name of hers: the
+    /// ruling that gives her the three words heads her record by what the text says of her, says who
+    /// decided, and leaves the slug, which her picture is filed under, as it was.
+    /// </summary>
+    [Fact]
+    public async Task ADaughterAddressedByHerWordsIsTheWomanWithTheIssueOfBloodAndKeepsHerSlug()
+    {
+        await Load();
+
+        var woman = await _db.Entities.Include(e => e.Claims).SingleAsync(e => e.Slug == "daughter");
+        woman.Name.Should().Be("Woman with an issue of blood");
+        woman.Distinguisher.Should().Contain("MAT 9:20-22");
+        woman.Notes.Should().Contain("MAT 9:22; MRK 5:34; LUK 8:48").And.Contain("does not give her name");
+        woman.Claims.Should().ContainSingle().Which.Source.Should().Contain("2026-09-30");
+
+        var words = SenseReadingFiles.AddressedRulings().Rulings.Select(r => r.WordId);
+        (await _db.WordEntities.Where(a => a.EntityId == woman.Id).Select(a => a.WordId).ToListAsync())
+            .Should().BeEquivalentTo(words);
+    }
+
+    /// <summary>
     /// A record we wrote says it is ours, in the source a reader is shown and in a claim carrying
     /// the method and whoever decided. A dataset's row carries neither, so the two can never be
     /// confused.

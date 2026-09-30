@@ -1,6 +1,6 @@
 {
-  "decidedBy": "the project owner's direction of 2026-09-29 that the encyclopedia is this project's own and BibleData is kept for events and the timeline, applied to the records the dataset heads with a word that is nobody's and no place's name — recorded on TSK-0428",
-  "policy": "A record is a person, a place or a people the text names, or something this project has read for itself. A dataset's record headed by a common noun or a description, with no word, verse, line, tie or picture of ours on it, is withdrawn. What the dataset says of it stays in the dataset's own files.",
+  "decidedBy": "the project owner's direction of 2026-09-29 that the encyclopedia is this project's own and BibleData is kept for events and the timeline, applied to the records the dataset heads with a word that is nobody's and no place's name, and his ruling of 2026-09-30 on heaven, earth and the garden — recorded on TSK-0428",
+  "policy": "A record is a person, a place or a people the text names, or something this project has read for itself. A dataset's record headed by a common noun or a description, with no word, verse, line, tie or picture of ours on it, is withdrawn. What the dataset says of it stays in the dataset's own files. The owner ruled heaven, earth and the garden out on 2026-09-30 although this corpus held a line, a name or a tie of its own on each: they are common words with several senses, not places. Those records are withdrawn with everything of ours that stood on them, and what the text says of Eden and of the trees that stood in it is held under Eden.",
   "records": [
     {
       "slug": "waters",
@@ -16,6 +16,36 @@
       "slug": "adespicableperson",
       "sourceId": "person:a despicable person_1",
       "why": "Daniel 11:21 says a vile person shall stand up, and gives him no name; the heading is the dataset's paraphrase of the description, and whom it means is a reading the text does not state."
+    },
+    {
+      "slug": "heaven",
+      "sourceId": "place:heaven_1",
+      "why": "Hebrew shamayim, heaven, is a common word with several senses: the firmament God called Heaven (GEN 1:8), where the lights are set (GEN 1:14-17) and the fowl fly (GEN 1:20). The text names no place by it.",
+      "ownerRuled": "the project owner, 2026-09-30, although this corpus held its own rows on the record"
+    },
+    {
+      "slug": "heaven-2",
+      "sourceId": "place:heaven_2",
+      "why": "The dataset's second record for the same word shamayim, heaven, which the text does not divide (GEN 1:8, 1:20).",
+      "ownerRuled": "the project owner, 2026-09-30, although this corpus held its own rows on the record"
+    },
+    {
+      "slug": "earth",
+      "sourceId": "place:Earth_1",
+      "why": "Hebrew erets, earth, is a common word with several senses: the dry land God called Earth (GEN 1:10), the ground, one country's land (GEN 13:6; EXO 8:16-17). The text names no place by it.",
+      "ownerRuled": "the project owner, 2026-09-30, although this corpus held its own rows on the record"
+    },
+    {
+      "slug": "earth-2",
+      "sourceId": "place:earth_2",
+      "why": "The dataset's second record for the same word erets, earth, which the text does not divide (GEN 1:28; GEN 9:1).",
+      "ownerRuled": "the project owner, 2026-09-30, although this corpus held its own rows on the record"
+    },
+    {
+      "slug": "thegarden",
+      "sourceId": "place:The Garden_1",
+      "why": "Hebrew gan, garden, is an ordinary word: the king's garden (2KI 25:4), the garden of Uzza (2KI 21:18), a garden inclosed (SNG 4:12). The garden the LORD God planted in Eden (GEN 2:8) is held under Eden.",
+      "ownerRuled": "the project owner, 2026-09-30, although this corpus held its own rows on the record"
     }
   ]
 }

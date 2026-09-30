@@ -382,6 +382,7 @@ internal sealed class OwnRecordLoader(
             return;
         }
 
+        referent.Name = says.Name ?? referent.Name;
         referent.Distinguisher = says.Distinguisher ?? referent.Distinguisher;
         referent.Notes = says.Notes ?? referent.Notes;
 
