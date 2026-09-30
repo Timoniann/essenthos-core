@@ -82,6 +82,13 @@
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsFourth.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\AddressedRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecordsSecond.json" />
+        <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
+        <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\CaesarReadings.json" />
+        <Content Remove="Loading\Encyclopedia\VerseReadings.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\VerseReadings.json" />
         <Content Remove="Loading\Encyclopedia\ObjectRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ObjectRecords.json" />
         <Content Remove="Loading\Encyclopedia\ObservanceRecords.json" />

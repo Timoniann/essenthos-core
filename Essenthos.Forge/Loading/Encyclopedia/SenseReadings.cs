@@ -267,7 +267,18 @@ internal sealed record TitleDecision(
 /// the verse asks, denies, supposes or reports a claim, and the word names the title alone.
 /// </param>
 /// <param name="Doubt">What can be said for the other reading, where the ruling is the cautious one of two.</param>
-internal sealed record TitleReading(string Reference, string Strong, string? Bearer, string Why, string? Doubt = null)
+/// <param name="Confidence">
+/// How sure the reading is, where a model read the verse and no person ruled on it; null on a ruling.
+/// </param>
+/// <param name="Second">The second reader's sentence, where two models read the verse and agreed.</param>
+internal sealed record TitleReading(
+    string Reference,
+    string Strong,
+    string? Bearer,
+    string Why,
+    string? Doubt = null,
+    double? Confidence = null,
+    string? Second = null)
 {
     public ScriptureSpan At { get; } = ScriptureSpan.Parse(Reference);
 }
@@ -345,6 +356,13 @@ internal static class SenseReadingFiles
     private const string AddressedResource = "Essenthos.Core.Loading.Encyclopedia.AddressedRecords.json";
 
     private const string TitleReadingsResource = "Essenthos.Core.Loading.Encyclopedia.TitleReadings.json";
+
+    private const string PharaohReadingsResource = "Essenthos.Core.Loading.Encyclopedia.PharaohReadings.json";
+
+    private const string CaesarReadingsResource = "Essenthos.Core.Loading.Encyclopedia.CaesarReadings.json";
+
+    private const string NamesakeSecondResource =
+        "Essenthos.Core.Loading.Encyclopedia.NamesakeRecordsSecond.json";
 
     private static readonly JsonSerializerOptions Shape = new()
     {
@@ -482,6 +500,20 @@ internal static class SenseReadingFiles
     public static TitleReadings TitleReadings() => Embedded<TitleReadings>(TitleReadingsResource);
 
     /// <summary>
+    /// Which king Pharaoh means at each verse a dataset lists for one of the kings of Egypt, as two
+    /// readings of the verse agreed: the king beside the title, or the title alone where the text does
+    /// not say which.
+    /// </summary>
+    public static TitleReadings PharaohReadings() => Embedded<TitleReadings>(PharaohReadingsResource);
+
+    /// <summary>The same for Caesar and the emperors the text speaks of.</summary>
+    public static TitleReadings CaesarReadings() => Embedded<TitleReadings>(CaesarReadingsResource);
+
+    /// <summary>Every title whose occurrences are read one by one, the Anointed first.</summary>
+    public static IReadOnlyList<TitleReadings> AllTitleReadings() =>
+        [TitleReadings(), PharaohReadings(), CaesarReadings()];
+
+    /// <summary>
     /// The records the owner has ruled the text does not identify: what each of them says about
     /// itself now, and every reading of the verse that could be right instead.
     /// </summary>
@@ -527,6 +559,13 @@ internal static class SenseReadingFiles
     public static OwnRecordRulings NamesakeRulings() => Embedded<OwnRecordRulings>(NamesakeResource);
 
     /// <summary>
+    /// The names a dataset lists a verse for and no word of ours named there, or named another bearer
+    /// of: each read against its verse by two models that did not see each other's answer, and kept
+    /// where both gave the same record.
+    /// </summary>
+    public static OwnRecordRulings NamesakeSecondRulings() => Embedded<OwnRecordRulings>(NamesakeSecondResource);
+
+    /// <summary>
     /// The record of Deborah that held Rebekah's nurse and the judge, whose number the dataset had
     /// written as another word's: each occurrence given to the woman its verse names.
     /// </summary>
@@ -544,7 +583,7 @@ internal static class SenseReadingFiles
     [
         Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings(),
         SeveralPeopleRulings(), SeveralPeopleSecondRulings(), SeveralPeopleThirdRulings(), NamesakeRulings(),
-        UnsettledSecondRulings(), SeveralPeopleFourthRulings(), AddressedRulings(),
+        UnsettledSecondRulings(), SeveralPeopleFourthRulings(), AddressedRulings(), NamesakeSecondRulings(),
     ];
 
     private static T Embedded<T>(string name)

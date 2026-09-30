@@ -287,6 +287,7 @@ internal sealed class DatasetLoader(
             await NameTheTitlesTheTextFixes(stoppingToken);
             await ReadWhoseTheTitleIsWhereItStands(stoppingToken);
             await NameWhomTheReadingsOfThePassagesFind(resources, stoppingToken);
+            await KeepTheVersesReadForTheRecordsTheySpeakOf(stoppingToken);
             await CiteTheVersesOurOwnWordsName(stoppingToken);
             await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
             await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
@@ -1910,7 +1911,10 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<TitleReadingLoader>();
-        status.Record(await loader.Load(cancellationToken));
+        foreach (var outcome in await loader.LoadAll(cancellationToken))
+        {
+            status.Record(outcome);
+        }
     }
 
     /// <summary>
@@ -1925,6 +1929,21 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<PassageReadingLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The verses a dataset lists for a record that two readings agree speak of it, kept as this
+    /// project's own, with the word that stands for the record annotated where it is a noun or a name.
+    /// After every pass that names a word, because it writes only where no other record stands, and
+    /// before the verses are cited off the words.
+    /// </summary>
+    private async Task KeepTheVersesReadForTheRecordsTheySpeakOf(CancellationToken cancellationToken)
+    {
+        status.Starting("the verses read for the records they speak of");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<VerseReadingLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>

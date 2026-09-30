@@ -169,18 +169,28 @@ internal static class EncyclopediaEndpoints
         ];
     }
 
-    /// <summary>The addresses of a set of namings, each address once.</summary>
     /// <summary>
-    /// The addresses of an entity's verses, those that name it first and those that only concern it
-    /// after, each in canonical order.
+    /// The addresses of an entity's verses: those that name it first, then those read as speaking of
+    /// it without the name, then those that only concern it, each in canonical order.
     /// </summary>
     internal static IQueryable<int> NamingFirst(IQueryable<EntityVerse> namings) =>
         namings
             .GroupBy(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride) + v.CanonicalVerse)
-            .Select(g => new { Address = g.Key, Names = g.Max(v => v.Names ? 1 : 0) })
-            .OrderByDescending(a => a.Names)
+            .Select(g => new
+            {
+                Address = g.Key,
+                Names = g.Max(v => v.Names ? 1 : 0),
+                SpokenOf = g.Max(v => v.Source.EndsWith(ReferenceKinds.SpokenOfMark) ? 1 : 0),
+            })
+            .OrderBy(a => a.SpokenOf == 1 ? SpokenOfPlace : a.Names == 1 ? NamedPlace : ConcerningPlace)
             .ThenBy(a => a.Address)
             .Select(a => a.Address);
+
+    private const int NamedPlace = 0;
+
+    private const int SpokenOfPlace = 1;
+
+    private const int ConcerningPlace = 2;
 
     internal static IQueryable<int> Addresses(IQueryable<EntityVerse> namings) =>
         namings
@@ -925,7 +935,8 @@ internal static class EncyclopediaEndpoints
                             at[0].CanonicalVerse,
                             [.. at.Select(v => new EntityNamingResponse(v.Label, v.Disputed, Datasets.Of(v.Source)))],
                             at.Any(v => v.Disputed),
-                            at.Any(v => v.Names));
+                            at.Any(v => v.Names),
+                            ReferenceKinds.Of(at.Select(v => (v.Source, v.Names))));
                     }),
                 ]));
         });
@@ -1938,8 +1949,13 @@ internal record EntityNamingResponse(string? Label, bool Disputed, string? Datas
 /// David*, and both are here rather than the verse appearing twice.
 /// </param>
 /// <param name="Names">
-/// True where a word of the verse names the entity, false where a source lists the verse as
-/// concerning it without any word of it saying who. The list gives the first kind first.
+/// True where a word of the verse is annotated to the entity, false where no word of it is.
+/// </param>
+/// <param name="Kind">
+/// <c>named</c> where the verse names the entity; <c>spoken-of</c> where it was read as speaking of
+/// the entity without the name, by a title, a description or a pronoun, and the naming's label is
+/// the words that stand for it; <c>concerning</c> where a source lists the verse and no word of it
+/// says who. The list gives them in that order.
 /// </param>
 internal record EntityReferenceResponse(
     BookRefResponse Book,
@@ -1947,7 +1963,8 @@ internal record EntityReferenceResponse(
     int Verse,
     IList<EntityNamingResponse> Namings,
     bool Disputed,
-    bool Names);
+    bool Names,
+    string Kind);
 
 internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResponse> Items);
 
