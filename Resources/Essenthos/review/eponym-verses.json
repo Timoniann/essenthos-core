@@ -53,7 +53,6 @@
       "label": "Ammon",
       "strong": "H5983",
       "references": [
-        "JDG 11:33",
         "1CH 19:5"
       ],
       "question": "BibleData files these verses under Ben-ammi as 'Ammon', and neither the Hebrew nor the Greek of them prints that name, so nothing in their words says whom it meant. Do they name the man, the Ammonites, or nobody of the name?",
@@ -199,11 +198,13 @@
       "label": "Jacob",
       "strong": "H3290",
       "references": [
-        "GEN 31:11",
-        "GEN 42:38",
-        "ISA 2:4"
+        "GEN 34:27",
+        "GEN 35:5",
+        "GEN 46:26",
+        "GEN 46:27",
+        "GEN 49:2"
       ],
-      "question": "BibleData files these verses under Jacob as 'Jacob', and neither the Hebrew nor the Greek of them prints that name, so nothing in their words says whom it meant. Do they name the man, the Israelites, or nobody of the name?",
+      "question": "BibleData files these verses under Jacob as 'Jacob', where the name stands in a phrase that elsewhere names the people — the sons of, the house of — but within Jacob's own lifetime, when it can mean his own children. Do they name the man, or the Israelites?",
       "options": [
         "israelites",
         "leave as it is"
@@ -214,13 +215,10 @@
       "label": "Jacob",
       "strong": "H3290",
       "references": [
-        "GEN 34:27",
-        "GEN 35:5",
-        "GEN 46:26",
-        "GEN 46:27",
-        "GEN 49:2"
+        "GEN 42:38",
+        "ISA 2:4"
       ],
-      "question": "BibleData files these verses under Jacob as 'Jacob', where the name stands in a phrase that elsewhere names the people — the sons of, the house of — but within Jacob's own lifetime, when it can mean his own children. Do they name the man, or the Israelites?",
+      "question": "BibleData files these verses under Jacob as 'Jacob', and neither the Hebrew nor the Greek of them prints that name, so nothing in their words says whom it meant. Do they name the man, the Israelites, or nobody of the name?",
       "options": [
         "israelites",
         "leave as it is"
@@ -325,8 +323,6 @@
       "label": "Israel",
       "strong": "H3478",
       "references": [
-        "JDG 3:8",
-        "JDG 11:33",
         "EZR 6:16",
         "EZR 6:17"
       ],
@@ -619,19 +615,6 @@
         "DEU 33:6"
       ],
       "question": "BibleData files these verses under Reuben as 'Reuben'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Reubenites?",
-      "options": [
-        "reubenites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "reuben",
-      "label": "Reuben",
-      "strong": "H7205",
-      "references": [
-        "JOS 18:17"
-      ],
-      "question": "BibleData files these verses under Reuben as 'Reuben', and neither the Hebrew nor the Greek of them prints that name, so nothing in their words says whom it meant. Do they name the man, the Reubenites, or nobody of the name?",
       "options": [
         "reubenites",
         "leave as it is"

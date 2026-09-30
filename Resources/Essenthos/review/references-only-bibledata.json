@@ -1,8 +1,8 @@
 {
   "about": "The verse references only BibleData states, which a reader is not shown. classes says what the text has at each; losers every record that loses verses, with the verses of ours it keeps; namesakes each reference where the name is printed and no rule decides the bearer (ours names the records our words name there instead); titles the records listed where the verse does not print their name, with the labels the dataset gives; records the BibleData records that are not yet read as ours. Reference is the canonical address.",
-  "written": "2026-09-30T08:23:25Z",
-  "references": 3739,
-  "entities": 384,
+  "written": "2026-09-30T10:59:33Z",
+  "references": 3576,
+  "entities": 380,
   "classes": [
     {
       "class": "word-for-god",
@@ -12,8 +12,8 @@
     },
     {
       "class": "not-a-name",
-      "references": 168,
-      "entities": 5,
+      "references": 5,
+      "entities": 1,
       "what": "the record is headed by a common noun or a description"
     },
     {
@@ -85,12 +85,6 @@
       "kept": 0
     },
     {
-      "slug": "earth",
-      "name": "Earth",
-      "lost": 103,
-      "kept": 0
-    },
-    {
       "slug": "pharaoh-2",
       "name": "Pharaoh",
       "lost": 72,
@@ -101,12 +95,6 @@
       "name": "Ammonites",
       "lost": 71,
       "kept": 20
-    },
-    {
-      "slug": "heaven",
-      "name": "heaven",
-      "lost": 44,
-      "kept": 0
     },
     {
       "slug": "manassites",
@@ -209,12 +197,6 @@
       "name": "Jehoram",
       "lost": 13,
       "kept": 26
-    },
-    {
-      "slug": "thegarden",
-      "name": "The Garden",
-      "lost": 13,
-      "kept": 0
     },
     {
       "slug": "caesar",
@@ -437,12 +419,6 @@
       "name": "Bezalel",
       "lost": 3,
       "kept": 9
-    },
-    {
-      "slug": "daughter",
-      "name": "Daughter",
-      "lost": 3,
-      "kept": 0
     },
     {
       "slug": "elisha",
@@ -5580,6 +5556,11 @@
         "verses": 1
       },
       {
+        "slug": "daughter",
+        "name": "Woman with an issue of blood",
+        "verses": 3
+      },
+      {
         "slug": "dionysius",
         "name": "Dionysius",
         "verses": 1
@@ -6026,25 +6007,11 @@
         "why": "the dataset lists no verse for it"
       },
       {
-        "slug": "daughter",
-        "name": "Daughter",
-        "line": false,
-        "listed": 3,
-        "why": "not-a-name 3"
-      },
-      {
         "slug": "death",
         "name": "Death",
         "line": false,
         "listed": 1,
         "why": "other-number 1"
-      },
-      {
-        "slug": "earth",
-        "name": "Earth",
-        "line": true,
-        "listed": 103,
-        "why": "not-a-name 103"
       },
       {
         "slug": "elishah-2",
@@ -6080,13 +6047,6 @@
         "line": true,
         "listed": 1,
         "why": "other-number 1"
-      },
-      {
-        "slug": "heaven",
-        "name": "heaven",
-        "line": true,
-        "listed": 44,
-        "why": "not-a-name 44"
       },
       {
         "slug": "hodiah-3",
@@ -6430,13 +6390,6 @@
         "line": false,
         "listed": 0,
         "why": "the dataset lists no verse for it"
-      },
-      {
-        "slug": "thegarden",
-        "name": "The Garden",
-        "line": true,
-        "listed": 13,
-        "why": "not-a-name 13"
       },
       {
         "slug": "yhvh-2",

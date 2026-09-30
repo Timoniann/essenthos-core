@@ -25836,6 +25836,1680 @@
       "why": "refused",
       "outcome": null,
       "settled": "reask"
+    },
+    {
+      "book": 1,
+      "bookCode": "GEN",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "71689|71690",
+      "subset": "explicit",
+      "a": {
+        "slug": "onan",
+        "name": "Onan",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "yhvh",
+        "name": "YHVH",
+        "kind": "person"
+      },
+      "relation": "killed-by",
+      "says": [
+        {
+          "from": "YHVH",
+          "type": "killer",
+          "to": "Onan",
+          "category": "explicit",
+          "note": null
+        },
+        {
+          "from": "Onan",
+          "type": "killed by",
+          "to": "YHVH",
+          "category": "inferred",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "GEN 38:9",
+          "text": "And Onan knew that the seed should not be his; and it came to pass, when he went in unto his brother's wife, that he spilled it on the ground, lest that he should give seed to his brother."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 4,
+      "bookCode": "NUM",
+      "sexA": "female",
+      "sexB": "male",
+      "id": "72063|72064",
+      "subset": "explicit",
+      "a": {
+        "slug": "cozbi",
+        "name": "Cozbi",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "zur-2",
+        "name": "Zur",
+        "kind": "person"
+      },
+      "relation": "daughter-of",
+      "says": [
+        {
+          "from": "Zur",
+          "type": "father",
+          "to": "Cozbi",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Cozbi",
+          "type": "daughter",
+          "to": "Zur",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NUM 25:15",
+          "text": "And the name of the Midianitish woman that was slain was Cozbi, the daughter of Zur; he was head over a people, and of a chief house in Midian."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 10,
+      "bookCode": "2SA",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "72475|72476",
+      "subset": "explicit",
+      "a": {
+        "slug": "abimelech-2",
+        "name": "Abimelech",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "jerubbesheth",
+        "name": "Jerubbesheth",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Jerubbesheth",
+          "type": "father",
+          "to": "Abimelech",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Abimelech",
+          "type": "son",
+          "to": "Jerubbesheth",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "2SA 11:21",
+          "text": "Who smote Abimelech the son of Jerubbesheth? did not a woman cast a piece of a millstone upon him from the wall, that he died in Thebez? why went ye nigh the wall? then say thou, Thy servant Uriah the Hittite is dead also."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "female",
+      "sexB": "male",
+      "id": "73097|73098",
+      "subset": "explicit",
+      "a": {
+        "slug": "achsah",
+        "name": "Achsah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "chelubai",
+        "name": "Chelubai",
+        "kind": "person"
+      },
+      "relation": "daughter-of",
+      "says": [
+        {
+          "from": "Chelubai",
+          "type": "father",
+          "to": "Achsah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Achsah",
+          "type": "daughter",
+          "to": "Chelubai",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 2:49",
+          "text": "She bare also Shaaph the father of Madmannah, Sheva the father of Machbenah, and the father of Gibea: and the daughter of Caleb was Achsa."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73121|73122",
+      "subset": "explicit",
+      "a": {
+        "slug": "shealtiel-2",
+        "name": "Shealtiel",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "jehoiachin",
+        "name": "Jehoiachin",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Jehoiachin",
+          "type": "father",
+          "to": "Shealtiel",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Shealtiel",
+          "type": "son",
+          "to": "Jehoiachin",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 3:17",
+          "text": "And the sons of Jeconiah; Assir, Salathiel his son,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73135|73136",
+      "subset": "explicit",
+      "a": {
+        "slug": "zerubbabel-2",
+        "name": "Zerubbabel",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "pedaiah-2",
+        "name": "Pedaiah",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Pedaiah",
+          "type": "father",
+          "to": "Zerubbabel",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Zerubbabel",
+          "type": "son",
+          "to": "Pedaiah",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 3:19",
+          "text": "And the sons of Pedaiah were, Zerubbabel, and Shimei: and the sons of Zerubbabel; Meshullam, and Hananiah, and Shelomith their sister:"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73139|73140",
+      "subset": "explicit",
+      "a": {
+        "slug": "meshullam-2",
+        "name": "Meshullam",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "zerubbabel-2",
+        "name": "Zerubbabel",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Zerubbabel",
+          "type": "father",
+          "to": "Meshullam",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Meshullam",
+          "type": "son",
+          "to": "Zerubbabel",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 3:19",
+          "text": "And the sons of Pedaiah were, Zerubbabel, and Shimei: and the sons of Zerubbabel; Meshullam, and Hananiah, and Shelomith their sister:"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73141|73142",
+      "subset": "explicit",
+      "a": {
+        "slug": "hananiah",
+        "name": "Hananiah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "zerubbabel-2",
+        "name": "Zerubbabel",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Zerubbabel",
+          "type": "father",
+          "to": "Hananiah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Hananiah",
+          "type": "son",
+          "to": "Zerubbabel",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 3:19",
+          "text": "And the sons of Pedaiah were, Zerubbabel, and Shimei: and the sons of Zerubbabel; Meshullam, and Hananiah, and Shelomith their sister:"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "female",
+      "sexB": "male",
+      "id": "73143|73144",
+      "subset": "explicit",
+      "a": {
+        "slug": "shelomith-2",
+        "name": "Shelomith",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "zerubbabel-2",
+        "name": "Zerubbabel",
+        "kind": "person"
+      },
+      "relation": "daughter-of",
+      "says": [
+        {
+          "from": "Zerubbabel",
+          "type": "father",
+          "to": "Shelomith",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Shelomith",
+          "type": "daughter",
+          "to": "Zerubbabel",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 3:19",
+          "text": "And the sons of Pedaiah were, Zerubbabel, and Shimei: and the sons of Zerubbabel; Meshullam, and Hananiah, and Shelomith their sister:"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73565|73566",
+      "subset": "explicit",
+      "a": {
+        "slug": "abiasaph",
+        "name": "Abiasaph",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "elkanah",
+        "name": "Elkanah",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Elkanah",
+          "type": "father",
+          "to": "Abiasaph",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Abiasaph",
+          "type": "son",
+          "to": "Elkanah",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 6:23",
+          "text": "Elkanah his son, and Ebiasaph his son, and Assir his son,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73567|73568",
+      "subset": "explicit",
+      "a": {
+        "slug": "assir-2",
+        "name": "Assir",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "abiasaph",
+        "name": "Abiasaph",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Abiasaph",
+          "type": "father",
+          "to": "Assir",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Assir",
+          "type": "son",
+          "to": "Abiasaph",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 6:23",
+          "text": "Elkanah his son, and Ebiasaph his son, and Assir his son,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73615|73616",
+      "subset": "explicit",
+      "a": {
+        "slug": "ethni",
+        "name": "Ethni",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "zerah-4",
+        "name": "Zerah",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Zerah",
+          "type": "father",
+          "to": "Ethni",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Ethni",
+          "type": "son",
+          "to": "Zerah",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 6:41",
+          "text": "The son of Ethni, the son of Zerah, the son of Adaiah,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73617|73618",
+      "subset": "explicit",
+      "a": {
+        "slug": "zerah-4",
+        "name": "Zerah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "adaiah-2",
+        "name": "Adaiah",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Adaiah",
+          "type": "father",
+          "to": "Zerah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Zerah",
+          "type": "son",
+          "to": "Adaiah",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 6:41",
+          "text": "The son of Ethni, the son of Zerah, the son of Adaiah,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73621|73622",
+      "subset": "explicit",
+      "a": {
+        "slug": "ethan-2",
+        "name": "Ethan",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "zimmah",
+        "name": "Zimmah",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Zimmah",
+          "type": "father",
+          "to": "Ethan",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Ethan",
+          "type": "son",
+          "to": "Zimmah",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 6:42",
+          "text": "The son of Ethan, the son of Zimmah, the son of Shimei,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73623|73624",
+      "subset": "explicit",
+      "a": {
+        "slug": "zimmah",
+        "name": "Zimmah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "shimei-8",
+        "name": "Shimei",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Shimei",
+          "type": "father",
+          "to": "Zimmah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Zimmah",
+          "type": "son",
+          "to": "Shimei",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 6:42",
+          "text": "The son of Ethan, the son of Zimmah, the son of Shimei,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73627|73628",
+      "subset": "explicit",
+      "a": {
+        "slug": "jahath-2",
+        "name": "Jahath",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "gershon",
+        "name": "Gershon",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Gershon",
+          "type": "father",
+          "to": "Jahath",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Jahath",
+          "type": "son",
+          "to": "Gershon",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 6:43",
+          "text": "The son of Jahath, the son of Gershom, the son of Levi."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "73649|73650",
+      "subset": "explicit",
+      "a": {
+        "slug": "mahli-3",
+        "name": "Mahli",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "mushi",
+        "name": "Mushi",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Mushi",
+          "type": "father",
+          "to": "Mahli",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Mahli",
+          "type": "son",
+          "to": "Mushi",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 6:47",
+          "text": "The son of Mahli, the son of Mushi, the son of Merari, the son of Levi."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "female",
+      "id": "73747|73748",
+      "subset": "explicit",
+      "a": {
+        "slug": "iezer",
+        "name": "Iezer",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "hammolecheth",
+        "name": "Hammolecheth",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Hammolecheth",
+          "type": "mother",
+          "to": "Iezer",
+          "category": "explicit",
+          "note": null
+        },
+        {
+          "from": "Iezer",
+          "type": "son",
+          "to": "Hammolecheth",
+          "category": "inferred",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 7:18",
+          "text": "And his sister Hammoleketh bare Ishod, and Abiezer, and Mahalah."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "74167|74168",
+      "subset": "explicit",
+      "a": {
+        "slug": "mattaniah-9",
+        "name": "Mattaniah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "mica-2",
+        "name": "Mica",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Mica",
+          "type": "father",
+          "to": "Mattaniah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Mattaniah",
+          "type": "son",
+          "to": "Mica",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 9:15",
+          "text": "And Bakbakkar, Heresh, and Galal, and Mattaniah the son of Micah, the son of Zichri, the son of Asaph;"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "74171|74172",
+      "subset": "explicit",
+      "a": {
+        "slug": "zichri-5",
+        "name": "Zichri",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "asaph-2",
+        "name": "Asaph",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Asaph",
+          "type": "father",
+          "to": "Zichri",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Zichri",
+          "type": "son",
+          "to": "Asaph",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 9:15",
+          "text": "And Bakbakkar, Heresh, and Galal, and Mattaniah the son of Micah, the son of Zichri, the son of Asaph;"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 13,
+      "bookCode": "1CH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "74409|74410",
+      "subset": "descent",
+      "a": {
+        "slug": "mahli-3",
+        "name": "Mahli",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "mushi",
+        "name": "Mushi",
+        "kind": "person"
+      },
+      "relation": "descendant-of",
+      "says": [
+        {
+          "from": "Mushi",
+          "type": "ancestor",
+          "to": "Mahli",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Mahli",
+          "type": "descendant",
+          "to": "Mushi",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "1CH 23:23",
+          "text": "The sons of Mushi; Mahli, and Eder, and Jeremoth, three."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 15,
+      "bookCode": "EZR",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75125|75126",
+      "subset": "descent",
+      "a": {
+        "slug": "sherebiah-2",
+        "name": "Sherebiah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "mahli",
+        "name": "Mahli",
+        "kind": "person"
+      },
+      "relation": "descendant-of",
+      "says": [
+        {
+          "from": "Mahli",
+          "type": "ancestor",
+          "to": "Sherebiah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Sherebiah",
+          "type": "descendant",
+          "to": "Mahli",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "EZR 8:18",
+          "text": "And by the good hand of our God upon us they brought us a man of understanding, of the sons of Mahli, the son of Levi, the son of Israel; and Sherebiah, with his sons and his brethren, eighteen;"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 15,
+      "bookCode": "EZR",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75279|75280",
+      "subset": "descent",
+      "a": {
+        "slug": "malchijah-6",
+        "name": "Malchijah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "harim-2",
+        "name": "Harim",
+        "kind": "person"
+      },
+      "relation": "descendant-of",
+      "says": [
+        {
+          "from": "Harim",
+          "type": "ancestor",
+          "to": "Malchijah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Malchijah",
+          "type": "descendant",
+          "to": "Harim",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "EZR 10:31",
+          "text": "And of the sons of Harim; Eliezer, Ishijah, Malchiah, Shemaiah, Shimeon,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75403|75404",
+      "subset": "explicit",
+      "a": {
+        "slug": "malchijah-6",
+        "name": "Malchijah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "harim-2",
+        "name": "Harim",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Harim",
+          "type": "father",
+          "to": "Malchijah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Malchijah",
+          "type": "son",
+          "to": "Harim",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 3:11",
+          "text": "Malchijah the son of Harim, and Hashub the son of Pahathmoab, repaired the other piece, and the tower of the furnaces."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75417|75418",
+      "subset": "explicit",
+      "a": {
+        "slug": "bavvai",
+        "name": "Bavvai",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "henadad-2",
+        "name": "Henadad",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Henadad",
+          "type": "father",
+          "to": "Bavvai",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Bavvai",
+          "type": "son",
+          "to": "Henadad",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 3:18",
+          "text": "After him repaired their brethren, Bavai the son of Henadad, the ruler of the half part of Keilah."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75433|75434",
+      "subset": "explicit",
+      "a": {
+        "slug": "pedaiah-4",
+        "name": "Pedaiah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "parosh",
+        "name": "Parosh",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Parosh",
+          "type": "father",
+          "to": "Pedaiah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Pedaiah",
+          "type": "son",
+          "to": "Parosh",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 3:25",
+          "text": "Palal the son of Uzai, over against the turning of the wall, and the tower which lieth out from the king's high house, that was by the court of the prison. After him Pedaiah the son of Parosh."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75531|75532",
+      "subset": "explicit",
+      "a": {
+        "slug": "jeshua-7",
+        "name": "Jeshua",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "azaniah",
+        "name": "Azaniah",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Azaniah",
+          "type": "father",
+          "to": "Jeshua",
+          "category": "inferred",
+          "note": "\"the Levites\" NEH 10:9"
+        },
+        {
+          "from": "Jeshua",
+          "type": "son",
+          "to": "Azaniah",
+          "category": "explicit",
+          "note": "\"the Levites\" NEH 10:9"
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 10:9",
+          "text": "And the Levites: both Jeshua the son of Azaniah, Binnui of the sons of Henadad, Kadmiel;"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75611|75612",
+      "subset": "explicit",
+      "a": {
+        "slug": "meshuallam",
+        "name": "Meshuallam",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "joed",
+        "name": "Joed",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Joed",
+          "type": "father",
+          "to": "Meshuallam",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Meshuallam",
+          "type": "son",
+          "to": "Joed",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 11:7",
+          "text": "And these are the sons of Benjamin; Sallu the son of Meshullam, the son of Joed, the son of Pedaiah, the son of Kolaiah, the son of Maaseiah, the son of Ithiel, the son of Jesaiah."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75643|75644",
+      "subset": "explicit",
+      "a": {
+        "slug": "seraiah-8",
+        "name": "Seraiah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "hilkiah-2",
+        "name": "Hilkiah",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Hilkiah",
+          "type": "father",
+          "to": "Seraiah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Seraiah",
+          "type": "son",
+          "to": "Hilkiah",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 11:11",
+          "text": "Seraiah the son of Hilkiah, the son of Meshullam, the son of Zadok, the son of Meraioth, the son of Ahitub, was the ruler of the house of God."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75657|75658",
+      "subset": "explicit",
+      "a": {
+        "slug": "jeroham-3",
+        "name": "Jeroham",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "pelaliah",
+        "name": "Pelaliah",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Pelaliah",
+          "type": "father",
+          "to": "Jeroham",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Jeroham",
+          "type": "son",
+          "to": "Pelaliah",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 11:12",
+          "text": "And their brethren that did the work of the house were eight hundred twenty and two: and Adaiah the son of Jeroham, the son of Pelaliah, the son of Amzi, the son of Zechariah, the son of Pashur, the son of Malchiah."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75679|75680",
+      "subset": "descent",
+      "a": {
+        "slug": "mattaniah-9",
+        "name": "Mattaniah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "mica-2",
+        "name": "Mica",
+        "kind": "person"
+      },
+      "relation": "descendant-of",
+      "says": [
+        {
+          "from": "Mica",
+          "type": "ancestor",
+          "to": "Mattaniah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Mattaniah",
+          "type": "descendant",
+          "to": "Mica",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 11:17",
+          "text": "And Mattaniah the son of Micha, the son of Zabdi, the son of Asaph, was the principal to begin the thanksgiving in prayer: and Bakbukiah the second among his brethren, and Abda the son of Shammua, the son of Galal, the son of Jeduthun."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75713|75714",
+      "subset": "explicit",
+      "a": {
+        "slug": "eliashib-7",
+        "name": "Eliashib",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "joiakim",
+        "name": "Joiakim",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Joiakim",
+          "type": "father",
+          "to": "Eliashib",
+          "category": "explicit",
+          "note": null
+        },
+        {
+          "from": "Eliashib",
+          "type": "son",
+          "to": "Joiakim",
+          "category": "inferred",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 12:10",
+          "text": "And Jeshua begat Joiakim, Joiakim also begat Eliashib, and Eliashib begat Joiada,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 16,
+      "bookCode": "NEH",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75715|75716|75809|75810",
+      "subset": "explicit",
+      "a": {
+        "slug": "joiada-2",
+        "name": "Joiada",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "eliashib-7",
+        "name": "Eliashib",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Eliashib",
+          "type": "father",
+          "to": "Joiada",
+          "category": "explicit",
+          "note": null
+        },
+        {
+          "from": "Joiada",
+          "type": "son",
+          "to": "Eliashib",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Eliashib",
+          "type": "father",
+          "to": "Joiada",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Joiada",
+          "type": "son",
+          "to": "Eliashib",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "NEH 12:10",
+          "text": "And Jeshua begat Joiakim, Joiakim also begat Eliashib, and Eliashib begat Joiada,"
+        },
+        {
+          "ref": "NEH 13:28",
+          "text": "And one of the sons of Joiada, the son of Eliashib the high priest, was son in law to Sanballat the Horonite: therefore I chased him from me."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 24,
+      "bookCode": "JER",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75889|75890",
+      "subset": "descent",
+      "a": {
+        "slug": "pashhur-2",
+        "name": "Pashhur",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "immer",
+        "name": "Immer",
+        "kind": "person"
+      },
+      "relation": "descendant-of",
+      "says": [
+        {
+          "from": "Immer",
+          "type": "ancestor",
+          "to": "Pashhur",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Pashhur",
+          "type": "descendant",
+          "to": "Immer",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "JER 20:1",
+          "text": "Now Pashur the son of Immer the priest, who was also chief governor in the house of the LORD, heard that Jeremiah prophesied these things."
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 24,
+      "bookCode": "JER",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75901|75902",
+      "subset": "explicit",
+      "a": {
+        "slug": "elasah-2",
+        "name": "Elasah",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "shaphan",
+        "name": "Shaphan",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Shaphan",
+          "type": "father",
+          "to": "Elasah",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Elasah",
+          "type": "son",
+          "to": "Shaphan",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "JER 29:3",
+          "text": "By the hand of Elasah the son of Shaphan, and Gemariah the son of Hilkiah, (whom Zedekiah king of Judah sent unto Babylon to Nebuchadnezzar king of Babylon) saying,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
+    },
+    {
+      "book": 24,
+      "bookCode": "JER",
+      "sexA": "male",
+      "sexB": "male",
+      "id": "75967|75968",
+      "subset": "explicit",
+      "a": {
+        "slug": "pashhur",
+        "name": "Pashhur",
+        "kind": "person"
+      },
+      "b": {
+        "slug": "malchijah-10",
+        "name": "Malchijah",
+        "kind": "person"
+      },
+      "relation": "son-of",
+      "says": [
+        {
+          "from": "Malchijah",
+          "type": "father",
+          "to": "Pashhur",
+          "category": "inferred",
+          "note": null
+        },
+        {
+          "from": "Pashhur",
+          "type": "son",
+          "to": "Malchijah",
+          "category": "explicit",
+          "note": null
+        }
+      ],
+      "verses": [
+        {
+          "ref": "JER 38:1",
+          "text": "Then Shephatiah the son of Mattan, and Gedaliah the son of Pashur, and Jucal the son of Shelemiah, and Pashur the son of Malchiah, heard the words that Jeremiah had spoken unto all the people, saying,"
+        }
+      ],
+      "reading": null,
+      "check": null,
+      "why": "not-asked",
+      "outcome": null,
+      "settled": null
     }
   ],
   "decisions": {
@@ -27710,15 +29384,15 @@
       "why": "no-word"
     },
     "72185-72186": {
-      "a": "joash",
-      "b": "iezer",
-      "decidedAt": "2026-09-13T09:35:36.565Z",
-      "decision": "reask",
-      "note": "Тут це H33, треба уточнити. По суті, ми можемо це й використати. Ане глянь точніше, можливо інші упоминання про родовід Гедеона",
-      "relation": "descendant-of",
-      "rows": "72185|72186",
+      "decision": "remove",
+      "note": "clan-derived",
       "subset": "descent",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "joash",
+      "relation": "descendant-of",
+      "b": "iezer",
+      "rows": "72185|72186",
+      "decidedAt": "2026-09-28T20:23:18.452Z"
     },
     "72193": {
       "a": "zebah",
@@ -27765,15 +29439,15 @@
       "why": "not-stated"
     },
     "72219-72220": {
-      "a": "manasseh-2",
-      "b": "gershom-2",
-      "decidedAt": "2026-09-13T09:38:57.003Z",
-      "decision": "confirm",
-      "note": "Так, але цей Манасія це не син Йосипа (якшо шо)",
-      "relation": "son-of",
-      "rows": "72219|72220",
+      "decision": "remove",
+      "note": "owner in chat 2026-09-29: Gershom son of Manasseh (Judg 18:30), not the reverse; this Manasseh is not Joseph's son",
       "subset": "explicit",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "manasseh-2",
+      "relation": "son-of",
+      "b": "gershom-2",
+      "rows": "72219|72220",
+      "decidedAt": "2026-09-29T08:00:14.236Z"
     },
     "72231-72232": {
       "a": "orpah",
@@ -27941,15 +29615,15 @@
       "why": "not-stated"
     },
     "72424-72426": {
-      "a": "ishbosheth",
-      "b": "rimmon",
-      "decidedAt": "2026-09-13T12:43:47.255Z",
-      "decision": "confirm",
-      "note": "",
-      "relation": "killed-by",
-      "rows": "72424|72426",
+      "decision": "remove",
+      "note": "owner on PRB-0829, 2026-09-28: 2 Samuel 4:5-6 names Rechab and Baanah, the sons of Rimmon, as the killers",
       "subset": "explicit",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "ishbosheth",
+      "relation": "killed-by",
+      "b": "rimmon",
+      "rows": "72424|72426",
+      "decidedAt": "2026-09-28T18:14:33.222Z"
     },
     "72481-72482": {
       "a": "tamar-2",
@@ -28018,15 +29692,15 @@
       "why": "not-stated"
     },
     "72531-72532": {
-      "a": "ishbibenob",
-      "b": "raphah",
-      "decidedAt": "2026-09-13T13:22:27.546Z",
-      "decision": "reask",
-      "note": "В єврейські пиши Rapha, тому там є Рефаім. Але це не син, а потомок. Виправи це",
-      "relation": "son-of",
-      "rows": "72531|72532",
+      "decision": "remove",
+      "note": "descendant",
       "subset": "explicit",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "ishbibenob",
+      "relation": "son-of",
+      "b": "raphah",
+      "rows": "72531|72532",
+      "decidedAt": "2026-09-28T20:24:12.778Z"
     },
     "72533-72534": {
       "a": "saph",
@@ -28051,26 +29725,26 @@
       "why": "not-stated"
     },
     "72551-72552": {
-      "a": "jashen",
-      "b": "eliahba",
-      "decidedAt": "2026-09-13T13:26:35.759Z",
-      "decision": "reask",
+      "decision": "remove",
       "note": "Здається що каже, просто англійська тут не точна. Перевір це",
-      "relation": "son-of",
-      "rows": "72551|72552",
       "subset": "explicit",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "jashen",
+      "relation": "son-of",
+      "b": "eliahba",
+      "rows": "72551|72552",
+      "decidedAt": "2026-09-28T20:28:59.824Z"
     },
     "72553-72554": {
-      "a": "jonathan-5",
-      "b": "eliahba",
-      "decidedAt": "2026-09-13T13:27:00.667Z",
-      "decision": "reask",
+      "decision": "remove",
       "note": "Здається шо ні, бо англійська тут не точна, перевір",
-      "relation": "son-of",
-      "rows": "72553|72554",
       "subset": "explicit",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "jonathan-5",
+      "relation": "son-of",
+      "b": "eliahba",
+      "rows": "72553|72554",
+      "decidedAt": "2026-09-28T20:29:02.295Z"
     },
     "72563-72564": {
       "a": "zelek",
@@ -28084,15 +29758,15 @@
       "why": "not-stated"
     },
     "72591-72592": {
-      "a": "manasseh",
-      "b": "bengeber",
-      "decidedAt": "2026-09-13T13:28:42.096Z",
-      "decision": "reask",
+      "decision": "confirm",
       "note": "Здається шо каже, перевір ще єврейську та інші переклади. Бо на скільки я бачу, шо текст це каже",
-      "relation": "descendant-of",
-      "rows": "72591|72592",
       "subset": "descent",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "manasseh",
+      "relation": "descendant-of",
+      "b": "bengeber",
+      "rows": "72591|72592",
+      "decidedAt": "2026-09-28T20:23:45.995Z"
     },
     "72603-72604": {
       "a": "shimei-4",
@@ -28249,15 +29923,15 @@
       "why": "not-stated"
     },
     "72903-72904": {
-      "a": "jerioth",
-      "b": "chelubai",
-      "decidedAt": "2026-09-13T14:35:38.277Z",
-      "decision": "confirm",
-      "note": "",
-      "relation": "wife-of",
-      "rows": "72903|72904",
+      "decision": "remove",
+      "note": "owner in chat 2026-09-28 (PRB-0543): 1 Chronicles 2:18 does not identify Jerioth; wife of Caleb stays only among her readings",
       "subset": "inferred",
-      "why": "refused"
+      "why": "refused",
+      "a": "jerioth",
+      "relation": "wife-of",
+      "b": "chelubai",
+      "rows": "72903|72904",
+      "decidedAt": "2026-09-28T18:27:12.137Z"
     },
     "72921-72922": {
       "a": "abijah-3",
@@ -28480,48 +30154,48 @@
       "why": "not-stated"
     },
     "73159-73160": {
-      "a": "rephaiah",
-      "b": "hananiah",
-      "decidedAt": "2026-09-13T21:41:22.907Z",
-      "decision": "reask",
+      "decision": "remove",
       "note": "Тут взагалі все дивне. Треба подивитися і оригінал і все навколо",
-      "relation": "son-of",
-      "rows": "73159|73160",
       "subset": "explicit",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "rephaiah",
+      "relation": "son-of",
+      "b": "hananiah",
+      "rows": "73159|73160",
+      "decidedAt": "2026-09-28T20:30:14.238Z"
     },
     "73161-73162": {
-      "a": "arnan",
-      "b": "hananiah",
-      "decidedAt": "2026-09-13T21:41:47.538Z",
-      "decision": "reask",
+      "decision": "remove",
       "note": "Тут взагалі все дивне. Треба глянути оригінал і все довкола",
-      "relation": "son-of",
-      "rows": "73161|73162",
       "subset": "explicit",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "arnan",
+      "relation": "son-of",
+      "b": "hananiah",
+      "rows": "73161|73162",
+      "decidedAt": "2026-09-28T20:30:16.964Z"
     },
     "73163-73164": {
-      "a": "obadiah-2",
-      "b": "hananiah",
-      "decidedAt": "2026-09-13T21:42:06.598Z",
-      "decision": "reask",
+      "decision": "remove",
       "note": "Тут взагалі все дивне. Треба глянути оригінал і все довкола",
-      "relation": "son-of",
-      "rows": "73163|73164",
       "subset": "explicit",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "obadiah-2",
+      "relation": "son-of",
+      "b": "hananiah",
+      "rows": "73163|73164",
+      "decidedAt": "2026-09-28T20:30:18.406Z"
     },
     "73165-73166": {
-      "a": "shecaniah",
-      "b": "hananiah",
-      "decidedAt": "2026-09-13T21:42:12.398Z",
-      "decision": "reask",
+      "decision": "remove",
       "note": "",
-      "relation": "son-of",
-      "rows": "73165|73166",
       "subset": "explicit",
-      "why": "not-stated"
+      "why": "not-stated",
+      "a": "shecaniah",
+      "relation": "son-of",
+      "b": "hananiah",
+      "rows": "73165|73166",
+      "decidedAt": "2026-09-28T20:30:19.852Z"
     },
     "73243-73244": {
       "a": "zereth",
@@ -28579,15 +30253,15 @@
       "why": "not-stated"
     },
     "73281-73282": {
-      "a": "meonothai",
-      "b": "othniel",
-      "decidedAt": "2026-09-13T21:59:01.688Z",
-      "decision": "reask",
+      "decision": "confirm",
       "note": "Тут цікавий момент. В єврейській пише \"сини\", а тут описаний лише Хафаф. Але я взяв BSB - там є Meonothai. Я глянув Септуагінти - там немає Meonothai. Можливо він береться не явно з наступного вірша - там далі йде про нього. Ану глянь та розберися. Бо Vulgate і деякі manuscripts of the Septuagint мають Meonothai вже в 4:13",
-      "relation": "son-of",
-      "rows": "73281|73282",
       "subset": "explicit",
-      "why": "refused"
+      "why": "not-stated",
+      "a": "meonothai",
+      "relation": "son-of",
+      "b": "othniel",
+      "rows": "73281|73282",
+      "decidedAt": "2026-09-28T20:31:26.156Z"
     },
     "73317-73318": {
       "a": "shammai-3",
@@ -32944,6 +34618,1898 @@
       "b": "aaron",
       "rows": "75911|75912",
       "decidedAt": "2026-09-26T23:19:56.000Z"
+    },
+    "73563-73564": {
+      "decision": "remove",
+      "note": "Son of Ebiasaph, not Elkanah",
+      "subset": "explicit",
+      "why": "namesake",
+      "a": "elkanah-3",
+      "relation": "son-of",
+      "b": "assir",
+      "rows": "73563|73564",
+      "decidedAt": "2026-09-28T18:49:11.919Z"
+    },
+    "73577-73578": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "namesake",
+      "a": "amasai",
+      "relation": "son-of",
+      "b": "elkanah-3",
+      "rows": "73577|73578",
+      "decidedAt": "2026-09-28T18:50:14.382Z"
+    },
+    "73579-73580": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "namesake",
+      "a": "ahimoth",
+      "relation": "son-of",
+      "b": "elkanah-3",
+      "rows": "73579|73580",
+      "decidedAt": "2026-09-28T18:50:17.370Z"
+    },
+    "73599-73600": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "namesake",
+      "a": "elkanah-4",
+      "relation": "son-of",
+      "b": "mahath",
+      "rows": "73599|73600",
+      "decidedAt": "2026-09-28T18:51:26.801Z"
+    },
+    "73778": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "rephah",
+      "relation": "son-of",
+      "b": "beriah-2",
+      "rows": "73778",
+      "decidedAt": "2026-09-28T18:56:45.753Z"
+    },
+    "73847-73848": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "arah",
+      "relation": "son-of",
+      "b": "jephunneh-2",
+      "rows": "73847|73848",
+      "decidedAt": "2026-09-28T18:56:56.495Z"
+    },
+    "73851-73852": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "rizia",
+      "relation": "son-of",
+      "b": "jephunneh-2",
+      "rows": "73851|73852",
+      "decidedAt": "2026-09-28T18:57:01.234Z"
+    },
+    "73861-73862": {
+      "decision": "confirm",
+      "note": "It can be a namesake, so be careful",
+      "subset": "explicit",
+      "why": "namesake",
+      "a": "gera-3",
+      "relation": "son-of",
+      "b": "bela-2",
+      "rows": "73861|73862",
+      "decidedAt": "2026-09-28T18:57:40.240Z"
+    },
+    "73865-73866": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "refused",
+      "a": "ahijah-5",
+      "relation": "son-of",
+      "b": "ehud-2",
+      "rows": "73865|73866",
+      "decidedAt": "2026-09-28T18:57:56.989Z"
+    },
+    "73867-73868": {
+      "decision": "confirm",
+      "note": "Yes, but do not mix with Gera son of Bela",
+      "subset": "explicit",
+      "why": "refused",
+      "a": "gera-4",
+      "relation": "son-of",
+      "b": "ehud-2",
+      "rows": "73867|73868",
+      "decidedAt": "2026-09-28T18:58:30.756Z"
+    },
+    "73873-73874": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "shaharaim",
+      "relation": "son-of",
+      "b": "gera-4",
+      "rows": "73873|73874",
+      "decidedAt": "2026-09-28T18:58:44.781Z"
+    },
+    "73929-73930": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "shashak",
+      "relation": "son-of",
+      "b": "elpaal",
+      "rows": "73929|73930",
+      "decidedAt": "2026-09-28T18:59:05.365Z"
+    },
+    "73931-73932": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "jeremoth-2",
+      "relation": "son-of",
+      "b": "elpaal",
+      "rows": "73931|73932",
+      "decidedAt": "2026-09-28T18:59:11.329Z"
+    },
+    "74001-74002": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "shehariah",
+      "relation": "son-of",
+      "b": "jeremoth-2",
+      "rows": "74001|74002",
+      "decidedAt": "2026-09-28T18:59:20.085Z"
+    },
+    "74003-74004": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "athaliah-2",
+      "relation": "son-of",
+      "b": "jeremoth-2",
+      "rows": "74003|74004",
+      "decidedAt": "2026-09-28T18:59:29.670Z"
+    },
+    "74005-74006": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "jaareshiah",
+      "relation": "son-of",
+      "b": "jeremoth-2",
+      "rows": "74005|74006",
+      "decidedAt": "2026-09-28T18:59:31.865Z"
+    },
+    "74007-74008": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "elijah-2",
+      "relation": "son-of",
+      "b": "jeremoth-2",
+      "rows": "74007|74008",
+      "decidedAt": "2026-09-28T18:59:33.252Z"
+    },
+    "74009-74010": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "zichri-4",
+      "relation": "son-of",
+      "b": "jeremoth-2",
+      "rows": "74009|74010",
+      "decidedAt": "2026-09-28T18:59:34.695Z"
+    },
+    "74139-74140": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "malchijah-2",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "74139|74140",
+      "decidedAt": "2026-09-28T18:59:42.914Z"
+    },
+    "74151-74152": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "immer",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "74151|74152",
+      "decidedAt": "2026-09-28T18:59:47.731Z"
+    },
+    "73780": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "resheph",
+      "relation": "son-of",
+      "b": "beriah-2",
+      "rows": "73780",
+      "decidedAt": "2026-09-28T19:02:58.536Z"
+    },
+    "73811-73812": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "zophah",
+      "relation": "son-of",
+      "b": "hotham",
+      "rows": "73811|73812",
+      "decidedAt": "2026-09-28T19:04:39.110Z"
+    },
+    "73817-73818": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "amal",
+      "relation": "son-of",
+      "b": "hotham",
+      "rows": "73817|73818",
+      "decidedAt": "2026-09-28T19:04:40.848Z"
+    },
+    "73849-73850": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "hanniel-2",
+      "relation": "son-of",
+      "b": "jephunneh-2",
+      "rows": "73849|73850",
+      "decidedAt": "2026-09-28T19:05:01.562Z"
+    },
+    "73927-73928": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "ahio-2",
+      "relation": "son-of",
+      "b": "elpaal",
+      "rows": "73927|73928",
+      "decidedAt": "2026-09-28T19:05:32.402Z"
+    },
+    "74367-74368": {
+      "decision": "confirm",
+      "note": "Different name Libni and Ladan",
+      "subset": "explicit",
+      "why": "namesake",
+      "a": "jehiel",
+      "relation": "son-of",
+      "b": "libni",
+      "rows": "74367|74368",
+      "decidedAt": "2026-09-28T19:07:30.086Z"
+    },
+    "74589-74590": {
+      "decision": "remove",
+      "note": "owner in chat 2026-09-29: Zetham is Jehiel's brother (1 Chr 23:8); sons of Jehieli in 26:22 is the clan name",
+      "subset": "explicit",
+      "why": "namesake",
+      "a": "zetham",
+      "relation": "son-of",
+      "b": "jehiel",
+      "rows": "74589|74590",
+      "decidedAt": "2026-09-29T07:27:09.363Z"
+    },
+    "74591-74592": {
+      "decision": "remove",
+      "note": "owner in chat 2026-09-29: Joel is Jehiel's brother (1 Chr 23:8); sons of Jehieli in 26:22 is the clan name",
+      "subset": "explicit",
+      "why": "namesake",
+      "a": "joel-6",
+      "relation": "son-of",
+      "b": "jehiel",
+      "rows": "74591|74592",
+      "decidedAt": "2026-09-29T08:00:14.561Z"
+    },
+    "75875-75876": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "immanuel",
+      "relation": "son-of",
+      "b": "isaiah",
+      "rows": "75875|75876",
+      "decidedAt": "2026-09-28T19:10:32.154Z"
+    },
+    "75949-75950": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "jerahmeel-3",
+      "relation": "son-of",
+      "b": "eliakim-2",
+      "rows": "75949|75950",
+      "decidedAt": "2026-09-28T19:30:11.364Z"
+    },
+    "75969-75970": {
+      "decision": "remove",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-stated",
+      "a": "malchijah-10",
+      "relation": "son-of",
+      "b": "mattaniah",
+      "rows": "75969|75970",
+      "decidedAt": "2026-09-28T19:31:44.726Z"
+    },
+    "75831-75832": {
+      "decision": "confirm",
+      "note": "Let's use it as unsure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "hammedatha",
+      "relation": "descendant-of",
+      "b": "agag-2",
+      "rows": "75831|75832",
+      "decidedAt": "2026-09-28T19:32:54.390Z"
+    },
+    "75333-75334": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "namesake",
+      "a": "shimei-16",
+      "relation": "descendant-of",
+      "b": "bani-4",
+      "rows": "75333|75334",
+      "decidedAt": "2026-09-28T19:36:52.336Z"
+    },
+    "75155-75156": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "namesake",
+      "a": "maaseiah-6",
+      "relation": "descendant-of",
+      "b": "harim",
+      "rows": "75155|75156",
+      "decidedAt": "2026-09-28T19:37:36.688Z"
+    },
+    "74189-74190": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "refused",
+      "a": "akkub-2",
+      "relation": "descendant-of",
+      "b": "korah-3",
+      "rows": "74189|74190",
+      "decidedAt": "2026-09-28T19:40:04.179Z"
+    },
+    "74191-74192": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "refused",
+      "a": "talmon",
+      "relation": "descendant-of",
+      "b": "korah-3",
+      "rows": "74191|74192",
+      "decidedAt": "2026-09-28T19:40:09.212Z"
+    },
+    "74193-74194": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "refused",
+      "a": "ahiman-2",
+      "relation": "descendant-of",
+      "b": "korah-3",
+      "rows": "74193|74194",
+      "decidedAt": "2026-09-28T19:40:11.748Z"
+    },
+    "74261-74262": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "refused",
+      "a": "elkanah-7",
+      "relation": "descendant-of",
+      "b": "korah-3",
+      "rows": "74261|74262",
+      "decidedAt": "2026-09-28T19:41:16.079Z"
+    },
+    "74263-74264": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "refused",
+      "a": "isshiah-2",
+      "relation": "descendant-of",
+      "b": "korah-3",
+      "rows": "74263|74264",
+      "decidedAt": "2026-09-28T19:41:28.741Z"
+    },
+    "74781-74782": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "refused",
+      "a": "zichri-10",
+      "relation": "descendant-of",
+      "b": "ephraim",
+      "rows": "74781|74782",
+      "decidedAt": "2026-09-28T19:42:36.621Z"
+    },
+    "75127-75128": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "refused",
+      "a": "hashabiah-4",
+      "relation": "descendant-of",
+      "b": "merari",
+      "rows": "75127|75128",
+      "decidedAt": "2026-09-28T19:43:23.414Z"
+    },
+    "75749-75750": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "refused",
+      "a": "shammua-3",
+      "relation": "descendant-of",
+      "b": "bilgah",
+      "rows": "75749|75750",
+      "decidedAt": "2026-09-28T19:47:00.859Z"
+    },
+    "74835-74836": {
+      "decision": "confirm",
+      "note": "very likely",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "azaziah-3",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74835|74836",
+      "decidedAt": "2026-09-28T19:53:41.205Z"
+    },
+    "74837-74838": {
+      "decision": "confirm",
+      "note": "very likely",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "nahath-2",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74837|74838",
+      "decidedAt": "2026-09-28T19:53:43.069Z"
+    },
+    "74839-74840": {
+      "decision": "confirm",
+      "note": "very likely",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "asahel-3",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74839|74840",
+      "decidedAt": "2026-09-28T19:53:44.887Z"
+    },
+    "74841-74842": {
+      "decision": "confirm",
+      "note": "very likely",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jerimoth-5",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74841|74842",
+      "decidedAt": "2026-09-28T19:53:46.711Z"
+    },
+    "74843-74844": {
+      "decision": "confirm",
+      "note": "very likely",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jozabad-4",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74843|74844",
+      "decidedAt": "2026-09-28T19:53:48.949Z"
+    },
+    "74845-74846": {
+      "decision": "confirm",
+      "note": "very likely",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "eliel-8",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74845|74846",
+      "decidedAt": "2026-09-28T19:53:51.053Z"
+    },
+    "74847-74848": {
+      "decision": "confirm",
+      "note": "very likely",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "ismachiah",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74847|74848",
+      "decidedAt": "2026-09-28T19:53:53.764Z"
+    },
+    "74849-74850": {
+      "decision": "confirm",
+      "note": "very likely",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "mahath-2",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74849|74850",
+      "decidedAt": "2026-09-28T19:53:55.527Z"
+    },
+    "74851-74852": {
+      "decision": "confirm",
+      "note": "very likely",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "benaiah-6",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74851|74852",
+      "decidedAt": "2026-09-28T19:53:57.235Z"
+    },
+    "75487-75488": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jamin-3",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75487|75488",
+      "decidedAt": "2026-09-28T19:57:25.590Z"
+    },
+    "75459-75460": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "mattithiah-5",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75459|75460",
+      "decidedAt": "2026-09-28T19:58:02.198Z"
+    },
+    "75461-75462": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "shema-4",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75461|75462",
+      "decidedAt": "2026-09-28T19:58:04.316Z"
+    },
+    "75463-75464": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "anaiah",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75463|75464",
+      "decidedAt": "2026-09-28T19:58:06.400Z"
+    },
+    "75465-75466": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "uriah-3",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75465|75466",
+      "decidedAt": "2026-09-28T19:58:09.050Z"
+    },
+    "75467-75468": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "maaseiah-10",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75467|75468",
+      "decidedAt": "2026-09-28T19:58:11.094Z"
+    },
+    "75469-75470": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "pedaiah-5",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75469|75470",
+      "decidedAt": "2026-09-28T19:58:12.984Z"
+    },
+    "75471-75472": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "mishael-2",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75471|75472",
+      "decidedAt": "2026-09-28T19:58:14.816Z"
+    },
+    "75475-75476": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "hashbaddanah",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75475|75476",
+      "decidedAt": "2026-09-28T19:58:17.716Z"
+    },
+    "75477-75478": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "zechariah-13",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75477|75478",
+      "decidedAt": "2026-09-28T19:58:19.510Z"
+    },
+    "75479-75480": {
+      "decision": "remove",
+      "note": "We can't be sure",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "meshullam-13",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75479|75480",
+      "decidedAt": "2026-09-28T19:58:21.932Z"
+    },
+    "75513-75514": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "zedekiah-3",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "75513|75514",
+      "decidedAt": "2026-09-28T20:02:20.216Z"
+    },
+    "75631-75632": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "zichri-11",
+      "relation": "descendant-of",
+      "b": "benjamin",
+      "rows": "75631|75632",
+      "decidedAt": "2026-09-28T20:02:33.013Z"
+    },
+    "75635-75636": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "hassenuah-2",
+      "relation": "descendant-of",
+      "b": "benjamin",
+      "rows": "75635|75636",
+      "decidedAt": "2026-09-28T20:02:47.971Z"
+    },
+    "75639-75640": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "joiarib-3",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "75639|75640",
+      "decidedAt": "2026-09-28T20:02:53.551Z"
+    },
+    "75673-75674": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "haggedolim",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "75673|75674",
+      "decidedAt": "2026-09-28T20:03:25.841Z"
+    },
+    "75683-75684": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "gishpa",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75683|75684",
+      "decidedAt": "2026-09-28T20:04:25.464Z"
+    },
+    "75743-75744": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "miniamin-2",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "75743|75744",
+      "decidedAt": "2026-09-28T20:04:31.697Z"
+    },
+    "75745-75746": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "moadiah",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "75745|75746",
+      "decidedAt": "2026-09-28T20:04:34.090Z"
+    },
+    "75757-75758": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "sallai-2",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "75757|75758",
+      "decidedAt": "2026-09-28T20:04:37.634Z"
+    },
+    "75769-75770": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "obadiah-11",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75769|75770",
+      "decidedAt": "2026-09-28T20:04:38.968Z"
+    },
+    "75799-75800": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jezrahiah",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75799|75800",
+      "decidedAt": "2026-09-28T20:04:40.319Z"
+    },
+    "74321-74322": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "ben",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74321|74322",
+      "decidedAt": "2026-09-28T20:06:30.688Z"
+    },
+    "74353-74354": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "shebaniah",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74353|74354",
+      "decidedAt": "2026-09-28T20:06:32.109Z"
+    },
+    "74355-74356": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "joshaphat-2",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74355|74356",
+      "decidedAt": "2026-09-28T20:06:33.394Z"
+    },
+    "74357-74358": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "nethanel-3",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74357|74358",
+      "decidedAt": "2026-09-28T20:06:34.665Z"
+    },
+    "74359-74360": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "eliezer-4",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74359|74360",
+      "decidedAt": "2026-09-28T20:06:35.937Z"
+    },
+    "74361-74362": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jehiah",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74361|74362",
+      "decidedAt": "2026-09-28T20:06:37.253Z"
+    },
+    "74417-74418": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jehoiarib-2",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74417|74418",
+      "decidedAt": "2026-09-28T20:07:54.999Z"
+    },
+    "74419-74420": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jedaiah-3",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74419|74420",
+      "decidedAt": "2026-09-28T20:07:56.872Z"
+    },
+    "74421-74422": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "harim",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74421|74422",
+      "decidedAt": "2026-09-28T20:07:58.660Z"
+    },
+    "74423-74424": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "seorim",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74423|74424",
+      "decidedAt": "2026-09-28T20:08:00.460Z"
+    },
+    "74425-74426": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "malchijah-3",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74425|74426",
+      "decidedAt": "2026-09-28T20:08:02.230Z"
+    },
+    "74427-74428": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "mijamin",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74427|74428",
+      "decidedAt": "2026-09-28T20:08:04.481Z"
+    },
+    "74429-74430": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "hakkoz",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74429|74430",
+      "decidedAt": "2026-09-28T20:08:06.062Z"
+    },
+    "74431-74432": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "abijah-5",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74431|74432",
+      "decidedAt": "2026-09-28T20:08:07.799Z"
+    },
+    "74433-74434": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jeshua",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74433|74434",
+      "decidedAt": "2026-09-28T20:08:09.702Z"
+    },
+    "74435-74436": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "shecaniah-2",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74435|74436",
+      "decidedAt": "2026-09-28T20:08:13.000Z"
+    },
+    "74437-74438": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "eliashib-2",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74437|74438",
+      "decidedAt": "2026-09-28T20:08:14.691Z"
+    },
+    "74439-74440": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jakim-2",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74439|74440",
+      "decidedAt": "2026-09-28T20:08:16.537Z"
+    },
+    "74441-74442": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "huppah",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74441|74442",
+      "decidedAt": "2026-09-28T20:08:19.228Z"
+    },
+    "74443-74444": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jeshebeab",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74443|74444",
+      "decidedAt": "2026-09-28T20:08:23.707Z"
+    },
+    "74445-74446": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "bilgah",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74445|74446",
+      "decidedAt": "2026-09-28T20:08:25.807Z"
+    },
+    "74447-74448": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "immer-2",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74447|74448",
+      "decidedAt": "2026-09-28T20:08:27.792Z"
+    },
+    "74449-74450": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "hezir",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74449|74450",
+      "decidedAt": "2026-09-28T20:08:29.612Z"
+    },
+    "74451-74452": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "happizzez",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74451|74452",
+      "decidedAt": "2026-09-28T20:08:31.503Z"
+    },
+    "74453-74454": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "pethahiah",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74453|74454",
+      "decidedAt": "2026-09-28T20:08:33.324Z"
+    },
+    "74455-74456": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jehezkel",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74455|74456",
+      "decidedAt": "2026-09-28T20:08:35.026Z"
+    },
+    "74457-74458": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jachin-3",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74457|74458",
+      "decidedAt": "2026-09-28T20:08:36.680Z"
+    },
+    "74459-74460": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "gamul",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74459|74460",
+      "decidedAt": "2026-09-28T20:08:38.327Z"
+    },
+    "74461-74462": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "delaiah-2",
+      "relation": "descendant-of",
+      "b": "eleazar",
+      "rows": "74461|74462",
+      "decidedAt": "2026-09-28T20:08:40.208Z"
+    },
+    "74463-74464": {
+      "decision": "remove",
+      "note": "descendant of Aaron",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "maaziah",
+      "relation": "descendant-of",
+      "b": "ithamar",
+      "rows": "74463|74464",
+      "decidedAt": "2026-09-28T20:08:45.878Z"
+    },
+    "74587-74588": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "shuppim",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74587|74588",
+      "decidedAt": "2026-09-28T20:11:05.332Z"
+    },
+    "74621-74622": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "maacah-8",
+      "relation": "descendant-of",
+      "b": "simeon",
+      "rows": "74621|74622",
+      "decidedAt": "2026-09-28T20:11:27.485Z"
+    },
+    "74879-74880": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "sheshbazzar",
+      "relation": "descendant-of",
+      "b": "judah",
+      "rows": "74879|74880",
+      "decidedAt": "2026-09-28T20:11:41.538Z"
+    },
+    "74937-74938": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "gibbar",
+      "relation": "descendant-of",
+      "b": "jacob",
+      "rows": "74937|74938",
+      "decidedAt": "2026-09-28T20:12:21.671Z"
+    },
+    "74939-74940": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "azmaveth-4",
+      "relation": "descendant-of",
+      "b": "jacob",
+      "rows": "74939|74940",
+      "decidedAt": "2026-09-28T20:12:49.542Z"
+    },
+    "74941-74942": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "nebo",
+      "relation": "descendant-of",
+      "b": "jacob",
+      "rows": "74941|74942",
+      "decidedAt": "2026-09-28T20:13:01.805Z"
+    },
+    "74943-74944": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "magbish",
+      "relation": "descendant-of",
+      "b": "jacob",
+      "rows": "74943|74944",
+      "decidedAt": "2026-09-28T20:13:07.968Z"
+    },
+    "74945-74946": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "elam-5",
+      "relation": "descendant-of",
+      "b": "jacob",
+      "rows": "74945|74946",
+      "decidedAt": "2026-09-28T20:13:47.153Z"
+    },
+    "74949-74950": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "senaah",
+      "relation": "descendant-of",
+      "b": "jacob",
+      "rows": "74949|74950",
+      "decidedAt": "2026-09-28T20:13:49.397Z"
+    },
+    "74953-74954": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "harim-3",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "74953|74954",
+      "decidedAt": "2026-09-28T20:14:03.391Z"
+    },
+    "74961-74962": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "ater-2",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74961|74962",
+      "decidedAt": "2026-09-28T20:14:12.656Z"
+    },
+    "74963-74964": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "hatita",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74963|74964",
+      "decidedAt": "2026-09-28T20:14:14.835Z"
+    },
+    "74965-74966": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "shobai",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "74965|74966",
+      "decidedAt": "2026-09-28T20:14:16.383Z"
+    },
+    "75045-75046": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "haggai",
+      "relation": "descendant-of",
+      "b": "jacob",
+      "rows": "75045|75046",
+      "decidedAt": "2026-09-28T20:15:26.816Z"
+    },
+    "75049-75050": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "iddo-5",
+      "relation": "descendant-of",
+      "b": "jacob",
+      "rows": "75049|75050",
+      "decidedAt": "2026-09-28T20:15:51.623Z"
+    },
+    "75063-75064": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jahaziel-4",
+      "relation": "descendant-of",
+      "b": "zattu",
+      "rows": "75063|75064",
+      "decidedAt": "2026-09-28T20:16:42.146Z"
+    },
+    "75083-75084": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "josiphiah",
+      "relation": "descendant-of",
+      "b": "bani-4",
+      "rows": "75083|75084",
+      "decidedAt": "2026-09-28T20:17:11.048Z"
+    },
+    "75103-75104": {
+      "decision": "confirm",
+      "note": "10:18",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "eliezer-7",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75103|75104",
+      "decidedAt": "2026-09-28T20:18:23.463Z"
+    },
+    "75105-75106": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "ariel-2",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75105|75106",
+      "decidedAt": "2026-09-28T20:18:51.277Z"
+    },
+    "75107-75108": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "shemaiah-14",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75107|75108",
+      "decidedAt": "2026-09-28T20:18:53.863Z"
+    },
+    "75109-75110": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "elnathan-2",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75109|75110",
+      "decidedAt": "2026-09-28T20:18:55.905Z"
+    },
+    "75111-75112": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "jarib",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "75111|75112",
+      "decidedAt": "2026-09-28T20:19:02.149Z"
+    },
+    "75113-75114": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "elnathan-3",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75113|75114",
+      "decidedAt": "2026-09-28T20:19:06.557Z"
+    },
+    "75115-75116": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "nathan-7",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75115|75116",
+      "decidedAt": "2026-09-28T20:19:08.703Z"
+    },
+    "75117-75118": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "meshullam-8",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75117|75118",
+      "decidedAt": "2026-09-28T20:19:12.610Z"
+    },
+    "75119-75120": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "joiarib",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75119|75120",
+      "decidedAt": "2026-09-28T20:19:14.622Z"
+    },
+    "75121-75122": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "elnathan-4",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75121|75122",
+      "decidedAt": "2026-09-28T20:19:18.122Z"
+    },
+    "75133-75134": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "uriah-2",
+      "relation": "descendant-of",
+      "b": "aaron",
+      "rows": "75133|75134",
+      "decidedAt": "2026-09-28T20:20:54.926Z"
+    },
+    "75193-75194": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "eliashib-4",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75193|75194",
+      "decidedAt": "2026-09-28T20:21:08.205Z"
+    },
+    "75195-75196": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "shallum-9",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75195|75196",
+      "decidedAt": "2026-09-28T20:21:10.292Z"
+    },
+    "75197-75198": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "telem",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75197|75198",
+      "decidedAt": "2026-09-28T20:21:11.963Z"
+    },
+    "75199-75200": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "uri-3",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75199|75200",
+      "decidedAt": "2026-09-28T20:21:13.315Z"
+    },
+    "75123-75124": {
+      "decision": "remove",
+      "note": "",
+      "subset": "descent",
+      "why": "not-stated",
+      "a": "iddo-6",
+      "relation": "descendant-of",
+      "b": "levi",
+      "rows": "75123|75124",
+      "decidedAt": "2026-09-28T20:21:55.383Z"
+    },
+    "71689-71690": {
+      "decision": "confirm",
+      "note": "Yes, but don't show it in the main description for the YHVH",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "onan",
+      "relation": "killed-by",
+      "b": "yhvh",
+      "rows": "71689|71690",
+      "decidedAt": "2026-09-29T11:16:13.715Z"
+    },
+    "72063-72064": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "cozbi",
+      "relation": "daughter-of",
+      "b": "zur-2",
+      "rows": "72063|72064",
+      "decidedAt": "2026-09-29T11:16:30.755Z"
+    },
+    "72475-72476": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "abimelech-2",
+      "relation": "son-of",
+      "b": "jerubbesheth",
+      "rows": "72475|72476",
+      "decidedAt": "2026-09-29T11:16:42.025Z"
+    },
+    "73097-73098": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "achsah",
+      "relation": "daughter-of",
+      "b": "chelubai",
+      "rows": "73097|73098",
+      "decidedAt": "2026-09-29T11:17:09.237Z"
+    },
+    "73121-73122": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "shealtiel-2",
+      "relation": "son-of",
+      "b": "jehoiachin",
+      "rows": "73121|73122",
+      "decidedAt": "2026-09-29T11:17:17.670Z"
+    },
+    "73135-73136": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "zerubbabel-2",
+      "relation": "son-of",
+      "b": "pedaiah-2",
+      "rows": "73135|73136",
+      "decidedAt": "2026-09-29T11:17:31.450Z"
+    },
+    "73139-73140": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "meshullam-2",
+      "relation": "son-of",
+      "b": "zerubbabel-2",
+      "rows": "73139|73140",
+      "decidedAt": "2026-09-29T11:19:24.553Z"
+    },
+    "73141-73142": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "hananiah",
+      "relation": "son-of",
+      "b": "zerubbabel-2",
+      "rows": "73141|73142",
+      "decidedAt": "2026-09-29T11:19:25.875Z"
+    },
+    "73143-73144": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "shelomith-2",
+      "relation": "daughter-of",
+      "b": "zerubbabel-2",
+      "rows": "73143|73144",
+      "decidedAt": "2026-09-29T11:19:27.902Z"
+    },
+    "73565-73566": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "abiasaph",
+      "relation": "son-of",
+      "b": "elkanah",
+      "rows": "73565|73566",
+      "decidedAt": "2026-09-29T11:29:26.210Z"
+    },
+    "73567-73568": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "assir-2",
+      "relation": "son-of",
+      "b": "abiasaph",
+      "rows": "73567|73568",
+      "decidedAt": "2026-09-29T11:29:30.417Z"
+    },
+    "73615-73616": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "ethni",
+      "relation": "son-of",
+      "b": "zerah-4",
+      "rows": "73615|73616",
+      "decidedAt": "2026-09-29T11:30:08.140Z"
+    },
+    "73617-73618": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "zerah-4",
+      "relation": "son-of",
+      "b": "adaiah-2",
+      "rows": "73617|73618",
+      "decidedAt": "2026-09-29T11:30:10.825Z"
+    },
+    "73621-73622": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "ethan-2",
+      "relation": "son-of",
+      "b": "zimmah",
+      "rows": "73621|73622",
+      "decidedAt": "2026-09-29T11:30:28.139Z"
+    },
+    "73623-73624": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "zimmah",
+      "relation": "son-of",
+      "b": "shimei-8",
+      "rows": "73623|73624",
+      "decidedAt": "2026-09-29T11:30:31.024Z"
+    },
+    "73627-73628": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "jahath-2",
+      "relation": "son-of",
+      "b": "gershon",
+      "rows": "73627|73628",
+      "decidedAt": "2026-09-29T11:30:34.881Z"
+    },
+    "73649-73650": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "mahli-3",
+      "relation": "son-of",
+      "b": "mushi",
+      "rows": "73649|73650",
+      "decidedAt": "2026-09-29T11:30:49.133Z"
+    },
+    "73747-73748": {
+      "decision": "remove",
+      "note": "Ishod, not Iezer. Check it",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "iezer",
+      "relation": "son-of",
+      "b": "hammolecheth",
+      "rows": "73747|73748",
+      "decidedAt": "2026-09-29T11:32:12.152Z"
+    },
+    "74167-74168": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "mattaniah-9",
+      "relation": "son-of",
+      "b": "mica-2",
+      "rows": "74167|74168",
+      "decidedAt": "2026-09-29T11:32:34.065Z"
+    },
+    "74171-74172": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "zichri-5",
+      "relation": "son-of",
+      "b": "asaph-2",
+      "rows": "74171|74172",
+      "decidedAt": "2026-09-29T11:32:39.476Z"
+    },
+    "74409-74410": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "descent",
+      "why": "not-asked",
+      "a": "mahli-3",
+      "relation": "descendant-of",
+      "b": "mushi",
+      "rows": "74409|74410",
+      "decidedAt": "2026-09-29T11:33:29.234Z"
+    },
+    "75125-75126": {
+      "decision": "confirm",
+      "note": "maybe son?",
+      "subset": "descent",
+      "why": "not-asked",
+      "a": "sherebiah-2",
+      "relation": "descendant-of",
+      "b": "mahli",
+      "rows": "75125|75126",
+      "decidedAt": "2026-09-29T11:33:36.993Z"
+    },
+    "75279-75280": {
+      "decision": "confirm",
+      "note": "or maybe son?",
+      "subset": "descent",
+      "why": "not-asked",
+      "a": "malchijah-6",
+      "relation": "descendant-of",
+      "b": "harim-2",
+      "rows": "75279|75280",
+      "decidedAt": "2026-09-29T11:34:03.550Z"
+    },
+    "75403-75404": {
+      "decision": "confirm",
+      "note": "or descendant",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "malchijah-6",
+      "relation": "son-of",
+      "b": "harim-2",
+      "rows": "75403|75404",
+      "decidedAt": "2026-09-29T11:34:31.513Z"
+    },
+    "75417-75418": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "bavvai",
+      "relation": "son-of",
+      "b": "henadad-2",
+      "rows": "75417|75418",
+      "decidedAt": "2026-09-29T11:35:02.437Z"
+    },
+    "75433-75434": {
+      "decision": "confirm",
+      "note": "or descendant",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "pedaiah-4",
+      "relation": "son-of",
+      "b": "parosh",
+      "rows": "75433|75434",
+      "decidedAt": "2026-09-29T11:35:29.988Z"
+    },
+    "75531-75532": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "jeshua-7",
+      "relation": "son-of",
+      "b": "azaniah",
+      "rows": "75531|75532",
+      "decidedAt": "2026-09-29T11:35:46.758Z"
+    },
+    "75611-75612": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "meshuallam",
+      "relation": "son-of",
+      "b": "joed",
+      "rows": "75611|75612",
+      "decidedAt": "2026-09-29T11:35:59.805Z"
+    },
+    "75643-75644": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "seraiah-8",
+      "relation": "son-of",
+      "b": "hilkiah-2",
+      "rows": "75643|75644",
+      "decidedAt": "2026-09-29T11:36:08.108Z"
+    },
+    "75657-75658": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "jeroham-3",
+      "relation": "son-of",
+      "b": "pelaliah",
+      "rows": "75657|75658",
+      "decidedAt": "2026-09-29T11:36:17.440Z"
+    },
+    "75679-75680": {
+      "decision": "confirm",
+      "note": "or son",
+      "subset": "descent",
+      "why": "not-asked",
+      "a": "mattaniah-9",
+      "relation": "descendant-of",
+      "b": "mica-2",
+      "rows": "75679|75680",
+      "decidedAt": "2026-09-29T11:36:27.961Z"
+    },
+    "75713-75714": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "eliashib-7",
+      "relation": "son-of",
+      "b": "joiakim",
+      "rows": "75713|75714",
+      "decidedAt": "2026-09-29T11:36:38.692Z"
+    },
+    "75715-75716-75809-75810": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "joiada-2",
+      "relation": "son-of",
+      "b": "eliashib-7",
+      "rows": "75715|75716|75809|75810",
+      "decidedAt": "2026-09-29T11:36:47.886Z"
+    },
+    "75889-75890": {
+      "decision": "confirm",
+      "note": "or desdendant",
+      "subset": "descent",
+      "why": "not-asked",
+      "a": "pashhur-2",
+      "relation": "descendant-of",
+      "b": "immer",
+      "rows": "75889|75890",
+      "decidedAt": "2026-09-29T11:37:00.672Z"
+    },
+    "75901-75902": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "elasah-2",
+      "relation": "son-of",
+      "b": "shaphan",
+      "rows": "75901|75902",
+      "decidedAt": "2026-09-29T11:37:13.060Z"
+    },
+    "75967-75968": {
+      "decision": "confirm",
+      "note": "",
+      "subset": "explicit",
+      "why": "not-asked",
+      "a": "pashhur",
+      "relation": "son-of",
+      "b": "malchijah-10",
+      "rows": "75967|75968",
+      "decidedAt": "2026-09-29T11:37:33.538Z"
     }
   }
 }

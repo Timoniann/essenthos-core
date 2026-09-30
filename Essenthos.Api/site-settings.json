@@ -3,6 +3,7 @@
   "settings": {
     "naveTopics": true,
     "generatedImages": true,
-    "ownWorkLicence": "cc-by-nc-4.0"
+    "ownWorkLicence": "cc-by-nc-4.0",
+    "relationshipsOursOnly": true
   }
 }
