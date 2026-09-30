@@ -530,7 +530,10 @@
       "words": [
         {
           "strong": "H4899",
-          "beside": true
+          "beside": true,
+          "except": [
+            "2SA 1:21"
+          ]
         },
         {
           "strong": "G5547",

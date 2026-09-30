@@ -40,6 +40,13 @@ public partial class DistinguisherTests
             lines[term.Slug] = term.Distinguisher;
         }
 
+        // A record a dataset listed and a ruling re-headed is ours, line and all.
+        foreach (var ruling in SenseReadingFiles.AddressedRulings().Rulings
+                     .Where(r => r.Existing is not null && r.Says?.Name is not null && r.Says.Distinguisher is not null))
+        {
+            lines[ruling.Existing!] = ruling.Says!.Distinguisher!;
+        }
+
         return lines;
     }
 
