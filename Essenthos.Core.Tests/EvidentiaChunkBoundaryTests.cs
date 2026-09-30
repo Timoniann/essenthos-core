@@ -247,13 +247,13 @@ public class EvidentiaChunkBoundaryTests
         words[1].Right.Should().BeFalse();
         words[1].Boundary.Should().Be(EvidentiaBoundaryClass.Prefix);
         words[3].Boundary.Should().Be(EvidentiaBoundaryClass.None);
-        measure.Of(EvidentiaWordState.Linked).Should().Be(new EvidentiaStateCount(2, 2, 1, 0, 0, Boundary: 1));
+        measure.Of(EvidentiaWordState.Linked).Should().Be(new EvidentiaStateCount(2, 2, 1, 0, 0, Boundary: 1, RightByTheJudgedKey: 1));
         measure.Rules[(EvidentiaWordState.Linked, nameof(EvidentiaAttachment.Preposition))].Should().Be(new EvidentiaStateCount(1, 1, 0, 0, 0, Boundary: 1));
         measure.Boundary.Should().Be(new EvidentiaBoundaryCount(1, 0, 0, 0, 0, 0, 0, 0));
         (measure + measure).Boundary.Prefix.Should().Be(2);
         measure.Report().Should()
             .Contain("chunk boundary: chunk-boundary 1/2")
-            .And.Contain("split key, pairs, both ways: 1/2 (50.00 %) by the key; with chunk-boundary counted right 2/2 (100.00 %)")
+            .And.Contain("split key, pairs, three ways: 1/2 (50.00 %) by the key; with chunk-boundary counted right 2/2 (100.00 %)")
             .And.Contain("by rule, linked, Preposition: 1 words; right 0/1 (0.00 %); with chunk-boundary counted right 1/1 (100.00 %); with chunk-boundary-attached 0/1");
     }
 

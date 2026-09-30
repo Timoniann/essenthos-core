@@ -40,8 +40,9 @@ internal enum EvidentiaHeadState
 }
 
 /// <summary>
-/// One word's state, the rule that gave it, the word it was read with, the split key's verdict, and the
-/// class a placement the key counts wrong is quoted apart in.
+/// One word's state, the rule that gave it, the word it was read with, the split key's verdict, the
+/// class a placement the key counts wrong is quoted apart in, the verdict of the key as its readers left
+/// it, and what they made of this placement where they read it.
 /// </summary>
 internal sealed record EvidentiaWordStateRecord(
     EvidentiaWordState State,
@@ -51,13 +52,16 @@ internal sealed record EvidentiaWordStateRecord(
     EvidentiaHeadState? HeadState,
     bool? Right,
     IReadOnlyList<long> KeyTargets,
-    EvidentiaBoundaryClass Boundary = EvidentiaBoundaryClass.None);
+    EvidentiaBoundaryClass Boundary = EvidentiaBoundaryClass.None,
+    bool? RightByTheJudgedKey = null,
+    EvidentiaKeyVerdict? Reading = null);
 
 /// <summary>
 /// How many words stand in a state or came from a rule, and how many of those the key can judge and calls
 /// right. <see cref="Boundary"/> and <see cref="BoundaryAttached"/> are the words among those it calls
 /// wrong that stand in the two chunk-boundary classes, and <see cref="SafeBoundary"/> those of either in
-/// the safe tier.
+/// the safe tier. <see cref="RightByTheJudgedKey"/> and <see cref="SafeRightByTheJudgedKey"/> are the words
+/// right by the key as its readers left it (<see cref="EvidentiaJudgedKey"/>).
 /// </summary>
 internal readonly record struct EvidentiaStateCount(
     int Words,
@@ -67,12 +71,15 @@ internal readonly record struct EvidentiaStateCount(
     int SafeRight,
     int Boundary = 0,
     int BoundaryAttached = 0,
-    int SafeBoundary = 0)
+    int SafeBoundary = 0,
+    int RightByTheJudgedKey = 0,
+    int SafeRightByTheJudgedKey = 0)
 {
     public static EvidentiaStateCount operator +(EvidentiaStateCount one, EvidentiaStateCount two) => new(
         one.Words + two.Words, one.Judged + two.Judged, one.Right + two.Right,
         one.SafeJudged + two.SafeJudged, one.SafeRight + two.SafeRight,
-        one.Boundary + two.Boundary, one.BoundaryAttached + two.BoundaryAttached, one.SafeBoundary + two.SafeBoundary);
+        one.Boundary + two.Boundary, one.BoundaryAttached + two.BoundaryAttached, one.SafeBoundary + two.SafeBoundary,
+        one.RightByTheJudgedKey + two.RightByTheJudgedKey, one.SafeRightByTheJudgedKey + two.SafeRightByTheJudgedKey);
 }
 
 /// <summary>
@@ -81,9 +88,12 @@ internal readonly record struct EvidentiaStateCount(
 /// right where the split key names its pair, a supplied word where the key's links leave it nothing to
 /// render, and an unresolved word is neither.
 ///
-/// <para>Every precision is quoted both ways: by the key, and with the placements of a chunk-boundary
-/// class (<see cref="EvidentiaChunkBoundary"/>) counted right, each class apart. <see cref="Loaded"/> is
-/// the same passage on the key as it was loaded.</para>
+/// <para>Every precision is quoted three ways: by the key, with the placements of a chunk-boundary
+/// class (<see cref="EvidentiaChunkBoundary"/>) counted right, each class apart, and against the judged
+/// key, which is the key with the corrections of its readers (<see cref="EvidentiaJudgedKey"/>) and no
+/// class counted by rule. <see cref="Loaded"/> is the same passage on the key as it was loaded;
+/// <see cref="JudgedFinal"/>, <see cref="JudgedSafe"/> and <see cref="JudgedLoaded"/> are the placements
+/// right by the judged key: of all, of the safe tier, and on the key as loaded.</para>
 /// </summary>
 internal sealed record EvidentiaStateMeasure(
     int SourceWords,
@@ -99,7 +109,11 @@ internal sealed record EvidentiaStateMeasure(
     int UnresolvedGrammatical,
     IReadOnlyDictionary<EvidentiaHeadState, int> Cascade,
     EvidentiaTierScore Loaded = default,
-    EvidentiaBoundaryCount Boundary = default)
+    EvidentiaBoundaryCount Boundary = default,
+    int JudgedFinal = 0,
+    int JudgedSafe = 0,
+    int JudgedLoaded = 0,
+    EvidentiaJudgedCount Readings = default)
 {
     public static readonly EvidentiaStateMeasure Empty = new(
         0, 0, new Dictionary<EvidentiaKeyPairKind, (int, int)>(), 0, 0, default, default,
@@ -125,7 +139,11 @@ internal sealed record EvidentiaStateMeasure(
         one.UnresolvedGrammatical + two.UnresolvedGrammatical,
         Merge(one.Cascade, two.Cascade, (first, second) => first + second),
         one.Loaded + two.Loaded,
-        one.Boundary + two.Boundary);
+        one.Boundary + two.Boundary,
+        one.JudgedFinal + two.JudgedFinal,
+        one.JudgedSafe + two.JudgedSafe,
+        one.JudgedLoaded + two.JudgedLoaded,
+        one.Readings + two.Readings);
 
     private static Dictionary<TKey, TValue> Merge<TKey, TValue>(
         IReadOnlyDictionary<TKey, TValue> one,
@@ -143,6 +161,8 @@ internal sealed record EvidentiaStateMeasure(
     }
 
     private static string Share(int part, int whole) => $"{part:N0}/{whole:N0} ({(whole == 0 ? 0 : (double)part / whole):P2})";
+
+    public const string JudgedName = "against the judged key";
 
     /// <summary>A figure by the key, then with each class counted right, the classes apart.</summary>
     private static string BothWays(int right, int judged, int boundary, int attached) =>
@@ -179,11 +199,18 @@ internal sealed record EvidentiaStateMeasure(
             $"{Share(Boundary.PrefixOnWordsLeftOut, Boundary.Prefix)}; {EvidentiaChunkBoundary.AttachedName} " +
             $"{Share(Boundary.Attached, Final.OnCoveredWords)}, auxiliaries {Share(Boundary.AttachedAuxiliaries, Boundary.Attached)}, " +
             $"on a verb the key leaves out beside its infinitive absolute {Share(Boundary.AttachedBesideInfinitives, Boundary.Attached)}",
-            $"key as loaded, pairs, both ways: {BothWays(Loaded.Correct, Loaded.OnCoveredWords, Boundary.Prefix, Boundary.Attached)}; " +
-            $"with both {Share(Loaded.Correct + Boundary.Prefix + Boundary.Attached, Loaded.OnCoveredWords)}",
-            $"split key, pairs, both ways: {BothWays(Final.Correct, Final.OnCoveredWords, Boundary.Prefix, Boundary.Attached)}; " +
+            $"key as loaded, pairs, three ways: {BothWays(Loaded.Correct, Loaded.OnCoveredWords, Boundary.Prefix, Boundary.Attached)}; " +
+            $"with both {Share(Loaded.Correct + Boundary.Prefix + Boundary.Attached, Loaded.OnCoveredWords)}; " +
+            $"{JudgedName} {Share(JudgedLoaded, Loaded.OnCoveredWords)}",
+            $"split key, pairs, three ways: {BothWays(Final.Correct, Final.OnCoveredWords, Boundary.Prefix, Boundary.Attached)}; " +
             $"with both {Share(Final.Correct + Boundary.Prefix + Boundary.Attached, Final.OnCoveredWords)}; " +
-            $"safe tier with both {Share(Safe.Correct + Boundary.SafePrefix + Boundary.SafeAttached, Safe.OnCoveredWords)}",
+            $"safe tier with both {Share(Safe.Correct + Boundary.SafePrefix + Boundary.SafeAttached, Safe.OnCoveredWords)}; " +
+            $"{JudgedName} {Share(JudgedFinal, Final.OnCoveredWords)}; safe tier {JudgedName} {Share(JudgedSafe, Safe.OnCoveredWords)}",
+            $"judged key: corrected {Share(Readings.Corrected, Readings.Readings)} of the readings of the key on these words, " +
+            $"defensible {Share(Readings.Defensible, Readings.Readings)}, confirmed {Share(Readings.Confirmed, Readings.Readings)}, " +
+            $"neither {Share(Readings.Neither, Readings.Readings)}, unsettled {Share(Readings.Unsettled, Readings.Readings)}; " +
+            $"no longer reading as the text does and not applied {Share(Readings.Stale, Readings.Readings + Readings.Stale)}; " +
+            $"wrong by the key and read by nobody {Share(Readings.Unread, Readings.WrongByTheKey)}",
         };
         foreach (var state in Enum.GetValues<EvidentiaWordState>())
         {
@@ -194,11 +221,14 @@ internal sealed record EvidentiaStateMeasure(
                     $"by state, {Name(state)}: {Share(count.Words, SourceWords)} of words; the key has a counterpart for " +
                     $"{UnresolvedWithCounterpart:N0}; grammatical {UnresolvedGrammatical:N0}",
                 EvidentiaWordState.Supplied =>
-                    $"by state, {Name(state)}: {Share(count.Words, SourceWords)} of words; right {Share(count.Right, count.Judged)}",
+                    $"by state, {Name(state)}: {Share(count.Words, SourceWords)} of words; right {Share(count.Right, count.Judged)}; " +
+                    $"{JudgedName} {Share(count.RightByTheJudgedKey, count.Judged)}",
                 _ =>
                     $"by state, {Name(state)}: {Share(count.Words, SourceWords)} of words; right {Share(count.Right, count.Judged)}; " +
                     $"safe tier {Share(count.SafeRight, count.SafeJudged)}; {Classes(count)}; " +
-                    $"safe tier with both {Share(count.SafeRight + count.SafeBoundary, count.SafeJudged)}",
+                    $"safe tier with both {Share(count.SafeRight + count.SafeBoundary, count.SafeJudged)}; " +
+                    $"{JudgedName} {Share(count.RightByTheJudgedKey, count.Judged)}; " +
+                    $"safe tier {JudgedName} {Share(count.SafeRightByTheJudgedKey, count.SafeJudged)}",
             });
         }
 
@@ -206,13 +236,15 @@ internal sealed record EvidentiaStateMeasure(
         lines.Add(
             $"by state, explained: {Share(explained.Sum(pair => pair.Value.Words), SourceWords)} of words; " +
             $"right {Share(explained.Sum(pair => pair.Value.Right), SourceWords)} of all words; with both chunk-boundary classes " +
-            $"{Share(explained.Sum(pair => pair.Value.Right + pair.Value.Boundary + pair.Value.BoundaryAttached), SourceWords)}");
+            $"{Share(explained.Sum(pair => pair.Value.Right + pair.Value.Boundary + pair.Value.BoundaryAttached), SourceWords)}; " +
+            $"{JudgedName} {Share(explained.Sum(pair => pair.Value.RightByTheJudgedKey), SourceWords)}");
         lines.AddRange(Rules
             .OrderBy(pair => pair.Key.State)
             .ThenByDescending(pair => pair.Value.Words)
             .ThenBy(pair => pair.Key.Rule, StringComparer.Ordinal)
             .Select(pair => $"by rule, {Name(pair.Key.State)}, {pair.Key.Rule}: {pair.Value.Words:N0} words; " +
-                            $"right {Share(pair.Value.Right, pair.Value.Judged)}; {Classes(pair.Value)}"));
+                            $"right {Share(pair.Value.Right, pair.Value.Judged)}; {Classes(pair.Value)}; " +
+                            $"{JudgedName} {Share(pair.Value.RightByTheJudgedKey, pair.Value.Judged)}"));
         var waiting = Cascade.Values.Sum();
         int Head(EvidentiaHeadState state) => Cascade.GetValueOrDefault(state);
         lines.Add(
@@ -254,8 +286,10 @@ internal static class EvidentiaStateScore
         IReadOnlySet<(long From, long To)> accepted,
         IReadOnlySet<(long From, long To)> safe,
         IReadOnlyDictionary<(long From, long To), EvidentiaBoundaryCase> boundary,
-        out IReadOnlyDictionary<long, EvidentiaWordStateRecord> records)
+        out IReadOnlyDictionary<long, EvidentiaWordStateRecord> records,
+        EvidentiaJudgedKey? judged = null)
     {
+        judged ??= EvidentiaJudgedKey.None;
         var words = source.DistinctBy(word => word.Token.Id).ToList();
         var proposalBySource = proposals.GroupBy(proposal => proposal.Source.Token.Id)
             .ToDictionary(group => group.Key, group => group.First());
@@ -264,6 +298,7 @@ internal static class EvidentiaStateScore
         var keyTargets = key.Pairs.GroupBy(pair => pair.From)
             .ToDictionary(group => group.Key, group => (IReadOnlyList<long>)[.. group.Select(pair => pair.To)]);
         var states = new Dictionary<long, (EvidentiaWordState State, string? Rule, bool? Right)>();
+        var judgedRight = new Dictionary<long, bool?>();
         foreach (var word in words)
         {
             var id = word.Token.Id;
@@ -272,10 +307,12 @@ internal static class EvidentiaStateScore
                 var pair = (id, proposal.Target.Token.Id);
                 states[id] = (StateOf(proposal), RuleOf(proposal),
                     gold.CoveredSourceWords.Contains(id) ? accepted.Contains(pair) : null);
+                judgedRight[id] = judged.Verdict(id, proposal.Target.Token.Id, states[id].Right);
             }
             else if (supplied.Contains(id))
             {
                 states[id] = (EvidentiaWordState.Supplied, null, absenceVerdicts.GetValueOrDefault(id));
+                judgedRight[id] = judged.Supplied(id, states[id].Right);
             }
             else
             {
@@ -301,7 +338,11 @@ internal static class EvidentiaStateScore
                     state == EvidentiaWordState.Unresolved && IsGrammatical(word) ? head.State : null,
                     right,
                     keyTargets.GetValueOrDefault(word.Token.Id) ?? [],
-                    Boundary(word.Token.Id));
+                    Boundary(word.Token.Id),
+                    judgedRight.GetValueOrDefault(word.Token.Id),
+                    proposalBySource.TryGetValue(word.Token.Id, out var placement)
+                        ? judged.Reading(word.Token.Id, placement.Target.Token.Id)
+                        : state == EvidentiaWordState.Supplied ? judged.ReadingOfSupplied(word.Token.Id) : null);
             });
 
         var byState = new Dictionary<EvidentiaWordState, EvidentiaStateCount>();
@@ -316,7 +357,9 @@ internal static class EvidentiaStateScore
                 1, right is null ? 0 : 1, right == true ? 1 : 0,
                 isSafe && right is not null ? 1 : 0, isSafe && right == true ? 1 : 0,
                 found == EvidentiaBoundaryClass.Prefix ? 1 : 0, found == EvidentiaBoundaryClass.Attached ? 1 : 0,
-                isSafe && found != EvidentiaBoundaryClass.None ? 1 : 0);
+                isSafe && found != EvidentiaBoundaryClass.None ? 1 : 0,
+                judgedRight.GetValueOrDefault(id) == true ? 1 : 0,
+                isSafe && judgedRight.GetValueOrDefault(id) == true ? 1 : 0);
             byState[state] = byState.GetValueOrDefault(state) + count;
             if (rule is not null)
             {
@@ -346,7 +389,37 @@ internal static class EvidentiaStateScore
             waiting.GroupBy(word => heads.GetValueOrDefault(word.Token.Id).State)
                 .ToDictionary(group => group.Key, group => group.Count()),
             EvidentiaTierScore.Of(proposals, gold.Pairs, gold.CoveredSourceWords),
-            EvidentiaChunkBoundary.Count(boundary, safe));
+            EvidentiaChunkBoundary.Count(boundary, safe),
+            JudgedPairs(proposals, key.Pairs),
+            JudgedPairs(safeProposals, key.Pairs),
+            JudgedPairs(proposals, gold.Pairs),
+            Readings());
+
+        // By pair a placement is right where the readers found it right, wrong where they found it wrong,
+        // and otherwise where the key names the pair: the folded conjunctions the by-word score pairs in
+        // order count in the figures by state and not here, as they do by the key.
+        int JudgedPairs(IEnumerable<EvidentiaProposal> placed, IReadOnlySet<(long From, long To)> pairs) =>
+            placed.Count(proposal => gold.CoveredSourceWords.Contains(proposal.Source.Token.Id)
+                && judged.Verdict(
+                    proposal.Source.Token.Id, proposal.Target.Token.Id,
+                    pairs.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))) == true);
+
+        EvidentiaJudgedCount Readings()
+        {
+            var wrong = words.Where(word => states[word.Token.Id].Right == false).ToList();
+            return new EvidentiaJudgedCount(
+                judged.Readings,
+                judged.Count(EvidentiaKeyVerdict.Corrected),
+                judged.Count(EvidentiaKeyVerdict.Defensible),
+                judged.Count(EvidentiaKeyVerdict.Confirmed),
+                judged.Count(EvidentiaKeyVerdict.Neither),
+                judged.Count(EvidentiaKeyVerdict.Unsettled),
+                judged.Stale,
+                wrong.Count,
+                wrong.Count(word => proposalBySource.TryGetValue(word.Token.Id, out var placement)
+                    ? !judged.HasRead(word.Token.Id, placement.Target.Token.Id)
+                    : !judged.HasReadSupplied(word.Token.Id)));
+        }
     }
 
     public static EvidentiaWordState StateOf(EvidentiaProposal proposal) =>

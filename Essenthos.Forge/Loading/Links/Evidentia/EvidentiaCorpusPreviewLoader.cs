@@ -314,9 +314,10 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             sourceAnalyses, targetAnalyses, finalProposals, absences, goldAnnotation with { Pairs = splitKey.Pairs }, out _).Accepted
             ?? new HashSet<(long From, long To)>();
         var boundary = EvidentiaChunkBoundary.Of(markedSource, targetAnalyses, finalProposals, goldAnnotation, splitKey, acceptedOnSplitKey);
+        var judgedKey = EvidentiaJudgedKey.Of(EvidentiaKeyCorrections.All, fromSlug, toSlug, markedSource, targetAnalyses);
         var states = EvidentiaStateScore.Of(
             markedSource, finalProposals, absences, absenceVerdicts, goldAnnotation, splitKey, acceptedOnSplitKey, safe, boundary,
-            out var wordStates);
+            out var wordStates, judgedKey);
         var parsed = markedSource.DistinctBy(word => word.Token.Id).ToDictionary(word => word.Token.Id, word => word.Token);
         var words = EvidentiaSourceWordAccount.Classify(
             source,
@@ -348,6 +349,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 CorrectOnSplitKey = state.State == EvidentiaWordState.Supplied ? null : state.Right,
                 SplitKey = options.RecordWords ? state.KeyTargets : null,
                 KeyClass = EvidentiaChunkBoundary.Name(state.Boundary),
+                CorrectOnJudgedKey = state.RightByTheJudgedKey,
+                KeyReading = state.Reading?.ToString().ToLowerInvariant(),
                 ParseHeadWordId = parsed.GetValueOrDefault(word.SourceWordId)?.SyntacticHead,
                 Relation = parsed.GetValueOrDefault(word.SourceWordId)?.Relation,
             }

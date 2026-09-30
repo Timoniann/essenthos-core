@@ -168,9 +168,9 @@ public class EvidentiaKeySplitTests
         words[4].State.Should().Be(EvidentiaWordState.Supplied);
         words[4].Right.Should().BeTrue();
         words[6].State.Should().Be(EvidentiaWordState.Unresolved);
-        measure.Of(EvidentiaWordState.Linked).Should().Be(new EvidentiaStateCount(3, 3, 3, 1, 1));
-        measure.Of(EvidentiaWordState.Attached).Should().Be(new EvidentiaStateCount(1, 1, 1, 0, 0));
-        measure.Of(EvidentiaWordState.Supplied).Should().Be(new EvidentiaStateCount(1, 1, 1, 0, 0));
+        measure.Of(EvidentiaWordState.Linked).Should().Be(new EvidentiaStateCount(3, 3, 3, 1, 1, RightByTheJudgedKey: 3, SafeRightByTheJudgedKey: 1));
+        measure.Of(EvidentiaWordState.Attached).Should().Be(new EvidentiaStateCount(1, 1, 1, 0, 0, RightByTheJudgedKey: 1));
+        measure.Of(EvidentiaWordState.Supplied).Should().Be(new EvidentiaStateCount(1, 1, 1, 0, 0, RightByTheJudgedKey: 1));
         measure.Of(EvidentiaWordState.Unresolved).Words.Should().Be(1);
         measure.SplitPairs.Should().Be(6);
         measure.KeyPairsAsLoaded.Should().Be(9);
