@@ -132,6 +132,9 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         string source,
         CancellationToken cancellationToken = default)
     {
+        // The full corpus holds millions of claims: asking whether this source already stated any takes
+        // longer than the default 30 seconds there, as it never did on a slim copy.
+        db.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
         var translation = await Text(translationSlug, cancellationToken);
 
         // Asked of this source and not of any statement: the Van Dyck and the Hindi already hold Clear
@@ -441,7 +444,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         var demoted = await Count(connection, Rehead, cancellationToken, parameters);
 
         var unmatched = new List<int>();
-        await using (var command = new NpgsqlCommand(Unmatched, connection))
+        await using (var command = new NpgsqlCommand(Unmatched, connection) { CommandTimeout = 600 })
         await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
         {
             while (await reader.ReadAsync(cancellationToken))
@@ -728,7 +731,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
     {
         await using var command = new NpgsqlCommand(
             "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
+            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection) { CommandTimeout = 600 };
         command.Parameters.AddWithValue("count", count);
         return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
