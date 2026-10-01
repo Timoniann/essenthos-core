@@ -138,13 +138,13 @@ internal static class Recipe
                     : null;
 
             case "names" when slugs.Count >= 2:
-                return await Exists(connection, PairLinks + " AND starts_with(l.source, @source)", slugs[0], slugs[1],
+                return await Exists(connection, PairLinks + FromSource, slugs[0], slugs[1],
                     NameListPass.Source, cancellationToken)
                     ? $"the names of {slugs[0]} and {slugs[1]} are already settled"
                     : null;
 
             case "possessives" when slugs.Count >= 2:
-                return await Exists(connection, PairLinks + " AND starts_with(l.source, @source)", slugs[0], slugs[1],
+                return await Exists(connection, PairLinks + FromSource, slugs[0], slugs[1],
                     PossessivePass.Source, cancellationToken)
                     ? $"the possessives of {slugs[0]} are already linked to {slugs[1]}"
                     : null;
@@ -189,6 +189,9 @@ internal static class Recipe
             JOIN text t ON t.id = l.to_text_id
             WHERE ((f.slug = @from AND t.slug = @to) OR (f.slug = @to AND t.slug = @from))
         """;
+
+    private const string FromSource =
+        " AND l.provenance_id IN (SELECT id FROM provenance WHERE starts_with(source, @source))";
 
     private const string BySource =
         "SELECT EXISTS (SELECT 1 FROM link l WHERE l.provenance_id IN " +
