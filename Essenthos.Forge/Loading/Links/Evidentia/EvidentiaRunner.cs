@@ -6,6 +6,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -78,8 +79,22 @@ internal sealed record EvidentiaRunOutcome(
 /// <see cref="EvidentiaLinkWriter"/>, never from here.
 /// </para>
 /// </summary>
-internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoader loader)
+/// <param name="scopes">
+/// Where a worker beyond the first gets a loader of its own: a loader and its context serve one book at
+/// a time. Not needed when the run computes one book at a time.
+/// </param>
+internal sealed class EvidentiaRunner(
+    AppDbContext db, EvidentiaCorpusPreviewLoader loader, IServiceScopeFactory? scopes = null)
 {
+    /// <summary>
+    /// Books computed at once when the command does not say. Each worker runs one UDPipe process at a
+    /// time, and the owner works on this machine.
+    /// </summary>
+    public const int DefaultParallel = 4;
+
+    /// <summary>The most books computed at once: never more UDPipe processes than the annotator allows.</summary>
+    public const int MaxParallel = UdpipeAnnotator.MaxProcesses;
+
     private const string DecisionImport =
         """
         COPY evidentia_decision (
@@ -98,8 +113,9 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
         string toSlug,
         IReadOnlyList<EvidentiaBookScope> books,
         EvidentiaMeasurementOptions options,
+        int parallel = DefaultParallel,
         CancellationToken cancellationToken = default) =>
-        await Run(fromSlug, toSlug, books, options, parentRunId: null, verses: null, cancellationToken);
+        await Run(fromSlug, toSlug, books, options, parentRunId: null, verses: null, parallel, cancellationToken);
 
     /// <summary>
     /// Repeats a run over some of its verses, with the configuration it was run with, as a new run
@@ -109,6 +125,7 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
     public async Task<EvidentiaRunOutcome> Rerun(
         int parentRunId,
         IReadOnlyCollection<EvidentiaAddress> verses,
+        int parallel = DefaultParallel,
         CancellationToken cancellationToken = default)
     {
         var parent = await db.EvidentiaRuns.AsNoTracking()
@@ -128,7 +145,7 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
             .Select(group => new EvidentiaBookScope(group.Key.Book, group.Key.Chapter, group.Key.Chapter))
             .ToList();
         return await Run(parent.FromSlug, parent.ToSlug, books, Options(parent.Configuration), parentRunId,
-            verses.ToHashSet(), cancellationToken);
+            verses.ToHashSet(), parallel, cancellationToken);
     }
 
     private async Task<EvidentiaRunOutcome> Run(
@@ -138,8 +155,15 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
         EvidentiaMeasurementOptions options,
         int? parentRunId,
         IReadOnlySet<EvidentiaAddress>? verses,
+        int parallel,
         CancellationToken cancellationToken)
     {
+        if (parallel is < 1 or > MaxParallel)
+        {
+            throw new ArgumentOutOfRangeException(nameof(parallel), parallel,
+                $"A run computes between 1 and {MaxParallel} books at once; pass --parallel 1 to {MaxParallel}.");
+        }
+
         var elapsed = Stopwatch.StartNew();
         var texts = await db.Texts.AsNoTracking()
             .Where(text => text.Slug == fromSlug || text.Slug == toSlug)
@@ -151,20 +175,33 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
         }
 
         options = await WithConfirmed(options, parentRunId, cancellationToken);
+        using var workers = new Workers(loader, scopes, Math.Min(parallel, books.Count));
         if (options.SecondPass && parentRunId is null)
         {
             // The first pass, kept nowhere: what it placed over the whole scope by evidence of its own, the
-            // aligner not consulted, is what the stored pass reads.
+            // aligner not consulted, is what the stored pass reads. Each book learns into rows of its own,
+            // added in book order, so the rows are the ones one pass over the books in turn would count.
             var learnt = options.Confirmed ?? new EvidentiaConfirmedRenderings();
             var first = options with
             {
-                Confirmed = null, Learns = learnt, AlignerLinks = false, AlignerPairs = null,
+                Confirmed = null, AlignerLinks = false, AlignerPairs = null,
                 Decisions = null, RecordWords = false, RecordDisagreements = false,
             };
-            foreach (var book in books)
-            {
-                await loader.MeasureBook(fromSlug, toSlug, book.Book, first, book.FromChapter, book.ToChapter, cancellationToken);
-            }
+            await EvidentiaBookOrder.Run(books.Count, workers.Count,
+                async (worker, index, token) =>
+                {
+                    var book = books[index];
+                    var learns = new EvidentiaConfirmedRenderings();
+                    await workers[worker].MeasureBook(fromSlug, toSlug, book.Book, first with { Learns = learns },
+                        book.FromChapter, book.ToChapter, token);
+                    return learns;
+                },
+                (_, learns, _) =>
+                {
+                    learnt.Add(learns);
+                    return Task.CompletedTask;
+                },
+                cancellationToken);
 
             options = options with { Confirmed = learnt };
         }
@@ -189,27 +226,41 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
         var evidenceSources = new SortedDictionary<string, SortedSet<string>>(StringComparer.Ordinal);
         var measurements = new List<EvidentiaBookMeasurement>(books.Count);
         int decisions = 0, proposals = 0, safe = 0, absences = 0;
-        foreach (var book in books)
-        {
-            var recorder = new EvidentiaDecisionRecorder(run.Id, verses);
-            measurements.Add(await loader.MeasureBook(fromSlug, toSlug, book.Book, options with { Decisions = recorder },
-                book.FromChapter, book.ToChapter, cancellationToken));
-            await Write(recorder.Decisions, cancellationToken);
-
-            decisions += recorder.Decisions.Count;
-            proposals += recorder.Decisions.Count(decision => decision.Absence is null && decision.TargetWordId is not null);
-            absences += recorder.Decisions.Count(decision => decision.Absence is not null);
-            safe += recorder.Decisions.Count(decision => decision.Tier == EvidentiaDecisionRecorder.SafeTier);
-            foreach (var (kind, sources) in recorder.EvidenceSources)
+        await EvidentiaBookOrder.Run(books.Count, workers.Count,
+            async (worker, index, token) =>
             {
-                if (!evidenceSources.TryGetValue(kind, out var all))
+                var book = books[index];
+                var recorder = new EvidentiaDecisionRecorder(run.Id, verses);
+                var learns = options.Learns is null ? null : new EvidentiaConfirmedRenderings();
+                var measurement = await workers[worker].MeasureBook(fromSlug, toSlug, book.Book,
+                    options with { Decisions = recorder, Learns = learns }, book.FromChapter, book.ToChapter, token);
+                return (Recorder: recorder, Learns: learns, Measurement: measurement);
+            },
+            async (_, book, token) =>
+            {
+                measurements.Add(book.Measurement);
+                await Write(book.Recorder.Decisions, token);
+                if (book.Learns is { } learns)
                 {
-                    evidenceSources[kind] = all = new SortedSet<string>(StringComparer.Ordinal);
+                    options.Learns!.Add(learns);
                 }
 
-                all.UnionWith(sources);
-            }
-        }
+                var recorder = book.Recorder;
+                decisions += recorder.Decisions.Count;
+                proposals += recorder.Decisions.Count(decision => decision.Absence is null && decision.TargetWordId is not null);
+                absences += recorder.Decisions.Count(decision => decision.Absence is not null);
+                safe += recorder.Decisions.Count(decision => decision.Tier == EvidentiaDecisionRecorder.SafeTier);
+                foreach (var (kind, sources) in recorder.EvidenceSources)
+                {
+                    if (!evidenceSources.TryGetValue(kind, out var all))
+                    {
+                        evidenceSources[kind] = all = new SortedSet<string>(StringComparer.Ordinal);
+                    }
+
+                    all.UnionWith(sources);
+                }
+            },
+            cancellationToken);
 
         run.Configuration = Configuration(options, evidenceSources);
         run.FinishedAt = DateTimeOffset.UtcNow;
@@ -402,6 +453,52 @@ internal sealed class EvidentiaRunner(AppDbContext db, EvidentiaCorpusPreviewLoa
         else
         {
             await writer.WriteAsync(value, type, cancellationToken);
+        }
+    }
+
+    /// <summary>
+    /// A loader for each worker. One worker reads with the runner's own loader, so a run of one book at a
+    /// time is computed as it always was; several each read through a scope of their own, since a context
+    /// serves one operation at a time and the runner's own is the writer's.
+    /// </summary>
+    private sealed class Workers : IDisposable
+    {
+        private readonly List<IServiceScope> owned = [];
+        private readonly List<EvidentiaCorpusPreviewLoader> loaders = [];
+
+        public Workers(EvidentiaCorpusPreviewLoader loader, IServiceScopeFactory? scopes, int count)
+        {
+            if (count <= 1)
+            {
+                loaders.Add(loader);
+                return;
+            }
+
+            if (scopes is null)
+            {
+                throw new InvalidOperationException(
+                    "A run of several books at once gives each worker a loader from a scope of its own, and this " +
+                    "runner was made without the scopes; resolve EvidentiaRunner from the container, or pass --parallel 1.");
+            }
+
+            for (var worker = 0; worker < count; worker++)
+            {
+                var scope = scopes.CreateScope();
+                owned.Add(scope);
+                loaders.Add(scope.ServiceProvider.GetRequiredService<EvidentiaCorpusPreviewLoader>());
+            }
+        }
+
+        public int Count => loaders.Count;
+
+        public EvidentiaCorpusPreviewLoader this[int worker] => loaders[worker];
+
+        public void Dispose()
+        {
+            foreach (var scope in owned)
+            {
+                scope.Dispose();
+            }
         }
     }
 

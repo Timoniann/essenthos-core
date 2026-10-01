@@ -63,11 +63,15 @@ internal sealed class EvidentiaFileSourceTexts
     /// </summary>
     private IReadOnlyList<EvidentiaToken> Words(string slug)
     {
-        if (tokensByText.TryGetValue(slug, out var known))
+        // Several books of a run read at once, and a text's words must be numbered once, in one order.
+        lock (tokensByText)
         {
-            return known;
+            return tokensByText.TryGetValue(slug, out var known) ? known : tokensByText[slug] = Numbered(slug);
         }
+    }
 
+    private List<EvidentiaToken> Numbered(string slug)
+    {
         var source = read(slug);
         var verses = source.Books
             .SelectMany(book => book.Chapters.SelectMany(chapter => chapter.Verses
@@ -102,7 +106,7 @@ internal sealed class EvidentiaFileSourceTexts
                 Gloss: word.Gloss)));
         }
 
-        return tokensByText[slug] = [.. tokens.OrderBy(token => token.Address.Book)
+        return [.. tokens.OrderBy(token => token.Address.Book)
             .ThenBy(token => token.Address.Chapter)
             .ThenBy(token => token.Address.Verse)
             .ThenBy(token => token.Position)];

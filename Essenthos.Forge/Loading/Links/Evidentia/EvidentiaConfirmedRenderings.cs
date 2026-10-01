@@ -36,6 +36,18 @@ internal sealed class EvidentiaConfirmedRenderings
     }
 
     /// <summary>
+    /// Counts what another pass counted. Its pairs new here follow these in the order it first met them,
+    /// so passes over the books one by one, added in book order, hold the rows one pass over all of them would.
+    /// </summary>
+    public void Add(EvidentiaConfirmedRenderings other)
+    {
+        foreach (var ((form, number), (safe, placed)) in other.rows)
+        {
+            Add(form, number, safe, placed);
+        }
+    }
+
+    /// <summary>
     /// Counts what a chapter placed by lexical evidence in its own verse. A word attached to its head
     /// says nothing of its own, and a pair the confirmed renderings themselves placed is not counted
     /// again: it would raise the share of the pair that placed it.

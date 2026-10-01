@@ -7,6 +7,14 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// <summary>Applies an audited local UDPipe model without modifying corpus rows.</summary>
 internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnvironment environment)
 {
+    /// <summary>
+    /// The most UDPipe processes running at once in this process, whoever asks: each holds a model of
+    /// a few hundred megabytes and a core, and the owner works on this machine.
+    /// </summary>
+    public const int MaxProcesses = 4;
+
+    private static readonly SemaphoreSlim Processes = new(MaxProcesses, MaxProcesses);
+
     private static readonly IReadOnlyDictionary<string, string> Models =
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -47,34 +55,8 @@ internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnviron
                 "; run the fetch-udpipe action, and note that the pinned tool is a Windows build.");
         }
 
-        var start = new ProcessStartInfo(executable,
-            $"--tag --parse --input horizontal --output conllu \"{model}\"")
-        {
-            RedirectStandardInput = true,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            StandardInputEncoding = Encoding.UTF8,
-            StandardOutputEncoding = Encoding.UTF8,
-            UseShellExecute = false,
-        };
-        using var process = Process.Start(start)
-            ?? throw new InvalidOperationException("Could not start local UDPipe; reinstall Resources/UDPipe with fetch-udpipe.");
-
-        // Both readers start before the write: UDPipe produces its output while it is still being
-        // fed, and draining one pipe at a time deadlocks as soon as a chapter's output outgrows a
-        // pipe buffer.
-        var output = process.StandardOutput.ReadToEndAsync(cancellationToken);
-        var error = process.StandardError.ReadToEndAsync(cancellationToken);
-        await process.StandardInput.WriteAsync(Sentences(tokens));
-        await process.StandardInput.DisposeAsync();
-        await Task.WhenAll(output, error);
-        await process.WaitForExitAsync(cancellationToken);
-        if (process.ExitCode != 0)
-        {
-            throw new InvalidOperationException($"Local UDPipe exited {process.ExitCode}: {error.Result.Trim()}");
-        }
-
-        var lexical = Rows(output.Result).Where(row => Letters(row.Columns[1]).Length > 0).ToList();
+        var lexical = Rows(await Parse(executable, model, tokens, cancellationToken))
+            .Where(row => Letters(row.Columns[1]).Length > 0).ToList();
         var reconciliation = Reconcile(tokens, [.. lexical.Select(row => row.Columns)]);
         if (reconciliation.ByCorpusIndex is null)
         {
@@ -92,6 +74,45 @@ internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnviron
                 Relation = columns.Length > 7 && columns[7] != "_" ? columns[7] : null,
             }).ToList(),
             UdpipeAnnotationStatus.Annotated);
+    }
+
+    /// <summary>The passage's CoNLL-U, from a UDPipe process of its own once one of the slots is free.</summary>
+    private static async Task<string> Parse(
+        string executable, string model, IReadOnlyList<EvidentiaToken> tokens, CancellationToken cancellationToken)
+    {
+        var start = new ProcessStartInfo(executable,
+            $"--tag --parse --input horizontal --output conllu \"{model}\"")
+        {
+            RedirectStandardInput = true,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            StandardInputEncoding = Encoding.UTF8,
+            StandardOutputEncoding = Encoding.UTF8,
+            UseShellExecute = false,
+        };
+        await Processes.WaitAsync(cancellationToken);
+        try
+        {
+            using var process = Process.Start(start)
+                ?? throw new InvalidOperationException("Could not start local UDPipe; reinstall Resources/UDPipe with fetch-udpipe.");
+
+            // Both readers start before the write: UDPipe produces its output while it is still being
+            // fed, and draining one pipe at a time deadlocks as soon as a chapter's output outgrows a
+            // pipe buffer.
+            var output = process.StandardOutput.ReadToEndAsync(cancellationToken);
+            var error = process.StandardError.ReadToEndAsync(cancellationToken);
+            await process.StandardInput.WriteAsync(Sentences(tokens));
+            await process.StandardInput.DisposeAsync();
+            await Task.WhenAll(output, error);
+            await process.WaitForExitAsync(cancellationToken);
+            return process.ExitCode == 0
+                ? output.Result
+                : throw new InvalidOperationException($"Local UDPipe exited {process.ExitCode}: {error.Result.Trim()}");
+        }
+        finally
+        {
+            Processes.Release();
+        }
     }
 
     /// <summary>
