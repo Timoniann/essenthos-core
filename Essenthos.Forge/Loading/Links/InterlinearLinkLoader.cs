@@ -102,10 +102,11 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             "Door43 Russian Synodal alignment of Titus, Philemon and 2 John, made in "
             + "translationCore and published at git.door43.org under CC0 1.0"),
         UnfoldingWordTextSource.Slug => (UnfoldingWordTextSource.Folder, UnfoldingWordSource),
+        _ when Door43AlignedBible.Of(slug) is { } aligned => (aligned.Folder, aligned.Source),
         _ => throw new ArgumentException(
-            $"Door43 interlinears exist for {Bible4uTextSource.Ohienko}, {Bible4uTextSource.Synodal} and " +
-            $"{UnfoldingWordTextSource.Slug}; {slug} has none. Name one of those as the source, or score against " +
-            "stored links instead."),
+            $"Door43 interlinears exist for {Bible4uTextSource.Ohienko}, {Bible4uTextSource.Synodal}, " +
+            $"{UnfoldingWordTextSource.Slug} and {string.Join(", ", Door43AlignedBible.All.Select(bible => bible.Slug))}; " +
+            $"{slug} has none. Name one of those as the source, or score against stored links instead."),
     };
 
     /// <summary>
@@ -133,8 +134,11 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
     {
         var translation = await Text(translationSlug, cancellationToken);
 
-        if (await db.Links.AnyAsync(
-                l => l.FromTextId == translation && l.Method == LinkMethod.StatedBySource, cancellationToken))
+        // Asked of this source and not of any statement: the Van Dyck and the Hindi already hold Clear
+        // Bible's stated links when their Door43 alignment arrives, and a second statement about the same
+        // words is what the corpus wants rather than a reason to skip.
+        if (await db.Links.AnyAsync(l => l.FromTextId == translation && l.Source == source, cancellationToken)
+            || await db.LinkClaims.AnyAsync(c => c.Source == source && c.Link!.FromTextId == translation, cancellationToken))
         {
             logger.LogInformation("{Text} is already linked from the interlinear; nothing to do", translationSlug);
             return new InterlinearOutcome(translationSlug, 0, 0, 0, 0, 0, TimeSpan.Zero);
@@ -180,7 +184,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         CancellationToken cancellationToken)
     {
         var started = Stopwatch.StartNew();
-        var join = await Join(folder, translation, cancellationToken);
+        var join = await Join(folder, translation, Unnumbered(translationSlug), cancellationToken);
         var written = await Reconcile(translation, source, join.Drafts, cancellationToken);
 
         var outcome = new InterlinearOutcome(
@@ -214,7 +218,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         }
 
         var translation = await Text(translationSlug, cancellationToken);
-        var join = await Join(folder, translation, cancellationToken);
+        var join = await Join(folder, translation, Unnumbered(translationSlug), cancellationToken);
         var stored = (await db.LinkWords.AsNoTracking()
                 .Where(word => word.Link!.FromTextId == translation && word.Link.Method == LinkMethod.StatedBySource)
                 .Select(word => new { word.LinkId, word.WordId, word.Side })
@@ -248,13 +252,24 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
                 $"No interlinear at {folder}. Point Dataset:ResourcesPath at the Resources folder that holds Door43/.");
         }
 
-        var join = await Join(folder, await Text(translationSlug, cancellationToken), cancellationToken);
+        var join = await Join(
+            folder, await Text(translationSlug, cancellationToken), Unnumbered(translationSlug), cancellationToken);
         return [.. join.Drafts.Select(draft => ((IReadOnlyList<long>)draft.From, (IReadOnlyList<long>)draft.To))];
     }
 
     private static string Key(IEnumerable<long> words) => string.Join(',', words.Order());
 
-    private async Task<InterlinearJoinResult> Join(string folder, int translation, CancellationToken cancellationToken)
+    /// <summary>
+    /// Whether the interlinear names some original words by spelling alone, as the releases exported by
+    /// older translationCore do. See <see cref="Door43AlignedBible"/>.
+    /// </summary>
+    private static bool Unnumbered(string translationSlug) => Door43AlignedBible.Of(translationSlug) is not null;
+
+    private async Task<InterlinearJoinResult> Join(
+        string folder,
+        int translation,
+        bool unnumbered,
+        CancellationToken cancellationToken)
     {
         var witnesses = new Dictionary<string, int>();
         foreach (var slug in (string[])[BhsaTextSource.Slug, NestleTextSource.Slug])
@@ -284,7 +299,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             var witness = witnesses[ordinal <= BookReferences.OldTestamentBookCount
                 ? BhsaTextSource.Slug
                 : NestleTextSource.Slug];
-            var read = Usfm3AlignmentReader.Read(await File.ReadAllTextAsync(file, cancellationToken));
+            var read = Usfm3AlignmentReader.Read(await File.ReadAllTextAsync(file, cancellationToken), unnumbered);
             var here = await Words(translation, ordinal.Value, cancellationToken);
             var there = await Words(witness, ordinal.Value, cancellationToken);
             var account = new InterlinearJoinAccount();
@@ -323,14 +338,12 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             ? [.. title, .. there.GetValueOrDefault(address) ?? []]
             : there.GetValueOrDefault(address) ?? [];
 
-    /// <summary>The book a file is for, from a name like <c>17-EST.usfm</c>.</summary>
-    private static int? Ordinal(string fileName)
-    {
-        var hyphen = fileName.IndexOf('-');
-        return hyphen < 0
-            ? null
-            : BookReferences.ResolveOrdinal(Path.GetFileNameWithoutExtension(fileName)[(hyphen + 1)..]);
-    }
+    /// <summary>
+    /// The book a file is for, from a name like <c>17-EST.usfm</c>, or <c>EST.usfm</c> where a Scripture
+    /// Burrito names its books by their code alone.
+    /// </summary>
+    private static int? Ordinal(string fileName) =>
+        BookReferences.ResolveOrdinal(Path.GetFileNameWithoutExtension(fileName)[(fileName.IndexOf('-') + 1)..]);
 
     private async Task<Dictionary<(int, int), List<InterlinearWord>>> Words(
         int textId,

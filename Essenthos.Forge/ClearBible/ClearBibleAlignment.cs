@@ -95,10 +95,12 @@ internal static class ClearBibleAlignment
         using var reader = new StreamReader(path);
         var header = reader.ReadLine()?.Split('\t') ?? [];
         var excludes = Array.IndexOf(header, "exclude");
+        var punctuation = Array.IndexOf(header, "isPunc");
         var strongs = Array.IndexOf(header, "strongs");
         var renders = Array.IndexOf(header, "source_verse");
         var rendersTo = Array.IndexOf(header, "source_verse_range_end");
         var parts = Array.IndexOf(header, "pos");
+        var morphology = Array.IndexOf(header, "morph");
 
         while (reader.ReadLine() is { } line)
         {
@@ -111,11 +113,29 @@ internal static class ClearBibleAlignment
             yield return new ClearBibleToken(
                 cells[0],
                 cells[2],
-                excludes >= 0 && cells.Length > excludes && cells[excludes].Trim() is "y",
+                (excludes >= 0 && cells.Length > excludes && cells[excludes].Trim() is "y")
+                || (punctuation >= 0 && cells.Length > punctuation && cells[punctuation].Trim() is "True"),
                 strongs >= 0 && cells.Length > strongs ? cells[strongs] : null,
                 Number(cells, renders) is { } first ? (first, Number(cells, rendersTo) ?? first) : null,
-                parts >= 0 && cells.Length > parts ? cells[parts] : null);
+                Part(cells, parts, morphology));
         }
+    }
+
+    /// <summary>What the Westminster morphology calls a pronominal suffix in its part-of-speech column.</summary>
+    public const string Suffix = "suffix";
+
+    /// <summary>
+    /// A source row's part of speech, with a pronominal suffix called one whichever edition the file
+    /// is. The morpheme edition says <c>suffix</c>; the Westminster Leningrad Codex says <c>pron</c>
+    /// and tells a suffix from a free pronoun only in its morphology, <c>psn3ms</c> against
+    /// <c>pp3ms</c>, so read alone its suffixes would be compared as words of their own.
+    /// </summary>
+    private static string? Part(string[] cells, int parts, int morphology)
+    {
+        var part = parts >= 0 && cells.Length > parts ? cells[parts] : null;
+        return morphology >= 0 && cells.Length > morphology && cells[morphology].StartsWith("ps", StringComparison.Ordinal)
+            ? Suffix
+            : part;
     }
 
     private static int? Number(string[] cells, int column) =>

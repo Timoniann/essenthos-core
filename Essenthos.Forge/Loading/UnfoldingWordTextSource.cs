@@ -69,32 +69,43 @@ internal static partial class UnfoldingWordTextSource
     [GeneratedRegex(@"\\w (?<word>[^|\\]*)\|[^\\]*\\w\*")]
     private static partial Regex AlignedWord();
 
-    public static TextSource Read(string folder)
+    public static TextSource Read(string folder) => Read(folder, Definition);
+
+    /// <summary>
+    /// Any Door43 release in this format, as the text <paramref name="definition"/> says it is: the
+    /// Indian Revised Version's are read exactly as the ULT is.
+    /// </summary>
+    internal static TextSource Read(string folder, TextDefinition definition)
     {
         var books = Directory.GetFiles(folder, "*.usfm")
             .Select(path => UsfmReader.Read(Unaligned(File.ReadAllText(path)), editorialHeadings: true))
             .Select(book => (Ordinal: BookReferences.ResolveOrdinal(book.Book) ?? throw new InvalidDataException(
-                $"The ULT file for \"{book.Book}\" names no book this corpus knows."), Book: book))
+                $"The {definition.Slug} file for \"{book.Book}\" names no book this corpus knows."), Book: book))
             .OrderBy(book => book.Ordinal)
             .ToList();
 
         if (books.Count == 0)
         {
             throw new DirectoryNotFoundException(
-                $"No ULT book is under {folder}. Run scripts/fetch-door43-ult.ps1.");
+                $"No {definition.Slug} book is under {folder}. Run scripts/fetch-door43-ult.ps1 for the ULT, "
+                + "scripts/fetch-door43-aligned.ps1 for the others.");
         }
 
-        return new TextSource(Definition, [.. books.Select((book, index) => new BookDraft(
+        return new TextSource(definition, [.. books.Select((book, index) => new BookDraft(
             CanonicalOrdinal: book.Ordinal,
             Position: index + 1,
             Name: BookReferences.Name(book.Ordinal),
             Slug: BookReferences.Slug(book.Ordinal),
             Chapters: [.. book.Book.Chapters.Select(chapter => EbibleTextSource.Chapter(chapter, tagged: false))],
+            NameNative: definition.Language == Definition.Language || book.Book.Name.Length == 0 ? null : book.Book.Name.Trim(),
             Abbreviation: BookReferences.Abbreviation(book.Ordinal)))]);
     }
 
-    /// <summary>A verse or a psalm's title opening inside a line, after a line of poetry has opened.</summary>
-    [GeneratedRegex(@"(?<=\S)[ \t]*(?=\\(?:v|d) )")]
+    /// <summary>
+    /// A verse or a psalm's title opening inside a line, after a line of poetry has opened, or a
+    /// paragraph the Telugu IRV opens at the end of the line its last verse ends on.
+    /// </summary>
+    [GeneratedRegex(@"(?<=\S)[ \t]*(?=\\(?:v |d |p\b))")]
     private static partial Regex InsideALine();
 
     /// <summary>

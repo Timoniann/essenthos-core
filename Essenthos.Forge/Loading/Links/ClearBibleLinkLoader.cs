@@ -178,9 +178,6 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
     /// </summary>
     private const double SameVerse = 0.5;
 
-    /// <summary>What the Westminster morphology calls a pronominal suffix in its part-of-speech column.</summary>
-    private const string Suffix = "suffix";
-
     /// <summary>
     /// A withdrawal cascades through tens of thousands of link words and claims, which does not
     /// finish inside the default thirty seconds.
@@ -989,7 +986,7 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
         foreach (var token in verse)
         {
             var folded = Comparable(token.Text, language);
-            if (token.Part == Suffix
+            if (token.Part == ClearBibleAlignment.Suffix
                 && tokens.Count > 0
                 && ClearBibleAlignment.Word(tokens[^1].Id) == ClearBibleAlignment.Word(token.Id))
             {

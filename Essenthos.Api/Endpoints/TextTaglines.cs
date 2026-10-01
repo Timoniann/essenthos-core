@@ -200,6 +200,71 @@ internal static class TextTaglines
                 "Індійська переглянута версія — єдина повна Біблія мовою гінді під відкритою ліцензією.",
                 "Die Indian Revised Version, die einzige vollständige Hindi-Bibel unter offener Lizenz.",
                 "La Indian Revised Version, la única Biblia completa en hindi con licencia abierta."),
+            ["IRVBEN"] = Say(
+                "The Indian Revised Version in Bengali, under an open licence.",
+                "Індійська переглянута версія бенгальською, під відкритою ліцензією.",
+                "Die Indian Revised Version auf Bengalisch, unter offener Lizenz.",
+                "La Indian Revised Version en bengalí, con licencia abierta."),
+            ["IRVASM"] = Say(
+                "The Indian Revised Version in Assamese, the first open Assamese Bible.",
+                "Індійська переглянута версія ассамською — перша відкрита ассамська Біблія.",
+                "Die Indian Revised Version auf Assamesisch, die erste offene assamesische Bibel.",
+                "La Indian Revised Version en asamés, la primera Biblia abierta en asamés."),
+            ["OHCB"] = Say(
+                "Biblica's Bible in present-day Hausa, under an open licence.",
+                "Біблія Biblica сучасною мовою хауса, під відкритою ліцензією.",
+                "Biblicas Bibel im heutigen Hausa, unter offener Lizenz.",
+                "La Biblia de Biblica en hausa actual, con licencia abierta."),
+            ["IRVGUJ"] = Say(
+                "The Indian Revised Version in Gujarati, under an open licence.",
+                "Індійська переглянута версія мовою гуджараті, під відкритою ліцензією.",
+                "Die Indian Revised Version auf Gujarati, unter offener Lizenz.",
+                "La Indian Revised Version en guyaratí, con licencia abierta."),
+            ["IRVKAN"] = Say(
+                "The Indian Revised Version in Kannada, under an open licence.",
+                "Індійська переглянута версія мовою каннада, під відкритою ліцензією.",
+                "Die Indian Revised Version auf Kannada, unter offener Lizenz.",
+                "La Indian Revised Version en canarés, con licencia abierta."),
+            ["IRVMAL"] = Say(
+                "The Indian Revised Version in Malayalam, under an open licence.",
+                "Індійська переглянута версія мовою малаялам, під відкритою ліцензією.",
+                "Die Indian Revised Version auf Malayalam, unter offener Lizenz.",
+                "La Indian Revised Version en malayalam, con licencia abierta."),
+            ["IRVMAR"] = Say(
+                "The Indian Revised Version in Marathi, under an open licence.",
+                "Індійська переглянута версія мовою маратхі, під відкритою ліцензією.",
+                "Die Indian Revised Version auf Marathi, unter offener Lizenz.",
+                "La Indian Revised Version en maratí, con licencia abierta."),
+            ["IRVPAN"] = Say(
+                "The Indian Revised Version in Punjabi, under an open licence.",
+                "Індійська переглянута версія мовою панджабі, під відкритою ліцензією.",
+                "Die Indian Revised Version auf Pandschabi, unter offener Lizenz.",
+                "La Indian Revised Version en panyabí, con licencia abierta."),
+            ["IRVTAM"] = Say(
+                "The Indian Revised Version in Tamil, under an open licence.",
+                "Індійська переглянута версія тамільською, під відкритою ліцензією.",
+                "Die Indian Revised Version auf Tamil, unter offener Lizenz.",
+                "La Indian Revised Version en tamil, con licencia abierta."),
+            ["IRVTEL"] = Say(
+                "The Indian Revised Version in Telugu, under an open licence.",
+                "Індійська переглянута версія мовою телугу, під відкритою ліцензією.",
+                "Die Indian Revised Version auf Telugu, unter offener Lizenz.",
+                "La Indian Revised Version en telugu, con licencia abierta."),
+            ["IRVURD"] = Say(
+                "The Indian Revised Version in Urdu, written in Devanagari, under an open licence.",
+                "Індійська переглянута версія мовою урду, записаною деванагарі, під відкритою ліцензією.",
+                "Die Indian Revised Version auf Urdu in Devanagari-Schrift, unter offener Lizenz.",
+                "La Indian Revised Version urdu en escritura devanagari, con licencia abierta."),
+            ["UST"] = Say(
+                "unfoldingWord's plain-English companion to the Literal Text, tied word by word to the originals.",
+                "Простий англійський супутник Буквального тексту unfoldingWord, пов'язаний з оригіналами слово в слово.",
+                "Der schlichte englische Begleiter des Literal Text von unfoldingWord, Wort für Wort mit den Urtexten verknüpft.",
+                "El compañero en inglés sencillo del Literal Text de unfoldingWord, vinculado palabra por palabra a los originales."),
+            ["VIGLT"] = Say(
+                "A literal Vietnamese New Testament and Ruth, tied word by word to the originals.",
+                "Буквальний в'єтнамський Новий Заповіт і Книга Рут, пов'язані з оригіналами слово в слово.",
+                "Ein wörtliches vietnamesisches Neues Testament mit Rut, Wort für Wort mit den Urtexten verknüpft.",
+                "Un Nuevo Testamento y Rut vietnamitas literales, vinculados palabra por palabra a los originales."),
             ["BRENTON"] = Say(
                 "Brenton's English translation of the Septuagint, verse for verse with its Greek.",
                 "Англійський переклад Септуагінти Брентона, вірш у вірш із її грецьким текстом.",

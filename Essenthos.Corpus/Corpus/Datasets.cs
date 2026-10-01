@@ -327,6 +327,64 @@ public static class Datasets
             + "Russian link a model proposed is right.",
             "Door43 Russian Synodal alignment", Links: true),
 
+        // The Van Dyck's ties to the Hebrew and Greek as BSOJ made them, beside Clear Bible's: a second
+        // statement about the same Arabic words by a different team. The release's LICENSE.md is the
+        // unfoldingWord Literal Text's, copied with the template; its manifest says CC BY-SA 4.0, and the
+        // two agree on the terms.
+        new("door43-avd", "Van Dyck word alignment", "BSOJ, on Door43", "CC BY-SA 4.0",
+            "https://creativecommons.org/licenses/by-sa/4.0/",
+            "https://git.door43.org/BSOJ/ar_avd",
+            "Which Arabic word of the Van Dyck renders which Hebrew or Greek word, stated by the people "
+            + "who tied them in translationCore, over the whole Bible. Where Clear Bible's team says the "
+            + "same, a link carries both their names.",
+            "BSOJ's alignment of the Van Dyck", Links: true,
+            Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the corpus's "
+                + "own form of these links is offered under CC BY-SA 4.0 in turn."),
+
+        new("unfoldingword-ust", "unfoldingWord Simplified Text alignment", "unfoldingWord", "CC BY-SA 4.0",
+            "https://creativecommons.org/licenses/by-sa/4.0/",
+            "https://git.door43.org/unfoldingWord/en_ust",
+            "Which English word of the unfoldingWord Simplified Text renders which Hebrew or Greek word, stated "
+            + "by the translators who made it, in 59 books.",
+            "unfoldingWord Simplified Text alignment", Links: true,
+            Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the corpus's own "
+                + "form of these links is offered under CC BY-SA 4.0 in turn, with the credit \"The original "
+                + "work by unfoldingWord is available from unfoldingword.org/ust\"."),
+
+        new("door43-vi", "Vietnamese Literal Text alignment", "Far East Broadcasting Company, on Door43",
+            "CC BY-SA 4.0",
+            "https://creativecommons.org/licenses/by-sa/4.0/",
+            "https://git.door43.org/vi_gl/vi_glt",
+            "Which Vietnamese word of the Literal Text renders which Hebrew or Greek word, stated by its "
+            + "translators, for the New Testament and Ruth.",
+            "Door43 alignment of the Vietnamese Literal Text", Links: true,
+            Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the corpus's "
+                + "own form of these links is offered under CC BY-SA 4.0 in turn."),
+
+        new("door43-lsg", "Louis Segond word alignment", "the French gateway-language team on Door43",
+            "CC BY-SA 4.0",
+            "https://creativecommons.org/licenses/by-sa/4.0/",
+            "https://git.door43.org/fr_gl/fr-textTranslation-FR_LSG",
+            "Which French word of the Segond's New Testament renders which Greek word, stated by the people who "
+            + "tied them, beside Clear Bible's alignment of the same text.",
+            "Door43 alignment of the Louis Segond", Links: true,
+            Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the corpus's "
+                + "own form of these links is offered under CC BY-SA 4.0 in turn."),
+
+        // One entry for the Indian Revised Versions because they are one programme: the same
+        // publisher, the same tool, the same terms, released together in the Door43 catalogue.
+        new("door43-irv", "Indian Revised Version word alignment", "Bridge Connectivity Solutions, on Door43",
+            "CC BY-SA 4.0",
+            "https://creativecommons.org/licenses/by-sa/4.0/",
+            "https://git.door43.org/Door43-Catalog",
+            "Which word of the Indian Revised Version renders which Hebrew or Greek word, stated by its "
+            + "translators in translationCore: the whole Hindi Bible, and the New Testament in Assamese, "
+            + "Bengali, Gujarati, Kannada, Malayalam, Marathi, Punjabi, Tamil, Telugu and Urdu.",
+            "Door43 alignment of the Indian Revised Version", Links: true,
+            Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the corpus's "
+                + "own form of these links is offered under CC BY-SA 4.0 in turn. Original work available "
+                + "at https://door43.org/."),
+
         // The second answer to a question the corpus already had an answer to, which is why it is
         // here at all: 98,989 of its records corroborate a link the Berean's own tables state, and
         // 8,345 disagree with one. Its repository does say CC BY 4.0 over the whole of the data,

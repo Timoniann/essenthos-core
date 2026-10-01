@@ -42,12 +42,12 @@ with the archive's extracted data.
 |---|---|---:|---|---|---|
 | Arabic AVD | SBLGNT, WLC | 2 | CC BY 4.0 | manual | loaded against `AVD1865` (2026-09-25) |
 | Arabic ONAV | SBLGNT | 1 | **CC BY-SA 4.0** | manual | retained, excluded from loading |
-| Assamese IRVAsm | SBLGNT | 1 | CC BY 4.0 | manual | candidate |
-| Bengali IRVBen | SBLGNT | 1 | CC BY 4.0 | manual | candidate |
+| Assamese IRVAsm | SBLGNT | 1 | CC BY 4.0 | manual | loaded against `IRVASM`, Door43's release of the same text (2026-10-01) |
+| Bengali IRVBen | SBLGNT | 1 | CC BY 4.0 | manual | loaded against `IRVBEN`, Door43's release of the same text (2026-10-01) |
 | English BSB | BGNT, SBLGNT, WLCM | 3 | CC BY 4.0 | manual | current calibration source |
-| English YLT | SBLGNT, WLC | 2 | CC BY 4.0 | manual | candidate |
+| English YLT | SBLGNT, WLC | 2 | CC BY 4.0 | manual | loaded against `YLT` (2026-10-01) |
 | French LSG | SBLGNT, WLCM | 2 | CC BY 4.0 | one `manual`, one process unstated | loaded against `LSG1910`, renumbered; see below |
-| Hausa OHCB | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | candidate |
+| Hausa OHCB | SBLGNT (the WLCM file is a copy of it) | 2 | CC BY 4.0 | manual | text and New Testament loaded as `OHCB` (2026-10-01); see below |
 | Hindi IRVHin | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | loaded against `IRV2019` (2026-09-25) |
 | Portuguese JFA11 | SBLGNT | 1 | CC BY 4.0 | **transfer from Spanish RVR09** | loaded against `ALM1911` (2026-09-25), every link saying it is a transfer, not made by hand |
 | Russian RUSSYN | SBLGNT, WLCM | 2 | CC BY 4.0 | manual | blocked by token mismatch; see below |
@@ -167,3 +167,45 @@ records authorizes an inferred link into a differently tokenized translation.
 Retain the individual TOML copyright holder and attribution. The repository says all alignment
 data is CC BY 4.0; each link imported from a set must identify the specific set and its stated
 copyright holder rather than crediting “Clear Bible” generically.
+
+## Young, Bengali, Assamese, Hausa — loaded 2026-10-01 (TSK-0911)
+
+**Terms read in each TOML, at the record closest to the bytes.** Every alignment says
+`license = "CC-BY-4.0"`. The targets say: YLT `Public domain` (eBible `engylt`, the file the corpus
+already loads); IRVBen and IRVAsm `CC-BY-4.0` at the Digital Bible Library, where Door43's release of
+the same text says CC BY-SA 4.0 and that is the one taken (`Resources/Door43/LICENCE.md`); OHCB
+`Public domain`, with the token files' own metadata `CC-BY 4.0` by BiblioNexus. The OHCB is Biblica's
+*Open* Hausa Contemporary Bible, and Biblica publishes its Open texts under CC BY-SA 4.0 — as the Open
+New Ukrainian Translation this corpus holds says in all three of eBible's places — so the text is
+recorded as CC BY-SA 4.0, the more restrictive. That Biblica statement was not read at Biblica's own
+site for the Hausa in this session; it is the one thing here asserted rather than read.
+
+**The YLT set is keyed to the Westminster Leningrad Codex word by word (`WLC.tsv`), not the morpheme
+edition.** Its pronominal suffix is a row of its own with part of speech `pron` and morphology
+`ps…` (45,618 of them), told from a free pronoun (`pp…`) only by the morphology; the reader calls it a
+suffix, so it is compared as part of the word before it, as `WLCM`'s `suffix` rows are. Its target file
+marks punctuation in an `isPunc` column rather than `exclude`, and is read by it. In the New Testament
+file `isPunc` is `False` on all but 79 marks of punctuation; they place on no word and nothing names them.
+
+**The Hausa Old Testament alignment does not exist.** `WLCM-OHCB-manual.json` is
+`SBLGNT-OHCB-manual.json` byte for byte (MD5 `338dba9f459f301fcade73f0c4aefe5c`): the same 63,852
+records, every one naming a Greek word. Only the New Testament set is loaded.
+
+**The Hausa text is read from the token files**, because nothing else publishes it where the corpus
+may take it: `ot_OHCB.tsv` and `nt_OHCB.tsv` hold every token of every verse with whether a space
+follows it, so a verse is written out as printed — punctuation on the word before it, a psalm's title
+(numbered as verse 0) at the head of verse 1. Paragraphs, headings and notes are not in the files and
+are not in the text.
+
+Measured on a scratch copy (`essenthos_core_s38`, dropped), each set alone:
+
+| set | records | unresolved | words placed (theirs) | links written | words of ours linked |
+|---|---:|---:|---|---:|---|
+| WLC-YLT | 437,255 | 6,692 | 474,671/475,012 source, 602,053/602,056 target | 430,563 | OT 91.8% |
+| SBLGNT-YLT | 127,902 | 835 | 137,205/137,741 source, 184,506/223,800 target | 127,067 | NT 94.9% |
+| SBLGNT-IRVBen | 80,185 | 356 (2 astray) | 156,628/158,069 target | 79,827 | NT 82.0% |
+| SBLGNT-IRVAsm | 89,883 | 956 | 153,090/157,977 target, 38 verses refused | 88,927 | NT 85.3% |
+| SBLGNT-OHCB | 63,852 | 183 | 182,377/182,498 target | 63,669 | NT 36.4% |
+
+The Hausa share is low for the reason the Segond's is: the set names few Hausa words per record. The
+shifted-*and* shape (PRB-0715) was not measured on these five sets, and none of them is screened for it.
