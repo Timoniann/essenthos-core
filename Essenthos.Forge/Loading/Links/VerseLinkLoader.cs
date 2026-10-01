@@ -31,6 +31,10 @@ namespace Essenthos.Core.Loading.Links;
 /// Verse pairs a source states through its own word links, where the frame joins nothing. Zero
 /// wherever the two agree, which is almost everywhere.
 /// </param>
+/// <param name="Repeated">
+/// Verse links removed because an earlier one of the same pair states exactly the same of exactly the
+/// same verses. Zero on every load of a corpus that has none.
+/// </param>
 internal sealed record VerseLinkOutcome(
     bool AlreadyLoaded,
     int Pairs,
@@ -40,17 +44,18 @@ internal sealed record VerseLinkOutcome(
     int Alone,
     int Covered,
     int Stated,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int Repeated = 0)
 {
     public override string ToString() => (AlreadyLoaded, Covered) switch
     {
-        (true, 0) when Stated == 0 => "the verse links are already loaded",
+        (true, 0) when Stated == 0 && Repeated == 0 => "the verse links are already loaded",
         (true, _) => $"the verse links are already loaded; {Covered} verses joined at an address " +
-                     $"another verse covers, {Stated} pairs a source states",
+                     $"another verse covers, {Stated} pairs a source states, {Repeated} repeated links removed",
         _ => $"{Links} verse links over {Pairs} text pairs in {Elapsed}: {Straight} one verse against " +
              $"one, {Divided} where the two divide the passage differently, {Alone} verses with no " +
              $"counterpart at all, {Covered} joined at an address another verse covers, {Stated} " +
-             "stated by a source through its own word links",
+             $"stated by a source through its own word links, {Repeated} repeated links removed",
     };
 }
 
@@ -171,6 +176,32 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         """;
 
     /// <summary>
+    /// Every verse link with what it states and the verses it states it of, as one array: the verses
+    /// of the <c>from</c> side as they are and those of the <c>to</c> side negated, each side in order.
+    /// Two links of one pair with the same shape are one statement written twice.
+    /// </summary>
+    internal const string Shapes =
+        """
+        SELECT l.id, l.from_text_id, l.to_text_id, l.relation, l.method, l.confidence, l.source, l.note, m.verses
+        FROM verse_link l
+        JOIN (SELECT verse_link_id,
+                     array_agg(CASE side WHEN 'from' THEN verse_id ELSE -verse_id END ORDER BY side, verse_id) AS verses
+              FROM verse_link_verse GROUP BY verse_link_id) m ON m.verse_link_id = l.id
+        """;
+
+    /// <summary>The verse links an earlier link of the same shape already states, the earliest kept.</summary>
+    private const string RepeatedVerseLinks =
+        $"""
+         WITH shaped AS (
+             SELECT s.id, row_number() OVER (
+                 PARTITION BY s.from_text_id, s.to_text_id, s.relation, s.method, s.confidence, s.source,
+                              s.note, s.verses
+                 ORDER BY s.id) AS nth
+             FROM ({Shapes}) s)
+         DELETE FROM verse_link l USING shaped s WHERE l.id = s.id AND s.nth > 1
+         """;
+
+    /// <summary>
     /// The verse correspondences a source states through its word links, wherever the frame joins
     /// nothing.
     ///
@@ -241,6 +272,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     public async Task<VerseLinkOutcome> Load(CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
+        var repeated = await Unrepeat(cancellationToken);
 
         var linked = await db.Links
             .Select(link => new { link.FromTextId, link.ToTextId })
@@ -329,14 +361,14 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                 "addresses a verse covers, {Stated} verse pairs a source states through its word links, " +
                 "{Mapped} read from a verse map",
                 only, alreadyStated, mapped);
-            return new VerseLinkOutcome(true, 0, mapped, 0, 0, 0, only, alreadyStated, started.Elapsed);
+            return new VerseLinkOutcome(true, 0, mapped, 0, 0, 0, only, alreadyStated, started.Elapsed, repeated);
         }
 
         written += mapped;
 
         var outcome = new VerseLinkOutcome(
             false, pairs, written, straight, divided, alone, await Cover(cancellationToken),
-            await Stated(cancellationToken), started.Elapsed);
+            await Stated(cancellationToken), started.Elapsed, repeated);
         logger.LogInformation("Verse links: {Outcome}", outcome);
         return outcome;
     }
@@ -440,7 +472,13 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         return Differing(await Reached(fromSlug), await Reached(toSlug), declaration.Without);
     }
 
-    /// <summary>The books of the first text a pair's verse links already reach.</summary>
+    /// <summary>
+    /// The books of the first text a pair's verse links already reach, by the address its verses stand
+    /// at and under the name <see cref="TwinPassages"/> joins them at — the key <see cref="Addressed"/>
+    /// files them under, which is what they are left out by. The book a verse is printed in is not it:
+    /// the King James' Baruch 6 stands in the Letter of Jeremiah, and the Douay's Daniel 3:31 in the Song
+    /// of the Three, and asked by the printed book a pair already joined there is joined there again.
+    /// </summary>
     private async Task<IReadOnlySet<int>> Joined(
         (int FromTextId, int ToTextId) pair,
         CancellationToken cancellationToken) =>
@@ -448,9 +486,13 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             .Where(member => member.Side == LinkSide.From
                              && member.VerseLink!.FromTextId == pair.FromTextId
                              && member.VerseLink.ToTextId == pair.ToTextId)
-            .Select(member => member.Verse!.Book!.CanonicalOrdinal)
+            .SelectMany(
+                member => db.VerseReferences.Where(r => r.VerseId == member.VerseId && r.IsPrimary),
+                (_, reference) => new { reference.CanonicalBook, reference.CanonicalChapter, reference.CanonicalVerse })
             .Distinct()
             .ToListAsync(cancellationToken))
+        .Select(reference => TwinPassages.Joined(
+            (reference.CanonicalBook, reference.CanonicalChapter, reference.CanonicalVerse)).Item1)
         .ToHashSet();
 
     /// <summary>
@@ -603,6 +645,25 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         var written = (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
         await transaction.CommitAsync(cancellationToken);
         return written;
+    }
+
+    /// <summary>
+    /// Removes the verse links that say again what an earlier link of the pair already says. Nothing
+    /// here writes one; this takes away any a corpus already holds, in one statement of a few seconds
+    /// that writes nothing where there are none.
+    /// </summary>
+    public async Task<int> Unrepeat(CancellationToken cancellationToken = default)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        await using var command = new NpgsqlCommand(RepeatedVerseLinks, (NpgsqlConnection)db.Database.GetDbConnection());
+        var removed = await command.ExecuteNonQueryAsync(cancellationToken);
+        if (removed > 0)
+        {
+            logger.LogInformation(
+                "{Removed} verse links that said again what an earlier link of the same pair says were removed", removed);
+        }
+
+        return removed;
     }
 
     public async Task<int> Cover(CancellationToken cancellationToken = default)

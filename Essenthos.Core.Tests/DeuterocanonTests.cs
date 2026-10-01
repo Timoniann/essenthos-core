@@ -615,6 +615,53 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
     }
 
     /// <summary>
+    /// A pair that holds a book it can never be joined in is asked about again on every load, and the
+    /// letter it has joined already, which the King James prints in Baruch and which stands in the
+    /// Letter of Jeremiah, is not joined a second time.
+    /// </summary>
+    [Fact]
+    public async Task ALoadOfAJoinedPairWritesNoVerseLinkAgain()
+    {
+        await Load(Tiny(Bible4uTextSource.Definitions["KJV"],
+            (LetterOfJeremiah.Baruch, LetterOfJeremiah.InBaruch, 73), (Wisdom, 5, 23)));
+        await Load(Tiny(SeptuagintTextSource.Definition(),
+            (LetterOfJeremiah.Book, LetterOfJeremiah.Chapter, 73), (Wisdom, 6, 25)));
+        await Place();
+
+        var loader = new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance);
+        await loader.Load();
+        var written = await _db.VerseLinks.CountAsync();
+        written.Should().BeGreaterThanOrEqualTo(73);
+
+        await loader.Load();
+
+        (await _db.VerseLinks.CountAsync()).Should().Be(written);
+    }
+
+    /// <summary>The same verse link written twice is taken away on the next load, the earlier kept.</summary>
+    [Fact]
+    public async Task AVerseLinkWrittenTwiceIsRemovedOnTheNextLoad()
+    {
+        await Load(Tiny(Bible4uTextSource.Definitions["KJV"], (LetterOfJeremiah.Baruch, LetterOfJeremiah.InBaruch, 3)));
+        await Load(Tiny(SeptuagintTextSource.Definition(), (LetterOfJeremiah.Book, LetterOfJeremiah.Chapter, 3)));
+        await Place();
+        var loader = new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance);
+        await loader.Load();
+        var first = await _db.VerseLinks.Include(link => link.Verses).OrderBy(link => link.Id).FirstAsync();
+        var ids = await _db.VerseLinks.Select(link => link.Id).ToListAsync();
+        _db.VerseLinks.Add(new VerseLink
+        {
+            FromTextId = first.FromTextId, ToTextId = first.ToTextId, Relation = first.Relation, Method = first.Method,
+            Confidence = first.Confidence, Source = first.Source, Note = first.Note,
+            Verses = [.. first.Verses.Select(member => new VerseLinkVerse { VerseId = member.VerseId, Side = member.Side })],
+        });
+        await _db.SaveChangesAsync();
+
+        (await loader.Load()).Repeated.Should().Be(1);
+        (await _db.VerseLinks.Select(link => link.Id).ToListAsync()).Should().BeEquivalentTo(ids);
+    }
+
+    /// <summary>
     /// A book the text holds gains the verses its source now prints after it, in the chapter it has
     /// and in new ones, and keeps every verse it had.
     /// </summary>

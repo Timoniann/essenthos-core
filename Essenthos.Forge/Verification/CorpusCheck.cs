@@ -5,6 +5,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Links;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -670,6 +671,17 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                   WHERE a.verse_id = fw.verse_id
               )
             """),
+
+        // A verse link is one statement of which verses correspond, and the same statement written
+        // twice is not two witnesses: the reader joins the verses twice and the verse-pair counts read
+        // both. The verse links' own step removes them on every load, so a count here is a writer that
+        // went round it.
+        ("verse links saying again what another link of the same pair says",
+            $"""
+             SELECT count(*) - count(DISTINCT (s.from_text_id, s.to_text_id, s.relation, s.method, s.confidence,
+                                               s.source, s.note, s.verses))
+             FROM ({VerseLinkLoader.Shapes}) s
+             """),
     ];
 
     /// <summary>
