@@ -130,6 +130,7 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
                 .OrderByDescending(candidate => candidate.Score)
                 .ThenBy(candidate => candidate.Source.Token.Address.DistanceTo(candidate.Target.Token.Address))
                 .ThenBy(candidate => candidate.Target.Token.Position)
+                .ThenBy(candidate => candidate.Target.Token.Id)
                 .ToList());
 
         var absences = chapter.Absences ?? [];
@@ -137,7 +138,7 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
             .GroupBy(absence => absence.Word.Token.Id)
             .ToDictionary(group => group.Key, group => group.First());
         foreach (var word in chapter.Source.DistinctBy(token => token.Id).OrderBy(token => token.Address.Verse)
-                     .ThenBy(token => token.Position))
+                     .ThenBy(token => token.Position).ThenBy(token => token.Id))
         {
             var content = chapter.ContentSourceWordIds.Contains(word.Id);
             var proposed = final.GetValueOrDefault(word.Id);
@@ -168,7 +169,8 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
                      .DistinctBy(absence => absence.Word.Token.Id)
                      .Where(absence => verses is null || verses.Contains(absence.Word.Token.Address))
                      .OrderBy(absence => absence.Word.Token.Address.Verse)
-                     .ThenBy(absence => absence.Word.Token.Position))
+                     .ThenBy(absence => absence.Word.Token.Position)
+                     .ThenBy(absence => absence.Word.Token.Id))
         {
             yield return Absent(runId, absence, content: false, safe);
         }

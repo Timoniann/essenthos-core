@@ -101,6 +101,7 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
         if (language.Equals("eng", StringComparison.OrdinalIgnoreCase))
         {
             var entries = await db.StrongEntries.AsNoTracking()
+                .OrderBy(entry => entry.StrongNumber)
                 .Select(entry => new SenseEntry(
                     entry.StrongNumber,
                     entry.Definition,
@@ -112,6 +113,8 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
 
         var translated = await db.StrongEntryTranslations.AsNoTracking()
             .Where(entry => entry.Language == language)
+            .OrderBy(entry => entry.StrongNumber)
+            .ThenBy(entry => entry.Id)
             .Select(entry => new SenseEntry(
                 entry.StrongNumber,
                 entry.Definition,

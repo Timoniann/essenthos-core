@@ -316,6 +316,8 @@ internal sealed class EvidentiaRunner(
                     Safe = pair.Count(decision => decision.Tier == EvidentiaDecisionRecorder.SafeTier),
                     Placed = pair.Count(),
                 })
+                .OrderBy(pair => pair.Form)
+                .ThenBy(pair => pair.StrongNumber)
                 .ToListAsync(cancellationToken);
             foreach (var pair in placed)
             {

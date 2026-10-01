@@ -245,6 +245,9 @@ internal sealed class EvidentiaKnownRenderingIndex(
             .OrderBy(observation => observation.VerseId)
             .ThenBy(observation => observation.SourceSurface, StringComparer.Ordinal)
             .ThenBy(observation => observation.TargetStrongNumber, StringComparer.Ordinal)
+            .ThenBy(observation => observation.SourcePosition)
+            .ThenBy(observation => observation.LinkId)
+            .ThenBy(observation => observation.SourceLemma, StringComparer.Ordinal)
             .ToList();
         if (sourceText.Language.Equals(EnglishLanguage, StringComparison.OrdinalIgnoreCase))
         {
