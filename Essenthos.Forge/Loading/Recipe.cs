@@ -1,13 +1,14 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Verbs;
 using Npgsql;
 
 namespace Essenthos.Core.Loading;
 
-/// <param name="Verb">The Forge verb, as typed: align, compose, names, strong, synodal-strong, union-strong, crosswire-strong, ohb-cuv, interlinear-join, correct, reload.</param>
+/// <param name="Verb">The Forge verb, as typed: one whose <see cref="ForgeVerb.Records"/> says it is recorded.</param>
 /// <param name="Arguments">What followed the verb, flags included.</param>
 /// <param name="At">When it last ran, or null for a step written down from what the corpus held rather than recorded as it ran.</param>
 /// <param name="Note">Why the step is there, for a step somebody wrote by hand.</param>
@@ -54,9 +55,6 @@ internal static class Recipe
         "The Forge runs that write links the load does not, in the order they last ran. Each verb records itself "
         + "here when it finishes; the load replays them after its own linking steps, skipping what the corpus already holds.";
 
-    private static readonly HashSet<string> Recorded =
-        ["align", "compose", "names", "possessives", "unshare", "strong", "synodal-strong", "union-strong", "crosswire-strong", "ohb-cuv", "interlinear-join", "correct", "reload"];
-
     private static readonly JsonSerializerOptions Json = new()
     {
         WriteIndented = true,
@@ -77,15 +75,15 @@ internal static class Recipe
 
     /// <summary>
     /// Whether a finished run of these arguments changed the corpus in a way the load would not
-    /// repeat: a trial writes nothing, and a replayed step is already in the recipe.
+    /// repeat, as its verb declares (<see cref="ForgeVerbs"/>): a trial writes nothing, and a replayed
+    /// step is already in the recipe.
     /// </summary>
     public static bool Records(string[] args) =>
         args.Length > 0
-        && Recorded.Contains(args[0])
+        && ForgeVerbs.Find(args[0])?.Records is { } records
         && Environment.GetEnvironmentVariable(Replaying) is null
         && !args.Contains("--dry-run")
-        && (args[0] is not ("names" or "possessives" or "unshare") || args.Contains("--apply"))
-        && (args[0] != "interlinear-join" || args.Contains("--replace"));
+        && records(args);
 
     public static void Record(string resources, string[] args, DateTimeOffset at)
     {
@@ -138,13 +136,13 @@ internal static class Recipe
                     : null;
 
             case "names" when slugs.Count >= 2:
-                return await Exists(connection, PairLinks + " AND starts_with(l.source, @source)", slugs[0], slugs[1],
+                return await Exists(connection, PairLinks + FromSource, slugs[0], slugs[1],
                     NameListPass.Source, cancellationToken)
                     ? $"the names of {slugs[0]} and {slugs[1]} are already settled"
                     : null;
 
             case "possessives" when slugs.Count >= 2:
-                return await Exists(connection, PairLinks + " AND starts_with(l.source, @source)", slugs[0], slugs[1],
+                return await Exists(connection, PairLinks + FromSource, slugs[0], slugs[1],
                     PossessivePass.Source, cancellationToken)
                     ? $"the possessives of {slugs[0]} are already linked to {slugs[1]}"
                     : null;
@@ -189,6 +187,9 @@ internal static class Recipe
             JOIN text t ON t.id = l.to_text_id
             WHERE ((f.slug = @from AND t.slug = @to) OR (f.slug = @to AND t.slug = @from))
         """;
+
+    private const string FromSource =
+        " AND l.provenance_id IN (SELECT id FROM provenance WHERE starts_with(source, @source))";
 
     private const string BySource =
         "SELECT EXISTS (SELECT 1 FROM link l WHERE l.provenance_id IN " +

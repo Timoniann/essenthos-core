@@ -587,6 +587,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             .Where(link => inScope.Contains(link.Id) && link.Method == LinkMethod.Aligner)
             .Where(link => (link.FromTextId == from && link.ToTextId == to) || (link.FromTextId == to && link.ToTextId == from))
             .SelectMany(link => link.Words.Select(word => new { link.Id, word.WordId }))
+            .OrderBy(word => word.Id)
+            .ThenBy(word => word.WordId)
             .ToListAsync(cancellationToken);
         return EvidentiaAlignerPairs.Of(words.GroupBy(word => word.Id).SelectMany(link =>
             link.Where(word => sourceIds.Contains(word.WordId)).SelectMany(source =>
@@ -609,6 +611,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     private async Task<IReadOnlyDictionary<string, string>> GreekGlosses(CancellationToken cancellationToken) =>
         greekGlosses ??= (await db.LexiconGlosses.AsNoTracking()
                 .Where(gloss => gloss.StrongNumber.StartsWith("G"))
+                .OrderBy(gloss => gloss.Id)
                 .Select(gloss => new { gloss.Lemma, gloss.Gloss })
                 .ToListAsync(cancellationToken))
             .GroupBy(gloss => gloss.Lemma, StringComparer.Ordinal)
@@ -661,6 +664,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                     && reference.CanonicalBook == canonicalBook)
                 .GroupBy(reference => reference.CanonicalChapter)
                 .Select(group => new { Chapter = group.Key, LastVerse = group.Max(reference => reference.CanonicalVerse) })
+                .OrderBy(chapter => chapter.Chapter)
                 .ToListAsync(cancellationToken);
             chapterLengths[(fromSlug, toSlug, canonicalBook)] = lengths =
                 new EvidentiaChapterLengths(chapters.Select(chapter => (chapter.Chapter, chapter.LastVerse)));
@@ -689,6 +693,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 && reference.CanonicalBook == canonicalBook
                 && reference.CanonicalChapter == canonicalChapter
                 && (!canonicalVerse.HasValue || reference.CanonicalVerse == canonicalVerse.Value))
+            .OrderBy(reference => reference.VerseId)
+            .ThenBy(reference => reference.CanonicalVerse)
             .Select(reference => new
             {
                 reference.VerseId,
@@ -712,6 +718,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var rows = await db.Words
             .AsNoTracking()
             .Where(word => verseIds.Contains(word.VerseId))
+            .OrderBy(word => word.Id)
             .Select(word => new
             {
                 word.Id,
@@ -757,6 +764,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             })
             .OrderBy(token => token.Address.Verse)
             .ThenBy(token => token.Position)
+            .ThenBy(token => token.Id)
             .ToList();
     }
 
@@ -943,6 +951,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                     WHERE r.verse_id = w.verse_id
                     ORDER BY r.canonical_book, r.canonical_chapter, r.canonical_verse LIMIT 1) m
                 WHERE w.id = ANY(@ids)
+                ORDER BY w.id
                 """,
                 (NpgsqlConnection)db.Database.GetDbConnection());
             command.Parameters.AddWithValue("ids", source.Select(token => token.Id).ToArray());
@@ -968,6 +977,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         IReadOnlyList<long> words, CancellationToken cancellationToken) =>
         (await db.WordEntities.AsNoTracking()
             .Where(annotation => words.Contains(annotation.WordId))
+            .OrderBy(annotation => annotation.WordId)
+            .ThenBy(annotation => annotation.EntityId)
             .Select(annotation => new { annotation.WordId, annotation.EntityId })
             .ToListAsync(cancellationToken))
         .GroupBy(annotation => annotation.WordId)
@@ -1046,6 +1057,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 word.WordId,
                 word.Side,
             }))
+            .OrderBy(word => word.Id)
+            .ThenBy(word => word.WordId)
+            .ThenBy(word => word.Side)
             .ToListAsync(cancellationToken);
 
         var goldLinks = links.GroupBy(row => row.Id)
