@@ -1,3 +1,5 @@
+using Essenthos.Core.Corpus;
+
 namespace Essenthos.Core.Loading.Links.Evidentia;
 
 /// <summary>What became of a word of the translation, as a reader will see it.</summary>
@@ -272,7 +274,7 @@ internal static class EvidentiaStateScore
     public const string LexicalRule = "lexical";
 
     private static readonly HashSet<EvidentiaAttachment> PhraseAttachments =
-        [EvidentiaAttachment.PhrasalParticle, EvidentiaAttachment.VerbOfItsParticle];
+        [.. AttachedWords.PhraseAttachments.Select(Enum.Parse<EvidentiaAttachment>)];
 
     private static readonly HashSet<string> OpenClasses = ["noun", "propn", "verb", "adj", "num", "adv"];
 

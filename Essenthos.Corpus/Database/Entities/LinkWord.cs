@@ -21,4 +21,18 @@ public class LinkWord
     public Word? Word { get; set; }
 
     public LinkSide Side { get; set; }
+
+    /// <summary>
+    /// Null for a word that renders the other side by itself, which is nearly every word. Set where
+    /// it renders it as part of another word of its own text, <see cref="HeadWordId"/>.
+    /// </summary>
+    public LinkWordRole? Role { get; set; }
+
+    /// <summary>
+    /// The word of the same text this one goes with: <em>see</em> for the <em>did</em> of <em>did
+    /// see</em>. Null where the word has no role, and where the head was later taken out of the text.
+    /// </summary>
+    public long? HeadWordId { get; set; }
+
+    public Word? HeadWord { get; set; }
 }

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -19,6 +20,7 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// </param>
 /// <param name="Withdrawn">Words taken out of an aligner's link so that a safe-tier absence could be written.</param>
 /// <param name="Superseded">Absences an earlier run's rule wrote on a word this run's verdicts render, taken back.</param>
+/// <param name="Attached">Words of the written links marked as going with another word of their own text.</param>
 internal sealed record EvidentiaApplyOutcome(
     bool Written,
     int Verdicts,
@@ -31,13 +33,15 @@ internal sealed record EvidentiaApplyOutcome(
     int Withdrawn,
     int Superseded,
     IReadOnlyList<string> Lines,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int Attached = 0)
 {
     public override string ToString() =>
         (Written ? "EVIDENTIA verdicts written" : "EVIDENTIA verdicts NOT written (plan only; pass --write to write)")
         + $": {Verdicts:N0} approved or corrected; {NewLinks:N0} new links ({NewAbsences:N0} of them absences), {OnExisting:N0} claims on a link naming the same words, "
         + $"{Within:N0} on a link naming more, {Promoted:N0} links whose settled answer changed, {Withheld:N0} withheld, "
-        + $"{Withdrawn:N0} words withdrawn from the aligner's links for an absence, {Superseded:N0} earlier absences taken back for a rendering; in {Elapsed}"
+        + $"{Withdrawn:N0} words withdrawn from the aligner's links for an absence, {Superseded:N0} earlier absences taken back for a rendering, "
+        + $"{Attached:N0} words marked as going with another word; in {Elapsed}"
         + (Lines.Count == 0 ? string.Empty : "\n" + string.Join("\n", Lines));
 }
 
@@ -89,6 +93,13 @@ internal sealed record EvidentiaApplyOutcome(
 /// taken back with an <see cref="EvidentiaWithdrawal"/> under the verdict that renders the word, and
 /// the review that wrote it is marked as superseded, so a replay of the ledger does not write it again.
 /// </para>
+///
+/// <para>
+/// **An attached word is a link like any other, and then says whose it is.** <em>did</em> of <em>did
+/// see</em> is written on the word its rule placed it on, and where that is its head's own
+/// counterpart, its membership of the link is marked with its role and the head it goes with
+/// (<see cref="AttachedWords"/>), in the same transaction.
+/// </para>
 /// </summary>
 internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verseLinks)
 {
@@ -129,6 +140,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
 
         if (transaction is not null)
         {
+            tally.Attached = await db.Database.ExecuteSqlInterpolatedAsync(AttachedWords.Mark(runId), cancellationToken);
             await transaction.CommitAsync(cancellationToken);
             if (tally.NewLinks > 0)
             {
@@ -137,7 +149,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
         }
 
         return new EvidentiaApplyOutcome(write, verdictIds.Count, tally.NewLinks, tally.NewAbsences, tally.OnExisting, tally.Within,
-            tally.Promoted, tally.Withheld, tally.Withdrawn, tally.Superseded, tally.Lines, elapsed.Elapsed);
+            tally.Promoted, tally.Withheld, tally.Withdrawn, tally.Superseded, tally.Lines, elapsed.Elapsed, tally.Attached);
     }
 
     private async Task Settle(EvidentiaRun run, long[] reviewIds, bool write, Tally tally, CancellationToken cancellationToken)
@@ -513,6 +525,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
         public int Withheld;
         public int Withdrawn;
         public int Superseded;
+        public int Attached;
         public List<string> Lines { get; } = [];
     }
 }

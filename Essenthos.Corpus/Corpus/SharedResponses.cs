@@ -312,7 +312,23 @@ internal record TextWordResponse(
     /// that the text runs on.
     /// </summary>
     public string? Break { get; init; }
+
+    /// <summary>
+    /// The word of this same text this one goes with, where it renders what it renders as part of
+    /// that word: <em>did</em> of <em>did see</em> writes the tense of the verb <em>see</em> renders,
+    /// and <em>he</em> of <em>he said</em> the person of its ending. Null for a word that renders on
+    /// its own, which is nearly every word.
+    /// </summary>
+    public AttachedResponse? Attached { get; init; }
 }
+
+/// <param name="Kind">
+/// <c>attached</c> where the word writes its head's inflection or function, <c>phrase-member</c>
+/// where it renders one word together with its head (<em>out</em> of <em>went out</em>).
+/// </param>
+/// <param name="HeadId">The head word, which is a word of the same text and nearly always of the same verse.</param>
+/// <param name="Head">The head as its text prints it, so it can be named without finding it.</param>
+internal record AttachedResponse(string Kind, long HeadId, string Head);
 
 /// <param name="Glosses">
 /// Every gloss the lexicon gives the entries the word reached, in the lexicon's order. More than one

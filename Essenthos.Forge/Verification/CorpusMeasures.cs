@@ -21,6 +21,15 @@
 /// here that was ever promised — the Septuagint's deuterocanon has no Hebrew counterpart, and the
 /// sixty-five verses its Daniel 3 holds beyond the Masoretic text have none either.
 /// </param>
+/// <param name="Attached">
+/// Of <paramref name="Rendered"/>, the words that render only as part of another word of their text:
+/// <em>did</em> of <em>did see</em>, on the verb whose tense it writes. A word with a rendering of its
+/// own as well is counted as linked.
+/// </param>
+/// <param name="PhraseMember">
+/// Of <paramref name="Rendered"/>, the words that render only together with another word of their
+/// text, <em>out</em> of <em>went out</em>, and are not attached.
+/// </param>
 internal sealed record Coverage(
     string Text,
     string Section,
@@ -28,8 +37,13 @@ internal sealed record Coverage(
     int Rendered,
     int StatedAbsent,
     int Silent,
-    int Unpaired)
+    int Unpaired,
+    int Attached = 0,
+    int PhraseMember = 0)
 {
+    /// <summary>The words of <see cref="Rendered"/> that render on their own: the five states' first.</summary>
+    public int Linked => Rendered - Attached - PhraseMember;
+
     /// <summary>
     /// The words this section had something to reach: every word but the unpaired ones.
     ///
@@ -433,6 +447,15 @@ internal sealed record CorpusMeasures(
     /// <summary>Words a link says have no counterpart, which <see cref="Rendered"/> counts as answered for.</summary>
     public int AbsentWords => Coverage.Sum(c => c.StatedAbsent);
 
+    /// <summary>Of <see cref="RenderedWords"/>, those that render only as part of another word of their text.</summary>
+    public int AttachedWords => Coverage.Sum(c => c.Attached);
+
+    /// <summary>Of <see cref="RenderedWords"/>, those that render only together with another word of their text.</summary>
+    public int PhraseMemberWords => Coverage.Sum(c => c.PhraseMember);
+
+    /// <summary>Words no link names in a verse a witness holds: what the corpus has said nothing about.</summary>
+    public int SilentWords => Coverage.Sum(c => c.Silent);
+
     /// <summary>
     /// Words in a verse no witness the text is linked to holds at all, and therefore outside
     /// <see cref="Words"/>. Nothing is missing here that was ever promised, and a corpus that
@@ -466,15 +489,18 @@ internal sealed record CorpusMeasures(
     public string Describe()
     {
         var report = new System.Text.StringBuilder();
-        report.AppendLine("coverage                          words   rendered   stated absent     silent   unpaired");
+        report.AppendLine("coverage                          words     linked   attached     phrase   supplied unresolved   unpaired");
         foreach (var c in Coverage)
         {
-            report.AppendLine($"  {c.Text,-13} {c.Section,-15} {c.Words,7} {c.Rendered,10} {c.StatedAbsent,15} " +
-                              $"{c.Silent,10} {c.Unpaired,10}   {c.Share,7:P1}");
+            report.AppendLine($"  {c.Text,-13} {c.Section,-15} {c.Words,7} {c.Linked,10} {c.Attached,10} {c.PhraseMember,10} " +
+                              $"{c.StatedAbsent,10} {c.Silent,10} {c.Unpaired,10}   {c.Share,7:P1}");
         }
 
         report.AppendLine($"  {RenderedWords} of {Words} words had a counterpart to reach and reached it, and {AbsentWords} are shown to have none; " +
                           $"{UnpairedWords} more have none in this corpus and are outside the share");
+
+        report.AppendLine($"  by state, of {Words} words: linked {RenderedWords - AttachedWords - PhraseMemberWords}, attached {AttachedWords}, " +
+                          $"phrase member {PhraseMemberWords}, supplied {AbsentWords}, unresolved {SilentWords}");
 
         report.AppendLine($"  {Aligned:P1} over the books alignment has reached; {UnalignedWords} words in {(Unaligned ?? []).Count} books " +
                           "of a linked text are not aligned yet and are outside that share");

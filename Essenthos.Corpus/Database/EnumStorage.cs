@@ -216,6 +216,20 @@ internal static class EnumSpelling
         _ => throw Unmapped(value),
     };
 
+    public static string Of(LinkWordRole value) => value switch
+    {
+        LinkWordRole.Attached => "attached",
+        LinkWordRole.PhraseMember => "phrase-member",
+        _ => throw Unmapped(value),
+    };
+
+    public static LinkWordRole ToLinkWordRole(string stored) => stored switch
+    {
+        "attached" => LinkWordRole.Attached,
+        "phrase-member" => LinkWordRole.PhraseMember,
+        _ => throw Unreadable<LinkWordRole>(stored),
+    };
+
     public static string Of(VerseNoteKind value) => value switch
     {
         VerseNoteKind.Footnote => "footnote",
@@ -330,6 +344,9 @@ internal static class EnumStorage
 
     public static readonly ValueConverter<LinkSide, string> LinkSide =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToLinkSide(stored));
+
+    public static readonly ValueConverter<LinkWordRole, string> LinkWordRole =
+        new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToLinkWordRole(stored));
 
     public static readonly ValueConverter<VerseNoteKind, string> VerseNoteKind =
         new(value => EnumSpelling.Of(value), stored => EnumSpelling.ToVerseNoteKind(stored));
