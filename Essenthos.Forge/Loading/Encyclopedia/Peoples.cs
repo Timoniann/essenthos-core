@@ -51,7 +51,10 @@ internal sealed record PeopleRecord(
 internal sealed record PeopleNaming(string Number, string Name, string Why);
 
 /// <summary>One occurrence a person or a review has decided names a people.</summary>
-internal sealed record PeopleRuling(long WordId, string People, string Reference, string Why);
+internal sealed record PeopleRuling(string Text, string Reference, int Position, string Surface, string People, string Why)
+{
+    public RuledWord Word => new(Text, Reference, Position, Surface);
+}
 
 /// <summary>
 /// A people Strong's Dictionary describes as a people and derives from no word he numbers.

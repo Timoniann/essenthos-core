@@ -602,50 +602,64 @@
   ],
   "rulings": [
     {
-      "wordId": 6782352,
-      "reference": "Psalm 34:1",
+      "text": "BHSA",
+      "reference": "PSA 34:1",
+      "position": 9,
+      "surface": "אֲבִימֶ֑לֶךְ",
       "strongNumber": "H40",
       "existing": "abimelech",
       "why": "The title of the psalm: David changed his behaviour before Abimelech, the Philistine king 1 Samuel 21:10-15 calls Achish king of Gath. It is the name or title the entry holds, and whether it is Achish's title or a second name for him is what the entry leaves open."
     },
     {
-      "wordId": 12104955,
-      "reference": "Genesis 21:22",
+      "text": "GRCBRENT",
+      "reference": "GEN 21:22",
+      "position": 11,
+      "surface": "Ὁχοζὰθ",
       "strongNumber": "H276",
       "existing": "ahuzzath",
       "why": "The Septuagint reads Abimelech, and Ochozath his friend, and Phicol the commander of his army, where the Masoretic text has Abimelech and Phicol alone; Codex Vaticanus and Brenton's text both name him here. Ochozath is the Greek of Ahuzzath in GEN 26:26."
     },
     {
-      "wordId": 12104960,
-      "reference": "Genesis 21:22",
+      "text": "GRCBRENT",
+      "reference": "GEN 21:22",
+      "position": 16,
+      "surface": "Φιχὸλ",
       "strongNumber": "H6369",
       "existing": "phicol",
       "why": "Phicol the commander of Abimelech's army, as the Masoretic text names him in this verse."
     },
     {
-      "wordId": 12105137,
-      "reference": "Genesis 21:32",
+      "text": "GRCBRENT",
+      "reference": "GEN 21:32",
+      "position": 12,
+      "surface": "Ὁχοζὰθ",
       "strongNumber": "H276",
       "existing": "ahuzzath",
       "why": "As in GEN 21:22, the Septuagint has Abimelech rise with Ochozath his friend and Phicol, where the Masoretic text has no Ahuzzath."
     },
     {
-      "wordId": 12105142,
-      "reference": "Genesis 21:32",
+      "text": "GRCBRENT",
+      "reference": "GEN 21:32",
+      "position": 17,
+      "surface": "Φίχολ",
       "strongNumber": "H6369",
       "existing": "phicol",
       "why": "Phicol the commander of Abimelech's army, as the Masoretic text names him in this verse."
     },
     {
-      "wordId": 12108836,
-      "reference": "Genesis 26:26",
+      "text": "GRCBRENT",
+      "reference": "GEN 26:26",
+      "position": 9,
+      "surface": "Ὁχοζὰθ",
       "strongNumber": "H276",
       "existing": "ahuzzath",
       "why": "Ochozath his friend, the Ahuzzath of the Masoretic text in this verse."
     },
     {
-      "wordId": 12108841,
-      "reference": "Genesis 26:26",
+      "text": "GRCBRENT",
+      "reference": "GEN 26:26",
+      "position": 14,
+      "surface": "Φιχὼλ",
       "strongNumber": "H6369",
       "existing": "phicol",
       "why": "Phicol the commander of Abimelech's army, as the Masoretic text names him in this verse."

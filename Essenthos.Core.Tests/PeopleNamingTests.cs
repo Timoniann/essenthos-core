@@ -197,7 +197,7 @@ public sealed class PeopleFileTests
         File.Rulings.Should().NotBeEmpty();
         File.Rulings.Should().OnlyContain(r => slugs.Contains(r.People));
         File.Rulings.Should().OnlyContain(r => r.Why.Length > 0);
-        File.Rulings.Select(r => r.WordId).Should().OnlyHaveUniqueItems();
+        File.Rulings.Select(r => r.Word).Should().OnlyHaveUniqueItems();
     }
 
     /// <summary>

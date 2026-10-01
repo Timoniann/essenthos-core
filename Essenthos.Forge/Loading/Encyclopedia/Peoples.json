@@ -181,51 +181,67 @@
   ],
   "rulings": [
     {
-      "wordId": 6536500,
+      "text": "BHSA",
+      "reference": "NUM 1:11",
+      "position": 2,
+      "surface": "בִ֨נְיָמִ֔ן",
       "people": "benjaminites",
-      "reference": "Numbers 1:11",
       "why": "The bare name stands for the census tribe whose chief is Abidan, not for Jacob's son. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin, which the encyclopedia could not hold."
     },
     {
-      "wordId": 6536863,
+      "text": "BHSA",
+      "reference": "NUM 1:36",
+      "position": 3,
+      "surface": "בִנְיָמִ֔ן",
       "people": "benjaminites",
-      "reference": "Numbers 1:36",
       "why": "The census of the Benjaminites by families and fathers' houses; the referent is the tribe. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
     },
     {
-      "wordId": 6536885,
+      "text": "BHSA",
+      "reference": "NUM 1:37",
+      "position": 4,
+      "surface": "בִנְיָמִ֑ן",
       "people": "benjaminites",
-      "reference": "Numbers 1:37",
       "why": "The tribe of Benjamin numbering 35,400 is the collective, and no person was on the candidate list. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
     },
     {
-      "wordId": 6537478,
+      "text": "BHSA",
+      "reference": "NUM 2:22",
+      "position": 3,
+      "surface": "בִּנְיָמִ֑ן",
       "people": "benjaminites",
-      "reference": "Numbers 2:22",
       "why": "The camp arrangement names the tribe, maṭṭeh Binyamin, a group no listed person-candidate covers. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
     },
     {
-      "wordId": 6537483,
+      "text": "BHSA",
+      "reference": "NUM 2:22",
+      "position": 8,
+      "surface": "בִנְיָמִ֔ן",
       "people": "benjaminites",
-      "reference": "Numbers 2:22",
       "why": "Sons of Benjamin here is the tribe Abidan leads, not the patriarch's own sons. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
     },
     {
-      "wordId": 6541534,
+      "text": "BHSA",
+      "reference": "NUM 7:60",
+      "position": 9,
+      "surface": "בִנְיָמִ֑ן",
       "people": "benjaminites",
-      "reference": "Numbers 7:60",
       "why": "Abidan is prince over the tribal body, and the name denotes the tribe at the offering. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
     },
     {
-      "wordId": 6543364,
+      "text": "BHSA",
+      "reference": "NUM 10:24",
+      "position": 6,
+      "surface": "בִנְיָמִ֑ן",
       "people": "benjaminites",
-      "reference": "Numbers 10:24",
       "why": "The marching order of the tribe's host; the referent is the collective. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
     },
     {
-      "wordId": 6544707,
+      "text": "BHSA",
+      "reference": "NUM 13:9",
+      "position": 3,
+      "surface": "בִנְיָמִ֔ן",
       "people": "benjaminites",
-      "reference": "Numbers 13:9",
       "why": "The spy list by tribe: Palti represents the tribe of Benjamin, not the individual patriarch. The audit of 2026-09-06 overturned the reading benjamin and named the tribe of Benjamin."
     }
   ],

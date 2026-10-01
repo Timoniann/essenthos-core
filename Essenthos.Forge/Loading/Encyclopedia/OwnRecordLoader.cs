@@ -21,6 +21,9 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// Records given the name row they should have had. Counted apart from <see cref="Created"/>
 /// because it is what a corpus written before this pass named anything gains on its next boot.
 /// </param>
+/// <param name="Restored">
+/// Ruled words of a file already recorded that had lost the ruling's answer, and were given it again.
+/// </param>
 internal sealed record OwnRecordOutcome(
     bool AlreadyLoaded,
     int Created,
@@ -29,16 +32,18 @@ internal sealed record OwnRecordOutcome(
     int Annotated,
     int Withheld,
     int Labelled,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int Restored = 0)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? $"the records this corpus writes for itself are already there; {Labelled} of them were " +
-              "given the name row they should have had"
+              $"given the name row they should have had, and {Restored} ruled words their ruling's answer again"
             : $"{Created} records written for referents no dataset holds and {Named} words annotated " +
               $"to them or to a record the ruling named, {Annotated} words in all once the links " +
               $"carried them, in {Elapsed}. {Unsettled} of the records name who else they might be, " +
-              $"and {Labelled} carry a name row this pass wrote. " +
+              $"{Labelled} carry a name row this pass wrote, and {Restored} ruled words of files " +
+              "already recorded were given their ruling's answer again. " +
               $"{Withheld} further records the readings ask for are withheld: the bulk pass is off.";
 }
 
@@ -123,6 +128,12 @@ internal sealed class OwnRecordLoader(
         var started = Stopwatch.StartNew();
         int created = 0, unsettled = 0, named = 0, annotated = 0;
 
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var words = await RuledWords.Resolve(
+            (NpgsqlConnection)db.Database.GetDbConnection(),
+            files.SelectMany(file => file.Rulings).Select(ruling => ruling.Word),
+            cancellationToken);
+
         var pending = new List<OwnRecordRulings>(files.Count);
         foreach (var file in files)
         {
@@ -132,36 +143,38 @@ internal sealed class OwnRecordLoader(
             }
         }
 
+        var restored = await Restore(files.Except(pending).ToList(), files, words, cancellationToken);
+
         foreach (var file in pending)
         {
-            var (wrote, open, settled) = await Apply(file, cancellationToken);
+            var (wrote, open, settled) = await Apply(file, words, cancellationToken);
             created += wrote;
             unsettled += open;
             named += settled.Count;
             annotated += settled.Count == 0
                 ? 0
                 : await Annotate(
-                    settled, await Corrections(file, cancellationToken), EnumSpelling.ToLinkMethod(file.Method),
+                    settled, await Corrections(file, words, cancellationToken), EnumSpelling.ToLinkMethod(file.Method),
                     file.Source, cancellationToken);
         }
 
-        var labelled = await Label(files, cancellationToken);
+        var labelled = await Label(files, words, cancellationToken);
         await Rehead(files, cancellationToken);
 
         if (pending.Count == 0)
         {
             logger.LogInformation(
                 "The rulings are already recorded; {Labelled} of their records were given the name "
-                + "row they should have had",
-                labelled);
-            return new OwnRecordOutcome(true, 0, 0, 0, 0, 0, labelled, started.Elapsed);
+                + "row they should have had, and {Restored} ruled words their ruling's answer again",
+                labelled, restored);
+            return new OwnRecordOutcome(true, 0, 0, 0, 0, 0, labelled, started.Elapsed, restored);
         }
 
         // The bulk pass belongs to the first boot and to no later one: a rulings file arriving on a
         // corpus that already has the others is that file's work alone.
         var withheld = pending.Count == files.Count ? await Bulk(resources, cancellationToken) : 0;
         var outcome = new OwnRecordOutcome(
-            false, created, unsettled, named, annotated, withheld, labelled, started.Elapsed);
+            false, created, unsettled, named, annotated, withheld, labelled, started.Elapsed, restored);
         logger.LogInformation("Wrote: {Outcome}", outcome);
         return outcome;
     }
@@ -174,6 +187,91 @@ internal sealed class OwnRecordLoader(
     private async Task<bool> Recorded(OwnRecordRulings file, CancellationToken cancellationToken) =>
         await db.EntityClaims.AnyAsync(c => c.Source == file.Source, cancellationToken)
         || await db.WordEntities.AnyAsync(a => a.Source == file.Source, cancellationToken);
+
+    /// <summary>
+    /// Whether a claim of the source stands on an annotation of the word naming the record, asked of
+    /// every candidate at once. A ruling that named a record the word already named lands as a claim
+    /// on that annotation rather than as a row of its own, so the claim is what is asked about.
+    /// </summary>
+    private const string Answered =
+        """
+        SELECT x.n
+        FROM unnest(@words, @entities, @sources) WITH ORDINALITY AS x(word_id, entity_id, source, n)
+        WHERE EXISTS (
+            SELECT 1 FROM word_entity a
+            JOIN word_entity_claim c ON c.word_entity_id = a.id
+            WHERE a.word_id = x.word_id AND a.entity_id = x.entity_id AND c.source = x.source)
+        """;
+
+    /// <summary>
+    /// The rulings of files already recorded whose word no longer carries the ruling's answer, given
+    /// it again.
+    ///
+    /// <para>
+    /// A file is applied once and then skipped whole, so a word that loses its answer afterwards —
+    /// as every word of a text does when a reload numbers its words afresh and the annotations go
+    /// with the old rows — would stay unanswered for good. An answer a later ruling takes back is not
+    /// given again, and neither is one naming a record that has since been folded or withdrawn: the
+    /// record is gone, and that is the fold's decision to keep.
+    /// </para>
+    /// </summary>
+    private async Task<int> Restore(
+        IReadOnlyList<OwnRecordRulings> recorded,
+        IReadOnlyList<OwnRecordRulings> files,
+        IReadOnlyDictionary<RuledWord, long> words,
+        CancellationToken cancellationToken)
+    {
+        var takenBack = files
+            .SelectMany(file => file.Rulings)
+            .Where(ruling => ruling.Corrects is not null)
+            .Select(ruling => (words[ruling.Word], ruling.Corrects!))
+            .ToHashSet();
+
+        var candidates = recorded
+            .SelectMany(file => file.Rulings.Select(ruling => (File: file, Ruling: ruling,
+                Word: words[ruling.Word], Slug: ruling.Create?.Slug ?? ruling.Existing!)))
+            .Where(c => !takenBack.Contains((c.Word, c.Slug)))
+            .ToList();
+        if (candidates.Count == 0)
+        {
+            return 0;
+        }
+
+        var slugs = candidates.Select(c => c.Slug).Distinct().ToList();
+        var ids = await db.Entities
+            .Where(e => slugs.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
+        var held = candidates.Where(c => ids.ContainsKey(c.Slug)).ToList();
+
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        var answered = new HashSet<long>();
+        await using (var command = new NpgsqlCommand(Answered, connection))
+        {
+            command.Parameters.AddWithValue("words", held.Select(c => c.Word).ToArray());
+            command.Parameters.AddWithValue("entities", held.Select(c => ids[c.Slug]).ToArray());
+            command.Parameters.AddWithValue("sources", held.Select(c => c.File.Source).ToArray());
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                answered.Add(reader.GetInt64(0));
+            }
+        }
+
+        var restored = 0;
+        foreach (var file in held.Where((_, index) => !answered.Contains(index + 1)).GroupBy(c => c.File))
+        {
+            var seed = file
+                .Select(c => ((long, int, double?, bool, string))(c.Word, ids[c.Slug], null, false, c.Ruling.Why))
+                .ToList();
+            await Annotate(seed, [], EnumSpelling.ToLinkMethod(file.Key.Method), file.Key.Source, cancellationToken);
+            logger.LogInformation(
+                "{Count} words ruled on in a recorded file had lost the ruling's answer and were given it again: {Words}",
+                seed.Count, string.Join("; ", file.Select(c => c.Ruling.Word)));
+            restored += seed.Count;
+        }
+
+        return restored;
+    }
 
     /// <summary>
     /// A record a ruling re-heads is ours: its heading, its line and its note are what the ruling
@@ -265,6 +363,7 @@ internal sealed class OwnRecordLoader(
     /// </summary>
     private async Task<int> Label(
         IReadOnlyList<OwnRecordRulings> files,
+        IReadOnlyDictionary<RuledWord, long> words,
         CancellationToken cancellationToken)
     {
         var wanted = files
@@ -284,7 +383,7 @@ internal sealed class OwnRecordLoader(
             .ToDictionaryAsync(e => e.Slug, cancellationToken);
 
         var occurrences = await Verses(
-            wanted.Select(ruling => ruling.WordId).ToList(), cancellationToken);
+            wanted.Select(ruling => words[ruling.Word]).ToList(), cancellationToken);
 
         var labelled = 0;
         foreach (var ruling in wanted)
@@ -295,7 +394,7 @@ internal sealed class OwnRecordLoader(
                 continue;
             }
 
-            var number = occurrences.TryGetValue(ruling.WordId, out var at) ? at.StrongNumber : null;
+            var number = occurrences.TryGetValue(words[ruling.Word], out var at) ? at.StrongNumber : null;
             record.Names.Add(new EntityName
             {
                 Label = ruling.Create.Name,
@@ -324,17 +423,18 @@ internal sealed class OwnRecordLoader(
     /// </summary>
     private async Task<(int Created, int Unsettled, List<(long, int, double?, bool, string)> Settled)> Apply(
         OwnRecordRulings file,
+        IReadOnlyDictionary<RuledWord, long> words,
         CancellationToken cancellationToken)
     {
         var settled = new List<(OwnRecordRuling Ruling, Entity Referent)>(file.Rulings.Count);
         int created = 0, unsettled = 0;
 
-        var verses = await Verses(file.Rulings.Select(r => r.WordId).ToList(), cancellationToken);
+        var verses = await Verses(file.Rulings.Select(r => words[r.Word]).ToList(), cancellationToken);
 
         foreach (var ruling in file.Rulings)
         {
             var referent = ruling.Create is { } record
-                ? await Write(record, verses.GetValueOrDefault(ruling.WordId), ruling.Why, file.Source, cancellationToken)
+                ? await Write(record, verses.GetValueOrDefault(words[ruling.Word]), ruling.Why, file.Source, cancellationToken)
                 : await Existing(ruling.Existing!, cancellationToken);
 
             if (referent is null)
@@ -369,7 +469,7 @@ internal sealed class OwnRecordLoader(
 
         var seed = settled
             .Select(s => ((long, int, double?, bool, string))(
-                s.Ruling.WordId, s.Referent.Id, null, false, s.Ruling.Why))
+                words[s.Ruling.Word], s.Referent.Id, null, false, s.Ruling.Why))
             .ToList();
 
         return (created, unsettled, seed);
@@ -567,6 +667,7 @@ internal sealed class OwnRecordLoader(
     /// <summary>The word and the record each correcting ruling of a file takes back.</summary>
     private async Task<IReadOnlyList<(long Word, int Entity)>> Corrections(
         OwnRecordRulings file,
+        IReadOnlyDictionary<RuledWord, long> words,
         CancellationToken cancellationToken)
     {
         var corrects = file.Rulings.Where(r => r.Corrects is not null).ToList();
@@ -581,7 +682,7 @@ internal sealed class OwnRecordLoader(
             .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
         return corrects
             .Where(r => ids.ContainsKey(r.Corrects!))
-            .Select(r => (r.WordId, ids[r.Corrects!]))
+            .Select(r => (words[r.Word], ids[r.Corrects!]))
             .ToList();
     }
 

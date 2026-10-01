@@ -5,29 +5,37 @@
   "source": "Essenthos, on the review of the genealogies the project owner asked for on 2026-09-16, each occurrence decided from the Hebrew and the verse it repeats",
   "rulings": [
     {
-      "wordId": 6858084,
-      "reference": "1 Chronicles 1:9",
+      "text": "BHSA",
+      "reference": "1CH 1:9",
+      "position": 10,
+      "surface": "רַעְמָ֖א",
       "strongNumber": "H7484",
       "existing": "raamah",
       "why": "The sons of Cush: Seba, Havilah, Sabta, Raamah and Sabteca — Raamah stands in a list of sons, and the verse goes on to name his own sons, Sheba and Dedan. It repeats Genesis 10:7, where the encyclopedia holds him as the son of Cush. A reading of the verse took the word for the trading place of Ezekiel 27:22, which is a place of the same name and not the man the genealogy names."
     },
     {
-      "wordId": 6858089,
-      "reference": "1 Chronicles 1:9",
+      "text": "BHSA",
+      "reference": "1CH 1:9",
+      "position": 15,
+      "surface": "רַעְמָ֖א",
       "strongNumber": "H7484",
       "existing": "raamah",
       "why": "The sons of Raamah: Sheba and Dedan. The second Raamah of the verse is the father of the two, the son of Cush named four words earlier, as in Genesis 10:7; a place does not have sons in a table of descent."
     },
     {
-      "wordId": 6858443,
-      "reference": "1 Chronicles 1:41",
+      "text": "BHSA",
+      "reference": "1CH 1:41",
+      "position": 6,
+      "surface": "דִישֹׁ֔ון",
       "strongNumber": "H1787",
       "existing": "dishon",
       "why": "The sons of Anah: Dishon. And the sons of Dishon: Hamran, Eshban, Ithran and Cheran. The second Dishon is the father of those four, and Genesis 36:21 and 36:26 name that father as Dishon the son of Seir, whose sons are Hemdan, Eshban, Ithran and Cheran. The first Dishon of the verse is Anah's son and is left as it is; the reading gave both the same record."
     },
     {
-      "wordId": 6544698,
-      "reference": "Numbers 13:7",
+      "text": "BHSA",
+      "reference": "NUM 13:7",
+      "position": 6,
+      "surface": "יֹוסֵֽף",
       "strongNumber": "H3130",
       "existing": "joseph-2",
       "why": "Of the tribe of Issachar, Igal the son of Joseph. The spies are named each with his father, and a man of Issachar is not the son of Jacob's son Joseph, who is the father of the tribes of Ephraim and Manasseh listed in 13:8 and 13:11. The reading took the name for the patriarch."

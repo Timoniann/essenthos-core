@@ -1,6 +1,7 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Encyclopedia;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Tests;
@@ -107,6 +108,73 @@ internal static class Corpus
 
         db.SaveChanges();
         return text;
+    }
+
+    /// <summary>
+    /// The words rulings name, each written at the address it names in its own text: the text is the
+    /// one given for its slug or a new one, the book, chapter and verse are added where the text has
+    /// none, and the positions before a ruled word are filled.
+    /// </summary>
+    public static Dictionary<RuledWord, Word> Place(
+        this AppDbContext db,
+        IEnumerable<RuledWord> words,
+        IReadOnlyDictionary<string, Text>? texts = null)
+    {
+        var placed = new Dictionary<RuledWord, Word>();
+        foreach (var verse in words.Distinct().GroupBy(word => (word.Text, Address: word.Address()!.Value)))
+        {
+            var (book, chapter, number, label) = verse.Key.Address;
+            var text = texts?.GetValueOrDefault(verse.Key.Text)
+                       ?? db.Texts.Local.FirstOrDefault(t => t.Slug == verse.Key.Text)
+                       ?? db.Texts.Add(new Text
+                       {
+                           Slug = verse.Key.Text,
+                           Name = verse.Key.Text,
+                           Kind = verse.Key.Text == "BHSA" ? TextKind.CriticalEdition : TextKind.Translation,
+                           Language = verse.Key.Text switch
+                           {
+                               "BHSA" => "hbo",
+                               "NESTLE1904" or "GRCBRENT" => "grc",
+                               _ => "eng",
+                           },
+                       }).Entity;
+            var bookRow = db.Books.Local.FirstOrDefault(b => b.Text == text && b.CanonicalOrdinal == book)
+                          ?? db.Books.Add(new Book
+                          {
+                              Text = text, CanonicalOrdinal = book, Position = book, Name = $"Book {book}", Slug = $"b{book}",
+                          }).Entity;
+            var chapterRow = db.Chapters.Local.FirstOrDefault(c => c.Book == bookRow && c.Number == chapter)
+                             ?? db.Chapters.Add(new Chapter { Text = text, Book = bookRow, Number = chapter }).Entity;
+            var verseRow = db.Verses.Add(new Verse
+            {
+                Text = text, Book = bookRow, Chapter = chapterRow, ChapterNumber = chapter, Number = number, Label = label,
+            }).Entity;
+            db.VerseReferences.Add(new VerseReference
+            {
+                Verse = verseRow, CanonicalBook = book, CanonicalChapter = chapter, CanonicalVerse = number, IsPrimary = true,
+            });
+
+            var last = verse.Max(word => word.Position);
+            for (var position = 1; position <= last; position++)
+            {
+                var ruled = verse.FirstOrDefault(word => word.Position == position);
+                var word = db.Words.Add(new Word
+                {
+                    Text = text,
+                    Verse = verseRow,
+                    Position = position,
+                    Surface = ruled?.Surface ?? $"word{position}",
+                    Trailer = position == last ? string.Empty : " ",
+                }).Entity;
+                if (ruled is not null)
+                {
+                    placed[ruled] = word;
+                }
+            }
+        }
+
+        db.SaveChanges();
+        return placed;
     }
 
     /// <summary>One word by its address, which is how a link's ends are named in a test.</summary>
