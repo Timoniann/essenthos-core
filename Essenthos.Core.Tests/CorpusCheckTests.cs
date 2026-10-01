@@ -1,9 +1,12 @@
 ﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Verbs;
 using Essenthos.Core.Verification;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
@@ -47,6 +50,17 @@ public sealed class CorpusCheckTests : IDisposable
         _transaction.Rollback();
         _transaction.Dispose();
         _db.Dispose();
+    }
+
+    [Fact]
+    public async Task VerifyRecordsWhatItFindsSoTheHealthReportIsTheLatestMeasure()
+    {
+        var before = await _db.VerificationRuns.CountAsync();
+        var services = new ServiceCollection().AddSingleton(_db).AddSingleton(_check).BuildServiceProvider();
+
+        await ForgeVerbs.Find("verify")!.Run(new ForgeRun(services, NullLogger.Instance, "", ""), ["verify"]);
+
+        (await _db.VerificationRuns.CountAsync()).Should().Be(before + 1);
     }
 
     [Fact]

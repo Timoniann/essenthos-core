@@ -28,7 +28,7 @@ internal static partial class ForgeVerbs
             Load),
         new("maintain", "[<table> ...]", "VACUUM (ANALYZE) of the tables that need it, or of the ones named.", Maintain),
         new("verify", "[--floor <share>]",
-            "Measure the corpus, record the measures for /v1/health, and fail on anything broken.", Verify),
+            "Measure the corpus, record what it finds for /v1/health, and fail on anything broken.", Verify),
         new("release", "[--allow-dirty] [--allow-unrecorded] [--dry-run]",
             "Verify this machine's corpus and dump it into .releases/ as the next release.", Release),
         new("publish", "--to <target> [--release <name>] [--without-rehearsal] [--dry-run]",

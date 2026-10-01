@@ -51,13 +51,16 @@ internal static partial class ForgeVerbs
 
     /// <summary>
     /// The measures as a command, so a build can fail on them. The floor is set below where the corpus
-    /// already stands: its job is to catch a load that lost something, not to be an aspiration.
+    /// already stands: its job is to catch a load that lost something, not to be an aspiration. What it
+    /// finds is recorded, broken or not, because /v1/health reports the latest measures and a fix made
+    /// between two loads is otherwise reported as still broken until the next whole load.
     /// </summary>
     private static async Task<int> Verify(ForgeRun forge, string[] args)
     {
         using var verifyScope = forge.Scope();
         var check = verifyScope.ServiceProvider.GetRequiredService<CorpusCheck>();
         var measures = await check.Measure();
+        await check.Record(measures);
         var floor = Array.IndexOf(args, "--floor") is var at and >= 0 && at + 1 < args.Length
             ? double.Parse(args[at + 1], CultureInfo.InvariantCulture)
             : CorpusCheck.RenderedFloor;
