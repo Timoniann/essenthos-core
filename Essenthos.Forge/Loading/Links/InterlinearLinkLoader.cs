@@ -499,6 +499,9 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         FROM interlinear_draft
         GROUP BY draft;
 
+        -- Indexed, because on the full corpus the withdrawal asks, for each of some 350,000 nearby links,
+        -- whether a draft word stands on it: without these the draft is read whole each time.
+        CREATE INDEX ON interlinear_draft (word_id, side, to_text_id);
         ANALYZE interlinear_draft;
         ANALYZE interlinear_shape;
 
@@ -524,6 +527,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         JOIN link l ON l.id = t.link_id
         WHERE l.from_text_id = @translation;
 
+        CREATE INDEX ON interlinear_nearby (id);
         ANALYZE interlinear_nearby;
 
         CREATE TEMP TABLE interlinear_match ON COMMIT DROP AS
@@ -533,6 +537,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
           ON n.to_text_id = s.to_text_id AND n.shape = s.shape AND n.relation = @renders
         ORDER BY s.draft, n.testified DESC, n.id;
 
+        CREATE INDEX ON interlinear_match (link_id);
         ANALYZE interlinear_match;
         """;
 
