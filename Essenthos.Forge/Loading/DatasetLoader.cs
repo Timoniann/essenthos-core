@@ -42,13 +42,17 @@ internal sealed class DatasetLoader(
     /// placed, folded and joined verse by verse again. Its word links go with it and have to be
     /// aligned again.
     /// </summary>
-    private static readonly Dictionary<string, Func<string, TextSource>> Reloadable = new Dictionary<string, Func<string, TextSource>>
-    {
-        [GeezTextSource.Slug] = resources => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder)),
-        [SweteTextSource.Slug] = resources => SweteTextSource.Read(Path.Combine(resources, "Swete")),
-        [SweteOldGreekTextSource.Slug] = resources => SweteOldGreekTextSource.Read(Path.Combine(resources, "Swete")),
-        [AlexandrinusTextSource.Slug] = AlexandrinusTextSource.Read,
-    }.Concat(SwordTexts.ToDictionary(
+    private static readonly Dictionary<string, Func<string, TextSource>> Reloadable = new Dictionary<string, Func<string, TextSource>>(
+    [
+        new(GeezTextSource.Slug, resources => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder))),
+        new(SweteTextSource.Slug, resources => SweteTextSource.Read(Path.Combine(resources, "Swete"))),
+        new(SweteOldGreekTextSource.Slug, resources => SweteOldGreekTextSource.Read(Path.Combine(resources, "Swete"))),
+        new(AlexandrinusTextSource.Slug, AlexandrinusTextSource.Read),
+        .. Door43TextSource.Definitions.Select(text => KeyValuePair.Create<string, Func<string, TextSource>>(
+            text.Value.Slug, resources => Door43TextSource.Read(Path.Combine(resources, "Door43", text.Key)))),
+        new(ClearBible.ClearBibleTextSource.OpenHausa,
+            resources => ClearBible.ClearBibleTextSource.Read(Path.Combine(resources, "ClearBible"))),
+    ]).Concat(SwordTexts.ToDictionary(
             text => text.Key,
             text => (Func<string, TextSource>)(resources => SwordTextSource.Read(Path.Combine(resources, text.Value)))))
         .ToDictionary();
@@ -243,6 +247,18 @@ internal sealed class DatasetLoader(
                 Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder)), stoppingToken);
             await Load(AlmeidaTextSource.Definition.Name, () => AlmeidaTextSource.Read(
                 Path.Combine(resources, AlmeidaTextSource.Folder)), stoppingToken);
+
+            // The Indian Revised Version in Bengali and Assamese, from the aligned files their links are
+            // drawn from; and the Hausa, which nobody publishes in a form the corpus may take except the
+            // token files of the alignment Clear Bible made of it.
+            foreach (var (folder, definition) in Door43TextSource.Definitions)
+            {
+                await Load(definition.Name, () => Door43TextSource.Read(
+                    Path.Combine(resources, "Door43", folder)), stoppingToken);
+            }
+
+            await Load(ClearBible.ClearBibleTextSource.Definition.Name, () => ClearBible.ClearBibleTextSource.Read(
+                Path.Combine(resources, "ClearBible")), stoppingToken);
             if (_wroteWords)
             {
                 await RefreshTheStatistics(stoppingToken);
@@ -1014,6 +1030,15 @@ internal sealed class DatasetLoader(
             UnfoldingWordTextSource.Slug,
             literal.Source,
             cancellationToken));
+
+        // The Van Dyck, the Indian Revised Version in three languages: their translators' own ties,
+        // beside Clear Bible's where both exist, each kept as its own statement.
+        foreach (var aligned in Door43.Door43AlignedBible.All)
+        {
+            status.Starting($"the Door43 alignment of {aligned.Slug}");
+            status.Record(await loader.Load(
+                Path.Combine(resources, "Door43", aligned.Folder), aligned.Slug, aligned.Source, cancellationToken));
+        }
     }
 
     /// <summary>
@@ -1210,14 +1235,17 @@ internal sealed class DatasetLoader(
             }
         }
 
-        // The unfoldingWord Literal Text and the Almeida print a title before the first verse, as the
-        // six English texts do.
+        // The unfoldingWord Literal Text, the Almeida, the Indian Revised Version and the Hausa print a
+        // title before the first verse, as the six English texts do.
         foreach (var read in (Func<TextSource>[])
                  [
                      .. EnglishTextSource.Definitions.Keys.Select(folder =>
                          (Func<TextSource>)(() => EnglishTextSource.Read(Path.Combine(resources, folder)))),
                      () => UnfoldingWordTextSource.Read(Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder)),
                      () => AlmeidaTextSource.Read(Path.Combine(resources, AlmeidaTextSource.Folder)),
+                     .. Door43TextSource.Definitions.Keys.Select(folder =>
+                         (Func<TextSource>)(() => Door43TextSource.Read(Path.Combine(resources, "Door43", folder)))),
+                     () => ClearBible.ClearBibleTextSource.Read(Path.Combine(resources, "ClearBible")),
                  ])
         {
             using var scope = services.CreateScope();

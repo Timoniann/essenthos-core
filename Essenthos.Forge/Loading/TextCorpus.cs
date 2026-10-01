@@ -45,6 +45,8 @@ internal static class TextCorpus
         .. DeuterocanonTextSource.Texts.Select(text => text.Definition),
         UnfoldingWordTextSource.Definition,
         AlmeidaTextSource.Definition,
+        .. Door43TextSource.Definitions.Values,
+        ClearBible.ClearBibleTextSource.Definition,
     ];
 
     /// <summary>The slugs of <see cref="Definitions"/>, which is what most checks actually want.</summary>

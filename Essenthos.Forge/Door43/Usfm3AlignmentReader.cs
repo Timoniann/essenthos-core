@@ -67,7 +67,13 @@ internal sealed record AlignedVerse(
 /// </summary>
 internal static partial class Usfm3AlignmentReader
 {
-    public static IReadOnlyList<AlignedVerse> Read(string content)
+    /// <param name="unnumbered">
+    /// Whether a milestone that names its original word by spelling alone still states a span. The
+    /// earliest translationCore exports leave <c>x-strong</c> and <c>x-lemma</c> empty and write only
+    /// <c>x-content</c> and its occurrence, which is everything the join places a word by; the files
+    /// that number their words are read without it, so an empty number there stays what it was.
+    /// </param>
+    public static IReadOnlyList<AlignedVerse> Read(string content, bool unnumbered = false)
     {
         var verses = new List<AlignedVerse>(64);
         var chapter = 0;
@@ -132,12 +138,13 @@ internal static partial class Usfm3AlignmentReader
                 {
                     var span = open[^1];
                     open.RemoveAt(open.Count - 1);
-                    if (span.Strong.Length > 0 && span.Words.Count > 0)
+                    var named = span.Strong.Length > 0 || (unnumbered && span.Content.Length > 0);
+                    if (named && span.Words.Count > 0)
                     {
                         spans.Add(new AlignmentSpan(
                             span.Strong, span.Content, span.Words, span.Occurrence, span.Occurrences, span.WordOccurrences));
                     }
-                    else if (span.Strong.Length > 0 && number > 0)
+                    else if (named && number > 0)
                     {
                         shared++;
                     }

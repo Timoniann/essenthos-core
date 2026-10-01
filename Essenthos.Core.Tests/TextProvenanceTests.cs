@@ -41,7 +41,7 @@ public sealed class TextProvenanceTests
     private static TextDefinition Of(string slug) => All.Single(definition => definition.Slug == slug);
 
     [Fact]
-    public void TheCorpusHoldsFortyFourTexts() => All.Should().HaveCount(44);
+    public void TheCorpusHoldsFiftySevenTexts() => All.Should().HaveCount(57);
 
     /// <summary>
     /// Every text says what it is. A licence and a year identify a file, not an edition, and the
@@ -148,7 +148,7 @@ public sealed class TextProvenanceTests
     {
         All.Where(definition => definition.Licence.Contains("SA", StringComparison.OrdinalIgnoreCase))
             .Should().OnlyContain(definition => definition.Redistribution == Redistribution.ShareAlike)
-            .And.HaveCount(9);
+            .And.HaveCount(22);
 
         Of(Bible4uTextSource.Ohienko).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(SweteTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
@@ -159,6 +159,8 @@ public sealed class TextProvenanceTests
         Of(UnfoldingWordTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(GeezTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(AlexandrinusTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Door43TextSource.Definitions.Values.Should().OnlyContain(text => text.Redistribution == Redistribution.ShareAlike);
+        Of(ClearBible.ClearBibleTextSource.OpenHausa).Redistribution.Should().Be(Redistribution.ShareAlike);
     }
 
     /// <summary>

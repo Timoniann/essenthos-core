@@ -131,13 +131,13 @@ internal static partial class UsfmReader
     /// </summary>
     private static readonly HashSet<string> Passage =
     [
-        "p", "m", "nb", "b", "q", "q1", "q2", "q3", "qc", "pi", "pi1", "mi", "d", "s", "s1", "s2",
-        "ms", "ms1", "sp", "li", "li1",
+        "p", "m", "nb", "b", "q", "q1", "q2", "q3", "q4", "qc", "pi", "pi1", "pi2", "mi", "d", "s", "s1", "s2",
+        "ms", "ms1", "sp", "li", "li1", "li2", "li3",
 
         // An embedded letter or speech set as its own paragraph — its opening, body and closing —
         // which the unfoldingWord Literal Text uses in Deuteronomy; a centred paragraph, a deeper
         // item of a list and the lines of an embedded poem, which Biblica's Ukrainian uses.
-        "pm", "pmo", "pmc", "pc", "li4", "qm1", "qm2",
+        "pm", "pmo", "pmc", "pc", "li4", "qm", "qm1", "qm2",
     ];
 
     /// <summary>
@@ -150,7 +150,7 @@ internal static partial class UsfmReader
 
         // A book's introduction, its outline and the tables in it, which some editions print before
         // the first chapter: the Segond has a page of it before every book.
-        "imt1", "imt2", "imt3", "ipi", "ib", "ie", "iot", "io1", "io2",
+        "imt1", "imt2", "imt3", "ipi", "im", "ib", "ie", "iot", "io1", "io2",
         "tr", "th1", "th2", "tc1", "tc2", "tc3",
 
         // References to other passages printed under a heading or over a section, a letter of the
@@ -161,6 +161,18 @@ internal static partial class UsfmReader
         // The number a chapter is printed under where it is not the one it is filed under: the World
         // English Bible's Psalm 151 is one chapter printed as 151.
         "cp",
+
+        // translationStudio's mark where one chunk of a translation ends and the next begins, which
+        // the Indian Revised Version's releases keep on a line of its own as \s5 and the Arabic
+        // Simplified Text as a bare \ts; and an outline entry with no level.
+        "s5", "ts", "io",
+
+        // The passages a section heading covers, printed under it, which the Arabic Simplified Text
+        // does over every section; a footnote's paragraph mark stranded on a line of its own outside
+        // any footnote, as the Malayalam IRV has once; and a speaker's name the Tamil IRV sets on a
+        // line of its own over the Song of Songs — the bride, the bridegroom — which is the editor
+        // saying who speaks and not a word of the song.
+        "sr", "fp", "k",
     ];
 
     /// <summary>
@@ -183,6 +195,7 @@ internal static partial class UsfmReader
         ["m"] = TextBreak.Paragraph,
         ["pi"] = TextBreak.Paragraph,
         ["pi1"] = TextBreak.Paragraph,
+        ["pi2"] = TextBreak.Paragraph,
         ["mi"] = TextBreak.Paragraph,
         ["pm"] = TextBreak.Paragraph,
         ["pmo"] = TextBreak.Paragraph,
@@ -190,15 +203,19 @@ internal static partial class UsfmReader
         ["pc"] = TextBreak.Paragraph,
         ["li4"] = TextBreak.Line,
         ["qm1"] = TextBreak.Line,
+        ["qm"] = TextBreak.Line,
         ["qm2"] = TextBreak.Line,
         ["b"] = TextBreak.Paragraph,
         ["q"] = TextBreak.Line,
         ["q1"] = TextBreak.Line,
         ["q2"] = TextBreak.Line,
         ["q3"] = TextBreak.Line,
+        ["q4"] = TextBreak.Line,
         ["qc"] = TextBreak.Line,
         ["li"] = TextBreak.Line,
         ["li1"] = TextBreak.Line,
+        ["li2"] = TextBreak.Line,
+        ["li3"] = TextBreak.Line,
     };
 
     /// <summary>The marker of a psalm's superscription.</summary>
@@ -878,8 +895,9 @@ internal static partial class UsfmReader
     /// <c>\it</c>, <c>\k</c> and <c>\tl</c> are italics, a keyword and a transliteration, which the
     /// Indian Revised Version sets over words of its own verses, and <c>\ord</c> the raised letters
     /// of an ordinal: typography again, over letters that are the text's. <c>\sc</c> is small
-    /// capitals, which Biblica's Ukrainian sets the inscription over the cross in.
+    /// capitals, which Biblica's Ukrainian sets the inscription over the cross in, and <c>\bd</c> bold,
+    /// which the Telugu IRV sets over a word of its own.
     /// </summary>
-    [GeneratedRegex(@"\\\+?(?:wj|qs|bk|nd|it|k|tl|ord|sc)\*?")]
+    [GeneratedRegex(@"\\\+?(?:wj|qs|bk|nd|it|bd|k|tl|ord|sc)\*?")]
     private static partial Regex Marked();
 }

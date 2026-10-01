@@ -104,6 +104,11 @@ internal sealed record ClearBibleSet(
         IrvHindiOldTestament(EbibleTextSource.IrvHindi, BhsaTextSource.Slug),
         IrvHindiNewTestament(EbibleTextSource.IrvHindi, NestleTextSource.Slug),
         AlmeidaNewTestament(AlmeidaTextSource.Slug, NestleTextSource.Slug),
+        YoungOldTestament(EnglishTextSource.Young, BhsaTextSource.Slug),
+        YoungNewTestament(EnglishTextSource.Young, NestleTextSource.Slug),
+        IrvBengaliNewTestament(Door43TextSource.IrvBengali, NestleTextSource.Slug),
+        IrvAssameseNewTestament(Door43TextSource.IrvAssamese, NestleTextSource.Slug),
+        OpenHausaNewTestament(ClearBibleTextSource.OpenHausa, NestleTextSource.Slug),
     ];
 
     /// <summary>
@@ -271,6 +276,78 @@ internal sealed record ClearBibleSet(
         ClearBibleJoin.Letters,
         $"Clear Bible Alignments SBLGNT-JFA11-transfer, BiblioNexus, {Repository}, CC BY 4.0, "
         + "transferred from their Spanish Reina-Valera 1909 alignment, not made by hand");
+
+    /// <summary>
+    /// Young's Literal Translation against the Hebrew, hand-made by Clear Bible's own team, whole Old
+    /// Testament. Its Hebrew is the Westminster Leningrad Codex word by word rather than the morpheme
+    /// edition the other sets use: the same identifiers, a pronominal suffix written as a pronoun of its
+    /// own and told apart only by its morphology, and the letters with their accents.
+    ///
+    /// Its target is eBible's <c>engylt</c>, the file this corpus loads, and the token file numbers a
+    /// psalm's title as verse 0 where that file prints it at the head of verse 1.
+    /// </summary>
+    public static ClearBibleSet YoungOldTestament(string englishSlug, string hebrewSlug) => new(
+        englishSlug,
+        hebrewSlug,
+        Path.Combine("data", "eng", "alignments", "YLT", "WLC-YLT-manual.json"),
+        Path.Combine("data", "eng", "targets", "YLT", "ot_YLT.tsv"),
+        Path.Combine("data", "sources", "WLC.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments WLC-YLT-manual, Clear Bible, {Repository}, CC BY 4.0, made by hand");
+
+    /// <summary>
+    /// Young's Literal Translation against the Greek, hand-made by Clear Bible's team, whole New
+    /// Testament. Young translated the Textus Receptus and the set is keyed to the SBLGNT, so a verse
+    /// the critical text omits has no record, and a word only Young's Greek has is rendered by nothing.
+    /// </summary>
+    public static ClearBibleSet YoungNewTestament(string englishSlug, string greekSlug) => new(
+        englishSlug,
+        greekSlug,
+        Path.Combine("data", "eng", "alignments", "YLT", "SBLGNT-YLT-manual.json"),
+        Path.Combine("data", "eng", "targets", "YLT", "nt_YLT.tsv"),
+        Path.Combine("data", "sources", "SBLGNT.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments SBLGNT-YLT-manual, Clear Bible, {Repository}, CC BY 4.0, made by hand");
+
+    /// <summary>
+    /// The Indian Revised Version in Bengali against the Greek, hand-made by NLCI, whole New Testament.
+    /// Its target is the Digital Bible Library's edition of 2019; the text this corpus loads is Door43's
+    /// release of the same translation, whose own alignment is loaded beside this one as a separate
+    /// statement, and the join on the letters is what says whether the two are the same words.
+    /// </summary>
+    public static ClearBibleSet IrvBengaliNewTestament(string bengaliSlug, string greekSlug) => new(
+        bengaliSlug,
+        greekSlug,
+        Path.Combine("data", "ben", "alignments", "IRVBen", "SBLGNT-IRVBen-manual.json"),
+        Path.Combine("data", "ben", "targets", "IRVBen", "nt_IRVBen.tsv"),
+        Path.Combine("data", "sources", "SBLGNT.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments SBLGNT-IRVBen-manual, NLCI, {Repository}, CC BY 4.0, made by hand");
+
+    /// <inheritdoc cref="IrvBengaliNewTestament"/>
+    public static ClearBibleSet IrvAssameseNewTestament(string assameseSlug, string greekSlug) => new(
+        assameseSlug,
+        greekSlug,
+        Path.Combine("data", "asm", "alignments", "IRVAsm", "SBLGNT-IRVAsm-manual.json"),
+        Path.Combine("data", "asm", "targets", "IRVAsm", "nt_IRVAsm.tsv"),
+        Path.Combine("data", "sources", "SBLGNT.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments SBLGNT-IRVAsm-manual, NLCI, {Repository}, CC BY 4.0, made by hand");
+
+    /// <summary>
+    /// Biblica's Open Hausa Contemporary Bible against the Greek, hand-made by BiblioNexus, whole New
+    /// Testament. The release also ships a <c>WLCM-OHCB-manual.json</c> for the Old Testament, and it is
+    /// this file byte for byte — the same 63,852 records, every one naming a Greek word — so there is no
+    /// Hausa alignment to the Hebrew to load.
+    /// </summary>
+    public static ClearBibleSet OpenHausaNewTestament(string hausaSlug, string greekSlug) => new(
+        hausaSlug,
+        greekSlug,
+        Path.Combine("data", "hau", "alignments", "OHCB", "SBLGNT-OHCB-manual.json"),
+        Path.Combine("data", "hau", "targets", "OHCB", "nt_OHCB.tsv"),
+        Path.Combine("data", "sources", "SBLGNT.tsv"),
+        ClearBibleJoin.Letters,
+        $"Clear Bible Alignments SBLGNT-OHCB-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand");
 
     private static class Spanish
     {
