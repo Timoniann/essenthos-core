@@ -1250,6 +1250,27 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(w => w.WordId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            entity.Property(w => w.Role).HasConversion(EnumStorage.LinkWordRole);
+
+            // A head taken out of its text leaves the word's own rendering standing: it still renders
+            // what it rendered, and only the word it went with is gone.
+            entity.HasOne(w => w.HeadWord)
+                .WithMany()
+                .HasForeignKey(w => w.HeadWordId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Only the few words that go with another are indexed, and the index is what lets a word
+            // be deleted without reading every membership in the corpus to find who named it a head.
+            entity.HasIndex(w => w.HeadWordId).HasFilter("head_word_id IS NOT NULL");
+
+            entity.ToTable("link_word", t =>
+            {
+                t.HasCheckConstraint("ck_link_word_role",
+                    $"role IS NULL OR role IN ('{EnumSpelling.Of(LinkWordRole.Attached)}', '{EnumSpelling.Of(LinkWordRole.PhraseMember)}')");
+                t.HasCheckConstraint("ck_link_word_head",
+                    "head_word_id IS NULL OR (role IS NOT NULL AND head_word_id <> word_id)");
+            });
         });
 
         modelBuilder.Entity<LinkClaim>(entity =>

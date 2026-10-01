@@ -104,7 +104,10 @@ public class EvidentiaDecision
     /// </summary>
     public LinkRelation? Absence { get; set; }
 
-    /// <summary>The source word of the placed pair an absence rests on: the head of a supplied article, or the word a prefix is written onto.</summary>
+    /// <summary>
+    /// The source word of the placed pair an absence or an attached word rests on: the head of a
+    /// supplied article, the word a prefix is written onto, or the word an attached word goes with.
+    /// </summary>
     public long? AnchorSourceWordId { get; set; }
 
     public long? AnchorTargetWordId { get; set; }

@@ -221,6 +221,13 @@ internal static class Texts
             .Select(m => new { m.WordId, m.WordGroup!.Kind })
             .ToListAsync(cancellationToken);
 
+        // A word that goes with another renders through its own link, which is already among the
+        // witnesses above; what it adds is the word it goes with, so the reader can name it.
+        var attached = await db.LinkWords
+            .Where(side => ids.Contains(side.WordId) && side.Role != null && side.HeadWordId != null)
+            .Select(side => new { side.WordId, side.Role, HeadId = side.HeadWordId!.Value, Head = side.HeadWord!.Surface })
+            .ToListAsync(cancellationToken);
+
         return new Reached(
             own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached),
             strongest,
@@ -229,7 +236,18 @@ internal static class Texts
                 .GroupBy(m => m.WordId)
                 .ToDictionary(group => group.Key, group => group.Min(m => m.Kind)),
             await Annotations.AllOf(db, ids, cancellationToken),
-            await Proposed(db, ids, cancellationToken));
+            await Proposed(db, ids, cancellationToken))
+        {
+            Attached = attached
+                .GroupBy(row => row.WordId)
+                .ToDictionary(
+                    group => group.Key,
+                    group => group
+                        .OrderBy(row => row.Role)
+                        .ThenBy(row => row.HeadId)
+                        .Select(row => new AttachedResponse(EnumSpelling.Of(row.Role!.Value), row.HeadId, row.Head))
+                        .First()),
+        };
     }
 
     /// <summary>
@@ -310,6 +328,9 @@ internal static class Texts
 
         /// <summary>For each Ge'ez word, the entry of Dillmann's lexicon it is a form of.</summary>
         public Dictionary<long, GeezEntryResponse> GeezEntries { get; init; } = [];
+
+        /// <summary>For each word that goes with another word of its text, that word and how.</summary>
+        public Dictionary<long, AttachedResponse> Attached { get; init; } = [];
     }
 
     private sealed record GlossWanted(
@@ -691,6 +712,7 @@ internal static class Texts
             LexiconGloss = counterparts.Glossed.GetValueOrDefault(id),
             ThroughGreek = counterparts.ThroughGreek.GetValueOrDefault(id),
             GeezEntry = counterparts.GeezEntries.GetValueOrDefault(id),
+            Attached = counterparts.Attached.GetValueOrDefault(id),
             Break = opening is { } kind ? EnumSpelling.Of(kind) : null,
             Entities = counterparts.Named.GetValueOrDefault(id) ?? [],
         };

@@ -96,6 +96,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         claimed AS (
             SELECT lw.word_id,
                    bool_or(l.relation IN ('renders', 'equals')) AS rendered,
+                   bool_or(l.relation IN ('renders', 'equals') AND lw.role IS NULL) AS linked,
+                   bool_or(l.relation IN ('renders', 'equals') AND lw.role = '{EnumSpelling.Of(LinkWordRole.Attached)}') AS attached,
                    bool_or(l.relation IN ('omits', 'expands', 'transposes')) AS absent
             FROM link_word lw
             JOIN link l ON l.id = lw.link_id
@@ -113,7 +115,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                count(*) FILTER (WHERE c.rendered),
                count(*) FILTER (WHERE c.rendered IS NOT TRUE AND c.absent),
                count(*) FILTER (WHERE c.word_id IS NULL AND pv.verse_id IS NOT NULL),
-               count(*) FILTER (WHERE c.word_id IS NULL AND pv.verse_id IS NULL)
+               count(*) FILTER (WHERE c.word_id IS NULL AND pv.verse_id IS NULL),
+               count(*) FILTER (WHERE c.rendered AND NOT c.linked AND c.attached),
+               count(*) FILTER (WHERE c.rendered AND NOT c.linked AND NOT c.attached)
         FROM word w
         JOIN text t ON t.id = w.text_id
         JOIN placed p ON p.verse_id = w.verse_id
@@ -525,6 +529,17 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             JOIN word w ON w.id = lw.word_id
             WHERE w.text_id <> CASE lw.side WHEN 'from' THEN l.from_text_id ELSE l.to_text_id END
             """),
+        // A word goes with a word of its own text, and only through a rendering: did goes with see in
+        // the English, and an absence has nothing for it to render as part of.
+        ("words going with a word of another text, or on a link that renders nothing",
+            """
+            SELECT count(*) FROM link_word lw
+            JOIN link l ON l.id = lw.link_id
+            JOIN word w ON w.id = lw.word_id
+            JOIN word h ON h.id = lw.head_word_id
+            WHERE lw.head_word_id IS NOT NULL
+              AND (h.text_id <> w.text_id OR l.relation NOT IN ('renders', 'equals'))
+            """),
         ("links naming no word on either side",
             "SELECT count(*) FROM link l WHERE NOT EXISTS (SELECT 1 FROM link_word lw WHERE lw.link_id = l.id)"),
         // An absence is one claim read from either end, and the relation is the only thing that
@@ -795,7 +810,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
 
         var coverage = await Read(connection, CoverageSql, cancellationToken, reader => new Coverage(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
-            (int)reader.GetInt64(4), (int)reader.GetInt64(5), (int)reader.GetInt64(6)));
+            (int)reader.GetInt64(4), (int)reader.GetInt64(5), (int)reader.GetInt64(6),
+            (int)reader.GetInt64(7), (int)reader.GetInt64(8)));
 
         var reach = Reach.Gather(await Read(connection, ReachSql, cancellationToken,
             reader => (Witness: reader.GetString(0), From: reader.GetString(1),

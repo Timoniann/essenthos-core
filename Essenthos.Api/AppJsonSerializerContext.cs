@@ -292,6 +292,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(StrongCandidateResponse))]
 [JsonSerializable(typeof(LexiconGlossResponse))]
 [JsonSerializable(typeof(ThroughGreekResponse))]
+[JsonSerializable(typeof(AttachedResponse))]
 [JsonSerializable(typeof(GeezEntryResponse))]
 [JsonSerializable(typeof(IList<TextWordResponse>))]
 [JsonSerializable(typeof(List<TextWordResponse>))]

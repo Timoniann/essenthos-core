@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 
@@ -227,6 +228,12 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
         decision.Tier = safe.Contains((word.Id, target)) ? SafeTier : proposal.Trace?.Tier ?? ReviewTier;
         decision.Rationale = proposal.Trace?.Rationale;
         decision.Confidence = (float)proposal.Confidence;
+        if (proposal.Kind == EvidentiaProposalKind.AttachedWord && proposal.Head is { } head)
+        {
+            decision.AnchorSourceWordId = head.Source.Token.Id;
+            decision.AnchorTargetWordId = head.Target.Token.Id;
+        }
+
         decision.Score = chosen is null ? null : (float)chosen.Score;
         decision.Margin = chosen is null || alternatives.Count == 0
             ? null
@@ -368,7 +375,7 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
         EvidentiaProposalKind.UniqueTargetGlossReview => "unique-target-gloss-review",
         EvidentiaProposalKind.UniqueDictionarySenseReview => "unique-dictionary-sense-review",
         EvidentiaProposalKind.GlobalAssignmentReview => "global-assignment-review",
-        EvidentiaProposalKind.AttachedWord => "attached-word",
+        EvidentiaProposalKind.AttachedWord => AttachedWords.DecisionKind,
         EvidentiaProposalKind.ResidualKnownRendering => "residual-known-rendering",
         EvidentiaProposalKind.AnchoredGapReview => "anchored-gap-review",
         EvidentiaProposalKind.RepeatedRenderingInOrder => "repeated-rendering-in-order",
