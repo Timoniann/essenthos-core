@@ -480,6 +480,20 @@ public static class Datasets
             Obliges: "The module's terms are a permission granted to CrossWire to distribute it; the corpus "
                 + "distributes neither the module nor its numbers, only correspondences derived from them."),
 
+        // The same project and the same terms as the King James mapping (mapping/LICENCE.md);
+        // Resources/OpenHebrewBible/LICENCE.md has the statement as read and the commit it was read at.
+        new("ohb-cuv", "Open Hebrew Bible mapping of the Chinese Union Version",
+            "Eliran Wong, Open Hebrew Bible Project, on the Faith Hope Love foundation's tagged text of the Union Version",
+            "CC BY-NC 4.0",
+            "https://creativecommons.org/licenses/by-nc/4.0/",
+            "https://github.com/eliranwong/OpenHebrewBible/tree/master/009-BHS-mapping-CUV",
+            "Which BHS word each span of the Chinese Union Version's Old Testament renders, as Eliran Wong "
+            + "mapped FHL's Strong-numbered spans to the running word numbers of BHS. Stated by the source: "
+            + "where FHL's numbers say only which lexeme a span renders, the mapping names the occurrence.",
+            Sources.OpenHebrewCuvCredit, Links: true,
+            Obliges: "NonCommercial: these links, and anything published from them, may not be used commercially; "
+                + "Eliran Wong and the Open Hebrew Bible Project are credited on every link and claim."),
+
         new("concordance-darby-strong", "Strong numbering of the Darby French Bible",
             "Concordances et Traductions de la Bible (concordance.bible); the copy read is CrossWire's FreJND "
             + "module, version 3.3",

@@ -81,6 +81,13 @@ internal static class Sources
     public const string SegondStrongCredit =
         "the Strong numbering of Louis Segond 1910 by Concordances et Traductions de la Bible, read from CrossWire's FreSegond1910";
 
+    /// <summary>
+    /// What every link and claim from the Open Hebrew Bible's mapping of the Chinese Union Version
+    /// to BHS begins with.
+    /// </summary>
+    public const string OpenHebrewCuvCredit =
+        "the Open Hebrew Bible's mapping of the Chinese Union Version to BHS (Eliran Wong), 009-BHS-mapping-CUV";
+
     /// <summary>What every link drawn from the Strong numbers on Darby's French Bible begins with.</summary>
     public const string DarbyFrenchStrongCredit =
         "the Strong numbering of the Darby French Bible by Concordances et Traductions de la Bible, read from CrossWire's FreJND";
