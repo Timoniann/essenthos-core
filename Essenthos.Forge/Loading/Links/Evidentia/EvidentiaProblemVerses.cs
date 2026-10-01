@@ -187,7 +187,7 @@ internal sealed class EvidentiaProblemVerses(AppDbContext db, EvidentiaRunner ru
         var worst = (await Ranked([runId], minimumContentWords, cancellationToken)).Take(take)
             .Select(verse => verse.Address)
             .ToList();
-        var outcome = await runner.Rerun(runId, worst, cancellationToken);
+        var outcome = await runner.Rerun(runId, worst, cancellationToken: cancellationToken);
         return $"{outcome}\n\n{await Compare(runId, outcome.RunId, cancellationToken)}";
     }
 

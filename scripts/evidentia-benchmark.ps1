@@ -32,10 +32,16 @@ param(
     [string[]] $Extra = @(),
 
     # Says the one run of held2 a step is allowed is this one.
-    [switch] $Unseal
+    [switch] $Unseal,
+
+    # Runs a set's passages side by side, at most -Degree at once, each its own Forge with one UDPipe at a
+    # time; the reports are then read in the set's order, so the figures are the ones a run one at a time gives.
+    [switch] $Parallel,
+    [ValidateRange(2, 4)]
+    [int] $Degree = 4
 )
 
-# Reads essenthos_core and writes nothing to it. Passages run one at a time: the owner works on this
+# Reads essenthos_core and writes nothing to it. Passages run one at a time unless -Parallel: the owner works on this
 # machine, and four at once took it over.
 $ErrorActionPreference = 'Stop'
 $repository = Split-Path -Parent $PSScriptRoot
@@ -224,6 +230,65 @@ function ByWord([string] $name, $c) {
         (Ratio $c.Rendered $c.Originals), (Ratio $c.RenderedOrUnrendered $c.Originals)
 }
 
+# The Forge's arguments for one passage; its outputs are named after it.
+function Arguments($passage) {
+    $name, $from, $to, $book, $first, $last, $flags = $passage
+    $prefix = Join-Path $directory $name
+    $arguments = @('Essenthos.Forge.dll', 'evidentia-measure-book', $from, $to, $book) + $flags
+    if ($first -gt 0) { $arguments += '--from-chapter', $first, '--to-chapter', $last }
+    if ($NeighbourVerses -ge 0) { $arguments += '--neighbour-verses', $NeighbourVerses }
+    $arguments += $Extra
+    $arguments + @('--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json",
+        '--key-doubts', "$prefix.key-doubts.json")
+}
+
+# One passage, waited for; its wall seconds.
+function Measure($passage) {
+    $name = $passage[0]
+    $prefix = Join-Path $directory $name
+    $arguments = Arguments $passage
+    $clock = [Diagnostics.Stopwatch]::StartNew()
+    & dotnet @arguments *> "$prefix.report.txt"
+    if ($LASTEXITCODE -ne 0) { throw "$name failed; see $prefix.report.txt" }
+    $clock.Elapsed.TotalSeconds
+}
+
+# Start-Process joins its arguments with spaces and quotes none of them.
+function Quoted([string] $argument) {
+    if ($argument -match '[\s"]') { '"' + ($argument -replace '"', '\"') + '"' } else { $argument }
+}
+
+# A set's passages, at most $Degree at once; each passage's wall seconds, and the set's own under '*'.
+function MeasureSideBySide($set) {
+    $seconds = @{}
+    $running = [Collections.Generic.List[object]]::new()
+    $clock = [Diagnostics.Stopwatch]::StartNew()
+    $next = 0
+    while ($next -lt $set.Count -or $running.Count -gt 0) {
+        while ($next -lt $set.Count -and $running.Count -lt $Degree) {
+            $passage = $set[$next++]
+            $prefix = Join-Path $directory $passage[0]
+            $process = Start-Process dotnet -ArgumentList ((Arguments $passage) | ForEach-Object { Quoted "$_" }) -NoNewWindow -PassThru `
+                -WorkingDirectory $snapshot -RedirectStandardOutput "$prefix.report.txt" -RedirectStandardError "$prefix.errors.txt"
+            $null = $process.Handle  # without it ExitCode reads empty once the process is gone
+            $running.Add(@{ Name = $passage[0]; Prefix = $prefix; Process = $process; Clock = [Diagnostics.Stopwatch]::StartNew() })
+        }
+        Start-Sleep -Milliseconds 250
+        foreach ($finished in @($running | Where-Object { $_.Process.HasExited })) {
+            $running.Remove($finished) | Out-Null
+            $seconds[$finished.Name] = $finished.Clock.Elapsed.TotalSeconds
+            Get-Content -LiteralPath "$($finished.Prefix).errors.txt" | Add-Content -LiteralPath "$($finished.Prefix).report.txt"
+            Remove-Item -LiteralPath "$($finished.Prefix).errors.txt"
+            if ($finished.Process.ExitCode -ne 0) {
+                $running | ForEach-Object { $_.Process.WaitForExit() }
+                throw "$($finished.Name) failed; see $($finished.Prefix).report.txt"
+            }
+        }
+    }
+    $seconds['*'] = $clock.Elapsed.TotalSeconds
+    $seconds
+}
+
 Push-Location $snapshot
 try {
     foreach ($set in $Runs -split ',') {
@@ -233,20 +298,13 @@ try {
         $words = @{}
         $routes = [ordered]@{}
         $fractions = [ordered]@{}
+        $measured = if ($Parallel) { MeasureSideBySide $passages[$set] } else { @{} }
         foreach ($passage in $passages[$set]) {
-            $name, $from, $to, $book, $first, $last, $flags = $passage
+            $name = $passage[0]
             $prefix = Join-Path $directory $name
-            $arguments = @('Essenthos.Forge.dll', 'evidentia-measure-book', $from, $to, $book) + $flags
-            if ($first -gt 0) { $arguments += '--from-chapter', $first, '--to-chapter', $last }
-            if ($NeighbourVerses -ge 0) { $arguments += '--neighbour-verses', $NeighbourVerses }
-            $arguments += $Extra
-            $arguments += '--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json",
-                '--key-doubts', "$prefix.key-doubts.json"
-            $clock = [Diagnostics.Stopwatch]::StartNew()
-            & dotnet @arguments *> "$prefix.report.txt"
-            if ($LASTEXITCODE -ne 0) { throw "$name failed; see $prefix.report.txt" }
-            $total.Seconds += $clock.Elapsed.TotalSeconds
-            '{0,-10} wall {1:N1}s' -f $name, $clock.Elapsed.TotalSeconds
+            $seconds = if ($Parallel) { $measured[$name] } else { Measure $passage }
+            $total.Seconds += $seconds
+            '{0,-10} wall {1:N1}s' -f $name, $seconds
             foreach ($match in (Select-String -LiteralPath "$prefix.report.txt" -Pattern $line)) {
                 $tier = $match.Matches[0].Groups['tier'].Value.Trim()
                 $correct = Number $match.Matches[0].Groups['correct'].Value
@@ -280,6 +338,7 @@ try {
         RouteSummary "$set all" $routes
         FractionSummary "$set all" $fractions
         '{0,-10} wall {1:N1}s' -f "$set all", $total.Seconds
+        if ($Parallel) { '{0,-10} wall clock {1:N1}s, {2} at once' -f "$set all", $measured['*'], $Degree }
     }
 }
 finally {

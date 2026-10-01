@@ -463,7 +463,9 @@ if (args is ["evidentia-measure-book", var measureBookFrom, var measureBookTo, v
 }
 
 // A stored run: the same measurement, with every decision kept under a run id so it can be ranked,
-// reviewed and compared. It writes the run's own tables and nothing of the corpus.
+// reviewed and compared. It writes the run's own tables and nothing of the corpus. --parallel N computes
+// up to N books at once (default 4, at most 4) and stores them in book order, so the run is the one a
+// serial run would store, ids included.
 if (args is ["evidentia-run", var runFrom, var runTo, ..])
 {
     var scopes = Positional(args, 3).Select(EvidentiaBookScope.Parse).ToList();
@@ -475,7 +477,8 @@ if (args is ["evidentia-run", var runFrom, var runTo, ..])
 
     using var runScope = app.Services.CreateScope();
     logger.LogInformation("\n{Outcome}", await runScope.ServiceProvider.GetRequiredService<EvidentiaRunner>()
-        .Run(Identifier(runFrom), Identifier(runTo), scopes, EvidentiaOptions(args, resources)));
+        .Run(Identifier(runFrom), Identifier(runTo), scopes, EvidentiaOptions(args, resources),
+            OptionalInt(args, "--parallel") ?? EvidentiaRunner.DefaultParallel));
     return 0;
 }
 
