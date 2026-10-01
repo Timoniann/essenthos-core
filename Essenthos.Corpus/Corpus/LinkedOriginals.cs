@@ -62,4 +62,15 @@ internal static class LinkedOriginals
     /// <summary>The first of each language in <see cref="Of"/>.</summary>
     public static List<LinkedOriginal> Primary(IEnumerable<LinkedOriginal> originals) =>
         [.. originals.GroupBy(original => original.Language).Select(language => language.First())];
+
+    /// <summary>
+    /// The one edition a count of how the text reaches <paramref name="number"/> is made over: the first
+    /// of <paramref name="primary"/> that can carry the number at all, since a Hebrew number stands only
+    /// in a Hebrew or Aramaic text and a Greek one only in a Greek text.
+    /// </summary>
+    public static LinkedOriginal? WitnessFor(IEnumerable<LinkedOriginal> primary, string number) =>
+        primary.FirstOrDefault(original => Writes(original.Language, number));
+
+    private static bool Writes(string language, string number) =>
+        number.StartsWith('G') ? language == "grc" : language is "hbo" or "arc";
 }

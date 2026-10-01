@@ -133,10 +133,11 @@ public sealed class StrongCardTests : IDisposable
     [Fact]
     public async Task CountingEveryNumberAnswersAsCountingAPage()
     {
-        var every = await StrongRenderingCounts.Count(_db, _english.Id, null, 3, default);
-        var page = await StrongRenderingCounts.Count(_db, _english.Id, [God, Create, Love], 3, default);
+        var primary = LinkedOriginals.Primary(await LinkedOriginals.Of(_db, _english.Id, default));
+        var every = await StrongRenderingCounts.CountText(_db, _english.Id, primary, default);
+        var page = await StrongRenderingCounts.Count(_db, _english.Id, [God, Create, Love], StrongRenderingCounts.Kept, default);
 
-        every.Should().Equal(page);
+        every.Renderings.Should().Equal(page);
     }
 
     /// <summary>
@@ -156,7 +157,7 @@ public sealed class StrongCardTests : IDisposable
         kept[God].Should().Equal(new StrongRenderingResponse("as the load counted it", 9));
         kept.Should().NotContainKey(Create);
 
-        var deeper = await StrongEndpoints.Renderings(_db, [God], _english.Id, StrongRenderingCounts.CardRenderings + 1, default);
+        var deeper = await StrongEndpoints.Renderings(_db, [God], _english.Id, StrongRenderingCounts.Kept + 1, default);
         deeper[God][0].Should().Be(new StrongRenderingResponse("god", 2));
     }
 

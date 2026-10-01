@@ -271,65 +271,101 @@ internal static class StrongEndpoints
                 return Results.NotFound(new ProblemResponse($"There is no text \"{corpus}\"."));
             }
 
-            // Counted over one edition of the original, the one the text is most fully joined to.
-            // G26 stands 116 times in each of the Greek editions the King James is linked to, and
-            // counting across them reported every rendering three times over; counting the
-            // translation's own tagged words as well reported more places reached than exist.
-            var witness = LinkedOriginals.Primary(await LinkedOriginals.Of(db, text.Id, cancellationToken))
-                .FirstOrDefault(original => WritesNumber(original.Language, canonical));
-            var witnessId = witness?.Id ?? 0;
-
-            var occurrences = await db.Words.CountAsync(
-                w => w.StrongNumber == canonical && w.TextId == witnessId, cancellationToken);
-
-            var sides = db.LinkWords
-                .Where(side => side.Word!.StrongNumber == canonical
-                               && side.Word.TextId == witnessId
-                               && (side.Link!.FromTextId == text.Id || side.Link.ToTextId == text.Id)
-                               && (side.Link!.Relation == LinkRelation.Renders
-                                   || side.Link.Relation == LinkRelation.Equals));
-
-            var reached = await sides
-                .Select(side => side.WordId)
-                .Distinct()
-                .CountAsync(cancellationToken);
-
-            // What the count rests on: a publisher's tagging and a statistical aligner are different
-            // witnesses to the same number, and a reader citing it has to be able to say which.
-            var methods = await sides
-                .Select(side => new { side.LinkId, side.Link!.Method })
-                .Distinct()
-                .GroupBy(link => link.Method)
-                .Select(g => new { Method = g.Key, Links = g.Count() })
-                .ToListAsync(cancellationToken);
-
-            var counted = await Renderings(
-                db, [canonical], text.Id, Math.Clamp(take ?? 40, 1, MostPerPage), cancellationToken);
-
-            return Results.Ok(new StrongRenderingsResponse(
-                canonical,
-                text.Slug,
-                occurrences,
-                reached,
-                occurrences - reached,
-                counted.GetValueOrDefault(canonical, []))
-            {
-                Witness = witness?.Slug,
-                Methods =
-                [
-                    .. methods
-                        .OrderByDescending(row => row.Links)
-                        .Select(row => new TextLinkMethodResponse(EnumSpelling.Of(row.Method), row.Links)),
-                ],
-            });
+            return Results.Ok(await RenderingsOf(
+                db, canonical, text.Id, text.Slug, Math.Clamp(take ?? 40, 1, MostPerPage), cancellationToken));
         }).RequireRateLimiting(RateLimits.Expensive);
 
     /// <summary>
-    /// Whether an edition in this language can carry the number at all: a Hebrew number stands only
-    /// in a Hebrew or Aramaic text and a Greek one only in a Greek text.
+    /// The renderings page for one number in one text. Counted over one edition of the original, the
+    /// one the text is most fully joined to: G26 stands 116 times in each of the Greek editions the King
+    /// James is linked to, and counting across them reported every rendering three times over; counting
+    /// the translation's own tagged words as well reported more places reached than exist.
+    ///
+    /// <para>
+    /// A number the load counted in the same edition is read from what it counted. Anything else is
+    /// counted as it is asked, which is cheap where the load kept nothing because there was nothing to
+    /// keep — a number the edition does not carry reaches no link at all.
+    /// </para>
     /// </summary>
-    private static bool WritesNumber(string language, string number) =>
-        number.StartsWith('G') ? language == "grc" : language is "hbo" or "arc";
+    internal static async Task<StrongRenderingsResponse> RenderingsOf(
+        AppDbContext db,
+        string canonical,
+        int textId,
+        string slug,
+        int take,
+        CancellationToken cancellationToken)
+    {
+        var witness = LinkedOriginals.WitnessFor(
+            LinkedOriginals.Primary(await LinkedOriginals.Of(db, textId, cancellationToken)), canonical);
+        var witnessId = witness?.Id ?? 0;
+
+        var kept = await db.StrongReaches
+            .AsNoTracking()
+            .Include(r => r.Methods)
+            .FirstOrDefaultAsync(
+                r => r.TextId == textId && r.StrongNumber == canonical && r.WitnessId == witnessId,
+                cancellationToken);
+        var (occurrences, reached, methods) = kept is not null
+            ? (kept.Occurrences, kept.Reached, [.. kept.Methods.Select(m => (m.Method, m.Links))])
+            : await ReachOf(db, canonical, textId, witnessId, cancellationToken);
+
+        // A number the edition carries and the load did not count there was counted over other
+        // editions, or before the links changed, so its phrases are counted again with its reach.
+        var counted = kept is null && occurrences > 0
+            ? ByNumber(await StrongRenderingCounts.Count(db, textId, [canonical], take, cancellationToken))
+            : await Renderings(db, [canonical], textId, take, cancellationToken);
+
+        return new StrongRenderingsResponse(
+            canonical,
+            slug,
+            occurrences,
+            reached,
+            occurrences - reached,
+            counted.GetValueOrDefault(canonical, []))
+        {
+            Witness = witness?.Slug,
+            Methods =
+            [
+                .. StrongRenderingCounts.Ordered(methods)
+                    .Select(row => new TextLinkMethodResponse(EnumSpelling.Of(row.Method), row.Links)),
+            ],
+        };
+    }
+
+    /// <summary>How often the number stands in the edition, and how many of those words the text's links reach, by which methods.</summary>
+    private static async Task<(int Occurrences, int Reached, List<(LinkMethod Method, int Links)> Methods)> ReachOf(
+        AppDbContext db,
+        string canonical,
+        int textId,
+        int witnessId,
+        CancellationToken cancellationToken)
+    {
+        var occurrences = await db.Words.CountAsync(
+            w => w.StrongNumber == canonical && w.TextId == witnessId, cancellationToken);
+
+        var sides = db.LinkWords
+            .Where(side => side.Word!.StrongNumber == canonical
+                           && side.Word.TextId == witnessId
+                           && (side.Link!.FromTextId == textId || side.Link.ToTextId == textId)
+                           && (side.Link!.Relation == LinkRelation.Renders
+                               || side.Link.Relation == LinkRelation.Equals));
+
+        var reached = await sides
+            .Select(side => side.WordId)
+            .Distinct()
+            .CountAsync(cancellationToken);
+
+        // What the count rests on: a publisher's tagging and a statistical aligner are different
+        // witnesses to the same number, and a reader citing it has to be able to say which.
+        var methods = await sides
+            .Select(side => new { side.LinkId, side.Link!.Method })
+            .Distinct()
+            .GroupBy(link => link.Method)
+            .Select(g => new { Method = g.Key, Links = g.Count() })
+            .ToListAsync(cancellationToken);
+
+        return (occurrences, reached, [.. methods.Select(row => (row.Method, row.Links))]);
+    }
 
     /// <summary>
     /// How many words of the corpus carry each of these numbers, in every witness that tags it —
@@ -364,7 +400,7 @@ internal static class StrongEndpoints
             return [];
         }
 
-        var counted = take <= StrongRenderingCounts.CardRenderings
+        var counted = take <= StrongRenderingCounts.Kept
                       && await db.StrongRenderings.AnyAsync(r => r.TextId == textId, cancellationToken)
             ? await db.StrongRenderings
                 .Where(r => r.TextId == textId && numbers.Contains(r.StrongNumber) && r.Rank <= take)
@@ -373,13 +409,16 @@ internal static class StrongEndpoints
                 .ToListAsync(cancellationToken)
             : await StrongRenderingCounts.Count(db, textId, numbers, take, cancellationToken);
 
-        return counted
+        return ByNumber(counted);
+    }
+
+    private static Dictionary<string, IList<StrongRenderingResponse>> ByNumber(IEnumerable<StrongRenderingCount> counted) =>
+        counted
             .GroupBy(row => row.Number)
             .ToDictionary(
                 group => group.Key,
                 IList<StrongRenderingResponse> (group) =>
                     [.. group.OrderBy(row => row.Rank).Select(row => new StrongRenderingResponse(row.Phrase, row.Uses))]);
-    }
 
     /// <summary>
     /// Whom this people is named after, where the dictionary says so.
