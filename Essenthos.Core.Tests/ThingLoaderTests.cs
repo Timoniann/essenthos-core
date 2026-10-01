@@ -513,6 +513,41 @@ public sealed class ThingLoaderTests : IDisposable
         (await _db.WordEntities.Select(a => a.Id).OrderBy(id => id).ToListAsync()).Should().Equal(rows);
     }
 
+    /// <summary>
+    /// A record as the file has it is not revised on the next boot: its names keep their rows, and a
+    /// case another pass gave its name stays, since that pass would only write it again.
+    /// </summary>
+    [Fact]
+    public async Task ASecondBootLeavesTheNamesAndTheFormsAnotherPassWrote()
+    {
+        var atonement = Record("day-of-atonement", "observance") with
+        {
+            Called =
+            [
+                new ThingWord("Day of Atonement", null, null, "H3117,H3725", null, null, null, null),
+                new ThingWord("Yom Kippur", null, null, null, null, null, null, null),
+                new ThingWord("The fast", null, null, null, null, null, null, null),
+            ],
+        };
+        await _loader.Load([atonement], CancellationToken.None);
+        var entity = await _db.Entities.SingleAsync(e => e.Slug == "day-of-atonement");
+        _db.EntityNameForms.Add(new EntityNameForm
+        {
+            EntityId = entity.Id, Language = "rus", GrammaticalCase = GrammaticalCases.Nominative, Form = "День искупления",
+            Method = LinkMethod.ModelReading, Confidence = 1, Source = "read from Scripture by a test",
+        });
+        await _db.SaveChangesAsync();
+        var names = await _db.EntityNames.Where(n => n.EntityId == entity.Id).Select(n => n.Id).OrderBy(id => id).ToListAsync();
+        _db.ChangeTracker.Clear();
+
+        var again = await _loader.Load([atonement], CancellationToken.None);
+
+        again.Revised.Should().Be(0);
+        (await _db.EntityNames.Where(n => n.EntityId == entity.Id).Select(n => n.Id).OrderBy(id => id).ToListAsync())
+            .Should().Equal(names);
+        (await _db.EntityNameForms.AnyAsync(f => f.EntityId == entity.Id && f.Language == "rus")).Should().BeTrue();
+    }
+
     /// <summary>A rule changed in the file is what the words say on the next boot.</summary>
     [Fact]
     public async Task AChangedRuleIsWrittenAgain()

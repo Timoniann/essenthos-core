@@ -5,36 +5,46 @@
   "source": "Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27",
   "rulings": [
     {
-      "wordId": 6886219,
-      "reference": "2 Chronicles 25:23",
+      "text": "BHSA",
+      "reference": "2CH 25:23",
+      "position": 7,
+      "surface": "יֹואָ֣שׁ",
       "strongNumber": "H3101",
       "existing": "joash-3",
       "why": "'Joash the king of Israel took Amaziah king of Judah, the son of Joash, the son of Jehoahaz': the Joash whose son Amaziah is, the son of Jehoahaz whom 2 Chronicles 21:17 and 22:1 also call Ahaziah, is the king of Judah. The Hebrew names him first, before the verb; the king of Israel who took Amaziah is the second Joash."
     },
     {
-      "wordId": 8217646,
-      "reference": "2 Chronicles 25:23",
+      "text": "KJV",
+      "reference": "2CH 25:23",
+      "position": 15,
+      "surface": "Joash",
       "strongNumber": "H3101",
       "existing": "joash-3",
       "why": "'Amaziah king of Judah, the son of Joash, the son of Jehoahaz': Amaziah's father is the king of Judah (2 Chronicles 24:27), not the king of Israel who took him."
     },
     {
-      "wordId": 8169725,
-      "reference": "2 Kings 14:13",
+      "text": "KJV",
+      "reference": "2KI 14:13",
+      "position": 2,
+      "surface": "Jehoash",
       "strongNumber": "H3060",
       "existing": "joash-4",
       "why": "'And Jehoash king of Israel took Amaziah king of Judah': the Jehoash who took Amaziah is the king of Israel, the son of Jehoahaz (14:8)."
     },
     {
-      "wordId": 8169737,
-      "reference": "2 Kings 14:13",
+      "text": "KJV",
+      "reference": "2KI 14:13",
+      "position": 14,
+      "surface": "Jehoash",
       "strongNumber": "H3060",
       "existing": "joash-3",
       "why": "'Amaziah king of Judah, the son of Jehoash the son of Ahaziah': Amaziah's father, the son of Ahaziah, is the king of Judah (2 Kings 11:2, 12:21)."
     },
     {
-      "wordId": 6887277,
-      "reference": "2 Chronicles 28:9",
+      "text": "BHSA",
+      "reference": "2CH 28:9",
+      "position": 7,
+      "surface": "עֹדֵ֣ד",
       "strongNumber": "H5752",
       "create": {
         "slug": "oded-prophet-in-samaria",
@@ -46,8 +56,10 @@
       "why": "2 Chronicles 28:9 names 'a prophet of the LORD, whose name was Oded' at Samaria in the reign of Ahaz, when Pekah fought Judah (28:1, 28:6). The Oded of 2 Chronicles 15:1 and 15:8 is the father of Azariah, who prophesied to Asa in his fifteenth year (15:10); the reigns the text gives between Asa and Ahaz come to well over a century and a half, so they are two men."
     },
     {
-      "wordId": 6771769,
-      "reference": "Zechariah 1:1",
+      "text": "BHSA",
+      "reference": "ZEC 1:1",
+      "position": 15,
+      "surface": "זְכַרְיָה֙",
       "strongNumber": "H2148",
       "existing": "zechariah-13",
       "says": {
@@ -57,15 +69,19 @@
       "why": "The record said he was the Zechariah of 2 Chronicles 26:5, of Uzziah's days, and the one who went up with Ezra (Ezra 8:2-3, 'of the sons of Pharosh'). Neither verse is about the prophet of Zechariah 1:1, whose word came in the second year of Darius."
     },
     {
-      "wordId": 6854065,
-      "reference": "Nehemiah 8:4",
+      "text": "BHSA",
+      "reference": "NEH 8:4",
+      "position": 42,
+      "surface": "זְכַרְיָ֥ה",
       "strongNumber": "H2148",
       "existing": "zechariah-24",
       "why": "Nehemiah 8:4 names Zechariah among the men who stood at Ezra's left hand when he read the law, in Nehemiah's day. The verse does not make him the prophet of Darius' second year, and the encyclopedia holds a record of him."
     },
     {
-      "wordId": 6856664,
-      "reference": "Nehemiah 12:16",
+      "text": "BHSA",
+      "reference": "NEH 12:16",
+      "position": 3,
+      "surface": "זְכַרְיָ֖ה",
       "strongNumber": "H2148",
       "existing": "zechariah-25",
       "says": {
@@ -81,8 +97,10 @@
       "why": "Nehemiah 12:16 names the Zechariah who headed the house of Iddo under Joiakim; whether he is the prophet the verse does not say, so he keeps his own record with the prophet as the open alternative."
     },
     {
-      "wordId": 6907430,
-      "reference": "Matthew 23:35",
+      "text": "NESTLE1904",
+      "reference": "MAT 23:35",
+      "position": 21,
+      "surface": "Ζαχαρίου",
       "strongNumber": "G2197",
       "create": {
         "slug": "zacharias-son-of-barachias",
@@ -104,8 +122,10 @@
       "why": "Matthew 23:35 and Luke 11:51 name a Zacharias killed between the temple and the altar. The encyclopedia held him on its record of the prophet; the father's name points to the prophet and the manner of death to Zechariah son of Jehoiada, and the text does not settle which, if either."
     },
     {
-      "wordId": 6907432,
-      "reference": "Matthew 23:35",
+      "text": "NESTLE1904",
+      "reference": "MAT 23:35",
+      "position": 23,
+      "surface": "Βαραχίου",
       "strongNumber": "G914",
       "create": {
         "slug": "barachias",
@@ -123,8 +143,10 @@
       "why": "Matthew 23:35 names Barachias as the father of the Zacharias slain between the temple and the altar. Which Zacharias that is stays open, and so does whether his father is the prophet's."
     },
     {
-      "wordId": 6911149,
-      "reference": "Matthew 27:56",
+      "text": "NESTLE1904",
+      "reference": "MAT 27:56",
+      "position": 8,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-7",
       "says": {
@@ -144,8 +166,10 @@
       "why": "Matthew 27:56 names 'Mary the mother of James and Joses' beside Mary Magdalene. The encyclopedia held her occurrences on its record of Jesus' mother, which the verses do not say she is."
     },
     {
-      "wordId": 7021325,
-      "reference": "Revelation 1:1",
+      "text": "NESTLE1904",
+      "reference": "REV 1:1",
+      "position": 28,
+      "surface": "Ἰωάνῃ",
       "strongNumber": "G2491",
       "create": {
         "slug": "john-who-saw-the-revelation",
@@ -163,8 +187,10 @@
       "why": "Revelation 1:1, 1:4, 1:9 and 22:8 name the John who saw the Revelation. The encyclopedia held him on its record of the son of Zebedee, an identification the book does not make."
     },
     {
-      "wordId": 6894895,
-      "reference": "Matthew 4:21",
+      "text": "NESTLE1904",
+      "reference": "MAT 4:21",
+      "position": 13,
+      "surface": "Ἰωάνην",
       "strongNumber": "G2491",
       "existing": "john-2",
       "says": {

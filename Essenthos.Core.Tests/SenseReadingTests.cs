@@ -52,7 +52,8 @@ public sealed class SenseReadingTests : IDisposable
     /// model wrong about, where it named azariah-16 instead. The reading is not loaded and the word
     /// is not left blank — the ruling annotates it.
     /// </summary>
-    private const long RuledWord = 6854130;
+    private static readonly RuledWord RuledWord = SenseReadingFiles.ReviewRulings().Rulings
+        .Single(r => r.Reference == "NEH 8:7" && r.Existing == "azariah-16").Word;
 
     private readonly AppDbContext _db;
     private readonly string _readings;
@@ -297,11 +298,11 @@ public sealed class SenseReadingTests : IDisposable
     [Fact]
     public async Task AWordARulingSettlesIsNotAlsoAnnotatedFromTheReading()
     {
-        _db.Database.ExecuteSqlRaw("UPDATE word SET id = {0} WHERE id = {1}", RuledWord, Hebrew(1).Id);
-        Answer(RuledWord, "zechariah-2", "high");
+        var ruled = _db.Place([RuledWord], new Dictionary<string, Text> { [_hebrew.Slug] = _hebrew })[RuledWord].Id;
+        Answer(ruled, "zechariah-2", "high");
 
         var named = await Load();
-        named.Should().NotContainKey(RuledWord);
+        named.Should().NotContainKey(ruled);
     }
 
     /// <summary>
@@ -329,19 +330,21 @@ public sealed class SenseReadingTests : IDisposable
         review.Should().HaveCount(33);
         review.Count(r => r.Existing is not null).Should().Be(21);
         review.Count(r => r.Create is not null).Should().Be(12);
-        review.Select(r => r.WordId).Should().NotIntersectWith(owner.Select(r => r.WordId));
+        review.Select(r => r.Word).Should().NotIntersectWith(owner.Select(r => r.Word));
 
-        // Every overturned reading is disposed of, and none of the four ways is silence: a ruling
-        // names the referent, the owner ruled on it, a later run replaced the answer the verdict was
-        // about, or the referent is a people and this encyclopedia has no kind one could point at.
-        var settled = review.Concat(owner).Select(r => r.WordId).ToHashSet();
-        var collective = refused
-            .Where(r => !settled.Contains(r.WordId))
-            .Where(r => !replaced.ContainsKey(r.WordId))
-            .ToList();
+        // Every overturned reading is disposed of, and none of the four ways is silence: a later run
+        // replaced the answer the verdict was about, a ruling of the review names the referent, the
+        // owner ruled on it, or the referent is the tribe of Benjamin, which the peoples' rulings give
+        // it. The rulings name their words by address and the readings by the id the run was asked
+        // about, so which ruling answers which reading is asked of a corpus; here the counts are held.
+        // The owner ruled on five of the overturned words, and the re-ask replaced one of those too.
+        const int ruledByTheOwner = 4;
+        var standing = refused.Where(r => !replaced.ContainsKey(r.WordId)).ToList();
+        var tribe = PeopleFiles.Read().Rulings;
 
-        collective.Should().HaveCount(8);
-        collective.Should().OnlyContain(r => r.StrongNumber == "H1144");
+        standing.Should().HaveCount(review.Count + ruledByTheOwner + tribe.Count);
+        standing.Count(r => r.StrongNumber == "H1144").Should().Be(tribe.Count);
+        tribe.Should().HaveCount(8).And.OnlyContain(r => r.People == "benjaminites");
     }
 
     /// <summary>

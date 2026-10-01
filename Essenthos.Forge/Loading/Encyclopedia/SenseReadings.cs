@@ -105,6 +105,8 @@ internal sealed record SupersededReadings(
 /// The owner's ruling on one occurrence: whom the word names, and whether that is somebody the
 /// encyclopedia already holds or a record this corpus has to write.
 /// </summary>
+/// <param name="Text">The witness the word is a word of; with the next three, the <see cref="RuledWord"/>.</param>
+/// <param name="Reference">The verse as that witness numbers it: <c>NEH 10:3</c> in BHSA.</param>
 /// <param name="StrongNumber">
 /// The number the word carries, or null for a word of a text that carries none: a name only the
 /// Septuagint prints, in Brenton's Greek or English.
@@ -114,15 +116,20 @@ internal sealed record SupersededReadings(
 /// overrule another ruling on its own, so the correction says which one it takes back.
 /// </param>
 internal sealed record OwnRecordRuling(
-    long WordId,
+    string Text,
     string Reference,
+    int Position,
+    string Surface,
     string? StrongNumber,
     OwnRecord? Create,
     string? Existing,
     RecordSays? Says,
     IReadOnlyList<OwnAlternative>? Alternatives,
     string Why,
-    string? Corrects = null);
+    string? Corrects = null)
+{
+    public RuledWord Word => new(Text, Reference, Position, Surface);
+}
 
 /// <summary>
 /// What a ruling makes a record say about itself, where the record is one the encyclopedia already

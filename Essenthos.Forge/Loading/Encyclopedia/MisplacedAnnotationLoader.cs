@@ -56,6 +56,44 @@ internal sealed class MisplacedAnnotationLoader(AppDbContext db, ILogger<Misplac
           AND r.canonical_book = {1} AND r.canonical_chapter = {2} AND r.canonical_verse = {3}
         """;
 
+    /// <summary>
+    /// The pending annotations the list would take off again, held out before a pass writes them:
+    /// each record named, in each verse the list takes it off.
+    /// </summary>
+    internal const string Withhold =
+        """
+        DELETE FROM pending_annotation a
+        USING word w, verse_reference r,
+              unnest(@entities, @books, @chapters, @verses) AS m(entity_id, book, chapter, verse)
+        WHERE a.entity_id = m.entity_id
+          AND w.id = a.word_id
+          AND r.verse_id = w.verse_id AND r.is_primary
+          AND r.canonical_book = m.book AND r.canonical_chapter = m.chapter AND r.canonical_verse = m.verse
+        """;
+
+    /// <summary>
+    /// The list as the parameters of <see cref="Withhold"/>, so a pass that names words writes nothing
+    /// this step would take back. Entries naming no record or no verse are left for this step to report.
+    /// </summary>
+    internal static async Task<(string Name, object Value)[]> Withheld(AppDbContext db, CancellationToken cancellationToken)
+    {
+        var misplaced = Read().Annotations;
+        var slugs = misplaced.Select(m => m.Record).Distinct().ToList();
+        var records = await db.Entities
+            .Where(e => slugs.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
+        var rows = misplaced
+            .Where(entry => records.ContainsKey(entry.Record))
+            .SelectMany(entry => (Citation.Parse(entry.Reference)?.Verses ?? [])
+                .Select(at => (Entity: records[entry.Record], at.Book, at.Chapter, at.Verse)))
+            .ToList();
+        return
+        [
+            ("entities", rows.Select(r => r.Entity).ToArray()), ("books", rows.Select(r => r.Book).ToArray()),
+            ("chapters", rows.Select(r => r.Chapter).ToArray()), ("verses", rows.Select(r => r.Verse).ToArray()),
+        ];
+    }
+
     public async Task<MisplacedAnnotationOutcome> Load(CancellationToken cancellationToken = default) =>
         await Load(Read().Annotations, cancellationToken);
 

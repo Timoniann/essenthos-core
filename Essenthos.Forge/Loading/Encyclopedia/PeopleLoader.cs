@@ -745,7 +745,7 @@ internal sealed class PeopleLoader(
         Dictionary<string, Entity> peoples,
         CancellationToken cancellationToken)
     {
-        var seed = new List<(long, int, double?, bool, string)>(file.Rulings.Count);
+        var seed = new List<(PeopleRuling Ruling, int People)>(file.Rulings.Count);
         var before = await db.Entities
             .Where(e => e.Kind == EntityKind.People)
             .Select(e => e.Slug)
@@ -769,12 +769,20 @@ internal sealed class PeopleLoader(
                 continue;
             }
 
-            seed.Add((ruling.WordId, people.Id, null, false, ruling.Why));
+            seed.Add((ruling, people.Id));
         }
 
-        var words = seed.Count == 0
-            ? 0
-            : await Annotate(seed, LinkMethod.Manual, file.Source, cancellationToken);
+        if (seed.Count == 0)
+        {
+            return (0, 0);
+        }
+
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var ids = await RuledWords.Resolve(
+            (NpgsqlConnection)db.Database.GetDbConnection(), seed.Select(s => s.Ruling.Word), cancellationToken);
+        var words = await Annotate(
+            [.. seed.Select(s => ((long, int, double?, bool, string))(ids[s.Ruling.Word], s.People, null, false, s.Ruling.Why))],
+            LinkMethod.Manual, file.Source, cancellationToken);
 
         return (seed.Count, words);
     }

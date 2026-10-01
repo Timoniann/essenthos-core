@@ -62,6 +62,31 @@ public sealed class MisplacedAnnotationLoaderTests : IDisposable
 
     private MisplacedAnnotationLoader Loader() => new(_db, NullLogger<MisplacedAnnotationLoader>.Instance);
 
+    /// <summary>
+    /// What a pass is about to write is held out where the list takes the record off, so the next
+    /// step has nothing to take back; the shipped list names Hermes in Acts 14:12.
+    /// </summary>
+    [Fact]
+    public async Task APassWritesNothingTheListWouldTakeOffAgain()
+    {
+        _db.Database.ExecuteSqlRaw("DELETE FROM word_entity");
+        var acts = _db.AddBook(_greek, 44, "Acts", (14, 12, ["Ἑρμῆν"]), (14, 13, ["Ἑρμῆν"]));
+        _db.SaveChanges();
+        var named = _db.WordAt(acts, 14, 12, 1).Id;
+        var elsewhere = _db.WordAt(acts, 14, 13, 1).Id;
+
+        await _db.Database.OpenConnectionAsync();
+        await using var transaction = await _db.Database.BeginTransactionAsync();
+        var connection = (Npgsql.NpgsqlConnection)_db.Database.GetDbConnection();
+        await Annotating.Run(connection, transaction, Annotating.Workspace, default);
+        await Annotating.Seed(connection, [(named, _hermes.Id, 0.85, false, "Mercurius"), (elsewhere, _hermes.Id, 0.85, false, "Hermes")], default);
+        await Annotating.Run(connection, transaction, MisplacedAnnotationLoader.Withhold, default,
+            await MisplacedAnnotationLoader.Withheld(_db, default));
+
+        await using var pending = new Npgsql.NpgsqlCommand("SELECT array_agg(word_id) FROM pending_annotation", connection);
+        ((long[])(await pending.ExecuteScalarAsync())!).Should().Equal(elsewhere);
+    }
+
     [Fact]
     public async Task TheRecordLeavesEveryWordOfTheVerseAndKeepsTheOthers()
     {

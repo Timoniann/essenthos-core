@@ -5,8 +5,10 @@
   "source": "Essenthos, on the project owner's decision of 2026-09-29 that whether Iezer of Numbers 26:30 is the Abiezer of 1 Chronicles 7:18 is left open",
   "rulings": [
     {
-      "wordId": 6862020,
-      "reference": "1 Chronicles 7:18",
+      "text": "BHSA",
+      "reference": "1CH 7:18",
+      "position": 10,
+      "surface": "אֲבִיעֶ֖זֶר",
       "strongNumber": "H44",
       "existing": "iezer",
       "says": {

@@ -5,8 +5,10 @@
   "source": "Essenthos, on the report of records holding several people, each occurrence read against its verse by claude-opus-5-5, 2026-09-25",
   "rulings": [
     {
-      "wordId": 6927343,
-      "reference": "Luke 6:16",
+      "text": "NESTLE1904",
+      "reference": "LUK 6:16",
+      "position": 2,
+      "surface": "Ἰούδαν",
       "strongNumber": "G2455",
       "create": {
         "slug": "judas-of-james",
@@ -24,8 +26,10 @@
       "why": "Luke 6:16 names 'Judas of James, and Judas Iscariot, which also was the traitor': the first Judas of the verse is not the betrayer, and the encyclopedia held no record of him."
     },
     {
-      "wordId": 6842531,
-      "reference": "Daniel 9:1",
+      "text": "BHSA",
+      "reference": "DAN 9:1",
+      "position": 7,
+      "surface": "אֲחַשְׁוֵרֹ֖ושׁ",
       "strongNumber": "H325",
       "create": {
         "slug": "ahasuerus-father-of-darius",
@@ -43,8 +47,10 @@
       "why": "Daniel 9:1 dates the vision to 'the first year of Darius the son of Ahasuerus, of the seed of the Medes'. The king of Esther and of Ezra 4:6 reigns after Cyrus; the father of the Mede who received the kingdom at Babylon's fall is another man."
     },
     {
-      "wordId": 6486681,
-      "reference": "Genesis 36:24",
+      "text": "BHSA",
+      "reference": "GEN 36:24",
+      "position": 8,
+      "surface": "עֲנָ֑ה",
       "strongNumber": "H6034",
       "create": {
         "slug": "anah-son-of-zibeon",
@@ -66,15 +72,19 @@
       "why": "Genesis 36:24 names this Anah as the son of Zibeon, the one who found the mules in the wilderness. The encyclopedia held him on its record of Beeri the Hittite, and his uncle of the same name, the son of Seir, on another."
     },
     {
-      "wordId": 6883035,
-      "reference": "2 Chronicles 20:14",
+      "text": "BHSA",
+      "reference": "2CH 20:14",
+      "position": 10,
+      "surface": "מַתַּנְיָ֛ה",
       "strongNumber": "H4983",
       "existing": "mattaniah-11",
       "why": "2 Chronicles 20:14 traces Jahaziel, who prophesied to Jehoshaphat, to 'Mattaniah, a Levite of the sons of Asaph': an ancestor in Jehoshaphat's day, centuries before the Mattaniah son of Micha of Nehemiah 11:17."
     },
     {
-      "wordId": 6550635,
-      "reference": "Numbers 22:4",
+      "text": "BHSA",
+      "reference": "NUM 22:4",
+      "position": 23,
+      "surface": "בָלָ֧ק",
       "strongNumber": "H1111",
       "existing": "balak",
       "says": {
@@ -83,64 +93,82 @@
       "why": "'Balak the son of Zippor was king of the Moabites at that time.' The record called him a Midianite prophet; he is the king of Moab who hired the prophet Balaam, and the Midianites are his allies in the verse, not his people."
     },
     {
-      "wordId": 6911145,
-      "reference": "Matthew 27:56",
+      "text": "NESTLE1904",
+      "reference": "MAT 27:56",
+      "position": 4,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-2",
       "why": "Matthew 27:56 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
     },
     {
-      "wordId": 6911228,
-      "reference": "Matthew 27:61",
+      "text": "NESTLE1904",
+      "reference": "MAT 27:61",
+      "position": 4,
+      "surface": "Μαριὰμ",
       "strongNumber": "G3137",
       "existing": "mary-2",
       "why": "Matthew 27:61 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
     },
     {
-      "wordId": 6911332,
-      "reference": "Matthew 28:1",
+      "text": "NESTLE1904",
+      "reference": "MAT 28:1",
+      "position": 10,
+      "surface": "Μαριὰμ",
       "strongNumber": "G3137",
       "existing": "mary-2",
       "why": "Matthew 28:1 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
     },
     {
-      "wordId": 6922457,
-      "reference": "Mark 15:40",
+      "text": "NESTLE1904",
+      "reference": "MRK 15:40",
+      "position": 11,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-2",
       "why": "Mark 15:40 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
     },
     {
-      "wordId": 6922581,
-      "reference": "Mark 15:47",
+      "text": "NESTLE1904",
+      "reference": "MRK 15:47",
+      "position": 3,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-2",
       "why": "Mark 15:47 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
     },
     {
-      "wordId": 6922595,
-      "reference": "Mark 16:1",
+      "text": "NESTLE1904",
+      "reference": "MRK 16:1",
+      "position": 5,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-2",
       "why": "Mark 16:1 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
     },
     {
-      "wordId": 6941692,
-      "reference": "Luke 24:10",
+      "text": "NESTLE1904",
+      "reference": "LUK 24:10",
+      "position": 5,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-2",
       "why": "Luke 24:10 names Mary Magdalene beside another Mary, and this is the Mary the verse calls Magdalene: the encyclopedia's record of her holds the verse."
     },
     {
-      "wordId": 6966161,
-      "reference": "Acts 13:7",
+      "text": "NESTLE1904",
+      "reference": "ACT 13:7",
+      "position": 7,
+      "surface": "Παύλῳ",
       "strongNumber": "G3972",
       "existing": "sergius",
       "why": "Acts 13:7 names 'the deputy of the country, Sergius Paulus, a prudent man': Paulus is the proconsul's second name, and Saul is first called Paul two verses later (13:9). The Strong number is the apostle's, and the man is not."
     },
     {
-      "wordId": 6966160,
-      "reference": "Acts 13:7",
+      "text": "NESTLE1904",
+      "reference": "ACT 13:7",
+      "position": 6,
+      "surface": "Σεργίῳ",
       "strongNumber": "G4588",
       "existing": "sergius",
       "why": "Acts 13:7 names 'the deputy of the country, Sergius Paulus': the proconsul of Cyprus, whom the encyclopedia holds."

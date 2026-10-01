@@ -5,8 +5,10 @@
   "source": "Essenthos, on the project owner's ruling of 2026-09-06",
   "rulings": [
     {
-      "wordId": 6855504,
-      "reference": "Nehemiah 10:2",
+      "text": "BHSA",
+      "reference": "NEH 10:3",
+      "position": 2,
+      "surface": "עֲזַרְיָ֖ה",
       "strongNumber": "H5838",
       "create": {
         "slug": "azariah-the-covenant-priest",
@@ -18,8 +20,10 @@
       "why": "The owner ruled that a post-exilic priest the datasets do not hold is a record this corpus writes, rather than a word left blank or bent onto a man who died two centuries earlier."
     },
     {
-      "wordId": 6856923,
-      "reference": "Nehemiah 12:33",
+      "text": "BHSA",
+      "reference": "NEH 12:33",
+      "position": 2,
+      "surface": "עֲזַרְיָ֥ה",
       "strongNumber": "H5838",
       "create": {
         "slug": "azariah-of-the-wall-dedication",
@@ -37,8 +41,10 @@
       "why": "The owner ruled a new record with notes on who he might theoretically be, rather than a forced merge onto either candidate."
     },
     {
-      "wordId": 6881451,
-      "reference": "2 Chronicles 17:7",
+      "text": "BHSA",
+      "reference": "2CH 17:7",
+      "position": 14,
+      "surface": "עֹבַדְיָ֣ה",
       "strongNumber": "H5662",
       "create": {
         "slug": "obadiah-the-teaching-prince",
@@ -50,8 +56,10 @@
       "why": "The owner ruled that where both candidates are wrong and the referent is somebody no dataset holds, this corpus writes the record."
     },
     {
-      "wordId": 6667754,
-      "reference": "2 Kings 9:31",
+      "text": "BHSA",
+      "reference": "2KI 9:31",
+      "position": 11,
+      "surface": "זִמְרִ֖י",
       "strongNumber": "H2174",
       "create": {
         "slug": "zimri-in-jezebels-cry",
@@ -73,8 +81,10 @@
       "why": "The owner ruled a new entity whose description says what it is, with the alternatives kept beside it rather than one of them chosen."
     },
     {
-      "wordId": 6596381,
-      "reference": "Judges 4:11",
+      "text": "BHSA",
+      "reference": "JDG 4:11",
+      "position": 10,
+      "surface": "חֹבָ֖ב",
       "strongNumber": "H2246",
       "existing": "hobab",
       "alternatives": [

@@ -5,80 +5,102 @@
   "source": "Essenthos, on the report of records holding several people and of names crossed in the translations, each occurrence read against its verse by claude-opus-5-5, 2026-09-27",
   "rulings": [
     {
-      "wordId": 8186152,
-      "reference": "1 Chronicles 7:30",
+      "text": "KJV",
+      "reference": "1CH 7:30",
+      "position": 7,
+      "surface": "Isuah",
       "strongNumber": "H3438",
       "existing": "ishvah",
       "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. The King James's Isuah is the second name, Ishvah; its mapping gave the word Ishvi's."
     },
     {
-      "wordId": 8186154,
-      "reference": "1 Chronicles 7:30",
+      "text": "KJV",
+      "reference": "1CH 7:30",
+      "position": 9,
+      "surface": "Ishuai",
       "strongNumber": "H3440",
       "existing": "ishvi",
       "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. The King James's Ishuai is the third name, Ishvi; its mapping gave the word Ishvah's."
     },
     {
-      "wordId": 21405495,
-      "reference": "1 Chronicles 7:30",
+      "text": "LSG1910",
+      "reference": "1CH 7:30",
+      "position": 4,
+      "surface": "Jischva",
       "strongNumber": "H3438",
       "existing": "ishvah",
       "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Segond's Jischva is Ishvah."
     },
     {
-      "wordId": 21405496,
-      "reference": "1 Chronicles 7:30",
+      "text": "LSG1910",
+      "reference": "1CH 7:30",
+      "position": 5,
+      "surface": "Jischvi",
       "strongNumber": "H3440",
       "existing": "ishvi",
       "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Segond's Jischvi is Ishvi."
     },
     {
-      "wordId": 14319890,
-      "reference": "1 Chronicles 7:30",
+      "text": "RV1909",
+      "reference": "1CH 7:30",
+      "position": 7,
+      "surface": "Isui",
       "strongNumber": "H3440",
       "existing": "ishvi",
       "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. The Reina-Valera's Isui is Ishvi; its Isua beside it is Ishvah."
     },
     {
-      "wordId": 11728671,
-      "reference": "1 Chronicles 7:30",
+      "text": "UKR1871",
+      "reference": "1CH 7:30",
+      "position": 5,
+      "surface": "Ішвій",
       "strongNumber": "H3440",
       "existing": "ishvi",
       "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Kulish's Ішвій is Ishvi; his Ішва beside it is Ishvah."
     },
     {
-      "wordId": 7551535,
-      "reference": "1 Chronicles 7:30",
+      "text": "GRCBRENT",
+      "reference": "1CH 7:30",
+      "position": 5,
+      "surface": "Σουΐα",
       "strongNumber": "H3438",
       "existing": "ishvah",
       "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Brenton's Σουΐα stands second, where the Hebrew has Ishvah."
     },
     {
-      "wordId": 7551537,
-      "reference": "1 Chronicles 7:30",
+      "text": "GRCBRENT",
+      "reference": "1CH 7:30",
+      "position": 7,
+      "surface": "Ἰσουῒ",
       "strongNumber": "H3440",
       "existing": "ishvi",
       "why": "1 Chronicles 7:30 names Asher's sons in the Hebrew's order, יִמְנָה וְיִשְׁוָה וְיִשְׁוִי: Imnah, Ishvah, Ishvi. Brenton's Ἰσουῒ stands third, where the Hebrew has Ishvi."
     },
     {
-      "wordId": 6856687,
-      "reference": "Nehemiah 12:19",
+      "text": "BHSA",
+      "reference": "NEH 12:19",
+      "position": 6,
+      "surface": "ידַֽעְיָ֖ה",
       "strongNumber": "H3048",
       "existing": "jedaiah-2",
       "why": "Nehemiah 12:12-21 names the heads of the priestly houses of 12:1-7 in the same order. 'Of Joiarib, Mattenai; of Jedaiah, Uzzi' follows 12:6, 'Joiarib, Jedaiah', whose Jedaiah the lexicon enumerates with 1 Chronicles 9:10 and Nehemiah 7:39. The review of 2026-09-06 argued the same pairing and named the Jedaiah of 12:7.",
       "corrects": "jedaiah-5"
     },
     {
-      "wordId": 6856699,
-      "reference": "Nehemiah 12:21",
+      "text": "BHSA",
+      "reference": "NEH 12:21",
+      "position": 5,
+      "surface": "ידַֽעְיָ֖ה",
       "strongNumber": "H3048",
       "existing": "jedaiah-5",
       "why": "Nehemiah 12:12-21 names the heads of the priestly houses of 12:1-7 in the same order. 'Of Hilkiah, Hashabiah; of Jedaiah, Nethaneel' follows 12:7, 'Hilkiah, Jedaiah', whose Jedaiah the lexicon enumerates with Nehemiah 11:10. The review of 2026-09-06 argued the same pairing and named the Jedaiah of 12:6.",
       "corrects": "jedaiah-2"
     },
     {
-      "wordId": 6901354,
-      "reference": "Matthew 13:55",
+      "text": "NESTLE1904",
+      "reference": "MAT 13:55",
+      "position": 18,
+      "surface": "Ἰάκωβος",
       "strongNumber": "G2385",
       "existing": "james-3",
       "says": {
@@ -87,8 +109,10 @@
       "why": "Matthew 13:55 asks 'is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?': they are named as Jesus's brothers, and the verse names Mary as Jesus's mother, not as theirs."
     },
     {
-      "wordId": 6901356,
-      "reference": "Matthew 13:55",
+      "text": "NESTLE1904",
+      "reference": "MAT 13:55",
+      "position": 20,
+      "surface": "Ἰωσὴφ",
       "strongNumber": "G2501",
       "existing": "joseph-7",
       "says": {
@@ -97,8 +121,10 @@
       "why": "Matthew 13:55 asks 'is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?': they are named as Jesus's brothers, and the verse names Mary as Jesus's mother, not as theirs."
     },
     {
-      "wordId": 6901358,
-      "reference": "Matthew 13:55",
+      "text": "NESTLE1904",
+      "reference": "MAT 13:55",
+      "position": 22,
+      "surface": "Σίμων",
       "strongNumber": "G4613",
       "existing": "simon-3",
       "says": {
@@ -107,8 +133,10 @@
       "why": "Matthew 13:55 asks 'is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?': they are named as Jesus's brothers, and the verse names Mary as Jesus's mother, not as theirs."
     },
     {
-      "wordId": 6901360,
-      "reference": "Matthew 13:55",
+      "text": "NESTLE1904",
+      "reference": "MAT 13:55",
+      "position": 24,
+      "surface": "Ἰούδας",
       "strongNumber": "G2455",
       "existing": "judas-2",
       "says": {
@@ -117,64 +145,82 @@
       "why": "Matthew 13:55 asks 'is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?': they are named as Jesus's brothers, and the verse names Mary as Jesus's mother, not as theirs."
     },
     {
-      "wordId": 6911234,
-      "reference": "Matthew 27:61",
+      "text": "NESTLE1904",
+      "reference": "MAT 27:61",
+      "position": 10,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-7",
       "why": "'And there was Mary Magdalene, and the other Mary, sitting over against the sepulchre': 'Mary Magdalene, and the other Mary' — the mother of James and Joses (MAT 27:56, MRK 15:40), whom the verses name beside Mary Magdalene and never as Jesus's mother."
     },
     {
-      "wordId": 6911338,
-      "reference": "Matthew 28:1",
+      "text": "NESTLE1904",
+      "reference": "MAT 28:1",
+      "position": 16,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-7",
       "why": "'came Mary Magdalene and the other Mary to see the sepulchre': 'Mary Magdalene, and the other Mary' — the mother of James and Joses (MAT 27:56, MRK 15:40), whom the verses name beside Mary Magdalene and never as Jesus's mother."
     },
     {
-      "wordId": 6922461,
-      "reference": "Mark 15:40",
+      "text": "NESTLE1904",
+      "reference": "MRK 15:40",
+      "position": 15,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-7",
       "why": "'Mary Magdalene, and Mary the mother of James the less and of Joses, and Salome': the second Mary is the mother of James and Joses."
     },
     {
-      "wordId": 6922585,
-      "reference": "Mark 15:47",
+      "text": "NESTLE1904",
+      "reference": "MRK 15:47",
+      "position": 7,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-7",
       "why": "'Mary Magdalene and Mary the mother of Joses beheld where he was laid': the second Mary is the mother of Joses."
     },
     {
-      "wordId": 6922599,
-      "reference": "Mark 16:1",
+      "text": "NESTLE1904",
+      "reference": "MRK 16:1",
+      "position": 9,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-7",
       "why": "'Mary Magdalene, and Mary the mother of James, and Salome': the second Mary is the mother of James."
     },
     {
-      "wordId": 6941696,
-      "reference": "Luke 24:10",
+      "text": "NESTLE1904",
+      "reference": "LUK 24:10",
+      "position": 9,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-7",
       "why": "'Mary Magdalene, and Joanna, and Mary the mother of James': the third woman is the mother of James."
     },
     {
-      "wordId": 6956544,
-      "reference": "John 19:25",
+      "text": "NESTLE1904",
+      "reference": "JHN 19:25",
+      "position": 17,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-4",
       "why": "'his mother, and his mother's sister, Mary the wife of Cleophas, and Mary Magdalene': the first Mary named is Mary of Clopas."
     },
     {
-      "wordId": 6956549,
-      "reference": "John 19:25",
+      "text": "NESTLE1904",
+      "reference": "JHN 19:25",
+      "position": 22,
+      "surface": "Μαρία",
       "strongNumber": "G3137",
       "existing": "mary-2",
       "why": "'Mary the wife of Cleophas, and Mary Magdalene': the second Mary named is Mary Magdalene."
     },
     {
-      "wordId": 6652369,
-      "reference": "1 Kings 11:29",
+      "text": "BHSA",
+      "reference": "1KI 11:29",
+      "position": 16,
+      "surface": "אֲחִיָּה֩",
       "strongNumber": "H281",
       "existing": "ahijah",
       "says": {
@@ -183,8 +229,10 @@
       "why": "'the prophet Ahijah the Shilonite found him in the way': the prophet of Shiloh, who tore his garment in twelve pieces for Jeroboam. The priest Ahiah son of Ahitub of 1 Samuel 14:3 and 14:18, Saul's day, is another man and has his own record."
     },
     {
-      "wordId": 6856571,
-      "reference": "Nehemiah 12:7",
+      "text": "BHSA",
+      "reference": "NEH 12:7",
+      "position": 3,
+      "surface": "חִלְקִיָּ֖ה",
       "strongNumber": "H2518",
       "existing": "hilkiah-3",
       "says": {
@@ -193,15 +241,19 @@
       "why": "'Sallu, Amok, Hilkiah, Jedaiah. These were the chief of the priests' who came up with Zerubbabel (12:1). The high priest of Josiah's day, the Hilkiah beside Ezra and Gemariah's father each have their own record."
     },
     {
-      "wordId": 6856696,
-      "reference": "Nehemiah 12:21",
+      "text": "BHSA",
+      "reference": "NEH 12:21",
+      "position": 2,
+      "surface": "חִלְקִיָּ֣ה",
       "strongNumber": "H2518",
       "existing": "hilkiah-3",
       "why": "'Of Hilkiah, Hashabiah': the house of the Hilkiah of 12:7, in the order of the first list."
     },
     {
-      "wordId": 6770882,
-      "reference": "Haggai 1:1",
+      "text": "BHSA",
+      "reference": "HAG 1:1",
+      "position": 5,
+      "surface": "דָרְיָ֣וֶשׁ",
       "strongNumber": "H1867",
       "existing": "darius",
       "says": {

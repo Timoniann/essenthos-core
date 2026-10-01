@@ -470,6 +470,36 @@ public sealed class CorpusCheckTests : IDisposable
         (await Integrity(check)).Should().Be(1);
     }
 
+    /// <summary>
+    /// The same verse link written twice is counted once as a repeat; a link of the same verses that
+    /// a different source states is a statement of its own and is not.
+    /// </summary>
+    [Fact]
+    public async Task AVerseLinkWrittenTwiceIsARepeatAndOneAnotherSourceStatesIsNot()
+    {
+        VerseLink("the canonical frame");
+        VerseLink("the canonical frame");
+        VerseLink("a verse map");
+        _db.SaveChanges();
+
+        (await Integrity("verse links saying again what another link of the same pair says")).Should().Be(1);
+    }
+
+    private void VerseLink(string source) =>
+        _db.VerseLinks.Add(new VerseLink
+        {
+            FromTextId = _english.Id,
+            ToTextId = _hebrew.Id,
+            Relation = LinkRelation.Equals,
+            Method = LinkMethod.StatedBySource,
+            Source = source,
+            Verses =
+            [
+                new VerseLinkVerse { VerseId = _db.VerseAt(_english, 1, 1).Id, Side = LinkSide.From },
+                new VerseLinkVerse { VerseId = _db.VerseAt(_hebrew, 1, 1).Id, Side = LinkSide.To },
+            ],
+        });
+
     private async Task<int> Integrity(string breaks) =>
         (await _check.Measure()).Integrity.Single(check => check.Breaks == breaks).Found;
 

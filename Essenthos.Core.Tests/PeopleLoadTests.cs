@@ -32,6 +32,9 @@ public sealed class PeopleLoadTests : IDisposable
     /// <summary>The eight occurrences a review ruled name the tribe rather than the patriarch.</summary>
     private readonly IReadOnlyList<PeopleRuling> _rulings;
 
+    /// <summary>The words those occurrences are.</summary>
+    private readonly IReadOnlyList<long> _ruled;
+
     public PeopleLoadTests(WitnessDatabase database)
     {
         _db = database.NewContext();
@@ -43,8 +46,9 @@ public sealed class PeopleLoadTests : IDisposable
         _file = PeopleFiles.Read();
         _rulings = _file.Rulings;
 
-        // One verse per word: the ruled occurrences, then a gentilic used as the people, the same
-        // gentilic standing as somebody's name, and a gentilic whose origin nobody holds.
+        // One verse per word in Genesis 1: as many unmarked as there are ruled occurrences, then a
+        // gentilic used as the people, the same gentilic standing as somebody's name, and a gentilic
+        // whose origin nobody holds.
         var verses = Enumerable
             .Range(1, _rulings.Count + Extra)
             .Select(number => (Chapter: 1, Verse: number, Words: new[] { "w" }))
@@ -53,14 +57,16 @@ public sealed class PeopleLoadTests : IDisposable
         _hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo", verses);
         _db.SaveChanges();
 
-        for (var position = 0; position < _rulings.Count; position++)
+        // The ruled occurrences themselves, at the addresses the rulings name.
+        var ruled = _db.Place(_rulings.Select(r => r.Word), new Dictionary<string, Text> { [_hebrew.Slug] = _hebrew });
+        foreach (var word in ruled.Values)
         {
-            Mark(position + 1, Collective, "pers,gens,topo");
-            _db.Database.ExecuteSqlRaw(
-                "UPDATE word SET id = {0} WHERE id = {1}",
-                _rulings[position].WordId,
-                _db.WordAt(_hebrew, 1, position + 1, 1).Id);
+            word.StrongNumber = Collective;
+            word.Morphology = JsonDocument.Parse("""{"pos": "subs", "nameType": "pers,gens,topo"}""");
         }
+
+        _db.SaveChanges();
+        _ruled = [.. _rulings.Select(r => ruled[r.Word].Id)];
 
         Mark(_rulings.Count + 1, Gentilic, null);
         Mark(_rulings.Count + 2, Gentilic, "pers");
@@ -160,9 +166,14 @@ public sealed class PeopleLoadTests : IDisposable
     /// </summary>
     private const int Extra = 11;
 
+    /// <summary>The one word of a verse of the first chapter of Genesis, where the fixture's own words stand.</summary>
+    private Word At(int verse) =>
+        _db.Words.Single(w => w.TextId == _hebrew.Id && w.Verse!.Book!.CanonicalOrdinal == 1
+                              && w.Verse.ChapterNumber == 1 && w.Verse.Number == verse && w.Position == 1);
+
     private void Mark(int verse, string number, string? nameType)
     {
-        var word = _db.WordAt(_hebrew, 1, verse, 1);
+        var word = At(verse);
         word.StrongNumber = number;
         word.Morphology = nameType is null
             ? JsonDocument.Parse("""{"pos": "subs"}""")
@@ -173,7 +184,7 @@ public sealed class PeopleLoadTests : IDisposable
     /// <summary>A word whose lexeme BHSA analyses as a gentilic, with the entry the lexicon holds.</summary>
     private void Analyse(int verse, string number, string? kjv, string definition)
     {
-        var word = _db.WordAt(_hebrew, 1, verse, 1);
+        var word = At(verse);
         word.StrongNumber = number;
         word.Morphology = JsonDocument.Parse("""{"pos": "adjv", "lexicalSet": "gntl"}""");
         _db.StrongEntries.Add(new StrongEntry
@@ -306,7 +317,7 @@ public sealed class PeopleLoadTests : IDisposable
             .ToListAsync();
 
         annotated.Should().ContainSingle();
-        annotated[0].WordId.Should().Be(_db.WordAt(_hebrew, 1, _rulings.Count + 1, 1).Id);
+        annotated[0].WordId.Should().Be(At(_rulings.Count + 1).Id);
         annotated[0].Method.Should().Be(LinkMethod.Lexical);
         annotated[0].Confidence.Should().Be(0.9);
     }
@@ -325,7 +336,7 @@ public sealed class PeopleLoadTests : IDisposable
             .Where(a => a.Entity!.Slug == "benjaminites")
             .ToListAsync();
 
-        annotated.Select(a => a.WordId).Should().BeEquivalentTo(_rulings.Select(r => r.WordId));
+        annotated.Select(a => a.WordId).Should().BeEquivalentTo(_ruled);
         annotated.Should().OnlyContain(a => a.Method == LinkMethod.Manual);
         annotated.Should().OnlyContain(a => a.Confidence == null);
     }
@@ -351,7 +362,7 @@ public sealed class PeopleLoadTests : IDisposable
             .Select(a => a.WordId)
             .ToListAsync();
 
-        annotated.Should().BeEquivalentTo(_rulings.Select(r => r.WordId));
+        annotated.Should().BeEquivalentTo(_ruled);
     }
 
     /// <summary>
@@ -391,7 +402,7 @@ public sealed class PeopleLoadTests : IDisposable
 
         var words = Enumerable
             .Range(4, 4)
-            .Select(offset => _db.WordAt(_hebrew, 1, _rulings.Count + offset, 1).Id)
+            .Select(offset => At(_rulings.Count + offset).Id)
             .ToList();
 
         await File.WriteAllLinesAsync(
@@ -514,7 +525,7 @@ public sealed class PeopleLoadTests : IDisposable
         amorites.Names.Should().ContainSingle(n => n.HebrewStrongNumber == Amorite);
 
         var named = await _db.WordEntities.SingleAsync(a => a.EntityId == amorites.Id);
-        named.WordId.Should().Be(_db.WordAt(_hebrew, 1, _rulings.Count + 8, 1).Id);
+        named.WordId.Should().Be(At(_rulings.Count + 8).Id);
         named.Method.Should().Be(LinkMethod.Lexical);
     }
 
@@ -541,7 +552,7 @@ public sealed class PeopleLoadTests : IDisposable
         outcome.Analysed.Should().Be(1);
 
         var named = await _db.WordEntities.SingleAsync(a => a.EntityId == egyptians.Id);
-        named.WordId.Should().Be(_db.WordAt(_hebrew, 1, _rulings.Count + 9, 1).Id);
+        named.WordId.Should().Be(At(_rulings.Count + 9).Id);
         named.Method.Should().Be(LinkMethod.Lexical);
     }
 
@@ -559,7 +570,7 @@ public sealed class PeopleLoadTests : IDisposable
         outcome.Unnamed.Should().Be(1);
         (await _db.Entities.CountAsync(e => e.Kind == EntityKind.People && e.Name.StartsWith("Jewish")))
             .Should().Be(0);
-        (await _db.WordEntities.CountAsync(a => a.WordId == _db.WordAt(_hebrew, 1, _rulings.Count + 10, 1).Id))
+        (await _db.WordEntities.CountAsync(a => a.WordId == At(_rulings.Count + 10).Id))
             .Should().Be(0);
     }
 
@@ -580,7 +591,7 @@ public sealed class PeopleLoadTests : IDisposable
         philistines.Names.Should().Contain(n => n.HebrewStrongNumber == Another);
         outcome.Joined.Should().Be(1);
 
-        var word = _db.WordAt(_hebrew, 1, _rulings.Count + 11, 1).Id;
+        var word = At(_rulings.Count + 11).Id;
         var named = await _db.WordEntities.SingleAsync(a => a.WordId == word);
         named.EntityId.Should().Be(philistines.Id);
     }

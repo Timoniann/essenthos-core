@@ -5,8 +5,10 @@
   "source": "Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown",
   "rulings": [
     {
-      "wordId": 6858809,
-      "reference": "1 Chronicles 2:18",
+      "text": "BHSA",
+      "reference": "1CH 2:18",
+      "position": 11,
+      "surface": "יְרִיעֹ֑ות",
       "strongNumber": "H3408",
       "existing": "jerioth",
       "says": {

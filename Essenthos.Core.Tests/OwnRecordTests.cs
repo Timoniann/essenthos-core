@@ -15,16 +15,16 @@ namespace Essenthos.Core.Tests;
 /// The records this corpus writes for itself, exercised against the rulings it actually ships
 /// rather than against a fixture standing in for them.
 ///
-/// The words are given the ids the ruling file names, so what is under test is the file a reader
-/// would be shown from — a ruling whose word id drifted, or whose referent slug was renamed away,
-/// fails here rather than quietly annotating nothing on a live database.
+/// The words are written at the addresses the ruling files name, so what is under test is the file a
+/// reader would be shown from — a ruling whose address is malformed, or whose referent slug was
+/// renamed away, fails here rather than quietly annotating nothing on a live database.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class OwnRecordTests : IDisposable
 {
     private readonly AppDbContext _db;
     private readonly IReadOnlyList<OwnRecordRuling> _rulings;
-    private readonly Text _hebrew;
+    private readonly Dictionary<RuledWord, long> _words;
     private readonly Text _english;
 
     public OwnRecordTests(WitnessDatabase database)
@@ -34,25 +34,17 @@ public sealed class OwnRecordTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
         _rulings = [.. SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)];
 
-        var ruled = _rulings.DistinctBy(ruling => ruling.WordId).ToList();
-        var verses = ruled
-            .Select((ruling, position) => (Chapter: 1, Verse: position + 1, Words: new[] { ruling.StrongNumber ?? "name" }))
-            .ToArray();
-
-        _hebrew = Corpus.Add(_db, SenseReadingLoader.Witness, TextKind.CriticalEdition, "hbo", verses);
-        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["Azariah"]));
-        _db.SaveChanges();
-
-        // The words the rulings are about, at the ids the rulings name.
-        for (var position = 0; position < ruled.Count; position++)
+        // The words the rulings are about, at the addresses the rulings name.
+        var placed = _db.Place(_rulings.Select(ruling => ruling.Word));
+        foreach (var ruling in _rulings)
         {
-            var word = _db.WordAt(_hebrew, 1, position + 1, 1);
-            word.StrongNumber = ruled[position].StrongNumber;
-            word.Morphology = JsonDocument.Parse("""{"pos": "subs", "nameType": "pers"}""");
-            _db.SaveChanges();
-            _db.Database.ExecuteSqlRaw(
-                "UPDATE word SET id = {0} WHERE id = {1}", ruled[position].WordId, word.Id);
+            placed[ruling.Word].StrongNumber = ruling.StrongNumber;
+            placed[ruling.Word].Morphology = JsonDocument.Parse("""{"pos": "subs", "nameType": "pers"}""");
         }
+
+        _english = Corpus.Add(_db, "ENGLISH", TextKind.Translation, "eng", (1, 1, ["Azariah"]));
+        _db.SaveChanges();
+        _words = placed.ToDictionary(word => word.Key, word => word.Value.Id);
 
         // The records the rulings point at or name as alternatives.
         foreach (var slug in Named())
@@ -107,7 +99,7 @@ public sealed class OwnRecordTests : IDisposable
         await Load();
 
         var named = await _db.WordEntities.Include(a => a.Entity).ToListAsync();
-        named.Select(a => a.WordId).Should().BeEquivalentTo(_rulings.Select(r => r.WordId).Distinct());
+        named.Select(a => a.WordId).Should().BeEquivalentTo(_rulings.Select(r => _words[r.Word]).Distinct());
         named.Should().OnlyContain(a => a.Method == LinkMethod.Manual);
         named.Should().OnlyContain(a => a.Confidence == null);
     }
@@ -129,7 +121,7 @@ public sealed class OwnRecordTests : IDisposable
         woman.Claims.Should().ContainSingle(claim => claim.Method == LinkMethod.Manual)
             .Which.Source.Should().Contain("2026-09-30");
 
-        var words = SenseReadingFiles.AddressedRulings().Rulings.Select(r => r.WordId);
+        var words = SenseReadingFiles.AddressedRulings().Rulings.Select(r => _words[r.Word]);
         (await _db.WordEntities.Where(a => a.EntityId == woman.Id).Select(a => a.WordId).ToListAsync())
             .Should().BeEquivalentTo(words);
     }
@@ -195,7 +187,7 @@ public sealed class OwnRecordTests : IDisposable
         await Load();
 
         var ruling = _rulings.First(r => r.Create is not null);
-        var word = await _db.Words.SingleAsync(w => w.Id == ruling.WordId);
+        var word = await _db.Words.SingleAsync(w => w.Id == _words[ruling.Word]);
         var reference = await _db.VerseReferences.SingleAsync(r => r.VerseId == word.VerseId && r.IsPrimary);
         var rests = await _db.EntityVerses.SingleAsync(v => v.Entity!.Slug == ruling.Create!.Slug);
 
@@ -255,7 +247,7 @@ public sealed class OwnRecordTests : IDisposable
     public async Task ADecisionCarriedAcrossAnUncertainLinkPicksUpTheLinksConfidence()
     {
         var ruling = _rulings[0];
-        var hebrew = await _db.Words.SingleAsync(w => w.Id == ruling.WordId);
+        var hebrew = await _db.Words.SingleAsync(w => w.Id == _words[ruling.Word]);
         var english = _db.WordAt(_english, 1, 1, 1);
 
         var link = new Link
@@ -378,7 +370,7 @@ public sealed class OwnRecordTests : IDisposable
         again.Created.Should().Be(0);
         (await _db.Entities.CountAsync()).Should().Be(entities);
         (await _db.WordEntities.Where(a => a.Source == report.Source).Select(a => a.WordId).ToListAsync())
-            .Should().BeEquivalentTo(report.Rulings.Select(r => r.WordId));
+            .Should().BeEquivalentTo(report.Rulings.Select(r => _words[r.Word]));
     }
 
     /// <summary>
@@ -401,21 +393,21 @@ public sealed class OwnRecordTests : IDisposable
         var rendering = _db.WordAt(_english, 1, 1, 1);
         _db.WordEntities.Add(new WordEntity
         {
-            WordId = ruling.WordId, EntityId = place.Id, Method = LinkMethod.ModelReading,
+            WordId = _words[ruling.Word], EntityId = place.Id, Method = LinkMethod.ModelReading,
             Confidence = 0.99, Source = reading, Note = "read as the place",
         });
         _db.WordEntities.Add(new WordEntity
         {
             WordId = rendering.Id, EntityId = place.Id, Method = LinkMethod.ModelReading,
             Confidence = 0.97, Source = reading,
-            Note = $"through BHSA word {ruling.WordId}, linked by aligner",
+            Note = $"through BHSA word {_words[ruling.Word]}, linked by aligner",
         });
         await _db.SaveChangesAsync();
 
         await Load();
 
         (await _db.WordEntities.AnyAsync(a => a.EntityId == place.Id)).Should().BeFalse();
-        (await _db.WordEntities.Include(a => a.Entity).SingleAsync(a => a.WordId == ruling.WordId))
+        (await _db.WordEntities.Include(a => a.Entity).SingleAsync(a => a.WordId == _words[ruling.Word]))
             .Entity!.Slug.Should().Be(ruling.Existing);
     }
 
@@ -427,7 +419,7 @@ public sealed class OwnRecordTests : IDisposable
     [Fact]
     public void NoWordIsRuledOnTwiceUnlessTheLaterRulingCorrectsTheEarlier()
     {
-        foreach (var word in _rulings.GroupBy(r => r.WordId).Where(g => g.Count() > 1))
+        foreach (var word in _rulings.GroupBy(r => _words[r.Word]).Where(g => g.Count() > 1))
         {
             var (earlier, later) = (word.First(), word.Last());
             word.Count().Should().Be(2, $"word {word.Key} is ruled on once and corrected once at most");
@@ -445,7 +437,7 @@ public sealed class OwnRecordTests : IDisposable
     {
         var file = SenseReadingFiles.NamesakeSecondRulings();
         file.Rulings.Should().NotBeEmpty();
-        file.Rulings.Should().OnlyContain(r => r.Existing != null && r.Create == null && r.WordId > 0
+        file.Rulings.Should().OnlyContain(r => r.Existing != null && r.Create == null && r.Position > 0 && r.Surface.Length > 0
                                                && r.StrongNumber != null && r.StrongNumber.Length > 1 && r.Why.Length > 0);
         file.Source.Should().Contain("claude-sonnet").And.Contain("claude-opus").And.Contain("2026-09-30");
         file.DecidedBy.Should().Contain("No person read them");
@@ -455,7 +447,7 @@ public sealed class OwnRecordTests : IDisposable
         var slugs = await _db.Entities.ToDictionaryAsync(e => e.Slug, e => e.Id);
         var named = await _db.WordEntities.Where(a => a.Source == file.Source).ToListAsync();
         named.Select(a => (a.WordId, a.EntityId)).Should().BeEquivalentTo(
-            file.Rulings.Select(r => (r.WordId, slugs[r.Existing!])));
+            file.Rulings.Select(r => (_words[r.Word], slugs[r.Existing!])));
     }
 
     /// <summary>
@@ -468,7 +460,7 @@ public sealed class OwnRecordTests : IDisposable
     {
         var file = SenseReadingFiles.DatasetRecordRulings();
         file.Rulings.Should().NotBeEmpty();
-        file.Rulings.Should().OnlyContain(r => r.Existing != null && r.Create == null && r.WordId > 0 && r.Why.Length > 0);
+        file.Rulings.Should().OnlyContain(r => r.Existing != null && r.Create == null && r.Position > 0 && r.Surface.Length > 0 && r.Why.Length > 0);
         file.Source.Should().Contain("claude-opus-5-5").And.Contain("2026-09-30").And.Contain("owner's instruction");
         file.DecidedBy.Should().Contain("No person read them");
 
@@ -477,7 +469,7 @@ public sealed class OwnRecordTests : IDisposable
         var slugs = await _db.Entities.ToDictionaryAsync(e => e.Slug, e => e.Id);
         var named = await _db.WordEntities.Where(a => a.Source == file.Source).ToListAsync();
         named.Select(a => (a.WordId, a.EntityId)).Should().BeEquivalentTo(
-            file.Rulings.Select(r => (r.WordId, slugs[r.Existing!])));
+            file.Rulings.Select(r => (_words[r.Word], slugs[r.Existing!])));
         foreach (var ruling in file.Rulings.Where(r => r.Says?.Name is not null))
         {
             var record = await _db.Entities.AsNoTracking().SingleAsync(e => e.Slug == ruling.Existing);
@@ -498,10 +490,50 @@ public sealed class OwnRecordTests : IDisposable
         foreach (var correction in _rulings.Where(r => r.Corrects is not null))
         {
             var named = await _db.WordEntities.Include(a => a.Entity)
-                .Where(a => a.WordId == correction.WordId)
+                .Where(a => a.WordId == _words[correction.Word])
                 .Select(a => a.Entity!.Slug)
                 .ToListAsync();
             named.Should().Equal(correction.Existing);
         }
+    }
+
+    /// <summary>
+    /// A ruling names its word by where it stands and how it reads, so a word that reads otherwise at
+    /// that address is not the word ruled on: the load stops and says which, instead of putting the
+    /// owner's decision on a stranger.
+    /// </summary>
+    [Fact]
+    public async Task ARulingWhoseWordIsNotWhereItSaysStopsTheLoadAndNamesIt()
+    {
+        var ruling = _rulings[0];
+        await _db.Words.Where(w => w.Id == _words[ruling.Word])
+            .ExecuteUpdateAsync(set => set.SetProperty(w => w.Surface, "another"));
+
+        var load = Load;
+
+        (await load.Should().ThrowAsync<InvalidDataException>())
+            .Which.Message.Should().Contain(ruling.Word.ToString()).And.Contain("never point it at whatever word");
+        (await _db.WordEntities.AnyAsync()).Should().BeFalse();
+    }
+
+    /// <summary>
+    /// A file is applied once and then skipped, so a word that lost its answer afterwards — a reload
+    /// numbers a text's words afresh, and the annotations go with the old rows — is given it again on
+    /// the next load, and on the load after that nothing is written.
+    /// </summary>
+    [Fact]
+    public async Task AWordThatLostItsRulingsAnswerIsGivenItAgainOnce()
+    {
+        await Load();
+        var file = SenseReadingFiles.NamesakeSecondRulings();
+        var ruling = file.Rulings.First(r => _rulings.All(other => other.Corrects is null || other.Word != r.Word));
+        await _db.WordEntities.Where(a => a.WordId == _words[ruling.Word]).ExecuteDeleteAsync();
+
+        var again = await Load();
+
+        again.Restored.Should().Be(1);
+        (await _db.WordEntities.Include(a => a.Entity).SingleAsync(a => a.WordId == _words[ruling.Word]))
+            .Should().Match<WordEntity>(a => a.Entity!.Slug == ruling.Existing && a.Source == file.Source);
+        (await Load()).Restored.Should().Be(0);
     }
 }

@@ -987,6 +987,10 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         await Run(connection, transaction, DistinguishCarried, cancellationToken,
             ("form", EnumSpelling.Of(ByTheForm)));
 
+        // A record a verse names wrongly is not named there to be taken off again by the next step.
+        await Run(connection, transaction, MisplacedAnnotationLoader.Withhold, cancellationToken,
+            await MisplacedAnnotationLoader.Withheld(db, cancellationToken));
+
         var settled = await Run(connection, transaction, Settle, cancellationToken,
             ("written", Written));
         await Run(connection, transaction, Claim, cancellationToken);

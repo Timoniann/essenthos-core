@@ -5,78 +5,100 @@
   "source": "Essenthos, on the record of Deborah that held two women, each occurrence read against its verse by claude-opus-5-5, 2026-09-30",
   "rulings": [
     {
-      "wordId": 6485969,
-      "reference": "Genesis 35:8",
+      "text": "BHSA",
+      "reference": "GEN 35:8",
+      "position": 3,
+      "surface": "דְּבֹרָה֙",
       "strongNumber": "H1683",
       "existing": "deborah",
       "why": "'Deborah Rebekah's nurse died, and she was buried beneath Bethel under an oak': the verse says which Deborah she is."
     },
     {
-      "wordId": 6596207,
-      "reference": "Judges 4:4",
+      "text": "BHSA",
+      "reference": "JDG 4:4",
+      "position": 2,
+      "surface": "דְבֹורָה֙",
       "strongNumber": "H1683",
       "existing": "deborah-2",
       "why": "'Deborah, a prophetess, the wife of Lapidoth, she judged Israel at that time': the judge, centuries after Rebekah's nurse was buried."
     },
     {
-      "wordId": 6596209,
-      "reference": "Judges 4:4",
+      "text": "BHSA",
+      "reference": "JDG 4:4",
+      "position": 4,
+      "surface": "נְבִיאָ֔ה",
       "strongNumber": "H5031",
       "existing": "deborah-2",
       "why": "'A prophetess' stands in apposition to Deborah in the same clause, and is said of the judge."
     },
     {
-      "wordId": 6596226,
-      "reference": "Judges 4:5",
+      "text": "BHSA",
+      "reference": "JDG 4:5",
+      "position": 6,
+      "surface": "דְּבֹורָ֗ה",
       "strongNumber": "H1683",
       "existing": "deborah-2",
       "why": "'She dwelt under the palm tree of Deborah between Ramah and Bethel in mount Ephraim': the judge of the verse before, where Israel came up to her for judgment."
     },
     {
-      "wordId": 6596346,
-      "reference": "Judges 4:9",
+      "text": "BHSA",
+      "reference": "JDG 4:9",
+      "position": 27,
+      "surface": "דְּבֹורָ֛ה",
       "strongNumber": "H1683",
       "existing": "deborah-2",
       "why": "'Deborah arose, and went with Barak to Kedesh': the prophetess who summoned Barak in 4:6."
     },
     {
-      "wordId": 6596371,
-      "reference": "Judges 4:10",
+      "text": "BHSA",
+      "reference": "JDG 4:10",
+      "position": 20,
+      "surface": "דְּבֹורָֽה",
       "strongNumber": "H1683",
       "existing": "deborah-2",
       "why": "'Deborah went up with him': with Barak and his ten thousand, the same woman as in 4:9."
     },
     {
-      "wordId": 6596429,
-      "reference": "Judges 4:14",
+      "text": "BHSA",
+      "reference": "JDG 4:14",
+      "position": 3,
+      "surface": "דְּבֹרָ֨ה",
       "strongNumber": "H1683",
       "existing": "deborah-2",
       "why": "'Deborah said unto Barak, Up; for this is the day in which the LORD hath delivered Sisera into thine hand': the prophetess speaking to Barak."
     },
     {
-      "wordId": 6596722,
-      "reference": "Judges 5:1",
+      "text": "BHSA",
+      "reference": "JDG 5:1",
+      "position": 3,
+      "surface": "דְּבֹורָ֔ה",
       "strongNumber": "H1683",
       "existing": "deborah-2",
       "why": "'Then sang Deborah and Barak the son of Abinoam on that day': the song after the battle of chapter 4."
     },
     {
-      "wordId": 6596813,
-      "reference": "Judges 5:7",
+      "text": "BHSA",
+      "reference": "JDG 5:7",
+      "position": 9,
+      "surface": "דְּבֹורָ֔ה",
       "strongNumber": "H1683",
       "existing": "deborah-2",
       "why": "'Until that I Deborah arose, that I arose a mother in Israel': the singer of the song names herself."
     },
     {
-      "wordId": 6596879,
-      "reference": "Judges 5:12",
+      "text": "BHSA",
+      "reference": "JDG 5:12",
+      "position": 3,
+      "surface": "דְּבֹורָ֔ה",
       "strongNumber": "H1683",
       "existing": "deborah-2",
       "why": "'Awake, awake, Deborah: awake, awake, utter a song: arise, Barak': the song addresses its singer beside Barak."
     },
     {
-      "wordId": 6596928,
-      "reference": "Judges 5:15",
+      "text": "BHSA",
+      "reference": "JDG 5:15",
+      "position": 6,
+      "surface": "דְּבֹרָ֔ה",
       "strongNumber": "H1683",
       "existing": "deborah-2",
       "why": "'The princes of Issachar were with Deborah': the tribes that came to the battle of chapter 4."

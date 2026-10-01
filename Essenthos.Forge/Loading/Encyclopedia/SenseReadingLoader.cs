@@ -175,7 +175,7 @@ internal sealed class SenseReadingLoader(
         var started = Stopwatch.StartNew();
         var (readings, contradicted, answers, runs, superseded) = SenseReadingFiles.Read(directory);
         var refused = SenseReadingFiles.Refused().Readings.ToDictionary(r => r.WordId);
-        var ruled = Ruled();
+        var ruled = await Ruled(cancellationToken);
 
         var wanted = new List<SenseReading>(readings.Count);
         int unlisted = 0, unclear = 0, unmeasured = 0, blocked = 0, decided = 0;
@@ -294,10 +294,18 @@ internal sealed class SenseReadingLoader(
     /// <summary>
     /// Every word a ruling has settled, whether the owner's or the review's. A decision beats a
     /// reading, and the two loaders would otherwise both annotate the word — the ruling with the
-    /// referent somebody decided on and this with the one that was overturned.
+    /// referent somebody decided on and this with the one that was overturned. A ruling whose word is
+    /// not where it says decides nothing here; the rulings' own step refuses it.
     /// </summary>
-    private static HashSet<long> Ruled() =>
-        [.. SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings).Select(r => r.WordId)];
+    private async Task<IReadOnlySet<long>> Ruled(CancellationToken cancellationToken)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var (found, _) = await RuledWords.Find(
+            (NpgsqlConnection)db.Database.GetDbConnection(),
+            SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings).Select(r => r.Word),
+            cancellationToken);
+        return found.Values.ToHashSet();
+    }
 
     private static SenseReadingOutcome Nothing(bool alreadyLoaded) =>
         new(alreadyLoaded, !alreadyLoaded, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [], TimeSpan.Zero);
